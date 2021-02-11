@@ -67,7 +67,7 @@ namespace WebFreight.Web.ExternalAPIs
                 }
                 else
                 {
-                    var response = this.Request.CreateResponse(HttpStatusCode.BadRequest);
+                    var response = this.Request.CreateResponse(HttpStatusCode.OK);
                     return response;
                 }
                

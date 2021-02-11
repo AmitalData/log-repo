@@ -336,5 +336,11 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public int? StorageFreeDays { get; set; }
+        [DataMember]
+        public string Address1 { get; set; }
+        [DataMember]
+        public string Address2 { get; set; }
+        [DataMember]
+        public string BillToId { get; set; }
     }
 }

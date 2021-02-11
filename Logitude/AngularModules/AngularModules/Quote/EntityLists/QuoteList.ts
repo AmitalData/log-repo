@@ -162,6 +162,7 @@ export class QuoteList {
 		AgentName: string;
 		TEU: number;
 		IsSaleCurrencySameAsCost: boolean;
+		IsMultiCurrency: boolean;
 		IsChargesByVAT: boolean;
 		ValueOfGoods: number;
 		IsQuoteDataExternal: boolean;

@@ -22,7 +22,7 @@ import { BatchTaskExecutionList } from '../../../Infrastructure/EntityLists/Batc
 import { BatchTaskExecutionListService } from '../../../Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
 import { DocumentsFilingExtendedPMService } from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
-import { ConsilidationInvoiceDomainService } from '../../Services/ConsilidationInvoiceDomainService';
+import { ConsilidationInvoiceDomainService } from '../../Services/ConsilidationInvoiceDomainService'; 
 
 export class ARInvoiceMenuButtonsHandler {
     private CurrentSession = SessionLocator.SelectedSession;
@@ -31,13 +31,14 @@ export class ARInvoiceMenuButtonsHandler {
     private isRunningBatchTaskExecution: boolean = false;
     private IsConfirmationMessageForCriedtNoteVisible:boolean=false;
     DocumentsFilingExtendedPMService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
+     
+    private RelativeRateDate: String; 
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
-        this.EntityPM = entityArgs.EntityPM;
-        
-        this.Listen();
-    }
+        this.EntityPM = entityArgs.EntityPM; 
+        this.Listen(); 
+    } 
 
     private CheckIsConfirmationMessageForCriedtNoteVisible(){
         this.IsConfirmationMessageForCriedtNoteVisible = FeatureLocator.HasFeaturePermession("ARInvoice", "ConfirmationForAutoCreditForCreditNotes") ? true : false;
@@ -653,7 +654,13 @@ export class ARInvoiceMenuButtonsHandler {
             }
         }
     }
+      
+    ComputeRelativeRateDate() {
+        this.RelativeRateDate = DateTool.GetRelativeRateDate(this.EntityPM.InvoiceDate, this.EntityPM.ExchangeRateDate, "old");
+    }
+     
     ApplyApproveClicked() {
+
         if (this.EntityPM.IsAutoCredit) {
             this.CheckIsConfirmationMessageForCriedtNoteVisible();
             var myConfirmWindow = new ConfirmWindow();
@@ -670,6 +677,35 @@ export class ARInvoiceMenuButtonsHandler {
             });
         }
 
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") { 
+        this.ComputeRelativeRateDate();
+
+            if (this.RelativeRateDate != "") {
+                let confirmWindow = new ConfirmWindow();
+                confirmWindow.Width = 290; 
+                confirmWindow.ShowCancelButton = true;
+                confirmWindow.CancelButtonText = "Cancel";
+                confirmWindow.ShowNoButton = false;
+                confirmWindow.YesButtonText = "Continue";
+                confirmWindow.ShowWarningImage = true;
+                confirmWindow.Title = TextCodeTranslator.Translate("General.O.Warning");
+                confirmWindow.Show("The invoice exchange rate is not up-to-date.");
+
+                confirmWindow.WindowClosed.subscribe(s => {
+                    if (confirmWindow.Yes) {
+                        this.ProceedToApprove("Approving..."); 
+                    }
+                    else if (confirmWindow.Cancel) {
+                        // nth
+                        this.StopFlags();
+                    }
+                }) 
+            }
+            else {
+                this.ProceedToApprove("Approving...");
+            }
+        }
+         
         else {
             this.ProceedToApprove("Approving...");
         }
@@ -995,6 +1031,7 @@ export class ARInvoiceMenuButtonsHandler {
         AutoCreditInvoice.DebitAccount = this.EntityPM.DebitAccount;
         AutoCreditInvoice.TransferStatusCode = this.EntityPM.TransferStatusCode;
         AutoCreditInvoice.BillToAddressId = this.EntityPM.BillToAddressId;
+        AutoCreditInvoice.PartnerId = this.EntityPM.PartnerId;
         AutoCreditInvoice.BillToId = this.EntityPM.BillToId;
         AutoCreditInvoice.InternalNotes = note.replace("%InvoiceNumber", this.EntityPM.InvoiceNumber);// this.EntityPM.InternalNotes;
         AutoCreditInvoice.InvoiceCurrencyExchangeRate = this.EntityPM.InvoiceCurrencyExchangeRate;

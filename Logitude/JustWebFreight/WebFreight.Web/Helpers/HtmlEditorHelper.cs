@@ -668,8 +668,11 @@ namespace WebFreight.Web.Helpers
         }
 
 
-        public string GetEditorHtmlData(string docOutId, string entityId, string objectTableId, string childEntityId, string childEntityObjectTableId, int tenant, string userId, bool theIsSendMail, string documentTemplateId, ref string subject, ref string from, ref string replyTo, ref string cc, ref string bcc, string mode = null, DocumentTypeTemplate template = null)
+        public HtmlEditorResolveResult GetEditorHtmlData(HtmlEditorResolveArgs htmlEditorResolveArgs)
         {
+            int tenant = htmlEditorResolveArgs.Tenant;
+
+
             ICommonDataContext context = CommonDataContext.GetContext(tenant);
             System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
             CurrentTenant = context.Tenants.Where(t => t.Id == tenant).FirstOrDefault();
@@ -686,7 +689,7 @@ namespace WebFreight.Web.Helpers
 
 
 
-            this.isSendMail = theIsSendMail;
+            this.isSendMail = htmlEditorResolveArgs.IsSendMail;
 
             int headerHeight = 0;
             int footerHeight = 0;
@@ -700,22 +703,17 @@ namespace WebFreight.Web.Helpers
 
 
 
-            if (string.IsNullOrEmpty(docOutId))
+            if (string.IsNullOrEmpty(htmlEditorResolveArgs.DocumentOutId))
             {
 
-                if (template == null)
+                if (htmlEditorResolveArgs.DocumentTypeTemplate == null)
                 {
                     documentTemplate = (from a in context.DocumentTypeTemplates
-                                        where a.Id == documentTemplateId
+                                        where a.Id == htmlEditorResolveArgs.DocumentTemplateId
 
                                         select a).FirstOrDefault();
-
-
-                    //docType = (from d in context.DocumentTypes
-                    //           where d.Id == documentTemplate.DocumentTypeId
-                    //           select d).FirstOrDefault();
                 }
-                else documentTemplate = template;
+                else documentTemplate = htmlEditorResolveArgs.DocumentTypeTemplate;
 
                 if (documentTemplate != null)
                 {
@@ -735,7 +733,7 @@ namespace WebFreight.Web.Helpers
 
 
                 DocumentOut documentOut = (from d in context.DocumentOuts.Include("DocumentsFiling")
-                                           where d.Id == docOutId && d.Tenant == tenant
+                                           where d.Id == htmlEditorResolveArgs.DocumentOutId && d.Tenant == tenant
                                            select d).FirstOrDefault();
 
                 docType = (from d in context.DocumentTypes
@@ -744,7 +742,7 @@ namespace WebFreight.Web.Helpers
 
 
                 documentTemplate = (from a in context.DocumentTypeTemplates
-                                    where a.Id == documentTemplateId
+                                    where a.Id == htmlEditorResolveArgs.DocumentTemplateId
 
                                     select a).FirstOrDefault();
 
@@ -780,7 +778,7 @@ namespace WebFreight.Web.Helpers
 
                     else
                     {
-                        if (theIsSendMail)
+                        if (isSendMail)
                         {
 
                             documentTypeTemplate = (from a in context.DocumentTypeTemplates
@@ -825,6 +823,7 @@ namespace WebFreight.Web.Helpers
             }
 
 
+            HtmlEditorResolveResult htmlEditorResolveResult = new HtmlEditorResolveResult() { };
 
             if (documentTypeTemplate != null)
             {
@@ -833,14 +832,14 @@ namespace WebFreight.Web.Helpers
                 {
                     if (!string.IsNullOrEmpty(documentTemplate.Subject))
                     {
-                        subject = documentTemplate.Subject;
+                        htmlEditorResolveArgs.Subject = documentTemplate.Subject;
                     }
                 }
                 else
                 {
                     if (!string.IsNullOrEmpty(documentTypeTemplate.Subject))
                     {
-                        subject = documentTypeTemplate.Subject;
+                        htmlEditorResolveArgs.Subject = documentTypeTemplate.Subject;
                     }
                 }
 
@@ -850,7 +849,7 @@ namespace WebFreight.Web.Helpers
                 string htmlheaderString = "";
                 string htmlBodyString = "";
                 string htmlfooterString = "";
-                if (mode == "Edit")
+                if (htmlEditorResolveArgs.Mode == "Edit")
                 {
                     htmlheaderString = "<header><height>" + "<div style='display:none'>" + documentTypeTemplate.TemplateHeaderHeight + "</div></height>" + header + "</header>";
                     htmlBodyString = documentTypeTemplate.TemplateBodyHtml != null ? "<div style ='width:100%'>" + enc.GetString(documentTypeTemplate.TemplateBodyHtml) + "</div>" : "";
@@ -863,62 +862,77 @@ namespace WebFreight.Web.Helpers
                     htmlBodyString = documentTypeTemplate.TemplateBodyHtml != null ? enc.GetString(documentTypeTemplate.TemplateBodyHtml) : "";
                     htmlfooterString = footer;
                 }
-
-                var htmlString = htmlheaderString + htmlBodyString + htmlfooterString;
-
-                var result = htmlString;
-                bool isHaveDataVariable = CheckIfTemplateHaveDataVariable(subject, from, replyTo, cc, bcc, htmlString);
+                htmlEditorResolveArgs.HtmlString = htmlheaderString + htmlBodyString + htmlfooterString;
+                bool isHaveDataVariable = CheckIfTemplateHaveDataVariable(htmlEditorResolveArgs);
                 if (isHaveDataVariable)
                 {
-                    result = ResolveHtmlData(entityId, objectTableId, userId, tenant, htmlString, ref subject, ref from, ref replyTo, ref cc,ref bcc, null, childEntityId, childEntityObjectTableId);
+                    htmlEditorResolveResult = ResolveHtmlData(htmlEditorResolveArgs, null);
                 }
-
-                return result;
-
-
-
-
+                else htmlEditorResolveResult.HtmlString = htmlEditorResolveArgs.HtmlString;
             }
-            else return null;
 
+
+            return htmlEditorResolveResult;
         }
-        private bool CheckIfTemplateHaveDataVariable(string subject, string from, string replyTo, string cc,string bcc, string htmlString)
+        
+        
+        
+        private bool CheckIfTemplateHaveDataVariable(HtmlEditorResolveArgs htmlEditorResolveArgs )
         {
             bool result = false;
-            if (!string.IsNullOrEmpty(subject))
+            if (!string.IsNullOrEmpty(htmlEditorResolveArgs.Subject))
             {
-                if (subject.Contains("[") && subject.Contains("]")) { return true; }
+                if (htmlEditorResolveArgs.Subject.Contains("[") && htmlEditorResolveArgs.Subject.Contains("]")) { return true; }
             }
-            if (!string.IsNullOrEmpty(from))
+            if (!string.IsNullOrEmpty(htmlEditorResolveArgs.From))
             {
-                if (from.Contains("[") && from.Contains("]")) { return true; }
+                if (htmlEditorResolveArgs.From.Contains("[") && htmlEditorResolveArgs.From.Contains("]")) { return true; }
             }
-            if (!string.IsNullOrEmpty(replyTo))
+            if (!string.IsNullOrEmpty(htmlEditorResolveArgs.ReplyTo))
             {
-                if (replyTo.Contains("[") && replyTo.Contains("]")) { return true; }
-            }
-
-            if (!string.IsNullOrEmpty(cc))
-            {
-                if (cc.Contains("[") && cc.Contains("]")) { return true; }
+                if (htmlEditorResolveArgs.ReplyTo.Contains("[") && htmlEditorResolveArgs.ReplyTo.Contains("]")) { return true; }
             }
 
-            if (!string.IsNullOrEmpty(bcc))
+            if (!string.IsNullOrEmpty(htmlEditorResolveArgs.Cc))
             {
-                if (bcc.Contains("[") && bcc.Contains("]")) { return true; }
+                if (htmlEditorResolveArgs.Cc.Contains("[") && htmlEditorResolveArgs.Cc.Contains("]")) { return true; }
             }
 
-            if (!string.IsNullOrEmpty(htmlString))
+            if (!string.IsNullOrEmpty(htmlEditorResolveArgs.Bcc))
             {
-                if (htmlString.Contains("[") && htmlString.Contains("]")) { return true; }
+                if (htmlEditorResolveArgs.Bcc.Contains("[") && htmlEditorResolveArgs.Bcc.Contains("]")) { return true; }
+            }
+
+            if (!string.IsNullOrEmpty(htmlEditorResolveArgs.To))
+            {
+                if (htmlEditorResolveArgs.To.Contains("[") && htmlEditorResolveArgs.To.Contains("]")) { return true; }
+            }
+
+
+
+            if (!string.IsNullOrEmpty(htmlEditorResolveArgs.HtmlString))
+            {
+                if (htmlEditorResolveArgs.HtmlString.Contains("[") && htmlEditorResolveArgs.HtmlString.Contains("]")) { return true; }
             }
 
             return result;
 
         }
-        public string ResolveHtmlData(string entityId, string objectTableId, string userId, int tenant, string htmlString, ref string subject, ref string from, ref string replyTo, ref string cc, ref string bcc, object customEntity, string childEntityId = null, string childEntityObjectTableId = null)
+        public HtmlEditorResolveResult ResolveHtmlData(HtmlEditorResolveArgs htmlEditorResolveArgs ,object customEntity )
         {
+            string htmlString = htmlEditorResolveArgs.HtmlString; 
+            string to = htmlEditorResolveArgs.To;
+            string from = htmlEditorResolveArgs.From;
+            string replyTo = htmlEditorResolveArgs.ReplyTo;
+            string cc = htmlEditorResolveArgs.Cc;
+            string bcc = htmlEditorResolveArgs.Bcc;
+            string subject = htmlEditorResolveArgs.Subject;
 
+            
+
+
+
+            int tenant = htmlEditorResolveArgs.Tenant;
             if (CurrentTenant == null)
             {
                 ICommonDataContext context = CommonDataContext.GetContext(tenant);
@@ -942,7 +956,7 @@ namespace WebFreight.Web.Helpers
             logosListHtml = new List<LogoClassHtml>();
             tablesRepository = new ObjectTableRepository(tenant);
 
-            ObjectTable entityTable = tablesRepository.GetObjectTableById(objectTableId, tenant);
+            ObjectTable entityTable = tablesRepository.GetObjectTableById(htmlEditorResolveArgs.ObjectTableId, tenant);
 
             if (entityTable != null) ObjectTableName = entityTable.Name;
             string entityName = "";
@@ -956,9 +970,9 @@ namespace WebFreight.Web.Helpers
             SharedDocumentsNodesHTML = new List<HtmlNode>();
 
             string childEntityName = "";
-            if (childEntityId != null && childEntityObjectTableId != null)
+            if (htmlEditorResolveArgs.ChildEntityId != null && htmlEditorResolveArgs.ChildEntityObjectTableId != null)
             {
-                ObjectTable childEntityTable = tablesRepository.GetObjectTableById(childEntityObjectTableId, tenant);
+                ObjectTable childEntityTable = tablesRepository.GetObjectTableById(htmlEditorResolveArgs.ChildEntityObjectTableId, tenant);
 
                 if (childEntityTable != null)
                 {
@@ -1018,9 +1032,9 @@ namespace WebFreight.Web.Helpers
 
             else
             {
-                if (!string.IsNullOrEmpty(entityId))
+                if (!string.IsNullOrEmpty(htmlEditorResolveArgs.EntityId))
                 {
-                    entity = GetEntity(entityName, entityId, tenant);
+                    entity = GetEntity(entityName, htmlEditorResolveArgs.EntityId, tenant);
                 }
                 else entity = customEntity;
             }
@@ -1028,14 +1042,14 @@ namespace WebFreight.Web.Helpers
             entityObjectFields = GetEntityObjectFields(entityName, tenant);//generalService.ObjectFieldsRepository.GetObjectFieldsByObjectTableName(entityName, tenant).ToList();
 
             childEntityObjectFields = new List<ObjectField>();
-            if (childEntityId != null && childEntityObjectTableId != null)
+            if (htmlEditorResolveArgs.ChildEntityId != null && htmlEditorResolveArgs.ChildEntityObjectTableId != null)
             {
-                childEntity = GetEntity(childEntityName, childEntityId, tenant);
+                childEntity = GetEntity(childEntityName, htmlEditorResolveArgs.ChildEntityId, tenant);
                 childEntityObjectFields = GetEntityObjectFields(childEntityName, tenant);//generalService.ObjectFieldsRepository.GetObjectFieldsByObjectTableName(childEntityName, tenant).ToList();
             }
 
             SystemDataQuery systemDataQuery = new SystemDataQuery();
-            SystemDataPM systemEntity = systemDataQuery.GetSinglePM(userId, tenant);
+            SystemDataPM systemEntity = systemDataQuery.GetSinglePM(htmlEditorResolveArgs.UserId, tenant);
 
 
             List<ObjectField> systemEntityObjectFields = GetEntityObjectFields("SystemData", tenant);
@@ -1050,7 +1064,7 @@ namespace WebFreight.Web.Helpers
             HtmlDocument document = null;
             signature = " ";
 
-            if (!string.IsNullOrEmpty(htmlString))
+            if (!string.IsNullOrEmpty(htmlEditorResolveArgs.HtmlString))
             {
                 htmlString = htmlString.Replace("<tbody>", "");
                 htmlString = htmlString.Replace("</tbody>", "");
@@ -1114,60 +1128,26 @@ namespace WebFreight.Web.Helpers
 
             ReplaceHtmlStringWithTageHtml = false;
 
-            if (!string.IsNullOrEmpty(subject))
+
+            var resolveVariableFieldArgs = new ResolveVariableFieldArgs
             {
-                if (subject.Contains("[") && subject.Contains("]"))
-                {
-                    HtmlDocument doc = new HtmlDocument();
-                    HtmlNode subjectNode = doc.CreateElement(subject);
-                    subjectNode.InnerHtml = subject;
-                    GetHtmlNodeValue(subjectNode, subject, entity, entityObjectFields, tablesDic, systemEntity, systemEntityObjectFields, signatureNodeList, tenant, generalService, ticketHeaderNode, ticketFooterNode);
-                    subject = subjectNode.InnerHtml;
-                }
-            }
+                Tenant = tenant,
+                SystemEntity = systemEntity,
+                SystemEntityObjectFields = systemEntityObjectFields,
+                SignatureNodeList = signatureNodeList,
+                TicketHeaderNode = ticketHeaderNode,
+                TicketFooterNode = ticketFooterNode,
+                TablesDic = tablesDic
+            };
 
+            subject = ResolveVariableField(subject, resolveVariableFieldArgs);
+            from = ResolveVariableField(from, resolveVariableFieldArgs);
+            replyTo = ResolveVariableField(replyTo, resolveVariableFieldArgs);
+            cc = ResolveVariableField(cc, resolveVariableFieldArgs);
+            bcc = ResolveVariableField(bcc, resolveVariableFieldArgs);
+            to = ResolveVariableField(to, resolveVariableFieldArgs);
 
-
-            if (!string.IsNullOrEmpty(from))
-            {
-                if (from.Contains("[") && from.Contains("]"))
-                {
-                    HtmlDocument doc = new HtmlDocument();
-                    HtmlNode fromNode = doc.CreateElement(from);
-                    fromNode.InnerHtml = from;
-                    GetHtmlNodeValue(fromNode, from, entity, entityObjectFields, tablesDic, systemEntity, systemEntityObjectFields, signatureNodeList, tenant, generalService, ticketHeaderNode, ticketFooterNode);
-                    from = fromNode.InnerHtml;
-                }
-            }
-
-
-            if (!string.IsNullOrEmpty(replyTo))
-            {
-                if (replyTo.Contains("[") && replyTo.Contains("]"))
-                {
-                    HtmlDocument doc = new HtmlDocument();
-                    HtmlNode replyToNode = doc.CreateElement(replyTo);
-                    replyToNode.InnerHtml = replyTo;
-                    GetHtmlNodeValue(replyToNode, replyTo, entity, entityObjectFields, tablesDic, systemEntity, systemEntityObjectFields, signatureNodeList, tenant, generalService, ticketHeaderNode, ticketFooterNode);
-                    replyTo = replyToNode.InnerHtml;
-                }
-            }
-
-
-
-            if (!string.IsNullOrEmpty(cc))
-            {
-                if (cc.Contains("[") && cc.Contains("]"))
-                {
-                    HtmlDocument doc = new HtmlDocument();
-                    HtmlNode ccNode = doc.CreateElement(cc);
-                    ccNode.InnerHtml = cc;
-                    GetHtmlNodeValue(ccNode, cc, entity, entityObjectFields, tablesDic, systemEntity, systemEntityObjectFields, signatureNodeList, tenant, generalService, ticketHeaderNode, ticketFooterNode);
-                    cc = ccNode.InnerHtml;
-                }
-            }
-
-            bcc = ResolveBCCVariableField(bcc, new HtmlEditorArgs { Tenant = tenant, SystemEntity = systemEntity, SystemEntityObjectFields = systemEntityObjectFields, SignatureNodeList = signatureNodeList, TicketHeaderNode = ticketHeaderNode, TicketFooterNode = ticketFooterNode, TablesDic = tablesDic });
+            
 
             if (signatureNodeList.Count() != 0)
             {
@@ -1390,7 +1370,7 @@ namespace WebFreight.Web.Helpers
                 {
                     if (securityKeyNode.ParentNode != null)
                     {
-                        HtmlNode newLogoSection = GetNewNodeHtml(GetSharedDocumentLinkHtml(securityKey, entityId, securityKeyNode.OuterHtml, tenant, HideSharedlogistics, SystemUrl));
+                        HtmlNode newLogoSection = GetNewNodeHtml(GetSharedDocumentLinkHtml(securityKey, htmlEditorResolveArgs.EntityId, securityKeyNode.OuterHtml, tenant, HideSharedlogistics, SystemUrl));
                         
                         foreach (HtmlNode childNode in newLogoSection.ChildNodes)
                         {
@@ -1421,21 +1401,30 @@ namespace WebFreight.Web.Helpers
                 result = sw.ToString();
             }
 
-            return result;
+            return new HtmlEditorResolveResult()
+            {
+                HtmlString = result, 
+                Subject = subject,
+                From = from,
+                To= to,
+                Cc = cc,
+                Bcc = bcc,
+                ReplyTo = replyTo
+            };
         }
 
-        private string ResolveBCCVariableField( string bcc, HtmlEditorArgs htmlEditorArgs)
+        private string ResolveVariableField( string fieldVaue, ResolveVariableFieldArgs resolveVariableFieldArgs)
         {
-            string result = bcc;
-            if (!string.IsNullOrEmpty(bcc))
+            string result = fieldVaue;
+            if (!string.IsNullOrEmpty(fieldVaue))
             {
-                if (bcc.Contains("[") && bcc.Contains("]"))
+                if (fieldVaue.Contains("[") && fieldVaue.Contains("]"))
                 {
-                    HtmlDocument doc = new HtmlDocument();
-                    HtmlNode bccNode = doc.CreateElement(bcc);
-                    bccNode.InnerHtml = bcc;
-                    GetHtmlNodeValue(bccNode, bcc, entity, entityObjectFields, htmlEditorArgs.TablesDic, htmlEditorArgs.SystemEntity, htmlEditorArgs.SystemEntityObjectFields, htmlEditorArgs.SignatureNodeList, htmlEditorArgs.Tenant, generalService, htmlEditorArgs.TicketHeaderNode, htmlEditorArgs.TicketFooterNode);
-                    result = bccNode.InnerHtml;
+                    HtmlDocument htmlDocument = new HtmlDocument();
+                    HtmlNode fieldNode = htmlDocument.CreateElement(fieldVaue);
+                    fieldNode.InnerHtml = fieldVaue;
+                    GetHtmlNodeValue(fieldNode, fieldVaue, entity, entityObjectFields, resolveVariableFieldArgs.TablesDic, resolveVariableFieldArgs.SystemEntity, resolveVariableFieldArgs.SystemEntityObjectFields, resolveVariableFieldArgs.SignatureNodeList, resolveVariableFieldArgs.Tenant, generalService, resolveVariableFieldArgs.TicketHeaderNode, resolveVariableFieldArgs.TicketFooterNode);
+                    result = fieldNode.InnerHtml;
                 }
             }
 
@@ -1458,7 +1447,7 @@ namespace WebFreight.Web.Helpers
         }
 
         bool ReplaceHtmlStringWithTageHtml = false;
-        public string ResolveHtmlString(HtmlResolveArgs htmlResolveArgs)
+        public string ResolveHtmlString(HtmlEditorResolveArgs htmlResolveArgs)
         {
             string entityName = GetObjectTableNameFromHTMLResolveArgs(htmlResolveArgs);
 
@@ -1535,7 +1524,7 @@ namespace WebFreight.Web.Helpers
             return htmlResolveArgs.HtmlString;
         }
 
-        private string GetObjectTableNameFromHTMLResolveArgs(HtmlResolveArgs htmlResolveArgs)
+        private string GetObjectTableNameFromHTMLResolveArgs(HtmlEditorResolveArgs htmlResolveArgs)
         {
             string entityName = "";
             if (!string.IsNullOrEmpty(htmlResolveArgs.ObjectTableId))
@@ -5329,31 +5318,28 @@ namespace WebFreight.Web.Helpers
                             {
 
                                 string resultValue = GetEntityFieldValue(theEntity, propertyName, theEntityObjectFields, tenant);
-
-                                if ((propertyName == "SecurityKey" || (propertyName == "ShipmentNumber" && ObjectTableName == "Shipment")) && CurrentTenant != null)
+                                string shipmentLevelCode = GetEntityPropertyValue(theEntity, "ShipmentLevelCode");
+                                bool enableSharedLogisticsMessageLink = CurrentTenant != null && ((CurrentTenant.SharedLogisticsMessageLink) || (CurrentTenant.SharedLogisMasterMessageLink && shipmentLevelCode == "C"));
+                                if ((propertyName == "SecurityKey" || (propertyName == "ShipmentNumber" && ObjectTableName == "Shipment")) && CurrentTenant != null && enableSharedLogisticsMessageLink)
                                 {
-                                    string shipmentLevelCode = GetEntityPropertyValue(theEntity, "ShipmentLevelCode");
-                                    if ((CurrentTenant.SharedLogisticsMessageLink && shipmentLevelCode != "C") || (CurrentTenant.SharedLogisMasterMessageLink && shipmentLevelCode == "C"))
+                                    if (propertyName == "SecurityKey")
                                     {
-                                        if (propertyName == "SecurityKey")
-                                        {
-                                            this.securityKey = resultValue;
-                                            shipmentNumbersNodesHtml.Add(node);
-                                            node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", "");
+                                        this.securityKey = resultValue;
+                                        shipmentNumbersNodesHtml.Add(node);
+                                        node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", "");
 
-                                        }
-                                        else
-                                        {
-                                            this.securityKey = GetEntityFieldValue(theEntity, "SecurityKey", theEntityObjectFields, tenant);
-                                            // node.Attributes["Text"].Value = node.Attributes["Text"].Value.Replace("[" + propertyName + "]", resultValue + " ");
+                                    }
+                                    else
+                                    {
+                                        this.securityKey = GetEntityFieldValue(theEntity, "SecurityKey", theEntityObjectFields, tenant);
+                                        // node.Attributes["Text"].Value = node.Attributes["Text"].Value.Replace("[" + propertyName + "]", resultValue + " ");
 
-                                            node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", resultValue + " ");
+                                        node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", resultValue + " ");
 
 
 
-                                            //this.securityKeyNode = node;
-                                            shipmentNumbersNodesHtml.Add(node);
-                                        }
+                                        //this.securityKeyNode = node;
+                                        shipmentNumbersNodesHtml.Add(node);
                                     }
                                 }
 
@@ -5848,16 +5834,16 @@ namespace WebFreight.Web.Helpers
         {
             string url = sharedLinkHTMLArgs.SystemUrl;
             if (url.Contains("login.aspx"))
-                url = RemoveLoginWordFromSystemUrl(url);
+                url = GetOnlyDomainNameFromSystemUrl(url);
 
-            string pageLink = GetSecurityPageLinkPath(sharedLinkHTMLArgs, url);
+            string pageLink = GetSecurityPageLink(sharedLinkHTMLArgs, url);
             string originalNodeInnerText = sharedLinkHTMLArgs.OriginalNodeInnerText.Replace("\"", "'");
-            string reslut = BuildSecurityKeyHtml(pageLink, originalNodeInnerText);
+            string reslut = BuildSecurityKeyLinkHtml(pageLink, originalNodeInnerText);
 
             return reslut;
         }
 
-        private string BuildSecurityKeyHtml(string pageLink, string originalNodeInnerText)
+        private string BuildSecurityKeyLinkHtml(string pageLink, string originalNodeInnerText)
         {
             string styleLink = "'font-family:Arial;font-size:18px;color:#0000FF'";
             string Textlink = "<a style=" + styleLink + " href='" + pageLink + "'" + ">View online</a>";
@@ -5865,28 +5851,61 @@ namespace WebFreight.Web.Helpers
             return reslut;
         }
 
-        private string GetSecurityPageLinkPath(SharedLinkHTMLArgs sharedLinkHTMLArgs, string url)
+        private string GetSecurityPageLink(SharedLinkHTMLArgs sharedLinkHTMLArgs, string url)
         {
             string entityId = GetEntityPropertyValue(sharedLinkHTMLArgs.Entity, "Id");
             string shipmentLevelCode = GetEntityPropertyValue(sharedLinkHTMLArgs.Entity, "ShipmentLevelCode");
-
+            string myUrl = url;
             string pagePath = @"/SharedLogistic/ShipmentPage.aspx";
-            if (shipmentLevelCode == "C") pagePath = @"/SharedMasterDocumentsPage.aspx";
+            string pageLink;
+            Tenant sharedTenant = GetCurrentTenant(sharedLinkHTMLArgs.Tenant);
+            if (sharedTenant != null && sharedTenant.SharedLogisMasterMessageLink && shipmentLevelCode == "C")
+            {
+                myUrl = GetSystemURL(sharedLinkHTMLArgs, myUrl);
+                pagePath = @"/SharedMasterDocumentsPage.aspx";
+                pageLink = (myUrl + pagePath).ToLower() + "?securitykey=" + sharedLinkHTMLArgs.Key;
+            }
+            else
+            {
+                pageLink = (myUrl + pagePath).ToLower() + "?securitykey=" + sharedLinkHTMLArgs.Key + ":" + entityId + ":" +
+                                  sharedLinkHTMLArgs.Tenant + ":" + sharedLinkHTMLArgs.HideSharedlogistics;
+            }
 
-            string pageLink = (url + pagePath).ToLower() + "?securitykey=" + sharedLinkHTMLArgs.Key + ":" + entityId + ":" +
-                              sharedLinkHTMLArgs.Tenant + ":" + sharedLinkHTMLArgs.HideSharedlogistics;
+            if (!pageLink.Contains("//"))
+            {
+                pageLink = "https://" + pageLink;
+            }
+
             return pageLink;
+        }
+
+        private static string GetSystemURL(SharedLinkHTMLArgs sharedLinkHTMLArgs, string systemUrl)
+        {
+            string myUrl = systemUrl;
+            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(sharedLinkHTMLArgs.Tenant);
+            TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePMByDomain(systemUrl);
+            if (tenantManagementPM != null && !string.IsNullOrEmpty(tenantManagementPM.CustomerURL))
+            {
+                myUrl = tenantManagementPM.CustomerURL;
+            }
+            myUrl = myUrl.ToLower().Replace("/cargotracking", "");
+
+            return myUrl;
         }
 
         private string GetEntityPropertyValue(object entity, string property)
         {
             PropertyInfo propertyInfo = entity.GetType().GetProperty(property);
-            string value = propertyInfo.GetValue(entity)?.ToString();
+            string value = "";
+            if (propertyInfo != null)
+            {
+                value = propertyInfo.GetValue(entity)?.ToString();
+            }
 
             return value;
         }
 
-        private string RemoveLoginWordFromSystemUrl(string systemUrl)
+        private string GetOnlyDomainNameFromSystemUrl(string systemUrl)
         {
             string url = systemUrl;
             string[] test = systemUrl.Split('/');
@@ -6976,7 +6995,7 @@ namespace WebFreight.Web.Helpers
 
         public static MessageArgs GetHtmlFromTemplate(string templateId, string objectTableId, int tenant)
         {
-            MessageArgs result = new MessageArgs();
+            HtmlEditorResolveResult htmlEditorResolveResult = new HtmlEditorResolveResult();
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
                 DocumentTypeTemplateRepository documentTypeTemplateRepository = new DocumentTypeTemplateRepository(tenant);
@@ -6984,27 +7003,31 @@ namespace WebFreight.Web.Helpers
                 HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
                 if (template != null && template.TemplateType == "M")
                 {
-                    string subject = template.Subject;
-                    string from = template.From;
-                    string replyTo = template.ReplyTo;
-                    string cc = template.CC;
-                    string bcc = template.BCC;
-                    string userId = GetLoggedUserId(tenant);
-                    result.HtmlTemplate = htmlEditorHelper.GetEditorHtmlData("", "", objectTableId, "", "", tenant, userId, true, template.Id, ref subject, ref from, ref replyTo, ref cc, ref bcc);
-                    result.HtmlTemplate = htmlEditorHelper.GetLogoHtmlString(result.HtmlTemplate);
+                    HtmlEditorResolveArgs htmlEditorResolveArgs = new HtmlEditorResolveArgs()
+                    {
+                        Subject = template.Subject,
+                        From = template.From,
+                        ReplyTo = template.ReplyTo,
+                        Cc= template.CC,
+                        Bcc = template.BCC,
+                        To = template.BCC,
+                        UserId = GetLoggedUserId(tenant),
+                        ObjectTableId = objectTableId, 
+                        Tenant = tenant , 
+                        DocumentTemplateId = template.Id , 
+                         
+                    };
 
 
-                    result.From = from;
-                    result.ReplyTo = replyTo;
-                    result.Subject = subject;
-
+                    htmlEditorResolveResult = htmlEditorHelper.GetEditorHtmlData(htmlEditorResolveArgs);
+                    htmlEditorResolveResult.HtmlString = htmlEditorHelper.GetLogoHtmlString(htmlEditorResolveResult.HtmlString);
                 }
 
                 scope.Complete();
 
             }
 
-            return result;
+            return new MessageArgs() {From = htmlEditorResolveResult.From, ReplyTo = htmlEditorResolveResult.ReplyTo, Subject = htmlEditorResolveResult.Subject, HtmlTemplate = htmlEditorResolveResult.HtmlString };
         }
 
         private static string GetLoggedUserId(int tenant)
@@ -7160,7 +7183,7 @@ namespace WebFreight.Web.Helpers
 
     }
 
-    public class HtmlEditorArgs
+    public class ResolveVariableFieldArgs
     {
         public int Tenant { get; set; }
         public SystemDataPM SystemEntity { get; set; }
@@ -7172,16 +7195,47 @@ namespace WebFreight.Web.Helpers
 
     }
 
-    public class HtmlResolveArgs
+
+    public class HtmlEditorResolveArgs
     {
-        public int Tenant { get; set; }
+        public string DocumentOutId { get; set; }
         public string EntityId { get; set; }
         public string ObjectTableId { get; set; }
+        public string ChildEntityId { get; set; }
+        public string ChildEntityObjectTableId { get; set; }
+        public int Tenant { get; set; }
+        public string UserId { get; set; }
+        public bool IsSendMail { get; set; }
+        public string DocumentTemplateId { get; set; }
+        public string Subject { get; set; }
+        public string From { get; set; }
+        public string ReplyTo { get; set; }
+        public string Cc { get; set; }
+        public string Bcc{ get; set; }
+        public string To { get; set; }
+        public string Mode { get; set; }
+        public DocumentTypeTemplate DocumentTypeTemplate { get; set; }
         public string ObjectTableName { get; set; }
         public string HtmlString { get; set; }
-        public string UserId { get; set; }
-
     }
+
+
+
+    public class HtmlEditorResolveResult
+    {
+        public string Subject { get; set; }
+        public string From { get; set; }
+        public string ReplyTo { get; set; }
+        public string Cc { get; set; }
+        public string Bcc { get; set; }
+        public string To { get; set; }
+        public string HtmlString { get; set; }
+    }
+
+
+
+
+
 
     public class SharedLinkHTMLArgs
     {

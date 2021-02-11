@@ -1,4 +1,5 @@
 ﻿using AmitalCustomsWindowsService.Utils;
+using Logitude.BL.Helpers;
 using Logitude.Customs.BL.EntityQueryServiceExt;
 using Logitude.Customs.BL.Validators;
 using Logitude.Customs.Def.EntityQueryServicesExt;
@@ -7,6 +8,7 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
 using Microsoft.Practices.Unity;
 using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Server.Infrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -158,6 +160,8 @@ namespace AmitalCustomsWindowsService
                 Simplog.Server.Infrastructure.LogitudeSettings.HandleLogMe?.Invoke("StartStatic", false, "", DateTime.MaxValue);//problem in the amial windows service debug mode after merge
 
                 CustomsRegistrations.Register();
+                InfraRegistrationHelper.Register();
+
                 _ThreadStartStaticLoaded = true;
                 
             }

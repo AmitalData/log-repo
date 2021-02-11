@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -16,6 +17,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return courierDeclarationRepository.GetCourierMasterMaxSequenceNumeric(courierMasterId, tenant);
         }
 
+        //public CourierDeclarationPM GetCourierDeclarationByDeclarationId(string declarationId, int Tenant)
+        //{
+        //    string entityKeyString = $"GetCourierDeclarationByDeclarationId({declarationId},{Tenant})";
+        //    var res = CacheManager.GetOrInsertNewObject<CourierDeclarationPM>(entityKeyString, () =>
+        //    {
+        //        return this.GetCourierDeclarationByDeclarationIdCore(declarationId, Tenant);
+        //    });
+        //    return res;
+        //}
         public CourierDeclarationPM GetCourierDeclarationByDeclarationId(string declarationId, int tenant)
         {
             CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(context);

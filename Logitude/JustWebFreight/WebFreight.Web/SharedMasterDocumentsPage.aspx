@@ -10,339 +10,420 @@
 
     <title>Documents</title>
 
-    <link href="../css/kendo.common.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../css/kendo.default.min.css" rel="stylesheet" type="text/css"/>
-    <script src="../js/jquery-3.5.1.min.js" type="text/javascript"></script>
-    <script src="../js/jquery.dateFormat-1.0.js" type="text/javascript"></script>
-    <script src="../js/kendo.all.min.js" type="text/javascript"></script>
-    <script src="../js/knockout-3.5.1.js" type="text/javascript"></script>
-    <script src="../js/knockout-kendo.min.js" type="text/javascript"></script>
+    <link href="css/kendo.common.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/kendo.default.min.css" rel="stylesheet" type="text/css" />
+    <script src="js/jquery-3.5.1.min.js" type="text/javascript"></script>
+    <script src="js/jquery.dateFormat-1.0.js" type="text/javascript"></script>
+    <script src="js/kendo.all.min.js" type="text/javascript"></script>
+    <script src="js/knockout-3.5.1.js" type="text/javascript"></script>
+    <script src="js/knockout-kendo.min.js" type="text/javascript"></script>
 
-    <link href="../HtmlHelpers/CSS/bootstrap.min.css" rel="stylesheet" />
-    <link href="../HtmlHelpers/CSS/bootstrap-responsive.min.css" rel="stylesheet" />
-    <link href="../HtmlHelpers/CSS/sunburst.css" rel="stylesheet" />
-    <link href="../HtmlHelpers/CSS/app.css" rel="stylesheet" />
-    <link href="../HtmlHelpers/CSS/LogitudeMainCss.css" rel="stylesheet" type="text/css"/>
-    <script src="../HtmlHelpers/JS/Logitude.Converters.js" type="text/javascript"></script>
-    <script src="../HtmlHelpers/JS/Logitude.Entites.js" type="text/javascript"></script>
-    <script src="../HtmlHelpers/JS/ContactActivityLog.js" type="text/javascript"></script>
+    <link href="HtmlHelpers/CSS/bootstrap.min.css" rel="stylesheet" />
+    <link href="HtmlHelpers/CSS/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="HtmlHelpers/CSS/sunburst.css" rel="stylesheet" />
+    <link href="HtmlHelpers/CSS/app.css" rel="stylesheet" />
+    <link href="HtmlHelpers/CSS/LogitudeMainCss.css" rel="stylesheet" type="text/css" />
+    <script src="HtmlHelpers/JS/Logitude.Converters.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/JS/Logitude.Entites.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/JS/ContactActivityLog.js" type="text/javascript"></script>
 
 
-<style type="text/css">
-    img[src] {
-        visibility: visible;
-    }
+    <style type="text/css">
+        img[src] {
+            visibility: visible;
+        }
 
-    img {
-        border: 0px;
-        outline: none;
-        visibility: hidden;
-        vertical-align: middle;
-    }
+        img {
+            border: 0px;
+            outline: none;
+            visibility: hidden;
+        }
 
-    #EntityHeaderArea {
-        height: 60px;
-        margin: 0 5px;
-        background: #F7F7F7;
-        border: 1px solid #DADADA;
-        padding-top: 3px;
-    }
+        .DocumentEntityArea {
+            margin: 0 5px;
+            background: #FFFFFF;
+            border: 2px solid <%=SecondaryColor%>;
+            padding-top: 3px;
+            margin: 0 50px;
+        }
 
-    .DocumentListBoxItem {
-        width: 100%;
-        height: 30px;
-        margin: 0px 0 5px 0;
-        border: 1px solid #D1D1D1;
-        background: #F7F7F7;
-        text-indent: 5px;
-        display: table;
-        border-radius: 5px;
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-    }
+        .DocumentListBoxItem {
+            width: 100%;
+            height: 30px;
+            margin: 0px 0 5px 0;
+            border: 1px solid #D1D1D1;
+            background: #F7F7F7;
+            text-indent: 5px;
+            display: table;
+            border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+        }
 
-</style>
+        .k-grid td {
+            border: 0;
+            border-width: 0;
+        }
+
+        .k-grid .k-header {
+            height: 1px;
+            border: 0;
+            border-width: 0;
+            border-color: white;
+            background: white;
+            color: black;
+            font-size: 13px;
+        }
+
+        .k-grid {
+            border: 0;
+            border-width: 0;
+            border-color: white;
+        }
+
+        .k-grid-content {
+            overflow-y: visible;
+        }
+
+        .k-grid-header {
+            border: 0;
+            border-width: 0;
+            border-color: white;
+            background-color: white;
+        }
+
+        .k-grid-header-wrap {
+            border-color: white;
+        }
+    </style>
 
 </head>
 
 <body>
 
 
-    <script src="../HtmlHelpers/JS/highlight.pack.js" type="text/javascript"></script>
-    <script src="../HtmlHelpers/JS/app.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/JS/highlight.pack.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/JS/app.js" type="text/javascript"></script>
+    
+    <div class="BusyIndicator" style="top:47.5%;width:20%;height:20%" id="DocumentsPageBusyIndicator"></div>  
 
-    <div id="ContainerHeader" style="position:absolute; top:0px; z-index:0; width:100%; height:40px; background: url('../HtmlHelpers/Images/Bars_Images/HeaderBar.png') repeat-x; border-bottom:1px solid #D1D1D1"></div>
+    <div id="Container" style="position: absolute; top: 0px; z-index: 3; width: 100%; display: normal">
+        <table style="height: 100%;">
 
-    <div id="Container" style="position:absolute; top:0px; z-index:3; width:100%;display:normal">
-        <table style="height:100%;">
-
-            <thead style="background-color:red">
-                <tr style="height:40px;">
-                    <td style="vertical-align:top;">
-                    
-                        <table style="margin:5px 0 0 0;">
+            <thead style="background-color: <%= MainColor %>">
+                <tr style="height: 50px;">
+                    <td style="vertical-align: top;">
+                        <table style="margin: 5px 0 0 0;">
                             <tr>
-                                <td style="width:5px;"></td>
-
-                                <td id="companyLogoArea" style="width:50px;">
-                                    <img id="companyLogo" src="../HtmlHelpers/Images/Icons/Logo.png" style="width:50px; height:35px; vertical-align:bottom; position:absolute; top:2px;"/>                    
+                                <td style="width: 10px;"></td>
+                                <td id="companyLogoArea" style="width: 50px;">
+                                    <img id="companyLogo" src="HtmlHelpers/Images/Icons/Logo.png" style="width: 50px; height: 55px;" />
                                 </td>
-
-                                <td style="vertical-align:central; text-indent: 5px;">
-                                    <span id="CompanyText" style="font-size:13px; color:#45494A">Sample</span>
+                                <td style="vertical-align: central; text-indent: 5px;">
+                                    <%--<span id="CompanyText" style="font-size:13px; color:#FFFF"></span>--%>
                                 </td>
-
-                                <td style="text-align:right; vertical-align:top;">
-                                    <div style="margin-top:-3px;">                               
-                                        <span style="font-size:11px; color:#45494A" id="MemberText"></span>
-                                        <span style="font-size:11px; color:#838889" id="MemberCardText"></span>
-                                    </div>
-                                </td>
-
-                                <td style="width:22px; vertical-align:top;">
-                                    <div style="margin-top:-5px;" ></div> 
-                                </td>
-
-                                <td style="width:5px;"></td>
+                                <td style="width: 5px;"></td>
                             </tr>
                         </table>
-                 
                     </td>
                 </tr>
             </thead>
 
             <tfoot>
-                <tr style="height:30px">
+                <tr style="height: 30px">
                     <td>
-                        <table style="width:100%; height:100%">
+                        <table style="width: 100%; height: 100%">
                             <tr>
-                                <td style="width:20px;"><div></div></td>
-
-                                <td class="Footer_LOG" style="width:190px; display:none;">
-                                    <a class="PoweredArea" href="http://www.logitudeworld.com" target="_blank" style="padding:0; margin:0; cursor:pointer; text-decoration:none;">
-                                        <table style="height:100%">
-                                            <tr>
-                                                <td style="width:65px; vertical-align:central; white-space:nowrap;"><p style="font-size:11px; color:#27AAE1; font-family: 'Lucida Sans Unicode';">Powered by</p></td>                            
-                                                <td style="width:40px; vertical-align:central;"><img src="../HtmlHelpers/Images/Icons/LogitudeLogo.png" style="width:40px; height:20px;" /></td>
-                                                <td style="width:85px; vertical-align:central;"><img src="../HtmlHelpers/Images/Icons/Logitude.png" style="width:79px; height:25px;" /></td>
-                                                <td></td>
-                                            </tr>
-                                        </table>
-                                    </a>
+                                <td style="width: 20px;">
+                                    <div></div>
                                 </td>
-
-                                <td class="Footer_UNI" style="width:190px; display:none;">
-                                    <a class="PoweredArea" href="http://www.amital.co.il" target="_blank" style="padding:0; margin:0; cursor:pointer; text-decoration:none;">
-                                        <table style="height:100%">
-                                            <tr>
-                                                <td style="width:65px; vertical-align:top; padding-top: 7px; white-space:nowrap; font-size:11px; color:#27AAE1; font-family: 'Lucida Sans Unicode';">Powered by</td>                            
-                                                <td style="width:28px; vertical-align:middle;"><img src="../images/ApplicationLogo/UnifreightSmallLogo.png" style="width:28px; height:28px;" /></td>
-                                                <td style="width:85px; vertical-align:middle; white-space:nowrap; font-size:14px; color:#7F7F7F; font-weight: bold; font-family: 'Lucida Sans Unicode';">Unifreight Cloud Services</td>
-                                                <td></td>
-                                            </tr>
-                                        </table>
-                                    </a>
-                                </td>
-
-                                <td><div></div></td>
-                                <td style="width:20px;"><div></div></td>
                             </tr>
-
                         </table>
                     </td>
                 </tr>
             </tfoot>
 
             <tbody>
-
-                <tr style="height:40px;">                   
-                    <td style="vertical-align:central;">
-                        
+                <tr style="height: 40px;">
+                    <td style="vertical-align: central;">
+                        <table>
+                            <tr>
+                                <td>
+                                    <div style="margin: 0 60px; font-size: 18px; color: #464951">
+                                        Master <span id="LongMasterNumber"></span><span id="ConnectedShipments" style="font-size: 14px;"></span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <a id="DownloadAllConnectedDocuments" onclick='OnDownloadAllConnectedDocuments()'>
+                                            <div style="cursor: pointer; font-size: 13px; color: rgb(0, 136, 204); text-align: right; padding-right: 50px;">Download All Master & House Documents</div>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
 
-                <tr style="height:60px;">
-                    <td style="vertical-align:top;">
-                                        <div id="EntityHeaderArea" style="margin:0 10px;">
-                                         
-                                        </div>
-                    </td>
-                </tr>
-
-
-                <tr>
-                    <td style="vertical-align:top;">
-                        <div class="pageContent" style="width:100%; position:relative; margin:-10px 0 0px 0;">
-                             <table style="width:100%; height:100%; border-collapse:collapse; border-spacing:0px;">
+                <tr style="height: 60px;">
+                    <td style="vertical-align: top;">
+                        <div id="EntityHeaderArea" class="DocumentEntityArea" style="height: 40px;">
+                            <table>
                                 <tr>
-                                    <td style="width:10px; height:100%;"><div style="width:1px; height:100%; background:#D1D1D1; margin-left:9px; margin-bottom:-0px;"></div></td>
-
-                                    <td style="vertical-align:top;">
-                                        <div>
-
-                                            <div id="mainTabsDiv">                                           
-
-                                            </div>                                               
-
-                                        </div>
+                                    <td style="height: 7px;"></td>
+                                </tr>
+                                <tr style="font-size: 15px;">
+                                    <td style="width: 15px;"></td>
+                                    <td style="width: 70px;">Routing : </td>
+                                    <td style="width: 20px;">
+                                        <img style="width: 20px; display: inline; height: 20px; vertical-align: middle" data-bind="attr: { src: FromCountySRC }" />
+                                    </td>
+                                    <td style="width: 1px; max-width: 160px;">
+                                        <div class="ValueTextStyle" style="max-width: 160px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-bind="text: FromPortName"></div>
                                     </td>
 
-                                    <td style="width:10px; height:100%;"><div style="width:1px; height:100%; background:#D1D1D1; margin-left:0px; margin-bottom:-0px;"></div></td>                                
-                               </tr>
+                                    <td style="width: 20px;">
+                                        <img class="ShowOnDataControl" src="HtmlHelpers/Images/Arrow.png" style="height: 16px; width: 16px; display: block; margin: auto;" />
+                                    </td>
+
+                                    <td style="width: 20px;">
+                                        <img style="width: 20px; display: inline; height: 20px; vertical-align: middle" data-bind="attr: { src: ToCountySRC }" />
+                                    </td>
+
+                                    <td style="width: 1px; max-width: 160px;">
+                                        <div class="ValueTextStyle" style="max-width: 160px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-bind="text: ToPortName"></div>
+                                    </td>
+                                    <td style="width: 70px;"></td>
+                                    <td style="width: 180px;">ATD : <span id="MainCarriageATD"></span></td>
+                                    <td style="width: 50px;"></td>
+                                    <td>Airline : <span id="MainCarriageCarrierName"></span></td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
                             </table>
                         </div>
                     </td>
                 </tr>
 
-                <tr style="height:16px;">
-                    <td>
-                            <div style="width:100%; height:16px; margin-top:0px;">
-                                <table style="width:100%; height:100%; border-collapse:collapse; border-spacing:0px;">
-                                    <tr>                                                                             
-                                       <td style="width:21px;"><div style="width:21px; height:16px; margin:-1px -5px 0 5px; background:url('../HtmlHelpers/Images/bars_Images/bottom-left.png') no-repeat"></div></td>
-                                       <td style="background:url('../HtmlHelpers/Images/bars_Images/bottom-middle.png') repeat-x"></td>
-                                       <td style="width:21px; background:url('../HtmlHelpers/Images/bars_Images/bottom-right.png') no-repeat"></td>     
-                                    </tr>
-                                </table>
-                            </div>
+                <tr style="height: 60px;">
+                    <td style="vertical-align: top;">
+                        <div class="DocumentEntityArea">
+                            <table>
+                                <tr>
+                                    <td id="DocumentsTabPageControl<%=CurrentEntityId%>">
+                                        <div id="DocumentsGrid<%=CurrentEntityId%>" style="padding-bottom: 20px;"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </td>
                 </tr>
 
-            </tbody>
+                <%  foreach (var houseShipment in ConnectedHousesShipments) {  %>
+                    <tr style="height: 10px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                
+                    <tr style="height: 40px;">
+                        <td style="vertical-align: central;">
+                            <div style="margin: 0 60px; font-size: 18px; color: #464951">
+                                House <span id="HouseNumberField<%=houseShipment.Id%>"><%=houseShipment.House%></span>
+                            </div>
+                        </td>
+                    </tr>
 
+                    <tr style="height: 60px;">
+                        <td style="vertical-align: top;">
+                            <div id="EntityHeaderArea<%=houseShipment.Id%>" class="DocumentEntityArea" style="height: 40px;">
+                                <table>
+                                    <tr>
+                                        <td style="height: 7px;"></td>
+                                    </tr>
+                                    <tr style="font-size: 15px;">
+                                        <td style="width: 15px;"></td>
+                                        <td>
+                                            Shipper : <%=houseShipment.ShipperName != null ? houseShipment.ShipperName : "---"%>
+                                        </td>
+                                        <td style="width: 70px;"></td>
+                                        <td>
+                                            Consignee : <%=houseShipment.ConsigneeName != null ? houseShipment.ConsigneeName : "---"%>
+                                        </td>
+                                        <td style="width: 70px;"></td>
+                                        <td>
+                                            Qty / weight : <%=houseShipment.NumberOfPackages != null && houseShipment.NumberOfPackages.ToString() != null? houseShipment.NumberOfPackages.ToString() : "0"%> / <%=houseShipment.ChargeableWeight != null && houseShipment.ChargeableWeight.ToString() != null ? houseShipment.ChargeableWeight.ToString() : "0"%>Kg
+                                        </td>
+                                        <td style="width:35%">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 60px;">
+                        <td style="vertical-align: top;">
+                            <div class="DocumentEntityArea">
+                                <table>
+                                    <tr>
+                                        <td id="DocumentsTabPageControl<%=houseShipment.Id%>">
+                                            <div id="DocumentsGrid<%=houseShipment.Id%>" style="padding-bottom: 20px;"></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                <%  }  %>
+
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </tbody>
         </table>
     </div>
-    
-    <div id="InvalidKeyArea" style="position:absolute; top:0px; z-index:3; width:100%;display:none">
-        <table style="height:100%;">
+
+    <div id="InvalidKeyArea" style="position: absolute; top: 0px; z-index: 3; width: 100%; display: none">
+        <table style="height: 100%;">
 
             <thead>
-                <tr style="height:40px;">
-                    <td style="vertical-align:top;">
-                    
-                        <table style="margin:5px 0 0 0;">
+                <tr style="height: 40px;">
+                    <td style="vertical-align: top;">
+
+                        <table style="margin: 5px 0 0 0;">
                             <tr>
-                                <td style="width:5px;"></td>
+                                <td style="width: 5px;"></td>
 
-                                <td style="width:50px;">
-                                    <img id="Img1" src="../HtmlHelpers/Images/Icons/Logo.png" style="width:50px; height:35px; vertical-align:bottom; position:absolute; top:2px;"/>                    
+                                <td style="width: 50px;">
+                                    <img id="invalidCompanyLogo" src="HtmlHelpers/Images/Icons/Logo.png" style="width: 50px; height: 35px; vertical-align: bottom; position: absolute; top: 2px;" />
                                 </td>
 
-                                <td style="vertical-align:central; text-indent: 5px;">
-                                    <span id="Span1" style="font-size:13px; color:#45494A">Company</span>
-                                </td>
 
-                                <td style="text-align:right; vertical-align:top;">
-                                </td>
 
-                                <td style="width:5px;"></td>
+                                <td style="text-align: right; vertical-align: top;"></td>
+
+                                <td style="width: 5px;"></td>
                             </tr>
                         </table>
-                 
+
                     </td>
                 </tr>
             </thead>
 
             <tbody>
 
-                <tr style="height:40px;">                   
-                    <td style="vertical-align:central;">
-                        <table style="width:100%;" id="Table1">
+                <tr style="height: 40px;">
+                    <td style="vertical-align: central;">
+                        <table style="width: 100%;" id="Table1">
                             <tr>
-                                <td style="width:5px;"></td>
+                                <td style="width: 5px;"></td>
 
-                                <td style="width:70px; vertical-align:bottom;">
-                                    <div id="Div1"></div>                                    
+                                <td style="width: 70px; vertical-align: bottom;">
+                                    <div id="Div1"></div>
                                 </td>
 
-                                <td style="vertical-align:central;">
-                                     
-                                </td>
+                                <td style="vertical-align: central;"></td>
 
-                                <td style="width:10px;"></td>
+                                <td style="width: 10px;"></td>
                             </tr>
                         </table>
                     </td>
                 </tr>
 
-                <tr style="height:60px;">
-                    <td style="vertical-align:top;">
-                                        <div id="Div2" style="margin:0 10px;">
-                                            <table style="width:100%; margin:0; padding:0px;">
-                                                
-                                               <tr>
-                                                   <td>
-                                                        <p style="color:black;font-size:30px;font-family:Arial;vertical-align:top">Link invalid</p>
-                                                   </td>
-                                               </tr>
+                <tr style="height: 60px;">
+                    <td style="vertical-align: top;">
+                        <div id="Div2" style="margin: 0 10px;">
+                            <table style="width: 100%; margin: 0; padding: 0px;">
 
-                                                  <tr>
-                                                   <td>
-                                                        <p style="color:black;font-size:14px;font-family:Arial;vertical-align:bottom;margin-top:15px">Shipment link is invalid.</p>
-                                                   </td>
-                                               </tr>
-                                            </table>
-                                        </div>
-                    </td>
-                </tr>
+                                <tr>
+                                    <td>
+                                        <p style="color: black; font-size: 30px; font-family: Arial; vertical-align: top">Link invalid</p>
+                                    </td>
+                                </tr>
 
-                <tr style="height:16px;">
-                    <td style="vertical-align:top;">
-                            <div style="width:100%; height:16px; position:relative; margin-top:-5px;">
-                            </div>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td style="vertical-align:top;">
-                        <div class="pageContent" style="width:100%; position:relative; margin:-10px 0 0px 0;">
+                                <tr>
+                                    <td>
+                                        <p style="color: black; font-size: 14px; font-family: Arial; vertical-align: bottom; margin-top: 15px">Shipment link is invalid.</p>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </td>
                 </tr>
 
-                <tr style="height:16px;">
+                <tr style="height: 16px;">
+                    <td style="vertical-align: top;">
+                        <div style="width: 100%; height: 16px; position: relative; margin-top: -5px;">
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="vertical-align: top;">
+                        <div class="pageContent" style="width: 100%; position: relative; margin: -10px 0 0px 0;">
+                        </div>
+                    </td>
+                </tr>
+
+                <tr style="height: 16px;">
                     <td>
-                            <div style="width:100%; height:16px; margin-top:0px;">
-                            </div>
+                        <div style="width: 100%; height: 16px; margin-top: 0px;">
+                        </div>
                     </td>
                 </tr>
             </tbody>
 
             <tfoot>
-                <tr style="height:30px">
+                <tr style="height: 30px">
                     <td>
-                        <table style="width:100%; height:100%">
+                        <table style="width: 100%; height: 100%">
                             <tr>
-                                <td style="width:20px;"><div></div></td>
+                                <td style="width: 20px;">
+                                    <div></div>
+                                </td>
 
-                                <td class="Footer_LOG" style="width:190px; display:none;">
-                                    <a class="PoweredArea" href="http://www.logitudeworld.com" target="_blank" style="padding:0; margin:0; cursor:pointer; text-decoration:none;">
-                                        <table style="height:100%">
+                                <td class="Footer_LOG" style="width: 190px; display: none;">
+                                    <a class="PoweredArea" href="http://www.logitudeworld.com" target="_blank" style="padding: 0; margin: 0; cursor: pointer; text-decoration: none;">
+                                        <table style="height: 100%">
                                             <tr>
-                                                <td style="width:65px; vertical-align:central; white-space:nowrap;"><p style="font-size:11px; color:#27AAE1; font-family: 'Lucida Sans Unicode';">Powered by</p></td>                            
-                                                <td style="width:40px; vertical-align:central;"><img src="../HtmlHelpers/Images/Icons/LogitudeLogo.png" style="width:40px; height:20px;" /></td>
-                                                <td style="width:85px; vertical-align:central;"><img src="../HtmlHelpers/Images/Icons/Logitude.png" style="width:79px; height:25px;" /></td>
+                                                <td style="width: 65px; vertical-align: central; white-space: nowrap;">
+                                                    <p style="font-size: 11px; color: #27AAE1; font-family: 'Lucida Sans Unicode';">Powered by</p>
+                                                </td>
+                                                <td style="width: 40px; vertical-align: central;">
+                                                    <img src="HtmlHelpers/Images/Icons/LogitudeLogo.png" style="width: 40px; height: 20px;" /></td>
+                                                <td style="width: 85px; vertical-align: central;">
+                                                    <img src="HtmlHelpers/Images/Icons/Logitude.png" style="width: 79px; height: 25px;" /></td>
                                                 <td></td>
                                             </tr>
                                         </table>
                                     </a>
                                 </td>
 
-                                <td class="Footer_UNI" style="width:190px; display:none;">
-                                    <a class="PoweredArea" href="http://www.amital.co.il" target="_blank" style="padding:0; margin:0; cursor:pointer; text-decoration:none;">
-                                        <table style="height:100%">
+                                <td class="Footer_UNI" style="width: 190px; display: none;">
+                                    <a class="PoweredArea" href="http://www.amital.co.il" target="_blank" style="padding: 0; margin: 0; cursor: pointer; text-decoration: none;">
+                                        <table style="height: 100%">
                                             <tr>
-                                                <td style="width:65px; vertical-align:top; padding-top: 7px; white-space:nowrap; font-size:11px; color:#27AAE1; font-family: 'Lucida Sans Unicode';">Powered by</td>                            
-                                                <td style="width:28px; vertical-align:middle;"><img src="../images/ApplicationLogo/UnifreightSmallLogo.png" style="width:28px; height:28px;" /></td>
-                                                <td style="width:85px; vertical-align:middle; white-space:nowrap; font-size:14px; color:#7F7F7F; font-weight: bold; font-family: 'Lucida Sans Unicode';">Unifreight Cloud Services</td>
+                                                <td style="width: 65px; vertical-align: top; padding-top: 7px; white-space: nowrap; font-size: 11px; color: #27AAE1; font-family: 'Lucida Sans Unicode';">Powered by</td>
+                                                <td style="width: 28px; vertical-align: middle;">
+                                                    <img src="images/ApplicationLogo/UnifreightSmallLogo.png" style="width: 28px; height: 28px;" /></td>
+                                                <td style="width: 85px; vertical-align: middle; white-space: nowrap; font-size: 14px; color: #7F7F7F; font-weight: bold; font-family: 'Lucida Sans Unicode';">Unifreight Cloud Services</td>
                                                 <td></td>
                                             </tr>
                                         </table>
                                     </a>
                                 </td>
 
-                                <td><div></div></td>
-                                <td style="width:20px;"><div></div></td>
+                                <td>
+                                    <div></div>
+                                </td>
+                                <td style="width: 20px;">
+                                    <div></div>
+                                </td>
                             </tr>
 
                         </table>
@@ -351,7 +432,7 @@
             </tfoot>
         </table>
     </div>
-  
+
     <script type="text/x-kendo-tmpl" id="RoutingListBoxItemDataTemplate">
         <div class="RoutingListBoxItem">
                       
@@ -365,79 +446,44 @@
              </div>
         </a>
     </script>
-    
+
     <script type="text/javascript">
         function OnDownloadDocument(url) {
-            if ($.IsDocumentsApprovalRequried) {
-                $.DownloadAll = false;
-                $.DocumentUrl = url;
-                $('#Container2').show();
-            }
-            else {
-                $.SendContactActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
-                window.open(url);
-            }
-            //const left = document.documentElement.clientWidth / 2.5;
-            //const top = document.documentElement.clientHeight / 2.5;
-            //var winFeature = 'width=330,height=125,top = ' + top + ',left = ' + left + '';
-            //var win = window.open('DocumentsApprovalPage.aspx', 'popup_window', winFeature);
-            //var timer = setInterval(function () {
-            //    if (win.closed) {
-            //        clearInterval(timer);
-            //        //$('#Container').show();
-            //        $('#Container2').hide();
-            //    }
-            //}, 1000);
+            $.SendContactActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
+            window.open(url);
         }
 
-
-        function CloseButtonClicked() {
-            $('#Container2').hide();
+        function OnDownloadAllDocument(houseNumber) {
+            $.SendContactsActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
+            var sharedDownloadURL = "WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType;
+            if ($.IsExternalURL) {
+                sharedDownloadURL += ":securitykey:" + $.CurrentEntityKey + "&filename=" + houseNumber;
+            }
+            window.open(sharedDownloadURL);
         }
 
-        function ApproveButtonClicked() {
-            if (!$('#ApprovalName').val()) {
-                $('#ErrorMessage').show();
+        function OnDownloadAllConnectedDocuments() {
+            var sharedDownloadURL = "WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":master:" + $.CurrentEntityId + ":" + $.CurrentCardType;
+            if ($.IsExternalURL) {
+                sharedDownloadURL += ":securitykey:" + $.CurrentEntityKey + "&filename=" + $.AllDocumentsFileName;
             }
-            else {
-                $('#ErrorMessage').hide();
-                $.DocumentsApprovalName = $('#ApprovalName').val();
-                $.PutDocumentsApprovedByUserName();
-                $('#Container2').hide();
-                if ($.DownloadAll) {
-                    $.DownloadAll = false;
-                    $.SendContactsActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
-                    window.open("../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType);
-                }
-                else {
-                    $.SendContactActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
-                    window.open($.DocumentUrl);
-                }
-            }
-        }
-
-        function OnDownloadAllDocument() {
-            if ($.IsDocumentsApprovalRequried) {
-                $.DownloadAll = true;
-                $('#Container2').show();
-            }
-            else {
-                $.SendContactsActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
-                window.open("../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType);
-            }
+            window.open(sharedDownloadURL);
         }
 
         function GetURL() {
-            return null;
-            //return "../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType;
+            var sharedDownloadURL = "WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType;
+            if ($.IsExternalURL) {
+                sharedDownloadURL += ":securitykey:" + $.CurrentEntityKey;
+            }
+            return sharedDownloadURL;
         }
     </script>
-   
-    <script type="text/javascript" src="DocumentsApprovalPageViewModel.js"></script>
-    
+
+    <script type="text/javascript" src="SharedDocuments/SharedMasterDocumentsPageViewModel.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function () {
-            var myLogoMethodUrl = "../api/authentication?myDummyInteger=" + 0 + "&myDummyString=" + "0";
+            var myLogoMethodUrl = "api/authentication?myDummyInteger=" + 0 + "&myDummyString=" + "0";
             $.ajax({
                 url: myLogoMethodUrl,
                 type: 'GET',
@@ -464,7 +510,7 @@
     <style>
         .headerDiv {
             height: 25px;
-            background: url("../HtmlHelpers/Images/Bars_Images/ItemHead.png") repeat-x;
+            background: url("HtmlHelpers/Images/Bars_Images/ItemHead.png") repeat-x;
             border-radius: 5px 5px 0 0;
             -webkit-border-radius: 5px 5px 0 0;
             -moz-border-radius: 5px 5px 0 0;

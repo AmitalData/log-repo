@@ -462,15 +462,17 @@ namespace WebFreight.Web.WcfApi
                     entityPM.IsHybrid = true;
                     Customer entity = customerRepository.GetSingleCustomerByCodeForHybrid(entityPM.Code, entityPM.Tenant, false);
 
-                    if (entity == null && !string.IsNullOrEmpty(entityPM.VatNumber))
+                    if (entity == null)
                     {
-                        Customer customer = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
-                        if (customer != null && (customer.CustomerStatusCode == "WAC" || customer.CustomerStatusCode == "POT"))
+                        bool isPotentialCustomerReceived = (entityPM.CustomerStatusCode == "POT" || entityPM.CustomerStatusCode == "WAC" || entityPM.SetReady);
+                        List<Customer> varCustomers = customerRepository.GetCustomersByVat(entityPM.VatNumber, entityPM.Tenant);
+                        Customer cloudPotentailCustomer = varCustomers.FirstOrDefault(c => c.CustomerStatusCode == "WAC" || c.CustomerStatusCode == "POT");//customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
+                        if (cloudPotentailCustomer != null && isPotentialCustomerReceived) //merge only potential customer with potentials item#75761
                         {
-                            entity = customer;
+                            entity = cloudPotentailCustomer;
                         }
                         else
-                            entity = GetCustomerByVatNumber(entityPM, customerRepository, countryRepository, tenantEntity);
+                           ValidateCustomerByVatNumber(entityPM, customerRepository, countryRepository, tenantEntity);
                     }
 
                     if (entity == null)
@@ -611,7 +613,7 @@ namespace WebFreight.Web.WcfApi
 
         }
 
-        private Customer GetCustomerByVatNumber(CustomerPM entityPM, CustomerRepository customerRepository, CountryRepository countryRepository, Tenant tenantEntity)
+        private void ValidateCustomerByVatNumber(CustomerPM entityPM, CustomerRepository customerRepository, CountryRepository countryRepository, Tenant tenantEntity)
         {
             Customer entity = null;
             if (tenantEntity.VatUniqueTypeCode == "UFA")
@@ -624,21 +626,12 @@ namespace WebFreight.Web.WcfApi
                 if (customerCountry != null && tenantEntity.VatUniqueCountryId == customerCountry.Id)
                 {
                     entity = GetCustomerByVatUniquePartnerType(entityPM, customerRepository, tenantEntity);
-                    //entity = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
-
-                    if (entity != null && (entity.Card.Code != entityPM.Code))
-                    {
-                        throw new ApplicationException("A customer with the same vat and different code already exists.");
-                        //response.HasError = true;
-                        //response.ErrorMessage = "A customer with the same vat and different code already exists.";
-                        //return response;
-                    }
-
-
                 }
             }
-
-            return entity;
+            if (entity != null && (entity.Card.Code != entityPM.Code))
+            {
+                throw new ApplicationException("A customer with the same vat and different code already exists.");
+            }
         }
 
         private Customer GetCustomerByVatUniquePartnerType(CustomerPM entityPM, CustomerRepository customerRepository, Tenant tenantEntity)
@@ -668,7 +661,7 @@ namespace WebFreight.Web.WcfApi
 
             return entity;
         }
-
+        
         public List<CustomerList> GetCustomerList(string searchText, string email, bool myCustomer, int tenant, int skip, int take, ref Response response)
         {
             if (CacheManager.CacheWrapper == null)
@@ -765,7 +758,6 @@ namespace WebFreight.Web.WcfApi
                                                                  PayablesAccountingCard = card.PayablesAccountingCard,
                                                                  InActive = customer.Card.InActive,
                                                                  Notes = customer.Card.Notes,
-                                                                 BillToId = customer.BillToId,
                                                                  Website = customer.Card.Website,
                                                                  SalesmanUserId = customer.SalesmanUserId,
                                                                  Id = customer.Id,
@@ -783,7 +775,6 @@ namespace WebFreight.Web.WcfApi
                                                                  //SalesmanUserEnglishName = customer.SalesmanUser == null ? null : (customer.SalesmanUser.Contact == null ? null : customer.SalesmanUser.Contact.EnglishName),
                                                                  CityName = customer.Card.CityName,
                                                                  VatTypeId = customer.Card.VatTypeId,
-                                                                 BillToName = customer.BillToCard.EnglishName,
                                                                  Field1 = customer.Field1,
                                                                  Field2 = customer.Field2,
                                                                  Field3 = customer.Field3,
@@ -799,6 +790,7 @@ namespace WebFreight.Web.WcfApi
                                                                  //SharedLogisticsInvitationStatusName = customer.Card.SharedLogisticsInvitationStatus != null ? customer.Card.SharedLogisticsInvitationStatus.Name : null,
                                                                  LastLoginDate = customer.Card.LastLoginDate,
                                                                  InvitationDate = customer.Card.InvitationDate,
+                                                                 IsAutonomy = customer.Card.IsAutonomy,
                                                              }).FirstOrDefault();
 
 
@@ -859,7 +851,7 @@ namespace WebFreight.Web.WcfApi
 
             }
         }
-
+        
         public CustomerPM GetCustomerPM(DataContracts.CustomerApiFilters filters, int tenant, ref Response response)
         {
             // return null;

@@ -2,6 +2,7 @@
 using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.BL.CoreBL.Batch;
 using Logitude.Accounting.BL.CoreBL.FunctionalTests;
+using Logitude.Accounting.BL.CoreBL.Testers;
 using Logitude.Accounting.Data;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
@@ -146,7 +147,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                             scope.Complete();
                            
                         }
-                        var res1 = new { Success = true, Message = $"Send to Batch Task {batchTaskId}" };
+                        var res1 = new { Success = true, Message = "The System 1000 file load process will be performed in the background" };// $"Send to Batch Task {batchTaskId}" };
                         return Request.CreateResponse(HttpStatusCode.Accepted, res1);
                     }
                     //response.Result = bankAccountPageAnalyzer.MyResultLoadBankPage;
@@ -204,6 +205,24 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
 
 
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetTestOperation(string operationId,string myparams)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+
+                var gateWayTester = new GateWayTester();
+                var res=gateWayTester.TestIt(operationId, authToken.Tenant, myparams);
+
+                return Request.CreateResponse(HttpStatusCode.OK, res);
             }
             catch (Exception ex)
             {

@@ -15,7 +15,7 @@ namespace Logitude.MetadataUpdate
             {
                 moduleName = args[0];
             }
-
+          
             MetadataUpdateService metadataUpdateService = new MetadataUpdateService();
             metadataUpdateService.RunModulesUpdate(moduleName);
         }

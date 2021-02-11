@@ -84,17 +84,20 @@ export class DecDangersContactPM {
     public set ChangeSetOp(newValue: string) { this.changeSetOp = newValue;  }//this.MarkAsDirty(); mohammad removed it because it sets the dirty bool to true when there is no changes.
 
     public UniqueKey: string;
-	 	
+    public DisableMarkAsDirty: boolean = false; 	
     public IsDirty: boolean;
     MarkAsDirty(propertyName:string = null) {
-        this.IsDirty = true;
-		  if (this.EntityParentPM) {
-            this.EntityParentPM.MarkAsDirty();
-        }	
-        if (propertyName != null) {
-            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.DecDangersContact");
-           
+        if(!this.DisableMarkAsDirty)
+        {
+            this.IsDirty = true;
+            if (this.EntityParentPM) {
+                this.EntityParentPM.MarkAsDirty();
+            }	
+            if (propertyName != null) {
+                this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
+                ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.DecDangersContact");
+            
+            }
         }
     }
 

@@ -47,7 +47,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
         private string currencyAccountingCard;
         private List<TransferStatusCodeItem> transferstatusCodes;
         private string defaultPaymentTermId;
-        public APInvoicePM APInvoiceCustomDataMappingAndValidating(APInvoice MyEntity, int tenant, string ComputingPartnerCode = "")
+        public APInvoicePM APInvoiceCustomDataMappingAndValidating(APInvoice MyEntity, int tenant, string ComputingPartnerCode = "", APInvoicePM RestClientAPIAPInvoice=null)
         {
             try
             {
@@ -72,17 +72,22 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     payableVATCard = accountingSetting.PayableVATCard;
                 }
 
-                this.InitAPInvoice(MyEntity, ComputingPartnerCode);                
+                this.InitAPInvoice(MyEntity, ComputingPartnerCode, RestClientAPIAPInvoice);                
                 this.InitAndValidateVendor();
                 this.InitAndValidateGeneralData(accountingSetting);
                 this.InitAndValidateInvoiceCurrency();
                 this.InitAndValidateCurrencyRateData();
                 this.InitAndValidateShipmentReference();
-                this.InitAndValidatePaymentTerm_DueDate();
+               
                 this.InitAndValidateTotalVATsOnly();
                 this.InitAndValidateInvoiceLines();
                 this.FillVATTransferExternalCodes(accountingSysytemCode, payableVATCard);
-                this.InitAndValidateTransferStatus();
+                if (RestClientAPIAPInvoice == null)
+                {
+                    this.InitAndValidatePaymentTerm_DueDate();
+                    this.InitAndValidateTransferStatus();
+                }
+                 
                 this.ComputeInvoiceAmounts();
 
                 return aPInvoicePM;
@@ -94,12 +99,12 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
         }
 
-        private void InitAPInvoice(APInvoice myEntity, string computingPartnerName)
+        private void InitAPInvoice(APInvoice myEntity, string computingPartnerName, APInvoicePM RestClientAPIAPInvoice)
         {
             User myUser = userRepository.GetSingleUserByEmail("system@tenant" + tenant + ".com", tenant, false);
             Tenant myTenant = tenantRepository.GetSingleTenant(tenant);
 
-            this.aPInvoicePM = APInvoiceDataMappingAndValidatin(myEntity, tenant, computingPartnerName);
+            this.aPInvoicePM = RestClientAPIAPInvoice!=null? RestClientAPIAPInvoice: APInvoiceDataMappingAndValidatin(myEntity, tenant, computingPartnerName);
             aPInvoicePM.Tenant = tenant;
             aPInvoicePM.StatusCode = "AD";
             aPInvoicePM.CreatedByUserId = myUser.Id;
@@ -340,11 +345,11 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
                 else
                 {
-                    this.aPInvoicePM.PaymentTermId = this.defaultPaymentTermId;                   
+                    this.aPInvoicePM.PaymentTermId = this.defaultPaymentTermId;
                 }
             }
-            
-            if(calculateDueDate)
+
+            if (calculateDueDate)
             {
                 DateTime? expectedDueDate = this.ComputeAPInvoiceDueDate(this.aPInvoicePM, paymentTermRepository);
 
@@ -367,6 +372,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 throw new ApplicationException("Payment Term is required");
             }
         }
+ 
         public void InitAndValidateTotalVATsOnly()
         {
 

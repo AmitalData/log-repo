@@ -29,7 +29,7 @@ import { filter } from 'rxjs/operators';
     //directives: [CORE_DIRECTIVES, ObjectFieldTemplate, ListHeaderTemplateComponent, ListTemplateComponent],
     providers: [PubSubService1],
     //pipes: [TextCodeTranslationPipe],
-    inputs: ['columns', 'rowCount', 'dataSource', 'searchFields', 'queryId', 'queryCode', 'QueryChangeEvent', 'Filterchangeevent', 'pubSubAdvanceQueryFiltersServiceRecived', 'autoLoad', 'SearchFieldchangeevent', 'MenuHeaderchangeevent', 'SelectedRow', 'ObjectTable', 'ColumnsReady', 'IsCustomTemplate', 'CustomColumnsReady', 'SelectFirstRow', 'EnableRowHoverVisibility', 'RowHoverVisibilityQueryName', 'HoverTemplateIndex', 'HasPermition', 'ShowArrow', 'IsGradiantSelectedColor', 'rowHeight', 'RowHoverColor', 'RowBackGroundColor', 'ChangeColorByPropName', 'ChangeColorByPropValue', 'IgnoreRowHoverVisibilityQueryName', 'PassAdditionalDataToTemplates', 'ShowHLineOverRow', 'EnableRowToolTip', 'ToolTipWidth', 'ToolTipHeight', 'ToolTipBinding', 'IsAllRecordsChecked', 'HighLightSelectedRow', 'SelectedRows', 'EnableMultiSelection', 'CustomBackFromEdit', 'CheckBoxFilterChanged', 'IsCheckBoxEnabled', 'FireCheckBoxChecked', 'Disabled', 'UseBusyIndecator', 'MarkIsChecked', 'MyScrollTop', 'MySelectedRowIndex', 'SortServerProp', 'ReloadData', 'CheckboxProp','FilterChangedEvent'],
+    inputs: ['columns', 'rowCount', 'dataSource', 'searchFields', 'queryId', 'queryCode', 'QueryChangeEvent', 'Filterchangeevent', 'pubSubAdvanceQueryFiltersServiceRecived', 'autoLoad', 'SearchFieldchangeevent', 'MenuHeaderchangeevent', 'SelectedRow', 'ObjectTable', 'ColumnsReady', 'IsCustomTemplate', 'CustomColumnsReady', 'SelectFirstRow', 'EnableRowHoverVisibility', 'RowHoverVisibilityQueryName', 'HoverTemplateIndex', 'HasPermition', 'ShowArrow', 'IsGradiantSelectedColor', 'rowHeight', 'RowHoverColor', 'RowBackGroundColor', 'ChangeColorByPropName', 'ChangeColorByPropValue', 'IgnoreRowHoverVisibilityQueryName', 'PassAdditionalDataToTemplates', 'ShowHLineOverRow', 'EnableRowToolTip', 'ToolTipWidth', 'ToolTipHeight', 'ToolTipBinding', 'IsAllRecordsChecked', 'HighLightSelectedRow', 'SelectedRows', 'EnableMultiSelection', 'CustomBackFromEdit', 'CheckBoxFilterChanged', 'IsCheckBoxEnabled', 'FireCheckBoxChecked', 'Disabled', 'UseBusyIndecator', 'MarkIsChecked', 'MyScrollTop', 'MySelectedRowIndex', 'SortServerProp', 'ReloadData', 'CheckboxProp', 'FilterChangedEvent','DontApplyVirtualization'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnDestroy {
@@ -37,6 +37,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
     public IsCheckBoxEnabled: boolean = true;
     Disabled: boolean = false;
     ReloadData: boolean = false;
+    DontApplyVirtualization: boolean = false;
     CheckboxProp: string;
     public PassAdditionalDataToTemplates: boolean = false;
     public RowBackGroundColor: string = "";
@@ -510,7 +511,9 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
     SpotLightCLicked: boolean = false;
     BackFromEditSub: any;
     onRowSelected(colDef: any, colIndex: number, rowData: any, rowIndex: number) {
-        if (this.Disabled) {
+        let selection = window.getSelection();
+        if (this.Disabled || (selection.anchorNode?.data&&selection.type=='Range')) {
+            console.log(selection);
             return;
         }
 
@@ -1409,14 +1412,23 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
             this.virtualRowMetaData.SpotlightDataTemplate = this.SpotlightDataTemplate;
             this.virtualRowMetaData.DetailsIcon = "./Images/SpotLightPlusIcon.png";
             this.virtualRowMetaData.cd = this.cd;//
+            this.virtualRowMetaData.DontApplyVirtualization = this.DontApplyVirtualization;
+            if (this.DontApplyVirtualization) {
+                this.dataSource.pageSize = this.rowCount;
+            }
+            else {
+                this.dataSource.pageSize = this.viewportSize * 3;
+            }
             if (this.controller) {
                 this.controller.disconnect(); 
             }
-            this.dataSource.pageSize = this.viewportSize * 3;
+            
             this.controller = new VirtualRowControllerV2(this.virtualRowMetaData); 
             this.controller.setDataSource(this.dataSource);
             //this.controller.ClearCache();
-            this.controller.ReloadDataSource(res);
+            //if (!this.DontApplyVirtualization) {
+                this.controller.ReloadDataSource(res);
+            //}
 
             if (this.cd) {
                 //this.cd.reattach();

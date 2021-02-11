@@ -3,7 +3,7 @@
   Name="TariffLinesContainersPrices"
   Schema="dbo"
   DBType="Main"
-  Module="Tariff">
+  Module="TariffModule">
   <Column
     Name="Id"
     Type="varchar"
@@ -79,6 +79,14 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CostPrice"
+    Type="decimal"
+    Precision="18"
+    Scale="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="TariffId"
     ReferencedTable="Tariffs"
@@ -94,4 +102,6 @@
     ReferencedTable="ChargesTypes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <UniqueConstraint
+    Columns="Tenant,TariffId,TariffLineId,SurchargeId" />
 </Table>

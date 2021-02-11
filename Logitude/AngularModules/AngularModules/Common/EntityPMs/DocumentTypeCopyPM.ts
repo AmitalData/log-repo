@@ -78,6 +78,11 @@ export class DocumentTypeCopyPM {
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
        
 	 
+    private isOriginal: boolean;
+    public get IsOriginal() { return this.isOriginal; }
+    public set IsOriginal(newValue: boolean) { if (this.isOriginal != newValue) { this.isOriginal = newValue; this.MarkAsDirty("IsOriginal"); } }
+       
+	 
 
     public OldEntityPM: DocumentTypeCopyPM;
 	    

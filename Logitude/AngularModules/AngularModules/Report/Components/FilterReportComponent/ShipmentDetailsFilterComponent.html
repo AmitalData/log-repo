@@ -9,7 +9,7 @@
     <tr>
         <td>
             <table>
-                <tr style="height:22px">
+                <tr style="height:22px" [hidden]="IsSchedulerReport && (ValidationErrorsList != null && ValidationErrorsList.length > 0)">
                     <td style="color:#1B90CB;font-size:14px;">Filter By:</td>
                 </tr>
 
@@ -23,13 +23,13 @@
 
                                 <td style="width:70px">From Date:</td>
                                 <td style="width:130px">
-                                    <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogDatePicker>
+                                    <AdvancedDatePicker [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [SelectedDateValue]="FromDate" [DataContext]="DataContext" [ShowToolTip]="true" [InputType]="'date'" [TimeMode]="'12'"></AdvancedDatePicker>
                                 </td>
 
                                 <td style="width:15px"></td>
                                 <td style="width:60px">To Date:</td>
                                 <td style="width:130px">
-                                    <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
+                                    <AdvancedDatePicker [NoObjectField]="true" [ObjectFieldName]="'ToDate'" [SelectedDateValue]="ToDate" [DataContext]="DataContext" [ShowToolTip]="true" [InputType]="'date'" [TimeMode]="'12'"></AdvancedDatePicker>
                                 </td>
                                 <td style="width:20px"><div></div></td>
                                 <td style="width:90px;">

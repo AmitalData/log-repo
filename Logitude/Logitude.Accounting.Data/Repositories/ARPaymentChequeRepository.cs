@@ -72,6 +72,14 @@ namespace Logitude.Accounting.Data.Repositories
 
         }
 
+
+        public List<ARPaymentCheque> GetByIds(int tenant, List<string> ids)
+        {
+            return (from a in context.ARPaymentCheques
+                   where a.Tenant == tenant && ids.Contains(a.Id)
+                   select a).ToList();
+        }
+
     }
 
 }

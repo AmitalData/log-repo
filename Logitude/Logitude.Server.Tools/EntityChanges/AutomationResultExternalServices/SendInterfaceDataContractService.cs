@@ -5,6 +5,7 @@ using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.ShipmentsModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,7 +62,7 @@ namespace Logitude.Server.Tools.EntityChanges.Service
             {
                 string josnString = LogitudeXmlSerializer.SerializeObjectToJosnString(sendInterfaceDataContractObject);
                 byte[] josnfile = Encoding.UTF8.GetBytes(josnString);
-                Document document = CreateDocument(josnfile, "Josn");
+                Document document = CreateDocument(josnfile, "Json");
                 StorageDataService.WriteFileOnStorage(new StorageDataArgs() { FileName = document.Id, Extension = document.Extension, FolderName = document.Folder, FileData = josnfile, Tenant = document.Tenant });
                 sendInterfaceDataContractJosnDocumentId = document.Id;
             }
@@ -70,14 +71,15 @@ namespace Logitude.Server.Tools.EntityChanges.Service
 
         private object GetDataContractObject(object entityPM , string computingPartnerCode)
         {
+            string shipmentLevelName = GetShipmentLevelName(entityPM);
             object sendInterfaceDataContractObject = null;
             Assembly blAssembly = Assembly.Load("Logitude.BL");
-            string typePath = "Logitude.BL.ShipmentsModel.APIDataContract.ApiV1." + sendInterfaceDataContractFileName + "QueryService";
+            string typePath = "Logitude.BL.ShipmentsModel.APIDataContract.ApiV1." + shipmentLevelName + "QueryService";
             Type type = blAssembly.GetType(typePath);
             if (type != null)
             {
                 var queryService = Activator.CreateInstance(type, new object[] { tenant });
-                MethodInfo methodInfo = queryService.GetType().GetMethods().Where(d => d.Name == (sendInterfaceDataContractFileName + "DataMapping")).FirstOrDefault();
+                MethodInfo methodInfo = queryService.GetType().GetMethods().Where(d => d.Name == (shipmentLevelName + "DataMapping")).FirstOrDefault();
                 sendInterfaceDataContractObject = methodInfo.Invoke(queryService, new object[] { entityPM, tenant, computingPartnerCode });
             }
             return sendInterfaceDataContractObject;
@@ -85,10 +87,20 @@ namespace Logitude.Server.Tools.EntityChanges.Service
 
         private string GetDataContractFileName(object entityPM)
         {
-            string sendInterfaceDataContractFileName = GetPropertyValueFromObject("ShipmentLevelName", entityPM);
-            if (sendInterfaceDataContractFileName == "Consol") sendInterfaceDataContractFileName = "Master";
-            return sendInterfaceDataContractFileName;
+            string shipmentNumber = GetPropertyValueFromObject("ShipmentNumber", entityPM);
+            string transportModeId = GetPropertyValueFromObject("TransportModeId", entityPM);
+            string directionId = GetPropertyValueFromObject("DirectionId", entityPM);
+            return GetShipmentLevelName(entityPM).ToLower() + "_" + transportModeId.ToLower()+ directionId.ToLower() +"_"+ shipmentNumber.ToLower();
         }
+        private string GetShipmentLevelName(object entityPM)
+        {
+            ShipmentLevelRepository shipmentLevelRepository = new ShipmentLevelRepository(tenant);
+            string shipmentLevelCode = GetPropertyValueFromObject("ShipmentLevelCode", entityPM);
+            string shipmentLevelName = shipmentLevelRepository.GetSingleShipmentLevelNameByCode(shipmentLevelCode);
+            return (shipmentLevelName == "Consol" ? "Master" : shipmentLevelName);
+        }
+
+
 
         private Document CreateDocument(byte[] fileData, string extension)
         {

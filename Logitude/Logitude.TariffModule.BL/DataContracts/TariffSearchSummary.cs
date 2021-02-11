@@ -9,6 +9,11 @@ namespace Logitude.TariffModule.BL.DataContracts
 {
    public class TariffSearchSummary
     {
+        public TariffSearchSummary()
+        {
+            MoreLessDetailsLabel = "More Details";
+        }
+
         [Key]
         public string TariffId { get; set; }
         public string TariffNumber { get; set; }
@@ -43,6 +48,9 @@ namespace Logitude.TariffModule.BL.DataContracts
         public DateTime? UpdateDate { get; set; }
         public DateTime? LastUsedDate { get; set; }
         public string ValidityDate { get; set; }
+        public int ContainerNumber { get; set; }
+        public string NoteMissingContainers { get; set; }
+        public string MoreLessDetailsLabel { get; set; }
     }
 
     public class ContainersPrice

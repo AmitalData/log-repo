@@ -11,20 +11,26 @@ import { MessagingStockUsageHistoryList } from '../EntityLists/MessagingStockUsa
 import { AppTool } from '../../Infrastructure/Tools';
 import { HttpClient, HttpEvent, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-//import { defer } from 'rxjs';
+import { CustomsTransferHeaderPM } from '../EntityPMs/CustomsTransferHeaderPM';
+import { CustomsTransferHeaderPMService } from './StandardPMs/CustomsTransferHeaderPMService';
+import { ShipmentTool } from '../Tools';
+import { BaseService } from '../../Abstractions/Services/BaseService';
+import { Observable } from 'rxjs';
 
 @Injectable()
 
-export class ShipmentDomainService {
-    
+export class ShipmentDomainService extends BaseService  {
+
     private _httpClient: HttpClient;
     private _apiUrl: string;
     constructor() {
+        super();
         this._httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain';
+        this.ApiURL = this.BaseURL + 'api/ShipmentDomain';
     }
 
-    GetCustomerCreditLimitDetails(customerId: string,quoteId: string, isBuildFromQuote: boolean) {
+    GetCustomerCreditLimitDetails(customerId: string, quoteId: string, isBuildFromQuote: boolean) {
         var url = this._apiUrl + '/GetCustomerCreditLimitDetails?customerId=' + customerId + '&quoteId=' + quoteId + '&isBuildFromQuote=' + isBuildFromQuote;
 
         return defer(() => {
@@ -81,23 +87,28 @@ export class ShipmentDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+    GetRecentShipments1() {
+
+        var url = this.ApiURL + '/GetRecentShipments';
+
+        return defer(() => {
+            return this.HttpClient.get(url, this.HttpHeaders).pipe(
+                map(response => {
+                    return this.GetServiceResponse(response);
+                }), catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetRecentShipments() {
-
-        var url = this._apiUrl + '/GetRecentShipments';
-
-        return defer(() => {
-            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
-
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = allLists;
-                return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+        return Observable.create(observer => {
+            this.Get(this.ApiURL + '/GetRecentShipments').subscribe((response: any) => {
+                return observer.next(this.GetServiceResponse(response));                
+            });
         });
     }
+
     GetDeparturesArrivals(myDirectionId: string, myTransportModeId: string) {
 
         var url = this._apiUrl + '/GetDeparturesArrivals?myDirectionId=' + myDirectionId + '&myTransportModeId=' + myTransportModeId;
@@ -119,7 +130,7 @@ export class ShipmentDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -144,7 +155,7 @@ export class ShipmentDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = listMapped;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetLoggedTenantMessagingStockLists() {
@@ -165,7 +176,7 @@ export class ShipmentDomainService {
                 }
 
                 return listMapped;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetLoggedTenantMessagingStockUsageHistoryLists(stockId: string) {
@@ -186,34 +197,46 @@ export class ShipmentDomainService {
                 }
 
                 return listMapped;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
-    ValidateShipmentMasterFieldExistance(entityId: string, myBookingId: string, myMasterField: string, myAirlinePrefixField: string, myDirectionId: string, myTransportModeId: string, myShipmentLevelCode: string, isCancelled: boolean) {
+
+    ValidateShipmentMasterFieldExistance(entityPM: ShipmentPM) {
         return defer(() => {
 
+            var isValidating = ShipmentTool.IsValidatingShipmentMasterFieldExistance(entityPM);
 
-            var args = new ValidateShipmentMasterArgs();
-            args.ShipmentId = entityId;
-            args.BookingId = myBookingId;
-            args.Master = myMasterField;
-            args.AirlinePrefix = myAirlinePrefixField;
-            args.DirectionId = myDirectionId;
-            args.TransportModeId = myTransportModeId;
-            args.ShipmentLevelCode = myShipmentLevelCode;
-            args.IsCancelled = isCancelled;
+            if (!isValidating) {
+                return null;
+            }
 
-            var mappedEntity: ValidateShipmentMasterArgs = this.MapJsonToValidateShipmentMasterArgs(args, false);
+            else {
+                var args = new ValidateShipmentMasterArgs();
+                args.ShipmentId = entityPM.Id;
+                args.BookingId = entityPM.BookingId;
+                args.Master = entityPM.Master;
+                args.AirlinePrefix = entityPM.AirlinePrefix;
+                args.DirectionId = entityPM.DirectionId;
+                args.TransportModeId = entityPM.TransportModeId;
+                args.ShipmentLevelCode = entityPM.ShipmentLevelCode;
+                args.IsCancelled = entityPM.IsCancelled;
+                args.OperationalDate = ShipmentTool.CalculateShipmentOperationalDate(entityPM);
 
-            return this._httpClient.post(this._apiUrl + "/PostValidateShipmentMasterArgs", JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    var myJsonResult = res;
-                    return myJsonResult;
+                var mappedEntity: ValidateShipmentMasterArgs = this.MapJsonToValidateShipmentMasterArgs(args, false);
 
-                }),catchError(ServiceHelper.HandleServiceError));
-    });
+                return this.HttpClient.post(this.ApiURL + "/PostValidateShipmentMasterArgs", JSON.stringify(mappedEntity), this.HttpHeaders).pipe(
+                    map((res) => {
+                        var myJsonResult = res;
+                        return myJsonResult;
+
+                    }), catchError(ServiceHelper.HandleServiceError));
+            }
+        });
     }
+
+
     GetMasterReceivables(entityId: string) {
-       
+
         var url = this._apiUrl + '/GetMasterReceivables?entityId=' + entityId;
 
         return defer(() => {
@@ -241,10 +264,10 @@ export class ShipmentDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
-    GetShipmentsQuotesCount( ) {
+    GetShipmentsQuotesCount() {
 
         var url = this._apiUrl + '/GetShipmentsQuotesCount?';
 
@@ -255,7 +278,7 @@ export class ShipmentDomainService {
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetShipmentConsolidationPackages(masterId: string) {
@@ -269,7 +292,7 @@ export class ShipmentDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetShipmentConnectedEntities(shipmentId: string) {
@@ -289,7 +312,7 @@ export class ShipmentDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = listMapped;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetShipmentsQueriesCounts(tenant: number, transportModeId: string, directionId: string, SearchFilter: string, serviceContextUser: string, TypeCode: string = null) {
@@ -325,7 +348,7 @@ export class ShipmentDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetAllMasterHousesReceivables(allHousesIdsString: string) {
@@ -340,10 +363,10 @@ export class ShipmentDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
-    GetConnectedShipmentsByMasterIdAndTenant(masterId: string,tenant: number) {
+    GetConnectedShipmentsByMasterIdAndTenant(masterId: string, tenant: number) {
 
         var url = this._apiUrl + '/GetConnectedShipmentsByMasterIdAndTenant?masterId=' + masterId + '&currentTenant=' + tenant;
 
@@ -366,7 +389,7 @@ export class ShipmentDomainService {
 
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetShipmentsCountByQuoteId(quoteId: string) {
@@ -380,7 +403,7 @@ export class ShipmentDomainService {
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetShipmentLevelCode(myShipmentId: string) {
@@ -395,12 +418,12 @@ export class ShipmentDomainService {
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetInvoiceOpenAmountPayables(entityId: string) {
 
-        var url = this._apiUrl + '/GetInvoiceOpenAmountPayables?entityId=' +  entityId;
+        var url = this._apiUrl + '/GetInvoiceOpenAmountPayables?entityId=' + entityId;
 
         return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
@@ -410,12 +433,12 @@ export class ShipmentDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
-    GetPayableInvoices(PayableId: string, PayableParentId:string) {
+    GetPayableInvoices(PayableId: string, PayableParentId: string) {
 
-        var url = this._apiUrl + '/GetPayableInvoices?PayableId=' + PayableId + '&PayableParentId=' + PayableParentId ;
+        var url = this._apiUrl + '/GetPayableInvoices?PayableId=' + PayableId + '&PayableParentId=' + PayableParentId;
 
         return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
@@ -423,7 +446,7 @@ export class ShipmentDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetShipmentsByQuoteId(quoteId: string) {
@@ -437,7 +460,7 @@ export class ShipmentDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetSingleShipmentPMByNumber(shipmentNumber: string) {
@@ -451,7 +474,7 @@ export class ShipmentDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetSingleShipmentPMWithoutComposition(id: string) {
@@ -466,7 +489,7 @@ export class ShipmentDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = shipment;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
     BlockNewARInvoice(shipmentId: string) {
@@ -480,7 +503,7 @@ export class ShipmentDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetShipmentFullTextSearch(filters: ApiQueryFilters) {
@@ -514,7 +537,7 @@ export class ShipmentDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetMessagingStockListForTenantManagmentTab(tenantManagementId: number) {
@@ -528,7 +551,7 @@ export class ShipmentDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -541,7 +564,7 @@ export class ShipmentDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -556,7 +579,7 @@ export class ShipmentDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -655,10 +678,10 @@ export class ShipmentDomainService {
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
-    GetArtemusStatus(shipmentNumber:string) {
+    GetArtemusStatus(shipmentNumber: string) {
 
         var url = this._apiUrl + '/GetArtemusStatus?shipmentNumber=' + shipmentNumber;
         return defer(() => {
@@ -667,7 +690,7 @@ export class ShipmentDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
     MapShipmentConnectedEntity(jsonList: any) {
@@ -694,7 +717,7 @@ export class ShipmentDomainService {
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -710,7 +733,7 @@ export class ShipmentDomainService {
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -725,7 +748,7 @@ export class ShipmentDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -738,7 +761,7 @@ export class ShipmentDomainService {
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = result;
                 return pmresponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
@@ -754,7 +777,7 @@ export class ShipmentDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -771,7 +794,7 @@ export class ShipmentDomainService {
                 myResponse = new ServiceResponse();
                 myResponse.Result = myResult;
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetOnStartDateEntitiesIds(entityCode: string, myStartDate: Date) {
@@ -787,7 +810,7 @@ export class ShipmentDomainService {
                 myResponse = new ServiceResponse();
                 myResponse.Result = myResult;
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
     BlockTransferEntities(ids: string[], entityCode: string) {
@@ -802,7 +825,7 @@ export class ShipmentDomainService {
                 myResponse = new ServiceResponse();
                 myResponse.Result = myResult;
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
     SendToAMANAC(shipmentId: string) {
@@ -816,7 +839,7 @@ export class ShipmentDomainService {
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -832,7 +855,7 @@ export class ShipmentDomainService {
                 myResponse = new ServiceResponse();
                 myResponse.Result = myResult;
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -848,7 +871,7 @@ export class ShipmentDomainService {
                 myResponse = new ServiceResponse();
                 myResponse.Result = myResult;
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -879,7 +902,31 @@ export class ShipmentDomainService {
                 myResponse = new ServiceResponse();
                 myResponse.Result = myResult;
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    ValidateAMANACShipmentsBeforeExporting(entityPM: CustomsTransferHeaderPM) {
+        return defer(() => {
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+            var customsHeaderService: CustomsTransferHeaderPMService = new CustomsTransferHeaderPMService();
+
+            var mappedEntity: CustomsTransferHeaderPM = customsHeaderService.MapJsonToEntityPM(entityPM, false);
+
+            return this._httpClient.post(this._apiUrl + "/PostValidateAMANACShipmentsBeforeExporting", JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+                .pipe(
+                    map((response: HttpResponse<any>) => {
+
+                        var pm = response.body;
+                        if (pm) {
+                            var mappedResult: CustomsTransferHeaderPM = customsHeaderService.MapJsonToEntityPM(pm, true, entityPM);
+                            serviceResponse.Result = mappedResult;
+                        }
+
+                        return serviceResponse;
+                    }),
+
+                    catchError(ServiceHelper.HandleServiceError));
         });
     }
 }
@@ -952,6 +999,7 @@ export class ValidateShipmentMasterArgs {
     public TransportModeId: string;
     public ShipmentLevelCode: string;
     public IsCancelled: boolean;
+    public OperationalDate: Date;
 }
 export class ImporterQueriesDataCounts {
     public OpenShipmentsCount: number;

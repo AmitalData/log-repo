@@ -51,11 +51,25 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
             this.Add(new LogitudePointerModel(896, "R059", WCOErrorPointerModel.LogitudeEntityEnum.Declaration, ""));
             this.Add(new LogitudePointerModel(895, "17B", WCOErrorPointerModel.LogitudeEntityEnum.Declaration, ""));
 
+
             this.Add(new LogitudePointerModel(28, "I07", WCOErrorPointerModel.LogitudeEntityEnum.Declaration, "EntitlementTypeCode"));
             this.Add(new LogitudePointerModel(28, "D027", WCOErrorPointerModel.LogitudeEntityEnum.Declaration, "IssueLocation"));
             this.Add(new LogitudePointerModel(28, "I94", WCOErrorPointerModel.LogitudeEntityEnum.Declaration, "Name"));
             this.Add(new LogitudePointerModel(28, "I95", WCOErrorPointerModel.LogitudeEntityEnum.Declaration, "Address"));
             this.Add(new LogitudePointerModel(1544, "166", WCOErrorPointerModel.LogitudeEntityEnum.None, "ProcedureCurrentCode"));
+
+            //export
+            this.Add(new LogitudePointerModel(2500, "I42", WCOErrorPointerModel.LogitudeEntityEnum.Declaration, "DestinationCountryCode"));
+            this.Add(new LogitudePointerModel(2501, "I110", WCOErrorPointerModel.LogitudeEntityEnum.Declaration, "IsExporterConfirmation"));
+            this.Add(new LogitudePointerModel(2505, "169", WCOErrorPointerModel.LogitudeEntityEnum.Declaration, "LoadingDateTime"));
+            this.Add(new LogitudePointerModel(2506, "T006", WCOErrorPointerModel.LogitudeEntityEnum.Declaration, "ShipCode"));
+            this.Add(new LogitudePointerModel(2507, "L010", WCOErrorPointerModel.LogitudeEntityEnum.Declaration, "FinalLoadingSite"));
+
+            //export
+            this.Add(new LogitudePointerModel(2502, "I101", WCOErrorPointerModel.LogitudeEntityEnum.Declaration, "RecipientName"));
+            this.Add(new LogitudePointerModel(2503, "I102", WCOErrorPointerModel.LogitudeEntityEnum.Declaration, "RecipientName"));
+            this.Add(new LogitudePointerModel(2504, "242", WCOErrorPointerModel.LogitudeEntityEnum.Declaration, "RecipientName"));
+
 
             //DeclarationTaxes
             this.Add(new LogitudePointerModel(128, "50A", WCOErrorPointerModel.LogitudeEntityEnum.DeclarationTaxes, ""));
@@ -89,6 +103,19 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
             this.Add(new LogitudePointerModel(1517, "35B", WCOErrorPointerModel.LogitudeEntityEnum.None, "")); // UCR ????
             this.Add(new LogitudePointerModel(1518, "016", WCOErrorPointerModel.LogitudeEntityEnum.None, ""));
             this.Add(new LogitudePointerModel(1519, "009", WCOErrorPointerModel.LogitudeEntityEnum.None, ""));
+
+            //export
+            this.Add(new LogitudePointerModel(2508, "163", WCOErrorPointerModel.LogitudeEntityEnum.GoodsShipment, "PartyRelationshipCode"));
+            this.Add(new LogitudePointerModel(2509, "I94", WCOErrorPointerModel.LogitudeEntityEnum.GoodsShipment, "BuyerName"));
+            this.Add(new LogitudePointerModel(2510, "I95", WCOErrorPointerModel.LogitudeEntityEnum.GoodsShipment, "BuyerAddress"));
+            this.Add(new LogitudePointerModel(2511, "242", WCOErrorPointerModel.LogitudeEntityEnum.GoodsShipment, "BuyerCountryCode"));
+            this.Add(new LogitudePointerModel(2512, "R005", WCOErrorPointerModel.LogitudeEntityEnum.GoodsShipment, "BuyerRoleCode"));
+            this.Add(new LogitudePointerModel(2513, "016", WCOErrorPointerModel.LogitudeEntityEnum.GoodsShipment, "SupplierChargeID"));
+            this.Add(new LogitudePointerModel(2514, "009", WCOErrorPointerModel.LogitudeEntityEnum.GoodsShipment, "AgentChargeID"));
+            this.Add(new LogitudePointerModel(2525, "I30", WCOErrorPointerModel.LogitudeEntityEnum.GoodsShipment, "PaymentType"));
+            this.Add(new LogitudePointerModel(2526, "I108", WCOErrorPointerModel.LogitudeEntityEnum.GoodsShipment, "SupplierInvoicesPayment"));
+
+
             //CustomsValuation
             this.Add(new LogitudePointerModel(557, "41A", WCOErrorPointerModel.LogitudeEntityEnum.CustomsValuation, "")); // ??? CustomsValuation - to do - dif tables????
             this.Add(new LogitudePointerModel(558, "371", WCOErrorPointerModel.LogitudeEntityEnum.None, "TypeCode"));
@@ -115,6 +142,18 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
             this.Add(new LogitudePointerModel(1250, "92A", WCOErrorPointerModel.LogitudeEntityEnum.None, ""));
             this.Add(new LogitudePointerModel(1251, "063", WCOErrorPointerModel.LogitudeEntityEnum.None, "OriginCountryCode"));
             this.Add(new LogitudePointerModel(843, "145", WCOErrorPointerModel.LogitudeEntityEnum.None, "ClassificationCode"));
+
+
+            //export
+            this.Add(new LogitudePointerModel(2517, "D006", WCOErrorPointerModel.LogitudeEntityEnum.GoodsItem, "StatementType"));
+            this.Add(new LogitudePointerModel(2518, "I80", WCOErrorPointerModel.LogitudeEntityEnum.GoodsItem, "StatementInd"));
+            this.Add(new LogitudePointerModel(2519, "337", WCOErrorPointerModel.LogitudeEntityEnum.GoodsItem, "ClassificationTypeCode"));
+            this.Add(new LogitudePointerModel(2520, "103", WCOErrorPointerModel.LogitudeEntityEnum.GoodsItem, "TransactionNature"));
+            this.Add(new LogitudePointerModel(2521, "I41", WCOErrorPointerModel.LogitudeEntityEnum.GoodsItem, "ClaimReason"));
+            this.Add(new LogitudePointerModel(2522, "108", WCOErrorPointerModel.LogitudeEntityEnum.GoodsItem, "AdditionalPrice"));
+            this.Add(new LogitudePointerModel(2523, "I15", WCOErrorPointerModel.LogitudeEntityEnum.GoodsItem, "AdditionalPriceType"));
+            this.Add(new LogitudePointerModel(2524, "147", WCOErrorPointerModel.LogitudeEntityEnum.GoodsItem, "IdentifierID"));
+
 
             //Consignment
             this.Add(new LogitudePointerModel(269, "28A", WCOErrorPointerModel.LogitudeEntityEnum.Consignment, ""));
@@ -146,7 +185,11 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
             this.Add(new LogitudePointerModel(2045, "105", WCOErrorPointerModel.LogitudeEntityEnum.None, "ThirdCargoID"));
             this.Add(new LogitudePointerModel(809, "173", WCOErrorPointerModel.LogitudeEntityEnum.None, "UnloadDate"));
 
-           //ConsignmentPackages
+            //export
+            this.Add(new LogitudePointerModel(2515, "I111", WCOErrorPointerModel.LogitudeEntityEnum.Consignment, "IsDangerousGoods"));
+            this.Add(new LogitudePointerModel(2516, "L086", WCOErrorPointerModel.LogitudeEntityEnum.Consignment, "ExportRecieverWareHouseCode"));
+
+            //ConsignmentPackages
             this.Add(new LogitudePointerModel(1783, "15L", WCOErrorPointerModel.LogitudeEntityEnum.ConsignmentPackages, ""));
             this.Add(new LogitudePointerModel(1785, "I10", WCOErrorPointerModel.LogitudeEntityEnum.None, "PackageMeasureQualifierCode"));
             this.Add(new LogitudePointerModel(1786, "146", WCOErrorPointerModel.LogitudeEntityEnum.None, "PackageQuantity"));

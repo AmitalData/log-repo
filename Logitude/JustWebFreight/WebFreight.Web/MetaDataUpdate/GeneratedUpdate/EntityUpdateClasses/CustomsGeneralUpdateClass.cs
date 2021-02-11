@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "4e6f3e22d83c55ccf10e14b312983dd5";
+		public const string HashString = "8c6b2aa4629f8fb74d9e3dd06dd05898";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "72b0",
+			      				    Code =  "bca8",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1494,7 +1494,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode CustomsGeneralTextCode_CustomsDeclarationReshimonConversionODeclarationNumberLengthError = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReshimonConversion.O.DeclarationNumberLengthError", DefaultText = "Declaration Number Length Error",LocalDefaultText = @"מספר הצהרה חייבת להיות עם 14 ספרות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode CustomsGeneralTextCode_CustomsDeclarationReshimonConversionODeclarationNumberConvertionDigitsError = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReshimonConversion.O.DeclarationNumberConvertionDigitsError", DefaultText = "Declaration Number Convertion Digits Error",LocalDefaultText = @"ספרות 3+4 צריכות להיות 98 ביבוא או 99 ביצוא", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomsGeneralTextCode_CustomsDeclarationReshimonConversionODeclarationNumberConvertionDigitsError = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReshimonConversion.O.DeclarationNumberConvertionDigitsError", DefaultText = "Declaration Number Convertion Digits Error",LocalDefaultText = @"ספרות 3+4 צריכות להיות 98 ביבוא או 99 ביצוא או 97 בשטעון", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsDeclarationOIsSignedVersionError = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IsSignedVersionError", DefaultText = "Last version was not signed - Can not send payment",LocalDefaultText = @"גרסת הצהרה אחרונה אינה חתומה - לא ניתן להגיש תשלום", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -2003,6 +2003,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_GeneralMHNotifications = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Notifications", DefaultText = "Notifications",LocalDefaultText = @"מרכז התראות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_GeneralMHCourierMaster = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.CourierMaster", DefaultText = "Courier Master",LocalDefaultText = @"בלדר ראשי", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralONotConnectInvoiceToDoc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.NotConnectInvoiceToDoc", DefaultText = "Not link an invoice/ invoice line  to the document: ",LocalDefaultText = @"לא קושר חשבון/חשבון פרט מכס לצרופה : ", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralODocumentInProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.DocumentInProgress", DefaultText = "There are documents in the process.",LocalDefaultText = @"קיימים מסמכים בתהליך שליחה.", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOValidationDocuments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ValidationDocuments", DefaultText = "Validation Documents",LocalDefaultText = @"בדיקת מסמכים לפני שליחת הצהרת יבוא", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOCreateDateFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CreateDateFrom", DefaultText = "Create Date From:",LocalDefaultText = @"מ - תאריך בקשה:", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOCreateDateTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CreateDateTo", DefaultText = "Create Date To:",LocalDefaultText = @"עד - תאריך בקשה:", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

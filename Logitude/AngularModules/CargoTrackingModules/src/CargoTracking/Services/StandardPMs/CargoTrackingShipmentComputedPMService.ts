@@ -153,6 +153,7 @@ export class CargoTrackingShipmentComputedPMService {
         if (!entityPM) {
             
             entityPM = new CargoTrackingShipmentComputedPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class CargoTrackingShipmentComputedPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

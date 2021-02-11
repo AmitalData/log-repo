@@ -14,8 +14,9 @@ namespace WarehouseData.Service
 {
   public  class DWDataWarehouseService
     {
-        GeneralDataWarehouseService generalDataWarehouseService;
-        WaterMarkDataWarehouseService waterMarkDataWarehouseService;
+        public  List<string> CustomObjectFieldTableLists { get; set; }
+        private GeneralDataWarehouseService generalDataWarehouseService;
+        private WaterMarkDataWarehouseService waterMarkDataWarehouseService;
         public DWDataWarehouseService()
         {
             generalDataWarehouseService = new GeneralDataWarehouseService();
@@ -41,8 +42,9 @@ namespace WarehouseData.Service
 
             }
 
-            table.ObjectFieldDBLists = GetCopyToDwObjectFieldLists(dwObjectTable);
             generalDataWarehouseService.ExecuteSql(CreateTABLE(table.Dw_TableName, dwObjectTable, table.ObjectFieldDBLists), destinationConnectionString);
+            table.ObjectFieldDBLists = GetCopyToDwObjectFieldLists(dwObjectTable);
+
         }
 
         private List<DWObjectFieldDB> GetCopyToDwObjectFieldLists(DataTable dataTable)
@@ -132,7 +134,7 @@ namespace WarehouseData.Service
             {
                 string customFieldindex = "";
                 int i = 1;
-                while (i <= 6)
+                while (i <= 40)
                 {
                     customFieldindex += "[Field" + i + "],";
                     i += 1;
@@ -160,6 +162,37 @@ namespace WarehouseData.Service
             string cmd = string.Empty;
             switch (table.DBTableName)
             {
+
+
+                case "Quotes":
+
+                    cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipperId DEFAULT '-1' FOR ShipperId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ConsigneeId DEFAULT '-1' FOR ConsigneeId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "AgentId DEFAULT '-1' FOR AgentId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CustomerId DEFAULT '-1' FOR CustomerId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "IncotermId DEFAULT '-1' FOR IncotermId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "SalesmanUserId DEFAULT '-1' FOR SalesmanUserId;"
+
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipmentTypeId DEFAULT '-1' FOR ShipmentTypeId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "DepartmentId DEFAULT '-1' FOR DepartmentId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "BranchId DEFAULT '-1' FOR BranchId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "SaleCurrencyId DEFAULT '-1' FOR SaleCurrencyId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "DirectionId DEFAULT '1' FOR DirectionId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "TransportModeId DEFAULT '1' FOR TransportModeId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "StageId DEFAULT '-1' FOR StageId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "QuoteClosingReasonId DEFAULT '-1' FOR QuoteClosingReasonId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "FromPortId DEFAULT '-1' FOR FromPortId;"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ToPortId DEFAULT '-1' FOR ToPortId;"
+                        ;
+
+                    break;
+
+
+
+
+
+
+
                 case "Shipments":
 
                     cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipperId DEFAULT '-1' FOR ShipperId"
@@ -201,6 +234,13 @@ namespace WarehouseData.Service
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipmentPayableStatusCode DEFAULT '-1' FOR ShipmentPayableStatusCode;"
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipmentReceivableStatusCode DEFAULT '-1' FOR ShipmentReceivableStatusCode;"
 
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PreCarriageTransportModeId DEFAULT '1' FOR PreCarriageTransportModeId"
+                      + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PreCarriageFromPortId DEFAULT '-1' FOR PreCarriageFromPortId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PreCarriageToPortId DEFAULT '-1' FOR PreCarriageToPortId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OnCarriageToPortId DEFAULT '-1' FOR OnCarriageToPortId"
+                       + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OnCarriageFromPortId DEFAULT '-1' FOR OnCarriageFromPortId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OnCarriageCarrierId DEFAULT '-1' FOR OnCarriageCarrierId"
+                      + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PreCarriageCarrierId DEFAULT '-1' FOR PreCarriageCarrierId"
 
 
                         ;
@@ -211,7 +251,9 @@ namespace WarehouseData.Service
                     cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "SalesmanUserId DEFAULT '-1' FOR SalesmanUserId"
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PrimaryContactId DEFAULT '-1' FOR PrimaryContactId;"
                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CountryId DEFAULT '-1' FOR CountryId;"
-                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PartnerTypeId DEFAULT '-1' FOR PartnerTypeId;";
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PartnerTypeId DEFAULT '-1' FOR PartnerTypeId;"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "BillToId DEFAULT '-1' FOR BillToId;";
+
                     break;
                 case "Tenants":
 
@@ -236,7 +278,12 @@ namespace WarehouseData.Service
                     + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "MainCarriageVesselId DEFAULT '-1' FOR MainCarriageVesselId;"
                     + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment1VesselId DEFAULT '-1' FOR Transshipment1VesselId"
                     + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment1CarrierId DEFAULT '-1' FOR Transshipment1CarrierId"
-                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OBLTypeCode DEFAULT '-1' FOR OBLTypeCode;"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "OBLTypeCode DEFAULT '-1' FOR OBLTypeCode;" 
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment1FromPortId DEFAULT '-1' FOR Transshipment1FromPortId;"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment2FromPortId DEFAULT '-1' FOR Transshipment2FromPortId;"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment3FromPortId DEFAULT '-1' FOR Transshipment3FromPortId;"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment2CarrierId DEFAULT '-1' FOR Transshipment2CarrierId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment3CarrierId DEFAULT '-1' FOR Transshipment3CarrierId"
 
                         ;
 
@@ -333,11 +380,9 @@ namespace WarehouseData.Service
 
                 if (table.TableName == "ObjectField")
                 {
-                    condition += !isPrivateDB ? " where " : " and";
-                    condition += " IsCustom = 1 and ObjectTableId in (select id from ObjectTables where Name = 'Shipment')";
-
+                    condition += ((!isPrivateDB ? " where " : " and") + GetCustomObjectFieldCondition());
                 }
-
+            
                 string originTableName = table.TableName == "WaterMark" && isPrivateDB ? ("Private" + table.DBTableName) : table.DBTableName;
 
 
@@ -393,6 +438,18 @@ namespace WarehouseData.Service
 
             }
         }
+
+        private string GetCustomObjectFieldCondition()
+        {
+            string condition  = " IsCustom = 1 and ObjectTableId in (select id from ObjectTables where Name in (";
+            foreach (string customObjectField in CustomObjectFieldTableLists)
+            {
+                condition += "'" + customObjectField + "' ,";
+            }
+            condition = condition.Remove(condition.Length - 1) + "))";
+            return condition;
+        }
+
         private void OnSqlRowsCopied(
        object sender, SqlRowsCopiedEventArgs e)
         {
@@ -552,7 +609,7 @@ namespace WarehouseData.Service
             }
         }
 
-        private static string GetUpdateDWDataBaseCondition(BuildDWArgs buildDWArgs)
+        private  string GetUpdateDWDataBaseCondition(BuildDWArgs buildDWArgs)
         {
 
             bool isPrivateDB = buildDWArgs.PrivateTenant != null ? true : false;
@@ -568,8 +625,7 @@ namespace WarehouseData.Service
 
             if (buildDWArgs.table.TableName == "ObjectField")
             {
-                condition += "and IsCustom = 1 and ObjectTableId =(select id from ObjectTables where Name = 'Shipment')";
-
+                condition += (" and" + GetCustomObjectFieldCondition());
             }
 
             return condition;

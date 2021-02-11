@@ -65,6 +65,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 reconciledTransactions = GetReconciledInvoicesTransactions();
 
                 reconciledTransactions = FillReconciliationNumbersOnTransactions(reconciledTransactions);
+
+                reconciledTransactions = FillReconciledPaymentAmountOnTransaction(reconciledTransactions);
+
             }
 
             return reconciledTransactions;
@@ -135,8 +138,17 @@ namespace Logitude.Accounting.BL.CoreBL
             // exclude partially reconcile transactions
             reconciledTransactions = reconciledTransactions.Where(d => d.IsReconciled == true && d.SourceTypeCode == AccountingEntityValues.ARInvoice).ToList();
 
+            FillTransactionsAmountToReconcile(reconciledTransactions);
 
             return reconciledTransactions;
+        }
+
+        private static void FillTransactionsAmountToReconcile(List<LedgerTransactionPM> reconciledTransactions)
+        {
+            reconciledTransactions.ForEach(transaction =>
+            {
+                var foreignAmount = transaction.ForeignAmountCredit == 0 ? transaction.ForeignAmountDebit : transaction.ForeignAmountCredit;
+            });
         }
 
         private List<LedgerTransactionPM> GetTransactionsById(List<string> ids)
@@ -223,16 +235,24 @@ namespace Logitude.Accounting.BL.CoreBL
         private LedgerTransaction GetPaymentTransaction()
         {
             JournalPM paymentJournal = GetPaymentJournal(paymentId);
-
-            LedgerTransaction paymentCreditTransaction = GetCreditTransactionByJournalId(paymentJournal.Id);
-
-            if (paymentCreditTransaction == null)
+            if(paymentJournal != null)
             {
-                paymentId = null;
-                //throw new ApplicationException("[ARPaymentInvoicesTransactionFetcher] Couldn't found payment transaction!");
+                LedgerTransaction paymentCreditTransaction = GetCreditTransactionByJournalId(paymentJournal.Id);
+
+                if (paymentCreditTransaction == null)
+                {
+                    paymentId = null;
+                    //throw new ApplicationException("[ARPaymentInvoicesTransactionFetcher] Couldn't found payment transaction!");
+                }
+                return paymentCreditTransaction;
+
+            }
+            else
+            {
+                return null;
             }
 
-            return paymentCreditTransaction;
+
         }
 
         private JournalPM GetPaymentJournal(string arpaymentId)

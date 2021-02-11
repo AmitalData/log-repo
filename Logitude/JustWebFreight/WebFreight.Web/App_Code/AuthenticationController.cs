@@ -1385,6 +1385,7 @@ namespace WebFreight.Web
 
                                 string encryptedTicket = FormsAuthentication.Encrypt(ticket);
                                 HttpCookie authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+                                authCookie.SameSite = SameSiteMode.None;
                                 HttpContext.Current.Response.Cookies.Add(authCookie);
 
                             }
@@ -2368,7 +2369,7 @@ namespace WebFreight.Web
         }
 
         PasswordCheckService passwordChkService = new PasswordCheckService();
-        List<string> CustomerCareEmails = new List<string>() {"fajr@logitudeworld.com", "eman@logitudeworld.com", "azhar@logitudeworld.com", "balqees@logitudeworld.com", "isra@logitudeworld.com", "mujahed@logitudeworld.com", "maram@logitudeworld.com", "diaa@logitudeworld.com", "zaki@logitudeworld.com", "ahmada@logitudeworld.com", "ihab@logitudeworld.com" };
+        List<string> CustomerCareEmails = new List<string>();// {"fajr@logitudeworld.com", "eman@logitudeworld.com", "azhar@logitudeworld.com", "balqees@logitudeworld.com", "isra@logitudeworld.com", "mujahed@logitudeworld.com", "maram@logitudeworld.com", "diaa@logitudeworld.com", "zaki@logitudeworld.com", "ahmada@logitudeworld.com", "ihab@logitudeworld.com" };
         private UserData CheckUserState(string email, string password, ref ContactPassword contactPassword, bool byToken, string clientType)
         {
 

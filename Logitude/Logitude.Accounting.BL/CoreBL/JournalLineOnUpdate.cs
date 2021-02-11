@@ -52,14 +52,14 @@ namespace Logitude.Accounting.BL.CoreBL
                     journalLinePM.CurrencyName = currency.EnglishName;
                 }
             }
-            if (!journalPM.ConversionJournal)
+            ///if (!journalPM.ConversionJournal)
             {
                 bool haveChange = false;
-                haveChange = FixCredit(journalLinePM, haveChange);
+                haveChange = FixCredit(journalLinePM, haveChange, journalPM.ConversionJournal);
 
                 FullAccountingSettingPM accountingSettings = getFullAccountingSettings(journalPM.Tenant);
 
-                haveChange = FixDebit(journalLinePM, haveChange, accountingSettings);
+                haveChange = FixDebit(journalLinePM, haveChange, accountingSettings, journalPM.ConversionJournal);
 
                 if (haveChange && journalLinePM.ChangeSetOp == ChangeSetOperation.None)
                 {
@@ -102,10 +102,10 @@ namespace Logitude.Accounting.BL.CoreBL
             }
         }
 
-        private bool FixCredit(JournalLinePM journalLinePM, bool haveChange)
+        private bool FixCredit(JournalLinePM journalLinePM, bool haveChange, bool conversionJournal)
         {
             var creditIVerifyGLAccountManager = GetIVerifyGLAccountManager();
-            creditIVerifyGLAccountManager.Verify(this._MainContext, journalLinePM.Tenant, journalLinePM.CreditAccountId, journalLinePM.CreditAccountNumber, journalLinePM.CurrencyId);
+            creditIVerifyGLAccountManager.Verify(this._MainContext, journalLinePM.Tenant, journalLinePM.CreditAccountId, journalLinePM.CreditAccountNumber, journalLinePM.CurrencyId, conversionJournal);
 
             if (IsFromMumps(journalLinePM) ||
                 journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit ||
@@ -124,7 +124,7 @@ namespace Logitude.Accounting.BL.CoreBL
             return haveChange;
         }
 
-        private bool FixDebit(JournalLinePM journalLinePM, bool haveChange, FullAccountingSettingPM accountingSettings)
+        private bool FixDebit(JournalLinePM journalLinePM, bool haveChange, FullAccountingSettingPM accountingSettings, bool conversionJournal)
         {
             var debitIVerifyGLAccountManager = GetIVerifyGLAccountManager();
             debitIVerifyGLAccountManager.Verify(
@@ -132,7 +132,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 journalLinePM.Tenant,
                 journalLinePM.DebitAccountId,
                 journalLinePM.DebitAccountNumber,
-                journalLinePM.CurrencyId
+                journalLinePM.CurrencyId,
+                conversionJournal
                 );
 
             if (
@@ -253,7 +254,7 @@ namespace Logitude.Accounting.BL.CoreBL
     }
     public interface IVerifyGLAccountManager
     {
-        void Verify(IAccountingContext mainContext, int tenant, string accountId, string accountNumber, string CurrencyId);
+        void Verify(IAccountingContext mainContext, int tenant, string accountId, string accountNumber, string CurrencyId, bool conversionJournal);
 
         string AccountId { get; }
         string ControlAccountId { get; }
@@ -267,7 +268,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-        public void Verify(IAccountingContext mainContext, int tenant, string accountId, string accountNumber, string CurrencyId)
+        public void Verify(IAccountingContext mainContext, int tenant, string accountId, string accountNumber, string CurrencyId,
+            bool ConversionJournal)
         {
             this._MainContext = mainContext;
             this._tenant = tenant;
@@ -289,7 +291,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 if (myGLAccountPM != null)
                 {
-                    if (myGLAccountPM.IsMultiCurrency.GetValueOrDefault())//Task 40640: טיפול בסרביס לפקודת יומן -במקרה של כרטיס מפוצל לרשום על הפיצול
+                    if (!ConversionJournal && myGLAccountPM.IsMultiCurrency.GetValueOrDefault())//Task 40640: טיפול בסרביס לפקודת יומן -במקרה של כרטיס מפוצל לרשום על הפיצול
                     {
                         //SuppressCheckGLAccountIsMultiCurrencyWI40640
 

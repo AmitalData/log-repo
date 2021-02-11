@@ -25,6 +25,7 @@ export class AccountingLedgerFilterComponent extends BaseComponent implements On
     public DataContext: AccountingLedgerFilterComponent = this;
 
     CustomerId: string;
+    PartnerId: string;
     FromDate: Date;
     ToDate: Date;
 
@@ -123,6 +124,13 @@ export class AccountingLedgerFilterComponent extends BaseComponent implements On
             this.queryFilterItem.DisplayInList = false;
             this.queryFilterItem.FieldName = "BillToId";
             this.queryFilterItem.FieldValue = this.CustomerId;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "PartnerId";
+            this.queryFilterItem.FieldValue = this.PartnerId;
             this.queryFilterItem.Operator = "Equals";
             this.queryFilterItems.push(this.queryFilterItem);
 

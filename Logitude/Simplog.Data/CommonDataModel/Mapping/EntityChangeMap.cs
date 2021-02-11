@@ -107,6 +107,14 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .IsMaxLength()
                 .IsUnicode(true);
 
+            this.Property(t => t.SendDocumentAutomationFailedXml)
+                .IsMaxLength()
+                .IsUnicode(true);
+
+            this.Property(t => t.SendDocumentAutomationSsucceedXml)
+                .IsMaxLength()
+                .IsUnicode(true);
+
             // Table & Column Mappings
             this.ToTable("EntityChanges");
 
@@ -139,7 +147,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
             this.Property(t => t.SendInterfaceAutomationFailedXml).HasColumnName("SendInterfaceAutomationFailedXml");
             this.Property(t => t.SendInterfaceAutomationSsucceedXml).HasColumnName("SendInterfaceAutomationSsucceedXml");
-
+            this.Property(t => t.SendDocumentAutomationFailedXml).HasColumnName("SendDocumentAutomationFailedXml");
+            this.Property(t => t.SendDocumentAutomationSsucceedXml).HasColumnName("SendDocumentAutomationSsucceedXml");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

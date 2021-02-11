@@ -30,7 +30,7 @@ namespace WebFreight.Web.Helpers
             globalContext = GlobalContext.GetContext();
         }
 
-        public void ResetUserPassword(ResetPasswordParameters resetPasswordParameters, string appMobileEnvironment, string brandingTenant)
+        public void ResetUserPassword(ResetPasswordParameters resetPasswordParameters, string brandingTenant)
         {
             //string newPassword = PasswordGenerator.GetBCryptHashedPassword(resetPasswordParameters.Email, PasswordGenerator.Generate(8));
             string reqNumber = GetResetRequestNumber();
@@ -59,7 +59,7 @@ namespace WebFreight.Web.Helpers
             {
                 ResetPasswordParameters = resetPasswordParameters,
                 Result = emailBodyResults.Result,
-                AppMobileEnvironment = appMobileEnvironment,
+                AppMobileEnvironment = resetPasswordParameters.AppEnvironment,
             };
             CreateEmailCommunicationLog(emailBodyResults.HtmlTemplate, emailCommunicationLogBuilderArgs, privatelabel);
         }
@@ -205,7 +205,7 @@ namespace WebFreight.Web.Helpers
         private string GetFogotPasswordPagePath(ResetPasswordParameters resetPasswordParameters, string siteUri, string reqNumber)
         {
             string pageName = string.IsNullOrEmpty(resetPasswordParameters.PageName) ? "PasswordChangePage.aspx" : resetPasswordParameters.PageName;
-            string path = siteUri + @"/" + pageName + "?email=" + resetPasswordParameters.Email + "&reset_request_number=" + reqNumber + "&ischamplogin=" + resetPasswordParameters.IsChampLogin;
+            string path = (string.IsNullOrEmpty(resetPasswordParameters.Domain) ? siteUri : resetPasswordParameters.Domain)  + @"/" + pageName + "?email=" + resetPasswordParameters.Email + "&reset_request_number=" + reqNumber + "&ischamplogin=" + resetPasswordParameters.IsChampLogin;
             
             if(!string.IsNullOrEmpty(resetPasswordParameters.BrandingTenant))
                 path += "&tenant=" + Int32.Parse(resetPasswordParameters.BrandingTenant);

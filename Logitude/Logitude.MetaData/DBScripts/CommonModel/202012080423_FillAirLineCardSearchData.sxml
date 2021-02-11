@@ -1,0 +1,105 @@
+﻿<Script DBType="Main" Module="Common"  AOT="true" TargetTableName="Airlines">
+  <Sql Version="1">
+    <![CDATA[
+
+If(OBJECT_ID('tempdb..#temp_CardSearches') Is Not Null)
+Begin
+    Drop Table #temp_CardSearches
+End
+
+ 
+CREATE TABLE #temp_CardSearches
+(
+	[Tenant] [int] NOT NULL,
+	[RecordDate] [datetime] NOT NULL,
+	[Keyword] [nvarchar](100) NULL,
+	[Weight] [int] NOT NULL,
+	[CardId] [varchar](15) NULL,
+	[PartnerTypeId] [varchar](2) not NULL,
+    [InActive] bit,
+	[IsCustomer] bit
+)
+
+
+
+
+declare  @Tenant int
+declare @Count as int
+set @Count = 0;
+
+declare  @CardId varchar(15)
+declare  @EnglishName varchar(70)
+declare  @CreateDate datetime
+declare  @UpdateDate datetime
+declare  @Weight int
+declare  @PartnerTypeId varchar(2)
+declare  @InActive bit
+declare  @Prefix varchar(3)
+declare  @ICAO varchar(3)
+declare  @IsCustomer bit
+
+
+     DECLARE AirlinesCursor CURSOR READ_ONLY
+     FOR
+     select Cards.Id ,Cards.Tenant , Cards.InActive,Cards.CreateDate , Cards.UpdateDate ,Cards.IsCustomer , Cards.PartnerTypeId,Airlines.Prefix,Airlines.ICAO
+     from Airlines
+     INNER JOIN Cards ON Cards.Id = Airlines.Id
+     where  $LastCounterWhere$
+
+     OPEN AirlinesCursor FETCH NEXT FROM AirlinesCursor INTO  @CardId,@Tenant, @InActive,  @CreateDate , @UpdateDate ,@IsCustomer,  @PartnerTypeId , @Prefix , @ICAO
+     WHILE @@FETCH_STATUS = 0
+     BEGIN
+
+ 
+        begin
+		          set @Weight = 0
+	            DECLARE  @newId varchar(100) ;
+	            declare  @RecordDate datetime
+		          set @RecordDate = @UpdateDate;
+	          	 if(@RecordDate is null) set @RecordDate = @CreateDate
+
+			       BEGIN TRY  
+
+		        	    if (@Prefix  is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive ,IsCustomer, Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive , @IsCustomer, t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@Prefix , 30 , 30) t where KeyWord !=' ' end
+		              if (@ICAO is not null)	begin 		 insert into #temp_CardSearches (Tenant, CardId  , RecordDate  , PartnerTypeId,InActive ,IsCustomer, Keyword , Weight) select  @Tenant, @CardId , @RecordDate  , @PartnerTypeId,@InActive , @IsCustomer, t.Keyword  , t.weight from dbo.BuildSearchKeywordFunction(@ICAO , 30 , 30) t where KeyWord !=' ' end
+
+
+	                set @Count = @Count + 1;
+                  if(@Count = 500000)
+                   begin    
+
+		                  insert into CardSearches (Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive, IsCustomer) select  Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive,IsCustomer from #temp_CardSearches
+                       truncate table #temp_CardSearches
+                       set @Count = 0
+                    end
+              
+		  	     END TRY 
+		     	  BEGIN CATCH  
+
+            declare @Exception as varchar(4000)
+            set @Exception = (SELECT   ERROR_MESSAGE() AS ErrorMessage);  
+            set @Exception = @Exception + ' (@CardId: ' + @CardId +') '+ ' (@Tenant: ' + CAST(@Tenant as varchar(100)) + ' )'
+             RAISERROR(@Exception, 16, 3);
+
+           RETURN;
+            END CATCH  
+
+    
+
+        end
+
+ 
+    FETCH NEXT FROM AirlinesCursor INTO  @CardId,@Tenant, @InActive,  @CreateDate , @UpdateDate ,@IsCustomer,  @PartnerTypeId ,  @Prefix , @ICAO
+    END
+    CLOSE AirlinesCursor
+    DEALLOCATE AirlinesCursor
+
+ 
+        if (@Count > 0) begin  insert into CardSearches (Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive , IsCustomer) select  Tenant, CardId , Keyword , RecordDate , Weight , PartnerTypeId,InActive , IsCustomer from #temp_CardSearches end
+ 
+	 
+             drop table #temp_CardSearches
+    ]]>
+  </Sql>
+  <Oracle Version="1"></Oracle>
+</Script>

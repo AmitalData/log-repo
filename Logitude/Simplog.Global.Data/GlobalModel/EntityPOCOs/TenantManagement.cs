@@ -192,8 +192,19 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public double? TotalPaymentamount { get; set; }
      
         public string BackgroundId { get; set; }
+        public string ComapnylogoId { get; set; }
+        public string InvertedLogoId { get; set; }
+        public string BrowserIconId { get; set; }
+        public string ShipmentHeaderImageId { get; set; }
+
 
         public bool NoPaymentForChildTenants { get; set; }
+
+        public DateTime? LastEbookingSentDate { get; set; }
+        public DateTime? LastSISentDate { get; set; }
+        public int NumberOfBookingSentLastWeek { get; set; }
+        public int NumberOfSISentLastWeek { get; set; }
+        public DateTime? LastContainerStatusReceived { get; set; }
 
     }
 }

@@ -49,6 +49,9 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.CC = entityPM.CC;
             poco.BCC = entityPM.BCC;
             poco.DefultAttachmentsXML = entityPM.DefultAttachmentsXML;
+            poco.To = entityPM.To;
+            poco.AutomationId = entityPM.AutomationId;
+
 
             if (entityPM.IsDefultAttachmentsXMLChanged)
             {

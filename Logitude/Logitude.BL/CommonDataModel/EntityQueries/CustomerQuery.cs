@@ -58,12 +58,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             {
                 if (CacheManager.CacheWrapper.Get(entityName) == null)
                 {
-                    entity = (from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Rank").Include("Card.SharedLogisticsInvitationStatus").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("LeadSource").Include("CustomerStatus").Include("ActivatedByUser.Contact").Include("SetAsInactiveByUser.Contact").Include("ActivationRequestedByUser.Contact")
+                    entity = (from a in repository.context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Rank").Include("Card.SharedLogisticsInvitationStatus").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("LeadSource").Include("CustomerStatus").Include("ActivatedByUser.Contact").Include("SetAsInactiveByUser.Contact").Include("ActivationRequestedByUser.Contact")
                               where a.Tenant == tenant && a.Id == id
                               select new CustomerPM()
                               {
-                                  BillToId = a.BillToId,
-                                  BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
+                                  BillToId = a.Card.BillToId,
+                                  BillToName = a.Card == null ? "" : a.Card.EnglishName,
                                   Id = a.Id,
                                   RankId = a.RankId,
                                   AccountManagerUserId = a.AccountManagerUserId,
@@ -181,6 +181,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   StorageFreeDays = a.Card.StorageFreeDays,
                                   GLAccountNumber = a.Card.GLAccountDisplayNumber,
                                   EORInumber = a.EORInumber,
+                                  IsAutonomy = a.Card.IsAutonomy,
                                   Card = new CardPM()
                                   {
                                       Id = a.Id,
@@ -218,12 +219,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             else
             {
-                entity = (from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Rank").Include("Card.SharedLogisticsInvitationStatus").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("LeadSource").Include("CustomerStatus").Include("ActivatedByUser.Contact").Include("SetAsInactiveByUser.Contact").Include("ActivationRequestedByUser.Contact")
+                entity = (from a in repository.context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Rank").Include("Card.SharedLogisticsInvitationStatus").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("LeadSource").Include("CustomerStatus").Include("ActivatedByUser.Contact").Include("SetAsInactiveByUser.Contact").Include("ActivationRequestedByUser.Contact")
                           where a.Id == id && a.Tenant == tenant
                           select new CustomerPM()
                           {
-                              BillToId = a.BillToId,
-                              BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
+                              BillToId = a.Card.BillToId,
+                              BillToName = a.Card.EnglishName,
                               Id = a.Id,
                               RankId = a.RankId,
                               AccountManagerUserId = a.AccountManagerUserId,
@@ -341,6 +342,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               StorageFreeDays = a.Card.StorageFreeDays,
                               GLAccountNumber = a.Card.GLAccountDisplayNumber,
                               EORInumber = a.EORInumber,
+                              IsAutonomy = a.Card.IsAutonomy,
                               Card = new CardPM
                               {
                                   Id = a.Id,
@@ -593,12 +595,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             {
                 if (CacheManager.CacheWrapper.Get(entityName) == null)
                 {
-                    entity = (from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("Card.SharedLogisticsInvitationStatus").Include("LeadSource").Include("CustomerStatus")
+                    entity = (from a in repository.context.Customers.Include("Card").Include("Card.SharedLogisticsInvitationStatus").Include("LeadSource").Include("CustomerStatus")
                               where a.Tenant == tenant && a.Id == id
                               select new CustomerPM()
                               {
-                                  BillToId = a.BillToId,
-                                  BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
+                                  BillToId = a.Card.BillToId,
+                                  BillToName = a.Card.EnglishName,
                                   Id = a.Id,
                                   RankId = a.RankId,
                                   AccountManagerUserId = a.AccountManagerUserId,
@@ -690,6 +692,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   UsoCFDICode = a.Card.UsoCFDICode,
                                   CompetitorFields = a.CompetitorFields,
                                   CreatedByPartner = a.Card.CreatedByPartner,
+                                  IsAutonomy = a.Card.IsAutonomy,
                                   Card = new CardPM()
                                   {
                                       Id = a.Id,
@@ -725,12 +728,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             else
             {
-                entity = (from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("Card.SharedLogisticsInvitationStatus").Include("LeadSource").Include("CustomerStatus")
+                entity = (from a in repository.context.Customers.Include("Card").Include("Card.SharedLogisticsInvitationStatus").Include("LeadSource").Include("CustomerStatus")
                           where a.Tenant == tenant && a.Id == id
                           select new CustomerPM()
                           {
-                              BillToId = a.BillToId,
-                              BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
+                              BillToId = a.Card.BillToId,
+                              BillToName = a.Card.EnglishName,
                               Id = a.Id,
                               RankId = a.RankId,
                               AccountManagerUserId = a.AccountManagerUserId,
@@ -822,6 +825,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               UsoCFDICode = a.Card.UsoCFDICode,
                               CompetitorFields = a.CompetitorFields,
                               CreatedByPartner = a.Card.CreatedByPartner,
+                              IsAutonomy = a.Card.IsAutonomy,
                               Card = new CardPM()
                               {
                                   Id = a.Id,
@@ -1074,12 +1078,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 {
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
-                        entity = (from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("Card.SharedLogisticsInvitationStatus").Include("LeadSource").Include("CustomerStatus")
+                        entity = (from a in repository.context.Customers.Include("Card").Include("Card.SharedLogisticsInvitationStatus").Include("LeadSource").Include("CustomerStatus")
                                   where a.Tenant == tenant && a.Card.Code == code
                                   select new CustomerPM()
                                   {
-                                      BillToId = a.BillToId,
-                                      BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
+                                      BillToId = a.Card.BillToId,
+                                      BillToName = a.Card.EnglishName,
                                       Id = a.Id,
                                       RankId = a.RankId,
                                       AccountManagerUserId = a.AccountManagerUserId,
@@ -1175,6 +1179,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       UsoCFDICode = a.Card.UsoCFDICode,
                                       CompetitorFields = a.CompetitorFields,
                                       CreatedByPartner = a.Card.CreatedByPartner,
+                                      IsAutonomy = a.Card.IsAutonomy,
                                       Card = new CardPM()
                                       {
                                           Id = a.Id,
@@ -1207,12 +1212,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 }
                 else
                 {
-                    entity = (from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("Card.SharedLogisticsInvitationStatus").Include("LeadSource").Include("CustomerStatus")
+                    entity = (from a in repository.context.Customers.Include("Card").Include("Card.SharedLogisticsInvitationStatus").Include("LeadSource").Include("CustomerStatus")
                               where a.Card.Code == code && a.Tenant == tenant
                               select new CustomerPM()
                               {
-                                  BillToId = a.BillToId,
-                                  BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
+                                  BillToId = a.Card.BillToId,
+                                  BillToName = a.Card.EnglishName,
                                   Id = a.Id,
                                   RankId = a.RankId,
                                   AccountManagerUserId = a.AccountManagerUserId,
@@ -1308,6 +1313,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   UsoCFDICode = a.Card.UsoCFDICode,
                                   CompetitorFields = a.CompetitorFields,
                                   CreatedByPartner = a.Card.CreatedByPartner,
+                                  IsAutonomy = a.Card.IsAutonomy,
                                   Card = new CardPM
                                   {
                                       Id = a.Id,
@@ -1332,12 +1338,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
             else
             {
-                entity = (from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("Card.SharedLogisticsInvitationStatus").Include("LeadSource").Include("CustomerStatus")
+                entity = (from a in repository.context.Customers.Include("Card").Include("Card.SharedLogisticsInvitationStatus").Include("LeadSource").Include("CustomerStatus")
                           where a.Card.Code == code && a.Tenant == tenant
                           select new CustomerPM()
                           {
-                              BillToId = a.BillToId,
-                              BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
+                              BillToId = a.Card.BillToId,
+                              BillToName = a.Card.EnglishName,
                               Id = a.Id,
                               RankId = a.RankId,
                               AccountManagerUserId = a.AccountManagerUserId,
@@ -1428,6 +1434,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               MetodoPagoCode = a.Card.MetodoPagoCode,
                               UsoCFDICode = a.Card.UsoCFDICode,
                               CreatedByPartner = a.Card.CreatedByPartner,
+                              IsAutonomy = a.Card.IsAutonomy,
                               Card = new CardPM()
                               {
                                   Id = a.Id,
@@ -1534,12 +1541,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 {
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
-                        entity = (from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("Card.SharedLogisticsInvitationStatus").Include("LeadSource").Include("CustomerStatus")
+                        entity = (from a in repository.context.Customers.Include("Card").Include("Card.SharedLogisticsInvitationStatus").Include("LeadSource").Include("CustomerStatus")
                                   where a.Tenant == tenant && a.Card.VatNumber == vatNumber
                                   select new CustomerPM()
                                   {
-                                      BillToId = a.BillToId,
-                                      BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
+                                      BillToId = a.Card.BillToId,
+                                      BillToName = a.Card.EnglishName,
                                       Id = a.Id,
                                       RankId = a.RankId,
                                       AccountManagerUserId = a.AccountManagerUserId,
@@ -1635,6 +1642,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       UsoCFDICode = a.Card.UsoCFDICode,
                                       CompetitorFields = a.CompetitorFields,
                                       CreatedByPartner = a.Card.CreatedByPartner,
+                                      IsAutonomy = a.Card.IsAutonomy,
                                       Card = new CardPM()
                                       {
                                           Id = a.Id,
@@ -1667,12 +1675,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 }
                 else
                 {
-                    entity = (from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("Card.SharedLogisticsInvitationStatus").Include("LeadSource").Include("CustomerStatus")
+                    entity = (from a in repository.context.Customers.Include("Card").Include("Card.SharedLogisticsInvitationStatus").Include("LeadSource").Include("CustomerStatus")
                               where a.Card.VatNumber == vatNumber && a.Tenant == tenant
                               select new CustomerPM()
                               {
-                                  BillToId = a.BillToId,
-                                  BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
+                                  BillToId = a.Card.BillToId,
+                                  BillToName = a.Card.EnglishName,
                                   Id = a.Id,
                                   RankId = a.RankId,
                                   AccountManagerUserId = a.AccountManagerUserId,
@@ -1768,6 +1776,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   UsoCFDICode = a.Card.UsoCFDICode,
                                   CompetitorFields = a.CompetitorFields,
                                   CreatedByPartner = a.Card.CreatedByPartner,
+                                  IsAutonomy = a.Card.IsAutonomy,
                                   Card = new CardPM
                                   {
                                       Id = a.Id,
@@ -1792,12 +1801,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
             else
             {
-                entity = (from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("Card.SharedLogisticsInvitationStatus").Include("LeadSource").Include("CustomerStatus")
+                entity = (from a in repository.context.Customers.Include("Card").Include("Card.SharedLogisticsInvitationStatus").Include("LeadSource").Include("CustomerStatus")
                           where a.Card.VatNumber == vatNumber && a.Tenant == tenant
                           select new CustomerPM()
                           {
-                              BillToId = a.BillToId,
-                              BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
+                              BillToId = a.Card.BillToId,
+                              BillToName = a.Card.EnglishName,
                               Id = a.Id,
                               RankId = a.RankId,
                               AccountManagerUserId = a.AccountManagerUserId,
@@ -1893,6 +1902,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               UsoCFDICode = a.Card.UsoCFDICode,
                               CompetitorFields = a.CompetitorFields,
                               CreatedByPartner = a.Card.CreatedByPartner,
+                              IsAutonomy = a.Card.IsAutonomy,
                               Card = new CardPM()
                               {
                                   Id = a.Id,
@@ -1994,12 +2004,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<CustomerPM> GetCustomerPMsByTenant(int tenant)
         {
-            IQueryable<CustomerPM> customers = from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("LeadSource")
+            IQueryable<CustomerPM> customers = from a in repository.context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("LeadSource")
                                                where a.Tenant == tenant
                                                select new CustomerPM()
                                                {
-                                                   BillToId = a.BillToId,
-                                                   BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
+                                                   BillToId = a.Card.BillToId,
+                                                   BillToName = a.Card.EnglishName,
                                                    Id = a.Id,
                                                    RankId = a.RankId,
                                                    AccountManagerUserId = a.AccountManagerUserId,
@@ -2102,6 +2112,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    UsoCFDICode = a.Card.UsoCFDICode,
                                                    CreatedByPartner = a.Card.CreatedByPartner,
                                                    EORInumber = a.EORInumber,
+                                                   IsAutonomy = a.Card.IsAutonomy,
                                                    Card = new CardPM()
                                                    {
                                                        Id = a.Id,
@@ -2122,12 +2133,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             string nameNew = "";
             nameNew = name;
 
-            var query = from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator")
+            var query = from a in repository.context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator")
                         where a.Tenant == tenant
                         select new CustomerPM()
                         {
-                            BillToId = a.BillToId,
-                            BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
+                            BillToId = a.Card.BillToId,
+                            BillToName = a.Card.EnglishName,
                             Id = a.Id,
                             RankId = a.RankId,
                             AccountManagerUserId = a.AccountManagerUserId,
@@ -2230,6 +2241,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             UsoCFDICode = a.Card.UsoCFDICode,
                             CreatedByPartner = a.Card.CreatedByPartner,
                             EORInumber = a.EORInumber,
+                            IsAutonomy = a.Card.IsAutonomy,
                             Card = new CardPM()
                             {
                                 Id = a.Id,
@@ -2319,7 +2331,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    InActive = customer.InActive,
                                                    Notes = customer.Notes,
                                                    SupportNotes = customer.SupportNotes,
-                                                   BillToId = customer.BillToId,
                                                    Website = customer.Website,
                                                    SalesmanUserId = customer.SalesmanUserId,
                                                    SalesmanBusinessUnitId = customer.SalesmanBusinessUnitId,
@@ -2342,7 +2353,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    CollectorName = customer.CollectorName,
                                                    ClassifierName = customer.ClassifierName,
                                                    VatTypeId = customer.VatTypeId,
-                                                   BillToName = customer.BillToName,
                                                    Field1 = customer.Field1,
                                                    Field2 = customer.Field2,
                                                    Field3 = customer.Field3,
@@ -2439,6 +2449,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    CreatedByPartner = customer.CreatedByPartner,
                                                    StateName = customer.StateName,
                                                    GLAccountNumber = customer.GLAccountDisplayNumber,
+                                                   IsAutonomy = customer.IsAutonomy,
                                                });
 
 
@@ -2448,7 +2459,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public CustomerList GetSingleCustomerList(string id, int tenant)
         {
-            CustomerList customerList = (from customer in repository.context.Customers.Include("Card").Include("BillToCard").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("Card.CreatedByUser.Contact").Include("Card.UpdatedByUser.Contact").Include("Card.PrimaryContact").Include("Region").Include("CustomerSize").Include("ActivatedByUser.Contact").Include("SetAsInactiveByUser.Contact").Include("ActivationRequestedByUser.Contact")
+            CustomerList customerList = (from customer in repository.context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("Card.CreatedByUser.Contact").Include("Card.UpdatedByUser.Contact").Include("Card.PrimaryContact").Include("Region").Include("CustomerSize").Include("ActivatedByUser.Contact").Include("SetAsInactiveByUser.Contact").Include("ActivationRequestedByUser.Contact")
                                          where customer.Tenant == tenant && customer.Id == id
                                          select new CustomerList()
                                          {
@@ -2460,8 +2471,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              InActive = customer.Card.InActive,
                                              Notes = customer.Card.Notes,
                                              SupportNotes = customer.Card.SupportNotes,
-                                             BillToId = customer.BillToId,
-                                             BillToName = customer.BillToCard == null ? "" : customer.BillToCard.EnglishName,
                                              Website = customer.Card.Website,
                                              SalesmanUserId = customer.SalesmanUserId,
                                              SalesmanUserEnglishName = customer.SalesmanUser == null ? null : (customer.SalesmanUser.Contact == null ? null : customer.SalesmanUser.Contact.EnglishName),
@@ -2578,6 +2587,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              ActivationRequestedByUserName = customer.ActivationRequestedByUser == null ? null : (customer.ActivationRequestedByUser.Contact == null ? null : customer.ActivationRequestedByUser.Contact.EnglishName),
                                              CreatedByPartner = customer.Card.CreatedByPartner,
                                              GLAccountNumber = customer.Card.GLAccountDisplayNumber,
+                                             IsAutonomy = customer.Card.IsAutonomy,
                                          }).FirstOrDefault();
 
             return customerList;
@@ -2634,7 +2644,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public CustomerList GetSingleCustomerListByCode(string code, int tenant)
         {
-            CustomerList customerList = (from customer in repository.context.Customers.Include("Card").Include("BillToCard").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("Card.CreatedByUser.Contact").Include("Card.UpdatedByUser.Contact").Include("Card.PrimaryContact").Include("Card.InvoiceCurrency").Include("CustomerSize")
+            CustomerList customerList = (from customer in repository.context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("Card.CreatedByUser.Contact").Include("Card.UpdatedByUser.Contact").Include("Card.PrimaryContact").Include("Card.InvoiceCurrency").Include("CustomerSize")
                                          where customer.Tenant == tenant && customer.Card.Code == code
                                          select new CustomerList()
                                          {
@@ -2646,8 +2656,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              InActive = customer.Card.InActive,
                                              Notes = customer.Card.Notes,
                                              SupportNotes = customer.Card.SupportNotes,
-                                             BillToId = customer.BillToId,
-                                             BillToName = customer.BillToCard == null ? "" : customer.BillToCard.EnglishName,
                                              Website = customer.Card.Website,
                                              SalesmanUserId = customer.SalesmanUserId,
                                              SalesmanUserEnglishName = customer.SalesmanUser == null ? null : (customer.SalesmanUser.Contact == null ? null : customer.SalesmanUser.Contact.EnglishName),
@@ -2749,6 +2757,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              MetodoPagoCode = customer.Card.MetodoPagoCode,
                                              UsoCFDICode = customer.Card.UsoCFDICode,
                                              CreatedByPartner = customer.Card.CreatedByPartner,
+                                             IsAutonomy = customer.Card.IsAutonomy,
                                          }).FirstOrDefault();
 
             return customerList;
@@ -2756,7 +2765,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public CustomerList GetSingleCustomerListByVatNumber(string vatnumber, int tenant)
         {
-            CustomerList customerList = (from customer in repository.context.Customers.Include("Card").Include("BillToCard").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("Card.CreatedByUser.Contact").Include("Card.UpdatedByUser.Contact").Include("Card.PrimaryContact").Include("Card.InvoiceCurrency").Include("CustomerSize")
+            CustomerList customerList = (from customer in repository.context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("Card.CreatedByUser.Contact").Include("Card.UpdatedByUser.Contact").Include("Card.PrimaryContact").Include("Card.InvoiceCurrency").Include("CustomerSize")
                                          where customer.Tenant == tenant && customer.Card.VatNumber == vatnumber
                                          select new CustomerList()
                                          {
@@ -2768,8 +2777,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              InActive = customer.Card.InActive,
                                              Notes = customer.Card.Notes,
                                              SupportNotes = customer.Card.SupportNotes,
-                                             BillToId = customer.BillToId,
-                                             BillToName = customer.BillToCard == null ? "" : customer.BillToCard.EnglishName,
                                              Website = customer.Card.Website,
                                              SalesmanUserId = customer.SalesmanUserId,
                                              SalesmanUserEnglishName = customer.SalesmanUser == null ? null : (customer.SalesmanUser.Contact == null ? null : customer.SalesmanUser.Contact.EnglishName),
@@ -2871,7 +2878,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              MetodoPagoCode = customer.Card.MetodoPagoCode,
                                              UsoCFDICode = customer.Card.UsoCFDICode,
                                              CreatedByPartner = customer.Card.CreatedByPartner,
-
+                                             IsAutonomy = customer.Card.IsAutonomy,
                                          }).FirstOrDefault();
 
             return customerList;
@@ -2897,7 +2904,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             foreach (EntityLastActivity lastActivity in lastActivities)
             {
-                Customer a = (from d in repository.context.Customers.Include("Card").Include("BillToCard").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Rank").Include("Card.SharedLogisticsInvitationStatus").Include("Industry").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("Card.CreatedByUser.Contact").Include("Card.UpdatedByUser.Contact").Include("Card.PrimaryContact").Include("Card.InvoiceCurrency").Include("CustomerStatus")
+                Customer a = (from d in repository.context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Rank").Include("Card.SharedLogisticsInvitationStatus").Include("Industry").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("Card.CreatedByUser.Contact").Include("Card.UpdatedByUser.Contact").Include("Card.PrimaryContact").Include("Card.InvoiceCurrency").Include("CustomerStatus")
                               where d.Id == lastActivity.EntityId
                               select d).FirstOrDefault();
 
@@ -2905,8 +2912,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 {
                     CustomerList list = new CustomerList()
                     {
-                        BillToId = a.BillToId,
-                        BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
                         Id = a.Id,
                         SalesmanUserId = a.SalesmanUserId,
                         SalesmanUserEnglishName = a.SalesmanUser == null ? null : (a.SalesmanUser.Contact == null ? null : a.SalesmanUser.Contact.EnglishName),
@@ -3007,6 +3012,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         MetodoPagoCode = a.Card.MetodoPagoCode,
                         UsoCFDICode = a.Card.UsoCFDICode,
                         CreatedByPartner = a.Card.CreatedByPartner,
+                        IsAutonomy = a.Card.IsAutonomy,
                     };
 
                     entityList.Add(list);
@@ -3582,12 +3588,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             {
                 if (CacheManager.CacheWrapper.Get(entityName) == null)
                 {
-                    entity = (from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Rank").Include("Card.SharedLogisticsInvitationStatus").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("LeadSource").Include("CustomerStatus")
+                    entity = (from a in repository.context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Rank").Include("Card.SharedLogisticsInvitationStatus").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("LeadSource").Include("CustomerStatus")
                               where a.Tenant == tenant && a.Id == id
                               select new CustomerPM()
                               {
-                                  BillToId = a.BillToId,
-                                  BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
+                                  BillToId = a.Card.BillToId,
+                                  BillToName = a.Card.EnglishName,
                                   Id = a.Id,
                                   RankId = a.RankId,
                                   AccountManagerUserId = a.AccountManagerUserId,
@@ -3694,6 +3700,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   MetodoPagoCode = a.Card.MetodoPagoCode,
                                   UsoCFDICode = a.Card.UsoCFDICode,
                                   CreatedByPartner = a.Card.CreatedByPartner,
+                                  IsAutonomy = a.Card.IsAutonomy,
                                   Card = new CardPM()
                                   {
                                       Id = a.Id,
@@ -3729,12 +3736,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             else
             {
-                entity = (from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Rank").Include("Card.SharedLogisticsInvitationStatus").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("Card.PrimaryContact").Include("LeadSource").Include("CustomerStatus")
+                entity = (from a in repository.context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Rank").Include("Card.SharedLogisticsInvitationStatus").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("Card.PrimaryContact").Include("LeadSource").Include("CustomerStatus")
                           where a.Id == id && a.Tenant == tenant
                           select new CustomerPM()
                           {
-                              BillToId = a.BillToId,
-                              BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
+                              BillToId = a.Card.BillToId,
+                              BillToName = a.Card.EnglishName,
                               Id = a.Id,
                               RankId = a.RankId,
                               AccountManagerUserId = a.AccountManagerUserId,
@@ -3841,6 +3848,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               MetodoPagoCode = a.Card.MetodoPagoCode,
                               UsoCFDICode = a.Card.UsoCFDICode,
                               CreatedByPartner = a.Card.CreatedByPartner,
+                              IsAutonomy = a.Card.IsAutonomy,
                               Card = new CardPM
                               {
                                   Id = a.Id,
@@ -4082,12 +4090,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public CustomerPM GetSingleCustomerPMByCode(string code, int tenant)
         {
-            CustomerPM entity = (from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("Card.SharedLogisticsInvitationStatus").Include("LeadSource").Include("CustomerStatus")
+            CustomerPM entity = (from a in repository.context.Customers.Include("Card").Include("Card.SharedLogisticsInvitationStatus").Include("LeadSource").Include("CustomerStatus")
                                  where a.Card.Code == code && a.Tenant == tenant
                                  select new CustomerPM()
                                  {
-                                     BillToId = a.BillToId,
-                                     BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
+                                     BillToId = a.Card.BillToId,
+                                     BillToName = a.Card.EnglishName,
                                      Id = a.Id,
                                      RankId = a.RankId,
                                      AccountManagerUserId = a.AccountManagerUserId,
@@ -4178,6 +4186,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      MetodoPagoCode = a.Card.MetodoPagoCode,
                                      UsoCFDICode = a.Card.UsoCFDICode,
                                      CreatedByPartner = a.Card.CreatedByPartner,
+                                     IsAutonomy = a.Card.IsAutonomy,
                                      Card = new CardPM()
                                      {
                                          Id = a.Id,
@@ -4283,12 +4292,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             {
                 if (CacheManager.CacheWrapper.Get(entityName) == null)
                 {
-                    entity = (from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Rank").Include("Card.SharedLogisticsInvitationStatus").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("LeadSource").Include("CustomerStatus").Include("ActivatedByUser.Contact").Include("SetAsInactiveByUser.Contact").Include("ActivationRequestedByUser.Contact")
+                    entity = (from a in repository.context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Rank").Include("Card.SharedLogisticsInvitationStatus").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("LeadSource").Include("CustomerStatus").Include("ActivatedByUser.Contact").Include("SetAsInactiveByUser.Contact").Include("ActivationRequestedByUser.Contact")
                               where a.Tenant == tenant && a.Id == id
                               select new CustomerPM()
                               {
-                                  BillToId = a.BillToId,
-                                  BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
+                                  BillToId = a.Card.BillToId,
+                                  BillToName = a.Card.EnglishName,
                                   Id = a.Id,
                                   RankId = a.RankId,
                                   AccountManagerUserId = a.AccountManagerUserId,
@@ -4404,6 +4413,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   GLAccountId = a.Card.GLAccountId,
                                   CreatedByPartner = a.Card.CreatedByPartner,
                                   StorageFreeDays = a.Card.StorageFreeDays,
+                                  IsAutonomy = a.Card.IsAutonomy,
                                   Card = new CardPM()
                                   {
                                       Id = a.Id,
@@ -4432,12 +4442,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             else
             {
-                entity = (from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Rank").Include("Card.SharedLogisticsInvitationStatus").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("LeadSource").Include("CustomerStatus").Include("ActivatedByUser.Contact").Include("SetAsInactiveByUser.Contact").Include("ActivationRequestedByUser.Contact")
+                entity = (from a in repository.context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Rank").Include("Card.SharedLogisticsInvitationStatus").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("LeadSource").Include("CustomerStatus").Include("ActivatedByUser.Contact").Include("SetAsInactiveByUser.Contact").Include("ActivationRequestedByUser.Contact")
                           where a.Id == id && a.Tenant == tenant
                           select new CustomerPM()
                           {
-                              BillToId = a.BillToId,
-                              BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
+                              BillToId = a.Card.BillToId,
+                              BillToName = a.Card.EnglishName,
                               Id = a.Id,
                               RankId = a.RankId,
                               AccountManagerUserId = a.AccountManagerUserId,
@@ -4553,6 +4563,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               GLAccountId = a.Card.GLAccountId,
                               CreatedByPartner = a.Card.CreatedByPartner,
                               StorageFreeDays = a.Card.StorageFreeDays,
+                              IsAutonomy = a.Card.IsAutonomy,
                               Card = new CardPM
                               {
                                   Id = a.Id,
@@ -4576,12 +4587,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public CustomerPM GetSinglePMByExternalId(string externalId, int tenant)
         {
-            CustomerPM entity = (from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("Card.SharedLogisticsInvitationStatus").Include("LeadSource").Include("CustomerStatus")
+            CustomerPM entity = (from a in repository.context.Customers.Include("Card").Include("Card.SharedLogisticsInvitationStatus").Include("LeadSource").Include("CustomerStatus")
                                  where a.Card.ReceivablesAccountingCard == externalId && a.Tenant == tenant
                                  select new CustomerPM()
                                  {
-                                     BillToId = a.BillToId,
-                                     BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
+                                     BillToId = a.Card.BillToId,
+                                     BillToName = a.Card.EnglishName,
                                      Id = a.Id,
                                      RankId = a.RankId,
                                      AccountManagerUserId = a.AccountManagerUserId,
@@ -4672,6 +4683,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      MetodoPagoCode = a.Card.MetodoPagoCode,
                                      UsoCFDICode = a.Card.UsoCFDICode,
                                      CreatedByPartner = a.Card.CreatedByPartner,
+                                     IsAutonomy = a.Card.IsAutonomy,
                                      Card = new CardPM()
                                      {
                                          Id = a.Id,

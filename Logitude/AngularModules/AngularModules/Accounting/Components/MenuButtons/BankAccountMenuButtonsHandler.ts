@@ -25,6 +25,8 @@ export class BankAccountMenuButtonsHandler {
     private CurrentSession = SessionLocator.SelectedSession;
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
     _CurrencyPMService: CurrencyPMService = new CurrencyPMService();
+    public DontShowLocal: boolean = SessionLocator.LoggedUserPM.DontShowLocal;;
+
 
 
     public SetEntityPM(entityArgs: EntityArgs) {
@@ -147,8 +149,8 @@ export class BankAccountMenuButtonsHandler {
         logitudeWindow.Width = (screenWidth > 1024) ? (screenWidth > 1200 ? 1500 : screenWidth - 20) : 900;
         logitudeWindow.Height = (screenHeight > 768) ? (screenHeight > 850 ? 700 : screenHeight - 70) : screenHeight - 70;
 
-        logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.ExternalReconcile");
-
+        var BankName = this.getBankName();
+        logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.ExternalReconcile") + ' - ' + BankName;
         logitudeWindow.IsFullScreen = true;
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./Accounting/Components/Others/ExternalReconcileComponent');
@@ -156,6 +158,15 @@ export class BankAccountMenuButtonsHandler {
             // show alert
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
+    }
+
+    getBankName(): string {
+        var isBankNameNotExists = this.EntityPM.EnglishName == null && this.EntityPM.LocalName == null;
+        var BankCode = this.DontShowLocal ? this.EntityPM.BankCodeEnglishName : this.EntityPM.BankCodeLocalName ? this.EntityPM.BankCodeLocalName : this.EntityPM.BankCodeEnglishName;
+        var BankEnglishName = this.EntityPM.EnglishName == null ? BankCode : this.EntityPM.EnglishName;
+        var BankLocalName = this.EntityPM.LocalName == null ? this.EntityPM.EnglishName : this.EntityPM.LocalName;
+        var BankName = this.DontShowLocal ? BankEnglishName : BankLocalName;
+        return isBankNameNotExists ? BankCode : BankName;
     }
 
 }

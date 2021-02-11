@@ -13,7 +13,7 @@ import { JournalLinePM } from '../../EntityPMs/JournalLinePM';
     templateUrl: './CopyJournalComponent.html',
 })
 
-export class CopyJournalComponent extends BaseComponent {
+export class CopyJournalComponent extends BaseComponent implements OnInit  {
     public EntityPM: JournalPM;
     public DataContext: any = this;
     public ObjectTableName: string = "Journal";
@@ -21,6 +21,7 @@ export class CopyJournalComponent extends BaseComponent {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
 
+    disableDates: boolean = true;
     constructor() {
         super();
 
@@ -28,9 +29,6 @@ export class CopyJournalComponent extends BaseComponent {
 
     }
 
-    SetUIProperties() {
-
-    }
 
     SetWindowArgs(args: any) {
         if (args != null) {
@@ -77,7 +75,10 @@ export class CopyJournalComponent extends BaseComponent {
             this.ValidationErrorsList.push(error);
         }
     }
-
+    public forceFocus: boolean = false;
+    ngOnInit() {
+        var t = setTimeout(() => { this.forceFocus = true; }, 1);
+    }
     NewJournalMapping(journal: JournalPM) {
         journal.IsNew = true;
         journal.TypeCode = "0"; // Manual
@@ -152,6 +153,13 @@ export class CopyJournalComponent extends BaseComponent {
     set Dates(value: boolean) {
         if (this.dates != value) {
             this.dates = value;
+            
+            this.disableDates = value;
+            
+            if(this.disableDates)
+                this.ResetDates();
+
+
         }
     }
 
@@ -177,5 +185,12 @@ export class CopyJournalComponent extends BaseComponent {
         if (this.documentDate != value) {
             this.documentDate = value;
         }
+    }
+
+
+    ResetDates(){
+        this.AccountingDate = null;
+        this.DueDate = null;
+        this.DocumentDate = null;
     }
 }

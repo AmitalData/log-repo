@@ -10,6 +10,7 @@ namespace Logitude.HybridTest.WcfCallers
 
     class PrepareShipment
     {
+        private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
         public static void PrepareShipmentVars()
         {
             //GetCurrencyCodeEUR();
@@ -152,7 +153,7 @@ namespace Logitude.HybridTest.WcfCallers
                 ServiceFilterType = null,
             };
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, 0, 10, serviceResponse };
+            object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, 0, 20, serviceResponse };
             ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
 
             ChargesTypeList[] chargesTypes = (ChargesTypeList[])serviceOutcome.Result;
@@ -267,7 +268,7 @@ namespace Logitude.HybridTest.WcfCallers
         }
         private static Response AssertResponse<T>(T entityPM)
         {
-            ServiceOutcome serviceOutcome = EntityWcfCaller.CallEntityUpsert(entityPM);
+            ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(entityPM);
             Assert.IsFalse(serviceOutcome.Response.HasError, "Prepare Shipment Vars Failed! " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNotNull(serviceOutcome.Response.Result, "Prepare Shipment Vars Failed! " + serviceOutcome.Response.ErrorMessage);
             return serviceOutcome.Response;

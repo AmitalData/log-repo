@@ -40,6 +40,7 @@ export class LogitudeWindow {
     public IsFillScreen_90: boolean = false;
     public SuppressBusyIndicator: boolean = false;
     public IsHideWindowMargin: boolean = false;
+    public EditComponentArguments: any = null;
 
     @Output() WindowClosed: EventEmitter<any> = new EventEmitter();
     @Output() ComponentLoaded: EventEmitter<any> = new EventEmitter();
@@ -501,6 +502,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
                             this.ComponentRef = cmpRef;
                             cmpRef.instance.ComponentRef = cmpRef;
                             cmpRef.instance.IsInsideWindow = true;
+                            cmpRef.instance.EditComponentArgument = this.logWindow.EditComponentArguments;
                             cmpRef.instance.ComponentBackground = "transparent";
                             cmpRef.instance.Run({ EntityId: this.EditComponentEntityId, ObjectTableName: this.EditComponentTableName, SelectedTabCode: this.EditComponentTabCode });
                             this.logWindow.ComponentLoaded.emit(this.ComponentRef.instance);
@@ -584,6 +586,24 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
             }
 
             this.CurrentSession.CloseCurrentWindow();
+        }
+    }
+
+    OnCTRL_Shift_S_HotKeyPressed(){
+        if (this.ComponentInstance && this.ComponentInstance.OnCTRL_Shift_S_HotKeyPressed) {
+            this.ComponentInstance.OnCTRL_Shift_S_HotKeyPressed();
+        }
+    }
+
+    OnEscHotKeyPressed(){
+        if (this.ComponentInstance && this.ComponentInstance.OnEscHotKeyPressed) {
+            this.ComponentInstance.OnEscHotKeyPressed();
+        }
+    }
+
+    OnCTRL_S_HotKeyPressed(){
+        if (this.ComponentInstance && this.ComponentInstance.OnCTRL_S_HotKeyPressed) {
+            this.ComponentInstance.OnCTRL_S_HotKeyPressed();
         }
     }
 }

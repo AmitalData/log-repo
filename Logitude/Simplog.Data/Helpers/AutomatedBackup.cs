@@ -49,6 +49,13 @@ namespace Simplog.Data.Helpers
         [DataMember]
         public bool IsAutomationResultEmailAllActiveUsers { get; set; }
 
+
+
+        [DataMember]
+        public string ReportTemplateId { get; set; }
+        [DataMember]
+        public string DocumentCopyId { get; set; }
+
         [DataMember]
         public AutomationFollowUp AutomationFollowUp { get; set; }
 
@@ -104,6 +111,11 @@ namespace Simplog.Data.Helpers
 
         [DataMember]
         public AutomationSendInterface AutomationSendInterface { get; set; }
+
+
+        [DataMember]
+        public AutomationSendDocument AutomationSendDocument { get; set; }
+
 
     }
 

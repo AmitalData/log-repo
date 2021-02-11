@@ -157,6 +157,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         this.myShipmentSubTypeListService.getAll().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.allShipmentSubTypes = myResponse.Result;
+                this.allShipmentSubTypes = this.allShipmentSubTypes.filter(d => !d.Inactive);
             }
         });
     }
@@ -611,6 +612,13 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         var subType: ShipmentSubTypeList = this.allShipmentSubTypes.filter(d => d.Code == subTypeCode)[0];
         if (subType) {
             this.ShipmentSubTypeId = subType.Id;
+        }
+
+        else {
+            var defaultSubType: ShipmentSubTypeList = this.allShipmentSubTypes.filter(d => d.ShipmentTypeCode == this.ShipmentTypeId)[0];             
+            if (defaultSubType) {
+                this.ShipmentSubTypeId = defaultSubType.Id;
+            }
         }
     }
 

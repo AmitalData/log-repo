@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;791f&quot;"
+  Code="&quot;4d09&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -422,10 +422,6 @@
       Name="&quot;ARPayment Fetcha Pago&quot;"
       SearchFields="&quot;FPG,ARPayment Fetcha Pago&quot;" />
     <Record
-      Code="&quot;TJC&quot;"
-      Name="&quot;Ticket Jumping Counter&quot;"
-      SearchFields="&quot;TJC,Ticket Jumping Counter&quot;" />
-    <Record
       Code="&quot;BDW&quot;"
       Name="&quot;Build Document Via WorkerRole&quot;"
       SearchFields="&quot;BDW,Build Document Via WorkerRole&quot;" />
@@ -474,14 +470,55 @@
       SearchFields="&quot;API,API Update&quot;"
       Name="&quot;API Update&quot;" />
     <Record
-      Code="&quot;LIC&quot;"
-      Name="&quot;License Management&quot;"
-      SearchFields="&quot;LIC,License Management&quot;" />
-    <Record
       Name="&quot;CRM Customer Quick Search&quot;"
       Code="&quot;CQS&quot;"
       SearchFields="&quot;CQS,CRM Customer Quick Search&quot;"
       Description="&quot;CRM Customer Quick Search&quot;" />
+    <Record
+      Name="&quot;Charges Types Direction Restrictions&quot;"
+      Code="&quot;CTR&quot;"
+      SearchFields="&quot;CTR,Charges Types Direction Restrictions&quot;"
+      Description="&quot;Charges Types Direction Restrictions&quot;" />
+    <Record
+      Name="&quot;Branch Code in Counters&quot;"
+      SearchFields="&quot;Branch Code in Counters&quot;"
+      Description="&quot;Branch Code in Counters&quot;"
+      Code="&quot;BCC&quot;" />
+    <Record
+      Code="&quot;ACP&quot;"
+      SearchFields="&quot;ACP,Accruals Approvement&quot;"
+      Name="&quot;Accruals Approvement&quot;"
+      Description="&quot;Accruals Approvement Toggle&quot;" />
+    <Record
+      Code="&quot;EQW&quot;"
+      Name="&quot;Export Query Data Via WorkerRole&quot;"
+      Description="&quot;Export Query Data to Excel Via WorkerRole&quot;"
+      SearchFields="&quot;Export Query Data Via WorkerRole&quot;" />
+    <Record
+      Name="&quot; Improved Search in Customers Views&quot;"
+      Code="&quot;SCV&quot;"
+      SearchFields="&quot;SCV, Improved Search in Customers Views&quot;"
+      Description="&quot; Improved Search in Customers Views&quot;" />
+    <Record
+      Code="&quot;TAR&quot;"
+      Name="&quot;All Tariffs&quot;"
+      SearchFields="&quot;TAR,All Tariffs&quot;"
+      Description="&quot;Hide Tariffs Menu&quot;" />
+    <Record
+      Code="&quot;QMC&quot;"
+      Name="&quot;Quote Multi Currency Mode&quot;"
+      SearchFields="&quot;QMC, Quote Multi Currency Mode&quot;"
+      Description="&quot;Quote Multi Currency Mode&quot;" />
+    <Record
+      Code="&quot;ADC&quot;"
+      Name="&quot;Automation Document Copies&quot;"
+      SearchFields="&quot;ADC,Automation Document Copies&quot;"
+      Description="&quot;Automation Document Copies&quot;" />
+    <Record
+      Code="&quot;DSR&quot;"
+      Name="&quot;Documents Send Result in AP Invoices Automation&quot;"
+      Description="&quot;Documents Send Result in AP Invoices Automation&quot;"
+      SearchFields="&quot;DSR,Documents Send Result in AP Invoices Automation&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

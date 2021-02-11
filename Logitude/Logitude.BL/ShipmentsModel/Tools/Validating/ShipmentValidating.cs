@@ -59,7 +59,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
                 ValidateCarrierPrefix(entityPM); 
                 ValidateAirlineRestriction(entityPM);
-                ValidateMasterNumber(entityPM);
+                //ValidateMasterNumber(entityPM);
                 ValidateShipmentBookingFields(entityPM, isNewEntity);
                 ValidateCreditLimitSetting(entityPM, entityPoco, myCommonContext, loggedTenant, isNewEntity);
                 ValidateConvertShipmentType(entityPM);
@@ -455,72 +455,61 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
         }
-        private static void ValidateMasterNumber(ShipmentPM entityPM)
-        {
-            if (entityPM.Tenant != 343 && entityPM.Tenant != 528 && !entityPM.IsHybrid)
-            {
-                if (!string.IsNullOrEmpty(entityPM.Master) && !string.IsNullOrEmpty(entityPM.AirlinePrefix) && !entityPM.IsCancelled)
-                {
-                    if (entityPM.DirectionId == "E" && entityPM.TransportModeId == "A")
-                    {
-                        if (entityPM.ShipmentLevelCode == "C" || entityPM.ShipmentLevelCode == "D")
-                        {
-                            int myTenant = entityPM.Tenant;
-                            bool isMasterFieldUsed = false;
 
-                            //ShipmentRepository shipmentRepository = new ShipmentRepository(myTenant);
-                            //IQueryable<ShipmentDataView> iQueryable = shipmentRepository.GetShipmentViewsByTenant(myTenant);
+        //private static void ValidateMasterNumber(ShipmentPM entityPM)
+        //{
+        //    if (entityPM.Tenant != 343 && entityPM.Tenant != 528 && !entityPM.IsHybrid)
+        //    {
+        //        if (!string.IsNullOrEmpty(entityPM.Master) && !string.IsNullOrEmpty(entityPM.AirlinePrefix) && !entityPM.IsCancelled)
+        //        {
+        //            if (entityPM.DirectionId == "E" && entityPM.TransportModeId == "A")
+        //            {
+        //                if (entityPM.ShipmentLevelCode == "C" || entityPM.ShipmentLevelCode == "D")
+        //                {
+        //                    int myTenant = entityPM.Tenant;
+        //                    bool isMasterFieldUsed = false;
 
-                            //iQueryable = (from a in iQueryable
-                            //              where (a.ShipmentLevelCode == "C" || a.ShipmentLevelCode == "D")
-                            //              && a.IsCancelled == false
-                            //                  && a.DirectionId == entityPM.DirectionId
-                            //                  && a.TransportModeId == entityPM.TransportModeId
-                            //              && a.Master == entityPM.Master
-                            //                  && a.AirlinePrefix == entityPM.AirlinePrefix
-                            //              select a);
+        //                    IShipmentsContext iContext = ShipmentsContext.GetContext(myTenant);
 
-                            IShipmentsContext iContext = ShipmentsContext.GetContext(myTenant);
+        //                    var iQueryable = (from myShipment in iContext.Shipments
+        //                                      join db_Masters in iContext.ShipmentMasterDatas
+        //                                      on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
+        //                                      from myMasterData in ShipmentsMasters.DefaultIfEmpty()
 
-                            var iQueryable = (from myShipment in iContext.Shipments
-                                              join db_Masters in iContext.ShipmentMasterDatas
-                                              on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
-                                              from myMasterData in ShipmentsMasters.DefaultIfEmpty()
+        //                                      where myShipment.Tenant == myTenant
+        //                                      && (myShipment.ShipmentLevelCode == "C" || myShipment.ShipmentLevelCode == "D")
+        //                                      && myShipment.IsCancelled == false
+        //                                      && myShipment.DirectionId == entityPM.DirectionId
+        //                                      && myShipment.TransportModeId == entityPM.TransportModeId
+        //                                      && myMasterData.Master == entityPM.Master
+        //                                      && myMasterData.AirlinePrefix == entityPM.AirlinePrefix
+        //                                      select myShipment);
 
-                                              where myShipment.Tenant == myTenant
-                                              && (myShipment.ShipmentLevelCode == "C" || myShipment.ShipmentLevelCode == "D")
-                                              && myShipment.IsCancelled == false
-                                              && myShipment.DirectionId == entityPM.DirectionId
-                                              && myShipment.TransportModeId == entityPM.TransportModeId
-                                              && myMasterData.Master == entityPM.Master
-                                              && myMasterData.AirlinePrefix == entityPM.AirlinePrefix
-                                              select myShipment);
+        //                    if (!string.IsNullOrEmpty(entityPM.Id))
+        //                    {
+        //                        iQueryable = iQueryable.Where(d => d.Id != entityPM.Id);
+        //                    }
 
-                            if (!string.IsNullOrEmpty(entityPM.Id))
-                            {
-                                iQueryable = iQueryable.Where(d => d.Id != entityPM.Id);
-                            }
+        //                    if (iQueryable.Count() > 0)
+        //                    {
+        //                        isMasterFieldUsed = true;
+        //                        throw new ApplicationException("Master field already used in another Shipment");
+        //                    }
 
-                            if (iQueryable.Count() > 0)
-                            {
-                                isMasterFieldUsed = true;
-                                throw new ApplicationException("Master field already used in another Shipment");
-                            }
-
-                            else
-                            {
-                                BookingRepository myBookingRepository = new BookingRepository(myTenant);
-                                isMasterFieldUsed = myBookingRepository.IsMasterFieldUsed(entityPM.Master, entityPM.AirlinePrefix, entityPM.BookingId, myTenant, entityPM.DirectionId, entityPM.TransportModeId);
-                                if (isMasterFieldUsed)
-                                {
-                                    throw new ApplicationException("Master field already used in another Booking");
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        //                    else
+        //                    {
+        //                        BookingRepository myBookingRepository = new BookingRepository(myTenant);
+        //                        isMasterFieldUsed = myBookingRepository.IsMasterFieldUsed(entityPM.Master, entityPM.AirlinePrefix, entityPM.BookingId, myTenant, entityPM.DirectionId, entityPM.TransportModeId);
+        //                        if (isMasterFieldUsed)
+        //                        {
+        //                            throw new ApplicationException("Master field already used in another Booking");
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
         private static void ValidateShipmentBookingFields(ShipmentPM entityPM, bool isNewEntity)
         {
             if (!string.IsNullOrEmpty(entityPM.BookingId))
@@ -1086,83 +1075,71 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
         }
-        public static bool IsMasterFieldUsedByAnotherShipment(string entityId, string myMasterField, string myAirlinePrefixField, string myDirectionId, string myTransportModeId, string myShipmentLevelCode, bool isCancelled, int myTenant)
-        {
-            bool isMasterFieldUsed = false;
+        //public static bool IsMasterFieldUsedByAnotherShipment(string entityId, string myMasterField, string myAirlinePrefixField, string myDirectionId, string myTransportModeId, string myShipmentLevelCode, bool isCancelled, int myTenant)
+        //{
+        //    bool isMasterFieldUsed = false;
 
-            if (myTenant != 343 && myTenant != 528)
-            {
-                if (!string.IsNullOrEmpty(myMasterField) && !string.IsNullOrEmpty(myAirlinePrefixField) && !isCancelled)
-                {
-                    if (myDirectionId == "E" && myTransportModeId == "A")
-                    {
-                        if (myShipmentLevelCode == "C" || myShipmentLevelCode == "D")
-                        {
-                            //ShipmentRepository shipmentRepository = new ShipmentRepository(myTenant);
-                            //IQueryable<ShipmentDataView> iQueryable1 = shipmentRepository.GetShipmentViewsByTenant(myTenant);
+        //    if (myTenant != 343 && myTenant != 528)
+        //    {
+        //        if (!string.IsNullOrEmpty(myMasterField) && !string.IsNullOrEmpty(myAirlinePrefixField) && !isCancelled)
+        //        {
+        //            if (myDirectionId == "E" && myTransportModeId == "A")
+        //            {
+        //                if (myShipmentLevelCode == "C" || myShipmentLevelCode == "D")
+        //                {
+        //                    IShipmentsContext iContext = ShipmentsContext.GetContext(myTenant);
 
-                            //iQueryable1 = (from a in iQueryable1
-                            //               where (a.ShipmentLevelCode == "C" || a.ShipmentLevelCode == "D")
-                            //               && a.IsCancelled == false
-                            //               && a.DirectionId == myDirectionId
-                            //               && a.TransportModeId == myTransportModeId
-                            //                       && a.Master == myMasterField
-                            //                   && a.AirlinePrefix == myAirlinePrefixField
-                            //               select a);
+        //                    var iQueryable = (from myShipment in iContext.Shipments
+        //                                      join db_Masters in iContext.ShipmentMasterDatas
+        //                                      on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
+        //                                      from myMasterData in ShipmentsMasters.DefaultIfEmpty()
 
-                            IShipmentsContext iContext = ShipmentsContext.GetContext(myTenant);
+        //                                      where myShipment.Tenant == myTenant
+        //                                      && (myShipment.ShipmentLevelCode == "C" || myShipment.ShipmentLevelCode == "D")
+        //                                      && myShipment.IsCancelled == false
+        //                                      && myShipment.DirectionId == myDirectionId
+        //                                      && myShipment.TransportModeId == myTransportModeId
+        //                                      && myMasterData.Master == myMasterField
+        //                                      && myMasterData.AirlinePrefix == myAirlinePrefixField
+        //                                      select myShipment);
 
-                            var iQueryable = (from myShipment in iContext.Shipments
-                                              join db_Masters in iContext.ShipmentMasterDatas
-                                              on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
-                                              from myMasterData in ShipmentsMasters.DefaultIfEmpty()
+        //                    if (!string.IsNullOrEmpty(entityId))
+        //                    {
+        //                        iQueryable = iQueryable.Where(d => d.Id != entityId);
+        //                    }
 
-                                              where myShipment.Tenant == myTenant
-                                              && (myShipment.ShipmentLevelCode == "C" || myShipment.ShipmentLevelCode == "D")
-                                              && myShipment.IsCancelled == false
-                                              && myShipment.DirectionId == myDirectionId
-                                              && myShipment.TransportModeId == myTransportModeId
-                                              && myMasterData.Master == myMasterField
-                                              && myMasterData.AirlinePrefix == myAirlinePrefixField
-                                              select myShipment);
+        //                    if (iQueryable.Count() > 0)
+        //                    {
+        //                        isMasterFieldUsed = true;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
 
-                            if (!string.IsNullOrEmpty(entityId))
-                            {
-                                iQueryable = iQueryable.Where(d => d.Id != entityId);
-                            }
+        //    return isMasterFieldUsed;
+        //}
+        //public static bool IsMasterFieldUsedByAnotherBooking(string myBookingId, string myMasterField, string myAirlinePrefixField, string myDirectionId, string myTransportModeId, string myShipmentLevelCode, bool isCancelled, int myTenant)
+        //{
+        //    bool isMasterFieldUsed = false;
 
-                            if (iQueryable.Count() > 0)
-                            {
-                                isMasterFieldUsed = true;
-                            }
-                        }
-                    }
-                }
-            }
+        //    if (myTenant != 343 && myTenant != 528)
+        //    {
+        //        if (!string.IsNullOrEmpty(myMasterField) && !string.IsNullOrEmpty(myAirlinePrefixField) && !isCancelled)
+        //        {
+        //            if (myDirectionId == "E" && myTransportModeId == "A")
+        //            {
+        //                if (myShipmentLevelCode == "C" || myShipmentLevelCode == "D")
+        //                {
+        //                    BookingRepository myBookingRepository = new BookingRepository(myTenant);
+        //                    isMasterFieldUsed = myBookingRepository.IsMasterFieldUsed(myMasterField, myAirlinePrefixField, myBookingId, myTenant, myDirectionId, myTransportModeId);
+        //                }
+        //            }
+        //        }
+        //    }
 
-            return isMasterFieldUsed;
-        }
-        public static bool IsMasterFieldUsedByAnotherBooking(string myBookingId, string myMasterField, string myAirlinePrefixField, string myDirectionId, string myTransportModeId, string myShipmentLevelCode, bool isCancelled, int myTenant)
-        {
-            bool isMasterFieldUsed = false;
-
-            if (myTenant != 343 && myTenant != 528)
-            {
-                if (!string.IsNullOrEmpty(myMasterField) && !string.IsNullOrEmpty(myAirlinePrefixField) && !isCancelled)
-                {
-                    if (myDirectionId == "E" && myTransportModeId == "A")
-                    {
-                        if (myShipmentLevelCode == "C" || myShipmentLevelCode == "D")
-                        {
-                            BookingRepository myBookingRepository = new BookingRepository(myTenant);
-                            isMasterFieldUsed = myBookingRepository.IsMasterFieldUsed(myMasterField, myAirlinePrefixField, myBookingId, myTenant, myDirectionId, myTransportModeId);
-                        }
-                    }
-                }
-            }
-
-            return isMasterFieldUsed;
-        }
+        //    return isMasterFieldUsed;
+        //}
 
         private static void ValidateMasterTypeDueToTransportMode(ShipmentPM entityPM)
         {
@@ -1491,7 +1468,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
         private static void ValidateConvertShipmentType(ShipmentPM entityPM)
         {
-            if (entityPM.ConvertShipmentToLCL || entityPM.ConvertShipmentToFCL)
+            if (entityPM.ConvertShipmentToLCL || entityPM.ConvertShipmentToFCL || entityPM.ConvertShipmentToLTL || entityPM.ConvertShipmentToFTL)
             {
                 if (!string.IsNullOrEmpty(entityPM.QuoteId))
                 {

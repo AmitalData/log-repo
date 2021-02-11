@@ -3,7 +3,7 @@
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
-            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" ></ValidationSummary>
         </td>
     </tr>
 
@@ -50,7 +50,10 @@
                                 [LookUpTableName]="'Card'"
                                 [DependencyFilter1Value]="BillToDependencyValue1"
                                 [DependencyFilter2Value]="BillToDependencyValue2"
-                                [DependencyFilter1IsList]="BillToDependencyValue1IsList">
+                                [DependencyFilter1IsList]="BillToDependencyValue1IsList"
+                                [DisplayFieldsFromList]="DisplayFieldsFromList"
+                                [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
+                                [CustomizedWidth]="BillToLovSizeForFullAccounting">
                         </LogLov>
                     </td>
 

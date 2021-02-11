@@ -83,7 +83,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             this.entityPM = entityPM;
             this.isNewEntity = true;
-            this.entityPM.Id = string.IsNullOrEmpty(this.entityPM.Id) ? IdCounter.GetNumber("Card", tenant).ToString() : this.entityPM.Id;
+            this.entityPM.Id = string.IsNullOrEmpty(this.entityPM.Id) || this.entityPM.IsHybrid ? IdCounter.GetNumber("Card", tenant).ToString() : this.entityPM.Id;
 
             this.entityCard = new Card()
             {
@@ -136,7 +136,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 this.UpdateContactSearchField(itemPM);
             }
-            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms != "oracle")
+            {
+                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+            }
         }
 
         public void Update(TruckerPM entityPM, bool mapComposition = false)
@@ -183,7 +187,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Trucker");
             //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
-            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms != "oracle")
+            {
+                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+            }
         }
 
         private void InitializeComponent()

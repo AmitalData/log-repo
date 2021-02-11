@@ -92,6 +92,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string Field9 { get; set; }
         public string Field10 { get; set; }
         public bool TotalVATOnly { get; set; }
+        public DateTime? PaidDate { get; set; }
 
     }
 }

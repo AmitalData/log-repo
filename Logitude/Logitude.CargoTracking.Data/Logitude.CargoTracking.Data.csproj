@@ -64,6 +64,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Http">
+      <HintPath>..\JustWebFreight\WebFreight.Web\Bin\System.Web.Http.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -92,6 +95,7 @@
     <Compile Include="EntityListQueryServices\CargoTrackingMilestoneListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoTrackingPortListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoTrackingShipmentComputedListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CargoTrackingShipmentFilters.cs" />
     <Compile Include="EntityListQueryServices\CargoTrackingShipmentListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoTrackingShipmentMasterListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoTrackingShipmentSearchListQueryService.cs" />
@@ -173,6 +177,10 @@
     <Compile Include="Repositories\Generated\CargoTrackingWatermarkRepository.Generated.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Logitude.CargoTracking.Def\Logitude.CargoTracking.Def.csproj">
+      <Project>{1602A405-278E-4FF9-B7B5-DFC6E525B497}</Project>
+      <Name>Logitude.CargoTracking.Def</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>

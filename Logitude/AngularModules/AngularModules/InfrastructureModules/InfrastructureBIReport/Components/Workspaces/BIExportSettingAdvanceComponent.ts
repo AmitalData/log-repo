@@ -41,7 +41,7 @@ export class BIExportSettingAdvanceComponent implements OnInit {
     SaveButtonClicked() {
         if (this.BIReportPreviewComponent != null && this.BIReportPreviewComponent.BIReportXMLData != null) {
             this.BIReportPreviewComponent.BIReportXMLData.IncludeTotals = this.IncludeTotals;
-            this.BIReportPreviewComponent.ExportToExcelClicked();
+            this.BIReportPreviewComponent.ExportButtonClicked("Excel");
         }
         this.CurrentSession.CloseCurrentWindow();
     }

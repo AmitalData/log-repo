@@ -354,11 +354,29 @@ export class DeclarationCourierStatusPM {
     public set SortedCourierDeclarationStatus(newValue: string) { if (this.sortedCourierDeclarationStatus != newValue) { this.sortedCourierDeclarationStatus = newValue; this.MarkAsDirty("SortedCourierDeclarationStatus"); } }
        
 	 
+    private delivered: boolean;
+    public get Delivered() { return this.delivered; }
+    public set Delivered(newValue: boolean) { if (this.delivered != newValue) { this.delivered = newValue; this.MarkAsDirty("Delivered"); } }
+       
+	 
+    private truckerId: string;
+    public get TruckerId() { return this.truckerId; }
+    public set TruckerId(newValue: string) { if (this.truckerId != newValue) { this.truckerId = newValue; this.MarkAsDirty("TruckerId"); } }
+       
+	 
+    private distributionArea: string;
+    public get DistributionArea() { return this.distributionArea; }
+    public set DistributionArea(newValue: string) { if (this.distributionArea != newValue) { this.distributionArea = newValue; this.MarkAsDirty("DistributionArea"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -366,6 +384,7 @@ export class DeclarationCourierStatusPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.DeclarationCourierStatus");
            
         }
+       }
     }
 
     private MyClone: DeclarationCourierStatusPM;

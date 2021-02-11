@@ -1,4 +1,4 @@
-﻿
+
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -131,6 +131,12 @@ export class AutomationPM {
     private automationResultEmailRecipientLists: any;
     public get AutomationResultEmailRecipientLists() { return this.automationResultEmailRecipientLists; }
     public set AutomationResultEmailRecipientLists(newValue: any) { this.automationResultEmailRecipientLists = newValue; this.MarkAsDirty("AutomationResultEmailRecipientLists"); }
+
+    private documentTypeTemplateIds: any;
+    public get DocumentTypeTemplateIds() { return this.documentTypeTemplateIds; }
+    public set DocumentTypeTemplateIds(newValue: any) { this.documentTypeTemplateIds = newValue; this.MarkAsDirty("DocumentTypeTemplateIds"); }
+
+
 
 
     private code: string;

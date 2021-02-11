@@ -114,8 +114,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public int ShipmentPickUpIndex { get; set; }
         public int ShipmentDeliveryIndex { get; set; }
         public int ShipmentContainerReturnIndex { get; set; }
-
         public string QuoteId { get; set; }
+        public string QuoteNumber { get; set; }
         public string BookingId { get; set; }
         public bool IsCancelled { get; set; }
         public bool IsAccountingClosed { get; set; }
@@ -812,5 +812,23 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public bool IsAccrualsApproved { get; set; }
         public DateTime? AccrualsApprovalDate { get; set; }
 
+        public double? HousesOpenPayablesInLocal { get; set; }
+        public double? HousesOpenPayablesInProfit { get; set; }
+        public double? HousesACCTPayablesInLocal { get; set; }
+        public double? HousesACCTPayablesInProfit { get; set; }
+        public double? HousesOpenReceivablesInLocal { get; set; }
+        public double? HousesOpenReceivablesInProfit { get; set; }
+        public double? HousesACCTReceivablesInLocal { get; set; }
+        public double? HousesACCTReceivablesInProfit { get; set; }
+
+        public DateTime? INTTRALastEBbookingSendDate { get; set; }
+
+        public string TruckerId { get; set; } 
+        public DateTime? AssignedToTruckerDate { get; set; }
+        public virtual Card TruckerCard { get; set; }
+
+        public string AssginedtoCustomsAgentId { get; set; }
+        public DateTime? AssginedToCustomsAgentDate { get; set; }
+        public virtual Card CustomsAgentCard { get; set; }
     }
 }

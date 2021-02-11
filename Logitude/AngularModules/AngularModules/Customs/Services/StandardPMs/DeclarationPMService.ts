@@ -201,6 +201,7 @@ export class DeclarationPMService {
         if (!entityPM) {
             
             entityPM = new DeclarationPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -482,6 +483,8 @@ export class DeclarationPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -507,7 +510,8 @@ export class DeclarationPMService {
             {
                 newConsignmentPM = new ConsignmentPM(null);
             }
-                
+ 			newConsignmentPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -561,7 +565,7 @@ export class DeclarationPMService {
                 newConsignmentPM.OldEntityPM = null;
                 newConsignmentPM.EntityParentPM = null;
             }
-			
+			 newConsignmentPM.DisableMarkAsDirty = false;
 			 newConsignmentPM.IsDirty = false;
             entityPM.Consignments.push(newConsignmentPM);
         }
@@ -575,6 +579,7 @@ export class DeclarationPMService {
                         //entityPM.Consignments.push(oldConsignments[itemKey]);
 						var oldItemJson = oldConsignments[itemKey];
                         var deletedPM: ConsignmentPM = new ConsignmentPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -586,7 +591,7 @@ export class DeclarationPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -625,7 +630,8 @@ export class DeclarationPMService {
             {
                 newConsignmentPackagePM = new ConsignmentPackagePM(null);
             }
-                
+ 			newConsignmentPackagePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -673,7 +679,7 @@ export class DeclarationPMService {
                 newConsignmentPackagePM.OldEntityPM = null;
                 newConsignmentPackagePM.EntityParentPM = null;
             }
-			
+			 newConsignmentPackagePM.DisableMarkAsDirty = false;
 			 newConsignmentPackagePM.IsDirty = false;
             entityPM.ConsignmentPackages.push(newConsignmentPackagePM);
         }
@@ -687,6 +693,7 @@ export class DeclarationPMService {
                         //entityPM.ConsignmentPackages.push(oldConsignmentPackages[itemKey]);
 						var oldItemJson = oldConsignmentPackages[itemKey];
                         var deletedPM: ConsignmentPackagePM = new ConsignmentPackagePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -698,7 +705,7 @@ export class DeclarationPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -734,7 +741,8 @@ export class DeclarationPMService {
             {
                 newConsignmentPackDangerPM = new ConsignmentPackDangerPM(null);
             }
-                
+ 			newConsignmentPackDangerPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -771,7 +779,7 @@ export class DeclarationPMService {
                 newConsignmentPackDangerPM.OldEntityPM = null;
                 newConsignmentPackDangerPM.EntityParentPM = null;
             }
-			
+			 newConsignmentPackDangerPM.DisableMarkAsDirty = false;
 			 newConsignmentPackDangerPM.IsDirty = false;
             entityPM.ConsignmentPackDangers.push(newConsignmentPackDangerPM);
         }
@@ -785,6 +793,7 @@ export class DeclarationPMService {
                         //entityPM.ConsignmentPackDangers.push(oldConsignmentPackDangers[itemKey]);
 						var oldItemJson = oldConsignmentPackDangers[itemKey];
                         var deletedPM: ConsignmentPackDangerPM = new ConsignmentPackDangerPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -796,7 +805,7 @@ export class DeclarationPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -830,7 +839,8 @@ export class DeclarationPMService {
             {
                 newConsignmentInternalTransitionPM = new ConsignmentInternalTransitionPM(null);
             }
-                
+ 			newConsignmentInternalTransitionPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -867,7 +877,7 @@ export class DeclarationPMService {
                 newConsignmentInternalTransitionPM.OldEntityPM = null;
                 newConsignmentInternalTransitionPM.EntityParentPM = null;
             }
-			
+			 newConsignmentInternalTransitionPM.DisableMarkAsDirty = false;
 			 newConsignmentInternalTransitionPM.IsDirty = false;
             entityPM.ConsignmentInternalTransitions.push(newConsignmentInternalTransitionPM);
         }
@@ -881,6 +891,7 @@ export class DeclarationPMService {
                         //entityPM.ConsignmentInternalTransitions.push(oldConsignmentInternalTransitions[itemKey]);
 						var oldItemJson = oldConsignmentInternalTransitions[itemKey];
                         var deletedPM: ConsignmentInternalTransitionPM = new ConsignmentInternalTransitionPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -892,7 +903,7 @@ export class DeclarationPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -915,7 +926,7 @@ export class DeclarationPMService {
             }
             var newSupplierInvoicePM: SupplierInvoicePM;
             newSupplierInvoicePM = new SupplierInvoicePM();
-				                
+		    newSupplierInvoicePM.DisableMarkAsDirty = true;                
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
 			
@@ -925,6 +936,7 @@ export class DeclarationPMService {
                 var pmProperty = pmKeysArray[pmKey];
                 newSupplierInvoicePM[pmProperty] = jItem[pmProperty];
             }
+			newSupplierInvoicePM.DisableMarkAsDirty = false;
             newSupplierInvoicePM.IsDirty = false;
             entityPM.SupplierInvoices.push(newSupplierInvoicePM);
         }
@@ -951,7 +963,8 @@ export class DeclarationPMService {
             {
                 newDeclarationTaxPM = new DeclarationTaxPM(null);
             }
-                
+ 			newDeclarationTaxPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -983,7 +996,7 @@ export class DeclarationPMService {
                 newDeclarationTaxPM.OldEntityPM = null;
                 newDeclarationTaxPM.EntityParentPM = null;
             }
-			
+			 newDeclarationTaxPM.DisableMarkAsDirty = false;
 			 newDeclarationTaxPM.IsDirty = false;
             entityPM.DeclarationTaxes.push(newDeclarationTaxPM);
         }
@@ -997,6 +1010,7 @@ export class DeclarationPMService {
                         //entityPM.DeclarationTaxes.push(oldDeclarationTaxes[itemKey]);
 						var oldItemJson = oldDeclarationTaxes[itemKey];
                         var deletedPM: DeclarationTaxPM = new DeclarationTaxPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -1008,7 +1022,7 @@ export class DeclarationPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -1041,7 +1055,8 @@ export class DeclarationPMService {
             {
                 newDeclarationConstraintPM = new DeclarationConstraintPM(null);
             }
-                
+ 			newDeclarationConstraintPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -1073,7 +1088,7 @@ export class DeclarationPMService {
                 newDeclarationConstraintPM.OldEntityPM = null;
                 newDeclarationConstraintPM.EntityParentPM = null;
             }
-			
+			 newDeclarationConstraintPM.DisableMarkAsDirty = false;
 			 newDeclarationConstraintPM.IsDirty = false;
             entityPM.DeclarationConstraints.push(newDeclarationConstraintPM);
         }
@@ -1087,6 +1102,7 @@ export class DeclarationPMService {
                         //entityPM.DeclarationConstraints.push(oldDeclarationConstraints[itemKey]);
 						var oldItemJson = oldDeclarationConstraints[itemKey];
                         var deletedPM: DeclarationConstraintPM = new DeclarationConstraintPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -1098,7 +1114,7 @@ export class DeclarationPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -1131,7 +1147,8 @@ export class DeclarationPMService {
             {
                 newDeclarationErrorViewPM = new DeclarationErrorViewPM(null);
             }
-                
+ 			newDeclarationErrorViewPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -1165,7 +1182,7 @@ export class DeclarationPMService {
                 newDeclarationErrorViewPM.OldEntityPM = null;
                 newDeclarationErrorViewPM.EntityParentPM = null;
             }
-			
+			 newDeclarationErrorViewPM.DisableMarkAsDirty = false;
 			 newDeclarationErrorViewPM.IsDirty = false;
             entityPM.DeclarationErrorViews2.push(newDeclarationErrorViewPM);
         }
@@ -1179,6 +1196,7 @@ export class DeclarationPMService {
                         //entityPM.DeclarationErrorViews2.push(oldDeclarationErrorViews2[itemKey]);
 						var oldItemJson = oldDeclarationErrorViews2[itemKey];
                         var deletedPM: DeclarationErrorViewPM = new DeclarationErrorViewPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -1190,7 +1208,7 @@ export class DeclarationPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -1214,7 +1232,7 @@ export class DeclarationPMService {
             }
             var newDeclarationConsAcceptancePM: DeclarationConsAcceptancePM;
             newDeclarationConsAcceptancePM = new DeclarationConsAcceptancePM();
-				                
+		    newDeclarationConsAcceptancePM.DisableMarkAsDirty = true;                
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
 			
@@ -1224,6 +1242,7 @@ export class DeclarationPMService {
                 var pmProperty = pmKeysArray[pmKey];
                 newDeclarationConsAcceptancePM[pmProperty] = jItem[pmProperty];
             }
+			newDeclarationConsAcceptancePM.DisableMarkAsDirty = false;
             newDeclarationConsAcceptancePM.IsDirty = false;
             entityPM.DeclarationConsAcceptances.push(newDeclarationConsAcceptancePM);
         }
@@ -1250,7 +1269,8 @@ export class DeclarationPMService {
             {
                 newDecDangersContactPM = new DecDangersContactPM(null);
             }
-                
+ 			newDecDangersContactPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -1284,7 +1304,7 @@ export class DeclarationPMService {
                 newDecDangersContactPM.OldEntityPM = null;
                 newDecDangersContactPM.EntityParentPM = null;
             }
-			
+			 newDecDangersContactPM.DisableMarkAsDirty = false;
 			 newDecDangersContactPM.IsDirty = false;
             entityPM.DecDangersContacts.push(newDecDangersContactPM);
         }
@@ -1298,6 +1318,7 @@ export class DeclarationPMService {
                         //entityPM.DecDangersContacts.push(oldDecDangersContacts[itemKey]);
 						var oldItemJson = oldDecDangersContacts[itemKey];
                         var deletedPM: DecDangersContactPM = new DecDangersContactPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -1309,7 +1330,7 @@ export class DeclarationPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -1344,7 +1365,8 @@ export class DeclarationPMService {
             {
                 newDeclarationExportRecipientPM = new DeclarationExportRecipientPM(null);
             }
-                
+ 			newDeclarationExportRecipientPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -1376,7 +1398,7 @@ export class DeclarationPMService {
                 newDeclarationExportRecipientPM.OldEntityPM = null;
                 newDeclarationExportRecipientPM.EntityParentPM = null;
             }
-			
+			 newDeclarationExportRecipientPM.DisableMarkAsDirty = false;
 			 newDeclarationExportRecipientPM.IsDirty = false;
             entityPM.DeclarationExportRecipients.push(newDeclarationExportRecipientPM);
         }
@@ -1390,6 +1412,7 @@ export class DeclarationPMService {
                         //entityPM.DeclarationExportRecipients.push(oldDeclarationExportRecipients[itemKey]);
 						var oldItemJson = oldDeclarationExportRecipients[itemKey];
                         var deletedPM: DeclarationExportRecipientPM = new DeclarationExportRecipientPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -1401,7 +1424,7 @@ export class DeclarationPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

@@ -1,5 +1,5 @@
 <!ELEMENT LOGICUSTFILE (LogitudeCustomsFile*)>
-<!ELEMENT LogitudeCustomsFile (CustomFileNo?, Id?, DeclarationOfficeCode?, FileState?, AgentId?, CustomerId?, TransportModeId?, CreatedByUserId?, ReferentUserId?, DepartmentId?, MAWB?, DealId?, HAWB?, ManifestNumber?, LoadingPortCode?, OriginCountryCode?, CargoDescription?, PackageTypeCode?, PackageMeasureQualifierCode?, PackageQuantity?, GrossMassMeasure?, VendorId?, ImporterId?, Tenant?, GrantDate?, ManifestDate?, ArrivalDateTime?, Mode?, EnglishName?, HebrewName?, WarehouseId?, UnloadportId?, ProcedureCurrentCode?, ImporterAddress?, CargoTypeCode?, SecondCargoID?, ThirdCargoID?, UnloadDate?, IsCourierDeclaration?, CasualSupplierName?, CasualSupplierAddress?, CourierHawb?, HAWBDATE?, COUWTVAL?, CasualImporterAddress1?, CasualImporterAddress2?, CasualImporterCity?, CasualImporterZipCode?, CasualImporterFax?, CasualImporterEmail?, CasualImportelTel?, CasualImporterContact?, CasualImporterCountry?, IsDiamondsDeclaration?, EstimatedTimeOfArrival?, OrderNumber?, WithPaper?, FileStatus?, NewFile?, ImporterFile?, Team?, FileOpenDate?)>
+<!ELEMENT LogitudeCustomsFile (CustomFileNo?, Id?, DeclarationOfficeCode?, FileState?, AgentId?, CustomerId?, TransportModeId?, CreatedByUserId?, ReferentUserId?, DepartmentId?, MAWB?, DealId?, HAWB?, ManifestNumber?, LoadingPortCode?, OriginCountryCode?, CargoDescription?, PackageTypeCode?, PackageMeasureQualifierCode?, PackageQuantity?, GrossMassMeasure?, VendorId?, ImporterId?, Tenant?, GrantDate?, ManifestDate?, ArrivalDateTime?, Mode?, EnglishName?, HebrewName?, WarehouseId?, UnloadportId?, ProcedureCurrentCode?, ImporterAddress?, CargoTypeCode?, SecondCargoID?, ThirdCargoID?, UnloadDate?, IsCourierDeclaration?, CasualSupplierName?, CasualSupplierAddress?, CourierHawb?, HAWBDATE?, COUWTVAL?, CasualImporterAddress1?, CasualImporterAddress2?, CasualImporterCity?, CasualImporterZipCode?, CasualImporterFax?, CasualImporterEmail?, CasualImportelTel?, CasualImporterContact?, CasualImporterCountry?, IsDiamondsDeclaration?, EstimatedTimeOfArrival?, OrderNumber?, WithPaper?, FileStatus?, NewFile?, ImporterFile?, Team?, FileOpenDate?, TruckerId?, DistributionArea?)>
 <!ELEMENT CustomFileNo (#PCDATA)>
 <!ELEMENT Id (#PCDATA)>
 <!ELEMENT DeclarationOfficeCode (#PCDATA)>
@@ -62,3 +62,5 @@
 <!ELEMENT ImporterFile (#PCDATA)>
 <!ELEMENT Team (#PCDATA)>
 <!ELEMENT FileOpenDate (#PCDATA)>
+<!ELEMENT TruckerId (#PCDATA)>
+<!ELEMENT DistributionArea (#PCDATA)>

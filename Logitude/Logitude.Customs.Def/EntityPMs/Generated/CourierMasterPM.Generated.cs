@@ -1216,6 +1216,167 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private int? packageQuantityInMAWB ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? PackageQuantityInMAWB  
+	   {
+	    
+	     get
+		{
+		   return packageQuantityInMAWB;
+		 }
+		 set
+		 {
+		   if(packageQuantityInMAWB != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageQuantityInMAWB",OldValue=packageQuantityInMAWB,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   packageQuantityInMAWB=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? landingDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? LandingDate  
+	   {
+	    
+	     get
+		{
+		   return landingDate;
+		 }
+		 set
+		 {
+		   if(landingDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LandingDate",OldValue=landingDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   landingDate=value;
+		   }
+			
+		 }
+	   }
+	  private string unifreightLeadingFile ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UnifreightLeadingFile  
+	   {
+	    
+	     get
+		{
+		   return unifreightLeadingFile;
+		 }
+		 set
+		 {
+		   if(unifreightLeadingFile != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UnifreightLeadingFile",OldValue=unifreightLeadingFile,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   unifreightLeadingFile=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? landingDateDateOnly ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? LandingDateDateOnly  
+	   {
+	    
+	     get
+		{
+		   return landingDateDateOnly;
+		 }
+		 set
+		 {
+		   if(landingDateDateOnly != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LandingDateDateOnly",OldValue=landingDateDateOnly,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   landingDateDateOnly=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? landingDateTimeOnly ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? LandingDateTimeOnly  
+	   {
+	    
+	     get
+		{
+		   return landingDateTimeOnly;
+		 }
+		 set
+		 {
+		   if(landingDateTimeOnly != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LandingDateTimeOnly",OldValue=landingDateTimeOnly,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   landingDateTimeOnly=value;
+		   }
+			
+		 }
+	   }
+	  private string courierMasterRemarks ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CourierMasterRemarks  
+	   {
+	    
+	     get
+		{
+		   return courierMasterRemarks;
+		 }
+		 set
+		 {
+		   if(courierMasterRemarks != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierMasterRemarks",OldValue=courierMasterRemarks,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   courierMasterRemarks=value;
+		   }
+			
+		 }
+	   }
+	  private int openDeclarations ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int OpenDeclarations  
+	   {
+	    
+	     get
+		{
+		   return openDeclarations;
+		 }
+		 set
+		 {
+		   if(openDeclarations != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OpenDeclarations",OldValue=openDeclarations,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   openDeclarations=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

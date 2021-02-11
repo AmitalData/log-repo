@@ -33,7 +33,7 @@ namespace WarehouseData.Helper
             if (table.HasCustomFields)
             {
                 CustomFieldWarehouseService customFieldWarehouseService = new CustomFieldWarehouseService();
-                buildFactSqlString = customFieldWarehouseService.BuildCustomFields(buildFactSqlString, table.CustomFieldsCount);
+                buildFactSqlString = customFieldWarehouseService.BuildCustomFields(buildFactSqlString, table);
             }
 
 
@@ -51,7 +51,7 @@ namespace WarehouseData.Helper
             if (table.HasCustomFields)
             {
                 CustomFieldWarehouseService customFieldWarehouseService = new CustomFieldWarehouseService();
-                updateFactSqlString = customFieldWarehouseService.BuildCustomFields(updateFactSqlString, table.CustomFieldsCount);
+                updateFactSqlString = customFieldWarehouseService.BuildCustomFields(updateFactSqlString,table);
             }
             generalDataWarehouseService.ExecuteSql(updateFactSqlString, connectionString);
         }

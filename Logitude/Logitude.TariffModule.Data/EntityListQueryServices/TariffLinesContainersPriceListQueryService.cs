@@ -21,31 +21,33 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
     {
 	    private IQueryable<TariffLinesContainersPriceList> GetIqueryableList(IQueryable<TariffLinesContainersPrice> iQueryable)
         {
-		IQueryable<TariffLinesContainersPriceList> query = (from a in iQueryable
-                                            select new TariffLinesContainersPriceList()
-											{
-                     
-					                          Id = a.Id,
-					
-					                          Tenant = a.Tenant,
-					
-					                          TariffId = a.TariffId,
-					
-					                          TariffLineId = a.TariffLineId,
-					
-					                          SurchargeId = a.SurchargeId,
-					
-					                          Price1 = a.Price1,
-					
-					                          Price2 = a.Price2,
-					
-					                          Price3 = a.Price3,
-					
-					                          Price4 = a.Price4,
-					
-					                          Price5 = a.Price5,
-					
-		                    	            });
+			IQueryable<TariffLinesContainersPriceList> query = (from a in iQueryable
+																select new TariffLinesContainersPriceList()
+																{
+
+																	Id = a.Id,
+
+																	Tenant = a.Tenant,
+
+																	TariffId = a.TariffId,
+
+																	TariffLineId = a.TariffLineId,
+
+																	SurchargeId = a.SurchargeId,
+
+																	Price1 = a.Price1,
+
+																	Price2 = a.Price2,
+
+																	Price3 = a.Price3,
+
+																	Price4 = a.Price4,
+
+																	Price5 = a.Price5,
+
+																	CostPrice = a.CostPrice,
+
+																});
             return query;
 		}
 

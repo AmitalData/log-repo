@@ -327,7 +327,17 @@
                                         <tr>
                                             <td>
                                                 <SectionBox [Scrolling]="true">
-                                                    <SectionHead>Storage</SectionHead>
+                                                    <SectionHead>
+                                                        <table>
+                                                            <tr>
+                                                                <td>Storage</td>
+                                                                <td style="width:70px; padding-left: 5px;">
+                                                                    <button class="Button" (click)="CalculateStorageClicked()">Calculate Storage</button>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </SectionHead>
+
                                                     <SectionBody>
                                                         <table>
                                                             <tr class="FormFieldRow">

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output, Input, OnInit, ElementRef, ChangeDetec
 import { AppTool } from '../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../Infrastructure/Utilities/TextCodeTranslator';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
+import { ControlsIdCounter } from 'Infrastructure/Utilities/ControlsIdCounter';
 
 @Component({
     selector: 'SendButton',
@@ -86,11 +87,15 @@ export class SendButton implements OnInit {
         this.ItemsSource = [];
 
         this._ElementRef = myElement;
-        var idIndex = this.CurrentSession.GetNewId("SenButton");
-        this._CustomSendOptionsComponentId = "CustomSendOptionsComponent_" + idIndex;
-        this._CustomSendOptionsComponentMenuId = "CustomSendOptionsComponentMenuId_" + idIndex;
-        this.ControlId = "ComboBox_" + idIndex;
-        this.ListControlId = "List_" + idIndex;
+
+        var buttonId = ControlsIdCounter.GetNextControlIdCounter("CustomSendOptionsComponent");
+
+        // var idIndex = this.CurrentSession.GetNewId("SenButton");
+
+        this._CustomSendOptionsComponentId = "SendButtom_" + ControlsIdCounter.GetNextControlIdCounter("CustomSendOptionsComponent");
+        this._CustomSendOptionsComponentMenuId = "SendButtomMenu_" + ControlsIdCounter.GetNextControlIdCounter("CustomSendOptionsComponentMenuId");
+        this.ControlId = ControlsIdCounter.GetNextControlIdCounter("ComboBox")+"";
+        this.ListControlId = ControlsIdCounter.GetNextControlIdCounter("List")+"";
     }
     handleClick(event) {
         var clickedComponent = event.target;

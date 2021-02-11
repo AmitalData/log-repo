@@ -147,7 +147,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             event.preventDefault();
             event.target.checked = false;
             var myMessageWindow = new MessageWindow();
-            myMessageWindow.Show("לם ניתן לבצע תשלום בזמינות עם תםריך תשלום עתידי");//TextCodeTranslator.Translate("")
+            myMessageWindow.Show("לא ניתן לבצע תשלום בזמינות עם תאריך תשלום עתידי");//TextCodeTranslator.Translate("")
 
         }
 
@@ -162,7 +162,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     }
 
 
-
+    isAutoFill: boolean = false;
     SetWindowArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {
 
@@ -173,57 +173,92 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                             this.entityResourceService.getEntityResourceByTableName("Customs.DeclarationPaymentProtest").subscribe((response: any) => {
                                 this.entityResourceService.getEntityResourceByTableName("Customs.CustomBank").subscribe((response: any) => {
 
+                                    this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAYHAND_FIL", "NON", "NON", SessionLocator.Tenant)
+                                        .subscribe(
+                                            (response: ServiceResponse) => {
+                                                let obj = response.Result;
+                                                if (obj) {
+                                                    let DefaultValue = obj['DefaultValue'];
 
-                                    this.DeclarationPM = args.EntityPM;
+                                                    if (DefaultValue == "A") {//==AutoFillPaymentScreen //if (customsSetting.AutoFillPaymentScreen) {
+                                                        if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
+                                                            this.isAutoFill = true;
 
-                                    if (this.DeclarationPM.IsCourierDeclaration) {
-                                        let myDeclarationCourierStatusListService: DeclarationCourierStatusListService = new DeclarationCourierStatusListService();
-
-                                        let filters = new ApiQueryFilters();
-
-                                        filters.addAdditionalFilter("DeclarationId", this.DeclarationPM.Id, null, null, "Equals", false, false, false, "string");
-                                        filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
-                                        filters.PageSize = 1;
-                                        myDeclarationCourierStatusListService.getByFilters(filters)
-                                            .subscribe((serviceResponse1: ServiceResponse) => {
-                                                let mappedDeclarationCourierStatusList: Array<DeclarationCourierStatusList> = serviceResponse1.Result;
-                                                if (mappedDeclarationCourierStatusList != null && mappedDeclarationCourierStatusList.length > 0) {
-                                                    this._CourierWorksheet = mappedDeclarationCourierStatusList[0];
-                                                }
-
-                                            });
-
-                                    }
-                                    if ((this.DeclarationPM.ImporterEntitlementTypeCode == "17" || this.DeclarationPM.ImporterEntitlementTypeCode == "18") && FeatureLocator.HasFeaturePermession("Customs.Declaration", "BTPA")) {
-                                        this.supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclaration(this.DeclarationPM.Id).subscribe(
-                                            invoices => {
-                                                if (invoices.Result != null) {
-                                                    this.sumBtl = 0.0;
-                                                    invoices.Result.forEach((el) => {
-                                                        if (el.SupplierInvoiceItems != null && el.SupplierInvoiceItems.length > 0) {
-                                                            el.SupplierInvoiceItems.forEach(si => {
-                                                                if (si.SupplierInvoiceItemTaxes != null && si.SupplierInvoiceItemTaxes.length > 0) {
-                                                                    si.SupplierInvoiceItemTaxes.forEach(it => {
-                                                                        if (it.TotalBtlCoverageNIS != null)
-                                                                            this.sumBtl += it.TotalBtlCoverageNIS;
-                                                                    })
-                                                                }
-                                                            })
+                                                            var MinAndMax;
+                                                            this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAY_AMT_RNG", "NON", "NON", SessionLocator.Tenant)
+                                                                .subscribe(
+                                                                    (response: ServiceResponse) => {
+                                                                        let obj = response.Result;
+                                                                        if (obj) {
+                                                                            var CGG_PAY_AMT_RNGDefault: string = obj['DefaultValue'];
+                                                                            if (CGG_PAY_AMT_RNGDefault != "" && CGG_PAY_AMT_RNGDefault != null) {
+                                                                                let MinAndMax = CGG_PAY_AMT_RNGDefault.split("-");
+                                                                                let min = parseFloat(MinAndMax[0].replace(/,/g, ''));
+                                                                                let max = parseFloat(MinAndMax[1].replace(/,/g, ''));
+                                                                                if (min < this.TotalTax && max > this.TotalTax) {
+                                                                                    this.BetweenMinAndMax = true;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    });
                                                         }
-
-                                                    });
+                                                    }
                                                 }
-                                                this.LoadPayment();
-                                                this.CheckRequrierdFieldsForSend();
+
+
+                                                this.DeclarationPM = args.EntityPM;
+
+                                                if (this.DeclarationPM.IsCourierDeclaration) {
+                                                    let myDeclarationCourierStatusListService: DeclarationCourierStatusListService = new DeclarationCourierStatusListService();
+
+                                                    let filters = new ApiQueryFilters();
+
+                                                    filters.addAdditionalFilter("DeclarationId", this.DeclarationPM.Id, null, null, "Equals", false, false, false, "string");
+                                                    filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
+                                                    filters.PageSize = 1;
+                                                    myDeclarationCourierStatusListService.getByFilters(filters)
+                                                        .subscribe((serviceResponse1: ServiceResponse) => {
+                                                            let mappedDeclarationCourierStatusList: Array<DeclarationCourierStatusList> = serviceResponse1.Result;
+                                                            if (mappedDeclarationCourierStatusList != null && mappedDeclarationCourierStatusList.length > 0) {
+                                                                this._CourierWorksheet = mappedDeclarationCourierStatusList[0];
+                                                            }
+
+                                                        });
+
+                                                }
+                                                if ((this.DeclarationPM.ImporterEntitlementTypeCode == "17" || this.DeclarationPM.ImporterEntitlementTypeCode == "18") && FeatureLocator.HasFeaturePermession("Customs.Declaration", "BTPA")) {
+                                                    this.supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclaration(this.DeclarationPM.Id).subscribe(
+                                                        invoices => {
+                                                            if (invoices.Result != null) {
+                                                                this.sumBtl = 0.0;
+                                                                invoices.Result.forEach((el) => {
+                                                                    if (el.SupplierInvoiceItems != null && el.SupplierInvoiceItems.length > 0) {
+                                                                        el.SupplierInvoiceItems.forEach(si => {
+                                                                            if (si.SupplierInvoiceItemTaxes != null && si.SupplierInvoiceItemTaxes.length > 0) {
+                                                                                si.SupplierInvoiceItemTaxes.forEach(it => {
+                                                                                    if (it.TotalBtlCoverageNIS != null)
+                                                                                        this.sumBtl += it.TotalBtlCoverageNIS;
+                                                                                })
+                                                                            }
+                                                                        })
+                                                                    }
+
+                                                                });
+                                                            }
+                                                            this.LoadPayment();
+                                                            this.CheckRequrierdFieldsForSend();
+                                                        });
+                                                }
+
+                                                else {
+                                                    this.LoadPayment();
+
+                                                    this.CheckRequrierdFieldsForSend();
+                                                }
+
+
+
                                             });
-                                    }
-
-                                    else {
-                                        this.LoadPayment();
-
-                                        this.CheckRequrierdFieldsForSend();
-                                    }
-                                   
 
                                 });
                             });
@@ -827,40 +862,42 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
     }
     AutoFillPaymentScreen() {
-        this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAYHAND_FIL", "NON", "NON", SessionLocator.Tenant)
-            .subscribe(
-                (response: ServiceResponse) => {
+        if (this.isAutoFill)
+            this.JustAutoFillPaymentScreen();
+        //this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAYHAND_FIL", "NON", "NON", SessionLocator.Tenant)
+        //    .subscribe(
+        //        (response: ServiceResponse) => {
 
-                    let obj = response.Result;
-                    if (obj) {
-                        let DefaultValue = obj['DefaultValue'];
+        //            let obj = response.Result;
+        //            if (obj) {
+        //                let DefaultValue = obj['DefaultValue'];
 
-                        if (DefaultValue == "A") {//==AutoFillPaymentScreen //if (customsSetting.AutoFillPaymentScreen) {
-                            if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
-                                var MinAndMax;
-                                this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAY_AMT_RNG", "NON", "NON", SessionLocator.Tenant)
-                                    .subscribe(
-                                        (response: ServiceResponse) => {
-                                            let obj = response.Result;
-                                            if (obj) {
-                                                var CGG_PAY_AMT_RNGDefault: string = obj['DefaultValue'];
-                                                if (CGG_PAY_AMT_RNGDefault != "" && CGG_PAY_AMT_RNGDefault != null) {
-                                                    let MinAndMax = CGG_PAY_AMT_RNGDefault.split("-");
-                                                    let min = parseFloat(MinAndMax[0].replace(/,/g, ''));
-                                                    let max = parseFloat(MinAndMax[1].replace(/,/g, ''));
-                                                    if (min < this.TotalTax && max > this.TotalTax) {
-                                                        this.BetweenMinAndMax = true;
-                                                    }
-                                                }
-                                            }
-                                            this.JustAutoFillPaymentScreen();
-                                        });
+        //                if (DefaultValue == "A") {//==AutoFillPaymentScreen //if (customsSetting.AutoFillPaymentScreen) {
+        //                    if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
+        //                        var MinAndMax;
+        //                        this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAY_AMT_RNG", "NON", "NON", SessionLocator.Tenant)
+        //                            .subscribe(
+        //                                (response: ServiceResponse) => {
+        //                                    let obj = response.Result;
+        //                                    if (obj) {
+        //                                        var CGG_PAY_AMT_RNGDefault: string = obj['DefaultValue'];
+        //                                        if (CGG_PAY_AMT_RNGDefault != "" && CGG_PAY_AMT_RNGDefault != null) {
+        //                                            let MinAndMax = CGG_PAY_AMT_RNGDefault.split("-");
+        //                                            let min = parseFloat(MinAndMax[0].replace(/,/g, ''));
+        //                                            let max = parseFloat(MinAndMax[1].replace(/,/g, ''));
+        //                                            if (min < this.TotalTax && max > this.TotalTax) {
+        //                                                this.BetweenMinAndMax = true;
+        //                                            }
+        //                                        }
+        //                                    }
+        //                                    this.JustAutoFillPaymentScreen();
+        //                                });
 
-                            }
-                        }
+        //                    }
+        //                }
 
-                    }
-                });
+        //            }
+        //        });
     }
 
    
@@ -887,6 +924,14 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 method.MethodTypeCode = "1";
                 this.paymentMethodTypeListService.getSingleFromCache("1").subscribe((response: ServiceResponse) => {
                     method.MethodTypeName = response.Result.LocalName;
+                });
+            }
+
+            if (!AppTool.IsNullOrEmpty( this.paymentMethodModelMax)) {
+                this.paymentMethodModelMax.Amount = this.DeclarationPM.TotalTax;
+                this.paymentMethodModelMax.MethodTypeCode = "1";
+                this.paymentMethodTypeListService.getSingleFromCache("1").subscribe((response: ServiceResponse) => {
+                    this.paymentMethodModelMax.MethodTypeName = response.Result.LocalName;
                 });
             }
         }
@@ -921,6 +966,18 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 method.PayerActivityTypeCode = defaultValue;
                 this.customerActivityTypeListService.getSingleFromCache(defaultValue).subscribe((response: ServiceResponse) => {
                     method.PayerActivityTypeName = response.Result.LocalName;
+                });
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.paymentMethodModelMax)) {
+                this.paymentMethodModelMax.Amount = this.DeclarationPM.TotalTax;
+                this.paymentMethodModelMax.MethodTypeCode = "2";
+                this.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
+                    this.paymentMethodModelMax.MethodTypeName = response.Result.LocalName;
+                });
+                this.paymentMethodModelMax.PayerActivityTypeCode = defaultValue;
+                this.customerActivityTypeListService.getSingleFromCache(defaultValue).subscribe((response: ServiceResponse) => {
+                    this.paymentMethodModelMax.PayerActivityTypeName = response.Result.LocalName;
                 });
             }
         }
@@ -981,8 +1038,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     NewProtestMethod() {
         this.NewProtestClicked();
     }
-    NewMethodMethod(isBtl = false) {
-        this.AddPaymentMethodClicked(isBtl);
+    NewMethodMethod(isBtl = false ) {
+        this.AddPaymentMethodClicked(isBtl,true);
     }
     CancelButtonClicked() {
         SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
@@ -1161,7 +1218,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         }
         else if (this.DeclarationPM.StorageStatusCode && !this.ErrorMessage) {
             this.ShowStorageStatusMessage = true;
-            this.ErrorMessage = "בקשת םחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
+            this.ErrorMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
             this.IsDisplayOnly = false;
 
 
@@ -1206,7 +1263,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             }
             else if (this.DeclarationPM.StorageStatusCode && !this.ErrorMessage) {
                 this.ShowStorageStatusMessage = true;
-                this.ErrorMessage = "בקשת םחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
+                this.ErrorMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
                 this.IsDisplayOnly = false;
             }
 
@@ -1255,8 +1312,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     PaymentMethodMessage: string = "";
     IsPaymentMethodMessageVisible: boolean = false;
     newLine: boolean = false;
-
-    AddPaymentMethodClicked(isBtl: boolean) {
+    paymentMethodModelMax: PaymentMethodModel
+    AddPaymentMethodClicked(isBtl: boolean, isLoad: boolean) {
 
         this.newLine = true;
         var line = 0;
@@ -1289,12 +1346,52 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             item.Line = line;
             item.SequenceNumeric = seq;
             this.paymentPM.AddDeclarationPaymentMethod(item);
+            if (this.BetweenMinAndMax && isLoad) {
+                this.paymentMethodModelMax = new PaymentMethodModel(item, this);
+            }
+            else {
+                var itemModel = new PaymentMethodModel(item, this);
+                this.PaymentMethodsList.Insert(itemModel);
 
-            var itemModel = new PaymentMethodModel(item, this);
-            this.PaymentMethodsList.Insert(itemModel);
+            }
         }
 
         this.BuildMethods();
+
+        //this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAYHAND_FIL", "NON", "NON", SessionLocator.Tenant)
+        //    .subscribe(
+        //        (response: ServiceResponse) => {
+
+        //            let obj = response.Result;
+        //            if (obj) {
+        //                let DefaultValue = obj['DefaultValue'];
+
+        //                if (DefaultValue == "A") {//==AutoFillPaymentScreen //if (customsSetting.AutoFillPaymentScreen) {
+        //                    if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
+        //                        var MinAndMax;
+        //                        this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAY_AMT_RNG", "NON", "NON", SessionLocator.Tenant)
+        //                            .subscribe(
+        //                                (response: ServiceResponse) => {
+        //                                    let obj = response.Result;
+        //                                    if (obj) {
+        //                                        var CGG_PAY_AMT_RNGDefault: string = obj['DefaultValue'];
+        //                                        if (CGG_PAY_AMT_RNGDefault != "" && CGG_PAY_AMT_RNGDefault != null) {
+        //                                            let MinAndMax = CGG_PAY_AMT_RNGDefault.split("-");
+        //                                            let min = parseFloat(MinAndMax[0].replace(/,/g, ''));
+        //                                            let max = parseFloat(MinAndMax[1].replace(/,/g, ''));
+        //                                            if (min < this.TotalTax && max > this.TotalTax) {
+        //                                                this.BetweenMinAndMax = true;
+        //                                            }
+        //                                        }
+        //                                    }
+                                          
+        //                                });
+
+        //                    }
+        //                }
+
+        //            }
+        //        });
 
         //RefreshScreenEvent myEvent = SessionLocator.CurrentAssemblyLocator.EventAggregator.GetEvent<RefreshScreenEvent>();
         //myEvent.Publish(new RefreshScreenEventArgs("DeclarationPaymentMethods"));
@@ -1408,7 +1505,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     IsFuturePaymentDateValid(event) {
         if (this.AutomaticPayment && event != null) {
             var myMessageWindow = new MessageWindow
-            myMessageWindow.Show("לם ניתן לבצע תשלום בזמינות עם תםריך תשלום עתידי");//TextCodeTranslator.Translate("")
+            myMessageWindow.Show("לא ניתן לבצע תשלום בזמינות עם תאריך תשלום עתידי");//TextCodeTranslator.Translate("")
             this.FuturePaymentDateTime = null;
             this.paymentPM.FuturePaymentDateTime = null;
             this.FuturePaymentTime = null;
@@ -1447,7 +1544,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             var currentDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), 0, 0, 0); // last of today
 
             if (this.PaymentDate < currentDate) {
-                this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", false, "לם ניתן להזין תםריך בעבר");
+                this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", false, "לא ניתן להזין תאריך בעבר");
                 return false;
             } else {
                 this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", true, "");
@@ -1478,7 +1575,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             if (!isFuturePaymentDateValid)
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.futuredatecantbepast"));
             if (!isPaymentDateValid)
-                this.ValidationErrorsList.push("לם ניתן להזין תםריך בעבר");
+                this.ValidationErrorsList.push("לא ניתן להזין תאריך בעבר");
 
         }
         else {
@@ -1501,7 +1598,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                     if (!AppTool.IsNullOrEmpty(this.FuturePaymentDateTime)) {
                                         if (!AppTool.IsNullOrEmpty(timeCompany)) {
                                             if (this.CheckIdDateBetween2Times(timeCompany, this.FuturePaymentDateTime)) {
-                                                this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                                this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
                                                 isBlockTime = true;
                                             }
 
@@ -1509,7 +1606,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                         if (!AppTool.IsNullOrEmpty(timeCustomer)) {
 
                                             if (this.CheckIdDateBetween2Times(timeCustomer, this.FuturePaymentDateTime)) {
-                                                this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                                this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
                                                 isBlockTime = true;
                                             }
                                         }
@@ -1519,14 +1616,14 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                         if (!AppTool.IsNullOrEmpty(timeCompany)) {
 
                                             if (this.CheckIdDateBetween2Times(timeCompany, this.PaymentDate)) {
-                                                this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                                this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
                                                 isBlockTime = true;
                                             }
                                         }
                                         if (!AppTool.IsNullOrEmpty(timeCustomer)) {
 
                                             if (this.CheckIdDateBetween2Times(timeCustomer, this.PaymentDate)) {
-                                                this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                                this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
                                                 isBlockTime = true;
                                             }
                                         }
@@ -1741,7 +1838,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             if (!isFuturePaymentDateValid)
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.futuredatecantbepast"));
             if (!isPaymentDateValid)
-                this.ValidationErrorsList.push("לם ניתן להזין תםריך בעבר");
+                this.ValidationErrorsList.push("לא ניתן להזין תאריך בעבר");
         }
         //#endregion
 
@@ -1768,7 +1865,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                 if (!AppTool.IsNullOrEmpty(this.FuturePaymentDateTime)) {
                                     if (!AppTool.IsNullOrEmpty(timeCompany)) {
                                         if (this.CheckIdDateBetween2Times(timeCompany, this.FuturePaymentDateTime)) {
-                                            this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                            this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
                                             isBlockTime = true;
                                         }
 
@@ -1776,7 +1873,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                     if (!AppTool.IsNullOrEmpty(timeCustomer)) {
 
                                         if (this.CheckIdDateBetween2Times(timeCustomer, this.FuturePaymentDateTime)) {
-                                            this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                            this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
                                             isBlockTime = true;
                                         }
                                     }
@@ -1786,14 +1883,14 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                     if (!AppTool.IsNullOrEmpty(timeCompany)) {
 
                                         if (this.CheckIdDateBetween2Times(timeCompany, this.PaymentDate)) {
-                                            this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                            this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
                                             isBlockTime = true;
                                         }
                                     }
                                     if (!AppTool.IsNullOrEmpty(timeCustomer)) {
 
                                         if (this.CheckIdDateBetween2Times(timeCustomer, this.PaymentDate)) {
-                                            this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                            this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
                                             isBlockTime = true;
                                         }
                                     }
@@ -2269,6 +2366,9 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             this.declarationMessagesService.PostSendPaymentOnly(params)
                 .subscribe(res1 => {
                 });
+        else
+            SessionLocator.SelectedSession.CloseCurrentWindow();
+
     }
 
     ActualSendToTransfer() {
@@ -2333,7 +2433,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 confirmWindow.Show(mess);
                 confirmWindow.WindowClosed.subscribe((event: any) => {
 
-                    if (mess.toLowerCase().includes("succeeded") || mess.toLowerCase().includes("בהצלחה") || mess.toLowerCase().includes("נפתחה רשומה בתיקים לםישור") || this._IsCloseScreen == true) // Mirit 20/07/15 Task-14344 - add successfully (Hebrew) // Mirit 24/11/15 Task 18440- add IsCloseScreen
+                    if (mess.toLowerCase().includes("succeeded") || mess.toLowerCase().includes("בהצלחה") || mess.toLowerCase().includes("נפתחה רשומה בתיקים לאישור") || this._IsCloseScreen == true) // Mirit 20/07/15 Task-14344 - add successfully (Hebrew) // Mirit 24/11/15 Task 18440- add IsCloseScreen
                     {
                         this.RefreshDeclaration();
                         if (SessionLocator.SelectedSession.CurrentWindow != null) {
@@ -2675,7 +2775,7 @@ export class PaymentMethodModel extends BaseComponent {
     }
 
     LoadBanks() {
-            this.parent.declarationWebService.GetCustomBanksForCard(this.parent.DeclarationPM.CustomerId).subscribe((response: ServiceResponse) => {
+             this.parent.declarationWebService.GetCustomBanksForCard(this.parent.DeclarationPM.CustomerId).subscribe((response: ServiceResponse) => {
                     let BlockAgentBankForMasabDefaultValue = "";
                     var result = response.Result.filter(d => !d.InActive);
                     console.log("[Response] GetCustomBanksForCard: ", result);
@@ -2704,7 +2804,7 @@ export class PaymentMethodModel extends BaseComponent {
                                                             this.agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
                                                             if (this.agentBanks.length == 1) {
                                                                 this.InternalBankId = this.agentBanks[0].Id;
-                                                                if (!this.BankIsNull) {
+                                                                if (!this.BankIsNull || this.MethodTypeCode!="2" ) {
                                                                     this.SelectedBank = this.agentBanks[0];
                                                                     this.BanksList = this.agentBanks;
                                                                 }
@@ -3143,11 +3243,12 @@ export class PaymentMethodModel extends BaseComponent {
 
 
                                 }
-                                if (this.parent.BetweenMinAndMax && this.methodPM.PayerActivityTypeCode == "3") {
+
+                                if (this.parent.BetweenMinAndMax && this.methodPM.PayerActivityTypeCode == "3" && this.parent.PaymentMethodsList.Length==0) {
                                     this.BankIsNull = true;
                                     this.methodPM.MethodTypeCode = "2";
                                     this.methodPM.PayerActivityTypeCode = "3";
-                                    this.methodPM.Amount = this.parent.DeclarationPM.TotalTax ;
+                                    this.methodPM.Amount = this.parent.DeclarationPM.TotalTax;
                                     this.InternalBankName = null;
                                     this.InternalBankId = null;
                                     this.parent.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
@@ -3156,6 +3257,17 @@ export class PaymentMethodModel extends BaseComponent {
                                     this.parent.customerActivityTypeListService.getSingleFromCache("3").subscribe((response: ServiceResponse) => {
                                         this.methodPM.PayerActivityTypeName = response.Result.LocalName;
                                     });
+
+                                    this.parent.PaymentMethodsList.Insert(this.parent.paymentMethodModelMax);
+                                }
+
+                                else if (this.parent.PaymentMethodsList.Length == 0) {
+                                    if (!AppTool.IsNullOrEmpty(this.parent.paymentPM)) {
+                                        for (let item of this.parent.paymentPM.DeclarationPaymentMethods) {
+                                            this.parent.PaymentMethodsList.Insert(new PaymentMethodModel(item, this.parent));
+                                        }
+                                    }
+                                   // this.parent.PaymentMethodsList.Insert(this.methodPM);
                                 }
                             }
                         }

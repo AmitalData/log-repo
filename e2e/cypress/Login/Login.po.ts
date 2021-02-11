@@ -12,9 +12,9 @@ it('Login Successfully', () => {
     //cy.visit('http://localhost:4200/')
 
     //cy.visit('https://test.logitudeworld.com/test')
-    var Email = Cypress.env("TestEmail");
-    var Password = Cypress.env("TestPassword");
-    var URL = Cypress.env("TestURL");
+    var Email = Cypress.env("CustomsEmail");
+    var Password = Cypress.env("CustomsPassword");
+    var URL = Cypress.env("CustomsAPIURL");
     var Env = Cypress.env("Env");
 
     if (Env == 'staging') {
@@ -63,7 +63,11 @@ it('Login Successfully', () => {
         Password = Cypress.env("TestStagingPasswordTIQ4");
       }
        
-   
+          else if ( Env == 'FAPreCloud'){
+         URL = Cypress.env("CloudPreURL");
+         Email = Cypress.env("FACloudEmail");
+         Password = Cypress.env("FACloudPassword");
+       }
    
 
     else //test_staging

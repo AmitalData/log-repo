@@ -36,6 +36,7 @@ using System.Text.RegularExpressions;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel;
+using Logitude.BookingLib.BL.EntityUpdateServices.Behaviours.BookingBehaviours.Validators;
 
 namespace WebFreight.Web.BookingModel.DomainServices
 {
@@ -294,18 +295,39 @@ namespace WebFreight.Web.BookingModel.DomainServices
         {
             string myResult = null;
 
-            if (myTenant != 343 && myTenant != 528)
+            try
             {
-                if (!string.IsNullOrEmpty(myMasterField) && !string.IsNullOrEmpty(myAirlinePrefixField) && !isCancelled)
+                BookingMasterIsUsedValidator validator = new BookingMasterIsUsedValidator();
+
+                validator.Validate(new BookingMasterIsUsedValidatorArgs()
                 {
-                    BookingRepository myBookingRepository = new BookingRepository(myTenant);
-                    bool isFieldExists = myBookingRepository.IsMasterFieldUsed(myMasterField, myAirlinePrefixField, entityId, myTenant, myDirectionCode, myTransportModeCode);
-                    if (isFieldExists)
-                    {
-                        myResult = "Master field already used in another Booking";
-                    }
-                }
+                    Tenant = myTenant,
+                    BookingId = entityId,
+                    DirectionCode = myDirectionCode,
+                    TransportModeCode = myTransportModeCode,
+                    Master = myMasterField,
+                    AirlinePrefix = myAirlinePrefixField,
+                    IsCancelled = isCancelled,
+                });
             }
+
+            catch (Exception ex)
+            {
+                myResult = ex.Message;
+            }
+
+            //if (myTenant != 343 && myTenant != 528)
+            //{
+            //    if (!string.IsNullOrEmpty(myMasterField) && !string.IsNullOrEmpty(myAirlinePrefixField) && !isCancelled)
+            //    {
+            //        BookingRepository myBookingRepository = new BookingRepository(myTenant);
+            //        bool isFieldExists = myBookingRepository.IsMasterFieldUsed(myMasterField, myAirlinePrefixField, entityId, myTenant, myDirectionCode, myTransportModeCode);
+            //        if (isFieldExists)
+            //        {
+            //            myResult = "Master field already used in another Booking";
+            //        }
+            //    }
+            //}
 
             return myResult;
         }

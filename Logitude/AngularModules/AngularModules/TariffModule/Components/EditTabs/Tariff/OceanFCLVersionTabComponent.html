@@ -101,7 +101,7 @@
                         </td>
 
                         <td style="width: 1px" *ngIf="IsApproveVersionButtonVisible">
-                            <button class="Button" (click)="ApproveVersionClicked()">Approve Version</button>
+                            <button class="GreenButton" (click)="ApproveVersionClicked()">Approve Version</button>
                         </td>
 
                         <td style="width:5px;" *ngIf="IsApproveVersionButtonVisible">
@@ -128,8 +128,8 @@
                                     </div>
 
                                     <button (click)="CopyVersionClicked()" *ngIf="!IsDraftVersion">Copy into new Version</button>
-                                    <!--<button (click)="AllInChargesClicked()">All-In Charges</button>-->
                                     <button (click)="UpdateMissingPortsClicked()" *ngIf="IsUpdateMissingPortsVisible">Update Missing Ports</button>
+                                    <button (click)="ViewUploadedExcelFilesClicked()">View Uploaded Excel Files</button>
                                 </div>
                             </div>
                         </td>
@@ -148,7 +148,7 @@
         <tr>
             <td>
                 <div class="MediaFill">
-                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="TariffsLinesSource" [UseVirtuallization]="true">
+                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="TariffsLinesSource" [UseVirtuallization]="true"  [SelectedRow]="selectedRow" [ChangeScrollPosition]="changeScrollPosition">
 
                         <!--Actions-->
                         <log-column [width]="'60'" *ngIf="IsDraftVersion">
@@ -424,9 +424,9 @@
                         </log-column>
 
                         <!-- TransitTime -->
-                        <log-column [Alignment]="'center'" [header]="'TariffLine.F.TransitTime' | TextCodeTranslationPipe" [width]="'120'">
+                        <log-column [Alignment]="'center'" [header]="'TariffLine.F.TransitTime' | TextCodeTranslationPipe" [width]="'120'" >
                             <ng-template let-item>
-                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                         <table>
                                             <tr>

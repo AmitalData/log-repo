@@ -35,7 +35,12 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationCorrection
       public string MessageError { get; set; }
       public string OldValue { get; set; }
       public string NewValue { get; set; }
-      public List<field> FieldErrors { get; set; }
+        public string AmendmentFieldStatus { get; set; }
+        public string AmendmentRequestInitiatorType { get; set; }
+
+        public string FieldAmendmentRejectReasonRemarks { get; set; }
+
+        public List<field> FieldErrors { get; set; }
       
     }
 }

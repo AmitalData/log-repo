@@ -153,6 +153,7 @@ export class GatepassRequestPMService {
         if (!entityPM) {
             
             entityPM = new GatepassRequestPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class GatepassRequestPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

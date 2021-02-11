@@ -149,7 +149,7 @@
 </div>
 
 <div style="position: absolute; top:-1px; bottom:0; left:0; right:0; margin:auto; padding: 0px; background: white; border-radius:0 5px 5px 0;" *ngIf="!IsDemoTenant">
-    <table class="noselect">
+    <table >
         <tr style="height: 1px;" *ngIf="!IsBackButtonAndTitleVisibile">
             <td>
                 <div></div>
@@ -184,11 +184,13 @@
 
                         <td>
                             <div *ngIf="HasActionBar()" style="width: 5px;"></div>
-                            <div *ngIf="HasActionBar()" id="ActionBar"  LocationDirective Code="MNA" ></div>
-                            <div *ngIf="!HasActionBar()" ></div>
+                            <div *ngIf="HasActionBar()" id="ActionBar" LocationDirective Code="MNA"></div>
+                            <div *ngIf="!HasActionBar()"></div>
                         </td>
 
-                       
+                        <td style="width: 480px;">
+                            <div LocationDirective Code="MNH"></div>
+                        </td>
                     </tr>
                 </table>
             </td>
@@ -249,7 +251,7 @@
                             <div></div>
                         </td>
                         <td *ngIf="IsShowAddFromLibraryLink" style="width: 175px; vertical-align: middle;">
-                            <p (click)="LinkAddDocumentFromLibraryClcik()" class="CustomLink" style="font-size:12px;width:173px;vertical-align:central">Add Document From Library</p>
+                            <p (click)="LinkAddDocumentFromLibraryClcik()" class="CustomLink" style="font-size:12px;width:173px;vertical-align:central">Check New Available Templates</p>
                         </td>
                         <td *ngIf="IsShowAddQuoteTemplateFromLibraryLink" style="width: 175px; vertical-align: middle;">
                             <p (click)="LinkAddQuoteTemplateFromLibraryClcik()" class="CustomLink" style="font-size:12px;width:173px;vertical-align:central">
@@ -268,7 +270,7 @@
                             <span *ngIf="ShowViews">{{'General.O.View' | TextCodeTranslationPipe}}:</span>
                         </td>
 
-                        <td style="vertical-align: middle;">
+                        <td style="vertical-align: middle;width:170px">
                             <QueryList *ngIf="ShowViews && ResourcesLoaded" [ItemsSource]="Queries" [UserItemSource]="UserQueries" [Binding]="'NameTextCodeCode'" [onSelectedQueryChangeEvent]="onSelectedQueryChangeEvent" [SelectedItem]="SelectedQuery" [ObjectTableName]="ObjectTableName" (itemSelectedEvent)="QueryValueChanged($event)" [QueryListSourceChanged]="QueryListSourceChanged" (QueriesChangedEvent)="QueriesChangedEvent($event)" [LoadResourceCompleted]="LoadResourceCompleted" [pubSubAdvanceQueryFiltersService]="AdvanceQFiltersService" (NewViewClosedEvent)="NewViewClosedEvent($event)"></QueryList>
 
 
@@ -296,13 +298,26 @@
         </div>-->
                         </td>
 
+                        <td style="width:200px;vertical-align:central">
+
+                            <div style="width:200px;height:20px">
+                                <p *ngIf="IsShowAddReportFromLibraryLink" (click)="LinkAddReportFromLibraryClick()" class="CustomLink" style="font-size:12px;float:right;width:200px;height:20px">Add Report From Library</p>
+
+                            </div>
+
+                        </td>
+
+
+                        <td *ngIf="(dataSource && dataSource.rowCount == ConstantPageSize && DontApplyVirtualization)" style="color: #666666; font-size: 11px; padding-left:5px;padding-right:5px;width:1px;background-color:#FFFBDA">
+                            <div>  <span>Showing the first {{ConstantPageSize}} rows, use the search field to find more results.</span></div>
+                        </td>
+
+
                         <td>
                             <div></div>
                         </td>
 
-                        <td style="width: 650px; left:50PX;"> 
-                            <div LocationDirective Code="MNH"></div>
-                        </td>
+
                         <td style="width: 1px;" *ngIf="IsNavigateButtonVisible">
                             <button *ngIf="IsNavigateButtonVisible" style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="Navigate()">Navigate</button>
                         </td>
@@ -310,16 +325,7 @@
                         <td style="width: 5px;">
                             <div></div>
                         </td>
-
-                        <td style="width:200px;vertical-align:central">
-
-                            <div style="width:200px;height:20px">
-                                <p *ngIf="IsShowAddReportFromLibraryLink" (click)="LinkAddReportFromLibraryClick()" class="CustomLink" style="font-size:12px;float:right;width:155px;height:22px">Add Report From Library</p>
-
-                            </div>
-
-                        </td>
-
+                         
                         <td style="width: 5px;">
                             <div></div>
                         </td>
@@ -399,7 +405,7 @@
                     <logitude-grid-v2 *ngIf="true" [dataSource]="dataSource" [QueryChangeEvent]="onQueryChangeEvent" [pubSubAdvanceQueryFiltersServiceRecived]="pubSubAdvanceQueryFiltersServiceRecived" [Filterchangeevent]="Filterchangeevent"
                                       [rows]="items" [SearchFieldchangeevent]="SearchFieldchangeevent" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
                                       [columns]="columns" (ColumnResisedevent)="ColumnResisedevent($event)" (MenuHeaderchanged)="onMenuHeaderchanged($event)"
-                                      [ObjectTable]="ObjectTable" [ColumnsReady]="ColumnsReady" [HasPermition]="HasPermition"
+                                      [ObjectTable]="ObjectTable" [ColumnsReady]="ColumnsReady" [HasPermition]="HasPermition" [DontApplyVirtualization]="DontApplyVirtualization"
                                       [rowCount]="rowCount" [searchFields]="searchFields" [queryId]="SelectedQueryId" [queryCode]="SelectedQueryCode" (rowSelectedEvent)="onRowSelected($event)"
                                       (AfterViewInitCompleted)="ViewInitCompleted($event)" [ReattachToDetection]="ReattachToDetection" [MyScrollTop]="MyScrollTop" [MySelectedRowIndex]="MySelectedRowIndex" [SortServerProp]="SortServerProp" (SortInvoked)="OnSortInvoked($event)"
                                       [FilterChangedEvent]="FilterChangedEvent">

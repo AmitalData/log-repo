@@ -1446,6 +1446,98 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isFavorite ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsFavorite  
+	   {
+	    
+	     get
+		{
+		   return isFavorite;
+		 }
+		 set
+		 {
+		   if(isFavorite != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsFavorite",OldValue=isFavorite,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isFavorite=value;
+		   }
+			
+		 }
+	   }
+	  private string containersNumbers ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContainersNumbers  
+	   {
+	    
+	     get
+		{
+		   return containersNumbers;
+		 }
+		 set
+		 {
+		   if(containersNumbers != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainersNumbers",OldValue=containersNumbers,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   containersNumbers=value;
+		   }
+			
+		 }
+	   }
+	  private int? packagesQuantity ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? PackagesQuantity  
+	   {
+	    
+	     get
+		{
+		   return packagesQuantity;
+		 }
+		 set
+		 {
+		   if(packagesQuantity != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackagesQuantity",OldValue=packagesQuantity,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   packagesQuantity=value;
+		   }
+			
+		 }
+	   }
+	  private string directionId ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DirectionId  
+	   {
+	    
+	     get
+		{
+		   return directionId;
+		 }
+		 set
+		 {
+		   if(directionId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DirectionId",OldValue=directionId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   directionId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

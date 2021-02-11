@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.BL.EntityQueryServices;
+﻿#if false
+using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Def.EntityPMs;
 using Simplog.Server.Infrastructure;
 using System;
@@ -196,3 +197,6 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         }
     }
 }
+
+
+#endif

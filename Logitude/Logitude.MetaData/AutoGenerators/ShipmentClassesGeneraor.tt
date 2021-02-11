@@ -55,7 +55,7 @@ GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles/ShipmentsModel","../../L
 //
 //
 //
-GenerateAllControllers("../EntityFiles/ShipmentsModel","../.../JustWebFreight/WebFreight.Web/Controllers","ShipmentsContext","ShipmentsModel");
+GenerateAllControllers("../EntityFiles/ShipmentsModel","../../JustWebFreight/WebFreight.Web/Controllers","ShipmentsContext","ShipmentsModel");
 //
 //
 //

@@ -57,12 +57,18 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         ReconcileMethodLocalName = a.ReconcileMethod != null ? a.ReconcileMethod.LocalName : null,
                                                         CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
                                                         ChartOfAccountsTypeName = a.ChartOfAccountsType != null ? a.ChartOfAccountsType.EnglishName : null,
+                                                        ChartOfAccountsTypeEnglishName = a.ChartOfAccountsType != null ? a.ChartOfAccountsType.EnglishName : null,
+                                                        ChartOfAccountsTypeLocalName = a.ChartOfAccountsType != null ? a.ChartOfAccountsType.LocalName : null,
+                                                        
                                                         CurrencyCode = a.IsMultiCurrency == true ? multi : a.Currency != null ? a.Currency.Code : null,
                                                         CurrencySign = a.IsMultiCurrency == true ? "" : a.Currency != null ? a.Currency.Sign : null,
                                                         ControlAccountName = a.ControlAccount != null ? a.ControlAccount.EnglishName : null,
                                                         ControlAccountId = a.ControlAccountId,
                                                         ControlAccountNumber = a.ControlAccount != null ? a.ControlAccount.DisplayNumber : null,
                                                         ChartOfAccountsName = a.ChartOfAccount != null ? a.ChartOfAccount.LocalName : null,
+                                                        ChartOfAccountsEnglishName = a.ChartOfAccount != null ? a.ChartOfAccount.EnglishName : null,
+                                                        ChartOfAccountsLocalName = a.ChartOfAccount != null ? a.ChartOfAccount.LocalName : null,
+
                                                         ActiveStatusName = a.Inactive == false ? active : inactive,
                                                         AutomaticReconcileId = a.AutomaticReconcileId,
                                                         AutomaticReconcileName = a.AutomaticReconcile != null ?
@@ -116,7 +122,15 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         Category3Name = a.Category3.EnglishName,
                                                         Category4Name = a.Category4.EnglishName,
                                                         Category5Name = a.Category5.EnglishName,
-                                                        ActiveForInterest =a.ActiveForInterest,
+                                                        Category1LocalName = a.Category1.LocalName,
+                                                        Category2LocalName = a.Category2.LocalName,
+                                                        Category3LocalName = a.Category3.LocalName,
+                                                        Category4LocalName = a.Category4.LocalName,
+                                                        Category5LocalName = a.Category5.LocalName,
+
+
+
+                                                   ActiveForInterest =a.ActiveForInterest,
                                                         ActiveForInterestCreditInvoice = a.ActiveForInterestCreditInvoice,
                                                         MinimumInterestInvoiceBilling = a.MinimumInterestInvoiceBilling,
                                                         InterestCalculationStartDate = a.InterestCalculationStartDate,
@@ -361,13 +375,20 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return accountList;
         }
         
-        public IQueryable<GLAccountList> GetByIds(List<string> ids, int tenant)
+        public IQueryable<GLAccountList> GetByIds(List<string> ids, int tenant, bool noNeedTenant)
         {
             IQueryable<GLAccount> accountQuery = (from a in context.GLAccounts
-                                                              where a.Tenant == tenant && ids.Contains(a.Id)
-                                                              select a);
+                                                      //where a.Tenant == tenant && ids.Contains(a.Id)
+                                                  where ids.Contains(a.Id)
+                                                  select a);
+            if (!noNeedTenant)
+            {
+                accountQuery = accountQuery.Where(a => a.Tenant == tenant);
+            }
 
             IQueryable<GLAccountList> accountListQuery = this.GetIqueryableList(accountQuery);
+            //var xxx = accountListQuery.ToList();
+
             return accountListQuery;
         }
 

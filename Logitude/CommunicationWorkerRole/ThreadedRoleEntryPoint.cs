@@ -46,6 +46,7 @@ using System.Xml.Linq;
 using WebFreight.Web.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.Customs.BL.Messaging.Amital;
+using Simplog.Server.Infrastructure.Interfaces;
 
 namespace CommunicationWorkerRole
 {
@@ -232,6 +233,7 @@ namespace CommunicationWorkerRole
 
 
             AccountingRegistrations.Register();
+            InfraRegistrationHelper.Register();
 
             Func<IAmitalRestrictOwnerService> createAmitalRestrictOwnerModelService = null;
 
@@ -303,7 +305,7 @@ namespace CommunicationWorkerRole
             //throw (new InvalidOperationException());
         }
         private static string[] ActiveWorkers = { };
-        private static void SetWorkerRoleName()
+        public static void SetWorkerRoleName()
         {
             DirectoryInfo directoryInfo = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
             string filePath = Path.Combine(directoryInfo.FullName, "WorkerRoleName.xml");
@@ -778,15 +780,20 @@ namespace CommunicationWorkerRole
 
             }
 
+            SetWorkerRoleName();
+
             if (LogitudeSettings.IsCostomsDeploy)
             {
                 var he = new CultureInfo("he-IL");// '("en-US") '    "he-IL")
                 he.DateTimeFormat.DateSeparator = ".";
                 he.DateTimeFormat.ShortDatePattern = "dd-MM-yy";// ' "yyyy/MM/dd" '  ' "DD/MM/YYYY"
                 System.Threading.Thread.CurrentThread.CurrentCulture = he;
+
+                LogitudeSettings.RunWorkerRoleAutomaticBreakPoint = false;
+
+                LogitudeSettings.WorkerRoleName = LogitudeSettings.WorkerRoleName?? "production";
             }
 
-            SetWorkerRoleName();
 
             CacheManager.CacheWrapper = CacheManager.CacheWrapper ?? new CacheWrapper(Cache);//Where is the cache (Why as usuall i neeed to do averything ?!?)
         }

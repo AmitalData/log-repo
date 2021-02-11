@@ -370,7 +370,11 @@ export class DeclarationTaxesTabComponent implements OnInit, OnDestroy {
     get PlatformFee() { return this.EntityPM == null ? null : this.EntityPM.PlatformFee; }
     get DealValue() { return this.EntityPM == null ? null : this.EntityPM.DealValue; }
     get LoadingFactor() { return this.EntityPM == null ? null : this.EntityPM.LoadingFactor; }
-    
+    get FOBValueNIS() {
+        return this.EntityPM == null ? null : this.EntityPM.FOBValueNIS ;
+    }
+    get FOBValueDollar() { return this.EntityPM == null ? null : this.EntityPM.FOBValueDollar; }
+
 
 
     public SelectedRow2: any = null;

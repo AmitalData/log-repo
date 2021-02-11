@@ -12,10 +12,12 @@ namespace WebFreight.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-            string userdata = Request.QueryString["userdata"];
+            TokenInput.Value = Request["Token"];
+            LoginInput.Value = Request["LoginData"];
 
-            if (!HttpContext.Current.Request.IsAuthenticated)
+            bool isAuthenticated = HttpContext.Current.Request.IsAuthenticated || !string.IsNullOrEmpty(TokenInput.Value) ? true : false;
+
+            if (!isAuthenticated)
             {
                 HttpContext.Current.Response.Redirect("login.aspx");
             }

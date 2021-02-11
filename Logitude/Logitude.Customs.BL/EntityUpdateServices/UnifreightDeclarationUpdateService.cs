@@ -803,7 +803,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         PRIMARYNUM = myCustomFileNo,
                         FORMID = "LGT_UPDATE_FCI",
                         DEBUG = "F",
-                        DONEOPERATION = "A",
+                        DONEOPERATION = "D",
                         //GSTRING1 = myYCULTASKPM.TASKID,
                     };
                     myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
@@ -836,14 +836,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     var xmltransmission = XmlGenericUtil<transmission>.SerializeObject(mytransmission, true);
                     requestData = xmltransmission;
                 }
-                if (_FromMessaging == true)
+                if (_FromMessaging == true )
                 {
                     var requestData2 = "";
                     var myEventContextTagModel = new EventContextTagModel();
                     myEventContextTagModel = this._DirtyDeclarationPM.CurrentContextTag as EventContextTagModel;
                     if (myEventContextTagModel != null)
                     {
-                        if (myEventContextTagModel.EventCode.ToString() == "INR" || string.IsNullOrWhiteSpace(myEventContextTagModel.EventCode.ToString()))
+                        if (!this._DirtyDeclarationPM.IsCourierDeclaration &&(  myEventContextTagModel.EventCode.ToString() == "INR" || string.IsNullOrWhiteSpace(myEventContextTagModel.EventCode.ToString())))
                         {
                             requestData2 = GetMyFUStatusXML("INR", "INR", "", "new", DateTime.Now, false);
                         }
@@ -916,7 +916,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     PRIMARYNUM = customFile.ToString(),
                     FORMID = "LGT_UPDATE_FCI",
                     DEBUG = "F",
-                    DONEOPERATION = "A",
+                    DONEOPERATION = "D",
                     //GSTRING1 = myYCULTASKPM.TASKID,
                 };
                 myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
@@ -1215,7 +1215,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             _CCUFILEMPM.CUSTOMERID = null;
             if (!String.IsNullOrWhiteSpace(_DirtyDeclarationPM.CustomerId))
             {
-                Card myCard = cardRepository.GetSingleCard(_DirtyDeclarationPM.CustomerId, _DirtyDeclarationPM.Tenant);
+                Card myCard = cardRepository.GetSingleCardCache(_DirtyDeclarationPM.CustomerId, _DirtyDeclarationPM.Tenant);
                 if (myCard != null)
                 {
                     _CCUFILEMPM.CUSTOMERID = myCard.Code;

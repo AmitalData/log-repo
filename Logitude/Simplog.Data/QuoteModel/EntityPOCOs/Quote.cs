@@ -165,6 +165,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public double? ExchangeRate { get; set; }
         public bool IsFixedPrice { get; set; }
         public bool IsSaleCurrencySameAsCost { get; set; }
+        public bool IsMultiCurrency { get; set; }
 
         public double? ValueOfGoods { get; set; }
         public string ValueOfGoodsCurrencyId { get; set; }

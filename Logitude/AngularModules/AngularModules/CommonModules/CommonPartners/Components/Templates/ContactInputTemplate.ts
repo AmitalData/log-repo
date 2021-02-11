@@ -393,6 +393,7 @@ export class ContactInputTemplate extends BaseComponent {
     public Info2Text: string = null;
     private loadedContact: ContactPM = null;
     private allCardContacts: any[] = [];
+    public LoadedContactId: string = null;
     public EmailLostFocus(email: string) {
 
         this.Info1Text = null;
@@ -408,6 +409,7 @@ export class ContactInputTemplate extends BaseComponent {
                         this.loadedContact = myResult[0];
 
                         if (this.loadedContact != null) {
+                            this.LoadedContactId = this.loadedContact.Id;
                             this.EnglishName = this.loadedContact.EnglishName;
                             this.LocalName = this.loadedContact.LocalName;
                             this.Email = this.loadedContact.Email;
@@ -480,6 +482,20 @@ export class ContactInputTemplate extends BaseComponent {
         }
 
         return errors;
+    }
+
+    IsInactiveContactExists() {
+        var output: boolean = false;
+
+        if (this.CardId) {
+            if (this.loadedContact) {
+                if (this.loadedContact.InActive) {
+                    output = true;
+                }
+            }
+        }
+
+        return output;
     }
 
     private ValidateContactExist() {

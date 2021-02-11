@@ -168,7 +168,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     (theDate.Day == 1 && theDate.Month == 1);
                 ac.CalculateBalance(
                     openBalancePlease_ReCalcYearTransfer,
-                    totalDateType, theDate,false, true, false);
+                    totalDateType, theDate,false, true, false,
+                    false);
 
                 ac.AccountBalance.LogMessage = null;
 
@@ -250,7 +251,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 var ac = new Logitude.Accounting.BL.CoreBL.AccountBalanceByDateCodeService(null, tenant, accountId, null);
                 ac.ReSetAccountList(false, false);
                 bool openBalancePlease_ReCalcYearTransfer = true;//Yaron said this is Default !!!
-                ac.CalculateBalance(openBalancePlease_ReCalcYearTransfer, totalDateType, theDate, false, true, false);
+                ac.CalculateBalance(openBalancePlease_ReCalcYearTransfer, totalDateType, theDate, false, true, false
+                    ,false);
 
                 ac.AccountBalance.LogMessage = null;
 
@@ -314,6 +316,44 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        public HttpResponseMessage GetAccountTransactionsCount(string accountId)
+        {
+            try
+            {
+                AuthenticationToken authToken = Authinticate();
+
+                int count = GetAccountTransactionsCount(accountId, authToken);
+
+                return Request.CreateResponse(HttpStatusCode.OK, count);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        private static int GetAccountTransactionsCount(string accountId, AuthenticationToken authToken)
+        {
+            IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+            GLAccountListQueryService glAccountQuery = new GLAccountListQueryService(MyContext);
+            LedgerTransactionListQueryService transactionsQuery = new LedgerTransactionListQueryService(MyContext);
+
+            var count = transactionsQuery.GetTransactionsCountByAccountId(accountId, authToken.Tenant);
+            return count;
+        }
+
+        private static AuthenticationToken Authinticate()
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            int tenant = authToken.Tenant;
+            string loggedUserEmail = authToken.Email;
+
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
+            return authToken;
         }
 
         public HttpResponseMessage GetAccountCurrencies(string accountId)

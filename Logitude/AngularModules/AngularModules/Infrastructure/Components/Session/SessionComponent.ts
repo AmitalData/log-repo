@@ -12,6 +12,7 @@ import {MainMenuComponent} from '../MainMenuComponent/MainMenuComponent';
 import {AmitalGatewayUtil} from '../../Utilities/AmitalGatewayUtil';
 import { Subscription, TeardownLogic } from 'rxjs';//itzik
 import {EntityResourceService} from '../../Services/EntityResourceService';
+import { LogitudeHotKeysComponent } from 'Controls/LogitudeHotkeysComponent/LogitudeHotKeysComponent';
 
 @Component({
     selector: 'SessionComponent',
@@ -34,6 +35,7 @@ export class SessionComponent {
     @Output() SessionSeleced: EventEmitter<boolean> = new EventEmitter();
     public MainMenuComponent: MainMenuComponent;
     entityResourceService: EntityResourceService = new EntityResourceService();
+    
     constructor(private temp: PubSubFiltersChangeEventService, public ChangeDetectorRef: ChangeDetectorRef) {
         this.PubSubFiltersChangeEventService = temp;
         this.SessionWindowIndex = null;
@@ -43,6 +45,7 @@ export class SessionComponent {
         this.ListControls = new Array<ListComponent>();
         this.IdCounters = new Array<SessionIdCounter>();
         this.MenuReferences = new Array<ComponentRef<any>>();
+        this.logitudeHotkeysComponents=new Array<LogitudeHotKeysComponent>();
 
         window.onresize = this.onWindowResized.bind(this);
         //window.onmouseup = this.onMouseUp.bind(this);
@@ -539,6 +542,67 @@ export class SessionComponent {
         this.ListControls = [];
     }
 
+    //Hotkeys component
+    private logitudeHotkeysComponents: Array<LogitudeHotKeysComponent>;
+    public CurrentLogitudeHotKeysComponent: LogitudeHotKeysComponent = null;
+    public SessionLogitudeHotKeysComponentIndex: number = null;
+    public GetNewLogitudeHotKeysComponentIndex() {
+        if (this.SessionLogitudeHotKeysComponentIndex == null) {
+            this.SessionLogitudeHotKeysComponentIndex = 0;
+        }
+
+        else {
+            this.SessionLogitudeHotKeysComponentIndex += 1;
+        }
+
+        return this.SessionLogitudeHotKeysComponentIndex;
+    }
+    public AddLogitudeHotKeysComponent(element: LogitudeHotKeysComponent) {
+        if (this.logitudeHotkeysComponents == null) {
+            this.logitudeHotkeysComponents = new Array<LogitudeHotKeysComponent>();
+        }
+
+        this.logitudeHotkeysComponents.push(element);
+        this.CurrentLogitudeHotKeysComponent = element;
+    }
+   
+    public RemoveLogitudeHotKeysComponent(element: LogitudeHotKeysComponent) {
+        var newCurrentLogitudeHotKeysComponent: LogitudeHotKeysComponent = null;
+        if (this.logitudeHotkeysComponents != null) {
+
+            var index = this.logitudeHotkeysComponents.indexOf(element);
+            if (index > -1) {
+                this.logitudeHotkeysComponents.splice(index, 1);
+            }
+
+            var biggestIndex = -1;
+            this.logitudeHotkeysComponents.forEach((item) => {
+                if (item.ComponentIndex > biggestIndex) {
+                    biggestIndex = item.ComponentIndex;
+                }
+            });
+
+            if (biggestIndex > -1) {
+                newCurrentLogitudeHotKeysComponent = this.logitudeHotkeysComponents.filter(f => f.ComponentIndex == biggestIndex)[0];
+            }
+        }
+
+        this.CurrentLogitudeHotKeysComponent = newCurrentLogitudeHotKeysComponent;
+    }
+    
+    public DestroyLogitudeHotKeysControls() {
+        if (this.logitudeHotkeysComponents == null) {
+            this.logitudeHotkeysComponents = new Array<LogitudeHotKeysComponent>();
+        }
+
+        this.logitudeHotkeysComponents.forEach((item) => {
+            item.DestroyLogitudeHotKeysControl();
+        });
+
+        this.logitudeHotkeysComponents = [];
+    }
+
+
     //public DestroyS
 
     public isDestroingSession: boolean = false;
@@ -549,6 +613,7 @@ export class SessionComponent {
         this.DestroyEditControls();
         this.DestroyListControls();
         this.DestroyMenuReferences();
+        this.DestroyLogitudeHotKeysControls();
 
         if (this.ComponentRef != null) {
             this.ComponentRef.destroy();

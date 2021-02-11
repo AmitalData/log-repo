@@ -18,6 +18,7 @@ import {VatTypesValidator} from '../../../Infrastructure/Validators/VatTypesVali
 import { QuoteValidator } from '../../../Quote/Validators/QuoteValidator';
 import { PriceStepList } from '../../../Infrastructure/EntityLists/PriceStepList';
 import { MeasurementList } from '../../../Common/EntityLists/MeasurementList';
+import { CommonTool } from '../../../Common/Tools';
 
 @Component({
     
@@ -31,7 +32,6 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
     public DataContext2 = this;
     public Father: any;
     public IsAdhoc: boolean = false;
-    public IsRoutingRate: boolean = false;
     public IsEditingEnabled: boolean = false;
     public ObjectTableName: string = "QuoteCharge";
     public QuotePriceObjectTableName: string = "QuotePriceSteps";
@@ -92,7 +92,6 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
         this.DataContext = dataContext;
         this.Father = this.DataContext.fatherComponent;
         this.IsAdhoc = this.DataContext.fatherComponent.IsAdhoc;
-        this.IsRoutingRate = this.DataContext.fatherComponent.IsRoutingRate;
         this.IsEditingEnabled = this.DataContext.fatherComponent.IsEditingEnabled;
         this.IsVATVisible = this.IsAdhoc && this.QuotePM.IsChargesByVAT ? true : false;
         this.IsRegionalTaxVisible = this.IsVATVisible && this.Father.IsRegionalTaxVisible ? true : false;
@@ -146,6 +145,7 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
                 break;
             }
         }
+        CommonTool.FilterChargeTypesByDirection(this.ChargeTypesQueryFilters, this.DataContext.QuotePM.DirectionId); 
     }
     BuildStepItemsSource() {
         if (this.StepsItemsSource == null) {
@@ -427,6 +427,9 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
         this.myCloner.AddField('SaleMaxAmount');
         this.myCloner.AddField('TariffId');
         this.myCloner.AddField('IsRegionalTax');
+        this.myCloner.AddField('SaleCurrencyId');
+        this.myCloner.AddField('SaleExchangeRate');
+        this.myCloner.AddField('SaleIsFixedRate');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.QuotePM);
     }

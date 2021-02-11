@@ -1,8 +1,15 @@
 import { CargoTrackingShipmentList } from '../../EntityLists/CargoTrackingShipmentList';
 import { CargoTrackingSearchService } from '../../Services/Others/CargoTrackingSearchService';
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
+import { SessionInfo } from 'src/Infrastructure/Utilities/SessionInfo';
+import { CargoTrackingBrandingDataExtendedService } from 'src/CargoTracking/Services/Others/CargoTrackingBrandingDataExtendedService';
+import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
+import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
+import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
+import { LoginExtendedService } from 'src/Infrastructure/Services/Extended/LoginExtendedService';
+
 
 
 @Component({
@@ -18,121 +25,180 @@ export class UserDashboardComponent implements AfterViewInit
     noResult: boolean = false;
     currentDate = new Date();
     FilteredItems: any[] = [];
-    searchForm;
     Shipments: CargoTrackingShipmentList[] = [];
-    _Tenant:number;
+    UserName: string;
+    ConnectedCustomers: string[] = [];
+    IsBrandingDataLoaded: boolean = false;
+    UserNameFirstLetters: string;
+    baseURL;
 
-    constructor(private router: Router,
-        private searchService: CargoTrackingSearchService)
+    get tenant()
     {
-        // this.GetVariablesFromURI();
-        // this.listenToRouterEvents();
-       
-         document.documentElement.style.setProperty('--BGColor', 'RGB(250,251,252)');
+        return CargoTrackingBrandingData.Tenant;
+    }
+    set tenant(val: number)
+    {
+        CargoTrackingBrandingData.Tenant = val;
+    }
 
+
+    constructor(
+        private brandingService: CargoTrackingBrandingDataExtendedService,
+        private loginService: LoginExtendedService,
+        private router: Router,
+        @Inject('BASE_URL') baseUrl: string) {
+        this.baseURL = baseUrl;
+        this.InitComponent();
+    }
+
+    private SetDefaultBackgroundColor()
+    {
+        document.documentElement.style.setProperty('--BGColor', 'RGB(250,251,252)');
+    }
+
+    private InitComponent()
+    {
+
+        this.SetDefaultBackgroundColor();
+        this.GetBrandingData();
+        this.GetLoggedUserIfNotSet();
+        this.Authenticate();
+    }
+
+
+    private GetLoggedUserIfNotSet()
+    {
+        if (!SessionInfo.LoggedUserPM) {
+            var tenant = sessionStorage.getItem("LoggedUserTenant");
+            var email = sessionStorage.getItem("LoggedUserEmail");
+            this.GetLoggedUserPM(email, tenant);
+        }else{
+            this.UserName = SessionInfo.LoggedUserPM.EnglishName;
+            this.SetFirstUserLetters(SessionInfo.LoggedUserPM.EnglishName);
+        }
+    }
+
+    private GetLoggedUserPM(email: any, tenant: any)
+    {
+        this.loginService.GetLoggedUser(email, tenant).subscribe((loggedUserPM: any) =>
+        {
+            if (loggedUserPM) {
+                SessionInfo.LoggedUserPM = loggedUserPM;
+                this.UserName = SessionInfo.LoggedUserPM.EnglishName;
+                this.SetFirstUserLetters(SessionInfo.LoggedUserPM.EnglishName);
+            }
+        });
+    }
+    private SetFirstUserLetters(userName: string)
+    {
+        if (userName) {
+            var splitted = userName.split(" ");
+            if (splitted.length == 1)
+                this.UserNameFirstLetters = splitted[0][0];
+            else if (splitted.length == 2)
+                this.UserNameFirstLetters = splitted[0][0] + splitted[1][0];
+            else if (splitted.length == 0)
+                this.UserNameFirstLetters = "Aa";
+
+        }
+    }
+
+    private GetCompanyLoginsFromCache()
+    {
+        SessionInfo.LoggedUserCompanyLogins = JSON.parse(sessionStorage.getItem("LoggedUserCompanyLogins"));
+        console.log("[LoggedUserCompanyLogins]", SessionInfo.LoggedUserCompanyLogins);
+        this.GetInvitedCustomers();
+    }
+
+    private GetInvitedCustomers()
+    {
+        this.ConnectedCustomers = SessionInfo.LoggedUserCompanyLogins
+            .filter(d => d.CardType == 'CS' && d.CardId != null && d.Tenant == this.tenant)
+            .map(d => d.CardId);
+        console.log("[Invited Customers]", this.ConnectedCustomers);
+    }
+
+
+
+    private Authenticate()
+    {
+        var loggedEmail = sessionStorage.getItem("LoggedUserEmail");
+        if (!loggedEmail)
+            this.router.navigate(["Cargo-Tracking", "login"]);
     }
 
     isNavOpened = false;
-    openNav(){
+
+    openNav()
+    {
         this.isNavOpened = !this.isNavOpened;
     }
 
-    SignOutClicked(){
-        this._Tenant = +sessionStorage.getItem("LoggedUserTenant");
+
+    SignOutClicked()
+    {
+        this.tenant = +sessionStorage.getItem("LoggedUserTenant");
         sessionStorage.clear();
-        if(this._Tenant)
-            this.router.navigate(["login"],{ queryParams: {tenant: this._Tenant}});
+        if (this.tenant)
+
+            this.router.navigate(["Cargo-Tracking/login"]);//,{ queryParams: {tenant: this.tenant}}
         else
-            this.router.navigate(["login"]);
+            this.router.navigate(["Cargo-Tracking/login"]);
+    }
+
+
+    public get InvertedLogoURL()
+    {
+        return CargoTrackingBrandingData.InvertedLogoURL;
+    }
+
+    public RedirectTo401Page()
+    {
+        this.router.navigate(['Error401']);
+    }
+
+
+    private GetBrandingData()
+    {
+        if (this.tenant)
+            this.IsBrandingDataLoaded = true;
+
+
+        this.brandingService.GetUserDashboardBrandingData(ServiceHelper.GetcargoTrackingDataRequest(this.baseURL))
+        .subscribe((response: ServiceResponse) =>
+        {
+            if (response.Result) {
+                ServiceHelper.SetCargoTrackingDate(response.Result, this.baseURL);
+                
+                this.IsBrandingDataLoaded = true;
+            }
+            else {
+                this.RedirectTo401Page();
+            }
+
+        });
     }
 
     ngAfterViewInit()
-    { 
-    }
-
-  
-
-
-
-
-    private _SearchText: string;
-    public get SearchText(): string
-    {
-        return this._SearchText;
-    }
-    public set SearchText(v: string)
-    {
-        this._SearchText = v;
-        if (!this.SearchText)
-            this.Search();
-    }
-
-    Clear()
-    {
-        this.SearchText = '';
-        this.Search();
-    }
-    Search()
-    {
-        if(this._Tenant){
-            this.router.navigate([this._Tenant,'search', this.SearchText]);
-            this.LoadShipments();
-        }
-            
-    }
-    ItemClicked(item)
-    {
-        var SecurityKey = item.SecurityKey;
-
-        this.router.navigate([this._Tenant,'shipment', SecurityKey]);
-
-    }
-    LoadShipments()
     {
 
-        this.noResult = false;
-        var searchText = this._SearchText.trim().toLowerCase();
-        if (searchText) {
-            this.isLoading = true;
-            this.searchService.getShipments(searchText, this._Tenant).subscribe((result: any) =>
-            {
-                this.isLoading = false;
-                console.log("[getShipments]", result);
-                this.Shipments = result;
-                this.noResult = this.Shipments.length == 0 && !!this.SearchText;
-
-            });
-        }else{
-            this.Shipments = [];
-        }
-
     }
-    references: string[];
-    SplitReference(reference: string){
-      this.references =reference!= null?  reference.split(','): null;
+    get ComapnyLogo()
+    {
+        return CargoTrackingBrandingData.ComapnylogoURL;
+    }
+    get BrowserIcon()
+    {
+        return CargoTrackingBrandingData.BrowserIconURL;
+    }
+    get BackGroundImg()
+    {
+        return CargoTrackingBrandingData.BackgroundURL;
+    } 
+    get ShipmentHeaderImage(){
+        return CargoTrackingBrandingData.ShipmentHeaderURL;
+    }
     
-    }
 
-    GetModeIcon(mode: string)
-    {
-        var iconPath = "";
-        switch (mode) {
-            case 'A':
-                iconPath = "./assets/images/misc/plane.svg";
-                break;
 
-            case 'O':
-                iconPath = "./assets/images/misc/ship.svg";
-                break;
-
-            case 'I':
-                iconPath = "./assets/images/misc/Truck.svg";
-                break;
-
-            default:
-                break;
-        }
-
-        return iconPath;
-    }
 }

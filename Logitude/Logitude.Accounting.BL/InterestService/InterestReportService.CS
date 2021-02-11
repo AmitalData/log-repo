@@ -308,7 +308,7 @@ namespace Logitude.Accounting.BL.InterestService
         private InterestEntityResult GetInterestEntityResultByInterestTransaction(InterestTransactionList interestTransactionLists)
         {
             IInterestEntityQueryService interestEntityQueryService = InterestQueryFactory.CreateInstance(interestTransactionLists.InterestEntityTypeCode);
-            InterestEntityResult entityResult = interestEntityQueryService.GetInterestEntity(interestTransactionLists.EntityId, interestTransactionLists.Tenant);
+            InterestEntityResult entityResult = interestEntityQueryService.GetInterestEntity(interestTransactionLists);
             return entityResult;
         }
 

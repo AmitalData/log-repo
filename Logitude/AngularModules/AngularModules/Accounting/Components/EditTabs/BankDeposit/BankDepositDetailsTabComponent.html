@@ -229,18 +229,17 @@
 
                                             <!-- DepositDate -->
                                             <!--<tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'DepositDate'" [ObjectTableName]="ObjectTableName"
-                                                              [DataContext]="DataContext"></LogLabel>
-                                                </td>
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'DepositDate'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
 
-                                                <td>
-                                                    <LogDatePicker [ObjectFieldName]="'DepositDate'" [ObjectTableName]="ObjectTableName"
-                                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                                                </td>
-                                                <td><div></div></td>
-                                            </tr>-->
-
+                                <td>
+                                    <LogDatePicker [ObjectFieldName]="'DepositDate'" [ObjectTableName]="ObjectTableName"
+                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                </td>
+                                <td><div></div></td>
+                            </tr>-->
                                             <!-- DepositBankAccountId -->
                                             <tr class="FormFieldRow">
                                                 <td>
@@ -340,23 +339,22 @@
                                         <table>
                                             <!-- DepositNumber -->
                                             <!--<tr class="FormFieldRow">
-                                                <td style="width: 115px;">
-                                                    <LogLabel [ObjectFieldName]="'DepositNumber'" [ObjectTableName]="ObjectTableName"
-                                                                [DataContext]="DataContext"></LogLabel>
-                                                </td>
+                                <td style="width: 115px;">
+                                    <LogLabel [ObjectFieldName]="'DepositNumber'" [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"></LogLabel>
+                                </td>
 
-                                                <td style="width: 180px;">
-                                                    <LogTextBox [ObjectFieldName]="'DepositNumber'" [InputType]="'number'" [DataContext]="DataContext"
-                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                                </td>
-                                                <td><div></div></td>
-                                            </tr>-->
-
+                                <td style="width: 180px;">
+                                    <LogTextBox [ObjectFieldName]="'DepositNumber'" [InputType]="'number'" [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                </td>
+                                <td><div></div></td>
+                            </tr>-->
                                             <!-- DepositDate -->
                                             <tr class="FormFieldRow">
                                                 <td>
                                                     <LogLabel [ObjectFieldName]="'DepositDate'" [ObjectTableName]="ObjectTableName"
-                                                                [DataContext]="DataContext"></LogLabel>
+                                                              [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td>
@@ -492,19 +490,19 @@
                     <!-- Cashbook lines Filters -->
                     <tr *ngIf="IsLinesSelection && !this.EntityPM.IsCashDeposit" style="height: 20px;">
                         <td style="width: 30px; padding: 5px;">
-                            <div *ngIf="!NoCashBookRows" style="width: 29px;">
-                                <div class="Button More"><CheckBox (Checked)="SelectAll($event)" [IsChecked]="IsAllSelected" style="width: 29px;"></CheckBox></div>
+                            <div style="width: 29px;">
+                                <div class="Button More"><CheckBox (Checked)="SelectAll($event)" [IsEnabled]="!NoCashBookRows" [IsChecked]="IsAllSelected" style="width: 29px;"></CheckBox></div>
                             </div>
                         </td>
                         <td style="width: 350px; padding: 5px;">
                             <div style="padding-left: 15px; width: 350px;">
 
                                 <ul class="FiltersMenu">
-                                    <li id="cashcheques" (click)="FilterItemClicked('cash')"  style="width: 105px; height: 22px;"
+                                    <li id="cashcheques" (click)="FilterItemClicked('cash')" style="width: 105px; height: 22px;"
                                         [class.SelectedFilter]="FilterSelectedValue === 'cash'">
                                         {{'Accounting.General.O.CashCheques' | TextCodeTranslationPipe}} ({{ChequesCounter.CashChequesCount}})
                                     </li>
-                                    <li id="postdatedcheques" (click)="FilterItemClicked('postdated')"  style="width: 135px; height: 22px;"
+                                    <li id="postdatedcheques" (click)="FilterItemClicked('postdated')" style="width: 135px; height: 22px;"
                                         [class.SelectedFilter]="FilterSelectedValue === 'postdated'">
                                         {{'Accounting.General.O.postdatedCheques' | TextCodeTranslationPipe}} ({{ChequesCounter.PostdatedChequesCount}})
                                     </li>
@@ -512,8 +510,18 @@
 
                             </div>
                             <!--<div style="float: right; padding: 4px; width: 250px;">
-                                <SearchTextBox [ObjectTableName]="ObjectTableName" [PlaceHolder]="'Cheque No. / Bank Account'" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
-                            </div>-->
+            <SearchTextBox [ObjectTableName]="ObjectTableName" [PlaceHolder]="'Cheque No. / Bank Account'" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+        </div>-->
+                        </td>
+                        <td *ngIf="!this.EntityPM.IsCashDeposit"  colspan="4" style="width: 620px; padding: 4px;">
+                            <div>
+                                <div style="padding: 0 5px; width: 250px;" [style.float]="isRTL ? 'left' : 'right'">
+                                    <SearchTextBox [ObjectTableName]="ObjectTableName" [PlaceHolder]="'Accounting.General.O.ChequeNoBankAccount' | TextCodeTranslationPipe" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+                                </div>
+                            </div>
+                            <div [style.float]="isRTL ? 'left' : 'right'">
+                                <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                            </div>
                         </td>
                         <td>
                             <div></div>
@@ -524,7 +532,7 @@
                     <tr *ngIf="!IsLinesSelection && !this.EntityPM.IsCashDeposit">
                         <td>
                             <div>
-                                <div style="padding: 4px; width: 250px;"  [style.float]="isRTL ? 'left' : 'right'" >
+                                <div style="padding: 4px; width: 250px;" [style.float]="isRTL ? 'left' : 'right'">
                                     <SearchTextBox [ObjectTableName]="ObjectTableName" [PlaceHolder]="'Accounting.General.O.ChequeNoBankAccount' | TextCodeTranslationPipe" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
                                 </div>
                             </div>
@@ -536,149 +544,154 @@
                         <td [attr.colspan]="IsLinesSelection?3:1" style="height: 100%; padding-bottom: 75px;">
 
                             <div class="GeneratedGridContainer">
-
+                                <div *ngIf="IsLinesSelection && CashbookLines?.Length == 0" id="{{'ARPaymentSpinner' | IdGeneratorPipe}}" class="NoDataText">
+                                    {{'CashbookLine.O.NoDataFound' | TextCodeTranslationPipe}}
+                                </div>
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%"
-                                    [ItemSource]="IsLinesSelection ? CashbookLines : BankDepositLines" [UseVirtuallization]="true">
+                                                    [ItemSource]="IsLinesSelection ? CashbookLines : BankDepositLines" [UseVirtuallization]="true">
 
-                                <log-column *ngIf="IsLinesSelection" [Alignment]="isRTL ? 'right' : 'left'" [header]="''" [width]="'40'"
-                                    [binding]="''">
-                                    <ng-template let-item>
-                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
-                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" style="padding-top: 2px;">
-                                            <CheckBox [IsChecked]="IsAllSelected || item.IsSelected == true" (Checked)="LineSelection(item , $event)"></CheckBox>
-                                        </div>
-                                    </log-cell-template>
-                                    </ng-template>
-                                </log-column>
+                                    <log-column *ngIf="IsLinesSelection" [Alignment]="isRTL ? 'right' : 'left'" [header]="''" [width]="'40'"
+                                                [binding]="''">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" style="padding-top: 2px;">
+                                                    <CheckBox [IsChecked]="IsAllSelected || item.IsSelected == true" (Checked)="LineSelection(item , $event)"></CheckBox>
+                                                    all[{{IsAllSelected}}] - line [{{item.IsSelected}}]
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+ 
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                                [header]="'BankDepositLine.F.ChequeNumber' | TextCodeTranslationPipe" [width]="'90'"
+                                                [binding]="'ChequeNumber'" [SortFieldName]="'ChequeNumber'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <span>{{item.ChequeNumber}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
 
-                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
-                                    [header]="'BankDepositLine.F.ChequeNumber' | TextCodeTranslationPipe" [width]="'90'"
-                                    [binding]="'ChequeNumber'">
-                                    <ng-template let-item>
-                                    <log-cell-template  #logcelltemplate [IgnoreMods]="true">
-                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                            <span>{{item.ChequeNumber}}</span>
-                                        </div>
-                                    </log-cell-template>
-                                     </ng-template>
-                                </log-column>
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                                [header]="'BankDepositLine.F.DueDate' | TextCodeTranslationPipe" [width]="'100'" [binding]="'DueDate'"
+                                                [SortFieldName]="'DueDate'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <span>{{item.DueDate | DateTimeToDatePipe }}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
 
-                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
-                                    [header]="'BankDepositLine.F.DueDate' | TextCodeTranslationPipe" [width]="'100'" [binding]="'DueDate'">
-                                    <ng-template let-item>
-                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
-                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                            <span>{{item.DueDate | DateTimeToDatePipe }}</span>
-                                        </div>
-                                    </log-cell-template>
-                                    </ng-template>
-                                </log-column>
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="GetAmountHeader()" [width]="'110'"
+                                                [binding]="'LocalAmount'" [SortFieldName]="'LocalAmount'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;"
+                                                     [class.red]='item.LocalAmount<0'>
+                                                    <span>{{ item.LocalAmount | NumbersPipe:'N2'  }} </span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
 
-                                <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="GetAmountHeader()" [width]="'110'"
-                                    [binding]="'LocalAmount'">
-                                    <ng-template let-item>
-                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
-                                        <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;"
-                                            [class.red]='item.LocalAmount<0'>
-                                            <span>{{ item.LocalAmount | NumbersPipe:'N2'  }} </span>
-                                        </div>
-                                    </log-cell-template>
-                                    </ng-template>
-                                </log-column>
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                                [header]="'CashBookLine.F.Currency' | TextCodeTranslationPipe" [width]="'75'" [binding]="'Currency'"
+                                                [SortFieldName]="'Currency'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <span>{{item.Currency}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
 
-                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
-                                    [header]="'CashBookLine.F.Currency' | TextCodeTranslationPipe" [width]="'75'" [binding]="'Currency'">
-                                    <ng-template let-item>
-                                    <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                            <span>{{item.Currency}}</span>
-                                        </div>
-                                    </log-cell-template>
-                                </ng-template>
-                                </log-column>
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                                [header]="'CashBookLine.F.ForeignAmount' | TextCodeTranslationPipe" [width]="'110'"
+                                                [binding]="'ForeignAmount'" [SortFieldName]="'ForeignAmount'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;"
+                                                     [class.red]='item.ForeignAmount<0'>
+                                                    <span>{{ item.ForeignAmount | NumbersPipe:'N2'  }} </span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
 
-                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
-                                    [header]="'CashBookLine.F.ForeignAmount' | TextCodeTranslationPipe" [width]="'110'"
-                                    [binding]="'ForeignAmount'">
-                                    <ng-template let-item>
-                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
-                                        <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;"
-                                            [class.red]='item.ForeignAmount<0'>
-                                            <span>{{ item.ForeignAmount | NumbersPipe:'N2'  }} </span>
-                                        </div>
-                                    </log-cell-template>
-                                </ng-template>
-                                </log-column>
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                                [header]="'CashBookLine.F.AccountNumber' | TextCodeTranslationPipe" [width]="'110'"
+                                                [binding]="'AccountNumber'" [SortFieldName]="'AccountNumber'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <span>{{item.AccountNumber}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
 
-                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
-                                    [header]="'CashBookLine.F.AccountNumber' | TextCodeTranslationPipe" [width]="'110'"
-                                    [binding]="'AccountNumber'">
-                                    <ng-template let-item>
-                                    <log-cell-template  #logcelltemplate [IgnoreMods]="true">
-                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                            <span>{{item.AccountNumber}}</span>
-                                        </div>
-                                    </log-cell-template>
-                                </ng-template>
-                                </log-column>
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                                [header]="'CashBookLine.F.Bank' | TextCodeTranslationPipe" [width]="'75'" [binding]="'Bank'" [SortFieldName]="'Bank'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <span>{{item.Bank}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
 
-                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
-                                    [header]="'CashBookLine.F.Bank' | TextCodeTranslationPipe" [width]="'75'" [binding]="'Bank'">
-                                    <ng-template let-item>
-                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
-                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                            <span>{{item.Bank}}</span>
-                                        </div>
-                                    </log-cell-template>
-                                </ng-template>
-                                </log-column>
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                                [header]="'CashBookLine.F.Branch' | TextCodeTranslationPipe" [width]="'75'" [binding]="'Branch'" [SortFieldName]="'Branch'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <span>{{item.Branch}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
 
-                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
-                                    [header]="'CashBookLine.F.Branch' | TextCodeTranslationPipe" [width]="'75'" [binding]="'Branch'">
-                                    <ng-template let-item>
-                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
-                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                            <span>{{item.Branch}}</span>
-                                        </div>
-                                    </log-cell-template>
-                                </ng-template>
-                                </log-column>
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                                [header]="'CashBookLine.F.ARPaymentNumber' | TextCodeTranslationPipe" [width]="'110'"
+                                                [binding]="'ARPaymentNumber'" [SortFieldName]="'ARPaymentNumber'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <a href="javascript:;" (click)="OpenARPayment(item.ARPaymentId)">{{item.ARPaymentNumber}}</a>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
 
-                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
-                                    [header]="'CashBookLine.F.ARPaymentNumber' | TextCodeTranslationPipe" [width]="'110'"
-                                    [binding]="'ARPaymentNumber'">
-                                    <ng-template let-item>
-                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
-                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                            <a href="javascript:;" (click)="OpenARPayment(item.ARPaymentId)">{{item.ARPaymentNumber}}</a>
-                                        </div>
-                                    </log-cell-template>
-                                </ng-template>
-                                </log-column>
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                                [header]="'ARPaymentCheque.F.StatusCode' | TextCodeTranslationPipe" [width]="'100'"
+                                                [binding]="'StatusCode'" [SortFieldName]="IsLinesSelection? (showLocal? 'ARPChequeStatusName' :'ARPChequeStatusLocalName' ) : (showLocal? 'ChequeStatusName' : 'ChequeStatusLocalName')">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    {{  IsLinesSelection ? (showLocal?item.ARPChequeStatusName : item.ARPChequeStatusLocalName ) : (showLocal?item.ChequeStatusName : item.ChequeStatusLocalName )  }}
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
 
-                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
-                                    [header]="'ARPaymentCheque.F.StatusCode' | TextCodeTranslationPipe" [width]="'100'"
-                                    [binding]="'StatusCode'">
-                                    <ng-template let-item>
-                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
-                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                            {{  IsLinesSelection ? (showLocal?item.ARPChequeStatusName : item.ARPChequeStatusLocalName ) : (showLocal?item.ChequeStatusName : item.ChequeStatusLocalName )  }}
-                                        </div>
-                                    </log-cell-template>
-                                </ng-template>
-                                </log-column>
-
-                                <log-column *ngIf="!IsLinesSelection" [Alignment]="isRTL ? 'right' : 'left'" [header]="" [width]="'100'"
-                                    [binding]="'StatusCode'">
-                                    <ng-template let-item>
-                                    <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                        <div class="CellStretched" style="width: 50px; max-width: 50px; padding-top: 2px;" title="Return Cheque">
-                                            <IconButton [style.text-align]="isRTL ? 'right' : 'left'" [IsEnabled]="!item.IsOutOfDeposit"
-                                                [Name]="'return'" [IsSmall]="true" (click)="ReturnChequeButtonClicked(item)"></IconButton>
-                                        </div>
-                                    </log-cell-template>
-                                </ng-template>
-                                </log-column>
+                                    <log-column *ngIf="!IsLinesSelection" [Alignment]="isRTL ? 'right' : 'left'" [header]="" [width]="'100'"
+                                                [binding]="'StatusCode'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div class="CellStretched" style="width: 50px; max-width: 50px; padding-top: 2px;" title="Return Cheque">
+                                                    <IconButton [style.text-align]="isRTL ? 'right' : 'left'" [IsEnabled]="!item.IsOutOfDeposit"
+                                                                [Name]="'return'" [IsSmall]="true" (click)="ReturnChequeButtonClicked(item)"></IconButton>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
 
                                 </logitude-edit-grid>
 

@@ -307,6 +307,108 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             return q;
         }
 
+        private IQueryable<LedgerTransaction> QFilterByDateTruncateTimeInclusiveUntil(
+         string DateTypeCode, DateTime to, IQueryable<LedgerTransaction> q
+         )
+        {
+            if (context.ToString().StartsWith("Fake"))
+            {
+
+
+                switch (DateTypeCode)
+                {
+                    case "2"://GLAccountTotalDateTypeValues.DueDate:
+                        {
+
+                            q = (from rec in q
+                              
+                                 where rec.DueDate.Date <= to
+                                 select rec
+);
+
+                            q = (from rec in q
+                                 orderby rec.DueDate, rec.Id
+                                 select rec);
+                        }
+                        break;
+                    case "3":// GLAccountTotalDateTypeValues.DocumentDate:
+                        {
+                            //return null;
+                            q = (from rec in q
+                                 
+                                 where rec.DocumentDate.Date <= to
+                                 select rec
+    );
+
+                            q = (from rec in q
+                                 orderby rec.DocumentDate, rec.Id
+                                 select rec);
+                        }
+                        break;
+                    case "1": //Accountingdate = "1"
+                    default:
+                        {
+                            q = (from rec in q
+                                 //where rec.AccountingDate.Date >= @from
+                                 where rec.AccountingDate.Date <= to
+                                 select rec
+                                );
+                            q = (from rec in q
+                                 orderby rec.AccountingDate, rec.Id
+                                 select rec);
+                        }
+                        break;
+                }
+
+            }
+            else
+            {
+
+                switch (DateTypeCode)
+                {
+                    case "2"://GLAccountTotalDateTypeValues.DueDate:
+                        {
+                            q = (from rec in q
+                                 //where EntityFunctions.TruncateTime(rec.DueDate) >= @from
+                                 where EntityFunctions.TruncateTime(rec.DueDate) <= to
+                                 select rec);
+                            q = (from rec in q
+                                 orderby rec.DueDate, rec.Id
+                                 select rec);
+                        }
+                        break;
+                    case "3":// GLAccountTotalDateTypeValues.DocumentDate:
+                        {
+                            //return null;
+                            q = (from rec in q
+                                 //where EntityFunctions.TruncateTime(rec.DocumentDate) >= @from
+                                 where EntityFunctions.TruncateTime(rec.DocumentDate) <= to
+                                 select rec
+                     );
+                            q = (from rec in q
+                                 orderby rec.DocumentDate, rec.Id
+                                 select rec);
+                        }
+                        break;
+                    case "1": //Accountingdate = "1"
+                    default:
+                        {
+                            q = (from rec in q
+                                 //where EntityFunctions.TruncateTime(rec.AccountingDate) >= @from
+                                 where EntityFunctions.TruncateTime(rec.AccountingDate) <= to
+                                 select rec
+                     );
+                            q = (from rec in q
+                                 orderby rec.AccountingDate, rec.Id
+                                 select rec);
+                        }
+                        break;
+                }
+
+            }
+
+            return q;
+        }
         public IQueryable<LedgerTransaction> GetQueryOrderAccDateAndIdBy(int tenant, IQueryable<string> listOfAccId, DateTime @from, DateTime to,
             string currencyId, 
             string searchByFilter,
@@ -613,7 +715,46 @@ on record.JournalId equals j.Id
             return myCalcGLAccountTotalByMonth;
 
         }
-     
+
+        public List<CurrencySumOpenAmount> CalcCurrencySumOpenAmountByMonthByDateType(string DateTypeCode,  DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null)
+        {
+            ///var fromDateOnlyDate = fromDate.Date;
+            var DateUntillNotIncludeOnlyDate = accoutingDateUntillNotInclude.Date
+                .AddDays(-1);//UntillNotIncludeOnly
+            var ledgerTransactionsByAccountingDate =
+
+                (from rec in context.LedgerTransactions
+                 where rec.Tenant == tenant
+                 where !rec.IsReconciled /*== false*/
+                 select rec);
+            
+            ledgerTransactionsByAccountingDate = QFilterByDateTruncateTimeInclusiveUntil(DateTypeCode,  DateUntillNotIncludeOnlyDate, ledgerTransactionsByAccountingDate);
+
+
+            var lTransByAccountingDateFilterByListOfAccId = ledgerTransactionsByAccountingDate;
+            if (listOfAccId != null)
+            {
+                lTransByAccountingDateFilterByListOfAccId = ledgerTransactionsByAccountingDate.Where(rec => listOfAccId.Contains(rec.AccountId));
+            }
+
+            var myQCalcGLAccountTotalByMonth = (from rec in lTransByAccountingDateFilterByListOfAccId
+                                                group rec by new
+                                                {
+                                                    rec.AccountId,
+                                                    rec.OpenAmountCurrencyId
+                                                } into groupByAccountCurrency
+                                                select new CurrencySumOpenAmount
+                                                {
+                                                    
+                                                    AccountId = groupByAccountCurrency.Key.AccountId,
+                                                    OpenAmountCurrencyId = groupByAccountCurrency.Key.OpenAmountCurrencyId,
+                                                    OpenAmount = groupByAccountCurrency.Sum(x => x.OpenAmount)
+
+                                                });
+
+            var l= myQCalcGLAccountTotalByMonth.ToList();
+            return l;
+        }
 
         public List<GLAccountTotalByMonth> CalcGLAccountTotalByMonthByAccountingDate(DateTime fromDate, DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null)
         {
@@ -1137,6 +1278,17 @@ on record.JournalId equals j.Id
                  select a).ToList();
             return ledgerTransactionPOCOs;
         }
+
+        public List<LedgerTransaction> GetLedgerTransactionsByAccountIdListAndJournalId(List<String> accountIdList,string journalId, int tenant)
+        {
+            List<LedgerTransaction> ledgerTransactionPOCOs =
+                (from a in context.LedgerTransactions
+                 where accountIdList.Contains(a.AccountId) && 
+                 a.Tenant == tenant &&
+                 a.JournalId == journalId
+                 select a).ToList();
+            return ledgerTransactionPOCOs;
+        }
         public List<string> GetTransactionsCurrencies(string accountId, int tenant)
         {
             List<string> transactionsCurrencies = (from lt in context.LedgerTransactions
@@ -1205,7 +1357,7 @@ on record.JournalId equals j.Id
         {
 
             int days = DateTime.DaysInMonth(taxReportMonth.Value.Year, taxReportMonth.Value.Month);
-            DateTime taxdate = new DateTime(taxReportMonth.Value.Year, taxReportMonth.Value.Month, days);
+            DateTime endOfTaxReportDate = new DateTime(taxReportMonth.Value.Year, taxReportMonth.Value.Month, days,23,59,59);
 
             FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
             FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
@@ -1215,9 +1367,14 @@ on record.JournalId equals j.Id
             return (from a in context.LedgerTransactions
                     join j in context.Journals on a.JournalId equals j.Id
                     join m in context.JournalAdditionalDatas on j.Id equals m.JournalId
-                    where (m.TaxReportId == null || m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode==null) && a.AccountingDate <= taxdate
-                   // && a.DocumentDate >= last180days
-                    && a.AccountId == setting.VATInputsGLAccountId && a.Tenant == tenant && a.LocalAmountDebit != 0 && a.OppositeAccountId != setting.VATOutputGLAccountId
+
+                    where (m.TaxReportId == null || m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode==null) 
+                            && a.DocumentDate <= endOfTaxReportDate
+                            && a.AccountId == setting.VATInputsGLAccountId 
+                            && a.Tenant == tenant 
+                            && a.LocalAmountDebit != 0 
+                            && a.OppositeAccountId != setting.VATOutputGLAccountId
+
                     select new TaxReportData()
                     {
                         Id = Guid.NewGuid().ToString(),

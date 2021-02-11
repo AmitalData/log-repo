@@ -32,7 +32,13 @@ export class ServiceHelper {
             
         if (error.status == 400) {
           var apiException = error.error;
-                if (apiException.ErrorType == "Exception" || apiException.ErrorType == "ModelStateError" || apiException.ErrorType == "DbEntityValidationException" || apiException.ErrorType == "ApplicationException" || apiException.ErrorType == "EntityCommandExecutionException" || apiException.ErrorType == "NullReferenceException") {
+            if (apiException.ErrorType == "Exception"
+                || apiException.ErrorType == "ModelStateError"
+                || apiException.ErrorType == "DbEntityValidationException"
+                || apiException.ErrorType == "ApplicationException"
+                || apiException.ErrorType == "EntityCommandExecutionException"
+                || apiException.ErrorType == "NullReferenceException"
+                || apiException.ErrorType == "SecurityException") {
 
                     var errorMessage: string = apiException.ShortErrorMessage;
                     if (apiException.ShortErrorMessage) {
@@ -268,45 +274,53 @@ export class ServiceHelper {
     private static LogServiceError(exception: string, stackTrace: string, logException = true) {
         try {
             if (exception) {
+
+                if (exception.startsWith("Sorry! you have no permission to do this operation"))
+                    return;
+
                 if (this.CurrentSession) {
                     this.CurrentSession.StopBusyIndicator();
 
                     if (!this.CurrentSession.IsShowErrorWindow) {
-                        this.CurrentSession.IsShowErrorWindow = true;
-                        var mywindow = new MessageWindow();
-                        mywindow.Show(exception);
+                         
+                            this.CurrentSession.IsShowErrorWindow = true;
+                            const mywindow = new MessageWindow();
+                            mywindow.Show(exception);
 
-                        mywindow.WindowClosed.subscribe(($event: any) => {
-                            this.CurrentSession.IsShowErrorWindow = false;
-                            if (exception) {
-                                if (exception.indexOf("Internet Connection Problem") > -1) {
-                                    var loginService: LoginService = new LoginService();
-                                    loginService.GetDocumentDownloadToken().subscribe((myResult:any) => {
-                                        if (myResult) {
-                                            SessionInfo.DocumentDownloadToken = myResult;
-                                        }
-                                    });
 
+                            mywindow.WindowClosed.subscribe(() => {
+                                this.CurrentSession.IsShowErrorWindow = false;
+                                if (exception) {
+                                    if (exception.indexOf("Internet Connection Problem") > -1) {
+                                        const loginService: LoginService = new LoginService();
+                                        loginService.GetDocumentDownloadToken().subscribe((myResult: any) => {
+                                            if (myResult) {
+                                                SessionInfo.DocumentDownloadToken = myResult;
+                                            }
+                                        });
+
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        
                     }
                 }
-            }
 
-            if (exception && stackTrace && logException  === true) {
 
-                var errorLog: ErrorLogPM = new ErrorLogPM();
-                errorLog.Id = Guid.newGuid();
-                errorLog.ClientDate = new Date();
-                errorLog.Tenant = SessionInfo.LoggedUserTenant;
-                errorLog.Tier = "Client";
-                errorLog.UserName = SessionInfo.LoggedUserEmail;
-                errorLog.Exception = exception;
-                errorLog.StackTrace = stackTrace;
-                window.sessionStorage.setItem(["ErrorLogs", errorLog.Id], JSON.stringify(errorLog));
+                if (stackTrace && logException === true) {
 
-                console.error(exception);
+                    var errorLog: ErrorLogPM = new ErrorLogPM();
+                    errorLog.Id = Guid.newGuid();
+                    errorLog.ClientDate = new Date();
+                    errorLog.Tenant = SessionInfo.LoggedUserTenant;
+                    errorLog.Tier = "Client";
+                    errorLog.UserName = SessionInfo.LoggedUserEmail;
+                    errorLog.Exception = exception;
+                    errorLog.StackTrace = stackTrace;
+                    window.sessionStorage.setItem(["ErrorLogs", errorLog.Id], JSON.stringify(errorLog));
+
+                    console.error(exception);
+                }
             }
         }
 
@@ -541,6 +555,22 @@ export class ServiceHelper {
         };
 
         return httpOptions;
+    }
+    public static OpenWindowWithParams( url:string,  params: any[]) {
+        var mapForm = document.createElement("form");
+        mapForm.target = "_blank";
+        mapForm.method = "POST"; // or "post" if appropriate
+        mapForm.action = url;
+        for (var i = 0; i < params.length; i++) {
+            var mapInput = document.createElement("input");
+            mapInput.type = "hidden";
+            mapInput.name = params[i].name;
+            mapInput.setAttribute("value", params[i].value);
+            mapForm.appendChild(mapInput);
+        }
+        document.body.appendChild(mapForm);
+        mapForm.submit();
+        document.body.removeChild(mapForm);
     }
 }
 

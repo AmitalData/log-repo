@@ -5,6 +5,7 @@ import { ReportFliter } from '../../Components/Filters/ReportFliter';
 import { QueryFilterItem } from '../../Components/Filters/QueryFilterItem';
 import { Component } from '@angular/core';
 import { AppTool, DateTool } from '../../../Infrastructure/Tools';
+import { AdvancedDatePickerResolverComponent } from '../../../Infrastructure/Components/LogitudeComponents/AdvancedDatePickerResolverComponent';
 
 @Component({
     selector: 'ShipmentDetailsFilterComponent',
@@ -17,6 +18,7 @@ export class ShipmentDetailsFilterComponent extends BaseComponent {
     public ObjectTableName: string = 'Report';
     public DataContext: ShipmentDetailsFilterComponent = this;
     public ValidationErrorsList: string[] = [];
+    public IsSchedulerReport: boolean = false;
     queryFilterItems: QueryFilterItem[];
     queryFilterItem: QueryFilterItem;
 
@@ -58,9 +60,23 @@ export class ShipmentDetailsFilterComponent extends BaseComponent {
         this.RunReportTitle = 'Preview';
     }
     ValidateSelectedFilters() {
-        var isValid: boolean = true;
+        this.ValidationErrorsList = [];
+        let isValid: boolean = true;
 
-        //nothing to validate
+        if (this.FromDate == null) {
+            this.ValidationErrorsList.push('From Date is required');
+            isValid = false;
+        }
+
+        if (this.ToDate == null) {
+            this.ValidationErrorsList.push('To Date is required');
+            isValid = false;
+        }
+        var advancedDatePickerResolverComponent: AdvancedDatePickerResolverComponent = new AdvancedDatePickerResolverComponent();
+        if (!advancedDatePickerResolverComponent.SetValidityBetweenTwoDateOptions(this.FromDate, this.ToDate)) {
+            this.ValidationErrorsList.push('From Date cannot be greater than To Date');
+            isValid = false;
+        }
 
         return isValid;
     }
@@ -73,6 +89,7 @@ export class ShipmentDetailsFilterComponent extends BaseComponent {
     }
     SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>) {
         //For Scheduler Report
+        this.IsSchedulerReport = true;
 
         if (queryFilterItems) {
             queryFilterItems.forEach((queryFilterItem) => {
@@ -117,37 +134,8 @@ export class ShipmentDetailsFilterComponent extends BaseComponent {
 
     RunReport(isloading: boolean) {
         if (isloading) {
-            this.ValidationErrorsList = [];
-            if (this.FromDate == null) {
-                this.ValidationErrorsList.push('From Date is required');
-            }
-
-            if (this.ToDate == null) {
-                this.ValidationErrorsList.push('To Date is required');
-            }
-
-            if (this.FromDate > this.ToDate) {
-                this.ValidationErrorsList.push(
-                    'From Date cannot be greater than To Date'
-                );
-            }
-
-            if (this.ValidationErrorsList.length == 0) {
-                this.queryFilterItems = new Array<QueryFilterItem>();
-
-                this.queryFilterItem = new QueryFilterItem();
-                this.queryFilterItem.DisplayInList = false;
-                this.queryFilterItem.FieldName = 'FromDate';
-                this.queryFilterItem.FieldValue = this.FromDate;
-                this.queryFilterItem.FieldDataType = 'Date';
-                this.queryFilterItems.push(this.queryFilterItem);
-
-                this.queryFilterItem = new QueryFilterItem();
-                this.queryFilterItem.DisplayInList = false;
-                this.queryFilterItem.FieldName = 'ToDate';
-                this.queryFilterItem.FieldValue = this.ToDate;
-                this.queryFilterItem.FieldDataType = 'Date';
-                this.queryFilterItems.push(this.queryFilterItem);
+            if (this.ValidateSelectedFilters()){
+                this.queryFilterItems = this.GetQueryFilterItems();
 
                 this.reportFliter = new ReportFliter();
                 this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;

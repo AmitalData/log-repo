@@ -461,6 +461,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
             return this.repository.CalcGLAccountTotalByMonthByDateType(DateTypeCode,fromDate, accoutingDateUntillNotInclude, tenant, listOfAccId);
         }
+        
+        public List<CurrencySumOpenAmount> CalcCurrencySumOpenAmountByMonthByDateType(string DateTypeCode,  DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null)
+        {
+            return this.repository.CalcCurrencySumOpenAmountByMonthByDateType(DateTypeCode,accoutingDateUntillNotInclude, tenant, listOfAccId);
+        }
 
         public List<GLAccountTotalByMonth> CalcGLAccountTotalByMonthByAccountingDate(DateTime fromDate, DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null)
         {
@@ -506,6 +511,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
             List<LedgerTransaction> ledgerTransactionPOCOs = null;
             ledgerTransactionPOCOs = repository.GetLedgerTransactionsByIdList(idList, tenant);
+            List<LedgerTransactionPM> pms = ledgerTransactionPOCOs.Select(poco => this.GetEntityPM(poco)).ToList();
+            return pms;
+        }
+
+        public List<LedgerTransactionPM> GetLedgerTransactionsByAccountIdListAndJournalId(List<string> accountIdList,string journalId, int tenant)
+        {
+            List<LedgerTransaction> ledgerTransactionPOCOs = null;
+            ledgerTransactionPOCOs = repository.GetLedgerTransactionsByAccountIdListAndJournalId(accountIdList, journalId, tenant);
             List<LedgerTransactionPM> pms = ledgerTransactionPOCOs.Select(poco => this.GetEntityPM(poco)).ToList();
             return pms;
         }

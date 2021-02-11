@@ -81,7 +81,7 @@
     @media screen and (max-width: 479px) {
         .search-text {
             /* margin: 0 20px; */
-            width: 100%;
+            width: calc(100% - 130px) !important;
         }
         .circle-image {
             width: 50px !important;
@@ -151,6 +151,14 @@
 
         .error{
             margin-top: 47px;
+        }
+
+        .direction-icon{
+            position: relative;
+            bottom: -7px;
+            transform: rotate(45deg);
+            width: 10px;
+            height: 10px;
         }
         
     }

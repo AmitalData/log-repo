@@ -2767,8 +2767,14 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxReport.O.CantDownload&quot;"
-      DefaultText="&quot;Can't download the report. Line , has a wrong check digit error. Fix it then try again.&quot;"
-      LocalDefaultText="&quot;לא ניתן להוריד את הקובץ. שורה , ישנה הודעת שגיאה &quot;ח.פ שגוי&quot; .יש לתקן את השורה בטרם השידור&quot;"
+      DefaultText="&quot;Can't download the report, Lines (#lines) has a wrong check digit error. Fix it then try again.&quot;"
+      LocalDefaultText="&quot;לא ניתן להוריד את הקובץ. שורה (#lines) , ישנה הודעת שגיאה &quot;ח.פ שגוי&quot; .יש לתקן את השורה בטרם השידור&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.InvoiceErrors&quot;"
+      DefaultText="&quot;Can't download the report. Lines (#lines) has an invalid invoice number error. Fix it then try again.&quot;"
+      LocalDefaultText="&quot;.לא ניתן להוריד את הקובץ שורה (#lines) ישנה הודעת שגיאה &quot;אסמכתא שגויה .יש לתקן את השורה בטרם השידור&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

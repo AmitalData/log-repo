@@ -47,6 +47,8 @@ using System.Web.Hosting;
 using WebFreight.Web.Helpers.APIHelpers;
 using Logitude.Customs.BL.PatchDistribution;
 using Logitude.Customs.BL.PatchDistribution.Patches;
+using Simplog.Server.Infrastructure.Interfaces;
+using Microsoft.Practices.Unity;
 
 namespace WebFreight.Web
 {
@@ -158,6 +160,9 @@ namespace WebFreight.Web
                 LogitudeCacheManager.ServerCache = new LocalHttpCache();
             }
 
+            InfraRegistrationHelper.Register();
+
+
             //AreaRegistration.RegisterAllAreas();
 
             // A route that enables RPC requests
@@ -198,6 +203,7 @@ namespace WebFreight.Web
             RouteTable.Routes.MapHttpRoute("Route1", "api/{controller}/getsinglepmwithoutcomposition/{id}/{tenant}", new { controller = "Shipments", action = "GetSingleShipmentPMWithoutComposition" });
             RouteTable.Routes.MapHttpRoute("Route2", "api/{controller}/getsinglepm/{id}/{tenant}", new { controller = "Shipments", action = "GetSingleShipmentPM" });
             RouteTable.Routes.MapHttpRoute("Route3", "api/{controller}/getsinglepmbykey/{securitykey}/{id}/{tenant}", new { controller = "Shipments", action = "GetSingleShipmentPMByKey" });
+            RouteTable.Routes.MapHttpRoute("Route4", "api/{controller}/getsinglepmbykeyandtenant/{securitykey}/{tenant}", new { controller = "Shipments", action = "GetSingleShipmentPMByKeyAndTenant" });
 
             RouteTable.Routes.Ignore("{resource}.axd/{*pathInfo}");
 

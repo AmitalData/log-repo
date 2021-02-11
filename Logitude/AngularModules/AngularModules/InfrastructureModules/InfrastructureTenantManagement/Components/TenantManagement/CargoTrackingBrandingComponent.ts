@@ -31,218 +31,264 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 
 })
 
-export class CargoTrackingBrandingComponent extends BaseComponent implements AfterViewInit, OnInit{
+export class CargoTrackingBrandingComponent extends BaseComponent implements AfterViewInit, OnInit
+{
     public EntityPM: TenantManagementPM;
     public myForm: FormGroup;
-    public DataContext:any= this;
+    public DataContext: any = this;
     IsVisibile: boolean;
     public EntityId: number;
-    private _entityResourceService: EntityResourceService = new EntityResourceService();
-    constructor( public entityArgs: EntityArgs) {
+    public BackgroundId: string;
+    public ComapnylogoId: string;
+    public InvertedLogoId: string;
+    public BrowserIconId: string;
+    public ShipmentHeaderImageId: string;
+    private entityResourceService: EntityResourceService = new EntityResourceService();
+    constructor(public entityArgs: EntityArgs)
+    {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.EntityId = this.EntityPM.Id;
-        this.ImageId = this.EntityPM.BackgroundId;
-        if(this.EntityPM.MainColor ==null)  document.documentElement.style.setProperty('--sliderBackground', null);
-        if(this.EntityPM.SecondaryColor ==null)  document.documentElement.style.setProperty('--sliderBackground2', null);
+        this.InitializeImageIds();
 
+        this.SetColorsFromEntity();
     }
-    clickColor(color: any) {
-         console.log('working.....'); 
-    }
-    calculateOpacity: boolean = false;
-    updateMainColor(event: any) {
-        if (this.EnableBranding) {
-            this.MainColor = event.value;
 
-            this.SliderValue = 1;
+    private SetColorsFromEntity()
+    {
+        if (this.EntityPM.MainColor) {
+            this.mainColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.MainColor);
+            this.mainColorCode = this.ConvertRGBAToHexColor(this.EntityPM.MainColor);
+        }
+        if (this.EntityPM.SecondaryColor) {
+            this.secondaryColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.SecondaryColor);
+            this.secondaryColorCode = this.ConvertRGBAToHexColor(this.EntityPM.SecondaryColor);
         }
     }
-    updateSecondaryColor(event: any) {
-        if (this.EnableBranding) {
-            this.SecondaryColor = event.value;
-            this.SecondarySliderValue = 1;
-        }
-    }
-    ngAfterViewInit() {
-      
-         this.Listen();
-    }
-    colorpicker: any;
-    secondarycolor: any;
-    private SaveCompletedEvent: any = null;
-    private CurrentSession = SessionLocator.SelectedSession;
-    Listen() {
-         if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                    if (isSaveSuccess) {
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                        this.SetUIPropertiesEnabled(this.EntityPM.EnableBranding);
-                    }
-                });
+
+    private InitializeImageIds()
+    {
+        this.BackgroundId = this.EntityPM.BackgroundId;
+        this.ComapnylogoId = this.EntityPM.ComapnylogoId;
+        this.InvertedLogoId = this.EntityPM.InvertedLogoId;
+        this.BrowserIconId = this.EntityPM.BrowserIconId;
+        this.ShipmentHeaderImageId = this.EntityPM.ShipmentHeaderImageId;
         
-        
+    }
+
+    RemoveImage(name){
+        if(name=='inverted'){
+            this.EntityPM.InvertedLogoId=null;
+            this.InvertedLogoId=null;
         }
-        this.colorpicker = document.getElementById("color");
-        this.secondarycolor = document.getElementById("secondarycolor");
-
-        if (this.MainColor != null) {
-
-          this.colorpicker.value = this.MainColor;
+        if(name=='company'){
+            this.EntityPM.ComapnylogoId=null;
+            this.ComapnylogoId=null;
         }
-        if (this.SecondaryColor != null) {
-
-            this.secondarycolor.value = this.SecondaryColor;
+        if(name=='favicon'){
+            this.EntityPM.BrowserIconId=null;
+            this.BrowserIconId=null;
         }
-        this.secondarycolor.addEventListener("change", () => this.updateSecondaryColor(this.secondarycolor), false);
-   
-    this.colorpicker.addEventListener("change", () => this.updateMainColor(this.colorpicker), false);
-       // colorWell.select();
-    }
-    sliderValue: number = 0;
-    get SliderValue() {
-        return this.sliderValue;
-    }
-    set SliderValue(value: number) {
-        this.sliderValue = value; this.calculateOpacity = true;
-        this.CalculateOpacity(value, "Main");
-
-    }
-
-    secondarySliderValue: number = 0;
-    get SecondarySliderValue() {
-        return this.secondarySliderValue;
-    }
-    set SecondarySliderValue(value: number) {
-        this.secondarySliderValue = value;
-        this.CalculateOpacity(value, "Secondary");
-
-    }
-    
-   
-    get MainColor() {
-        return (this.EntityPM.MainColor != null && this.EntityPM.MainColor.length>7) ?  "#"+this.EntityPM.MainColor.substring(3,9):this.EntityPM.MainColor;
-    }
-    set MainColor(value: string) {
-        if (this.EntityPM.MainColor != value) {
-            
-            this.ValidateHexCode(value, "MainColor");
-            this.EntityPM.MainColor = value;
-            this.colorpicker.value = value;
-            
-             if(value ==null){
-               document.documentElement.style.setProperty('--sliderBackground', null);
-                this.SliderValue=0;
-             }
+        if(name=='bg'){
+            this.EntityPM.BackgroundId=null;
+            this.BackgroundId=null;
         }
     }
-    get MainColorOpacity() {
-        return this.EntityPM.MainColorOpacity;
+    ngAfterViewInit()
+    {
+        this.ListenToEntitySavedEvent();
     }
-    set MainColorOpacity(value: string) {
-        if (this.EntityPM.MainColorOpacity != value) {          
-            this.EntityPM.MainColorOpacity = value;
-            
+
+    ListenToEntitySavedEvent()
+    {
+        SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) =>
+        {
+            if (isSaveSuccess) {
+                this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
+                this.SetUIPropertiesEnabled(this.EntityPM.EnableBranding);
+            }
+        });
+    }
+
+    mainColorOpacity: number = 100;
+    get MainColorOpacity()
+    {
+        return this.mainColorOpacity;
+    }
+    set MainColorOpacity(value: number)
+    {
+        this.mainColorOpacity = value;
+        this.UpdateEntityMainColor();
+    }
+
+    private mainColorCode: string;
+    private UpdateEntityMainColor()
+    {
+        this.EntityMainColor = this.ConvertHexToRGBColor(this.MainColorCode, this.MainColorOpacity);
+    }
+
+    public get MainColorCode(): string
+    {
+        return this.mainColorCode;
+    }
+    public set MainColorCode(hexColor: string)
+    {
+        this.mainColorCode = hexColor;
+        this.ValidateMainColorCode(hexColor);
+        this.UpdateEntityMainColor();
+    }
+
+    private ValidateMainColorCode(hexColor: string)
+    {
+        if (!this.ValidateHexCode(hexColor, "MainColorCode"))
+            this.wrongMainColor = true;
+        else
+            this.wrongMainColor = false;
+
+        this.UpdateEditComponentValidationErrors();
+    }
+
+    private UpdateEditComponentValidationErrors()
+    {
+        if (this.wrongMainColor || this.wrongSecondaryColor) {
+            SessionLocator.SelectedSession.CurrentEditComponent.IsEditValid = false;
+            SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = ['Please enter valid color hex code'];
+        } else {
+            SessionLocator.SelectedSession.CurrentEditComponent.IsEditValid = true;
+            SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = [];
         }
     }
- get ContactEmail() {
+
+    get EntityMainColor()
+    {
+        return this.EntityPM.MainColor;
+    }
+    set EntityMainColor(value: string)
+    {
+        this.EntityPM.MainColor = value;
+
+    }
+
+
+
+    get EntitySecondaryColor()
+    {
+        return this.EntityPM.SecondaryColor;
+    }
+    set EntitySecondaryColor(value: string)
+    {
+        this.EntityPM.SecondaryColor = value;
+
+    }
+
+    secondaryColorOpacity: any = 100;
+    get SecondaryColorOpacity()
+    {
+        return this.secondaryColorOpacity;
+    }
+    set SecondaryColorOpacity(value: number)
+    {
+        this.secondaryColorOpacity = value;
+
+
+
+        this.SetEntitySecondaryColor();
+    }
+
+    wrongSecondaryColor: boolean = false;
+    wrongMainColor: boolean = false;
+    private secondaryColorCode: string;
+    private SetEntitySecondaryColor()
+    {
+        this.EntitySecondaryColor = this.ConvertHexToRGBColor(this.SecondaryColorCode, this.SecondaryColorOpacity);
+    }
+
+    public get SecondaryColorCode(): string
+    {
+        return this.secondaryColorCode;
+    }
+    public set SecondaryColorCode(hexColor: string)
+    {
+        this.secondaryColorCode = hexColor;
+
+        this.ValidateSecondaryColor(hexColor);
+        this.SetEntitySecondaryColor();
+    }
+
+
+
+
+    private ValidateSecondaryColor(hexColor: string)
+    {
+        if (!this.ValidateHexCode(hexColor, "SecondaryColorCode"))
+            this.wrongSecondaryColor = true;
+
+        else
+            this.wrongSecondaryColor = false;
+
+        this.UpdateEditComponentValidationErrors();
+    }
+
+    get ContactEmail()
+    {
         return this.EntityPM.ContactEmail;
     }
-    set ContactEmail(value: string) {
-        if (this.EntityPM.ContactEmail != value) {          
+    set ContactEmail(value: string)
+    {
+        if (this.EntityPM.ContactEmail != value) {
             this.EntityPM.ContactEmail = value;
-            
-        }
-    }
-get CustomerURL() {
-        return this.EntityPM.CustomerURL;
-    }
-    set CustomerURL(value: string) {
-        if (this.EntityPM.CustomerURL != value) {          
-            this.EntityPM.CustomerURL = value;
-            
-        }
-    }
-    get SecondaryColorOpacity() {
-        return this.EntityPM.SecondaryColorOpacity;
-    }
-    set SecondaryColorOpacity(value: string) {
-        if (this.EntityPM.SecondaryColorOpacity != value) {
-            this.EntityPM.SecondaryColorOpacity = value;
 
         }
     }
-   public get EnableBranding() {
+    get CustomerURL()
+    {
+        return this.EntityPM.CustomerURL;
+    }
+    set CustomerURL(value: string)
+    {
+        if (this.EntityPM.CustomerURL != value) {
+            this.EntityPM.CustomerURL = value;
+
+        }
+    }
+
+    public get EnableBranding()
+    {
         return this.EntityPM.EnableBranding;
     }
-  public  set EnableBranding(value: boolean) {
+    public set EnableBranding(value: boolean)
+    {
         if (this.EntityPM.EnableBranding != value) {
             this.EntityPM.EnableBranding = value;
             this.EnableBrandingChange(value);
         }
     }
-    get SecondaryColor() {
-        return (this.EntityPM.SecondaryColor != null && this.EntityPM.SecondaryColor.length > 7) ? "#" + this.EntityPM.SecondaryColor.substring(3, 9) : this.EntityPM.SecondaryColor;
-    }
-    set SecondaryColor(value: string) {
-        if (this.EntityPM.SecondaryColor != value) {
-            this.ValidateHexCode(value, "SecondaryColor");
-            this.EntityPM.SecondaryColor = value;
-            
-            this.secondarycolor.value = value;
-            if(value ==null){
-                document.documentElement.style.setProperty('--sliderBackground2', null);
-               this.SecondarySliderValue=0;
-             }
-        }
 
-    }
-    ValidateHexCode(value:string, fieldName:string) {
+    ValidateHexCode(value: string, fieldName: string)
+    {
 
-        var valid: boolean = /^#[0-9a-fA-F]*/i.test(value);
-        if ((!valid || value.length>9 || value.length<7) && value != null) {
+        const regex = new RegExp('^#([a-fA-F0-9]{6})$');
+        var valid: boolean = regex.test(value);
+        if ((!valid || value.length > 9 || value.length < 7) && value != null) {
             this.UIProperties.SetValidity(fieldName, "TenantManagement", false, "this is not a valid hex code");
-
             return false;
         }
         else {
             this.UIProperties.SetValidity(fieldName, "TenantManagement", true, null);
-
             return true;
         }
     }
- 
-    public colorPickerValue: string;
-    public secondarycolorPickerValue: string;
-    CalculateOpacity(value: number, field: string) {
-        if (this.EnableBranding) {
-            var color;
-            if (field == "Main") {
-                color = this.colorpicker.value;
-                // value = ;
-                this.MainColorOpacity =value ==0?"00": Math.round(value * 255).toString(16);
-            }
-            else {
-                // value = Math.round(value * 255);
-                this.SecondaryColorOpacity = value ==0?"00":  Math.round(value * 255).toString(16);
-                color = this.secondarycolor.value;
-            }
-            var rgbaColor = 'rgba(' + parseInt(color.slice(-6, -4), 16) + ',' + parseInt(color.slice(-4, -2), 16) + ',' + parseInt(color.slice(-2), 16) + ',' + value + ')';
 
-            if (field == "Main") {
-                document.documentElement.style.setProperty('--sliderBackground', rgbaColor);
 
-            }
-            else { document.documentElement.style.setProperty('--sliderBackground2', rgbaColor); }
-        }
-    }
-    ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe((response: any) => {
+    ngOnInit()
+    {
+        this.entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe((response: any) =>
+        {
             this.IsVisibile = true;
             this.EntityPM = this.entityArgs.EntityPM;
             if (this.EntityPM) {
 
-               this.SetUIPropertiesEnabled(this.EntityPM.EnableBranding);
+                this.SetUIPropertiesEnabled(this.EntityPM.EnableBranding);
 
             }
         });
@@ -250,13 +296,34 @@ get CustomerURL() {
 
 
     }
-    public ImageId: string;
-    ImageUploadedCompleted(code) {
-        this.ImageId = code;
+
+    BackgroundImageUploadedCompleted(code)
+    {
+        this.BackgroundId = code;
         this.EntityPM.BackgroundId = code;
     }
+    ComapnylogoUploadedCompleted(code)
+    {
+        this.ComapnylogoId = code;
+        this.EntityPM.ComapnylogoId = code;
+    }
+    InvertedLogoUploadedCompleted(code)
+    {
+        this.InvertedLogoId = code;
+        this.EntityPM.InvertedLogoId = code;
+    }
+    BrowserIconUploadedCompleted(code)
+    {
+        this.BrowserIconId = code;
+        this.EntityPM.BrowserIconId = code;
+    }
+    ShipmentHeaderImageUploadedCompleted(code) {
+        this.ShipmentHeaderImageId = code;
+        this.EntityPM.ShipmentHeaderImageId = code;
+    }
 
-    EnableBrandingChange(value: any) {
+    EnableBrandingChange(value: any)
+    {
 
         this.EntityPM.UpdateByUserId = SessionInfo.LoggedUserId + "^" + SessionInfo.LoggedUserTenant.toString();
         this.EnableBranding = value;
@@ -264,17 +331,79 @@ get CustomerURL() {
 
     }
 
-    SetUIPropertiesEnabled(value: boolean) {
-      
+    SetUIPropertiesEnabled(value: boolean)
+    {
+
         this.UIProperties.SetEnabled("MainColor", "TenantManagement", value);
         this.UIProperties.SetEnabled("SecondaryColor", "TenantManagement", value);
-
         this.UIProperties.SetEnabled("CustomerURL", "TenantManagement", value);
         this.UIProperties.SetEnabled("ContactEmail", "TenantManagement", value);
         this.UIProperties.SetEnabled("HideSharedlogistics", "TenantManagement", value);
     }
 
 
+
+    ConvertHexToRGBColor(hex: string, alpha: number)
+    {
+        if (hex && hex.length >= 7) {
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+
+            if (alpha) {
+                return `rgba(${r}, ${g}, ${b}, ${alpha / 100})`;
+            } else {
+                return `rgb(${r}, ${g}, ${b})`;
+            }
+        } else {
+            return 'rgba(0,0,0,1)';
+        }
+    }
+
+    RGBToHex(r, g, b)
+    {
+        r = r.toString(16);
+        g = g.toString(16);
+        b = b.toString(16);
+
+        if (r.length == 1)
+            r = "0" + r;
+        if (g.length == 1)
+            g = "0" + g;
+        if (b.length == 1)
+            b = "0" + b;
+
+        return "#" + r + g + b;
+    }
+    ConvertRGBAToHexColor(rgba: string)
+    {
+        var numbers = rgba.replace('rgba(', '').replace(')', '').replace(' ', '');
+        var splittedNumbers = numbers.split(',');
+        var red = parseInt(splittedNumbers[0].trim());
+        var green = parseInt(splittedNumbers[1].trim());
+        var blue = parseInt(splittedNumbers[2].trim());
+        var opacity = parseInt(splittedNumbers[3].trim());
+
+        var r = red.toString(16);
+        var g = green.toString(16);
+        var b = blue.toString(16);
+
+        if (r.length == 1)
+            r = "0" + r;
+        if (g.length == 1)
+            g = "0" + g;
+        if (b.length == 1)
+            b = "0" + b;
+
+        return "#" + r + g + b;
+    }
+    GetOpacityFromRGBA(rgba: string)
+    {
+        var numbers = rgba.replace('rgba(', '').replace(')', '').replace(' ', '');
+        var splittedNumbers = numbers.split(',');
+        var opacity = parseFloat(splittedNumbers[3].trim());
+        return opacity * 100;
+    }
 
 
 

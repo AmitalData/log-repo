@@ -14,6 +14,7 @@ export class EntityArgs {
     public IsNewEntity: boolean = false;
     public SkipCtor: boolean = false;
     public PreSelectedTabCode: string = null;
+    public EditComponentArgument: any = null;
     public EntityArgEventEmitter: EventEmitter<any> = new EventEmitter<any>();
     public SendMessage(token: any) {//itzik test 
         this.EntityArgEventEmitter.emit(token);

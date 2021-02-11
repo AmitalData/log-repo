@@ -5,16 +5,16 @@
     <script>
         (function() {
             var MainFolder = "CargoTracking"
-            var base = window.location.href.substring(0, window.location.href.toLowerCase().indexOf(MainFolder.toLowerCase())) + MainFolder +'/';
+            var base = window.location.href.substring(0, window.location.href.toLowerCase().lastIndexOf(MainFolder.toLowerCase())) + MainFolder +'/';
             if(window.location.href.includes('localhost'))
                base ="/";
             document.write('<base href="' + base + '" />');
         })();
    </script>
     <meta charset="utf-8">
-    <title>Cargo Tracking Prototype</title>
+    <title>Cargo Tracking</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" id="appIcon" type="image/x-icon" href="favicon.ico">
     <!-- <link rel="stylesheet" href="assets/bootstrap.min.css"> -->
     <link rel="stylesheet" href="./assets/stylsheets/fonts.css">
     <link rel="stylesheet" href="./assets/stylsheets/app.css">

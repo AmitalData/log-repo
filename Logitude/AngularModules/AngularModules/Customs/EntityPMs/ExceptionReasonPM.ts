@@ -63,7 +63,10 @@ export class ExceptionReasonPM {
     public OldEntityPM: ExceptionReasonPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -71,6 +74,7 @@ export class ExceptionReasonPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.ExceptionReason");
            
         }
+       }
     }
 
     private MyClone: ExceptionReasonPM;

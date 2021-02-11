@@ -471,7 +471,8 @@ var interestReportArgs: InterestReportArguments=  this.FillInterestReportArgs();
  
 // }
 
-GetNumberOfDocumentNotPrinted() {
+GetNumberOfDocumentNotPrinted(isReportsAttached: boolean) {
+  this.AttachReportWithEachInvoice = isReportsAttached ? true: false;
   this.ValidationErrorsList = [];
   if (this.SelectedItemsCount == 0) {
     this.ValidationErrorsList.push(TextCodeTranslator.Translate("InterestReport.O.SelectAtLeastOnLine"));
@@ -510,8 +511,10 @@ GetNumberOfDocumentNotPrinted() {
     }
 
   });
-}
-}
+    }
+    this.DropdownClose();
+    }
+
 
 // public newWindow:any;
 
@@ -623,17 +626,38 @@ public SelectedItems :SelectItem[]=[];
     interestReportArgs.SelectedItems = this.SelectedItems;
     interestReportArgs.ExcludedIds = this.ExcludedItems.Collection;
     return interestReportArgs;
-  }
+    }
+
     CancelButtonClicked() {
         this.SelectedItemsCount = 0;
         this.selectedItems.Clear();
         this.CurrentSession.CloseCurrentWindow();
+    }
 
-}
+    getScreenHeight() { return self.innerHeight; }
+    dropdownDisplay: string = 'none';
+    DropdowndisplayToggle() {
+        var item = document.getElementById("printbutton");
+        var itemRect = item.getBoundingClientRect();
 
+        let DDLHeight =22.5;//    height: 22px; * 3 +30 
+        let Extra = 22 + 1 + 1; //    height: 22px; +1 UP +1 DOWN 
+        if (itemRect.bottom + DDLHeight < this.getScreenHeight()) {//this.PaintTop = true                
+            document.getElementById("dropdowmenu").style.top = (itemRect.bottom - DDLHeight - Extra) + 'px';
+        }
+      
+        if (this.dropdownDisplay == 'none') {
+            this.dropdownDisplay = 'block';
+        }
+        else {
+            this.dropdownDisplay = 'none';
+        }
+    }
+
+    DropdownClose() {
+        this.dropdownDisplay = 'none';
+    }
  
-
-
 }
 
 

@@ -158,7 +158,10 @@ export class SLAHeaderPM {
     public OldEntityPM: SLAHeaderPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -166,6 +169,7 @@ export class SLAHeaderPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "SLAHeader");
            
         }
+       }
     }
 
     private MyClone: SLAHeaderPM;

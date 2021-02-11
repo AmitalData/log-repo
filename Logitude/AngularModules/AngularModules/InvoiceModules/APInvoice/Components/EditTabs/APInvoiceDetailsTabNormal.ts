@@ -1471,13 +1471,18 @@ export class APInvoiceLineItem extends BaseComponent {
     }
 
     private exists: boolean = false;
+    private UpdateExists() {
+        this.exists = false;
+        if (this.invoicePM.InvoiceLines.indexOf(this.invoiceLinePM) > -1) {
+            this.exists = true;
+        }
+    }
+
     get Exists() {
         var exists = false;
-
         if (this.invoicePM.InvoiceLines.indexOf(this.invoiceLinePM) > -1) {
             exists = true;
         }
-
         return exists;
     }
 
@@ -1492,7 +1497,12 @@ export class APInvoiceLineItem extends BaseComponent {
 
     ApplyInvoiceLineChecked() {
         if (this.exists == true) {
-            this.ForiegnCurrencyAmount = this.OpenAmount;
+
+            if (this.invoiceLinePM.AmountTypeCode != "NEXP") {
+                if (AppTool.IsNullOrZero(this.ForiegnCurrencyAmount) && !AppTool.IsNullOrZero(this.OpenAmount)) {
+                    this.ForiegnCurrencyAmount = this.OpenAmount;
+                }
+            }
             this.invoicePM.AddAPInvoiceLinePM(this.invoiceLinePM);
         }
 
@@ -1688,12 +1698,11 @@ export class APInvoiceLineItem extends BaseComponent {
     GetVatTypeData() {
         if (AppTool.IsNullOrEmpty(this.VatTypeId)) {
             this.VatTypeName = null;
-            this.VatPercentage = null;
             this.VatIsMultiPercentage = false;
             //this.invoiceLinePM.ExternalVATCard = null;
             this.invoiceLinePM.ExternalTAXItemId = null;
-            this.ReadVatTypeData();
-            this.SetUIProperties_VAT();
+
+            this.SetVatPercentage(null);
         }
 
         else {
@@ -1706,24 +1715,25 @@ export class APInvoiceLineItem extends BaseComponent {
                         //this.invoiceLinePM.ExternalVATCard = list.ExternalVATCard;
                         this.invoiceLinePM.ExternalTAXItemId = list.ExternalTAXItemId;
 
+                        var vatPercentage: number = null;
+
                         if (list.IsMultiPercentage) {
-                            this.VatPercentage = null;
+                            vatPercentage = null;
                         }
 
                         else {
-                            this.VatPercentage = this.fatherComponent.GetVatTypePercentage(this.VatTypeId);
+                            vatPercentage = this.fatherComponent.GetVatTypePercentage(this.VatTypeId);
                         }
 
-                        this.ReadVatTypeData();
-                        this.SetUIProperties_VAT();
+                        this.SetVatPercentage(vatPercentage);
                     }
                 }
             });
         }
     }
 
-    SetVatPercentage(myPercentage: number) {
-        this.VatPercentage = myPercentage;
+    SetVatPercentage(value: number) {
+        this.VatPercentage = value;
     }
     get VatTypeName() { return this.invoiceLinePM.VatTypeName; }
     set VatTypeName(newValue: string) {
@@ -1736,10 +1746,11 @@ export class APInvoiceLineItem extends BaseComponent {
     set VatPercentage(newValue: number) {
         if (this.invoiceLinePM.VatPercentage != newValue) {
             this.invoiceLinePM.VatPercentage = AppTool.Round(newValue, 3);
-            this.ReadVatTypeData();
-            this.ReCalculateTotals();
-            this.SetUIProperties_VAT();
         }
+
+        this.ReadVatTypeData();
+        this.ReCalculateTotals();
+        this.SetUIProperties_VAT();
     }
 
     get VatIsMultiPercentage() { return this.invoiceLinePM.VatIsMultiPercentage; }

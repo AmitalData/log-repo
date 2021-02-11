@@ -59,10 +59,7 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
         this.BuildScreenData();
         this.Listen()
 
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.TransmissionError)) {
-            this.EntityWarningsList.push(this.EntityPM.TransmissionError);
-            this.EntityWarning = this.EntityPM.TransmissionError;
-        }
+        this.BuildEntityWarnings();
 
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
@@ -79,6 +76,15 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
         this.BuildInvoiceNumberFilters();
     }
 
+    private BuildEntityWarnings() {
+        this.EntityWarning = "";
+        this.EntityWarningsList = [];
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.TransmissionError)) {
+            this.EntityWarningsList.push(this.EntityPM.TransmissionError);
+            this.EntityWarning = this.EntityPM.TransmissionError;
+        }
+    }
+
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;  
     private Listen() {
@@ -89,6 +95,7 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
                     this.LoadInvoices();
+                    this.BuildEntityWarnings();
                 }
 
                 else {
@@ -105,6 +112,7 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
                     this.LoadInvoices();
+                    this.BuildEntityWarnings();
                 }
             });
         }
@@ -181,7 +189,7 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
             }            
         }
 
-        this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, isFieldtEnabled);
+        this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, isFieldtEnabled);
     }
     SetUIProperties_BillToAddress() {
@@ -284,6 +292,28 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
         this.UIProperties.SetEnabled("DueDate", this.ObjectTableName, AllowManuallyDueDate);
     }
 
+    get PartnerId() { return this.EntityPM.PartnerId; }
+    set PartnerId(newValue: string) {
+        if (this.EntityPM.PartnerId != newValue) {
+            this.EntityPM.PartnerId = newValue;
+            if (AppTool.IsNullOrEmpty(newValue)) {
+                this.BillToId = null;
+            }
+            else {
+                this.myCardListService.getSingle(newValue).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: CardList = myResponse.Result;
+                        if (list != null) {
+                            this.BillToId = list.BillToId;
+                            if (AppTool.IsNullOrEmpty(this.BillToId)) {
+                                this.BillToId = newValue;
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    }
     // Bill To
     public BillToDependencyValue1: string = null;
     get BillToId() { return this.EntityPM.BillToId; }

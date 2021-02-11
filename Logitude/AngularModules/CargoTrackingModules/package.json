@@ -4,9 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start-secondary": "ng serve --port 8000",
     "postinstall": "ngcc",
     "build:Old": "ng build --base-href /CargoTracking/ --prod && start dist\\CargoTracking",
     "build": "ng build --prod && start dist\\CargoTracking",
+    "start:hosts":"ng s --port=5200 --disable-host-check",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

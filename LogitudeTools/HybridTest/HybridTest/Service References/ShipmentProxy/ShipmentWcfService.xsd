@@ -24,6 +24,7 @@
       <xs:element minOccurs="0" name="AccountedReceivablesInLocalCurrency" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="AccountedReceivablesInProfitCurrency" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="AccountingCloseDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="AccrualsApprovalDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="ActivityByUserName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ActivityDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="ActivityTypeName" nillable="true" type="xs:string" />
@@ -98,6 +99,7 @@
       <xs:element minOccurs="0" name="CustomsClearanceDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="CustomsDeclarationNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CutoffDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DangerousUnNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DeclarationDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="DeclarationNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DeliveryOrder" nillable="true" type="xs:string" />
@@ -220,6 +222,7 @@
       <xs:element minOccurs="0" name="INTTRAInstructions" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="INTTRAIsFreighted" type="xs:boolean" />
       <xs:element minOccurs="0" name="INTTRALastBookingResponse" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="INTTRALastEBbookingSendDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="INTTRALastStatusDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="INTTRASIError" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="INTTRASIStatusCode" nillable="true" type="xs:string" />
@@ -236,10 +239,12 @@
       <xs:element minOccurs="0" name="IncotermCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IncotermId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IsAccountingClosed" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsAccrualsApproved" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsAnyConversation" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsArchived" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsAssembly" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsCancelled" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsDangerous" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsDepositionRequired" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsDigitalSignRequired" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsException" type="xs:boolean" />
@@ -310,6 +315,7 @@
       <xs:element minOccurs="0" name="MainCarriageToPortName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MainCarriageVesselId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MainCarriageVesselName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MainHarmonize" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ManifestLastSharingDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="ManifestReason" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ManifestStatusCode" nillable="true" type="xs:string" />
@@ -363,6 +369,7 @@
       <xs:element minOccurs="0" name="ProjectNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ProrateReceivables" type="xs:boolean" />
       <xs:element minOccurs="0" name="QuoteId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="QuoteNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="RegistryDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="RequestedDocumentsCount" type="xs:int" />
       <xs:element minOccurs="0" name="ResultFromDocument" type="xs:boolean" />

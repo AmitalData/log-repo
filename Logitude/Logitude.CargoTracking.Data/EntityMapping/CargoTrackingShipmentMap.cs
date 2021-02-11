@@ -132,6 +132,13 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.CustomsClearanceDate).HasColumnName("CustomsClearanceDate");
 
             this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasDatabaseGeneratedOption(null);
+
+            this.Property(t => t.ContainersNumbers).HasColumnName("ContainersNumbers").IsMaxLength().IsUnicode(true);
+
+            this.Property(t => t.PackagesQuantity).HasColumnName("PackagesQuantity");
+
+            this.Property(t => t.DirectionId).HasColumnName("DirectionId").IsRequired().HasMaxLength(1).IsUnicode(false);
+
         }
     }
 }

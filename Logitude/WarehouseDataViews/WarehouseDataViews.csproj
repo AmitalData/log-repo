@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CheckFeatureForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CheckFeatureForm.Designer.cs">
+      <DependentUpon>CheckFeatureForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CompareViewForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +78,9 @@
     <Compile Include="Service\PrivateDataWarehouseViewService.cs" />
     <Compile Include="Service\DataWarehouseViewsService.cs" />
     <Compile Include="Service\CustomFieldDataWarehouseViewService.cs" />
+    <EmbeddedResource Include="CheckFeatureForm.resx">
+      <DependentUpon>CheckFeatureForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CompareViewForm.resx">
       <DependentUpon>CompareViewForm.cs</DependentUpon>
     </EmbeddedResource>

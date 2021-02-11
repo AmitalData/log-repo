@@ -117,6 +117,7 @@ namespace WebFreight.Web.WebServices
             if (loggedContact != null)
             {
                 myDataProvider.IssuedByUser = loggedContact.EnglishName;
+                myDataProvider.IssuedByUserPosition = loggedContact.Position;
             }
 
             if (shipment != null)
@@ -200,6 +201,7 @@ namespace WebFreight.Web.WebServices
                 Card notify2 = null;
                 Card myConsigneePartner = null;
                 Card consigneeNotImporter = null;
+                Contact salesmanData = null;
 
                 if (shipment.Notify1Id != null)
                 {
@@ -220,6 +222,12 @@ namespace WebFreight.Web.WebServices
                 {
                     consigneeNotImporter = (from a in commonContext.Cards where a.Id == shipment.ConsigneeNotImporterId select a).FirstOrDefault();
                 }
+
+                if(shipment.SalesmanUserId != null)
+                {
+                    salesmanData = (from a in commonContext.Contacts where a.Id == shipment.SalesmanUserId select a).FirstOrDefault(); 
+                }
+
                 #endregion
 
                 #region Ports
@@ -264,7 +272,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.CustomsDeclarationNumber = shipment.CustomsDeclarationNumber != null ? shipment.CustomsDeclarationNumber : "";
                 myDataProvider.InsidePackagesDetails = shipment.NumberOfInsidePackagesDetails;
                 myDataProvider.Incoterm = shipment.IncotermName;
-                myDataProvider.Salesman = shipment.SalesmanUserName;
+                myDataProvider.Salesman = shipment.SalesmanUserName;            
                 myDataProvider.TotalPayables = shipment.OpenPayablesInLocalCurrency + shipment.AccountedPayablesInLocalCurrency;
                 myDataProvider.ValueOfGoods = shipment.ValueOfGoods;
                 myDataProvider.ENSNumber = shipment.ENSNumber;
@@ -298,7 +306,12 @@ namespace WebFreight.Web.WebServices
                         myDataProvider.ValueOfGoodsCurrency = currency.EnglishName;
                     }
                 }
+                if (salesmanData != null)
+                {
+                    myDataProvider.SalesmanEmail = salesmanData.Email;
+                    
 
+                }
                 #region Tenant
                 Tenant myTenant = (from a in commonContext.Tenants where a.Id == tenant select a).FirstOrDefault();
                 if (myTenant != null)
@@ -424,6 +437,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.Transshipment1ETD = shipment.Transshipment1ETD;
                 myDataProvider.Transshipment1ATD = shipment.Transshipment1ATD;
                 myDataProvider.Transshipment1ATA = shipment.Transshipment1ATA;
+                myDataProvider.AWBCommodityItemNumber = shipment.AWBCommodityItemNumber;
 
                 #region MasterAMSBL
                 var aMSBL_FromHouse = "";
@@ -599,7 +613,7 @@ namespace WebFreight.Web.WebServices
                         Address shipperClientAddress = addressRepository.GetSingleAddress(shipment.ShipperAddressId, tenant);
 
                         if (shipperClientAddress != null)
-                        {
+                       { 
                             if (shipperClientAddress.IsLocalLanguage)
                             {
                                 if (shipperClient != null && !string.IsNullOrEmpty(shipperClient.LocalName))
@@ -739,7 +753,37 @@ namespace WebFreight.Web.WebServices
                     Card consignee = (from a in commonContext.Cards
                                       where a.Id == shipment.ConsigneeId
                                       select a).FirstOrDefault();
+                    if (consignee != null)
+                    {
+                        string myResultConsignee = "";
 
+                        myResultConsignee = consignee.EnglishName != null ? consignee.EnglishName : "";
+
+                        if (shipment.ConsigneeAddressId != null)
+                        {
+                            Address consigneeAddress = addressRepository.GetSingleAddress(shipment.ConsigneeAddressId, tenant);
+
+
+                            if (consigneeAddress != null)
+                            {
+                                if (consigneeAddress.IsLocalLanguage && !string.IsNullOrEmpty(consignee.LocalName))
+                                {
+                                    myResultConsignee = consignee.LocalName;
+                                }
+
+                                myResultConsignee += Environment.NewLine + DataProviders.General.GetAddress(consigneeAddress);
+
+                                if (consigneeAddress.PhoneNumber != null || consigneeAddress.FaxNumber != null)
+                                {
+                                    myResultConsignee += Environment.NewLine + (consigneeAddress.PhoneNumber != null ? "Tel: " + consigneeAddress.PhoneNumber + " " : "") + (consigneeAddress.FaxNumber != null ? "Fax: " + consigneeAddress.FaxNumber + " " : "");
+                                }
+
+
+                            }
+                        }
+
+                        myDataProvider.ConsigneeNameAddress = myResultConsignee;
+                    }
                     myDataProvider.ConsigneeName = consignee != null ? consignee.EnglishName : "";
                     myDataProvider.ConsigneeVAT = consignee != null ? consignee.VatNumber : "";
 
@@ -1060,8 +1104,10 @@ namespace WebFreight.Web.WebServices
                     {
                         myDataProvider.UserName = currentContact.EnglishName;
                         myDataProvider.UserEmail = currentContact.Email != null ? currentContact.Email : "";
+                        myDataProvider.UserPhoneNumber = currentContact.BusinessPhone;
                     }
                 }
+
                 #endregion
 
                 #region Agent

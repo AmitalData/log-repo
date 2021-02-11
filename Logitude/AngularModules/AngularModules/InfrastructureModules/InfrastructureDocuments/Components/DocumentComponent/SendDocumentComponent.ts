@@ -358,13 +358,14 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                 }
             }
 
-            if (!AppTool.IsNullOrEmpty(this.SelectedInternalDocument.Subject)) {
-                this.Subject = this.SelectedInternalDocument.Subject;
+            if (!this.IsResendEmail) {
+                if (!AppTool.IsNullOrEmpty(this.SelectedInternalDocument.Subject)) {
+                    this.Subject = this.SelectedInternalDocument.Subject;
+                }
+                else {
+                    this.Subject = this.CurrentDocument.DocumentTypeSubject != null ? this.CurrentDocument.DocumentTypeSubject : this.CurrentDocument.DocumentTypeName;
+                }
             }
-            else {
-                this.Subject = this.CurrentDocument.DocumentTypeSubject != null ? this.CurrentDocument.DocumentTypeSubject : this.CurrentDocument.DocumentTypeName;
-            }
-
             this.LoadDocumentTypeTemplates(null);
         }
         else {
@@ -707,7 +708,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
     LoadHtmlTemplateData(templateId: string) {
 
-
+        
         if (this.SelectedDocumentTypeTemplateViewModel != null && this.SelectedDocumentTypeTemplateViewModel.IsLoad) {
             this.froalaEditorSetting.froalaEditorComponent.SetHtml(this.SelectedDocumentTypeTemplateViewModel.HtmlData);
             this.From = this.SelectedDocumentTypeTemplateViewModel.From;
@@ -715,6 +716,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             this.Subject = this.SelectedDocumentTypeTemplateViewModel.TemplateSubject;
             this.Cc = this.SelectedDocumentTypeTemplateViewModel.TemplateCc;
             this.Bcc = this.SelectedDocumentTypeTemplateViewModel.TemplateBcc;
+            this.ToEmail  = this.SelectedDocumentTypeTemplateViewModel.To;
 
             if (!AppTool.IsNullOrEmpty(this.Cc)) this.AddCcClick();
             if (!AppTool.IsNullOrEmpty(this.Bcc)) this.AddBccClick();
@@ -725,18 +727,21 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             var docoutId = this.DocumentOutId;
             if (templateId) docoutId = "";
 
+            var to: string = "";
+
             if (this.SelectedDocumentTypeTemplateViewModel != null && this.SelectedDocumentTypeTemplateViewModel.Entity) {
                 this.From = !AppTool.IsNullOrEmpty(this.SelectedDocumentTypeTemplateViewModel.Entity.From) ? this.SelectedDocumentTypeTemplateViewModel.Entity.From : "";
                 this.ReplyTo = !AppTool.IsNullOrEmpty(this.SelectedDocumentTypeTemplateViewModel.Entity.ReplyTo) ? this.SelectedDocumentTypeTemplateViewModel.Entity.ReplyTo : "";
                 this.Cc = !AppTool.IsNullOrEmpty(this.SelectedDocumentTypeTemplateViewModel.Entity.CC) ? this.SelectedDocumentTypeTemplateViewModel.Entity.CC : "";
                 this.Bcc = !AppTool.IsNullOrEmpty(this.SelectedDocumentTypeTemplateViewModel.Entity.BCC) ? this.SelectedDocumentTypeTemplateViewModel.Entity.BCC : "";
+                to = !AppTool.IsNullOrEmpty(this.SelectedDocumentTypeTemplateViewModel.Entity.To) ? this.SelectedDocumentTypeTemplateViewModel.Entity.To : "";
 
 
             }
 
 
 
-            this._htmlEditorService.getEditorHtmlData(docoutId, this.EntityId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, true, templateId, "", "", this.From, this.ReplyTo, this.Cc, this.Bcc).subscribe((res:any) => {
+            this._htmlEditorService.getEditorHtmlData(docoutId, this.EntityId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, true, templateId, "", "", this.From, this.ReplyTo, this.Cc, this.Bcc, to).subscribe((res: any) => {
 
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
@@ -751,8 +756,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                             this.SelectedDocumentTypeTemplateViewModel.ReplyTo = !AppTool.IsNullOrEmpty(myResult.ReplyTo) ? myResult.ReplyTo : "";
                             this.SelectedDocumentTypeTemplateViewModel.TemplateCc = !AppTool.IsNullOrEmpty(myResult.Cc) ? myResult.Cc : "";
                             this.SelectedDocumentTypeTemplateViewModel.TemplateBcc = !AppTool.IsNullOrEmpty(myResult.Bcc) ? myResult.Bcc : "";
-
-
+                            this.SelectedDocumentTypeTemplateViewModel.To = !AppTool.IsNullOrEmpty(myResult.ToEmail) ? myResult.ToEmail : "";
 
                             if (!AppTool.IsNullOrEmpty(myResult.Subject)) {
                                 this.SelectedDocumentTypeTemplateViewModel.TemplateSubject = myResult.Subject;
@@ -768,6 +772,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                         this.ReplyTo = !AppTool.IsNullOrEmpty(myResult.ReplyTo) ? myResult.ReplyTo : "";
                         this.Cc = !AppTool.IsNullOrEmpty(myResult.Cc) ? myResult.Cc : "";
                         this.Bcc = !AppTool.IsNullOrEmpty(myResult.Bcc) ? myResult.Bcc : "";
+                        this.ToEmail = !AppTool.IsNullOrEmpty(myResult.ToEmail) ? myResult.ToEmail : "";
 
                         if (!AppTool.IsNullOrEmpty(this.Cc)) this.AddCcClick();
                         if (!AppTool.IsNullOrEmpty(this.Bcc)) this.AddBccClick();

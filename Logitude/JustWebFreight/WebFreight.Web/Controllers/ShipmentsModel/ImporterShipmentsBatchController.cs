@@ -651,16 +651,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             //}
 
 
-            if (entityAM.MainCarriageETA != null)
-            {
-                entityPM.MainCarriageETA = entityAM.MainCarriageETA;
-            }
-
-            if (entityAM.MainCarriageATA != null)
-            {
-                entityPM.MainCarriageATA = entityAM.MainCarriageATA;
-            }
-
+            entityPM.MainCarriageETA = entityAM.MainCarriageETA;
+            entityPM.MainCarriageATA = entityAM.MainCarriageATA;
             entityPM.MainCarriageATD = entityAM.MainCarriageATD;
             entityPM.OnCarriageATA = entityAM.OnCarriageATA;
             entityPM.OnCarriageATD = entityAM.OnCarriageATD;

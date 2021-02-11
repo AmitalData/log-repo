@@ -88,6 +88,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        Code = a.Card.Code,
                                        GLAccountDisplayNumber = a.Card.GLAccountDisplayNumber,
                                    },
+                                   BillToId = a.Card.BillToId,
                                }).FirstOrDefault();
 
             CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
@@ -163,6 +164,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        EnglishName = a.Card.EnglishName,
                                        PrimaryContactId = a.Card.PrimaryContactId,
                                    },
+                                   BillToId = a.Card.BillToId,
                                }).FirstOrDefault();
 
             CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
@@ -237,6 +239,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        EnglishName = a.Card.EnglishName,
                                        PrimaryContactId = a.Card.PrimaryContactId,
                                    },
+                                   BillToId = a.Card.BillToId,
                                }).FirstOrDefault();
 
             CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
@@ -306,6 +309,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    EnglishName = a.Card.EnglishName,
                                                    PrimaryContactId = a.Card.PrimaryContactId,
                                                },
+                                               BillToId = a.Card.BillToId,
                                            };
             return AccountingPartners;
         }
@@ -358,6 +362,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  EnglishName = a.Card.EnglishName,
                                  PrimaryContactId = a.Card.PrimaryContactId,
                              },
+                             BillToId = a.Card.BillToId,
                          }).AsQueryable();
 
             IQueryable<AccountingPartnerPM> query2 = null;
@@ -482,6 +487,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        PartnerTypeId = a.Card.PartnerTypeId,
                                        Code = a.Card.Code,
                                    },
+                                   BillToId = a.Card.BillToId,
                                }).FirstOrDefault();
 
             CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);

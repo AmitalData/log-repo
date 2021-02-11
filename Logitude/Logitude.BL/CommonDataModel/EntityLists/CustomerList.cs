@@ -30,12 +30,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string LeadSourceId { get; set; }
 
         [DataMember]
-        public string BillToId { get; set; }
-
-        [DataMember]
-        public string BillToName { get; set; }
-
-        [DataMember]
         public string SalesmanUserId { get; set; }
 
         [DataMember]
@@ -424,5 +418,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         public int SearchWeight { get; set; }
 
+        [DataMember]
+        public bool IsAutonomy { get; set; }
     }
 }

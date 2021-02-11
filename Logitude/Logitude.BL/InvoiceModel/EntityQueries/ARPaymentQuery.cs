@@ -20,11 +20,14 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.EntityLists;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
     public class ARPaymentQuery
     {
+        const string ActionTypeCode_Credit = "1";
+
         ARPaymentRepository repository;
         public ARPaymentQuery()
         {
@@ -38,10 +41,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         {
             repository = arPaymentRepository;
         }
-        public ARPaymentPM GetSinglePMForInterest(string id, int tenant)
+        public ARPaymentPM GetSinglePMForInterest(InterestTransactionList interestTransactionLists)
         {
             ARPaymentPM payment = (from a in repository.context.ARPayments 
-                                   where a.Id == id && a.Tenant == tenant
+                                   where a.Id == interestTransactionLists.EntityId && 
+                                         a.Tenant == interestTransactionLists.Tenant
                                    select new ARPaymentPM()
                                    {
                                        Id = a.Id,
@@ -51,7 +55,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                    }).FirstOrDefault();
             if (payment!=null)
             {
-                payment = SetJournalFields(payment);
+                payment = SetInterestJournalFields(payment, interestTransactionLists);
             }
 
             return payment;
@@ -146,6 +150,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        CancelationNotes = a.CancelationNotes,
 
                                        PaymentCurrencySign= a.PaymentCurrency.Sign,
+                                       PartnerId = a.PartnerId,
 
                                    }).FirstOrDefault();
 
@@ -246,8 +251,39 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             JournalPM journal = journalQuery.GetJournalByAccountingEntityIdAndCode(paymentId,"3",tenant);
             return journal;
 
+        }
+
+        private ARPaymentPM SetInterestJournalFields(ARPaymentPM payment, InterestTransactionList interestTransactionLists)
+        {
+            List<JournalPM> journals = GetJournalsWithLinesByPaymentId(payment.Id, payment.Tenant);
+            if (journals != null)
+            {
+                SetInterestJournalFieldsForPayment(journals, payment, interestTransactionLists);
+            }
+            return payment;
+        }
 
 
+        private void SetInterestJournalFieldsForPayment(List<JournalPM> journals, ARPaymentPM payment, InterestTransactionList interestTransactionLists)
+        {
+            foreach (JournalPM journal in journals)
+            {
+                decimal? journalTotalLocalAmount= journal.JournalLines.Where(s=>s.ActionTypeCode == ActionTypeCode_Credit).Sum(s=>s.LocalAmount);
+                if (interestTransactionLists.LocalAmount == journalTotalLocalAmount)
+                {
+                    payment.JournalId = journal.Id;
+                    payment.JournalNumber = journal.JournalNumber;
+                    break;
+                }
+
+            }
+        }
+
+        private List<JournalPM> GetJournalsWithLinesByPaymentId(string paymentId, int tenant)
+        {
+            IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
+            List<JournalPM> journals = journalQuery.GetJournalsWithLinesByAccountingEntityIdAndCode(paymentId, "3", tenant);
+            return journals;
         }
 
         private string GetAccountIdForGLAccountCurrency(GLAccountPM gLAccount, string paymentCurrencyId)
@@ -383,6 +419,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        IsPaymentNumberManuallySet = a.IsPaymentNumberManuallySet,
                                        AccountingCancelationDate = a.AccountingCancelationDate,
                                        CancelationNotes = a.CancelationNotes,
+                                       PartnerId = a.PartnerId,
                                    }).FirstOrDefault();
             if (payment != null)
             {
@@ -527,6 +564,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    Field10 = entity.Field10,
                                                    AccountingCancelationDate = entity.AccountingCancelationDate,
                                                    CancelationNotes = entity.CancelationNotes,
+                                                   PartnerId = entity.PartnerId,
                                                };
             return query2;
         }
@@ -625,6 +663,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             Field10 = entity.Field10,
                             AccountingCancelationDate = entity.AccountingCancelationDate,
                             CancelationNotes = entity.CancelationNotes,
+                            PartnerId = entity.PartnerId,
                         };
 
             return query;
@@ -724,6 +763,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             Field10 = entity.Field10,
                             AccountingCancelationDate = entity.AccountingCancelationDate,
                             CancelationNotes = entity.CancelationNotes,
+                            PartnerId = entity.PartnerId,
                         };
 
             return query;
@@ -809,6 +849,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                          Field10 = a.Field10,
                                          AccountingCancelationDate = a.AccountingCancelationDate,
                                          CancelationNotes = a.CancelationNotes,
+                                         PartnerId = a.PartnerId,
                                      }).FirstOrDefault();
 
             return payment;

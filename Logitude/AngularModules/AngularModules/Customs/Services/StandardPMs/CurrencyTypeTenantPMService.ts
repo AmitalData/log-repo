@@ -153,6 +153,7 @@ export class CurrencyTypeTenantPMService {
         if (!entityPM) {
             
             entityPM = new CurrencyTypeTenantPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -193,6 +194,8 @@ export class CurrencyTypeTenantPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 

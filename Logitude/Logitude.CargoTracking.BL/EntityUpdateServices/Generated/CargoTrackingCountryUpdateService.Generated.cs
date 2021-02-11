@@ -55,15 +55,19 @@ namespace Logitude.CargoTracking.BL.EntityUpdateServices
         }
 
 		
-	    protected override void FillDefaultValuesOnCreate(CargoTrackingCountryPM entityPM)
-        {
- 
-		}
-		protected override void FillDefaultValuesOnUpdate(CargoTrackingCountryPM entityPM)
-		{
- 
-		}
+		protected override void FillDefaultValuesOnCreate(CargoTrackingCountryPM entityPM)
+        {     
+  
 		
+		    entityPM.Id = IdCounter.GetNumber("CargoTrackingCountry", entityPM.Tenant); 
+					
+	    }
+        
+		protected override void FillDefaultValuesOnUpdate(CargoTrackingCountryPM entityPM)
+        {       
+           
+        }
+		  
 		 
 	 
    }

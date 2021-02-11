@@ -139,6 +139,8 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeContactEmail { get; set; }
         public string ConsigneePhoneNumber { get; set; }
         public string ConsigneeVATNumber { get; set; }
+        public string SalesmanName { get; set; }
+        public string HousesNumbers { get; set; }
         public List<ManifestDetailsClass> ManifestDetails { get; set; }
         public List<NewManifestDetailsClass> NewManifestDetails { get; set; }
         public List<GroupedContainersClass> GroupedManifestDetailsList { get; set; }
@@ -247,11 +249,15 @@ namespace WebFreight.Web.DataProviders
         public string ValueOfGoodsCurrency { get; set; }
         public string ShipperRefernce1 { get; set; }
         public string PlaceOfReceipt { get; set; }
+        public string Dimensions { get; set; }
         public List<ShipmentAssemblyLine> Assemblies { get; set; }
+
     }
 
     public class NewManifestDetailsClass
     {
+        public string OnCarriageToPort { get; set; }
+        public string OnCarriageFromPort{get; set;}
         public string AMSBL { get; set; }
         public string FileNumber { get; set; }
         public string HAWB { get; set; }
@@ -264,6 +270,8 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneePhoneNumber { get; set; }
         public string ConsigneeVATNumber { get; set; }
         public string DestinationPortCode { get; set; }
+        public string LastDeliveryFullAddress { get; set; }
+        public string FisrtPickupFullAddress { get; set; }
         public string PortOfDischarge { get; set; }
         public string ChargeableWeight { get; set; }
         public string Prepaid { get; set; }
@@ -384,7 +392,6 @@ namespace WebFreight.Web.DataProviders
         public string Notes { get; set; }
         public string Harmonize { get; set; }
         public double? Tare { get; set; }
-
         public string HorseName { get; set; }
         public int? HorseYearOfBirth { get; set; }
         public string HorseColor { get; set; }
@@ -398,6 +405,7 @@ namespace WebFreight.Web.DataProviders
         public string HorseCurrentStable { get; set; }
         public string HorseOwner { get; set; }
         public string HorseRemarks { get; set; }
+        public string Dimensions { get; set; }
     }
 
     public class GroupedContainersClass

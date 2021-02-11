@@ -10,15 +10,21 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
 {
     public class BulkDataPreperation
     {
-        public DataTable dataTable { get; set; }
-        public DataTable dataTable2 { get; set; }
-        public SqlDataReader sqlDataReader { get; set; }
-        public CargoTable cargoTable { get; set; }
-        public DateTime? automaticLastUpdateDate { get; set; }
-        public int NumberOfCoulmnsUpdated { get; set; }
-        public int NumberOfCoulmnsUpdated2 { get; set; }
+        public DataTable MainDataTable { get; set; }
+        public DataTable InnerDataTable { get; set; }
+        public SqlDataReader SqlDataReader { get; set; }
+        public CargoTrackingTable CargoTrackingTable { get; set; }
+        public DateTime? AutomaticLastUpdateDate { get; set; }
+        public int NumberOfMainCoulmnsUpdated { get; set; }
+        public int NumberOfInnerCoulmnsUpdated { get; set; }
 
         public int MaxRecoredTakeEachTime { get; set; }
         public int NumberRecoredTake { get; set; }
+        public CargoTrackingUpdateDataBaseArgs CargoTrackingUpdateDataBaseArgs { get; set; }
+        public DataTable SelectedDataTable { get; set; }
+        public string CoulmnForCusstomMapping { get; set; }
+
+
+
     }
 }

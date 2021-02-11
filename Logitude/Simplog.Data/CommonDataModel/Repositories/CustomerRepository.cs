@@ -29,14 +29,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public int GetCustomerCount(int tenant)
         {
-            return (from a in context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("BillToCard").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank") 
+            return (from a in context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank") 
                     where a.Tenant == tenant && a.IsCustomer 
                     select a).Count();
         }
 
         public IQueryable<Customer> GetCustomers(int tenant)
         {
-            return (from record in context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("BillToCard").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Collector.Contact").Include("Classifier.Contact")
+            return (from record in context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Collector.Contact").Include("Classifier.Contact")
                     where record.Tenant == tenant 
                     select record);
         }
@@ -54,7 +54,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                   
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
-                            entity = (from a in context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("BillToCard").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Collector.Contact").Include("Classifier.Contact")
+                            entity = (from a in context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Collector.Contact").Include("Classifier.Contact")
                                       where a.Tenant == tenant && a.Card.Code == code.Trim()
                                       select a).FirstOrDefault();
 
@@ -73,7 +73,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 }
                 else
                 {
-                    entity = (from record in context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("BillToCard").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Collector.Contact").Include("Classifier.Contact") where record.Card.Code == code.Trim() && record.Tenant == tenant select record).FirstOrDefault();
+                    entity = (from record in context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Collector.Contact").Include("Classifier.Contact") where record.Card.Code == code.Trim() && record.Tenant == tenant select record).FirstOrDefault();
                 }
                 return entity;
             }
@@ -128,7 +128,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                    
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
-                            entity = (from a in context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("BillToCard").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Collector.Contact").Include("Classifier.Contact")
+                            entity = (from a in context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Collector.Contact").Include("Classifier.Contact")
                                       where a.Tenant == tenant && a.Card.VatNumber == vat
                                       select a).FirstOrDefault();
 
@@ -147,11 +147,27 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 }
                 else
                 {
-                    entity = (from record in context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("BillToCard").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank") where record.Card.VatNumber == vat && record.Tenant == tenant select record).FirstOrDefault();
+                    entity = (from record in context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank") where record.Card.VatNumber == vat && record.Tenant == tenant select record).FirstOrDefault();
                 }
                 return entity;
             }
             return null;
+        }
+
+
+        public List<Customer> GetCustomersByVat(string vat, int tenant)
+        {
+            var result = new List<Customer>();
+            if (!string.IsNullOrEmpty(vat))
+            {
+                result = (from a in context.Customers.Include("Card")
+                          where a.Tenant == tenant && a.Card.VatNumber == vat && a.Card.InActive == false
+                          select a).ToList();
+ 
+
+            }
+
+            return result;
         }
         public Customer GetSingleCustomerByVatForHybrid(string vat, int tenant, bool getFromCache)
         {
@@ -200,7 +216,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                    
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
-                            entity = (from a in context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("BillToCard").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Collector.Contact").Include("Classifier.Contact").Include("Region")
+                            entity = (from a in context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Collector.Contact").Include("Classifier.Contact").Include("Region")
                                       where a.Tenant == tenant && a.Id == id
                                       select a).FirstOrDefault();
 
@@ -219,7 +235,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 }
                 else
                 {
-                    entity = (from record in context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("BillToCard").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Collector.Contact").Include("Classifier.Contact") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+                    entity = (from record in context.Customers.Include("Card").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Collector.Contact").Include("Classifier.Contact") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
                 }
                 return entity;
             }

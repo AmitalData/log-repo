@@ -42,6 +42,7 @@ namespace WebFreight.Web.DataProviders
         public DateTime? Date { get; set; }
         public string InvoiceNumber { get; set; }
         public string BillToName { get; set; }
+        public string PartnerName { get; set; }
         public string OurReference { get; set; }
         public string CustomerReference { get; set; }
         public string Routing { get; set; }
@@ -57,6 +58,7 @@ namespace WebFreight.Web.DataProviders
         public double? ProfitInLocalCurrency { get; set; }
         public double? ProfitInProfitCurrency { get; set; }
         public string BillToCode { get; set; }
+        public DateTime? InvoiceDueDate { get; set; }
     }
 
     public class InvoiceVATRoutingTotals

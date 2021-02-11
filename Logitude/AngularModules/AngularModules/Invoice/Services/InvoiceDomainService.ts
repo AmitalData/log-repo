@@ -716,6 +716,18 @@ export class InvoiceDomainService {
         });
     }
 
+    GetConnectedAPInvoicestoPayments(paymentId: string) {
+        var url = this._apiUrl + '/GetConnectedAPInvoicestoPayments?paymentId=' + paymentId;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = response;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     MapARPaymentJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ARPaymentPM = null) {
         if (!entityPM) {
             entityPM = new ARPaymentPM();

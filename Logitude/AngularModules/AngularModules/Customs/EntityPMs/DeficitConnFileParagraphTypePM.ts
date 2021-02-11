@@ -58,7 +58,10 @@ export class DeficitConnFileParagraphTypePM {
     public OldEntityPM: DeficitConnFileParagraphTypePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -66,6 +69,7 @@ export class DeficitConnFileParagraphTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.DeficitConnFileParagraphType");
            
         }
+       }
     }
 
     private MyClone: DeficitConnFileParagraphTypePM;

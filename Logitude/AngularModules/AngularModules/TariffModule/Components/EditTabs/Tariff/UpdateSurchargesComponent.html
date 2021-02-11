@@ -30,6 +30,18 @@
         -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#F5F5F5', endColorstr='#C7C7C7' ,GradientType=0)";
         background: linear-gradient(180deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
     }
+    .Description {
+        width: 100%;     
+        line-height: 18px;
+        font-size: 11px;
+        font-family: Arial;
+        color: gray;
+        margin-left: 15px;
+        white-space: normal;
+        word-wrap: break-word;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
 </style>
 
 <table>
@@ -329,15 +341,19 @@
                                                     <table>
                                                         <tr class="BoxHeader">
                                                             <td>
-                                                                <label>Surcharges</label>
+                                                                <label >Surcharges     </label>
+                                                                <label class="Description">
+                                                                    Mark the lines you wish to update, lines that are not marked will not be updated
+                                                                </label>
                                                             </td>
+                                                     
                                                         </tr>
-
                                                         <tr style="height:28px;" *ngIf="TypeCode != 'OFS'">
+   
                                                             <td>
                                                                 <table>
                                                                     <tr>
-                                                                        <td style="width:120px;">
+                                                                        <td style="width:160px;">
                                                                             <div></div>
                                                                         </td>
 
@@ -374,12 +390,12 @@
                                                                                 <CheckBox [IsChecked]="item.IsChargeChecked" (Checked)="item.IsChargeChecked = $event"></CheckBox>
                                                                             </td>
 
-                                                                            <td style="width:95px;">
+                                                                            <td style="width:140px;">
                                                                                 <LogLabel [ObjectFieldName]="'NewPrice'" [DataContext]="item.DataContext" [Text]="item.DisplayText"></LogLabel>
                                                                             </td>
 
                                                                             <td style="width:90px;">
-                                                                                <LogTextBox [InputType]="'double'" [Placeholder]="'No Update'" [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'NewPrice'" [Text]="item.NewPrice" [DataContext]="item.DataContext"></LogTextBox>
+                                                                                <LogTextBox [InputType]="'double'" [Placeholder]="item.NewPricePlaceHolder" [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'NewPrice'" [Text]="item.NewPrice" [DataContext]="item.DataContext"></LogTextBox>
                                                                             </td>
 
                                                                             <td style="width:1px;">
@@ -422,6 +438,8 @@
                                                                                                 <td style="width: 70px; min-width: 70px; max-width: 70px; text-align:center;" *ngIf="FatherComponent.Container3Visibility">{{FatherComponent.Container3Label}}</td>
                                                                                                 <td style="width: 70px; min-width: 70px; max-width: 70px; text-align:center;" *ngIf="FatherComponent.Container4Visibility">{{FatherComponent.Container4Label}}</td>
                                                                                                 <td style="width: 70px; min-width: 70px; max-width: 70px; text-align:center;" *ngIf="FatherComponent.Container5Visibility">{{FatherComponent.Container5Label}}</td>
+                                                                                                <td style="width: 70px; min-width: 70px; max-width: 70px; text-align:center;">{{'TariffLinesContainersPrice.F.CostPrice' | TextCodeTranslationPipe}}</td>
+
                                                                                                 <td class="LastChild">
                                                                                                     <div></div>
                                                                                                 </td>
@@ -441,23 +459,27 @@
                                                                                                 </td>
 
                                                                                                 <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px;" *ngIf="FatherComponent.Container1Visibility">
-                                                                                                    <LogTextBox [InputType]="'double'" [Placeholder]="'No Update'" [NoObjectField]="true" [ObjectFieldName]="'Price1'" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                    <LogTextBox [InputType]="'double'" [Placeholder]="item.PriceOnePlaceholder" [NoObjectField]="true" [ObjectFieldName]="'Price1'" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
                                                                                                 </td>
 
                                                                                                 <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px;" *ngIf="FatherComponent.Container2Visibility">
-                                                                                                    <LogTextBox [InputType]="'double'" [Placeholder]="'No Update'" [NoObjectField]="true" [ObjectFieldName]="'Price2'" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                    <LogTextBox [InputType]="'double'" [Placeholder]="item.PriceTwoPlaceholder" [NoObjectField]="true" [ObjectFieldName]="'Price2'" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
                                                                                                 </td>
 
                                                                                                 <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px;" *ngIf="FatherComponent.Container3Visibility">
-                                                                                                    <LogTextBox [InputType]="'double'" [Placeholder]="'No Update'" [NoObjectField]="true" [ObjectFieldName]="'Price3'" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                    <LogTextBox [InputType]="'double'" [Placeholder]="item.PriceThreePlaceholder" [NoObjectField]="true" [ObjectFieldName]="'Price3'" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
                                                                                                 </td>
 
                                                                                                 <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px;" *ngIf="FatherComponent.Container4Visibility">
-                                                                                                    <LogTextBox [InputType]="'double'" [Placeholder]="'No Update'" [NoObjectField]="true" [ObjectFieldName]="'Price4'" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                    <LogTextBox [InputType]="'double'" [Placeholder]="item.PriceFourPlaceholder" [NoObjectField]="true" [ObjectFieldName]="'Price4'" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
                                                                                                 </td>
 
                                                                                                 <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px;" *ngIf="FatherComponent.Container5Visibility">
-                                                                                                    <LogTextBox [InputType]="'double'" [Placeholder]="'No Update'" [NoObjectField]="true" [ObjectFieldName]="'Price5'" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                    <LogTextBox [InputType]="'double'" [Placeholder]="item.PriceFivePlaceholder" [NoObjectField]="true" [ObjectFieldName]="'Price5'" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                </td>
+
+                                                                                                <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px;">
+                                                                                                    <LogTextBox [InputType]="'double'" [Placeholder]="item.costPricePlaceholder" [NoObjectField]="true" [ObjectFieldName]="'CostPrice'" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
                                                                                                 </td>
 
                                                                                                 <td class="CellStretched">

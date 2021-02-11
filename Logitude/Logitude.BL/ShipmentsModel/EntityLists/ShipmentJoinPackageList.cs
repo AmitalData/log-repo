@@ -170,5 +170,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public double? PackageLength { get; set; }
         public double? PackageHeight { get; set; }
         public string ConsigneeId { get; set; }
+        public string Routing { get; set; }
     }
 }

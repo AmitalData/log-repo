@@ -1,6 +1,6 @@
 ﻿
 (function (jQuery) {
-
+    jQuery.Token = null;
     jQuery.CurrentTenant = null;
     jQuery.CurrentCardId = null;
     jQuery.CurrentCardType = null;
@@ -64,7 +64,10 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
-            
+            headers: {
+                'Token': $.Token
+            },
+
             success: function (result) {                
                 //jQuery("#companyLogo").attr('src', result);
                 var img = new Image();
@@ -92,6 +95,9 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
+            headers: {
+                'Token': $.Token
+            },
 
             success: function (result) {
 
@@ -133,6 +139,9 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
+            headers: {
+                'Token': $.Token
+            },
 
             success: function (shipmentPM) {
 
@@ -192,6 +201,9 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
+            headers: {
+                'Token': $.Token
+            },
 
             success: function (result) {
 
@@ -231,6 +243,9 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
+            headers: {
+                'Token': $.Token
+            },
 
             success: function (result) {
 
@@ -345,6 +360,9 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
+            headers: {
+                'Token': $.Token
+            },
 
             success: function (result) {
 
@@ -394,6 +412,9 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
+            headers: {
+                'Token': $.Token
+            },
 
             success: function (result) {
 
@@ -567,7 +588,8 @@
         }
     });
     $("#BackButton").click(function () {
-        parent.history.back();
+        //parent.history.back();
+        window.history.go(-1);
         return false;
     });
 
@@ -580,6 +602,9 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
+            headers: {
+                'Token': $.Token
+            },
 
             success: function (result) {
                 window.localStorage.setItem("Token", "");
@@ -611,10 +636,15 @@
         $.ResizePage(210);
         $.SetTabsEnabled(false);
 
-        var link = $(location).attr('href');
-        var linkArray = link.split('=')
-        var linkQuery = linkArray[1];
+        $.Token = $("#TokenInput").val();
+        var linkQuery = $("#LoginInput").val();
         var linkParameters = null;
+
+        if ($.trim($.Token) == "") {
+            var link = $(location).attr('href');
+            var linkArray = link.split('=')
+            linkQuery = linkArray[1];
+        }
 
         if (linkQuery && linkQuery.indexOf('%3A') > -1)
         {

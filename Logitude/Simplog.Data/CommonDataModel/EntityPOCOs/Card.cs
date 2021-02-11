@@ -142,5 +142,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool AccountingVATSplit { get; set; }
 
         public string UploadingUniqueKey { get; set; }
+
+        public string BillToId { get; set; }
     }
 }

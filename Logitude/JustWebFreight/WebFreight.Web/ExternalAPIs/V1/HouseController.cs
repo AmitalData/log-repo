@@ -229,6 +229,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                     HouseQueryService mappingService = new HouseQueryService(authToken.Tenant);
                     ShipmentPM entityPM = mappingService.HouseCustomDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);
+                    entityPM.IsExternalAPI = true;
 
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
@@ -278,7 +279,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         this.ValidateUnitCodes(entityPM);
 
                         AddressRepository addressRepository = new AddressRepository(entityPM.Tenant);
-                        this.SetPartnersAddresses(entityPM, addressRepository, authToken.Tenant);
+                        //this.SetPartnersAddresses(entityPM, addressRepository, authToken.Tenant);
                         this.ValidateAndSetCustomerData(entityPM, addressRepository, authToken.Tenant);
 
                         if (!string.IsNullOrEmpty(entityPM.IncotermId))
@@ -445,71 +446,73 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     }
             }
         }
-        private void SetPartnersAddresses(ShipmentPM entityPM, AddressRepository addressRepository, int tenant)
-        {
-            if (!string.IsNullOrEmpty(entityPM.ShipperId))
-            {
-                Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperId, tenant);
-                if (address != null)
-                {
-                    entityPM.ShipperAddressId = address.Id;
-                }
-            }
 
-            if (!string.IsNullOrEmpty(entityPM.ConsigneeId))
-            {
-                Address address = addressRepository.GetMainAddressByCardId(entityPM.ConsigneeId, tenant);
-                if (address != null)
-                {
-                    entityPM.ConsigneeAddressId = address.Id;
-                }
-            }
+        // Ayman Handled in Shipment Service (keep it DRY)
+        //private void SetPartnersAddresses(ShipmentPM entityPM, AddressRepository addressRepository, int tenant)
+        //{
+        //    if (!string.IsNullOrEmpty(entityPM.ShipperId))
+        //    {
+        //        Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperId, tenant);
+        //        if (address != null)
+        //        {
+        //            entityPM.ShipperAddressId = address.Id;
+        //        }
+        //    }
 
-            if (!string.IsNullOrEmpty(entityPM.ShipperNotExporterId))
-            {
-                Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperNotExporterId, tenant);
-                if (address != null)
-                {
-                    entityPM.ShipperNotExporterAddressId = address.Id;
-                }
-            }
+        //    if (!string.IsNullOrEmpty(entityPM.ConsigneeId))
+        //    {
+        //        Address address = addressRepository.GetMainAddressByCardId(entityPM.ConsigneeId, tenant);
+        //        if (address != null)
+        //        {
+        //            entityPM.ConsigneeAddressId = address.Id;
+        //        }
+        //    }
 
-            if (!string.IsNullOrEmpty(entityPM.AgentId))
-            {
-                Address address = addressRepository.GetMainAddressByCardId(entityPM.AgentId, tenant);
-                if (address != null)
-                {
-                    entityPM.AgentAddressId = address.Id;
-                }
-            }
+        //    if (!string.IsNullOrEmpty(entityPM.ShipperNotExporterId))
+        //    {
+        //        Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperNotExporterId, tenant);
+        //        if (address != null)
+        //        {
+        //            entityPM.ShipperNotExporterAddressId = address.Id;
+        //        }
+        //    }
 
-            if (!string.IsNullOrEmpty(entityPM.CustomAgentImportId))
-            {
-                Address address = addressRepository.GetMainAddressByCardId(entityPM.CustomAgentImportId, tenant);
-                if (address != null)
-                {
-                    entityPM.CustomAgentImportAddressId = address.Id;
-                }
-            }
+        //    if (!string.IsNullOrEmpty(entityPM.AgentId))
+        //    {
+        //        Address address = addressRepository.GetMainAddressByCardId(entityPM.AgentId, tenant);
+        //        if (address != null)
+        //        {
+        //            entityPM.AgentAddressId = address.Id;
+        //        }
+        //    }
 
-            if (!string.IsNullOrEmpty(entityPM.ReleasingAgentId))
-            {
-                Address address = addressRepository.GetMainAddressByCardId(entityPM.ReleasingAgentId, tenant);
-                if (address != null)
-                {
-                    entityPM.ReleasingAgentAddressId = address.Id;
-                }
-            }
+        //    if (!string.IsNullOrEmpty(entityPM.CustomAgentImportId))
+        //    {
+        //        Address address = addressRepository.GetMainAddressByCardId(entityPM.CustomAgentImportId, tenant);
+        //        if (address != null)
+        //        {
+        //            entityPM.CustomAgentImportAddressId = address.Id;
+        //        }
+        //    }
 
-            if (!string.IsNullOrEmpty(entityPM.FreightForwarderId))
-            {
-                Address address = addressRepository.GetMainAddressByCardId(entityPM.FreightForwarderId, tenant);
-                if (address != null)
-                {
-                    entityPM.FreightForwarderAddressId = address.Id;
-                }
-            }
-        }
+        //    if (!string.IsNullOrEmpty(entityPM.ReleasingAgentId))
+        //    {
+        //        Address address = addressRepository.GetMainAddressByCardId(entityPM.ReleasingAgentId, tenant);
+        //        if (address != null)
+        //        {
+        //            entityPM.ReleasingAgentAddressId = address.Id;
+        //        }
+        //    }
+
+        //    if (!string.IsNullOrEmpty(entityPM.FreightForwarderId))
+        //    {
+        //        Address address = addressRepository.GetMainAddressByCardId(entityPM.FreightForwarderId, tenant);
+        //        if (address != null)
+        //        {
+        //            entityPM.FreightForwarderAddressId = address.Id;
+        //        }
+        //    }
+        //}
         private void ValidateAndSetCustomerData(ShipmentPM entityPM, AddressRepository addressRepository, int tenant)
         {
             if (!string.IsNullOrEmpty(entityPM.CustomerId))
@@ -632,6 +635,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         if (HousePM != null)
                         {
                             HousePM.ConcurrencyGUID = entity.ConcurrencyGUID;
+                            HousePM.IsExternalAPI = true;
 
                             if (HousePM.IsOperationalClosed)
                             {
@@ -651,10 +655,15 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             APITransshipmentHelper aPITransshipmentHelper = new APITransshipmentHelper(HousePM, authToken.Tenant);
                             aPITransshipmentHelper.ValidateRoutingsSeriesDates();
 
+                            AddressRepository addressRepository = new AddressRepository(authToken.Tenant);
+                            this.ValidateAndSetCustomerData(HousePM, addressRepository, authToken.Tenant);
+
                             ShipmentService service = new ShipmentService(MyContext, HousePM, SecurityUtility.GetAuthenticatedUser());
                             service.Update(true);
                         }
 
+                        MyContext = ShipmentsContext.GetContext(authToken.Tenant);
+                        mappingService = new HouseQueryService(authToken.Tenant);
                         var result = mappingService.GetHouseById(HousePM.Id, authToken.Tenant);
                         APIHelper.AddCommunicationLog("D", entity, result, "Shipment", HousePM.Id, "House API", authToken.Tenant);
                         return Request.CreateResponse(HttpStatusCode.OK, result);

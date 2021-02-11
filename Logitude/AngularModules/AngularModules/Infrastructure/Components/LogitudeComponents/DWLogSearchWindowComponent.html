@@ -94,7 +94,8 @@
                                 <td *ngIf="IsMultipleSelection" style="width:10%"></td>
                                 <td style="width: 230px; vertical-align:middle;">
                                     <SearchTextBox [ObjectTableName]="ParentTableName"
-                                                   (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+                                                   (SearchTextChangeEvent)="TextChanged($event)"
+                                                   [PlaceHolder]="ObjectFieldName == '[Date Key]' ? 'Search ... 2011-01-01' : ''"></SearchTextBox>
                                 </td>
                                 <td> </td>
                             </tr>

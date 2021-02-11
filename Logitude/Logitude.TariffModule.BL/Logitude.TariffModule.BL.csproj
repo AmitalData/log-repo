@@ -96,6 +96,7 @@
     <Compile Include="EntityDataMappings\Generated\TariffTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TariffVersionAllInChargeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TariffVersionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TariffVersionUploadedExcelDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\TariffDataMapping.cs" />
     <Compile Include="EntityDataMappings\TariffLineDataMapping.cs" />
     <Compile Include="EntityDataMappings\TariffLinesContainersPriceDataMapping.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="EntityDataMappings\TariffTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TariffVersionAllInChargeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TariffVersionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TariffVersionUploadedExcelDataMapping.cs" />
     <Compile Include="EntityPMs\Generated\TariffLinePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TariffLinesContainersPricePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TariffPM.Generated.cs" />
@@ -116,6 +118,7 @@
     <Compile Include="EntityPMs\Generated\TariffTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TariffVersionAllInChargePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TariffVersionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TariffVersionUploadedExcelPM.Generated.cs" />
     <Compile Include="EntityPMs\TariffLineExpirationDatePM.cs" />
     <Compile Include="EntityQueryServices\Generated\TariffLineQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TariffLinesContainersPriceQueryService.Generated.cs" />
@@ -127,11 +130,13 @@
     <Compile Include="EntityQueryServices\Generated\TariffTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TariffVersionAllInChargeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TariffVersionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TariffVersionUploadedExcelQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\TariffLineQueryService.cs" />
     <Compile Include="EntityQueryServices\TariffLinesContainersPriceQueryService.cs" />
     <Compile Include="EntityQueryServices\TariffQueryService.cs" />
     <Compile Include="EntityQueryServices\TariffSurchargesUpdateQueryService.cs" />
     <Compile Include="EntityQueryServices\TariffVersionQueryService.cs" />
+    <Compile Include="EntityQueryServices\TariffVersionUploadedExcelQueryService.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffLinesContainersPriceUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffLineUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffProductUpdateService.Generated.cs" />
@@ -142,6 +147,7 @@
     <Compile Include="EntityUpdateServices\Generated\TariffUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffVersionAllInChargeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffVersionUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TariffVersionUploadedExcelUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\TariffLinesContainersPriceUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TariffLineUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TariffProductUpdateService.cs" />
@@ -149,6 +155,7 @@
     <Compile Include="EntityUpdateServices\TariffUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TariffVersionAllInChargeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TariffVersionUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\TariffVersionUploadedExcelUpdateService.cs" />
     <Compile Include="Helpers\PriceCheckManager.cs" />
     <Compile Include="Helpers\TariffLineHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

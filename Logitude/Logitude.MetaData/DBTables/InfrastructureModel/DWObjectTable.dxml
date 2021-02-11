@@ -115,4 +115,25 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ObjectTableName"
+    OldNames="CustomFieldObjectTableName"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MaxNumberOfCustomFields"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="HasCustomFields"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
 </Table>

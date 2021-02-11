@@ -1,8 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth.service';
+import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
+import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
+import { CargoTrackingBrandingDataExtendedService } from 'src/CargoTracking/Services/Others/CargoTrackingBrandingDataExtendedService';
+import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
 import { CommonDataExtendedService } from 'src/Infrastructure/Services/Extended/CommonDataExtendedService';
 import { LoginExtendedService } from 'src/Infrastructure/Services/Extended/LoginExtendedService';
+import { LoginServiceHelper } from 'src/Infrastructure/Utilities/LoginServiceHelper';
+import { SessionInfo } from 'src/Infrastructure/Utilities/SessionInfo';
 
 @Component({
     selector: 'login',
@@ -25,12 +31,34 @@ export class LoginComponent implements OnInit {
     public errorMessage: string = "";
     public Tenant: number;
     public ShowbusyIndicator: boolean = false;
+    public MainColor: string = null;
+    public SecondaryColor: string = null;
     constructor(private router: Router,
         private route: ActivatedRoute,
         private loginExtendedService: LoginExtendedService,
         private commonDataExtendedService: CommonDataExtendedService,
-        private authService: AuthService) {
+        private authService: AuthService,
+        private cargoTrackingBrandingDataExtendedService: CargoTrackingBrandingDataExtendedService,
+        private loginServiceHelper: LoginServiceHelper,
+        @Inject('BASE_URL') baseUrl: string) {
         this.RouteToMainPage();
+        this.GetcargoTrackingData(baseUrl);
+    }
+
+    private GetcargoTrackingData(baseUrl:string) {
+        this.LogoImgSrc = "./assets/images/logo/White.jpg";
+        this.cargoTrackingBrandingDataExtendedService.GetUserDashboardBrandingData(ServiceHelper.GetcargoTrackingDataRequest(baseUrl)).subscribe((response: ServiceResponse) => {
+            if(response.Result){
+                this.Tenant = response.Result.Tenant;
+                ServiceHelper.SetCargoTrackingDate(response.Result,baseUrl);
+                this.LogoImgSrc = this.loginServiceHelper.GetLoginLogoImg();
+                this.MainColor = response.Result.MainColor != null ? ServiceHelper.ConvertHexaToRGBA(response.Result.MainColor) : null;
+                this.SecondaryColor = response.Result.SecondaryColor != null ? ServiceHelper.ConvertHexaToRGBA(response.Result.SecondaryColor) : null;
+            }
+            else{
+                this.GoToError401();
+            }
+        });
     }
 
     ngOnInit() {
@@ -39,22 +67,6 @@ export class LoginComponent implements OnInit {
 
     private initComponent() {
         document.body.style.background = "#fff";
-        this.GetLoginLogoImg();
-    }
-
-    private GetLoginLogoImg() {
-        this.LogoImgSrc = "./assets/images/logo/White.jpg";
-        this.Tenant = this.route.snapshot.queryParams?.tenant;
-        if(this.Tenant){
-            this.commonDataExtendedService.GetComponayLogo(this.Tenant).subscribe((logoImage: any) => {
-                if (logoImage && !logoImage.HasError)
-                    this.LogoImgSrc = logoImage;
-                else  
-                    this.LogoImgSrc = "./assets/images/logo/UnifreightLogo.jpg";
-            });
-        }
-        else
-            this.LogoImgSrc = "./assets/images/logo/UnifreightLogo.jpg";
     }
 
     public passEyeClicked() {
@@ -132,16 +144,40 @@ export class LoginComponent implements OnInit {
         else this.errorMessage = "Login failed! invalid user name or password.";
     }
 
+     private GoToError401(){
+        this.router.navigate(['Error401']);
+    }
+
     private LoginSucceeded(LoginParams: any, userData: any) {
+        this.errorMessage = "";
         let tenantList = userData.CompanyLogins;
         let LogInToTenant  = tenantList.filter(tenan => tenan.Tenant == this.Tenant)[0];
-        if(!LogInToTenant) LogInToTenant= tenantList[0];
-
-        this.loginExtendedService.PostLoginData(LoginParams, LogInToTenant.Tenant).subscribe((userData: any) => {
+        if(!LogInToTenant) {
+            this.errorMessage = "Login failed! unauthorized user.";
             this.ShowbusyIndicator = false;
-            if (userData) {
-                this.FillSessionInfoData(userData);
-                this.RouteToMainPage();
+        }
+        else {
+            SessionInfo.LoggedUserCompanyLogins = userData.CompanyLogins;
+            sessionStorage.setItem("LoggedUserCompanyLogins", JSON.stringify(userData.CompanyLogins));
+
+            this.loginExtendedService.PostLoginData(LoginParams, LogInToTenant.Tenant).subscribe((userData: any) => {
+                this.ShowbusyIndicator = false;
+                if (userData) {
+                    this.FillSessionInfoData(userData);
+                    this.RouteToMainPage();
+                }
+            });
+
+            this.GetLoggedUserPM(LoginParams.Email, LogInToTenant.Tenant);
+        }
+    }
+
+    private GetLoggedUserPM(email: any, tenant: any)
+    {
+        this.loginExtendedService.GetLoggedUser(email, tenant).subscribe((loggedUserPM: any) =>
+        {
+            if (loggedUserPM) {
+                SessionInfo.LoggedUserPM = loggedUserPM;
             }
         });
     }
@@ -152,6 +188,12 @@ export class LoginComponent implements OnInit {
         sessionStorage.setItem("LoggedUserEmail", userData.UserName);
         sessionStorage.setItem("LoggedUserId", userData.Id);
         sessionStorage.setItem("DocumentDownloadToken", userData.DocumentDownloadToken);
+
+        SessionInfo.LoggedUserEmail = userData.UserName;
+        SessionInfo.LoggedUserId = userData.Id;
+        SessionInfo.LoggedUserTenant = userData.CurrentTenant;
+        SessionInfo.Token = userData.Token;
+        SessionInfo.DocumentDownloadToken = userData.DocumentDownloadToken;
     }
 
     private RouteToMainPage(){
@@ -160,15 +202,17 @@ export class LoginComponent implements OnInit {
             this.authService.redirectUrl = null;
           }
         else if (sessionStorage.getItem("Token")) {
-            this.router.navigate([sessionStorage.getItem("LoggedUserTenant"), this.authService.DefaultPageCargoTracking])
+            this.router.navigate([this.authService.DefaultPageCargoTracking])
         }
     }
 
     public ForgotPasswordClicked() {
-        this.Tenant = this.route.snapshot.queryParams?.tenant;
+        //this.Tenant = this.route.snapshot.queryParams?.tenant;
         if(this.Tenant)
-            this.router.navigate(["resetpassword"],{ queryParams: {tenant: this.Tenant}});
+
+            this.router.navigate(["Cargo-Tracking/resetpassword"]);//,{ queryParams: {tenant: this.Tenant}}
         else
-            this.router.navigate(["resetpassword"]);
+            this.router.navigate(["Cargo-Tracking/resetpassword"]);
     }
+
 }

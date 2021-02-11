@@ -1,0 +1,10 @@
+﻿<Script DBType="Main"  Module="Accounting" >
+  <Sql Version="3">
+    <![CDATA[
+    UPDATE  TaxReportLines
+    set  StatusCode = 9
+    where  SIGN(VatAmount) <> SIGN (TotalInvoiceAmount)
+    and VatAmount <> 0 and TotalInvoiceAmount <> 0 and VatAmount is not null and TotalInvoiceAmount is not null 
+    ]]>      
+  </Sql>
+</Script>

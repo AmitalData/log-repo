@@ -110,6 +110,9 @@
     <None Include="DBScripts\Post\202005270157_SetNullableForCDROPColumns_Global.sxml" />
     <None Include="DBScripts\Post\202005270158_SetNullableForCDROPColumns_Main.sxml" />
     <None Include="DBScripts\Post\202007031145_DeclarationCancellationAddOn.sxml" />
+    <None Include="DBScripts\Post\202010111400_UpdateRequiredFields.sxml" />
+    <None Include="DBScripts\Post\202012211428_SetDeclarationDirection2I.sxml" />
+    <None Include="DBScripts\Post\2020122708949_SetOpenDeclarations.sxml" />
     <None Include="DBScripts\Pre\202005210104_DropUnneededTables_Global.sxml" />
     <None Include="DBScripts\Pre\202005210105_DropUnneededTables_Main.sxml" />
     <None Include="DBScripts\Pre\202005210106_DropUnneededTables_SystemLogs.sxml" />
@@ -138,13 +141,17 @@
     <None Include="DBScripts\Pre\202007091941_AddONDeclarationCancellationAndAmendment.sxml" />
     <None Include="DBScripts\Pre\202007091441_FixFKCliam.sxml" />
     <None Include="DBScripts\Pre\202009061641_FixFKCourierPendingReason.sxml" />
+    <None Include="DBScripts\Pre\20201215_AddAddonCourierAuto.sxml" />
     <None Include="DBTables\AcceptanceStatus.dxml" />
     <None Include="DBTables\AccumalationState.dxml" />
     <None Include="DBTables\ActionCode.dxml" />
     <None Include="DBTables\AddressContactState.dxml" />
     <None Include="DBTables\AddressPurpose.dxml" />
     <None Include="DBTables\AgentTalkBackType.dxml" />
+    <None Include="DBTables\AmendCancellRequestInitiator.dxml" />
     <None Include="DBTables\AmendmentFieldReasonType.dxml" />
+    <None Include="DBTables\AmendmentFieldStatusType.dxml" />
+    <None Include="DBTables\AmendmentRequestRejectReasonType.dxml" />
     <None Include="DBTables\AmendmentRequestStatus.dxml" />
     <None Include="DBTables\AmendmentStatus.dxml" />
     <None Include="DBTables\AmountType.dxml" />
@@ -153,6 +160,7 @@
     <None Include="DBTables\AttachmentType.dxml" />
     <None Include="DBTables\Authority.dxml" />
     <None Include="DBTables\AuthorizedSignerPermit.dxml" />
+    <None Include="DBTables\AutonomyRegionType.dxml" />
     <None Include="DBTables\AutonomyType.dxml" />
     <None Include="DBTables\Bank.dxml" />
     <None Include="DBTables\CancellationReasonRequestType.dxml" />
@@ -305,6 +313,7 @@
     <None Include="DBTables\DocumentTypeCustomsData.dxml" />
     <None Include="DBTables\EntitlementType.dxml" />
     <None Include="DBTables\EntityTypeLookup.dxml" />
+    <None Include="DBTables\ExporterRoleType.dxml" />
     <None Include="DBTables\FacilitationType.dxml" />
     <None Include="DBTables\FaultInspectionType.dxml" />
     <None Include="DBTables\FreightPaymentMethod.dxml" />
@@ -332,6 +341,7 @@
     <None Include="DBTables\LastReleaseFromWarehouse.dxml" />
     <None Include="DBTables\LeadDocumentExceptionType.dxml" />
     <None Include="DBTables\LeadDocumentType.dxml" />
+    <None Include="DBTables\LoadingSiteType.dxml" />
     <None Include="DBTables\MamanSpecialAction.dxml" />
     <None Include="DBTables\MamanSpecialActionStatus.dxml" />
     <None Include="DBTables\MamanStatus.dxml" />
@@ -456,11 +466,16 @@
     <None Include="DBTables\VendorStatus.dxml" />
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
+    <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
+    <None Include="EntityFiles\AmendmentRequestRejectReasonType.lxml" />
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
+    <None Include="EntityFiles\AutonomyRegionType.lxml" />
     <None Include="EntityFiles\CancellationReasonRequestType.lxml" />
     <None Include="EntityFiles\CancellationRequestStatus.lxml" />
     <None Include="EntityFiles\DeclarationReferantData.lxml" />
+    <None Include="EntityFiles\ExporterRoleType.lxml" />
+    <None Include="EntityFiles\LoadingSiteType.lxml" />
     <None Include="EntityFiles\NbcDeclarationType.lxml" />
     <None Include="EntityFiles\CargoSeal.lxml" />
     <None Include="EntityFiles\CargoSealIdentifier.lxml" />
@@ -570,6 +585,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\ReferantException.lxml" />
+    <None Include="EntityFiles\AmendCancellRequestInitiator.lxml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

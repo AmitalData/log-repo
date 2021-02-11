@@ -106,6 +106,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                 case "IsReferantAddOn":
                     CheckIsReferantAddOn();
                     break;
+                case "IsDeclarationDisplayOnly":
+                    CheckIsDeclarationDisplayOnly();
+                    break;
                 case "TEST":
                     SendGenericRequest();
                     break;
@@ -118,6 +121,64 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
             MyGenericResponseObj.Stage = "Done All ";
             MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
 
+        }
+
+        private void CheckIsDeclarationDisplayOnly()
+        {
+            string user = this.MyCommunicationsParams.LoggingUserId;
+            if (String.IsNullOrWhiteSpace(user)) user = AuthenticationUtil.ResolveUserId(ResolvedTenant());
+
+            if (!String.IsNullOrWhiteSpace(_LogitudeScheduler.Param1))
+            {
+                GetDeclarationPM(_LogitudeScheduler.Param1);
+                if (_MyDeclarationPM == null)
+                {
+                    throw new BusinessErrorException("Declaration with ID " + _LogitudeScheduler.Param1 + " Doesn't exist");
+                }
+                else
+                {
+                    var responseXML = new IsDeclarationDisplayOnlyResponseXML();
+                    
+                    CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(_context);
+                    List<CustomsRequestsSheetPM> customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(_MyDeclarationPM.Tenant, "2750", "", "", null, null, _MyDeclarationPM.CustomFileNo, true);
+                    if (customsRequestsSheetPMList != null)
+                    {
+                        if (customsRequestsSheetPMList.Count > 0)
+                        {
+                            var RequestInProgressInterfaceTypeName = customsRequestsSheetPMList.First().InterfaceTypeName;
+                            var text = TranslateTextsClass.Translate("Customs.General.RequestInProgress", _MyDeclarationPM.Tenant, true);
+                            MyGenericResponseObj.Message = String.Format(text, RequestInProgressInterfaceTypeName);
+                            responseXML.isDeclarationDisplayOnly = "T";
+                            responseXML.message = MyGenericResponseObj.Message;
+                        }
+                    }
+                    if (responseXML == null || responseXML.isDeclarationDisplayOnly != "T")
+                    {
+                        //Check if Declaration was already paid, constraint in progress or Future payment was done
+                        var declarationValidator = new Logitude.Customs.BL.Validators.DeclarationValidator(_MyDeclarationPM);
+                        declarationValidator.DeclarationViewDisplayOnlyChecks();
+                        if (declarationValidator.ErrorCode.Count > 0)
+                        {
+                            MyGenericResponseObj.Message = TranslateTextsClass.Translate(declarationValidator.ErrorCode[0], _MyDeclarationPM.Tenant, true);
+                            //MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
+                            responseXML.isDeclarationDisplayOnly = "T";
+                            responseXML.message = MyGenericResponseObj.Message;
+                        }
+                    }
+
+                    if (responseXML != null)
+                    {
+                        var xml = XmlGenericUtil<IsDeclarationDisplayOnlyResponseXML>.SerializeObject(responseXML);
+                        MyGenericResponseObj.ResponseXml = xml;
+                    }
+                }
+            }
+            else
+            {
+                throw new BusinessErrorException("Declaration ID is missing");
+            }
+
+            MyGenericResponseObj.ApplicationId = _MyDeclarationPM.Id;
         }
 
         private void DeletePending()
@@ -893,5 +954,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 
     }
 
+
+    public class IsDeclarationDisplayOnlyResponseXML
+    {
+        public string isDeclarationDisplayOnly;
+        public string message;
+    }
 }
 

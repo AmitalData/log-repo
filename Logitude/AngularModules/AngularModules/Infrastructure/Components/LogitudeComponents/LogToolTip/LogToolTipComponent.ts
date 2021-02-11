@@ -37,7 +37,7 @@ export class LogToolTipComponent implements AfterViewInit {
         this.SetComponentId();
     }
     SetComponentId(){
-        this.counterId=ControlsIdCounter.GetNextControlIdCounter(name);
+        this.counterId=ControlsIdCounter.GetNextControlIdCounter(this.name);
         this.name+=this.counterId;
     }
     ngAfterViewInit(): void {

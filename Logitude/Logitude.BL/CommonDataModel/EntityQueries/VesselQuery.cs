@@ -130,6 +130,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      Code = a.Code,
                                      EnglishName = a.EnglishName,
                                      Id = a.Id,
+                                     InActive = a.InActive,
+                                     LocalName = a.LocalName,
+                                     Notes = a.Notes,
+                                     Tenant = a.Tenant,
+                                     SearchFields = a.SearchFields,
+                                     ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                      IMOCode = a.IMOCode,
                                      CountryId = a.CountryId,
                                  }).FirstOrDefault();

@@ -90,7 +90,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.IsCustomsChargesOnly = entityPM.IsCustomsChargesOnly;
             entity.ExternalAccountingEntityId = entityPM.ExternalAccountingEntityId;
             entity.IsFromInterestBatchInvoice = entityPM.IsFromInterestBatchInvoice;
-
+            entity.PartnerId = entityPM.PartnerId;
             if (entityPM.HouseNumber != null)
             {
                 entityPM.HouseNumber = entityPM.HouseNumber.Trim();

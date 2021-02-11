@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer } from 'rxjs';
+import { SessionInfo } from 'src/Infrastructure/Utilities/SessionInfo';
 
 @Injectable()
 export class LoginExtendedService {
@@ -25,7 +26,28 @@ export class LoginExtendedService {
 						return error;
 					})));
 		});
-	}
+    }
+
+    GetLoggedUser(userEmail:string,tenant: number) {
+        var url = this._apiUrl + 'ngMetaData?tenant=' + tenant + '&useremail=' + userEmail + '&getloggeduser=true';
+
+        var token = SessionInfo.Token || sessionStorage.getItem('Token');
+
+        const authHeader = {
+            headers: new HttpHeaders({
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                'Token': token
+            })
+        };
+
+        return this._http.get(url, authHeader).pipe(map(response => {
+            var result = response;
+            return result;
+        }), catchError(error => {
+            return error;
+        }));
+    }
 
 	PostLoginData(loginParameters: LoginParameters, tenant: number) {
 		var authHeaders = ServiceHelper.GetHeaders();
@@ -41,7 +63,9 @@ export class LoginExtendedService {
 						return error;
 					})));
 		});
-	}
+    }
+
+
 
 	PostRequestResetUserPassword(resetPasswordParameters: ResetPasswordParameters){
 		var authHeaders = ServiceHelper.GetHeaders();
@@ -115,6 +139,7 @@ export class ResetPasswordParameters {
 	CaptchaKey: string;
 	CaptchaCode: string;
 	PageName: string;
+	Domain: string;
 	BrandingTenant: string;
 }
 

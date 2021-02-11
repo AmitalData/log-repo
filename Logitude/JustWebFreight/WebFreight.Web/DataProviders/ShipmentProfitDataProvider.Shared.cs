@@ -14,7 +14,7 @@ namespace WebFreight.Web.DataProviders
         public string ProfitInLocalCurrency { get; set; }
         public string EstimateProfitInLocalCurrency { get; set; }
         public string DifferenceInLocalCurrency { get; set; }
-
+        public string MasterShipmentNumber { get; set; }
         public string ProfitCurrencyCode { get; set; }
         public string ProfitCurrencyName { get; set; }
         public string PayablesInProfitCurrency { get; set; }
@@ -122,6 +122,9 @@ namespace WebFreight.Web.DataProviders
         public DateTime? ATD_DateTime { get; set; }
         public DateTime? ATA_DateTime { get; set; }
         public string BranchName { get; set; }
+
+        public bool IsAccrualsApproved { get; set; }
+        public DateTime? AccrualsApprovalDate { get; set; }
     }
 
     public class ProfitDetailsClass
@@ -148,5 +151,7 @@ namespace WebFreight.Web.DataProviders
         public double? ACCTPayablesInProfit { get; set; }
 
         public string Vendor { get; set; }
+
+        public bool? IsExpenseCharge { get; set; }
     }
 }

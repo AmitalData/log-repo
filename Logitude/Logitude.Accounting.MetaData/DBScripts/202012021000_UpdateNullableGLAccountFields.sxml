@@ -1,0 +1,13 @@
+﻿ <Script DBType="Main" Pre="true" Module="Accounting" >
+  <Sql Version="2">
+    <![CDATA[
+        update glaccountmoredatas set balanceinlocalcurrency = 0 where balanceinlocalcurrency is null
+        update glaccountmoredatas set LocalBalanceInDue = 0 where LocalBalanceInDue is null
+		
+		
+        ALTER TABLE glaccountmoredatas ADD CONSTRAINT DF_DefaultValue_Balance DEFAULT 0 FOR balanceinlocalcurrency
+        ALTER TABLE glaccountmoredatas ADD CONSTRAINT DF_DefaultValue_LocalBalance DEFAULT 0 FOR LocalBalanceInDue
+    ]]>
+  </Sql>
+   <Oracle Version="1"></Oracle>
+</Script>

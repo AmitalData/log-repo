@@ -61,6 +61,7 @@ export class ARInvoiceList {
 		AmountDueInLocalCurrency: number;
 		AmountDueInProfitCurrency: number;
 		MainEntityId: string;
+		MasterEntityId: string;
 		HouseNumber: string;
 		MasterNumber: string;
 		Description: string;
@@ -143,5 +144,6 @@ export class ARInvoiceList {
 		RegionalTaxId: string;
 		RegionalTaxPercentage: number;
 		PaidDate: Date;
+		PartnerId: string;
 	
 }

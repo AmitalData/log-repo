@@ -73,7 +73,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private AccountingSettingRepository accountingSettingRepository;
         private AccountingSystemRepository accountingSystemRepository;
         private ContactRepository contactRepository;
-        private InterestReportRepository InterestReportRepository;
         private List<string> allShipmentIds;
         private List<string> allActiveShipmentIds;
         private List<Shipment> allShipments;
@@ -274,6 +273,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.UpdateInvoiceEntities();
             }
 
+            this.InitializeSalesmanField();
+
             this.UpdateInvoiceLines();
             this.UpdateTotalVats();
             this.BuildSearchFields();
@@ -315,6 +316,37 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
 
+        }
+
+        private void InitializeSalesmanField()
+        {
+            if (this.isNewEntity)
+            {
+                if (entityPM.SalesmanUserId == null)
+                {
+                    if (entityPM.MainEntityId != null)
+                    {
+                        Shipment shipment = allShipments.Where(d => d.Id == entityPM.MainEntityId).FirstOrDefault();
+                        if (shipment != null)
+                        {
+                            entityPM.SalesmanUserId = shipment.SalesmanUserId;
+                        }
+                    }
+                }
+
+                if (entityPM.SalesmanUserId == null)
+                {
+                    if (entityPM.BillToId != null)
+                    {
+                        CardRepository cardRepository = new CardRepository(entityPM.Tenant);
+                        Card card = cardRepository.GetSingleCard(entityPM.BillToId, entityPM.Tenant);
+                        if (card != null)
+                        {
+                            entityPM.SalesmanUserId = card.SalesmanUserId;
+                        }
+                    }
+                }
+            }
         }
 
         private void SetPrintNotesForInterestInvoice(ARInvoicePM invoice)
@@ -478,7 +510,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (this.entityPM.SetVoided)
             {
-                this.sATInterfaceHelper.SendSATCancellationRequest(entityPM, invoice);
+                this.sATInterfaceHelper.HandleInvoiceSATCancellation(entityPM, invoice);
             }
 
             this.ValidateHigherStatus();
@@ -1049,21 +1081,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 entityPM.InvoiceDate = entityPM.InvoiceDate.Value.Date;
             }
 
-            if (this.isNewEntity)
-            {
-                if (string.IsNullOrEmpty(entityPM.SalesmanUserId))
-                {
-                    if (!string.IsNullOrEmpty(entityPM.BillToId))
-                    {
-                        CardRepository cardRepository = new CardRepository(entityPM.Tenant);
-                        Card card = cardRepository.GetSingleCard(entityPM.BillToId, entityPM.Tenant);
-                        if (card != null)
-                        {
-                            entityPM.SalesmanUserId = card.SalesmanUserId;
-                        }
-                    }
-                }
-            }
+
 
             this.InitializeDueDate();
             this.InitializeBranchField();
@@ -1153,14 +1171,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     this.GenerateInvoiceNumber();
                 }
 
-                DocumentOutRepository documentOutRepository = new DocumentOutRepository(myCommonContext);
-                DocumentOut docOut = documentOutRepository.GetDocumentOutByEntityAndChildEntity(invoice.MainEntityId, invoice.Id);
-                if (docOut != null)
-                {
-                    docOut.NeedsRebuild = true;
-                    documentOutRepository.Update(docOut);
-                    documentOutRepository.SubmitChanges();
-                }
+                this.UpdateNeedRebuild();
             }
 
             if (!isNewEntity)
@@ -1224,6 +1235,31 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         entityPM.InvoiceNumber = entityPM.Id;
                     }
                 }
+            }
+        }
+
+        private void UpdateNeedRebuild()
+        {
+            DocumentOut docOut = null;
+            DocumentOutRepository documentOutRepository = new DocumentOutRepository(myCommonContext);
+
+            if (entityPM.IsConsolidationInvoice)
+            {
+                string objectTableId = new ObjectTableRepository(entityPM.Tenant).GetObjectTableIdByName("ARInvoice");
+
+                docOut = documentOutRepository.GetDocumentOutByEntityId(invoice.Id, objectTableId, this.tenant);
+            }
+
+            else
+            {
+                docOut = documentOutRepository.GetDocumentOutByEntityAndChildEntity(invoice.MainEntityId, invoice.Id);
+            }
+
+            if (docOut != null)
+            {
+                docOut.NeedsRebuild = true;
+                documentOutRepository.Update(docOut);
+                documentOutRepository.SubmitChanges();
             }
         }
 
@@ -3398,6 +3434,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Description);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.CustomerRef);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PrintNotes);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.InternalNotes);
 
             #region Card
             if (!string.IsNullOrEmpty(entityPM.BillToId))
@@ -3447,11 +3484,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
             #endregion
-
-            if (mySearchFields.Length > 4000)
-            {
-                mySearchFields = mySearchFields.Substring(0, 4000);
-            }
 
             entityPM.SearchFields = mySearchFields;
             invoice.SearchFields = mySearchFields;
@@ -3945,6 +3977,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 this.UpdateShipmentRegistryDate();
                 this.UpdSatehipmentFirstApprovalDate();
+            }
+
+            // when creating auto credit invoice: press on back button then save, the invoice should be transferred
+            else if(entityPM.IsAutoCredit)
+            {
+                this.CreateARInvoiceMessage(true);
             }
         }
         private void UpdateShipmentRegistryDate()

@@ -48,6 +48,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.ReceivablesAccountingCard = entityPM.ReceivablesAccountingCard;
             entityCard.PayablesAccountingCard = entityPM.PayablesAccountingCard;
             entityCard.AccountingVATSplit = entityPM.AccountingVATSplit;
+            entityCard.BillToId = entityPM.BillToId;
             entityCard.VatNumber = entityPM.VatNumber;
             entityCard.Notes = entityPM.Remark;
             entityCard.Website = entityPM.Website;
@@ -66,6 +67,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.SATForeignRFC = entityPM.SATForeignRFC;
             entityCard.MetodoPagoCode = entityPM.MetodoPagoCode;
             entityCard.UsoCFDICode = entityPM.UsoCFDICode;
+            entityCard.ImageDetailId = entityPM.ImageDetailId;
             if (!entityPM.IsFirstContactToAdd)
             {
                 entityCard.PrimaryContactId = entityPM.PrimaryContactId;

@@ -43,6 +43,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
         private ICommonDataContext commonDataContext;
         private IInfrastructureContext infrastructureContext;
         private ContactRepository contactRep;
+        private CustomerRepository customerRepository;
         private Contact systemContact;
         private List<ContactPM> contacts;
         private ContactQuery contactQuery;
@@ -50,7 +51,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
         private CardRepository cardRepository;
         private AddressQuery addressQuery;
         private bool IsConfirmationByUser;
-
+        List<SystemUser> systemUsers;
         public PartnersUploadHelper(BatchTaskExecutionPM batchTaskExecution) : base(batchTaskExecution)
         {
             this.batchTaskExecutionPM = batchTaskExecution;
@@ -81,10 +82,12 @@ namespace WebFreight.Web.Helpers.APIHelpers
             countryRepository = new CountryRepository(commonDataContext);
             stateRepository = new StateRepository(commonDataContext);
             contactRep = new ContactRepository(commonDataContext);
+            customerRepository = new CustomerRepository(commonDataContext);
             contactQuery = new ContactQuery(contactRep);
             cardRepository = new CardRepository(commonDataContext);
             addressQuery = new AddressQuery(tenant);
             batchTaskExecutionRepository = new BatchTaskExecutionRepository(infrastructureContext);
+            systemUsers = new List<SystemUser>();
         }
 
         private void FillDefaultValues()
@@ -95,7 +98,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
         }
 
         private List<string> partnersUniqueKeys;
-       
+
         private void FillDefaultValues_Partner()
         {
             partnersUniqueKeys = new List<string>();
@@ -425,7 +428,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     {
                         if (!string.IsNullOrEmpty(rowData[16]))
                         {
-                            if (partnerExcel.Type == "WH"  && rowData[16].Length > 5)
+                            if (partnerExcel.Type == "WH" && rowData[16].Length > 5)
                             {
                                 this.errorMsg = this.errorMsg + "Line " + partnerExcel.RowIndex + ": " + "Code Field max length must be 5" + ",";
                             }
@@ -447,12 +450,24 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         }
                     }
 
+                    if (rowData.Length > 17)
+                    {
+                        if (!string.IsNullOrEmpty(rowData[17]))
+                        {
+                            if (partnerExcel.Type == "CS" || partnerExcel.Type == "PO")
+                            {
+                                partnerExcel.SalesmanEmail = rowData[17].Trim();
+                            }
+                        }
+                    }
+
                     this.PartnerExcelList.Add(partnerExcel);
                 }
 
+                this.ValidateSalesMan();
 
-                var checkDuplicates = from x in PartnerExcelList.Where(a=>a.Code != null && (a.Type == "WH" || a.Type == "TR"))
-                                      group x by ( x.Code, x.Type) into g
+                var checkDuplicates = from x in PartnerExcelList.Where(a => a.Code != null && (a.Type == "WH" || a.Type == "TR"))
+                                      group x by (x.Code, x.Type) into g
                                       let count = g.Count()
                                       orderby count descending
                                       select new { Value = g.Key, Count = count };
@@ -478,6 +493,41 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 {
                     RunPartnersGenerator_Validation();
                     scope.Complete();
+                }
+            }
+        }
+
+       
+        private void ValidateSalesMan()
+        {
+            var items = (from b in PartnerExcelList where (b.Type == "CS" || b.Type == "PO") && !string.IsNullOrEmpty(b.SalesmanEmail) select b).ToList();
+            if (items.Count > 0)
+            {
+                List<string> emails = (from b in items group b by b.SalesmanEmail into g select g.Key).ToList();
+                systemUsers = (from user in commonDataContext.Users where user.IsSalesman
+                               join db_Contacts in commonDataContext.Contacts
+                               on user.Id equals db_Contacts.Id
+                               into db_UsersContacts
+                               from contact in db_UsersContacts.DefaultIfEmpty()
+                               where
+                               user.Tenant == tenant
+                               && contact.Tenant == tenant
+                               && !contact.InActive
+                               && emails.Contains(contact.Email)
+                               select new SystemUser
+                               {
+                                   Id = contact.Id,
+                                   Email = contact.Email,
+                               }).ToList();
+
+
+                foreach (PartnerExcel item in items)
+                {
+                    var systemUser = systemUsers.Where(d => d.Email == item.SalesmanEmail).FirstOrDefault();
+                    if (systemUser == null)
+                    {
+                        this.errorMsg += "Line " + item.RowIndex + ": " + "Salesman " + item.SalesmanEmail + " is not a system user " + ",";
+                    }
                 }
             }
         }
@@ -511,7 +561,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 {
                     message = checkDuplicates_Count + " duplicate lines were found in Excel and DB. Do you want to continue?";
                 }
-                else if (checkDuplicates_Count > 0 ||  intersectionBetweenExcelAndDB > 0)
+                else if (checkDuplicates_Count > 0 || intersectionBetweenExcelAndDB > 0)
                 {
                     if (checkDuplicates_Count > 0)
                     {
@@ -542,6 +592,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
             statesDictionary = stateRepository.GetStates(tenant).ToDictionary(d => d.Id, o => o);
             countriesDictionary = countryRepository.GetCountries(tenant).ToDictionary(d => d.Id, o => o);
             var currentItem = 0;
+
             foreach (var item in PartnerExcelList)
             {
                 try
@@ -617,12 +668,15 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
                     this.UpdateProcessPercentage(PartnerExcelList.Count(), currentItem);
                 }
+
                 catch (Exception e)
                 {
                     this.errorMsg += "Line " + item.RowIndex + ": " + e.Message + ",";
                     errorsCount = errorsCount + 1;
                 }
             }
+
+            this.UpdateCustomersSalesmen();
             this.HandelBatchTask();
         }
 
@@ -635,15 +689,27 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 this.batchTaskExecutionPM.StatusCode = "F";
                 this.batchTaskExecutionPM.ProgressMessage = errorMsg;
                 throw new ApplicationException(errorMsg);
-
             }
+
             else
             {
-                this.batchTaskExecutionPM.StatusCode = "D";
-                msg = "Successfully Uploaded " + (PartnerExcelList.Count() - duplicateLinesCount) + " out of " + PartnerExcelList.Count() + " Partners. " +
-                                                           duplicateLinesCount + " duplicate lines were found.";
-                msg = msg.Length > 4000 ? msg.Substring(0, 4000) : msg;
-                this.batchTaskExecutionPM.ProgressMessage = msg;
+                try
+                {
+                    this.batchTaskExecutionPM.StatusCode = "D";
+                    msg = "Successfully Uploaded " + (PartnerExcelList.Count() - duplicateLinesCount) + " out of " + PartnerExcelList.Count() + " Partners. " +
+                                                               duplicateLinesCount + " duplicate lines were found.";
+                    msg = msg.Length > 4000 ? msg.Substring(0, 4000) : msg;
+                    this.batchTaskExecutionPM.ProgressMessage = msg;
+                }
+
+                catch (Exception e)
+                {
+                    msg = e.Message;
+                    msg = msg.Length > 4000 ? msg.Substring(0, 4000) : msg;
+                    this.batchTaskExecutionPM.StatusCode = "F";
+                    this.batchTaskExecutionPM.ProgressMessage = msg;
+                    throw new ApplicationException(msg);
+                }
             }
 
             workbook.Close();
@@ -721,7 +787,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
             {
                 accountingPartner.Contacts.Add(contactPM);
             }
-           
+
             AccountingPartnerService service = new AccountingPartnerService(commonDataContext, accountingPartner, systemContact.Id);
             service.Create(accountingPartner);
         }
@@ -749,7 +815,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
             {
                 trucker.Contacts.Add(contactPM);
             }
-            
+
             TruckerService service = new TruckerService(commonDataContext, trucker, systemContact.Id);
             service.Create(trucker);
         }
@@ -815,7 +881,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
             {
                 warehouse.Contacts.Add(contactPM);
             }
-   
+
             WarehouseService service = new WarehouseService(commonDataContext, warehouse, systemContact.Id);
             service.Create(warehouse);
         }
@@ -870,7 +936,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
             {
                 customAgent.Contacts.Add(contactPM);
             }
-            
+
             CustomAgentService service = new CustomAgentService(commonDataContext, customAgent, systemContact.Id);
             service.Create(customAgent);
         }
@@ -899,7 +965,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
             {
                 customer.Contacts.Add(contactPM);
             }
-           
+
             CustomerService service = new CustomerService(commonDataContext, customer, systemContact.Id);
             service.Create();
         }
@@ -927,7 +993,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
             {
                 agent.Contacts.Add(contactPM);
             }
-     
+
             AgentService service = new AgentService(commonDataContext, agent, systemContact.Id);
             service.Create(agent);
         }
@@ -999,6 +1065,47 @@ namespace WebFreight.Web.Helpers.APIHelpers
             else
                 return null;
         }
+
+        private void UpdateCustomersSalesmen()
+        {
+            var items = (from b in PartnerExcelList where (b.Type == "CS" || b.Type == "PO") && !string.IsNullOrEmpty(b.SalesmanEmail) select b).ToList();
+            if (systemUsers.Count > 0)
+            {
+                int count = 0;
+                this.errorMsg = "";
+                foreach (PartnerExcel item in items)
+                {
+                    try
+                    {
+                        Card card = cardRepository.GetSingleCardByUniqueCode(item.UniqueCode, tenant, false);
+                        if (card != null)
+                        {
+                            card.SalesmanUserId = systemUsers.Where(a => a.Email == item.SalesmanEmail).Select(a => a.Id).FirstOrDefault();
+                            Customer customer = customerRepository.GetSingleCustomer(card.Id, tenant);
+                            customer.SalesmanUserId = card.SalesmanUserId;
+                            cardRepository.Update(card);
+                            customerRepository.Update(customer);
+                            count++;
+                        }
+                        if (count >= 100)
+                        {
+                            cardRepository.SubmitChanges();
+                            customerRepository.SubmitChanges();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        this.errorMsg += "Line " + item.RowIndex + ": " + ex.Message + ",";
+                    }
+                }
+
+                if (count > 0)
+                {
+                    cardRepository.SubmitChanges();
+                    customerRepository.SubmitChanges();
+                }
+            }
+        }
     }
     public class PartnerExcel
     {
@@ -1022,5 +1129,13 @@ namespace WebFreight.Web.Helpers.APIHelpers
         public string PayablesExternalID { get; set; }
         public string ReceivablesExternalID { get; set; }
         public string Code { get; set; }
+        public string SalesmanEmail { get; set; }
+    }
+
+    public class SystemUser
+    {
+        public string Id { get; set; }
+        public string Email { get; set; }
+
     }
 }

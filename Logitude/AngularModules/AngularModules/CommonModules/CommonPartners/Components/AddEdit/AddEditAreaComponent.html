@@ -57,16 +57,8 @@
                                                         <td style="color:#1B90CB">
                                                             Ports
                                                         </td>
-                                                        <td style="width:50px">
-                                                            <div></div>
-                                                        </td>
-                                                        <td style="width:3px">
-                                                            <div></div>
-                                                        </td>
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
-                                                        <td style="width:150px">
+                                                        
+                                                        <td style="width:200px">
                                                             <table>
                                                                 <tr>
                                                                     <td style="width: 80px;">
@@ -75,16 +67,44 @@
                                                                             Country Ports
                                                                         </button>
                                                                     </td>
+
                                                                     <td style="width:5px">
                                                                         <div></div>
                                                                     </td>
+
                                                                     <td style="width: 50px;">
                                                                         <button style="height:20px;" class="Button" (click)="DataContext.ChoosePort()">
                                                                             <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
                                                                             Port
                                                                         </button>
                                                                     </td>
-                                                                    <td style="width:10px"></td>
+
+                                                                    <td style="width:5px">
+                                                                        <div></div>
+                                                                    </td>
+
+                                                                    <td style="width:55px;">
+                                                                        <div tabindex="0" class="ToggleButton">
+                                                                            <label>More</label>
+                                                                            <img src="./Images/ToggleIcon.png" />
+
+                                                                            <div class="ToggleButtonMenu">
+                                                                                <button (click)="DownloadClicked()">Download</button>
+
+                                                                                <div>
+                                                                                    <input class="upload" style="display: none;width:65px"
+                                                                                           type="file" (change)="OnFileChanged($event)"
+                                                                                           (click)="fileInput.value = null" value="" accept=".xls,.xlsx"
+                                                                                           #fileInput>
+                                                                                    <a href="#" style="text-decoration:none">
+                                                                                        <button (click)="fileInput.click()">Upload</button>
+                                                                                    </a>
+                                                                                </div>                                                                                
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td style="width:5px"></td>
                                                                 </tr>
                                                             </table>
                                                         </td>
@@ -93,7 +113,6 @@
                                                     </tr>
                                                 </table>
                                             </td>
-
                                         </tr>
                                         <tr style="overflow-y:hidden">
                                             <td>
@@ -114,7 +133,7 @@
 
                                                         <div class="SimpleGridViewBody" style="overflow-y:auto">
                                                             <table>
-                                                                <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of DataContext.PortItemsList">
+                                                                <tr class="SimpleGridViewRow RowHover" *ngFor="let item of DataContext.PortItemsList">
                                                                     <td class="GridViewCell" style="width:80px; min-width: 80px;max-width:80px">
                                                                         <div>{{item.Code}}</div>
                                                                     </td>

@@ -31,7 +31,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             }
             else
             {
-                this.Property(t => t.SearchFields).HasMaxLength(4000).IsUnicode(true);
+                this.Property(t => t.SearchFields).IsMaxLength().IsUnicode(true);
             }
 
             this.Property(t => t.BranchId).IsRequired().HasMaxLength(15).IsUnicode(false);
@@ -127,6 +127,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.Field9).HasColumnName("Field9");
             this.Property(t => t.Field10).HasColumnName("Field10");
             this.Property(t => t.TotalVATOnly).HasColumnName("TotalVATOnly");
+            this.Property(t => t.PaidDate).HasColumnName("PaidDate");
 
 
             // Relationships

@@ -307,7 +307,7 @@ namespace Logitude.Accounting.Data
 				
 			modelBuilder.Entity<InterestReport>().Property(x => x.CreditAllotmentPercentage).HasPrecision(4, 2);
 				
-			modelBuilder.Entity<InterestReport>().Property(x => x.CalCreditAllotmentCommission).HasPrecision(4, 2);
+			modelBuilder.Entity<InterestReport>().Property(x => x.CalCreditAllotmentCommission).HasPrecision(18, 2);
 				
 			modelBuilder.Entity<InterestReportLinesByDate>().Property(x => x.TotalAmount).HasPrecision(18, 2);
 				
@@ -335,9 +335,9 @@ namespace Logitude.Accounting.Data
 				
 			modelBuilder.Entity<InterestTransaction>().Property(x => x.ForeignAmount).HasPrecision(16, 2);
 				
-			modelBuilder.Entity<JournalLine>().Property(x => x.LocalAmount).HasPrecision(16, 2);
+			modelBuilder.Entity<JournalLine>().Property(x => x.LocalAmount).HasPrecision(18, 4);
 				
-			modelBuilder.Entity<JournalLine>().Property(x => x.ForeignAmount).HasPrecision(16, 2);
+			modelBuilder.Entity<JournalLine>().Property(x => x.ForeignAmount).HasPrecision(18, 4);
 				
 			modelBuilder.Entity<JournalLine>().Property(x => x.ExchangeRate).HasPrecision(16, 5);
 				

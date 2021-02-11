@@ -100,6 +100,8 @@ export class NewARInvoiceComponent extends BaseComponent {
     private EntityLevelCode: string = null;
     private EntityTableName: string = null;
     private EntityReceivables: any[] = [];
+    private EntitySalesmanUserId: string = null;
+
     SetWindowArgs(myarguments: any) {
         this.shipmentPM = myarguments["Shipment"];
         this.InvoiceTypeCode = myarguments["InvoiceTypeCode"];
@@ -119,6 +121,9 @@ export class NewARInvoiceComponent extends BaseComponent {
             this.EntityPM.ProfitCurrencyId = this.shipmentPM.ProfitCurrencyId;
             this.EntityPM.OperationalDate = InvoiceTool.GetOperationalDate(this.shipmentPM);
             this.EntityPM.BranchId = this.shipmentPM.BranchId;
+            this.EntityPM.SalesmanUserId = this.shipmentPM.SalesmanUserId;
+            this.EntityPM.SalesmanUserName = this.shipmentPM.SalesmanUserName;
+            this.EntitySalesmanUserId = this.shipmentPM.SalesmanUserId;
 
             var myDescription: string = null;
             switch (this.shipmentPM.DirectionId) {
@@ -187,11 +192,11 @@ export class NewARInvoiceComponent extends BaseComponent {
             isBillToAddressEnabled = true;
         }
 
-        this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, isBillToEnabled);
+        this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("PartnerId", this.ObjectTableName, isBillToEnabled);
         this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, isBillToAddressEnabled);
-
-       
     }
+
     SetUIProperties_VatNumber() {
         var isFieldRequired = false;
 
@@ -293,6 +298,7 @@ export class NewARInvoiceComponent extends BaseComponent {
         if (this.SelectedPartnerType != selected) {
             this.SelectedPartnerType = selected
 
+            this.PartnerId = null;
             this.BillToId = null;
             this.BillToAddressId = null;
             this.BillToPartnerTypeId = null;
@@ -304,7 +310,7 @@ export class NewARInvoiceComponent extends BaseComponent {
                 switch (selected.Code) {
                     case "CUS":
                         {
-                            this.BillToId = this.shipmentPM.CustomerId;
+                            this.PartnerId = this.shipmentPM.CustomerId;
 
                             if (!AppTool.IsNullOrEmpty(this.shipmentPM.CustomerReference1)) {
                                 myReference = this.shipmentPM.CustomerReference1;
@@ -319,7 +325,7 @@ export class NewARInvoiceComponent extends BaseComponent {
 
                     case "SHI":
                         {
-                            this.BillToId = this.shipmentPM.ShipperId;
+                            this.PartnerId = this.shipmentPM.ShipperId;
 
                             if (!AppTool.IsNullOrEmpty(this.shipmentPM.ShipperReference1)) {
                                 myReference = this.shipmentPM.ShipperReference1;
@@ -334,7 +340,7 @@ export class NewARInvoiceComponent extends BaseComponent {
 
                     case "CON":
                         {
-                            this.BillToId = this.shipmentPM.ConsigneeId;
+                            this.PartnerId = this.shipmentPM.ConsigneeId;
 
                             if (!AppTool.IsNullOrEmpty(this.shipmentPM.ConsigneeReference1)) {
                                 myReference = this.shipmentPM.ConsigneeReference1;
@@ -349,7 +355,7 @@ export class NewARInvoiceComponent extends BaseComponent {
 
                     case "AGE":
                         {
-                            this.BillToId = this.shipmentPM.AgentId;
+                            this.PartnerId = this.shipmentPM.AgentId;
 
                             if (!AppTool.IsNullOrEmpty(this.shipmentPM.AgentReference1)) {
                                 myReference = this.shipmentPM.AgentReference1;
@@ -362,18 +368,18 @@ export class NewARInvoiceComponent extends BaseComponent {
                             break;
                         }
 
-                    case "CGE": { this.BillToId = this.shipmentPM.CustomAgentExportId; myReference = this.shipmentPM.CustomAgentExportReference; break; }
-                    case "CGI": { this.BillToId = this.shipmentPM.CustomAgentImportId; myReference = this.shipmentPM.CustomAgentImportReference; break; }
-                    case "NOT1": { this.BillToId = this.shipmentPM.Notify1Id; break; }
-                    case "NOT2": { this.BillToId = this.shipmentPM.Notify2Id; break; }
-                    case "SNE": { this.BillToId = this.shipmentPM.ShipperNotExporterId; myReference = this.shipmentPM.ShipperReference1; break; }
-                    case "CNI": { this.BillToId = this.shipmentPM.ConsigneeNotImporterId; myReference = this.shipmentPM.ConsigneeReference1; break; }
-                    case "FFW": { this.BillToId = this.shipmentPM.FreightForwarderId; myReference = this.shipmentPM.FreightForwarderReference; break; }
-                    case "DTR": { this.BillToId = this.shipmentPM.ConsolidatorId; myReference = this.shipmentPM.ConsolidatorReference; break; }
-                    case "OTH": { this.BillToId = null; break; }
-                    case "AL": { this.BillToId = this.shipmentPM.MainCarriageCarrierId; break; }
-                    case "SL": { this.BillToId = this.shipmentPM.MainCarriageCarrierId; break; }
-                    case "TR": { this.BillToId = this.shipmentPM.MainCarriageCarrierId; break; }
+                    case "CGE": { this.PartnerId = this.shipmentPM.CustomAgentExportId; myReference = this.shipmentPM.CustomAgentExportReference; break; }
+                    case "CGI": { this.PartnerId = this.shipmentPM.CustomAgentImportId; myReference = this.shipmentPM.CustomAgentImportReference; break; }
+                    case "NOT1": { this.PartnerId = this.shipmentPM.Notify1Id; break; }
+                    case "NOT2": { this.PartnerId = this.shipmentPM.Notify2Id; break; }
+                    case "SNE": { this.PartnerId = this.shipmentPM.ShipperNotExporterId; myReference = this.shipmentPM.ShipperReference1; break; }
+                    case "CNI": { this.PartnerId = this.shipmentPM.ConsigneeNotImporterId; myReference = this.shipmentPM.ConsigneeReference1; break; }
+                    case "FFW": { this.PartnerId = this.shipmentPM.FreightForwarderId; myReference = this.shipmentPM.FreightForwarderReference; break; }
+                    case "DTR": { this.PartnerId = this.shipmentPM.ConsolidatorId; myReference = this.shipmentPM.ConsolidatorReference; break; }
+                    case "OTH": { this.PartnerId = null; break; }
+                    case "AL": { this.PartnerId = this.shipmentPM.MainCarriageCarrierId; break; }
+                    case "SL": { this.PartnerId = this.shipmentPM.MainCarriageCarrierId; break; }
+                    case "TR": { this.PartnerId = this.shipmentPM.MainCarriageCarrierId; break; }
                     default: { break; }
                 }
             }
@@ -387,6 +393,29 @@ export class NewARInvoiceComponent extends BaseComponent {
     set BillToPartnerTypeId(newValue: string) {
         if (this.EntityPM.BillToPartnerTypeId != newValue) {
             this.EntityPM.BillToPartnerTypeId = newValue;
+        }
+    }
+
+    get PartnerId() { return this.EntityPM.PartnerId; }
+    set PartnerId(newValue: string) {
+        if (this.EntityPM.PartnerId != newValue) {
+            this.EntityPM.PartnerId = newValue;
+            if (AppTool.IsNullOrEmpty(newValue)) {
+                this.BillToId = null;
+            }
+            else {
+                this.myCardListService.getSingle(newValue).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: CardList = myResponse.Result;
+                        if (list != null) {
+                            this.BillToId = list.BillToId;
+                            if (AppTool.IsNullOrEmpty(this.BillToId)) {
+                                this.BillToId = newValue;
+                            }
+                        }
+                    }
+                });
+            }
         }
     }
 
@@ -417,6 +446,7 @@ export class NewARInvoiceComponent extends BaseComponent {
                 this.EntityPM.BillToCreditLimitOpenBalance = null;
                 this.EntityPM.BillToCreditLimitWarningPercentage = null;
                 this.EntityPM.BillToBlockNewInvoiceCreation = false;
+
                 if (SessionLocator.SATInterfaceSettings) {
                     this.MetodoPagoCode = SessionLocator.SATInterfaceSettings.MetodoPagoCode;
                 }
@@ -443,7 +473,10 @@ export class NewARInvoiceComponent extends BaseComponent {
                             this.EntityPM.BillToCreditLimitOpenBalance = list.CreditLimitOpenBalance;
                             this.EntityPM.BillToCreditLimitWarningPercentage = list.CreditLimitWarningPercentage;
                             this.EntityPM.BillToBlockNewInvoiceCreation = list.BlockNewInvoiceCreation;                            
-                            this.EntityPM.SalesmanUserId = list.SalesmanUserId;
+
+                            if (!this.EntitySalesmanUserId) {
+                                this.EntityPM.SalesmanUserId = list.SalesmanUserId;
+                            }
 
                             if (!AppTool.IsNullOrEmpty(list.SATPaymentMethodCode)) {
                                 this.SATPaymentMethodCode = list.SATPaymentMethodCode;

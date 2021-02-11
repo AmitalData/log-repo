@@ -301,6 +301,7 @@ export class ShipmentTool {
         shipmentPM.SalesmanUserId = oldShipment.SalesmanUserId;
         shipmentPM.AWBCurrencyId = oldShipment.AWBCurrencyId;
         shipmentPM.QuoteId = oldShipment.QuoteId;
+        shipmentPM.QuoteNumber = oldShipment.QuoteNumber;
         shipmentPM.IncotermId = oldShipment.IncotermId;
         shipmentPM.FreightPrepaidCollectId = oldShipment.FreightPrepaidCollectId;
         shipmentPM.OtherPrepaidCollectId = oldShipment.OtherPrepaidCollectId;
@@ -2060,6 +2061,137 @@ export class ShipmentTool {
                 shipmentPricing.ChargeableDays = item.ChargeableDays;
             }
         });
+    }
+
+    public static IsValidatingShipmentMasterFieldExistance(entityPM: ShipmentPM) {
+        var output: boolean = false;
+
+        if (entityPM.Tenant != 343 && entityPM.Tenant != 528) {
+            if (entityPM.DirectionId == "E" && entityPM.TransportModeId == "A") {
+                if (entityPM.ShipmentLevelCode == "C" || entityPM.ShipmentLevelCode == "D") {
+                    if (!AppTool.IsNullOrEmpty(entityPM.Master) && !AppTool.IsNullOrEmpty(entityPM.AirlinePrefix) && !entityPM.IsCancelled) {
+                        output = true;
+                    }
+                }
+            }
+        }
+
+        return output;
+    }
+    public static CalculateShipmentOperationalDate(entityPM: ShipmentPM): Date {
+        var output: Date = null;
+
+        if (entityPM.ShipmentLevelCode == "H") {
+            output = this.CalculateHouseShipmentOperationalDate(entityPM);
+        }
+
+        else {
+            if (entityPM.DirectionId == "I") {
+                output = this.CalculateArrivalShipmentOperationalDate(entityPM);
+
+            }
+
+            else {
+                output = this.CalculateDepartureShipmentOperationalDate(entityPM);
+            }
+        }
+
+        return output;
+    }
+    private static CalculateHouseShipmentOperationalDate(entityPM: ShipmentPM): Date {
+        var output: Date = null;
+
+        if (entityPM.MasterShipmentDataId) {
+            output = entityPM.OperationalDate;
+        }
+
+        if (!output) {
+            output = entityPM.CreateDateTime;
+        }
+
+        return output;
+    }
+    private static CalculateArrivalShipmentOperationalDate(entityPM: ShipmentPM): Date {
+        var output: Date = null;
+
+        if (entityPM.Transshipment3ATA) {
+            output = entityPM.Transshipment3ATA;
+        }
+
+        else if (entityPM.Transshipment2ATA) {
+            output = entityPM.Transshipment2ATA;
+        }
+
+        else if (entityPM.Transshipment1ATA) {
+            output = entityPM.Transshipment1ATA;
+        }
+
+        else if (entityPM.MainCarriageATA) {
+            output = entityPM.MainCarriageATA;
+        }
+
+        else if (entityPM.Transshipment3ETA) {
+            output = entityPM.Transshipment3ETA;
+        }
+
+        else if (entityPM.Transshipment2ETA) {
+            output = entityPM.Transshipment2ETA;
+        }
+
+        else if (entityPM.Transshipment1ETA) {
+            output = entityPM.Transshipment1ETA;
+        }
+
+        else if (entityPM.MainCarriageETA) {
+            output = entityPM.MainCarriageETA;
+        }
+
+        else {
+            output = entityPM.CreateDateTime;
+        }
+
+        return output;
+    }
+    private static CalculateDepartureShipmentOperationalDate(entityPM: ShipmentPM): Date {
+        var output: Date = null;
+
+        if (entityPM.MainCarriageATD) {
+            output = entityPM.MainCarriageATD;
+        }
+
+        else if (entityPM.Transshipment1ATD) {
+            output = entityPM.Transshipment1ATD;
+        }
+
+        else if (entityPM.Transshipment2ATD) {
+            output = entityPM.Transshipment2ATD;
+        }
+
+        else if (entityPM.Transshipment3ATD) {
+            output = entityPM.Transshipment3ATD;
+        }
+
+        else if (entityPM.MainCarriageETD) {
+            output = entityPM.MainCarriageETD;
+        }
+
+        else if (entityPM.Transshipment1ETD) {
+            output = entityPM.Transshipment1ETD;
+        }
+
+        else if (entityPM.Transshipment2ETD) {
+            output = entityPM.Transshipment2ETD;
+        }
+
+        else if (entityPM.Transshipment3ETD) {
+            output = entityPM.Transshipment3ETD;
+        }
+
+        else {
+            output = entityPM.CreateDateTime;
+        }
+
+        return output;
     }
 }
 export class ByPckageType {

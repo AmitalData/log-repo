@@ -217,7 +217,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     IsCopiedAtSignup = a.IsCopiedAtSignup,
                                     IsEnabledForCustomers = a.IsEnabledForCustomers,
                                     CountryCode = a.CountryCode,
-                                    DocumentTypeCategoryCode=a.DocumentTypeCategoryCode,
+                                    DocumentTypeCategoryCode = a.DocumentTypeCategoryCode,
                                     DocumentTypeCategoryName = a.DocumentTypeCategory != null ? a.DocumentTypeCategory.Name : null,
                                     OrderBy = a.OrderBy,
                                     FileName = a.FileName,
@@ -240,7 +240,23 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             d.DocumentTypeCustomFields = documentTypeCustomFieldQuery.GetDocumentTypeCusotmFieldPMsByDocumentTypeId(d.Id, d.Tenant).ToList();
             d.DocumentTypeCopies = documentCopiesQuery.GetDocumentTypeCopiesByDocumentType(d.Id, documentOutId, d.Tenant);
 
+            d.DocumentTypeCopies = MarkIsOriginalDocumentCopy(d);
             return d;
+        }
+
+        private List<DocumentTypeCopyPM> MarkIsOriginalDocumentCopy(DocumentTypePM documentTypePM)
+        {
+            List<DocumentTypeCopyPM> documentTypeCopies = documentTypePM.DocumentTypeCopies;
+            for (int i = 0; i < documentTypeCopies.Count(); i++)
+            {
+                if (documentTypeCopies[i].Code == documentTypePM.Code)
+                {
+                    documentTypeCopies[i].IsOriginal = true;
+                    break;
+                }
+            }
+
+            return documentTypeCopies;
         }
 
         public List<DocumentTypePM> GetDocumentTypePMsByTenant(int tenant)
@@ -576,7 +592,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           OnPrintPopulateDateFieldName = a.OnPrintPopulateDateFieldName,
                                           OnSendPopulateDateFieldName = a.OnSendPopulateDateFieldName,
                                           OnUploadPopulateDateFieldName = a.OnUploadPopulateDateFieldName,
-
+                                          
 
                                       }).ToList();
             return d;

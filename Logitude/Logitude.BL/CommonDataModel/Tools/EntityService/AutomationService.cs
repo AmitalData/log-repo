@@ -75,10 +75,29 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             SaveAutomationLastUpdate(entityPM.ObjectTableId, entityPM.Tenant);
             SaveAutomationHistory();
 
+            ConnectDocumentTypeTemplateToAuomation();
+
             List<string> eventCodeLists = new List<string>(new string[] { "AUCR" });
             AddTraceEvent(eventCodeLists);
 
      
+        }
+
+        private void ConnectDocumentTypeTemplateToAuomation()
+        {
+            if(this.entityPm.DocumentTypeTemplateIds!=null && this.entityPm.DocumentTypeTemplateIds.Count > 0)
+            {
+                DocumentTypeTemplateRepository documentTypeTemplateRepository = new DocumentTypeTemplateRepository(this.entityPm.Tenant);
+                List<DocumentTypeTemplate>   documentTypeTemplates =  documentTypeTemplateRepository.GetDocumentTypeTemplatesBydocumentTypeTemplateIds(this.entityPm.DocumentTypeTemplateIds, this.entityPm.Tenant).ToList();
+                foreach(DocumentTypeTemplate documentTypeTemplate in documentTypeTemplates)
+                {
+                    documentTypeTemplate.AutomationId = this.entityPm.Id;
+                    documentTypeTemplateRepository.Update(documentTypeTemplate);
+                }
+
+                documentTypeTemplateRepository.SubmitChanges();
+            }
+
         }
 
         private void SaveAutomationResultEmailRecipientLists()

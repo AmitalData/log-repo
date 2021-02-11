@@ -70,9 +70,21 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (String.IsNullOrEmpty(text)) text = "No Vendors found with Vat Number and Deduction File Number";
                 throw new Exception(text);
             }
+            List<String> glid_cache = new List<string>();
+            List<CardGLAccountDataView> workList = new List<CardGLAccountDataView>();
+            foreach (var item in listOfAccounts)
+            {
+                string glid = item.Id;
+                if (!glid_cache.Contains(glid))
+                {
+                    glid_cache.Add(glid);
+                    workList.Add(item);
+                }
+            }
+
 
             int chunkSize = 1000;
-            var listOf1000 = listOfAccounts.Select((x, i) => new { Index = i, Value = x })
+            var listOf1000 = workList.Select((x, i) => new { Index = i, Value = x })
             .GroupBy(x => x.Index / chunkSize)
             .Select(x => x.Select(v => v.Value).ToList())
             .ToList();
@@ -85,8 +97,17 @@ namespace Logitude.Accounting.BL.CoreBL
                 int count = 0;
                 foreach (var obj in listOfAccountsMax1000)
                 {
+                    string tempDeductionFileNumber = "";
+                    if (!String.IsNullOrWhiteSpace(obj.ConsolidationVat))
+                    {
+                        tempDeductionFileNumber = obj.ConsolidationVat;
+                    }
+                    else
+                    {
+                        tempDeductionFileNumber = obj.VatNumber;
+                    }
                     string line = "B" + obj.DisplayNumber.Replace(" ", "").PadLeft(15, '0').Substring(0, 15)
-                        + obj.DeductionFileNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9)
+                        + tempDeductionFileNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9)
                         + obj.VatNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9);
                     flatFile.AppendLine(line);
                     count++;

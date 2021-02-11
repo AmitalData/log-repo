@@ -22,6 +22,9 @@ using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.GlobalModel.Tools.EntityService;
 using System.Web;
+using System.Transactions;
+using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Server.Tools;
 
 namespace WebFreight.Web.Helpers
 {
@@ -124,18 +127,51 @@ namespace WebFreight.Web.Helpers
                     };
 
                     logitudeLeadService.Create(LogitudeLeadpm);
-
+                    AddCommunicationLog(LogitudeLeadpm , "Logitude Lead");
                 }
             }
             return null;
         }
 
 
+        public void AddCommunicationLog(LogitudeLeadPM leadPM , string subject)
+        {
+            byte[] documentXML = LogitudeXmlSerializer.SerializeObject(leadPM);
+
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            {
+                CommunicationsParams logParams = new CommunicationsParams()
+                {
+                    From = leadPM.CompanyName,
+                    Tenant =0,
+                    CommunicationLogTypeCode = "Lead",
+                    QueueName = "LogitudeLeadQueue",
+                    Priority = 1,
+                    InOut = "O",
+                    Status = "W",
+                    Subject = subject,
+                    FolderName = "LogitudeLeadQueue",
+                    ByteData = documentXML,
+
+                };
+                Communications.AddCommunicationLog(logParams);
+
+                scope.Complete();
+            }
+        }
+
+
+
+
+
+
+
+
         public string VerifiyLogitudeLead(LogitudeLeadPM leadPM)
         {
             LogitudeLeadQuery logitudeLeadQuery = new LogitudeLeadQuery();
             LogitudeLeadPM entityPM = logitudeLeadQuery.GetSinglePM(leadPM.Id);
-            if (entityPM != null)
+            if (entityPM != null )
             {
                 entityPM.LastUpdateDate = DateTime.Now;
                 entityPM.Email = leadPM.Email;
@@ -238,7 +274,7 @@ namespace WebFreight.Web.Helpers
                     opportunityRepository.SubmitChanges();
                 }
 
-
+                AddCommunicationLog(entityPM, "Verifiy Logitude Lead");
             }
 
 

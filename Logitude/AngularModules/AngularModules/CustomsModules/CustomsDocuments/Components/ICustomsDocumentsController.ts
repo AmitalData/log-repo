@@ -25,4 +25,5 @@ export interface ICustomsDocumentsController{
     SetDefaultConnectedEntityNumber(customsDocumentsTicket: CustomsDocumentsTicketPM, entityPM: any);
     FillConnectedDocumentPointer(customsDocumentPointerPM: CustomsDocumentPointerPM);
     CheckIfDuplicateTicket();
+    ValidationBeforeSave(customsDocumentsTicket: CustomsDocumentsTicketPM,param1:string);
 } 

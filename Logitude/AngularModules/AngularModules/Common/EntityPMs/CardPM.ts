@@ -474,6 +474,21 @@ export class CardPM {
     public set AccountingVATSplit(newValue: boolean) { if (this.accountingVATSplit != newValue) { this.accountingVATSplit = newValue; this.MarkAsDirty("AccountingVATSplit"); } }
        
 	 
+    private address1: string;
+    public get Address1() { return this.address1; }
+    public set Address1(newValue: string) { if (this.address1 != newValue) { this.address1 = newValue; this.MarkAsDirty("Address1"); } }
+       
+	 
+    private address2: string;
+    public get Address2() { return this.address2; }
+    public set Address2(newValue: string) { if (this.address2 != newValue) { this.address2 = newValue; this.MarkAsDirty("Address2"); } }
+       
+	 
+    private billToId: string;
+    public get BillToId() { return this.billToId; }
+    public set BillToId(newValue: string) { if (this.billToId != newValue) { this.billToId = newValue; this.MarkAsDirty("BillToId"); } }
+       
+	 
 
     public OldEntityPM: CardPM;
 		

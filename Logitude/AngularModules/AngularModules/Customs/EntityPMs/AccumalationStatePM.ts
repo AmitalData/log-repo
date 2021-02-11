@@ -48,7 +48,10 @@ export class AccumalationStatePM {
     public OldEntityPM: AccumalationStatePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -56,6 +59,7 @@ export class AccumalationStatePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.AccumalationState");
            
         }
+       }
     }
 
     private MyClone: AccumalationStatePM;

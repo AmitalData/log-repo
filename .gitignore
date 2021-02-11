@@ -365,6 +365,8 @@ __pycache__/
 /JustConfig
 /JustConfig/
 /JustConfig/*
+/images/CargoTrackingImages/
+/images/CargoTrackingImages/*
 /Logitude/JustWebFreight/WebFreight.Web/Angular
 /Logitude/JustWebFreight/WebFreight.Web/Angular/out-tsc
 /Logitude/AngularModules/packages
@@ -430,3 +432,10 @@ __pycache__/
 
 /e2e/Cypress/IslamsTeam/ReleaseTestsQ4/Quotation/CreateEditQuote.ts
 /Logitude/AngularModules/.vscode/AngularModules
+/package-lock.json
+/Logitude/JustWebFreight/WebFreight.Web/CargoTrackingImages
+/Logitude/JustWebFreight/WebFreight.Web/CargoTracking
+/Logitude/JustWebFreight/WebFreight.Web/CargoTracking/CargoTrackingImages/*
+/Logitude/JustWebFreight/WebFreight.Web/CargoTracking/CargoTrackingImages
+*.png
+/Logitude/AngularModules/CypressTesting/Shipment/cypress/Reports

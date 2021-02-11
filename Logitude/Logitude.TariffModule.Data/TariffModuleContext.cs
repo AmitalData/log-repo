@@ -87,6 +87,8 @@ namespace Logitude.TariffModule.Data
             modelBuilder.Configurations.Add(new TariffVersionMap());
 	
             modelBuilder.Configurations.Add(new TariffVersionAllInChargeMap());
+	
+            modelBuilder.Configurations.Add(new TariffVersionUploadedExcelMap());
 				
 				
 			modelBuilder.Entity<TariffLine>().Property(x => x.MinPrice).HasPrecision(18, 3);
@@ -156,6 +158,8 @@ namespace Logitude.TariffModule.Data
 			modelBuilder.Entity<TariffLinesContainersPrice>().Property(x => x.Price4).HasPrecision(18, 3);
 				
 			modelBuilder.Entity<TariffLinesContainersPrice>().Property(x => x.Price5).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLinesContainersPrice>().Property(x => x.CostPrice).HasPrecision(18, 3);
 						 
             #region
             modelBuilder.Configurations.Add(new AccountingSystemMap());
@@ -490,6 +494,12 @@ namespace Logitude.TariffModule.Data
 	 }
 	
 	 public IDbSet<TariffVersionAllInCharge> TariffVersionAllInCharges 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TariffVersionUploadedExcel> TariffVersionUploadedExcels 
 	 {
 	      get; set;
 	 

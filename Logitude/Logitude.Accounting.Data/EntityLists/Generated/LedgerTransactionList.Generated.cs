@@ -120,6 +120,30 @@ namespace Logitude.Accounting.Data.EntityLists
        public bool InProgressExternalReconcile  { get; set; }
        [DataMember]
        public decimal OriginalAmount  { get; set; }
+       [DataMember]
+       public string ReconcileMethodCode  { get; set; }
+       [DataMember]
+       public bool IsCumulativeForeignAmountPos  { get; set; }
+       [DataMember]
+       public bool IsForeignAmountCreditPos  { get; set; }
+       [DataMember]
+       public bool IsCumulativeLocalAmountPos  { get; set; }
+       [DataMember]
+       public bool IsLocalAmountCreditPos  { get; set; }
+       [DataMember]
+       public bool IsForeignAmountPos  { get; set; }
+       [DataMember]
+       public bool IsOriginalAmountPos  { get; set; }
+       [DataMember]
+       public string IconCode  { get; set; }
+       [DataMember]
+       public string ForeignAmountCreditWithSign  { get; set; }
+       [DataMember]
+       public string CumulativeForeignAmountSign  { get; set; }
+       [DataMember]
+       public decimal CalculatedLocalAmount  { get; set; }
+       [DataMember]
+       public decimal CalculatedForeignAmount  { get; set; }
    }
 
 }

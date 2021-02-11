@@ -96,22 +96,37 @@ namespace Logitude.Accounting.BL.CoreBL
 
             var newLTranListOfAccountID = _NewLedgerTransactionsWithCounters.Where(r => r.AccountId == currentAccountId).ToList();
             decimal totalNewLedgerOpenAmount = newLTranListOfAccountID.Sum(r => r.OpenAmount);
-            //if (totNew + totReconciliationAmount != 0)
-            bool inMaynTheARPaymentCreateDebitCreditAgainstKUPA = true;
-            if (Math.Abs(totalNewLedgerOpenAmount) < Math.Abs(totalAmountFromJournalReconciliation)) {
-                
-                if (inMaynTheARPaymentCreateDebitCreditAgainstKUPA &&
-                currrentAccountJournalReconcileList.Count() == 1 &&
-                _NewLedgerTransactionsWithCounters.Count == 2 &&
-                _NewLedgerTransactionsWithCounters[0].AccountId == _NewLedgerTransactionsWithCounters[1].AccountId
-                )
+
+            bool Same_glaccount_for_debit_and_creditV2Enable = true;
+            bool isAdjustJournalSameAccount = IsAdjustJournalSameAccount(totalNewLedgerOpenAmount);
+            if (Same_glaccount_for_debit_and_creditV2Enable &&
+                isAdjustJournalSameAccount
+                    )
+            {
+                totalNewLedgerOpenAmount = OnAdjustJournalSameAccount_UseFirstLine(ref newLTranListOfAccountID);
+
+            }
+            else
+            {
+
+                //if (totNew + totReconciliationAmount != 0)
+                bool inMaynTheARPaymentCreateDebitCreditAgainstKUPA = true;
+                if (Math.Abs(totalNewLedgerOpenAmount) < Math.Abs(totalAmountFromJournalReconciliation))
                 {
-                    Debug.WriteLine("במעיין ARPayment  שורה לחיוב ה הקופה ושורה לזיכוי הקופה");
-                    Debug.WriteLine("צריך להשתמש בשורה לזכות !!");
-                    newLTranListOfAccountID = newLTranListOfAccountID.Where(r => r.LocalAmountCredit != 0).ToList();
-                    totalNewLedgerOpenAmount = newLTranListOfAccountID.Sum(r => r.OpenAmount);
+
+                    if (inMaynTheARPaymentCreateDebitCreditAgainstKUPA &&
+                    currrentAccountJournalReconcileList.Count() == 1 &&
+                    _NewLedgerTransactionsWithCounters.Count == 2 &&
+                    _NewLedgerTransactionsWithCounters[0].AccountId == _NewLedgerTransactionsWithCounters[1].AccountId
+                    )
+                    {
+                        Debug.WriteLine("במעיין ARPayment  שורה לחיוב ה הקופה ושורה לזיכוי הקופה");
+                        Debug.WriteLine("צריך להשתמש בשורה לזכות !!");
+                        newLTranListOfAccountID = newLTranListOfAccountID.Where(r => r.LocalAmountCredit != 0).ToList();
+                        totalNewLedgerOpenAmount = newLTranListOfAccountID.Sum(r => r.OpenAmount);
 
 
+                    }
                 }
             }
             if (Math.Abs(totalNewLedgerOpenAmount) < Math.Abs(totalAmountFromJournalReconciliation))
@@ -123,7 +138,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (isPartialReconciliation)
             {
                 Debug.WriteLine("isPartialReconciliation!!!! eyal said only 1 oldTRans Against 1 newTrans");
-                if (newLTranListOfAccountID.Count!=1 || oldLTransGroupByAccountId.Count() != 1)
+                if (newLTranListOfAccountID.Count != 1 || oldLTransGroupByAccountId.Count() != 1)
                 {
                     //throw new Exception("isPartialReconciliation!!!! eyal said only 1 oldTRans Against 1 newTrans");
                 }
@@ -156,6 +171,75 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
             return myReconciliationPM;
+        }
+
+        private bool IsAdjustJournalSameAccount(decimal totalNewLedgerOpenAmount)
+        {
+            return _JournalPM.AccountingEntityCode == "10" /*Reconciliation*/ &&
+                            totalNewLedgerOpenAmount == 0 && // its  adjust !!
+                            _NewLedgerTransactionsWithCounters.Count == 2 &&
+                            _NewLedgerTransactionsWithCounters[0].AccountId == _NewLedgerTransactionsWithCounters[1].AccountId;
+        }
+
+        private static decimal OnAdjustJournalSameAccount_UseFirstLine(ref List<LedgerTransactionPM> newLTranListOfAccountID)
+        {
+            decimal totalNewLedgerOpenAmount;
+            Debug.WriteLine(
+@"Task 75738: ADJUST SERVICE- allow the user to define chose the same glaccount for debit and credit
+במקרה שהחן הנגדי == החשבון
+המטרה בעצם להעביר את ההפרש לתאריך אחר
+אנו נתאים את כל שורות ההתאמה הישנות מול 
+תנועה אחת *בלבד* מהתנעות החדשות מהפקודה שיצרנו
+ללא התנועה השניה
+");
+            Debug.WriteLine("באם הסכום של כל התנועות החדשות לחן הינו אפס דאז זה להתאמה ");
+            Debug.WriteLine("בשורה הראשונה יש את ההפרש להתאמה מול הכרטיס (בשורה השניה לחן ההפרשים) !!");
+            //newLTranListOfAccountID = newLTranListOfAccountID.Where(r => r.LocalAmountCredit != 0).ToList();
+            // adjust journal 
+            //- the first line its the diff amount to adujust 
+            //- the seond move the diff to the diffAccount
+            newLTranListOfAccountID = new List<LedgerTransactionPM>() { newLTranListOfAccountID.First() };
+            totalNewLedgerOpenAmount = newLTranListOfAccountID.Sum(r => r.OpenAmount);
+            return totalNewLedgerOpenAmount;
+        }
+
+        private decimal MoveAdjustSum2SameAccountButDiffDate_useOnly1NewTransaction(ref List<LedgerTransactionPM> newLTranListOfAccountID)
+        {
+            decimal totalNewLedgerOpenAmount;
+            Debug.WriteLine(
+@"Task 75738: ADJUST SERVICE- allow the user to define chose the same glaccount for debit and credit
+במקרה שהחן הנגדי == החשבון
+המטרה בעצם להעביר את ההפרש לתאריך אחר
+אנו נתאים את כל שורות ההתאמה הישנות מול 
+תנועה אחת *בלבד* מהתנעות החדשות מהפקודה שיצרנו
+ללא התנועה השניה
+");
+
+            newLTranListOfAccountID = UseOnlyOneTransactionFromTheNewJournal(newLTranListOfAccountID);
+            totalNewLedgerOpenAmount = newLTranListOfAccountID.Sum(r => r.OpenAmount);
+            if (_JournalPM.JournalReconciles.Sum(r => r.ReconciliationAmount) != totalNewLedgerOpenAmount)
+            {
+                throw new Exception("never tested- Task 75738: ADJUST SERVICE- allow the user to define chose the same glaccount for debit and credit");
+            }
+
+            return totalNewLedgerOpenAmount;
+        }
+
+        private List<LedgerTransactionPM> UseOnlyOneTransactionFromTheNewJournal(List<LedgerTransactionPM> newLTranListOfAccountID)
+        {
+            if (
+                             //_JournalPM.JournalLines.First().ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit
+                             _JournalPM.JournalReconciles.Sum(r => r.ReconciliationAmount) > 0
+                             )
+            {
+                newLTranListOfAccountID = newLTranListOfAccountID.Where(r => r.LocalAmountCredit != 0).ToList();
+            }
+            else
+            {
+                newLTranListOfAccountID = newLTranListOfAccountID.Where(r => r.LocalAmountDebit != 0).ToList();
+            }
+
+            return newLTranListOfAccountID;
         }
 
         private ReconciliationPM GetReconciliationPM(string currentAccountId)

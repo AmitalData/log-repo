@@ -553,7 +553,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         PRIMARYNUM = accountingCustomFile,
                         FORMID = "LGT_UPDATE_FCI",
                         DEBUG = "F",
-                        DONEOPERATION = "A",
+                        DONEOPERATION = "D",
                         GSTRING1 = "",
                         //GSTRING1 = string.IsNullOrWhiteSpace(dirtyDeclarationPM.CustomFileNo) ? "NO_LOCK" : "",
                         //GSTRING1 = myYCULTASKPM.TASKID,

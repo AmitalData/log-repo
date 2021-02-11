@@ -12,6 +12,7 @@ import {QuotePM} from '../../../Quote/EntityPMs/QuotePM';
 import {VatTypesValidator} from '../../../Infrastructure/Validators/VatTypesValidator';
 import { QuoteValidator } from '../../../Quote/Validators/QuoteValidator';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { CommonTool } from '../../../Common/Tools';
 
 @Component({
     
@@ -24,7 +25,6 @@ export class AddEditFCLChargeComponent implements OnDestroy {
     public DataContext: FCLQuoteChargeItem;
     public Father: any;
     public IsAdhoc: boolean = false;
-    public IsRoutingRate: boolean = false;
     public IsEditingEnabled: boolean = false;
     public ObjectTableName: string = "QuoteCharge";
     public ItemsSource: ObservableCollection;
@@ -69,7 +69,6 @@ export class AddEditFCLChargeComponent implements OnDestroy {
         this.DataContext = dataContext;
         this.Father = this.DataContext.fatherComponent;
         this.IsAdhoc = this.DataContext.fatherComponent.IsAdhoc;
-        this.IsRoutingRate = this.DataContext.fatherComponent.IsRoutingRate;
         this.IsEditingEnabled = this.DataContext.fatherComponent.IsEditingEnabled;
         this.IsVATVisible = this.IsAdhoc && this.QuotePM.IsChargesByVAT ? true : false;
         this.IsRegionalTaxVisible = this.IsVATVisible && this.Father.IsRegionalTaxVisible ? true : false;
@@ -108,6 +107,8 @@ export class AddEditFCLChargeComponent implements OnDestroy {
                 break;
             }
         }
+        CommonTool.FilterChargeTypesByDirection(this.ChargeTypesQueryFilters, this.QuotePM.DirectionId); 
+
     }
 
     public SelectedRow: FCLQuoteChargeItem = null;
@@ -276,6 +277,9 @@ export class AddEditFCLChargeComponent implements OnDestroy {
         this.myCloner.AddField('SaleMaxAmount');
         this.myCloner.AddField('TariffId');
         this.myCloner.AddField('IsRegionalTax');
+        this.myCloner.AddField('SaleCurrencyId');
+        this.myCloner.AddField('SaleExchangeRate');
+        this.myCloner.AddField('SaleIsFixedRate');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.QuotePM);
     }

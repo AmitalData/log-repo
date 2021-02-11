@@ -251,6 +251,11 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public string SecondaryColor { get; set; }
         
         public string BackgroundId { get; set; }
+        public string ComapnylogoId { get; set; }
+        public string InvertedLogoId { get; set; }
+        public string BrowserIconId { get; set; }
+        public string ShipmentHeaderImageId { get; set; }
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]
         public string PrivateLabelId { get; set; }
@@ -357,6 +362,16 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public double? TotalPaymentamount { get; set; }
         public bool NoPaymentForChildTenants { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? LastEbookingSentDate { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? LastSISentDate { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public int NumberOfBookingSentLastWeek { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public int NumberOfSISentLastWeek { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? LastContainerStatusReceived { get; set; }
 
     }
 }

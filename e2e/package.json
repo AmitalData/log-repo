@@ -1,6 +1,5 @@
 {
   "name": "cypress",
-  "version": "4.9.0",
   "scripts": {
     "ng": "ng",
     "test": "ng test",
@@ -12,7 +11,7 @@
     "buildAOT": "node --max_old_space_size=9000 node_modules/@angular/cli/bin/ng build --prod --aot --optimization=false --show-circular-dependencies=false",
     "do-e2e": "protractor e2e/protractor.conf.js",
     "start-e2e": "node --max_old_space_size=3000 node_modules/@angular/cli/bin/ng e2e",
-    "cypressRun": "cypress run",
+    "cypressRun": "node_modules\\.bin\\cypress run",
     "runtests": "npm run cypressRun",
     "cypressopen": "node_modules\\.bin\\cypress open",
     "clean:reports": "rm -R -f cypress/reports && mkdir cypress/reports && mkdir cypress/reports/mochareports",
@@ -46,6 +45,7 @@
     "ag-grid-angular": "^20.0.0",
     "ag-grid-community": "^20.0.0",
     "ag-grid-enterprise": "^20.0.0",
+    "cypress-log-to-output": "^1.1.2",
     "mochawesome-report-generator": "^5.1.0",
     "rxjs": "~6.5.4",
     "selenium-webdriver": "^4.0.0-alpha.5",
@@ -63,7 +63,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
     "codelyzer": "^5.1.2",
-    "cypress": "^4.9.0",
+    "cypress": "^4.12.1",
     "cypress-file-upload": "^4.0.7",
     "cypress-localstorage-commands": "^1.2.1",
     "cypress-mochawesome-reporter": "^1.0.1",
@@ -84,6 +84,6 @@
     "protractor-beautiful-reporter": "^1.3.6",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.7"
   }
 }

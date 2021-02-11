@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Automation&quot;"
-  Code="&quot;31bb&quot;"
+  Code="&quot;aedf&quot;"
   Name="&quot;Automation&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Common&quot;"
@@ -50,6 +50,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;9b48&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -1969,5 +1970,15 @@
       TextCodeTypeCode="&quot;TH&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;SENDINTERFACERESULT&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Automation.Features.SENDINTERFACERESULT&quot;"
+      FeatureDefaultText="&quot;Send Interface Result&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+  </AdditionalFeatures>
 </entity>

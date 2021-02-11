@@ -288,7 +288,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
             return null;
         }
-        
+
         public IQueryable<Port> GetSinglePortByCode(string input, bool byCode, int tenant)
         {
             if (byCode)
@@ -472,6 +472,20 @@ namespace Simplog.Data.CommonDataModel.Repositories
                           where a.CombinedCode == code && a.Tenant == tenant && a.IsOcean
                           select a).FirstOrDefault();
             return entity;
+        }
+
+        public IQueryable<Port> GetAirlinePortsByName(string name, int tenant)
+        {
+            return (from a in context.Ports.Include("Country")
+                    where a.Tenant == tenant && a.EnglishName == name && a.IsAir
+                    select a);
+        }
+
+        public IQueryable<Port> GetOceanPortsByName(string name, int tenant)
+        {
+            return (from a in context.Ports.Include("Country")
+                    where a.Tenant == tenant && a.EnglishName == name && a.IsOcean
+                    select a);
         }
     }
 }

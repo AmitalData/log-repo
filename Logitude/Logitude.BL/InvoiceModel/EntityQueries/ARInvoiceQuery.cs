@@ -179,6 +179,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             List<MoneyStatusClass> datalistInvoice = (from a in invoices
                                                       where a.StatusCode != "DR" && a.StatusCode != "VD" && a.StatusCode != "LL" && a.InvoiceDate >= lastDate && a.Tenant == tenant //&& !a.IsAutoCredit && !a.IsClosed && !a.IsCancelled
+                                                     && !a.IsConstituentInvoice 
                                                       group a by new
                                                       {
                                                           a.InvoiceDate.Value.Day,
@@ -1376,6 +1377,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             ReadyForTransfer = a.TransferStatusCode == "RD" ? true : false,
                             PaymentTermExternalId = a.PaymentTermExternalId,
                             MainEntityId = a.MainEntityId,
+                            MasterEntityId = a.MainEntityId,
                             MainEntityReference = a.MainEntityReference,
                             IsDueDateColorRed = (a.DueDate == null || a.StatusCode == "PD") ? false : (a.DueDate.Value < todayDate ? true : false),
                             IsExpectedPaymentDateColorRed = (a.ExpectedPaymentDate == null || a.StatusCode == "PD") ? false : (a.ExpectedPaymentDate.Value < todayDate ? true : false),
@@ -1414,6 +1416,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             RegionalTaxId = a.RegionalTaxId,
                             RegionalTaxPercentage = a.RegionalTaxPercentage,
                             PaidDate  = a.PaidDate,
+                            PartnerId = a.PartnerId,
                         };
 
             return query;
@@ -1513,6 +1516,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              ReadyForTransfer = entity.TransferStatusCode == "RD" ? true : false,
                              PaymentTermExternalId = entity.PaymentTermExternalId,
                              MainEntityId = entity.MainEntityId,
+                             MasterEntityId= entity.MainEntityId,
                              MainEntityReference = entity.MainEntityReference,
                              IsDueDateColorRed = (entity.DueDate == null || entity.StatusCode == "PD") ? false : (entity.DueDate.Value < todayDate ? true : false),
                              IsExpectedPaymentDateColorRed = (entity.ExpectedPaymentDate == null || entity.StatusCode == "PD") ? false : (entity.ExpectedPaymentDate.Value < todayDate ? true : false),
@@ -1555,6 +1559,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              RegionalTaxPercentage = entity.RegionalTaxPercentage,
                              PaidDate = entity.PaidDate,
                              IsFromInterestBatchInvoice =entity .IsFromInterestBatchInvoice,
+                             PartnerId = entity.PartnerId,
                          };
 
             return result;
@@ -1670,6 +1675,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               RegionalTaxId = a.RegionalTaxId,
                                               RegionalTaxPercentage = a.RegionalTaxPercentage,
                                               PaidDate = a.PaidDate,
+                                              PartnerId = a.PartnerId,
                                           }).ToList();
             return invoices;
         }
@@ -1727,6 +1733,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     ExchangeRateDate = entityPOCO.ExchangeRateDate,
                     MainEntityReference = entityPOCO.MainEntityReference,
                     MainEntityId = entityPOCO.MainEntityId,
+                    MasterEntityId = entityPOCO.MainEntityId,
                     IsClosed = entityPOCO.IsClosed,
                     HouseNumber = entityPOCO.HouseNumber,
                     MasterNumber = entityPOCO.MasterNumber,
@@ -1788,6 +1795,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     RegionalTaxId = entityPOCO.RegionalTaxId,
                     RegionalTaxPercentage = entityPOCO.RegionalTaxPercentage,
                     PaidDate = entityPOCO.PaidDate,
+                    PartnerId = entityPOCO.PartnerId,
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
@@ -2090,6 +2098,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              ReadyForTransfer = entity.TransferStatusCode == "RD" ? true : false,
                              PaymentTermExternalId = entity.PaymentTermExternalId,
                              MainEntityId = entity.MainEntityId,
+                             MasterEntityId = entity.MainEntityId,
                              MainEntityReference = entity.MainEntityReference,
                              IsDueDateColorRed = (entity.DueDate == null || entity.StatusCode == "PD") ? false : (entity.DueDate.Value < todayDate ? true : false),
                              IsExpectedPaymentDateColorRed = (entity.ExpectedPaymentDate == null || entity.StatusCode == "PD") ? false : (entity.ExpectedPaymentDate.Value < todayDate ? true : false),
@@ -2131,6 +2140,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              RegionalTaxId = entity.RegionalTaxId,
                              RegionalTaxPercentage = entity.RegionalTaxPercentage,
                              PaidDate = entity.PaidDate,
+                             PartnerId = entity.PartnerId,
+                             PartnerName = entity.Partner.EnglishName,
                          };
 
             return result;

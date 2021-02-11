@@ -1,7 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/auth.service';
+import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
+import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
+import { CargoTrackingBrandingDataExtendedService } from 'src/CargoTracking/Services/Others/CargoTrackingBrandingDataExtendedService';
+import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
 import { CommonDataExtendedService } from 'src/Infrastructure/Services/Extended/CommonDataExtendedService';
 import { LoginExtendedService } from 'src/Infrastructure/Services/Extended/LoginExtendedService';
+import { LoginServiceHelper } from 'src/Infrastructure/Utilities/LoginServiceHelper';
 
 @Component({
     selector: 'resetPassword',
@@ -19,11 +25,42 @@ export class ResetPasswordComponent implements OnInit {
     public Tenant: number;
     public Succeeded: boolean = false;
     public ShowbusyIndicator: boolean = false;
+    public MainColor: string = null;
+    public SecondaryColor: string = null;
+    public CustomerURL: string = "";
     constructor(private router: Router,
         private route: ActivatedRoute,
         private loginExtendedService: LoginExtendedService,
-        private commonDataExtendedService: CommonDataExtendedService) {
+        private authService: AuthService,
+        private commonDataExtendedService: CommonDataExtendedService,
+        private cargoTrackingBrandingDataExtendedService: CargoTrackingBrandingDataExtendedService,
+        private loginServiceHelper: LoginServiceHelper,
+        @Inject('BASE_URL') baseUrl: string) {
+            this.CustomerURL = baseUrl;
+            this.GetcargoTrackingData(baseUrl);
     }
+
+
+    private GoToError401(){
+        this.router.navigate(['Error401']);
+    }
+
+    private GetcargoTrackingData(baseUrl:string) {
+        this.LogoImgSrc = "./assets/images/logo/White.jpg";
+        this.cargoTrackingBrandingDataExtendedService.GetUserDashboardBrandingData(ServiceHelper.GetcargoTrackingDataRequest(baseUrl)).subscribe((response: ServiceResponse) => {
+            if(response.Result){
+                this.Tenant = response.Result.Tenant;
+                ServiceHelper.SetCargoTrackingDate(response.Result,baseUrl);
+                this.LogoImgSrc = this.loginServiceHelper.GetLoginLogoImg();
+                this.MainColor = response.Result.MainColor != null ? ServiceHelper.ConvertHexaToRGBA(response.Result.MainColor) : null;
+                this.SecondaryColor = response.Result.SecondaryColor != null ? ServiceHelper.ConvertHexaToRGBA(response.Result.SecondaryColor) : null;
+            }
+            else{
+                this.GoToError401();
+            }
+        });
+    }
+
 
     ngOnInit() {
         this.initComponent();
@@ -31,22 +68,6 @@ export class ResetPasswordComponent implements OnInit {
 
     private initComponent() {
         document.body.style.background = "#fff";
-        this.GetLogoImgage();
-    }
-
-    private GetLogoImgage() {
-        this.LogoImgSrc = "./assets/images/logo/White.jpg";
-        this.Tenant = this.route.snapshot.queryParams?.tenant
-        if(this.Tenant){
-            this.commonDataExtendedService.GetComponayLogo(this.Tenant).subscribe((logoImage: any) => {
-                if (logoImage && !logoImage.HasError)
-                    this.LogoImgSrc = logoImage;
-                else  
-                    this.LogoImgSrc = "./assets/images/logo/UnifreightLogo.jpg";
-            });
-        }
-        else
-            this.LogoImgSrc = "./assets/images/logo/UnifreightLogo.jpg";
     }
 
     private captchaCode: string = "";
@@ -88,6 +109,7 @@ export class ResetPasswordComponent implements OnInit {
                 CaptchaCode: this.CaptchaCode,
                 CaptchaKey: this.CaptchaKey,
                 PageName: "changepassword",
+                Domain: this.CustomerURL + this.authService.DefaultPageCargoTracking,
                 BrandingTenant: this.Tenant ? this.Tenant.toString() : "",
             }
 
@@ -128,10 +150,11 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     public BackToLoginClicked() {
-        this.Tenant = this.route.snapshot.queryParams?.tenant;
+        //this.Tenant = this.route.snapshot.queryParams?.tenant;
         if(this.Tenant)
-            this.router.navigate(["login"],{ queryParams: {tenant: this.Tenant}});
+
+            this.router.navigate(["Cargo-Tracking/login"]);//,{ queryParams: {tenant: this.Tenant}}
         else
-            this.router.navigate(["login"]);
+            this.router.navigate(["Cargo-Tracking/login"]);
     }
 }

@@ -1976,7 +1976,9 @@ export class PartnerServicePM {
     public ShippingLine: ShippingLinePM = null;
     public Trucker: TruckerPM = null;
     public AccountingPartner: AccountingPartnerPM = null;
-
+    public IsReactivatingContact: boolean = false;
+    public IsConnectingInactiveContact: boolean = false;
+    public InactiveContactId: string = null;
 }
 export class PartnerExternalAccountsServicePM {
     public Tenant: number;

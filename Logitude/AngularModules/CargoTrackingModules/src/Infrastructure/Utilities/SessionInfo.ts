@@ -1,3 +1,5 @@
+import { CargoTrackingShipmentFilters } from 'src/CargoTracking/DataContracts/CargoTrackingShipmentFilters';
+
 export class SessionInfo{
 
     private static loggedUserId: string;
@@ -20,10 +22,11 @@ export class SessionInfo{
     public static get LoggedUserEmail(): string { return this.loggedUserEmail; }
     public static set LoggedUserEmail(newValue: string) { this.loggedUserEmail = newValue; }
 
-    //private static loggedUserPM: UserPM;
-    //public static get LoggedUserPM(): UserPM { return this.loggedUserPM; }
-    //public static set LoggedUserPM(newValue: UserPM)
-    //{
-    //    if (this.loggedUserPM != newValue) this.loggedUserPM = newValue;
-    //}
+    public static LoggedUser: any;
+    public static LoggedUserCompanyLogins: any[] = [];
+
+    public static ShipmentsFilters: CargoTrackingShipmentFilters;
+
+    public static LoggedUserPM: any;
+
 }

@@ -165,7 +165,6 @@
             this.cbxOldUpdateCode = new System.Windows.Forms.CheckBox();
             this.button49 = new System.Windows.Forms.Button();
             this.btnCallOldUpdate = new System.Windows.Forms.Button();
-            
             this.UpdateRulesLabel = new System.Windows.Forms.Label();
             this.button48 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -180,9 +179,13 @@
             this.lblUInvoice = new System.Windows.Forms.Label();
             this.lblUQuote = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.uploadCitiesBtn = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.citiesTextBox = new System.Windows.Forms.TextBox();
             this.CargoTrackingTestBtn = new System.Windows.Forms.Button();
-            this.uploadMexicoCitiesBtn = new System.Windows.Forms.Button();
-            this.AirlineLogosCheckBox = new System.Windows.Forms.CheckBox();
             this.button47 = new System.Windows.Forms.Button();
             this.button44 = new System.Windows.Forms.Button();
             this.button43 = new System.Windows.Forms.Button();
@@ -193,6 +196,7 @@
             this.btnDownloadMrt = new System.Windows.Forms.Button();
             this.EncryptionDocumentLabel = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.AirlineLogosCheckBox = new System.Windows.Forms.CheckBox();
             this.UpdateLogosLabel = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.FilePathTextBox = new System.Windows.Forms.TextBox();
@@ -200,6 +204,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.AirlineLogoTenantTextBox = new System.Windows.Forms.TextBox();
             this.button46 = new System.Windows.Forms.Button();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.button51 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -207,7 +213,9 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -348,6 +356,7 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sandBoxToolStripMenuItem,
             this.productionToolStripMenuItem,
@@ -408,6 +417,7 @@
             // 
             // toolStripTextBoxFilePath
             // 
+            this.toolStripTextBoxFilePath.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBoxFilePath.Name = "toolStripTextBoxFilePath";
             this.toolStripTextBoxFilePath.Size = new System.Drawing.Size(100, 23);
             this.toolStripTextBoxFilePath.Text = "c:\\TextCode.xml";
@@ -536,6 +546,7 @@
             // 
             // tenantTxtBox
             // 
+            this.tenantTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tenantTxtBox.Name = "tenantTxtBox";
             this.tenantTxtBox.Size = new System.Drawing.Size(100, 23);
             this.tenantTxtBox.Text = "1";
@@ -571,6 +582,7 @@
             // 
             // statusStrip1
             // 
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar1,
             this.toolStripStatusLabel1,
@@ -915,9 +927,9 @@
             // 
             // button39
             // 
-            this.button39.Location = new System.Drawing.Point(10, 429);
+            this.button39.Location = new System.Drawing.Point(9, 427);
             this.button39.Name = "button39";
-            this.button39.Size = new System.Drawing.Size(184, 25);
+            this.button39.Size = new System.Drawing.Size(197, 25);
             this.button39.TabIndex = 88;
             this.button39.Text = "TestFutureCheques";
             this.toolTip1.SetToolTip(this.button39, "When finished, Click on Update Tenants, Then Build Zip files");
@@ -926,9 +938,9 @@
             // 
             // button37
             // 
-            this.button37.Location = new System.Drawing.Point(10, 460);
+            this.button37.Location = new System.Drawing.Point(9, 460);
             this.button37.Name = "button37";
-            this.button37.Size = new System.Drawing.Size(184, 25);
+            this.button37.Size = new System.Drawing.Size(197, 25);
             this.button37.TabIndex = 87;
             this.button37.Text = "Create Journal More Data";
             this.toolTip1.SetToolTip(this.button37, "When finished, Click on Update Tenants, Then Build Zip files");
@@ -1315,9 +1327,9 @@
             // 
             // updateReportLocalNamesBtn
             // 
-            this.updateReportLocalNamesBtn.Location = new System.Drawing.Point(10, 354);
+            this.updateReportLocalNamesBtn.Location = new System.Drawing.Point(8, 298);
             this.updateReportLocalNamesBtn.Name = "updateReportLocalNamesBtn";
-            this.updateReportLocalNamesBtn.Size = new System.Drawing.Size(184, 23);
+            this.updateReportLocalNamesBtn.Size = new System.Drawing.Size(199, 23);
             this.updateReportLocalNamesBtn.TabIndex = 74;
             this.updateReportLocalNamesBtn.Text = "Update Report Local Names ";
             this.updateReportLocalNamesBtn.UseVisualStyleBackColor = true;
@@ -1326,7 +1338,7 @@
             // updateReportLocalNamesLabel
             // 
             this.updateReportLocalNamesLabel.AutoSize = true;
-            this.updateReportLocalNamesLabel.Location = new System.Drawing.Point(10, 380);
+            this.updateReportLocalNamesLabel.Location = new System.Drawing.Point(15, 330);
             this.updateReportLocalNamesLabel.MinimumSize = new System.Drawing.Size(100, 0);
             this.updateReportLocalNamesLabel.Name = "updateReportLocalNamesLabel";
             this.updateReportLocalNamesLabel.Size = new System.Drawing.Size(100, 13);
@@ -1335,9 +1347,9 @@
             // 
             // btnExecuteSqlScriptFiles
             // 
-            this.btnExecuteSqlScriptFiles.Location = new System.Drawing.Point(6, 203);
+            this.btnExecuteSqlScriptFiles.Location = new System.Drawing.Point(8, 192);
             this.btnExecuteSqlScriptFiles.Name = "btnExecuteSqlScriptFiles";
-            this.btnExecuteSqlScriptFiles.Size = new System.Drawing.Size(201, 44);
+            this.btnExecuteSqlScriptFiles.Size = new System.Drawing.Size(199, 28);
             this.btnExecuteSqlScriptFiles.TabIndex = 76;
             this.btnExecuteSqlScriptFiles.Text = "Execute Sql Script Files";
             this.btnExecuteSqlScriptFiles.UseVisualStyleBackColor = true;
@@ -1385,9 +1397,9 @@
             this.groupBox1.Controls.Add(this.RecalculateCashbookLbl);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.textBox1);
-            this.groupBox1.Location = new System.Drawing.Point(10, 253);
+            this.groupBox1.Location = new System.Drawing.Point(8, 226);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(199, 95);
+            this.groupBox1.Size = new System.Drawing.Size(199, 66);
             this.groupBox1.TabIndex = 81;
             this.groupBox1.TabStop = false;
             // 
@@ -1429,6 +1441,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 24);
             this.tabControl1.Name = "tabControl1";
@@ -1546,26 +1559,6 @@
             this.button49.Text = "Update Reports";
             this.button49.UseVisualStyleBackColor = true;
             this.button49.Click += new System.EventHandler(this.button49_Click);
-            // 
-            // btnCallOldUpdate
-            // 
-            this.btnCallOldUpdate.Location = new System.Drawing.Point(543, 342);
-            this.btnCallOldUpdate.Name = "btnCallOldUpdate";
-            this.btnCallOldUpdate.Size = new System.Drawing.Size(184, 23);
-            this.btnCallOldUpdate.TabIndex = 98;
-            this.btnCallOldUpdate.Text = "Update Old Code";
-            this.btnCallOldUpdate.UseVisualStyleBackColor = true;
-            this.btnCallOldUpdate.Click += new System.EventHandler(this.btnCallOldUpdate_Click);
-            // 
-            // button50
-            // 
-            //this.button50.Location = new System.Drawing.Point(543, 313);
-            //this.button50.Name = "button49";
-            //this.button50.Size = new System.Drawing.Size(184, 36);
-            //this.button50.TabIndex = 85;
-            //this.button50.Text = "Load Closed Tables";
-            //this.button50.UseVisualStyleBackColor = true;
-            //this.button50.Click += new System.EventHandler(this.button50_Click);
             // 
             // btnCallOldUpdate
             // 
@@ -1714,8 +1707,8 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage2.Controls.Add(this.groupBox2);
             this.tabPage2.Controls.Add(this.CargoTrackingTestBtn);
-            this.tabPage2.Controls.Add(this.uploadMexicoCitiesBtn);
             this.tabPage2.Controls.Add(this.button47);
             this.tabPage2.Controls.Add(this.button44);
             this.tabPage2.Controls.Add(this.button43);
@@ -1776,6 +1769,66 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.linkLabel2);
+            this.groupBox2.Controls.Add(this.label7);
+            this.groupBox2.Controls.Add(this.uploadCitiesBtn);
+            this.groupBox2.Controls.Add(this.label8);
+            this.groupBox2.Controls.Add(this.citiesTextBox);
+            this.groupBox2.Location = new System.Drawing.Point(8, 342);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(199, 59);
+            this.groupBox2.TabIndex = 82;
+            this.groupBox2.TabStop = false;
+            // 
+            // linkLabel2
+            // 
+            this.linkLabel2.AutoSize = true;
+            this.linkLabel2.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.linkLabel2.Location = new System.Drawing.Point(162, 42);
+            this.linkLabel2.Name = "linkLabel2";
+            this.linkLabel2.Size = new System.Drawing.Size(19, 13);
+            this.linkLabel2.TabIndex = 81;
+            this.linkLabel2.TabStop = true;
+            this.linkLabel2.Text = "(?)";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(12, 71);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(76, 13);
+            this.label7.TabIndex = 78;
+            this.label7.Text = "                       ";
+            // 
+            // uploadCitiesBtn
+            // 
+            this.uploadCitiesBtn.Location = new System.Drawing.Point(2, 10);
+            this.uploadCitiesBtn.Name = "uploadCitiesBtn";
+            this.uploadCitiesBtn.Size = new System.Drawing.Size(182, 23);
+            this.uploadCitiesBtn.TabIndex = 98;
+            this.uploadCitiesBtn.Text = "Upload Cities";
+            this.uploadCitiesBtn.UseVisualStyleBackColor = true;
+            this.uploadCitiesBtn.Click += new System.EventHandler(this.uploadCitiesBtn_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(12, 42);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(40, 13);
+            this.label8.TabIndex = 80;
+            this.label8.Text = "tenant:";
+            // 
+            // citiesTextBox
+            // 
+            this.citiesTextBox.Location = new System.Drawing.Point(53, 39);
+            this.citiesTextBox.Name = "citiesTextBox";
+            this.citiesTextBox.Size = new System.Drawing.Size(56, 20);
+            this.citiesTextBox.TabIndex = 79;
+            this.citiesTextBox.TextChanged += new System.EventHandler(this.citiesTextBox_TextChanged);
+            // 
             // CargoTrackingTestBtn
             // 
             this.CargoTrackingTestBtn.Location = new System.Drawing.Point(497, 529);
@@ -1785,16 +1838,6 @@
             this.CargoTrackingTestBtn.Text = "CargoTrackingTest";
             this.CargoTrackingTestBtn.UseVisualStyleBackColor = true;
             this.CargoTrackingTestBtn.Click += new System.EventHandler(this.CargoTrackingTestBtn_Click);
-            // 
-            // uploadMexicoCitiesBtn
-            // 
-            this.uploadMexicoCitiesBtn.Location = new System.Drawing.Point(10, 400);
-            this.uploadMexicoCitiesBtn.Name = "uploadMexicoCitiesBtn";
-            this.uploadMexicoCitiesBtn.Size = new System.Drawing.Size(182, 23);
-            this.uploadMexicoCitiesBtn.TabIndex = 98;
-            this.uploadMexicoCitiesBtn.Text = "Upload Mexico Cities";
-            this.uploadMexicoCitiesBtn.UseVisualStyleBackColor = true;
-            this.uploadMexicoCitiesBtn.Click += new System.EventHandler(this.uploadMexicoCitiesBtn_Click);
             // 
             // button47
             // 
@@ -1838,9 +1881,9 @@
             // 
             // button40
             // 
-            this.button40.Location = new System.Drawing.Point(8, 529);
+            this.button40.Location = new System.Drawing.Point(9, 522);
             this.button40.Name = "button40";
-            this.button40.Size = new System.Drawing.Size(182, 23);
+            this.button40.Size = new System.Drawing.Size(197, 23);
             this.button40.TabIndex = 92;
             this.button40.Text = "Add States";
             this.button40.UseVisualStyleBackColor = true;
@@ -1856,9 +1899,9 @@
             // 
             // HarmonizeCodesButton
             // 
-            this.HarmonizeCodesButton.Location = new System.Drawing.Point(10, 491);
+            this.HarmonizeCodesButton.Location = new System.Drawing.Point(9, 492);
             this.HarmonizeCodesButton.Name = "HarmonizeCodesButton";
-            this.HarmonizeCodesButton.Size = new System.Drawing.Size(182, 23);
+            this.HarmonizeCodesButton.Size = new System.Drawing.Size(197, 23);
             this.HarmonizeCodesButton.TabIndex = 90;
             this.HarmonizeCodesButton.Text = "Upload Harmonize Codes";
             this.HarmonizeCodesButton.UseVisualStyleBackColor = true;
@@ -1971,6 +2014,27 @@
             this.button46.UseVisualStyleBackColor = true;
             this.button46.Click += new System.EventHandler(this.button46_Click_1);
             // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.button51);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(743, 558);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Misc";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // button51
+            // 
+            this.button51.Location = new System.Drawing.Point(18, 21);
+            this.button51.Name = "button51";
+            this.button51.Size = new System.Drawing.Size(180, 36);
+            this.button51.TabIndex = 0;
+            this.button51.Text = "Verify Redeemed Cheques";
+            this.button51.UseVisualStyleBackColor = true;
+            this.button51.Click += new System.EventHandler(this.button51_Click_1);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1998,8 +2062,11 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2186,11 +2253,18 @@
         private System.Windows.Forms.Button button50;
 
         private System.Windows.Forms.CheckBox AirlineLogosCheckBox;
-        private System.Windows.Forms.Button uploadMexicoCitiesBtn;
         private System.Windows.Forms.ToolStripStatusLabel conStrLabel;
         private System.Windows.Forms.Button CargoTrackingTestBtn;
         
         private System.Windows.Forms.Label UpdateCargoTrackingLabel;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.LinkLabel linkLabel2;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox citiesTextBox;
+        private System.Windows.Forms.Button uploadCitiesBtn;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Button button51;
     }
 }
 

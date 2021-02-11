@@ -36,6 +36,9 @@ namespace WebFreight.Web.ExternalAPIs
                     entity = RemoveSpaces(entity);
                     ShipmentNumbersXML.ShipmentDataMappingValidating(entity, tenant);
                     var response = ShipmentNumbersXML.GetShipmentNumbersXMLMessage(entity, tenant);
+
+                    APIHelper.AddCommunicationLog("D", entity, response, "Shipment", null, "Shipment Numbers API", authToken.Tenant);
+
                     return Request.CreateResponse(HttpStatusCode.OK, response);
                 }
                 catch (Exception ex)
@@ -56,13 +59,13 @@ namespace WebFreight.Web.ExternalAPIs
         {
             // we can use the reflection here to support the generalization (but there is a cost for for loop) - it needs discussion 
             GetShipmentNumbers newEntity = entity;
-            newEntity.Direction = Regex.Replace(newEntity.Direction, @"\s+", "");
-            newEntity.TransportMode = Regex.Replace(newEntity.TransportMode, @"\s+", "");
-            newEntity.ShipmentLevel = Regex.Replace(newEntity.ShipmentLevel, @"\s+", "");
-            newEntity.House = Regex.Replace(newEntity.House, @"\s+", "");
-            newEntity.Master = Regex.Replace(newEntity.Master, @"\s+", "");
-            newEntity.Carrier = Regex.Replace(newEntity.Carrier, @"\s+", "");
-            newEntity.ContainerNumber = Regex.Replace(newEntity.ContainerNumber, @"\s+", "");
+            newEntity.Direction = !string.IsNullOrEmpty(newEntity.Direction) ? Regex.Replace(newEntity.Direction, @"\s+", "") : newEntity.Direction;
+            newEntity.TransportMode = !string.IsNullOrEmpty(newEntity.TransportMode) ? Regex.Replace(newEntity.TransportMode, @"\s+", "") : newEntity.TransportMode;  
+            newEntity.ShipmentLevel = !string.IsNullOrEmpty(newEntity.ShipmentLevel) ? Regex.Replace(newEntity.ShipmentLevel, @"\s+", "") : newEntity.ShipmentLevel;
+            newEntity.House = !string.IsNullOrEmpty(newEntity.House) ? Regex.Replace(newEntity.House, @"\s+", "") : newEntity.House;
+            newEntity.Master = !string.IsNullOrEmpty(newEntity.Master) ? Regex.Replace(newEntity.Master, @"\s+", "") : newEntity.Master;
+            newEntity.Carrier = !string.IsNullOrEmpty(newEntity.Carrier) ? Regex.Replace(newEntity.Carrier, @"\s+", "") : newEntity.Carrier;
+            newEntity.ContainerNumber = !string.IsNullOrEmpty(newEntity.ContainerNumber) ? Regex.Replace(newEntity.ContainerNumber, @"\s+", "") : newEntity.ContainerNumber;
             return newEntity;
         }
     }

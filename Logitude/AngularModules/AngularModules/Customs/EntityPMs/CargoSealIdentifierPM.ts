@@ -133,7 +133,10 @@ export class CargoSealIdentifierPM {
     public OldEntityPM: CargoSealIdentifierPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -141,6 +144,7 @@ export class CargoSealIdentifierPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.CargoSealIdentifier");
            
         }
+       }
     }
 
     private MyClone: CargoSealIdentifierPM;

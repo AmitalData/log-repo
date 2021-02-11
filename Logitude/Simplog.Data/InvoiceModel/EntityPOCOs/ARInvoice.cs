@@ -215,5 +215,8 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public DateTime? AutomaticLastUpdateDate { get; set; }
 
         public DateTime? PaidDate { get; set; }
+        public string PartnerId { get; set; }
+        [ForeignKey("PartnerId")]
+        public virtual Card Partner { get; set; }
     }
 }

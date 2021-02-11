@@ -22,6 +22,7 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
+using Logitude.BL.Resolvers;
 
 namespace WebFreight.Web.Security
 {
@@ -215,8 +216,15 @@ namespace WebFreight.Web.Security
             }
         }
 
+        public static bool IsWorkerRoleCall = false;
+       
         public static void CheckContactFeature(string objectTableName, string featureCode, int tenant,string overrideEmail=null)
         {
+            if (IsWorkerRoleCall && HttpContext.Current == null) //for calling the excel export data from WR 
+            {
+                return;
+            }
+
             bool exists = false;
 
             if (objectTableName.Contains("Customs."))
@@ -359,6 +367,11 @@ namespace WebFreight.Web.Security
 	 
 		public static bool CheckTableContactFeature(string objectTableName, string featureCode, int tenant)
         {
+            if (IsWorkerRoleCall && HttpContext.Current == null) //for calling the excel export data from WR 
+            {
+                return true;
+            }
+
             bool exists = false;
 
             if (tenant == 0)
@@ -966,6 +979,12 @@ namespace WebFreight.Web.Security
 
         public static string GetAuthenticatedUser()
         {
+            if (IsWorkerRoleCall && HttpContext.Current == null) //for calling the excel export data from WR 
+            {
+                var loggedContact = LoggedContactResolver.GetLoggedContact(0);
+                return loggedContact?.Email;
+            }
+
             if (HttpContext.Current != null)
             {
 
@@ -1058,6 +1077,8 @@ namespace WebFreight.Web.Security
         {
             HttpContext context = HttpContext.Current;
             string Url = context.Request.Url.ToString().Split('/')[2];//("http://", "");
+            Url = Url.Split(':')[0];
+
             return Url;
         }
 

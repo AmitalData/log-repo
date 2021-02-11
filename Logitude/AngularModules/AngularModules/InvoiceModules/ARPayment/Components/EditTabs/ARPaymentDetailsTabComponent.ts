@@ -63,10 +63,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
 
         this.EntityPM = entityArgs.EntityPM;
-        if (this.EntityPM && !AppTool.IsNullOrEmpty(this.EntityPM.TransmissionError)) {
-            this.EntityWarningsList.push(this.EntityPM.TransmissionError);
-            
-        }
+        this.BuildEntityWarnings();
 
         this.FullAccounting = SessionLocator.TenantPM.AccountingActivated;
         this.ItemsSource = new ObservableCollection([]);
@@ -106,6 +103,14 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
     }
 
+    private BuildEntityWarnings() {
+        this.EntityWarningsList = [];
+        if (this.EntityPM && !AppTool.IsNullOrEmpty(this.EntityPM.TransmissionError)) {
+            this.EntityWarningsList.push(this.EntityPM.TransmissionError);
+
+        }
+    }
+
     ngOnInit() {
         this.LoadPaymentMethods();
     }  
@@ -130,6 +135,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
                     this.LoadData();
+                    this.BuildEntityWarnings();
                 }
 
                 if (this.RequestedCommandCode) {
@@ -142,6 +148,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
                     this.LoadData();
+                    this.BuildEntityWarnings();
                 }
             });
         }
@@ -189,6 +196,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
             if (this.FullAccounting) {
                 this.UIProperties.SetEnabled("BankAccountId", this.ObjectTableName, false);
             }
+            this.UIProperties.SetEnabled("PartnerId", this.ObjectTableName, false);
         }
 
         else {
@@ -204,9 +212,11 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.UIProperties.SetEnabled("CreditCardTypeId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("BranchId", this.ObjectTableName, true);
 
+            this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, false);
             if (AppTool.IsNullOrEmpty(this.EntityPM.BillToId)) {
                 this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);
             }
+            
 
             if (this.EntityPM.StatusCode == "VD") {
                 this.UIProperties.SetEnabled("PrintNotes", this.ObjectTableName, false);
@@ -219,18 +229,18 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
     
     SetUIProperties_Invoices() {
         if (!this.IsScreenEnabled) {
-            this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("PartnerId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);
         }
 
         else {
-            this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("PartnerId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, true);
 
             if (this.EntityPM.PaymentInvoices.length > 0) {
-                this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, false);
+                this.UIProperties.SetEnabled("PartnerId", this.ObjectTableName, false);
                 this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);
                 this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);
             }
@@ -550,6 +560,30 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.ItemsSource.InsertCollection(itemsCollection);
         this.UpdateSummary();
         this.IsDataLoaded = true;
+    }
+
+    get PartnerId() { return this.EntityPM.PartnerId; }
+    set PartnerId(newValue: string) {
+        if (this.EntityPM.PartnerId != newValue) {
+            this.EntityPM.PartnerId = newValue;
+            if (AppTool.IsNullOrEmpty(newValue)) {
+                this.BillToId = null;
+            }
+            else {
+                var myService: CardListService = new CardListService();
+                myService.getSingle(newValue).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: CardList = myResponse.Result;
+                        if (list != null) {
+                            this.BillToId = list.BillToId;
+                            if (AppTool.IsNullOrEmpty(this.BillToId)) {
+                                this.BillToId = newValue;
+                            }
+                        }
+                    }
+                });
+            }
+        }
     }
 
     // BillTo
@@ -1716,47 +1750,49 @@ export class ARPaymentInvoiceArgs extends BaseComponent {
     SetUIProperties_CurrencyMatched() {
         this.isCurrencyMatched = false;
 
-        if (this.PaymentPM.PaymentCurrencyId == this.CurrencyId) {
-            this.isCurrencyMatched = true;
-        }
+        if (this.PaymentPM.PaymentCurrencyId) {
+            if (this.PaymentPM.PaymentCurrencyId == this.CurrencyId) {
+                this.isCurrencyMatched = true;
+            }
 
-        else {
-            if (this.trigger.IsMultiCurrency) {
-                if (this.PaymentPM.PaymentCurrencyId == SessionLocator.LocalCurrencyId) {
-                    this.isCurrencyMatched = true;
-                    this.IsAdvancedButtonVisible = true;
-                }
+            else {
+                if (this.trigger.IsMultiCurrency) {
+                    if (this.PaymentPM.PaymentCurrencyId == SessionLocator.LocalCurrencyId) {
+                        this.isCurrencyMatched = true;
+                        this.IsAdvancedButtonVisible = true;
+                    }
 
-                else if (this.CurrencyId == SessionLocator.LocalCurrencyId) {
-                    this.isCurrencyMatched = true;
-                    this.IsAdvancedButtonVisible = true;
+                    else if (this.CurrencyId == SessionLocator.LocalCurrencyId) {
+                        this.isCurrencyMatched = true;
+                        this.IsAdvancedButtonVisible = true;
+                    }
                 }
             }
         }
     }
-  SetUIProperties_AllowedToConnect() {
-    this.isAllowedToConnect = true;
+    SetUIProperties_AllowedToConnect() {
+        this.isAllowedToConnect = true;
 
-    if (this.IsConnected == false) {
-      if (this.Invoice.StatusCode == "DR") {
-        this.isAllowedToConnect = false;
-      }
+        if (this.IsConnected == false) {
+            if (this.Invoice.StatusCode == "DR") {
+                this.isAllowedToConnect = false;
+            }
 
-      if (this.isCurrencyMatched == false) {
-        this.isAllowedToConnect = false;
-      }
+            if (this.isCurrencyMatched == false) {
+                this.isAllowedToConnect = false;
+            }
 
-      if (AppTool.IsNullOrZero(this.AmountDue)) {
-        this.isAllowedToConnect = false;
-      }
+            if (AppTool.IsNullOrZero(this.AmountDue)) {
+                this.isAllowedToConnect = false;
+            }
 
-      if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
-        if ((this.Invoice.MetodoPagoCode != this.PaymentPM.MetodoPagoCode && !AppTool.IsNullOrEmpty(this.PaymentPM.MetodoPagoCode)) || (this.PaymentPM.MetodoPagoCode == "PUE" && this.Invoice.StatusCode != "AD") && this.PaymentPM.OpenAmount >= this.Invoice.AmountPaid) {
-          this.isAllowedToConnect = false;
+            if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
+                if ((this.Invoice.MetodoPagoCode != this.PaymentPM.MetodoPagoCode && !AppTool.IsNullOrEmpty(this.PaymentPM.MetodoPagoCode)) || (this.PaymentPM.MetodoPagoCode == "PUE" && this.Invoice.StatusCode != "AD") && this.PaymentPM.OpenAmount >= this.Invoice.AmountPaid) {
+                    this.isAllowedToConnect = false;
+                }
+            }
         }
-      }
     }
-  }
     SetUIProperties_AmountPaidEnabled() {
         var isEnabled: boolean = true;
 

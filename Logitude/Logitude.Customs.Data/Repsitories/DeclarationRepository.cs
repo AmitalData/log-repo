@@ -13,6 +13,7 @@ using Logitude.Customs.Data.EntityLists;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -71,9 +72,10 @@ namespace Logitude.Customs.Data.Repsitories
 
         public int GetDeclarationMaxCancelRequestNumber(int tenant, string id)
         {
-      
+            // && a.Id==id
+
             var list = (from a in context.Declarations
-                        where a.Tenant == tenant && a.CancelRequestNumber != null && a.Id==id
+                        where a.Tenant == tenant  && a.CancelRequestNumber != null
                         select  a.CancelRequestNumber  ).ToList();
 
             int? max = 0;
@@ -279,6 +281,13 @@ namespace Logitude.Customs.Data.Repsitories
         }
         //Yuval Chalup 19.11.2015 TASK-17450 --->
 
+        public IQueryable<Declaration> GetQSingle(EntityKeyFields entityKeys)
+        {
+            DeclarationKeys keys = entityKeys as DeclarationKeys;
+            return (from a in context.Declarations
+                    where a.Id == keys.Id
+                    select a);
+        }
         public string GetIdByCustomFileNo(string customFileNo, int tenant)
         {
          
@@ -295,13 +304,17 @@ namespace Logitude.Customs.Data.Repsitories
         }
         public List<string> GetListByCourierHAWB(string CourierHAWB, int tenant)
         {
-            
-            return
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+
+
+            var q =
                   (
                   from rec in context.Declarations
                   where rec.CourierHAWB == CourierHAWB && rec.Tenant == tenant
                   select rec.Id
-                  ).ToList();
+                  );
+            return q.ToList(); ;
         }
         public string GetConcurrencyGUIDByCustomFileNo(string customFileNo, int tenant)
         {

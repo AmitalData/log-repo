@@ -26,7 +26,7 @@
     <script src="../HtmlHelpers/JS/Logitude.Converters.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/Logitude.Entites.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/ContactActivityLog.js" type="text/javascript"></script>
-
+    <script src="../HtmlHelpers/JS/Logitude.Tools.js" type="text/javascript"></script>   
 
 <style type="text/css">
     img[src] {
@@ -103,6 +103,10 @@
 
 <body>
 
+    <form style="visibility:collapse;">
+        <input id="TokenInput" runat="server" />
+        <input id="LoginInput" runat="server" />
+    </form>
 
     <script src="../HtmlHelpers/JS/highlight.pack.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/app.js" type="text/javascript"></script>
@@ -991,13 +995,27 @@
     <script type="text/javascript">
         function OnDownloadDocument(url) {
             $.SendContactActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
-            window.open(url);
-        }
+            //window.open(url);
 
+            var params = [];
+            params.push({ name: "Token", value: $.Token });
+            PostFormParamsBlank(url, params);
+        }
 
         function OnDownloadAllDocument() {
             $.SendContactsActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
-            window.open("../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType);
+
+            var url = "../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType;
+
+            if ($.IsExternalURL) {
+                url += ":securitykey:" + $.CurrentEntityKey;
+            }
+
+            var params = [];
+            params.push({ name: "Token", value: $.Token });
+            PostFormParamsBlank(url, params);
+
+            //window.open(url);
         }
 
         function GetURL() {

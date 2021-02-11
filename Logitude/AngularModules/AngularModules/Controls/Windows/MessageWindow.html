@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .MessageWindowLayout {
         position: absolute;
@@ -65,13 +65,14 @@
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
     }
-      .red{
+
+    .red{
           color: #e50a0a !important;
       }
 </style>
 
 <div class="MessageWindowLayout" tabindex="-1" contenteditable="false" *ngIf="ShowModal"></div>
-
+<LogitudeHotKeysComponent  (CTRL_S_HotKey)="OnCTRL_S_HotKeyPressed()" ></LogitudeHotKeysComponent>
 <div class="MediaFillAbsolute">
     <div class="MediaFillRelative">
         <div [attr.id]="WindowId" class="MessageWindow" [ngStyle]="{left: Left, top: Top, width: Width, height: Height}" [style.zIndex]="ZIndex">
@@ -106,7 +107,8 @@
                                         <ScrollViewer>
                                             <div class="MediaFillRelative">
                                                 <div style="position: absolute; top: 50%; transform:translateY(-50%);">
-                                                    <div style="white-space: normal; word-wrap: break-word; width: 100%; font-size: 11px; text-align: left; color: #6E7172;" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">{{Message}}</div>
+                                                    <div *ngIf="!IsMessageMultiLine" style="white-space:normal; word-wrap: break-word; width: 100%; font-size: 11px; text-align: left; color: #6E7172;" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">{{Message}}</div>
+                                                    <div *ngIf="IsMessageMultiLine" style="white-space:pre-line; word-wrap: break-word; width: 100%; font-size: 11px; text-align: left; color: #6E7172;" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">{{Message}}</div>
                                                 </div>
                                             </div>
                                         </ScrollViewer>

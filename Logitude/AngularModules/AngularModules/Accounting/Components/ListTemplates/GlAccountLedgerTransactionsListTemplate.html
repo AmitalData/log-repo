@@ -51,12 +51,12 @@
     <!-- SourceType -->
     <div style="padding: 0px 7px;text-align: left;" class="TextTrimming" *ngIf="fieldName == 'Source'">
 
-        <span title="{{rowData['SourceType']}}" *ngIf="IconCode"
+        <span title="{{rowData['SourceType']}}" *ngIf="rowData['IconCode']"
               [class]="'SourceTypeIcon color-' + rowData['SourceTypeCode']"
-              (click)="OpenSource(rowData['SourceId'])">{{IconCode}}</span>
+              (click)="OpenSource(rowData['SourceId'])">{{rowData['IconCode']}}</span>
 
         <a href="javascript:;" (click)="OpenSource(rowData['SourceId'])">
-            {{ rowData['SourceNumber'] }}
+            {{rowData['SourceNumber']}}
         </a>
     </div>
 
@@ -64,12 +64,12 @@
     <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'DueDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
 
     <!-- LocalAmountCredit -->
-    <div class="TextTrimming" *ngIf="fieldName == 'LocalAmountCredit'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["LocalAmountCredit"]!=0'>
-        {{ (rowData["LocalAmountCredit"] != 0 ? rowData["LocalAmountCredit"] : rowData["LocalAmountDebit"])| NumbersPipe:'N2' }}
+    <div class="TextTrimming" *ngIf="fieldName == 'LocalAmountCredit'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["IsLocalAmountCreditPos"]'>
+        {{  rowData["CalculatedLocalAmount"]   | NumbersPipe:'N2' }}
     </div>
 
     <!-- CumulativeLocalAmount -->
-    <div class="TextTrimming" *ngIf="fieldName == 'CumulativeLocalAmount'" style="color:#00a24d; text-align: right; padding: 0px 2px; direction: ltr;" [class.red]='rowData["CumulativeLocalAmount"]<0'>
+    <div class="TextTrimming" *ngIf="fieldName == 'CumulativeLocalAmount'" style="color:#000; text-align: right; padding: 0px 2px; direction: ltr;">
         {{ rowData[fieldName] | NumbersPipe:'N2' }}
     </div>
 
@@ -79,12 +79,12 @@
 
 
     <!-- ForeignAmountCredit -->
-    <div class="TextTrimming" *ngIf="fieldName == 'ForeignAmountCredit'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["ForeignAmountCredit"]!=0'>
-        {{ (rowData["ForeignAmountCredit"] != 0 ? rowData["ForeignAmountCredit"] : rowData["ForeignAmountDebit"]) | NumbersPipe:'N2' }} {{rowData['CurrencySign']}}
+    <div class="TextTrimming" *ngIf="fieldName == 'ForeignAmountCredit'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["IsForeignAmountCreditPos"]'>
+        {{  rowData["CalculatedForeignAmount"]   | NumbersPipe:'N2' }} {{rowData['CurrencySign']}}
     </div>
 
     <!-- CumulativeForeignAmount -->
-    <div class="TextTrimming" *ngIf="fieldName == 'CumulativeForeignAmount'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["CumulativeForeignAmount"]<0'>
+    <div class="TextTrimming" *ngIf="fieldName == 'CumulativeForeignAmount'" style="color:#000; text-align: right; padding: 0px 2px;direction: ltr;">
         {{ rowData[fieldName] | NumbersPipe:'N2'  }} {{rowData['CurrencySign']}}
     </div>
 
@@ -110,14 +110,14 @@
     <div class="TextTrimming" *ngIf="fieldName == 'OpenAmount'" style="text-align: right; padding: 0px 2px;direction: ltr;" >
         {{ rowData[fieldName] | NumbersPipe:'N2'  }} <!--{{rowData["OpenAmountCurrencySign"]}}-->
     </div>
-    <div class="TextTrimming" *ngIf="fieldName == 'ForeignAmount'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["ForeignAmountCredit"]!=0'>
+    <div class="TextTrimming" *ngIf="fieldName == 'ForeignAmount'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["IsLocalAmountCreditPos"]'>
         {{ rowData[fieldName] | NumbersPipe:'N2'  }} <!--{{rowData["OpenAmountCurrencySign"]}}-->
     </div>
 
     <div *ngIf="fieldName == 'OriginalAmount'">
-        <div class="TextTrimming" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["OpenAmount"]<0'>
+        <div class="TextTrimming" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["IsLocalAmountCreditPos"]'>
 
-            {{ CalculateOriginalAmount() | NumbersPipe:'N2'  }} <!--{{ CalculatOriginalCurruncy() }} -->
+            {{ rowData[fieldName]| NumbersPipe:'N2'  }} <!--{{ CalculatOriginalCurruncy() }} -->
         </div>
     </div>
 

@@ -94,6 +94,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string SearchFields { get; set; }
 
         public string MainEntityId { get; set; }
+        public string MasterEntityId { get; set; }
         public string MainEntityReference { get; set; }
         public double? AmountDue { get; set; }
 
@@ -409,5 +410,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? PaidDate { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string PartnerId { get; set; }
+
     }
 }

@@ -32,6 +32,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string SearchFields { get; set; }
         public string BankName { get; set; }
         public string BankAddress { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
         public string Swift { get; set; }
         public string AccountNumber { get; set; }
         public string IBANNumber { get; set; }
@@ -121,7 +123,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public int SearchWeight { get; set; }
 
         public DateTime? RecordDate { get; set; }
+        public string BillToId { get; set; }
 
-        
+
     }
 }

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "e1253e5d4b09f4bebc908c86f16a518d";
+		public const string HashString = "d2db9195946bffd5d0fb6391631d02f2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "14d1",
+			      				    Code =  "7059",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -616,6 +616,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature GeneralFeature_CUSTOMSINTERFACESETTINGS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSINTERFACESETTINGS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CUSTOMSINTERFACESETTINGS", NameTextCodeDefaultText = @"Customs Interface Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 		   Feature GeneralFeature_MASTERSDOCUMENTSLINK = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MASTERSDOCUMENTSLINK", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.MASTERSDOCUMENTSLINK", NameTextCodeDefaultText = @"Enable Masters Documents Link for Agents" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
+		   Feature GeneralFeature_AGENTDOCUMENTSPERMISSION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AGENTDOCUMENTSPERMISSION", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AGENTDOCUMENTSPERMISSION", NameTextCodeDefaultText = @"Documents Permission Agent View" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
    
 	    
@@ -2121,7 +2123,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralOWantToCancelTaxReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.WantToCancelTaxReport", DefaultText = "Are you sure you want to cancel this report?",LocalDefaultText = @"האם אתה בטוח שאתה רוצה לבטל דוח זה؟", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_GeneralBNew = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.B.New", DefaultText = "New",LocalDefaultText = @"אישור", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_GeneralBNew = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.B.New", DefaultText = "New",LocalDefaultText = @"חדש", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralBSelect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.B.Select", DefaultText = "Select",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -2413,9 +2415,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralOFieldIsInactive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.FieldIsInactive", DefaultText = "%FieldName is Inactive",LocalDefaultText = @"%FieldName  חסום", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_GeneralMCOthersUserDefinedReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.UserDefinedReport", DefaultText = "User Defined Reports",LocalDefaultText = "הוגדר ע\''י משתמש", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_GeneralMCOthersUserDefinedReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.UserDefinedReport", DefaultText = "User Defined Reports",LocalDefaultText = @"קבוצות מאזן מחושבות", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingGeneralONewUserDefinedReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NewUserDefinedReport", DefaultText = "New User Defined Report",LocalDefaultText = "הוגדר מחדש ע''י", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralMApprovalPaymentWarning = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.ApprovalPaymentWarning", DefaultText = "Please note that in addition to paying VAT, %br We need your approval to pay: %br Purchase tax in the amount of %PurchaseTax ₪ %br Customs in the amount of %CustomsTax ₪ %br Do you confirm?",LocalDefaultText = "אנא תשומת ליבך כי בנוסף לתשלום המע''מ, %br יש לנו צורך באישורך לשלם: %br מס קנייה בסך של %PurchaseTax ₪ %br מכס בסך של %CustomsTax ₪ %br האם אתה מאשר?", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

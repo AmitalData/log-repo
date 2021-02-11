@@ -142,6 +142,7 @@
     <Compile Include="EntityQueryServices\Generated\FlightsSchedulesRequestQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\FlightsSchedulesRequestStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\FlightsSchedulesResponseQueryService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Behaviours\BookingBehaviours\Validators\BookingMasterIsUsedValidator.cs" />
     <Compile Include="EntityUpdateServices\BookingAnswerUpdateService.cs" />
     <Compile Include="EntityUpdateServices\BookingPackageUpdateService.cs" />
     <Compile Include="EntityUpdateServices\BookingProductUpdateService.cs" />

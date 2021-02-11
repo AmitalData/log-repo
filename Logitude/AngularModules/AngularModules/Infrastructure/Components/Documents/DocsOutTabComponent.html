@@ -26,10 +26,20 @@
                             <div></div>
                         </td>
 
+
+
                         <td style="width: 1px;">
                             <HelpIcon [IconSize]="14" [Header]="'DocsOut.AddTemplates' | TextCodeTranslationPipe" [Text]="'DocsOut.AddYourOwnTemplates' | TextCodeTranslationPipe"></HelpIcon>
                         </td>
 
+                        <td style="width:200px;vertical-align:central">
+
+                            <div style="width:200px;height:20px">
+                                <p *ngIf="IsShowAddFromLibraryLink" (click)="LinkAddDocumentFromLibraryClcik()" class="CustomLink" style="font-size:12px;float:right;width:190px;height:20px">Check New Available Templates</p>
+
+                            </div>
+
+                        </td>
                         <td>
                             <div></div>
                         </td>
@@ -42,15 +52,6 @@
                             </button>
                         </td>
 
-
-                        <td style="width:200px;vertical-align:central">
-
-                            <div style="width:200px;height:20px">
-                                <p *ngIf="IsShowAddFromLibraryLink" (click)="LinkAddDocumentFromLibraryClcik()" class="CustomLink" style="font-size:12px;float:right;width:173px;height:22px">Add Document From Library</p>
-
-                            </div>
-
-                        </td>
                         <td style="width:5px;">
                             <div></div>
                         </td>
@@ -133,7 +134,7 @@
 
                                                             <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
 
-                                                                <button id="{{item.DocumentTypeCode+'-S-DocsOut' | IdGeneratorPipe}}" *ngIf="item.VisibleSendButton" style="width: 40px;" class="Button"  (click)="SendButtonClick(item)"   >Send</button>
+                                                                <button id="{{item.DocumentTypeCode+'-S-DocsOut' | IdGeneratorPipe}}" [disabled]="DisableSendOriginalCopy" *ngIf="item.VisibleSendButton" style="width: 40px;" class="Button"  (click)="SendButtonClick(item)"   >Send</button>
                                                                 <button id="{{item.DocumentTypeCode+'-P-DocsOut' | IdGeneratorPipe}}" *ngIf="item.VisiblePrintButton" style="width: 75px;" class="Button" (click)="PrintButtonClick(item)"   >Print/Send</button>
 
 

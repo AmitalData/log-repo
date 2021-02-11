@@ -180,7 +180,7 @@ export class WebFreightDomainService {
                     if (response.ok == true) {
                         var viewResponse: any = response;
                         if (viewResponse != "Faild") {
-                            return viewResponse;
+                            return viewResponse?.body;
                         }
                         else {
                             return "Faild";
@@ -221,8 +221,8 @@ export class WebFreightDomainService {
         });
     }
 
-    GetBIReportLogStatus(reportId: string) {
-        var url = this._apiUrl + '/GetBIReportLogStatus?reportId=' + reportId;
+    GetBIReportLogStatus(bIReportsExecutionLogId: string) {
+        var url = this._apiUrl + '/GetBIReportLogStatus?bIReportsExecutionLogId=' + bIReportsExecutionLogId;
 
         return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
@@ -231,6 +231,19 @@ export class WebFreightDomainService {
                 serviceResponse.Result = report;
                 return serviceResponse;
             }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    GetQueryExportExecutionLogStatus(logId: string) {
+        var url = this._apiUrl + '/GetQueryExportExecutionLogStatus?logId=' + logId;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var report = response;
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = report;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 

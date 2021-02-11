@@ -108,7 +108,24 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
             return myResult;
         }
+        public Card GetSingleCardCache(string id, int Tenant)
+        {
+            string entityKeyString = $"GetSingleCard({id},{Tenant})";
+            var res = CacheManager.GetOrInsertNewObject<Card>(entityKeyString, () =>
+            {
+                //return this.GetSingleCard(id, Tenant);
+                Card entity = Queryable.FirstOrDefault<Card>((from a in context.Cards
+                                                              
+                                                              //.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus").Include("ImageDetail").Include("InvoiceCurrency").Include("VatType").Include("Trucker").Include("ShippingLine").Include("CustomAgent").Include("ShippingAgent").Include("Warehouse").Include("Agent").Include("Vendor")
 
+                                                              where a.Id == id
+                                                              select a));
+
+                return entity;
+
+            });
+            return res;
+        }
         public Card GetSingleCard(string id, int tenant)
         {
             Card entity = Queryable.FirstOrDefault<Card>((from a in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus").Include("ImageDetail").Include("InvoiceCurrency").Include("VatType").Include("Trucker").Include("ShippingLine").Include("CustomAgent").Include("ShippingAgent").Include("Warehouse").Include("Agent").Include("Vendor")
@@ -589,5 +606,43 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     where a.UploadingUniqueKey == uniqueCode
                     select a).Any();
         }
+
+        public Card GetSingleCardByUniqueCode(string unique, int tenant, bool getFromCache)
+        {
+            if (!string.IsNullOrEmpty(unique))
+            {
+                string entityName = "Card" + unique + tenant;
+                Card entity;
+                if (getFromCache)
+                {
+
+                    if (CacheManager.CacheWrapper.Get(entityName) == null)
+                    {
+
+                        entity = (from a in context.Cards
+                                  where a.Tenant == tenant && a.UploadingUniqueKey == unique
+                                  select a).FirstOrDefault();
+
+                        if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
+                        {
+                            CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                        }
+                    }
+                    else
+                    {
+                        entity = (Card)CacheManager.CacheWrapper.Get(entityName);
+                    }
+
+
+                }
+                else
+                {
+                    entity = (from record in context.Cards where record.UploadingUniqueKey == unique && record.Tenant == tenant select record).FirstOrDefault();
+                }
+                return entity;
+            }
+            return null;
+        }
+
     }
 }

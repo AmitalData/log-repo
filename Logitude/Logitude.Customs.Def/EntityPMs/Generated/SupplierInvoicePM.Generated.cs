@@ -1393,7 +1393,53 @@ namespace Logitude.Customs.Def.EntityPMs
               }
              set {  deletedSupplierInvoiceUCRs = value; }
 	    }
-	     }
+	  	  private decimal? itemFOBAmountForeign ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? ItemFOBAmountForeign  
+	   {
+	    
+	     get
+		{
+		   return itemFOBAmountForeign;
+		 }
+		 set
+		 {
+		   if(itemFOBAmountForeign != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ItemFOBAmountForeign",OldValue=itemFOBAmountForeign,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   itemFOBAmountForeign=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? itemFOBAmountNIS ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? ItemFOBAmountNIS  
+	   {
+	    
+	     get
+		{
+		   return itemFOBAmountNIS;
+		 }
+		 set
+		 {
+		   if(itemFOBAmountNIS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ItemFOBAmountNIS",OldValue=itemFOBAmountNIS,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   itemFOBAmountNIS=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 

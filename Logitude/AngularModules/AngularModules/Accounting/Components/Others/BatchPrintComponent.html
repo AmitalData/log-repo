@@ -11,6 +11,96 @@
         color: gray;
         font-family: sans-serif;
     }
+
+    .x-split-button {
+        position: relative;
+        display: inline-block;
+        text-align: left;
+     }
+
+
+
+    .x-button {
+        width: initial !important;
+        position: relative;
+        margin: 0;
+        height: 22px;
+        float: left;
+        outline: none;
+        line-height: 21px;
+        /*background: #F2F2F2;
+      border: 1px solid  #00b300;*/
+        border: 1px solid #6A8299;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    }
+
+        .x-button:disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .x-button:hover {
+            cursor: pointer;
+            /*background:  #00b300;*/
+            background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 0.85) 100%);
+            background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 0.85) 100%);
+            background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 0.85) ));
+            background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 0.85) 100%);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 0.85) 100%);
+        }
+
+        .x-button:active {
+            background: #F2F2F2;
+        }
+
+        .x-button.x-button-drop {
+            border-right: 0;
+            height: 22px;
+        }
+    /*.open > .x-button-drop-menu {
+      display: block;
+    }*/
+
+    .x-button-drop-menu {
+        position: absolute;
+        top: 22px;
+        right: 0;
+        z-index: 1000;
+        /*display: none;*/
+        text-align: right;
+        float: left;
+        min-width: 130px;
+        /*padding: 5px 0;
+        margin: 2px 0 0;*/
+        font-size: 15px;
+        list-style: none;
+        background-color: #F2F2F2;
+        background-clip: padding-box;
+        border: .5px solid #45494A;
+        box-shadow: .5px .5px 2px #6A8299;
+    }
+
+        .x-button-drop-menu li span {
+            display: block;
+            padding: 3px 20px;
+            clear: both;
+            font-family: arial;
+            color: #444;
+            text-decoration: none;
+            height: 22px;
+        }
+
+            .x-button-drop-menu li span:hover {
+                background: #D3D3D3;
+                cursor: pointer;
+            }
+
+  
+
 </style>
 
 
@@ -35,8 +125,8 @@
 
         <td style="width:120px;">
             <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
-                                                        [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
-                                                        [HideColumns]="true" [SelectedDateValue]="FromDate"></LogDatePicker>
+                           [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
+                           [HideColumns]="true" [SelectedDateValue]="FromDate"></LogDatePicker>
         </td>
 
         <td style="width:10px"></td>
@@ -46,8 +136,8 @@
 
         <td style="width:120px;">
             <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
-                                                        [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
-                                                        [HideColumns]="true" [SelectedDateValue]="ToDate"></LogDatePicker>
+                           [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
+                           [HideColumns]="true" [SelectedDateValue]="ToDate"></LogDatePicker>
         </td>
         <td style="width:10px"></td>
 
@@ -63,21 +153,10 @@
         </td>
         <td style="width: 250px;">
             <div>
-            {{'InterestReport.O.ShowReportsWithPrintedInvoices' | TextCodeTranslationPipe}}
-        </div>
-        </td>
-        <td style="width: 35px;height:23px;">
-            <div>
-                <CheckBox [IsChecked]="AttachReportWithEachInvoice" (Checked)="AttachReportWithEachInvoice = $event "></CheckBox>
-
+                {{'InterestReport.O.ShowReportsWithPrintedInvoices' | TextCodeTranslationPipe}}
             </div>
         </td>
-        <td>
-        <div>
-            {{'InterestReport.O.AttachReportWithEachInvoice' | TextCodeTranslationPipe}}
-        </div>
-        </td>
-        <td  ></td>
+        <td></td>
 
 
     </tr>
@@ -96,25 +175,44 @@
         </td>
     </tr>
 
-    <tr style="height: 32px;">
-        <td colspan="13" style="vertical-align: bottom">
-            <table style="height: 22px;">
+    <tr style="height: 22px;">
+        <td colspan="13">
+            <table>
                 <tr>
-                 
                     <td style="width: 57px;">
                         <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
-                    <td style="width: 85%">
+                    <td style="width: 72.5%">
                         <div></div>
                     </td>
-                    <td style="width: 57px;">
-                        <button class="RedButton" (click)="GetNumberOfDocumentNotPrinted()">{{PrintButtonText}}</button>
+                    <td colspan="13" style="width:242px">
+                        <div [attr.id]="'printbutton'">
+                            <span style="display:inline" class="x-split-button">
+                                <button (click)="GetNumberOfDocumentNotPrinted(true)"
+                                        class="RedButton"
+                                        style="width:220px;border-radius: 0px 5px 5px 0px;float:right">
+                                   {{'InterestReport.O.PrintInvoicesAndAttachedReports' | TextCodeTranslationPipe}}
+                                </button>
+                                <button [attr.id]="'arrow'" class="x-button x-button-drop"
+                                        style="width: 20px;border-radius: 5px 0px 0px 5px;color:gray;float:right"
+                                        (click)="DropdowndisplayToggle()">
+                                    &#9660;
+                                </button>
+                                <div [attr.id]="'dropdowmenu'"
+                                     [ngStyle]="{'display': dropdownDisplay  }"
+                                     style="position: fixed;z-index: 1;background-color : whitesmoke;width:280px; ">
+                                    <ul class="x-button-drop-menu">
+                                        <li>
+                                            <span style="width: 217px" [style.text-align]="isRTL ? 'right' : 'left'"  (click)="GetNumberOfDocumentNotPrinted(false)">{{'InterestReport.O.PrintInvoicesAlone' | TextCodeTranslationPipe}}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </span>
+                        </div>
                     </td>
-
                 </tr>
             </table>
         </td>
     </tr>
-
 </table>

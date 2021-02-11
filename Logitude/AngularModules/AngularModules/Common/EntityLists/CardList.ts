@@ -33,6 +33,8 @@ export class CardList {
 		SearchFields: string;
 		BankName: string;
 		BankAddress: string;
+		Address1: string;
+		Address2: string;
 		Swift: string;
 		AccountNumber: string;
 		IBANNumber: string;
@@ -110,5 +112,6 @@ export class CardList {
 		InlandWeightRoundingCode: string;
 		SearchWeight: number;
 		RecordDate: Date;
+		BillToId: string;
 	
 }

@@ -19,7 +19,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
     {
         private IQueryable<LedgerTransactionList> GetIqueryableList(IQueryable<LedgerTransaction> iQueryable)
         {
-            IQueryable<LedgerTransactionList> query = (from a in iQueryable.Include("JournalLine").Include("Currency").Include("Journal")
+            IQueryable<LedgerTransactionList> query = (from a in iQueryable.Include("JournalLine").Include("Account").Include("Currency").Include("Journal")
                                                        select new LedgerTransactionList()
                                                        {
                                                            Id = a.Id,
@@ -36,7 +36,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            ForeignAmountCredit = a.ForeignAmountCredit,
                                                            ForeignAmountDebit = a.ForeignAmountDebit,
                                                            ForeignAmount = a.ForeignAmountDebit == 0 ? a.ForeignAmountCredit : a.ForeignAmountDebit,
-
+                                                           ReconcileMethodCode = a.Account.ReconcileMethodCode,
                                                            JournalId = a.JournalId,
                                                            JournalNumber = a.JournalLine.Journal.JournalNumber,
                                                            Source = a.JournalLine.Journal.AccountingEntityReference,
@@ -65,7 +65,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            SourceId = a.JournalLine.Journal.AccountingEntityId, // hidden id to use in link
                                                            SourceNumber = a.JournalLine.Journal.AccountingEntityReference, // display number
                                                            SourceTypeCode = a.JournalLine.Journal.AccountingEntity.Code, // source type code from AccountingEntities
-
                                                            SelectCheckBox = false,
                                                            CurrencySign = a.Currency.Sign,
                                                            OpenAmountCurrencySign = a.OpenAmountCurrency.Sign,
@@ -73,7 +72,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            OppositeAccountEnglishName = a.OppositeAccount != null ? a.OppositeAccount.EnglishName : null,
                                                            OppositeAccountLocalName = a.OppositeAccount != null ? a.OppositeAccount.LocalName : null,
                                                            OppositeAccountDisplayNumber = a.OppositeAccount != null ? a.OppositeAccount.DisplayNumber : null,
-                                                           
+                                                           OriginalAmount = 0,
+                                                           CalculatedForeignAmount = a.ForeignAmountCredit != 0 ? a.ForeignAmountCredit : a.ForeignAmountDebit,
+                                                           CalculatedLocalAmount = a.LocalAmountCredit != 0 ? a.LocalAmountCredit : a.LocalAmountDebit
+
                                                        });
 
 
@@ -220,6 +222,16 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             IQueryable<LedgerTransactionList> LedgerTransactionListQuery = GetIqueryableList(LedgerTransactionQuery);
             var myList = LedgerTransactionListQuery.ToList();
             return myList;
+        }
+
+        public int GetTransactionsCountByAccountId(string AccountId, int tenant)
+        {
+            IQueryable<LedgerTransaction> LedgerTransactionQuery = (from a in context.LedgerTransactions
+                                                                    where a.Tenant == tenant && a.AccountId == AccountId
+                                                                    select a);
+
+            IQueryable<LedgerTransactionList> LedgerTransactionListQuery = GetIqueryableList(LedgerTransactionQuery);
+            return LedgerTransactionListQuery.Count();
         }
 
 
@@ -507,8 +519,38 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 .Skip(skipped)
                 .Take(queryOperations.PageSize);
             var mylist = query2.ToList();
+            MapLedgerTransactionnList(mylist, callback.IsFromExcelGenerator);
             return mylist;
         }
+ 
+        public void MapLedgerTransactionnList (List<LedgerTransactionList> LedgerTransactions, bool  IsFromExcelGenerator)
+        {
+            LedgerTransactionHelper ledgerTransactionHelper = new LedgerTransactionHelper();
+            LedgerTransactions.ForEach(rec =>
+            {
+                rec.OriginalAmount = ledgerTransactionHelper.CalculateOriginalAmount(rec);
+                rec.IconCode = ledgerTransactionHelper.getEntityIcon(rec.SourceTypeCode);
+                rec.Source =  rec.IconCode+" "+ rec.SourceNumber;
+                rec.IsLocalAmountCreditPos = rec.LocalAmountCredit != 0;
+                rec.CalculatedLocalAmount = rec.LocalAmountCredit != 0 ? rec.LocalAmountCredit : rec.LocalAmountDebit;
+                //rec.LocalAmountCredit = rec.LocalAmountCredit != 0 ? rec.LocalAmountCredit : rec.LocalAmountDebit;
+                rec.IsCumulativeLocalAmountPos = rec.CumulativeLocalAmount < 0;
+                rec.IsForeignAmountCreditPos = rec.ForeignAmountCredit != 0;
+                rec.CalculatedForeignAmount = rec.ForeignAmountCredit != 0 ? rec.ForeignAmountCredit : rec.ForeignAmountDebit;
+                //rec.ForeignAmountCredit = rec.ForeignAmountCredit != 0 ? rec.ForeignAmountCredit : rec.ForeignAmountDebit;
+                rec.IsCumulativeForeignAmountPos = rec.CumulativeForeignAmount < 0;
+                rec.IsOriginalAmountPos = rec.OpenAmount < 0;
+                rec.IsForeignAmountPos = rec.ForeignAmountCredit != 0;
+                rec.ForeignAmountCreditWithSign = rec.CalculatedForeignAmount + " " + rec.CurrencySign;
+                rec.CumulativeForeignAmountSign = rec.CumulativeForeignAmount + " " + rec.CurrencySign;
+                if (IsFromExcelGenerator)
+                {
+                    ledgerTransactionHelper.MapAmountWithNegativeValue(rec);
+                }
+            });
+        }
+       
+      
         public List<LedgerTransactionList> GetReconciliationFilterList(QueryOperations queryOperations, GenericCallBack callback,
             string AccountId,
             int tenant)
@@ -871,12 +913,14 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             IQueryable<LedgerTransaction> query;
             int myMAX = getNextGroupArgs.MaxPageSize; //getNextGroupArgs.LT_LinesMaximum;
             GetNextGroupArgs args = getNextGroupArgs;
+            bool onlyZeroes = args.OnlyZeroes;
             LedgerTransactionRepository repo = new LedgerTransactionRepository(this.context);
             List<LedgerTransaction> q;
             if (getNextGroupArgs.MoveOn)
             {
                 query = repo.GetAll(getNextGroupArgs.Tenant).Where(rec => rec.Tenant == args.Tenant && rec.AccountId == args.GLAccountId
                     && (rec.OpenAmount > 0.00m || rec.OpenAmount < 0.00m || (rec.OpenAmount == 0m && rec.IsReconciled == false))
+                    && (args.OnlyZeroes == false || rec.OpenAmount == 0m)
                     && (rec.DueDate > args.OldDate || (rec.DueDate == args.OldDate && String.Compare(rec.Id, args.OldId) > 0))
                     && rec.DueDate < args.UpToDueDate).OrderBy(r => r.DueDate).ThenBy(r1 => r1.Id).Take(myMAX);//.ToList();
             }
@@ -885,6 +929,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                // myMAX = getNextGroupArgs.LT_LinesMaximum;// was * 2;
                 query = repo.GetAll(getNextGroupArgs.Tenant).Where(rec => rec.Tenant == args.Tenant && rec.AccountId == args.GLAccountId
                     && (rec.OpenAmount > 0.00m || rec.OpenAmount < 0.00m || (rec.OpenAmount == 0m && rec.IsReconciled == false))
+                    && (args.OnlyZeroes == false || rec.OpenAmount == 0m)
                     && (rec.DueDate > args.OldDate || (rec.DueDate == args.OldDate && String.Compare(rec.Id, args.OldId) >= 0))
                     && rec.DueDate < args.UpToDueDate).OrderBy(r => r.DueDate).ThenBy(r1 => r1.Id).Take(myMAX);//.ToList();
 
@@ -893,6 +938,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             {
                 query = repo.GetAll(getNextGroupArgs.Tenant).Where(rec => rec.Tenant == args.Tenant && rec.AccountId == args.GLAccountId
                     && (rec.OpenAmount > 0.00m || rec.OpenAmount < 0.00m || (rec.OpenAmount == 0m && rec.IsReconciled == false))
+                    && (args.OnlyZeroes == false || rec.OpenAmount == 0m)
                     && (rec.DueDate > args.OldDate || (rec.DueDate == args.OldDate && String.Compare(rec.Id, args.OldId) > 0))
                     && rec.DueDate < args.UpToDueDate).OrderBy(r => r.DueDate).ThenBy(r1 => r1.Id).Take(myMAX);//.ToList();
 
@@ -1142,7 +1188,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 .Take(queryOperations.PageSize);
 
             var mylist = resultedList.ToList();
-
+            MapLedgerTransactionnList(mylist, false);
 
             return mylist;
         }
@@ -1224,6 +1270,25 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             return ledgerTransactionListQuery;
         }
+
+        public IQueryable<LedgerTransactionList> GetExternalTransactionsForAccounts(List<string> accountsIds, int tenant)
+        {
+            DateTime today = GetCurrentDate(tenant);
+
+            IQueryable<LedgerTransaction> ledgerTransactionQuery = (from trans in context.LedgerTransactions
+                                                                    join jrn in context.Journals on trans.JournalId equals jrn.Id
+                                                                    where
+                                                                        jrn.ExternalSystem != null
+                                                                    && accountsIds.Contains(trans.AccountId)
+                                                                    && trans.Tenant == tenant
+                                                                    && trans.DueDate > today
+                                                                    && trans.LocalAmountCredit != 0
+                                                                    select trans);
+
+            IQueryable<LedgerTransactionList> ledgerTransactionListQuery = GetIqueryableList(ledgerTransactionQuery);
+
+            return ledgerTransactionListQuery;
+        }
     }
 
     public class LedgerTransactionDto
@@ -1263,6 +1328,14 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public LedgerTransactionBalanceFilterCallBack CallBack { get; set; }
         public string DateTypeCode { get; set; }
         public bool CheckHaveAccountingQueued { get; set; }
+
+        /*
+         * ClacOpenReconciledAmounT
+         * ***לאחר התייעצות עם ירון הוחלט ****
+יבוצע רק בכרטסת 
+אשר לא כוללת כרטיסים מקושרים וללא כרטיסי פיצול מטבעות !!!!
+         */
+        public bool ClacOpenReconciledAmount_OnlyWithout_IncludeRelatedCurrenciesAccount_IncludeChildAccounts { get; set; }
     }
     public class LedgerTransactionBalanceResponse : LedgerTransactionBalanceFilterCallBack
     {
@@ -1273,6 +1346,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public string GLAccountId { get; set; }
 
         public long TookMS { get; set; }
+
+        public string OpenAmountCurrencyId { get; set; }
+        public decimal StartTotalOpenAmount { get; set; }
     }
 
     public class LedgerTransactionBalanceFilterCallBack : LedgerTransactionBalanceFilterCallBackCanBeNull
@@ -1426,6 +1502,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public int MaxPageSize { get; set; }
         public decimal MaximalDifference { get; set; }
         public decimal ActualDifference { get; set; }
+        public bool OnlyZeroes { get; set; }
+
     }
 
     public class GetAllAccountArgs

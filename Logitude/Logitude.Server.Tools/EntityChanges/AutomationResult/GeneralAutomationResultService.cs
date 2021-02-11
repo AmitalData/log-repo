@@ -88,7 +88,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 
                 if (automationCondition.OperatorCode.Contains("F"))
                 {
-                    Field item = automationConditionFieldLists.Where(d => d.FieldCode == automationConditionvalue).FirstOrDefault();
+                    Field item = automationConditionFieldLists.Where(d => d.FieldCode.ToLower() == automationConditionvalue).FirstOrDefault();
 
                     if (item != null)
                     {
@@ -311,13 +311,15 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             if (delaytimeDetails.DelaytimeIndicator == "OO" && delaytimeDetails.Delaytime != 0) delay = delaytimeDetails.Delaytime * 60;
             if (delaytimeDetails.DelaytimeIndicator == "DD" && delaytimeDetails.Delaytime != 0) delay = delaytimeDetails.Delaytime * 60 * 24;
 
-            if (!string.IsNullOrEmpty(delaytimeDetails.SelectedDelaytimeFieldCode) && !string.IsNullOrEmpty(delaytimeDetails.DelaytimeOp))
+            if (!string.IsNullOrEmpty(delaytimeDetails.SelectedDelaytimeFieldCode) && !string.IsNullOrEmpty(delaytimeDetails.DelaytimeOp) && delaytimeDetails.DelaytimeOp != "NL")
             {
                 DateTime nextRunDateBeforeAddDelayed = DateTime.UtcNow;
                 Field field = automationFieldLists.Where(d => d.FieldCode == delaytimeDetails.SelectedDelaytimeFieldCode).FirstOrDefault();
                 if (field != null && !string.IsNullOrEmpty(field.Value))
                 {
                     nextRunDateBeforeAddDelayed = ConvertToDate(field.Value) ?? nextRunDateBeforeAddDelayed;
+                    TimeSpan timeSpan = TimeZoneInfo.Local.GetUtcOffset(nextRunDateBeforeAddDelayed);
+                    nextRunDateBeforeAddDelayed = nextRunDateBeforeAddDelayed.Subtract(timeSpan);
                     newDelayedQueue = true;
                 }
                 if (delaytimeDetails.DelaytimeOp == "BF") delay = delay * -1;

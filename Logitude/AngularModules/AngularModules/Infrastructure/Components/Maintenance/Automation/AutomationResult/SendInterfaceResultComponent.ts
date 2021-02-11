@@ -30,7 +30,9 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
     constructor() {
         super();
         this.DataContext = this;
-        this.IsCustomerCare = SessionLocator.LoggedUserPM.IsCustomerCare;
+        if (FeatureLocator.HasFeaturePermession("Automation", "SENDINTERFACERESULT") && SessionLocator.LoggedUserPM.IsCustomerCare) {
+            this.IsCustomerCare = true;
+        }
 
         this.InitializeSendInterfaceResultComponent();
 
@@ -51,7 +53,7 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
 
         this.SendFormatLists = [];
         this.SendFormatLists.push(new Operator("XML", "XML"));
-        this.SendFormatLists.push(new Operator("JOSN", "JOSN"));
+        this.SendFormatLists.push(new Operator("JSON", "JSON"));
 
 
         this.SendViaClassLists = [];

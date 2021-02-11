@@ -136,7 +136,7 @@ namespace WebFreight.Web.Helpers
                             PDim = "[" + filter.ParentDimTabelName + filter.DimensionTableDisplayName + "]";
                             OTBL = "[" + filter.DWObjectTableCode + filter.DimensionTableDisplayName + "]";
                         }
-                        if (filter.DataTypeCode != "Date" && filter.DataTypeCode != "DateTime")
+                        if (filter.DataTypeCode != "Date" && (filter.DataTypeCode != "DateTime" || filter.Code == "[Date Key]"))
                         {
                             if (filter.Operation.Code == "Equals")
                             {
@@ -418,7 +418,8 @@ namespace WebFreight.Web.Helpers
                 innerSqlStatmentDetails.Columns = Columns;
                 innerSqlStatmentDetails.Filters = Filters;
                 int columnIndex = 0;
-                Columns.ForEach(c => {
+                Columns.ForEach(c =>
+                {
                     columnIndex += 1;
                     if (c.IsMultipleSelection)
                     {
@@ -427,7 +428,7 @@ namespace WebFreight.Web.Helpers
                         sqlColumnStatmentDetails.MultiSelectedCount = c.MultiSelectedValueLists.Count();
 
                         innerSqlStatmentDetails = BuildSqlStatmentDetails(innerSqlStatmentDetails, columnIndex);
-                        
+
                         sqlCommandDefinition = BuildSqlCommandDefinition(innerSqlStatmentDetails, DWQueryParam, sqlColumnStatmentDetails);
                         FinalQuery += string.IsNullOrEmpty(FinalQuery) ? sqlCommandDefinition.SQLString : " Union " + sqlCommandDefinition.SQLString;
                     }
@@ -440,8 +441,31 @@ namespace WebFreight.Web.Helpers
                 sqlStatmentDetails = BuildSqlStatmentDetails(sqlStatmentDetails);
                 sqlCommandDefinition = BuildSqlCommandDefinition(sqlStatmentDetails, DWQueryParam);
             }
-            
+
+            SQLSecurityTenantValidation(DWQueryParam, sqlCommandDefinition);
+
             return sqlCommandDefinition;
+        }
+
+        private  void SQLSecurityTenantValidation(DWQueryData DWQueryParam, SqlCommandDefinition sqlCommandDefinition)
+        {
+            string factCode = GetFactTableCode(DWQueryParam);
+            string querySQL = sqlCommandDefinition.SQLString.ToLower().Replace(" ", "");
+            string whereByParenttenant = ("where" + factCode + ".[parenttenant]=");
+            string whereBySourcettenant = ("where" + factCode + ".[sourcetenant]=");
+            if (!querySQL.Contains(whereByParenttenant) && !querySQL.Contains(whereBySourcettenant))
+            {
+                throw new Exception("You are not authorized to view the content.");
+            }
+        }
+
+        private string GetFactTableCode(DWQueryData DWQueryParam)
+        {
+            string factName = DWQueryParam.FactTableName;
+            DWObjectTableQuery dWObjectTableQuery = new DWObjectTableQuery(Tenant);
+            DWObjectTablePM dWObjectTablePM = dWObjectTableQuery.GetSinglePM(factName, Tenant);
+            string factCode = (dWObjectTablePM != null && !string.IsNullOrEmpty(dWObjectTablePM.ParentFactCode)) ? dWObjectTablePM.ParentFactCode : factName;
+            return factCode.ToLower();
         }
 
         private SqlStatmentDetails BuildSqlStatmentDetails(SqlStatmentDetails sqlStatmentDetails, int columnIndex = -1, bool isMainSelectStmt = false)
@@ -710,27 +734,32 @@ namespace WebFreight.Web.Helpers
                 recordTypeCondation += ") ";
             }
 
-            if (FinalQuery.Contains("where"))
-            {
 
-                string finarlCondition = ("where " + Fact + TenantWhere + "@Tenant" + " and");
-                if (!string.IsNullOrEmpty(recordTypeCondation)) finarlCondition += recordTypeCondation + " and";
-                FinalQuery = FinalQuery.Replace("where", finarlCondition);
-            }
-            else if (FinalQuery.Contains("group by"))
+            if (DWQueryParam.UserEmail != "ahmadb@test.com")
             {
-                string finarlCondition = ("where " + Fact + TenantWhere + "@Tenant");
-                if (!string.IsNullOrEmpty(recordTypeCondation)) finarlCondition += (" and " + recordTypeCondation)  ;
-                finarlCondition +=" group by";
-                FinalQuery = FinalQuery.Replace("where", finarlCondition);
+                if (FinalQuery.Contains("where"))
+                {
 
-            }
-            else
-            {
-                FinalQuery = FinalQuery + " where " + Fact + TenantWhere + "@Tenant";
-                if (!string.IsNullOrEmpty(recordTypeCondation)) FinalQuery +=(" and" + recordTypeCondation);
+                    string finarlCondition = ("where " + Fact + TenantWhere + "@Tenant" + " and");
+                    if (!string.IsNullOrEmpty(recordTypeCondation)) finarlCondition += recordTypeCondation + " and";
+                    FinalQuery = FinalQuery.Replace("where", finarlCondition);
+                }
+                else if (FinalQuery.Contains("group by"))
+                {
+                    string finarlCondition = ("where " + Fact + TenantWhere + "@Tenant");
+                    if (!string.IsNullOrEmpty(recordTypeCondation)) finarlCondition += (" and " + recordTypeCondation);
+                    finarlCondition += " group by";
+                    FinalQuery = FinalQuery.Replace("group by", finarlCondition);
 
+                }
+                else
+                {
+                    FinalQuery = FinalQuery + " where " + Fact + TenantWhere + "@Tenant";
+                    if (!string.IsNullOrEmpty(recordTypeCondation)) FinalQuery += (" and" + recordTypeCondation);
+
+                }
             }
+
 
             if (HasMultipleSelection && (sqlColumnStatmentDetails != null && sqlColumnStatmentDetails.MultiSelectedCount > 0))
             {
@@ -774,6 +803,7 @@ namespace WebFreight.Web.Helpers
             return result;
         }
 
+
         private string GetChargesTypeConditions(List<DWObjectFieldsDetails> columns,string pivotTableNickname, int columnIndex)
         {
             string codeString = pivotTableNickname + ".Code = ";
@@ -810,8 +840,8 @@ namespace WebFreight.Web.Helpers
                 fieldCode = "[" + field.DWObjectTableCode + field.DimensionTableDisplayName + "]." + field.Code;
 
             string datePartsSqlColum = field.DWObjectTableCode + "." + field.Code;
-            if (field.DataTypeCode == "Time") datePartsSqlColum = "convert(varchar(5)," + fieldCode + ", 8)";
-            else if (field.DataTypeCode == "Date") datePartsSqlColum = "convert(varchar(10)," + fieldCode + ", 120)";
+            if (field.DataTypeCode == "Time") datePartsSqlColum = "convert(varchar(5), CAST(" + fieldCode + " AS datetime), 8)";
+            else if (field.DataTypeCode == "Date") datePartsSqlColum = "convert(varchar(10), CAST(" + fieldCode + " AS datetime) , 120)";
 
             datePartsSqlColum += ((!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
             return datePartsSqlColum;

@@ -1185,13 +1185,13 @@ if(hasApiHelper)
                 GenericSort sortClass = new GenericSort();
 
 								<#+ 
-if(tableName == "Card")
+if(tableName == "Card" || tableName == "Customer")
 {
 	#>
                 
-                QueryFilterItem item = queryOperations.QueryFilterItems.Where(f => f.FieldName == "CompactSearchField").FirstOrDefault();
+                QueryFilterItem item = queryOperations.QueryFilterItems.Where(f => f.FieldName == "CardSearchField").FirstOrDefault();
                 queryOperations.QueryFilterItems.Remove(item);
-                string seachvalue = item != null ? item.FieldValue!=null ? !string.IsNullOrEmpty(item.FieldValue.ToString()) ? item.FieldValue.ToString() :null :null : null;
+                string searchvalue = item != null ? item.FieldValue!=null ? !string.IsNullOrEmpty(item.FieldValue.ToString()) ? item.FieldValue.ToString() :null :null : null;
 				
 				<#+
 }
@@ -1237,22 +1237,20 @@ if(hasApiHelper)
 
 		      
 			  								<#+ 
-if(tableName == "Card")
+if(tableName == "Card" || tableName == "Customer")
 {
 	#>
              
-			 if (!string.IsNullOrEmpty(seachvalue))
+			 if (!string.IsNullOrEmpty(searchvalue))
                 {
-                    CardSearchFilter cardSearchFilter = new CardSearchFilter();
-                    entityLists = cardSearchFilter.GetFilteredQuery(new CardSearchFilterArgs() { SeachText = seachvalue, Tenant = tenant, QueryOperations = queryOperations, EntityLists = entityLists, Filter = genericFilter });
+				    <#= tableName #>DataSearchService <#= FirstServiceCharacterToLower(tableName) #>DataSearchService = new <#= tableName #>DataSearchService();
+                    entityLists = <#= FirstServiceCharacterToLower(tableName) #>DataSearchService.Run( new <#= tableName #>SearchArgs() { SearchText = searchvalue, Tenant = tenant, EntityLists = entityLists, SortByColumnName = queryOperations.SortByColumnName, SortDirectin = queryOperations.SortDirectin, PageSize = queryOperations.PageSize, FilterItems = queryOperations.QueryFilterItems }).AsQueryable();
                 }
 		     
- 
+ else
  <#+
 }
-else
-{
-} 
+
 
 				#>
 
@@ -1331,7 +1329,7 @@ else
               {
 					response.Count = entityLists.Count();
     <#+ 
-if(tableName == "Card")
+if(tableName == "Card" || tableName == "Customer")
 {
 	#>
                 

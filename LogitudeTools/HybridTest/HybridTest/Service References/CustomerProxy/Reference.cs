@@ -203,6 +203,9 @@ namespace HypredTest.CustomerProxy {
         private string CustomsAgentNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EORInumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool EnableConsolidationInvoicesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -318,6 +321,9 @@ namespace HypredTest.CustomerProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsActiveForMobileField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsAutonomyField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsCreditLimitEnabledField;
@@ -1359,6 +1365,19 @@ namespace HypredTest.CustomerProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string EORInumber {
+            get {
+                return this.EORInumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EORInumberField, value) != true)) {
+                    this.EORInumberField = value;
+                    this.RaisePropertyChanged("EORInumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool EnableConsolidationInvoices {
             get {
                 return this.EnableConsolidationInvoicesField;
@@ -1861,6 +1880,19 @@ namespace HypredTest.CustomerProxy {
                 if ((this.IsActiveForMobileField.Equals(value) != true)) {
                     this.IsActiveForMobileField = value;
                     this.RaisePropertyChanged("IsActiveForMobile");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsAutonomy {
+            get {
+                return this.IsAutonomyField;
+            }
+            set {
+                if ((this.IsAutonomyField.Equals(value) != true)) {
+                    this.IsAutonomyField = value;
+                    this.RaisePropertyChanged("IsAutonomy");
                 }
             }
         }
@@ -2973,6 +3005,12 @@ namespace HypredTest.CustomerProxy {
         private bool AccountingVATSplitField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Address1Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Address2Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private HypredTest.CustomerProxy.AddressPM[] AddressesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -3263,6 +3301,32 @@ namespace HypredTest.CustomerProxy {
                 if ((this.AccountingVATSplitField.Equals(value) != true)) {
                     this.AccountingVATSplitField = value;
                     this.RaisePropertyChanged("AccountingVATSplit");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Address1 {
+            get {
+                return this.Address1Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Address1Field, value) != true)) {
+                    this.Address1Field = value;
+                    this.RaisePropertyChanged("Address1");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Address2 {
+            get {
+                return this.Address2Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Address2Field, value) != true)) {
+                    this.Address2Field = value;
+                    this.RaisePropertyChanged("Address2");
                 }
             }
         }
@@ -12967,6 +13031,9 @@ namespace HypredTest.CustomerProxy {
         private bool IsActiveForMobileField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsAutonomyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsBlockedBusinessUnitField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -14086,6 +14153,19 @@ namespace HypredTest.CustomerProxy {
                 if ((this.IsActiveForMobileField.Equals(value) != true)) {
                     this.IsActiveForMobileField = value;
                     this.RaisePropertyChanged("IsActiveForMobile");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsAutonomy {
+            get {
+                return this.IsAutonomyField;
+            }
+            set {
+                if ((this.IsAutonomyField.Equals(value) != true)) {
+                    this.IsAutonomyField = value;
+                    this.RaisePropertyChanged("IsAutonomy");
                 }
             }
         }

@@ -52,6 +52,7 @@ import {DWLovComponent} from './Components/LogitudeComponents/DWLovComponent';
 import {DWDateComponent} from './Components/LogitudeComponents/DWDateComponent'
 
 import {LogDatePickerComponent} from './Components/LogitudeComponents/LogDatePickerComponent';
+import { AdvancedDatePickerComponent } from './Components/LogitudeComponents/AdvancedDatePickerComponent';
 import {LogCalendarComponent} from './Components/LogitudeComponents/LogCalendarComponent';
 import {TimeSelectComponent} from './Components/LogitudeComponents/TimeSelectComponent';
 import {LogCheckboxComponent} from './Components/LogitudeComponents/LogCheckboxComponent';
@@ -182,6 +183,8 @@ import { MultiSelectLOVComponent } from './Components/LogitudeComponents/MultiSe
 import { FTBSchedulerTemplateComponent } from '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/SchedulerTemplates/FTBSchedulerTemplateComponent';
 import { SendInterfaceResultComponent } from './Components/Maintenance/Automation/AutomationResult/SendInterfaceResultComponent';
 import { FTPAutomationDetailsComponent } from './Components/Maintenance/Automation/AutomationResult/FTPAutomationDetailsComponent';
+import { ToolTipFloatDirective } from './Utilities/RTLDirectives/ToolTipFloatDirective';
+import { SendDocumentResultComponent } from './Components/Maintenance/Automation/AutomationResult/SendDocumentResultComponent';
 
 
 
@@ -194,8 +197,9 @@ export const Directives =
         FocusMeDirective,
         LocationDirective,
         FixedPositionDirective,
-    ChildDirective,
+        ChildDirective,
         FloatStartDirective,
+        ToolTipFloatDirective,
         FloatEndDirective,
         TextAlignStart,
         TextAlignEnd,
@@ -240,6 +244,7 @@ export const ControlsComponents =
         DWLovComponent,
         DWDateComponent,
         LogDatePickerComponent,
+        AdvancedDatePickerComponent,
         LogCalendarComponent,
         TimeSelectComponent,
         LogCheckboxComponent,
@@ -300,6 +305,7 @@ export const ControlsComponents =
         FTBSchedulerTemplateComponent,
         SendInterfaceResultComponent,
         FTPAutomationDetailsComponent,
+        SendDocumentResultComponent,
     ];
 export const Components =
     [
@@ -374,7 +380,9 @@ export const Components =
         BTELogTabComponent,
         BTEParameterTabComponent,
         LastSuccessfulLoginComponent,
-        FTBSchedulerTemplateComponent
+        FTBSchedulerTemplateComponent,
+        
+        
     ];
 
 export class ModuleDeclarations {
@@ -478,6 +486,7 @@ export class ModuleDeclarations {
             case 'FTBSchedulerTemplateComponent': { myResult = FTBSchedulerTemplateComponent; break; }
             case 'SendInterfaceResultComponent': { myResult = SendInterfaceResultComponent; break; }
             case 'FTPAutomationDetailsComponent': { myResult = FTPAutomationDetailsComponent; break; }
+            case 'SendDocumentResultComponent': { myResult = SendDocumentResultComponent; break; }
 
                 
 

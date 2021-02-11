@@ -280,7 +280,7 @@ export class QuoteUtilities {
         entityPM.TransitTime = copiedEntityPM.TransitTime;
         entityPM.ProfitCurrencyId = copiedEntityPM.ProfitCurrencyId;
         entityPM.ProfitExchangeRate = copiedEntityPM.ProfitExchangeRate;
-       
+        entityPM.IsMultiCurrency = copiedEntityPM.IsMultiCurrency;       
     }
     public static CopyQuotePackages(entityPM: QuotePM, copiedEntityPM: QuotePM) {
         copiedEntityPM.QuotePackages.forEach(item => {
@@ -669,8 +669,8 @@ export class QuoteUtilities {
 
     public static IsPriceCheckVisible(entityPM: QuotePM) {
         var myResult = false;
-
-        if (FeatureLocator.HasFeaturePermession("Quote", "QuotePriceCheck") && (entityPM.TransportModeId.toUpperCase() == "A" || this.IsLCLQuote(entityPM)) && (entityPM.QuoteTypeCode != null && entityPM.QuoteTypeCode.toUpperCase() == "A")) {
+        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TAR" && d.TenantNumber == SessionLocator.Tenant)[0];
+        if (featureToggle  != null && FeatureLocator.HasFeaturePermession("Quote", "QuotePriceCheck") && (entityPM.TransportModeId.toUpperCase() == "A" || this.IsLCLQuote(entityPM)) && (entityPM.QuoteTypeCode != null && entityPM.QuoteTypeCode.toUpperCase() == "A")) {
             myResult = true;
         }
         return myResult;

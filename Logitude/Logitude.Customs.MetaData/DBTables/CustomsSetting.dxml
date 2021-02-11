@@ -148,6 +148,7 @@
   <Column
     Name="CompanyType"
     Type="varchar"
+    DefaultValue="0"
     Size="1">
     <Constraints
       Nullable="false" />

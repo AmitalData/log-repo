@@ -1,7 +1,7 @@
 ﻿(function (jQuery) {
     jQuery.CurrentTenant = null;
     jQuery.CurrentCardId = null;
-    jQuery.CurrentCardType = null;
+    jQuery.CurrentCardType = "AG";
     jQuery.CurrentEntityId = null;
     jQuery.CurrentEntityPM = null;
     jQuery.CurrentEmail = null;
@@ -10,10 +10,9 @@
     jQuery.IsBrandingEnabled = "";
     jQuery.TenantDateTimeFormat = null;
     jQuery.DisplayDocumentsAndEvents = false;
-    jQuery.IsDocumentsApprovalRequried = false;
-    jQuery.DocumentsApprovalName = "";
     jQuery.DownloadAll = false;
     jQuery.DocumentUrl = "";
+    jQuery.AllDocumentsFileName = "";
 
     jQuery.ResizePage = (function (myFixedHeight) {
         var minHeight = 400;
@@ -31,7 +30,7 @@
 
     jQuery.GetCompanyLogo = (function () {
 
-        var url = "../api/commondata/?companyId=" + $.CurrentTenant;
+        var url = "api/commondata/?companyId=" + $.CurrentTenant;
 
         $.ajax({
             url: url,
@@ -55,9 +54,73 @@
         });
     });
 
+    jQuery.GetCargoLoginTenant = (function (myDomain) {
+
+        var url = "api/CargoTrackingBranding/?domain=" + myDomain;
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            contentType: 'application/json',
+
+            success: function (result) {
+                if (result != null && result.Result != null) {
+                    $.CurrentTenant = result.Result;
+
+                    $.GetLogginData();
+                    $.GetCompanyLogo();
+                }
+                else {
+                    $("#DocumentsPageBusyIndicator").hide();
+                    $("#Container").hide();
+                    $("#InvalidKeyArea").show();
+                }
+            },
+
+            error: function (jqXHR, textStatus, errorThrown) {
+                $.CheckUserException(jqXHR);
+                $("#DocumentsPageBusyIndicator").hide();
+                $("#Container").hide();
+                $("#InvalidKeyArea").show();
+            }
+        });
+
+    });
+
+    jQuery.GetLoginTenant = (function (myDomain) {
+
+        var url = "api/CargoTrackingBranding/?domain=" + myDomain;
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            contentType: 'application/json',
+
+            success: function (result) {
+                if (result != null && result.Result != null) {
+                    $.CurrentTenant = result.Result;
+
+                    $.GetLogginData();
+                    $.GetCompanyLogo();
+                }
+                else {
+                    $.GetCargoLoginTenant(myDomain + "/cargotracking");
+                }
+            },
+
+            error: function (jqXHR, textStatus, errorThrown) {
+                $.CheckUserException(jqXHR);
+                $("#DocumentsPageBusyIndicator").hide();
+                $("#Container").hide();
+                $("#InvalidKeyArea").show();
+            }
+        });
+
+    });
+
     jQuery.GetLogginData = (function () {
 
-        var url = "../api/commondata/?email=" + $.CurrentEmail + "&tenant=" + $.CurrentTenant + "&cardId=" + $.CurrentCardId;
+        var url = "api/commondata/?email=" + $.CurrentEmail + "&tenant=" + $.CurrentTenant + "&cardId=" + $.CurrentCardId;
 
         $.ajax({
             url: url,
@@ -88,53 +151,43 @@
     });
 
     jQuery.GetSingleEntityPM = (function () {
-
         $(".ShowOnDataControl").hide();
         $("#DocumentsPageBusyIndicator").show();
 
         if ($.IsExternalURL) {
-            var url = "../api/shipments/getsinglepmbykey/" + $.CurrentEntityKey + "/" + $.CurrentEntityId + "/" + $.CurrentTenant;
+            var url = "api/shipments/getsinglepmbykeyandtenant/" + $.CurrentEntityKey + "/" + $.CurrentTenant;
         }
 
         $.ajax({
             url: url,
             type: 'GET',
             contentType: 'application/json',
-
             success: function (shipmentPM) {
-
                 if (shipmentPM) {
-                    $.CurrentEntityPM = shipmentPM;
-                    $.CurrentEntityId = shipmentPM.Id;
-                    ko.applyBindings(BuildShipmentBackAreaViewModel(shipmentPM, "../"), document.getElementById("BackArea"));
-                    ko.applyBindings(BuildShipmentHeaderViewModel(shipmentPM, $.TenantDateTimeFormat, "../"), document.getElementById("EntityHeaderArea"));
-
+                    SetShipmentPM(shipmentPM);
+                    ko.applyBindings(BuildShipmentHeaderViewModel(shipmentPM, $.TenantDateTimeFormat, ""), document.getElementById("EntityHeaderArea"));
                     BuildRoutingLegs(shipmentPM, $.TenantDateTimeFormat);
-
-                    $.SetTabsEnabled(true);
-
                     $(".ShowOnDataControl").show();
                     $("#DocumentsPageBusyIndicator").hide();
                     if ($.IsExternalURL) {
-
                         if ($.DisplayDocumentsAndEvents) {
-                            $.GetShipmentDocuments();
+                            $.GetShipmentDocuments($.CurrentEntityId, $.CurrentEntityKey, "MasterDocuments_"+ shipmentPM.LongMaster);
+                            if (shipmentPM.ConnectedShipments > 0) {
+                                $.GetMasterConnectedHouseShipments();
+                            }
                         }
-
                         else {
-                            $("#DocumentsTabPageControl").css({
+                            $("#DocumentsTabPageControl" + $.CurrentEntityId).css({
                                 "font-family": "Arial",
                                 "color": "#8F9293",
                                 "font-size": "16px",
                                 "margin-top": "20px",
+                                "text-align": "center",
+                                "padding": "20px",
                             });
 
-                            $("#DocumentsTabPageControl").html("Documents information is only available for logged-in users");
+                            $("#DocumentsTabPageControl" + $.CurrentEntityId).html("Documents information is only available for logged-in users");
                         }
-                    }
-
-                    else {
-                        $.GetShipmentDocuments();
                     }
                     $.SendContactActivity($.CurrentEmail, "Shipment", "Shipment Display", $.CurrentTenant, $.CurrentCardId);
                 }
@@ -149,11 +202,8 @@
 
             error: function (jqXHR, textStatus, errorThrown) {
                 $.CheckUserException(jqXHR);
-                $.SetTabsEnabled(true);
                 $("#DocumentsPageBusyIndicator").hide();
-
                 if ($.IsExternalURL) {
-
                     $("#Container").hide();
                     $("#InvalidKeyArea").show();
                 }
@@ -161,18 +211,13 @@
         });
     });
 
-    jQuery.GetShipmentDocuments = (function () {
-
+    jQuery.GetShipmentDocuments = (function (myEntityId, myEntityKey, fileName) {
         $("#DocumentsPageBusyIndicator").show();
 
         var url = null;
 
         if ($.IsExternalURL) {
-            url = "../api/DocumentsData?securitykey=" + $.CurrentEntityKey + "&entityId=" + $.CurrentEntityId + "&partnerType=" + $.CurrentCardType + "&tenant=" + $.CurrentTenant;
-        }
-
-        else {
-            url = "../api/DocumentsData?entityId=" + $.CurrentEntityId + "&partnerType=" + $.CurrentCardType + "&tenant=" + $.CurrentTenant;
+            url = "api/DocumentsData?securitykey=" + myEntityKey + "&entityId=" + myEntityId + "&partnerType=" + $.CurrentCardType + "&tenant=" + $.CurrentTenant;
         }
 
         $.ajax({
@@ -183,24 +228,74 @@
             success: function (result) {
 
                 $.SendContactActivity($.CurrentEmail, "Shipment", "Documents Display", $.CurrentTenant, $.CurrentCardId);
-
+                let documentsTabPageControlId = "#DocumentsTabPageControl" + myEntityId;
                 if (result.length > 0) {
-
-                    ko.applyBindings(BuildDocumentsTabPageViewModel(result, "../", false), document.getElementById("DocumentsTabPageControl"));
+                    $("#DownloadAllConnectedDocuments").show();
+                    ko.applyBindings(BuildMasterDocumentsTabPageViewModel(myEntityId, result, fileName, ""), document.getElementById(documentsTabPageControlId));
                 }
 
                 else {
-
-                    $("#DocumentsTabPageControl").css({
+                    $(documentsTabPageControlId).css({
                         "font-family": "Arial",
                         "color": "#8F9293",
                         "font-size": "22px",
                         "margin-top": "20px",
+                        "text-align": "center",
+                        "padding": "20px",
                     });
 
-                    $("#DocumentsTabPageControl").html("No Documents");
+                    $(documentsTabPageControlId).html("No Documents");
                 }
 
+                $("#DocumentsPageBusyIndicator").hide();
+            },
+
+            error: function (jqXHR, textStatus, errorThrown) {
+                $.CheckUserException(jqXHR);
+                $("#DocumentsPageBusyIndicator").hide();
+            }
+        });
+
+    });
+
+    jQuery.GetMasterConnectedHouseShipments = (function () {
+        $("#DocumentsPageBusyIndicator").show();
+        var url = null;
+
+        if ($.IsExternalURL) {
+            url = "api/ShipmentDomain?entityId=" + $.CurrentEntityId + "&tenant=" + $.CurrentTenant;
+        }
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            contentType: 'application/json',
+
+            success: function (result) {
+
+                $.SendContactActivity($.CurrentEmail, "Shipment", "Get connected house shipments", $.CurrentTenant, $.CurrentCardId);
+                if (result.length > 0) {
+                    $.ConnectedHouses = result;
+                    $.each(result, function (index, value) {
+                        if (value) {
+                            if ($.DisplayDocumentsAndEvents) {
+                                $.GetShipmentDocuments(value.Id, value.SecurityKey, "HouseDocuments_"+value.House);
+                            }
+                            else {
+                                $("#DocumentsTabPageControl" + value.Id).css({
+                                    "font-family": "Arial",
+                                    "color": "#8F9293",
+                                    "font-size": "16px",
+                                    "margin-top": "20px",
+                                    "text-align": "center",
+                                    "padding": "20px",
+                                });
+
+                                $("#DocumentsTabPageControl" + value.Id).html("Documents information is only available for logged-in users");
+                            }
+                        }
+                    });
+                }
                 $("#DocumentsPageBusyIndicator").hide();
             },
 
@@ -223,7 +318,12 @@
         var linkArray = link.split('=')
         var linkQuery = linkArray[1];
         var linkParameters = null;
-
+        var domain = link.split("/sharedmasterdocumentspage.aspx")[0];
+        if (domain != null && domain.indexOf("//") > -1) {
+            domain = domain.split("//")[1];
+            if (domain.indexOf(":") > -1)
+                domain = domain.split(":")[0];
+        }
         if (linkQuery && linkQuery.indexOf('%3A') > -1) {
             linkParameters = linkQuery.split('%3A')
         }
@@ -233,18 +333,39 @@
 
         if ($.trim(link).indexOf("securitykey") != -1) {
             $.CurrentEntityKey = linkParameters[0];
-            $.CurrentEntityId = linkParameters[1];
-            $.CurrentTenant = linkParameters[2];
-            $.IsBrandingEnabled = linkParameters[3];
-
             $.IsExternalURL = true;
-            if ($.IsBrandingEnabled == "true") {
-                //Do Something
-            }
 
-            $.GetLogginData();
-            $.GetCompanyLogo();
+            $("#DownloadAllConnectedDocuments").hide();
+            $("#DocumentsPageBusyIndicator").show();
+            $.GetLoginTenant(domain);
         }
     });
 
 }(jQuery));
+
+function SetShipmentPM(shipmentPM) {
+    $.CurrentEntityPM = shipmentPM;
+    $.CurrentEntityId = shipmentPM.Id;
+    $("#LongMasterNumber").html(shipmentPM.LongMaster);
+    $.AllDocumentsFileName = "MasterDocuments_" + shipmentPM.LongMaster;
+    $("#ConnectedShipments").html(" (" + shipmentPM.ConnectedShipments + " Houses)");
+    $("#MainCarriageCarrierName").html(shipmentPM.MainCarriageCarrierName != null ? shipmentPM.MainCarriageCarrierName : "---");
+    let mainCarriageATD = shipmentPM.MainCarriageATD;
+    if (mainCarriageATD != null) {
+        let mainCarriageATDToString = formatDate(new Date(mainCarriageATD));
+        $("#MainCarriageATD").html(mainCarriageATDToString);
+    }
+    else
+        $("#MainCarriageATD").html("---");
+}
+function formatDate(date) {
+    var myDate = "";
+    let day = ("0" + date.getDate()).slice(-2);
+    let month = ("0" + (date.getMonth() + 1)).slice(-2);
+    let year = date.getFullYear();
+    let hours = ("0" + date.getHours()).slice(-2);
+    let minutes = ("0" + date.getMinutes()).slice(-2);
+    myDate = day + "." + month + "." + year + " " + hours + ":" + minutes;
+
+    return myDate;
+}

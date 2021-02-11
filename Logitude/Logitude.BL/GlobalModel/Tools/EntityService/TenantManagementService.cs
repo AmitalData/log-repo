@@ -21,6 +21,7 @@ using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,18 +33,23 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
     {
         bool isNewEntity;
         int tenant;
+        const string CargoTrackingImageFolder = "CargoTrackingImages";
+        const string CargoTrackingImageExtensionType = "png";
         private TenantManagementPM entityPM;
         public TenantManagement entityPoco { get; set; }
         private IGlobalContext objectContext;
+        private ICommonDataContext CommonContext;
         private TenantManagementRepository entityRepository;
         private TenantManagementLicenseRepository tenantManagementLicenseRepository;
         private TenantAddOnRepository tenantAddOnRepository;
-        public TenantManagementService(IGlobalContext objectContext, int tenant = 0)
+        public TenantManagementService(IGlobalContext objectContext, int tenant = 0, ICommonDataContext CommonContext=null)
         {
             this.objectContext = objectContext;
+            this.CommonContext = CommonContext;
             this.entityRepository = new TenantManagementRepository(objectContext);
             this.tenantManagementLicenseRepository = new TenantManagementLicenseRepository(objectContext);
             this.tenantAddOnRepository = new TenantAddOnRepository(objectContext);
+           
         }
 
         private List<TenantManagementLicensePM> licensesChangeSet;
@@ -99,7 +105,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             this.ClearAllUsersCache();
             this.BrandingEvent();
             this.CheckParentTenants();         
-            this.UpdateCargoTrackingColors();
+            this.DeleteOldImages();
             if (entityPM.Id == 341)
             {
                 this.UpdateCustomer();
@@ -110,13 +116,57 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             entityRepository.Update(entityPoco);
             entityRepository.SubmitChanges();
         }
+
+
+        private void DeleteOldImages()
+        {
+            if (this.entityPM.BackgroundId != this.entityPoco.BackgroundId)
+            {
+              DeleteImageFromCargoTrackingImages(entityPoco.BackgroundId);
+            }
+            if (this.entityPM.ComapnylogoId != this.entityPoco.ComapnylogoId)
+            {
+                DeleteImageFromCargoTrackingImages(entityPoco.ComapnylogoId);
+            }
+            if (this.entityPM.InvertedLogoId != this.entityPoco.InvertedLogoId)
+            {
+                DeleteImageFromCargoTrackingImages(entityPoco.InvertedLogoId);
+            }
+            if (this.entityPM.BrowserIconId != this.entityPoco.BrowserIconId)
+            {
+                DeleteImageFromCargoTrackingImages(entityPoco.BrowserIconId);
+            }
+            if (this.entityPM.ShipmentHeaderImageId != this.entityPoco.ShipmentHeaderImageId)
+            {
+                DeleteImageFromCargoTrackingImages(entityPoco.ShipmentHeaderImageId);
+            }
+        }
+        public void DeleteImageFromCargoTrackingImages(string imgId)
+        {
+            string imagePath = GetFilePath(GetFileNameWithExtension(imgId));
+            if (File.Exists(imagePath))
+            {
+                File.Delete(imagePath);
+            }
+
+        }
+        private string GetFilePath(string fileName)
+        {
+            string folderPath = System.Web.HttpContext.Current.Server.MapPath("~/" + CargoTrackingImageFolder + "/");
+            string filePath = folderPath + fileName;
+            return filePath;
+        }
+
+        private string GetFileNameWithExtension(string imgName)
+        {
+            return imgName + "." + CargoTrackingImageExtensionType;
+        }
         private void  UpdateCargoTrackingColors()
         {
-            int index =  (entityPM.MainColor!= null && entityPM.MainColor.Length > 7) ? 3 : 1;
-            this.entityPM.MainColor= (this.entityPM.MainColor!= null && entityPM.MainColorOpacity != null) ? "#" +entityPM.MainColorOpacity + entityPM.MainColor.ToString().Substring(index, 6): entityPM.MainColor;
-            index =( entityPM.SecondaryColor!= null && entityPM.SecondaryColor.Length > 7) ? 3 : 1;
-            this.entityPM.SecondaryColor = (entityPM.SecondaryColor!= null && entityPM.SecondaryColorOpacity != null ) ? "#" + entityPM.SecondaryColorOpacity + entityPM.SecondaryColor.ToString().Substring(index, 6) : entityPM.SecondaryColor;
-
+            //int index =  (entityPM.MainColor!= null && entityPM.MainColor.Length > 7) ? 3 : 1;
+            //this.entityPM.MainColor= (this.entityPM.MainColor!= null && entityPM.MainColorOpacity != null) ? "#" +entityPM.MainColorOpacity + entityPM.MainColor.ToString().Substring(index, 6): entityPM.MainColor;
+            //index =( entityPM.SecondaryColor!= null && entityPM.SecondaryColor.Length > 7) ? 3 : 1;
+            //this.entityPM.SecondaryColor = (entityPM.SecondaryColor!= null && entityPM.SecondaryColorOpacity != null ) ? "#" + entityPM.SecondaryColorOpacity + entityPM.SecondaryColor.ToString().Substring(index, 6) : entityPM.SecondaryColor;
 
         }
         private void UpdateCustomer()

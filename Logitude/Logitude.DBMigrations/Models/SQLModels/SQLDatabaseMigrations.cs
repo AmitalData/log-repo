@@ -565,6 +565,11 @@ namespace Logitude.DBMigrations.Models
             return (!isUniqueConstraintColumnDataTypeChanged && isUniqueConstraintInCurrentTable);
         }
 
+        protected override UniqueConstraintDefinition GetUniqueConstraintFromCurrentTable(UniqueConstraintDefinition uniqueConstraint)
+        {
+            return CurrentTable.UniqueConstraints.Where(u => u.Columns.ToLower() == uniqueConstraint.Columns.ToLower()).FirstOrDefault();
+        }
+
         protected override bool IsUniqueConstraintInDXMLTable(UniqueConstraintDefinition uniqueConstraint)
         {
             return DXMLTable.UniqueConstraints.Where(u => u.Columns.ToLower() == uniqueConstraint.Columns.ToLower()).Any();
@@ -1254,7 +1259,7 @@ namespace Logitude.DBMigrations.Models
         {
             bool isBasicArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.BASIC);
             bool isZeroDownTimeArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME);
-            bool isColumnDataTypeChanged = ((dbColumn.Constraints.Nullable && !dxmlColumn.Constraints.Nullable && !isBasicArgumentProvided) ||
+            bool isColumnDataTypeChanged = ((dbColumn.Constraints.Nullable && !dxmlColumn.Constraints.Nullable && !dbColumn.Constraints.HasNotNullCheckConstraint && !isBasicArgumentProvided) ||
                                             (dbColumn.Type != dxmlColumn.Type) ||
                                             (dbColumn.Size != FormatColumnSize(dxmlColumn.Size, dxmlColumn.Type) && dxmlColumn.Size != 0) ||
                                             (dbColumn.Type == "decimal" && dxmlColumn.Type == "decimal" && (dbColumn.Precision != dxmlColumn.Precision || dbColumn.Scale != dxmlColumn.Scale)));

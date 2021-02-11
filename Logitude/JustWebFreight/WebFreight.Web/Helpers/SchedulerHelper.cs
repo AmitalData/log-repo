@@ -16,8 +16,9 @@ namespace WebFreight.Web.Helpers
         {
             var queueservice = new DbQueueService();
             var TodayDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, task.NextRunTime.Value.Hour, task.NextRunTime.Value.Minute, task.NextRunTime.Value.Second);
+            var TodayUTCDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, task.NextRunTimeUTC.Value.Hour, task.NextRunTimeUTC.Value.Minute, task.NextRunTimeUTC.Value.Second);
 
-            if (task.NextRunTime < DateTime.Now)
+            if (task.NextRunTimeUTC < DateTime.UtcNow)
             {
                 var NewNextRunTime = new DateTime(task.NextRunTime.Value.Year, task.NextRunTime.Value.Month, DateTime.Now.Day, task.NextRunTime.Value.Hour, task.NextRunTime.Value.Minute, task.NextRunTime.Value.Second);
                 var NewNextRunTimeUTC = new DateTime(task.NextRunTimeUTC.Value.Year, task.NextRunTimeUTC.Value.Month, DateTime.Now.Day, task.NextRunTimeUTC.Value.Hour, task.NextRunTimeUTC.Value.Minute, task.NextRunTimeUTC.Value.Second);
@@ -76,65 +77,85 @@ namespace WebFreight.Web.Helpers
                     }
                 case "W":
                     {
-                        DateTime NextRunTime;
+
+                         
                         var ToDay = DateTime.Now.DayOfWeek;
                         var ToDayString = DateTime.Now.DayOfWeek.ToString();
-                        NextRunTime = Next(TodayDate, ToDay);
+
+                        var NextRunTime = Next(TodayDate, ToDay);
+                        var NextRunTimeUTC = Next(TodayUTCDate, ToDay); 
+
                         task.NextRunTime = NextRunTime;
+                        task.NextRunTimeUTC = NextRunTimeUTC;
+
                         if (task.Sunday)
                         {
                             NextRunTime = Next(TodayDate, DayOfWeek.Sunday);
+                            NextRunTimeUTC = Next(TodayUTCDate, DayOfWeek.Sunday);
                             if (NextRunTime < task.NextRunTime)
                             {
                                 task.NextRunTime = NextRunTime;
+                                task.NextRunTimeUTC = NextRunTimeUTC;
                             }
                         }
                         if (task.Monday)
                         {
                             NextRunTime = Next(TodayDate, DayOfWeek.Monday);
+                            NextRunTimeUTC = Next(TodayUTCDate, DayOfWeek.Monday);
                             if (NextRunTime < task.NextRunTime)
                             {
                                 task.NextRunTime = NextRunTime;
+                                task.NextRunTimeUTC = NextRunTimeUTC;
                             }
                         }
                         if (task.Tuesday)
                         {
                             NextRunTime = Next(TodayDate, DayOfWeek.Tuesday);
+                            NextRunTimeUTC = Next(TodayUTCDate, DayOfWeek.Tuesday);
                             if (NextRunTime < task.NextRunTime)
                             {
                                 task.NextRunTime = NextRunTime;
+                                task.NextRunTimeUTC = NextRunTimeUTC;
                             }
                         }
                         if (task.Wednesday)
                         {
                             NextRunTime = Next(TodayDate, DayOfWeek.Wednesday);
+                            NextRunTimeUTC = Next(TodayUTCDate, DayOfWeek.Wednesday);
                             if (NextRunTime < task.NextRunTime)
                             {
                                 task.NextRunTime = NextRunTime;
+                                task.NextRunTimeUTC = NextRunTimeUTC;
                             }
                         }
                         if (task.Thursday)
                         {
                             NextRunTime = Next(TodayDate, DayOfWeek.Thursday);
+                            NextRunTimeUTC = Next(TodayUTCDate, DayOfWeek.Thursday);
                             if (NextRunTime < task.NextRunTime)
                             {
                                 task.NextRunTime = NextRunTime;
+                                task.NextRunTimeUTC = NextRunTimeUTC;
                             }
                         }
                         if (task.Friday)
                         {
                             NextRunTime = Next(TodayDate, DayOfWeek.Friday);
+                            NextRunTimeUTC = Next(TodayUTCDate, DayOfWeek.Friday);
                             if (NextRunTime < task.NextRunTime)
                             {
                                 task.NextRunTime = NextRunTime;
+                                task.NextRunTimeUTC = NextRunTimeUTC;
                             }
                         }
                         if (task.Satarday)
                         {
                             NextRunTime = Next(TodayDate, DayOfWeek.Saturday);
+                            NextRunTimeUTC = Next(TodayUTCDate, DayOfWeek.Saturday);
                             if (NextRunTime < task.NextRunTime)
                             {
                                 task.NextRunTime = NextRunTime;
+                                task.NextRunTimeUTC = NextRunTimeUTC;
                             }
                         }
                        break;
@@ -143,6 +164,7 @@ namespace WebFreight.Web.Helpers
                     {
                         //DateTime NextRunTime;
                         task.NextRunTime = task.NextRunTime.Value.AddMonths(1);
+                        task.NextRunTimeUTC = task.NextRunTimeUTC.Value.AddMonths(1);
                         break;
                     }
                 default: // Once

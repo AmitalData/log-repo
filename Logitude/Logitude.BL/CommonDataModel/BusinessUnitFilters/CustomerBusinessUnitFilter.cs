@@ -170,28 +170,37 @@ namespace Logitude.BL.CommonDataModel.BusinessUnitFilters
 
         public IQueryable<CardList> RunFilter(IQueryable<CardList> iQueryableData)
         {
-            List<RoleFeature> myFeatureRoles = this.GetFeaturesRoles();
+            var iQueryableData_NotCustomers = iQueryableData.Where(d => d.PartnerTypeId != "CS" && d.PartnerTypeId != "PO");
 
-            if (myFeatureRoles.Count > 0)
+            iQueryableData = iQueryableData.Where(d => d.PartnerTypeId == "CS" || d.PartnerTypeId == "PO");
+
+            if (iQueryableData.Count() > 0)
             {
-                if (!myFeatureRoles.Where(d => d.FeatureAccessLevelCode == "OR").Any())
+                List<RoleFeature> myFeatureRoles = this.GetFeaturesRoles();
+
+                if (myFeatureRoles.Count > 0)
                 {
-                    if (myFeatureRoles.Where(d => d.FeatureAccessLevelCode == "US").Any())
+                    if (!myFeatureRoles.Where(d => d.FeatureAccessLevelCode == "OR").Any())
                     {
-                        iQueryableData = iQueryableData.Where(d => d.SalesmanUserId == loggedUser.Id);
-                    }
+                        if (myFeatureRoles.Where(d => d.FeatureAccessLevelCode == "US").Any())
+                        {
+                            iQueryableData = iQueryableData.Where(d => d.SalesmanUserId == loggedUser.Id);
+                        }
 
-                    else if (myFeatureRoles.Where(d => d.FeatureAccessLevelCode == "BU").Any())
-                    {
-                        iQueryableData = iQueryableData.Where(d => d.SalesmanBusinessUnitId == loggedUser.BusinessUnitId);
-                    }
+                        else if (myFeatureRoles.Where(d => d.FeatureAccessLevelCode == "BU").Any())
+                        {
+                            iQueryableData = iQueryableData.Where(d => d.SalesmanBusinessUnitId == loggedUser.BusinessUnitId);
+                        }
 
-                    else if (myFeatureRoles.Where(d => d.FeatureAccessLevelCode == "PR").Any())
-                    {
-                        iQueryableData = iQueryableData.Where(d => d.SalesmanBusinessUnitId.StartsWith(loggedUser.BusinessUnitId));
+                        else if (myFeatureRoles.Where(d => d.FeatureAccessLevelCode == "PR").Any())
+                        {
+                            iQueryableData = iQueryableData.Where(d => d.SalesmanBusinessUnitId.StartsWith(loggedUser.BusinessUnitId));
+                        }
                     }
                 }
             }
+
+            iQueryableData = iQueryableData.Concat(iQueryableData_NotCustomers);
 
             return iQueryableData;
         }

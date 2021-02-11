@@ -2,6 +2,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from 'src/Infrastructure/Components/LoginComponent/Login.Component';
+import { Error401Component } from 'src/CargoTracking/Components/Errors/Error401Component';
 import { HomeComponent } from 'src/CargoTracking/Components/PublicSite/HomeComponent/HomeComponent';
 import { PublicShipmentDetailsComponent } from 'src/CargoTracking/Components/PublicSite/PublicShipmentDetailsComponent/PublicShipmentDetailsComponent';
 import { SearchComponent } from 'src/CargoTracking/Components/PublicSite/SearchComponent/SearchComponent';
@@ -18,7 +19,7 @@ const routes: Routes = [
 
       
     { 
-        path: ':Tenant/dashboard', 
+        path: 'Cargo-Tracking', 
         component: UserDashboardComponent,
         canActivate: [AuthGuard],
         children: [
@@ -26,42 +27,31 @@ const routes: Routes = [
             { path: "shipments", component: ShipmentsListComponent }, 
             { path: "shipment/:SecurityKey", component: ShipmentDetailsComponent }, 
             { path: "favorites", component: FavoritesPageComponent  }, 
+            {path: '**', redirectTo: 'Cargo-Tracking', pathMatch: 'full' }, 
            
         ]
     },
     {
-        path: ':Tenant/search',
+        path: 'public-tracking/search',
         component: HomeComponent,
         children: [ 
-            // { path: "", redirectTo: "/:Tenant/search/", pathMatch: "full" },
             { path: "", component: SearchComponent }, 
             { path: "shipment/:SecurityKey", component: PublicShipmentDetailsComponent },
-            { path: "shipment", redirectTo: ':Tenant/search' },
+            { path: "shipment", redirectTo: 'public-tracking/search' },
             { path: ":searchKey", component: SearchComponent },
-            {path: '**', redirectTo: '/1/search/', pathMatch: 'full' }, 
+            {path: '**', redirectTo: 'public-tracking/search', pathMatch: 'full' }, 
         ]
     },
     
  
-    { path: 'login', component: LoginComponent },
-    { path: 'resetpassword', component: ResetPasswordComponent },
-    { path: 'changepassword', component: ChangePasswordComponent },
-    // {path: '', component: PublicGateComponent, pathMatch: 'full' },
-    {path: '', component: HomeComponent, pathMatch: 'full' },
-    {path: ':Tenant', redirectTo: '/:Tenant/search/', pathMatch: 'full'},
-    {path: '**', redirectTo: '/1/search/', pathMatch: 'full' },
-    // {path: '**',redirectTo: '1/search', pathMatch: 'full'  },
 
+    { path: 'Cargo-Tracking/login', component: LoginComponent },
+    { path: 'Cargo-Tracking/resetpassword', component: ResetPasswordComponent },
+    { path: 'Cargo-Tracking/changepassword', component: ChangePasswordComponent },
+    { path: 'Error401', component: Error401Component },
+    { path: '', redirectTo: 'public-tracking/search', pathMatch: 'full' },
+    { path: '**', redirectTo: 'public-tracking/search', pathMatch: 'full' },
  
-
-    // {path: ':Tenant', redirectTo: '/:Tenant/search/', pathMatch: 'full'},
-    // {path: ':Tenant/search', redirectTo: '/:Tenant/search/', pathMatch: 'full'},
-    // {path: ':Tenant/search/:searchKey', component: SearchComponent },
-    // { path: 'pageb', component: PageBComponent },
-    // { path: 'login', component: LoginComponent },
-    // {path: ':Tenant/shipment/:SecurityKey', component: ShipmentComponent},    
-    // {path: '', component: SearchComponent , pathMatch: 'full' },
-    // {path: '**',component: SearchComponent, pathMatch: 'full' },
 ]; 
 
 @NgModule({

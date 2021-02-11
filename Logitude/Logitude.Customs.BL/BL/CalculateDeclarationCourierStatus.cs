@@ -148,14 +148,19 @@ namespace Logitude.Customs.BL.BL
             if (string.IsNullOrWhiteSpace(myDeclarationCourierStatusPM.DocumentStatusCode))
             {
                 myDeclarationCourierStatusPM.DocumentStatusCode = "M";
+                return;
             }
+            var customContext = CustomContext.GetContext(myDeclarationCourierStatusPM.Tenant);
+            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
+            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", myDeclarationCourierStatusPM.Tenant, "Declaration");
 
-            else if (IsDocumentError(myDeclarationCourierStatusPM))
+            /*else*/
+            if (IsDocumentError(myDeclarationCourierStatusPM, customsDocumentsTicketPMList))
             {
                 myDeclarationCourierStatusPM.DocumentStatusCode = "X";
 
             }
-            else if (IsDocumentMissing(myDeclarationCourierStatusPM))
+            else if (IsDocumentMissing(myDeclarationCourierStatusPM, customsDocumentsTicketPMList))
             {
                 myDeclarationCourierStatusPM.DocumentStatusCode = "M";
             }
@@ -350,13 +355,13 @@ namespace Logitude.Customs.BL.BL
             }
         }
 
-        public Boolean IsDocumentMissing(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
+        public Boolean IsDocumentMissing(DeclarationCourierStatusPM myDeclarationCourierStatusPM, List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList)
         {
             var customContext = CustomContext.GetContext(myDeclarationCourierStatusPM.Tenant);
-            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
+            //CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
             CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
  
-            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", myDeclarationCourierStatusPM.Tenant, "Declaration");
+            //List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", myDeclarationCourierStatusPM.Tenant, "Declaration");
 
             List<CustomDocumentTypePM> CustomDocumentTypePMList = docTypeQuery.GetMandatoryCustomDocumentTypesForCourier(declarationPM.Tenant);
             if (CustomDocumentTypePMList != null)
@@ -374,13 +379,13 @@ namespace Logitude.Customs.BL.BL
             return false;
         }
 
-        public Boolean IsDocumentError(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
+        public Boolean IsDocumentError(DeclarationCourierStatusPM myDeclarationCourierStatusPM, List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList)
         {
-            var customContext = CustomContext.GetContext(myDeclarationCourierStatusPM.Tenant);
-            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
-            CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
+            //var customContext = CustomContext.GetContext(myDeclarationCourierStatusPM.Tenant);
+            //CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
+            //CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
 
-            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", myDeclarationCourierStatusPM.Tenant, "Declaration");
+            //List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", myDeclarationCourierStatusPM.Tenant, "Declaration");
 
             //List<CustomDocumentTypePM> CustomDocumentTypePMList = docTypeQuery.GetMandatoryCustomDocumentTypesForCourier(declarationPM.Tenant);
             //if (CustomDocumentTypePMList != null)

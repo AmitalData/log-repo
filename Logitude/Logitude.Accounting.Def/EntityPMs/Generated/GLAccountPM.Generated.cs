@@ -2793,6 +2793,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string relatedGLAccount ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RelatedGLAccount  
+	   {
+	    
+	     get
+		{
+		   return relatedGLAccount;
+		 }
+		 set
+		 {
+		   if(relatedGLAccount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RelatedGLAccount",OldValue=relatedGLAccount,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   relatedGLAccount=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

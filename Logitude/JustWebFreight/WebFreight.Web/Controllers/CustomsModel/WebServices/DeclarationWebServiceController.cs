@@ -42,8 +42,7 @@ using System.Xml.Serialization;
 using System.Xml;
 using System.IO;
 using Logitude.CustomsMessaging.ResponseServices;
-
-
+using Logitude.Customs.BL.TraceEvents;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -1227,6 +1226,27 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
+
+        public HttpResponseMessage GetDeclarationDocumentWithConnectNotValid(string parentEntityId, string parentEntityCode)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+                CustomsDocumentQueryService customsDocumentQuery = new CustomsDocumentQueryService(customContext);
+                List<CustomsDocumentPM> documents = customsDocumentQuery.GetDeclarationDocumentWithConnectNotValid(parentEntityId, parentEntityCode, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, documents);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetDeclarationMandatoryTicketList(string parentEntityId, string parentEntityCode)
         {
             try
@@ -1919,6 +1939,27 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
 
         }
+
+
+        public HttpResponseMessage GetCLSHWBEventHandle(string DeclerationID,String UserID ,int a_Tenent , int  a_mode)
+        {
+            try
+            {
+
+                DeclarationUpdateService.SetCLSHWB(DeclerationID, UserID, a_Tenent, a_mode == 1 ? UnifreightEventMode.@new : UnifreightEventMode.del);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+
+        }
+
+        //RaiseCLSHWBEvent
+
     }
-    
+
 }

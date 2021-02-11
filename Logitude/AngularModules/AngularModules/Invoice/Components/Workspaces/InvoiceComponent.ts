@@ -6,6 +6,7 @@ import {AccountPayablesComponent} from '../Workspaces/AccountPayablesComponent';
 import {AccountingTransferComponent} from '../Workspaces/AccountingTransferComponent';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     selector: 'OperationsComponent',
@@ -17,10 +18,13 @@ export class InvoiceComponent implements AfterViewInit {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     public isRTL: boolean = false;
+    public IsVisible_Settings: boolean = false;
     constructor() {
         if (ObjectsLocator.GlobalSetting) {
             this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         }
+
+        this.IsVisible_Settings = FeatureLocator.HasFeaturePermession("General", "HOWTOACCOUNTINGSETTINGS") ? true : false;
     }
 
     ngAfterViewInit() {

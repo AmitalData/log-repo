@@ -1,0 +1,43 @@
+import * as Actions from "../../actions/Actions";
+import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
+import { ShipmentDetails } from "../../models/ShipmentDetails";
+import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
+import { ShipmentSelector } from "../../selectors/Selectors";
+import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
+import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
+
+let ShipmentData: ShipmentDetails;
+let shipmentNumber: string;
+
+Given("the user logged in and navigates to shipments workspace", () => {
+  cy.Login()
+  Actions.NavigatesToShipmentsWorkspace()
+});
+
+Given("a direct shipment with the following details",
+  (dataTable) => {
+    let shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+    ShipmentData = shipmentDetails;
+    Actions.OpenNewShipmentWizard(ShipmentData.ShipmentLevel);
+    Actions.FillShipmentWizardsFields(ShipmentData);
+});
+
+When("create shipment", () => {
+  Actions.CreateShipment(ShipmentData.ShipmentLevel);
+});
+Then("the direct should create successfully", () => {
+  BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
+    shipmentNumber = interception.response.body.ShipmentNumber;
+  })
+});
+
+Given("the user open the direct shipment", () => {
+  Actions.OpenShipment(shipmentNumber)
+})
+When("copy the shipment", () => {
+  Actions.CopyShipment(ShipmentData.ShipmentLevel);
+});
+
+Then("a shipment copy should create successfully", () => {
+  BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+});

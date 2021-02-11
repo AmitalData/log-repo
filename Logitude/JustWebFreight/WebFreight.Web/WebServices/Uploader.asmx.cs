@@ -41,6 +41,9 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Def.EntityPMs;
 using System.Xml.Linq;
 using Logitude.BL.Helpers;
+using Simplog.Data.ShipmentsModel;
+using Logitude.BL.ShipmentsModel.EntityQueries;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
 namespace WebFreight.Web.WebServices
 {
@@ -647,7 +650,39 @@ namespace WebFreight.Web.WebServices
 
         }
 
+        public List<DocumentsFilingPM> GetMasterDocumentsAndItsConnectedHousesDocuments(string entityId, int tenant)
+        {
+            ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
+            DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(myContext);
+            DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
+            List<DocumentsFilingPM> myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(entityId, tenant);
+            List<DocumentsFilingPM> housesDocumentFilings = GetConnectedHousesDocumentsFilingPMs(entityId, tenant, myDocumentsFilingQuery);
+            myDocumentFilings = myDocumentFilings.Concat(housesDocumentFilings).ToList();
 
+            return myDocumentFilings;
+        }
+
+        private static List<DocumentsFilingPM> GetConnectedHousesDocumentsFilingPMs(string entityId, int tenant, DocumentsFilingQuery myDocumentsFilingQuery)
+        {
+            List<string> housesShipmentsIds = GetAllConnectedHousesShipmentByShipmentMasterId(entityId, tenant);
+            List<DocumentsFilingPM> myDocumentFilings = new List<DocumentsFilingPM>();
+            for (int i = 0; i < housesShipmentsIds.Count(); i++)
+            {
+                List<DocumentsFilingPM> houseDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(housesShipmentsIds[i], tenant);
+                myDocumentFilings = myDocumentFilings.Concat(houseDocumentFilings).ToList();
+            }
+
+            return myDocumentFilings;
+        }
+
+        private static List<string> GetAllConnectedHousesShipmentByShipmentMasterId(string entityId, int tenant)
+        {
+            IShipmentsContext shipmentContext = ShipmentsContext.GetContext(tenant);
+            ShipmentConsoleShipmentQuery shipmentConsoleShipmentQuery = new ShipmentConsoleShipmentQuery(shipmentContext);
+            List<string> housesShipmentsIds = shipmentConsoleShipmentQuery.GetMasterConnectedHouseShipments(entityId, tenant)
+                                                                          .Select(shipment => shipment.Id).ToList();
+            return housesShipmentsIds;
+        }
 
         [WebMethod]
         public byte[] DownloadFile(string documentId, string documentExtension, string fileLocation, int tenant, bool withOutTenant = false)

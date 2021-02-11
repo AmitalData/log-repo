@@ -15,22 +15,35 @@ declare var UploadLogoFile, HideImage, SetImage, ShowHideProgressDownload, Array
 
   selector: 'ImageComponent',
   templateUrl: './ImageComponent.html',
-  inputs: ['EntityId', 'ImageId', "EntityName", 
+  inputs: ['EntityId', 'ImageId', "EntityName",
   'ImageId', 'WidthImage', 'HeightImage', 'ImageResizeWidth',
-   'ImageResizeHeight', 'HideBorder', 'DisplayOnly', 
-   'ConversationHeaderId','KeepOriginalSize'],
+   'ImageResizeHeight', 'HideBorder', 'DisplayOnly',
+   'ConversationHeaderId','KeepOriginalSize','Extension'],
   providers: [ImageLibraryService],
 })
 
 
 export class ImageComponent implements AfterViewInit, OnInit {
-  ImageId: string;
+
+
+    private _ImageId : string;
+    public get ImageId() : string {
+        return this._ImageId;
+    }
+    public set ImageId(v : string) {
+        this._ImageId = v;
+        if(!v){
+            SetImage(this.ImageKey, "./Images/DefultImage3.jpg", true);
+        }
+    }
+
   EntityId: string;
   EntityName: string;
   HideBorder: boolean = false;
   IsLoadingImage: boolean = false;
   ImageResizeWidth: number;
   ImageResizeHeight: number;
+  Extension:string;
   DefultImageHeight: string = "auto";
   ImageKey: string = Guid.newGuid();
   ImageFileHtmlId: string = Guid.NewRandomString();
@@ -38,7 +51,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
   ProgressDownloadId: string = Guid.newGuid();
   DataImage: any;
   DisplayOnly: boolean = false;
-  Tooltip: string = "Click to add the photo";// 
+  Tooltip: string = "Click to add the photo";//
   CursorImage: string = "pointer";
   BorderStyle: string = "1px solid #d3d3d3";
   WidthImage: string = "100%";
@@ -117,6 +130,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
 
 
   ShowLogosIfExist(imageId: string, extension: string = "jpg", isUseCach = true) {
+    extension = this.Extension?this.Extension:extension;
     if (!imageId) imageId = this.ImageId;
 
     if (isUseCach) {
@@ -143,7 +157,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
   }
 
   GetImageFile(imageId: string, extension: string, isFirEvent: boolean = false) {
-
+    extension = this.Extension?this.Extension:extension;
     var type = "Base64";
     if (this.EntityName == "Quotation" || this.EntityName == "Airline") {
       type += ("^ImageDetail");
@@ -206,13 +220,15 @@ export class ImageComponent implements AfterViewInit, OnInit {
 
     if (file) {
       var reader: FileReader = new FileReader();
-      var extension: string = "";
+      var extension: string =extension = this.Extension?this.Extension:"";
       var fileInfo = file.name.split('.');
 
-      if (fileInfo.length > 1) {
+      if (fileInfo.length > 1 && !extension) {
         extension = fileInfo[fileInfo.length - 1];
       }
-      else extension = fileInfo[1];
+      else if(!extension) extension = fileInfo[1];
+      else
+        extension = this.Extension?this.Extension:extension;
 
       if (extension) {
         extension = extension.toLowerCase();
@@ -422,9 +438,9 @@ export class ImageComponent implements AfterViewInit, OnInit {
   }
 
   GetSocialMessageImageFile(imageId: string, imageNumber: number) {
-
+    var extension = this.Extension?this.Extension:"jpg";
     ShowHideProgressDownload(true, this.ProgressDownloadId);
-    this._imageLibraryService.DownloadFile(imageId, "jpg", "images", SessionInfo.LoggedUserTenant, "Base64").subscribe((res: any) => {
+    this._imageLibraryService.DownloadFile(imageId, extension, "images", SessionInfo.LoggedUserTenant, "Base64").subscribe((res: any) => {
       var pmResponse: ServiceResponse = res;
 
       ShowHideProgressDownload(false, this.ProgressDownloadId);

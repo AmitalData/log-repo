@@ -155,6 +155,7 @@ export class GuaranteePMService {
         if (!entityPM) {
             
             entityPM = new GuaranteePM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
@@ -215,6 +216,8 @@ export class GuaranteePMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -240,7 +243,8 @@ export class GuaranteePMService {
             {
                 newGuaranteeConditionPM = new GuaranteeConditionPM(null);
             }
-                
+ 			newGuaranteeConditionPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -272,7 +276,7 @@ export class GuaranteePMService {
                 newGuaranteeConditionPM.OldEntityPM = null;
                 newGuaranteeConditionPM.EntityParentPM = null;
             }
-			
+			 newGuaranteeConditionPM.DisableMarkAsDirty = false;
 			 newGuaranteeConditionPM.IsDirty = false;
             entityPM.GuaranteeConditions.push(newGuaranteeConditionPM);
         }
@@ -286,6 +290,7 @@ export class GuaranteePMService {
                         //entityPM.GuaranteeConditions.push(oldGuaranteeConditions[itemKey]);
 						var oldItemJson = oldGuaranteeConditions[itemKey];
                         var deletedPM: GuaranteeConditionPM = new GuaranteeConditionPM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -297,7 +302,7 @@ export class GuaranteePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
@@ -330,7 +335,8 @@ export class GuaranteePMService {
             {
                 newRequiredGuaranteeTypePM = new RequiredGuaranteeTypePM(null);
             }
-                
+ 			newRequiredGuaranteeTypePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -362,7 +368,7 @@ export class GuaranteePMService {
                 newRequiredGuaranteeTypePM.OldEntityPM = null;
                 newRequiredGuaranteeTypePM.EntityParentPM = null;
             }
-			
+			 newRequiredGuaranteeTypePM.DisableMarkAsDirty = false;
 			 newRequiredGuaranteeTypePM.IsDirty = false;
             entityPM.RequiredGuaranteeTypes.push(newRequiredGuaranteeTypePM);
         }
@@ -376,6 +382,7 @@ export class GuaranteePMService {
                         //entityPM.RequiredGuaranteeTypes.push(oldRequiredGuaranteeTypes[itemKey]);
 						var oldItemJson = oldRequiredGuaranteeTypes[itemKey];
                         var deletedPM: RequiredGuaranteeTypePM = new RequiredGuaranteeTypePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -387,7 +394,7 @@ export class GuaranteePMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

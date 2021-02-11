@@ -80,6 +80,16 @@ export class QuoteChargePM {
     public set ViewOrder(newValue: number) { if (this.viewOrder != newValue) { this.viewOrder = newValue; this.MarkAsDirty("ViewOrder"); } }
        
 	 
+    private saleRatio: number;
+    public get SaleRatio() { return this.saleRatio; }
+    public set SaleRatio(newValue: number) { if (this.saleRatio != newValue) { this.saleRatio = newValue; this.MarkAsDirty("SaleRatio"); } }
+       
+	 
+    private costRatio: number;
+    public get CostRatio() { return this.costRatio; }
+    public set CostRatio(newValue: number) { if (this.costRatio != newValue) { this.costRatio = newValue; this.MarkAsDirty("CostRatio"); } }
+       
+	 
     private quoteTypeCode: string;
     public get QuoteTypeCode() { return this.quoteTypeCode; }
     public set QuoteTypeCode(newValue: string) { if (this.quoteTypeCode != newValue) { this.quoteTypeCode = newValue; this.MarkAsDirty("QuoteTypeCode"); } }
@@ -571,6 +581,11 @@ export class QuoteChargePM {
     private tariffNumber: string;
     public get TariffNumber() { return this.tariffNumber; }
     public set TariffNumber(newValue: string) { if (this.tariffNumber != newValue) { this.tariffNumber = newValue; this.MarkAsDirty("TariffNumber"); } }
+       
+	 
+    private tariffLineId: string;
+    public get TariffLineId() { return this.tariffLineId; }
+    public set TariffLineId(newValue: string) { if (this.tariffLineId != newValue) { this.tariffLineId = newValue; this.MarkAsDirty("TariffLineId"); } }
        
 	 
     private tariffVersion: number;

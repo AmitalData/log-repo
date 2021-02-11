@@ -87,6 +87,9 @@
     <Compile Include="Customs\CustomFile\LOGIDOCS.cs">
       <DependentUpon>LOGIDOCS.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Customs\CustomFile\LOGIGENREQ.cs">
+      <DependentUpon>LOGIGENREQ.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Customs\CustomFile\LOGIPAYHAND.cs">
       <DependentUpon>LOGIPAYHAND.xsd</DependentUpon>
     </Compile>
@@ -178,6 +181,12 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Customs\CustomFile\LOGIDOCS.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\LOGIGENREQ.dtd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Customs\CustomFile\LOGIGENREQ.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Customs\CustomFile\LOGISCHEDULER.dtd">

@@ -2,7 +2,7 @@ import { BankDepositExtendedPMService } from './../../../Accounting/Services/Ext
 import { CashBookExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/CashBookExtendedPMService';
 import { ReconciliationExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
 declare var window: any;
-import { Component, Type, ComponentRef, ViewContainerRef, ViewChild, Output, EventEmitter, ViewChildren, QueryList, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, Type, ComponentRef, ViewContainerRef, ViewChild, Output, EventEmitter, ViewChildren, QueryList, OnDestroy, ChangeDetectorRef,HostListener } from '@angular/core';
 import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
 import { ObjectFieldPM } from '../../EntityPMs/ObjectFieldPM';
 import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
@@ -23,6 +23,7 @@ import { EditTabComponent } from './EditTabComponent';
 import { Subscription, TeardownLogic } from 'rxjs';//itzik
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
+
 
 @Component({    
     templateUrl: './EditComponent.html',
@@ -63,6 +64,8 @@ export class EditComponent implements OnDestroy {
     public IsSaveBtnDisable: boolean = false;
     public NeedRefresh: boolean = false;
 
+    public EditComponentArgument: any = null;
+
     EntityParentPM: any;
     ShowWindowsOverEditComponent: boolean = false;
 
@@ -79,6 +82,9 @@ export class EditComponent implements OnDestroy {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public CurrentSession = SessionLocator.SelectedSession;
     public IsReloadNeeded: boolean = false;
+    
+    
+
     constructor(private entityPMService: EntityPMService, private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private _totangoService: TotangoService, private cd: ChangeDetectorRef) {
         this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
         this.ComponentIndex = this.CurrentSession.GetNewEditComponentIndex();
@@ -87,6 +93,41 @@ export class EditComponent implements OnDestroy {
         this.EditComponentCellId = "EditComponentCellId_" + this.CurrentSession.SessionIndex + "_" + this.ComponentIndex;
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         this.WorkEnvironment = ObjectsLocator.GlobalSetting == undefined ? "logitude" : ObjectsLocator.GlobalSetting.WorkEnvironment;
+        
+    }
+
+    OnSaveAndCloseHotKey(){
+        if(!this.IsSaveBtnDisable){
+        this.SaveChangesAndClose();
+        }
+    }
+
+    OnSaveHotKeyPressed(){
+        console.log("saving the edit component ");
+        if(this.EntityPM && this.EntityPM.IsDirty){
+        this.SaveChanges();
+        }
+    }
+
+    OnArrowLeftHotKeyPressed(){
+        if(this.PreviousButtonDisabled==false 
+                     && this.NextPreviousVisible==true){
+        console.log("Moving Previous ");
+        this.Previous();
+                     }
+    }
+
+    OnEscHotKeyPressed(){
+        console.log("Back from edit ");
+        this.BackButtonClicked();
+    }
+
+    OnArrowRightHotKeyPressed(){
+            if(this.NextButtonDisabled==false
+            && this.NextPreviousVisible==true){
+        console.log("Moving Next ");
+        this.Next();
+            }
     }
 
     private EntityFields: any[] = null;
@@ -158,7 +199,7 @@ export class EditComponent implements OnDestroy {
         if (this.EntityId || (this.EntityId && this.EntityPM.Id))
             isNewEntity = false;
 
-        if ((this.ObjectTableName == "ARPayment"  || this.ObjectTableName== "APPayment") && SessionLocator.TenantPM.AccountingActivated && isNewEntity) {
+        if ((this.ObjectTableName == "ARPayment" ) && SessionLocator.TenantPM.AccountingActivated && isNewEntity) {
             this.IsSaveBtnVisible = false;
         }
         //
@@ -954,9 +995,9 @@ export class EditComponent implements OnDestroy {
                 SessionLocator.DynamicLoader.Load("./Infrastructure/Components/EditComponent/EditTabComponent", this.TabControlBodyViewContainerRef)
                     .then(cmpRef => {
 
-                        if (this.PreSelectedTabCode != null) {
-                            this.entityArgs.PreSelectedTabCode = this.PreSelectedTabCode;
-                        }
+
+                        this.entityArgs.PreSelectedTabCode = this.PreSelectedTabCode;
+                        this.entityArgs.EditComponentArgument = this.EditComponentArgument;
 
                         cmpRef.instance.CurrentlySelected = true;
                         cmpRef.instance.Run(this.SingleDetailsTab.Code, this.SingleDetailsTab.HtmlComponentUrl);
@@ -1765,6 +1806,7 @@ export class EditComponent implements OnDestroy {
         //}
 
         this.CurrentSession.RemoveEditComponent(this);
+        
         this.ngOnDestroy();
 
 

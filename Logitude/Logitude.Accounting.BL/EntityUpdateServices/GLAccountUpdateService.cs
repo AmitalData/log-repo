@@ -537,46 +537,58 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
             // Chart of Account change validation
-            if (entityPOCO.ChartOfAccountsId != entityPM.ChartOfAccountsId)
+            //if (entityPOCO.ChartOfAccountsId != entityPM.ChartOfAccountsId)
+            //{
+            //    // ChartOfAccount changed
+            //    // get transactions in closed period
+            //    LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(entityPOCO.Tenant);
+            //    AccountingPeriodQueryService periodQuery = new AccountingPeriodQueryService(entityPOCO.Tenant);
+            //    List<AccountingPeriodPM> tenantPeriods = periodQuery.GetAccountingPeriodsByTenantAndType("1", entityPOCO.Tenant); // 1- Accounting, Regular
+            //    if (tenantPeriods.Count() > 0)
+            //    {
+            //        //
+            //        // note: the opened periods may be found in a different years, 
+            //        //       so I fetch the opened periods over years and check its closed transactions
+            //        //
+
+            //        DateTime closedDate;
+            //        DateTime openDate;
+
+            //        //List<AccountingPeriodPM> periodsWithOpenedMonths = tenantPeriods.Where(d => d.ClosedMonth != d.OpenMonth).ToList();
+            //        foreach (AccountingPeriodPM period in tenantPeriods)
+            //        {
+            //            // prepare closed month date
+            //            if (period.ClosedMonth == null)
+            //                closedDate = new DateTime(period.Year, 1, 1, 0, 0, 0);
+            //            else
+            //                closedDate = new DateTime(period.Year, period.ClosedMonth.Value, DateTime.DaysInMonth(period.Year, period.ClosedMonth.Value), 23, 59, 59);
+
+            //            // prepare open month date
+            //            openDate = new DateTime(period.Year, period.OpenMonth, 1, 0, 0, 0);
+
+            //            // get transactions in closed period
+            //            IQueryable<LedgerTransaction> transactions = transQuery.GetClosedPeriodTransactions(entityPOCO.Id, closedDate, openDate, entityPOCO.Tenant);
+            //            if (transactions.Count() > 0)
+            //            {
+            //                throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccounts.O.ChartOfAccountCantChangedGLAhaveTrans", entityPOCO.Tenant, useLocal));
+            //            }
+            //        }
+
+            //    }
+
+            //}
+
+
+            if (entityPOCO.ChartOfAccountsTypeCode != entityPM.ChartOfAccountsTypeCode)
             {
-                // ChartOfAccount changed
-                // get transactions in closed period
-                LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(entityPOCO.Tenant);
-                AccountingPeriodQueryService periodQuery = new AccountingPeriodQueryService(entityPOCO.Tenant);
-                List<AccountingPeriodPM> tenantPeriods = periodQuery.GetAccountingPeriodsByTenantAndType("1", entityPOCO.Tenant); // 1- Accounting, Regular
-                if (tenantPeriods.Count() > 0)
+                List<LedgerTransactionList> transactions = GetAccountTransactions(entityPM);
+                if (transactions.Count > 0)
                 {
-                    //
-                    // note: the opened periods may be found in a different years, 
-                    //       so I fetch the opened periods over years and check its closed transactions
-                    //
-
-                    DateTime closedDate;
-                    DateTime openDate;
-
-                    //List<AccountingPeriodPM> periodsWithOpenedMonths = tenantPeriods.Where(d => d.ClosedMonth != d.OpenMonth).ToList();
-                    foreach (AccountingPeriodPM period in tenantPeriods)
-                    {
-                        // prepare closed month date
-                        if (period.ClosedMonth == null)
-                            closedDate = new DateTime(period.Year, 1, 1, 0, 0, 0);
-                        else
-                            closedDate = new DateTime(period.Year, period.ClosedMonth.Value, DateTime.DaysInMonth(period.Year, period.ClosedMonth.Value), 23, 59, 59);
-
-                        // prepare open month date
-                        openDate = new DateTime(period.Year, period.OpenMonth, 1, 0, 0, 0);
-
-                        // get transactions in closed period
-                        IQueryable<LedgerTransaction> transactions = transQuery.GetClosedPeriodTransactions(entityPOCO.Id, closedDate, openDate, entityPOCO.Tenant);
-                        if (transactions.Count() > 0)
-                        {
-                            throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccounts.O.ChartOfAccountCantChangedGLAhaveTrans", entityPOCO.Tenant, useLocal));
-                        }
-                    }
-
+                    throw new ApplicationException("Can't change chart of account type while the account has a transactions");
                 }
-
             }
+
+
 
             //CurrencyQuery currencyQuery = new CurrencyQuery(entityPM.Tenant);
             //if (entityPM.ConnectedItems != null)
@@ -645,6 +657,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             ValidateCurrencyChange(entityPM, entityPOCO);
         }
+
         protected override void OnUpdating(GLAccountPM entityPM)
         {
             AddAcitivityLog(entityPM, "U");
@@ -2015,7 +2028,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 AccountId = entityPM.Id,
                 Tenant = entityPM.Tenant,
-                ChangeSetOp = ChangeSetOperation.Insert
+                ChangeSetOp = ChangeSetOperation.Insert,
+                BalanceInLocalCurrency = 0,
+                LocalBalanceInDue = 0,
+
+                TotalOpenChequesInLocalCur = 0,
+                TotFutureOpenChequesInLocalCur = 0,
+
 
             }, false);
         }

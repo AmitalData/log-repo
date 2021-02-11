@@ -14,9 +14,7 @@ export class FavoritesPageComponent
 
     constructor()
     {
-        // this.GetVariablesFromURI();
-        // this.listenToRouterEvents();
-       
+ 
     }
 
  

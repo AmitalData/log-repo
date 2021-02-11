@@ -60,13 +60,16 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     private _glaService: GLAccountListService = new GLAccountListService();
     _PartnerTypeListService: PartnerTypeListService = new PartnerTypeListService();
     private CurrentSession = SessionLocator.SelectedSession;
-
+    DisplayFieldsFromList:string;
+    DisplayLocalFieldsFromList:string;
+    BillToLovSizeForFullAccounting:number;
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
+        this.accountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this._entityResourceService.getEntityResourceByTableName("ARPayment", 0).subscribe((response: any) => {});
         this._entityResourceService.getEntityResourceByTableName("ARInvoice", 0).subscribe((response: any) => {});
-
+        this.InitializeBillToLov();
         this.loadPartnerTypesFilter();
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -79,7 +82,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         if (this.invoicePm == null) {
             this.invoicePm = new ARInvoicePM();
         }
-        this.accountingActivated = SessionLocator.TenantPM.AccountingActivated;
+        
 
         if(SessionLocator.TenantPM.AccountingActivated)
             this.invoicePm.IsFullAccounting = true;
@@ -95,6 +98,14 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
+        }
+    }
+
+    private InitializeBillToLov() {
+        if (this.accountingActivated) {
+            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.BillToLovSizeForFullAccounting = 550;
         }
     }
 
@@ -185,6 +196,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
         if (this.invoicePm != null) {
             this.IsCreatedFromInvoiceSide = true;
+            this.UIProperties.SetEnabled("PartnerId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);
@@ -291,6 +303,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         this.CreateARPayment();
 
         if (this.IsCreatedFromInvoiceSide) {
+            this.newARPaymentPM.PartnerId = this.invoicePm.PartnerId;
             this.newARPaymentPM.BillToId = this.invoicePm.BillToId;
             this.newARPaymentPM.BillToName = this.invoicePm.BillToName;
             this.newARPaymentPM.BillToAddressId = this.invoicePm.BillToAddressId;
@@ -310,7 +323,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
         else {
             if (!AppTool.IsNullOrEmpty(this.customerId)) {
-                this.BillToId = this.customerId;
+                this.PartnerId = this.customerId;
             }
 
             this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
@@ -573,6 +586,30 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     }
 
     get DebitAccountDependencyProperty1() { return "AR,BN"; }
+
+    get PartnerId() { return this.EntityPM.PartnerId; }
+    set PartnerId(newValue: string) {
+        if (this.EntityPM.PartnerId != newValue) {
+            this.EntityPM.PartnerId = newValue;
+            if (AppTool.IsNullOrEmpty(newValue)) {
+                this.BillToId = null;
+            }
+            else {
+                var myService: CardListService = new CardListService();
+                myService.getSingle(newValue).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: CardList = myResponse.Result;
+                        if (list != null) {
+                            this.BillToId = list.BillToId;
+                            if (AppTool.IsNullOrEmpty(this.BillToId)) {
+                                this.BillToId = newValue;
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    }
 
     // BillTo Properties
     get BillToId() { return this.newARPaymentPM.BillToId; }
@@ -905,6 +942,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     }
 
     SetUIProperties_Payment() {
+        this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, false);
         this.UIProperties.SetRequired("SATPaymentMethodCode", this.ObjectTableName, false);
         this.UIProperties.SetRequired("MetodoPagoCode", this.ObjectTableName, false);
 
@@ -1199,9 +1237,9 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     public set SelectedPartnerType(type : PartnerTypeList) {
         this._SelectedPartnerType = type;
         this.filterByPartnerTypeCode = type.Id;
-        this.BillToId = null;
-    }
+        this.PartnerId = null;
 
+    }
 
 }
 

@@ -332,11 +332,11 @@ namespace Logitude.Accounting.BL.CoreBL
                                         &&
                                         this._JournalPM.JournalExternalReconciles.Count > 0
                                         &&
-                                        myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList.Count == 1
+                                        myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList.Count >= 1
 
                                         )
             {
-                var myExternalReconciliation = myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList.First();
+                var myExternalReconciliation = myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList.Last();
 
                 var myJournalUpdateService = new JournalUpdateService(this._AccountingContext, new Dictionary<string, IContext>(), this._JournalPM.Tenant);
 
@@ -1049,9 +1049,15 @@ namespace Logitude.Accounting.BL.CoreBL
                     int year = DateTime.Now.Year;
                     var repo = new GLAccountTotalByMonthRepository(0);
                     var activeTenants =repo.GetActiveTenantPerYear(year);
-                    foreach (var tenant in activeTenants)
+                    var myTenantRepository = new TenantRepository(0);
+                    var prodTenant = myTenantRepository.GetTenants().Where(r => r.IsTestTenant == false).ToList();
+                    int iCount = 0;
+                    foreach (int tenant in activeTenants)
                     {
-
+                        if (prodTenant.FirstOrDefault(r=>r.Id == tenant) == null)
+                        {
+                            continue;//IsTestTenant
+                        }
                         using (var scope = TransactionFactory.GetNewTransaction())
                         {
                             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
@@ -1067,7 +1073,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             // serialize
                             string xmlString = LogitudeXmlSerializer.SerializeObjectToXmlElementString<AccountingIntegrityInParam>(paramsObj);
 
-
+                            service.DelayQueueInMinutes = iCount * 45;
                             service.Update(new AccountingIntegrityCheckPM()
                             {
                                 ChangeSetOp = ChangeSetOperation.Insert,
@@ -1082,6 +1088,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             }
                             , true);
                             scope.Complete();
+                            iCount++;//more 45 min
                         }
 
                     }

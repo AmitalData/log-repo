@@ -68,7 +68,10 @@ export class InterfaceTenantDefinitionPM {
     public OldEntityPM: InterfaceTenantDefinitionPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -76,6 +79,7 @@ export class InterfaceTenantDefinitionPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.InterfaceTenantDefinition");
            
         }
+       }
     }
 
     private MyClone: InterfaceTenantDefinitionPM;

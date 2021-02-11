@@ -36,11 +36,13 @@ using Logitude.CargoTracking.BL.EntityUpdateServices;
 using Logitude.CargoTracking.Data.EntityListQueryServices;
 using Logitude.CargoTracking.BL.EntityQueryServices;
 using System.Threading;
+using Logitude.CargoTracking.Def.DataContracts;
+using Logitude.CargoTracking.BL.CoreBL;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
-{ 
+{
 
-    
+
     public class CargoTrackingSearchController : ApiController
     {
 
@@ -50,15 +52,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         {
             try
             {
-                
+
 
                 ICargoTrackingContext MyContext = CargoTrackingContext.GetContext(tenant);
                 CargoTrackingShipmentSearchListQueryService cargoTrackingShipmentSearchQuery = new CargoTrackingShipmentSearchListQueryService(MyContext);
 
-                List<CargoTrackingShipmentList> shipments = cargoTrackingShipmentSearchQuery.GetShipments(searchKey, tenant).OrderByDescending(s=>s.CreateDate).ToList();
+                List<CargoTrackingShipmentList> shipments = cargoTrackingShipmentSearchQuery.GetShipments(searchKey, tenant).OrderByDescending(s => s.CreateDate).ToList();
 
-                //throw new ApplicationException("Hi, I am an error!! okay!");
-
+ 
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, shipments);
 
                 return reponseMessage;
@@ -81,7 +82,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(MyContext);
 
                 CargoTrackingShipmentList shipment = shipmentsQuery.GetShipment(SecurityKey, tenant);
-                List<Milestone> milestones = shipmentsQuery.GetMilestonesFieldsFromCargoTrackingShipment(shipment);
+                List<Milestone> milestones = shipmentsQuery.GetCargoTrackingShipmentMilestones(shipment);
                 CargoTrackingShipmentWithMilestones cargoTrackingShipmentWithMilestones = new CargoTrackingShipmentWithMilestones()
                 {
                     ShipmentList = shipment,
@@ -100,24 +101,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
         [HttpGet]
-        public HttpResponseMessage GetUserShipments(int pageIndex, int pageSize, int tenant)
+        public HttpResponseMessage GetUserShipments(int pageIndex, int pageSize, [FromUri] CargoTrackingShipmentFilters shipmentFilters)
         {
             try
             {
-                // for now, it gets top 500 shipments by tenant
+                CargoTrackingUsersShipmentService usersShipmentService = new CargoTrackingUsersShipmentService();
+                CargoTrackingShipmentsResponse response = usersShipmentService.GetUserShipmentsResponse(pageIndex, pageSize, shipmentFilters);
 
-                ICargoTrackingContext MyContext = CargoTrackingContext.GetContext(tenant);
-                CargoTrackingShipmentSearchListQueryService cargoTrackingShipmentSearchQuery = new CargoTrackingShipmentSearchListQueryService(MyContext);
-
-                List<CargoTrackingShipmentList> shipments 
-                    = cargoTrackingShipmentSearchQuery
-                    .GetTop500Shipments(pageIndex, pageSize, tenant)
-                    .OrderByDescending(s => s.CreateDate)
-                    .ToList();
-
-                //Thread.Sleep(700);
-
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, shipments);
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
                 return reponseMessage;
             }
@@ -127,25 +118,18 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             }
 
         }
+
         [HttpGet]
-        public HttpResponseMessage GetUserShipmentsCount(int pageIndex, int pageSize, int tenant)
+        public HttpResponseMessage GetUserShipmentsCount([FromUri] CargoTrackingShipmentFilters shipmentFilters)
         {
             try
             {
-                // for now, it gets top 500 shipments by tenant
+               
+                CargoTrackingUsersShipmentService usersShipmentService = new CargoTrackingUsersShipmentService();
+                CargoTrackingShipmentsCounter counter = usersShipmentService.GetUserShipmentsCounter(shipmentFilters);
 
-                ICargoTrackingContext MyContext = CargoTrackingContext.GetContext(tenant);
-                CargoTrackingShipmentSearchListQueryService cargoTrackingShipmentSearchQuery = new CargoTrackingShipmentSearchListQueryService(MyContext);
 
-                List<CargoTrackingShipmentList> shipments
-                    = cargoTrackingShipmentSearchQuery
-                    .GetTop500Shipments(pageIndex, pageSize, tenant)
-                    .OrderByDescending(s => s.CreateDate)
-                    .ToList();
-
-                //Thread.Sleep(700);
-
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, shipments);
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, counter);
 
                 return reponseMessage;
             }
@@ -164,16 +148,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, references);
 
-                Thread.Sleep(4000);
-
                 return reponseMessage;
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-
+            
         }
+
 
         private static List<string> GetShipmentPublicReferences(string SecurityKey, int tenant)
         {
@@ -191,6 +174,4 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         public int Tenant { get; set; }
     }
 
-
 }
-	 

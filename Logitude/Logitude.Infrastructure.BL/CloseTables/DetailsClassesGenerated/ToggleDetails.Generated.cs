@@ -73,13 +73,6 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Code = "TJC", 
-                Name = "Ticket Jumping Counter", 
-                SearchFields = "TJC,Ticket Jumping Counter", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
                 Code = "BDW", 
                 Name = "Build Document Via WorkerRole", 
                 SearchFields = "BDW,Build Document Via WorkerRole", 
@@ -164,17 +157,82 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Code = "LIC", 
-                Name = "License Management", 
-                SearchFields = "LIC,License Management", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
                 Name = "CRM Customer Quick Search", 
                 Code = "CQS", 
                 SearchFields = "CQS,CRM Customer Quick Search", 
                 Description = "CRM Customer Quick Search", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Charges Types Direction Restrictions", 
+                Code = "CTR", 
+                SearchFields = "CTR,Charges Types Direction Restrictions", 
+                Description = "Charges Types Direction Restrictions", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Branch Code in Counters", 
+                SearchFields = "Branch Code in Counters", 
+                Description = "Branch Code in Counters", 
+                Code = "BCC", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "ACP", 
+                SearchFields = "ACP,Accruals Approvement", 
+                Name = "Accruals Approvement", 
+                Description = "Accruals Approvement Toggle", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "EQW", 
+                Name = "Export Query Data Via WorkerRole", 
+                Description = "Export Query Data to Excel Via WorkerRole", 
+                SearchFields = "Export Query Data Via WorkerRole", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = " Improved Search in Customers Views", 
+                Code = "SCV", 
+                SearchFields = "SCV, Improved Search in Customers Views", 
+                Description = " Improved Search in Customers Views", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "TAR", 
+                Name = "All Tariffs", 
+                SearchFields = "TAR,All Tariffs", 
+                Description = "Hide Tariffs Menu", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "QMC", 
+                Name = "Quote Multi Currency Mode", 
+                SearchFields = "QMC, Quote Multi Currency Mode", 
+                Description = "Quote Multi Currency Mode", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "ADC", 
+                Name = "Automation Document Copies", 
+                SearchFields = "ADC,Automation Document Copies", 
+                Description = "Automation Document Copies", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "DSR", 
+                Name = "Documents Send Result in AP Invoices Automation", 
+                Description = "Documents Send Result in AP Invoices Automation", 
+                SearchFields = "DSR,Documents Send Result in AP Invoices Automation", 
 			});
 			
             return all;

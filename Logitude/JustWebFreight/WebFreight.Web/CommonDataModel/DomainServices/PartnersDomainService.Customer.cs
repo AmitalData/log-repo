@@ -1072,17 +1072,27 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
         private List<CustomerList> GetCustomerListsByApplyCardSearchMechanizm(int tenant, string mySearchText, IQueryable<CustomersDataView> customers)
         {
             List<CustomerList> myResult;
+
             IQueryable<CustomerList> myListQuery = customerQuery.GetIQueryableEntityList(customers);
-            CustomerSearchFilterArgs customerSearchFilterArgs = new CustomerSearchFilterArgs()
+            CustomerSearchArgs customerSearchArgs = new CustomerSearchArgs()
             {
                 Tenant = tenant,
                 SearchText = mySearchText,
                 PageSize = 11,
-                Customers = myListQuery,
+                EntityLists = myListQuery,
+                FilterItems = GetQueryFilterItems(),
             };
-            CustomerSearchFilter customerSearchFilter = new CustomerSearchFilter(customerSearchFilterArgs);
-            myResult = customerSearchFilter.Run();
+            CustomerDataSearchService customerDataSearchService = new CustomerDataSearchService();
+            myResult = customerDataSearchService.Run(customerSearchArgs);
+
             return myResult;
+        }
+
+        private List<QueryFilterItem>  GetQueryFilterItems()
+        {
+            var queryFilterItems = new List<QueryFilterItem>();
+            queryFilterItems.Add(new QueryFilterItem() { FieldName = "IsCustomer", FieldValue = true });
+            return queryFilterItems;
         }
 
         [Invoke]

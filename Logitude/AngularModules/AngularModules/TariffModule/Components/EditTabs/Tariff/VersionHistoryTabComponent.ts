@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, EventEmitter } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { TariffPM } from '../../../EntityPMs/TariffPM';
@@ -43,6 +43,12 @@ export class VersionHistoryTabComponent implements OnDestroy {
     public IsActionsEnabled: boolean = false;
     public IsDownloadExcelTemplateVisible: boolean = false;
     public IsAllInChargesVisible: boolean = false;
+    public LineIdFromPriceCheck: string;
+    public chargeableWeightInKG: number;
+    public selectedRow: any;
+    public changeScrollPosition: EventEmitter<any> = new EventEmitter();
+    public darkerColler: string = "#f8ca12";
+
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
         this.VersionLinesSource = new ObservableCollection([]);
@@ -62,6 +68,10 @@ export class VersionHistoryTabComponent implements OnDestroy {
         
         this.LoadVersions();
         this.Listen();
+    }
+    Intialize(args: any) {
+        this.LineIdFromPriceCheck = args['LineIdFromPriceCheck'];
+        this.chargeableWeightInKG = args['ChargeableWeightInKG'];
     }
 
     private AllChargesTypes: ChargesTypeList[];
@@ -455,12 +465,24 @@ export class VersionHistoryTabComponent implements OnDestroy {
     private FillLines() {
         this.VersionLinesSource.Clear();
         var itemsCollection: VersionHistoryTariffLine[] = [];
-
+        var count = 0; var selectRowIndex = 0; var isSelectRowExist = false;
         this.tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
-            itemsCollection.push(new VersionHistoryTariffLine(item, this.EntityPM));
+            var itemhistory = new VersionHistoryTariffLine(item, this, this.EntityPM);
+            count++;
+            itemsCollection.push(itemhistory);
+            if (!AppTool.IsNullOrEmpty(this.LineIdFromPriceCheck) && itemhistory.myTariffLine.Id == this.LineIdFromPriceCheck) {
+                this.selectedRow = itemhistory;
+                selectRowIndex = count;
+                isSelectRowExist = true;
+            }
         });
-
+        
         this.VersionLinesSource.InsertCollection(itemsCollection);
+        if (isSelectRowExist) {
+            this.changeScrollPosition.emit({
+                RowIndex: selectRowIndex
+            });
+        }
     }
 
     // Download Excel 
@@ -650,6 +672,15 @@ export class VersionHistoryTabComponent implements OnDestroy {
             }
         });
     }
+
+    ViewUploadedExcelFilesClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Uploaded Excel Files";
+        logWindow.Width = 600;
+        logWindow.Height = 500;
+        logWindow.WindowArgs = { TariffId: this.EntityPM.Id, Version: this.VersionPM.Version };
+        logWindow.Show('./TariffModule/Components/EditTabs/Tariff/UploadedExcelsComponent');
+    }
 }
 
 export class VersionHistoryTariffLine {
@@ -710,13 +741,15 @@ export class VersionHistoryTariffLine {
     public Surcharge9PriceValue: string;
     public Surcharge10PriceValue: string;
 
-    private myTariffLine: TariffLinePM;
+    public myTariffLine: TariffLinePM;
     private myTariff: TariffPM;
-    constructor(tariffLine: TariffLinePM, tariff: TariffPM) {
+    private fatherComponent: VersionHistoryTabComponent;
+    constructor(tariffLine: TariffLinePM, public FatherComponent: VersionHistoryTabComponent, tariff: TariffPM) {
         this.myTariff = tariff;
+        this.fatherComponent = FatherComponent;
         this.myTariffLine = tariffLine;
         this.AssignCommonData();
-
+        this.SetCellColorsForPriceCheck();
         if (tariff.TypeCode == "AFC" || tariff.TypeCode == "OLC") {
             this.AssignData_FreightCost();
         }
@@ -729,7 +762,16 @@ export class VersionHistoryTariffLine {
             this.AssignData_OceanFCLSurchargeCost();
         }
     }
+    public CellColor:string = "transparent";
+    private SetCellColorsForPriceCheck() {
+        if (!AppTool.IsNullOrEmpty(this.fatherComponent.LineIdFromPriceCheck) && this.fatherComponent.LineIdFromPriceCheck == this.myTariffLine.Id) {
+            this.CellColor = "#f7dc6e";
+        }
 
+        else {
+                this.CellColor = "rgba(230, 231, 232, 0.5)";
+        }
+    }
     private AssignCommonData() {
         this.OriginPortCode = this.myTariffLine.OriginPortCode;
         this.DestinationPortCode = this.myTariffLine.DestinationPortCode;
@@ -798,53 +840,61 @@ export class VersionHistoryTariffLine {
         if (!AppTool.IsNullOrEmpty(ichargeTypeId)) {
             if (this.myTariffLine.ContainersPrices.filter(d => d.SurchargeId == ichargeTypeId).length > 0) {
                 this.myTariffLine.ContainersPrices.filter(d => d.SurchargeId == ichargeTypeId).forEach((item) => {
-                    if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType1Id)) {
-                        if (AppTool.IsNullOrZero(item.Price1)) {
-                            myValue = "-";
-                        }
 
-                        else {
-                            myValue = item.Price1.toString();
-                        }
+                    if (!AppTool.IsNullOrZero(item.CostPrice)) {
+                        myValue = item.CostPrice.toString();
                     }
 
-                    if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType2Id)) {
-                        if (AppTool.IsNullOrZero(item.Price2)) {
-                            myValue = myValue + " / -";
+                    else {
+
+                        if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType1Id)) {
+                            if (AppTool.IsNullOrZero(item.Price1)) {
+                                myValue = "-";
+                            }
+
+                            else {
+                                myValue = item.Price1.toString();
+                            }
                         }
 
-                        else {
-                            myValue = myValue + " / " + item.Price2.toString();
-                        }
-                    }
+                        if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType2Id)) {
+                            if (AppTool.IsNullOrZero(item.Price2)) {
+                                myValue = myValue + " / -";
+                            }
 
-                    if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType3Id)) {
-                        if (AppTool.IsNullOrZero(item.Price3)) {
-                            myValue = myValue + " / -";
-                        }
-
-                        else {
-                            myValue = myValue + " / " + item.Price3.toString();
-                        }
-                    }
-
-                    if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType4Id)) {
-                        if (AppTool.IsNullOrZero(item.Price4)) {
-                            myValue = myValue + " / -";
+                            else {
+                                myValue = myValue + " / " + item.Price2.toString();
+                            }
                         }
 
-                        else {
-                            myValue = myValue + " / " + item.Price4.toString();
-                        }
-                    }
+                        if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType3Id)) {
+                            if (AppTool.IsNullOrZero(item.Price3)) {
+                                myValue = myValue + " / -";
+                            }
 
-                    if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType5Id)) {
-                        if (AppTool.IsNullOrZero(item.Price5)) {
-                            myValue = myValue + " / -";
+                            else {
+                                myValue = myValue + " / " + item.Price3.toString();
+                            }
                         }
 
-                        else {
-                            myValue = myValue + " / " + item.Price5.toString();
+                        if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType4Id)) {
+                            if (AppTool.IsNullOrZero(item.Price4)) {
+                                myValue = myValue + " / -";
+                            }
+
+                            else {
+                                myValue = myValue + " / " + item.Price4.toString();
+                            }
+                        }
+
+                        if (!AppTool.IsNullOrEmpty(this.myTariff.ContainerType5Id)) {
+                            if (AppTool.IsNullOrZero(item.Price5)) {
+                                myValue = myValue + " / -";
+                            }
+
+                            else {
+                                myValue = myValue + " / " + item.Price5.toString();
+                            }
                         }
                     }
                 });

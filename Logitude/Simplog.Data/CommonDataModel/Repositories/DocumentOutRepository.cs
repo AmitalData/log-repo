@@ -40,6 +40,18 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return d;
         }
 
+        public DocumentOut GetDocumentOutByEntityId(string entityId, string objectTableId, int tenant)
+        {
+            DocumentOut documentOut = (from a in context.DocumentOuts
+                                       .Include("DocumentsFiling")
+                                       where 
+                                       a.Tenant == tenant
+                                       && a.DocumentsFiling.EntityId == entityId
+                                       && a.DocumentsFiling.ObjectTableId == objectTableId
+                                       select a).FirstOrDefault();
+            return documentOut;
+        }
+
         public DocumentOut GetDocumentOutByEntityAndChildEntity(string entityId, string childEntityId)
         {
             DocumentOut documentOut = (from a in context.DocumentOuts.Include("DocumentsFiling").Include("DocumentsFiling.DocumentType").Include("DocumentsFiling.CreatedByUser.Contact")

@@ -100,6 +100,21 @@ export class DWObjectTablePM {
     public set DisplayName(newValue: string) { if (this.displayName != newValue) { this.displayName = newValue; this.MarkAsDirty("DisplayName"); } }
        
 	 
+    private objectTableName: string;
+    public get ObjectTableName() { return this.objectTableName; }
+    public set ObjectTableName(newValue: string) { if (this.objectTableName != newValue) { this.objectTableName = newValue; this.MarkAsDirty("ObjectTableName"); } }
+       
+	 
+    private maxNumberOfCustomFields: number;
+    public get MaxNumberOfCustomFields() { return this.maxNumberOfCustomFields; }
+    public set MaxNumberOfCustomFields(newValue: number) { if (this.maxNumberOfCustomFields != newValue) { this.maxNumberOfCustomFields = newValue; this.MarkAsDirty("MaxNumberOfCustomFields"); } }
+       
+	 
+    private hasCustomFields: boolean;
+    public get HasCustomFields() { return this.hasCustomFields; }
+    public set HasCustomFields(newValue: boolean) { if (this.hasCustomFields != newValue) { this.hasCustomFields = newValue; this.MarkAsDirty("HasCustomFields"); } }
+       
+	 
 
     public OldEntityPM: DWObjectTablePM;
 		

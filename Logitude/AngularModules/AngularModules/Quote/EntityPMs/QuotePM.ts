@@ -1153,6 +1153,11 @@ export class QuotePM {
     public set IsSaleCurrencySameAsCost(newValue: boolean) { if (this.isSaleCurrencySameAsCost != newValue) { this.isSaleCurrencySameAsCost = newValue; this.MarkAsDirty("IsSaleCurrencySameAsCost"); } }
        
 	 
+    private isMultiCurrency: boolean;
+    public get IsMultiCurrency() { return this.isMultiCurrency; }
+    public set IsMultiCurrency(newValue: boolean) { if (this.isMultiCurrency != newValue) { this.isMultiCurrency = newValue; this.MarkAsDirty("IsMultiCurrency"); } }
+       
+	 
     private notifyId: string;
     public get NotifyId() { return this.notifyId; }
     public set NotifyId(newValue: string) { if (this.notifyId != newValue) { this.notifyId = newValue; this.MarkAsDirty("NotifyId"); } }

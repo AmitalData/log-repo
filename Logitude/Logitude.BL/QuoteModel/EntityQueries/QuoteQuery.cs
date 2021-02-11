@@ -293,6 +293,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                ShipmentSubTypeName = f.ShipmentSubType == null ? null : f.ShipmentSubType.Name,
                                                RegionalTaxId = f.RegionalTaxId,
                                                RegionalTaxPercentage=f.RegionalTaxPercentage,
+                                               IsMultiCurrency = f.IsMultiCurrency,
                                            };
             return result;
         }
@@ -510,6 +511,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         RequestDate = f.RequestDate,
                         EstimatedProfitInLocal = f.EstimatedProfitInLocal,
                         EstimatedProfitInProfit = f.EstimatedProfitInProfit,
+                        IsMultiCurrency = f.IsMultiCurrency,
                     };
 
                     ContactRepository rep = new ContactRepository(tenant);
@@ -1362,6 +1364,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 RegionalTaxId = entityPOCO.RegionalTaxId,
                 RegionalTaxPercentage = entityPOCO.RegionalTaxPercentage,
                 DescriptionRightToLeft = entityPOCO.DescriptionRightToLeft,
+                IsMultiCurrency = entityPOCO.IsMultiCurrency,
             };
 
             int tenant = entityPOCO.Tenant;
@@ -1971,7 +1974,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 }
             }
 
-            entityPM.QuoteCharges = quoteChargeQuery.GetQuoteChargesPMsByQuoteId(entityId, tenant);
+            entityPM.QuoteCharges = quoteChargeQuery.GetQuoteChargesPMsByQuoteId(entityId, tenant, entityPM.QuoteTypeCode);
 
             entityPM.TotalVATs = myTotalVATQuery.GetTotalVATs(entityId, tenant);
 

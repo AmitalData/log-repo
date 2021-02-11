@@ -43,7 +43,10 @@ export class TariffSurchargesUpdateMethodPM {
     public OldEntityPM: TariffSurchargesUpdateMethodPM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -51,6 +54,7 @@ export class TariffSurchargesUpdateMethodPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TariffSurchargesUpdateMethod");
            
         }
+       }
     }
 
     private MyClone: TariffSurchargesUpdateMethodPM;

@@ -10,41 +10,41 @@ h1{
     margin: 0;
     padding: 0;
     width: 170px;
-    background-color: var(--MainColor);
+    background-color: var(--secondaryColor);
     position: fixed;
     height: 100%;
     overflow: auto;
     text-align: center;
     color: white;
-      
+
   }
-  
+
   .sidebar a {
     display: block;
     padding: 17px;
     margin: 11px 0px;
-    color: #d6d6d6;
+    color: #fff;
     text-decoration: none;
     cursor: pointer;
     font-weight: 100;
     text-align: left;
     padding-left: 30px;
     font-size: 18px;
-    border-left: 6px solid var(--MainColor);
+    border-left: 6px solid var(--secondaryColor);
   }
-   
+
     .sidebar a.active {
         /* background-color: #4CAF50; */
         color: white;
         font-weight: 700;
         border-left: 6px solid white;
     }
-    
+
     .sidebar a:hover:not(.active) {
         opacity: .8;
         color: white;
     }
-    
+
   div.content {
     margin-left: 170px;
     min-height: calc(100vh - 50px);
@@ -56,6 +56,32 @@ h1{
     border-radius: 50%;
     width: 80px;
   }
+  .sidebar .avatar{
+    line-height: 70px;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .sidebar .avatar .circle-bg{
+    background: var(--secondaryColor);
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    opacity: 0.5;
+  }
+  .sidebar .avatar .letters{
+    font-size: 40px;
+    text-transform: uppercase;
+    z-index: 3;
+    position: absolute;
+    top: 4px;
+    text-align: center;
+    margin: 0 auto;
+    width: 80px;
+
+  }
   .sidebar .user-name{
     color: white;
     font-size: 15px;
@@ -66,6 +92,7 @@ h1{
     color: white;
     font-size: 11px;
     font-weight: 600;
+    cursor: pointer;
   }
 
   .sidebar .logo{
@@ -75,29 +102,29 @@ h1{
   }
 
   .sidebar .logo > img{
-    /* width: 120px; */ 
+    width: calc(100% - 30px);
   }
 
-  
+
   @media screen and (max-width: 700px) {
     .sidebar {
       width: 100%;
       height: auto;
       position: fixed;
-      z-index: 10; 
+      z-index: 10;
     }
     .sidebar a {float: left;}
     div.content {margin-left: 0;}
   }
-  
+
   @media screen and (max-width: 479px) {
     div.content {
       padding: 0 15px;
     }
-   
-    
-    .sidebar { 
-      height: 50px; 
+
+
+    .sidebar {
+      height: 50px;
     }
     .sidebar a {
       text-align: center;
@@ -108,12 +135,13 @@ h1{
       top: 0;
       width: fit-content;
       margin: 0 auto;
-      padding-top: 12px;
+      /* padding-top: 12px; */
       display: inline-block;
     }
 
     .sidebar .logo img{
-        width: 80px;
+        width: auto;
+        max-height: 50px;
     }
 
     .sidebar .action-buttons{
@@ -123,16 +151,16 @@ h1{
     }
     .sidebar .right-button{
         float: right;
-        
+
     }
     .sidebar .left-button{
         float: left;
-        
+
     }
     .nav-opened{
         display: block !important;
         position: fixed;
-        background: var(--MainColor);
+        background: var(--secondaryColor);
         left: 0;
         top: 0;
         right: 0;

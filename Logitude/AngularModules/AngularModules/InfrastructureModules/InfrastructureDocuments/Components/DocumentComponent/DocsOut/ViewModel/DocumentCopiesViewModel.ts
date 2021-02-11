@@ -1,4 +1,4 @@
-﻿import {DocumentTypeCopyPM} from '../../../../../../Common/EntityPMs/DocumentTypeCopyPM';
+import {DocumentTypeCopyPM} from '../../../../../../Common/EntityPMs/DocumentTypeCopyPM';
 import {ShipmentPM} from '../../../../../../Shipment/EntityPMs/ShipmentPM';
 import {EntityArgs} from '../../../../../../Infrastructure/DataContracts/EntityArgs';
 import {DocumentTypePM} from '../../../../../../Common/EntityPMs/DocumentTypePM';
@@ -34,6 +34,7 @@ export class DocumentCopiesViewModel {
     public IsSelectedByDefault: boolean;
     public IsDiableSelctedDocumentTypeCopy: boolean = false;
     public IsPrintButtonEnabled: boolean = false;
+    public IsOriginal: boolean = false;
     
     public IsHideSetSelectedAsDefaultBtn: boolean;
     public DivSelectBackgroud: string;
@@ -130,6 +131,12 @@ export class DocumentCopiesViewModel {
 
             if (this.CurrentDocumentType.IsDocumentOneTimePrintLimited && this.CurrentDocumentType.LimitedPrintCopyId == this.CurrentDocumentOutCopy.DocumentTypeCopyId && !AppTool.IsNullOrEmpty(this.CurrentDocumentOutCopy.LastPrintedByUserId)) {
                 this.IsPrintButtonEnabled = false;
+            }
+        }
+
+        if (this.CurrentDocumentTypeCopy != null) {
+            if (this.CurrentDocumentTypeCopy && this.CurrentDocumentTypeCopy.IsOriginal) {
+                this.IsOriginal = true;
             }
         }
 

@@ -182,6 +182,17 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 #region Shipment Fields
 
+
+                if (shipmentPM.ShipmentLevelCode == "H")
+                {
+                    Shipment tempMaterShipment = shipmentRepository.GetSingleShipment(shipmentPM.MasterShipmentDataId, tenant);
+                    provider.MasterShipmentNumber = tempMaterShipment.ShipmentNumber;
+                }
+                else if (shipmentPM.ShipmentLevelCode == "C")
+                {
+                    provider.MasterShipmentNumber = shipmentPM.ShipmentNumber;
+                }
+
                 double? openReceivablesLocal = shipmentPM.OpenReceivablesInLocalCurrency;
                 double? acctReceivablesLocal = shipmentPM.AccountedReceivablesInLocalCurrency;
                 double? allReceivablesLocal = openReceivablesLocal.Value + acctReceivablesLocal.Value;
@@ -218,7 +229,8 @@ namespace WebFreight.Web.ReportsWebServices
                 provider.DifferenceInProfitCurrency = String.Format("{0:#,0.00}", differenceInProfitCurrency);
                 provider.ShipmentVolume = shipmentPM.Volume;
                 provider.VolumeUnitCode = shipmentPM.VolumeUnitCode;
-
+                provider.IsAccrualsApproved = shipmentPM.IsAccrualsApproved;
+                provider.AccrualsApprovalDate = shipmentPM.AccrualsApprovalDate;
                 #endregion
 
                 #region Group by ChargeType
@@ -249,6 +261,7 @@ namespace WebFreight.Web.ReportsWebServices
                          ChargeTypeId = g.Select(s => s.ChargesTypeId).FirstOrDefault(),
                          ChargeTypeCode = g.Select(s => s.ChargesTypeCode).FirstOrDefault(),
                          ChargeTypeName = g.Select(s => s.ChargesTypeName).FirstOrDefault(),
+                         IsExpenseCharge = g.Select(s => s.IsExpenseCharge).FirstOrDefault(),
                          OpenPayablesInLocal = g.Sum(s => s.OpenAmountInLocalCurrency),
                          OpenPayablesInProfit = g.Sum(s => s.OpenAmountInProfitCurrency),
                          ACCTPayablesInLocal = g.Sum(s => s.AccountedAmountInLocalCurrency),
@@ -265,6 +278,7 @@ namespace WebFreight.Web.ReportsWebServices
                          ChargeTypeId = g.Select(s => s.ChargesTypeId).FirstOrDefault(),
                          ChargeTypeCode = g.Select(s => s.ChargesTypeCode).FirstOrDefault(),
                          ChargeTypeName = g.Select(s => s.ChargesTypeName).FirstOrDefault(),
+                         IsExpenseCharge = g.Select(s => s.IsExpenseCharge).FirstOrDefault(),
                          ReceivablesInLocalCurrency = String.Format("{0:#,0.00}", g.Sum(s => s.TotalAmountLocal)),
                          ReceivablesInProfitCurrency = String.Format("{0:#,0.00}", g.Sum(s => s.AmountInProfitCurrency)),
                      }).ToList();
@@ -275,6 +289,7 @@ namespace WebFreight.Web.ReportsWebServices
                     record.ChargeTypeId = item.ChargeTypeId;
                     record.ChargeTypeCode = item.ChargeTypeCode;
                     record.ChargeTypeName = item.ChargeTypeName;
+                    record.IsExpenseCharge = item.IsExpenseCharge;
                     record.Vendor = item.Vendor;
 
                     double? theOpenPayablesLocal = item.OpenPayablesInLocal;
@@ -348,6 +363,7 @@ namespace WebFreight.Web.ReportsWebServices
                     record.ChargeTypeId = item.ChargeTypeId;
                     record.ChargeTypeCode = item.ChargeTypeCode;
                     record.ChargeTypeName = item.ChargeTypeName;
+                    record.IsExpenseCharge = item.IsExpenseCharge;
                     record.ReceivablesInLocalCurrency = item.ReceivablesInLocalCurrency;
                     record.ReceivablesInProfitCurrency = item.ReceivablesInProfitCurrency;
                     record.ProfitInLocalCurrency = item.ReceivablesInLocalCurrency;
@@ -737,7 +753,7 @@ namespace WebFreight.Web.ReportsWebServices
             if (shipment != null)
             {
                 provider.ShipmentNumber = string.IsNullOrEmpty(shipment.ShipmentNumber) ? "" : shipment.ShipmentNumber;
-                
+
                 IncotermRepository incotermRepository = new IncotermRepository(tenant);
                 Incoterm incoterm = incotermRepository.GetSingleIncoterm(shipment.IncotermId,tenant);
                 if (incoterm != null)

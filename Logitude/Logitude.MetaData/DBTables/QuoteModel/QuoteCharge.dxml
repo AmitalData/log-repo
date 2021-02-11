@@ -426,6 +426,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="TariffLineId"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="QuoteId"
     ReferencedTable="Quotes"

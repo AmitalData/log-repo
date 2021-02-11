@@ -669,6 +669,11 @@ export class ARPaymentPM {
     public set PaymentCurrencySign(newValue: string) { if (this.paymentCurrencySign != newValue) { this.paymentCurrencySign = newValue; this.MarkAsDirty("PaymentCurrencySign"); } }
        
 	 
+    private partnerId: string;
+    public get PartnerId() { return this.partnerId; }
+    public set PartnerId(newValue: string) { if (this.partnerId != newValue) { this.partnerId = newValue; this.MarkAsDirty("PartnerId"); } }
+       
+	 
 
     public OldEntityPM: ARPaymentPM;
 		

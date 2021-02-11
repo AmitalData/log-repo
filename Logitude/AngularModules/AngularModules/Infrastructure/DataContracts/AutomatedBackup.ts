@@ -4,7 +4,8 @@ import {AutomationSetValue} from './AutomationSetValue';
 import {AutomationCondition} from './AutomationCondition';
 import {AutomationFollowUp} from './AutomationFollowUp';
 import {AutomationQueuedTask} from './AutomationQueuedTask';
-import { AutomationSendInterface } from './AutomationSendInterface';
+import {AutomationSendInterface} from './AutomationSendInterface';
+import {AutomationSendDocument} from './AutomationSendDocument';
 
 @Injectable() 
 
@@ -23,6 +24,9 @@ export class AutomatedBackup {
     public DelaytimeIndicator: string;
     public Type: string;
     public IsAutomationResultEmailAllActiveUsers: boolean;
+    public ReportTemplateId: string;
+    public DocumentCopyId: string;
+
     AautomationConditionLists: AutomationCondition[];
     AutomationSetValueLists: AutomationSetValue[];
     DelayAautomationConditionLists: AutomationCondition[];
@@ -30,7 +34,7 @@ export class AutomatedBackup {
     AutomationQueuedTask: AutomationQueuedTask;
     AutomationSetSLAValue: AutomationSetSLAValue;
     AutomationSendInterface: AutomationSendInterface;
-
+    AutomationSendDocument: AutomationSendDocument;
 
 }
 

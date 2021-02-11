@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validators;
 using Logitude.BL.ShipmentsModel.Tools.Validating;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -194,11 +195,32 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         }
                     }
 
-                    bool isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherShipment(shipmentPM.Id, item.MasterNumber, shipmentPM.AirlinePrefix, shipmentPM.DirectionId, shipmentPM.TransportModeId, shipmentPM.ShipmentLevelCode, shipmentPM.IsCancelled, tenant);
-                    if (isFieldExists)
+                    ShipmentMasterIsUsedValidator validator = new ShipmentMasterIsUsedValidator();
+
+                    validator.Validate(new ShipmentMasterIsUsedValidatorArgs()
+                    {
+                        Tenant = tenant,
+                        ShipmentId = shipmentPM.Id,
+                        BookingId = shipmentPM.BookingId,
+                        DirectionId = shipmentPM.DirectionId,
+                        TransportModeId = shipmentPM.TransportModeId,
+                        ShipmentLevelCode = shipmentPM.ShipmentLevelCode,
+                        Master = item.MasterNumber,
+                        AirlinePrefix = shipmentPM.AirlinePrefix,
+                        IsCancelled = shipmentPM.IsCancelled,
+                        IsThrowingException = false,
+                    });
+
+                    if (validator.IsUsedInShipment)
                     {
                         throw new ApplicationException("Main Carriage Leg 1 Master field already used in another Shipment");
                     }
+
+                    //bool isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherShipment(shipmentPM.Id, item.MasterNumber, shipmentPM.AirlinePrefix, shipmentPM.DirectionId, shipmentPM.TransportModeId, shipmentPM.ShipmentLevelCode, shipmentPM.IsCancelled, tenant);
+                    //if (isFieldExists)
+                    //{
+                    //    throw new ApplicationException("Main Carriage Leg 1 Master field already used in another Shipment");
+                    //}
                 }
             }
         }

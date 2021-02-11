@@ -1,4 +1,4 @@
-﻿
+
 <div style="height: 80px; width: 100%;">
     <div class="MediaFillAbsolute" style="overflow-x:auto; overflow-y:hidden;">
         <table>
@@ -14,8 +14,28 @@
                             <td>
                                 <table>
                                     <tr>
+
+                                        <!-- Partner -->
+                                        <td style="width: 1px; padding-right: 5px;width:50px" class="Label">Partner:</td>
+                                        <td style="width: 200px; min-width: 200px;">
+                                            <div style="width:200px;">
+                                                <LogLov [ObjectFieldName]="'PartnerId'"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Card'"
+                                                        [DisplayMemberPath]="'EnglishName'"
+                                                        [DependencyFilter1IsList]="'true'"
+                                                        [ShowInActive]="'true'"
+                                                        [DependencyFilter1Value]="''"
+                                                        [HideMaintenanceIcon]="true"
+                                                        [HideAddLink]="true"
+                                                        [HideAdd]="true"
+                                                        [HideEdit]="true">
+                                                </LogLov>
+                                            </div>
+                                        </td>
+
                                         <!-- Customer -->
-                                        <td style="width: 1px; padding-right: 5px;width:80px" class="Label">Customer:</td>
+                                        <td style="width: 1px; padding-right: 5px;width:80px" class="Label">Bill To/ Vendor:</td>
                                         <td style="width: 200px; min-width: 200px;">
                                             <div style="width:200px;">
                                                 <LogLov [ObjectFieldName]="'CustomerId'"
@@ -28,8 +48,7 @@
                                                         [HideMaintenanceIcon]="true"
                                                         [HideAddLink]="true"
                                                         [HideAdd]="true"
-                                                        [HideEdit]="true"
-                                                        >
+                                                        [HideEdit]="true">
                                                 </LogLov>
                                             </div>
                                         </td>
@@ -43,7 +62,6 @@
                                                 </label>
                                             </div>
                                         </td>
-
 
                                         <!-- Shipment Create Date -->
                                         <td style="width: 180px; min-width: 180px;">

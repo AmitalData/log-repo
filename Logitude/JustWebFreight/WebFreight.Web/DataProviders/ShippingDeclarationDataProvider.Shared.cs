@@ -26,6 +26,7 @@ namespace WebFreight.Web.DataProviders
         /// </summary>
         public string TenantCountryCode { get; set; }
         public string ConsigneeAddress { get; set; }
+        public string ConsigneeNameAddress { get; set; }
         public string TenantLogo { get; set; }
         /// <summary>
         /// If notify exists,show notify.Else show importer
@@ -301,8 +302,9 @@ namespace WebFreight.Web.DataProviders
         public string FreightForwardedAddress { get; set; }
         public string FreightForwardedAddressWithoutCountry { get; set; }
         public string Incoterm { get; set; }
-
         public string Salesman { get; set; }
+        public string SalesmanEmail { get; set; }
+        public string UserPhoneNumber { get; set; }    
         public double? TotalPayables { get; set; }
         public string CustomsAgent { get; set; }
         public double? TotalPayablesForMainCarriageCarrier { get; set; }
@@ -388,6 +390,7 @@ namespace WebFreight.Web.DataProviders
         public string TenantName { get; set; }
         public string TenantPhone { get; set; }
         public string IssuedByUser { get; set; }
+        public string IssuedByUserPosition { get; set; }
 
         public DateTime? MainCarriageATD { get; set; }
 
@@ -481,6 +484,7 @@ namespace WebFreight.Web.DataProviders
         //If no delivery, show pickup/delivery address of the consignee
         //If no pickup/delivery address, show the chosen address on the consignee
         public string DeliveryAddress_New { get; set; }
-        
+
+        public string AWBCommodityItemNumber { get; set; }
     }
 }

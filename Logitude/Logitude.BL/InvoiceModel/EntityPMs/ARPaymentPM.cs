@@ -248,6 +248,8 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public string GLAccountCurrencyCode { get; set; }
         public string PaymentCurrencySign { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string PartnerId { get; set; }
 
     }
 }

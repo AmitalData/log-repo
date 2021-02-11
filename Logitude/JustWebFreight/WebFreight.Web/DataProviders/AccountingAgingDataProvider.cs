@@ -37,13 +37,34 @@ namespace WebFreight.Web.DataProviders
         public string AccountDisplayNumber { get; set; }
         public string AccountCurrencyCode { get; set; }
         public string CurrencyCode { get; set; }
+        public string ChartOfAccountLocalName { get; set; }
 
         public string CustomerVatNumber { get; set; }
         public string CustomerPaymentTerm { get; set; }
         public decimal CustomerCreditLimit { get; set; }
         public decimal GLAccountStandardInterestRate { get; set; }
 
+        public string AccountSalesmanName { get; set; }
+        public string AccountSalesmanLocalName { get; set; }
 
+        public string AccountCollectorName { get; set; }
+        public string AccountCollectorLocalName { get; set; }
+        public string Category1Name { get; set; }
+        public string Category2Name { get; set; }
+        public string Category3Name { get; set; }
+        public string Category4Name { get; set; }
+        public string Category5Name { get; set; }
+        public string Category6Name { get; set; }
+        public string Category1LocalName { get; set; }
+        public string Category2LocalName { get; set; }
+        public string Category3LocalName { get; set; }
+        public string Category4LocalName { get; set; }
+        public string Category5LocalName { get; set; }
+        public string Category6LocalName { get; set; }
+        public string ChartOfAccountsLocalName { get; set; }
+        public string ChartOfAccountsEnglishName { get; set; }
+        public string ChartOfAccountsTypeEnglishName { get; set; }
+        public string ChartOfAccountsTypeLocalName { get; set; }
     }
 
     public class AgingPeriodTotal

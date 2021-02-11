@@ -74,6 +74,15 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CourierPendingReasonList { get; set; }
         [Column("LastMileStatusName")]
 	    public string LastMileStatusName { get; set; }
+        [Column("Delivered")]
+	    public bool Delivered { get; set; }
+        [ForeignKey("Trucker")]
+        [Column("TruckerId")]
+	    public string TruckerId { get; set; }
+	      
+        public virtual Trucker Trucker { get; set; }
+        [Column("DistributionArea")]
+	    public string DistributionArea { get; set; }
     }
 }
 	 

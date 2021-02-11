@@ -162,7 +162,7 @@
                                 </td>
 
                                 <td style="width: 57px;">
-                                    <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                                    <button id="{{'NewExportDeclarationCancelButton' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                                 </td>
 
                                 <td style="width: 5px;">
@@ -170,7 +170,7 @@
                                 </td>
 
                                 <td style="width: 57px;">
-                                    <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                                    <button id="{{'NewExportDeclarationOkButton' | IdGeneratorPipe}}"  class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                                 </td>
                             </tr>
                         </table>

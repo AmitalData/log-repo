@@ -91,6 +91,9 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 	private _glaService: GLAccountListService = new GLAccountListService();
 	private CurrentSession = SessionLocator.SelectedSession;
 	public PaymentCurrencySign: string;
+	DisplayFieldsFromList:string;
+    DisplayLocalFieldsFromList:string;
+    BillToLovSizeForFullAccounting:number;
 	constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService)
 	{
 		super();
@@ -156,8 +159,17 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 		  this.GetData();
 
 		// this.UIProperties.SetEnabled("AmountToReconcile","LedgerTransaction",!this.IsGridReadOnly);
-
+		this.InitializeBillToLov();
 	}
+
+	private InitializeBillToLov() {
+        
+		this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+        this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+		this.BillToLovSizeForFullAccounting = 550;
+        
+	}
+	
 	SetAmountCurrencyCode()
 	{
 		if (this.EntityPM)

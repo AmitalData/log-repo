@@ -54,7 +54,7 @@ import { UserDefinedReportPM } from 'Accounting/EntityPMs/UserDefinedReportPM';
     providers: [ListComponentArgs , EntityListService, EntityResourceService, PubSubService, PubSubService1, EntityPMService, TotangoService],
 })
 
-export class ListComponent implements OnInit, AfterViewInit {
+export class ListComponent implements OnInit, AfterViewInit { 
     public IsDemoTenant: boolean = false;
     public ComponentIndex: number = null;
     private myQueryColumnsPMService: QueryColumnsPMService;
@@ -86,6 +86,8 @@ export class ListComponent implements OnInit, AfterViewInit {
     public IsShowTipIcon: boolean = false;
     public IsFirstTipLoad: boolean = false;
 
+    ConstantPageSize: number = 100;
+    DontApplyVirtualization: boolean = false;
 
     //public Title: string;
     private title: string;//= "";
@@ -150,7 +152,11 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     SearchMethod() {
         //this.ApplyPreDefinedFilters();
-        this.CurrentQueryFilters.AdditionalFilters = this.CurrentQueryFilters.AdditionalFilters.filter(a => a.FieldName != "SearchFields");
+
+        var searchFieldName: string = this.IsUseCardSearchMechanism() ? "CardSearchField" : "SearchFields";
+
+
+        this.CurrentQueryFilters.AdditionalFilters = this.CurrentQueryFilters.AdditionalFilters.filter(a => a.FieldName != searchFieldName);
         //if (this.searchFields && this.searchFields != "") {
         //    this.searchFields = this.searchFields.replace(/"/g, '');
         //    //this.searchFields = this.searchFields.replace(/\//g, '');//("\\", "\\");
@@ -159,7 +165,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         //    //this.searchFields = this.searchFields.trim();
         //}
         //if (this.ClearMySearch == false) {
-        this.CurrentQueryFilters.addAdditionalFilter("SearchFields", this.searchFields, null, null, "Contains", false, true, false, "String");
+        this.CurrentQueryFilters.addAdditionalFilter(searchFieldName, this.searchFields, null, null, "Contains", false, true, false, "String");
         this.onQueryChangeEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: this.CurrentQueryFilters, SearchFieldChanged: true, Reload: true });
         //}
         //else {
@@ -616,6 +622,10 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
 
+        if (this.IsUseCardSearchMechanism()) {
+            this.DontApplyVirtualization = true;
+        }
+
         if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString()) && !SessionLocator.LoggedUserPM.IsCustomerCare && this.ObjectTableName == "Contact") {
             this.IsDemoTenant = true;
         }
@@ -632,9 +642,9 @@ export class ListComponent implements OnInit, AfterViewInit {
         var subscription = this.pubSubAdvanceQueryFiltersService.Stream.subscribe(customer => this.processAdvanceQueryFilters(customer));
       //SessionLocator.SelectedSession.pubSubAdvanceQueryFiltersService.emit(this.pubSubAdvanceQueryFiltersService)
       //this.ObjectTableName == "Customs.Declaration" || this.ObjectTableName == "Customs.PhysicalCheck" ||
-      if (this.ObjectTableName.startsWith("Customs.")) {
-          this.IsNavigateButtonVisible = false;
-      }
+    //   if (this.ObjectTableName.startsWith("Customs.")) {
+    //       this.IsNavigateButtonVisible = false;
+    //   }
         this.Listen();
         //this.CD.detectChanges();
     }
@@ -1001,28 +1011,35 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
            if(this.QueryCode.includes(this.ObjectTableName+".")){
                this.SelectedQuery = allQueries.filter(f => f.UniqueCode == (/*this.ObjectTableName+ (f.UserId!= undefined?"." + f.UserId:"") + '.'+*/this.QueryCode))[0];
+               if (this.SelectedQuery == null) {
+                   this.SelectedQuery = allQueries.filter(f => f.UniqueCode == (this.ObjectTableName + (f.UserId != undefined ? "." + f.UserId : "") + '.' + this.QueryCode))[0];
+               }
            }
            else{
                this.SelectedQuery = allQueries.filter(f => f.UniqueCode == (this.ObjectTableName+ (f.UserId!= undefined?"." + f.UserId:"") + '.'+this.QueryCode))[0];
            }
-
             this.Queries = allQueries.filter(f => (f.UserId == null && FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
         }
 
         else if (this.QueryCode) {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
-        
-            if(this.QueryCode.includes(this.ObjectTableName+".")){
+
+            if (this.QueryCode.includes(this.ObjectTableName + ".")) {
                 this.SelectedQuery = allQueries.filter(f => f.UniqueCode == (/*this.ObjectTableName + (f.UserId != undefined ? "." + f.UserId : "") + '.'+*/this.QueryCode))[0];
+                if (this.SelectedQuery == null) {
+                    this.SelectedQuery = allQueries.filter(f => f.UniqueCode == (this.ObjectTableName + (f.UserId != undefined ? "." + f.UserId : "") + '.' + this.QueryCode))[0];
+                }
             }
-               else{
-                this.SelectedQuery = allQueries.filter(f => f.UniqueCode == (this.ObjectTableName + (f.UserId != undefined ? "." + f.UserId : "") + '.'+this.QueryCode))[0];
+            else {
+                this.SelectedQuery = allQueries.filter(f => f.UniqueCode == (this.ObjectTableName + (f.UserId != undefined ? "." + f.UserId : "") + '.' + this.QueryCode))[0];
             }
         }
 
         else {
             this.SelectedQuery = this.Queries[0];
         }
+
+       this.CheckIfQueriesConatinDefaultPerspectiveQuery();
         let forceExistQuery = (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") ;
 
         if (/*forceExistQuery &&*/  this.SelectedQuery != null) {
@@ -1086,6 +1103,21 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         this.SetAddButton();
     }
 
+
+    CheckIfQueriesConatinDefaultPerspectiveQuery(){
+        if(this.Queries && !AppTool.IsNullOrEmpty(this.listArgs.Perspective)){
+            var isQueriesConatinDefaultPerspective:boolean=false;
+            for(let i=0 ; i < this.Queries.length ; i++){
+                if(this.Queries[i].UniqueCode == this.SelectedQuery.UniqueCode){
+                    isQueriesConatinDefaultPerspective=true;
+                    break;
+                }
+            }
+            if(!isQueriesConatinDefaultPerspective){
+                this.Queries.push(this.SelectedQuery);
+            }
+        }
+    }
     GetQueryColumns(queryCode, userId) {
         //var queryId = window.Queries.filter(x => x.Code === queryCode)[0].Id;
         this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + this.Tenant + "&queryCode=" + queryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + userId)
@@ -1592,7 +1624,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             MyFilters.AdditionalFilters.push(filter);
         });
         //console.log(searchfields);
-        if (searchfields) {
+        if (searchfields && !this.IsUseCardSearchMechanism()) {
             //filters.addAdditionalFilter("SearchFields", searchfields, null, null, "Contains", null, null, null, "Text");
             MyFilters.Filter1Name = "SearchFields";
             MyFilters.Filter1Operator = "Contains";
@@ -1605,7 +1637,13 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         //this.firstCall = false;
         //}
         MyFilters.PageIndex = skip;
-        MyFilters.PageSize = take;
+
+        if (this.IsUseCardSearchMechanism()) {
+            MyFilters.PageSize = this.ConstantPageSize;
+            MyFilters.DontApplyVirtualization = this.DontApplyVirtualization;
+        } else MyFilters.PageSize = take;
+
+       
         MyFilters.SortBy = sortingCol;
         MyFilters.SortDirection = sortingDir;
         this.CurrentQueryFilters = MyFilters;
@@ -2384,7 +2422,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             this.DestroyMe = false;
             //this.IsAdvancedSearchOpened = false;
             res.subscribe((aa: any) => {
-                if (AppTool.IsNullOrEmpty($event) && AppTool.IsNullOrEmpty($event.BackFromEdit)) {
+                if (!AppTool.IsNullOrEmpty($event) && !AppTool.IsNullOrEmpty($event.BackFromEdit)) {
                     $event.BackFromEdit.emit({ Data: aa.Result, rowIndex: $event.rowIndex });
                 } else {
                     if (AppTool.IsNullOrEmpty($event.rowIndex)) {
@@ -2502,9 +2540,9 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         else if (this.ObjectTableName == "Currency") {
             this.NewEntityButtonLabel = TextCodeTranslator.Translate("General.B.Add");
         }
-        else if (this.ObjectTableName == "UserDefinedReport") {
-            this.NewEntityButtonLabel = TextCodeTranslator.Translate("Accounting.General.O.NewUserDefinedReport");
-        }
+        // else if (this.ObjectTableName == "UserDefinedReport") {
+        //     this.NewEntityButtonLabel = TextCodeTranslator.Translate("Accounting.General.O.NewUserDefinedReport");
+        // }
         else {
             //this.NewEntityButtonLabel = "New " + TextCodeTranslator.TranslateTable(this.ObjectTableName);
             if (AppTool.IsNullOrEmpty(this.listArgs.NewButtonLabel)) {
@@ -2601,6 +2639,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
                     case "Customs.Declaration":
                         {
+                            isVisible = false;
                             this.customsSettingListService.getSingleFromCache(this.TenantPM.Id.toString()).subscribe((response: ServiceResponse) => {
                                 var list = response.Result;
 
@@ -2609,11 +2648,13 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                         isVisible = false;
                                     }
                                 }
+                                if (!isVisible && this.HaveFeatureNewExportDeclararion()) {
+                                    isVisible = true;
+                                }
+                                this.IsNewEntityButtonVisible = isVisible;
                             });
 
-                            if (!isVisible && this.HaveFeatureNewExportDeclararion()) {
-                                isVisible = true;
-                            }
+                          
                             break;
                         }
 
@@ -3471,6 +3512,17 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     }
 
 
+    IsUseCardSearchMechanism() {
+        var result: boolean = false;
+        if (this.ObjectTableName == "Customer") {
+            var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SCV" && d.TenantNumber == SessionLocator.Tenant)[0];
+            if (featureToggle) {
+            result = true;
+            }
+        }
+        return result;
+
+    }
 
     private currentFilters: ApiQueryFilters;
     private currentSearchFields: string;

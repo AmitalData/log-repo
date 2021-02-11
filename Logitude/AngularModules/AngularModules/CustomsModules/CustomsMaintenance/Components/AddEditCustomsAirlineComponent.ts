@@ -118,6 +118,10 @@ export class AddEditCustomsAirlineComponent extends BaseComponent {
         this.EntityPM.InActive = newValue;
     }
 
+    public get UnloadPortCode() { return this.EntityPM.UnloadPortCode; }
+    public set UnloadPortCode(newValue: string) {
+        this.EntityPM.UnloadPortCode = newValue;
+    }
     //#endregion\
 
     OkButtonClicked() {

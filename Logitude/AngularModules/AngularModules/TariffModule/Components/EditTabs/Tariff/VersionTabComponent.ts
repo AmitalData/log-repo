@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, EventEmitter } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -29,7 +29,7 @@ declare var ResultAsArray: any;
     templateUrl: './VersionTabComponent.html',
 })
 
-export class VersionTabComponent extends BaseComponent implements OnDestroy {
+export class VersionTabComponent extends BaseComponent implements OnDestroy  {
     public EntityPM: TariffPM;
     public ObjectTableName: string = "Tariff";
     public TariffsLinesSource: ObservableCollection;
@@ -43,6 +43,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     public IsDraftVersion: boolean = true;
     public CurrentVersion: TariffVersionPM;
     private FileName: string;
+    private FileExtension: string;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsFirstDraft = false;
     public SelectedVersionNumber: number;
@@ -52,9 +53,14 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     public LineIdFromPriceCheck: string;
     public AllInCharges: string;
     public LinesCount: number;
+    public selectedRow: any;
+    public changeScrollPosition: EventEmitter<any> = new EventEmitter();
+    public darkerColler: string = "#f8ca12";
+    public chargeableWeightInKG: number;
 
-    constructor(public entityArgs: EntityArgs) {
+    constructor(public entityArgs: EntityArgs ) {    
         super();
+        
         this.EntityPM = entityArgs.EntityPM;
         this.GetTariffType();
         this.Listen();
@@ -74,6 +80,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         this.CurrentVersion = args['CurrentVersion'];
         this.SelectedVersionNumber = args['SelectedVersionNumber'];
         this.LineIdFromPriceCheck = args['LineIdFromPriceCheck'];
+        this.chargeableWeightInKG = args['ChargeableWeightInKG'];
         this.LoadVersions();
         this.SetOriginDependencyFilterValue();
     }
@@ -342,32 +349,29 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         }
 
         this.ItemsCollection = [];
-
+        var count = 0; var selectedIndexRow = 0; var isItemSelectExist = false;
         tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
-            this.ItemsCollection.push(new AirCostTariffLineData(item, this));
+            var itemAir = new AirCostTariffLineData(item, this)
+            count++;
+            this.ItemsCollection.push(itemAir);
+            if (!AppTool.IsNullOrEmpty(this.LineIdFromPriceCheck) && itemAir.EntityPM.Id == this.LineIdFromPriceCheck) {
+                this.selectedRow = itemAir;
+                selectedIndexRow = count;
+                isItemSelectExist = true;
+            }
         });
-
         this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
 
         //this.InitializePager();
         //this.FillGridPagerItems();
         this.DoCompare();
+        if (isItemSelectExist) {
+            this.changeScrollPosition.emit({
+                RowIndex: selectedIndexRow
+            });
+        }
+      
     }
-
-    //FillGridPagerItems() {
-
-    //  var items: AirCostTariffLineData[] = [];
-
-    //  if (this.ItemsCollection) {
-    //    var start = (this.PageIndex - 1) * this.PageSize;
-    //    var end = start + this.PageSize;
-
-    //    items = this.ItemsCollection.slice(start, end);
-    //  }
-
-    //  this.TariffsLinesSource.Clear();
-    //  this.TariffsLinesSource.InsertCollection(items);
-    //}
 
     private DoCompare() {
         this.DeletedTariffsLines = [];
@@ -548,10 +552,13 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         this.CurrentSession.StartBusyIndicator("Uploading...");
 
         this.FileName = null;
+        this.FileExtension = null;
+
         if (!AppTool.IsNullOrEmpty(file.name)) {
             var name = file.name.split('.');
             if (name.length == 2) {
                 this.FileName = name[0];
+                this.FileExtension = name[1];
             }
         }
         if (file && file.size > 0) {
@@ -588,8 +595,8 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             filter.TariffId = context.EntityPM.Id;
             filter.Version = context.CurrentVersion.Version;
             filter.TariffType = context.EntityPM.TypeCode;
-            filter.TariffType = context.EntityPM.TypeCode;
             filter.FileName = context.FileName;
+            filter.FileExtension = context.FileExtension;
             context.SendExcelToServer(filter);
 
         };
@@ -862,6 +869,15 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                 }
             });
         }
+    }
+
+    ViewUploadedExcelFilesClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Uploaded Excel Files";
+        logWindow.Width = 600;
+        logWindow.Height = 500;
+        logWindow.WindowArgs = { TariffId: this.EntityPM.Id, Version: this.CurrentVersion.Version };
+        logWindow.Show('./TariffModule/Components/EditTabs/Tariff/UploadedExcelsComponent');
     }
 }
 

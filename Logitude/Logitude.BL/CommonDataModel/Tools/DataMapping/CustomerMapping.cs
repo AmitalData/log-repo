@@ -29,7 +29,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 
             entityPOCO.LogBoxActivated = entityPM.LogBoxActivated;
             entityPOCO.IsPrivateLabelCustomer = entityPM.IsPrivateLabelCustomer;
-            entityPOCO.BillToId = entityPM.BillToId;
             entityPOCO.RankId = entityPM.RankId;
             entityPOCO.AccountManagerUserId = entityPM.AccountManagerUserId;
             entityPOCO.SalesmanUserId = entityPM.SalesmanUserId;
@@ -134,11 +133,12 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.ExternalId2 = entityPM.ExternalId2;
             entityCard.SATForeignRFC = entityPM.SATForeignRFC;
             entityCard.ClassifierId = entityPM.ClassifierId;
-            entityCard.CollectorId= entityPM.CollectorId;
+            entityCard.CollectorId = entityPM.CollectorId;
             entityCard.StorageFreeDays = entityPM.StorageFreeDays;
-
+            entityCard.BillToId = entityPM.BillToId;
             entityCard.MetodoPagoCode = entityPM.MetodoPagoCode;
             entityCard.UsoCFDICode = entityPM.UsoCFDICode;
+            entityCard.IsAutonomy = entityPM.IsAutonomy;
             if (!entityPM.IsFirstContactToAdd)
             {
                 entityCard.PrimaryContactId = entityPM.PrimaryContactId;
@@ -165,7 +165,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
         {
             #region Competitors Search Field 
             string myCompetitorFields = "";
-            var CompetitorIds = entityPM.CustomerCompetitors.Where(p=>p.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).Select(p => p.CompetitorId);
+            var CompetitorIds = entityPM.CustomerCompetitors.Where(p => p.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).Select(p => p.CompetitorId);
             foreach (string item in CompetitorIds)
             {
                 MethodHelper.AddToSearchFields(ref myCompetitorFields, item);
@@ -177,16 +177,16 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             }
             entityCard.CompetitorFields = myCompetitorFields;
             entityPM.CompetitorFields = myCompetitorFields;
-            
+
             #endregion
         }
 
         private static void BuildSearchFields(CustomerPM entityPM, Card entityCard, bool isNewEntity)
         {
             string mySearchFields = "";
-            
+
             int tenant = entityPM.Tenant;
-            
+
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Code);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.EnglishName);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.LocalName);
@@ -273,117 +273,117 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
         public static CustomerPM GetMappedPMFromPoco(Customer a)
         {
             CustomerPM pm = new CustomerPM()
-                                {
-                                    BillToId = a.BillToId,
-                                    BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
-                                    Id = a.Id,
-                                    RankId = a.RankId,
-                                    AccountManagerUserId = a.AccountManagerUserId,
-                                    SalesmanUserId = a.SalesmanUserId,
-                                    SalesmanUserEnglishName = a.SalesmanUser == null ? null : (a.SalesmanUser.Contact == null ? null : a.SalesmanUser.Contact.EnglishName),
-                                    SalesmanBusinessUnitId = a.SalesmanUser == null ? null : a.SalesmanUser.BusinessUnitId,
-                                    Tenant = a.Tenant,
-                                    Website = a.Card.Website,
-                                    Code = a.Card.Code,
-                                    LocalName = a.Card.LocalName,
-                                    EnglishName = a.Card.EnglishName,
-                                    CardPMId = a.Id,
-                                    ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
-                                    PayablesAccountingCard = a.Card.PayablesAccountingCard,
-                                    AccountingVATSplit =a.Card.AccountingVATSplit,
-                                    CreateDate = a.Card.CreateDate,
-                                    UpdateDate = a.Card.UpdateDate,
-                                    CreatedByUserId = a.Card.CreatedByUserId,
-                                    UpdatedByUserId = a.Card.UpdatedByUserId,
-                                    InActive = a.Card.InActive,
-                                    Notes = a.Card.Notes,
-                                    SupportNotes = a.Card.SupportNotes,
-                                    PartnerTypeId = a.Card.PartnerTypeId,
-                                    PaymentTermId = a.Card.PaymentTermId,
-                                    VatNumber = a.Card.VatNumber,
-                                    InvoiceCurrencyId = a.Card.InvoiceCurrencyId,
-                                    ComputedLocalName = string.IsNullOrEmpty(a.Card.LocalName) ? a.Card.EnglishName : a.Card.LocalName,
-                                    AccountManagerUserEnglishName = a.AccountManagerUser != null ? a.AccountManagerUser.Contact.EnglishName : null,
-                                    CityName = a.Card.CityName,
-                                    RankCode = a.Rank != null ? a.Rank.Code : null,
-                                    RankName = a.Rank != null ? a.Rank.Name : null,
-                                    VatTypeId = a.Card.VatTypeId,
-                                    ImageDetailId = a.Card.ImageDetailId,
-                                    BankName = a.Card.BankName,
-                                    BankAddress = a.Card.BankAddress,
-                                    IBANNumber = a.Card.IBANNumber,
-                                    Swift = a.Card.Swift,
-                                    AccountNumber = a.Card.AccountNumber,
-                                    SharedLogisticsInvitationStatusName = a.Card.SharedLogisticsInvitationStatus != null ? a.Card.SharedLogisticsInvitationStatus.Name : null,
-                                    IsActiveForMobile = a.Card.IsActiveForMobile,
-                                    LastLoginDate = a.Card.LastLoginDate,
-                                    InvitationDate = a.Card.InvitationDate,
-                                    LeadSourceId = a.LeadSourceId,
-                                    IndustryId = a.IndustryId,
-                                    ClassifierId = a.ClassifierId,
-                                    CollectorId = a.CollectorId,
-                                    LeadSourceName = a.LeadSource != null ? a.LeadSource.Name : null,
-                                    IndustryName = a.Industry != null ? a.Industry.Name : null,
-                                    ClassifierName = a.Classifier != null ? a.Classifier.Contact.EnglishName : null,
-                                    CollectorName = a.Collector != null ? a.Collector.Contact.EnglishName : null,
-                                    CreditLimit = a.CreditLimit,
-                                    LeadDescription = a.LeadDescription,
-                                    IsCustomer = a.IsCustomer,
-                                    FreelancerId = a.FreelancerId,
-                                    FreelancerName = a.Freelancer != null ? a.Freelancer.Contact.EnglishName : null,
-                                    CustomerStatusCode = a.CustomerStatusCode,
-                                    ForwarderId = a.ForwarderId,
-                                    ForwarderName = a.Forwarder != null ? a.Forwarder.EnglishName : null,
-                                    CustomsAgentId = a.CustomsAgentId,
-                                    CustomsAgentName = a.CustomsAgent != null ? a.CustomsAgent.EnglishName : null,
-                                    MediatorId = a.MediatorId,
-                                    MediatorName = a.Mediator != null ? a.Mediator.EnglishName : null,
-                                    BeforeDeactiveStatusCode = a.BeforeDeactiveStatusCode,
-                                    CodeMyCustomer = a.IsCustomer ? a.Card.Code + " (Customer)" : a.Card.Code,
-                                    PrimaryContactName = a.PrimaryContactName,
-                                    PrimaryContactEmail = a.PrimaryContactEmail,
-                                    PrimaryContactPhone = a.PrimaryContactPhone,
-                                    CustomerStatusName = a.CustomerStatus != null ? a.CustomerStatus.Name : null,
-                                    PrimaryContactId = a.Card.PrimaryContactId,
-                                    ReadyForActivationDate = a.ReadyForActivationDate,
-                                    RegionId = a.RegionId,
-                                    RegionName = a.Region != null ? a.Region.Name : null,
-                                    CustomerSizeId = a.CustomerSizeId,
-                                    LastCallDate = a.LastCallDate,
-                                    LastMeetingDate = a.LastMeetingDate,
-                                    LastOpportunityDate = a.LastOpportunityDate,
-                                    LastOpportunityStatus = a.LastOpportunityStatus,
-                                    LastOpportunitySubject = a.LastOpportunitySubject,
-                                    FirstInvoiceDate = a.FirstInvoiceDate,
-                                    FirstShipmentDate = a.FirstShipmentDate,
-                                    LastShipmentDate = a.LastShipmentDate,
-                                    StartWorkingDate = a.StartWorkingDate,
-                                    StartWorkingManuallySet = a.StartWorkingManuallySet,
-                                    LastQuoteDate = a.LastQuoteDate,
-                                    LastInteractionDate = a.LastInteractionDate,
-                                    EnableConsolidationInvoices = a.Card.EnableConsolidationInvoices,
-                                    ActivityWatch = a.ActivityWatch,
-                                    KnownConsignor = a.KnownConsignor,
-                                    KCExpirationDate = a.KCExpirationDate,
-                                    LogBoxActivated = a.LogBoxActivated,
-                                    IRSNumber = a.Card.IRSNumber,
-                                    IRSPlace = a.Card.IRSPlace,
-                                    IsPrivateLabelCustomer = a.IsPrivateLabelCustomer,
-                                    EORInumber = a.EORInumber,
-                                    Card = new CardPM()
-                                    {
-                                        Id = a.Id,
-                                        Tenant = a.Tenant,
-                                        EnglishName = a.Card.EnglishName,
-                                        CityName = a.Card.CityName,
-                                        CountryId = a.Card.CountryId,
-                                        CountryName = a.Card.CountryName,
-                                        PrimaryContactId = a.Card.PrimaryContactId,
-                                        ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
-                                        PayablesAccountingCard = a.Card.PayablesAccountingCard,
-                                        AccountingVATSplit=a.Card.AccountingVATSplit,
-                                    },
-                                };
+            {
+                BillToId = a.Card.BillToId,
+                BillToName = a.Card.EnglishName,
+                Id = a.Id,
+                RankId = a.RankId,
+                AccountManagerUserId = a.AccountManagerUserId,
+                SalesmanUserId = a.SalesmanUserId,
+                SalesmanUserEnglishName = a.SalesmanUser == null ? null : (a.SalesmanUser.Contact == null ? null : a.SalesmanUser.Contact.EnglishName),
+                SalesmanBusinessUnitId = a.SalesmanUser == null ? null : a.SalesmanUser.BusinessUnitId,
+                Tenant = a.Tenant,
+                Website = a.Card.Website,
+                Code = a.Card.Code,
+                LocalName = a.Card.LocalName,
+                EnglishName = a.Card.EnglishName,
+                CardPMId = a.Id,
+                ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
+                PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                AccountingVATSplit = a.Card.AccountingVATSplit,
+                CreateDate = a.Card.CreateDate,
+                UpdateDate = a.Card.UpdateDate,
+                CreatedByUserId = a.Card.CreatedByUserId,
+                UpdatedByUserId = a.Card.UpdatedByUserId,
+                InActive = a.Card.InActive,
+                Notes = a.Card.Notes,
+                SupportNotes = a.Card.SupportNotes,
+                PartnerTypeId = a.Card.PartnerTypeId,
+                PaymentTermId = a.Card.PaymentTermId,
+                VatNumber = a.Card.VatNumber,
+                InvoiceCurrencyId = a.Card.InvoiceCurrencyId,
+                ComputedLocalName = string.IsNullOrEmpty(a.Card.LocalName) ? a.Card.EnglishName : a.Card.LocalName,
+                AccountManagerUserEnglishName = a.AccountManagerUser != null ? a.AccountManagerUser.Contact.EnglishName : null,
+                CityName = a.Card.CityName,
+                RankCode = a.Rank != null ? a.Rank.Code : null,
+                RankName = a.Rank != null ? a.Rank.Name : null,
+                VatTypeId = a.Card.VatTypeId,
+                ImageDetailId = a.Card.ImageDetailId,
+                BankName = a.Card.BankName,
+                BankAddress = a.Card.BankAddress,
+                IBANNumber = a.Card.IBANNumber,
+                Swift = a.Card.Swift,
+                AccountNumber = a.Card.AccountNumber,
+                SharedLogisticsInvitationStatusName = a.Card.SharedLogisticsInvitationStatus != null ? a.Card.SharedLogisticsInvitationStatus.Name : null,
+                IsActiveForMobile = a.Card.IsActiveForMobile,
+                LastLoginDate = a.Card.LastLoginDate,
+                InvitationDate = a.Card.InvitationDate,
+                LeadSourceId = a.LeadSourceId,
+                IndustryId = a.IndustryId,
+                ClassifierId = a.ClassifierId,
+                CollectorId = a.CollectorId,
+                LeadSourceName = a.LeadSource != null ? a.LeadSource.Name : null,
+                IndustryName = a.Industry != null ? a.Industry.Name : null,
+                ClassifierName = a.Classifier != null ? a.Classifier.Contact.EnglishName : null,
+                CollectorName = a.Collector != null ? a.Collector.Contact.EnglishName : null,
+                CreditLimit = a.CreditLimit,
+                LeadDescription = a.LeadDescription,
+                IsCustomer = a.IsCustomer,
+                FreelancerId = a.FreelancerId,
+                FreelancerName = a.Freelancer != null ? a.Freelancer.Contact.EnglishName : null,
+                CustomerStatusCode = a.CustomerStatusCode,
+                ForwarderId = a.ForwarderId,
+                ForwarderName = a.Forwarder != null ? a.Forwarder.EnglishName : null,
+                CustomsAgentId = a.CustomsAgentId,
+                CustomsAgentName = a.CustomsAgent != null ? a.CustomsAgent.EnglishName : null,
+                MediatorId = a.MediatorId,
+                MediatorName = a.Mediator != null ? a.Mediator.EnglishName : null,
+                BeforeDeactiveStatusCode = a.BeforeDeactiveStatusCode,
+                CodeMyCustomer = a.IsCustomer ? a.Card.Code + " (Customer)" : a.Card.Code,
+                PrimaryContactName = a.PrimaryContactName,
+                PrimaryContactEmail = a.PrimaryContactEmail,
+                PrimaryContactPhone = a.PrimaryContactPhone,
+                CustomerStatusName = a.CustomerStatus != null ? a.CustomerStatus.Name : null,
+                PrimaryContactId = a.Card.PrimaryContactId,
+                ReadyForActivationDate = a.ReadyForActivationDate,
+                RegionId = a.RegionId,
+                RegionName = a.Region != null ? a.Region.Name : null,
+                CustomerSizeId = a.CustomerSizeId,
+                LastCallDate = a.LastCallDate,
+                LastMeetingDate = a.LastMeetingDate,
+                LastOpportunityDate = a.LastOpportunityDate,
+                LastOpportunityStatus = a.LastOpportunityStatus,
+                LastOpportunitySubject = a.LastOpportunitySubject,
+                FirstInvoiceDate = a.FirstInvoiceDate,
+                FirstShipmentDate = a.FirstShipmentDate,
+                LastShipmentDate = a.LastShipmentDate,
+                StartWorkingDate = a.StartWorkingDate,
+                StartWorkingManuallySet = a.StartWorkingManuallySet,
+                LastQuoteDate = a.LastQuoteDate,
+                LastInteractionDate = a.LastInteractionDate,
+                EnableConsolidationInvoices = a.Card.EnableConsolidationInvoices,
+                ActivityWatch = a.ActivityWatch,
+                KnownConsignor = a.KnownConsignor,
+                KCExpirationDate = a.KCExpirationDate,
+                LogBoxActivated = a.LogBoxActivated,
+                IRSNumber = a.Card.IRSNumber,
+                IRSPlace = a.Card.IRSPlace,
+                IsPrivateLabelCustomer = a.IsPrivateLabelCustomer,
+                EORInumber = a.EORInumber,
+                Card = new CardPM()
+                {
+                    Id = a.Id,
+                    Tenant = a.Tenant,
+                    EnglishName = a.Card.EnglishName,
+                    CityName = a.Card.CityName,
+                    CountryId = a.Card.CountryId,
+                    CountryName = a.Card.CountryName,
+                    PrimaryContactId = a.Card.PrimaryContactId,
+                    ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
+                    PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                    AccountingVATSplit = a.Card.AccountingVATSplit,
+                },
+            };
             return pm;
 
         }

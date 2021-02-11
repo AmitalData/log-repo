@@ -21,7 +21,8 @@ namespace Logitude.DBMigrations.Models
         protected string DXMLFileName;
 
         protected string MissingIndexesWarnings = "";
-
+        protected string MissingUniqueConstraintsWarnings = "";
+        
         public string GetScript()
         {
             CurrentTable = GetCurrentTableDefinitionFromDB();
@@ -132,6 +133,11 @@ namespace Logitude.DBMigrations.Models
             return MissingIndexesWarnings;
         }
 
+        public string GetMissingUniqueConstraintsWarnings()
+        {
+            return MissingUniqueConstraintsWarnings;
+        }
+
         public string GetUniqueConstraintsScript()
         {
             string tableUniqueConstraintsScript = "";
@@ -140,7 +146,10 @@ namespace Logitude.DBMigrations.Models
             {
                 foreach (var uniqueConstraint in DXMLTable.UniqueConstraints)
                 {
-                    tableUniqueConstraintsScript += GetCreateUniqueConstraintScript(uniqueConstraint);
+                    if (IsContainDBConfigurationEnvironment(uniqueConstraint.Env))
+                    {
+                        tableUniqueConstraintsScript += GetCreateUniqueConstraintScript(uniqueConstraint);
+                    }
                 }
             }
             else
@@ -159,7 +168,18 @@ namespace Logitude.DBMigrations.Models
                     {
                         if (!IsUniqueConstraintInCurrentTable(uniqueConstraint))
                         {
-                            tableUniqueConstraintsScript += GetCreateUniqueConstraintScript(uniqueConstraint);
+                            if (IsContainDBConfigurationEnvironment(uniqueConstraint.Env))
+                            {
+                                tableUniqueConstraintsScript += GetCreateUniqueConstraintScript(uniqueConstraint);
+                            }
+                        }
+                        else
+                        {
+                            if (IsNotContainDBConfigurationEnvironment(uniqueConstraint.Env))
+                            {
+                                UniqueConstraintDefinition currentTableUniqueConstraint = GetUniqueConstraintFromCurrentTable(uniqueConstraint);
+                                MissingUniqueConstraintsWarnings += "Warning: Different Environment For Unique Constraint In DXML File " + DXMLFileName + ", The Found Unique Constraint On DB Is " + currentTableUniqueConstraint.ConstraintName + "\n";
+                            }
                         }
                     }
                 }
@@ -414,7 +434,10 @@ namespace Logitude.DBMigrations.Models
             {
                 if (!ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME))
                 {
-                    BuildDropColumnMigration(currentTableColumn, dxmlTableColumn);
+                    if (!(ToolConfigurations.DatabaseType.ToLower() == "oracle" && !ToolArguments.IsArgumentProvided(Arguments.ALLOWDROP)))
+                    {
+                        BuildDropColumnMigration(currentTableColumn, dxmlTableColumn);
+                    }
                 }
             }
             else
@@ -497,7 +520,10 @@ namespace Logitude.DBMigrations.Models
                 BuildSetNullableMigration(currentTableColumn, dxmlTableColumn);
             }
 
-            BuildRenameMigration(currentTableColumn, dxmlTableColumn);
+            if (!(ToolConfigurations.DatabaseType.ToLower() == "oracle" && !ToolArguments.IsArgumentProvided(Arguments.ALLOWDROP)))
+            {
+                BuildRenameMigration(currentTableColumn, dxmlTableColumn);
+            }
 
             BuildAlterPrimaryKeyMigration(currentTableColumn, dxmlTableColumn);
         }
@@ -1057,6 +1083,20 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
+        protected bool IsContainDBConfigurationEnvironment(string envAttribute)
+        {
+            envAttribute = envAttribute?.ToLower();
+            string dbEnvConfig = DBConfigurationsManager.GetDBConfigurationValue("Env")?.ToLower();
+            return envAttribute == null || (envAttribute != null && envAttribute.Split(',').Contains(dbEnvConfig));
+        }
+
+        protected bool IsNotContainDBConfigurationEnvironment(string envAttribute)
+        {
+            envAttribute = envAttribute?.ToLower();
+            string dbEnvConfig = DBConfigurationsManager.GetDBConfigurationValue("Env")?.ToLower();
+            return envAttribute != null && !envAttribute.Split(',').Contains(dbEnvConfig);
+        }
+        
         protected void ExitTool(string message)
         {
             Console.WriteLine(message);
@@ -1137,6 +1177,8 @@ namespace Logitude.DBMigrations.Models
         protected abstract bool IsIndexInDXMLTable(IndexDefinition index);
 
         protected abstract bool IsUniqueConstraintInCurrentTable(UniqueConstraintDefinition uniqueConstraint);
+
+        protected abstract UniqueConstraintDefinition GetUniqueConstraintFromCurrentTable(UniqueConstraintDefinition uniqueConstraint);
 
         protected abstract bool IsUniqueConstraintInDXMLTable(UniqueConstraintDefinition uniqueConstraint);
 

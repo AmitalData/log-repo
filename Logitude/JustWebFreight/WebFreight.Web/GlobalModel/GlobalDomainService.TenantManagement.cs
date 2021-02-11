@@ -1076,6 +1076,11 @@ namespace WebFreight.Web.GlobalModel
                     Technology = tenantManagement.Technology,
                     PrivateLabelId = tenantManagement.GlobalTenant != null ? tenantManagement.GlobalTenant.PrivateLabelId : "",
                     SilverlightEndDate = tenantManagement.SilverlightEndDate,
+                    LastEbookingSentDate = tenantManagement.LastEbookingSentDate,
+                    LastSISentDate = tenantManagement.LastSISentDate,
+                    NumberOfBookingSentLastWeek = tenantManagement.NumberOfBookingSentLastWeek,
+                    NumberOfSISentLastWeek = tenantManagement.NumberOfSISentLastWeek,
+                    LastContainerStatusReceived = tenantManagement.LastContainerStatusReceived,
                 };
 
                 return tenantManagementList;

@@ -20,6 +20,7 @@ namespace Logitude.DBMigrations.Models
 
         protected string Root;
         protected string MissingIndexesWarnings = "";
+        protected string MissingUniqueConstraintsWarnings = "";
         protected List<TableDefinition> DXMLTablesDefinitions;
         protected List<DXMLHash> DXMLHashes;
         protected List<ExecutedSxmlFile> ExecutedSxmlFiles;
@@ -74,9 +75,13 @@ namespace Logitude.DBMigrations.Models
             ValidateDBFiles(dxmlFiles, sxmlFiles);
             PrepareRequiredData();
 
+            string dbConfigurationsDxml = dxmlFiles.Where(d => Path.GetFileName(d).ToLower() == "DBMigrationConfigurations.dxml".ToLower()).FirstOrDefault();
+            ValidateDatabaseEnvConfiguration(dbConfigurationsDxml);
+
             GeneratedScript scriptsToSave = GenerateAndExecuteDBScripts(dxmlFiles, sxmlFiles);
             SaveScripts(scriptsToSave);
             ExportMissingIndexesWarnings();
+            ExportMissingUniqueConstraintsWarnings();
         }
 
         protected void ValidateDBFiles(string[] dxmlFiles, string[] sxmlFiles)
@@ -96,6 +101,7 @@ namespace Logitude.DBMigrations.Models
             GetIncludedModulesFromDB();
             GetDXMLHashesFromDB();
             GetExecutedSXMLFilesFromDB();
+            GetDBConfigurationsFromDB();
         }
 
         protected GeneratedScript GenerateAndExecuteDBScripts(string[] dxmlFiles, string[] sxmlFiles)
@@ -106,8 +112,8 @@ namespace Logitude.DBMigrations.Models
             bool isExecuteArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.EXE) || (RunSettings.DebugMode && RunSettings.ExecuteScripts);
 
             List<ScriptDefinition> scriptDefinitions = GetScriptDefinitionsFromSxmlFiles(sxmlFiles);
+            scriptDefinitions = FilterScriptsByEnvironmentConfiguration(scriptDefinitions);
             ValidateNotExecutedAOTScripts(scriptDefinitions);
-
             GeneratedScript toolTablesScript = HandleDXMLFiles(toolDxmlFiles, isExecuteArgumentProvided);
             GeneratedScript preGeneralScript = HandleSXMLFiles(scriptDefinitions, isExecuteArgumentProvided, true);
             GeneratedScript migrationsScript = HandleDXMLFiles(migrationDxmlFiles, isExecuteArgumentProvided);
@@ -319,6 +325,7 @@ namespace Logitude.DBMigrations.Models
             dxmlGeneratedScript.GeneratedScript = AppendToGeneratedScript(dxmlGeneratedScript.GeneratedScript, dxmlTable.TableDefinition.DBType, generatedScripts);
             dxmlGeneratedScript.RelationsScript = AppendToGeneratedScript(dxmlGeneratedScript.RelationsScript, dxmlTable.TableDefinition.DBType, databaseMigrationsResult.RelationsScript);
             MissingIndexesWarnings += databaseMigrationsResult.MissingIndexesWarnings;
+            MissingUniqueConstraintsWarnings += databaseMigrationsResult.MissingUniqueConstraintsWarnings;
 
             return dxmlGeneratedScript;
         }
@@ -347,13 +354,15 @@ namespace Logitude.DBMigrations.Models
             string indexesScript = databaseMigrations.GetIndexesScript();
             string missingIndexesWarnings = databaseMigrations.GetMissingIndexesWarnings();
             string uniqueConstraintsScript = databaseMigrations.GetUniqueConstraintsScript();
-            
+            string missingUniqueConstraintsWarnings = databaseMigrations.GetMissingUniqueConstraintsWarnings();
+
             return new DatabaseMigrationsResult
             {
                 MigrationsScript = migrationsScript,
                 RelationsScript = relationsScript,
                 IndexesScript = indexesScript,
                 MissingIndexesWarnings = missingIndexesWarnings,
+                MissingUniqueConstraintsWarnings = missingUniqueConstraintsWarnings,
                 UniqueConstraintsScript = uniqueConstraintsScript
             };
         }
@@ -410,10 +419,12 @@ namespace Logitude.DBMigrations.Models
         {
             Console.WriteLine("Saving The Generated Scripts ...");
 
-            string globalScript = !String.IsNullOrEmpty(generatedScript.GlobalScript) ? generatedScript.GlobalScript.Replace(ScriptSemicolonCode, ";") : "";
-            string mainScript = !String.IsNullOrEmpty(generatedScript.MainScript) ? generatedScript.MainScript.Replace(ScriptSemicolonCode, ";") : "";
-            string systemLogsScript = !String.IsNullOrEmpty(generatedScript.SystemLogsScript) ? generatedScript.SystemLogsScript.Replace(ScriptSemicolonCode, ";") : "";
-            string cargoTrackingScript = !String.IsNullOrEmpty(generatedScript.CargoTrackingScript) ? generatedScript.CargoTrackingScript.Replace(ScriptSemicolonCode, ";") : "";
+            bool isScriptsArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.SCRIPTS);
+
+            string globalScript = isScriptsArgumentProvided ? (!String.IsNullOrEmpty(generatedScript.GlobalScript) ? generatedScript.GlobalScript.Replace(ScriptSemicolonCode, ";") : "") : null;
+            string mainScript = isScriptsArgumentProvided ? (!String.IsNullOrEmpty(generatedScript.MainScript) ? generatedScript.MainScript.Replace(ScriptSemicolonCode, ";") : "") : null;
+            string systemLogsScript = isScriptsArgumentProvided ? (!String.IsNullOrEmpty(generatedScript.SystemLogsScript) ? generatedScript.SystemLogsScript.Replace(ScriptSemicolonCode, ";") : "") : null;
+            string cargoTrackingScript = isScriptsArgumentProvided ? (!String.IsNullOrEmpty(generatedScript.CargoTrackingScript) ? generatedScript.CargoTrackingScript.Replace(ScriptSemicolonCode, ";") : "") : null;
 
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             if (ToolArguments.IsArgumentProvided(Arguments.DEPLOYMENT))
@@ -565,6 +576,26 @@ namespace Logitude.DBMigrations.Models
             }
 
             File.WriteAllText(missingIndexesWarningsFilePath, missingIndexesWarningsToExport);
+        }
+
+        protected void ExportMissingUniqueConstraintsWarnings()
+        {
+            string missingUniqueConstraintsWarningsToExport = !String.IsNullOrEmpty(MissingUniqueConstraintsWarnings) ? MissingUniqueConstraintsWarnings.TrimEnd('\n') : "";
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            if (ToolArguments.IsArgumentProvided(Arguments.DEPLOYMENT))
+            {
+                projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            }
+
+            string warningsDirectoryPath = Path.Combine(projectDirectory, @"Warnings");
+            string missingUniqueConstraintsWarningsFilePath = Path.Combine(projectDirectory, @"Warnings\MissingUniqueConstraintsWarnings.txt");
+
+            if (!Directory.Exists(warningsDirectoryPath))
+            {
+                Directory.CreateDirectory(warningsDirectoryPath);
+            }
+
+            File.WriteAllText(missingUniqueConstraintsWarningsFilePath, missingUniqueConstraintsWarningsToExport);
         }
 
         protected GeneratedScript AppendToGeneratedScript(GeneratedScript generatedScript, string dbType, string script)
@@ -1369,6 +1400,11 @@ namespace Logitude.DBMigrations.Models
                 }
             }
 
+            if(ToolConfigurations.DatabaseType.ToLower() == "oracle")
+            {
+                scriptDefinitions = scriptDefinitions.Where(s => !s.AOT).ToList();
+            }
+
             return scriptDefinitions;
         }
 
@@ -1470,7 +1506,7 @@ namespace Logitude.DBMigrations.Models
                     }
                     else
                     {
-                        UpdateIntoDBMigrationsDataScripts(scriptDefinition);
+                        UpdateDBMigrationsDataScripts(scriptDefinition);
                     }
                 }
             }
@@ -1717,6 +1753,72 @@ namespace Logitude.DBMigrations.Models
             ExecutedSxmlFiles = executedSxmlFiles;
         }
 
+        protected void GetDBConfigurationsFromDB()
+        {
+            string connectionString = ToolConfigurations.GetConnectionString("Main");
+            if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
+            {
+                string queryString = "SELECT * FROM \"DBMIGRATIONCONFIGURATIONS\"";
+
+                OracleDataReader reader = null;
+                OracleConnection connection = new OracleConnection(connectionString);
+                OracleCommand command = new OracleCommand(queryString, connection);
+
+                try
+                {
+                    connection.Open();
+                    reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        DBConfigurationsManager.AddDBConfiguration(reader["Type"].ToString() , reader["Value"].ToString());
+                    }
+
+                    reader.Close();
+                    connection.Close();
+                }
+                catch (Exception)
+                {
+                    if (reader != null)
+                    {
+                        reader.Close();
+                    }
+                    connection.Close();
+                }
+
+            }
+            else
+            {
+                string queryString = "SELECT * FROM [dbo].[DBMigrationConfigurations]";
+
+                SqlDataReader reader = null;
+                SqlConnection connection = new SqlConnection(connectionString);
+                SqlCommand command = new SqlCommand(queryString, connection);
+
+                try
+                {
+                    connection.Open();
+                    reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        DBConfigurationsManager.AddDBConfiguration(reader["Type"].ToString(), reader["Value"].ToString());
+                    }
+
+                    reader.Close();
+                    connection.Close();
+                }
+                catch (Exception)
+                {
+                    if (reader != null)
+                    {
+                        reader.Close();
+                    }
+                    connection.Close();
+                }
+            }
+        }
+
         protected ExecuteSxmlFileResult ShouldExecuteSxmlFile(string sxmlFileName, ScriptDefinition scriptDefinition)
         {
             if (!ExecutedSxmlFiles.Where(e => e.SxmlFileName.ToLower() == sxmlFileName.ToLower() && e.DBType.ToLower() == scriptDefinition.DBType.ToLower()).Any())
@@ -1942,7 +2044,9 @@ namespace Logitude.DBMigrations.Models
                 "DBMigrationsSetDefaultValues.dxml".ToLower(),
                 "DBMigrationsSetValueCounters.dxml".ToLower(),
                 "DBMigrationsDataScripts.dxml".ToLower(),
-                "DBMigrationsDataScriptCounters.dxml".ToLower()
+                "DBMigrationsDataScriptCounters.dxml".ToLower(),
+                "DBMigrationConfigurations.dxml".ToLower()
+
             };
 
             return toolDxmlFilesNames;
@@ -2032,7 +2136,7 @@ namespace Logitude.DBMigrations.Models
                 ExitTool("Error: Cannot Find SystemLogsConnectionString in Configuration File");
             }
 
-            if (databaseType.ToLower() == "oracle" && ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME))
+            if (databaseType.ToLower() == "oracle" && (ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME) || ToolArguments.IsArgumentProvided(Arguments.DEV)))
             {
                 ExitTool("Error: Zero Down Time Mode For Oracle Not Ready To Use");
             }
@@ -2174,8 +2278,16 @@ namespace Logitude.DBMigrations.Models
             {
                 Console.WriteLine("\nZero Down Time Migrations Started");
                 ZeroDownTimeMigrations zeroDownTimeMigrations  = CreateZeroDownTimeMigrations();
-                zeroDownTimeMigrations.Start();
-                Console.WriteLine("Zero Down Time Migrations Finished");
+                if (zeroDownTimeMigrations != null)
+                {
+                    zeroDownTimeMigrations.Start();
+                    Console.WriteLine("Zero Down Time Migrations Finished");
+                }
+                else
+                {
+                    Console.WriteLine("Zero Down Time Migrations Not Implemented");
+                }
+                
             }
         }
 
@@ -2273,9 +2385,12 @@ namespace Logitude.DBMigrations.Models
                 }
             }
         }
-
-        protected void UpdateIntoDBMigrationsDataScripts(ScriptDefinition scriptDefinition)
+        
+        protected void UpdateDBMigrationsDataScripts(ScriptDefinition scriptDefinition)
         {
+            UpdateDataScriptCounter(scriptDefinition.TargetTableName);
+            int scriptExecutionNumber = GetDataScriptCounter(scriptDefinition.TargetTableName);
+
             if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
             {
 
@@ -2286,7 +2401,7 @@ namespace Logitude.DBMigrations.Models
                 int sxmlVersion = scriptDefinition.Sql.Version;
                 string sxmlScriptHashValue = GenerateHashString(scriptDefinition.Sql.Script);
 
-                string queryString = "UPDATE [dbo].[DBMigrationsDataScripts] SET [SxmlScript] = '" + sxmlScript + "', [Status] = 'Waiting', [StartDate] = NULL, [EndDate] = NULL, " +
+                string queryString = "UPDATE [dbo].[DBMigrationsDataScripts] SET [SxmlScript] = '" + sxmlScript + "', [Status] = 'Waiting', [ScriptExecutionNumber] = " + scriptExecutionNumber + ", [StartDate] = NULL, [EndDate] = NULL, " +
                     "[LastBatchElapsedTime] = 0, [ScriptVersion] = " + sxmlVersion + ", [ScriptHashValue] = '" + sxmlScriptHashValue + "', " +
                     "[ScriptHistoryAction] = '" + scriptDefinition.ScriptHistoryAction + "' WHERE [SxmlFileName] = '" + scriptDefinition.SxmlFileName + "'";
 
@@ -2492,6 +2607,25 @@ namespace Logitude.DBMigrations.Models
             {
                 ExitTool("Error: Cannot Set Tool Configurations");
             }
+        }
+
+        protected void ValidateDatabaseEnvConfiguration(string dbConfigurationsDxml)
+        {
+            if (!DBConfigurationsManager.IsDBConfigurationExists("Env"))
+            {
+                string[] dxmlFiles = new string[] { dbConfigurationsDxml };
+                HandleDXMLFiles(dxmlFiles, true);
+                string validationMessage = "Error: Cannot Find Environment Configuration In Table [DBMigrationConfigurations] In Main Database, " +
+                                           "To Continue You Should Add It Using Insert Statement";
+                ExitTool(validationMessage);
+            }
+        }
+        
+        protected List<ScriptDefinition> FilterScriptsByEnvironmentConfiguration(List<ScriptDefinition> scriptDefinitions)
+        {
+            string dbEnvConfig = DBConfigurationsManager.GetDBConfigurationValue("Env");
+            List<ScriptDefinition> filteredScriptDefinitions = scriptDefinitions.Where(script => script.Env == null || (script.Env != null && script.Env.Split(',').Contains(dbEnvConfig))).ToList();
+           return filteredScriptDefinitions;
         }
 
         protected void ExitTool(string message)

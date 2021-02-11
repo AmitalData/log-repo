@@ -1,9 +1,11 @@
 <div class="class-response-content">
-    <table style="width: 620px;height: 350px;padding-top: 10px;">
 
-        <tr class="FormFieldRow" style="height:1px">
+
+    <table style="width: 800px;height: 700px;padding-top: 10px;">
+       
+        <tr class="FormFieldRow" style="height: 340px;">
             <!--background-color :aquamarine;-->
-            <td colspan="5" style="width: 100% ; height : 100%">
+            <td colspan="5" style="width: 100% ; ">
                 <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
                     <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="DeclarationRemarksQueryObservableList">
 
@@ -45,16 +47,17 @@
                             </ng-template>
                         </log-column>
                         <!--<log-column [header]="'הערות'"
-                                                            [binding]="'StatusComment'"
-                                                            [width]="'200'" [Alignment]="'Right'">
-                                                    <ng-template let-item>
-                        <log-cell-template  #logcelltemplate>
-                                                        <div class="RightCenter">
-                                                            <span>{{item.StatusComment}}</span>
-                                                        </div>
-                                                    </log-cell-template>
-                        </ng-template>
-                                                </log-column>-->
+                                                        [binding]="'StatusComment'"
+                                                        [width]="'200'" [Alignment]="'Right'">
+                                                <ng-template let-item>
+                    <log-cell-template  #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                        <span>{{item.StatusComment}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                    </ng-template>
+                                            </log-column>-->
+                        he
 
                         <log-column [header]="'הערות'"
                                     [binding]="'StatusComment'" [width]="'300'" [Alignment]="'right'">
@@ -64,10 +67,10 @@
                                         <span>{{item.StatusComment}}</span>
                                     </div>
                                     <!--<<div *ngIf="logcelltemplate.IsEditMode" style="height: 90%; width: 90%;">
-                                        <LogTextBox [ObjectFieldName]="'StatusComment'" [InputType]="'text'" [DataContext]="item"
-                                                    [HideColumns]="true"
-                                                    [NoObjectField]="true"></LogTextBox>
-                                    </div>-->
+                                    <LogTextBox [ObjectFieldName]="'StatusComment'" [InputType]="'text'" [DataContext]="item"
+                                                [HideColumns]="true"
+                                                [NoObjectField]="true"></LogTextBox>
+                                </div>-->
                                 </log-cell-template>
                             </ng-template>
                         </log-column >
@@ -83,17 +86,151 @@
 
 
                         <!--<log-column [header]="'הערות'"
-                                                            [binding]="'StatusComment'"
-                                                            [width]="'100'" [Alignment]="'Right'">
-                                                    <ng-template let-item>
-                        <log-cell-template  #logcelltemplate>
-                                                        <div class="RightCenter">
-                                                             <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Id'" [NoObjectField]="true" [Text]="item.StatusComment" [DataContext]="item" [ObjectTableName]="'Customs.Declaration'" [HideColumns]="true"></LogTextBox>
+                                                        [binding]="'StatusComment'"
+                                                        [width]="'100'" [Alignment]="'Right'">
+                                                <ng-template let-item>
+                    <log-cell-template  #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                         <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Id'" [NoObjectField]="true" [Text]="item.StatusComment" [DataContext]="item" [ObjectTableName]="'Customs.Declaration'" [HideColumns]="true"></LogTextBox>
 
-                                                        </div>
-                                                    </log-cell-template>
-                        </ng-template>
-                                                </log-column>-->
+                                                    </div>
+                                                </log-cell-template>
+                    </ng-template>
+                                            </log-column>-->
+                    </logitude-edit-grid>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="FormFieldRow" style="height: 25px;" *ngIf="IsSivug && SupplierInvoiceItemListLoaded">
+            <td colspan="4" ><span class="RightCenter" style="font-size: 18px; color: #1B90CB;">הערות מסווג לפרט מכס</span> </td>
+            
+        </tr>
+        <tr class="FormFieldRow" style="height: 250px;" *ngIf="IsSivug && SupplierInvoiceItemListLoaded">
+            <!--background-color :aquamarine;-->
+            <td colspan="5" style="width: 100% ; ">
+                <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="SupplierInvoiceItemList">
+                        <!-- InvoiceNumber -->
+                        <log-column [header]="'Customs.SupplierInvoiceItem.F.InvoiceNumber' | TextCodeTranslationPipe"
+                                    [binding]="'InvoiceNumber'"
+                                    [width]="'100'" [Alignment]="'Right'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <div class="RightCenter">
+                                        <span>{{item.InvoiceNumber}}</span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+                        <!-- ClassificationCode -->
+                        <!--"'Customs.SupplierInvoiceItem.F.ClassificationCode' | TextCodeTranslationPipe"-->
+                        <log-column [header]="'Customs.SupplierInvoiceItem.F.ClassificationCode' | TextCodeTranslationPipe"
+                                    [binding]="'ClassificationCode'"
+                                    [width]="'100'" [Alignment]="'Right'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <div class="RightCenter">
+                                        <span>{{item.ClassificationCode}}</span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+                        <!-- TradeAgreementName -->
+                        <!---->
+                        <log-column [header]="'Customs.SupplierInvoiceItem.F.TradeAgreementName' | TextCodeTranslationPipe"
+                                    [width]="'70'" [Alignment]="'Right'"
+                                    [binding]="'TradeAgreementName'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <div class="RightCenter">
+                                        <span>{{item.TradeAgreementName}}</span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+                        <!-- InvoiceQuantity -->
+                        <log-column [header]="'Customs.SupplierInvoiceItem.F.InvoiceQuantity' | TextCodeTranslationPipe"
+                                    [width]="'80'" [Alignment]="'Right'"
+                                    [binding]="'InvoiceQuantity'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <div class="LeftCenter">
+                                        <span>{{item.InvoiceQuantity | NumbersPipe:'N2'}}</span>
+
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+                        <!-- InvoiceQuantityType -->
+                        <log-column [header]="'Customs.SupplierInvoiceItem.F.InvoiceQuantityType' | TextCodeTranslationPipe"
+                                    [width]="'50'" [Alignment]="'Right'"
+                                    [binding]="'InvoiceQuantityType'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <div class="RightCenter">
+                                        <span>{{item.InvoiceQuantityType}}</span>
+
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+
+                        <!-- ItemPrice -->
+                        <log-column [header]="'Customs.SupplierInvoiceItem.F.ItemPrice' | TextCodeTranslationPipe"
+                                    [width]="'100'" [Alignment]="'Right'"
+                                    [binding]="'ItemPrice'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <div class="LeftCenter">
+                                        <span>{{item.ItemPrice | NumbersPipe:'N2' }}</span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+
+                        <!-- OriginCountryName -->
+                        <log-column [header]="'Customs.SupplierInvoiceItem.F.OriginCountryName' | TextCodeTranslationPipe"
+                                    [width]="'100'" [Alignment]="'Right'"
+                                    [binding]="'OriginCountryName'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <div class="RightCenter">
+                                        <span>{{item.OriginCountryName}}</span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+                        <!--ClasifiedRemarks-->
+
+                        <log-column [header]="'Customs.SupplierInvoiceItem.F.ClasifiedRemarks' | TextCodeTranslationPipe"
+                                    [width]="'220'" [Alignment]="'Right'"
+                                    [binding]="'ClasifiedRemarks'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <div class="RightCenter">
+                                        <span>{{item.ClasifiedRemarks}}</span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+                        <log-column [width]="'30'" [Alignment]="'right'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <div *ngIf="item.ClasifiedRemarks != null ">
+                                        <button class="Button" (click)="SupplierInvoiceItemExpandComment(item , $event)"><img class="CenterCenter" title="לצפייה בהערה" src="./Images/Icons/expand.png" /></button>
+
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
                     </logitude-edit-grid>
                 </div>
             </td>

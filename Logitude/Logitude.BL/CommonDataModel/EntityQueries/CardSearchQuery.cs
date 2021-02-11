@@ -45,6 +45,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                       Weight = a.Weight,
                       PartnerTypeId = a.PartnerTypeId,
                       InActive = a.InActive,
+                      IsCustomer = a.IsCustomer,
                    }).FirstOrDefault();
 
             return myResult;
@@ -66,6 +67,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      Weight = a.Weight,
                                                      PartnerTypeId = a.PartnerTypeId,
                                                      InActive = a.InActive,
+                                                     IsCustomer = a.IsCustomer,
+
                                                  };
             return result;
         }

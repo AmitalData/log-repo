@@ -9,6 +9,8 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { JournalList } from '../../EntityLists/JournalList';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
+import { GLAccountExtendedListService } from '../../Services/ExtendedLists/GLAccountExtendedListService';
 
 @Component({
     
@@ -33,6 +35,9 @@ export class FieldTemplateComponent {
     public isRTL: boolean = false;
     public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
     public tenantCurrency: string = "";
+    public ChildrenGLAccounts: GLAccountPM[]=[];
+    public numberOfChildren : number = 0;
+    glAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
@@ -168,6 +173,10 @@ export class FieldTemplateComponent {
                 this.FieldValue = this.Entity.StatusLocalName;
             }
         }
+
+        if (this.ObjectTableName == "GLAccount") {
+            this.BuildChildrenGLAccountsList();
+        }
     }
 
     Abs(num: number) {
@@ -258,6 +267,18 @@ export class FieldTemplateComponent {
         }
     }
 
+    OpenAPPayment(id) {
+        if (!AppTool.IsNullOrEmpty(id)) {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'APPayment' });
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                    });
+                });
+        }
+    }
+
     VatNumberClicked() {
 
     }
@@ -286,5 +307,21 @@ export class FieldTemplateComponent {
         }
 
         return color;
+    }
+
+    BuildChildrenGLAccountsList() {
+        //ChildrenGLAccounts = new List<GLAccountPM>();
+        this.glAccountExtendedListService.GetChildrenGLAccounts(this.Entity.Id).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse) {
+                if (!myResponse.HasError) {
+                    for (let item of myResponse.Result) {
+                        this.ChildrenGLAccounts.push(item);
+                        this.numberOfChildren += 1;
+                    }
+                }
+            }
+        });
+
+
     }
 }

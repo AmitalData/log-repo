@@ -85,7 +85,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 PartnerTypeId = "SL",
                 UploadingUniqueKey = entityPM.UploadingUniqueKey,
             };
-
+            
             this.entityPOCO = new ShippingLine()
             {
                 Id = entityPM.Id,
@@ -113,8 +113,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "ShippingLine");
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
-            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms != "oracle")
+            {
+                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+            }
         }
 
         public void Update(ShippingLinePM entityPM, bool mapComposition = false)
@@ -165,8 +168,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "ShippingLine");
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
-            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms != "oracle")
+            {
+                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+            }
         }
 
         private void InitializeComponent()

@@ -59,7 +59,7 @@
                         </td>
 
                         <td style="width: 1px" *ngIf="IsApproveVersionButtonVisible">
-                            <button class="Button" (click)="ApproveVersionClicked()">Approve Version</button>
+                            <button class="GreenButton" (click)="ApproveVersionClicked()">Approve Version</button>
                         </td>
 
                         <td style="width:5px;" *ngIf="IsApproveVersionButtonVisible">
@@ -91,7 +91,7 @@
         <tr>
             <td>
                 <div class="MediaFill">
-                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="TariffsLinesSource">
+                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="TariffsLinesSource" [SelectedRow]="selectedRow" [ChangeScrollPosition]="changeScrollPosition">
 
                         <!--Actions-->
                         <log-column [width]="'60'" *ngIf="IsDraftVersion">

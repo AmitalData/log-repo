@@ -23,6 +23,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logitude.Customs.BL.BL;
+using Logitude.Customs.BL.TraceEvents;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -243,6 +244,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             string notificationDefinitionCode = "";
             var eventContextTagModel = entityPM.CurrentContextTag as EventContextTagModel;
+            string unifrieghtStatus = "";
             if (eventContextTagModel != null)
             {
                 switch (eventContextTagModel.CallProccessID)
@@ -255,14 +257,64 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         notificationDefinitionCode = "8228D";
                         break;
                 }
+
+
+
             }
 
             if (!string.IsNullOrWhiteSpace(notificationDefinitionCode))
             {
                 DeclarationPM connectedDeclarationPM = GetConnectedDeclarationPM(entityPM);
                 DoUpdateNotification(entityPM, connectedDeclarationPM, loggingUserId, notificationDefinitionCode, eventContextTagModel.FUStatusRemarks);
+                if(connectedDeclarationPM!= null && connectedDeclarationPM.Direction=="E")
+                SendEvent(eventContextTagModel.EventCode, eventContextTagModel, loggingUserId, this.connectedDeclarationId, entityPM.VerificationRemarks, entityPM.RequestedCustomsDocId);
             }
         }
+
+
+        private void SendEvent(string statusId , EventContextTagModel eventContextTagModel , string loggingUserId, string declarationId,string  remarks, string requestedCustomsDocId)
+        {
+            try
+            {
+
+                
+                Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel myAmitalEventTracerModel;
+                
+                    myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                    {
+                        Tenant =  Tenant,
+                        objectTableName = eventContextTagModel.StatusObjectTable,
+                        EventCode = statusId,
+                        notes = "DocumentId :" + requestedCustomsDocId + '\n' + remarks,
+                        CommunicationLoggingEntityReference = eventContextTagModel.StatusEntityId,
+                        EntityId = declarationId,
+                        UserId = loggingUserId,
+                        CommunicationSubject = "FU Status from logitude ",
+                        MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                        {
+                            entname = "CFIFILEM",
+                            primary_number = eventContextTagModel.StatusCustomFileNo,
+                            status = "new",
+                            xml_status = "new",
+                            status_id = statusId,
+                            status_DateTime = DateTime.Now,
+                            //status_place = "FRA",
+                            //status_save = "no_fail",
+                            comments = eventContextTagModel.FUStatusRemarks,
+                        }
+
+                    };
+                 
+               
+                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, true);
+            }
+            catch (Exception)
+            {
+                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
+                throw;
+            }
+        }
+
 
         private DeclarationPM GetConnectedDeclarationPM(CustomsDocumentsTicketPM dirtyEntityPM)
         {
@@ -381,6 +433,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 this.hasNoDeclaration = true;
                 this.connectedDeclarationId = null;
             }
+
+              
         }
 
         private void UpdateDeclarationCourierStatus(CustomsDocumentsTicketPM entityPM)

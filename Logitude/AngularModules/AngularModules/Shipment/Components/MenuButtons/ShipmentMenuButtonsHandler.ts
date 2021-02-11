@@ -231,9 +231,54 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                         }
                     }
 
+                    if (button.EventCode == "ConvertShipmentToLTL") {
+                        if (buttonEnabled) {
+                            if (this.EntityPM.TransportModeId == "I" && this.EntityPM.ShipmentTypeId == "FTL") {
+                                if (this.EntityPM.IsCancelled) {
+                                    button.IsDisabled = true;
+                                }
+
+                                else {
+                                    button.IsHidden = false;
+                                    button.IsDisabled = false;
+                                }
+                            }
+
+                            else {
+                                button.IsHidden = true;
+                            }
+                        }
+
+                        else {
+                            button.IsHidden = true;
+                        }
+                    }
+
+                    if (button.EventCode == "ConvertShipmentToFTL") {
+                        if (buttonEnabled) {
+                            if (this.EntityPM.TransportModeId == "I" && this.EntityPM.ShipmentTypeId == "LTL") {
+                                if (this.EntityPM.IsCancelled) {
+                                    button.IsDisabled = true;
+                                }
+
+                                else {
+                                    button.IsHidden = false;
+                                    button.IsDisabled = false;
+                                }
+                            }
+
+                            else {
+                                button.IsHidden = true;
+                            }
+                        }
+                        else {
+                            button.IsHidden = true;
+                        }
+                    }
+
                     if (button.EventCode == "ConvertShipmentToLCL") {
                         if (buttonEnabled) {
-                            if (this.EntityPM.ShipmentTypeId == "FCLD") {
+                            if (this.EntityPM.TransportModeId == "O" && this.EntityPM.ShipmentTypeId == "FCLD") {
                                 if (this.EntityPM.IsCancelled) {
                                     button.IsDisabled = true;
                                 }
@@ -256,7 +301,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
                     if (button.EventCode == "ConvertShipmentToFCL") {
                         if (buttonEnabled) {
-                            if (this.EntityPM.ShipmentTypeId == "LCLD") {
+                            if (this.EntityPM.TransportModeId == "O" && this.EntityPM.ShipmentTypeId == "LCLD") {
                                 if (this.EntityPM.IsCancelled) {
                                     button.IsDisabled = true;
                                 }
@@ -386,10 +431,22 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                         this.SplitShipmentClicked();
                         break;
                     }
+
+                    case "ConvertShipmentToLTL": {
+                        this.ConvertShipmentToLTLClicked();
+                        break;
+                    }
+
+                    case "ConvertShipmentToFTL": {
+                        this.ConvertShipmentToFTLClicked();
+                        break;
+                    }
+
                     case "ConvertShipmentToLCL": {
                         this.ConvertShipmentToLCLClicked();
                         break;
                     }
+
                     case "ConvertShipmentToFCL": {
                         this.ConvertShipmentToFCLClicked();
                         break;
@@ -445,6 +502,14 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             this.DoConvertShipmentType("ToFCL");
                         }
 
+                        if (this.IsConvertToLTLClicked) {
+                            this.DoConvertShipmentType("ToLTL");
+                        }
+
+                        if (this.IsConvertToFTLClicked) {
+                            this.DoConvertShipmentType("ToFTL");
+                        }
+
                         if (this.IsConvertDirectionClicked) {
                             this.DoConvertShipmentDirection();
                         }
@@ -490,6 +555,8 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         this.Reload = false;
         this.IsConvertToLCLClicked = false;
         this.IsConvertToFCLClicked = false;
+        this.IsConvertToLTLClicked = false;
+        this.IsConvertToFTLClicked = false;
         this.IsConvertDirectionClicked = false;
         this.IsSendToAMANACClicked = false;
     }
@@ -543,37 +610,28 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         });
     }
     private AccountedReopenShipment() {
-        this.currentActionName = "AccountedReopen";
-        this.ActionStepsStateList = new Array<ActionsStepsState>();
+        this.currentActionName = "AccountedReopen";        
         var args = new MenuButtonsTemplateArgs();
         args.IsNotesStackPanelVisible = true;
-        args.NotesHeader = "Shipment Accounting Reopen Notes";
-        var state = new ActionsStepsState();
-        state.Message = TextCodeTranslator.Translate("Shipment.M.ShipmentAccountingReopened");
-        this.ActionStepsStateList.push(state);
-
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Accounted Shipment Reopen";
         logWindow.WindowArgs = args;
+        logWindow.Width = 500;
+        logWindow.Height = 350;
         logWindow.Show('./Shipment/Components/MenuButtons/MenuButtonsTemplateComponent');
         logWindow.ComponentLoaded.subscribe(cmp => {
             cmp.ReopenDone.subscribe(p => {
                 this.EntityPM.EventNote = p;
             });
         });
+
         logWindow.WindowClosed.subscribe(($event: any) => {
             this.ResetButtonClicked();
             if ($event == "confirm") {
                 this.EntityPM.IsAccountingClosed = false;
                 this.OkButton();
-
             }
-            else {
-            }
-
         });
-
-
     }
     private AccountingCloseShipment() {
         this.currentActionName = "AccountingClose";
@@ -583,10 +641,9 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
             this.EntityPM.ShipmentReceivables.forEach(p => {
                 if (p.ShipmentReceivableLineStatusCode != "ACCT" && p.ShipmentReceivableLineStatusCode != "EMPT")
                     if (p.TotalAmount != null && p.TotalAmount != 0) hasOpenReceivables = true;
-
             });
-
         }
+
         if (!SessionLocator.AccountingSettingPM.AllowClosureWithoutPayables) {
             if (this.EntityPM.ShipmentPayables.length > 0)
                 this.EntityPM.ShipmentPayables.forEach(p => {
@@ -601,7 +658,6 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             }
                         }
                 });
-
         }
 
         if (this.EntityPM.ShipmentLevelCode == "C") {
@@ -645,8 +701,8 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
             if (this.EntityPM.ShipmentLevelCode == "C") {
                 error = "can’t close for accounting if there are any open payables/receivables in the Master or one \nof the connected shipments. Please check and fix this issue and try again";
             }
-            ErrorsList.push(error);
 
+            ErrorsList.push(error);
         }
 
         else if (!this.EntityPM.IsOperationalClosed) {
@@ -669,41 +725,34 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         if (!success) args.EnabledOkButton = false;
         args.ValidationErrorsList = ErrorsList;
         args.ActionStepsStateList = this.ActionStepsStateList;
+        args.IsNotesStackPanelVisible = true;
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Shipment Accounting Close";
         logWindow.WindowArgs = args;
+        logWindow.Width = 500;
+        logWindow.Height = 350;
         logWindow.Show('./Shipment/Components/MenuButtons/MenuButtonsTemplateComponent');
+        logWindow.ComponentLoaded.subscribe(cmp => {
+            cmp.ReopenDone.subscribe(p => {
+                this.EntityPM.EventNote = p;
+            });
+        });
         logWindow.WindowClosed.subscribe(($event: any) => {
             this.ResetButtonClicked();
             if ($event == "confirm") {
-                this.EntityPM.IsAccountingClosed = true;
-                this.EntityPM.EventNote = null;
+                this.EntityPM.IsAccountingClosed = true;                
                 this.EntityPM.AccountingCloseDate = DateTool.GetCurrentDateTimeAsUtc();
                 this.OkButton();
-
             }
-            else {
-            }
-
         });
-
-
-
-
-
-
     }
     private OperationalReopenShipment() {
         this.currentActionName = "OperationalReopen";
-        this.ActionStepsStateList = new Array<ActionsStepsState>();
         var args = new MenuButtonsTemplateArgs();
-        args.IsNotesStackPanelVisible = true;
-        args.NotesHeader = "Shipment Operational Reopen Notes";
-        var state = new ActionsStepsState();
-        state.Message = TextCodeTranslator.Translate("Shipment.M.ShipmentOperationalReopened");
-        this.ActionStepsStateList.push(state);
-        args.ActionStepsStateList = this.ActionStepsStateList;
+        args.IsNotesStackPanelVisible = true;        
         var logWindow = new LogitudeWindow();
+        logWindow.Width = 500;
+        logWindow.Height = 350;
         logWindow.Title = "Shipment Operational Reopen";
         logWindow.WindowArgs = args;
         logWindow.Show('./Shipment/Components/MenuButtons/MenuButtonsTemplateComponent');
@@ -765,14 +814,9 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         var args = new MenuButtonsTemplateArgs();
         args.ObjectTableName = "Shipment";
         args.EntityPM = this.EntityPM;
-        args.NotesHeader = "Convert Shipment From House To Direct...";
-        args.IsNotesStackPanelVisible = false;
-        args.EventNote = null;
+        args.IsNotesStackPanelVisible = true;
         this.ActionStepsStateList = new Array<ActionsStepsState>();
         var state: ActionsStepsState = new ActionsStepsState();
-        state.Message = TextCodeTranslator.Translate("Shipment.M.ShipmentConvertedHtoD");
-        this.ActionStepsStateList.push(state);
-
         if (this.EntityPM.DirectionId == "E" || this.EntityPM.DirectionId == "D" || this.EntityPM.DirectionId == "R") {
             var settingCode = "HAWBCounter" + this.EntityPM.TransportModeId + "_E_D";
             var tenantSettingPM = SessionLocator.TenantSettings.filter(p => p.SettingCode == settingCode)[0];
@@ -789,13 +833,13 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         args.ActionStepsStateList = this.ActionStepsStateList;
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = args;
-        logWindow.Width = 970;
-        logWindow.Height = 570;
+        logWindow.Width = 500;
+        logWindow.Height = 350;
         logWindow.Title = "Convert Shipment From House To Direct";
         logWindow.Show('./Shipment/Components/MenuButtons/MenuButtonsTemplateComponent');
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
-                var notes = s.EventNotes;
+                this.EntityPM.EventNote = s.EventNotes;
                 if (d == "confirm") {
                     this.EntityPM.ConvertFromHouseToDirect = true;
                     this.EntityPM.ConvertFromDirectToHouse = false;
@@ -818,32 +862,34 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                 var args = new MenuButtonsTemplateArgs();
                 args.ObjectTableName = "Shipment";
                 args.EntityPM = this.EntityPM;
-                args.NotesHeader = "Convert Shipment From Direct To House...";
-                args.IsNotesStackPanelVisible = false;
-                args.EventNote = null;
+                args.IsNotesStackPanelVisible = true;
                 this.ActionStepsStateList = new Array<ActionsStepsState>();
                 var state: ActionsStepsState = new ActionsStepsState();
-                state.Message = TextCodeTranslator.Translate("Shipment.M.ShipmentConvertedDToH");
-                this.ActionStepsStateList.push(state);
 
+                var logWindow = new LogitudeWindow();
                 if (this.EntityPM.MainCarriageIsFromStack) {
                     state = new ActionsStepsState();
                     state.Message = TextCodeTranslator.Translate("Shipment.M.MasterAWBNumberTakenFromStack");
                     state.State = "Error";
                     this.ActionStepsStateList.push(state);
                     args.EnabledOkButton = false;
+                    logWindow.Width = 700;
+                    logWindow.Height = 400;
+                }
+
+                else {
+                    logWindow.Width = 450;
+                    logWindow.Height = 300;
                 }
 
                 args.ActionStepsStateList = this.ActionStepsStateList;
-                var logWindow = new LogitudeWindow();
                 logWindow.WindowArgs = args;
-                logWindow.Width = 935;
-                logWindow.Height = 570;
 
                 logWindow.Title = "Convert Shipment From Direct To House";
                 logWindow.Show('./Shipment/Components/MenuButtons/MenuButtonsTemplateComponent');
                 logWindow.ComponentLoaded.subscribe(s => {
                     logWindow.WindowClosed.subscribe(d => {
+                        this.EntityPM.EventNote = s.EventNotes;
                         if (d == "confirm") {
                             if (!this.EntityPM.MainCarriageIsFromStack) {
                                 this.EntityPM.ConvertFromDirectToHouse = true;
@@ -869,24 +915,18 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
     }
     private ReactivateShipment() {
-
         this.currentActionName = "ReactivateShipment";
 
         var args = new MenuButtonsTemplateArgs();
         args.ObjectTableName = "Shipment";
         args.EntityPM = this.EntityPM;
-        args.NotesHeader = "Shipment Reactivation Notes";
         args.IsNotesStackPanelVisible = true;
-        args.EventNote = "";
-        this.ActionStepsStateList = new Array<ActionsStepsState>();
-        var state2: ActionsStepsState = new ActionsStepsState();
-        state2.Message = TextCodeTranslator.Translate("Shipment.M.ShipmentReactivated");
-        this.ActionStepsStateList.push(state2);
-        args.ActionStepsStateList = this.ActionStepsStateList;
+        args.EventNote = "";       
+        
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = args;
-        logWindow.Width = 935;
-        logWindow.Height = 570;
+        logWindow.Width = 500;
+        logWindow.Height = 350;
         logWindow.Title = "Reactivate Shipment";
         logWindow.Show('./Shipment/Components/MenuButtons/MenuButtonsTemplateComponent');
         logWindow.ComponentLoaded.subscribe(s => {
@@ -896,15 +936,10 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                     if (!AppTool.IsNullOrEmpty(notes))
                         this.EntityPM.EventNote = notes;
                     this.EntityPM.IsCancelled = false;
-
-
                     this.OkButton();
-
                 }
 
                 this.ResetButtonClicked();
-
-
             });
         });
     }
@@ -954,22 +989,15 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         this.isButtonClicked = false;
     }
     private ConfirmCanceling() {
-
         var args = new MenuButtonsTemplateArgs();
         args.ObjectTableName = "Shipment";
         args.EntityPM = this.EntityPM;
-        args.NotesHeader = "Shipment Cancel Notes";
         args.IsNotesStackPanelVisible = true;
         args.EventNote = "";
-        this.ActionStepsStateList = new Array<ActionsStepsState>();
-        var state2: ActionsStepsState = new ActionsStepsState();
-        state2.Message = TextCodeTranslator.Translate("Shipment.M.ShipmentCancelled");
-        this.ActionStepsStateList.push(state2);
-        args.ActionStepsStateList = this.ActionStepsStateList;
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = args;
-        logWindow.Width = 935;
-        logWindow.Height = 570;
+        logWindow.Width = 500;
+        logWindow.Height = 350;
         logWindow.Title = "Cancel Shipment";
         logWindow.Show('./Shipment/Components/MenuButtons/MenuButtonsTemplateComponent');
         logWindow.ComponentLoaded.subscribe(s => {
@@ -979,6 +1007,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                     if (!AppTool.IsNullOrEmpty(notes))
                         this.EntityPM.EventNote = notes;
                     this.EntityPM.IsCancelled = true;
+
                     if (this.EntityPM.MainCarriageIsFromStack || this.EntityPM.MAWBTakenFromStack) {
                         this.EntityPM.MAWBReturnedToStack = true;
                         this.EntityPM.MAWBReturnedToStackWithCancel = true;
@@ -991,8 +1020,6 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                 this.ResetButtonClicked();
             });
         });
-
-
     }
     private OkButton() {
         if (this.currentActionName == "OperationalClose" || this.currentActionName == "AccountingClose") {
@@ -1080,6 +1107,27 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         });
     }
 
+    private IsConvertToLTLClicked: boolean = false;
+    private IsConvertToFTLClicked: boolean = false;
+    private ConvertShipmentToLTLClicked() {
+        var errors: string[] = [];
+        Validator.TryValidateObject(this.EntityPM, "Shipment", errors);
+
+        if (errors.length == 0) {
+            this.IsConvertToLTLClicked = true;
+            this.OkButton();
+        }
+    }
+    private ConvertShipmentToFTLClicked() {
+        var errors: string[] = [];
+        Validator.TryValidateObject(this.EntityPM, "Shipment", errors);
+
+        if (errors.length == 0) {
+            this.IsConvertToFTLClicked = true;
+            this.OkButton();
+        }
+    }
+
     private IsConvertToLCLClicked: boolean = false;
     private IsConvertToFCLClicked: boolean = false;
     private ConvertShipmentToLCLClicked() {
@@ -1100,6 +1148,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
             this.OkButton();
         }
     }
+
     private DoConvertShipmentType(type: string) {
         var errors: string[] = [];
 
@@ -1109,7 +1158,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
         else if (this.EntityPM.ShipmentPackages.filter(d => !AppTool.IsNullOrEmpty(d.DeliveryId)).length > 0
             || this.EntityPM.ShipmentPackages.filter(d => !AppTool.IsNullOrEmpty(d.EmptyContainerReturnId)).length > 0) {
-            errors.push("Cannot change shipment type when shipment packages are connected to a delivery or empty container return");
+            errors.push("Cannot change shipment type when shipment packages are \nconnected to a delivery or empty container return");
         }
 
         else if (this.EntityPM.ShipmentLevelCode == "H" && !AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId)) {
@@ -1127,7 +1176,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         else if (this.EntityPM.MainCarriageATD != null || this.EntityPM.Transshipment1ATD != null || this.EntityPM.Transshipment2ATD != null
             || this.EntityPM.Transshipment3ATD != null || this.EntityPM.MainCarriageATA != null || this.EntityPM.Transshipment1ATA != null
             || this.EntityPM.Transshipment2ATA != null || this.EntityPM.Transshipment3ATA != null) {
-            errors.push("Cannot change shipment type when shipment contains actual departure/arrival dates");
+            errors.push("Cannot change shipment type when shipment contains \nactual departure/arrival dates");
         }
 
         if (errors.length == 0) {
@@ -1136,7 +1185,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                     var result: boolean = myResponse.Result;
 
                     if (result) {
-                        errors.push("Cannot change shipment type when shipment is connected to Cross Docks Entries / Releases");
+                        errors.push("Cannot change shipment type when shipment is connected \nto Cross Docks Entries / Releases");
                     }
 
                     this.ShowNotesWindow(errors, type);
@@ -1158,10 +1207,10 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         args.IsConvertShipmentType = true;
         args.ValidationErrorsList = errors;
         args.EnabledOkButton = false;
+        args.IsNotesStackPanelVisible = true;
+        args.NotesHeader = "Notes";
 
         if (errors.length == 0) {
-            args.IsNotesStackPanelVisible = true;
-            args.NotesHeader = "Notes";
             args.EnabledOkButton = true;
         }
 
@@ -1179,12 +1228,26 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                     windowTitle = "Convert Shipment From LCL To FCL";
                     break;
                 }
+
+            case "ToLTL":
+                {
+                    this.currentActionName = "ConvertShipmentToLTL";
+                    windowTitle = "Convert Shipment From FTL To LTL";
+                    break;
+                }
+
+            case "ToFTL":
+                {
+                    this.currentActionName = "ConvertShipmentToFTL";
+                    windowTitle = "Convert Shipment From LTL To FTL";
+                    break;
+                }
         }
 
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = args;
-        logWindow.Width = 935;
-        logWindow.Height = 570;
+        logWindow.Width = 500;
+        logWindow.Height = 350;
 
         logWindow.Title = windowTitle;
         logWindow.Show('./Shipment/Components/MenuButtons/MenuButtonsTemplateComponent');
@@ -1206,6 +1269,20 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             {
                                 this.EntityPM.ConvertShipmentToLCL = false;
                                 this.EntityPM.ConvertShipmentToFCL = true;
+                                break;
+                            }
+
+                        case "ToLTL":
+                            {
+                                this.EntityPM.ConvertShipmentToLTL = true;
+                                this.EntityPM.ConvertShipmentToFTL = false;
+                                break;
+                            }
+
+                        case "ToFTL":
+                            {
+                                this.EntityPM.ConvertShipmentToLTL = false;
+                                this.EntityPM.ConvertShipmentToFTL = true;
                                 break;
                             }
                     }
@@ -1349,12 +1426,10 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         console.log(WarningsList);
         console.log(ErrorsList);
 
-
-
         var args = new MenuButtonsTemplateArgs();
         args.ValidationErrorsList = ErrorsList;
         args.ValidationWarningsList = WarningsList;
-        args.IsNotesStackPanelVisible = false;
+        args.IsNotesStackPanelVisible = true;
         args.ActionStepsStateList = this.ActionStepsStateList;
 
         var state = new ActionsStepsState();
@@ -1365,31 +1440,35 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         else {
             state.State = "Succeeded";
         }
+
         this.ActionStepsStateList.push(state);
 
-
-
-        if (ErrorsList.length > 0)
+        if (ErrorsList.length > 0) {
             args.EnabledOkButton = false;
+        }
+
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Shipment Operational Close";
         logWindow.WindowArgs = args;
+        logWindow.Width = 500;
+        logWindow.Height = 350;
         logWindow.Show('./Shipment/Components/MenuButtons/MenuButtonsTemplateComponent');
+        logWindow.ComponentLoaded.subscribe(cmp => {
+            cmp.ReopenDone.subscribe(p => {
+                this.EntityPM.EventNote = p;
+            });
+        });
         logWindow.WindowClosed.subscribe(($event: any) => {
             this.ResetButtonClicked();
             if ($event == "confirm") {
                 this.EntityPM.IsOperationalClosed = true;
-                this.EntityPM.OperationalCloseDate = DateTool.GetCurrentDateTimeAsUtc();
-                this.EntityPM.EventNote = null;
+                this.EntityPM.OperationalCloseDate = DateTool.GetCurrentDateTimeAsUtc();                
                 this.OkButton();
             }
             else {
-
                 this.EntityPM.RejectChanges();
                 this.RejectChanges();
-
             }
-
         });
     }
     private ValidateShipmentRules(WarningsList: Array<string>, ErrorsList: Array<string>, entityPM: any) {

@@ -89,7 +89,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPM = entityPM;
             this.isNewEntity = true;
 
-            this.entityPM.Id = string.IsNullOrEmpty(this.entityPM.Id) ? IdCounter.GetNumber("Card", tenant).ToString() : this.entityPM.Id;
+            this.entityPM.Id = string.IsNullOrEmpty(this.entityPM.Id) || this.entityPM.IsHybrid ? IdCounter.GetNumber("Card", tenant).ToString() : this.entityPM.Id;
 
 
             this.entityCard = new Card()
@@ -145,8 +145,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 this.UpdateContactSearchField(itemPM);
             }
-            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms != "oracle")
+            {
+                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+            }
         }
 
         public void Update(WarehousePM entityPM, bool mapComposition = false)
@@ -194,8 +197,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
 
-            RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms != "oracle")
+            {
+                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
+            }
         }
 
         private void InitializeComponent()
@@ -232,6 +238,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     {
                         entityPM.CityName = myAddress.City;
                         entityPM.CountryId = myAddress.CountryId;
+                        entityPM.Address1 = myAddress.Address1;
+                        entityPM.Address2 = myAddress.Address2;
 
                         if (!string.IsNullOrEmpty(myAddress.CountryId))
                         {
@@ -259,6 +267,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityCard.CountryId = entityPM.CountryId;
                 entityCard.CountryCode = entityPM.CountryCode;
                 entityCard.CountryName = entityPM.CountryName;
+                entityCard.Address1 = entityPM.Address1;
+                entityCard.Address2 = entityPM.Address2;
             }
 
             else
@@ -267,6 +277,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityPM.CountryId = entityCard.CountryId;
                 entityPM.CountryCode = entityCard.CountryCode;
                 entityPM.CountryName = entityCard.CountryName;
+                entityPM.Address1 = entityCard.Address1;
+                entityPM.Address2 = entityCard.Address2;
             }
         }
 

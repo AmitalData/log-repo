@@ -1,5 +1,6 @@
 ﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,10 +52,17 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public DocumentsMetaDataType GetSingleDocumentsMetaDataTypeByCustomsMetaDataCode(string code, int tenant)
         {
-            DocumentsMetaDataType d = (from a in context.DocumentsMetaDataTypes
-                                       where a.CustomsMetaDataCode == code && a.Tenant == tenant
-                                       select a).FirstOrDefault();
-            return d;
+
+            string entityKeyString = $"GetSingleDocumentsMetaDataTypeByCustomsMetaDataCode({code},{tenant})";
+            var res = CacheManager.GetOrInsertNewObject<DocumentsMetaDataType>(entityKeyString, () =>
+            {
+                DocumentsMetaDataType d = (from a in context.DocumentsMetaDataTypes
+                                           where a.CustomsMetaDataCode == code && a.Tenant == tenant
+                                           select a).FirstOrDefault();
+                return d;
+            });
+            return res;
+           
         }
 
         public void Add(DocumentsMetaDataType entity)

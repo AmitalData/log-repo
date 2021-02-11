@@ -58,6 +58,9 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     public fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
     PaymentChequePMService: PaymentChequeExtendedPMService = new PaymentChequeExtendedPMService();
     IsChequeLinkVisibile: boolean = false;
+    DisplayFieldsFromList:string;
+    DisplayLocalFieldsFromList:string;
+    VendorLovSizeForFullAccounting:number;
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
 
@@ -67,6 +70,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
         }
         this.IsFullAccounting = SessionLocator.TenantPM.AccountingActivated;
+        this.InitializeBillToLov()
         this.EntityPM = entityArgs.EntityPM;
         this.ItemsSource = new ObservableCollection([]);
         this.EnableNegativeOffsetAPPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetAPPayments;
@@ -92,6 +96,13 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
 
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
+    }
+    private InitializeBillToLov() {
+        if (this.IsFullAccounting) {
+            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.VendorLovSizeForFullAccounting = 550;
+        }
     }
     public ShowSplitButton: boolean = false;
     IsSplitComponentOpened: boolean;
@@ -124,26 +135,26 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
     entityId: string;
     ViewPaymentCheque() {
-
-        this.PaymentChequePMService.GetPaymentChequeByPaymentIdAndChequeNumber(this.EntityPM.ChequeOrPaymentRef, this.EntityPM.Id).subscribe((myResult:ServiceResponse) => {
-            var myResponse: ServiceResponse = myResult;
-            if (myResponse != null) {
-
-                var res = myResponse.Result;
-                var entityId = res.Id;
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                    .then(cmpRef => {
-                        cmpRef.instance.ComponentRef = cmpRef;
-                        cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: "PaymentCheque", BackButtonLabel: "PaymentCheque" });
-                        cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                            this.BuildScreenData();
+        if(this.IsFullAccounting){
+            this.PaymentChequePMService.GetPaymentChequeByPaymentIdAndChequeNumber(this.EntityPM.ChequeOrPaymentRef, this.EntityPM.Id).subscribe((myResult:ServiceResponse) => {
+                var myResponse: ServiceResponse = myResult;
+                if (myResponse != null) {
+        
+                    var res = myResponse.Result;
+                    var entityId = res.Id;
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: "PaymentCheque", BackButtonLabel: "PaymentCheque" });
+                            cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                                this.BuildScreenData();
+                            });
                         });
-                    });
-            }
-
-        });
-
-
+                }
+        
+            });
+        
+        }
     }
 
     private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
@@ -208,24 +219,38 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
+    vendor: CardList;
+    VendorChanged(vednor:CardList){
+        this.vendor = vednor;
+        this.LoadTaxPercentage();
+        
+    }
     private IsTaxUpdated = false;
     private LoadTaxPercentage() {
-        if (this.IsFullAccounting) {
-            this.GLAccountWithholdingService.GetDeductionPercentage(this.VendorId, this.EntityPM.RegisterDate).subscribe((myResult:any) => {
-                var myResponse: ServiceResponse = myResult;
-                if (!myResponse.HasError) {
-                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id) || this.IsTaxUpdated) {
-                        this.IsNoVendorTax = myResponse.Result.IsDefault;
-                        this.TaxDeductionPercentage = myResponse.Result.Percentage;
+        if (this.IsFullAccounting) 
+        {
+            const nonIsraeliVendor = this.vendor ? this.vendor.CountryCode != "IL" : false;
+            if(nonIsraeliVendor) {
+                this.TaxDeductionPercentage = 0;
+            } else {
+
+                this.GLAccountWithholdingService.GetDeductionPercentage(this.VendorId, this.EntityPM.RegisterDate).subscribe((myResult:any) => {
+                    var myResponse: ServiceResponse = myResult;
+                    if (!myResponse.HasError) {
+                        if (AppTool.IsNullOrEmpty(this.EntityPM.Id) || this.IsTaxUpdated) {
+                            this.IsNoVendorTax = myResponse.Result.IsDefault;
+                            this.TaxDeductionPercentage = myResponse.Result.Percentage;
+                        }
+                        else {
+                            this.IsNoVendorTax = myResponse.Result.IsDefault;
+                        }
                     }
                     else {
-                        this.IsNoVendorTax = myResponse.Result.IsDefault;
+                        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
                     }
-                }
-                else {
-                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
-                }
-            });
+                });
+            }
+
         }
     }
 
@@ -713,7 +738,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 this.GetCardProperties();
                 this.LoadData();
                 this.IsTaxUpdated = true;
-                this.LoadTaxPercentage();
+
             }
         }
     }
@@ -945,8 +970,12 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     set TaxDeductionPercentage(value: number) {
         if (this.EntityPM != null) {
             if (this.EntityPM.TaxDeductionPercentage != value) {
-                this.EntityPM.TaxDeductionPercentage = value;
-                this.CalculateTaxDeductionLocalAmount();
+
+            const nonIsraeliVendor = this.vendor ? this.vendor.CountryCode != "IL" : false;
+            if(nonIsraeliVendor)
+                value = 0;
+            this.EntityPM.TaxDeductionPercentage = value;
+            this.CalculateTaxDeductionLocalAmount();
             }
         }
     }
@@ -1015,9 +1044,18 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             if (this.EntityPM.PaymentMethodCode != value) {
                 this.EntityPM.PaymentMethodCode = value;
                 this.SetAutomaticPaymentCheque(value);
-
-
                 this.SetUIProperties_FullAccounting(); // for BankAccountId
+
+                this.ItemsSource.Collection.forEach((item: APPaymentInvoiceArgs) => {
+
+                    if (item.IsConnected && item.Invoice.AmountDue == 0 && item.AmountPaid == 0) {
+                        if (value != "FS") {
+                            item.IsConnected = false;
+                        }
+                    }
+
+                    item.SetUIProperties();
+                });
             }
         }
     }
@@ -1638,15 +1676,8 @@ export class APPaymentInvoiceArgs extends BaseComponent {
         this.IsAdvancedButtonVisible = false;
         this.CheckBoxEnabled = true;
 
-
-
-
-
         this.SetUIProperties_CurrencyMatched();
         this.SetUIProperties_AllowedToConnect();
-
-
-
 
         if (this.isAllowedToConnect) {
             this.isControlEnabled = true;
@@ -1671,7 +1702,14 @@ export class APPaymentInvoiceArgs extends BaseComponent {
 
             else
                 if (this.trigger.EntityPM.OpenAmount <= 0) {
-                    this.NotMatchedVisibility = false;
+
+                    if (this.trigger.EntityPM.OpenAmount == 0 && this.PaymentPM.PaymentMethodCode == "FS") {
+                        this.CheckBoxVisibility = true;
+                    }
+
+                    else {
+                        this.NotMatchedVisibility = false;
+                    }
                 }
 
                 else {
@@ -1724,38 +1762,45 @@ export class APPaymentInvoiceArgs extends BaseComponent {
     SetUIProperties_CurrencyMatched() {
         this.isCurrencyMatched = false;
 
-        if (this.PaymentPM.PaymentCurrencyId == this.CurrencyId) {
-            this.isCurrencyMatched = true;
-        }
+        if (this.PaymentPM.PaymentCurrencyId) {
+            if (this.PaymentPM.PaymentCurrencyId == this.CurrencyId) {
+                this.isCurrencyMatched = true;
+            }
 
-        else {
-            if (this.trigger.IsMultiCurrency) {
-                if (this.PaymentPM.PaymentCurrencyId == SessionLocator.LocalCurrencyId) {
-                    this.isCurrencyMatched = true;
-                    this.IsAdvancedButtonVisible = true;
-                }
+            else {
+                if (this.trigger.IsMultiCurrency) {
+                    if (this.PaymentPM.PaymentCurrencyId == SessionLocator.LocalCurrencyId) {
+                        this.isCurrencyMatched = true;
+                        this.IsAdvancedButtonVisible = true;
+                    }
 
-                else if (this.CurrencyId == SessionLocator.LocalCurrencyId) {
-                    this.isCurrencyMatched = true;
-                    this.IsAdvancedButtonVisible = true;
+                    else if (this.CurrencyId == SessionLocator.LocalCurrencyId) {
+                        this.isCurrencyMatched = true;
+                        this.IsAdvancedButtonVisible = true;
+                    }
                 }
             }
         }
     }
     SetUIProperties_AllowedToConnect() {
+
         this.isAllowedToConnect = true;
 
         if (this.IsConnected == false) {
-            if (this.Invoice.StatusCode == "WA") {
+
+            if (this.Invoice.StatusCode == "WA" || this.isCurrencyMatched == false) {
                 this.isAllowedToConnect = false;
             }
 
-            if (this.isCurrencyMatched == false) {
-                this.isAllowedToConnect = false;
-            }
+            else if (AppTool.IsNullOrZero(this.AmountDue)) {
 
-            if (AppTool.IsNullOrZero(this.AmountDue)) {
-                this.isAllowedToConnect = false;
+                if (this.AmountDue == 0 && this.Invoice.StatusCode == "AD" && this.PaymentPM.PaymentMethodCode == "FS") {
+                    this.isAllowedToConnect = true;
+                }
+
+                else {
+                    this.isAllowedToConnect = false;
+                }
             }
         }
     }

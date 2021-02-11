@@ -1,0 +1,199 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
+{
+   public partial class CargoTrackingShipmentDxml  
+   {    
+      
+        public string  GetCargoTrackingShipmentDxml (){
+		    string dxmlFile = "<Table Name='CargoTrackingShipments' Schema='dbo' DBType='CargoTracking'>"+
+"  <Column Name='Tenant' Type='int'>"+
+"    <Constraints Nullable='false' />"+
+"  </Column>"+
+"  <Column Name='EntityId' Type='varchar' Size='15'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ForwardingShipmentHeaderId' Type='varchar' Size='15'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='CustomsShipmentHeaderId' Type='varchar' Size='15'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='EntityType' Type='varchar' Size='1'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='CurrentMilestoneCode' Type='varchar' Size='2'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='CurrentMilestoneDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='CustomerId' Type='varchar' Size='15'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='TransportModeId' Type='varchar' Size='15'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='Master' Type='varchar' Size='20'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='House' Type='varchar' Size='20'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ShipmentNumber' Type='varchar' Size='20'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='FromPortId' Type='varchar' Size='15'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ToPortId' Type='varchar' Size='15'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ShipperId' Type='varchar' Size='15'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ConsigneeId' Type='varchar' Size='15'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='GrossWeight' Type='float'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='Volume' Type='float'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='PickupDone' Type='bit'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='PickupDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='CreateDate' Type='datetime'>"+
+"    <Constraints Nullable='false' />"+
+"  </Column>"+
+"  <Column Name='SecurityKey' Type='varchar' Size='40'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ConsigneeName' Type='varchar' Size='70'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ShipperName' Type='varchar' Size='70'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='CustomerReference' Type='varchar' Size='101'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='IsMainRecord' Type='bit'>"+
+"    <Constraints Nullable='false' />"+
+"  </Column>"+
+"  <Column Name='PickupEstimationDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='FromWarehouseDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='FromWarehouseEstimationDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='FromWarehouseNotes' Type='nvarchar' Size='500'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='DepartureDone' Type='bit'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='DepartureDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='DepartureEstimationDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ArrivalDone' Type='bit'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ArrivalDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ArrivalEstimationDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ToWarehouseDone' Type='bit'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ToWarehouseDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ToWarehouseEstimationDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ToWarehouseNotes' Type='nvarchar' Size='500'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='CustomsPaymentDone' Type='bit'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='CustomsPaymentDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ClearanceDone' Type='bit'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ClearanceDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='DeliveredDone' Type='bit'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='DeliveredDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='DeliveredEstimationDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='FromWarehouseDone' Type='bit'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='FirstPickupETD' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='WarehouseLegActualEntryDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='WarehouseLegExpectedEntryDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='WarehouseLegRemarks' Type='nvarchar' Size='500'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='DeclarationDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='CustomsClearanceDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='Id' Type='int' Identity='true'>"+
+"    <Constraints PrimaryKey='true' Nullable='false' />"+
+"  </Column>"+
+"  <Column Name='ContainersNumbers' Type='nvarchar' Size='-1'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='PackagesQuantity' Type='int'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='DirectionId' Type='varchar' Size='1'>"+
+"    <Constraints Nullable='false' />"+
+"  </Column>"+
+"  <Relation ForeignKeyColumn='EntityType' ReferencedTable='CargoTrackingHeaderEntityTypes' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+
+"  <Relation ForeignKeyColumn='CurrentMilestoneCode' ReferencedTable='CargoTrackingMilestones' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+
+"  <Index Columns='EntityId' />"+
+"  <Index Columns='Tenant,SecurityKey' />"+
+"  <UniqueConstraint Columns='EntityType,EntityId,Tenant' />"+
+"</Table>";
+		
+		   return dxmlFile;
+		}
+		 
+   }
+
+}
+	 

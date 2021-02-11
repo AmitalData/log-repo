@@ -192,7 +192,7 @@
                                             </td>-->
 
 
-                                            <td [hidden]="!HasDownloadFeature" style="width: 115px;">
+                                            <td [hidden]="!HasDownloadFeature" style="width: 95px;">
                                                 <div style="vertical-align:central;background-color:#D1D6D8" tabindex="0" class="ToggleButton">
                                                     <div sstyle="background-color:#D1D6D8">
 
@@ -202,9 +202,9 @@
                                                                     <div style="width:5px"></div>
                                                                 </td>
 
-                                                                <td style="width:20px">
+                                                                <!--<td style="width:20px">
                                                                     <img style="left:0" title="Export To Excel" src="./Images/Buttons/excelicon.png" />
-                                                                </td>
+                                                                </td>-->
 
 
                                                                 <td>
@@ -221,7 +221,7 @@
                                                                     <img style="margin-left:10px" src="./Images/ToggleIcon.png" />
                                                                     <div style="float:right;left:-65px;width:140px" class="ToggleButtonMenu">
 
-                                                                        <button [disabled]="IsNewEntity || HasValidationError" (click)="ExportToExcelClicked()">
+                                                                        <button [disabled]="IsNewEntity || HasValidationError" (click)="ExportButtonClicked('Excel')">
                                                                             <div>Excel File</div>
                                                                         </button>
 
@@ -230,7 +230,9 @@
                                                                             <div>Excel File (Advanced)</div>
                                                                         </button>
 
-
+                                                                        <button [disabled]="IsNewEntity || HasValidationError" (click)="ExportButtonClicked('Pdf')">
+                                                                            <div>Pdf File</div>
+                                                                        </button>
                                                                     </div>
 
                                                                 </td>

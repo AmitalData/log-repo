@@ -888,7 +888,7 @@
                                             <tr *ngFor="let item of AvailableTariffs" style="height:1px">
                                                 <td>
                                                     <table>
-                                                        <tr style="height:110px;">
+                                                        <tr style="height:130px;">
                                                             <td>
                                                                 <table>
                                                                     <tr style="height:3px">
@@ -896,6 +896,7 @@
                                                                             <div></div>
                                                                         </td>
                                                                     </tr>
+
                                                                     <tr>
                                                                         <td>
                                                                             <table style="border-radius: 8px; border:1px solid rgba(149, 149, 149, 0.5);">
@@ -906,7 +907,7 @@
                                                                                         </div>
                                                                                     </td>
 
-                                                                                    <td style="width:180px;min-width:180px; max-width:180px; vertical-align:central">
+                                                                                    <td style="width:190px;min-width:190px; max-width:190px; vertical-align:central">
                                                                                         <table>
                                                                                             <tr>
                                                                                                 <td>
@@ -928,7 +929,25 @@
 
                                                                                             <tr>
                                                                                                 <td>
-                                                                                                    <div></div>
+                                                                                                    <div>
+                                                                                                        <table *ngIf="item.NoteMissingContainers" style="vertical-align:bottom">
+                                                                                                            <tr style="height:28px;">
+                                                                                                                <td style="width:18px;">
+                                                                                                                    <div>
+                                                                                                                        <img class="CenterCenter" src="./Images/ValidationError.png" />
+                                                                                                                    </div>
+                                                                                                                </td>
+
+                                                                                                                <td style="width:2px;">
+                                                                                                                    <div></div>
+                                                                                                                </td>
+
+                                                                                                                <td class="TextTrimming" style="width:160px;min-width:160px; max-width:160px; color:darkred" [title]="item.NoteMissingContainers">
+                                                                                                                    {{item.NoteMissingContainers}}
+                                                                                                                </td>
+                                                                                                            </tr>
+                                                                                                        </table>
+                                                                                                    </div>
                                                                                                 </td>
                                                                                             </tr>
                                                                                         </table>
@@ -976,7 +995,19 @@
                                                                                             </tr>
 
                                                                                             <tr style="height:22px;">
-                                                                                                <td class="Label TextTrimming" style="font-size:11px; width:500px; max-width:500px;">{{item.Remarks}}</td>
+                                                                                                <td style="width:500px;">
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td class="Label TextTrimming" style="width:1px; max-width:500px; font-size:11px;" [title]="item.Remarks">
+                                                                                                                {{item.Remarks}}
+                                                                                                            </td>
+
+                                                                                                            <td style="width:15px;">
+                                                                                                                <img *ngIf="item.Remarks" (click)="ExpandNotesClicked(item.Remarks)" src="./Images/Icons/expand.png" style="cursor:pointer;width:12px;height:12px;"/>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                </td>
                                                                                             </tr>
                                                                                             <tr style="height:22px;">
                                                                                                 <td class="Label TextTrimming" style="font-size:11px; width:500px; max-width:500px;">{{item.AllIn}}</td>
@@ -1003,7 +1034,9 @@
                                                                                     <td style="width:140px;">
                                                                                         <table>
                                                                                             <tr style="height:5px;">
-                                                                                                <td><div></div></td>
+                                                                                                <td>
+                                                                                                    <div></div>
+                                                                                                </td>
                                                                                             </tr>
 
                                                                                             <tr style="height:20px;">
@@ -1011,7 +1044,9 @@
                                                                                                     <table>
                                                                                                         <tr>
                                                                                                             <td class="Label" style="font-size:10px;">Last Used</td>
-                                                                                                            <td style="width:2px;"><div></div></td>
+                                                                                                            <td style="width:2px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
                                                                                                             <td class="Label" style="font-size:10px; width:70px;">{{item.LastUsedDate | DateTimePipe:'SD'}}</td>
                                                                                                         </tr>
                                                                                                     </table>
@@ -1023,7 +1058,9 @@
                                                                                                     <table>
                                                                                                         <tr>
                                                                                                             <td class="Label" style="font-size:10px;">Last Updated</td>
-                                                                                                            <td style="width:2px;"><div></div></td>
+                                                                                                            <td style="width:2px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
                                                                                                             <td class="Label" style="font-size:10px; width:70px;">{{item.UpdateDate | DateTimePipe:'SD'}}</td>
                                                                                                         </tr>
                                                                                                     </table>
@@ -1045,7 +1082,7 @@
                                                                                                             </td>
 
                                                                                                             <td style="width:70px; color: #45494a;" class="Label">
-                                                                                                                More Details
+                                                                                                                {{item.MoreLessDetailsLabel}}
                                                                                                             </td>
 
                                                                                                             <td style="width:20px">
@@ -1077,7 +1114,9 @@
                                                             <td>
                                                                 <table>
                                                                     <tr style="height:15px;">
-                                                                        <td><div></div></td>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
                                                                     </tr>
 
                                                                     <tr>
@@ -1121,7 +1160,9 @@
                                                                             <ScrollViewer [Small]="true">
                                                                                 <table>
                                                                                     <tr style="height:5px;">
-                                                                                        <td><div></div></td>
+                                                                                        <td>
+                                                                                            <div></div>
+                                                                                        </td>
                                                                                     </tr>
 
                                                                                     <tr *ngFor="let allInItem of item.AllInSurcharges" style="height:22px;">
@@ -1168,10 +1209,10 @@
                                                                                 </tr>
 
                                                                                 <tr class="FormFieldRow">
-                                                                                  <td>
-                                                                                    <Hyperlink [IsEnabled]="item.SurchargesWithoutAllIn != null && item.SurchargesWithoutAllIn.length != 0" (click)="ViewSurchargesClicked(item)">View Tariff</Hyperlink>
-                                                                                    <!--<p class="hyperlink" [class.HyperlinkDisabled]="!IsViewSurchargesClickedEnabled">View Tariff</p>-->
-                                                                                  </td>
+                                                                                    <td>
+                                                                                        <Hyperlink [IsEnabled]="item.SurchargesWithoutAllIn != null && item.SurchargesWithoutAllIn.length != 0" (click)="ViewSurchargesClicked(item)">View Tariff</Hyperlink>
+                                                                                        <!--<p class="hyperlink" [class.HyperlinkDisabled]="!IsViewSurchargesClickedEnabled">View Tariff</p>-->
+                                                                                    </td>
                                                                                 </tr>
 
                                                                                 <tr>
@@ -1190,26 +1231,28 @@
                                                                             <ScrollViewer [Small]="true">
                                                                                 <table>
                                                                                     <tr style="height:5px;">
-                                                                                        <td><div></div></td>
+                                                                                        <td>
+                                                                                            <div></div>
+                                                                                        </td>
                                                                                     </tr>
 
                                                                                     <tr *ngFor="let surcharge of item.SurchargesWithoutAllIn" style="height:22px;">
                                                                                         <td>
                                                                                             <table>
                                                                                                 <tr>
-                                                                                                    <td style="width:35px;font-size:11px;">
+                                                                                                    <!--<td style="width:35px;font-size:11px;">
                                                                                                         {{surcharge.Code}}
                                                                                                     </td>
 
                                                                                                     <td style="width:2px; height: 100%;">
                                                                                                         <div style="width:1px; height: calc(100% - 5px); background: #aaaaaa; margin:auto;"></div>
-                                                                                                    </td>
+                                                                                                    </td>-->
 
                                                                                                     <td style="width:3px;">
                                                                                                         <div></div>
                                                                                                     </td>
 
-                                                                                                    <td style="font-size:11px; float:left; width:122px; max-width:122px;" class="TextTrimming">
+                                                                                                    <td style=" width:35px; font-size:11px; float:left; width:122px; max-width:122px;" class="TextTrimming">
                                                                                                         {{surcharge.Name}}
                                                                                                     </td>
 
@@ -1252,7 +1295,9 @@
                                                                                     <td style="vertical-align:central;">
                                                                                         <table>
                                                                                             <tr>
-                                                                                                <td><div></div></td>
+                                                                                                <td>
+                                                                                                    <div></div>
+                                                                                                </td>
                                                                                             </tr>
 
                                                                                             <tr style="height:28px;">
@@ -1265,7 +1310,9 @@
                                                                                             </tr>
 
                                                                                             <tr>
-                                                                                                <td><div></div></td>
+                                                                                                <td>
+                                                                                                    <div></div>
+                                                                                                </td>
                                                                                             </tr>
                                                                                         </table>
                                                                                     </td>
@@ -1283,6 +1330,7 @@
                                                     </table>
                                                 </td>
                                             </tr>
+
                                             <tr>
                                                 <td></td>
                                             </tr>

@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Transactions;
 using Logitude.BL.GlobalModel.EntityDws;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using System.Text.RegularExpressions;
 
 namespace Logitude.BL.GlobalModel.EntityQueries
 {
@@ -30,7 +31,61 @@ namespace Logitude.BL.GlobalModel.EntityQueries
         {
             this.repository = repository;
         }
+        public TenantManagementPM GetSinglePMByDomain(string domain)
+        {
 
+            domain = TrimDomainByRegex(domain);
+            TenantManagementPM TenantManagement = (from a in repository.context.TenantManagements
+                                                   where a.EnableBranding && a.CustomerURL == domain && a.Id !=0 && a.GlobalTenant.IsActive
+                                                   select new TenantManagementPM()
+                                                   {
+                                                       Id = a.Id,
+                                                       MainColor = a.MainColor, 
+                                                       SecondaryColor = a.SecondaryColor, 
+                                                       BackgroundId = a.BackgroundId,
+                                                       ShipmentHeaderImageId = a.ShipmentHeaderImageId,
+                                                       ComapnylogoId = a.ComapnylogoId,
+                                                       InvertedLogoId = a.InvertedLogoId,
+                                                       BrowserIconId = a.BrowserIconId,
+                                                       CustomerURL = a.CustomerURL,
+
+                                                   }).FirstOrDefault();
+
+
+            return TenantManagement;
+        }
+
+        public int GetTenantSinglePMByDomain(string domain)
+        {
+
+            domain = TrimDomainByRegex(domain);
+            int Tenant = (from a in repository.context.TenantManagements
+                                                   where a.CustomerURL == domain  && a.Id !=0 && a.GlobalTenant.IsActive
+                                                   select a.Id
+                                                  ).FirstOrDefault();
+
+            return Tenant;
+        }
+
+        public bool CheckIsdomainAlreadyExist(TenantManagementPM tenantManagement)
+        {
+
+            string domain = TrimDomainByRegex(tenantManagement.CustomerURL);
+            bool IsExist = (from a in repository.context.TenantManagements
+                          where a.CustomerURL == domain  && a.Id!= tenantManagement.Id
+                            select a.Id).Any();
+
+            return IsExist;
+        }
+
+
+        private string TrimDomainByRegex(string domain)
+        {
+            domain = domain.EndsWith("/") ? domain.Substring(0, domain.Length - 1) : domain;
+            domain = Regex.Replace(domain, @"^(?:http(?:s)?://)?(?:www(?:[0-9]+)?\.)?", string.Empty, RegexOptions.IgnoreCase);
+
+            return domain;
+        }
         public TenantManagementPM GetSinglePM(int id)
         {
             string entityName = "TenantManagementPM" + id;
@@ -178,7 +233,16 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      SecondaryColor = a.SecondaryColor,// != null && a.SecondaryColor.Length > 7) ? "#" + a.SecondaryColor.Substring(3, 6) : null,
 
                                                      BackgroundId = a.BackgroundId,
+                                                     ShipmentHeaderImageId = a.ShipmentHeaderImageId,
+                                                     ComapnylogoId = a.ComapnylogoId,
+                                                     InvertedLogoId = a.InvertedLogoId,
+                                                     BrowserIconId = a.BrowserIconId,
                                                      NoPaymentForChildTenants = a.NoPaymentForChildTenants,
+                                                     LastEbookingSentDate = a.LastEbookingSentDate,
+                                                     LastSISentDate = a.LastSISentDate,
+                                                     NumberOfBookingSentLastWeek = a.NumberOfBookingSentLastWeek,
+                                                     NumberOfSISentLastWeek = a.NumberOfSISentLastWeek,
+                                                     LastContainerStatusReceived = a.LastContainerStatusReceived,
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -360,7 +424,17 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   SecondaryColor = a.SecondaryColor,// != null && a.SecondaryColor.Length > 7) ? "#" + a.SecondaryColor.Substring(3, 6) : null,
 
                                                   BackgroundId = a.BackgroundId,
+                                                  ComapnylogoId = a.ComapnylogoId,
+                                                  InvertedLogoId = a.InvertedLogoId,
+                                                  BrowserIconId = a.BrowserIconId,
+                                                  ShipmentHeaderImageId = a.ShipmentHeaderImageId,
                                                   NoPaymentForChildTenants = a.NoPaymentForChildTenants,
+                                                  LastEbookingSentDate = a.LastEbookingSentDate,
+                                                  LastSISentDate = a.LastSISentDate,
+                                                  NumberOfBookingSentLastWeek = a.NumberOfBookingSentLastWeek,
+                                                  NumberOfSISentLastWeek = a.NumberOfSISentLastWeek,
+                                                  LastContainerStatusReceived = a.LastContainerStatusReceived,
+
                                               }).FirstOrDefault();
 
                 if (tenant1 != null)
@@ -539,6 +613,12 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         AveragePrice = a.AveragePrice,
                         TotalPaymentamount = a.TotalPaymentamount,
                         NoPaymentForChildTenants = a.NoPaymentForChildTenants,
+                        LastEbookingSentDate = a.LastEbookingSentDate,
+                        LastSISentDate = a.LastSISentDate,
+                        NumberOfBookingSentLastWeek = a.NumberOfBookingSentLastWeek,
+                        NumberOfSISentLastWeek = a.NumberOfSISentLastWeek,
+                        LastContainerStatusReceived = a.LastContainerStatusReceived,
+
                     });
         }
         public TenantManagementList MapSingleList(TenantManagement entity)
@@ -667,6 +747,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     MainAdditionalPackageApplied = entity.MainAdditionalPackageApplied,
                     TotalPrice = entity.TotalPrice,
                     NoPaymentForChildTenants = entity.NoPaymentForChildTenants,
+                    LastEbookingSentDate = entity.LastEbookingSentDate,
+                    LastSISentDate = entity.LastSISentDate,
+                    NumberOfBookingSentLastWeek = entity.NumberOfBookingSentLastWeek,
+                    NumberOfSISentLastWeek = entity.NumberOfSISentLastWeek,
+                    LastContainerStatusReceived = entity.LastContainerStatusReceived,
                 };
             }
 
@@ -794,6 +879,12 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                        TotalPrice = a.TotalPrice,
                        NoPaymentForChildTenants = a.NoPaymentForChildTenants,
+                       LastEbookingSentDate = a.LastEbookingSentDate,
+                       LastSISentDate = a.LastSISentDate,
+                       NumberOfBookingSentLastWeek = a.NumberOfBookingSentLastWeek,
+                       NumberOfSISentLastWeek = a.NumberOfSISentLastWeek,
+                       LastContainerStatusReceived = a.LastContainerStatusReceived,
+
                    };
         }
 
@@ -1058,6 +1149,12 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              AveragePrice = a.AveragePrice,
                                              TotalPaymentamount = a.TotalPaymentamount,
                                              NoPaymentForChildTenants = a.NoPaymentForChildTenants,
+                                             LastEbookingSentDate = a.LastEbookingSentDate,
+                                             LastSISentDate = a.LastSISentDate,
+                                             NumberOfBookingSentLastWeek = a.NumberOfBookingSentLastWeek,
+                                             NumberOfSISentLastWeek = a.NumberOfSISentLastWeek,
+                                             LastContainerStatusReceived = a.LastContainerStatusReceived,
+
                                          }).FirstOrDefault();
 
             return tenant;

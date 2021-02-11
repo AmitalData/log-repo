@@ -99,8 +99,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="dlls\" />
+    <Content Include="dlls\Interop.MSXML2.dll" />
+    <Content Include="dlls\Json2KeyValue.dll" />
+    <Content Include="dlls\XmlRender.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
