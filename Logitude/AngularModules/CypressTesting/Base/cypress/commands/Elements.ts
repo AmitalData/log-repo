@@ -43,7 +43,8 @@ Cypress.Commands.add("FillLogLov", (selector, value, fromCache) => {
         cy.intercept(URLs.GetByCompactFilters).as("LOVDataLoaded")
     }
 
-    cy.get(selector).clear().type(value)
+    //cy.get(selector).clear().type(value)
+    cy.get(selector).type("{selectall}" + value)
 
     if (!fromCache) {
         cy.wait("@LOVDataLoaded")
