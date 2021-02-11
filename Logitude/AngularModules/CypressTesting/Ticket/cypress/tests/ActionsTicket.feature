@@ -1,4 +1,6 @@
-Feature: Cancel and Reactive Ticket Test
+Feature: Actions Ticket test
+    this file will create ticket then test the following Actions
+    Cancel , Reactivate and Close Without Notifying
 
     Scenario: Create new ticket
         Given the user logged in and navigated to ticket workspace
@@ -16,3 +18,7 @@ Feature: Cancel and Reactive Ticket Test
     Scenario: Reactivate the ticket
         When reactivate
         Then the ticket should reactivate successfully
+
+    Scenario: Close Without Notifying
+        When close without notifying
+        Then the ticket should close successfully

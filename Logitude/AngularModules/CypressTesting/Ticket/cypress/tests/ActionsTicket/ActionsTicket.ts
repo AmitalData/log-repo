@@ -46,10 +46,19 @@ Then("the ticket should cancel successfully", () => {
 });
 
 When("reactivate", () => {
-    cy.DefineRequestWait("PUT",URLs.Tickets, "WaitPutTicketRequest")
+    cy.DefineRequestWait("PUT",URLs.Tickets, "WaitPutTicketRequest");
     Actions.ReactivateTicket();
 });
 
 Then("the ticket should reactivate successfully", () => {
+    BaseAssertion.AssertStatusCode("WaitPutTicketRequest", 200);
+});
+
+When("close without notifying",()=>{
+    cy.DefineRequestWait("PUT",URLs.Tickets, "WaitPutTicketRequest");
+    Actions.CloseTicket();
+})
+
+Then("the ticket should close successfully",()=>{
     BaseAssertion.AssertStatusCode("WaitPutTicketRequest", 200);
 });
