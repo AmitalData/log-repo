@@ -4768,8 +4768,31 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             itemPM.ShipmentId = entityPM.Id;
             itemPM.Tenant = tenant;
 
-            entityPM.ShipmentPickUpIndex += 1;
-            itemPM.PickUpDeliveryNumber = entityPM.ShipmentNumber + "/" + entityPM.ShipmentPickUpIndex;
+            if (!string.IsNullOrEmpty(itemPM.ParentPickUpDeliveryId))
+            {
+                ShipmentPickUpDelivery parent = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, itemPM.ParentPickUpDeliveryId);
+                if(parent != null)
+                {
+                    if (parent.ChildPickUpIndex == null)
+                    {
+                        parent.ChildPickUpIndex = 1;
+                    }
+
+                    else
+                    {
+                        parent.ChildPickUpIndex += 1;
+                    }
+
+                    itemPM.PickUpDeliveryNumber = parent.PickUpDeliveryNumber + "/" + parent.ChildPickUpIndex;
+                    shipmentPickUpDeliveryRepository.Update(parent);
+                }
+            }
+
+            else
+            {
+                entityPM.ShipmentPickUpIndex += 1;
+                itemPM.PickUpDeliveryNumber = entityPM.ShipmentNumber + "/" + entityPM.ShipmentPickUpIndex;
+            }            
 
             ShipmentPickUpDelivery itemPoco = new ShipmentPickUpDelivery()
             {
@@ -4872,8 +4895,31 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             else
             {
-                entityPM.ShipmentDeliveryIndex += 1;
-                itemPM.PickUpDeliveryNumber = entityPM.ShipmentNumber + "/" + entityPM.ShipmentDeliveryIndex;
+                if (!string.IsNullOrEmpty(itemPM.ParentPickUpDeliveryId))
+                {
+                    ShipmentPickUpDelivery parent = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, itemPM.ParentPickUpDeliveryId);
+                    if (parent != null)
+                    {
+                        if (parent.ChildPickUpIndex == null)
+                        {
+                            parent.ChildPickUpIndex = 1;
+                        }
+
+                        else
+                        {
+                            parent.ChildPickUpIndex += 1;
+                        }
+
+                        itemPM.PickUpDeliveryNumber = parent.PickUpDeliveryNumber + "/" + parent.ChildPickUpIndex;
+                        shipmentPickUpDeliveryRepository.Update(parent);
+                    }
+                }
+
+                else
+                {
+                    entityPM.ShipmentDeliveryIndex += 1;
+                    itemPM.PickUpDeliveryNumber = entityPM.ShipmentNumber + "/" + entityPM.ShipmentDeliveryIndex;
+                }
             }
 
             this.UpdateShipmentPackageFromDelivery(itemPM);
