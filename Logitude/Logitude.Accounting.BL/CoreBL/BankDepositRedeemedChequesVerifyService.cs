@@ -79,9 +79,10 @@ namespace Logitude.Accounting.BL.CoreBL
                         Log("[Tenant " + tenantStr + "] bill to accounts got, (" + billtos.Count() + ")");
 
 
-                        foreach (var billTo in billToAccounts)
+                        foreach (var billTo in billtos)
                         {
-                            CalculateBilltoFutureCheques(tenant, billTo);
+                            GLAccountChequesTotalCalculator chequesTotalCalculator = new GLAccountChequesTotalCalculator(tenant);
+                            chequesTotalCalculator.RecalculateChequesTotalForBillToAccount(billTo);
                         }
 
                         scope.Complete();
