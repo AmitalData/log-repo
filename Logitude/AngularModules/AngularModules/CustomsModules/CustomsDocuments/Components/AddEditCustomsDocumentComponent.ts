@@ -596,8 +596,8 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             this.connectTo = this.SelectedIndex;
 
         var err = this.iCustomsDocumentsController.ValidationBeforeSave(this.CustomsDocumentsTicket, this.connectTo.toString());
-        if (err!="") {
-                 this.ValidationErrorsList = [];
+        if (!AppTool.IsNullOrEmpty(err)) {
+            this.ValidationErrorsList = [];
 
             this.ValidationErrorsList.push(err);
                 return;
