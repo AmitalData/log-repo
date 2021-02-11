@@ -54,7 +54,7 @@
 
             </div>
             <div class="value">
-
+                <div *ngIf="Shipment.House != null">{{Shipment.House}}</div>
                 <div *ngIf="IsLoadingReferences">
                     Loading...
                 </div>
