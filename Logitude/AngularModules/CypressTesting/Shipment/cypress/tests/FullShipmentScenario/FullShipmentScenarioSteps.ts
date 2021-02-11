@@ -14,6 +14,8 @@ import { PartnersDetails } from "cypress/models/PartnersDetails";
 import { APInvoiceDetails } from "cypress/models/APInvoiceDetails"
 import { APPaymentDetails } from "cypress/models/APPaymentDetails"
 import { ARPaymentDetails } from "cypress/models/ARPaymentDetails"
+import { RequestAliases } from '../../../../Base/cypress/constants/RequestAliases';
+
 let ShipmentData: ShipmentDetails;
 let packagesDetails: PackagesDetails[]
 let APInvoiceData: APInvoiceDetails
@@ -36,7 +38,7 @@ When("create shipment", () => {
     Actions.CreateShipment(ShipmentData.ShipmentLevel);
 });
 Then("the shipment should create successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200).then((interception) => {
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
         ShipmentData.ShipmentNumber = interception.response.body.ShipmentNumber;
     });
 });
@@ -81,7 +83,7 @@ When("save shipment", () => {
 
 });
 Then("the direct shipment should save successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutShipmentRequest", 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 
 });
 Given("a payable with the following details", (dataTable) => {
@@ -98,7 +100,7 @@ When("receive APInvoice", () => {
     Actions.ReceiveAPInvoice();
 });
 Then("the APInvoice should create successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPostAPInvoicesRequest", 200).then((interception) => {
+    BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200).then((interception) => {
         APInvoiceNumber = interception.request.body.invoiceNumber
     });
 
@@ -108,7 +110,7 @@ When("approve APInvoice", () => {
     Actions.APApproveInvoice()
 });
 Then("the APInvoice should approve successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutAPInvoicesRequest", 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
 
 });
 Given("an APPayment with the following details", (dataTable) => {
@@ -121,7 +123,7 @@ When("pay the APInvoice", () => {
     Actions.PayAPInvoice()
 });
 Then("the APInvoice should pay successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutAPPayments", 200)
+    BaseAssertion.AssertStatusCode(RequestAliases.APPayments, 200)
 
 
 });
@@ -144,21 +146,21 @@ When("create ARInvoice", () => {
     Actions.CreateARInvoice()
 });
 Then("the ARInvoice should create successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPostARInvoicesRequest", 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });
 
 When("approve ARInvoice", () => {
     Actions.ARApproveInvoice()
 });
 Then("the ARInvoice should approve successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutARInvoicesRequest", 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });
 
 When("set ARInvoice as sent", () => {
     Actions.SetAsSentARInvoice()
 });
 Then("the ARInvoice should set as sent successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutARInvoicesRequest", 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });
 Given("an ARPayment with the following details", (dataTable) => {
     cy.Click(Selectors.ARPaymentTabInsideShipment)
@@ -170,7 +172,7 @@ When("pay the ARInvoice", () => {
     Actions.PayARInvoice()
 });
 Then("the ARInvoice should pay successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutARPayments", 200)
+    BaseAssertion.AssertStatusCode(RequestAliases.ARPayments, 200)
 });
 
 Given("a credit ARInvoice with the following details", (dataTable) => {
@@ -185,7 +187,7 @@ When("create credit ARInvoice", () => {
 
 });
 Then("the credit ARInvoice should create successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPostARInvoicesRequest", 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 
 });
 
@@ -194,7 +196,7 @@ When("approve credit ARInvoice", () => {
 
 });
 Then("the credit ARInvoice should approve successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutARInvoicesRequest", 200).then((interception) => {
+    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200).then((interception) => {
         ARInvoiceNumber = interception.response.body.InvoiceNumber
     })
 });
@@ -204,7 +206,7 @@ When("set credit ARInvoice as sent", () => {
 
 });
 Then("the credit ARInvoice should set successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutARInvoicesRequest", 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });
 
 Given("a credit ARPayment with the following details", (dataTable) => {
@@ -231,7 +233,7 @@ When("upload docs", () => {
     cy.get(BaseSelectors.Row0).click();
     cy.Click(BaseSelectors.UploadDocumentdbtn);
     const fileName = 'Logitude.jpg'
-    cy.DefineRequestWait("POST", "**/PostLogsList", "WaitUpload")
+    cy.DefineRequestWait(RestAPI.POST, "**/PostLogsList", "WaitUpload")
     cy.fixture(fileName).then(function (fileContent) {
         cy.get('input.upload').attachFile({ fileContent, fileName, mimetype: 'application/pdf' })
         cy.get('#FileUploadedSuccessfully').should('be.visible')
@@ -252,16 +254,17 @@ Then("the attachment should delete successfully", () => {
     BaseAssertion.AssertStatusCode("WaitDelete", 200)
 
 })
-Given("the user in the direct's shipment rounting tab",()=>{
+Given("the user in the direct's shipment rounting tab", () => {
     cy.Click(Selectors.RoutingsTab, null);
 });
 
-Given("edit Main Carriage Leg with the follwing details",(dataTable)=>{
+Given("edit Main Carriage Leg with the follwing details", (dataTable) => {
     let mainCarriageLeg = dataTable.hashes()[0] as MainCarriageLeg;
     Actions.EditMainCarriageLegs(mainCarriageLeg.Airline);
-}); 
+    cy.Click(Selectors.ShipmentSaveButton, null);
+});
 
-When("close shipment operationally",()=>{
+When("close shipment operationally", ()=>{
     cy.Click(Selectors.ShipmentMoreList, null,true);
     cy.Click(Selectors.OperationalCloseButton, null);
     Actions.UpdateClosedShipment();
@@ -273,8 +276,8 @@ When("close shipment Accountly",()=>{
     Actions.UpdateClosedShipment();
 });
 
-Then("the shipment should close successfully",()=>{
-    BaseAssertion.AssertStatusCode("WaitPutShipmentRequest", 200)
+Then("the shipment should close successfully", () => {
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
 });
 
 When("reopen shipment Accountly",()=>{
@@ -289,6 +292,6 @@ When("reopen shipment operationally",()=>{
     Actions.UpdateClosedShipment();
 });
 
-Then("the shipment should Reopen successfully",()=>{
-    BaseAssertion.AssertStatusCode("WaitPutShipmentRequest", 200)
+Then("the shipment should Reopen successfully", () => {
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
 });

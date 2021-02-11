@@ -952,7 +952,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             }
 
             if (this.ObjectTableName == "APInvoice") {
-                this.ResultCodeList.push(new ResultCode("Documents Send", "SENDDOCUMENT"));
+                const documentSendFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "DSR" && d.TenantNumber == SessionLocator.Tenant)[0];
+                if (documentSendFeatureToggle != null) this.ResultCodeList.push(new ResultCode("Documents Send", "SENDDOCUMENT"));
             }
 
             //Masters and Houses

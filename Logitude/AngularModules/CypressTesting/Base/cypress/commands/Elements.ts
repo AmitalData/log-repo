@@ -44,7 +44,8 @@ Cypress.Commands.add("FillLogLov", (selector, value, fromCache) => {
         cy.intercept(URLs.GetByCompactFilters).as("LOVDataLoaded")
     }
 
-    cy.get(selector).clear().type(value)
+    //cy.get(selector).clear().type(value)
+    cy.get(selector).type("{selectall}" + value)
 
     if (!fromCache) {
         cy.wait("@LOVDataLoaded")
@@ -67,11 +68,8 @@ Cypress.Commands.add("Click", (selector, contains, force = false) => {
     let element = cy.get(selector)//.should('exist')
     if (contains) {
         element = element.contains(contains, { matchCase: false })
-
     }
-
     element.click({force:force})
-
 })
 
 Cypress.Commands.add("ClickCheckBox", (selector) => {

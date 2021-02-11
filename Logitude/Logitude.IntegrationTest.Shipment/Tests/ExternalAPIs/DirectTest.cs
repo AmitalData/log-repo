@@ -26,9 +26,7 @@ namespace Logitude.IntegrationTest.Shipment.Tests.ExternalAPIs
             //factory = new EntityInitializerFactory();
 
             await CreateShipment();
-
             await GetShipment();
-
             await UpdateShipmentWithInvalidFutureATD();
             await UpdateShipmentWithInvalidFutureATA();
             await UpdateShipmentWithValidDates();
