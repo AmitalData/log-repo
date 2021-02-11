@@ -265,12 +265,9 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     get Reference1() { return this.reference1; }
     set Reference1(value: string) {
         if (this.reference1 != value) {
-            for (let line of this.JournalLines.Collection) {
-                if (line.Reference1 == this.reference1) {
-                    line.Reference1 = value;
-                }
-            }
             this.reference1 = value;
+            this.UpdateFirstLineReferencesNotesAndCurrency();
+          
 
         }
     }
@@ -279,26 +276,17 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     get Reference2() { return this.reference2; }
     set Reference2(value: string) {
         if (this.reference2 != value) {
-            for (let line of this.JournalLines.Collection) {
-                if (line.Reference2 == this.reference2) {
-                    line.Reference2 = value;
-                }
-            }
             this.reference2 = value;
-
+            this.UpdateFirstLineReferencesNotesAndCurrency();
         }
     }
 
     reference3: string;
     get Reference3() { return this.reference3; }
     set Reference3(value: string) {
-        if (this.reference3 != value) {
-            for (let line of this.JournalLines.Collection) {
-                if (line.Reference3 == this.reference3) {
-                    line.Reference3 = value;
-                }
-            }
+        if (this.reference3 != value) {          
             this.reference3 = value;
+            this.UpdateFirstLineReferencesNotesAndCurrency();
 
         }
     }
@@ -307,12 +295,8 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     get Notes() { return this.notes; }
     set Notes(value: string) {
         if (this.notes != value) {
-            for (let line of this.JournalLines.Collection) {
-                if (line.Notes == this.Notes) {
-                    line.Notes = value;
-                }
-            }
-               this.notes = value;
+            this.notes = value;
+            this.UpdateFirstLineReferencesNotesAndCurrency();
 
         }
     }
@@ -323,6 +307,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         if (this.currency != value) {
             this.currency = value;
             this.CurrencyId =this.EntityPM.IsNew ? value? value.Id: null:this.EntityPM.CurrencyId;
+            this.UpdateFirstLineReferencesNotesAndCurrency();
         }
     }
 
@@ -349,6 +334,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             this.EntityPM.CurrencyId = value;
             this.getHeaderCurrency(value);
             this.getHeadercurrencyRate(value);
+            
         }
     }
     get DocumentDate() { return this.EntityPM.DocumentDate; }
@@ -614,7 +600,7 @@ getHeaderCurrency(CurrencyId:string){
         if (lines) {
             lines.forEach((line: JournalLineModel) => {
                 var headerDate = this.AccountingDate;
-                if (headerDate && line.AccountingDate)
+                if (headerDate && line.AccountingDate && !line.ActionCode)
                 {
                     var header_year = headerDate.getFullYear();
                     var header_month = headerDate.getMonth() + 1;
@@ -633,6 +619,8 @@ getHeaderCurrency(CurrencyId:string){
                     if (line_month != header_month)
                         line_month = header_month;
 
+                    if (line_day != header_day)
+                        line_day = header_day;
                     //validate day according to month
                     if (line_day > this.lastDay(line_year, line_month - 1)) {
                         // Set new Date
@@ -645,6 +633,7 @@ getHeaderCurrency(CurrencyId:string){
                         lineDate.setFullYear(line_year);
                         lineDate.setMonth(line_month - 1);
                         lineDate.setDate(line_day);
+                        line.accDay = line_day;
 
                        // console.log("[!] AccountingDate for line " + line.Line + " is changed to " + lineDate.toString());
                     }
@@ -664,20 +653,38 @@ getHeaderCurrency(CurrencyId:string){
         var lines = this.JournalLines;
         console.log("[TEST] ", entity, this.JournalLines);
     }
-  UpdateLinesDates() {
-    var lines = this.JournalLines.Collection;
-    if (lines) {
-      lines.forEach((line: JournalLineModel) => {
-        if (line.Line == this.JournalLines.Length) {
-          if (!line.AccountingDate) line.AccountingDate = this.AccountingDate;
-          if (!line.DueDate) line.DueDate = this.DueDate;
-          if (!line.DocumentDate) line.DocumentDate = this.DocumentDate;
-        }});
+    UpdateLinesDates() {
+        var lines = this.JournalLines.Collection;
+        if (lines) {
+            lines.forEach((line: JournalLineModel) => {
+                if (!line.ActionCode) {
+                    if (line.AccountingDate != this.AccountingDate ) line.AccountingDate = this.AccountingDate;
+                    if (line.DueDate != this.DueDate) line.DueDate = this.DueDate;
+                    if (line.DocumentDate != this.DocumentDate) line.DocumentDate = this.DocumentDate;
+                }
+            });
 
 
+        }
+    }
+    UpdateFirstLineReferencesNotesAndCurrency() {
+        var lines = this.JournalLines.Collection;
+        if (lines) {
+            lines.forEach((line: JournalLineModel) => {
+                if ( !line.ActionCode) {
+                    if (line.Reference1 != this.Reference1 ) line.Reference1 = this.Reference1;
+                    if (line.Reference2 != this.Reference2) line.Reference2 = this.Reference2;
+                    if (line.Reference3 != this.Reference3) line.Reference3 = this.Reference3;
+                    if (line.Notes != this.Notes) line.Notes = this.Notes;
+                    if (line.Currency != this.Currency) line.Currency = this.Currency;
+                }
+            });
+
+
+        }
     }
 
-  }
+  
 
 }
 
