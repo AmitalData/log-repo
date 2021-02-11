@@ -10,12 +10,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Logitude.BL.GlobalModel.Tools.EntityService
 {
     public class TenantManagmentPrivateLablesService
     {
-
+        const string privateLablesImageFolder = "PrivateLablesImages";
+       // const string privateLablesImageExtensionType = "png";
         bool isNewEntity;
         private int tenant;
         public TenantManagmentPrivateLabels Poco { get; set; }
@@ -69,11 +71,54 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
 
 
                 TenantManagmentPrivateLablesMapping.MapEntity(entityPM, Poco, isNewEntity);
-                entityRepository.Update(Poco);
+                this.DeleteOldImages();
+                entityRepository.Update(Poco); 
                 entityRepository.SubmitChanges();
                 
         }
 
+
+        private void DeleteOldImages()
+        {
+            if (this.entityPm.BackgroundImageId != this.Poco.BackgroundImageId)
+            {
+                DeleteImage(Poco.BackgroundImageId);
+            }
+            if (this.entityPm.MainImageId != this.Poco.MainImageId)
+            {
+                DeleteImage(Poco.MainImageId);
+            }
+            if (this.entityPm.LoginProgressImageId != this.Poco.LoginProgressImageId)
+            {
+                DeleteImage(Poco.LoginProgressImageId);
+            }
+            if (this.entityPm.ForgetPasswordImageId != this.Poco.ForgetPasswordImageId)
+            {
+                DeleteImage(Poco.ForgetPasswordImageId);
+            }
+          
+        }
+
+        public void DeleteImage(string imgId)
+        {
+            string imagePath = GetFilePath(GetFileNameWithExtension(imgId));
+            if (File.Exists(imagePath))
+            {
+                File.Delete(imagePath);
+            }
+
+        }
+        private string GetFilePath(string fileName)
+        {
+            string folderPath = System.Web.HttpContext.Current.Server.MapPath("~/" + privateLablesImageFolder +  "/");
+            string filePath = folderPath + fileName;
+            return filePath;
+        }
+
+        private string GetFileNameWithExtension(string imgName)
+        {
+            return imgName; //+ "." + privateLablesImageExtensionType;
+        }
 
     }
 }

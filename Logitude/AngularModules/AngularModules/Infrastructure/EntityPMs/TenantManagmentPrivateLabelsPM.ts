@@ -85,6 +85,31 @@ export class TenantManagmentPrivateLabelsPM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
+    private backgroundImageId: string;
+    public get BackgroundImageId() { return this.backgroundImageId; }
+    public set BackgroundImageId(newValue: string) { if (this.backgroundImageId != newValue) { this.backgroundImageId = newValue; this.MarkAsDirty("BackgroundImageId"); } }
+       
+	 
+    private mainImageId: string;
+    public get MainImageId() { return this.mainImageId; }
+    public set MainImageId(newValue: string) { if (this.mainImageId != newValue) { this.mainImageId = newValue; this.MarkAsDirty("MainImageId"); } }
+       
+	 
+    private mainColor: string;
+    public get MainColor() { return this.mainColor; }
+    public set MainColor(newValue: string) { if (this.mainColor != newValue) { this.mainColor = newValue; this.MarkAsDirty("MainColor"); } }
+       
+	 
+    private loginProgressImageId: string;
+    public get LoginProgressImageId() { return this.loginProgressImageId; }
+    public set LoginProgressImageId(newValue: string) { if (this.loginProgressImageId != newValue) { this.loginProgressImageId = newValue; this.MarkAsDirty("LoginProgressImageId"); } }
+       
+	 
+    private forgetPasswordImageId: string;
+    public get ForgetPasswordImageId() { return this.forgetPasswordImageId; }
+    public set ForgetPasswordImageId(newValue: string) { if (this.forgetPasswordImageId != newValue) { this.forgetPasswordImageId = newValue; this.MarkAsDirty("ForgetPasswordImageId"); } }
+       
+	 
 
     public OldEntityPM: TenantManagmentPrivateLabelsPM;
 		

@@ -1,4 +1,4 @@
-import {Component,ViewChildren,OnInit} from '@angular/core';
+import {Component,ViewChildren,OnInit, ViewChild, ElementRef} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
@@ -13,6 +13,7 @@ import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {ImageParameter} from '../../../../Infrastructure/DataContracts/ImageParameter';
 import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
 import {ImageLibraryService} from '../../../../Common/Services/Others/ImageLibraryService';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 
 declare var UploadLogoFile, HideImage, SetImage, ArrayBufferToBase64: any;
 
@@ -27,28 +28,206 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     public ObjectTableName: string = "TenantManagmentPrivateLabels";
     public ValidationErrorsList: string[] = [];
     public IsNewEntity: boolean;
-    private EntityId: string = null;
+    //private EntityId: string = null;
     public DataImageMain: any;
     public DataImageSmall: any;
     private IsEditMode: boolean = false;
     LogoMainFileHtmlId: string = Guid.NewRandomString();
     LogoSmallFileHtmlId: string = Guid.NewRandomString();
 
-    @ViewChildren(LocationDirective) public AllLocations: LocationDirective;
+    mainColorOpacity: number = 100;
+    private mainColorCode: string;
+    wrongMainColor: boolean = false;
+    public BackgroundImageId: string;
+    public MainImageId: string;
+    public LoginProgressImageId: string;
+    public ForgetPasswordImageId: string;
+
+
+    private entityResourceService: EntityResourceService = new EntityResourceService();
+    IsVisibile: boolean;
+    public EntityId: number; 
+
+    @ViewChildren(LocationDirective) public AllLocations: LocationDirective; 
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
-        this.EntityPM = new TenantManagmentPrivateLabelsPM();          
+        this.EntityPM = new TenantManagmentPrivateLabelsPM();
+         
     }
+     
 
     ngOnInit() {
-        this.UIProperties.SetRequired("HybridPartnerId", this.ObjectTableName, true);
+        this.UIProperties.SetRequired("HybridPartnerId", this.ObjectTableName, true); 
     }
 
+    private InitializeImageIds() {
+        this.BackgroundImageId = this.EntityPM.BackgroundImageId;
+        this.MainImageId = this.EntityPM.MainImageId;
+        this.LoginProgressImageId = this.EntityPM.LoginProgressImageId;
+        this.ForgetPasswordImageId = this.EntityPM.ForgetPasswordImageId;
+    }
+
+    RemoveImage(name) {
+
+        switch (name) {
+            case "BackgroundImage": {
+                this.EntityPM.BackgroundImageId = null;
+                this.BackgroundImageId = null;
+                break;
+            }
+            case "MainImage": {
+                this.EntityPM.MainImageId = null;
+                this.MainImageId = null;
+                break;
+            }
+            case "LoginProgressImage": {
+                this.EntityPM.LoginProgressImageId = null;
+                this.LoginProgressImageId = null;
+                break;
+            }
+            case "ForgetPasswordImage": {
+                this.EntityPM.ForgetPasswordImageId = null;
+                this.ForgetPasswordImageId = null;
+                break;
+            }
+            default: {
+                //statements; 
+                break;
+            }
+        }
+    }
+    private SetColorsFromEntity() {
+        if (this.EntityPM.MainColor) {
+            this.mainColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.MainColor);
+            this.mainColorCode = this.ConvertRGBAToHexColor(this.EntityPM.MainColor);
+        } 
+    }
+
+    GetOpacityFromRGBA(rgba: string) {
+        var numbers = rgba.replace('rgba(', '').replace(')', '').replace(' ', '');
+        var splittedNumbers = numbers.split(',');
+        var opacity = parseFloat(splittedNumbers[3].trim());
+        return opacity * 100;
+    }
+
+    ConvertRGBAToHexColor(rgba: string) {
+        var numbers = rgba.replace('rgba(', '').replace(')', '').replace(' ', '');
+        var splittedNumbers = numbers.split(',');
+        var red = parseInt(splittedNumbers[0].trim());
+        var green = parseInt(splittedNumbers[1].trim());
+        var blue = parseInt(splittedNumbers[2].trim());
+        var opacity = parseInt(splittedNumbers[3].trim());
+
+        var r = red.toString(16);
+        var g = green.toString(16);
+        var b = blue.toString(16);
+
+        if (r.length == 1)
+            r = "0" + r;
+        if (g.length == 1)
+            g = "0" + g;
+        if (b.length == 1)
+            b = "0" + b;
+
+        return "#" + r + g + b;
+    }
+
+    ConvertHexToRGBColor(hex: string, alpha: number) {
+        if (hex && hex.length >= 7) {
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+
+            if (alpha) {
+                return `rgba(${r}, ${g}, ${b}, ${alpha / 100})`;
+            } else {
+                return `rgb(${r}, ${g}, ${b})`;
+            }
+        } else {
+            return 'rgba(0,0,0,1)';
+        }
+    }
+
+    get MainColorOpacity() {
+        return this.mainColorOpacity;
+    }
+    set MainColorOpacity(value: number) {
+        this.mainColorOpacity = value;
+        this.UpdateEntityMainColor();
+    }
+     
+    private UpdateEntityMainColor() {
+        this.EntityMainColor = this.ConvertHexToRGBColor(this.MainColorCode, this.MainColorOpacity);
+    }
+
+    public get MainColorCode(): string {
+        return this.mainColorCode;
+    }
+    public set MainColorCode(hexColor: string) {
+        this.mainColorCode = hexColor;
+        this.ValidateMainColorCode(hexColor);
+        this.UpdateEntityMainColor();
+    }
+     
+
+
+    ValidateHexCode(value: string, fieldName: string) {
+
+        const regex = new RegExp('^#([a-fA-F0-9]{6})$');
+        var valid: boolean = regex.test(value);
+        if ((!valid || value.length > 9 || value.length < 7) && value != null) {
+            this.UIProperties.SetValidity(fieldName, "TenantManagement", false, "this is not a valid hex code");
+            return false;
+        }
+        else {
+            this.UIProperties.SetValidity(fieldName, "TenantManagement", true, null);
+            return true;
+        }
+    }
+
+
+    private ValidateMainColorCode(hexColor: string) {
+        if (!this.ValidateHexCode(hexColor, "MainColorCode"))
+            this.wrongMainColor = true;
+        else
+            this.wrongMainColor = false;
+
+      //  this.UpdateEditComponentValidationErrors();
+    }
+
+    private UpdateEditComponentValidationErrors() {
+        if (this.wrongMainColor ) {
+            SessionLocator.SelectedSession.CurrentEditComponent.IsEditValid = false;
+            SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = ['Please enter valid color hex code'];
+        } else {
+            SessionLocator.SelectedSession.CurrentEditComponent.IsEditValid = true;
+            SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = [];
+        }
+    }
+
+    get EntityMainColor() {
+        return this.EntityPM.MainColor;
+    }
+    set EntityMainColor(value: string) {
+        this.EntityPM.MainColor = value;
+
+    }
+     
     SetWindowArgs(windowArgs: any) {
         this.EntityPM = windowArgs.Entity;
         this.IsEditMode = true;
-       
+        this.EntityId = +this.EntityPM.Id;
+
+        this.InitializeImageIds();
+        this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response: any) => {
+            this.IsVisibile = true;
+            this.EntityPM = windowArgs.Entity; 
+        });
+
+
+
+        this.SetColorsFromEntity();
         this.RunComponent();
     }
 
@@ -64,6 +243,31 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
+    }
+
+
+    BackgroundImageUploadedCompleted(imageId) {
+        this.BackgroundImageId = imageId;
+        this.EntityPM.BackgroundImageId = imageId;
+
+    } 
+ 
+   MainImageImageUploadedCompleted(imageId) {
+       this.MainImageId = imageId;
+       this.EntityPM.MainImageId = imageId;
+
+    }
+
+    LoginProgressImageUploadedCompleted(imageId) {
+        this.LoginProgressImageId = imageId;
+        this.EntityPM.LoginProgressImageId = imageId;
+
+    }
+
+    ForgetPasswordImageUploadedCompleted(imageId) {
+        this.ForgetPasswordImageId = imageId;
+        this.EntityPM.ForgetPasswordImageId = imageId;
+
     }
 
 
@@ -292,8 +496,16 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
          }
      }
    
+    get MainColor() {
+        return this.EntityPM.MainColor;
+    }
 
-
+    set MainColor(value: string) {
+        if (value != this.EntityPM.MainColor) {
+            this.EntityPM.MainColor = value;
+        }
+    }
+ 
 
 
     CancelButtonClicked() {
@@ -307,6 +519,10 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         if (this.HybridPartnerId == null || this.HybridPartnerId == "") {
             errors.push("Hybrid Partner Field is Required");
         }
+        if (this.wrongMainColor) {
+            errors.push("Please Enter Valid Color");
+        }
+
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {        

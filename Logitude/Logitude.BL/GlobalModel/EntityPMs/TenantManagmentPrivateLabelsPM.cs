@@ -22,6 +22,11 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public string SearchFields { get; set; }
         public byte[] SmallLogo { get; set; }
         public int Tenant { get; set; }
+        public string BackgroundImageId { get; set; }
+        public string MainImageId { get; set; }
+        public string MainColor { get; set; }
+        public string LoginProgressImageId { get; set; }
+        public string ForgetPasswordImageId { get; set; }
 
     }
 }

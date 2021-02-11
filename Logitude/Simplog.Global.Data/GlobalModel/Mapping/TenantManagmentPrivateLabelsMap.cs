@@ -19,6 +19,11 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.HybridPartnerId).IsRequired().HasMaxLength(15).IsUnicode(true);
             this.Property(t => t.InActive).IsRequired();
             this.Property(t => t.SearchFields).HasMaxLength(500);
+            this.Property(t => t.MainColor).HasMaxLength(100);
+            this.Property(t => t.BackgroundImageId).HasMaxLength(15);
+            this.Property(t => t.MainImageId).HasMaxLength(15);
+            this.Property(t => t.LoginProgressImageId).HasMaxLength(15);
+            this.Property(t => t.ForgetPasswordImageId).HasMaxLength(15);
 
 
             this.ToTable("TenantManagmentPrivateLabels");
@@ -34,6 +39,12 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.SmallLogo).HasColumnName("SmallLogo");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
+            this.Property(t => t.BackgroundImageId).HasColumnName("BackgroundImageId");
+            this.Property(t => t.MainImageId).HasColumnName("MainImageId");
+            this.Property(t => t.MainColor).HasColumnName("MainColor");
+            this.Property(t => t.LoginProgressImageId).HasColumnName("LoginProgressImageId");
+            this.Property(t => t.ForgetPasswordImageId).HasColumnName("ForgetPasswordImageId");
+
 
             //this.HasRequired(t => t.GlobalTenant).WithOptional(t => t.TenantManagement);
             //this.HasOptional(t => t.MainLogoId).WithMany().HasForeignKey(d => d.LogoId);
