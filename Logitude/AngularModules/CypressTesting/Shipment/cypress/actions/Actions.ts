@@ -178,7 +178,13 @@ export function FillReceivablesTab(receivableDetails: ReceivableDetails[]) {
         cy.Click(ShipmentSelector.AddReceivableOkButton, null)
     }
 }
-
+export function GenerateReceivablesFromPayables(){
+    cy.Click(ShipmentSelector.ReceivablesTab, null)
+    cy.Click(ShipmentSelector.ReceivableFromPayables,null)
+    cy.Click(BaseSelectors.CheckBoxLine,null)
+    cy.Click(BaseSelectors.RedButton,"Ok")
+  UpdateShipment(ShipmentSelector.ShipmentSaveButton)
+}
 
 export function FillPickupRouting() {
     cy.Click(ShipmentSelector.RoutingsTab, null, true)
@@ -314,11 +320,11 @@ export function FillARInvoiceDetails(aRInvoiceDetails: ARInvoiceDetails) {
     cy.get(".ComboBox").click();
     cy.get(".FillParent").find(".TextTrimming").contains("Customer").click()
     cy.FillLogLov(ShipmentSelector.ARInvoiceInvoiceCurrency, aRInvoiceDetails.InvoiceCurrency, true)
-    cy.get(ShipmentSelector.ARInvoiceExchangeRate).clear().type(aRInvoiceDetails.InvoiceExchangeRate.toString());
+    cy.FillLogTextBox(ShipmentSelector.ARInvoiceExchangeRate,aRInvoiceDetails.InvoiceExchangeRate.toString());
     cy.FillDate(ShipmentSelector.ARInvoiceInvoiceDate, aRInvoiceDetails.InvoiceDate)
     cy.FillLogLov(ShipmentSelector.ARInvoicePaymentTerm, aRInvoiceDetails.PaymentTerms, true)
     cy.FillDate(ShipmentSelector.ARInvoiceDueDate, aRInvoiceDetails.DueDate)
-    cy.get(ShipmentSelector.ARInvoiceVatNumber).clear().type(aRInvoiceDetails.VATNo)
+    cy.FillLogTextBox(ShipmentSelector.ARInvoiceVatNumber,aRInvoiceDetails.VATNo)
     cy.FillLogLov(ShipmentSelector.ARInvoiceBranch, aRInvoiceDetails.Branch, true)
     cy.Click(ShipmentSelector.OkCreateARInvoiceButton, null);
     cy.FillLogLov(ShipmentSelector.ARInvoiceVatType, aRInvoiceDetails.VATType, true)
