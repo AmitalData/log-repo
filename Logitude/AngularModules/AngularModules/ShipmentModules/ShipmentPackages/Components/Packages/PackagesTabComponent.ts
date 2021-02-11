@@ -2336,6 +2336,13 @@ export class ShipmentPackageItem extends BaseComponent {
         this.UIProperties.SetEnabled("RegistrationNumber", this.ObjectTableName, isEnabled);
     }
 
+    get LCLContainerTypeId() { return this.EntityPM.LCLContainerTypeId; }
+    set LCLContainerTypeId(newValue: string) {
+        if (this.EntityPM.LCLContainerTypeId != newValue) {
+            this.EntityPM.LCLContainerTypeId = newValue;
+        }
+    }
+
     public PackageTypeList: PackageTypeList;
     get PackageTypeTextCode() { return this.IsLCLEntity ? "ShipmentPackage.F.PackageTypeId" : "ShipmentPackage.F.ContainerTypeId"; }
     get PackageTypeId() { return this.EntityPM.PackageTypeId; }

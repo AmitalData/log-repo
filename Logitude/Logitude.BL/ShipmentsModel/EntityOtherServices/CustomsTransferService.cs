@@ -319,12 +319,14 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
 
                         if (string.IsNullOrEmpty(containerType))
                         {
-                            containerType = package.PackageType == null ? "" : package.PackageType.Code;
+                            containerType = item.ShipmentTypeId == "LCL"  || item.ShipmentTypeId == "LCLD" ? (package.LCLPackageType == null ? "" : package.LCLPackageType.Code) : (package.PackageType == null ? "" : package.PackageType.Code);
                         }
 
                         else
                         {
-                            containerType += ", " + (package.PackageType == null ? "" : package.PackageType.Code);
+                            containerType += item.ShipmentTypeId == "LCL" || item.ShipmentTypeId == "LCLD" ? 
+                                (", " + (package.LCLPackageType == null ? "" : package.LCLPackageType.Code)):
+                                (", " + (package.PackageType == null ? "" : package.PackageType.Code));
                         }
                     }
                     #endregion
