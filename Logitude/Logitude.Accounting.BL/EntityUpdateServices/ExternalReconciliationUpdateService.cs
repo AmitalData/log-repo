@@ -108,11 +108,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private void SetARPaymentChequesAsReedemed(List<ARPaymentChequePM> arpaymentCheques)
         {
-            foreach (var arpaymentCheque in arpaymentCheques)
-            {
-                if (arpaymentCheque != null && (arpaymentCheque.StatusCode == ARPaymentChequeStatusValues.InBank || arpaymentCheque.StatusCode == ARPaymentChequeStatusValues.InBankAccount))
-                    SetARPaymentChequeAsRedeemed(arpaymentCheque);
-            }
+            if(arpaymentCheques != null)
+                foreach (var arpaymentCheque in arpaymentCheques)
+                {
+                    if (arpaymentCheque != null && (arpaymentCheque.StatusCode == ARPaymentChequeStatusValues.InBank || arpaymentCheque.StatusCode == ARPaymentChequeStatusValues.InBankAccount))
+                        SetARPaymentChequeAsRedeemed(arpaymentCheque);
+                }
         }
 
         private void SetTransactionsAsExternallyReconciled(int tenant, List<LedgerTransactionPM> LedgerTransactions)
