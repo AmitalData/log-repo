@@ -79,6 +79,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     CheckId = a.CheckId,
                     ContainerNubmer = a.ContainerNubmer,
                     OperationName = a.Operation != null ? a.Operation.LocalName : null,
+                    IsClosed=a.IsClosed,
                 };
                 checkLists.Add(check);
             }
