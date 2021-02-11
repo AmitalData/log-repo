@@ -131,13 +131,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 if (this.AdditionalData.IsPaymentRequired) {
                     if (this.EntityPm) {
                         
-                        var ammount = 0;
-
-                        this.AdditionalData.RequestPaymentData.ServiceTypes.forEach((item, key) => {
-                            ammount += +(item.AmountInNIS);
-                        });
-
-                        this.TotalAmount = ammount;
+                        this.SetTotalAmountInNIS();
                     }
                 }
                 else {
@@ -180,6 +174,21 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
         });
 
     }
+
+    private SetTotalAmountInNIS() {
+        let ammount = 0;
+        let maxDecimalDigitsCount = 0;
+        this.AdditionalData.RequestPaymentData.ServiceTypes.forEach((item, key) => {
+            let splitItemAmount = item.AmountInNIS?.toString()?.split('.');
+            if (splitItemAmount != null && splitItemAmount.length > 1 && splitItemAmount[1].length > maxDecimalDigitsCount) {
+                maxDecimalDigitsCount = splitItemAmount[1].length;
+            }
+            ammount += +(item.AmountInNIS);
+        });
+
+        this.TotalAmount = +ammount.toFixed(maxDecimalDigitsCount);
+    }
+
     ReloadPage() {
         var ConfirmResult = confirm("The page has expired. Do you want to refresh it ?");
         if (ConfirmResult == true || ConfirmResult == false) {
@@ -195,13 +204,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     if (this.AdditionalData.IsPaymentRequired) {
                         if (this.EntityPm) {
 
-                            var ammount = 0;
-
-                            this.AdditionalData.RequestPaymentData.ServiceTypes.forEach((item, key) => {
-                                ammount += +(item.AmountInNIS);
-                            });
-                            
-                            this.TotalAmount = ammount;
+                            this.SetTotalAmountInNIS();
                         }
                     }
                     else {
