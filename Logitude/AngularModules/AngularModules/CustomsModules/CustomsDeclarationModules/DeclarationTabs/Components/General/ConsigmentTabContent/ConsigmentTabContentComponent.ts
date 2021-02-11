@@ -182,9 +182,9 @@ export class ConsigmentTabContentComponent
         if (!this.declarationPM)
             this.declarationPM = args.Parent;
 
-        if (this.declarationPM.Direction == "E") {
-        if (AppTool.IsNullOrEmpty(this.ConsignmentType)) { this.ConsignmentType = "E"; }
-        }
+        //if (this.declarationPM.Direction == "E") {
+        //if (AppTool.IsNullOrEmpty(this.ConsignmentType)) { this.ConsignmentType = "E"; }
+        //}
 
         this.IsCourierDeclaration = this.declarationPM.IsCourierDeclaration;
         this.ShowExcludeConsignmentBoolean = this.declarationPM.Consignments.length == 1;

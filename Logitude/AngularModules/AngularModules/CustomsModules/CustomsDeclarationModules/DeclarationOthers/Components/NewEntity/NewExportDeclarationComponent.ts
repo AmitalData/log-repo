@@ -117,6 +117,13 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
     }
 
     SubmitChanges() {
+
+        var Consignment  = new ConsignmentPM(this.EntityPM);
+
+        Consignment.ConsignmentType = 'E';
+
+        this.EntityPM.AddConsignment(Consignment); 
+
         this.declarationPMService.insert(this.EntityPM).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
