@@ -10,14 +10,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
 
 namespace Logitude.BL.GlobalModel.Tools.EntityService
 {
     public class TenantManagmentPrivateLablesService
     {
-        const string privateLablesImageFolder = "PrivateLablesImages";
-       // const string privateLablesImageExtensionType = "png";
+
         bool isNewEntity;
         private int tenant;
         public TenantManagmentPrivateLabels Poco { get; set; }
@@ -38,87 +36,44 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
 
         public void Create(TenantManagmentPrivateLabelsPM entityPM)
         {
-                TenantManagmentPrivateLabels ModsPoco = new TenantManagmentPrivateLabels();
-                this.isNewEntity = true;
-                this.entityPm = entityPM;
+            TenantManagmentPrivateLabels ModsPoco = new TenantManagmentPrivateLabels();
+            this.isNewEntity = true;
+            this.entityPm = entityPM;
 
 
 
-                this.isNewEntity = true;
-                this.entityPm = entityPM;
-                this.Poco = new TenantManagmentPrivateLabels();
+            this.isNewEntity = true;
+            this.entityPm = entityPM;
+            this.Poco = new TenantManagmentPrivateLabels();
 
 
-                this.Poco.Id = IdCounter.GetNumber("TenantManagmentPrivateLabels", 0);
-                TenantManagmentPrivateLablesMapping.MapEntity(entityPM, Poco, isNewEntity);
-                entityRepository.Add(Poco);
-                entityRepository.SubmitChanges();
-               
+            this.Poco.Id = IdCounter.GetNumber("TenantManagmentPrivateLabels", 0);
+            TenantManagmentPrivateLablesMapping.MapEntity(entityPM, Poco, isNewEntity);
+            entityRepository.Add(Poco);
+            entityRepository.SubmitChanges();
+
 
         }
 
 
 
         public void Update(TenantManagmentPrivateLabelsPM entityPM)
-        { 
-                TenantManagmentPrivateLabels ModsPoco = new TenantManagmentPrivateLabels();
-                
-                this.isNewEntity = false;
-                this.entityPm = entityPM;
-
-                this.Poco = entityRepository.GetSingleTenantManagmentPrivateLabels(entityPM.Id);
-
-
-
-                TenantManagmentPrivateLablesMapping.MapEntity(entityPM, Poco, isNewEntity);
-                this.DeleteOldImages();
-                entityRepository.Update(Poco); 
-                entityRepository.SubmitChanges();
-                
-        }
-
-
-        private void DeleteOldImages()
         {
-            if (this.entityPm.BackgroundImageId != this.Poco.BackgroundImageId)
-            {
-                DeleteImage(Poco.BackgroundImageId);
-            }
-            if (this.entityPm.MainImageId != this.Poco.MainImageId)
-            {
-                DeleteImage(Poco.MainImageId);
-            }
-            if (this.entityPm.LoginProgressImageId != this.Poco.LoginProgressImageId)
-            {
-                DeleteImage(Poco.LoginProgressImageId);
-            }
-            if (this.entityPm.ForgetPasswordImageId != this.Poco.ForgetPasswordImageId)
-            {
-                DeleteImage(Poco.ForgetPasswordImageId);
-            }
-          
-        }
+            TenantManagmentPrivateLabels ModsPoco = new TenantManagmentPrivateLabels();
 
-        public void DeleteImage(string imgId)
-        {
-            string imagePath = GetFilePath(GetFileNameWithExtension(imgId));
-            if (File.Exists(imagePath))
-            {
-                File.Delete(imagePath);
-            }
+            this.isNewEntity = false;
+            this.entityPm = entityPM;
+
+            this.Poco = entityRepository.GetSingleTenantManagmentPrivateLabels(entityPM.Id);
+
+
+
+            TenantManagmentPrivateLablesMapping.MapEntity(entityPM, Poco, isNewEntity);
+            entityRepository.Update(Poco);
+            entityRepository.SubmitChanges();
 
         }
-        private string GetFilePath(string fileName)
-        {
-            string folderPath = System.Web.HttpContext.Current.Server.MapPath("~/" + privateLablesImageFolder +  "/");
-            string filePath = folderPath + fileName;
-            return filePath;
-        }
 
-        private string GetFileNameWithExtension(string imgName)
-        {
-            return imgName; //+ "." + privateLablesImageExtensionType;
-        }
 
     }
 }
