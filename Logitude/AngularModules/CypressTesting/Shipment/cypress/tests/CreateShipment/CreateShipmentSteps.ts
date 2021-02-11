@@ -2,9 +2,10 @@ import * as Actions from "../../actions/Actions";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
-import { Selectors } from "../../selectors/Selectors";
+import { ShipmentSelector } from "../../selectors/Selectors";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
+import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 
 let ShipmentData: ShipmentDetails;
 
@@ -27,5 +28,5 @@ When("create shipment", () => {
 });
 
 Then("the shipment should create successfully", () => {
-  BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200);
+  BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });

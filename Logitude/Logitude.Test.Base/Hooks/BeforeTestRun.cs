@@ -2,6 +2,8 @@
 using Logitude.Test.Base.Models.Infrastructure;
 using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
+using Logitude.Test.Base.Models.LocationsPreparation;
+using Logitude.Test.Base.Models.PartnersPreparation;
 using Logitude.Test.Base.Services;
 using System;
 using System.Collections.Generic;
@@ -12,7 +14,7 @@ using TechTalk.SpecFlow;
 namespace Logitude.Test.Base.Hooks
 {
     [Binding]
-    public class PrepareUserTenantBeforeTestRun
+    public class BeforeTestRun
     {
         [BeforeTestRun(Order = 0)]
         public static void SetupBeforeTestRun()
@@ -20,6 +22,8 @@ namespace Logitude.Test.Base.Hooks
             SetupBaseSettings();
             SetupUsersAuthentication();
             SetupDefaultUserTenant();
+            SetupLocationPreparationVariables();
+            SetupPartnerPreparationVariables();
         }
 
         private static void SetupBaseSettings()
@@ -44,6 +48,19 @@ namespace Logitude.Test.Base.Hooks
             SetupDefaultTenant();
             SetupDefaultUser();
         }
+
+        private static void SetupLocationPreparationVariables()
+        {
+            LocationsVariables locationsVariables = DataPreparation.GetLocationsVariables();
+            LocationsDataMap(locationsVariables);
+        }
+
+        private static void SetupPartnerPreparationVariables()
+        {
+            PartnersVariables partnersVariables = DataPreparation.GetPartnersVariables();
+            PartnersDataMap(partnersVariables);
+        }
+
         private static Configurations GetConfigurations()
         {
             try
@@ -128,6 +145,42 @@ namespace Logitude.Test.Base.Hooks
             UserTenant.BranchId = user?.BranchId;
             UserTenant.DepartmentId = user?.DepartmentId;
             UserTenant.BusinessUnitId = user?.BusinessUnitId;
+        }
+
+        private static void LocationsDataMap(LocationsVariables locationsVariables)
+        {
+            LocationsData.PortLHRId = locationsVariables.PortLHRId;
+            LocationsData.PortLASDomesticId = locationsVariables.PortLASDomesticId;
+            LocationsData.PortMIADomesticId = locationsVariables.PortMIADomesticId;
+            LocationsData.PortAirJFKId = locationsVariables.PortAirJFKId;
+            LocationsData.PortOceanSOUId = locationsVariables.PortOceanSOUId;
+            LocationsData.PortInlandNYCId = locationsVariables.PortInlandNYCId;
+            LocationsData.PortLONId = locationsVariables.PortLONId;
+            LocationsData.PortMANId = locationsVariables.PortMANId;
+            LocationsData.CountryUSId = locationsVariables.CountryUSId;
+            LocationsData.CountryGBId = locationsVariables.CountryGBId;
+            LocationsData.StateAKId = locationsVariables.StateAKId;
+        }
+
+        private static void PartnersDataMap(PartnersVariables partnersVariables)
+        {
+            PartnersData.VendorId = partnersVariables.VendorId;
+            PartnersData.AgentId = partnersVariables.AgentId;
+            PartnersData.CustomerId = partnersVariables.CustomerId;
+            PartnersData.CustomAgentId = partnersVariables.CustomAgentId;
+            PartnersData.ShippingAgentId = partnersVariables.ShippingAgentId;
+            PartnersData.PotentialCustomerId = partnersVariables.PotentialCustomerId;
+            PartnersData.TruckerTLONId = partnersVariables.TruckerTLONId;
+            PartnersData.TruckerTNYCId = partnersVariables.TruckerTNYCId;
+            PartnersData.ShipperExportId = partnersVariables.ShipperExportId;
+            PartnersData.ShipperImportId = partnersVariables.ShipperImportId;
+            PartnersData.ConsigneeExportId = partnersVariables.ConsigneeExportId;
+            PartnersData.ConsigneeImportId = partnersVariables.ConsigneeImportId;
+            PartnersData.AirlineAAId = partnersVariables.AirlineAAId;
+            PartnersData.AirlineBAId = partnersVariables.AirlineBAId;
+            PartnersData.ShippingLineMSCUId = partnersVariables.ShippingLineMSCUId;
+            PartnersData.ShippingLineMAEUId = partnersVariables.ShippingLineMAEUId;
+            PartnersData.WarehouseId = partnersVariables.WarehouseId;
         }
     }
 }

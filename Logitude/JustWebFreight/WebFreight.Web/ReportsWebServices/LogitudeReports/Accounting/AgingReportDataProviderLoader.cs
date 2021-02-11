@@ -509,6 +509,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.CustomerPaymentTerm = item.AccountTermLocalName;
                     record.GLAccountStandardInterestRate = item.GLAccountStandardInterestRate;
 
+                    record.ChartOfAccountLocalName = item.ChartOfAccountLocalName;
+                    record.ChartOfAccountsEnglishName = item.ChartOfAccountsEnglishName;
+                    record.ChartOfAccountsTypeLocalName = item.ChartOfAccountsTypeLocalName;
+                    record.ChartOfAccountsTypeEnglishName = item.ChartOfAccountsTypeEnglishName;
+
                     //record.AccountSalesmanName = item.AccountSalesmanName;
                     //record.AccountSalesmanLocalName = item.AccountSalesmanLocalName;
                     //record.AccountCollectorName = item.AccountCollectorName;
@@ -549,6 +554,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.CustomerVatNumber = item.CustomerVatNumber;
                     record.CustomerPaymentTerm = item.AccountTermLocalName;
                     record.GLAccountStandardInterestRate = item.GLAccountStandardInterestRate;
+
+                    record.ChartOfAccountLocalName = item.ChartOfAccountLocalName;
+                    record.ChartOfAccountsEnglishName = item.ChartOfAccountsEnglishName;
+                    record.ChartOfAccountsTypeLocalName = item.ChartOfAccountsTypeLocalName;
+                    record.ChartOfAccountsTypeEnglishName = item.ChartOfAccountsTypeEnglishName;
+
+
                     //record.AccountSalesmanName = item.AccountSalesmanName;
                     //record.AccountSalesmanLocalName = item.AccountSalesmanLocalName;
                     //record.AccountCollectorName = item.AccountCollectorName;

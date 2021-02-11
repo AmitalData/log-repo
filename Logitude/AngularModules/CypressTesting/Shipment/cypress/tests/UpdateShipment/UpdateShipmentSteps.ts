@@ -1,5 +1,5 @@
 import * as Actions from "../../actions/Actions"
-import { Selectors } from "../../selectors/Selectors"
+import { ShipmentSelector } from "../../selectors/Selectors"
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { PartnersDetails } from "cypress/models/PartnersDetails";
@@ -8,6 +8,7 @@ import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { ShipmentDetails } from "cypress/models/ShipmentDetails";
 import { ReceivableDetails } from "cypress/models/ReceivableDetails"
 import { PackagesDetails } from "cypress/models/PackagesDetails";
+import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 
 //#region variables
 let shipmentDetails: ShipmentDetails;
@@ -88,18 +89,18 @@ When("create shipment", () => {
 });
 
 When("update shipment", () => {
-    Actions.UpdateShipment(Selectors.ShipmentSaveButton)
+    Actions.UpdateShipment(ShipmentSelector.ShipmentSaveButton)
 });
 //#endregion
 
 //#region Assert steps
 Then("the direct should create successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200).then((interception) => {
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
         shipmentDetails.ShipmentNumber = interception.response.body.ShipmentNumber;
     })
 });
 
 Then("the direct should update successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutShipmentRequest", 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });
 //#endregion

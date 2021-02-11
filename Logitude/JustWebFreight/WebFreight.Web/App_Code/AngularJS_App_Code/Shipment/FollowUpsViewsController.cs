@@ -354,6 +354,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                                   EstimatedFinalArrivalDate = f.EstimatedFinalArrivalDate,
                                   NotInvoicedReceivablesAmount = f.NotInvoicedReceivablesAmount,
                                   ProjectNumber = f.ProjectNumber,
+                                  MainCarriageVesselName = f.MainCarriageVesselName,
                               };
 
             entityLists = genericFilter.GetFilteredQuery<ShipmentList>(listQueryOperation, entityLists);

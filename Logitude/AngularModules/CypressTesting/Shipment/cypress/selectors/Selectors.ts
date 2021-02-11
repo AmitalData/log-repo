@@ -1,6 +1,6 @@
 import { RegexSelectors } from '../selectors/RegexSelectors';
 
-export class Selectors extends RegexSelectors {
+export class ShipmentSelector extends RegexSelectors {
   //#region Shared
   public static readonly ShipmentMoreList = '#MenuButtons';
   public static readonly ShipmentTab = '#SHIP';
@@ -173,6 +173,9 @@ export class Selectors extends RegexSelectors {
   public static readonly ARInvoiceSaveButton = '#ARInvoiceBSaveAsDraft';
   public static readonly ARInvoiceVoidButton = '#ARInvoiceBVoid';
   public static readonly ARInvoiceCancelDraftButton = '#ARInvoiceBCancelDraft';
+  public static readonly CreateCustomsCreditNote = '#CreateCustomsCreditNote';
+  public static readonly ToggleButtonClass = '.ToggleButton';
+  public static readonly ContainsCustoms = 'Customs';
   //#endregion
   //#region operations and actions
   public static readonly NewAttachedHouse = '#NewHouseBtn';
@@ -212,6 +215,14 @@ export class Selectors extends RegexSelectors {
   //#region Send docs tab
   public static readonly SendMessageButton = '#SendMessagebtn';
   public static readonly EmailSearchInput = '.LogitudeEmailSearchInput';
+  //#endregion
+  //#region Customer
+  public static readonly NewCustomer = '#NewButton_Customer';
+  public static readonly CustomerCompanyName = '#Address_Name';
+  public static readonly CustomerCity = '#Address_City';
+  public static readonly CustomerCountry = '#Address_CountryId';
+  public static readonly CustomerState = '#Address_StateId';
+  public static readonly AddCustomer = '#Ok-AddCustomer';
   //#endregion
 
 

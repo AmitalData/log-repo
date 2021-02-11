@@ -1,5 +1,4 @@
-﻿@Pre-Prepare
-Feature: Create Shipments
+﻿Feature: Create Shipments
 	With pre-prepared base and shipment data
 	We want to create master and house shipments.
 
