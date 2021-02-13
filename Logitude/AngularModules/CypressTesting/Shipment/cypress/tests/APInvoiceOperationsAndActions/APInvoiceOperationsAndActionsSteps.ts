@@ -1,14 +1,18 @@
 import * as Actions from "../../actions/Actions";
 import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
-import { ShipmentSelector } from "../../selectors/Selectors";
+import { ShipmentSelectors } from "../../selectors/Selectors";
 import { PayableDetails } from "cypress/models/PayableDetails"
 import { APInvoiceDetails } from "cypress/models/APInvoiceDetails"
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
-import { CustomerDetails } from "cypress/models/CustomerDetails";
+import { CustomerDetails } from '../../../../Common/cypress/models/CustomerDetails';
 import { MainCarriageLeg } from 'cypress/models/MainCarriageLeg';
 import { PackagesDetails } from 'cypress/models/PackagesDetails';
+import * as CommonActions from '../../../../Common/cypress/actions/Actions';
+import * as AccountingActions from '../../../../Accounting/cypress/actions/Actions';
+import { AccountingSelectors } from "../../../../Accounting/cypress/selectors/Selectors";
+
 //#region variables
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
@@ -16,14 +20,14 @@ let shipmentNumber: string;
 //#region Create customer
 Given("the user logged in and navigates to customers workspace", () => {
   cy.Login();
-  Actions.NavigatesToCustomersWorkspace();
+  CommonActions.NavigatesToCustomersWorkspace();
 });
 Given("a customer with the following details", (dataTable) => {
   let customerDetails = dataTable.hashes()[0] as CustomerDetails;
-  Actions.AddNewCustomer(customerDetails);
+  CommonActions.AddNewCustomer(customerDetails);
 });
 When("create customer", () => {
-  Actions.CreateCustomer();
+  CommonActions.CreateCustomer();
 });
 
 Then("the customer should create successfully", () => {
@@ -56,7 +60,7 @@ Then("the direct should create successfully", () => {
 //#region Update routing tab
 Given("the user in the shipment's rounting tab",()=>{
   Actions.OpenShipment(shipmentNumber);
-  cy.Click(ShipmentSelector.RoutingsTab, null);
+  cy.Click(ShipmentSelectors.RoutingsTab, null);
 });
 Given("edit main carriage leg with the follwing details",(dataTable)=>{
   let mainCarriageLeg = dataTable.hashes()[0] as MainCarriageLeg;
@@ -79,7 +83,7 @@ Given("a payable with the following details",
   });
   When("add payables",
   () => {
-    Actions.UpdateShipment(ShipmentSelector.ShipmentSaveButton)
+    Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
 
   });
   Then("the payables should add successfully",
@@ -91,11 +95,11 @@ Given("a payable with the following details",
 And("an APInvoice with a random invoice number and the following details",
   (dataTable) => {
     const APInvoiceData = dataTable.hashes()[0] as APInvoiceDetails
-    cy.Click(ShipmentSelector.ReceiveInvoiceButton, null);
-    Actions.FillAPInvoiceDetails(APInvoiceData)
+    cy.Click(AccountingSelectors.ReceiveInvoiceButton, null);
+    AccountingActions.FillAPInvoiceDetails(APInvoiceData)
   });
 When("receive invoice", () => {
-  Actions.ReceiveAPInvoice();
+  AccountingActions.ReceiveAPInvoice();
 });
 Then("the invoice should create successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
@@ -103,7 +107,7 @@ Then("the invoice should create successfully", () => {
   //#endregion
 //#region Approve APInvoice
 When("approve invoice", () => {
-  Actions.APApproveInvoice()
+  AccountingActions.APApproveInvoice()
 });
 Then("the invoice should approve successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
@@ -128,7 +132,7 @@ Then("the invoice should void successfully", () => {
 
 //#region update shipment step
 When("update shipment", () => {
-  Actions.UpdateShipment(ShipmentSelector.ShipmentSaveButton)
+  Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
 });
 //#endregion
 
