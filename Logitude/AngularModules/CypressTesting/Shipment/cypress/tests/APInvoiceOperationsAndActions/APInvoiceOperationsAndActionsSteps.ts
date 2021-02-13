@@ -1,12 +1,14 @@
 import * as Actions from "../../actions/Actions";
 import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
-import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
-import { ShipmentSelector } from "../../selectors/Selectors";
+import { ShipmentSelectors } from "../../selectors/Selectors";
 import { PayableDetails } from "cypress/models/PayableDetails"
 import { APInvoiceDetails } from "cypress/models/APInvoiceDetails"
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
+import { AccountingSelectors } from "../../../../Accounting/cypress/selectors/Selectors";
+import * as AccountingActions from "../../../../Accounting/cypress/actions/Actions";
+
 
 let ShipmentData: ShipmentDetails;
 let shipmentNumber: string;
@@ -37,23 +39,23 @@ Given("a payable with the following details",
     const PayableData = dataTable.hashes()[0] as PayableDetails;
     Actions.OpenShipment(shipmentNumber)
     Actions.FillPayablesTab(PayableData)
-    Actions.UpdateShipment(ShipmentSelector.ShipmentSaveButton)
+    Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
   });
 And("an APInvoice with a random invoice number and the following details",
   (dataTable) => {
     const APInvoiceData = dataTable.hashes()[0] as APInvoiceDetails
-    cy.Click(ShipmentSelector.ReceiveInvoiceButton, null);
-    Actions.FillAPInvoiceDetails(APInvoiceData)
+    cy.Click(AccountingSelectors.ReceiveInvoiceButton, null);
+    AccountingActions.FillAPInvoiceDetails(APInvoiceData)
   });
 When("receive invoice", () => {
-  Actions.ReceiveAPInvoice();
+  AccountingActions.ReceiveAPInvoice();
 });
 Then("the invoice should create successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
 });
 
 When("approve invoice", () => {
-  Actions.APApproveInvoice()
+  AccountingActions.APApproveInvoice()
 });
 Then("the invoice should approve successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
