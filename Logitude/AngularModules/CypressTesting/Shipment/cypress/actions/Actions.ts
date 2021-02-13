@@ -20,6 +20,10 @@ export function NewCustomsCreditNoteARInvoice() {
     cy.Click(ShipmentSelectors.ToggleButtonClass, ShipmentSelectors.ContainsCustoms, true);
     cy.Click(ShipmentSelectors.CreateCustomsCreditNote, null, false);
 }
+export function NewCustomsARInvoice() {
+    cy.Click(ShipmentSelector.ToggleButtonClass, ShipmentSelector.ContainsCustoms, true);
+    cy.Click(ShipmentSelector.CreateCustomsARInvoice, null, false);
+}
 
 export function NavigatesToShipmentsWorkspace() {
     cy.Click(BaseSelectors.OperationsMenu, null)
@@ -158,7 +162,13 @@ export function FillReceivablesTab(receivableDetails: ReceivableDetails[]) {
         cy.Click(ShipmentSelectors.AddReceivableOkButton, null)
     }
 }
-
+export function GenerateReceivablesFromPayables(){
+    cy.Click(ShipmentSelector.ReceivablesTab, null)
+    cy.Click(ShipmentSelector.ReceivableFromPayables,null)
+    cy.Click(BaseSelectors.CheckBoxLine,null)
+    cy.Click(BaseSelectors.RedButton,"Ok")
+  UpdateShipment(ShipmentSelector.ShipmentSaveButton)
+}
 
 export function FillPickupRouting() {
     cy.Click(ShipmentSelectors.RoutingsTab, null, true)
@@ -273,16 +283,16 @@ export function VoidAPInvoice() {
 export function FillARInvoiceDetails(aRInvoiceDetails: ARInvoiceDetails) {
     cy.get(".ComboBox").click();
     cy.get(".FillParent").find(".TextTrimming").contains("Customer").click()
-    cy.FillLogLov(ShipmentSelectors.ARInvoiceInvoiceCurrency, aRInvoiceDetails.InvoiceCurrency, true)
-    cy.get(ShipmentSelectors.ARInvoiceExchangeRate).clear().type(aRInvoiceDetails.InvoiceExchangeRate.toString());
-    cy.FillDate(ShipmentSelectors.ARInvoiceInvoiceDate, aRInvoiceDetails.InvoiceDate)
-    cy.FillLogLov(ShipmentSelectors.ARInvoicePaymentTerm, aRInvoiceDetails.PaymentTerms, true)
-    cy.FillDate(ShipmentSelectors.ARInvoiceDueDate, aRInvoiceDetails.DueDate)
-    cy.get(ShipmentSelectors.ARInvoiceVatNumber).clear().type(aRInvoiceDetails.VATNo)
-    cy.FillLogLov(ShipmentSelectors.ARInvoiceBranch, aRInvoiceDetails.Branch, true)
-    cy.Click(ShipmentSelectors.OkCreateARInvoiceButton, null);
-    cy.FillLogLov(ShipmentSelectors.ARInvoiceVatType, aRInvoiceDetails.VATType, true)
-    cy.Click(ShipmentSelectors.VatTypeApplyToAll, null)
+    cy.FillLogLov(ShipmentSelector.ARInvoiceInvoiceCurrency, aRInvoiceDetails.InvoiceCurrency, true)
+    cy.FillLogTextBox(ShipmentSelector.ARInvoiceExchangeRate,aRInvoiceDetails.InvoiceExchangeRate.toString());
+    cy.FillDate(ShipmentSelector.ARInvoiceInvoiceDate, aRInvoiceDetails.InvoiceDate)
+    cy.FillLogLov(ShipmentSelector.ARInvoicePaymentTerm, aRInvoiceDetails.PaymentTerms, true)
+    cy.FillDate(ShipmentSelector.ARInvoiceDueDate, aRInvoiceDetails.DueDate)
+    cy.FillLogTextBox(ShipmentSelector.ARInvoiceVatNumber,aRInvoiceDetails.VATNo)
+    cy.FillLogLov(ShipmentSelector.ARInvoiceBranch, aRInvoiceDetails.Branch, true)
+    cy.Click(ShipmentSelector.OkCreateARInvoiceButton, null);
+    cy.FillLogLov(ShipmentSelector.ARInvoiceVatType, aRInvoiceDetails.VATType, true)
+    cy.Click(ShipmentSelector.VatTypeApplyToAll, null)
 }
 
 export function CreateARInvoice() {

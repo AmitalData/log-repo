@@ -127,6 +127,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ReceivableTotalAmount = '#ShipmentReceivable_TotalAmount';
   public static readonly AddReceivableOkButton = '#Ok-AddReceivableBtn';
   public static readonly ShipmentReceivableRate = '#ShipmentReceivable_Rate'
+  public static readonly ReceivableFromPayables="#PAYB-Receivable"
   //#endregion 
   //#region Payable tab fields
   public static readonly AddNewPayableLine = '#AddPayable button';
@@ -156,6 +157,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ARInvoiceVoidButton = '#ARInvoiceBVoid';
   public static readonly ARInvoiceCancelDraftButton = '#ARInvoiceBCancelDraft';
   public static readonly CreateCustomsCreditNote = '#CreateCustomsCreditNote';
+  public static readonly CreateCustomsARInvoice = '#CreateCustomsInvoice';
   public static readonly ToggleButtonClass = '.ToggleButton';
   public static readonly ContainsCustoms = 'Customs';
   //#endregion
