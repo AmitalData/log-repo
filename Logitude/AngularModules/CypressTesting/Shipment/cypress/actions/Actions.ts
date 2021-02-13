@@ -40,6 +40,10 @@ export function NewCustomsCreditNoteARInvoice() {
     cy.Click(ShipmentSelector.ToggleButtonClass, ShipmentSelector.ContainsCustoms, true);
     cy.Click(ShipmentSelector.CreateCustomsCreditNote, null, false);
 }
+export function NewCustomsARInvoice() {
+    cy.Click(ShipmentSelector.ToggleButtonClass, ShipmentSelector.ContainsCustoms, true);
+    cy.Click(ShipmentSelector.CreateCustomsARInvoice, null, false);
+}
 
 export function NavigatesToShipmentsWorkspace() {
     cy.Click(BaseSelectors.OperationsMenu, null)
