@@ -175,6 +175,7 @@ export class ShipmentSelector extends RegexSelectors {
   public static readonly ARInvoiceVoidButton = '#ARInvoiceBVoid';
   public static readonly ARInvoiceCancelDraftButton = '#ARInvoiceBCancelDraft';
   public static readonly CreateCustomsCreditNote = '#CreateCustomsCreditNote';
+  public static readonly CreateCustomsARInvoice = '#CreateCustomsInvoice';
   public static readonly ToggleButtonClass = '.ToggleButton';
   public static readonly ContainsCustoms = 'Customs';
   //#endregion
