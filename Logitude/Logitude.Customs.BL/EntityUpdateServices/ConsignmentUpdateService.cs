@@ -37,6 +37,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 this.maxCounter = consignmentQueryService.GetMaxCounterKey(entityPM.DeclarationId, entityPM.Tenant) ?? 0;
             }
+            entityPM.Tenant = entityParentPM.Tenant;
             maxCounter = entityPM.ConsignmentNumber = maxCounter.Value + 1;
 
         }
