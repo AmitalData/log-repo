@@ -243,6 +243,7 @@
     <Compile Include="CoreBL\CashbookService.cs" />
     <Compile Include="CoreBL\FunctionalTests\ClearAccountingDB.cs" />
     <Compile Include="CoreBL\FunctionalTests\JournalToGLAccountMoreData.cs" />
+    <Compile Include="CoreBL\GLAccountChequesTotalCalculator.cs" />
     <Compile Include="CoreBL\GLAccountsAgingCSVBuilder.cs" />
     <Compile Include="CoreBL\GLAccountsCSVFlatFileAnalyser.cs" />
     <Compile Include="CoreBL\InterestReport\CSVStringLinesGetter.cs" />
