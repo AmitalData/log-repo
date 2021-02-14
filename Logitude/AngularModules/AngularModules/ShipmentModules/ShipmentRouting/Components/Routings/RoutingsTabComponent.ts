@@ -20,6 +20,7 @@ import {AddressListService} from '../../../../Common/Services/StandardLists/Addr
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { ShipmentReceivablePM } from '../../../../Shipment/EntityPMs/ShipmentReceivablePM';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
     
@@ -493,143 +494,167 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
     }
     DeleteLeg(myRoutingItem: RoutingItem) {
         if (myRoutingItem) {
+            var myLegType: string = myRoutingItem.LegType;
 
-            var message: string = null;
-            var myLegType: string = myRoutingItem.LegType;           
-
-            switch (myLegType) {
-                case "Pick Up": {
-                    message = TextCodeTranslator.Translate("Shipment.M.DeleteThisPickup");
-                    break;
+            if (myLegType == "Pick Up") {
+                if (this.EntityPM.ShipmentPickUps.filter(d => d.Id != myRoutingItem.Pickup.Id && d.PickUpDeliveryNumber.indexOf(myRoutingItem.Pickup.PickUpDeliveryNumber) > -1).length > 0) {
+                    var messageSindow: MessageWindow = new MessageWindow();
+                    messageSindow.Show("Please delete the consequent pickups before deleting this pickup");
                 }
 
-                case "Pre Carriage": {
-                    message = TextCodeTranslator.Translate("Shipment.M.DeleteThisPreCarriage");
-                    break;
-                }
-
-                case "On Carriage": {
-                    message = TextCodeTranslator.Translate("Shipment.M.DeleteThisOnCarriage");
-                    break;
-                }
-
-                case "Delivery": {
-                    message = TextCodeTranslator.Translate("Shipment.M.DeleteThisDelivery");
-                    break;
-                }
-
-                case "WarehouseLeg":
-                case "WarehouseLeg_Pickups": {
-                    message = "Delete Warehouse \ Terminal?";
-                    break;
+                else {
+                    this.ProceedToDelete(myRoutingItem, myLegType);
                 }
             }
 
-            var confirmWindow = new ConfirmWindow();
-            confirmWindow.Show(message);
-            confirmWindow.WindowClosed.subscribe((event: any) => {
-                if (confirmWindow.Yes) {
+            else if (myLegType == "Delivery") {
+                if (this.EntityPM.ShipmentDeliveries.filter(d => d.Id != myRoutingItem.Delivery.Id && d.PickUpDeliveryNumber.indexOf(myRoutingItem.Delivery.PickUpDeliveryNumber) > -1).length > 0) {
+                    var messageSindow: MessageWindow = new MessageWindow();
+                    messageSindow.Show("Please delete the consequent deliveries before deleting this delivery");
+                }
 
-                    switch (myLegType) {
-                        case "Pick Up": {
+                else {
+                    this.ProceedToDelete(myRoutingItem, myLegType);
+                }
+            }
 
-                            var followups = this.EntityPM.FollowUps.filter(f => f.LegType != null);
-                            followups = followups.filter(f => f.LegType.indexOf(myRoutingItem.Pickup.PickUpDeliveryNumber) > -1);
-                            if (followups.length > 0) {
-                                followups.forEach(item => {
-                                    this.EntityPM.RemoveShipmentFollowUp(item);
-                                });
+            else {
+                this.ProceedToDelete(myRoutingItem, myLegType);
+            }            
+        }       
+    }
+    private ProceedToDelete(myRoutingItem: RoutingItem, myLegType: string) {
+        var message: string = null;
 
-                                this.CurrentSession.FireEvent("FollowupsChanged");
-                            }
+        switch (myLegType) {
+            case "Pick Up": {
+                message = TextCodeTranslator.Translate("Shipment.M.DeleteThisPickup");
+                break;
+            }
 
-                            this.EntityPM.RemovePickUp(myRoutingItem.Pickup);
-                            break;
+            case "Pre Carriage": {
+                message = TextCodeTranslator.Translate("Shipment.M.DeleteThisPreCarriage");
+                break;
+            }
+
+            case "On Carriage": {
+                message = TextCodeTranslator.Translate("Shipment.M.DeleteThisOnCarriage");
+                break;
+            }
+
+            case "Delivery": {
+                message = TextCodeTranslator.Translate("Shipment.M.DeleteThisDelivery");
+                break;
+            }
+
+            case "WarehouseLeg":
+            case "WarehouseLeg_Pickups": {
+                message = "Delete Warehouse \ Terminal?";
+                break;
+            }
+        }
+
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show(message);
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+
+                switch (myLegType) {
+                    case "Pick Up": {
+
+                        var followups = this.EntityPM.FollowUps.filter(f => f.LegType != null);
+                        followups = followups.filter(f => f.LegType.indexOf(myRoutingItem.Pickup.PickUpDeliveryNumber) > -1);
+                        if (followups.length > 0) {
+                            followups.forEach(item => {
+                                this.EntityPM.RemoveShipmentFollowUp(item);
+                            });
+
+                            this.CurrentSession.FireEvent("FollowupsChanged");
                         }
 
-                        case "Pre Carriage": {
-                            RoutingHelper.RemovePreCarriageLeg(this.EntityPM);
-                            this.SetAddButtonsIsDisabled();
-                            break;
-                        }
-
-                        case "On Carriage": {
-                            RoutingHelper.RemoveOnCarriageLeg(this.EntityPM);
-                            this.SetAddButtonsIsDisabled();
-                            break;
-                        }
-
-                        case "Delivery": {
-
-                            var followups = this.EntityPM.FollowUps.filter(f => f.LegType != null);
-                            followups = followups.filter(f => f.LegType.indexOf(myRoutingItem.Delivery.PickUpDeliveryNumber) > -1);
-                            if (followups.length > 0) {
-                                followups.forEach(item => {
-                                    this.EntityPM.RemoveShipmentFollowUp(item);
-                                });
-
-                                this.CurrentSession.FireEvent("FollowupsChanged");
-                            }
-
-                            this.EntityPM.RemoveDelivery(myRoutingItem.Delivery);
-                            break;
-                        }
-
-                        case "WarehouseLeg":
-                        case "WarehouseLeg_Pickups": {
-                            this.EntityPM.WarehouseLegWarehouseId = null;
-                            this.EntityPM.WarehouseLegAddressId = null;
-                            this.EntityPM.WarehouseLegReference = null;
-                            this.EntityPM.WarehouseLegTerminalCode = null;
-                            this.EntityPM.WarehouseLegLastFreeDate = null;
-                            this.EntityPM.TerminalAvailable = null;
-                            this.EntityPM.WarehouseLegCutOffDate = null;
-                            this.EntityPM.WarehouseLegRemarks = null;
-                            this.EntityPM.WarehouseLegExpectedEntryDate = null;
-                            this.EntityPM.WarehouseLegExpectedReleaseDate = null;
-                            this.EntityPM.WarehouseLegActualEntryDate = null;
-                            this.EntityPM.WarehouseLegActualReleaseDate = null;
-                            this.EntityPM.WarehouseLegVGMCutOffDate = null;
-                            this.EntityPM.WarehouseStorageFreeDays = null;
-                            this.EntityPM.GrossWeightPerStorageDays = null;
-                            this.EntityPM.IsCFSWarehouse = false;
-                            this.EntityPM.IsCFSWarehouseChanged = false
-
-                            ShipmentTool.OnWarehouseStorageFreeDaysChanged(this.EntityPM);
-
-                            var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
-                            if (storageReceivable) {
-                                this.EntityPM.RemoveReceivable(storageReceivable);
-                                this.CurrentSession.FireEvent("StorageReceivableRemoved");
-                            }
-
-                            if (this.EntityPM.ShipmentStoragePricings.length > 0) {
-                                this.EntityPM.ShipmentStoragePricings = [];
-                                //this.EntityPM.ShipmentStoragePricings.forEach(item => {
-                                //    this.EntityPM.RemoveShipmentStoragePricing(item);
-                                //});
-                            }
-
-                            var followups = this.EntityPM.FollowUps.filter(f => f.LegType != null);
-                            followups = followups.filter(f => f.LegType.indexOf("WarehouseLeg") > -1);
-
-                            if (followups.length > 0) {
-                                followups.forEach(item => {
-                                    this.EntityPM.RemoveShipmentFollowUp(item);
-                                });
-
-                                this.CurrentSession.FireEvent("FollowupsChanged");
-                            }
-
-                            break;
-                        }
+                        this.EntityPM.RemovePickUp(myRoutingItem.Pickup);
+                        break;
                     }
 
-                    this.BuildItemsCollection();           
+                    case "Pre Carriage": {
+                        RoutingHelper.RemovePreCarriageLeg(this.EntityPM);
+                        this.SetAddButtonsIsDisabled();
+                        break;
+                    }
+
+                    case "On Carriage": {
+                        RoutingHelper.RemoveOnCarriageLeg(this.EntityPM);
+                        this.SetAddButtonsIsDisabled();
+                        break;
+                    }
+
+                    case "Delivery": {
+
+                        var followups = this.EntityPM.FollowUps.filter(f => f.LegType != null);
+                        followups = followups.filter(f => f.LegType.indexOf(myRoutingItem.Delivery.PickUpDeliveryNumber) > -1);
+                        if (followups.length > 0) {
+                            followups.forEach(item => {
+                                this.EntityPM.RemoveShipmentFollowUp(item);
+                            });
+
+                            this.CurrentSession.FireEvent("FollowupsChanged");
+                        }
+
+                        this.EntityPM.RemoveDelivery(myRoutingItem.Delivery);
+                        break;
+                    }
+
+                    case "WarehouseLeg":
+                    case "WarehouseLeg_Pickups": {
+                        this.EntityPM.WarehouseLegWarehouseId = null;
+                        this.EntityPM.WarehouseLegAddressId = null;
+                        this.EntityPM.WarehouseLegReference = null;
+                        this.EntityPM.WarehouseLegTerminalCode = null;
+                        this.EntityPM.WarehouseLegLastFreeDate = null;
+                        this.EntityPM.TerminalAvailable = null;
+                        this.EntityPM.WarehouseLegCutOffDate = null;
+                        this.EntityPM.WarehouseLegRemarks = null;
+                        this.EntityPM.WarehouseLegExpectedEntryDate = null;
+                        this.EntityPM.WarehouseLegExpectedReleaseDate = null;
+                        this.EntityPM.WarehouseLegActualEntryDate = null;
+                        this.EntityPM.WarehouseLegActualReleaseDate = null;
+                        this.EntityPM.WarehouseLegVGMCutOffDate = null;
+                        this.EntityPM.WarehouseStorageFreeDays = null;
+                        this.EntityPM.GrossWeightPerStorageDays = null;
+                        this.EntityPM.IsCFSWarehouse = false;
+                        this.EntityPM.IsCFSWarehouseChanged = false
+
+                        ShipmentTool.OnWarehouseStorageFreeDaysChanged(this.EntityPM);
+
+                        var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
+                        if (storageReceivable) {
+                            this.EntityPM.RemoveReceivable(storageReceivable);
+                            this.CurrentSession.FireEvent("StorageReceivableRemoved");
+                        }
+
+                        if (this.EntityPM.ShipmentStoragePricings.length > 0) {
+                            this.EntityPM.ShipmentStoragePricings = [];
+                        }
+
+                        var followups = this.EntityPM.FollowUps.filter(f => f.LegType != null);
+                        followups = followups.filter(f => f.LegType.indexOf("WarehouseLeg") > -1);
+
+                        if (followups.length > 0) {
+                            followups.forEach(item => {
+                                this.EntityPM.RemoveShipmentFollowUp(item);
+                            });
+
+                            this.CurrentSession.FireEvent("FollowupsChanged");
+                        }
+
+                        break;
+                    }
                 }
-            });
-        }       
-    }    
+
+                this.BuildItemsCollection();
+            }
+        });
+    }
     AddChildLeg(myLegType: string, myRoutingItem: RoutingItem) {
         switch (myLegType) {
             case "Pick Up": {
