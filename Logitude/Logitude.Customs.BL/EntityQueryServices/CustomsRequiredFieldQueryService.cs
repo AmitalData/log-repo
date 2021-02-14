@@ -14,7 +14,20 @@ namespace Logitude.Customs.BL.EntityQueryServices
 {
     public partial class CustomsRequiredFieldQueryService : EntityQueryService<CustomsRequiredField, CustomsRequiredFieldKeys, CustomsRequiredFieldPM, object, CustomsRequiredFieldKeys>
     {
+
         public List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTable(string ObjectTableId, int Tenant,string type="A")
+
+        {
+            string entityKeyString = $"GetCustomRequiredFieldsByObjectTableFromCache({ObjectTableId},{Tenant})";
+            var res = CacheManager.GetOrInsertNewObject<List<CustomsRequiredFieldPM>>(entityKeyString, () =>
+            {
+                return this.GetCustomRequiredFieldsByObjectTableCore(ObjectTableId, Tenant);
+            });
+            return res;
+        }
+
+        private List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTableCore(string ObjectTableId, int Tenant, string type = "A")
+
         {
             CustomsRequiredFieldRepository rep = new CustomsRequiredFieldRepository(context);
             List<CustomsRequiredField> requiredFields = rep.GetCustomRequiredFieldsByObjectTable(ObjectTableId,Tenant, type);
