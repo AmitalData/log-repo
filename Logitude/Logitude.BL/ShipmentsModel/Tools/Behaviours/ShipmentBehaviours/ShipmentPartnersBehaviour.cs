@@ -214,7 +214,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         }
         private bool IsShipmentFromToLogbox()
         {
-            bool isShipmentFromOrToLogbox = entityPM.IsImporterShipment || !string.IsNullOrEmpty(entityPM.ForwarderShipmentNumber);
+            bool isShipmentFromUNF = entityPM.IsHybrid;
+            bool isShipmentFromOrToLogbox = isShipmentFromUNF || entityPM.IsImporterShipment || !string.IsNullOrEmpty(entityPM.ForwarderShipmentNumber);
             return isShipmentFromOrToLogbox;
         }
     }
