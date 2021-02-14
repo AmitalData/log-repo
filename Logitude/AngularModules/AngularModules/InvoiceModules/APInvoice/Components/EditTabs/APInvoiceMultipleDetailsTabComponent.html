@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr>
         <td>
@@ -207,8 +207,23 @@
                                         <SearchBox [ObjectTableName]="'Shipment'" [IsQuickSearch]="true" [IsDisabled]="!IsEditingEnabled" (ItemClicked)="AddShipment($event)"></SearchBox>
                                     </td>
 
-                                    <td style="width: 5px;">
+                                    <td style="width: 10px;">
                                         <div></div>
+                                    </td>
+
+                                    <td style="width:150px; vertical-align:middle;">
+                                        <ul class="FiltersMenu">
+                                            <li (click)="LevelCodeitemClicked('All')" (mouseover)="LevelCodeMouseOver('All')" [class.SelectedFilter]="LevelCodeSelectedValue === 'All'">
+                                                All
+                                            </li>
+                                            <li style="width:50px;" (click)="LevelCodeitemClicked('D')" (mouseover)="LevelCodeMouseOver('D')" (mouseleave)="LevelCodeMouseLeave('D')" [class.SelectedFilter]="LevelCodeSelectedValue === 'D'" title="Direct">
+                                                Masters
+                                            </li>
+                                            <li style="width:70px;" (click)="LevelCodeitemClicked('H')" (mouseover)="LevelCodeMouseOver('H')" (mouseleave)="LevelCodeMouseLeave('H')" [class.SelectedFilter]="LevelCodeSelectedValue === 'H'" title="House">
+                                                Shipments
+                                            </li>
+                      
+                                        </ul>
                                     </td>
 
                                     <td>

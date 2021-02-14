@@ -18,6 +18,9 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { Output, EventEmitter } from '@angular/core';
+
 
 @Component({
     
@@ -25,6 +28,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 })
 
 export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implements OnDestroy {
+    @Output() SelectedValueChanged = new EventEmitter();
     public EntityPM: APInvoicePM = null;
     public ObjectTableName = "APInvoice";
     public DataContext = this;
@@ -34,6 +38,8 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    private apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
+
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
@@ -697,6 +703,32 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
             this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
     }
+
+    public LevelCodeSelectedValue: string = "All";
+    LevelCodeitemClicked(itemValue: string) {
+        if (this.LevelCodeSelectedValue != itemValue) {
+            this.LevelCodeSelectedValue = itemValue;
+            var RemoveFilter = false;
+            if (this.apiQueryFilters.AdditionalFilters.length > 0) {
+                this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "ShipmentLevelCode");
+            }
+
+            this.apiQueryFilters.addAdditionalFilter("ShipmentLevelCode", itemValue, null, null, "Equals", false, true, false, "string", (itemValue == "All" ? true : false));
+
+            this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
+        }
+    }
+
+    LevelCodeMouseOver(itemValue: string) {
+        if (this.LevelCodeSelectedValue != itemValue) {          
+        }
+    }
+
+    LevelCodeMouseLeave(itemValue: string) {
+        if (this.LevelCodeSelectedValue != itemValue) {      
+        }
+    }
+
 }
 
 export class MultipleShipmentLine {
