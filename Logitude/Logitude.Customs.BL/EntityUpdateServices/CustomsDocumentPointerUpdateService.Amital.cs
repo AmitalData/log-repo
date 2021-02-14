@@ -95,7 +95,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         EventCode = statusId,
                         notes = eventContextTagModel.EventRemarks,
                         CommunicationLoggingEntityReference = eventContextTagModel.StatusEntityId,
-                        EntityId = dirtyEntityPM.Id,
+                        EntityId = declaration.Id,
                         UserId = loggingUserId,
 
                         CommunicationSubject = "FU Status from logitude ",

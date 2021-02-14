@@ -126,7 +126,7 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  PaymentDate_Date= d.PaymentDate,
                                                                  PaymentDate_Time= d.PaymentDate!= null ? System.Data.Entity.DbFunctions.CreateTime(d.PaymentDate.Value. Hour, d.PaymentDate.Value.Minute, d.PaymentDate.Value.Second).Value.Hours.ToString() +":" + System.Data.Entity.DbFunctions.CreateTime(d.PaymentDate.Value.Hour, d.PaymentDate.Value.Minute, d.PaymentDate.Value.Second).Value.Minutes.ToString() : "" ,
                                                                  IsClose=d.IsClose,
-                                                                 PhysicalCheck=  1 ,
+                                                                 PhysicalCheck=  d.PhysicalCheck ,
 
 
 
@@ -176,7 +176,7 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                                     DepartmentId = d.DepartmentId,
                                                                                     RequestedCustomsDocId=d.RequestedCustomsDocId,
                                                                                     IsCancelled= d.IsCancelled,
-                                                                                    IsClose= d.IsClose
+                                                                                    IsClose= d.IsClose,
                                                                                 });
 
             if (refId.Count>0)
