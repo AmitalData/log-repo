@@ -33,16 +33,16 @@ Feature: Create Consolidation Invoice
             | AFT         | GRWT | 5        | 10        | EUR      | TestVendor |
         When add payables
         Then the payables should add successfully
-    Scenario: Create APInvoice
-        Given an APInvoice with a random invoice number and the following details
-            | Vendor     | InvoiceAmount | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATType | VatNo |
-            | TestVendor | 50            | EUR             | 4                   | Today       | Cash         | Today   | Zero    | 5     |
-        When receive invoice
-        Then the invoice should create successfully
+    # Scenario: Create APInvoice
+    #     Given an APInvoice with a random invoice number and the following details
+    #         | Vendor     | InvoiceAmount | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATType | VatNo |
+    #         | TestVendor | 50            | EUR             | 4                   | Today       | Cash         | Today   | Zero    | 5     |
+    #     When receive invoice
+    #     Then the invoice should create successfully
 
-    Scenario: Approve APInvoice
-        When approve invoice
-        Then the invoice should approve successfully
+    # Scenario: Approve APInvoice
+    #     When approve invoice
+    #     Then the invoice should approve successfully
 
     Scenario: Add Charges in Receivables by generating from payables
         When generate receivables from payables

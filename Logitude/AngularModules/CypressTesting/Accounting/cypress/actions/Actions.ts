@@ -108,7 +108,7 @@ export function APApproveInvoice() {
 export function FillconsolidationInvoiceDetails(){
     cy.Click(BaseSelectors.AccountingMenu,null)
     cy.Click(AccountingSelectors.ReceivableAccounting,null)
-    cy.Click(".ToggleButton","New")
+    cy.get("label").contains("New").click()
     cy.Click("button","New consolidation invoice")
 
 

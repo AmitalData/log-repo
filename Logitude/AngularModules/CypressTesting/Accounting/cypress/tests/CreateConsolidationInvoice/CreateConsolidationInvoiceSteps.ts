@@ -121,30 +121,30 @@ Given("a payable with the following details",
   });
   //#endregion
 //#region Create APInvoice
-Given("an APInvoice with a random invoice number and the following details",
-  (dataTable) => {
-    const APInvoiceData = dataTable.hashes()[0] as APInvoiceDetails
-    cy.Click(AccountingSelectors.ReceiveInvoiceButton, null);
-    AccountingActions.FillAPInvoiceDetails(APInvoiceData,false,PayableData.Vendor)
-  });
-When("receive invoice", () => {
-  AccountingActions.ReceiveAPInvoice();
-});
-Then("the invoice should create successfully", () => {
-  BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
-});
-  //#endregion
-//#region Approve APInvoice
-When("approve invoice", () => {
-  AccountingActions.APApproveInvoice()
-});
-Then("the invoice should approve successfully", () => {
-  BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
-});
+// Given("an APInvoice with a random invoice number and the following details",
+//   (dataTable) => {
+//     const APInvoiceData = dataTable.hashes()[0] as APInvoiceDetails
+//     cy.Click(AccountingSelectors.ReceiveInvoiceButton, null);
+//     AccountingActions.FillAPInvoiceDetails(APInvoiceData,false,PayableData.Vendor)
+//   });
+// When("receive invoice", () => {
+//   AccountingActions.ReceiveAPInvoice();
+// });
+// Then("the invoice should create successfully", () => {
+//   BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
+// });
+//   //#endregion
+// //#region Approve APInvoice
+// When("approve invoice", () => {
+//   AccountingActions.APApproveInvoice()
+// });
+// Then("the invoice should approve successfully", () => {
+//   BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
+// });
   //#endregion
 //#region generate receivables from payables
 When("generate receivables from payables", () => {
-  cy.BackButton("Shipment: " + shipmentNumber)
+  //cy.BackButton("Shipment: " + shipmentNumber)
   ShipmentActions.GenerateReceivablesFromPayables(true)
 });
 Then("the receivables should generate successfully", () => {

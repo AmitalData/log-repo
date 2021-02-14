@@ -78,7 +78,6 @@ Given("the user add package with the following details", (dataTable) => {
 Given("a payable with the following details",
   (dataTable) => {
     const PayableData = dataTable.hashes()[0] as PayableDetails;
-    Actions.OpenShipment(shipmentNumber)
     Actions.FillPayablesTab(PayableData)
   });
   When("add payables",
