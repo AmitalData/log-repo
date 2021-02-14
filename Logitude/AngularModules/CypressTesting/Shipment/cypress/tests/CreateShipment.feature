@@ -1,4 +1,5 @@
-@stable @smoke @stable
+@smoke and @stable
+ @stable
 Feature: Create shipments
   After the user logging in the system and navigate to shipments workspace
   will will create a direct shipment.

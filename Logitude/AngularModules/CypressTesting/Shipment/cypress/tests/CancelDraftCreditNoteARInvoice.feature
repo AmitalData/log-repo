@@ -1,4 +1,5 @@
-@stable @smoke
+@smoke and @stable
+
 Feature: Credit note ARInvoice operations and actions
     After the user logging in the system and navigate to shipments workspace
     will create a direct shipment, after that create a credit note ARInvoice and cancel draft.
