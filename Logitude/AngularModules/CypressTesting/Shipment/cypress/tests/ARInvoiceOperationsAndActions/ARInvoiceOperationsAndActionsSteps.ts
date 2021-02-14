@@ -8,10 +8,10 @@ import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliase
 import { CustomerDetails } from '../../../../Common/cypress/models/CustomerDetails';
 import { MainCarriageLeg } from 'cypress/models/MainCarriageLeg';
 import { PackagesDetails } from 'cypress/models/PackagesDetails';
-import { ARInvoiceDetails } from "cypress/models/ARInvoiceDetails";
+import { ARInvoiceDetails } from "../../../../Accounting/cypress/models/ARInvoiceDetails";
 import * as CommonActions from '../../../../Common/cypress/actions/Actions';
 import * as AccountingActions from '../../../../Accounting/cypress/actions/Actions';
-
+import { AccountingSelectors } from '../../../../Accounting/cypress/selectors/Selectors'
 //#region variables
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
@@ -74,16 +74,16 @@ Given("the user add package with the following details", (dataTable) => {
 //#endregion
 //#region Add Payables
 Given("a payable with the following details", (dataTable) => {
-        const PayableData = dataTable.hashes()[0] as PayableDetails;
-        Actions.FillPayablesTab(PayableData)
-    });
+    const PayableData = dataTable.hashes()[0] as PayableDetails;
+    Actions.FillPayablesTab(PayableData)
+});
 When("add payables", () => {
-        Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
+    Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
 
-    });
-Then("the payables should add successfully",  () => {
-        BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
-    });
+});
+Then("the payables should add successfully", () => {
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
+});
 //#endregion
 //#region generate receivables from payables
 When("generate receivables from payables", () => {
@@ -97,7 +97,7 @@ Then("the receivables should generate successfully", () => {
 Given("an ARInvoice with a random invoice number and the following details",
     (dataTable) => {
         const ARInvoiceData = dataTable.hashes()[0] as ARInvoiceDetails
-        cy.Click(ShipmentSelectors.CreateARInvoiceButton, null);
+        cy.Click(AccountingSelectors.CreateARInvoiceButton, null);
         AccountingActions.FillARInvoiceDetails(ARInvoiceData)
     });
 When("create invoice", () => {
@@ -109,7 +109,7 @@ Then("the invoice should create successfully", () => {
 //#endregion
 //#region Approve ARInvoice
 When("approve invoice", () => {
-    Actions.ARApproveInvoice()
+    AccountingActions.ARApproveInvoice()
 });
 Then("the invoice should approve successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
@@ -117,7 +117,7 @@ Then("the invoice should approve successfully", () => {
 //#endregion
 //#region Set ARInvoice as sent
 When("set invoice as sent", () => {
-    Actions.SetAsSentARInvoice()
+    AccountingActions.SetAsSentARInvoice()
 });
 Then("the invoice should set as sent successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
@@ -125,7 +125,7 @@ Then("the invoice should set as sent successfully", () => {
 //#endregion
 //#region Void ARInvoice
 When("void invoice", () => {
-    Actions.VoidARInvoice()
+    AccountingActions.VoidARInvoice()
 });
 Then("the invoice should void successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);

@@ -7,7 +7,6 @@ import { ShipmentSelectors } from '../../../../Shipment/cypress/selectors/Select
 import { ShipmentDetails } from '../../../../Shipment/cypress/models/ShipmentDetails';
 import { PackagesDetails } from '../../../../Shipment/cypress/models/PackagesDetails';
 import { PayableDetails } from '../../../../Shipment/cypress/models/PayableDetails';
-import { APInvoiceDetails } from '../../../../Shipment/cypress/models/APInvoiceDetails';
 import * as BaseAssertion from '../../../../Base/cypress/actions/Assertion';
 import { CustomerDetails } from '../../../../Common/cypress/models/CustomerDetails';
 import { RequestAliases } from '../../../../Base/cypress/constants/RequestAliases';
@@ -15,16 +14,15 @@ import { CommonSelectors } from '../../../../Common/cypress/selectors/Selectors'
 import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors';
 import { ARInvoiceDetails } from '../../../../Shipment/cypress/models/ARInvoiceDetails';
 import { AccountingSelectors } from "../../selectors/Selectors";
-import { RestAPI } from '../../../../Base/cypress/constants/RestAPI';
 
 //#region variables
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
 let customerCode: string;
-let PayableData:PayableDetails
+let PayableData: PayableDetails
 //#endregion
 
-///#region Create customer
+//#region Create customer
 Given("the user logged in and navigates to customers workspace", () => {
   cy.Login();
   CommonActions.NavigatesToCustomersWorkspace();
@@ -42,7 +40,7 @@ When("create customer", () => {
 Then("the customer should create successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.PartnersDomainRequest, 200).then((interception) => {
     customerCode = interception.response.body.Customer.Code;
-  });;
+  });
 });
 //#endregion
 //#region Update customer
@@ -78,111 +76,91 @@ When("create shipment", () => {
 });
 
 Then("the direct should create successfully", () => {
-    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
-        shipmentNumber = interception.response.body.ShipmentNumber;
-    })
+  BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
+    shipmentNumber = interception.response.body.ShipmentNumber;
+  })
 });
 //#endregion
-
-
 //#region Update packages tab
 Given("the user add package with the following details", (dataTable) => {
   ShipmentActions.OpenShipment(shipmentNumber);
-    let packagesDetails = dataTable.hashes() as PackagesDetails[];
-    ShipmentActions.FillPackageTab(shipmentDetails.TransportMode, packagesDetails)
+  let packagesDetails = dataTable.hashes() as PackagesDetails[];
+  ShipmentActions.FillPackageTab(shipmentDetails.TransportMode, packagesDetails)
 });
 //#endregion
-
 //#region update shipment step
 When("update shipment", () => {
   ShipmentActions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
 });
 //#endregion
-
 //#region update shipment assert step
 Then("the direct should update successfully", () => {
-    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+  BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });
 //#endregion
 //#region Add Payables
 Given("a payable with the following details",
   (dataTable) => {
-     PayableData = dataTable.hashes()[0] as PayableDetails;
+    PayableData = dataTable.hashes()[0] as PayableDetails;
     ShipmentActions.FillPayablesTab(PayableData)
   });
-  When("add payables",
+When("add payables",
   () => {
     ShipmentActions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
 
   });
-  Then("the payables should add successfully",
+Then("the payables should add successfully",
   () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
   });
-  //#endregion
-//#region Create APInvoice
-// Given("an APInvoice with a random invoice number and the following details",
-//   (dataTable) => {
-//     const APInvoiceData = dataTable.hashes()[0] as APInvoiceDetails
-//     cy.Click(AccountingSelectors.ReceiveInvoiceButton, null);
-//     AccountingActions.FillAPInvoiceDetails(APInvoiceData,false,PayableData.Vendor)
-//   });
-// When("receive invoice", () => {
-//   AccountingActions.ReceiveAPInvoice();
-// });
-// Then("the invoice should create successfully", () => {
-//   BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
-// });
-//   //#endregion
-// //#region Approve APInvoice
-// When("approve invoice", () => {
-//   AccountingActions.APApproveInvoice()
-// });
-// Then("the invoice should approve successfully", () => {
-//   BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
-// });
-  //#endregion
+//#endregion
 //#region generate receivables from payables
 When("generate receivables from payables", () => {
-  //cy.BackButton("Shipment: " + shipmentNumber)
   ShipmentActions.GenerateReceivablesFromPayables(true)
 });
 Then("the receivables should generate successfully", () => {
-    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+  BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });
 //#endregion
 //#region Create ARInvoice
 Given("an ARInvoice with a random invoice number and the following details",
-    (dataTable) => {
-        const ARInvoiceData = dataTable.hashes()[0] as ARInvoiceDetails
-        cy.Click(ShipmentSelectors.CreateARInvoiceButton, null);
-        AccountingActions.FillARInvoiceDetails(ARInvoiceData)
-    });
+  (dataTable) => {
+    const ARInvoiceData = dataTable.hashes()[0] as ARInvoiceDetails
+    cy.Click(AccountingSelectors.CreateARInvoiceButton, null);
+    AccountingActions.FillARInvoiceDetails(ARInvoiceData)
+  });
 When("create invoice", () => {
   AccountingActions.CreateARInvoice(true)
 });
 Then("the invoice should create successfully", () => {
-    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
+  BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });
 //#endregion
-
-//#region Consolidation Invoice
+//#region Create Consolidation Invoice
 Given("a Consolidation Invoice with the following details",
-    (dataTable) => {
-      const ARInvoiceData = dataTable.hashes()[0] as ARInvoiceDetails
-      ARInvoiceData.Partner=customerCode
-      cy.BackButton("Shipment: " + shipmentNumber)
-      cy.BackButton("Operations")
-        AccountingActions.FillconsolidationInvoiceDetails()
-        AccountingActions.FillARInvoiceDetails(ARInvoiceData)
+  (dataTable) => {
+    cy.BackButton("Shipment: " + shipmentNumber)
+    cy.BackButton("Operations")
+    const ARInvoiceData = dataTable.hashes()[0] as ARInvoiceDetails
+    ARInvoiceData.Partner = customerCode
+    AccountingActions.FillconsolidationInvoiceDetails(ARInvoiceData)
 
-    });
-When("approve consolidation invoice", () => {
+  });
+When("create consolidation invoice", () => {
   AccountingActions.CreateARInvoice()
-  cy.DefineRequestWait(RestAPI.POST,"**/ConsilidationInvoiceDomain","ConsilidationInvoiceDomain")
-  cy.Click(ShipmentSelectors.ARInvoiceApproveButton, null)
+
+});
+Then("the consolidation invoice should create successfully", () => {
+  BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200)
+
+});
+//#endregion
+//#region Approve Consolidation Invoice
+
+When("approve consolidation invoice", () => {
+AccountingActions.ApproveConsilidationInvoice()
 });
 Then("the consolidation invoice should approve successfully", () => {
-  BaseAssertion.AssertStatusCode("ConsilidationInvoiceDomain",200)
+  BaseAssertion.AssertStatusCode("ConsilidationInvoiceDomain", 200)
 });
-//#endregion
+    //#endregion

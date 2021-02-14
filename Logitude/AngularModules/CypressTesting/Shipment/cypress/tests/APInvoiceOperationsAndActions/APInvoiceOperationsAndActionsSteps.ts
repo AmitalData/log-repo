@@ -3,7 +3,7 @@ import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
 import { ShipmentSelectors } from "../../selectors/Selectors";
 import { PayableDetails } from "cypress/models/PayableDetails"
-import { APInvoiceDetails } from "cypress/models/APInvoiceDetails"
+import { APInvoiceDetails } from "../../../../Accounting/cypress/models/APInvoiceDetails"
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 import { CustomerDetails } from '../../../../Common/cypress/models/CustomerDetails';
@@ -91,7 +91,7 @@ Given("a payable with the following details",
   });
   //#endregion
 //#region Create APInvoice
-And("an APInvoice with a random invoice number and the following details",
+Given("an APInvoice with a random invoice number and the following details",
   (dataTable) => {
     const APInvoiceData = dataTable.hashes()[0] as APInvoiceDetails
     cy.Click(AccountingSelectors.ReceiveInvoiceButton, null);
@@ -114,7 +114,7 @@ Then("the invoice should approve successfully", () => {
   //#endregion
 //#region Cancel the APInvoice approvement
 When("cancel the invoice approvement", () => {
-  Actions.APInvoiceCancelApproval()
+  AccountingActions.APInvoiceCancelApproval()
 });
 Then("the invoice should cancel successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
@@ -122,7 +122,7 @@ Then("the invoice should cancel successfully", () => {
   //#endregion
 //#region Void APInvoice
 When("void invoice", () => {
-  Actions.VoidAPInvoice()
+  AccountingActions.VoidAPInvoice()
 });
 Then("the invoice should void successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
