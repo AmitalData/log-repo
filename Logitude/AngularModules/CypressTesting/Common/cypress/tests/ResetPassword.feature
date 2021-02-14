@@ -1,4 +1,4 @@
-Feature: Create Shipment Tests
+Feature: Reset password test
 
     Scenario: Enter a password and mismatch password confirmation
         Given "!A123456" as a paswword without confirm password
@@ -25,7 +25,6 @@ Feature: Create Shipment Tests
         When sumbit
         Then validate message should appear successfully
 
-    #new ?
     Scenario: Enter a new password same as the current password
         Given "ahmed13!A15" as a current ,paswword and confirm password
         When sumbit

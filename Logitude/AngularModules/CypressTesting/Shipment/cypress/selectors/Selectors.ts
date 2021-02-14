@@ -1,6 +1,6 @@
 import { RegexSelectors } from '../selectors/RegexSelectors';
 
-export class ShipmentSelector extends RegexSelectors {
+export class ShipmentSelectors extends RegexSelectors {
   //#region Shared
   public static readonly ShipmentMoreList = '#MenuButtons';
   public static readonly ShipmentTab = '#SHIP';
@@ -127,6 +127,7 @@ export class ShipmentSelector extends RegexSelectors {
   public static readonly ReceivableTotalAmount = '#ShipmentReceivable_TotalAmount';
   public static readonly AddReceivableOkButton = '#Ok-AddReceivableBtn';
   public static readonly ShipmentReceivableRate = '#ShipmentReceivable_Rate'
+  public static readonly ReceivableFromPayables="#PAYB-Receivable"
   //#endregion 
   //#region Payable tab fields
   public static readonly AddNewPayableLine = '#AddPayable button';
@@ -136,25 +137,7 @@ export class ShipmentSelector extends RegexSelectors {
   public static readonly ShipmentPayableCurrency = '#ShipmentPayable_CurrencyId';
   public static readonly ShipmentPayableUnitPrice = '#ShipmentPayable_UnitPrice';
   public static readonly ShipmentPayableQuantity = '#ShipmentPayable_Quantity';
-  //#endregion
-  //#region APInvoice
-  public static readonly APInvoiceVendor = '#APInvoice_VendorId';
-  public static readonly APInvoiceInvoiceNumber = '#APInvoice_InvoiceNumber';
-  public static readonly APInvoiceAmountInInvoice = '#APInvoice_AmountInInvoiceCurrency';
-  public static readonly APInvoiceInvoiceCurrency = '#APInvoice_InvoiceCurrencyId';
-  public static readonly APInvoiceInvoiceExchangeRate = '#APInvoice_InvoiceCurrencyExchangeRate';
-  public static readonly APInvoiceInvoiceDate = '#date_APInvoice_InvoiceDate';
-  public static readonly APInvoicePaymentTerm = '#APInvoice_PaymentTermId';
-  public static readonly APInvoiceDueDate = '#date_APInvoice_DueDate';
-  public static readonly APInvoiceVATNumber = '#APInvoice_VATNumber'
-  public static readonly OkCreateAPInvoiceButton = '#Ok-CreateAPInvoice';
-  public static readonly APInvoiceLineCheckBox = '#CheckBox_0_0_LBL';
-  public static readonly APInvoiceVatType = '#APInvoice_VatTypeId';
-  public static readonly APInvoiceSaveButton = '#APInvoiceBSave';
-  public static readonly APInvoiceApproveButton = '#APInvoiceBApprove';
-  public static readonly APInvoiceCancelApprovalButton = '#APInvoiceBCancelApproval';
-  public static readonly APInvoiceVoidButton = '#APInvoiceBVoid';
-  public static readonly ReceiveInvoiceButton = '#ReceiveInvoice';
+  public static readonly ShipmentPayableVendor = '#ShipmentPayable_VendorId';
   //#endregion
   //#region ARInvoice
   public static readonly ARInvoiceBranch = '#ARInvoice_BranchId';
@@ -174,6 +157,7 @@ export class ShipmentSelector extends RegexSelectors {
   public static readonly ARInvoiceVoidButton = '#ARInvoiceBVoid';
   public static readonly ARInvoiceCancelDraftButton = '#ARInvoiceBCancelDraft';
   public static readonly CreateCustomsCreditNote = '#CreateCustomsCreditNote';
+  public static readonly CreateCustomsARInvoice = '#CreateCustomsInvoice';
   public static readonly ToggleButtonClass = '.ToggleButton';
   public static readonly ContainsCustoms = 'Customs';
   //#endregion
@@ -200,6 +184,7 @@ export class ShipmentSelector extends RegexSelectors {
   public static readonly APPaymentApproveButton = '#APPaymentBApprove';
   public static readonly PayableAccountingTab = '#PAYABLEAccounting';
   public static readonly QueryLink = '.QueryLink';
+  public static readonly EditShipmentLine = 'button[id^="Edit_"]';
   //#endregion
   //#region ARPayment
   public static readonly ARPaymentTabInsideShipment = '#ARInvoiceTHARPayments';
@@ -216,16 +201,6 @@ export class ShipmentSelector extends RegexSelectors {
   public static readonly SendMessageButton = '#SendMessagebtn';
   public static readonly EmailSearchInput = '.LogitudeEmailSearchInput';
   //#endregion
-  //#region Customer
-  public static readonly NewCustomer = '#NewButton_Customer';
-  public static readonly CustomerCompanyName = '#Address_Name';
-  public static readonly CustomerCity = '#Address_City';
-  public static readonly CustomerCountry = '#Address_CountryId';
-  public static readonly CustomerState = '#Address_StateId';
-  public static readonly AddCustomer = '#Ok-AddCustomer';
-  //#endregion
-
-
   //#region AWB Wizard
   public static readonly AddPackageLineInAWBWizard = "#AddPackageBtn";
   public static readonly PackageQuantityInAWBWizard = "input[id^='ShipmentPackage_Quantity']:last";

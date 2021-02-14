@@ -14,6 +14,7 @@ declare global {
             ClickRadio(selector: string): Chainable<Element>
             ValidateElementColor(selector: string, expectedcolor: string): Chainable<Element>
             SelectQuickSearchFirstElement(selector: string, value: string): Chainable<Element>
+            SelectQuickSearchFirstElement2(selector: string, value: string): Chainable<Element>
         }
     }
 }
@@ -44,7 +45,7 @@ Cypress.Commands.add("FillLogLov", (selector, value, fromCache) => {
     }
 
     //cy.get(selector).clear().type(value)
-    cy.get(selector).type("{selectall}" + value)
+    cy.get(selector).type("{selectall}" + value,{delay:5})
 
     if (!fromCache) {
         cy.wait("@LOVDataLoaded")
@@ -93,6 +94,16 @@ Cypress.Commands.add("SelectQuickSearchFirstElement", (selector, value) => {
         .within(() => {
             cy.get(selector).focus().clear().type(value).then(() => {
                 cy.wait("@QuickSearchDataLoaded")
+                cy.get("ul > li").eq(0).click({ force: true })
+            })
+        })
+})
+
+Cypress.Commands.add("SelectQuickSearchFirstElement2", (selector, value) => {
+    cy.intercept(URLs.GetQuickSearch).as("QuickSearchDataLoaded")
+    cy.get(selector).parents("quicksearchtextbox").eq(0).find(".LogitudeQuickSearchTextBox")
+        .within(() => {
+            cy.get(selector).focus().clear().type(value).then(() => {
                 cy.get("ul > li").eq(0).click({ force: true })
             })
         })

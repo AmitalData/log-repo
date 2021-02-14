@@ -7,10 +7,19 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly CustomersMenu = '#GeneralMHCustomers';
     //#endregion
     //#region Buttons
+    public static readonly TicketsMenu = '#GeneralMHTicket';
     public static readonly RedButton = '.RedButton';
     public static readonly Button = '.Button';
     public static readonly Row0='#row0';
     public static readonly UploadDocumentdbtn="#UploadDocumentdbtn";
     public static readonly OKBtn = "#OKBtn";
     public static readonly SaveWizard = "#SaveWizard";
+    public static readonly Backbutton = '#EditBackbutton';
+
+    //#region Contains
+    public static readonly ContainsApplytoall = 'Apply to all';
+    public static readonly ContainsOK = 'OK';
+
+
+    //#endregion
 }

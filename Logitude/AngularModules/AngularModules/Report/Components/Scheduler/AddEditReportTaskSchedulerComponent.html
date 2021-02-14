@@ -2,11 +2,6 @@
     <tr style="height:100%;vertical-align:top;">
         <td>
             <table>
-                <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-                    <td>
-                        <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
-                    </td>
-                </tr>
                 <tr>
                     <td>
                         <ScrollViewer>
