@@ -76,6 +76,7 @@ export class DeclarationReferantDataList {
 	FclLcl: string;
 	PackageQuantity: number;
 	ForwarderId: string;
+	ForwarderName: string;
 	
 }
  

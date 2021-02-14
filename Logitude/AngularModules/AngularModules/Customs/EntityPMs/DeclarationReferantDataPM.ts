@@ -209,6 +209,11 @@ export class DeclarationReferantDataPM {
     public set ForwarderId(newValue: string) { if (this.forwarderId != newValue) { this.forwarderId = newValue; this.MarkAsDirty("ForwarderId"); } }
        
 	 
+    private forwarderName: string;
+    public get ForwarderName() { return this.forwarderName; }
+    public set ForwarderName(newValue: string) { if (this.forwarderName != newValue) { this.forwarderName = newValue; this.MarkAsDirty("ForwarderName"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		

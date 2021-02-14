@@ -104,7 +104,11 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  LastStatusDate = a.LastStatusDate,
                                                                  LastStatusName = a.LastStatusName,
                                                                  OrderMoney = a.OrderMoney,
-                                                                 StorageSiteCode=d.StorageSiteCode,
+                                                                 FclLcl = a.FclLcl,
+                                                                 ForwarderName = a.ForwarderCard.LocalName,
+                                                                 PackageQuantity = a.PackageQuantity,
+
+                                                                 StorageSiteCode =d.StorageSiteCode,
                                                                  HatraDate=d.HatraDate,
                                                                  PaymentDate=d.PaymentDate,
                                                                  TaxationDateTime=d.TaxationDateTime,
@@ -129,8 +133,7 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  PhysicalCheck=  d.PhysicalCheck ,
 
 
-
-                                                             }) ;
+                                                              }) ;
                                                                 
                                               return query;
 
