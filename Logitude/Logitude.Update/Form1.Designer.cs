@@ -179,6 +179,7 @@
             this.lblUInvoice = new System.Windows.Forms.Label();
             this.lblUQuote = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.bluesnapBtn = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.label7 = new System.Windows.Forms.Label();
@@ -206,6 +207,7 @@
             this.button46 = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.button51 = new System.Windows.Forms.Button();
+            this.updateBluesnapTransactionsLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -367,7 +369,7 @@
             this.batchTaskExecutionToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(751, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(858, 24);
             this.menuStrip1.TabIndex = 13;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -417,7 +419,6 @@
             // 
             // toolStripTextBoxFilePath
             // 
-            this.toolStripTextBoxFilePath.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBoxFilePath.Name = "toolStripTextBoxFilePath";
             this.toolStripTextBoxFilePath.Size = new System.Drawing.Size(100, 23);
             this.toolStripTextBoxFilePath.Text = "c:\\TextCode.xml";
@@ -546,7 +547,6 @@
             // 
             // tenantTxtBox
             // 
-            this.tenantTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tenantTxtBox.Name = "tenantTxtBox";
             this.tenantTxtBox.Size = new System.Drawing.Size(100, 23);
             this.tenantTxtBox.Text = "1";
@@ -587,9 +587,9 @@
             this.toolStripProgressBar1,
             this.toolStripStatusLabel1,
             this.conStrLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 608);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 672);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(751, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(858, 22);
             this.statusStrip1.TabIndex = 14;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -1446,7 +1446,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 24);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(751, 584);
+            this.tabControl1.Size = new System.Drawing.Size(858, 648);
             this.tabControl1.TabIndex = 84;
             // 
             // tabPage1
@@ -1514,7 +1514,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(743, 558);
+            this.tabPage1.Size = new System.Drawing.Size(850, 622);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Update";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
@@ -1707,6 +1707,8 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage2.Controls.Add(this.updateBluesnapTransactionsLabel);
+            this.tabPage2.Controls.Add(this.bluesnapBtn);
             this.tabPage2.Controls.Add(this.groupBox2);
             this.tabPage2.Controls.Add(this.CargoTrackingTestBtn);
             this.tabPage2.Controls.Add(this.button47);
@@ -1765,9 +1767,19 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(743, 558);
+            this.tabPage2.Size = new System.Drawing.Size(850, 622);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
+            // 
+            // bluesnapBtn
+            // 
+            this.bluesnapBtn.Location = new System.Drawing.Point(10, 563);
+            this.bluesnapBtn.Name = "bluesnapBtn";
+            this.bluesnapBtn.Size = new System.Drawing.Size(196, 23);
+            this.bluesnapBtn.TabIndex = 100;
+            this.bluesnapBtn.Text = "Update Bluesnap Transactions";
+            this.bluesnapBtn.UseVisualStyleBackColor = true;
+            this.bluesnapBtn.Click += new System.EventHandler(this.bluesnapBtn_Click);
             // 
             // groupBox2
             // 
@@ -1939,7 +1951,7 @@
             this.tabPage3.Controls.Add(this.button46);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(743, 558);
+            this.tabPage3.Size = new System.Drawing.Size(850, 622);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Airline Logos";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -2020,7 +2032,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(743, 558);
+            this.tabPage4.Size = new System.Drawing.Size(850, 622);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Misc";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -2035,11 +2047,20 @@
             this.button51.UseVisualStyleBackColor = true;
             this.button51.Click += new System.EventHandler(this.button51_Click_1);
             // 
+            // updateBluesnapTransactionsLabel
+            // 
+            this.updateBluesnapTransactionsLabel.AutoSize = true;
+            this.updateBluesnapTransactionsLabel.Location = new System.Drawing.Point(212, 573);
+            this.updateBluesnapTransactionsLabel.Name = "updateBluesnapTransactionsLabel";
+            this.updateBluesnapTransactionsLabel.Size = new System.Drawing.Size(16, 13);
+            this.updateBluesnapTransactionsLabel.TabIndex = 101;
+            this.updateBluesnapTransactionsLabel.Text = "...";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(751, 630);
+            this.ClientSize = new System.Drawing.Size(858, 694);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -2265,6 +2286,8 @@
         private System.Windows.Forms.Button uploadCitiesBtn;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.Button button51;
+        private System.Windows.Forms.Button bluesnapBtn;
+        private System.Windows.Forms.Label updateBluesnapTransactionsLabel;
     }
 }
 
