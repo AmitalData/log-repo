@@ -29,7 +29,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             });
             return res;
         }
-
+        /*
         private List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTableCore(string ObjectTableId, int Tenant,string type="A")
 
  
@@ -41,7 +41,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             });
             return res;
         }
-
+        */
         private List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTableCore(string ObjectTableId, int Tenant, string type = "A")
 
         {
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             return requiredFieldsPms;
         }
-
+        
         public CustomsRequiredFieldPM GetCustomRequiredFieldsByObjectFieldCode(string ObjectFieldCode, int Tenant)
         {
             CustomsRequiredFieldRepository rep = new CustomsRequiredFieldRepository(context);
@@ -73,6 +73,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             return requiredFieldsPms;
         }
-
+        
     }
 }
