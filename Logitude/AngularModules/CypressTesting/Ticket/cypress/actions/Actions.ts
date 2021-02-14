@@ -1,6 +1,8 @@
 import { TicketDetails } from "../models/TicketDetails";
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
+import * as BaseAssertion from "../../../Base/cypress/actions/Assertion"
 import { TicketSelectors } from "../selectors/TicketSelectors";
+import { URLs } from "../constants/URLs";
 
 export function FillTicketFields(ticketDetails: TicketDetails) {
     cy.FillLogLov(TicketSelectors.TicketCompany, ticketDetails.Company, true);
@@ -27,7 +29,7 @@ export function ReplyTicket() {
 export function AddInternalNoteTicket() {
     cy.Click(TicketSelectors.InternalNote, null);
     cy.FillLogTextBox(TicketSelectors.CorrespondenceLine, "Send Internal Note");
-    cy.Click(TicketSelectors.SendAsOpenButton, "Send and set as Open");
+    cy.Click(TicketSelectors.SendAsOpenButton, "Send and set as Open");//not done
 }
 
 export function CancelTicket() {
@@ -48,21 +50,19 @@ export function CloseTicket() {
     cy.Click(BaseSelectors.RedButton, "Ok");
 }
 
-export function CreateCallActivity() {
-    cy.Click(TicketSelectors.CallButton, null);
-    cy.FillLogTextBox(TicketSelectors.ActivitySubject, "Create Call Test");
+export function CreateActivity(ActivityTypeButton : string) {
+    cy.Click(ActivityTypeButton, null);
+    cy.FillLogTextBox(TicketSelectors.ActivitySubject, "Create Activity Test");
     cy.Click(BaseSelectors.RedButton, "Ok");
 }
 
-export function CreateTaskActivity() {
-    cy.Click(TicketSelectors.TaskButton, null);
-    cy.FillLogTextBox(TicketSelectors.ActivitySubject, "Create Task Test");
-    cy.Click(BaseSelectors.RedButton, "Ok");
-}
-
-export function CreateAppoimentActivity() {
-    cy.Click(TicketSelectors.AppoimentButton, null);
-    cy.FillLogTextBox(TicketSelectors.ActivitySubject, "Create Appoiment Test");
-    cy.Click(BaseSelectors.RedButton, "Ok");
+export function MarkActivitiesAsComplete(){
+    for(var i=0;i<3;i++){
+        cy.get('.HyperlinkButtonControl').children().eq(i).click({force:true});
+        cy.Click(TicketSelectors.MarkAsComplete,null);
+        cy.DefineRequestWait("PUT", URLs.Activity, "WaitPutActivityRequest");
+        BaseAssertion.AssertStatusCode("WaitPutActivityRequest", 200);
+        cy.Click(TicketSelectors.BackButton,null);
+    }
 }
 

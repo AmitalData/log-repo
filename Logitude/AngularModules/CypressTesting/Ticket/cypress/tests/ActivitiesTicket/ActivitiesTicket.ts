@@ -4,6 +4,7 @@ import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import * as Actions from "../../actions/Actions";
 import { URLs } from "../../constants/URLs";
+import { TicketSelectors } from "../../selectors/TicketSelectors";
 
 let TicketData: TicketDetails;
 
@@ -32,13 +33,14 @@ Then("the ticket should create successfully", () => {
 });
 //#endregion
 
+//#region Create Activities
 Given("the user in the ticket's main page", () => {
     Actions.OpenTicket(TicketData.TicketNumber);
 });
 
 When("create phone call activity", () => {
     cy.DefineRequestWait("POST", URLs.Activity, "WaitPostActivityRequest");
-    Actions.CreateCallActivity();
+    Actions.CreateActivity(TicketSelectors.TdCall);
 });
 
 Then("the call activity should appear successfully", () => {
@@ -47,7 +49,7 @@ Then("the call activity should appear successfully", () => {
 
 When("create task activity", () => {
     cy.DefineRequestWait("POST", URLs.Activity, "WaitPostActivityRequest");
-    Actions.CreateTaskActivity();
+    Actions.CreateActivity(TicketSelectors.TdTask);
 });
 
 Then("the task activity should appear successfully", () => {
@@ -56,9 +58,43 @@ Then("the task activity should appear successfully", () => {
 
 When("create appointment activity", () => {
     cy.DefineRequestWait("POST", URLs.Activity, "WaitPostActivityRequest");
-    Actions.CreateAppoimentActivity();
+    cy.DefineRequestWait("POST", "performancelogs", "WAITGET");
+    Actions.CreateActivity(TicketSelectors.TdAppoinment);
 });
 
 Then("the appointment activity should appear successfully", () => {
     BaseAssertion.AssertStatusCode("WaitPostActivityRequest", 200);
+    BaseAssertion.AssertStatusCode("WAITGET", 200);
 });
+//#endregion
+
+//#region Complete Activities 
+
+When("complete phone call activity", () => {
+   Actions.MarkActivitiesAsComplete();
+});
+
+Then("the call activity should complete successfully", () => {
+    // BaseAssertion.AssertStatusCode("WaitPutActivityRequest", 200);
+    // cy.Click(TicketSelectors.BackButton,null);
+});
+
+// When("complete task activity", () => {
+//     Actions.MarkActivitiesAsComplete(1);
+// });
+
+// Then("the task activity should complete successfully", () => {
+//     // BaseAssertion.AssertStatusCode("WaitPutActivityRequest", 200);
+//     // cy.Click(TicketSelectors.BackButton,null);
+// });
+
+// When("complete appointment activity", () => {
+//     Actions.MarkActivitiesAsComplete(0);
+// });
+
+// Then("the appointment activity should complete successfully", () => {
+//     // BaseAssertion.AssertStatusCode("WaitPutActivityRequest", 200);
+//     // cy.Click(TicketSelectors.BackButton,null);
+// });
+
+//#endregion
