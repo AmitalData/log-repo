@@ -12509,6 +12509,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ENSNumber = f.ENSNumber,
                     ENSDate = f.ENSDate,
                     WarehouseLegWarehouseId = f.WarehouseLegWarehouseId,
+                    WarehouseLegTerminalName = f.WarehouseLegTerminalName,
                     WarehouseLegAddressId = f.WarehouseLegAddressId,
                     WarehouseLegTerminalCode = f.WarehouseLegTerminalCode,
                     WarehouseLegExpectedEntryDate = f.WarehouseLegExpectedEntryDate,
