@@ -183,10 +183,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
 
             //List<CustomsRequestsSheet> requests = repository.GetCustomsRequestsSheetByCustomFileNumber(customFileNumber, tenant);
+            var date = DateTime.Now.AddHours(-24);
             var q = //context.CustomsRequestsSheets
                 this.repository.GetAll(Tenant)
                 .Where(rec => rec.Tenant == Tenant)
                 .Where(rec => listSheetStatusInProcess.Contains(rec.RequestStatusCode)
+                
                     //rec.RequestStatusCode == "1" /*EnglishName	LocalName Created	בקשה נרשמה */
                     //||
                     //rec.RequestStatusCode == "2" /*EnglishName	LocalName In Process	באמצע טיפול*/
@@ -196,7 +198,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     //rec.RequestStatusCode == "20" /* Sent	נשלח */ //Yuval Chalup 06.08.2015 TASK-15156
                     //||
                     //rec.RequestStatusCode == "21" /* Received	התקבלה תשובה */ //Yuval Chalup 06.08.2015 TASK-15156
-                    );
+                    )
+                .Where(rec=>rec.RequestCreateDate >  date);
             if (displayOnlyMode)
             {
                 q = q.Where(rec => intrefaceTypeListDisplayOnly.Contains(rec.InterfaceTypeCode));

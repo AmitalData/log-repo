@@ -1029,30 +1029,6 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     SupplierInvoiceItemPM.OcrHeight = 0;
                 }
 
-                SupplierInvoiceItemPM.AdditionalQuantityType = TranslateMeasurmentUnit(invoiceItem.AdditionalQuantityType);
-                if (!string.IsNullOrWhiteSpace(SupplierInvoiceItemPM.AdditionalQuantityType))
-                {
-                    if (invoiceItem.AdditionalQuantity != null && !String.IsNullOrWhiteSpace(invoiceItem.AdditionalQuantity))
-                    {
-                        if (decimal.TryParse(invoiceItem.AdditionalQuantity, out decimal1))
-                        {
-                            if (decimal1 > 0) SupplierInvoiceItemPM.AdditionalQuantity = decimal1;
-                        }
-                        else
-                        {
-                            throw new BusinessErrorException("Error in parsing Additional Quantity (" + invoiceItem.AdditionalQuantity + ") into integer");
-                        }
-                    }
-                    else if(!SupplierInvoiceItemPM.AdditionalQuantity.HasValue)
-                    {
-                        SupplierInvoiceItemPM.AdditionalQuantityType = null;
-                    }
-                }
-                else if (SupplierInvoiceItemPM.AdditionalQuantity.HasValue)
-                {
-                    SupplierInvoiceItemPM.AdditionalQuantity = null;
-                }
-
                 if (invoiceItem.CERTIFICATES != null && invoiceItem.CERTIFICATES.Count() > 0)
                 {
                     try
@@ -1089,22 +1065,6 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 {
                     throw new BusinessErrorException("Error in parsing LINE_ID (" + invoiceItem.LINE_ID + ") into integer");
                 }
-
-                if (SupplierInvoiceItemPM.StatisticQuantity != null || SupplierInvoiceItemPM.AdditionalQuantity != null || SupplierInvoiceItemPM.CustomsBookTypeCode != null || SupplierInvoiceItemPM.PreferenceDocumentNumber != null || SupplierInvoiceItemPM.ActualInvoiceLines != null
-            || SupplierInvoiceItemPM.DeferredCustomsTax != null || SupplierInvoiceItemPM.DeferredPurchaseTax != null || SupplierInvoiceItemPM.SalesTaxExemptionTypeCode != null || SupplierInvoiceItemPM.TaxExemptCode != null || SupplierInvoiceItemPM.OptionalTamaPercentage != null
-            || SupplierInvoiceItemPM.NonCustomsItemPrice != null || SupplierInvoiceItemPM.WholeSaleItemPrice != null || SupplierInvoiceItemPM.IsUsed || SupplierInvoiceItemPM.ManufactureIdentifier != null || SupplierInvoiceItemPM.DangerousClassificationCode != null || SupplierInvoiceItemPM.DangerousPackingGroupTypeCode != null
-            || (SupplierInvoiceItemPM.SupplierInvoiceItemsMods != null && SupplierInvoiceItemPM.SupplierInvoiceItemsMods.Count() > 0) || (SupplierInvoiceItemPM.SupplierInvoiceItemProcesTypes != null && SupplierInvoiceItemPM.SupplierInvoiceItemProcesTypes.Count() > 0)
-             || (SupplierInvoiceItemPM.SupplierInvoiceItemsConDeclars != null && SupplierInvoiceItemPM.SupplierInvoiceItemsConDeclars.Count() > 0) || (SupplierInvoiceItemPM.SupplierInvoiceItemLevies != null && SupplierInvoiceItemPM.SupplierInvoiceItemLevies.Count() > 0)
-             || (SupplierInvoiceItemPM.SupplierInvoiceItemsDescripts != null && SupplierInvoiceItemPM.SupplierInvoiceItemsDescripts.Count() > 0) || (SupplierInvoiceItemPM.SupplierInvoiceItemsSerialNums != null && SupplierInvoiceItemPM.SupplierInvoiceItemsSerialNums.Count() > 0)
-            || (SupplierInvoiceItemPM.SupplierInvoiceItemsProdIdents != null && SupplierInvoiceItemPM.SupplierInvoiceItemsProdIdents.Count() > 0))
-                {
-                    SupplierInvoiceItemPM.ItemAdditionalStatus = true;
-                }
-                else
-                {
-                    SupplierInvoiceItemPM.ItemAdditionalStatus = false;
-                }
-
                 if (SupplierInvoiceItemPM.ChangeSetOp != ChangeSetOperation.Update)
                 {
                     SupplierInvoiceItemPM.Tenant = ResolvedTenant();
