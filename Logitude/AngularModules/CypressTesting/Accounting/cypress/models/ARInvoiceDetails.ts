@@ -8,4 +8,5 @@ export interface ARInvoiceDetails {
     VATNo:string,
     Branch:string,
     VATType: string,
+    Partner:string
 }
