@@ -146,51 +146,6 @@ export class AccountingMainTesterComponent extends BaseComponent {
         });
 
     }
-    //XXX_Click() {
-
-    //}
-    //YYY_Click() {
-
-    //}
-    //Aging_Click() {
-    //    let aging_params = {
-    //        Tenant: 1,
-    //        "AgingForDate": new Date(),
-    //        "NumberOfmonthsbackwards": 6,
-    //        VendorCustomerId: "1-1",
-    //        Aging4AccountTypeCode: 'Customer2',
-    //        Category1Id: "",
-    //        Category2Id: "",
-    //        Category3Id: "",
-    //        Category4Id: "",
-    //        Category5Id: "",
-    //        Category6Id: "",
-    //        CollectorId: "",
-    //        SalesmanId: "",
-    //        ChartOfAccountsTypeCode: "",
-    //        ChartOfAccountsId: "",
-    //        AggregateByGLAccountCurrencies: false,
-    //        AggregateByGLAccountChildren: false,
-    //        AgingMethod_Options: 'TotalByMonthMethod;TotalByMonthFIFOMethod;ReconcileOpenBalanceMethod',
-    //        AgingMethod: 'ReconcileOpenBalanceMethod',
-    //        GroupByDate: 'DueDate',
-    //        GroupByDate_Options: 'DueDate;AccountingDate',
-    //        Aging4AccountTypeCode_Options: 'ControlAccountOnly1;Customer2;Vendor3',
-    //        BuildPivot: true,
-    //    };
-        
-    //    let opr = "Aging_Click";
-
-    //    this.StrandartOp(opr, aging_params, () => {
-    //        //if (aging_params.BuildPivot) {
-    //            let resObj = JSON.parse(this.JsonOut);
-    //            if (Array.isArray(resObj)) {
-    //                this.JsonList = resObj;
-    //            }
-    //        //}
-    //    });
-
-    //}
 
 
     CardIndexNew_Click() {
@@ -361,13 +316,21 @@ export class AccountingMainTesterComponent extends BaseComponent {
         }
         let objToCheck1 = JSON.parse(this._TextBoxParam);
         let _ReconciliationStageCUrl = ServiceHelper.GetLogitudeURL() + '/api/ReconciliationStageC';
+        //let myUrl = _ReconciliationStageCUrl + "?tenant=" + objToCheck1.Tenant;
+        //myUrl = myUrl + "&gLAccountId=" + objToCheck1.GLAccountId;
+        //myUrl = myUrl + "&accountTypeCode=" + objToCheck1.AccountTypeCode;
+        //myUrl = myUrl + "&upToDueDate=" + objToCheck1.UpToDueDate;
+        //myUrl = myUrl + "&lT_LinesMaximum=" + objToCheck1.LT_LinesMaximum;
+        //myUrl = myUrl + "&maximalPageSize=" + objToCheck1.MaxPageSize;///dif !!!
+        //myUrl = myUrl + "&closeOnlyZeroes=" + objToCheck1.CloseOnlyZeroes;
         let myUrl = _ReconciliationStageCUrl + "?tenant=" + objToCheck1.Tenant;
         myUrl = myUrl + "&gLAccountId=" + objToCheck1.GLAccountId;
         myUrl = myUrl + "&accountTypeCode=" + objToCheck1.AccountTypeCode;
         myUrl = myUrl + "&upToDueDate=" + objToCheck1.UpToDueDate;
         myUrl = myUrl + "&lT_LinesMaximum=" + objToCheck1.LT_LinesMaximum;
-        myUrl = myUrl + "&maximalPageSize=" + objToCheck1.MaxPageSize;///dif !!!
+        myUrl = myUrl + "&maxPageSize=" + objToCheck1.MaxPageSize;
         myUrl = myUrl + "&closeOnlyZeroes=" + objToCheck1.CloseOnlyZeroes;
+        myUrl = myUrl + "&noBatch=0";
         this.CurrentSession.StartBusyIndicatorCreating();
         let _http = ServiceHelper.HttpClient;
         _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
