@@ -1,6 +1,4 @@
-@smoke @stable 
-
-
+@smoke @stable @all
 Feature: Cancel shipment
   After the user logging in the system and navigate to shipments workspace
   will create a direct shipment and cancel it.
