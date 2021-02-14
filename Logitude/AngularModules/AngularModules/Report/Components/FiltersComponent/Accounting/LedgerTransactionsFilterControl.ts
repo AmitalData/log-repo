@@ -506,36 +506,50 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     private SetFilterItem(queryFilterItem: QueryFilterItem)
     {
         if (queryFilterItem) {
-            if (queryFilterItem.FieldName == "FromDate") {
-                this.FromDate = queryFilterItem.FieldValue;
-            }
-            else if (queryFilterItem.FieldName == "ToDate") {
-                this.ToDate = queryFilterItem.FieldValue;
-            }
-            else if (queryFilterItem.FieldName == "GLAccountId") {
-                this.GLAccountId = queryFilterItem.FieldValue;
-            }
-            else if (queryFilterItem.FieldName == "ChartOfAccountId") {
-                this.ChartOfAccountId = queryFilterItem.FieldValue;
-            }
-            else if (queryFilterItem.FieldName == "CurrencyId") {
-                this.CurrencyId = queryFilterItem.FieldValue;
-            }
-            else if (queryFilterItem.FieldName == "IncludeChildAccounts") {
-                this.IncludeChildAccounts = queryFilterItem.FieldValue;
-            }
-            else if (queryFilterItem.FieldName == "SearchFields") {
-                this.SearchFields = queryFilterItem.FieldValue;
-            }
-            else if (queryFilterItem.FieldName == "DateTypeCode") {
-                this._dateTypeCode = queryFilterItem.FieldValue;
-                this.SetFilterSelectedValue();
-            }
-            else if (queryFilterItem.FieldName == "IncludeRelatedCurrenciesAccount") {
-                this.IncludeRelatedCurrenciesAccount = queryFilterItem.FieldValue;
-            }
-            else if (queryFilterItem.FieldName == "IsReconciled") {
-                this.IsReconciled = queryFilterItem.FieldValue;
+            switch (queryFilterItem.FieldName) {
+                case "FromDate":
+                    this.FromDate = queryFilterItem.FieldValue;
+                    break;
+                case "ToDate":
+                    this.ToDate = queryFilterItem.FieldValue;
+                    break;
+                case "GLAccountId":
+                    this.GLAccountId = queryFilterItem.FieldValue;
+                    break;
+                case "ChartOfAccountId":
+                    this.ChartOfAccountId = queryFilterItem.FieldValue;
+                    break;
+                case "CurrencyId":
+                    this.CurrencyId = queryFilterItem.FieldValue;
+                    break;
+                case "IncludeChildAccounts":
+                    this.IncludeChildAccounts = queryFilterItem.FieldValue;
+                    break;
+                case "SearchFields":
+                    this.SearchFields = queryFilterItem.FieldValue;
+                    break;
+                case "DateTypeCode":
+                    this._dateTypeCode = queryFilterItem.FieldValue;
+                    this.SetFilterSelectedValue();
+                    break;
+                case "IncludeRelatedCurrenciesAccount":
+                    this.IncludeRelatedCurrenciesAccount = queryFilterItem.FieldValue;
+                    break;
+                case "IsReconciled":
+                    this.IsReconciled = queryFilterItem.FieldValue;
+                    break;
+                case "SalesmanUserId":
+                    this.Salesman = queryFilterItem.FieldValue;
+                    break;
+                case "CategoryIndex":
+                    this.SelectedItemChanged(queryFilterItem.FieldValue);
+                    break;
+                case "CategoryValue":
+                    //CategoryValue
+                    break;
+                case "ChartOfAccountsTypeCode":
+                    this.ChartOfAccountsTypeCode = queryFilterItem.FieldValue;
+                    break;
             }
         }
     }
@@ -737,10 +751,10 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             if (this.glaccountPM) {
                 if (this.glaccountPM.IsMultiCurrency) {
 
-                    this.CurrencyId = null;
+                    this.CurrencyId = !AppTool.IsNullOrEmpty(this.CurrencyId) && this.IsSchedulerReport ? this.CurrencyId : null;
                     this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
                 } else {
-                    this.CurrencyId = this.glaccountPM.CurrencyId;
+                    this.CurrencyId = !AppTool.IsNullOrEmpty(this.CurrencyId) && this.IsSchedulerReport ? this.CurrencyId : this.glaccountPM.CurrencyId;
                     this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
                 }
             }
