@@ -1,4 +1,4 @@
-@smoke @release
+@stable @smoke @release
 Feature: Create customs ARInvoice
     After the user logging in the system and navigate to shipments workspace
     will create a customer and direct shipment, after that update routing

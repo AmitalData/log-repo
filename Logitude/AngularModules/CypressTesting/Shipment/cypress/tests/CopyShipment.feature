@@ -1,4 +1,4 @@
-@smoke
+@stable @smoke
 Feature: Copy direct export air shipment
     After the user logging in the system and navigate to shipments workspace
     will will create a direct shipment and copy it.
