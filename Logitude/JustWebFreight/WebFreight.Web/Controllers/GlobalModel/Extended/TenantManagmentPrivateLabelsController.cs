@@ -24,7 +24,26 @@ using WebFreight.Web.Security;
 namespace WebFreight.Web.Controllers.GlobalModel.Extended
 {
     public class TenantManagmentPrivateLabelsController : ApiController
-    { 
+    {
+
+        // Hybrid Labels
+        public HttpResponseMessage PutGetHybridLabelsBrandingData(HybridLabelsBrandingDataRequest BrandingDataRequest)
+        {
+
+            try
+            {
+                HybridLabelsBrandingDataService hybridLabelsBrandingDataService = new HybridLabelsBrandingDataService();
+                HybridLabelsBrandingData brandingData = hybridLabelsBrandingDataService.GeHybridLabelsBrandingDataByUrl(BrandingDataRequest, true);
+                ServiceResponse response = new ServiceResponse();
+                response.Result = brandingData;
+                return Request.CreateResponse(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+         
 
         public HttpResponseMessage GetSingle(string id)
         {
@@ -40,23 +59,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey); 
 
                 return Request.CreateResponse(HttpStatusCode.OK, tenantManagmentPrivateLabelsPM);
-                 
-                //HybridLabelsBrandingDataService hybridLabelsBrandingDataService = new HybridLabelsBrandingDataService();
-                //HybridLabelsBrandingDataRequest hybridBrandingDataRequest = null; 
-                //if (tenantManagmentPrivateLabelsPM != null)
-                //{
-                // hybridBrandingDataRequest = new HybridLabelsBrandingDataRequest()
-                // { 
-                //      Id = tenantManagmentPrivateLabelsPM.Id,
-                //      BackgroundImageId = tenantManagmentPrivateLabelsPM.BackgroundImageId,
-                //     MainImageId = tenantManagmentPrivateLabelsPM.MainImageId,
-                //     LoginProgressImageId = tenantManagmentPrivateLabelsPM.LoginProgressImageId,
-                //     ForgetPasswordImageId = tenantManagmentPrivateLabelsPM.ForgetPasswordImageId,
-                // };
-                // }
-                // HybridLabelsBrandingData brandingData = hybridLabelsBrandingDataService.GeHybridLabelsBrandingData(hybridBrandingDataRequest);
-                //return Request.CreateResponse(HttpStatusCode.OK, brandingData);
-
+                  
             }
             catch (Exception ex)
             {

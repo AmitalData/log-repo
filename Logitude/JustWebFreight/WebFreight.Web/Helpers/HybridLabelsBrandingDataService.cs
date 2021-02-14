@@ -18,11 +18,11 @@ namespace WebFreight.Web.Helpers
         string imageBrandingData = "";
         string imageBrandingDataRequest = "";
         string[] imagesFields = { "BackgroundImage", "MainImage", "LoginProgressImage", "ForgetPasswordImage" };
-        public HybridLabelsBrandingData GeHybridLabelsBrandingData(HybridLabelsBrandingDataRequest BrandingDataRequest, bool isFromPrivateSite = false)
+        public HybridLabelsBrandingData GeHybridLabelsBrandingDataByUrl(HybridLabelsBrandingDataRequest BrandingDataRequest, bool isFromPrivateSite = false)
         {
 
             TenantManagmentPrivateLabelsQuery tenantManagementQuery = new TenantManagmentPrivateLabelsQuery();
-            TenantManagmentPrivateLabelsPM tenantManagementPM = tenantManagementQuery.GetSinglePM(BrandingDataRequest.Id);
+            TenantManagmentPrivateLabelsPM tenantManagementPM = tenantManagementQuery.GetSingleActivePMByUrl(BrandingDataRequest.PrivateLabelUrl);
             HybridLabelsBrandingData BrandingData = MapBrandingData(tenantManagementPM, BrandingDataRequest, isFromPrivateSite);
 
             return BrandingData;

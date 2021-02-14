@@ -56,25 +56,24 @@
         }
 
 
-        .InputShow{
-      margin: 0px;
-    height: 15px;
-    /*width: 200px;
+    .InputShow {
+        margin: 0px;
+        height: 15px;
+        /*width: 200px;
     padding: 3px;*/
-    border: 1px solid #D1D1D1;
-    outline-style: solid;
-    outline-width: 0px;
-    font: 11px "Lucida Sans Unicode";
-    color: #45494A;
-    border-radius: 3px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    -moz-box-shadow: inset 0 0 10px #D1D1D1;
-    -webkit-box-shadow: inset 0 0 10px #D1D1D1;
-    box-shadow: inset 0 0 10px #D1D1D1;
-    background: white;
-
-}
+        border: 1px solid #D1D1D1;
+        outline-style: solid;
+        outline-width: 0px;
+        font: 11px "Lucida Sans Unicode";
+        color: #45494A;
+        border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        -moz-box-shadow: inset 0 0 10px #D1D1D1;
+        -webkit-box-shadow: inset 0 0 10px #D1D1D1;
+        box-shadow: inset 0 0 10px #D1D1D1;
+        background: white;
+    }
 
     .cmdSubmit {
         -moz-box-shadow: inset 0px 1px 0px 0px #caefab;
@@ -143,7 +142,9 @@
         }
 </style>
 
-<table class="PreventSelect" style="background: url(Images/LoginScreen/screen_bg.jpg) center center;background-size: 100% 100%;position: absolute;">
+  backgroundimageid
+<table class="PreventSelect" [ngStyle]="{ 'background-image': 'url(' + BackgroundImage + ')'}" center center;background-size: 100% 100%;position: absolute;">
+    <!--  <table class="PreventSelect" style="background: url(Images/LoginScreen/screen_bg.jpg) center center;background-size: 100% 100%;position: absolute;"> -->
     <tr>
         <td style="width:30%;">
             <div></div>
@@ -189,6 +190,7 @@
                                         </tr>
 
                                         <tr style="height: 16px;">
+
                                             <td style="opacity: 0.7; background-image: url('Images/LoginScreen/shadow1.png'); background-repeat: no-repeat;">
                                                 <div></div>
                                             </td>
@@ -230,14 +232,14 @@
                                                                         <td class="column1">
                                                                             <label>password</label>
                                                                             <div style="height:31px;width:280px;border:1px solid lightgray;border-radius:4px;" class="InputShow">
-                                                                                <input [attr.type]="InputPasswordType" [ngStyle]="{'width':Password ? '250px' : '280px' }" style="border:0px" class="auto-style1" id="Password" [(ngModel)]="Password" required   (keydown)="OnMouseDownEvt($event)" />
-                                                                                <img src="{{PasswordImage}}" [hidden]="!Password" id="ShowHidePasswordImageId" title= "{{PasswordTitle}} Password" alt="Show Password" style="padding-left:2px;font-size:12px;vertical-align:central;font-family:Arial; cursor:pointer;text-decoration:none;float:right;margin-top:3px;margin-right:2px;" (click)="ShowHidePasswordClick()" />
+                                                                                <input [attr.type]="InputPasswordType" [ngStyle]="{'width':Password ? '250px' : '280px' }" style="border:0px" class="auto-style1" id="Password" [(ngModel)]="Password" required (keydown)="OnMouseDownEvt($event)" />
+                                                                                <img src="{{PasswordImage}}" [hidden]="!Password" id="ShowHidePasswordImageId" title="{{PasswordTitle}} Password" alt="Show Password" style="padding-left:2px;font-size:12px;vertical-align:central;font-family:Arial; cursor:pointer;text-decoration:none;float:right;margin-top:3px;margin-right:2px;" (click)="ShowHidePasswordClick()" />
                                                                             </div>
                                                                         </td>
                                                                     </tr>
 
 
-                                                                    <tr [style.height]="IsShowAreaCaptcha ?'5px':'10px'" >
+                                                                    <tr [style.height]="IsShowAreaCaptcha ?'5px':'10px'">
                                                                         <td>
                                                                             <div></div>
                                                                         </td>
@@ -247,7 +249,7 @@
                                                                     <tr *ngIf="IsShowAreaCaptcha" style="height:30px;">
                                                                         <td>
                                                                             <img src={{CaptchaImageUrl}} style="height:auto;width:auto;float:left;" />
-                                                                                 <input  [(ngModel)]="CaptchaTextValue"  style="height:19px;margin-bottom:5px;margin-top:5px;float:left;" type="text" placeholder="type the text you see" id="CaptchaTextBox" />
+                                                                            <input [(ngModel)]="CaptchaTextValue" style="height:19px;margin-bottom:5px;margin-top:5px;float:left;" type="text" placeholder="type the text you see" id="CaptchaTextBox" />
 
                                                                         </td>
                                                                     </tr>
