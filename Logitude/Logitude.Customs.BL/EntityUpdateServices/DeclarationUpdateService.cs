@@ -1563,7 +1563,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("8250 RequestInProgress stop create a new one !! ");
                 }
-                throw;
+               // throw;
             }
         }
         //Yuval Chalup 10.12.2015 TASK-17450 --->
