@@ -1,4 +1,4 @@
-@smoke and @release and @stable
+@smoke @release @stable @all
 
 Feature: APInvoice operations and actions
     After the user logging in the system and navigate to shipments workspace
