@@ -316,13 +316,21 @@ export class AccountingMainTesterComponent extends BaseComponent {
         }
         let objToCheck1 = JSON.parse(this._TextBoxParam);
         let _ReconciliationStageCUrl = ServiceHelper.GetLogitudeURL() + '/api/ReconciliationStageC';
+        //let myUrl = _ReconciliationStageCUrl + "?tenant=" + objToCheck1.Tenant;
+        //myUrl = myUrl + "&gLAccountId=" + objToCheck1.GLAccountId;
+        //myUrl = myUrl + "&accountTypeCode=" + objToCheck1.AccountTypeCode;
+        //myUrl = myUrl + "&upToDueDate=" + objToCheck1.UpToDueDate;
+        //myUrl = myUrl + "&lT_LinesMaximum=" + objToCheck1.LT_LinesMaximum;
+        //myUrl = myUrl + "&maximalPageSize=" + objToCheck1.MaxPageSize;///dif !!!
+        //myUrl = myUrl + "&closeOnlyZeroes=" + objToCheck1.CloseOnlyZeroes;
         let myUrl = _ReconciliationStageCUrl + "?tenant=" + objToCheck1.Tenant;
         myUrl = myUrl + "&gLAccountId=" + objToCheck1.GLAccountId;
         myUrl = myUrl + "&accountTypeCode=" + objToCheck1.AccountTypeCode;
         myUrl = myUrl + "&upToDueDate=" + objToCheck1.UpToDueDate;
         myUrl = myUrl + "&lT_LinesMaximum=" + objToCheck1.LT_LinesMaximum;
-        myUrl = myUrl + "&maximalPageSize=" + objToCheck1.MaxPageSize;///dif !!!
+        myUrl = myUrl + "&maxPageSize=" + objToCheck1.MaxPageSize;
         myUrl = myUrl + "&closeOnlyZeroes=" + objToCheck1.CloseOnlyZeroes;
+        myUrl = myUrl + "&noBatch=0";
         this.CurrentSession.StartBusyIndicatorCreating();
         let _http = ServiceHelper.HttpClient;
         _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
