@@ -4,9 +4,11 @@ import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import * as Actions from "../../actions/Actions";
 import { URLs } from "../../constants/URLs";
+import { TicketSelectors } from "../../selectors/TicketSelectors";
 
 let TicketData: TicketDetails;
 
+//#region  create ticket 
 Given("the user logged in and navigated to ticket workspace", () => {
     cy.Login();
     cy.Click(BaseSelectors.TicketsMenu, null)
@@ -29,15 +31,30 @@ Then("the ticket should create successfully", () => {
         TicketData.TicketNumber = interception.response.body.TicketNumber;
     })
 });
+//#endregion
 
-Given("the user edit the description", () => {
+Given("the user in the ticket's main page", () => {
     Actions.OpenTicket(TicketData.TicketNumber);
-    Actions.EditTheTicket();
+});
+
+When("save as close", () => {
+    cy.DefineRequestWait("PUT", URLs.Tickets, "WaitPutTicketRequest")
+    cy.Click(".x-button-drop",null);
+    cy.Click(".x-button-drop-menu" , "Save as Closed");
+    cy.Click(BaseSelectors.RedButton , "Ok");
 });
 
 When("save as open", () => {
     cy.DefineRequestWait("PUT", URLs.Tickets, "WaitPutTicketRequest")
-    cy.Click(BaseSelectors.SaveAsOpenButton, null);
+    cy.Click(".x-button-drop",null);
+    cy.Click(".x-button-drop-menu" , "Save as Open");
+});
+
+When("save as resolve", () => {
+    cy.DefineRequestWait("PUT", URLs.Tickets, "WaitPutTicketRequest")
+    cy.Click(".x-button-drop",null);
+    cy.Click(".x-button-drop-menu" , "Save as Resolved");
+    cy.Click(BaseSelectors.RedButton , "Ok");
 });
 
 Then("the ticket should save successfully", () => {
