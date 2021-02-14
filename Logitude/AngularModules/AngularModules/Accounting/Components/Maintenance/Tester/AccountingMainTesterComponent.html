@@ -2,6 +2,7 @@
     table, th, td {
         border: 1px solid black;
     }
+
     tr:nth-child(even) {
         background-color: #f2f2f2;
     }
@@ -35,7 +36,7 @@
             <td style="width:200px">
                 <button class="Button" (click)="CardIndexNew_Click()">CardIndexNew</button>
             </td>
-            <td style="width:200px"></td>
+            <td style="width:200px" class="Button" (click)="CardIndexNewDrillDown1st_Click()">CardIndexNewDrillDown1st</td>
             <td style="width:200px"></td>
         </tr>
 
@@ -61,7 +62,7 @@
             <td style="width:200px"></td>
             <td style="width:200px"></td>
         </tr>
-      
+
     </table>
 
 
@@ -87,18 +88,64 @@
                 <button class="Button" (click)="JournalSend_Click()">JournalSend</button>
             </td>
             <td style="width:200px">
-              
             </td>
             <td style="width:200px"></td>
             <td style="width:200px"></td>
         </tr>
     </table>
-   
- 
+
+
     <br />
 
     <button class="Button" (click)="_ButtonReverseTrans_Click()">Reverse from Ledger to journal line</button>
 </div>
+
+
+<div *ngIf="SelectedItem=='Aging'">
+    <table>
+       
+        <tr>
+            <td style="width:200px">
+                <button class="Button" (click)="Aging_Click()">Aging Report</button>
+            </td>
+            <td style="width:200px">
+            </td>
+            <td style="width:200px"></td>
+            <td style="width:200px"></td>
+        </tr>
+    </table>
+
+
+</div>
+
+<div *ngIf="SelectedItem=='Alex'">
+    <table>
+
+        <tr>
+            <td style="width:200px">
+                <button class="Button" (click)="ButtonReconcileStageCNoBatch_Click()">ReconcileStageC NoBatch</button>
+            </td>
+            <td style="width:200px">
+                <button class="Button" (click)="ButtonReconcileStageCBatch_Click()">ReconcileStageC Batch</button>
+            </td>
+            <td style="width:200px"></td>
+            <td style="width:200px"></td>
+        </tr>
+        <tr>
+            <td style="width:200px">
+                <button class="Button" (click)="YYY_Click()">YYY</button>
+            </td>
+            <td style="width:200px">
+            </td>
+            <td style="width:200px"></td>
+            <td style="width:200px"></td>
+        </tr>
+
+    </table>
+
+
+</div>
+
 <div>
     <table>
         <tr style="height:100px">
@@ -116,7 +163,7 @@
             </td>
         </tr>
         <tr style="height:25px">
-            
+
             <td>
                 <LogTextBox [ObjectFieldName]="'ErrorMess'"
                             [Text]="ErrorMess" [ObjectTableName]="ObjectTableName"

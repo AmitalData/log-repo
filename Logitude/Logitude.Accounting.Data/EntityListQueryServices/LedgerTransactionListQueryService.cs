@@ -1328,6 +1328,14 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public LedgerTransactionBalanceFilterCallBack CallBack { get; set; }
         public string DateTypeCode { get; set; }
         public bool CheckHaveAccountingQueued { get; set; }
+
+        /*
+         * ClacOpenReconciledAmounT
+         * ***לאחר התייעצות עם ירון הוחלט ****
+יבוצע רק בכרטסת 
+אשר לא כוללת כרטיסים מקושרים וללא כרטיסי פיצול מטבעות !!!!
+         */
+        public bool ClacOpenReconciledAmount_OnlyWithout_IncludeRelatedCurrenciesAccount_IncludeChildAccounts { get; set; }
     }
     public class LedgerTransactionBalanceResponse : LedgerTransactionBalanceFilterCallBack
     {
@@ -1338,6 +1346,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public string GLAccountId { get; set; }
 
         public long TookMS { get; set; }
+
+        public string OpenAmountCurrencyId { get; set; }
+        public decimal StartTotalOpenAmount { get; set; }
     }
 
     public class LedgerTransactionBalanceFilterCallBack : LedgerTransactionBalanceFilterCallBackCanBeNull

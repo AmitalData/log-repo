@@ -123,13 +123,6 @@ namespace Logitude.Server.Tools
 
             return json;
         }
-        public static object JsonConvertDeserializeObject(string json)
-        {
-            var objT = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
-            
-
-            return objT;
-        }
         public static string SerializeObjectToJosnStringMax<T>(T myObject)
         {
 
@@ -137,6 +130,20 @@ namespace Logitude.Server.Tools
 
             return json;
         }
+        public static object JsonConvertDeserializeObject(string json)
+        {
+            var objT = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
+            
+
+            return objT;
+        }
+        //public static string SerializeObjectToJosnStringMax<T>(T myObject)
+        //{
+
+        //    string json = new System.Web.Script.Serialization.JavaScriptSerializer() { MaxJsonLength = int.MaxValue }.Serialize(myObject);
+
+        //    return json;
+        //}
         public static T JsonConvertDeserializeTObject<T>(string json)
         {
             var objT = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(json);
