@@ -29,6 +29,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         StatusCode = a.StatusCode ,
                         LocalAmount = a.LocalAmount ,
                         ValueDate = a.ValueDate,
+                        ChequeNumber = a.ChequeNumber,
+                        PaymentId = a.PaymentId
                     }).ToList();
 
 

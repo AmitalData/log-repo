@@ -79,9 +79,10 @@ namespace Logitude.Accounting.BL.CoreBL
                         Log("[Tenant " + tenantStr + "] bill to accounts got, (" + billtos.Count() + ")");
 
 
-                        foreach (var billTo in billToAccounts)
+                        foreach (var billTo in billtos)
                         {
-                            CalculateBilltoFutureCheques(tenant, billTo);
+                            GLAccountChequesTotalCalculator chequesTotalCalculator = new GLAccountChequesTotalCalculator(tenant);
+                            chequesTotalCalculator.RecalculateChequesTotalForBillToAccount(billTo);
                         }
 
                         scope.Complete();
@@ -123,17 +124,13 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         var tenant = Convert.ToInt32(tenantStr);
 
-                        // get billto glaccounts
-                        IAccountingContext MyContext = AccountingContext.GetContext(tenant);
-                        IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
+                        List<string> billToAccountsIds = GetTenantBillToAccountsThatHaveCheques(tenant);
 
-                        var billToAccounts = (from cheque in invoiceContext.ARPaymentChequeReplicas
-                                       join payment in invoiceContext.ARPayments on cheque.PaymentId equals payment.Id
-                                       where cheque.Tenant == tenant
-                                       select payment.BillToId).Distinct().ToList();
-
-                        foreach (var billTo in billToAccounts)
-                            CalculateBilltoFutureCheques(tenant, billTo);
+                        foreach (var billToAccountId in billToAccountsIds)
+                        {
+                            GLAccountChequesTotalCalculator chequesTotalCalculator = new GLAccountChequesTotalCalculator(tenant);
+                            chequesTotalCalculator.RecalculateChequesTotalForBillToAccount(billToAccountId);
+                        }
 
                         scope.Complete();
                         Log("   >>>>> tenant (" + tenantStr + ") cheques recalculated successfully");
@@ -154,6 +151,16 @@ namespace Logitude.Accounting.BL.CoreBL
             Log(".........................");
             Log(">>> cheques recalculated successfully for giver tenants");
 
+        }
+
+        private static List<string> GetTenantBillToAccountsThatHaveCheques(int tenant)
+        {
+            IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
+
+            return (from cheque in invoiceContext.ARPaymentChequeReplicas
+                    join payment in invoiceContext.ARPayments on cheque.PaymentId equals payment.Id
+                    where cheque.Tenant == tenant
+                    select payment.BillToId).Distinct().ToList();
         }
 
         public List<ARPaymentChequePM> GetNotRedeemedReconciledCheques(int tenant)

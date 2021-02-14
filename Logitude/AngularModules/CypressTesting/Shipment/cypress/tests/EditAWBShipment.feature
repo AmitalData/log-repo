@@ -1,4 +1,4 @@
-@smoke
+@smoke @not-stable
 Feature: Edit AWB Shipment
     The authenticated user will create a direct export air shipment,
     and open AWB wizard screen to show overview tab and add packages from AWB wizard.
