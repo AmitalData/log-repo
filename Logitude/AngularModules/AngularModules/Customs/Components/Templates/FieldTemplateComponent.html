@@ -402,8 +402,20 @@
                         <div *ngIf="Entity['RequestedCustomsDocId']=='1'">
                             <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Icons/GreenV.png" />
                         </div>
-                     </div>
+                    </div>
                 </div>
+
+                <div *ngIf="FieldName == 'FclLcl'" style="position:relative;width:100%; height: 100%;">
+                    <div *ngIf="IsHeaderScreenTemplate">
+                        <div *ngIf="Entity['FclLcl']=='F'">
+                            <span>{{'FCL'}}</span>
+                        </div>
+                        <div *ngIf="Entity['FclLcl']=='L'">
+                            <span>{{'LCL'}}</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div *ngIf="FieldName == 'Actions'" (click)="ButtonClick()">
                     <div (click)="ButtonClick()">
                         <courier-filter-button #MyDropdownMenuFilterComponent

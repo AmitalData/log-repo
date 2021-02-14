@@ -180,6 +180,10 @@ public partial class LogitudeCustomsFile
 
     private string distributionAreaField;
 
+    private string fclLclField;
+
+    private string forwarderIdField;
+
     /// <remarks/>
     public string CustomFileNo
     {
@@ -1009,6 +1013,32 @@ public partial class LogitudeCustomsFile
         set
         {
             this.distributionAreaField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string FclLcl
+    {
+        get
+        {
+            return this.fclLclField;
+        }
+        set
+        {
+            this.fclLclField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string ForwarderId
+    {
+        get
+        {
+            return this.forwarderIdField;
+        }
+        set
+        {
+            this.forwarderIdField = value;
         }
     }
 }
