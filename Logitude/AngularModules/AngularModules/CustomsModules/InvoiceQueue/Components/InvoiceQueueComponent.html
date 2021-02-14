@@ -235,23 +235,24 @@
         background: white;
     }
 
-    .cut-text { 
-  width : 120px;
-  overflow:hidden;
-  display:inline-block;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-        .cut-text-label { 
-     width : 100px;
-  overflow:hidden;
-  display:inline-block;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+    .cut-text {
+        width: 120px;
+        overflow: hidden;
+        display: inline-block;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        vertical-align: bottom;
+    }
+    .cut-text-label {
+        width: 100px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        vertical-align:bottom;
+    }
 </style>
 
-<div class="class-response-content" *ngIf="declaration">
+<div class="class-response-content" *ngIf="declaration && IsLoaded">
     <div style="float:left;width:115px; bottom:15px; left:3% " class="dropdown">
         <div class="WindowButton" (mousedown)="CloseClicked()">
             <img src="./Images/WindowIcons/WindowClose.png" class="CenterCenter" style=" bottom:15px; right: 150px;" />
@@ -285,7 +286,7 @@
     <table>
         <tr style="height:25px;">
             <td>
-                <span _ngcontent-c14="" class="Counter" style="font-size: 18px; color: #1B90CB;">
+                <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
                     מספר תיק
                 </span>
                 <span _ngcontent-c14="" class="Counter" style="font-size: 18px; ">
@@ -300,7 +301,7 @@
                     שם לקוח
                 </span>
 
-                <span _ngcontent-c14="" class="Counter cut-text" style="font-size: 18px;">
+                <span _ngcontent-c14="" class="Counter cut-text" data-toggle="tooltip" data-placement="bottom" title="{{declaration.CustomerName}}" style="font-size: 18px;">
 
                     {{declaration.CustomerName}}
                 </span>
@@ -314,7 +315,7 @@
                 </span>
 
 
-                <span _ngcontent-c14="" class="Counter cut-text" style="font-size: 18px; width:140px!important">
+                <span _ngcontent-c14="" class="Counter cut-text" data-toggle="tooltip" data-placement="bottom" title="{{declaration.DeclarationNumber}}" style="font-size: 18px; width:140px!important">
 
                     {{declaration.DeclarationNumber}}
                 </span>
@@ -335,54 +336,38 @@
             <td></td>
             <td>
                 <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
-
                     תחנת מכס
                 </span>
 
 
-                <span _ngcontent-c14="" class="Counter cut-text" style="font-size: 18px;">
+                <span _ngcontent-c14="" class="Counter cut-text" data-toggle="tooltip" data-placement="bottom" title="{{declaration.DeclarationOfficeName}}" style="font-size: 18px;">
 
                     {{declaration.DeclarationOfficeName}}
                 </span>
 
             </td>
-
             <td></td>
             <td>
                 <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
-
                     אתר אחסון
                 </span>
 
-                <span _ngcontent-c14="" class="Counter cut-text" style="font-size: 18px;">
-
-                    {{   declaration.StorageSiteName}}
+                <span class="Counter cut-text" data-toggle="tooltip" data-placement="bottom" title="{{declaration.StorageSiteName}}" style="font-size: 18px;">
+                    {{declaration.StorageSiteName}}
                 </span>
+           
 
             </td>
-
             <td></td>
-            <!--<td>
-                <span _ngcontent-c14="" class="Counter" style="font-size: 18px; color: #1B90CB;">
-
-                    תנאי מכר
-                </span>
-
-                <span _ngcontent-c14="" class="Counter" style="font-size: 18px;" *ngIf="declaration.SupplierInvoices && declaration.SupplierInvoices[0]">
-                    {{   declaration.SupplierInvoices[0].IncotermCode}}
-                </span>
-                <br />
-            </td>-->
         </tr>
         <tr style="height:25px;">
-
             <td>
                 <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
 
                     תנאי מכר
                 </span>
 
-                <span _ngcontent-c14="" class="Counter cut-text" style="font-size: 18px;" *ngIf="declaration.SupplierInvoices && declaration.SupplierInvoices[0]">
+                <span _ngcontent-c14="" class="Counter cut-text"  data-toggle="tooltip" data-placement="bottom" title="{{  declaration.SupplierInvoices[0].IncotermCode}}" style="font-size: 18px;" *ngIf="declaration.SupplierInvoices && declaration.SupplierInvoices[0]">
                     {{   declaration.SupplierInvoices[0].IncotermCode}}
                 </span>
                 <br />
@@ -394,19 +379,18 @@
                     משלח
                 </span>
 
-                <span _ngcontent-c14="" class="Counter cut-text " style="font-size: 18px;" *ngIf="GeneralDetails">
+                <span _ngcontent-c14="" class="Counter cut-text "  data-toggle="tooltip" data-placement="bottom" title="{{GeneralDetails.Forwarder}}" style="font-size: 18px;" *ngIf="GeneralDetails">
                     {{   GeneralDetails.Forwarder}}
                 </span>
                 <br />
             </td>
             <td></td>
             <td>
-                <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
-
+                <span _ngcontent-c14="" class="Counter cut-text-label"  style="font-size: 18px; color: #1B90CB;">
                     סוג משלוח
                 </span>
 
-                <span _ngcontent-c14="" class="Counter cut-text" style="font-size: 18px;" *ngIf="GeneralDetails">
+                <span _ngcontent-c14="" class="Counter cut-text" data-toggle="tooltip" data-placement="bottom" title="{{GeneralDetails.TypeOfDelivery}}" style="font-size: 18px;" *ngIf="GeneralDetails">
                     {{   GeneralDetails.TypeOfDelivery}}
                 </span>
                 <br />
