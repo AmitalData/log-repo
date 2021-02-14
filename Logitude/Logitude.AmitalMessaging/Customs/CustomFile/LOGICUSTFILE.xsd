@@ -74,6 +74,8 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="FileOpenDate" />
         <xs:element minOccurs="0" maxOccurs="1" ref="TruckerId" />
         <xs:element minOccurs="0" maxOccurs="1" ref="DistributionArea" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="FclLcl" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ForwarderId" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -141,4 +143,6 @@
   <xs:element name="FileOpenDate" type="xs:string" />
   <xs:element name="TruckerId" type="xs:string" />
   <xs:element name="DistributionArea" type="xs:string" />
+  <xs:element name="FclLcl" type="xs:string" />
+  <xs:element name="ForwarderId" type="xs:string" />
 </xs:schema>
