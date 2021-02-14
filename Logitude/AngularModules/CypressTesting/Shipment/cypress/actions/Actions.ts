@@ -162,11 +162,17 @@ export function FillReceivablesTab(receivableDetails: ReceivableDetails[]) {
         cy.Click(ShipmentSelectors.AddReceivableOkButton, null)
     }
 }
-export function GenerateReceivablesFromPayables() {
+export function GenerateReceivablesFromPayables(profit?:boolean) {
     cy.Click(ShipmentSelectors.ReceivablesTab, null)
     cy.Click(ShipmentSelectors.ReceivableFromPayables, null)
     cy.Click(BaseSelectors.CheckBoxLine, null)
     cy.Click(BaseSelectors.RedButton, "Ok")
+    // if(profit){
+    // cy.Click("#Edit",null)
+    // cy.get(ShipmentSelectors.ReceivableUnitPrice).clear().type("20");
+    // cy.Click(ShipmentSelectors.AddReceivableOkButton, null)
+
+    // }
     UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
 }
 
@@ -280,25 +286,6 @@ export function VoidAPInvoice() {
     cy.Click(ShipmentSelectors.ConfirmWindowYes, null);
 }
 
-export function FillARInvoiceDetails(aRInvoiceDetails: ARInvoiceDetails) {
-    cy.get(".ComboBox").click();
-    cy.get(".FillParent").find(".TextTrimming").contains("Customer").click()
-    cy.FillLogLov(ShipmentSelectors.ARInvoiceInvoiceCurrency, aRInvoiceDetails.InvoiceCurrency, true)
-    cy.FillLogTextBox(ShipmentSelectors.ARInvoiceExchangeRate, aRInvoiceDetails.InvoiceExchangeRate.toString());
-    cy.FillDate(ShipmentSelectors.ARInvoiceInvoiceDate, aRInvoiceDetails.InvoiceDate)
-    cy.FillLogLov(ShipmentSelectors.ARInvoicePaymentTerm, aRInvoiceDetails.PaymentTerms, true)
-    cy.FillDate(ShipmentSelectors.ARInvoiceDueDate, aRInvoiceDetails.DueDate)
-    cy.FillLogTextBox(ShipmentSelectors.ARInvoiceVatNumber, aRInvoiceDetails.VATNo)
-    cy.FillLogLov(ShipmentSelectors.ARInvoiceBranch, aRInvoiceDetails.Branch, true)
-    cy.Click(ShipmentSelectors.OkCreateARInvoiceButton, null);
-    cy.FillLogLov(ShipmentSelectors.ARInvoiceVatType, aRInvoiceDetails.VATType, true)
-    cy.Click(ShipmentSelectors.VatTypeApplyToAll, null)
-}
-
-export function CreateARInvoice() {
-    cy.DefineRequestWait(RestAPI.POST, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
-    cy.Click(ShipmentSelectors.ARInvoiceSaveButton, null)
-}
 
 export function ARApproveInvoice() {
     cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
@@ -387,7 +374,7 @@ export function PayARInvoice() {
 
 export function NewARPaymentFromAccounting(aRPaymentDetails: ARPaymentDetails, invoiceNumber: string) {
     cy.Click(BaseSelectors.AccountingMenu, null)
-    cy.Click(ShipmentSelectors.ReceivableAccounting, null)
+    cy.Click(AccountingSelectors.ReceivableAccounting, null)
     cy.Click(ShipmentSelectors.QueryLink, "New Payment")
     FillARPaymentDetails(aRPaymentDetails)
     cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViews, RequestAliases.ARInvoiceviews)

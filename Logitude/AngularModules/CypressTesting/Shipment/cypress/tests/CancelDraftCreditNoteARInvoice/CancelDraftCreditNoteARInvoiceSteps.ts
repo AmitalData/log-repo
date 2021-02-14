@@ -6,6 +6,7 @@ import {ReceivableDetails}from"cypress/models/ReceivableDetails"
 import { ARInvoiceDetails } from "cypress/models/ARInvoiceDetails"
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
+import * as AccountingActions from '../../../../Accounting/cypress/actions/Actions';
 
 let ShipmentData: ShipmentDetails;
 let shipmentNumber: string;
@@ -39,11 +40,11 @@ Given("a credit ARInvoice with a random invoice number and the following details
 (dataTable) => {
     const ARInvoiceData = dataTable.hashes()[0] as ARInvoiceDetails
     cy.Click(ShipmentSelectors.CreateCreditNoteARInvoiceButton, null);
-    Actions.FillARInvoiceDetails(ARInvoiceData)
+    AccountingActions.FillARInvoiceDetails(ARInvoiceData)
   });
 });
 When("create invoice", () => {
-    Actions.CreateARInvoice()
+    AccountingActions.CreateARInvoice()
 });
 Then("the invoice should create successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);

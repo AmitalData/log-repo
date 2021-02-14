@@ -1,6 +1,5 @@
-export class AccountingSelectors
-{
-	 //#region APInvoice
+export class AccountingSelectors {
+     //#region APInvoice
      public static readonly APInvoiceVendor = '#APInvoice_VendorId';
      public static readonly APInvoiceInvoiceNumber = '#APInvoice_InvoiceNumber';
      public static readonly APInvoiceAmountInInvoice = '#APInvoice_AmountInInvoiceCurrency';
@@ -21,4 +20,9 @@ export class AccountingSelectors
      public static readonly APInvoiceLineForiegnCurrencyAmount = '#APInvoiceLine_ForiegnCurrencyAmount';
      public static readonly APInvoiceAmountInInvoiceCurrency = '#APInvoice_AmountInInvoiceCurrency';
      //#endregion
+     //#region Receivable tab
+     public static readonly ReceivableAccounting = '#RECEIVABLEAccounting';
+     //#endregion
+
+
 }

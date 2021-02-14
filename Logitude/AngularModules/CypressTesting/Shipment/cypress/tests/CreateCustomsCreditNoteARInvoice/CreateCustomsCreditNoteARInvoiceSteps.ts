@@ -10,6 +10,7 @@ import { PackagesDetails } from 'cypress/models/PackagesDetails';
 import { ReceivableDetails } from 'cypress/models/ReceivableDetails';
 import { ARInvoiceDetails } from 'cypress/models/ARInvoiceDetails';
 import { RequestAliases } from '../../../../Base/cypress/constants/RequestAliases';
+import * as AccountingActions from '../../../../Accounting/cypress/actions/Actions';
 
 //#region variables
 let shipmentDetails: ShipmentDetails;
@@ -104,11 +105,11 @@ Given("a receivable with the following details", (dataTable) => {
 Given("a customs credit note ARInvoice with a random invoice number and the following details", (dataTable) => {
     let ARInvoiceDetails = dataTable.hashes()[0] as ARInvoiceDetails;
     ShipmentActions.NewCustomsCreditNoteARInvoice()
-    ShipmentActions.FillARInvoiceDetails(ARInvoiceDetails);
+    AccountingActions.FillARInvoiceDetails(ARInvoiceDetails);
 });
 
 When("create invoice", () => {
-    ShipmentActions.CreateARInvoice()
+    AccountingActions.CreateARInvoice()
 });
 
 Then("the invoice should create successfully", () => {

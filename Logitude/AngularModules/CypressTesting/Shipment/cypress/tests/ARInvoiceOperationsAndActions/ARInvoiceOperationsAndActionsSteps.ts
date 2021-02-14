@@ -10,6 +10,7 @@ import { MainCarriageLeg } from 'cypress/models/MainCarriageLeg';
 import { PackagesDetails } from 'cypress/models/PackagesDetails';
 import { ARInvoiceDetails } from "cypress/models/ARInvoiceDetails";
 import * as CommonActions from '../../../../Common/cypress/actions/Actions';
+import * as AccountingActions from '../../../../Accounting/cypress/actions/Actions';
 
 //#region variables
 let shipmentDetails: ShipmentDetails;
@@ -74,7 +75,6 @@ Given("the user add package with the following details", (dataTable) => {
 //#region Add Payables
 Given("a payable with the following details", (dataTable) => {
         const PayableData = dataTable.hashes()[0] as PayableDetails;
-        Actions.OpenShipment(shipmentNumber)
         Actions.FillPayablesTab(PayableData)
     });
 When("add payables", () => {
@@ -98,10 +98,10 @@ Given("an ARInvoice with a random invoice number and the following details",
     (dataTable) => {
         const ARInvoiceData = dataTable.hashes()[0] as ARInvoiceDetails
         cy.Click(ShipmentSelectors.CreateARInvoiceButton, null);
-        Actions.FillARInvoiceDetails(ARInvoiceData)
+        AccountingActions.FillARInvoiceDetails(ARInvoiceData)
     });
 When("create invoice", () => {
-    Actions.CreateARInvoice()
+    AccountingActions.CreateARInvoice()
 });
 Then("the invoice should create successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);

@@ -15,6 +15,7 @@ import { APInvoiceDetails } from "cypress/models/APInvoiceDetails"
 import { APPaymentDetails } from "cypress/models/APPaymentDetails"
 import { ARPaymentDetails } from "cypress/models/ARPaymentDetails"
 import { RequestAliases } from '../../../../Base/cypress/constants/RequestAliases';
+import * as AccountingActions from '../../../../Accounting/cypress/actions/Actions';
 
 let ShipmentData: ShipmentDetails;
 let packagesDetails: PackagesDetails[]
@@ -94,7 +95,7 @@ Given("a payable with the following details", (dataTable) => {
 Given("an APInvoice with the following details and a random invoice number", (dataTable) => {
     APInvoiceData = dataTable.hashes()[0] as APInvoiceDetails
     cy.Click(Selectors.ReceiveInvoiceButton, null);
-    Actions.FillAPInvoiceDetails(APInvoiceData)
+    AccountingActions.FillAPInvoiceDetails(APInvoiceData)
 });
 When("receive APInvoice", () => {
     Actions.ReceiveAPInvoice();
@@ -140,10 +141,10 @@ Given("an ARInvoice with the following details",
     (dataTable) => {
         const ARInvoiceData = dataTable.hashes()[0] as ARInvoiceDetails
         cy.Click(Selectors.CreateARInvoiceButton, null);
-        Actions.FillARInvoiceDetails(ARInvoiceData)
+        AccountingActions.FillARInvoiceDetails(ARInvoiceData)
     });
 When("create ARInvoice", () => {
-    Actions.CreateARInvoice()
+    AccountingActions.CreateARInvoice()
 });
 Then("the ARInvoice should create successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
@@ -180,10 +181,10 @@ Given("a credit ARInvoice with the following details", (dataTable) => {
     cy.BackButton("Shipment: " + ShipmentData.ShipmentNumber)
     const ARInvoiceData = dataTable.hashes()[0] as ARInvoiceDetails
     cy.Click(Selectors.CreateCreditNoteARInvoiceButton, null);
-    Actions.FillARInvoiceDetails(ARInvoiceData)
+    AccountingActions.FillARInvoiceDetails(ARInvoiceData)
 });
 When("create credit ARInvoice", () => {
-    Actions.CreateARInvoice()
+    AccountingActions.CreateARInvoice()
 
 });
 Then("the credit ARInvoice should create successfully", () => {

@@ -146,6 +146,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ARInvoicePaymentTerm = '#ARInvoice_PaymentTermId';
   public static readonly ARInvoiceInvoiceDate = '#date_ARInvoice_InvoiceDate';
   public static readonly ARInvoiceInvoiceCurrency = '#ARInvoice_InvoiceCurrencyId';
+  public static readonly ARInvoicePartner="#ARInvoice_PartnerId"
   public static readonly CreateCreditNoteARInvoiceButton = '#CreateCreditNote';
   public static readonly CreateARInvoiceButton = '#CreateARInvoice';
   public static readonly ARInvoiceExchangeRate = '#ARInvoice_InvoiceCurrencyExchangeRate';
@@ -160,6 +161,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly CreateCustomsARInvoice = '#CreateCustomsInvoice';
   public static readonly ToggleButtonClass = '.ToggleButton';
   public static readonly ContainsCustoms = 'Customs';
+  public static readonly GeneralSave="#GeneralBSave"
   //#endregion
   //#region operations and actions
   public static readonly NewAttachedHouse = '#NewHouseBtn';
@@ -195,7 +197,6 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly OkAddARPayment = '#ok-AddARPayment';
   public static readonly ARPaymentSave = '#ARPayment-Save';
   public static readonly ARPaymentBApprove = '#ARPaymentBApprove';
-  public static readonly ReceivableAccounting = '#RECEIVABLEAccounting';
   //#endregion
   //#region Send docs tab
   public static readonly SendMessageButton = '#SendMessagebtn';
