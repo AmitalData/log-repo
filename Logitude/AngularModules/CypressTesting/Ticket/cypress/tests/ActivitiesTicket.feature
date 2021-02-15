@@ -1,7 +1,7 @@
 @smoke @release @stable @all
 Feature: Activities Ticket Test
-    this file will create ticket then test the following activities
-    create Call, Task and Appointment
+    This file will create ticket then test the following 
+    Create and complete Call, Task and Appointment activities
 
     Scenario: Create new ticket
         Given the user logged in and navigated to ticket workspace

@@ -1,6 +1,6 @@
 @smoke @release @stable @all
 Feature: Correspondence Ticket Test
-    this file will test the Reply and Add Internal Note
+    This file will test the Reply and Add Internal Note
 
     Scenario: Create New Ticket
         Given the user logged in and navigated to ticket workspace
