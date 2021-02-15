@@ -204,7 +204,7 @@
                                     </td>
 
                                     <td style="width: 300px;">
-                                        <SearchBox [ObjectTableName]="'Shipment'" [IsQuickSearch]="true" [IsDisabled]="!IsEditingEnabled" (ItemClicked)="AddShipment($event)"></SearchBox>
+                                        <SearchBox [ObjectTableName]="'Shipment'" [IsQuickSearch]="true" [IsDisabled]="!IsEditingEnabled" (ItemClicked)="AddShipment($event)" [QueryFilterItems] ="apiQueryFilters" [AutoClearSearchText]="true"></SearchBox>
                                     </td>
 
                                     <td style="width: 10px;">
@@ -213,13 +213,13 @@
 
                                     <td style="width:150px; vertical-align:middle;">
                                         <ul class="FiltersMenu">
-                                            <li (click)="LevelCodeitemClicked('All')" (mouseover)="LevelCodeMouseOver('All')" [class.SelectedFilter]="LevelCodeSelectedValue === 'All'">
+                                            <li (click)="LevelCodeitemClicked('All')" (mouseover)="LevelCodeMouseOver('All')" [class.SelectedFilter]="LevelCodeSelectedValue === 'All'" title="All Shipments">
                                                 All
                                             </li>
-                                            <li style="width:50px;" (click)="LevelCodeitemClicked('D')" (mouseover)="LevelCodeMouseOver('D')" (mouseleave)="LevelCodeMouseLeave('D')" [class.SelectedFilter]="LevelCodeSelectedValue === 'D'" title="Direct">
+                                            <li style="width:50px;" (click)="LevelCodeitemClicked('MasterAndDirect')" (mouseover)="LevelCodeMouseOver('MasterAndDirect')" (mouseleave)="LevelCodeMouseLeave('MasterAndDirect')" [class.SelectedFilter]="LevelCodeSelectedValue === 'MasterAndDirect'" title="Master And Direct">
                                                 Masters
                                             </li>
-                                            <li style="width:70px;" (click)="LevelCodeitemClicked('H')" (mouseover)="LevelCodeMouseOver('H')" (mouseleave)="LevelCodeMouseLeave('H')" [class.SelectedFilter]="LevelCodeSelectedValue === 'H'" title="House">
+                                            <li style="width:70px;" (click)="LevelCodeitemClicked('HouseAndDirect')" (mouseover)="LevelCodeMouseOver('MasterAndHouse')" (mouseleave)="LevelCodeMouseLeave('HouseAndDirect')" [class.SelectedFilter]="LevelCodeSelectedValue === 'HouseAndDirect'" title="House And Direct">
                                                 Shipments
                                             </li>
                       

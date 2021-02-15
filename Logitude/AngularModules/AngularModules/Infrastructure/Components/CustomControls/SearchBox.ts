@@ -4,7 +4,7 @@ import {AppTool} from '../../../Infrastructure/Tools';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {CardListService} from '../../../Common/Services/StandardLists/CardListService';
 import {CommonDomainService} from '../../../Common/Services/CommonDomainService';
-import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ApiQueryFilters, FilterItem} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {ClientListService} from '../../../Customs/Services/StandardLists/ClientListService';
@@ -13,6 +13,9 @@ import {UIProperty, UIProperties, UIPropertyArgs} from '../../../Infrastructure/
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import {KeyCode} from '../../../Infrastructure/DataContracts/KeyCode';
 import {IdGeneratorPipe} from '../../../Controls/Pipes/IdGeneratorPipe';
+import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
+import { EntityListService } from '../../Services/EntityListService';
+import { ShipmentListService } from '../../../Shipment/Services/StandardLists/ShipmentListService';
 @Component({
     selector: "SearchBox",
     
@@ -69,6 +72,7 @@ export class SearchBox implements OnInit {
     private myService: CommonDomainService = null;
     private myCardListService: CardListService = null;
     private clientListService: ClientListService = null;
+    private shipmentListService: ShipmentListService = null;
     public QuickSearchItems: any[] = [];
     public NewId: string;
     emitText: boolean = true;
@@ -85,10 +89,12 @@ export class SearchBox implements OnInit {
     @Input() ErrorMessage: string;
     @Input() MaxPopupItemsCount: number;
     @Input() InputType: string;
+    @Input() QueryFilterItems: ApiQueryFilters;
+    LookUpTable: ObjectTablePM;
     public isRTL: boolean = false;
 
 
-    constructor() {
+    constructor(private entityListService: EntityListService ) {
         this.SetControlDisplay();
 
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
@@ -152,6 +158,7 @@ export class SearchBox implements OnInit {
             this.myService = new CommonDomainService();
             this.myCardListService = new CardListService();
             this.clientListService = new ClientListService();
+            this.shipmentListService = new ShipmentListService();
         }
     }
 
@@ -302,12 +309,12 @@ export class SearchBox implements OnInit {
                         this.QuickSearchItems = [];
                         var itemsCount = 0;
 
-                    if (myResponse != null) {
-                        itemsCount = myResponse.Result.length;
-                        this.QuickSearchItems = myResponse.Result;
-                        this.highlightedItemIndex = 0;
-                        this.HighlightedItem = this.QuickSearchItems[0];
-                    }
+                        if (myResponse != null) {
+                            itemsCount = myResponse.Result.length;
+                            this.QuickSearchItems = myResponse.Result;
+                            this.highlightedItemIndex = 0;
+                            this.HighlightedItem = this.QuickSearchItems[0];
+                        }
 
                         this.IsQuickSearchNoResult = itemsCount == 0 ? true : false;
                         this.SetDropDownheight(itemsCount);
@@ -319,11 +326,11 @@ export class SearchBox implements OnInit {
                 var filters = new ApiQueryFilters();
                 filters.PageIndex = 0;
                 filters.PageSize = 10;
-                           
+
                 filters.addAdditionalFilter("PassportNumber", "", null, null, "NotEqual", false, false, false, "string");
                 filters.addAdditionalFilter("Code", "", null, null, "NotEqual", false, false, false, "string");
                 filters.addAdditionalFilter("SearchFields", this.SearchText, null, null, "Contains", false, false, false, "string");
-                
+
                 this.clientListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
 
                     this.IsQuickSearchLoading = false;
@@ -345,31 +352,69 @@ export class SearchBox implements OnInit {
 
             else if (!AppTool.IsNullOrEmpty(this.ObjectTableName) && !AppTool.IsNullOrEmpty(this.SearchText)) {
 
-                this.myService.GetQuickSearch(this.ObjectTableName, this.SearchText).subscribe((myResponse: ServiceResponse) => {
-                    if (this.MyCallTime == null || myResponse.CallTime > this.MyCallTime) {
-                        this.MyCallTime = myResponse.CallTime;
+                   if (this.QueryFilterItems == null) {
+                     this.myService.GetQuickSearch(this.ObjectTableName, this.SearchText).subscribe((myResponse: ServiceResponse) => {
+                        if (this.MyCallTime == null || myResponse.CallTime > this.MyCallTime) {
+                            this.MyCallTime = myResponse.CallTime;
 
-                        this.IsQuickSearchLoading = false;
-                        this.QuickSearchItems = [];
-                        var itemsCount = 0;
+                            this.IsQuickSearchLoading = false;
+                            this.QuickSearchItems = [];
+                            var itemsCount = 0;
 
-                        if (myResponse.Result != null) {
-                            itemsCount = myResponse.Result.length;
-                            this.QuickSearchItems = myResponse.Result;
+                            if (myResponse.Result != null) {
+                                itemsCount = myResponse.Result.length;
+                                this.QuickSearchItems = myResponse.Result;
 
-                            this.highlightedItemIndex = 0;
-                            this.HighlightedItem = this.QuickSearchItems[0];
+                                this.highlightedItemIndex = 0;
+                                this.HighlightedItem = this.QuickSearchItems[0];
+                            }
+
+                            this.IsQuickSearchNoResult = itemsCount == 0 ? true : false;
+                            this.SetDropDownheight(itemsCount);
                         }
+                      });
+                   }else {
 
-                        this.IsQuickSearchNoResult = itemsCount == 0 ? true : false;
-                        this.SetDropDownheight(itemsCount);
-                    }
-                });
-            }
+                     this.QueryFilterItems.GetCount = true;
+                     this.IsQuickSearchLoading = true;
+                     this.IsQuickSearchNoResult = false;
 
-            else {
+                      if (!AppTool.IsNullOrEmpty(this.SearchText)) {
+                        this.QueryFilterItems.Filter10Name = "SearchFields";
+                        this.QueryFilterItems.Filter10Value = this.SearchText;
+                        this.QueryFilterItems.Filter10Operator = "Contains";
+                      }
+
+                        var loadPromise = this.entityListService.getByFilters(this.ObjectTableName, this.QueryFilterItems);
+                        loadPromise.then((res: any) => {
+                          res.subscribe((myResponse: any) => {
+                            if (this.MyCallTime == null || myResponse.CallTime > this.MyCallTime) {
+                                this.MyCallTime = myResponse.CallTime;
+
+                                this.IsQuickSearchLoading = false;
+                                this.QuickSearchItems = [];
+                                var itemsCount = 0;
+
+                                if (myResponse != null) {
+                                    itemsCount = myResponse.Result.length;
+                                    this.QuickSearchItems = myResponse.Result;
+
+                                    this.highlightedItemIndex = 0;
+                                    this.HighlightedItem = this.QuickSearchItems[0];
+                                }
+
+                                this.IsQuickSearchNoResult = itemsCount == 0 ? true : false;
+                                this.SetDropDownheight(itemsCount);
+                            }
+                        })
+                     });
+
+                   }
+
+            } else {
                 this.QuickSearchItems = [];
             }
+
         }
     }
 

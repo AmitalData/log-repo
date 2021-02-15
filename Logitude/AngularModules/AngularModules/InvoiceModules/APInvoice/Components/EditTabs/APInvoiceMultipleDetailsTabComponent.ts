@@ -37,8 +37,8 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     public LocalCurrencyCode: string;
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
+    public apiQueryFilters: ApiQueryFilters = null;
     private CurrentSession = SessionLocator.SelectedSession;
-    private apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
 
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -50,7 +50,6 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
         this.SetUIProperties();
         this.BuildScreenData();
         this.Listen();
-
         if (FeatureLocator.HasFeaturePermession("APInvoice", "APInvoiceEditExchangeRate")) {
             this.IsEditExchangeRateVisible = true;
         }
@@ -120,6 +119,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
 
         if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
             if (AppTool.IsNullOrEmpty(this.VATNumber)) {
+                isFieldRequired = true;
                 isFieldRequired = true;
             }
 
@@ -708,14 +708,21 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     LevelCodeitemClicked(itemValue: string) {
         if (this.LevelCodeSelectedValue != itemValue) {
             this.LevelCodeSelectedValue = itemValue;
-            var RemoveFilter = false;
-            if (this.apiQueryFilters.AdditionalFilters.length > 0) {
-                this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "ShipmentLevelCode");
+
+            if (itemValue == "All") {
+                this.apiQueryFilters = null;
+            } else {
+                this.apiQueryFilters = new ApiQueryFilters();
+                this.apiQueryFilters.PageIndex = 0;
+                this.apiQueryFilters.PageSize = 10;
+
+                if (itemValue == "MasterAndDirect") {   
+                    this.apiQueryFilters.addAdditionalFilter("ShipmentLevelCode", "D,C", null, null, "InList", true, true, false, "string");
+                } else if (itemValue == "HouseAndDirect") {
+                        this.apiQueryFilters.addAdditionalFilter("ShipmentLevelCode", "D,H", null, null, "InList", true, true, false, "string");
+                } 
             }
-
-            this.apiQueryFilters.addAdditionalFilter("ShipmentLevelCode", itemValue, null, null, "Equals", false, true, false, "string", (itemValue == "All" ? true : false));
-
-            this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
+            
         }
     }
 
