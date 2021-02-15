@@ -32,5 +32,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly DivElement = "div";
     public static readonly FirstRecentEntityItem = ".RecentEntityItem:first";
     public static readonly ToggleIcon='[src="./Images/ToggleIcon.png"]'
+    public static readonly BackBottonBodyClass = ".BackBottonBody"
+
 
 }
