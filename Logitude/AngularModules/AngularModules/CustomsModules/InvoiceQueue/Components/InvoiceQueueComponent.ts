@@ -18,6 +18,7 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { tryParse } from 'selenium-webdriver/http';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     selector: 'InvoiceQueueComponent',
@@ -34,6 +35,7 @@ export class InvoiceQueueComponent
     public InvoiceListList: ObservableCollection;
     public EMessagesList: ObservableCollection;
     public WMessagesList: ObservableCollection;
+    public GeneralDetails: any;
     public declaration: DeclarationPM;
     CreateQInvoiceButtonDim: boolean;
     ErrorMessages: boolean;
@@ -52,10 +54,23 @@ export class InvoiceQueueComponent
             });
         });
     }
+
+    ExpandComment(entity: any, $event: any) {
+        var windowArgs: any = {};
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Height = 400;
+        logitudeWindow.Width = 700;
+        logitudeWindow.ShowCloseButton = true;
+        windowArgs.remarks = entity.Comments;
+       // logitudeWindow.Title = this.title;
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./CustomsModules/CustomsControls/Components/RemarksPopUp');
+    }
+
     private GetData() {
         this.ResetVariables();
-       this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
-        //this._declarationPMService.get("1-5362").subscribe(data => {
+      this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
+    //      this._declarationPMService.get("1-5362").subscribe(data => {
             this.declaration = data.Result;
             SessionLocator.SelectedSession.StopBusyIndicator();
             if (this.declaration == null) {
@@ -82,6 +97,8 @@ export class InvoiceQueueComponent
                     x.InvoiceAmount = this.SetFixedValue(x.InvoiceAmount);
                     this.IntegratedInvoiceList.Insert(x);
                 });
+                this.GeneralDetails = (data.Result.Invoice as AllInvoices).GeneralDetails;
+                 
                 if ((data.Result.Invoice as AllInvoices).Invoices != null) {
                     (data.Result.Invoice as AllInvoices).Invoices.forEach(x => {
                         if (x.InvoiceDate != null && x.InvoiceDate != "") {
@@ -109,7 +126,7 @@ export class InvoiceQueueComponent
                         if (x.E != null) {
                             this.EMessagesList.Insert(x);
                             this.ErrorMessages = true;
-                            this.CreateQInvoiceButtonDim = true; // מקש חשבוניות ב DIM אם יש שגאיה מסוג ERROR
+                            this.CreateQInvoiceButtonDim = true; // מקש חשבוניות ב DIM םם יש שגםיה מסוג ERROR
                         }
                         if (x.W != null) {
                             this.WMessagesList.Insert(x);
@@ -140,12 +157,13 @@ export class InvoiceQueueComponent
         this.InvoiceListList = new ObservableCollection([]);
         this.EMessagesList = new ObservableCollection([]);
         this.WMessagesList = new ObservableCollection([]);
+        this.GeneralDetails = {};
         this.ErrorMessages = false;
         this.WarningMessages = false;
     }
 
     SetWindowArgs(args: any) {
-        //var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "3000028" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-211622" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבוא"}';
+        //var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "3000028" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-211622" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבום"}';
 
         this.UnifreightMessage = args.unifreightMessage;
         this.GetData();
@@ -198,7 +216,7 @@ export class InvoiceQueueComponent
             confirm.YesButtonText = TextCodeTranslator.Translate("General.O.Confirm");
             confirm.NoButtonText = TextCodeTranslator.Translate("General.O.Void");
             // confirm.Show(TextCodeTranslator.Translate("Customs.Declarations.O.UnSavedRemark"));
-            confirm.Show("ביציאה מהמסך לא ישמרו הערות לחשבונית שהוזנו במסך")
+            confirm.Show("ביציםה מהמסך לם ישמרו הערות לחשבונית שהוזנו במסך")
             confirm.WindowClosed.subscribe((event: any) => {
                 if (confirm.Yes) {
                     confirm.Close();
@@ -289,7 +307,7 @@ export class InvoiceQueueComponent
                 "CFIHMAIN.LogitudeTask",
                 "ShowPayments",
                 unifreightMessageM,
-                " הצגת מסך : רשימת הוצאות");
+                " הצגת מסך : רשימת הוצםות");
         }
         else {
             alert("ShowPayments");
@@ -340,6 +358,7 @@ export class InvoiceQueueComponent
     }
 
 
+
     ShowDelivery() {
 
         let myDeclaration: DeclarationPM = this.declaration;
@@ -379,6 +398,49 @@ export class InvoiceQueueComponent
         }
         else {
             alert("ShowDelivery");
+        }
+    }
+
+
+    ShowImportFile() {
+
+        let myDeclaration: DeclarationPM = this.declaration;
+        let myViewModelName = "InvoiceQueueComponent.ts-ShowImportFile";
+        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+            let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+                .subscribe(
+                    (mess: UnifreightMessageM) => {
+                        var IsMatchUnifreightCallbackCommand = (
+                            mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                            mess.LogitudeEntityNumber == myDeclaration.Id &&
+                            mess.LogitudeViewModel == myViewModelName);
+                        IsMatchUnifreightCallbackCommand = true;
+                        if (IsMatchUnifreightCallbackCommand) {
+                            sub.unsubscribe();
+                            SessionLocator.SelectedSession.StopBusyIndicator();
+                            let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
+                            //SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.declaration.Id, { rowIndex: this.RowIndex });
+                            this.GetData();
+                        }
+                    }
+                );
+
+            SessionLocator.SelectedSession.StartBusyIndicator("");
+            var unifreightMessageM =
+                AmitalGatewayUtil.Instance.
+                    DeclarationMessaging.GetMessage(myDeclaration.CustomFileNo, myDeclaration.Id,
+                        myViewModelName);
+
+            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                "ScriptableGatewayUtil.ShowImportFile",
+                "CFIHMAIN.LogitudeTask",
+                "ShowImportFile",
+                unifreightMessageM,
+                " הצגת מסך : תיק שילוח");
+        }
+        else {
+            alert("ShowImportFile");
         }
     }
 

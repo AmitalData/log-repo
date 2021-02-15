@@ -425,6 +425,13 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string PalestinianCode { get; set; }
         [Column("RequestedCustomsDocId")]
 	    public int? RequestedCustomsDocId { get; set; }
+        [ForeignKey("ExportDeclarationOffice")]
+        [Column("ExportDeclarationOfficeCode")]
+	    public string ExportDeclarationOfficeCode { get; set; }
+	      
+        public virtual CustomsHouseType ExportDeclarationOffice { get; set; }
+        [Column("PhysicalCheck")]
+	    public int? PhysicalCheck { get; set; }
     }
 }
 	 

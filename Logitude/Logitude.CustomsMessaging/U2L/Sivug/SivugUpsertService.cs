@@ -951,23 +951,35 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 
                 SupplierInvoiceItemPM.OriginCountryCode = invoiceItem.ITEMORIGINCOUNTRY;
 
+                if (SupplierInvoiceItemPM.OriginCountryCode == "")
+                    SupplierInvoiceItemPM.OriginCountryCode = null;
+
                 SupplierInvoiceItemPM.ItemCode = invoiceItem.ITEMCODE;
                 //   SupplierInvoiceItemPM.UnfInvoiceCounterKey = invoiceItem.ITEM_SI_COUNTER;
                 SupplierInvoiceItemPM.ClasifiedRemarks = invoiceItem.CLASIFIEDREMARKS;
-
-                if (_IsBuildItemsUnit && !string.IsNullOrEmpty(SupplierInvoiceItemPM.ClassificationCode))
+                if (messageType == "UMS2L")
                 {
-                    if (ClasificationQtyTypes.Keys.Contains(SupplierInvoiceItemPM.ClassificationCode))
+                    SupplierInvoiceItemPM.InvoiceQuantityType = TranslateMeasurmentUnit(invoiceItem.UNIT_ID);
+                }
+                else
+                {
+                    if (_IsBuildItemsUnit && !string.IsNullOrEmpty(SupplierInvoiceItemPM.ClassificationCode))
                     {
-                        SupplierInvoiceItemPM.InvoiceQuantityType = ClasificationQtyTypes[SupplierInvoiceItemPM.ClassificationCode];
+                        if (ClasificationQtyTypes.Keys.Contains(SupplierInvoiceItemPM.ClassificationCode))
+                        {
+                            SupplierInvoiceItemPM.InvoiceQuantityType = ClasificationQtyTypes[SupplierInvoiceItemPM.ClassificationCode];
+                        }
+                        else
+                        {
+                            SupplierInvoiceItemPM.InvoiceQuantityType = customsItemQueryService.GetQuantityTypeByClassificationCode(SupplierInvoiceItemPM.ClassificationCode, ResolvedTenant());
+                            ClasificationQtyTypes.Add(SupplierInvoiceItemPM.ClassificationCode, SupplierInvoiceItemPM.InvoiceQuantityType);
+                        }
                     }
-                    else
+                    if (string.IsNullOrWhiteSpace(SupplierInvoiceItemPM.InvoiceQuantityType) && !string.IsNullOrWhiteSpace(invoiceItem.UNIT_ID))
                     {
-                        SupplierInvoiceItemPM.InvoiceQuantityType = customsItemQueryService.GetQuantityTypeByClassificationCode(SupplierInvoiceItemPM.ClassificationCode, ResolvedTenant());
-                        ClasificationQtyTypes.Add(SupplierInvoiceItemPM.ClassificationCode, SupplierInvoiceItemPM.InvoiceQuantityType);
+                        SupplierInvoiceItemPM.InvoiceQuantityType = TranslateMeasurmentUnit(invoiceItem.UNIT_ID);
                     }
                 }
-                SupplierInvoiceItemPM.InvoiceQuantityType = TranslateMeasurmentUnit(invoiceItem.UNIT_ID);
                 SupplierInvoiceItemPM.StatisticQuantityType = TranslateMeasurmentUnit(invoiceItem.StatisticQuantityType);
                 SupplierInvoiceItemPM.TaxExemptCode = invoiceItem.TAXEXEMPTCODE; //TranslateTaxExemptCode(invoiceItem.TAXEXEMPTCODE);
 
@@ -1017,30 +1029,6 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     SupplierInvoiceItemPM.OcrHeight = 0;
                 }
 
-                SupplierInvoiceItemPM.AdditionalQuantityType = TranslateMeasurmentUnit(invoiceItem.AdditionalQuantityType);
-                if (!string.IsNullOrWhiteSpace(SupplierInvoiceItemPM.AdditionalQuantityType))
-                {
-                    if (invoiceItem.AdditionalQuantity != null && !String.IsNullOrWhiteSpace(invoiceItem.AdditionalQuantity))
-                    {
-                        if (decimal.TryParse(invoiceItem.AdditionalQuantity, out decimal1))
-                        {
-                            if (decimal1 > 0) SupplierInvoiceItemPM.AdditionalQuantity = decimal1;
-                        }
-                        else
-                        {
-                            throw new BusinessErrorException("Error in parsing Additional Quantity (" + invoiceItem.AdditionalQuantity + ") into integer");
-                        }
-                    }
-                    else if(!SupplierInvoiceItemPM.AdditionalQuantity.HasValue)
-                    {
-                        SupplierInvoiceItemPM.AdditionalQuantityType = null;
-                    }
-                }
-                else if (SupplierInvoiceItemPM.AdditionalQuantity.HasValue)
-                {
-                    SupplierInvoiceItemPM.AdditionalQuantity = null;
-                }
-
                 if (invoiceItem.CERTIFICATES != null && invoiceItem.CERTIFICATES.Count() > 0)
                 {
                     try
@@ -1077,22 +1065,6 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 {
                     throw new BusinessErrorException("Error in parsing LINE_ID (" + invoiceItem.LINE_ID + ") into integer");
                 }
-
-                if (SupplierInvoiceItemPM.StatisticQuantity != null || SupplierInvoiceItemPM.AdditionalQuantity != null || SupplierInvoiceItemPM.CustomsBookTypeCode != null || SupplierInvoiceItemPM.PreferenceDocumentNumber != null || SupplierInvoiceItemPM.ActualInvoiceLines != null
-            || SupplierInvoiceItemPM.DeferredCustomsTax != null || SupplierInvoiceItemPM.DeferredPurchaseTax != null || SupplierInvoiceItemPM.SalesTaxExemptionTypeCode != null || SupplierInvoiceItemPM.TaxExemptCode != null || SupplierInvoiceItemPM.OptionalTamaPercentage != null
-            || SupplierInvoiceItemPM.NonCustomsItemPrice != null || SupplierInvoiceItemPM.WholeSaleItemPrice != null || SupplierInvoiceItemPM.IsUsed || SupplierInvoiceItemPM.ManufactureIdentifier != null || SupplierInvoiceItemPM.DangerousClassificationCode != null || SupplierInvoiceItemPM.DangerousPackingGroupTypeCode != null
-            || (SupplierInvoiceItemPM.SupplierInvoiceItemsMods != null && SupplierInvoiceItemPM.SupplierInvoiceItemsMods.Count() > 0) || (SupplierInvoiceItemPM.SupplierInvoiceItemProcesTypes != null && SupplierInvoiceItemPM.SupplierInvoiceItemProcesTypes.Count() > 0)
-             || (SupplierInvoiceItemPM.SupplierInvoiceItemsConDeclars != null && SupplierInvoiceItemPM.SupplierInvoiceItemsConDeclars.Count() > 0) || (SupplierInvoiceItemPM.SupplierInvoiceItemLevies != null && SupplierInvoiceItemPM.SupplierInvoiceItemLevies.Count() > 0)
-             || (SupplierInvoiceItemPM.SupplierInvoiceItemsDescripts != null && SupplierInvoiceItemPM.SupplierInvoiceItemsDescripts.Count() > 0) || (SupplierInvoiceItemPM.SupplierInvoiceItemsSerialNums != null && SupplierInvoiceItemPM.SupplierInvoiceItemsSerialNums.Count() > 0)
-            || (SupplierInvoiceItemPM.SupplierInvoiceItemsProdIdents != null && SupplierInvoiceItemPM.SupplierInvoiceItemsProdIdents.Count() > 0))
-                {
-                    SupplierInvoiceItemPM.ItemAdditionalStatus = true;
-                }
-                else
-                {
-                    SupplierInvoiceItemPM.ItemAdditionalStatus = false;
-                }
-
                 if (SupplierInvoiceItemPM.ChangeSetOp != ChangeSetOperation.Update)
                 {
                     SupplierInvoiceItemPM.Tenant = ResolvedTenant();

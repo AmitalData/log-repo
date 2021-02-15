@@ -311,8 +311,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
 
                    var requestedCustomsDocId = myCustomsDocumentsTicketQueryService.CheckRequestedCustomsDocIdsByEntityIdAndChilds(myDeclarationPM.Id, myDeclarationPM.Tenant, "", customResponse.RequiredDocumentDetails.documentID.ToString());
-                    if(requestedCustomsDocId!= myDeclarationPM.RequestedCustomsDocId)
+                    if (requestedCustomsDocId!= myDeclarationPM.RequestedCustomsDocId)
                     myDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+
+
+                    myDeclarationPM.RequestedCustomsDocId = requestedCustomsDocId;
+
                 }
             }
 

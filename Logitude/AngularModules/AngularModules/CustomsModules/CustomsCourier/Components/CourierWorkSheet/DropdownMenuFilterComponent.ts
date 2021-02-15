@@ -118,7 +118,7 @@ export class DropdownMenuFilterComponent implements OnInit {
             document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
                 (myTop/*itemRect.top*/ /*+ 27*/ /*-5*/) + 'px';
 
-            let DDLHeight = 65+55;//    height: 22px; * 3 +30 
+            let DDLHeight = 65+70;//    height: 22px; * 3 +30 
             let Extra = 22 + 1 + 1; //    height: 22px; +1 UP +1 DOWN 
             if (itemRect.bottom + DDLHeight + Extra > this.getScreenHeight()) {//this.PaintTop = true                
                 document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =

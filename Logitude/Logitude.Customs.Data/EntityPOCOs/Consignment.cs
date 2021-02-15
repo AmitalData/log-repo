@@ -102,6 +102,13 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ExportLoadingPortCode { get; set; }
 	      
         public virtual LoadingSiteType ExportLoadingPort { get; set; }
+        [ForeignKey("CustomsShipCode")]
+        [Column("ShipCode")]
+	    public string ShipCode { get; set; }
+	      
+        public virtual CustomsShip CustomsShipCode { get; set; }
+        [Column("ConsignmentType")]
+	    public string ConsignmentType { get; set; }
     }
 }
 	 

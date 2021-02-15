@@ -136,7 +136,7 @@ MainInterfaceCode ="5002"
                     Name = "בדיקות פיזיות	",
                     IsDCA = true,
                     Entity="Declaration",
-                    Param1= @"{}",
+                    Param1= @"{ ""checkId"":""""}",
                     Param2= @"{}",
                     MainInterfaceCode="190",
                 },

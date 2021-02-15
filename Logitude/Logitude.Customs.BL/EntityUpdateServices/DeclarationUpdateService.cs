@@ -53,7 +53,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
     {
         private DataProvider currentDataProvider;
         private EventTracerArgs _LastTraceEventParams;
-
+        private CourierMasterPM _CourierMasterPM;
 
         public bool IsFromCustomsFeedback { get; set; }
         public bool ToUpdateWithPaymentDate { get; set; }
@@ -735,6 +735,58 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             base.OnUpdating(entityPM, entityPOCO);
         }
+
+        private void UpdateReferantData(DeclarationPM entityPM)
+        {
+            DateTime stopLogAt = new DateTime(2021, 06, 01);
+            string logData = "";
+            var loggedUser = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
+            logData = $"entityPM.CustomFileNo={entityPM.CustomFileNo}, User name={loggedUser}, before update1";
+            LogitudeSettings.HandleLogMe("Referant update " + logData, false, "referant.NewFile", stopLogAt);
+
+            DeclarationReferantDataQueryService declarationReferantDataQueryService = new DeclarationReferantDataQueryService(entityPM.Tenant);
+            DeclarationReferantDataPM referant = declarationReferantDataQueryService.GetSingle(entityPM.Id, false, false);
+            if (referant != null)
+            {
+                if (entityPM.ProcedureCurrentCode != null)
+                {
+                    if (entityPM.ProcedureCurrentCode.Length > 3)
+                    {
+                        string ProcedureCurrentCode = entityPM.ProcedureCurrentCode.Substring(0, 3);
+                        if (ProcedureCurrentCode == "407")
+                        {
+                            if (referant.ClassificationStatus == null)
+                            {
+                                referant.ClassificationStatus = "N";
+                                referant.ChangeSetOp = ChangeSetOperation.Update;
+                            }
+                        }
+                    }
+                }
+                logData = $"entityPM.CustomFileNo={entityPM.CustomFileNo}, referant.NewFile={referant.NewFile}, before update2";
+                LogitudeSettings.HandleLogMe("Referant update " + logData, false, "referant.NewFile", stopLogAt);
+                if (referant.NewFile != false)
+                {
+                    if (HttpContextUtil.IsCustomDomainService())
+                    {
+                        logData = $"entityPM.CustomFileNo={entityPM.CustomFileNo}, before update3";
+                        LogitudeSettings.HandleLogMe("Referant update " + logData, false, "referant.NewFile", stopLogAt);
+                        referant.NewFile = false;
+                        referant.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                }
+                if (referant.ChangeSetOp == ChangeSetOperation.Update)
+                {
+                    ICustomContext context = MainContext as CustomContext;
+                    DeclarationReferantDataUpdateService service = new DeclarationReferantDataUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                    service.Update(referant, true);
+                    DeclarationReferantDataRepository declarationReferantDataRepository = new DeclarationReferantDataRepository(context);
+                    logData = $"entityPM.CustomFileNo={entityPM.CustomFileNo}, referant.NewFile={referant.NewFile}, after update";
+                    LogitudeSettings.HandleLogMe("Referant update " + logData, false, "referant.NewFile", stopLogAt);
+                }
+            }
+        }
+
         public void UpdatePendingByKeyWordsByImporterName(DeclarationPM entityPM, Boolean IsAfterDeclarationCourierStatusInsert )
         {
 
@@ -1167,34 +1219,81 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             }
                         }
                     }
-                    
+
+                    if(newDeclarationCourierStatusPM != null && !newDeclarationCourierStatusPM.IsClosedForFollowUp)
+                    {
+                        if (this._CourierMasterPM == null)
+                        {
+                            var myCourierDeclarationQueryService = new CourierDeclarationQueryService(context);
+                            CourierDeclarationPM _CourierDeclarationPM = myCourierDeclarationQueryService.GetCourierDeclarationByDeclarationId(entityPM.Id, entityPM.Tenant);
+                            if (_CourierDeclarationPM != null)
+                            {
+                                var myCourierMasterQueryService = new CourierMasterQueryService(context);
+                                this._CourierMasterPM = myCourierMasterQueryService.GetSingle(_CourierDeclarationPM.CourierMasterId, true, false);
+                            }
+                        }
+                        if (this._CourierMasterPM != null && !this._CourierMasterPM.IsOpen)
+                        {
+                            this._CourierMasterPM.IsOpen = true;
+                            this._CourierMasterPM.ChangeSetOp = ChangeSetOperation.Update;
+                            var myCourierMasterUpdateService = new CourierMasterUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                            myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
+                        }
+                    }
                 }
                 
             }
             //  -------- Declaration Referant Data 
-            if(entityPM.ProcedureCurrentCode!= null)
+            UpdateReferantData(entityPM);
+            /*
+            DateTime stopLogAt = new DateTime(2020, 06, 01);
+            string logData = "";
+            var loggedUser = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
+            logData = $"entityPM.CustomFileNo={entityPM.CustomFileNo}, User name={loggedUser}, before update1";
+            LogitudeSettings.HandleLogMe("Referant update " + logData, false, "referant.NewFile", stopLogAt);
+            
+            DeclarationReferantDataQueryService declarationReferantDataQueryService = new DeclarationReferantDataQueryService(entityPM.Tenant);
+            DeclarationReferantDataPM referant = declarationReferantDataQueryService.GetSingle(entityPM.Id, false, true);
+            if (referant != null)
             {
-                ICustomContext context = MainContext as CustomContext;
-                if (entityPM.ProcedureCurrentCode.Length > 3)
+                if (entityPM.ProcedureCurrentCode != null)
                 {
-                    string ProcedureCurrentCode = entityPM.ProcedureCurrentCode.Substring(0, 3);
-                    if (ProcedureCurrentCode == "407")
+                    if (entityPM.ProcedureCurrentCode.Length > 3)
                     {
-                        DeclarationReferantDataQueryService declarationReferantDataQueryService = new DeclarationReferantDataQueryService(entityPM.Tenant);
-                        DeclarationReferantDataPM referant = declarationReferantDataQueryService.GetSingle(entityPM.Id, false, true);
-                        if (referant != null)
+                        string ProcedureCurrentCode = entityPM.ProcedureCurrentCode.Substring(0, 3);
+                        if (ProcedureCurrentCode == "407")
                         {
                             if (referant.ClassificationStatus == null)
                             {
                                 referant.ClassificationStatus = "N";
                                 referant.ChangeSetOp = ChangeSetOperation.Update;
-                                DeclarationReferantDataUpdateService service=new DeclarationReferantDataUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
-                                service.Update(referant, true);
                             }
                         }
                     }
                 }
-            }
+                logData = $"entityPM.CustomFileNo={entityPM.CustomFileNo}, referant.NewFile={referant.NewFile}, before update2";
+                LogitudeSettings.HandleLogMe("Referant update " + logData, false, "referant.NewFile", stopLogAt);
+                if (referant.NewFile != false)
+                {
+                    if (HttpContextUtil.IsCustomDomainService())
+                    {
+                        logData = $"entityPM.CustomFileNo={entityPM.CustomFileNo}, before update3";
+                        LogitudeSettings.HandleLogMe("Referant update " + logData, false, "referant.NewFile", stopLogAt);
+                        referant.NewFile = false;
+                        referant.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                }
+                if(referant.ChangeSetOp == ChangeSetOperation.Update)
+                {
+                    ICustomContext context = MainContext as CustomContext;
+                    DeclarationReferantDataUpdateService service = new DeclarationReferantDataUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                    service.Update(referant, true);
+                    DeclarationReferantDataRepository declarationReferantDataRepository = new DeclarationReferantDataRepository(context);
+                    declarationReferantDataRepository.SubmitChanges();
+                    logData = $"entityPM.CustomFileNo={entityPM.CustomFileNo}, referant.NewFile={referant.NewFile}, after update";
+                    LogitudeSettings.HandleLogMe("Referant update " + logData, false, "referant.NewFile", stopLogAt);
+                }
+            }*/
         }
 
 
@@ -1566,7 +1665,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("8250 RequestInProgress stop create a new one !! ");
                 }
-                throw;
+               // throw;
             }
         }
         //Yuval Chalup 10.12.2015 TASK-17450 --->

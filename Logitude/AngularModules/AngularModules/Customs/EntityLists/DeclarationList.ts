@@ -193,6 +193,8 @@ export class DeclarationList {
 	TransshipmentApprovalDateTime: Date;
 	FinalLoadingSite: string;
 	RequestedCustomsDocId: number;
+	ExportDeclarationOfficeCode: string;
+	PhysicalCheck: number;
 	
 }
  

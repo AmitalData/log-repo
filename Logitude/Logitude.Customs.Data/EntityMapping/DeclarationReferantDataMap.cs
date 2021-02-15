@@ -80,6 +80,12 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.ImporterFile).HasColumnName("ImporterFile").HasMaxLength(30).IsUnicode(false);
 
             this.Property(t => t.FileOpenDate).HasColumnName("FileOpenDate");
+
+            this.Property(t => t.FclLcl).HasColumnName("FclLcl").HasMaxLength(1).IsUnicode(true);
+
+            this.Property(t => t.PackageQuantity).HasColumnName("PackageQuantity");
+
+            this.Property(t => t.ForwarderId).HasColumnName("ForwarderId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

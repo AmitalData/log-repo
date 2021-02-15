@@ -7,6 +7,7 @@ import { CustomMessageProgressComponent } from './Components/CustomMessageProgre
 import { NotificationComponent } from './Components/NotificationComponent';
 import { ObjectViewerComponent } from './Components/ObjectViewerComponent';
 import { SendDeclarationTastCaseComponent } from './Components/TestCase/SendDeclarationTastCaseComponent';
+import { RemarksPopUp } from './Components/RemarksPopUp';
 
 export const Components =
     [
@@ -19,6 +20,7 @@ export const Components =
         NotificationComponent,
         ObjectViewerComponent,
         SendDeclarationTastCaseComponent,
+        RemarksPopUp
     ];
 
 export class ModuleDeclarations {
@@ -36,6 +38,8 @@ export class ModuleDeclarations {
             case "NotificationComponent": { myResult = NotificationComponent; break; }
             case "ObjectViewerComponent": { myResult = ObjectViewerComponent; break; }
             case "SendDeclarationTastCaseComponent": { myResult = SendDeclarationTastCaseComponent; break; }
+            case "RemarksPopUp": { myResult = RemarksPopUp; break; }
+
         }
 
         return myResult;

@@ -982,6 +982,19 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ExportDeclarationOfficeCode"
+    Type="varchar"
+    Size="17">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PhysicalCheck"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"
@@ -1182,6 +1195,11 @@
     ReferencedTable="LoadingSiteTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ExportDeclarationOfficeCode"
+    ReferencedTable="CustomsHouseTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
   <Index
     Columns="AmendmentOriginalDeclartation" />
   <Index
@@ -1194,8 +1212,6 @@
     Columns="AvailabilityDate" />
   <Index
     Columns="HatraDate" />
-
   <Index
-  Columns="IsClose" />
-
+    Columns="IsClose" />
 </Table>

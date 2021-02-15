@@ -15,6 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.MessageLib.PhysicalCheck;
+using Logitude.Customs.Data.EntityLists;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -155,7 +156,27 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this.MyRequestSheetParam.CustomFileNo = customfileNumber;
                     this.MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                     this.MyRequestSheetParam.EntityId2 = phsicalCheckPM.DeclarationId;
+
+                    List<PhysicalCheckList> physicalchecks = physicalCheckQueryService.GetPhysicalChecksByDeclarationId(phsicalCheckPM.DeclarationId, phsicalCheckPM.Tenant);
+                    Boolean physicalchecksclosed = true;
+                    foreach (var item in physicalchecks)
+                    {
+                        if (!item.IsClosed)
+                        {
+                            physicalchecksclosed = false;
+                        }
+                    }
+                    if (physicalchecksclosed)
+                    {
+                        var decPM = declarationQueryService.GetSingleDeclarationById(phsicalCheckPM.DeclarationId, phsicalCheckPM.Tenant);
+                        DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+                        decPM.PhysicalCheck = 2;
+                        decPM.ChangeSetOp = ChangeSetOperation.Update;
+                        declarationUpdateService.Update(decPM, true);
+                    }
+
                 }
+
             }
             catch (System.Exception ee)
             {

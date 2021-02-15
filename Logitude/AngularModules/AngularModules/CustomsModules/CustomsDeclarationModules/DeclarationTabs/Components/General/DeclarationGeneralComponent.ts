@@ -459,6 +459,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
 
     SetScreenFieldsEditability() {
         this.UIProperties.SetEnabled("DeclarationOfficeCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("ExportDeclarationOfficeCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("ProcedureCurrentCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("DeclarationDocumentTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("TaxationDateTime", this.ObjectTableName, !this.IsDisplayOnly);
@@ -481,6 +482,11 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         this.EntityPM.DeclarationOfficeCode = newValue;
         this.ChangeTransportMode();
     }
+
+    public get ExportDeclarationOfficeCode() { return this.EntityPM.ExportDeclarationOfficeCode; }
+    public set ExportDeclarationOfficeCode(newValue: string) {
+        this.EntityPM.ExportDeclarationOfficeCode = newValue;
+     }
 
     public get ProcedureCurrentCode() { return this.EntityPM.ProcedureCurrentCode; }
     public set ProcedureCurrentCode(newValue: string) {
@@ -1273,6 +1279,9 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         consignment.DeclarationId = this.EntityPM.Id;
         consignment.Tenant = SessionLocator.Tenant;
         consignment.IsLastReleaseFromWarehous = "F";
+        if (this.EntityPM.Direction == "E") {
+            consignment.ConsignmentType = "E";
+        }
         consignment.SequenceNumeric = ++this.consignmentIndex;
         consignment.ConsignmentNumber = ++this.consignmentNumber;
         this.EntityPM.AddConsignment(consignment);

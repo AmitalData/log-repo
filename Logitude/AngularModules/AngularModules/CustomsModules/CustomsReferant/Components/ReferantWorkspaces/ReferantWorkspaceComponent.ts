@@ -7,7 +7,7 @@ import { ListComponentArgs } from '../../../../Infrastructure/Args';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ChartingDataClass } from '../../../../Infrastructure/DataContracts/Dashboard/ChartingDataClass';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { FormatTool } from '../../../../Infrastructure/Tools';
+import { FormatTool, AppTool } from '../../../../Infrastructure/Tools';
 import { DeclarationReferantDataExtendedListService } from '../../../../Customs/Services/ExtendedLists/DeclarationReferantDataExtendedListService';
 import { Dictionary } from '../../../../Infrastructure/GenericTypes/Dictionary';
 import { DeclarationReferantDataFiltersMenuComponent } from '../FiltersMenu/DeclarationReferantDataFiltersMenuComponent';
@@ -322,7 +322,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     FilterChange($event) {
         this.filters = new ApiQueryFilters();
         this.filters = $event.Filters;
-
+    
         this.RefId = this.declarationReferantDataFiltersMenuComponent.LOVListUsers.map(({ Id }) => Id).toString();
         this.DepId = this.declarationReferantDataFiltersMenuComponent.LOVListDepartment.map(({ Id }) => Id).toString();
         this.TransportModeId = this.declarationReferantDataFiltersMenuComponent.transportmodeId;
@@ -333,7 +333,15 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                 this.LoadInProgressDeclarationReferantDatasDashboard();
             });
     }
+    RefreshButtonClicked() {
+        this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).subscribe(
+            (data: any) => {
+                this.counters = data.Result;
+                this.LoadAllScreenData();
+                this.LoadInProgressDeclarationReferantDatasDashboard();
+            });
 
+    }
 
     ViewReferantQuery(myQueryCode: string) {
         if (myQueryCode != null) {
@@ -397,7 +405,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                     }
                 default: { break; }
             }
-            this.BuildFiltersForQuery(this.filters);
+             this.BuildFiltersForQuery(this.filters);
             if (myQueryCode.endsWith("_A"))
                 this.filters.addAdditionalFilter("IsAvailabilityDateNull", false, null, null, "Equals", false, false, false, "number");
             var listArgs = new ListComponentArgs();
@@ -407,13 +415,17 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("General.MH.ReferantWorkspace");
             listArgs.IgnoreSelectedPerspective = true;
+            if (AppTool.IsNullOrEmpty(listArgs.NewButtonLabel)) listArgs.NewButtonLabel = TextCodeTranslator.Translate("Customs.General.O.NewCustomsFile"); // "פתיחת תיק חדש";
+             var _filters = ["TransportModeId", "ReferentUserId", "DepartmentName", "ReferantUserName", "DepartmentId"];
+
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
+
                         cmpRef.instance.Run(listArgs);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                            this.filters = $event.Filters;
+                            this.filters.AdditionalFilters = this.filters.AdditionalFilters.filter(x => x.FieldName == "TransportModeId" || x.FieldName == "ReferentUserId" || x.FieldName == "DepartmentName" || x.FieldName == "ReferantUserName" || x.FieldName == "DepartmentId"  );
                             this.LoadAllScreenData();
                             this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).subscribe(
                                 (data: any) => {

@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CustomsGeneral&quot;"
-  Code="&quot;fed9&quot;"
+  Code="&quot;4a53&quot;"
   Name="&quot;CustomsGeneral&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -5216,6 +5216,7 @@
       LocalDefaultText="&quot;מסך רפרנט&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
+
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

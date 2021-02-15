@@ -5331,6 +5331,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string exportDeclarationOfficeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportDeclarationOfficeCode  
+	   {
+	    
+	     get
+		{
+		   return exportDeclarationOfficeCode;
+		 }
+		 set
+		 {
+		   if(exportDeclarationOfficeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportDeclarationOfficeCode",OldValue=exportDeclarationOfficeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportDeclarationOfficeCode=value;
+		   }
+			
+		 }
+	   }
+	  private int? physicalCheck ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? PhysicalCheck  
+	   {
+	    
+	     get
+		{
+		   return physicalCheck;
+		 }
+		 set
+		 {
+		   if(physicalCheck != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PhysicalCheck",OldValue=physicalCheck,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   physicalCheck=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

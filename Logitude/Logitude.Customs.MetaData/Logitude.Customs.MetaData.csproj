@@ -155,7 +155,7 @@
     <None Include="DBTables\AmendCancellRequestInitiator.dxml" />
     <None Include="DBTables\AmendmentFieldReasonType.dxml" />
     <None Include="DBTables\AmendmentFieldStatusType.dxml" />
-    <None Include="DBTables\AmendmentRequestRejectReasonType.dxml" />
+    <None Include="DBTables\AmendRequestRejectReasonType.dxml" />
     <None Include="DBTables\AmendmentRequestStatus.dxml" />
     <None Include="DBTables\AmendmentStatus.dxml" />
     <None Include="DBTables\AmountType.dxml" />
@@ -473,7 +473,7 @@
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
-    <None Include="EntityFiles\AmendmentRequestRejectReasonType.lxml" />
+    <None Include="EntityFiles\AmendRequestRejectReasonType.lxml" />
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
     <None Include="EntityFiles\AutonomyRegionType.lxml" />

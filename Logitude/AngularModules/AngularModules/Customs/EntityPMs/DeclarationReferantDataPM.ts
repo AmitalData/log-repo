@@ -194,6 +194,26 @@ export class DeclarationReferantDataPM {
     public set IsClose(newValue: boolean) { if (this.isClose != newValue) { this.isClose = newValue; this.MarkAsDirty("IsClose"); } }
        
 	 
+    private fclLcl: string;
+    public get FclLcl() { return this.fclLcl; }
+    public set FclLcl(newValue: string) { if (this.fclLcl != newValue) { this.fclLcl = newValue; this.MarkAsDirty("FclLcl"); } }
+       
+	 
+    private packageQuantity: number;
+    public get PackageQuantity() { return this.packageQuantity; }
+    public set PackageQuantity(newValue: number) { if (this.packageQuantity != newValue) { this.packageQuantity = newValue; this.MarkAsDirty("PackageQuantity"); } }
+       
+	 
+    private forwarderId: string;
+    public get ForwarderId() { return this.forwarderId; }
+    public set ForwarderId(newValue: string) { if (this.forwarderId != newValue) { this.forwarderId = newValue; this.MarkAsDirty("ForwarderId"); } }
+       
+	 
+    private forwarderName: string;
+    public get ForwarderName() { return this.forwarderName; }
+    public set ForwarderName(newValue: string) { if (this.forwarderName != newValue) { this.forwarderName = newValue; this.MarkAsDirty("ForwarderName"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		

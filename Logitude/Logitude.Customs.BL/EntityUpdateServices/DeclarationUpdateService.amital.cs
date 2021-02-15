@@ -536,7 +536,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("8250 RequestInProgress stop create a new one !! ");
                 }
-                throw;
+              //  throw;
             }
             this.IsDelayedDeclarationStatusRequestSent = true;
         }
@@ -1646,7 +1646,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             LogMessagingUtil.Instance.AppendLine("CheckFileStatus>genericResponseObj>Status= " + genericResponseObj.Status);
 
-            return (genericResponseObj.Status == "1");
+            bool isStatusExist = false;
+            if (!String.IsNullOrWhiteSpace(genericResponseObj.Message) && !genericResponseObj.Message.Contains("does not Exist"))
+            {
+                isStatusExist = true;
+            }
+            return (isStatusExist);
 
         }
 
@@ -1715,7 +1720,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             LogMessagingUtil.Instance.AppendLine("CheckFileEvent>genericResponseObj>Status= " + genericResponseObj.Status);
 
-            return (genericResponseObj.Status == "1");
+            bool isStatusExist = false;
+            if (!String.IsNullOrWhiteSpace(genericResponseObj.Message) && !genericResponseObj.Message.Contains("does not Exist"))
+            {
+                isStatusExist = true;
+            }
+            return (isStatusExist);
 
         }
 
@@ -1783,9 +1793,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 LogMessagingUtil.Instance.AppendLine("CheckFileEvent>genericResponseObj>Message= " + genericResponseObj.Message);
             }
             LogMessagingUtil.Instance.AppendLine("CheckFileEvent>genericResponseObj>Status= " + genericResponseObj.Status);
-
-            return (genericResponseObj.Status == "1");
-
+            bool isStatusExist = false;
+            if (!String.IsNullOrWhiteSpace(genericResponseObj.Message) && !genericResponseObj.Message.Contains("does not Exist"))
+            {
+                isStatusExist = true;
+            }
+            return (isStatusExist);
         }
     }
     public class amitalInfo

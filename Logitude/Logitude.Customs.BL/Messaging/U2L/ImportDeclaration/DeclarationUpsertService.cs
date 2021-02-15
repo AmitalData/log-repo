@@ -313,7 +313,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 {
                     if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.ImporterId))
                     {
-                        if (_AmitalCustomsFile.ImporterId.Substring(0, 2) == "P-")
+                        if (_AmitalCustomsFile.ImporterId.Length > 1 && _AmitalCustomsFile.ImporterId.Substring(0, 2) == "P-")
                         {
                             this._MyDeclarationPM.ImporterPassportNumber = _AmitalCustomsFile.ImporterId.Substring(2);
                             this._MyDeclarationPM.ImporterTypeCode = "2";
@@ -939,10 +939,43 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             this._DeclarationReferantDataPM.Team = TranslateTeam(_AmitalCustomsFile.Team);
 
             this._DeclarationReferantDataPM.FileOpenDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.FileOpenDate, "AmitalCustomsFile.FileOpenDate");
+            this._DeclarationReferantDataPM.FclLcl = _AmitalCustomsFile.FclLcl;
+            this._DeclarationReferantDataPM.ForwarderId = TranslateForwarder(_AmitalCustomsFile.ForwarderId);
+            
+            int packageQuantity = 0;
+            if (int.TryParse(_AmitalCustomsFile.PackageQuantity, out packageQuantity) || string.IsNullOrWhiteSpace(_AmitalCustomsFile.PackageQuantity))
+            {
+                this._DeclarationReferantDataPM.PackageQuantity = packageQuantity;
+            }
 
             this._DeclarationReferantDataPM.Tenant = ResolvedTenant();
             myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
 
+        }
+
+        private string TranslateForwarder(string forwarderId)
+        {
+            if (String.IsNullOrWhiteSpace(forwarderId))
+            {
+                AppendLogLine("forwarderId is null");
+                return null;
+            }
+            CardRepository cardRep = new CardRepository(ResolvedTenant());
+            Card card = cardRep.GetSingleCard(forwarderId, ResolvedTenant());
+            if (card != null)
+            {
+                return card.Id;
+            }
+            else
+            {
+                card = cardRep.GetSingleCardByCode(forwarderId, ResolvedTenant(), true);
+                if (card != null)
+                {
+                    return card.Id;
+                }
+            }
+            AppendLogLine("No forwarder found for forwarderId " + forwarderId);
+            return null;
         }
 
         private string TranslateVendor(string amitalvendorId)

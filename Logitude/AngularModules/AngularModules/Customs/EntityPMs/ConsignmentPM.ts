@@ -252,6 +252,16 @@ export class ConsignmentPM {
     public set ExportLoadingPortCode(newValue: string) { if (this.exportLoadingPortCode != newValue) { this.exportLoadingPortCode = newValue; this.MarkAsDirty("ExportLoadingPortCode"); } }
        
 	 
+    private shipCode: string;
+    public get ShipCode() { return this.shipCode; }
+    public set ShipCode(newValue: string) { if (this.shipCode != newValue) { this.shipCode = newValue; this.MarkAsDirty("ShipCode"); } }
+       
+	 
+    private consignmentType: string;
+    public get ConsignmentType() { return this.consignmentType; }
+    public set ConsignmentType(newValue: string) { if (this.consignmentType != newValue) { this.consignmentType = newValue; this.MarkAsDirty("ConsignmentType"); } }
+       
+	 
 
     public OldEntityPM: ConsignmentPM;
 	

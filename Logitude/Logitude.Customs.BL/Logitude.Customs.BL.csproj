@@ -143,8 +143,8 @@
     <Compile Include="CloseTables\CustomsPartnerFtpDetails.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AmendCancellRequestInitiatorDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AmendmentFieldStatusTypeDetails.Generated.cs" />
-    <Compile Include="CloseTables\DetailsClassesGenerated\AmendmentRequestRejectReasonTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AmendmentStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\AmendRequestRejectReasonTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AmountTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CancellationReasonRequestTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CancellationRequestStatusDetails.Generated.cs" />
@@ -290,10 +290,10 @@
     <Compile Include="EntityDataMappings\AmendCancellRequestInitiatorDataMapping.cs" />
     <Compile Include="EntityDataMappings\AmendmentFieldReasonTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AmendmentFieldStatusTypeDataMapping.cs" />
-    <Compile Include="EntityDataMappings\AmendmentRequestRejectReasonTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AmendmentRequestStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\AmendmentStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\AmendmentTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AmendRequestRejectReasonTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AmountTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ApprovedProfessionDataMapping.cs" />
     <Compile Include="EntityDataMappings\AssigneeNotificationTypeDataMapping.cs" />
@@ -476,10 +476,10 @@
     <Compile Include="EntityDataMappings\Generated\AmendCancellRequestInitiatorDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AmendmentFieldReasonTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AmendmentFieldStatusTypeDataMapping.Generated.cs" />
-    <Compile Include="EntityDataMappings\Generated\AmendmentRequestRejectReasonTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AmendmentRequestStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AmendmentStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AmendmentTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AmendRequestRejectReasonTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AmountTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ApprovedProfessionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AssigneeNotificationTypeDataMapping.Generated.cs" />
@@ -969,7 +969,7 @@
     <Compile Include="EntityQueryServices\DeclarationReferantDataQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendCancellRequestInitiatorQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendmentFieldStatusTypeQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\AmendmentRequestRejectReasonTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AmendRequestRejectReasonTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AutonomyRegionTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CancellationReasonRequestTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CancellationRequestStatusQueryService.Generated.cs" />
@@ -1470,7 +1470,7 @@
     <Compile Include="EntityUpdateServices\DeclarationMamanSpecialActionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\AmendCancellRequestInitiatorUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AmendmentFieldStatusTypeUpdateService.Generated.cs" />
-    <Compile Include="EntityUpdateServices\Generated\AmendmentRequestRejectReasonTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\AmendRequestRejectReasonTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AmountTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CancellationReasonRequestTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CancellationRequestStatusUpdateService.Generated.cs" />
