@@ -728,6 +728,14 @@
       <Project>{a00ae10e-2560-4e06-99fa-859ea7488ec3}</Project>
       <Name>Logitude.Social.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logitude.TariffModule.BL\Logitude.TariffModule.BL.csproj">
+      <Project>{312a7909-04d0-49b5-8d73-77598451f22e}</Project>
+      <Name>Logitude.TariffModule.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.TariffModule.Data\Logitude.TariffModule.Data.csproj">
+      <Project>{0a2a3ab8-4d14-4140-be2f-2d95b235bb7c}</Project>
+      <Name>Logitude.TariffModule.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.TimeManagement.BL\Logitude.TimeManagement.BL.csproj">
       <Project>{2b42c0df-9dd8-4ed1-8f6e-94746cfc1e63}</Project>
       <Name>Logitude.TimeManagement.BL</Name>
