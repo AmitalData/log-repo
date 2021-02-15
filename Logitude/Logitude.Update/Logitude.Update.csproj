@@ -225,6 +225,12 @@
     <Compile Include="EnhancedUpdateForm.Designer.cs">
       <DependentUpon>EnhancedUpdateForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FixDuplicatedJournals.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FixDuplicatedJournals.Designer.cs">
+      <DependentUpon>FixDuplicatedJournals.cs</DependentUpon>
+    </Compile>
     <Compile Include="FlexibleMessageBox.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -287,6 +293,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EnhancedUpdateForm.resx">
       <DependentUpon>EnhancedUpdateForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FixDuplicatedJournals.resx">
+      <DependentUpon>FixDuplicatedJournals.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
