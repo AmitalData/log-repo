@@ -77,6 +77,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     public IsAdvancedSearchOpened: boolean = false;
     LayoutDirection: string = 'ltr';
     customsSettingListService: CustomsSettingListService = new CustomsSettingListService();
+    public IsReferantObjectTable: boolean = false;
 
     @ViewChild(LogGridComponent) MyLogGridComponent: LogGridComponent = null;
     public IsShowTipArea: boolean = false;
@@ -626,13 +627,17 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
         this.Filterchangeevent = new LogEvents.EventManager();
         var subscription = this.pubSubAdvanceQueryFiltersService.Stream.subscribe(customer => this.processAdvanceQueryFilters(customer));
-      //SessionLocator.SelectedSession.pubSubAdvanceQueryFiltersService.emit(this.pubSubAdvanceQueryFiltersService)
-      //this.ObjectTableName == "Customs.Declaration" || this.ObjectTableName == "Customs.PhysicalCheck" ||
-      if (this.ObjectTableName.startsWith("Customs.")) {
-          this.IsNavigateButtonVisible = false;
-      }
+        //SessionLocator.SelectedSession.pubSubAdvanceQueryFiltersService.emit(this.pubSubAdvanceQueryFiltersService)
+        //this.ObjectTableName == "Customs.Declaration" || this.ObjectTableName == "Customs.PhysicalCheck" ||
+        if (this.ObjectTableName.startsWith("Customs.")) {
+            this.IsNavigateButtonVisible = false;
+        }
         this.Listen();
         //this.CD.detectChanges();
+        if (this.ObjectTableName == "Customs.DeclarationReferantData") {
+            this.IsReferantObjectTable = true;
+        }
+
     }
 
     private ReloadAllListEvent: any = null;
@@ -853,7 +858,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 myObjectTableName = myObjectTableName.substr((this.ObjectTable.ClientModuleName + '.').length)
                             }
                             var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/FiltersMenu/" + /*this.ObjectTable.Name*/myObjectTableName + "FiltersMenuComponent";
-                            if (myObjectTableName == "DeclarationReferantData") {
+                            if (myObjectTableName == "DeclarationReferantData") { 
                                 var myComponentPath = "./CustomsModules/CustomsReferant/Components/FiltersMenu/" + /*this.ObjectTable.Name*/myObjectTableName + "FiltersMenuComponent";
                             }
                             SessionLocator.DynamicLoader.Load(myComponentPath, myLocation.viewContainerRef)
