@@ -4763,6 +4763,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;BillToId&quot;"
     ListPropertyPath="&quot;BillToId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
