@@ -182,14 +182,16 @@
                             <IconButton [Name]="'Edit'" [Title]="'Edit report folder'" (click)="EditBIReportFolderClicked()"></IconButton>
                         </td>
 
-                        <td>
+                       
+
+                        <td style="max-width:600px;">
+                            <div LocationDirective Code="MNH"></div>
+                        </td>
+                        <td *ngIf="HasActionBar()" style="width: 10px;"></td>
+                        <td *ngIf="HasActionBar()" style="width: 80px;">
                             <div *ngIf="HasActionBar()" style="width: 5px;"></div>
                             <div *ngIf="HasActionBar()" id="ActionBar" LocationDirective Code="MNA"></div>
                             <div *ngIf="!HasActionBar()"></div>
-                        </td>
-
-                        <td style="width: 480px;">
-                            <div LocationDirective Code="MNH"></div>
                         </td>
                     </tr>
                 </table>
