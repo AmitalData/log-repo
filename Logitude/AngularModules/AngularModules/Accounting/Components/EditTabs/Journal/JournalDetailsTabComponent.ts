@@ -43,6 +43,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     public ObjectTableName = "Journal";
     public DataContext = this;
     defaultCurrencyId: string = SessionLocator.TenantPM.CurrencyId;
+    public  TenantCurrency = SessionLocator.TenantPM.CurrencyCode;
     JournalLines: ObservableCollection;//JournalLineModel[];
     creditTotal: number = 0;
     debitTotal: number = 0;
@@ -885,7 +886,7 @@ class JournalLineModel extends BaseComponent {
                 if (value != SessionLocator.TenantPM.CurrencyId) {
                     this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, true);
                     if (this.parent.currency.Id != value) {
-                        this.ratesTableExtendedListService.getClosestRate(this.parent.currency.Id, value).subscribe((myResponse: ServiceResponse) => {
+                        this.ratesTableExtendedListService.getClosestRate(this.parent.defaultCurrencyId, value).subscribe((myResponse: ServiceResponse) => {
                             if (myResponse != null) {
                                 if (!myResponse.HasError) {
                                     if (myResponse.Result != undefined && myResponse.Result != null) {
