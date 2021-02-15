@@ -355,6 +355,11 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         {
             IJournalQueryServiceExt journalQueryService = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
             var journal = journalQueryService.GetJournalByAccountingEntityIdAndCode(paymentPM.Id, "3", tenant);
+
+            bool isStornoJournal = journal != null && journal.OriginalJournalId != null;
+            if (isStornoJournal)
+                return null;
+
             return journal;
         }
 
