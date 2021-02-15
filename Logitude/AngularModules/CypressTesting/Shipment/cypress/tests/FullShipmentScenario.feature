@@ -27,7 +27,7 @@ Feature:  Full Shipment Scenario
     # Scenario: Add Partners
     #     Given  partners with following details
     #         | Consignee           | Agent     | CustomsAgentExport | CustomsAgentImport | Notify1   | Notify2   | ShipperNotExporter | ConsigneeNotImporter | FreightForwarder | Coloader  | CustomClearancePoint | Consolidator | ReleasingAgent |
-    #         | TestConsigneeExport | TestAgent | TestCustomsAgent   | TestCustomsAgent   | TestAgent | TestAgent | TestShipperExport  | TestConsigneeExport  | TestAgent        | TestAgent | TestWarehouse        | TestAgent    | TestAgent      |
+    #         | TestConsigneeExport | TestAgent | TestCustomAgent   | TestCustomAgent   | TestAgent | TestAgent | TestShipperExport  | TestConsigneeExport  | TestAgent        | TestAgent | TestWarehouse        | TestAgent    | TestAgent      |
     #     When save shipment
     #     Then the direct shipment should save successfully
 

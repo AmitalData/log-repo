@@ -8,4 +8,6 @@ export class AccountingURLs {
     public static readonly ARPayments = '**/arpayments';
     public static readonly InvoiceDomain = '**/InvoiceDomain';
     public static readonly ConsilidationInvoiceDomain = "**/ConsilidationInvoiceDomain"
+    public static readonly VatTypePercentageCall = "**/GetVatTypePercentagePMByDate?**"
+
 }

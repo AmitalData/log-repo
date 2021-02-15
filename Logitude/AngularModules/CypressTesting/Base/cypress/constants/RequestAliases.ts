@@ -19,4 +19,6 @@ export class RequestAliases {
     public static readonly PutTariff = 'PutTariff';
     public static readonly GetRecentTariffs = 'GetRecentTariffs';
     public static readonly GetAllTariffVersionsForTariff = 'GetAllTariffVersionsForTariff';
+    public static readonly GetVatTypePercentage = 'GetVatTypePercentage';
+    
 }

@@ -102,7 +102,10 @@ export function FillARInvoiceDetails(aRInvoiceDetails: ARInvoiceDetails) {
     else {
         cy.Click(AccountingSelectors.OkCreateARInvoiceButton, null);
         cy.FillLogLov(AccountingSelectors.ARInvoiceVatType, aRInvoiceDetails.VATType, true)
+        cy.DefineRequestWait(RestAPI.GET, AccountingURLs.VatTypePercentageCall, RequestAliases.GetVatTypePercentage)
         cy.Click(AccountingSelectors.VatTypeApplyToAll, null)
+        cy.wait('@' + RequestAliases.GetVatTypePercentage);
+
     }
 }
 
