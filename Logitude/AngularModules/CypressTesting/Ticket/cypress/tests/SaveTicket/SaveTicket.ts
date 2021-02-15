@@ -4,7 +4,6 @@ import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import * as Actions from "../../actions/Actions";
 import { URLs } from "../../constants/URLs";
-import { TicketSelectors } from "../../selectors/TicketSelectors";
 
 let TicketData: TicketDetails;
 

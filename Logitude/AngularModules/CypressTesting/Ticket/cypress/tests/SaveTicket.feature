@@ -1,4 +1,7 @@
+@smoke @release @stable @all
 Feature: Save Ticket Test
+    This file will create ticket then test the following
+    Save as close , as open and as resolved
 
     Scenario: Create new ticket
         Given the user logged in and navigated to ticket workspace

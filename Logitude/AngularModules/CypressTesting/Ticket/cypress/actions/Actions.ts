@@ -1,6 +1,5 @@
 import { TicketDetails } from "../models/TicketDetails";
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
-import * as BaseAssertion from "../../../Base/cypress/actions/Assertion"
 import { TicketSelectors } from "../selectors/TicketSelectors";
 import { URLs } from "../constants/URLs";
 
@@ -29,16 +28,6 @@ export function ReplyTicket() {
 export function AddInternalNoteTicket() {
     cy.Click(TicketSelectors.InternalNote, null);
     cy.FillLogTextBox(TicketSelectors.CorrespondenceLine, "Send Internal Note");
-    cy.Click(TicketSelectors.SendAsOpenButton, "Send and set as Open");
-}
-
-export function CancelTicket() {
-    cy.Click(TicketSelectors.MenuButtons, null);
-    cy.Click(TicketSelectors.TicketCancel, null);
-    cy.Click(BaseSelectors.RedButton, "Yes");
-export function AddInternalNoteTicket() {
-    cy.Click(TicketSelectors.InternalNote, null);
-    cy.FillLogTextBox(TicketSelectors.CorrespondenceLine, "Send Internal Note");
     cy.get(TicketSelectors.SendAsOpenButton).eq(1).click();
 }
 
@@ -60,19 +49,20 @@ export function CloseTicket() {
     cy.Click(BaseSelectors.RedButton, "Ok");
 }
 
-export function CreateActivity(ActivityTypeButton : string) {
+export function CreateActivity(ActivityTypeButton: string) {
     cy.Click(ActivityTypeButton, null);
     cy.FillLogTextBox(TicketSelectors.ActivitySubject, "Create Activity Test");
     cy.Click(BaseSelectors.RedButton, "Ok");
+}
+
+export function MarkActivitiesAsComplete(ActivityImg: string) {
+    cy.Click(ActivityImg, null);
+    cy.DefineRequestWait("PUT", URLs.Activity, "WaitPutActivityRequest");
+    cy.Click(TicketSelectors.MarkAsComplete, null);
+}
+
 export function SaveTicket(SaveType: string) {
     cy.DefineRequestWait("PUT", URLs.Tickets, "WaitPutTicketRequest")
     cy.Click(TicketSelectors.SaveMenuDropButton, null);
     cy.Click(TicketSelectors.SaveMenuButton, SaveType);
-}
-
-export function MarkActivitiesAsComplete(ActivityImg : string){
-        cy.Click(ActivityImg,null);
-        cy.DefineRequestWait("PUT", URLs.Activity, "WaitPutActivityRequest");
-        cy.Click(TicketSelectors.MarkAsComplete,null);
-        
 }
