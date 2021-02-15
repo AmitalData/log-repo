@@ -548,5 +548,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return journalLines;
         }
+
     }
 }
