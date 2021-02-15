@@ -175,7 +175,7 @@ Then("the consolidation invoice should approve successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200).then((interception) => {
     consolidationInvoiceNumber = interception.response.body.InvoiceNumber;
   })
-  cy.Click(BaseSelectors.Backbutton, null, false);
+  cy.BackButton("Accounting")
 });
 //#endregion
 
