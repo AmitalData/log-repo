@@ -27,4 +27,8 @@ export class BaseSelectors extends RegexSelectors {
     //#endregion
 
     public static readonly FirstElementInList = 'ul > li';
+    public static readonly AddButton = "#Add";
+    public static readonly SpanElement = "span";
+    public static readonly DivElement = "div";
+    public static readonly FirstRecentEntityItem = ".RecentEntityItem:first";
 }
