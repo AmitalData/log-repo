@@ -8,7 +8,7 @@ import { TicketSelectors } from "../../selectors/TicketSelectors";
 
 let TicketData: TicketDetails;
 
-//#region  create ticket 
+//#region create ticket 
 Given("the user logged in and navigated to ticket workspace", () => {
     cy.Login();
     cy.Click(BaseSelectors.TicketsMenu, null)
@@ -38,22 +38,16 @@ Given("the user in the ticket's main page", () => {
 });
 
 When("save as close", () => {
-    cy.DefineRequestWait("PUT", URLs.Tickets, "WaitPutTicketRequest")
-    cy.Click(".x-button-drop",null);
-    cy.Click(".x-button-drop-menu" , "Save as Closed");
+    Actions.SaveTicket("Save as Closed")
     cy.Click(BaseSelectors.RedButton , "Ok");
 });
 
 When("save as open", () => {
-    cy.DefineRequestWait("PUT", URLs.Tickets, "WaitPutTicketRequest")
-    cy.Click(".x-button-drop",null);
-    cy.Click(".x-button-drop-menu" , "Save as Open");
+    Actions.SaveTicket("Save as Open");
 });
 
 When("save as resolve", () => {
-    cy.DefineRequestWait("PUT", URLs.Tickets, "WaitPutTicketRequest")
-    cy.Click(".x-button-drop",null);
-    cy.Click(".x-button-drop-menu" , "Save as Resolved");
+    Actions.SaveTicket( "Save as Resolved");
     cy.Click(BaseSelectors.RedButton , "Ok");
 });
 
