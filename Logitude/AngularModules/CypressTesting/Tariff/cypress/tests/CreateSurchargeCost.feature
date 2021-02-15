@@ -2,7 +2,7 @@
 Feature: Create New Surcharge Cost Tariff
     The authenticated user will create new air, ocean LCL, and ocean FCL surcharge cost tariff.
 
-    Scenario: Create New Air Surcharge Cost
+    Scenario: Login and create new air surcharge cost
         Given the user logged in and navigate to tariff workspace
         And an air surcharge cost with the following details
             | Name                 | Seller |
@@ -14,7 +14,7 @@ Feature: Create New Surcharge Cost Tariff
         When create surcharge cost
         Then the surcharge cost should create successfully
 
-    Scenario: Create New Ocean LCL Surcharge Cost
+    Scenario: Create new ocean LCL surcharge cost
         Given an ocean LCL surcharge cost with the following details
             | Name                      | Seller |
             | TestOceanLCLSurchargeCost | MAEU   |
@@ -25,7 +25,7 @@ Feature: Create New Surcharge Cost Tariff
         When create surcharge cost
         Then the surcharge cost should create successfully
 
-    Scenario: Create New Ocean FCL Surcharge Cost
+    Scenario: Create new ocean FCL surcharge cost
         Given an ocean FCL surcharge cost with the following details
             | Name                      | Seller |
             | TestOceanFCLSurchargeCost | MAEU   |

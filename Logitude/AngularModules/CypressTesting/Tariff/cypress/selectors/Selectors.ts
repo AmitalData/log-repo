@@ -11,8 +11,25 @@ export class TariffSelectors
     public static readonly TariffProduct = "#Tariff_TariffProductId";
     public static readonly TariffVersionAllInChargeType = "input[id^='TariffVersionAllInCharge_ChargesTypeId']:last";
     public static readonly EditTariffAllInChargesButton = "newairfreightcostcomponent button[id^='Edit']:last";
+    public static readonly TariffNotes = "#Tariff_Notes";
+    public static readonly TariffLineFromPort = "#TariffLine_OriginPortId";
+    public static readonly TariffLineToPort = "#TariffLine_DestinationPortId";
+    public static readonly TariffLineTransitTime = "#TariffLine_TransitTime";
+    public static readonly TariffLineNotes = "#TariffLine_Notes";
+    public static readonly TariffLineMinPrice = "#TariffLine_MinPrice";
+    public static readonly SaveTariff = "#Tariff-Save";
+    public static readonly TariffContractNumber = "#Tariff_ContractNumber";
+    public static readonly TariffCurrency = "#Tariff_CurrencyId";
 
     public static TariffSurcharge(number: number): string{
         return "#Tariff_Surcharge" + number.toString() + "Id";
+    }
+
+    public static TariffLineSurchargePrice(number: number): string{
+        return "#TariffLine_Surcharge" + number.toString() + "Price";
+    }
+
+    public static TariffLineStepPrice(number: number): string{
+        return "#TariffLine_Step" + number.toString() + "Price";
     }
 }

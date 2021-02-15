@@ -15,4 +15,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly OKBtn = "#OKBtn";
     public static readonly SaveWizard = "#SaveWizard";
     public static readonly AddButton = "#Add";
+    public static readonly SpanElement = "span";
+    public static readonly DivElement = "div";
+    public static readonly FirstRecentEntityItem = ".RecentEntityItem:first";
 }

@@ -10,4 +10,7 @@ export class RequestAliases {
     public static readonly APPayments = 'APPayments';
     public static readonly ARPayments = 'ARPayments';
     public static readonly PostTariff = 'PostTariff';
+    public static readonly PutTariff = 'PutTariff';
+    public static readonly GetRecentTariffs = 'GetRecentTariffs';
+    public static readonly GetAllTariffVersionsForTariff = 'GetAllTariffVersionsForTariff';
 }

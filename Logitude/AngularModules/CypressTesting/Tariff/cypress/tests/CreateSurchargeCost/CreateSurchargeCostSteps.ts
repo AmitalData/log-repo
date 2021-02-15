@@ -8,15 +8,18 @@ Given("the user logged in and navigate to tariff workspace", () => {
 });
 
 Given("an air surcharge cost with the following details", (dataTable) => {
-    FillNewSurchargeCost("Air", dataTable);
+  let tariffDetails = dataTable.hashes()[0] as TariffDetails;
+  Actions.FillNewSurchargeCost("Air", tariffDetails);
 });
 
 Given("an ocean LCL surcharge cost with the following details", (dataTable) => {
-  FillNewSurchargeCost("Ocean LCL", dataTable);
+  let tariffDetails = dataTable.hashes()[0] as TariffDetails;
+  Actions.FillNewSurchargeCost("Ocean LCL", tariffDetails);
 });
 
 Given("an ocean FCL surcharge cost with the following details", (dataTable) => {
-  FillNewSurchargeCost("Ocean FCL", dataTable);
+  let tariffDetails = dataTable.hashes()[0] as TariffDetails;
+  Actions.FillNewSurchargeCost("Ocean FCL", tariffDetails);
 });
 
 Given("add the follwing surcharges", (dataTable) => {
@@ -25,16 +28,9 @@ Given("add the follwing surcharges", (dataTable) => {
 });
 
 When("create surcharge cost", () => {
-    Actions.CreateTariff();
+  Actions.CreateTariff();
 });
 
 Then("the surcharge cost should create successfully", () => {
-  Actions.ValidateCreatedSurchargeCost();
+  Actions.ValidateCreateSurchargeCost();
 });
-
-
-function FillNewSurchargeCost(surchargeCostType: string, dataTable: any){
-  let tariffDetails = dataTable.hashes()[0] as TariffDetails;
-  Actions.OpenNewSurchargeCostWizard(surchargeCostType);
-  Actions.FillSurchargeCostWizardFields(tariffDetails);
-}

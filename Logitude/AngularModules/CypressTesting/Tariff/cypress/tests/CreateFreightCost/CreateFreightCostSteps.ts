@@ -8,33 +8,29 @@ Given("the user logged in and navigate to tariff workspace", () => {
 });
 
 Given("an air freight cost with the following details", (dataTable) => {
-    FillNewFreightCost("Air", dataTable);
+    let tariffDetails = dataTable.hashes()[0] as TariffDetails;
+    Actions.FillNewFreightCost("Air", tariffDetails);
 });
 
 Given("an ocean LCL freight cost with the following details", (dataTable) => {
-  FillNewFreightCost("Ocean LCL", dataTable);
+  let tariffDetails = dataTable.hashes()[0] as TariffDetails;
+  Actions.FillNewFreightCost("Ocean LCL", tariffDetails);
 });
 
 Given("an ocean FCL freight cost with the following details", (dataTable) => {
-  FillNewFreightCost("Ocean FCL", dataTable);
+  let tariffDetails = dataTable.hashes()[0] as TariffDetails;
+  Actions.FillNewFreightCost("Ocean FCL", tariffDetails);
 });
 
-Given("add the follwing All-In charges", (dataTable) => {
+Given("the follwing All-In charges", (dataTable) => {
   let chargeTypeDetailsList = dataTable.hashes() as ChargeTypeDetails[];
   Actions.FillAllInCharges(chargeTypeDetailsList);
 });
 
 When("create freight cost", () => {
-    Actions.CreateTariff();
+  Actions.CreateTariff();
 });
 
 Then("the freight cost should create successfully", () => {
-  Actions.ValidateCreatedFreightCost();
+  Actions.ValidateCreateFreightCost();
 });
-
-
-function FillNewFreightCost(freightCostType: string, dataTable: any){
-  let tariffDetails = dataTable.hashes()[0] as TariffDetails;
-  Actions.OpenNewFreightCostWizard(freightCostType);
-  Actions.FillFreightCostWizardFields(freightCostType, tariffDetails);
-}
