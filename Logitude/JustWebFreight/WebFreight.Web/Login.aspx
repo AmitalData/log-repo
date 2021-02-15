@@ -1908,7 +1908,8 @@
         function OnLoad() {
 
             var url = window.location.href;
-            var isDSV = url.toLowerCase().indexOf("dsv.co.il") > -1 ? true : false;
+           
+            var isDSV = (url.toLowerCase().indexOf("dsv.co.il") > -1 || IsDSVLocalRun()) ? true : false;
             var myDomain = url.split('/')[2];
 
 
@@ -1960,7 +1961,13 @@
 
         }
 
-
+        function IsDSVLocalRun() {
+            const queryString = window.location.search;
+            if (queryString)
+                return queryString.toLowerCase().indexOf("dsvlocal") > -1;
+            else
+                return false;
+        }
 
         function DSVLogin(myDomain) {
 
@@ -1991,8 +1998,8 @@
                         document.location.href = "AngularLogin" + "/index.html" + ("?Menu=" + urlMenu);
                     }
                     else {
-
-                        document.location.href = "AngularLogin" + "/index.html";
+                        const dsvLocal = IsDSVLocalRun() ? "?dsvlocal" : "";
+                        document.location.href = "AngularLogin" + "/index.html" + dsvLocal;
                     }
                     //document.location.href = "AngularLogin" + "/index.html";
                 },
@@ -2081,7 +2088,7 @@
 
         }
 
-</script>
+    </script>
 
     <script type="text/javascript"> 
 <!-- 
