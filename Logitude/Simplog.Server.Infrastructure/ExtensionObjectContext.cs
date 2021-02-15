@@ -36,8 +36,8 @@ using Simplog.Server.Infrastructure;
         //}
             var indexOffROM = selectSql.LastIndexOf("FROM ");
             newselectSql = "SELECT 1 MyCount  " + selectSql.Substring(indexOffROM) +
-            //" FOR UPDATE NOWAIT ";
-            " FOR UPDATE WAIT 10 ";
+            " FOR UPDATE NOWAIT ";
+            //" FOR UPDATE WAIT 1 ";
 
         var parameters = query.Parameters.Select(p => GetDbParameter(p.Name, p.Value)).ToArray();
 
@@ -80,8 +80,8 @@ using Simplog.Server.Infrastructure;
 
         if (LogitudeSettings.DatabaseManagementSystem == "oracle")
         {
-            //newselectSql = selectSql + " FOR UPDATE NOWAIT ";
-            newselectSql = selectSql + " FOR UPDATE WAIT 10 ";
+            newselectSql = selectSql + " FOR UPDATE NOWAIT ";
+            //newselectSql = selectSql + " FOR UPDATE WAIT 1 ";
         }
         else
         {

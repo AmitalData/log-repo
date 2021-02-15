@@ -278,7 +278,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (documentIn != null)
             {
                 ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-                var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant);
+                var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "2715" });
                 documentsFilingService.Update(documentIn, null, requestParams.LoggingUserId, false);
             }
 

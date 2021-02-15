@@ -180,7 +180,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private void AnalyzePaymentDocument(Attachment attachment, DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams,string MyDeclarationNumVersionId)
         {
             ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant, MyDeclarationNumVersionId);
+            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant,
+                new CustomDocumentsFilingParams() { MainInterfaceCode = "8302" }, MyDeclarationNumVersionId);
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
             var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
             DocumentsFilingPM documentsFilingPM = null;
@@ -224,7 +225,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private void UpdatePaymentDocument(DocumentsFilingPM documentsFilingPM, Attachment attachment, DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams,string DeclarationNumVersionId)
         {
             ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant, DeclarationNumVersionId);
+            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "8302" }, DeclarationNumVersionId);
 
             documentsFilingPM.Description = "טופס הצהרה " + this._MyDeclarationPM.DeclarationNumber + "-" + this._MyDeclarationPM.VersionId;
             documentsFilingPM.Name = "טופס הצהרה " + this._MyDeclarationPM.DeclarationNumber + "-" + this._MyDeclarationPM.VersionId;
@@ -241,7 +242,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private DocumentsFilingPM CreatePaymentDocument(Attachment attachment, DF_NG_8302_Web03_DeclarationPrintRequestParams requestParams, string DeclarationNumVersionId)
         {
             ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant, DeclarationNumVersionId);
+            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "8302" }, DeclarationNumVersionId);
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
 
             var documentsFilingPM = new DocumentsFilingPM();

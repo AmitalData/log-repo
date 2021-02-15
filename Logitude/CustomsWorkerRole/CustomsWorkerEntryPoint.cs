@@ -1,8 +1,10 @@
-﻿using Logitude.CustomsMessaging.MessagingServices;
+﻿using Logitude.Customs.Data.Repsitories;
+using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
+using System.Linq;
 using System.Web.Caching;
 
 namespace CustomsWorkerRole
@@ -31,6 +33,17 @@ namespace CustomsWorkerRole
 
             
             ThreadedRoleEntryPoint.StartStatic(BuildObjectTablesZipFilesDataAction, prodInfo);
+            try
+            {
+                var repo = new CustomsSettingRepository(1);
+                WorkerRoleServiceLocator.HaveCourierTenant = repo.GetRealAll().Any(r => r.CompanyType == "B");
+            }
+            catch (Exception)
+            {
+
+                //throw;
+            }
+           
             InjectionUtil.Init(null, null, checkContactFeature, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null,null,null);
             //ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
             

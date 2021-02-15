@@ -27,6 +27,7 @@ using Simplog.Server.Infrastructure;
 using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
+using Logitude.Server.Tools;
 
 namespace CustomsWorkerRole
 {
@@ -320,7 +321,7 @@ namespace CustomsWorkerRole
 
         private void WorkUntilQEmpty_Db()
         {
-            while (true)
+            while (!WorkerRoleServiceLocator.PleaseShutDown)
             {
                 
                 try
