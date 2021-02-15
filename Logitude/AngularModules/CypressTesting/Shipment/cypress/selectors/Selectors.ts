@@ -5,6 +5,8 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentMoreList = '#MenuButtons';
   public static readonly ShipmentTab = '#SHIP';
   public static readonly ShipmentSearchBar = '#Shipment_Search';
+  public static readonly ShipmentSearchParent = 'searchbox';
+  public static readonly ShipmentSearchParentClass = '.SearchBox';
   //public static readonly InvoiceMoreList = '#MenuButtons_1';
   public static readonly ConfirmWindowYes = '#ConfirmWindow_Yes_0';
   public static readonly SaveClose = '#SaveClose';
