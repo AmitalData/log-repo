@@ -14,10 +14,13 @@ export class TicketSelectors extends RegexSelectors
 	public static readonly CorrespondenceLine = "#CorrespondenceLine"
 	public static readonly TicketCancel = "#TicketBCancel"
 	public static readonly TicektReactivate = "#TicektBReactivate"
+	public static readonly TicektClosewithoutNotifying = "#TicektBClosewithoutNotifying"
 	public static readonly MenuButtons = "#MenuButtons"
 	public static readonly TicektClosewithoutNotifying = "#TicektBClosewithoutNotifying"
 	public static readonly SaveMenuDropButton = ".x-button-drop"
 	public static readonly SaveMenuButton = ".x-button-drop-menu"
+	public static readonly ActivitySubject = "#Activity_Subject"
+	public static readonly MarkAsComplete = "#ActivityBMarkAsComplete"
 	//public static readonly 
 
 

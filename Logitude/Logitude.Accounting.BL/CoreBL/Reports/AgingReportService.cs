@@ -698,6 +698,28 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                     }
                     ).ToList();
+                if (ToCalcOpenTransactionsFutureDueDate())
+                {
+                     
+                    reportList.ForEach(r =>
+                    {
+
+                        if (r.OrderDate == graterThen_OpenTransactionsFutureDueDate)
+                        {
+                            r.OrderAfterOpenrECODueDate = true;
+                        }
+                    });
+
+                    namedPeriods.ForEach(r =>
+                    {
+
+                        if (r.OrderDate == graterThen_OpenTransactionsFutureDueDate)
+                        {
+                            r.OrderAfterOpenrECODueDate = true;
+                        }
+                    });
+
+                }
 
                 MyPeriodList = reportList;
                 MyPeriodExtendedList = namedPeriods;
@@ -1744,7 +1766,7 @@ Period	Acc	Currency	Total
                 }
                 else if (OrderAfterOpenrECODueDate)
                 {
-                    return " >= " + month;
+                    return "FutureAmount";// " >= " + month;
 
                 }
                 else

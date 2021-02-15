@@ -6,11 +6,10 @@ import { ShipmentSelectors } from '../../../../Shipment/cypress/selectors/Select
 import { ShipmentDetails } from '../../../../Shipment/cypress/models/ShipmentDetails';
 import { PackagesDetails } from '../../../../Shipment/cypress/models/PackagesDetails';
 import { PayableDetails } from '../../../../Shipment/cypress/models/PayableDetails';
-import { APInvoiceDetails } from '../../../../Shipment/cypress/models/APInvoiceDetails';
+import { APInvoiceDetails } from 'cypress/models/APInvoiceDetails';
 import * as BaseAssertion from '../../../../Base/cypress/actions/Assertion';
 import { CustomerDetails } from '../../../../Common/cypress/models/CustomerDetails';
 import { RequestAliases } from '../../../../Base/cypress/constants/RequestAliases';
-import { CommonSelectors } from '../../../../Common/cypress/selectors/Selectors';
 import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors';
 
 //#region variables
@@ -40,23 +39,6 @@ Then("the customer should create successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.PartnersDomainRequest, 200).then((interception) => {
     customerCode = interception.response.body.Customer.Code;
   });;
-});
-//#endregion
-
-//#region Update customer
-Given("the user in the customer's billing tab", () => {
-  CommonActions.OpenCustomer(customerCode);
-  cy.Click(CommonSelectors.CustomerBillingTab, null, false);
-});
-
-When("activate consolidated invoice option", () => {
-  cy.Click(CommonSelectors.EnableConsolidationInvoices, null, false);
-  CommonActions.UpdateCustomer();
-});
-
-Then("the customer should update successfully", () => {
-  BaseAssertion.AssertStatusCode(RequestAliases.Customers, 200)
-  cy.Click(BaseSelectors.Backbutton, null, false);
 });
 //#endregion
 

@@ -1,4 +1,4 @@
-@release
+@smoke @release @all
 Feature: Create multiple shipment AP Invoice
   After the user logging in the system and navigate to customers workspace
   will create a customer as shipper in the new shipments
@@ -11,11 +11,6 @@ Feature: Create multiple shipment AP Invoice
       | TestCompany | LAS  | US      | AK    |
     When create customer
     Then the customer should create successfully
-
-  Scenario: Update customer
-    Given the user in the customer's billing tab
-    When activate consolidated invoice option
-    Then the customer should update successfully
 
   Scenario: Create first direct export air shipment
     Given the user in shipments workspace

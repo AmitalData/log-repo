@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "d2c4888e4a3dcdb2aa8f0c30ea13980a";
+		public const string HashString = "6a4e1fc8151f0a8ebee2a13fc9527d2c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3006,6 +3006,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CopiedFrom",
 					  						ListPropertyPath =  "CopiedFrom",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3722,7 +3723,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode JournalTextCode_JournalMCurrenyNotMatched = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.CurrenyNotMatched", DefaultText = "Account Currncy does not equal to selected currecy code",LocalDefaultText = @"מטבע הכרטיס לא תואם את המטבע הנבחר", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode JournalTextCode_JournalMJournalAmountNotMatched = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.JournalAmountNotMatched", DefaultText = "Journal credit amount does not match the debit amount",LocalDefaultText = @"סכום חובה שונה מסכום זכות ", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode JournalTextCode_JournalMJournalAmountNotMatched = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.JournalAmountNotMatched", DefaultText = "Total debit amount must be equal to total credit amount. There is a difference of: ",LocalDefaultText = @" :סכום חובה שונה מסכום זכות. קיים הפרש של  ", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode JournalTextCode_JournalMExchangeRateEmpty = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ExchangeRateEmpty", DefaultText = "Exchange rate is not defined",LocalDefaultText = @"לא הוגדר שער המרה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

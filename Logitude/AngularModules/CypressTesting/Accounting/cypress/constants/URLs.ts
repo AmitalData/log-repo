@@ -7,4 +7,5 @@ export class AccountingURLs
     public static readonly APPayments = '**/appayments';
     public static readonly ARPayments = '**/arpayments';
     public static readonly InvoiceDomain = '**/InvoiceDomain';
+    public static readonly ConsilidationInvoiceDomain="**/ConsilidationInvoiceDomain"
 }

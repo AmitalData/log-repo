@@ -1,5 +1,10 @@
-import { URLs } from '../constants/URLs'
+import { BaseURLs } from '../constants/URLs'
 import * as gr from '../actions/GenerateRandoms'
+import { QuickSearchDetails } from '../models/QuickSearchDetails';
+import { RestAPI } from '../constants/RestAPI';
+import { RequestAliases } from '../constants/RequestAliases';
+import * as BaseAssertion from '../actions/Assertion';
+import { BaseSelectors } from '../selectors/BaseSelectors';
 
 declare global {
     namespace Cypress {
@@ -13,8 +18,9 @@ declare global {
             ClickCheckBox(selector: string): Chainable<Element>
             ClickRadio(selector: string): Chainable<Element>
             ValidateElementColor(selector: string, expectedcolor: string): Chainable<Element>
-            SelectQuickSearchFirstElement(selector: string, value: string): Chainable<Element>
+            SelectQuickSearchFirstElement(quickSearchDetails: QuickSearchDetails): Chainable<Element>
             SelectQuickSearchFirstElement2(selector: string, value: string): Chainable<Element>
+            BackButton(contains:string): Chainable<Element>
         }
     }
 }
@@ -41,7 +47,7 @@ Cypress.Commands.add("FillLogTextBox", (selector, value) => {
 Cypress.Commands.add("FillLogLov", (selector, value, fromCache) => {
 
     if (!fromCache) {
-        cy.intercept(URLs.GetByCompactFilters).as("LOVDataLoaded")
+        cy.intercept(BaseURLs.GetByCompactFilters).as("LOVDataLoaded")
     }
 
     //cy.get(selector).clear().type(value)
@@ -88,19 +94,19 @@ Cypress.Commands.add("ValidateElementColor", (selector, expectedcolor) => {
 
 })
 
-Cypress.Commands.add("SelectQuickSearchFirstElement", (selector, value) => {
-    cy.intercept(URLs.GetQuickSearch).as("QuickSearchDataLoaded")
-    cy.get(selector).parents("searchbox").eq(0).find(".SearchBox")
+Cypress.Commands.add("SelectQuickSearchFirstElement", (quickSearchDetails: QuickSearchDetails) => {
+    cy.DefineRequestWait(RestAPI.GET, quickSearchDetails.WaitURL, RequestAliases.QuickSearchDataLoaded);
+    cy.get(quickSearchDetails.Selector).parents(quickSearchDetails.Parent).eq(0).find(quickSearchDetails.ParentClass)
         .within(() => {
-            cy.get(selector).focus().clear().type(value).then(() => {
-                cy.wait("@QuickSearchDataLoaded")
-                cy.get("ul > li").eq(0).click({ force: true })
+            cy.get(quickSearchDetails.Selector).focus().clear().type(quickSearchDetails.Value).then(() => {
+                BaseAssertion.AssertStatusCode(RequestAliases.QuickSearchDataLoaded, 200);
+                cy.get(BaseSelectors.FirstElementInList).eq(0).click({ force: true });
             })
         })
 })
 
 Cypress.Commands.add("SelectQuickSearchFirstElement2", (selector, value) => {
-    cy.intercept(URLs.GetQuickSearch).as("QuickSearchDataLoaded")
+    cy.intercept(BaseURLs.GetQuickSearch).as("QuickSearchDataLoaded")
     cy.get(selector).parents("quicksearchtextbox").eq(0).find(".LogitudeQuickSearchTextBox")
         .within(() => {
             cy.get(selector).focus().clear().type(value).then(() => {

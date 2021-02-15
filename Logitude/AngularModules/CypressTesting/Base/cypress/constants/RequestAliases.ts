@@ -12,4 +12,11 @@ export class RequestAliases {
     public static readonly CustomerViews = 'CustomerViews';
     public static readonly Customers = 'Customers';
     public static readonly InvoiceDomain = 'InvoiceDomain';
+    public static readonly ConsilidationInvoiceDomain = "ConsilidationInvoiceDomain"
+    public static readonly Quotes = 'Quotes';
+    public static readonly QuickSearchDataLoaded = 'QuickSearchDataLoaded';
+    public static readonly PostTariff = 'PostTariff';
+    public static readonly PutTariff = 'PutTariff';
+    public static readonly GetRecentTariffs = 'GetRecentTariffs';
+    public static readonly GetAllTariffVersionsForTariff = 'GetAllTariffVersionsForTariff';
 }
