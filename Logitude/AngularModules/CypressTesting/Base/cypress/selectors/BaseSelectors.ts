@@ -5,21 +5,20 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly OperationsMenu = '#GeneralMHOperations';
     public static readonly AccountingMenu = '#GeneralMHAccounting';
     public static readonly CustomersMenu = '#GeneralMHCustomers';
+    public static readonly TicketsMenu = '#GeneralMHTicket';
     //#endregion
     //#region Buttons
-    public static readonly TicketsMenu = '#GeneralMHTicket';
     public static readonly RedButton = '.RedButton';
     public static readonly Button = '.Button';
-    public static readonly Row0='#row0';
-    public static readonly UploadDocumentdbtn="#UploadDocumentdbtn";
+    public static readonly Row0 = '#row0';
+    public static readonly UploadDocumentdbtn = "#UploadDocumentdbtn";
     public static readonly OKBtn = "#OKBtn";
     public static readonly SaveWizard = "#SaveWizard";
     public static readonly Backbutton = '#EditBackbutton';
-
     //#region Contains
     public static readonly ContainsApplytoall = 'Apply to all';
     public static readonly ContainsOK = 'OK';
-
-
     //#endregion
+
+    public static readonly FirstElementInList = 'ul > li';
 }
