@@ -52,9 +52,9 @@
 	DECLARE PartnersCursor CURSOR READ_ONLY
 	FOR
 	SELECT dw_Partners.Id,dw_Partners.Code, dw_Partners.EnglishName,dw_Partners.LocalName , dw_Partners.CityName, dw_Partners.CountryName , dw_States.EnglishName , dw_Partners.ZipCode, dw_Contacts.EnglishName ,accountManagerUser.EnglishName, salesmanUser.EnglishName ,dw_Ranks.Name,dw_PartnerTypes.Name, dw_Partners.Tenant, dw_DWHSettings.ParentTenant,dw_Countries.Code,dw_Contacts.Email , dw_Partners.ReceivablesAccountingCard,dw_Partners.address1,dw_Partners.address2, dw_Partners.Phone
-	 ,dw_Regions.Name , dw_CustomerSizes.Name ,dw_Industries.Name , dw_Partners.VatNumber ,dw_Customers.CreditLimitAmount , dw_Customers.CreditLimitOpenBalance,dw_LeadSources.Name, dw_Partners.AutomaticLastUpdateDate, dw_Partners.InActive,  dw_Customers.FirstShipmentDate, dw_Customers.LastShipmentDate , billTo.EnglishName
+	 ,dw_Regions.Name , dw_CustomerSizes.Name ,dw_Industries.Name , dw_Partners.VatNumber ,dw_Customers.CreditLimitAmount , dw_Customers.CreditLimitOpenBalance,dw_LeadSources.Name, dw_Partners.AutomaticLastUpdateDate, dw_Partners.InActive,  dw_Customers.FirstShipmentDate, dw_Customers.LastShipmentDate , null
 	From dw_Partners
-     inner JOIN dw_Partners billTo ON dw_Partners.BillToId = billTo.Id
+     --inner JOIN dw_Partners billTo ON dw_Partners.BillToId = billTo.Id
 	left JOIN dw_Customers ON dw_Partners.Id = dw_Customers.Id
 	inner JOIN dw_Contacts ON dw_Partners.PrimaryContactId = dw_Contacts.Id
 	left join dw_Contacts accountManagerUser on dw_Customers.AccountManagerUserId=accountManagerUser.Id
