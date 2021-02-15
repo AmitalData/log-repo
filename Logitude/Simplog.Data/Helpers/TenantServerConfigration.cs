@@ -72,7 +72,6 @@ namespace Simplog.Data.Helpers
             return dateTime;
 
         }
-
         private static double GetCurrentDateWithTimeZoneOffset(int tenant)
         {
 
@@ -116,8 +115,6 @@ namespace Simplog.Data.Helpers
 
             return offsetHours;
         }
-
-
         public static string GetDbConnection(int tenant)
         {
           
@@ -135,6 +132,18 @@ namespace Simplog.Data.Helpers
             WebFreightContext context = new WebFreightContext(connection);
 
             return context.Database.Connection.ConnectionString;// entityBuilder.ConnectionString;
+        }
+        public static DateTime GetEndOfTodayDate(int tenant)
+        {
+            var todayDate = GetCurrentDateTime(tenant);
+            todayDate = new DateTime(todayDate.Year, todayDate.Month, todayDate.Day, 23, 59, 59, 59);
+            return todayDate;
+        }
+        public static DateTime GetStartOfTodayDate(int tenant)
+        {
+            var todayDate = GetCurrentDateTime(tenant);
+            todayDate = new DateTime(todayDate.Year, todayDate.Month, todayDate.Day, 0, 0, 0, 0);
+            return todayDate;
         }
     }
 

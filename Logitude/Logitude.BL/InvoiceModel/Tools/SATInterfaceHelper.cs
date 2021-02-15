@@ -1406,8 +1406,8 @@ namespace Logitude.BL.InvoiceModel.Tools
             }
             else
             {
-                entityPoco.SATTransferStatusCode = entityPM.SATTransferStatusCode = "NT";
-                entityPoco.TransmissionError = entityPM.TransmissionError = null;
+                entityPoco.SATTransferStatusCode = entityPM.SATTransferStatusCode = "ND";
+                //entityPoco.TransmissionError = entityPM.TransmissionError = null;
             }
         }
 
@@ -2145,6 +2145,11 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                 this.BuildProfactCommunicationLog33(comprobante, entityPM.Tenant, entityPM.Id, entityPM.PaymentNo.ToString(), true, true);
                 entityPoco.SATTransferStatusCode = entityPM.SATTransferStatusCode = "TG";
+            }
+            else
+            {
+                entityPoco.SATTransferStatusCode = entityPM.SATTransferStatusCode = "ND";
+                //entityPoco.TransmissionError = entityPM.TransmissionError = null;
             }
         }
 

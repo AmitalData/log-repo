@@ -1,6 +1,7 @@
-export class TicketSelectors
+import { RegexSelectors } from "./RegexSelectors"
+
+export class TicketSelectors extends RegexSelectors
 {
-	//should i remove ticket ! 
 	public static readonly TicketEntityType ="LogLov_Ticket_EntityType"
 	public static readonly TicketCompany = "#Ticket_CompanyId"
 	public static readonly TicketContact = "#Ticket_ContactId"
@@ -11,7 +12,10 @@ export class TicketSelectors
 	public static readonly TicketShipmentEntityNumber ="#Shipment_Search"
 	public static readonly SaveAsOpenButton = "#CustomSendOptionsComponent"
 	public static readonly CorrespondenceLine = "#CorrespondenceLine"
+	public static readonly TicketCancel = "#TicketBCancel"
+	public static readonly TicektReactivate = "#TicektBReactivate"
+	public static readonly MenuButtons = "#MenuButtons"
+	public static readonly TicektClosewithoutNotifying = "#TicektBClosewithoutNotifying"
 	//public static readonly 
-	//public static readonly 
-	//public static readonly 
+
 }

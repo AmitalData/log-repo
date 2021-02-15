@@ -6,30 +6,57 @@
         <td>
             <div class="MediaFill">
                 <div class="TabControl">
-                    <div class="TabControlHead">
-                    </div>
+                    <table>
+                        <tr>
+                            <td>
+                                <div>
+                                    <table>
+                                        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+                                            <td>
+                                                <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height:100%">
+                            <td>
+                                <div class="TabControlHead" style="height:5px;">
+                                </div>
 
-                    <div class="TabControlBody">
+                                <div class="TabControlBody" style="top:5px;">
 
-                        <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'RETASK'">
-                            <div class="MediaFillAbsolute" style="top: 5px;margin:5px">
-                                <div LocationDirective Code="RETASK"></div>
-                            </div>
-                        </div>
+                                    <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'RETASK'">
+                                        <div class="MediaFillAbsolute" style="top: 5px;margin:5px">
+                                            <div LocationDirective Code="RETASK"></div>
+                                        </div>
+                                    </div>
 
-                        <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'PRREP'">
-                            <div class="MediaFillAbsolute" style="top: 5px;margin:5px">
-                                <div LocationDirective Code="PRREP"></div>
-                            </div>
-                        </div>
+                                    <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'PRREP'">
+                                        <div class="MediaFillAbsolute" style="top: 5px;margin:5px">
+                                            <div LocationDirective Code="PRREP"></div>
+                                        </div>
+                                    </div>
 
-                        <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'OPEMA'">
-                            <div class="MediaFillAbsolute" style="top: 5px;margin:5px">
-                                <div LocationDirective Code="OPEMA"></div>
-                            </div>
-                        </div>
+                                    <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'OPEMA'">
+                                        <div class="MediaFillAbsolute" style="top: 5px;margin:5px">
+                                            <div LocationDirective Code="OPEMA"></div>
+                                        </div>
+                                    </div>
 
-                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="height:1px;"></div>
+                            </td>
+                        </tr>
+                    </table>
+
+
+
                 </div>
             </div>
         </td>

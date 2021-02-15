@@ -1,5 +1,5 @@
 import * as Actions from "../../actions/Actions";
-import { ShipmentSelector } from "../../selectors/Selectors";
+import { ShipmentSelectors } from "../../selectors/Selectors";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
@@ -51,11 +51,9 @@ Then("the house should create successfully", () => {
 //#region Connect the house shipment to the master 
 Given("the user in the master's Shipment tab", () => {
     cy.Click(BaseSelectors.OperationsMenu, null)
-    cy.Click(ShipmentSelector.ShipmentTab, null)
-    cy.log("ShipmentNumberfinal")
-    cy.log(shipmentNumber)
+    cy.Click(ShipmentSelectors.ShipmentTab, null)
     Actions.OpenShipment(shipmentNumber);
-    cy.Click(ShipmentSelector.ShipmentsTab, null);
+    cy.Click(ShipmentSelectors.ShipmentsTab, null);
 });
 
 When("connect the house shipment", () => {

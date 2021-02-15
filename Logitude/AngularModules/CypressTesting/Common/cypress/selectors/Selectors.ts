@@ -1,8 +1,21 @@
-export class Selectors
-{
+export class CommonSelectors {
+    //#region Reset password
     public static readonly ErrorList = '#errorsList';
     public static readonly SubmitButton = '#cmdSubmit';
     public static readonly CurrentPassword = '#CurrentPassword';
     public static readonly Password = '#Password';
     public static readonly ConfirmPassword = '#ConfirmPassword';
+    //#endregion
+    //#region Customer
+    public static readonly NewCustomer = '#NewButton_Customer';
+    public static readonly CustomerCompanyName = '#Address_Name';
+    public static readonly CustomerCity = '#Address_City';
+    public static readonly CustomerCountry = '#Address_CountryId';
+    public static readonly CustomerState = '#Address_StateId';
+    public static readonly AddCustomer = '#Ok-AddCustomer';
+    public static readonly CustomerListItem = '[class="Row ag-row tooltip"]';
+    public static readonly CustomerBillingTab = '#CustomerTHBilling';
+    public static readonly EnableConsolidationInvoices = '[for="Customer_EnableConsolidationInvoices"]';
+    public static readonly CustomerSave = '#Customer-Save';
+    //#endregion
 }
