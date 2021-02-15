@@ -6,6 +6,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "start2": "node --max_old_space_size=4000 node_modules/@angular/cli/bin/ng serve --port 3000",
     "start": "node --max_old_space_size=4000 node_modules/@angular/cli/bin/ng serve",
     "build": "node --max_old_space_size=4000 node_modules/@angular/cli/bin/ng build --show-circular-dependencies=false",
     "start-aot": "node --max_old_space_size=9000 node_modules/@angular/cli/bin/ng serve --prod --aot --optimization=false",
