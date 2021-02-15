@@ -49,11 +49,20 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                         return _TrailReport_Click(tenant, _TextBoxParam);
                     }
                     break;
+
+                case "Aging_Click":
+                    {
+                        return Aging_Click(tenant, _TextBoxParam);
+                    }
+                    break;
+
+
                 case "CardIndexNew_Click":
                     {
                         return CardIndexNew_Click(tenant, _TextBoxParam);
                     }
                     break;
+
                 default:
                     return new GateWayTesterResult()
                     {
@@ -63,6 +72,44 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                     break;
             }
         }
+
+        private GateWayTesterResult Aging_Click(int tenant, string textBoxParam)
+        {
+
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+                var myAgingReportParam = LogitudeXmlSerializer.JsonConvertDeserializeTObject<AgingReportParam>(textBoxParam);
+                //using (
+                var agingReport = new AgingReportService(myAgingReportParam);
+                var xml = agingReport.RunReport();
+                //var MyPeriodList = agingReport.MyPeriodList;
+                var xmlMyPeriodList = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<PeriodMExtended>>(agingReport.MyPeriodExtendedList);
+
+                gateWayTesterResult.Log = xmlMyPeriodList;
+
+
+                gateWayTesterResult.JsonOut = xml;
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+                gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
+                gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+
 
         private GateWayTesterResult _TrailReport_Click(int tenant, string textBoxParam)         
         {
@@ -83,7 +130,7 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                 gateWayTesterResult.Log = trailReportService.DbLog;
                 
 
-                gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnString<List<TrailReportM>>(res);
+                gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<TrailReportM>>(res);
 
 
             }
@@ -230,7 +277,7 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                 var s = new ReverseEngineerLedgerTransactionService(param.MyDate, param.MyTenant);
                 s.CheckDbIntegrity();
 
-                gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnString<List<JournalLineLedgerDTO>>(s.CompareReport.rows);
+                gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<JournalLineLedgerDTO>>(s.CompareReport.rows);
 
 
             }
@@ -262,7 +309,7 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                 var s = new ReverseEngineerTotalByMonthService(param.MyDate, param.MyTenant, param.MyGLAccId);
                 s.CheckDbIntegrity();
                 
-                gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnString<List<GLAccountTotalByMonthsDTO>>(s.CompareReport.GLAccountTotalByMonthsList);
+                gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<GLAccountTotalByMonthsDTO>>(s.CompareReport.GLAccountTotalByMonthsList);
                 ///ReloadGrid(SerializeObjectByte);
 
             }

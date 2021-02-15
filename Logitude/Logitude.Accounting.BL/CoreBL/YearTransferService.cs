@@ -555,7 +555,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             endAccountBalanceService.CalculateBalance(
 openBalancePlease_ReCalcYearTransfer, 
-GLAccountTotalDateTypeValues.Accountingdate, CalculateBalanceIsNotIncludeSo_endOfYearUserInputPlus1,false, false, true);
+GLAccountTotalDateTypeValues.Accountingdate, CalculateBalanceIsNotIncludeSo_endOfYearUserInputPlus1,false, false, true,false);
 
             var totals = (from rec in endAccountBalanceService.AccountBalance.verbose.CurrencySumUntillMounth.Union(endAccountBalanceService.AccountBalance.verbose.TheMounthCurrencySum)
                           group rec by new

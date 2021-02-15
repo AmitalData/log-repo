@@ -31,6 +31,7 @@ using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 using Logitude.Server.Tools;
+using System.Web;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -210,6 +211,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     //if (_ExecAsSP)
                     //{
                     this.Exec_usp_AccountingStreaming(myLedgerTransactionsWithCounters, allGLAccountTotalByMonths.ToList());
+
+                    Impersonate();
                     //CreateReconcileFromStorno(myLedgerTransactionsWithCounters);
                     ICreateAutoReconcileWhileStreamingService myCreateAutoReconcileWhileStreamingService = new CreateAutoReconcileWhileStreamingService();
                     myCreateAutoReconcileWhileStreamingService.MustInit(_AccountingContext, _JournalPM, myLedgerTransactionsWithCounters);
@@ -290,6 +293,50 @@ namespace Logitude.Accounting.BL.CoreBL
                     LogMessagingUtil.Instance.AppendLine("AccountingStreamingInNewSerializableTransaction:Took:" + sw.Elapsed.ToString());
                 }
             }
+        }
+
+        private void Impersonate()
+        {
+            try
+            {
+                var 
+                userIdentityNameb4 = AuthenticationUtil.ResolveUserIdentityName(_JournalPM.Tenant); 
+                if (HttpContext.Current != null)
+                {
+                    return; 
+                }
+                    
+                if (string.IsNullOrEmpty(_JournalPM.CreatedByUserId))
+                {
+                    LogMessagingUtil.Instance.AppendLine("no Impersonate");
+                    return; 
+                }
+                ContactRepository contactRep = new ContactRepository(_JournalPM.Tenant);
+                var contact = contactRep.GetSingleContact(_JournalPM.CreatedByUserId, _JournalPM.Tenant);
+                if (contact == null)
+                {
+                    LogMessagingUtil.Instance.AppendLine("no Impersonate contact == null");
+                    return; 
+                }
+                
+                if (string.IsNullOrEmpty(contact.Email))
+                {
+                    LogMessagingUtil.Instance.AppendLine("no Impersonate");
+                    return;
+                }
+                LogMessagingUtil.Instance.AppendLine($"Impersonate to {contact.Email}");
+                AuthenticationUtil.Impersonate(_JournalPM.Tenant, contact.Email,"");
+                
+                var userIdentityNameafter = AuthenticationUtil.ResolveUserIdentityName(_JournalPM.Tenant);
+                LogMessagingUtil.Instance.AppendLine($"Impersonate to {contact.Email}");
+
+            }
+            catch (Exception ee)
+            {
+
+                LogMessagingUtil.Instance.AppendLine($"no Impersonate Exception ee{ee.Message}");
+            }
+            
         }
 
         private void UpdateInExternalReconcileProgressToFalse()
