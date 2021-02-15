@@ -1,4 +1,4 @@
- @release  @all
+@release  @all
 Feature: Create Consolidation Invoice
     After the user logging in the system and navigate to customers workspace
     will create a customer as shipper in the new shipments,
@@ -7,8 +7,8 @@ Feature: Create Consolidation Invoice
     Scenario: Create customer
         Given the user logged in and navigates to customers workspace
         And a customer with the following details
-            | CompanyName   | City | Country | State |
-            | TestCompany12 | LAS  | US      | AK    |
+            | CompanyName | City | Country | State |
+            | TestCompany | LAS  | US      | AK    |
         When create customer
         Then the customer should create successfully
 
@@ -20,8 +20,8 @@ Feature: Create Consolidation Invoice
     Scenario: Create direct export air shipment
         Given the user navigates to shipments workspace
         And a direct shipment with the following details
-            | ShipmentLevel | Direction | TransportMode | Shipper       | MainCarriageFromPort | MainCarriageToPort |
-            | Direct        | Export    | Air           | TestCompany12 | LHR                  | MIA                |
+            | ShipmentLevel | Direction | TransportMode | Shipper     | MainCarriageFromPort | MainCarriageToPort |
+            | Direct        | Export    | Air           | TestCompany | LHR                  | MIA                |
         When create shipment
         Then the direct should create successfully
 
@@ -51,8 +51,8 @@ Feature: Create Consolidation Invoice
 
     Scenario:Create a new Consolidation Invoice
         Given a Consolidation Invoice with the following details
-            | PartnerType | Partner       | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATNo | Branch      |
-            | Customer    | TestCompany12 | EUR             | 4                   | Today       | Cash         | Today   | Zero  | Main Office |
+            | PartnerType | Partner     | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATNo | Branch      |
+            | Customer    | TestCompany | EUR             | 4                   | Today       | Cash         | Today   | Zero  | Main Office |
         When create consolidation invoice
         Then the consolidation invoice should create successfully
 

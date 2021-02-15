@@ -1,0 +1,275 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 9,
+    "passes": 5,
+    "pending": 0,
+    "failures": 4,
+    "start": "2021-02-15T08:05:09.990Z",
+    "end": "2021-02-15T08:18:01.593Z",
+    "duration": 771603,
+    "testsRegistered": 9,
+    "passPercent": 55.55555555555556,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "9bd8a664-7ebc-4f10-82c2-f7c06fa6e1a7",
+      "title": "",
+      "fullFile": "cypress\\tests\\CreateConsolidationInvoice.feature",
+      "file": "cypress\\tests\\CreateConsolidationInvoice.feature",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "f57a0f38-9a88-4869-8d77-6aa43d9f3688",
+          "title": "Create Consolidation Invoice",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Create customer",
+              "fullTitle": "Create Consolidation Invoice Create customer",
+              "timedOut": null,
+              "duration": 26790,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "de46a531-9e38-4656-aaf8-67cac9378c54",
+              "parentUUID": "f57a0f38-9a88-4869-8d77-6aa43d9f3688",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Update customer",
+              "fullTitle": "Create Consolidation Invoice Update customer",
+              "timedOut": null,
+              "duration": 4507,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "610087cf-261a-46c4-916b-38ac2f4134e2",
+              "parentUUID": "f57a0f38-9a88-4869-8d77-6aa43d9f3688",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Create direct export air shipment",
+              "fullTitle": "Create Consolidation Invoice Create direct export air shipment",
+              "timedOut": null,
+              "duration": 11496,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "57082140-5e70-4cad-8985-fe41080e3999",
+              "parentUUID": "f57a0f38-9a88-4869-8d77-6aa43d9f3688",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Update packages tab",
+              "fullTitle": "Create Consolidation Invoice Update packages tab",
+              "timedOut": null,
+              "duration": 8234,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "30ce2a13-e25a-4742-bce4-a09c78c3a109",
+              "parentUUID": "f57a0f38-9a88-4869-8d77-6aa43d9f3688",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Add Payables",
+              "fullTitle": "Create Consolidation Invoice Add Payables",
+              "timedOut": null,
+              "duration": 13645,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "5aeebaf9-961f-43f7-ac93-444475771d4e",
+              "parentUUID": "f57a0f38-9a88-4869-8d77-6aa43d9f3688",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Add Charges in Receivables by generating from payables",
+              "fullTitle": "Create Consolidation Invoice Add Charges in Receivables by generating from payables",
+              "timedOut": null,
+              "duration": 22650,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {
+                "message": "CypressError: Timed out retrying after 20050ms: `cy.click()` failed because this element:\n\n`<li _ngcontent-xpx-c33=\"\" class=\"DefaultMenuItem SelectedMenuItem\" id=\"ShipmentTHReceivables\" style=\"text-align: left;\">...</li>`\n\nis being covered by another element:\n\n`<div _ngcontent-xpx-c48=\"\" class=\"EditableGridBody\" style=\"position: absolute; overflow: auto; min-height: 50px; top: 35px; bottom: 0px;\" id=\"edit-log-gridRows_0_4\">...</div>`\n\nFix this problem, or use {force: true} to disable error checking.\n\nhttps://on.cypress.io/element-cannot-be-interacted-with",
+                "estack": "CypressError: Timed out retrying after 20050ms: `cy.click()` failed because this element:\n\n`<li _ngcontent-xpx-c33=\"\" class=\"DefaultMenuItem SelectedMenuItem\" id=\"ShipmentTHReceivables\" style=\"text-align: left;\">...</li>`\n\nis being covered by another element:\n\n`<div _ngcontent-xpx-c48=\"\" class=\"EditableGridBody\" style=\"position: absolute; overflow: auto; min-height: 50px; top: 35px; bottom: 0px;\" id=\"edit-log-gridRows_0_4\">...</div>`\n\nFix this problem, or use {force: true} to disable error checking.\n\nhttps://on.cypress.io/element-cannot-be-interacted-with\n    at $Cy.ensureDescendents (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:161412:26)\n    at ensureDescendents (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:149885:8)\n    at ensureDescendentsAndScroll (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:149892:14)\n    at ensureElIsNotCovered (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:150026:5)\n    at runAllChecks (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:150172:52)\n    at retryActionability (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:150195:16)\n    at tryCatcher (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:10584:23)\n    at Function.Promise.attempt.Promise.try (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:7858:29)\n    at tryFn (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:165754:21)\n    at whenStable (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:165792:12)\n    at http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:165287:16\n    at tryCatcher (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:10584:23)\n    at Promise._settlePromiseFromHandler (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:8519:31)\n    at Promise._settlePromise (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:8576:18)\n    at Promise._settlePromise0 (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:8621:10)\n    at Promise._settlePromises (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:8701:18)\nFrom Your Spec Code:\n    at Context.eval (http://test.logitudeworld.com/__cypress/tests?p=cypress\\support\\index.ts:187:13)\nFrom Your Spec Code:\n    at Context.eval (http://test.logitudeworld.com/__cypress/tests?p=cypress\\support\\index.ts:187:13)",
+                "diff": null
+              },
+              "uuid": "d51017d0-5ad4-484d-8b02-bf0dcb08bd89",
+              "parentUUID": "f57a0f38-9a88-4869-8d77-6aa43d9f3688",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Create ARInvoice",
+              "fullTitle": "Create Consolidation Invoice Create ARInvoice",
+              "timedOut": null,
+              "duration": 22207,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {
+                "message": "CypressError: Timed out retrying after 20050ms: `cy.click()` failed because this element:\n\n`<button _ngcontent-xpx-c54=\"\" class=\"Button\" id=\"CreateARInvoice\">New Inv...</button>`\n\nis being covered by another element:\n\n`<div _ngcontent-xpx-c49=\"\" class=\"LogCellTemplateInnerChild TextTrimming\" style=\"left: 3px; right: 3px; top: 0px;\">50.00</div>`\n\nFix this problem, or use {force: true} to disable error checking.\n\nhttps://on.cypress.io/element-cannot-be-interacted-with",
+                "estack": "CypressError: Timed out retrying after 20050ms: `cy.click()` failed because this element:\n\n`<button _ngcontent-xpx-c54=\"\" class=\"Button\" id=\"CreateARInvoice\">New Inv...</button>`\n\nis being covered by another element:\n\n`<div _ngcontent-xpx-c49=\"\" class=\"LogCellTemplateInnerChild TextTrimming\" style=\"left: 3px; right: 3px; top: 0px;\">50.00</div>`\n\nFix this problem, or use {force: true} to disable error checking.\n\nhttps://on.cypress.io/element-cannot-be-interacted-with\n    at $Cy.ensureDescendents (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:161412:26)\n    at ensureDescendents (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:149885:8)\n    at ensureDescendentsAndScroll (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:149892:14)\n    at ensureElIsNotCovered (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:150026:5)\n    at runAllChecks (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:150172:52)\n    at retryActionability (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:150195:16)\n    at tryCatcher (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:10584:23)\n    at Function.Promise.attempt.Promise.try (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:7858:29)\n    at tryFn (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:165754:21)\n    at whenStable (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:165792:12)\n    at http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:165287:16\n    at tryCatcher (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:10584:23)\n    at Promise._settlePromiseFromHandler (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:8519:31)\n    at Promise._settlePromise (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:8576:18)\n    at Promise._settlePromise0 (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:8621:10)\n    at Promise._settlePromises (http://test.logitudeworld.com/__cypress/runner/cypress_runner.js:8701:18)\nFrom Your Spec Code:\n    at Context.eval (http://test.logitudeworld.com/__cypress/tests?p=cypress\\support\\index.ts:187:13)\nFrom Your Spec Code:\n    at Context.eval (http://test.logitudeworld.com/__cypress/tests?p=cypress\\support\\index.ts:187:13)",
+                "diff": null
+              },
+              "uuid": "b3a4a482-4c0b-4c83-8896-83acfd19c495",
+              "parentUUID": "f57a0f38-9a88-4869-8d77-6aa43d9f3688",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Create a new Consolidation Invoice",
+              "fullTitle": "Create Consolidation Invoice Create a new Consolidation Invoice",
+              "timedOut": null,
+              "duration": 21602,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 20000ms: Expected to find content: 'Shipment: 2891' within the element: <div.BackBottonBody> but never did.",
+                "estack": "AssertionError: Timed out retrying after 20000ms: Expected to find content: 'Shipment: 2891' within the element: <div.BackBottonBody> but never did.\n    at Context.eval (http://test.logitudeworld.com/__cypress/tests?p=cypress\\support\\index.ts:185:27)",
+                "diff": null
+              },
+              "uuid": "22194b11-188c-43d3-85e0-966e2882b525",
+              "parentUUID": "f57a0f38-9a88-4869-8d77-6aa43d9f3688",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Approve Consolidation Invoice",
+              "fullTitle": "Create Consolidation Invoice Approve Consolidation Invoice",
+              "timedOut": null,
+              "duration": 22343,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 20000ms: Expected to find element: `#ARInvoiceBApprove`, but never found it.",
+                "estack": "AssertionError: Timed out retrying after 20000ms: Expected to find element: `#ARInvoiceBApprove`, but never found it.\n    at Context.eval (http://test.logitudeworld.com/__cypress/tests?p=cypress\\support\\index.ts:183:22)",
+                "diff": null
+              },
+              "uuid": "e86ee125-0c8d-4e2c-9adc-307cc426e039",
+              "parentUUID": "f57a0f38-9a88-4869-8d77-6aa43d9f3688",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "de46a531-9e38-4656-aaf8-67cac9378c54",
+            "610087cf-261a-46c4-916b-38ac2f4134e2",
+            "57082140-5e70-4cad-8985-fe41080e3999",
+            "30ce2a13-e25a-4742-bce4-a09c78c3a109",
+            "5aeebaf9-961f-43f7-ac93-444475771d4e"
+          ],
+          "failures": [
+            "d51017d0-5ad4-484d-8b02-bf0dcb08bd89",
+            "b3a4a482-4c0b-4c83-8896-83acfd19c495",
+            "22194b11-188c-43d3-85e0-966e2882b525",
+            "e86ee125-0c8d-4e2c-9adc-307cc426e039"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 153474,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false
+      },
+      "version": "4.1.0"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "./mochawesome-report",
+        "quite": true,
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "4.0.1"
+    }
+  }
+}

@@ -32,6 +32,7 @@ Then("the ticket should create successfully", () => {
 });
 //#endregion
 
+//#region Actions 
 Given("the user in the ticket's main page", () => {
     Actions.OpenTicket(TicketData.TicketNumber);
 });
@@ -62,3 +63,4 @@ When("close without notifying",()=>{
 Then("the ticket should close successfully",()=>{
     BaseAssertion.AssertStatusCode("WaitPutTicketRequest", 200);
 });
+//#endregion
