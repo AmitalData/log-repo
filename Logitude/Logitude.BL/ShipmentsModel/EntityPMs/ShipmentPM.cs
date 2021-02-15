@@ -2562,6 +2562,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public double? HousesOpenReceivablesInProfit { get; set; }
         public double? HousesACCTReceivablesInLocal { get; set; }
         public double? HousesACCTReceivablesInProfit { get; set; }
+        public bool IsGroupageHousesUpdated { get; set; }
     }
 
     public class TransshipmentLeg

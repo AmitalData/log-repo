@@ -4127,6 +4127,33 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     entityRepository.SubmitChanges();
                 }
 
+                if (entityPM.IsGroupageHousesUpdated)
+                {
+                    List<InsideShipmentPackagePM> masterInsidePackages = new List<InsideShipmentPackagePM>();
+                    foreach (ShipmentPackagePM item in entityPM.ShipmentPackages.ToList())
+                    {
+                        List<InsideShipmentPackagePM> list = item.InsideShipmentPackages.ToList();
+                        if (list.Count > 0)
+                        {
+                            masterInsidePackages.AddRange(list);
+                        }
+                    }
+
+                    foreach (InsideShipmentPackagePM insidePackage in masterInsidePackages.Where(a => a.OriginalShipmentPackageId != null))
+                    {
+                        ShipmentPackage housePakage = shipmentPackageRepository.GetSingleShipmentPackage(insidePackage.OriginalShipmentPackageId, tenant);
+                        ShipmentPackagePM masterPackage = entityPM.ShipmentPackages.Where(a => a.Id == insidePackage.ShipmentPackageId).FirstOrDefault();
+                        if (masterPackage.PackageTypeId != housePakage.LCLContainerTypeId)
+                        {
+                            housePakage.LCLContainerTypeId = masterPackage.PackageTypeId;
+                            shipmentPackageRepository.Update(housePakage);
+                            shipmentPackageRepository.SubmitChanges();
+                        }
+                    }
+
+                    entityPM.IsGroupageHousesUpdated = false;
+                }
+
                 if (isUpdatingHouses || isUpdatingHousesFinalArrivalDate)
                 {
                     if (initializer.ShipmentConsoleShipmentsChangeSet != null)

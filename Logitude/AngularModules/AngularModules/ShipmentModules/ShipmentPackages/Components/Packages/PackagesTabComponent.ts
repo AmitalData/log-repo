@@ -33,7 +33,7 @@ import { HorseList } from '../../../../Common/EntityLists/HorseList';
 import { ShipmentSubTypeListService } from '../../../../shipment/services/standardlists/shipmentsubtypelistservice';
 declare var ResultAsArray: any;
 
-@Component({    
+@Component({
     templateUrl: './PackagesTabComponent.html',
 })
 
@@ -73,12 +73,13 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     private SessionEvent: any = null;
     private TabSelectedEvent: any = null;
     private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null; 
+    private LoadCompletedEvent: any = null;
     private CrossDockReleasesEvent: any = null;
     private firstDigit: string = ",";
     private secondDigit: string = ".";
 
     private IsDisconnectWarehouseReleasePackage: boolean = false;
+    private IsGroupageEntityClicked: boolean = false;
 
     private chooseShipmentPackageFromWarehouseReleasePackages: boolean = false;
     private Listen() {
@@ -91,11 +92,11 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     this.BuildItemsSource();
                 }
             });
-        
+
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;                    
-                    
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+
                     this.SetUIProperties();
                     this.SetGenerateData();
                     this.BuildItemsSource();
@@ -120,7 +121,10 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                         this.EnableWarehouseRelaseForUse();
                     }
 
-
+                    if (this.IsGroupageEntityClicked) {
+                        this.IsGroupageEntityClicked = false;
+                        this.RunGroupageWindow();
+                    }
                 }
             });
 
@@ -168,7 +172,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         AppTool.KillEventEmitter(this.TabSelectedEvent);
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
-        AppTool.KillEventEmitter(this.CrossDockReleasesEvent);        
+        AppTool.KillEventEmitter(this.CrossDockReleasesEvent);
     }
 
     ngOnInit() {
@@ -230,7 +234,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     this.HorseFieldIsVisible = true;
                 }
             }
-        });       
+        });
     }
 
     public IsGroupageEntity: boolean = false;
@@ -247,7 +251,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     isInsideButtonVisible = false;
                 }
             }
-            
+
             if (FeatureLocator.HasFeaturePermession("Shipment", "Area.ContainersFU")) {
                 this.IsContainersFUVisible = true;
             }
@@ -275,7 +279,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                 if (!myResponse.HasError) {
                     this.AllPackageTypes = myResponse.Result;
                 }
-            });           
+            });
         }
 
         if (this.IsFCLEntity) {
@@ -324,7 +328,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
         else {
             this.AddButtonLabel = TextCodeTranslator.Translate("Shipment.B.Packages.AddContainer");
-            if(this.EntityPM.TransportModeId == "I")
+            if (this.EntityPM.TransportModeId == "I")
                 this.AddButtonLabel = TextCodeTranslator.Translate("Shipment.B.Packages.AddFullTruckLoad");
             this.PackageTypeColumnHeader = TextCodeTranslator.Translate("ShipmentPackage.F.ContainerTypeId");
             this.QuantityLabel = TextCodeTranslator.Translate("Shipment.F.NumberOfContainers");
@@ -569,7 +573,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
         this.EntityPM.ChargeableWeightInKG = weigh_Kg;
     }
-    
+
     OnMeasurmentsSettingsChanged() {
         this.SetAttachedLabels();
         ShipmentTool.RecalculateShipmentFields(this.EntityPM);
@@ -739,7 +743,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         if (this.EntityPM.ChargeableWeightEdited != value) {
             this.EntityPM.ChargeableWeightEdited = value;
         }
-    }    
+    }
 
     get AWBCommodityItemNumber() { return this.EntityPM.AWBCommodityItemNumber; }
     set AWBCommodityItemNumber(newValue: string) {
@@ -793,7 +797,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         //}
     }
 
-    GrossWeightLostFocus(input: any) {        
+    GrossWeightLostFocus(input: any) {
 
         var valueComputed: number = 0;
         var valueInserted: number = 0;
@@ -946,7 +950,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
         } else this.GeneratePackagesfromCrossDockReleases();
 
-    
+
 
     }
 
@@ -966,15 +970,15 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         windowArgs.ViewModelTrigger = this;
         windowArgs.IsContainer = !this.IsLCLEntity;
         var logWindow = new LogitudeWindow();
- 
-        logWindow.Width = !windowArgs.IsContainer ? 1200:1130;
+
+        logWindow.Width = !windowArgs.IsContainer ? 1200 : 1130;
         logWindow.Height = 550;
         logWindow.Title = "Choose Packages";
         logWindow.WindowArgs = windowArgs;
         logWindow.Show("./Warehouse/Components/ChoosePackagesFromWarehousePackageReleasesComponent");
 
     }
-    
+
     SetGenerateData() {
         this.IsGenerateControlVisible = this.EntityPM.ShipmentPackages.length == 0 ? true : false;
         if (this.IsGenerateControlVisible) {
@@ -1017,7 +1021,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.IsGeneratePackagesfromCrossDockReleasesButtonVisible = false;
         if (FeatureLocator.HasFeaturePermession("General", "CROSSDOCKS")) {
             if (this.IsGenerateButtonVisible && this.IsEditingEnabled) {
-                if ((this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "H") && this.EntityPM.DirectionId !="I") {
+                if ((this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "H") && this.EntityPM.DirectionId != "I") {
                     this.GenerateCrossDockReleasesButtonLabel = "Generate from Cross Dock Releases Packages";
                     this.IsGeneratePackagesfromCrossDockReleasesButtonVisible = true;
                     //var count: number = 0;
@@ -1045,9 +1049,9 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             this.Generate_FCL();
         }
         this.RefreshPackages();
-     
+
     }
-    
+
     Generate_LCL() {
         if (this.EntityPM.ShipmentOrderPackages.length > 0) {
             this.EntityPM.ShipmentOrderPackages.forEach(item => {
@@ -1190,7 +1194,8 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             }
         }
     }
-       
+
+    private allPackages: ShipmentPackagePM[];
     BuildButtonClicked() {
 
         this.CurrentSession.StartBusyIndicatorLoading();
@@ -1202,9 +1207,9 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
             if (myResponse != null) {
                 if (!myResponse.HasError) {
-                    var allPackages: ShipmentPackagePM[] = myResponse.Result;
+                    this.allPackages= myResponse.Result;
 
-                    if (allPackages.length == 0) {
+                    if (this.allPackages.length == 0) {
                         this.IsNoPackagesLoadedTextVisible = true;
                     }
 
@@ -1212,27 +1217,35 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                         this.IsNoPackagesLoadedTextVisible = false;
 
                         if (this.IsGroupageEntity) {
-                            var logWindow = new LogitudeWindow();
-                            logWindow.WindowArgs = { FatherComponent: this, AllPackages: allPackages };
-                            logWindow.Title = "Build Master Packages";
-                            logWindow.IsFillScreen = true;
-                            logWindow.Show("./ShipmentModules/ShipmentTabs/Components/Windows/Groupage/GroupageComponent");
-                            logWindow.WindowClosed.subscribe(s => {
-                                if (s) {
-                                    this.BuildItemsSource();
-                                    this.ComputeTotals();
-                                }
-                            });
+                            this.IsGroupageEntityClicked = true;
+                            this.CurrentSession.CurrentEditComponent.SaveChanges();
                         }
 
                         else {
-                            this.BuildPackagesFromList(allPackages);
+                            this.BuildPackagesFromList(this.allPackages);
                         }
                     }
                 }
             }
         });
     }
+
+
+    RunGroupageWindow() {
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = { FatherComponent: this, AllPackages: this.allPackages };
+        logWindow.Title = "Build Master Packages";
+        logWindow.IsFillScreen = true;
+        logWindow.Show("./ShipmentModules/ShipmentTabs/Components/Windows/Groupage/GroupageComponent");
+        logWindow.WindowClosed.subscribe(s => {
+            if (s) {
+                //this.entityArgs.EditComponent.SaveChanges();
+               this.BuildItemsSource();
+               this.ComputeTotals();
+            }
+        });
+    }
+
     RebuildButtonClicked() {
         var confirmWindow = new ConfirmWindow();
 
@@ -1303,6 +1316,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     newPackage.CommodityName = item.CommodityName;
                     newPackage.HorseId = item.HorseId;
                     newPackage.HorseName = item.HorseName;
+                    newPackage.LCLContainerTypeId = item.LCLContainerTypeId;
                     this.EntityPM.AddPackage(newPackage);
                 }
 
@@ -1381,6 +1395,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                         newPackage.CommodityName = item.CommodityName;
                         newPackage.HorseId = item.HorseId;
                         newPackage.HorseName = item.HorseName;
+                        newPackage.LCLContainerTypeId = item.LCLContainerTypeId;
                         this.EntityPM.AddPackage(newPackage);
                     }
                 }
@@ -1427,6 +1442,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                 newPackage.Reference4 = item.Reference4;
                 newPackage.CommodityNumber = item.CommodityNumber;
                 newPackage.CommodityName = item.CommodityName;
+                newPackage.LCLContainerTypeId = item.LCLContainerTypeId;
 
                 item.InsideShipmentPackages.forEach(itemInside => {
                     var newInsidePackage = new InsideShipmentPackagePM(null);

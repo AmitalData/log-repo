@@ -121,7 +121,7 @@ export class GroupageComponent {
         insideShipmentPack.Length = shipmentListItem.EntityPM.Length;
         insideShipmentPack.Width = shipmentListItem.EntityPM.Width;
         insideShipmentPack.Weight = shipmentListItem.EntityPM.Weight;
-        shipmentPackagePM.PackageTypeId = shipmentListItem.EntityPM.PackageTypeId;
+        insideShipmentPack.PackageTypeId = shipmentListItem.EntityPM.PackageTypeId;
         insideShipmentPack.PackageTypeName = shipmentListItem.EntityPM.PackageTypeName;
         insideShipmentPack.Volume = shipmentListItem.EntityPM.Volume;
         insideShipmentPack.VolumetricWeight = shipmentListItem.EntityPM.VolumetricWeight;
@@ -159,7 +159,7 @@ export class GroupageComponent {
                 confirmWindow.YesButtonText = "Ok";
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
-                        //shipmentListItem.EntityPM.LCLContainerTypeId = MasterListItem.EntityPM.PackageTypeId;
+                        this.EntityPM.IsGroupageHousesUpdated = true;
                         this.AddInsideShipmentPackage(MasterListItem, toggleItem, shipmentListItem);
                     }
                 });
@@ -285,6 +285,8 @@ export class GroupageComponent {
             ServiceLocator.SendTotangoUserActivity("Master", "Building packages for ocean groupage");
 
             this.CurrentSession.CloseCurrentWindowEmit("OK");
+            //this.FatherComponent.entityArgs.EditComponent.SaveChanges();
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
 
 

@@ -206,7 +206,7 @@ export class GroupageContainerComponent extends BaseComponent {
                 confirmWindow.YesButtonText = "Ok";
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
-                        //this.ShipmentListItem.EntityPM.LCLContainerTypeId = this.PackageTypeId;
+                        this.ShipmentPM.IsGroupageHousesUpdated = true;
                         this.AddGroupagePackage();
                     }
                 });
