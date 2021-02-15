@@ -184,14 +184,14 @@ namespace Logitude.CommonTests.Models.Builders
             {
                 Tenant = UserTenant.Tenant,
                 CountryId = LocationsData.CountryUSId,
-                AgentId = PartnersData.AgentId,
+                //AgentId = PartnersData.AgentId,
                 StateId = LocationsData.StateAKId,
-                CountryName = "United States of America",
-                CountryEnglishName = "United States of America",
-                CountryCode = "US",
-                StateCode = "AK",
-                HasStates=true ,
-                IsStateRequired=true
+                //CountryName = "United States of America",
+                //CountryEnglishName = "United States of America",
+                //CountryCode = "US",
+                //StateCode = "AK",
+                //HasStates=true ,
+                //IsStateRequired=true
 
             };
             return this;

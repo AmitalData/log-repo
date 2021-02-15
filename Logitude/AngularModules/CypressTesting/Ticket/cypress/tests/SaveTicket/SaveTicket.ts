@@ -7,7 +7,7 @@ import { URLs } from "../../constants/URLs";
 
 let TicketData: TicketDetails;
 
-//#region Create Ticket 
+//#region create ticket 
 Given("the user logged in and navigated to ticket workspace", () => {
     cy.Login();
     cy.Click(BaseSelectors.TicketsMenu, null)
@@ -32,26 +32,24 @@ Then("the ticket should create successfully", () => {
 });
 //#endregion
 
-//#region Correspondence
 Given("the user in the ticket's main page", () => {
     Actions.OpenTicket(TicketData.TicketNumber);
 });
 
-When("reply to the correspondence", () => {
-    cy.DefineRequestWait("POST",URLs.Correspondences, "WaitPostCorrespondenceRequest")
-    Actions.ReplyTicket();
+When("save as close", () => {
+    Actions.SaveTicket("Save as Closed")
+    cy.Click(BaseSelectors.RedButton , "Ok");
 });
 
-Then("the reply should appear successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPostCorrespondenceRequest", 200);
+When("save as open", () => {
+    Actions.SaveTicket("Save as Open");
 });
 
-When("add an internal note", () => {
-    cy.DefineRequestWait("POST",URLs.Correspondences, "WaitPostCorrespondenceRequest")
-    Actions.AddInternalNoteTicket();
+When("save as resolve", () => {
+    Actions.SaveTicket( "Save as Resolved");
+    cy.Click(BaseSelectors.RedButton , "Ok");
 });
 
-Then("the internal note should appear successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPostCorrespondenceRequest", 200);
+Then("the ticket should save successfully", () => {
+    BaseAssertion.AssertStatusCode("WaitPutTicketRequest", 200);
 });
-//#endregion

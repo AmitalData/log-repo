@@ -40,7 +40,7 @@ Given("the user in the ticket's main page", () => {
 
 When("create phone call activity", () => {
     cy.DefineRequestWait("POST", URLs.Activity, "WaitPostActivityRequest");
-    Actions.CreateActivity(TicketSelectors.TdCall);
+    Actions.CreateActivity(TicketSelectors.AddCall);
 });
 
 Then("the call activity should appear successfully", () => {
@@ -49,7 +49,7 @@ Then("the call activity should appear successfully", () => {
 
 When("create task activity", () => {
     cy.DefineRequestWait("POST", URLs.Activity, "WaitPostActivityRequest");
-    Actions.CreateActivity(TicketSelectors.TdTask);
+    Actions.CreateActivity(TicketSelectors.AddTask);
 });
 
 Then("the task activity should appear successfully", () => {
@@ -58,13 +58,13 @@ Then("the task activity should appear successfully", () => {
 
 When("create appointment activity", () => {
     cy.DefineRequestWait("POST", URLs.Activity, "WaitPostActivityRequest");
-    cy.DefineRequestWait("POST", "performancelogs", "WAITGET");
-    Actions.CreateActivity(TicketSelectors.TdAppoinment);
+    cy.DefineRequestWait("POST", "performancelogs", "WailAllLoad");
+    Actions.CreateActivity(TicketSelectors.AddAppoinment);
 });
 
 Then("the appointment activity should appear successfully", () => {
     BaseAssertion.AssertStatusCode("WaitPostActivityRequest", 200);
-    BaseAssertion.AssertStatusCode("WAITGET", 200);
+    BaseAssertion.AssertStatusCode("WailAllLoad", 200);
 });
 //#endregion
 
