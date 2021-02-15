@@ -79,6 +79,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     public IsAdvancedSearchOpened: boolean = false;
     LayoutDirection: string = 'ltr';
     customsSettingListService: CustomsSettingListService = new CustomsSettingListService();
+    public IsReferantObjectTable: boolean = false;
 
     @ViewChild(LogGridComponent) MyLogGridComponent: LogGridComponent = null;
     @ViewChild(LogGridComponentV2) MyLogGridComponentV2: LogGridComponentV2 = null;
@@ -647,6 +648,10 @@ export class ListComponent implements OnInit, AfterViewInit {
     //   }
         this.Listen();
         //this.CD.detectChanges();
+        if (this.ObjectTableName == "Customs.DeclarationReferantData") {
+            this.IsReferantObjectTable = true;
+        }
+
     }
 
     private ReloadAllListEvent: any = null;
@@ -867,7 +872,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 myObjectTableName = myObjectTableName.substr((this.ObjectTable.ClientModuleName + '.').length)
                             }
                             var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/FiltersMenu/" + /*this.ObjectTable.Name*/myObjectTableName + "FiltersMenuComponent";
-                            if (myObjectTableName == "DeclarationReferantData") {
+                            if (myObjectTableName == "DeclarationReferantData") { 
                                 var myComponentPath = "./CustomsModules/CustomsReferant/Components/FiltersMenu/" + /*this.ObjectTable.Name*/myObjectTableName + "FiltersMenuComponent";
                             }
                             SessionLocator.DynamicLoader.Load(myComponentPath, myLocation.viewContainerRef)

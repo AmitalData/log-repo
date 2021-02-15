@@ -129,10 +129,10 @@ namespace Logitude.Server.Tools
 
 
 
-   
+
     public abstract class WorkerEntryPointDoneLog : Logitude.Server.Tools.WorkerEntryPoint
     {
-        
+
 
         public int NumberOfDoneItems { get; set; }
         public DateTime? LastActivity { get; set; }
@@ -176,7 +176,7 @@ namespace Logitude.Server.Tools
                 threadID = AppDomain.GetCurrentThreadId();
                 NumberOfDoneItems++;
                 DateTime doneDate = //new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, 0);
-                    // WHY NOT utc AS writing to db ????
+                                    // WHY NOT utc AS writing to db ????
                 new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, DateTime.UtcNow.Hour, DateTime.UtcNow.Minute, 0);
                 DoneItemsInRange = DoneItemsInRange ?? new Dictionary<DateTime, int>();
                 if (DoneItemsInRange.Keys.Contains(doneDate))
@@ -264,4 +264,11 @@ namespace Logitude.Server.Tools
             }
         }
     }
+
+    public static class WorkerRoleServiceLocator
+    {
+        public static bool PleaseShutDown { get; set; }
+        public static bool HaveCourierTenant { get; set; }
+    }
+
 }

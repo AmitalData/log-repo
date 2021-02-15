@@ -24,7 +24,9 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     public isScreenLoaded: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
-    public counters: any;
+    public counters: any; 
+    public ObjectTableName: string = "Customs.DeclarationReferantData";
+
 
     // Queries Features
     public FilesInProcessVisibility: boolean = true;

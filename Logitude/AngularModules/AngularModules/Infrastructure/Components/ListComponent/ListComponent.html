@@ -310,7 +310,9 @@
                             <div></div>
                         </td>
 
-
+                        <td  *ngIf="IsReferantObjectTable" style="width: 650px; left:50PX;"> 
+                            <div LocationDirective Code="MNH"></div>
+                        </td>
                         <td style="width: 1px;" *ngIf="IsNavigateButtonVisible">
                             <button *ngIf="IsNavigateButtonVisible" style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="Navigate()">Navigate</button>
                         </td>

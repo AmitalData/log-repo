@@ -59,7 +59,7 @@ namespace AmitalCustomsWindowsService.BL
         {
             DateTime lastRunTime = DateTime.MinValue;
             
-            while (ServiceStarted)
+            while (ServiceStarted && !WorkerRoleServiceLocator.PleaseShutDown)
             {
                 // check the current time against the last run plus interval
                 var lastRun = ((TimeSpan)(DateTime.UtcNow.Subtract(lastRunTime))).TotalSeconds;

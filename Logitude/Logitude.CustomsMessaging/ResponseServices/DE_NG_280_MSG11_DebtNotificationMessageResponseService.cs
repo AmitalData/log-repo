@@ -293,7 +293,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private void AnalyzeDeficitDocument(Attachment[] attachment, GenericRequestParams requestParams)
         {
             ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant);
+            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "280" });
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
             var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
             DocumentsFilingPM documentsFilingPM = null;
@@ -346,7 +346,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private void UpdatePaymentDocument(DocumentsFilingPM documentsFilingPM, Attachment attachment, GenericRequestParams requestParams)
         {
             ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant);
+            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "280" });
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
             var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
             string logMessage = "";
@@ -362,7 +362,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private void CreatePaymentDocument(Attachment attachment, GenericRequestParams requestParams)
         {
             ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant);
+            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "280" });
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
             string logMessage = "";
 
