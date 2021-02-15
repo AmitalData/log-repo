@@ -47,7 +47,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         int tenant;
         ARPaymentChequePM newlyAddedCheque = null;
         bool isNewEntity = false;
-        bool IsCashPayment {  get { return paymentPM.AccountingPaymentMethodCode == "CA"; } }
+        bool IsCashPayment { get { return paymentPM.AccountingPaymentMethodCode == "CA"; } }
         bool IsChequePayment { get { return paymentPM.AccountingPaymentMethodCode == "CH"; } }
 
 
@@ -65,7 +65,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             if (PaymentCashbook != null)
                 AddChequesOrCashToCashbook();
 
-            CreatePaymentJournal();
+            CreatePaymentJournalIfNotCreated();
         }
 
         private void AddChequesOrCashToCashbook()
@@ -84,7 +84,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
 
         private void CreateJournal(ARPaymentPM arpaymentPM)
         {
-            CreatePaymentJournal();
+            CreatePaymentJournalIfNotCreated();
         }
         private void AddNewChequesToCashbook()
         {
@@ -329,10 +329,17 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             cashBookLineUpdate.Update(cashBookLine);
         }
 
-        private void CreatePaymentJournal()
+        private void CreatePaymentJournalIfNotCreated()
+        {
+            JournalPM journal = GetPaymentJournal();
+            if (journal == null)
+                CreateNewPaymentJournal();
+
+        }
+
+        private JournalPM CreateNewPaymentJournal()
         {
             JournalPM journal = GetNewJournalForPayment();
-
             int counter = 0;
 
             CreateCreditLine(journal, ref counter);
@@ -341,6 +348,14 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             CreateAutomaticReconcileForJournal(journal);
 
             SubmitJournal(journal);
+            return journal;
+        }
+
+        private JournalPM GetPaymentJournal()
+        {
+            IJournalQueryServiceExt journalQueryService = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
+            var journal = journalQueryService.GetJournalByAccountingEntityIdAndCode(paymentPM.Id, "3", tenant);
+            return journal;
         }
 
         private void SubmitJournal(JournalPM journal)
@@ -646,7 +661,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         private CashBookPM GetPaymentCashbook()
         {
             ICashBookQueryServiceExt cashQuery = ContainerAccessor.Container.Resolve(typeof(ICashBookQueryServiceExt), "CashBookQueryServiceExt", new ParameterOverride("", 1)) as ICashBookQueryServiceExt;
-            CashBookPM cashBook = cashQuery.GetByPaymentAndCurrencyAndBranch(paymentPM.PaymentCurrencyId, IsCashPayment? "1":"2", paymentPM.BranchId, tenant);
+            CashBookPM cashBook = cashQuery.GetByPaymentAndCurrencyAndBranch(paymentPM.PaymentCurrencyId, IsCashPayment ? "1" : "2", paymentPM.BranchId, tenant);
             PaymentCashbook = cashBook;
             return cashBook;
         }
