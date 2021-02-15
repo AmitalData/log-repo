@@ -177,7 +177,7 @@ function CalculateAmount(Quantity: number, UnitPrice: number) : number {
 //#region ConsolidationInvoice
 export function FillconsolidationInvoiceDetails(ARInvoiceData:ARInvoiceDetails){
     NavigatesToAccountsReceivableWorkspace()
-    cy.Click(BaseSelectors.label,"New")
+    cy.Click(BaseSelectors.ToggleIcon,null)
     cy.Click(BaseSelectors.button,"New consolidation invoice")
     FillARInvoiceDetails(ARInvoiceData)
 
