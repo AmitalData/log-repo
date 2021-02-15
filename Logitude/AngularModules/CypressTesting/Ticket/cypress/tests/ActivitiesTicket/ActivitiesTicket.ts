@@ -69,32 +69,30 @@ Then("the appointment activity should appear successfully", () => {
 //#endregion
 
 //#region Complete Activities 
-
 When("complete phone call activity", () => {
-   Actions.MarkActivitiesAsComplete();
+   Actions.MarkActivitiesAsComplete(TicketSelectors.CLImg);
 });
 
 Then("the call activity should complete successfully", () => {
-    // BaseAssertion.AssertStatusCode("WaitPutActivityRequest", 200);
-    // cy.Click(TicketSelectors.BackButton,null);
+    BaseAssertion.AssertStatusCode("WaitPutActivityRequest", 200);
+    cy.Click(TicketSelectors.BackButton, null);
 });
 
-// When("complete task activity", () => {
-//     Actions.MarkActivitiesAsComplete(1);
-// });
+When("complete task activity", () => {
+    Actions.MarkActivitiesAsComplete(TicketSelectors.TSImg);
+});
 
-// Then("the task activity should complete successfully", () => {
-//     // BaseAssertion.AssertStatusCode("WaitPutActivityRequest", 200);
-//     // cy.Click(TicketSelectors.BackButton,null);
-// });
+Then("the task activity should complete successfully", () => {
+    BaseAssertion.AssertStatusCode("WaitPutActivityRequest", 200);
+    cy.Click(TicketSelectors.BackButton, null);
+});
 
-// When("complete appointment activity", () => {
-//     Actions.MarkActivitiesAsComplete(0);
-// });
+When("complete appointment activity", () => {
+    Actions.MarkActivitiesAsComplete(TicketSelectors.APImg);
+});
 
-// Then("the appointment activity should complete successfully", () => {
-//     // BaseAssertion.AssertStatusCode("WaitPutActivityRequest", 200);
-//     // cy.Click(TicketSelectors.BackButton,null);
-// });
-
+Then("the appointment activity should complete successfully", () => {
+    BaseAssertion.AssertStatusCode("WaitPutActivityRequest", 200);
+    cy.Click(TicketSelectors.BackButton, null);
+});
 //#endregion

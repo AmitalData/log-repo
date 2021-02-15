@@ -28,12 +28,12 @@ Feature: Activities Ticket Test
         When complete phone call activity
         Then the call activity should complete successfully
 
-    # Scenario: Complete Task Activity
-    #     When complete task activity
-    #     Then the task activity should complete successfully
+    Scenario: Complete Task Activity
+        When complete task activity
+        Then the task activity should complete successfully
 
-    # Scenario: CreCompleteate Appointment Activity
-    #     When complete appointment activity
-    #     Then the appointment activity should complete successfully
+    Scenario: CreCompleteate Appointment Activity
+        When complete appointment activity
+        Then the appointment activity should complete successfully
 
 

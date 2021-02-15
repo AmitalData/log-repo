@@ -29,7 +29,7 @@ export function ReplyTicket() {
 export function AddInternalNoteTicket() {
     cy.Click(TicketSelectors.InternalNote, null);
     cy.FillLogTextBox(TicketSelectors.CorrespondenceLine, "Send Internal Note");
-    cy.Click(TicketSelectors.SendAsOpenButton, "Send and set as Open");//not done
+    cy.get(TicketSelectors.SendAsOpenButton).eq(1).click();
 }
 
 export function CancelTicket() {
@@ -56,13 +56,9 @@ export function CreateActivity(ActivityTypeButton : string) {
     cy.Click(BaseSelectors.RedButton, "Ok");
 }
 
-export function MarkActivitiesAsComplete(){
-    for(var i=0;i<3;i++){
-        cy.get('.HyperlinkButtonControl').children().eq(i).click({force:true});
-        cy.Click(TicketSelectors.MarkAsComplete,null);
+export function MarkActivitiesAsComplete(ActivityImg : string){
+        cy.Click(ActivityImg,null);
         cy.DefineRequestWait("PUT", URLs.Activity, "WaitPutActivityRequest");
-        BaseAssertion.AssertStatusCode("WaitPutActivityRequest", 200);
-        cy.Click(TicketSelectors.BackButton,null);
-    }
+        cy.Click(TicketSelectors.MarkAsComplete,null);
+        
 }
-
