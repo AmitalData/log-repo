@@ -149,7 +149,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
         private void WorkUntilQEmpty_Db()
         {
-            while (true)
+            while (!WorkerRoleServiceLocator.PleaseShutDown)
             {
                 
                 try

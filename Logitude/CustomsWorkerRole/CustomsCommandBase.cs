@@ -225,7 +225,7 @@ namespace CustomsWorkerRole
             bool proccesDone = false;
             for (int filtterPriority = 2; filtterPriority < 3; filtterPriority++)
             {
-                while (true)
+                while (!WorkerRoleServiceLocator.PleaseShutDown)
                 {
                     LogMessagingUtilWR.Instance.Clear();
                     LogMessagingUtil.Instance.Clear();

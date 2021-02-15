@@ -111,8 +111,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 base64string = base64string.Replace("/", "_");
                 base64string = base64string.Replace("+", "-");
                 this.entityPM.Id = base64string;
-
-                this.entityPM.Code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
+                bool inOracleCreateNewTransaction =
+                 (this.MyCustomDocumentsFilingParams != null && this.MyCustomDocumentsFilingParams.MainInterfaceCode == "3053"
+                    && this.MyCustomDocumentsFilingParams.IsCourier);
+                
+                this.entityPM.Code = CodeCounter.GetNumber("DocumentsFiling", tenant, inOracleCreateNewTransaction).ToString();
             }
             if (!entityPM.IsHybrid)
             {
@@ -1440,6 +1443,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
         protected UniFileVerM MyUniFileVerM { get; set; }
         protected string MetaDataVersionValue { get; set; }
+        
+        public CustomDocumentsFilingParams MyCustomDocumentsFilingParams { get; set; }
 
         public DocumentsFilingMetaDataValuePM GetDocumentsFilingMetaDataValueByFilingIdAndCode(string documentsFilingId, string code, string type = null)
         {
@@ -1471,5 +1476,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         public string EXTENSION { get; set; }
 
+    }
+    public class CustomDocumentsFilingParams
+    {
+        public bool IsCourier { get; set; }
+        public string MainInterfaceCode { get; set; }
+
+        
     }
 }

@@ -18,9 +18,13 @@ namespace Logitude.CustomsMessaging.Helpers
 
         public bool FeatureIsOn = true;
 
-        public UnifreightDocumentsFilingService(ICommonDataContext objectContext, int tenant,string DeclarationNumVersionId = null)
+        public UnifreightDocumentsFilingService(ICommonDataContext objectContext, int tenant,
+            CustomDocumentsFilingParams customDocumentsFilingParams,
+            
+            string DeclarationNumVersionId = null)
             :base(objectContext, tenant)
         {
+            base.MyCustomDocumentsFilingParams = customDocumentsFilingParams;
             base.MetaDataVersionValue = DeclarationNumVersionId;
         }
         public bool OnlyIfChangeUpdateAndAddVersion { get; set; }
