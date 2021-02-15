@@ -15,8 +15,8 @@ namespace WebFreight.Web.SharedLogistic
 
             if (string.IsNullOrEmpty(securitykey))
             {
-                TokenInput.Value = Request["Token"];
-                LoginInput.Value = Request["LoginData"];
+                this.InitStoredItems();
+
 
                 bool isAuthenticated = HttpContext.Current.Request.IsAuthenticated || !string.IsNullOrEmpty(TokenInput.Value) ? true : false;
 
@@ -25,6 +25,55 @@ namespace WebFreight.Web.SharedLogistic
                     HttpContext.Current.Response.Redirect("../login.aspx");
                 }
             }
+        }
+
+        private void InitStoredItems()
+        {
+            string token = Request["Token"];
+            string loginData = Request["LoginData"];
+
+            if (string.IsNullOrEmpty(token))
+            {
+                token = this.GetSessionValue("Token");
+            }
+
+            else
+            {
+                this.Session.Add("Token", token);
+            }
+
+            if (string.IsNullOrEmpty(loginData))
+            {
+                loginData = this.GetSessionValue("LoginData");
+            }
+
+            else
+            {
+                this.Session.Add("LoginData", loginData);
+            }
+
+            TokenInput.Value = token;
+            LoginInput.Value = loginData;
+        }
+
+        private string GetSessionValue(string itemKey)
+        {
+            string output = null;
+
+            foreach (string key in Session.Keys)
+            {
+                if (key == itemKey)
+                {
+                    if (Session[key] != null)
+                    {
+                        output = Session[key].ToString();
+                        break;
+                    }
+                }
+
+            }
+
+            return output;
         }
 
         protected override void OnInit(EventArgs e)
