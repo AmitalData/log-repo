@@ -12,7 +12,7 @@ import { CustomerDetails } from '../../../../Common/cypress/models/CustomerDetai
 import { RequestAliases } from '../../../../Base/cypress/constants/RequestAliases';
 import { CommonSelectors } from '../../../../Common/cypress/selectors/Selectors';
 import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors';
-import { ARInvoiceDetails } from '../../../../Shipment/cypress/models/ARInvoiceDetails';
+import { ARInvoiceDetails } from 'cypress/models/ARInvoiceDetails';
 import { AccountingSelectors } from "../../selectors/Selectors";
 
 //#region variables
