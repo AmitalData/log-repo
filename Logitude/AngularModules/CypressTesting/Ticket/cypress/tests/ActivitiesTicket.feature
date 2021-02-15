@@ -1,4 +1,4 @@
-@smoke @Release
+@smoke @release @stable @all
 Feature: Activities Ticket Test
     this file will create ticket then test the following activities
     create Call, Task and Appointment
@@ -35,5 +35,3 @@ Feature: Activities Ticket Test
     Scenario: CreCompleteate Appointment Activity
         When complete appointment activity
         Then the appointment activity should complete successfully
-
-
