@@ -23,33 +23,16 @@ using System.Windows.Forms;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
-    public class DuplicatedJournalsService
+    public class DuplicatedJournalsVoidingService
     {
         public string LoggingText { get; set; } = "";
 
-        public DuplicatedJournalsService()
+        public DuplicatedJournalsVoidingService()
         {
 
         }
 
-        public List<ARPaymentsId> GetARPaymentsIdsHavingDuplicatedJournals(int tenant)
-        {
-            var context = AccountingContext.GetContext(tenant);
-
-            IQueryable<ARPaymentsId> result = from journal in context.Journals
-                                        where journal.Tenant == tenant
-                                             && journal.AccountingEntityCode == AccountingEntityValues.ARPayment
-                                             && journal.IsVoided == false
-                                             && journal.OriginalJournalId == null
-                                        group journal by journal.AccountingEntityId into grouped
-                                        where grouped.Count() > 1
-                                        select new ARPaymentsId() { ARPaymentId = grouped.Key };
-
-
-            return result.ToList();
-        }
-
-        public List<Journal> GetJournalsToVoid(int tenant)
+        public List<Journal> GetARPaymentDuplicatedJournals(int tenant)
         {
             var context = AccountingContext.GetContext(tenant);
             var result = from journal in context.Journals
@@ -60,23 +43,22 @@ namespace Logitude.Accounting.BL.CoreBL
                          group journal by journal.AccountingEntityId into grouped
                          where grouped.Count() > 1
                          select grouped.FirstOrDefault();
-
             return result.ToList();
         }
 
-        public void FixDuplicatedjournals(int tenant)
+        public List<Journal> VoidDuplicatedJournalsOfARPayment(int tenant)
         {
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
-
                 try
                 {
-                    var journals = GetJournalsToVoid(tenant);
+                    var journals = GetARPaymentDuplicatedJournals(tenant);
                     foreach (var journal in journals)
                         VoidJournal(tenant, journal);
 
                     scope.Complete();
 
+                    return journals;
                 }
                 catch (Exception ex)
                 {
@@ -87,24 +69,22 @@ namespace Logitude.Accounting.BL.CoreBL
             }
         }
 
-        private static void VoidJournal(int tenant, Journal journal)
+        private void VoidJournal(int tenant, Journal journal)
         {
-            var context = AccountingContext.GetContext(tenant);
+            StornoOverrideM journalStorno = BuildJournalStorno(journal);
 
-            var service = new JournalVoidUpdateService(context, new Dictionary<string, IContext>(), tenant);
+            var journalVoidService = new JournalVoidUpdateService(AccountingContext.GetContext(tenant), new Dictionary<string, IContext>(), tenant);
+            journalVoidService.VoidJournal(journal.Id, tenant, journalStorno);
+        }
 
-            var StornoOverrideM = new StornoOverrideM()
+        private StornoOverrideM BuildJournalStorno(Journal journal)
+        {
+            return new StornoOverrideM()
             {
                 AccountingEntityCode = journal.AccountingEntityCode,
                 AccountingEntityId = journal.AccountingEntityId,
                 AccountingEntityReference = journal.AccountingEntityReference,
             };
-            service.VoidJournal(journal.Id, tenant, StornoOverrideM);
         }
-    }
-
-    public class ARPaymentsId
-    {
-        public string ARPaymentId { get; set; }
     }
 }

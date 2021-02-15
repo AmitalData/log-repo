@@ -31,12 +31,11 @@ namespace Logitude.Update
         {
             this.tenantTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.GetChequesBtn = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.countLbl = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.fixDupJournals = new System.Windows.Forms.Button();
-            this.statusLbl = new System.Windows.Forms.Label();
+            this.statusLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,17 +55,6 @@ namespace Logitude.Update
             this.label1.Size = new System.Drawing.Size(41, 13);
             this.label1.TabIndex = 4;
             this.label1.Text = "Tenant";
-            // 
-            // GetChequesBtn
-            // 
-            this.GetChequesBtn.Location = new System.Drawing.Point(678, 22);
-            this.GetChequesBtn.Name = "GetChequesBtn";
-            this.GetChequesBtn.Size = new System.Drawing.Size(252, 28);
-            this.GetChequesBtn.TabIndex = 3;
-            this.GetChequesBtn.Text = "Get ARPayment With Duplicated Journals";
-            this.GetChequesBtn.UseVisualStyleBackColor = true;
-            this.GetChequesBtn.Visible = false;
-            this.GetChequesBtn.Click += new System.EventHandler(this.GetJournalsBtn_Click);
             // 
             // dataGridView1
             // 
@@ -102,32 +90,31 @@ namespace Logitude.Update
             this.fixDupJournals.Name = "fixDupJournals";
             this.fixDupJournals.Size = new System.Drawing.Size(173, 28);
             this.fixDupJournals.TabIndex = 11;
-            this.fixDupJournals.Text = "Fix Duplicated Journals";
+            this.fixDupJournals.Text = "Remove Duplicated Journals";
             this.fixDupJournals.UseVisualStyleBackColor = true;
-            this.fixDupJournals.Click += new System.EventHandler(this.fixDupJournals_Click);
+            this.fixDupJournals.Click += new System.EventHandler(this.removeDuplicatedJournals_Click);
             // 
             // statusLbl
             // 
-            this.statusLbl.AutoSize = true;
-            this.statusLbl.Location = new System.Drawing.Point(363, 53);
-            this.statusLbl.Name = "statusLbl";
-            this.statusLbl.Size = new System.Drawing.Size(16, 13);
-            this.statusLbl.TabIndex = 12;
-            this.statusLbl.Text = "...";
+            this.statusLabel.AutoSize = true;
+            this.statusLabel.Location = new System.Drawing.Point(363, 53);
+            this.statusLabel.Name = "statusLbl";
+            this.statusLabel.Size = new System.Drawing.Size(16, 13);
+            this.statusLabel.TabIndex = 12;
+            this.statusLabel.Text = "...";
             // 
             // FixDuplicatedJournals
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(942, 540);
-            this.Controls.Add(this.statusLbl);
+            this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.fixDupJournals);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.countLbl);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.tenantTextBox);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.GetChequesBtn);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.Name = "FixDuplicatedJournals";
@@ -135,6 +122,7 @@ namespace Logitude.Update
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Fix Duplicated Journals Tool";
+            this.Load += new System.EventHandler(this.FixDuplicatedJournals_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -145,11 +133,10 @@ namespace Logitude.Update
 
         private System.Windows.Forms.TextBox tenantTextBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button GetChequesBtn;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label countLbl;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button fixDupJournals;
-        private System.Windows.Forms.Label statusLbl;
+        private System.Windows.Forms.Label statusLabel;
     }
 }

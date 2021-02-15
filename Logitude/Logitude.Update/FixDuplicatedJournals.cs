@@ -2,6 +2,8 @@
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.BL.Resolvers;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -20,73 +22,53 @@ namespace Logitude.Update
         public FixDuplicatedJournals()
         {
             InitializeComponent();
-        }
 
-        private void GetJournalsBtn_Click(object sender, EventArgs e)
-        {
-            DuplicatedJournalsService duplicatedJournalsService = new DuplicatedJournalsService();
-
-            int tenant = Convert.ToInt32(tenantTextBox.Text);
-
-            var arpaymentIds = duplicatedJournalsService.GetARPaymentsIdsHavingDuplicatedJournals(tenant);
-
-            countLbl.Text = arpaymentIds.Count().ToString();
-            dataGridView1.DataSource = arpaymentIds;
-
-
-            //foreach (var arpaymentId in arpaymentIds)
-            //{
-
-            //}
-            //// Get journals
-            //JournalQueryService journalQueryService = new JournalQueryService(tenant);
-            //var res = journalQueryService.GetByAccountingEntityIdAndAccountingEntityCode()
-
-
-
-            //var context = AccountingContext.GetContext(tenant);
-            //var service = new JournalVoidUpdateService(context, new Dictionary<string, IContext>(), tenant);
-
-            //var StornoOverrideM = new Accounting.Def.EntityUpdateServicesExt.StornoOverrideM()
-            //{
-            //    AccountingEntityCode = AccountingEntityCode,
-            //    AccountingEntityId = AccountingEntityId,
-            //    AccountingEntityReference = AccountingEntityReference,
-            //};
-            //journalPM = service.VoidJournal(JournalId, tenant, StornoOverrideM);
-
-
-
+            LoggedContactResolver.RegisterLoggedContactUtil();
 
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DuplicatedJournalsService duplicatedJournalsService = new DuplicatedJournalsService();
+            DuplicatedJournalsVoidingService duplicatedJournalsService = new DuplicatedJournalsVoidingService();
 
             int tenant = Convert.ToInt32(tenantTextBox.Text);
 
-            var journals = duplicatedJournalsService.GetJournalsToVoid(tenant);
-            countLbl.Text = journals.Count().ToString();
-            dataGridView1.DataSource = journals;
+            var journals = duplicatedJournalsService.GetARPaymentDuplicatedJournals(tenant);
+
+            ShowData(journals);
+
         }
 
-        private void fixDupJournals_Click(object sender, EventArgs e)
+        private void removeDuplicatedJournals_Click(object sender, EventArgs e)
         {
-            DuplicatedJournalsService duplicatedJournalsService = new DuplicatedJournalsService();
+            statusLabel.Text = "Voiding ...";
 
-            int tenant = Convert.ToInt32(tenantTextBox.Text);
-            statusLbl.Text = "Getting Journals ...";
+            DuplicatedJournalsVoidingService voidingService = new DuplicatedJournalsVoidingService();
+            var voidedJournals = voidingService.VoidDuplicatedJournalsOfARPayment(Convert.ToInt32(tenantTextBox.Text));
+            
+            ShowData(voidedJournals);
 
-            var journals = duplicatedJournalsService.GetJournalsToVoid(tenant);
+            statusLabel.Text = "Fixed";
+        }
 
-            countLbl.Text = journals.Count().ToString();
-            dataGridView1.DataSource = journals;
+        public void ShowData(List<Journal> voidedJournals)
+        {
+            SetCount(voidedJournals.Count());
+            SetGridViewDataSource(voidedJournals);
+        }
 
-            statusLbl.Text = "Voiding ...";
-            duplicatedJournalsService.FixDuplicatedjournals(tenant);
-            statusLbl.Text = "Fixed";
+        private void SetGridViewDataSource(List<Journal> voidedJournals)
+        {
+            dataGridView1.DataSource = voidedJournals;
+        }
 
+        private void SetCount(int count)
+        {
+            countLbl.Text = count.ToString();
+        }
+
+        private void FixDuplicatedJournals_Load(object sender, EventArgs e)
+        {
 
         }
     }
