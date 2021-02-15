@@ -29,7 +29,7 @@ export function FillAllInCharges(chargeTypeDetailsList: ChargeTypeDetails[]) {
     cy.contains("Click the add button to add new lines");
     for (let i = 0; i < chargeTypeDetailsList.length; i++) {
         cy.Click(BaseSelectors.AddButton, null);
-        if(chargeTypeDetailsList[i].Name){
+        if (chargeTypeDetailsList[i].Name) {
             cy.FillLogLov(TariffSelectors.TariffVersionAllInChargeType, chargeTypeDetailsList[i].Name, true);
         }
     }
@@ -39,7 +39,7 @@ export function FillAllInCharges(chargeTypeDetailsList: ChargeTypeDetails[]) {
 export function FillSurcharges(surchargeDetailsList: SurchargeDetails[]) {
     for (let i = 0; i < surchargeDetailsList.length; i++) {
         if (i < 10) {
-            if(surchargeDetailsList[i].Name){
+            if (surchargeDetailsList[i].Name) {
                 cy.FillLogLov(TariffSelectors.TariffSurcharge(i + 1), surchargeDetailsList[i].Name, true);
             }
         }
@@ -53,8 +53,7 @@ export function CreateTariff() {
 }
 
 export function UpdateTariff() {
-    cy.DefineRequestWait(RestAPI.PUT, Urls.Tariffs, RequestAliases.PutTariff);
-    cy.Click(TariffSelectors.SaveTariff, null);
+    RequestUpdateTariff(TariffSelectors.SaveTariff, null);
 }
 
 export function ValidateUpdateTariff() {
@@ -63,7 +62,7 @@ export function ValidateUpdateTariff() {
 
 export function ValidateCreateFreightCost() {
     BaseAssertion.AssertStatusCode(RequestAliases.PostTariff, 200);
-    cy.wait("@" + RequestAliases.GetRecentTariffs);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetRecentTariffs, 200);
 }
 
 export function ValidateCreateSurchargeCost() {
@@ -73,14 +72,15 @@ export function ValidateCreateSurchargeCost() {
             if (interception.response.body.ErrorMessage.indexOf("Tariff surcharge seller should be unique") !== -1) {
                 cy.Click(BaseSelectors.Button, "Cancel");
             } else {
-                throw new Error("Created Tariff Failed");
+                throw new Error("Create Tariff Failed");
             }
         } else {
-            if (interception.response.statusCode !== 200) {
-                throw new Error("Created Tariff Failed");
+            if (interception.response.statusCode === 200) {
+                BaseAssertion.AssertStatusCode(RequestAliases.GetRecentTariffs, 200);
+            } else {
+                throw new Error("Create Tariff Failed");
             }
         }
-        cy.wait("@" + RequestAliases.GetRecentTariffs);
     })
 }
 
@@ -90,17 +90,49 @@ export function OpenLastCreatedTariff() {
     cy.wait("@" + RequestAliases.GetAllTariffVersionsForTariff);
 }
 
-export function OpenDraftVersionTab() {
-    cy.Click(BaseSelectors.SpanElement, "[Draft]");
-}
-
-export function OpenGeneralTab(){
+export function OpenGeneralTab() {
     cy.Click(BaseSelectors.DivElement, "General");
 }
 
-export function AddFreightCostTariffLine(freightCostType: string, freightCostTariffLineDetailsList: FreightCostTariffLineDetails[]) {
+export function AddFreightCostTariffLines(freightCostType: string, freightCostTariffLineDetailsList: FreightCostTariffLineDetails[]) {
+    FillFreightCostTariffLines(freightCostType, freightCostTariffLineDetailsList, true);
+}
+
+export function EditFreightCostTariffLines(freightCostType: string, freightCostTariffLineDetailsList: FreightCostTariffLineDetails[]) {
+    FillFreightCostTariffLines(freightCostType, freightCostTariffLineDetailsList, false);
+}
+
+export function EditFreightCostGeneralTab(freightCostType: string, tariffDetails: TariffDetails) {
+    FillTariffName(tariffDetails.Name);
+    FillTariffContractNumber(tariffDetails.ContractNumber);
+    FillTariffSeller(tariffDetails.Seller);
+    if (freightCostType !== "Air") {
+        FillCurrency(tariffDetails.Currency);
+    }
+    if (freightCostType === "Air") {
+        FillTariffProduct(tariffDetails.Product);
+    }
+    FillTariffNotes(tariffDetails.Notes);
+}
+
+export function ApproveTariffVersion() {
+    RequestUpdateTariff(BaseSelectors.GreenButton, "Approve Version");
+}
+
+export function CopyTariffVersion(newVersionStartDate: string) {
+    cy.Click(TariffSelectors.TariffActionsToggleButton, null);
+    cy.Click(TariffSelectors.TariffActionsToggleButtonItem, TariffSelectors.ContainsCopyIntoNewVersion);
+    cy.FillDate(TariffSelectors.TariffStartDate, newVersionStartDate);
+    RequestUpdateTariff(BaseSelectors.RedButton, null);
+}
+
+function FillFreightCostTariffLines(freightCostType: string, freightCostTariffLineDetailsList: FreightCostTariffLineDetails[], isNew: boolean) {
     for (let i = 0; i < freightCostTariffLineDetailsList.length; i++) {
-        cy.Click(BaseSelectors.AddButton, null);
+        if (isNew) {
+            cy.Click(BaseSelectors.AddButton, null);
+        } else {
+            cy.Click(TariffSelectors.TariffLineEditButton(i), null);
+        }
         FillTariffLinePorts(freightCostTariffLineDetailsList[i].FromPort, freightCostTariffLineDetailsList[i].ToPort);
         if (freightCostType === "Ocean FCL") {
             FillTariffLineSurchargePrice(1, freightCostTariffLineDetailsList[i].Step1Price);
@@ -121,19 +153,6 @@ export function AddFreightCostTariffLine(freightCostType: string, freightCostTar
     }
 }
 
-export function EditFreightCostGeneralTab(freightCostType: string, tariffDetails: TariffDetails){
-    FillTariffName(tariffDetails.Name);
-    FillTariffContractNumber(tariffDetails.ContractNumber);
-    FillTariffSeller(tariffDetails.Seller);
-    if(freightCostType !== "Air"){
-        FillCurrency(tariffDetails.Currency);
-    }
-    if(freightCostType === "Air"){
-        FillTariffProduct(tariffDetails.Product);
-    }
-    FillTariffNotes(tariffDetails.Notes);
-}
-
 function OpenNewFreightCostWizard(freightCostType: string) {
     cy.Click(TariffSelectors.NewFreightCostToggleButton, null);
     cy.Click(TariffSelectors.NewFreightCostToggleMenuButton, freightCostType);
@@ -145,7 +164,7 @@ function FillFreightCostWizardFields(freightCostType: string, tariffDetails: Tar
     FillTariffSeller(tariffDetails.Seller);
     FillCurrency(tariffDetails.Currency);
     FillTariffStartDate(tariffDetails.StartDate);
-    if(freightCostType === "Air"){
+    if (freightCostType === "Air") {
         FillTariffProduct(tariffDetails.Product);
     }
     FillTariffNotes(tariffDetails.Notes);
@@ -164,38 +183,38 @@ function FillSurchargeCostWizardFields(tariffDetails: TariffDetails) {
     FillTariffNotes(tariffDetails.Notes);
 }
 
-function FillTariffName(tariffName: string){
-    if(tariffName){
+function FillTariffName(tariffName: string) {
+    if (tariffName) {
         cy.FillLogTextBox(TariffSelectors.TariffName, tariffName);
     }
 }
 
-function FillTariffContractNumber(contractNumber: string){
-    if(contractNumber){
+function FillTariffContractNumber(contractNumber: string) {
+    if (contractNumber) {
         cy.FillLogTextBox(TariffSelectors.TariffContractNumber, contractNumber);
     }
 }
 
-function FillTariffSeller(seller: string){
-    if(seller){
+function FillTariffSeller(seller: string) {
+    if (seller) {
         cy.FillLogLov(TariffSelectors.TariffSeller, seller, false);
     }
 }
 
-function FillCurrency(currency: string){
-    if(currency){
+function FillCurrency(currency: string) {
+    if (currency) {
         cy.FillLogLov(TariffSelectors.TariffCurrency, currency, true);
     }
 }
 
-function FillTariffNotes(notes: string){
-    if(notes){
+function FillTariffNotes(notes: string) {
+    if (notes) {
         cy.FillLogTextBox(TariffSelectors.TariffNotes, notes);
     }
 }
 
-function FillTariffStartDate(startDate: string){
-    if(startDate){
+function FillTariffStartDate(startDate: string) {
+    if (startDate) {
         cy.FillDate(TariffSelectors.TariffStartDate, startDate);
     }
 }
@@ -212,8 +231,8 @@ function FillTariffLineSurchargePrice(surchargeNumber: number, price: number) {
     }
 }
 
-function FillTariffProduct(product: string){
-    if(product){
+function FillTariffProduct(product: string) {
+    if (product) {
         cy.FillLogLov(TariffSelectors.TariffProduct, product, true);
     }
 }
@@ -225,10 +244,10 @@ function FillTariffLineMinPrice(minPrice: number) {
 }
 
 function FillTariffLinePorts(fromPort: string, toPort: string) {
-    if(fromPort){
+    if (fromPort) {
         cy.FillLogLov(TariffSelectors.TariffLineFromPort, fromPort, false);
     }
-    if(toPort){
+    if (toPort) {
         cy.FillLogLov(TariffSelectors.TariffLineToPort, toPort, false);
     }
 }
@@ -243,4 +262,9 @@ function FillTariffLineNotes(notes: string) {
     if (notes) {
         cy.FillLogTextBox(TariffSelectors.TariffLineNotes, notes);
     }
+}
+
+function RequestUpdateTariff(selector: string, selectorContains: string) {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.Tariffs, RequestAliases.PutTariff);
+    cy.Click(selector, selectorContains);
 }

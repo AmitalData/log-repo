@@ -4,12 +4,12 @@ import { TariffDetails } from "../../models/TariffDetails";
 import { ChargeTypeDetails } from "../../models/ChargeTypeDetails";
 
 Given("the user logged in and navigate to tariff workspace", () => {
-    Actions.LoginAndNavigateToTariffWorkspace();
+  Actions.LoginAndNavigateToTariffWorkspace();
 });
 
 Given("an air freight cost with the following details", (dataTable) => {
-    let tariffDetails = dataTable.hashes()[0] as TariffDetails;
-    Actions.FillNewFreightCost("Air", tariffDetails);
+  let tariffDetails = dataTable.hashes()[0] as TariffDetails;
+  Actions.FillNewFreightCost("Air", tariffDetails);
 });
 
 Given("an ocean LCL freight cost with the following details", (dataTable) => {

@@ -21,27 +21,31 @@ Given("add the follwing tariff lines", (dataTable) => {
     Actions.AddFreightCostTariffLines("Air", freightCostTariffLineDetailsList);
 });
 
-Given("the user in general tab", () => {
-    Actions.OpenGeneralTab();
-});
-
-Given("the freight cost with new following details", (dataTable) => {
-    let tariffDetails = dataTable.hashes()[0] as TariffDetails;
-    Actions.EditFreightCostGeneralTab("Air", tariffDetails);
+Given("the follwing new values for the tariff lines", (dataTable) => {
+    let freightCostTariffLineDetailsList = dataTable.hashes() as FreightCostTariffLineDetails[];
+    Actions.EditFreightCostTariffLines("Air", freightCostTariffLineDetailsList);
 });
 
 When("create freight cost", () => {
     Actions.CreateTariff();
 });
 
-When("update freight cost", () => {
-    Actions.UpdateTariff();
+When("approve version", () => {
+    Actions.ApproveTariffVersion();
+});
+
+When("copy version with start date {string}", (newVersionStartDate: string) => {
+    Actions.CopyTariffVersion(newVersionStartDate);
 });
 
 Then("the freight cost should create successfully", () => {
     Actions.ValidateCreateFreightCost();
 });
 
-Then("the freight cost should update successfully", () => {
+Then("the version should approve successfully", () => {
+    Actions.ValidateUpdateTariff();
+});
+
+Then("the version should copy successfully", () => {
     Actions.ValidateUpdateTariff();
 });
