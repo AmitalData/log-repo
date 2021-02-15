@@ -350,6 +350,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                                   ARInvoices = f.ARInvoices,
                                   Notes = f.Notes,
                                   WarehouseLegLastFreeDate = f.WarehouseLegLastFreeDate,
+                                  WarehouseLegTerminalName = f.WarehouseLegTerminalName,
                                   LastFinalDestination = f.LastFinalDestination,
                                   EstimatedFinalArrivalDate = f.EstimatedFinalArrivalDate,
                                   NotInvoicedReceivablesAmount = f.NotInvoicedReceivablesAmount,

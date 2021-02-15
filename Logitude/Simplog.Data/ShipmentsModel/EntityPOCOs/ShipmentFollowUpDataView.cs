@@ -624,6 +624,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public double? GrossWeightPerTon { get; set; }
 
         public string WarehouseLegWarehouseId { get; set; }
+        public string WarehouseLegTerminalName { get; set; }
         public string WarehouseLegAddressId { get; set; }
         public string WarehouseLegTerminalCode { get; set; }
         public DateTime? WarehouseLegExpectedEntryDate { get; set; }

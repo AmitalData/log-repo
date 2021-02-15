@@ -79,9 +79,10 @@ namespace Logitude.Accounting.BL.CoreBL
                         Log("[Tenant " + tenantStr + "] bill to accounts got, (" + billtos.Count() + ")");
 
 
-                        foreach (var billTo in billToAccounts)
+                        foreach (var billTo in billtos)
                         {
-                            CalculateBilltoFutureCheques(tenant, billTo);
+                            GLAccountChequesTotalCalculator chequesTotalCalculator = new GLAccountChequesTotalCalculator(tenant);
+                            chequesTotalCalculator.RecalculateChequesTotalForBillToAccount(billTo);
                         }
 
                         scope.Complete();
@@ -92,9 +93,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         Log("*FAILED* Tenant(" + tenantStr + ")" + ex.Message);
 
-                        throw ;
+                        throw;
                     }
-                    
+
 
                 }
             }
@@ -123,17 +124,13 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         var tenant = Convert.ToInt32(tenantStr);
 
-                        // get billto glaccounts
-                        IAccountingContext MyContext = AccountingContext.GetContext(tenant);
-                        IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
+                        List<string> billToAccountsIds = GetTenantBillToAccountsThatHaveCheques(tenant);
 
-                        var billToAccounts = (from cheque in invoiceContext.ARPaymentChequeReplicas
-                                       join payment in invoiceContext.ARPayments on cheque.PaymentId equals payment.Id
-                                       where cheque.Tenant == tenant
-                                       select payment.BillToId).Distinct().ToList();
-
-                        foreach (var billTo in billToAccounts)
-                            CalculateBilltoFutureCheques(tenant, billTo);
+                        foreach (var billToAccountId in billToAccountsIds)
+                        {
+                            GLAccountChequesTotalCalculator chequesTotalCalculator = new GLAccountChequesTotalCalculator(tenant);
+                            chequesTotalCalculator.RecalculateChequesTotalForBillToAccount(billToAccountId);
+                        }
 
                         scope.Complete();
                         Log("   >>>>> tenant (" + tenantStr + ") cheques recalculated successfully");
@@ -156,6 +153,16 @@ namespace Logitude.Accounting.BL.CoreBL
 
         }
 
+        private static List<string> GetTenantBillToAccountsThatHaveCheques(int tenant)
+        {
+            IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
+
+            return (from cheque in invoiceContext.ARPaymentChequeReplicas
+                    join payment in invoiceContext.ARPayments on cheque.PaymentId equals payment.Id
+                    where cheque.Tenant == tenant
+                    select payment.BillToId).Distinct().ToList();
+        }
+
         public List<ARPaymentChequePM> GetNotRedeemedReconciledCheques(int tenant)
         {
             Log("[Tenant " + tenant + "] getting cheques ...");
@@ -172,39 +179,39 @@ namespace Logitude.Accounting.BL.CoreBL
 
             List<string> depositIds
                                 = (from ledger in context.LedgerTransactions
-                                  join journal in context.Journals on ledger.JournalId equals journal.Id
-                                  where ledger.IsExternalReconcile == true
-                                         && journal.AccountingEntityCode == "6"
-                                         && ledger.Tenant == tenant
-                                  select journal.AccountingEntityId).ToList();
+                                   join journal in context.Journals on ledger.JournalId equals journal.Id
+                                   where ledger.IsExternalReconcile == true
+                                          && journal.AccountingEntityCode == "6"
+                                          && ledger.Tenant == tenant
+                                   select journal.AccountingEntityId).ToList();
 
             List<string> paymentChequeIds = (from a in context.BankDepositLines
-                                             where depositIds.Contains(a.DepositId)  && a.Tenant == tenant
+                                             where depositIds.Contains(a.DepositId) && a.Tenant == tenant
                                              select a.ARPaymentChequeId).ToList();
 
             List<ARPaymentChequePM> paymentChequesNotRedeemed = (from cheque in context.ARPaymentCheques
-                                                      where paymentChequeIds.Contains(cheque.Id) && cheque.Tenant == tenant
-                                                            && cheque.StatusCode == "3" 
-                                                      select new ARPaymentChequePM()
-                                                      {
-                                                          Id = cheque.Id,
-                                                          Tenant = cheque.Tenant,
-                                                          CurrencyCode = cheque.Currency.Code,
-                                                          SearchFields = cheque.SearchFields,
-                                                          LineNumber = cheque.LineNumber,
-                                                          ChequeNumber = cheque.ChequeNumber,
-                                                          ValueDate = cheque.ValueDate,
-                                                          LocalAmount = cheque.LocalAmount,
-                                                          ForeignAmount = cheque.ForeignAmount,
-                                                          BankId = cheque.BankId,
-                                                          BankBranch = cheque.BankBranch,
-                                                          BankAccount = cheque.BankAccount,
-                                                          StatusName = cheque.ARPaymentChequeStatus != null ? cheque.ARPaymentChequeStatus.EnglishName : "",
-                                                          PaymentId = cheque.PaymentId,
-                                                          ExchangeRate = cheque.ExchangeRate,
-                                                          StatusCode = cheque.StatusCode,
-                                                          CurrencyId = cheque.CurrencyId,
-                                                      }).OrderBy(d=>d.ChequeNumber).ToList();
+                                                                 where paymentChequeIds.Contains(cheque.Id) && cheque.Tenant == tenant
+                                                                       && cheque.StatusCode == "3"
+                                                                 select new ARPaymentChequePM()
+                                                                 {
+                                                                     Id = cheque.Id,
+                                                                     Tenant = cheque.Tenant,
+                                                                     CurrencyCode = cheque.Currency.Code,
+                                                                     SearchFields = cheque.SearchFields,
+                                                                     LineNumber = cheque.LineNumber,
+                                                                     ChequeNumber = cheque.ChequeNumber,
+                                                                     ValueDate = cheque.ValueDate,
+                                                                     LocalAmount = cheque.LocalAmount,
+                                                                     ForeignAmount = cheque.ForeignAmount,
+                                                                     BankId = cheque.BankId,
+                                                                     BankBranch = cheque.BankBranch,
+                                                                     BankAccount = cheque.BankAccount,
+                                                                     StatusName = cheque.ARPaymentChequeStatus != null ? cheque.ARPaymentChequeStatus.EnglishName : "",
+                                                                     PaymentId = cheque.PaymentId,
+                                                                     ExchangeRate = cheque.ExchangeRate,
+                                                                     StatusCode = cheque.StatusCode,
+                                                                     CurrencyId = cheque.CurrencyId,
+                                                                 }).OrderBy(d => d.ChequeNumber).ToList();
 
 
             Log("[Tenant " + tenant + "] cheques got, count: " + paymentChequesNotRedeemed.Count());
@@ -272,7 +279,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 throw;
             }
-            
+
         }
         public void SetChequesAsRedeemed(int tenant, List<ARPaymentChequePM> chequesPMs)
         {
@@ -299,7 +306,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     scope.Complete();
                 }
-                
+
 
                 Log("[Tenant " + tenant + "] update cheques finished");
                 Log("......................................");
@@ -316,7 +323,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private void Log(string text)
         {
-            LoggingText += text +Environment.NewLine;
+            LoggingText += text + Environment.NewLine;
         }
 
         private void writeChequesOnFile()
@@ -341,7 +348,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
         List<string> billToAccounts;
-        private void GetTenantBillToAccounts(int tenant,string paymentId)
+        private void GetTenantBillToAccounts(int tenant, string paymentId)
         {
 
             ARPaymentRepository repo = new ARPaymentRepository(tenant);

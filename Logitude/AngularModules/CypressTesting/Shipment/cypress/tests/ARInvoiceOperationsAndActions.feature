@@ -1,4 +1,4 @@
-@stable @smoke @release
+@smoke @release @stable @all
 Feature: ARInvoice operations and actions
   After the user logging in the system and navigate to shipments workspace
     will create a direct shipment,update routing tab,packages.

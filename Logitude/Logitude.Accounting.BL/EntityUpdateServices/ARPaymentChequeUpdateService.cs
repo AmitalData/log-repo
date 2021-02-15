@@ -1,27 +1,20 @@
-﻿using Logitude.Accounting.BL.EntityQueryServices;
+﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.CoreBL;
+using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.Helpers;
-using Logitude.BL.Interfaces;
 using Logitude.BL.Resolvers;
-using Logitude.BL.Security;
 using Logitude.Server.Tools;
-using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Microsoft.Practices.Unity;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Server.Infrastructure;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -115,69 +108,43 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
         }
 
-        protected override void AfterUpdating(ARPaymentChequePM entityPM, EntityPM entityParentPM)
+        protected override void AfterUpdating(ARPaymentChequePM chequePM, EntityPM entityParentPM)
         {
-            base.AfterUpdating(entityPM, entityParentPM);
-            TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
-            TenantPM tenant = tenantQuery.GetSinglePM(entityPM.Tenant);
-            if (tenant.AccountingActivated)
+            bool isAccountingActivated = CheckIfAccountingIsActivated(chequePM.Tenant);
+            if (isAccountingActivated)
             {
-                ARPaymentRepository repo = new ARPaymentRepository(entityPM.Tenant);
-
-                ARPayment payment = repo.GetSingleNotCancelledARPayment(entityPM.PaymentId, entityPM.Tenant);
+                ARPayment payment = GetPayment(chequePM.Tenant, chequePM.PaymentId);
                 if (payment != null)
                 {
-                    List<ARPayment> payments = repo.GetARPaymentsByBillTo(payment.BillToId, entityPM.Tenant);
-                    List<string> paymentIds = new List<string>();
-                    foreach (var item in payments)
-                    {
-
-                        paymentIds.Add(item.Id);
-
-                    }
-
-
-                    ARPaymentChequeQueryService queryService = new ARPaymentChequeQueryService(entityPM.Tenant);
-                    List<ARPaymentChequePM> aRPaymentChequePMs = queryService.GetARPaymentChequesByPaymentIds(paymentIds, entityPM.Tenant);
-                    CardRepository cardRepo = new CardRepository(entityPM.Tenant);
-                    //Card card = cardRepo.GetSingleCard(payment.BillToId, entityPM.Tenant);
-
-
-                    //if (card != null)
-                    //{
-                        string GLAccountId = cardRepo.GetGLAccountIdByCardId(payment.BillToId, entityPM.Tenant);
-                        GLAccountMoreDataQueryService moreDataQueryService = new GLAccountMoreDataQueryService(entityPM.Tenant);
-                        IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
-                        GLAccountMoreDataPM moreDataPM = moreDataQueryService.GetSingle(GLAccountId, false, false);
-                        GLAccountMoreDataUpdateService updateService = new GLAccountMoreDataUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-                        moreDataPM.TotFutureOpenChequesInLocalCur = 0;
-                        moreDataPM.TotalOpenChequesInLocalCur = 0;
-                        foreach (ARPaymentChequePM item in aRPaymentChequePMs)
-                        {
-                            if (item.StatusCode != "6" && item.StatusCode != "5")
-                            {
-                                if (item.ValueDate > DateTime.Today)
-                                {
-                                    moreDataPM.TotFutureOpenChequesInLocalCur += item.LocalAmount;
-
-                                }
-                                else
-                                {
-                                    moreDataPM.TotalOpenChequesInLocalCur += item.LocalAmount;
-
-                                }
-                            }
-                        }
-                      
-                        moreDataPM.ChangeSetOp = ChangeSetOperation.Update;
-                        updateService.Update(moreDataPM, true);
-                     //   SubmitChanges();
-                    //}
+                    GLAccountChequesTotalCalculator chequesTotalCalculator = new GLAccountChequesTotalCalculator(chequePM.Tenant);
+                    chequesTotalCalculator.RecalculateChequesTotalForBillToAccount(payment.BillToId);
                 }
-
+           
             }
         }
 
+        private static ARPayment GetPayment(int tenant, string paymentId)
+        {
+            ARPaymentRepository repo = new ARPaymentRepository(tenant);
+            ARPayment payment = repo.GetSingleNotCancelledARPayment(paymentId, tenant);
+            return payment;
+        }
+
+
+
+        private bool CheckIfAccountingIsActivated(int tenant)
+        {
+            TenantPM tenantPM = GetTenant(tenant);
+            var isAccountingActivated = tenantPM.AccountingActivated;
+            return isAccountingActivated;
+        }
+
+        private static TenantPM GetTenant(int _tenant)
+        {
+            TenantQuery tenantQuery = new TenantQuery(_tenant);
+            TenantPM tenant = tenantQuery.GetSinglePM(_tenant);
+            return tenant;
+        }
 
         public ContactPM GetLoggedContact(int tenant)
         {
@@ -193,7 +160,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             base.SubmitChanges();
         }
-
+        
 
     }
 }

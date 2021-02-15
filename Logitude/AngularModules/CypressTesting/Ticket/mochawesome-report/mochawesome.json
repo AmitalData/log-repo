@@ -1,0 +1,163 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2021-02-14T19:35:48.687Z",
+    "end": "2021-02-14T19:36:23.164Z",
+    "duration": 34477,
+    "testsRegistered": 4,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "d52a3338-4940-42f8-8746-642cd8f885fe",
+      "title": "",
+      "fullFile": "cypress\\tests\\ActionsTicket.feature",
+      "file": "cypress\\tests\\ActionsTicket.feature",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "aaa6a059-669c-447f-82f1-c18905a62d0a",
+          "title": "Actions Ticket test",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Create new ticket",
+              "fullTitle": "Actions Ticket test Create new ticket",
+              "timedOut": null,
+              "duration": 24980,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "fcd8ce74-325e-49f7-bc95-cf25f024d3c8",
+              "parentUUID": "aaa6a059-669c-447f-82f1-c18905a62d0a",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Cancel the ticket",
+              "fullTitle": "Actions Ticket test Cancel the ticket",
+              "timedOut": null,
+              "duration": 3239,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "cc00a6b9-0035-4930-a881-1a5fafba9d78",
+              "parentUUID": "aaa6a059-669c-447f-82f1-c18905a62d0a",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Reactivate the ticket",
+              "fullTitle": "Actions Ticket test Reactivate the ticket",
+              "timedOut": null,
+              "duration": 1102,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "384cc33a-6ed0-46c1-90a4-eced60d224ce",
+              "parentUUID": "aaa6a059-669c-447f-82f1-c18905a62d0a",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Close Without Notifying",
+              "fullTitle": "Actions Ticket test Close Without Notifying",
+              "timedOut": null,
+              "duration": 1778,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "61630eaa-7e9d-4418-9c12-7bb108aacec8",
+              "parentUUID": "aaa6a059-669c-447f-82f1-c18905a62d0a",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "fcd8ce74-325e-49f7-bc95-cf25f024d3c8",
+            "cc00a6b9-0035-4930-a881-1a5fafba9d78",
+            "384cc33a-6ed0-46c1-90a4-eced60d224ce",
+            "61630eaa-7e9d-4418-9c12-7bb108aacec8"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 31099,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false
+      },
+      "version": "4.1.0"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "./mochawesome-report",
+        "quite": true,
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "4.0.1"
+    }
+  }
+}
