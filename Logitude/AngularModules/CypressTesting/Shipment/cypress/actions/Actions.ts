@@ -10,6 +10,10 @@ import { URLs } from '../constants/URLs';
 import { RestAPI } from '../../../Base/cypress/constants/RestAPI';
 import { RequestAliases } from '../../../Base/cypress/constants/RequestAliases';
 import * as Conditions from "../actions/Conditions";
+import { AccountingURLs } from '../../../Accounting/cypress/constants/URLs';
+import { AccountingSelectors } from '../../../Accounting/cypress/selectors/Selectors';
+import { BaseURLs } from '../../../Base/cypress/constants/URLs';
+import { QuickSearchDetails } from '../../../Base/cypress/models/QuickSearchDetails';
 
 //#region ShipmentsWorkspace
 export function NavigatesToShipmentsWorkspace() {
@@ -45,7 +49,15 @@ export function UpdateShipment(saveButtonSelector: string, saveButtonSelectorCon
 
 export function OpenShipment(shipmentNumber: string) {
     cy.DefineRequestWait("GET", "**/ngMetaData/getmenubuttongrouppms?**", "WaitLoadShipmentMenuButtons");
-    cy.SelectQuickSearchFirstElement(ShipmentSelectors.ShipmentSearchBar, shipmentNumber)
+
+    var quickSearchDetails = {
+        Selector: ShipmentSelectors.ShipmentSearchBar,
+        Parent: ShipmentSelectors.ShipmentSearchParent,
+        ParentClass: ShipmentSelectors.ShipmentSearchParentClass,
+        WaitURL: BaseURLs.GetQuickSearch,
+        Value: shipmentNumber
+    } as QuickSearchDetails;
+    cy.SelectQuickSearchFirstElement(quickSearchDetails);
 }
 
 export function CancelShipment() {
@@ -337,30 +349,30 @@ function FillMasterFields(shipmentDetails: ShipmentDetails) {
 }
 
 function FillMainFields(shipmentDetails: ShipmentDetails) {
-    FillDirection(shipmentDetails);
-    FillTransportMode(shipmentDetails);
-    FillShipmentType(shipmentDetails);
+    FillDirection(shipmentDetails.Direction);
+    FillTransportMode(shipmentDetails.TransportMode);
+    FillShipmentType(shipmentDetails.ShipmentType, shipmentDetails.TransportMode);
 }
 
 
-function FillDirection(shipmentDetails: ShipmentDetails) {
-    let directionRadioSelector = ShipmentSelectors.DirectionRadio(shipmentDetails.Direction);
+function FillDirection(Direction: string) {
+    let directionRadioSelector = ShipmentSelectors.DirectionRadio(Direction);
     cy.ClickRadio(directionRadioSelector);
 }
 
 
-function FillTransportMode(shipmentDetails: ShipmentDetails) {
-    let transportModeRadioSelector = ShipmentSelectors.TransportModeRadio(shipmentDetails.TransportMode);
+function FillTransportMode(TransportMode: string) {
+    let transportModeRadioSelector = ShipmentSelectors.TransportModeRadio(TransportMode);
     cy.ClickRadio(transportModeRadioSelector);
 }
 
-function FillShipmentType(shipmentDetails: ShipmentDetails) {
-    if (shipmentDetails.ShipmentType) {
+function FillShipmentType(ShipmentType: string, TransportMode: string) {
+    if (ShipmentType) {
         let shipmentTypeRadioSelector: string;
-        if (Conditions.IsGroupage(shipmentDetails.ShipmentType)) {
-            shipmentTypeRadioSelector = ShipmentSelectors.GroupageShipmentTypeRadio(shipmentDetails.TransportMode);
+        if (Conditions.IsGroupage(ShipmentType)) {
+            shipmentTypeRadioSelector = ShipmentSelectors.GroupageShipmentTypeRadio(TransportMode);
         } else {
-            shipmentTypeRadioSelector = ShipmentSelectors.ShipmentTypeRadio(shipmentDetails.ShipmentType);
+            shipmentTypeRadioSelector = ShipmentSelectors.ShipmentTypeRadio(ShipmentType);
         }
         cy.ClickRadio(shipmentTypeRadioSelector);
     }

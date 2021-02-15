@@ -11,6 +11,9 @@ import { PayableDetails } from '../../../Shipment/cypress/models/PayableDetails'
 import { ARInvoiceDetails } from 'cypress/models/ARInvoiceDetails';
 import { APPaymentDetails } from 'cypress/models/APPaymentDetails';
 import { ARPaymentDetails } from 'cypress/models/ARPaymentDetails';
+import { BaseURLs } from '../../../Base/cypress/constants/URLs';
+import { QuickSearchDetails } from '../../../Base/cypress/models/QuickSearchDetails';
+
 //#region CustomInvoices
 export function NewCustomsCreditNoteARInvoice() {
     cy.Click(BaseSelectors.ToggleButtonClass, AccountingSelectors.ContainsCustoms, true);
@@ -145,7 +148,15 @@ export function CancelDraftARInvoice() {
 export function AddTwoShipmentLinesAndEditAmount(shipmentNumbers: string[], VATType: string, payableDetails: PayableDetails) {
     const amount = CalculateAmount(payableDetails.Quantity, payableDetails.UnitPrice);
     for (let i = 0; i < shipmentNumbers.length; i++) {
-        cy.SelectQuickSearchFirstElement(ShipmentSelectors.ShipmentSearchBar, shipmentNumbers[i]);
+        var quickSearchDetails = {
+            Selector: ShipmentSelectors.ShipmentSearchBar,
+            Parent: ShipmentSelectors.ShipmentSearchParent,
+            ParentClass: ShipmentSelectors.ShipmentSearchParentClass,
+            WaitURL: BaseURLs.GetQuickSearch,
+            Value: shipmentNumbers[i]
+        } as QuickSearchDetails;
+        cy.SelectQuickSearchFirstElement(quickSearchDetails);
+        
         cy.get(AccountingSelectors.EditShipmentLine).children().eq(i).click();
         cy.FillLogTextBox(AccountingSelectors.APInvoiceLineForiegnCurrencyAmount, amount.toString());
         cy.FillLogLov(AccountingSelectors.APInvoiceVatType, VATType, true);
