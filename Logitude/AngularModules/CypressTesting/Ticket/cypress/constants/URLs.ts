@@ -3,8 +3,6 @@ export class URLs
     public static readonly CRMDomain = "**/CRMDomain/**"
     public static readonly Tickets = "**/tickets"
     public static readonly Correspondences = "**/correspondences"
+    public static readonly Activity = "**/activities"
     //public static readonly 
-    //public static readonly 
-    //public static readonly 
-
 }

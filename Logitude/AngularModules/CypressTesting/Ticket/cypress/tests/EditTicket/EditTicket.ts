@@ -7,6 +7,7 @@ import { URLs } from "../../constants/URLs";
 
 let TicketData: TicketDetails;
 
+//#region Create Ticket
 Given("the user logged in and navigated to ticket workspace", () => {
     cy.Login();
     cy.Click(BaseSelectors.TicketsMenu, null)
@@ -29,6 +30,7 @@ Then("the ticket should create successfully", () => {
         TicketData.TicketNumber = interception.response.body.TicketNumber;
     })
 });
+//#endregion
 
 Given("the user edit the description", () => {
     Actions.OpenTicket(TicketData.TicketNumber);
