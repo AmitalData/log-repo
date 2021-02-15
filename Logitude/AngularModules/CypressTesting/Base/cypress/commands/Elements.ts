@@ -20,6 +20,7 @@ declare global {
             ValidateElementColor(selector: string, expectedcolor: string): Chainable<Element>
             SelectQuickSearchFirstElement(quickSearchDetails: QuickSearchDetails): Chainable<Element>
             SelectQuickSearchFirstElement2(selector: string, value: string): Chainable<Element>
+            BackButton(contains:string): Chainable<Element>
         }
     }
 }

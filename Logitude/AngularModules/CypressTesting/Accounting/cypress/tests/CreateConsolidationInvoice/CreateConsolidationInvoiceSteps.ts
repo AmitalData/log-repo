@@ -1,4 +1,3 @@
-// @ts-nocheck
 import * as CommonActions from '../../../../Common/cypress/actions/Actions';
 import * as ShipmentActions from '../../../../Shipment/cypress/actions/Actions';
 import * as AccountingActions from '../../../../Accounting/cypress/actions/Actions';
