@@ -501,7 +501,7 @@ namespace Logitude.Accounting.BL.Validators
             {
                 if ((myJournalPM.StatusCode == "1") || (myJournalPM.StatusCode == "2"))//Draft = 0,//WaitingforApprove = 1,//Approved = 2,//Voided = 3
                 {
-                    errorsList.Add(TranslateMyTextCode(JournalValidator.M_JournalAmountNotMatched  + Math.Abs(debitTotal - creditTotal) , myJournalPM.Tenant));
+                    errorsList.Add(TranslateTextsClass.Translate(JournalValidator.M_JournalAmountNotMatched, myJournalPM.Tenant)+ " " + Math.Abs(debitTotal - creditTotal));
                 }
             }
 
