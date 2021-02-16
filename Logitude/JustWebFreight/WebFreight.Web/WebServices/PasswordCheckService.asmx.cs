@@ -181,7 +181,6 @@ namespace WebFreight.Web.WebServices
         public bool ResetUserPassword(string email, int tenant)
         {
             bool succeeded = false;
-            //ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
             IGlobalContext globalContext = GlobalContext.GetContext();
             GlobalContact contact = globalContext.GlobalContacts.Where(c => c.GlobalTenantId == tenant && c.Email == email && c.InActive == false).FirstOrDefault();
             ContactPassword contactPassword = globalContext.ContactPasswords.Where(c => c.Email == email).FirstOrDefault();
@@ -189,115 +188,136 @@ namespace WebFreight.Web.WebServices
             {
                 string newPassword = PasswordGenerator.Generate(8);
                 string newHashedPassword = PasswordGenerator.GetBCryptHashedPassword(email, newPassword);
-
-                contactPassword.Password = newHashedPassword;
-                contactPassword.IsLocked = false;
-                contactPassword.MustChangePassword = true;
-                contactPassword.IsBCrypt = true;
-
-                globalContext.SaveChanges();
-
-
-                
-                StringBuilder HtmlTemplate = new StringBuilder();
-                string teamName = (LogitudeSettings.WorkEnvironment == "cloud" ? "Amital" : LogitudeSettings.ProductName) + " Team";
-                string siteUri = LogitudeSettings.WorkEnvironment == "cloud" ? "https://cloud.amital.co.il/" : ("www." + LogitudeSettings.DomainName);
-
-                string siteLogin = LogitudeSettings.LogitudeURL;
-                bool isLogBox = false;
-                string senderEmail = "no-reply@" + (LogitudeSettings.WorkEnvironment == "cloud" ? "amital.co.il" : "LogitudeWorld.com");
-
-
-
-
-
-                TenantManagmentPrivateLabelsPM privatelabel = null;
-                if (LogitudeSettings.DeploymentStage != null && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2"))
+                UpdateContactWithNewHashedPassword(globalContext, contactPassword, newHashedPassword);
+                ResetPasswordHtmlArgs resetPasswordHtmlArgs = GetNewResetPasswordArgs(newPassword);
+                resetPasswordHtmlArgs = IsLogboxEnvironment() ? GetResetPasswordArgsForLogboxEnvironment(newPassword) : resetPasswordHtmlArgs;
+                StringBuilder HtmlTemplate = BuildResetPasswordSentSuccessfullyHtmlTemplate(resetPasswordHtmlArgs);
+                ResetPassswordEmailCommunicationArgs resetPassswordEmailCommunicationArgs = new ResetPassswordEmailCommunicationArgs
                 {
-
-                    var url = SecurityUtility.getLoggedDomain();
-                    if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
-                    {
-                        TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(0);
-                        privatelabel = query.GetSingleActivePMByUrl(url);
-                    }
-                    if (privatelabel != null)
-                    {
-                        teamName = privatelabel.PrivateLabelShortName + " Team";
-                        siteUri = privatelabel.PrivateLabelUrl;
-                        siteLogin = "http://" + privatelabel.PrivateLabelUrl;
-                        senderEmail = "no-reply@" + privatelabel.PrivateLabelUrl.Replace("www.", "");
-                        //env = privatelabel.PrivateLabelShortName;
-                        isLogBox = true;
-                    }
-                    else
-                    {
-                        teamName = "LogBox Team";
-                        siteUri = "system.logbox.co.il";
-                        siteLogin = "http://system.logbox.co.il";
-                        senderEmail = "no-reply@logbox.co.il";
-                        //env = "Logbox";
-                        isLogBox = true;
-                    }
-
-                }
-                //if (LogitudeSettings.DeploymentStage != null && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2"))
-                //{
-                //    teamName = "LogBox Team";
-                //    siteUri = "system.logbox.co.il";
-                //    senderEmail = "no-reply@logbox.co.il";
-                //    isLogBox = true;
-                //}
-
-
-                //HtmlTemplate.Append("<p style='font-weight:bold;text-align:left;font-size:16px;font-family:'Times New Roman''><b>Your Logitude Password!</b></p>");
-                HtmlTemplate.Append("<p style='text-align:left'>");
-                //HtmlTemplate.Append("<br />");
-                HtmlTemplate.Append("Hi,");
-                HtmlTemplate.Append("<br /><br />");
-                HtmlTemplate.Append("Your password has been reset successfully.");
-                HtmlTemplate.Append("</P>");
-                HtmlTemplate.Append("<p style='text-align:left'>");
-                HtmlTemplate.Append("Your new password is: " + newPassword);
-                HtmlTemplate.Append("<br />");
-                HtmlTemplate.Append("To access your account please <a href='" + siteLogin + "'>login</a>");
-                HtmlTemplate.Append("<br /><br />");
-                HtmlTemplate.Append("Thanks,");
-                HtmlTemplate.Append("<br />");
-                HtmlTemplate.Append(teamName);
-                HtmlTemplate.Append("<br />");
-                HtmlTemplate.Append("<a href='http://" + siteUri + "'>" + siteUri + "<a>");
-                HtmlTemplate.Append("<br /><span  style='font-size:13px;text-align:left'>Please do not reply directly to this message</span>");
-                HtmlTemplate.Append("</P>");
-                //if (!isLogBox)
-                //{
-                //    HtmlTemplate.Append("<p style='font-size:14px;text-align:left'>Logitude is the first true online Freight Forwarding software solution developed specifically for the cloud<br/> <img width='258' height='101' src='cid:logo0' /></p>");
-                //}
-
-                HtmlTemplate.Append("");
-                         
-                EmailCommunicationParams emailParams = new EmailCommunicationParams()
-                {
-                    Subject = "Password reset",
-                    From = senderEmail,
-                    To = email,
-                    CC = null,
-                    BCC = null,
-                    EmailBody = HtmlTemplate.ToString(),
+                    FromEmail = resetPasswordHtmlArgs.FromEmail,
+                    ToEmail = email,
                     Tenant = tenant,
-                    LoggingUserId  = contact.Id, 
-                    IsBodySecured = true,
+                    LoggedUserId = contact.Id,
+                    HtmlTemplate = HtmlTemplate
                 };
-                Communications.AddEmailCommunicationLogQueue(emailParams, tenant);
-
+                AddPasswordResetEmailCommunicationLog(resetPassswordEmailCommunicationArgs);
                 succeeded = true;
+            }
+            return succeeded;
+        }
+
+        private void UpdateContactWithNewHashedPassword(IGlobalContext globalContext, ContactPassword contactPassword, string newHashedPassword)
+        {
+            contactPassword.Password = newHashedPassword;
+            contactPassword.IsLocked = false;
+            contactPassword.MustChangePassword = true;
+            contactPassword.IsBCrypt = true;
+            globalContext.SaveChanges();
+        }
+
+        private ResetPasswordHtmlArgs GetNewResetPasswordArgs(string newPassword)
+        {
+            ResetPasswordHtmlArgs resetPasswordHtmlArgs = new ResetPasswordHtmlArgs
+            {
+                NewPassword = newPassword,
+                TeamName = (LogitudeSettings.WorkEnvironment == "cloud" ? "Amital" : LogitudeSettings.ProductName) + " Team",
+                SiteUri = LogitudeSettings.WorkEnvironment == "cloud" ? "https://cloud.amital.co.il/" : ("www." + LogitudeSettings.DomainName),
+                SiteLogin = LogitudeSettings.LogitudeURL,
+                FromEmail = "no-reply@" + (LogitudeSettings.WorkEnvironment == "cloud" ? "amital.co.il" : "LogitudeWorld.com")
+            };
+
+            return resetPasswordHtmlArgs;
+        }
+
+        private void AddPasswordResetEmailCommunicationLog(ResetPassswordEmailCommunicationArgs resetPassswordEmailCommunicationArgs)
+        {
+            EmailCommunicationParams emailParams = new EmailCommunicationParams()
+            {
+                Subject = "Password reset",
+                From = resetPassswordEmailCommunicationArgs.FromEmail,
+                To = resetPassswordEmailCommunicationArgs.ToEmail,
+                CC = null,
+                BCC = null,
+                EmailBody = resetPassswordEmailCommunicationArgs.HtmlTemplate.ToString(),
+                Tenant = resetPassswordEmailCommunicationArgs.Tenant,
+                LoggingUserId = resetPassswordEmailCommunicationArgs.LoggedUserId,
+                IsBodySecured = true,
+            };
+            Communications.AddEmailCommunicationLogQueue(emailParams, resetPassswordEmailCommunicationArgs.Tenant);
+        }
+
+        private ResetPasswordHtmlArgs GetResetPasswordArgsForLogboxEnvironment(string newPassword)
+        {
+            ResetPasswordHtmlArgs resetPasswordHtmlArgs;
+            string url = SecurityUtility.getLoggedDomain();
+            if (IsPrivateLableUrl(url))
+            {
+                resetPasswordHtmlArgs = GetResetPasswordArgsForHybridLable(newPassword, url);
             }
             else
             {
-                succeeded = false;
+                resetPasswordHtmlArgs = new ResetPasswordHtmlArgs
+                {
+                    NewPassword = newPassword,
+                    TeamName = "LogBox Team",
+                    SiteUri = "system.logbox.co.il",
+                    SiteLogin = "http://system.logbox.co.il",
+                    FromEmail = "no-reply@logbox.co.il"
+                };
+            }
+            return resetPasswordHtmlArgs;
+        }
+
+        private ResetPasswordHtmlArgs GetResetPasswordArgsForHybridLable(string newPassword, string url)
+        {
+            ResetPasswordHtmlArgs resetPasswordHtmlArgs = new ResetPasswordHtmlArgs();
+            TenantManagmentPrivateLabelsQuery tenantManagmentPrivateLabelsQuery = new TenantManagmentPrivateLabelsQuery(0);
+            TenantManagmentPrivateLabelsPM privatelabel = tenantManagmentPrivateLabelsQuery.GetSingleActivePMByUrl(url);
+            if (privatelabel != null)
+            {
+                resetPasswordHtmlArgs.NewPassword = newPassword;
+                resetPasswordHtmlArgs.TeamName = privatelabel.PrivateLabelShortName + " Team";
+                resetPasswordHtmlArgs.SiteUri = privatelabel.PrivateLabelUrl;
+                resetPasswordHtmlArgs.SiteLogin = "http://" + privatelabel.PrivateLabelUrl;
+                resetPasswordHtmlArgs.FromEmail = "no-reply@" + privatelabel.PrivateLabelDomain;
             }
 
-            return succeeded;
+            return resetPasswordHtmlArgs;
+        }
+
+        private StringBuilder BuildResetPasswordSentSuccessfullyHtmlTemplate(ResetPasswordHtmlArgs resetPasswordHtmlArgs)
+        {
+            StringBuilder HtmlTemplate = new StringBuilder();
+            HtmlTemplate.Append("<p style='text-align:left'>");
+            HtmlTemplate.Append("Hi,");
+            HtmlTemplate.Append("<br /><br />");
+            HtmlTemplate.Append("Your password has been reset successfully.");
+            HtmlTemplate.Append("</P>");
+            HtmlTemplate.Append("<p style='text-align:left'>");
+            HtmlTemplate.Append("Your new password is: " + resetPasswordHtmlArgs.NewPassword);
+            HtmlTemplate.Append("<br />");
+            HtmlTemplate.Append("To access your account please <a href='" + resetPasswordHtmlArgs.SiteLogin + "'>login</a>");
+            HtmlTemplate.Append("<br /><br />");
+            HtmlTemplate.Append("Thanks,");
+            HtmlTemplate.Append("<br />");
+            HtmlTemplate.Append(resetPasswordHtmlArgs.TeamName);
+            HtmlTemplate.Append("<br />");
+            HtmlTemplate.Append("<a href='http://" + resetPasswordHtmlArgs.SiteUri + "'>" + resetPasswordHtmlArgs.SiteUri + "<a>");
+            HtmlTemplate.Append("<br /><span  style='font-size:13px;text-align:left'>Please do not reply directly to this message</span>");
+            HtmlTemplate.Append("</P>");
+            HtmlTemplate.Append("");
+
+            return HtmlTemplate;
+        }
+
+        private bool IsPrivateLableUrl(string url)
+        {
+            return !url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il");
+        }
+
+        private bool IsLogboxEnvironment()
+        {
+            return LogitudeSettings.DeploymentStage != null && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2");
         }
 
         //public Document BuildHtmlDocument(int tenant, string body)
@@ -525,5 +545,22 @@ namespace WebFreight.Web.WebServices
             }
             return isValid;
         }
+    }
+    public class ResetPasswordHtmlArgs
+    {
+        public string NewPassword { get; set; }
+        public string TeamName { get; set; }
+        public string SiteUri { get; set; }
+        public string SiteLogin { get; set; }
+        public string FromEmail { get; set; }
+    }
+
+    public class ResetPassswordEmailCommunicationArgs
+    {
+        public string FromEmail { get; set; }
+        public string ToEmail { get; set; }
+        public int Tenant { get; set; }
+        public string LoggedUserId { get; set; }
+        public StringBuilder HtmlTemplate { get; set; }
     }
 }
