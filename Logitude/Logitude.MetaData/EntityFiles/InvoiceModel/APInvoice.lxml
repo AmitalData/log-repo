@@ -3733,7 +3733,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    HasTemplate="false"
+    HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;ConnectedEntityReferences&quot;"
     IsSpellCheckedFullFieldLable="false"

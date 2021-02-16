@@ -2309,7 +2309,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    HasTemplate="false"
+    HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;MainEntityReference&quot;"
     IsSpellCheckedFullFieldLable="false"
