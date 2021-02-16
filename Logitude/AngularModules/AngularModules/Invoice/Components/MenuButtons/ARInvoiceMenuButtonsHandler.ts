@@ -665,7 +665,7 @@ export class ARInvoiceMenuButtonsHandler {
             this.CheckExchageRateLastUpdate();
         }
         else {
-            this.ValidateAutoCreditInvoice();
+            this.CheckAutoCreditInvoice();
         }
     }
     private CheckExchageRateLastUpdate() {
@@ -683,7 +683,7 @@ export class ARInvoiceMenuButtonsHandler {
 
             confirmWindow.WindowClosed.subscribe(s => {
                 if (confirmWindow.Yes) {
-                    this.ValidateAutoCreditInvoice();
+                    this.CheckAutoCreditInvoice();
                 }
                 else if (confirmWindow.Cancel) {
                     // nth
@@ -692,11 +692,11 @@ export class ARInvoiceMenuButtonsHandler {
             });
         }
         else {
-            this.ValidateAutoCreditInvoice();
+            this.CheckAutoCreditInvoice();
         }
     }
 
-    private ValidateAutoCreditInvoice() {
+    private CheckAutoCreditInvoice() {
         if (this.EntityPM.IsAutoCredit) {
             this.CheckIsConfirmationMessageForCriedtNoteVisible();
             const myConfirmWindow = new ConfirmWindow();
