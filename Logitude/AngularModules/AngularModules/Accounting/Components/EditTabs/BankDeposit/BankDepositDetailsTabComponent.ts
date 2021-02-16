@@ -556,6 +556,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
             var CashbookLine = this.CashbookLines.Collection.filter(a => a.CashBookId == line.CashBookId && a.ARPChequeId == line.ARPChequeId)[0];
             if (CashbookLine != null) {
                 this.CashbookLines.Collection.filter(a => a.CashBookId == line.CashBookId && a.ARPChequeId == line.ARPChequeId)[0].IsSelected = true;
+                this.PushBankDeposit(CashbookLine);
             }
         }
     }

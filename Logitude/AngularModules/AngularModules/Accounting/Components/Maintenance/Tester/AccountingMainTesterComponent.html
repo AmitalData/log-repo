@@ -47,12 +47,17 @@
 </div>
 <div *ngIf="SelectedItem=='JournalApproveService'">
     <table>
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td style="padding-left: 10px; padding-right: 10px; overflow-x: auto;" colspan="4">
+                <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+            </td>
+        </tr>
         <tr>
             <td style="width:200px">
                 <button class="Button" (click)="WorkWithoutQueue_Click()">WorkWithoutQueue</button>
             </td>
             <td style="width:200px">
-                <button class="Button">WorkWithQueue</button>
+                <button class="Button" (click)="JournalApproveQueue_Click()">Queue</button>
             </td>
             <td style="width:200px"></td>
             <td style="width:200px"></td>
@@ -118,9 +123,10 @@
 
         <tr>
             <td style="width:200px">
-                <button class="Button" (click)="XXX_Click()">XXX</button>
+                <button class="Button" (click)="ButtonReconcileStageCNoBatch_Click()">ReconcileStageC NoBatch</button>
             </td>
             <td style="width:200px">
+                <button class="Button" (click)="ButtonReconcileStageCBatch_Click()">ReconcileStageC Batch</button>
             </td>
             <td style="width:200px"></td>
             <td style="width:200px"></td>

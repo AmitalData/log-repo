@@ -201,6 +201,7 @@ namespace WebFreight.Web.WebServices
                 Card notify2 = null;
                 Card myConsigneePartner = null;
                 Card consigneeNotImporter = null;
+                Contact salesmanData = null;
 
                 if (shipment.Notify1Id != null)
                 {
@@ -221,6 +222,12 @@ namespace WebFreight.Web.WebServices
                 {
                     consigneeNotImporter = (from a in commonContext.Cards where a.Id == shipment.ConsigneeNotImporterId select a).FirstOrDefault();
                 }
+
+                if (shipment.SalesmanUserId != null)
+                {
+                    salesmanData = (from a in commonContext.Contacts where a.Id == shipment.SalesmanUserId select a).FirstOrDefault();
+                }
+
                 #endregion
 
                 #region Ports
@@ -299,7 +306,11 @@ namespace WebFreight.Web.WebServices
                         myDataProvider.ValueOfGoodsCurrency = currency.EnglishName;
                     }
                 }
+                if (salesmanData != null)
+                {
+                    myDataProvider.SalesmanEmail = salesmanData.Email;
 
+                }
                 #region Tenant
                 Tenant myTenant = (from a in commonContext.Tenants where a.Id == tenant select a).FirstOrDefault();
                 if (myTenant != null)
@@ -1092,6 +1103,7 @@ namespace WebFreight.Web.WebServices
                     {
                         myDataProvider.UserName = currentContact.EnglishName;
                         myDataProvider.UserEmail = currentContact.Email != null ? currentContact.Email : "";
+                        myDataProvider.UserPhoneNumber = currentContact.BusinessPhone;
                     }
                 }
                 #endregion

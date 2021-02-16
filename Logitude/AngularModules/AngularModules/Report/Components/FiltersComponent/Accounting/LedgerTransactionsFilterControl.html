@@ -360,7 +360,7 @@
 
                     <!-- 2 -->
                     <td style="padding-top: 5px;">
-                        <ComboBox style="display: inline-block; width: 100px;" [ItemsSource]="CategoriesList" (SelectedItemChanged)="SelectedItemChanged($event)" [IsDisabled]="IsCategoryDisabled"></ComboBox>
+                        <ComboBox style="display: inline-block; width: 100px;" [ItemsSource]="CategoriesList" [SelectedItem]="SelectedCategory" (SelectedItemChanged)="SelectedItemChanged($event)" [IsDisabled]="IsCategoryDisabled"></ComboBox>
 
                         <div style="display: inline-block; width: 117px;padding: 0 5px;" [ngSwitch]="SelectedCategory" [class.disabled]="IsCategoryDisabled">
 

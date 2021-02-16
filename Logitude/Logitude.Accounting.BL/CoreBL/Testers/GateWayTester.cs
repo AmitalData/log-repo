@@ -7,9 +7,11 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Logitude.Accounting.BL.CoreBL.Testers
 {
@@ -17,6 +19,7 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
     {
         public GateWayTesterResult TestIt(string operationId,int tenant, string _TextBoxParam)
         {
+            LogMessagingUtil.Instance.Clear();
             switch (operationId)
             {
                 case "_ButtonReverseTotal_Click":
@@ -34,6 +37,13 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                         return WorkWithoutQueue_Click(tenant, _TextBoxParam);
                     }
                     break;
+                    
+                    case "JournalApproveQueue_Click":
+                    {
+                        return JournalApproveQueue_Click(tenant, _TextBoxParam);
+                    }
+                    break;
+
                 case "_TrailReport_Click":
                     {
                         return _TrailReport_Click(tenant, _TextBoxParam);
@@ -213,6 +223,49 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
 
                 gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
                 gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+        
+        private GateWayTesterResult JournalApproveQueue_Click(int tenant, string textBoxParam)
+
+        {
+            dynamic param = null;
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+
+
+                param = LogitudeXmlSerializer.JsonConvertDeserializeObject(textBoxParam);
+                //int tenantFrom = param.Tenant;
+
+                var myWorker = new JournalApproveService.JournalApproveWorker();
+                var sw = Stopwatch.StartNew();
+                HttpContext.Current.Items["workerrolename"] = (string)param.workerrolename;
+                string selectedQueue = null;
+                if ((bool)param.ConversionJournal)
+                {
+                    selectedQueue = JournalApproveService.K_AccountingConversionJournalApproveWR;
+                }
+                myWorker.WorkUntilQEmptyQueueDB(TimeSpan.FromSeconds((int)param.TimeOutinSec), selectedQueue);
+                sw.Stop();
+                LogMessagingUtil.Instance.AppendLine($"Tot:{sw.Elapsed}");
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+
+                gateWayTesterResult.Log = LogMessagingUtil.Instance.ToString();
             }
             return gateWayTesterResult;
         }

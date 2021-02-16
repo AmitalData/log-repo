@@ -19,7 +19,7 @@ namespace Simplog.Data.Helpers
 
         public static DateTime GetCurrentDateTime(int tenant)
         {
-        
+
             if (LogitudeSettings.IsCostomsDeploy)
             {
                 return DateTime.Now;
@@ -47,8 +47,8 @@ namespace Simplog.Data.Helpers
                     dateTime = dateTime.AddHours(offsetHours);
                 }
             }
-            
-   
+
+
 
 
             //double offsetHours = Entity.TimeZoneOffset;
@@ -72,29 +72,28 @@ namespace Simplog.Data.Helpers
             return dateTime;
 
         }
-
         private static double GetCurrentDateWithTimeZoneOffset(int tenant)
         {
 
             string entityName = "Tenant" + tenant;
 
             Tenant entity;
-         
-                if (CacheManager.CacheWrapper.Get(entityName) == null)
+
+            if (CacheManager.CacheWrapper.Get(entityName) == null)
+            {
+                TenantRepository tenantRepository = new TenantRepository(tenant);
+                entity = tenantRepository.GetSingleTenant(tenant);
+                if (entity != null)
                 {
-                    TenantRepository tenantRepository = new TenantRepository(tenant);
-                    entity = tenantRepository.GetSingleTenant(tenant);
-                    if (entity != null)
-                    {
-                        CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                    }
+                    CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                 }
-                else
-                {
-                    entity = (Tenant)CacheManager.CacheWrapper.Get(entityName);
-                }
-            
-       
+            }
+            else
+            {
+                entity = (Tenant)CacheManager.CacheWrapper.Get(entityName);
+            }
+
+
 
             double offsetHours = 0;
             if (entity != null)
@@ -116,11 +115,9 @@ namespace Simplog.Data.Helpers
 
             return offsetHours;
         }
-
-
         public static string GetDbConnection(int tenant)
         {
-          
+
             GlobalDB currentDb;
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
@@ -131,10 +128,22 @@ namespace Simplog.Data.Helpers
             string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
             WebFreightContext context = new WebFreightContext(connection);
 
             return context.Database.Connection.ConnectionString;// entityBuilder.ConnectionString;
+        }
+        public static DateTime GetEndOfTodayDate(int tenant)
+        {
+            var todayDate = GetCurrentDateTime(tenant);
+            todayDate = new DateTime(todayDate.Year, todayDate.Month, todayDate.Day, 23, 59, 59, 59);
+            return todayDate;
+        }
+        public static DateTime GetStartOfTodayDate(int tenant)
+        {
+            var todayDate = GetCurrentDateTime(tenant);
+            todayDate = new DateTime(todayDate.Year, todayDate.Month, todayDate.Day, 0, 0, 0, 0);
+            return todayDate;
         }
     }
 

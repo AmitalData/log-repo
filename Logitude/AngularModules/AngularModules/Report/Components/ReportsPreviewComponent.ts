@@ -110,8 +110,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
         return this.ReportFilterConmponent.IsPartnersChanged(SelectedTab);
     }
 
-    GetReportTemplate() {
-        var reportTemplateId: string = this.Report.DefaultTemplateId;
+    GetReportTemplateId() {
+        const reportTemplateId: string = this.StimulsoftArg.DefaultTemplateId;
         return reportTemplateId;
     }
 
