@@ -32,7 +32,7 @@ export class ARInvoiceMenuButtonsHandler {
     private IsConfirmationMessageForCriedtNoteVisible:boolean=false;
     DocumentsFilingExtendedPMService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
      
-    private RelativeRateDate: String; 
+    //private RelativeRateDate: String; 
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
@@ -656,60 +656,67 @@ export class ARInvoiceMenuButtonsHandler {
     }
       
     ComputeRelativeRateDate() {
-        this.RelativeRateDate = DateTool.GetRelativeRateDate(this.EntityPM.InvoiceDate, this.EntityPM.ExchangeRateDate, "old");
+        return  DateTool.GetRelativeRateDate(this.EntityPM.InvoiceDate, this.EntityPM.ExchangeRateDate, "old");
     }
      
     ApplyApproveClicked() {
 
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode !== "NONE") {
+            this.CheckExchageRateLastUpdate();
+        }
+        else {
+            this.ValidateAutoCreditInvoice();
+        }
+    }
+    private CheckExchageRateLastUpdate() {
+         
+        if (this.ComputeRelativeRateDate()) {
+            const confirmWindow = new ConfirmWindow();
+            confirmWindow.Width = 290;
+            confirmWindow.ShowCancelButton = true;
+            confirmWindow.CancelButtonText = "Cancel";
+            confirmWindow.ShowNoButton = false;
+            confirmWindow.YesButtonText = "Continue";
+            confirmWindow.ShowWarningImage = true;
+            confirmWindow.Title = TextCodeTranslator.Translate("General.O.Warning");
+            confirmWindow.Show("The invoice exchange rate is not up-to-date.");
+
+            confirmWindow.WindowClosed.subscribe(s => {
+                if (confirmWindow.Yes) {
+                    this.ValidateAutoCreditInvoice();
+                }
+                else if (confirmWindow.Cancel) {
+                    // nth
+                    this.StopFlags();
+                }
+            });
+        }
+        else {
+            this.ValidateAutoCreditInvoice();
+        }
+    }
+
+    private ValidateAutoCreditInvoice() {
         if (this.EntityPM.IsAutoCredit) {
             this.CheckIsConfirmationMessageForCriedtNoteVisible();
-            var myConfirmWindow = new ConfirmWindow();
+            const myConfirmWindow = new ConfirmWindow();
             myConfirmWindow.Width = 400;
-            var Text=TextCodeTranslator.Translate("ARInvoice.M.ConfirmAutoCredit");
-            if((this.EntityPM.AutoCreditedByInvoiceTypeCode =="CD" || this.EntityPM.AutoCreditedByInvoiceTypeCode =="CC") && this.IsConfirmationMessageForCriedtNoteVisible){
-               Text=TextCodeTranslator.Translate("ARInvoice.M.ConfirmAutoCreditForAutoCredit");
+            let Text = TextCodeTranslator.Translate("ARInvoice.M.ConfirmAutoCredit");
+            if ((this.EntityPM.AutoCreditedByInvoiceTypeCode === "CD" || this.EntityPM.AutoCreditedByInvoiceTypeCode === "CC") && this.IsConfirmationMessageForCriedtNoteVisible) {
+                Text = TextCodeTranslator.Translate("ARInvoice.M.ConfirmAutoCreditForAutoCredit");
             }
             myConfirmWindow.Show(Text);
             myConfirmWindow.WindowClosed.subscribe(s => {
                 if (myConfirmWindow.Yes) {
-                    this.ProceedToApprove(TextCodeTranslator.Translate("ARInvoice.M.CreatingAutoCredit"));                    
+                    this.ProceedToApprove(TextCodeTranslator.Translate("ARInvoice.M.CreatingAutoCredit"));
                 }
             });
+
         }
-
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") { 
-        this.ComputeRelativeRateDate();
-
-            if (this.RelativeRateDate != "") {
-                let confirmWindow = new ConfirmWindow();
-                confirmWindow.Width = 290; 
-                confirmWindow.ShowCancelButton = true;
-                confirmWindow.CancelButtonText = "Cancel";
-                confirmWindow.ShowNoButton = false;
-                confirmWindow.YesButtonText = "Continue";
-                confirmWindow.ShowWarningImage = true;
-                confirmWindow.Title = TextCodeTranslator.Translate("General.O.Warning");
-                confirmWindow.Show("The invoice exchange rate is not up-to-date.");
-
-                confirmWindow.WindowClosed.subscribe(s => {
-                    if (confirmWindow.Yes) {
-                        this.ProceedToApprove("Approving..."); 
-                    }
-                    else if (confirmWindow.Cancel) {
-                        // nth
-                        this.StopFlags();
-                    }
-                }) 
-            }
-            else {
-                this.ProceedToApprove("Approving...");
-            }
-        }
-         
-        else {
+        else
             this.ProceedToApprove("Approving...");
-        }
     }
+
     ProceedToApprove(msg: string) {
         this.EntityPM.SetVoided = false;
         this.EntityPM.SetApproved = true;
