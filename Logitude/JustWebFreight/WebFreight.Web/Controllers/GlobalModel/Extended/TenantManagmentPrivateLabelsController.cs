@@ -126,6 +126,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                         Poco.PrivateLabelName = entityPM.PrivateLabelName;
                         Poco.PrivateLabelShortName = entityPM.PrivateLabelShortName;
                         Poco.PrivateLabelUrl = entityPM.PrivateLabelUrl;
+                        Poco.PrivateLabelDomain = entityPM.PrivateLabelDomain;
                         Poco.ReceiveAllStatuses = entityPM.ReceiveAllStatuses;
                         Poco.SmallLogo = entityPM.SmallLogo;
                         Poco.SearchFields = entityPM.PrivateLabelName + "," + entityPM.PrivateLabelShortName + "," + entityPM.PrivateLabelUrl + "," + entityPM.ContactUsEmail + ",";
