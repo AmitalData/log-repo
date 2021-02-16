@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="ExportDeclarationClosingDatas"
+  Schema="Customs"
+  DBType="Main"
+  Module="Customs">
+  <Column
+    Name="FinalThirdCargoId"
+    OldNames="FinalManifestNumber"
+    Type="varchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DeclarationId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="FinalCargoTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FinalManifestNumber"
+    Type="varchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FinalSecondCargoId"
+    Type="varchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LoadingDateTime"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FinalShipCode"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FinalLoadingSite"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="FinalCargoTypeCode"
+    ReferencedTable="CargoIdentifireTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="FinalShipCode"
+    ReferencedTable="CustomsShips"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="FinalLoadingSite"
+    ReferencedTable="LoadingSiteTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+</Table>

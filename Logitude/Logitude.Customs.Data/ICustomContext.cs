@@ -194,6 +194,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<EntitlementType> EntitlementTypes { get; }
 		 IDbSet<EntityTypeLookup> EntityTypeLookups { get; }
 		 IDbSet<ExceptionReason> ExceptionReasons { get; }
+		 IDbSet<ExportDeclarationClosingData> ExportDeclarationClosingDatas { get; }
 		 IDbSet<ExporterRoleType> ExporterRoleTypes { get; }
 		 IDbSet<FacilitationType> FacilitationTypes { get; }
 		 IDbSet<FaultInspectionType> FaultInspectionTypes { get; }

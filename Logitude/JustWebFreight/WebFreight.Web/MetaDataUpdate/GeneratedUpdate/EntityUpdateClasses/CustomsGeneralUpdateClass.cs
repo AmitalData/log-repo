@@ -79,10 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-
-		public const string HashString = "d5c12b51c1a6b2ae21f569c525836c35";
-
-
+		public const string HashString = "581e2697601f9c417c8f1351407e63e2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -122,9 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
- 
 			      				    Code =  "4a53",
- 
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2009,7 +2004,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode CustomsGeneralTextCode_GeneralMHCourierMaster = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.CourierMaster", DefaultText = "Courier Master",LocalDefaultText = @"בלדר ראשי", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralONotConnectInvoiceToDoc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.NotConnectInvoiceToDoc", DefaultText = "Not link an invoice/ invoice line  to the document: ",LocalDefaultText = @"לא קושר חשבון/חשבון פרט מכס לצרופה : ", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralODocumentInProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.DocumentInProgress", DefaultText = "There are documents in the process.",LocalDefaultText = @"קיימים מסמכים בתהליך שליחה.", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
@@ -2021,8 +2015,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOCreateDateTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CreateDateTo", DefaultText = "Create Date To:",LocalDefaultText = @"עד - תאריך בקשה:", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_GeneralMHReferantWorkspace = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.ReferantWorkspace", DefaultText = "Referant Workspace",LocalDefaultText = @"מסך רפרנט", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
- 
- 	 
 
    
 	    

@@ -459,6 +459,7 @@
     <Compile Include="EntityDataMappings\EntitlementTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\EntityTypeLookupDataMapping.cs" />
     <Compile Include="EntityDataMappings\ExceptionReasonDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ExportDeclarationClosingDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\ExporterRoleTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\FacilitationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\FaultInspectionTypeDataMapping.cs" />
@@ -645,6 +646,7 @@
     <Compile Include="EntityDataMappings\Generated\EntitlementTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EntityTypeLookupDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ExceptionReasonDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ExportDeclarationClosingDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ExporterRoleTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FacilitationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FaultInspectionTypeDataMapping.Generated.cs" />
@@ -974,6 +976,7 @@
     <Compile Include="EntityQueryServices\Generated\CancellationReasonRequestTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CancellationRequestStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DocumentRejectTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ExportDeclarationClosingDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExporterRoleTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\LoadingSiteTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ReferantTeamQueryService.Generated.cs" />
@@ -1479,6 +1482,7 @@
     <Compile Include="EntityUpdateServices\Generated\CustomsShipUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationExportRecipientUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DocumentRejectTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ExportDeclarationClosingDataUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ExporterRoleTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LoadingSiteTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\NbcDeclarationTypeUpdateService.Generated.cs" />

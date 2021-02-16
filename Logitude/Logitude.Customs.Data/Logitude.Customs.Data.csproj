@@ -160,6 +160,7 @@
     <Compile Include="EntityKeys\DocumentRejectTypeKeys.cs" />
     <Compile Include="EntityKeys\DocumentTypeCustomsDataKeys.cs" />
     <Compile Include="EntityKeys\ExceptionReasonKeys.cs" />
+    <Compile Include="EntityKeys\ExportDeclarationClosingDataKeys.cs" />
     <Compile Include="EntityKeys\ExporterRoleTypeKeys.cs" />
     <Compile Include="EntityKeys\FreightPaymentMethodKeys.cs" />
     <Compile Include="EntityKeys\GatepassRequestKeys.cs" />
@@ -257,6 +258,7 @@
     <Compile Include="EntityListQueryServices\DocumentRejectTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DocumentTypeCustomsDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ExceptionReasonListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ExportDeclarationClosingDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ExporterRoleTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\FreightPaymentMethodListQueryService.cs" />
     <Compile Include="EntityListQueryServices\GatepassRequestListQueryService.cs" />
@@ -320,6 +322,7 @@
     <Compile Include="EntityListQueryServices\Generated\DocumentRejectTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DocumentTypeCustomsDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ExceptionReasonListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ExportDeclarationClosingDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ExporterRoleTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\FreightPaymentMethodListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\GatepassRequestListQueryService.Generated.cs" />
@@ -451,6 +454,7 @@
     <Compile Include="EntityLists\Generated\DocumentRejectTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DocumentTypeCustomsDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ExceptionReasonList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ExportDeclarationClosingDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ExporterRoleTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\FreightPaymentMethodList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GatepassRequestList.Generated.cs" />
@@ -549,6 +553,7 @@
     <Compile Include="EntityMapping\DocumentRejectTypeMap.cs" />
     <Compile Include="EntityMapping\DocumentTypeCustomsDataMap.cs" />
     <Compile Include="EntityMapping\ExceptionReasonMap.cs" />
+    <Compile Include="EntityMapping\ExportDeclarationClosingDataMap.cs" />
     <Compile Include="EntityMapping\ExporterRoleTypeMap.cs" />
     <Compile Include="EntityMapping\FreightPaymentMethodMap.cs" />
     <Compile Include="EntityMapping\GatepassRequestMap.cs" />
@@ -646,6 +651,7 @@
     <Compile Include="EntityPOCOs\DocumentRejectType.cs" />
     <Compile Include="EntityPOCOs\DocumentTypeCustomsData.cs" />
     <Compile Include="EntityPOCOs\ExceptionReason.cs" />
+    <Compile Include="EntityPOCOs\ExportDeclarationClosingData.cs" />
     <Compile Include="EntityPOCOs\ExporterRoleType.cs" />
     <Compile Include="EntityPOCOs\FreightPaymentMethod.cs" />
     <Compile Include="EntityPOCOs\GatepassRequest.cs" />
@@ -744,6 +750,7 @@
     <Compile Include="Repsitories\DocumentRejectTypeRepository.cs" />
     <Compile Include="Repsitories\DocumentTypeCustomsDataRepository.cs" />
     <Compile Include="Repsitories\ExceptionReasonRepository.cs" />
+    <Compile Include="Repsitories\ExportDeclarationClosingDataRepository.cs" />
     <Compile Include="Repsitories\ExporterRoleTypeRepository.cs" />
     <Compile Include="Repsitories\FreightPaymentMethodRepository.cs" />
     <Compile Include="Repsitories\GatepassRequestRepository.cs" />
@@ -807,6 +814,7 @@
     <Compile Include="Repsitories\Generated\DocumentRejectTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DocumentTypeCustomsDataRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ExceptionReasonRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\ExportDeclarationClosingDataRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ExporterRoleTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\FreightPaymentMethodRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\GatepassRequestRepository.Generated.cs" />

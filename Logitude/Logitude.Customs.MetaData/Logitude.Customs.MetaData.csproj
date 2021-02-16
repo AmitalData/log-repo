@@ -318,6 +318,7 @@
     <None Include="DBTables\DocumentTypeCustomsData.dxml" />
     <None Include="DBTables\EntitlementType.dxml" />
     <None Include="DBTables\EntityTypeLookup.dxml" />
+    <None Include="DBTables\ExportDeclarationClosingData.dxml" />
     <None Include="DBTables\ExporterRoleType.dxml" />
     <None Include="DBTables\FacilitationType.dxml" />
     <None Include="DBTables\FaultInspectionType.dxml" />
@@ -921,6 +922,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DBScripts\Post\202007201200_DepartmentSearchfield.sxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="EntityFiles\ExportDeclarationClosingData.lxml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

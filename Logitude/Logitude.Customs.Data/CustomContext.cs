@@ -422,6 +422,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ExceptionReasonMap());
 	
+            modelBuilder.Configurations.Add(new ExportDeclarationClosingDataMap());
+	
             modelBuilder.Configurations.Add(new ExporterRoleTypeMap());
 	
             modelBuilder.Configurations.Add(new FacilitationTypeMap());
@@ -2298,6 +2300,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ExceptionReason> ExceptionReasons 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ExportDeclarationClosingData> ExportDeclarationClosingDatas 
 	 {
 	      get; set;
 	 
