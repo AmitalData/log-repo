@@ -15,7 +15,6 @@ import {KeyCode} from '../../../Infrastructure/DataContracts/KeyCode';
 import {IdGeneratorPipe} from '../../../Controls/Pipes/IdGeneratorPipe';
 import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
 import { EntityListService } from '../../Services/EntityListService';
-import { ShipmentListService } from '../../../Shipment/Services/StandardLists/ShipmentListService';
 @Component({
     selector: "SearchBox",
     
@@ -72,7 +71,6 @@ export class SearchBox implements OnInit {
     private myService: CommonDomainService = null;
     private myCardListService: CardListService = null;
     private clientListService: ClientListService = null;
-    private shipmentListService: ShipmentListService = null;
     public QuickSearchItems: any[] = [];
     public NewId: string;
     emitText: boolean = true;
@@ -158,7 +156,6 @@ export class SearchBox implements OnInit {
             this.myService = new CommonDomainService();
             this.myCardListService = new CardListService();
             this.clientListService = new ClientListService();
-            this.shipmentListService = new ShipmentListService();
         }
     }
 
