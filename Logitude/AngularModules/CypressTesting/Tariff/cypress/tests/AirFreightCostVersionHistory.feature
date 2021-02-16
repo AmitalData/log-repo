@@ -1,4 +1,4 @@
-@release
+@release @all
 Feature: Air Freight Cost Tariff Version History
     The authenticated user will create new air freight cost tariff,
     add new tariff lines in draft version tab, then approve it,
@@ -33,3 +33,7 @@ Feature: Air Freight Cost Tariff Version History
             | 30       | 40         | 50         | 60         |
         When approve version
         Then the version should approve successfully
+
+    Scenario: Open version history tab to show the approved versions
+        When open version history tab
+        Then all approved versions should appear successfully

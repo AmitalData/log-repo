@@ -20,13 +20,12 @@ export class TariffSelectors
     public static readonly SaveTariff = "#Tariff-Save";
     public static readonly TariffContractNumber = "#Tariff_ContractNumber";
     public static readonly TariffCurrency = "#Tariff_CurrencyId";
-
-
     public static readonly TariffActionsToggleButton = ".TabControlBody[id!='ApplicationSession'] .MediaFillAbsolute:visible .ToggleButton img";
     public static readonly TariffActionsToggleButtonItem = ".TabControlBody[id!='ApplicationSession'] .MediaFillAbsolute:visible .ToggleButton button";
     public static readonly ContainsCopyIntoNewVersion = "Copy into new Version";
+    public static readonly TariffVersionHistoryComboBox = ".TabControlBody[id!='ApplicationSession'] .MediaFillAbsolute:visible .ComboBox";
 
-
+    
     public static TariffSurcharge(number: number): string{
         return "#Tariff_Surcharge" + number.toString() + "Id";
     }
@@ -40,6 +39,10 @@ export class TariffSelectors
     }
 
     public static TariffLineEditButton(lineNumber: number): string{
-        return ".MediaFillAbsolute:visible #row" + lineNumber.toString() + " button[id^='Edit']";
+        return ".TabControlBody[id!='ApplicationSession'] .MediaFillAbsolute:visible #row" + lineNumber.toString() + " button[id^='Edit']";
+    }
+
+    public static TariffVersionHistoryComboBoxItem(versionNumber: number): string{
+        return ".TabControlBody[id!='ApplicationSession'] .MediaFillAbsolute:visible .ComboBox .ComboBoxItem span[title^='Version " + versionNumber.toString() + "']";
     }
 }

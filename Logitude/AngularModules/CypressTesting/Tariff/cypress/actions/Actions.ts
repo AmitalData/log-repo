@@ -46,52 +46,18 @@ export function FillSurcharges(surchargeDetailsList: SurchargeDetails[]) {
     }
 }
 
-export function CreateTariff() {
-    cy.DefineRequestWait(RestAPI.POST, Urls.Tariffs, RequestAliases.PostTariff);
-    cy.DefineRequestWait(RestAPI.GET, Urls.TariffDomainGetRecentTariffs, RequestAliases.GetRecentTariffs);
-    cy.Click(BaseSelectors.RedButton + ":last", null);
-}
-
-export function UpdateTariff() {
-    RequestUpdateTariff(TariffSelectors.SaveTariff, null);
-}
-
-export function ValidateUpdateTariff() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PutTariff, 200);
-}
-
-export function ValidateCreateFreightCost() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PostTariff, 200);
-    BaseAssertion.AssertStatusCode(RequestAliases.GetRecentTariffs, 200);
-}
-
-export function ValidateCreateSurchargeCost() {
-    let intercept = cy.wait("@" + RequestAliases.PostTariff);
-    intercept.then((interception) => {
-        if (interception.response.statusCode === 400) {
-            if (interception.response.body.ErrorMessage.indexOf("Tariff surcharge seller should be unique") !== -1) {
-                cy.Click(BaseSelectors.Button, "Cancel");
-            } else {
-                throw new Error("Create Tariff Failed");
-            }
-        } else {
-            if (interception.response.statusCode === 200) {
-                BaseAssertion.AssertStatusCode(RequestAliases.GetRecentTariffs, 200);
-            } else {
-                throw new Error("Create Tariff Failed");
-            }
-        }
-    })
-}
-
 export function OpenLastCreatedTariff() {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetAllTariffVersionsForTariff, RequestAliases.GetAllTariffVersionsForTariff);
+    DefineRequestGetAllVersionsForTariff();
     cy.Click(BaseSelectors.FirstRecentEntityItem, null);
-    cy.wait("@" + RequestAliases.GetAllTariffVersionsForTariff);
+    AssertGetAllVersionsForTariff();
 }
 
 export function OpenGeneralTab() {
     cy.Click(BaseSelectors.DivElement, "General");
+}
+
+export function OpenVersionHistoryTab() {
+    cy.Click(BaseSelectors.DivElement, "Version History");
 }
 
 export function AddFreightCostTariffLines(freightCostType: string, freightCostTariffLineDetailsList: FreightCostTariffLineDetails[]) {
@@ -115,15 +81,85 @@ export function EditFreightCostGeneralTab(freightCostType: string, tariffDetails
     FillTariffNotes(tariffDetails.Notes);
 }
 
+export function CreateTariff() {
+    DefineRequestPostTariff();
+    DefineRequestGetRecentTariffs();
+    cy.Click(BaseSelectors.RedButton + ":last", null);
+}
+
+export function UpdateTariff() {
+    DefineRequestPutTariff();
+    cy.Click(TariffSelectors.SaveTariff, null);
+}
+
 export function ApproveTariffVersion() {
-    RequestUpdateTariff(BaseSelectors.GreenButton, "Approve Version");
+    DefineRequestsForApproveOrCopyTariffVersion();
+    cy.Click(BaseSelectors.GreenButton, "Approve Version");
 }
 
 export function CopyTariffVersion(newVersionStartDate: string) {
     cy.Click(TariffSelectors.TariffActionsToggleButton, null);
     cy.Click(TariffSelectors.TariffActionsToggleButtonItem, TariffSelectors.ContainsCopyIntoNewVersion);
     cy.FillDate(TariffSelectors.TariffStartDate, newVersionStartDate);
-    RequestUpdateTariff(BaseSelectors.RedButton, null);
+    DefineRequestsForApproveOrCopyTariffVersion();
+    cy.Click(BaseSelectors.RedButton, null);
+}
+
+export function ValidateUpdateTariff() {
+    AssertPutTariff();
+}
+
+export function ValidateCreateFreightCost() {
+    AssertPostTariff();
+    AssertGetRecentTariffs();
+}
+
+export function ValidateCreateSurchargeCost() {
+    let intercept = cy.wait("@" + RequestAliases.PostTariff);
+    intercept.then((interception) => {
+        if (interception.response.statusCode === 400) {
+            if (interception.response.body.ErrorMessage.indexOf("Tariff surcharge seller should be unique") !== -1) {
+                cy.Click(BaseSelectors.Button, "Cancel");
+            } else {
+                throw new Error("Create Tariff Failed");
+            }
+        } else {
+            if (interception.response.statusCode === 200) {
+                AssertGetRecentTariffs();
+            } else {
+                throw new Error("Create Tariff Failed");
+            }
+        }
+    })
+}
+
+export function ValidateApproveTariffVersion() {
+    AssertApproveOrCopyTariffVersion();
+}
+
+export function ValidateCopyTariffVersion() {
+    AssertApproveOrCopyTariffVersion();
+}
+
+export function ValidateApprovedVersionsAppear(){
+    cy.Click(TariffSelectors.TariffVersionHistoryComboBox, null);
+    BaseAssertion.AssertElementExist(TariffSelectors.TariffVersionHistoryComboBoxItem(1));
+    BaseAssertion.AssertElementExist(TariffSelectors.TariffVersionHistoryComboBoxItem(2));
+}
+
+
+function DefineRequestsForApproveOrCopyTariffVersion() {
+    DefineRequestPutTariff();
+    DefineRequestGetAllVersionsForTariff();
+    DefineRequestGetTariffVersionLines();
+    DefineRequestGetSingleTariff();
+}
+
+function AssertApproveOrCopyTariffVersion() {
+    AssertPutTariff();
+    AssertGetAllVersionsForTariff();
+    AssertGetTariffVersionLines();
+    AssertGetSingleTariff();
 }
 
 function FillFreightCostTariffLines(freightCostType: string, freightCostTariffLineDetailsList: FreightCostTariffLineDetails[], isNew: boolean) {
@@ -264,7 +300,50 @@ function FillTariffLineNotes(notes: string) {
     }
 }
 
-function RequestUpdateTariff(selector: string, selectorContains: string) {
+function DefineRequestGetAllVersionsForTariff() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetAllTariffVersionsForTariff, RequestAliases.GetAllTariffVersionsForTariff);
+}
+
+function DefineRequestPostTariff() {
+    cy.DefineRequestWait(RestAPI.POST, Urls.Tariffs, RequestAliases.PostTariff);
+}
+
+function DefineRequestGetRecentTariffs() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.TariffDomainGetRecentTariffs, RequestAliases.GetRecentTariffs);
+}
+
+function DefineRequestPutTariff() {
     cy.DefineRequestWait(RestAPI.PUT, Urls.Tariffs, RequestAliases.PutTariff);
-    cy.Click(selector, selectorContains);
+}
+
+function DefineRequestGetTariffVersionLines() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetTariffVersionLines, RequestAliases.GetTariffVersionLines);
+}
+
+function DefineRequestGetSingleTariff() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetSingleTariff, RequestAliases.GetSingleTariff);
+}
+
+function AssertPutTariff() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutTariff, 200);
+}
+
+function AssertPostTariff() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PostTariff, 200);
+}
+
+function AssertGetRecentTariffs() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetRecentTariffs, 200);
+}
+
+function AssertGetAllVersionsForTariff() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetAllTariffVersionsForTariff, 200);
+}
+
+function AssertGetTariffVersionLines() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetTariffVersionLines, 200);
+}
+
+function AssertGetSingleTariff() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetSingleTariff, 200);
 }

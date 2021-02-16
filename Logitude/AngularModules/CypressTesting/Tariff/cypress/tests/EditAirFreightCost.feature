@@ -1,4 +1,4 @@
-@release
+@release @all
 Feature: Edit Air Freight Cost Tariff
     The authenticated user will create new air freight cost tariff,
     add new tariff lines in draft version tab,

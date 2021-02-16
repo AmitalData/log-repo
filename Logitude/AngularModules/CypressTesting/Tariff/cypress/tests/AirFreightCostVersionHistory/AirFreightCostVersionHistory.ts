@@ -38,14 +38,22 @@ When("copy version with start date {string}", (newVersionStartDate: string) => {
     Actions.CopyTariffVersion(newVersionStartDate);
 });
 
+When("open version history tab", () => {
+    Actions.OpenVersionHistoryTab();
+});
+
 Then("the freight cost should create successfully", () => {
     Actions.ValidateCreateFreightCost();
 });
 
 Then("the version should approve successfully", () => {
-    Actions.ValidateUpdateTariff();
+    Actions.ValidateApproveTariffVersion();
 });
 
 Then("the version should copy successfully", () => {
-    Actions.ValidateUpdateTariff();
+    Actions.ValidateCopyTariffVersion();
+});
+
+Then("all approved versions should appear successfully", () => {
+    Actions.ValidateApprovedVersionsAppear();
 });
