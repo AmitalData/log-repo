@@ -39,4 +39,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly BackBottonBodyClass = ".BackBottonBody"
 
 
+
+    //Abed Malakh
+    public static readonly GreenButton = ".GreenButton";
 }

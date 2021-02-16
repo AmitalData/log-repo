@@ -4,7 +4,7 @@ import { TariffDetails } from "../../models/TariffDetails";
 import { SurchargeDetails } from "../../models/SurchargeDetails";
 
 Given("the user logged in and navigate to tariff workspace", () => {
-    Actions.LoginAndNavigateToTariffWorkspace();
+  Actions.LoginAndNavigateToTariffWorkspace();
 });
 
 Given("an air surcharge cost with the following details", (dataTable) => {
