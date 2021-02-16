@@ -18,7 +18,7 @@ export class HybridLabelsBrandingDataService {
         this._apiUrl = BrandingDataService.GetAppURL(baseUrl) + 'api/TenantManagmentPrivateLabels';
     }
 
-    GetBrandingData(BrandingDataRequest: HybridLabelsBrandingDataRequest) {
+    GetABrandingData(BrandingDataRequest: HybridLabelsBrandingDataRequest) {
         var url = '/PutGetHybridLabelsBrandingData';
         var callUrl = this._apiUrl.concat(url);
 
@@ -26,8 +26,34 @@ export class HybridLabelsBrandingDataService {
             var result: ServiceResponse = response.json();
             return result;
         });
-           // catchError(null));
+        // catchError(null));
+
+    }
+
+    GetUserDashboardBrandingData(BrandingDataRequest: HybridLabelsBrandingDataRequest) {
+        var url = '/PutGetHybridLabelsBrandingData';
+        var callUrl = this._apiUrl.concat(url);
+
+        return this._http.put(callUrl, BrandingDataRequest, { headers: this.httpHeaders }).map((response) => {
+            var result: ServiceResponse = response.json();
+            return result;
+        });
+    }
+
+
+    GetBrandingData(BrandingDataRequest: HybridLabelsBrandingDataRequest) {
+            var url = '/PutGetHybridLabelsBrandingData';
+            var callUrl = this._apiUrl.concat(url);
+
+            return this._http.post(callUrl, BrandingDataRequest , { headers: this.httpHeaders }).map(response => {
+                var result = response.json();
+                return result;
+            });
+
+        }
+
+
     }  
 
 
-}
+ 

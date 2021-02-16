@@ -79,14 +79,19 @@ export class BrandingDataService {
 
     private static SetMainImage(BrandingData: any, baseUrl: string) {
         if (BrandingData.MainImageBytes) {
-            HybridLabelsBrandingData.MainImageURL = BrandingDataService.GetImageFromBytes(BrandingData.MainImageBytes);
+            HybridLabelsBrandingData.MainImageURL = "url(" + BrandingDataService.GetImageFromBytes(BrandingData.MainImageBytes) + ")";
             this.StoreImageInStorage("MainImage", BrandingData.MainImageId, BrandingData.MainImageBytes);
         }
         else {
             var StorageMainImage: HybridLabelsImage = BrandingDataService.GetImageFromStorage("MainImage");
             if (StorageMainImage && StorageMainImage.Id != null && StorageMainImage.Id == BrandingData.MainImageId) {
-                HybridLabelsBrandingData.MainImageURL = BrandingDataService.GetImageFromBytes(StorageMainImage.Data);
-            } 
+                HybridLabelsBrandingData.MainImageURL = "url(" + BrandingDataService.GetImageFromBytes(StorageMainImage.Data) + ")";
+            }
+            else {
+                // Default image? 
+                HybridLabelsBrandingData.MainImageURL = "url('" + baseUrl + "../../../Images/LoginScreen/shadow2.png')"
+
+            }
         }
     }
 
@@ -138,16 +143,48 @@ export class BrandingDataService {
         return ImgId;
     }
 
+  
+
 
     public static GetBackgroundImage() {
-        if (HybridLabelsBrandingData.Tenant && HybridLabelsBrandingData.BackgroundImageURL != null)
+        console.log("main Background image  : " + HybridLabelsBrandingData.BackgroundImageURL);
+        if (HybridLabelsBrandingData.BackgroundImageURL != null) 
             return HybridLabelsBrandingData.BackgroundImageURL;
+        else
+            HybridLabelsBrandingData.BackgroundImageURL = "url('../../../Images/LoginScreen/shadow2.png')"
+    }
+
+
+
+    public static GetABackgroundImage() { 
+        console.log("BACK GROUND : " + HybridLabelsBrandingData.BackgroundImageURL);
+
+        console.log("BACK tenant : " + HybridLabelsBrandingData.Tenant);
+
+        console.log(" TTTT " + HybridLabelsBrandingData.Tenant && HybridLabelsBrandingData.BackgroundImageURL != null);
+
+        if (HybridLabelsBrandingData.Tenant && HybridLabelsBrandingData.BackgroundImageURL != null) {
+
+            console.log("Inside IFFFF  " + HybridLabelsBrandingData.BackgroundImageURL);
+
+            return HybridLabelsBrandingData.BackgroundImageURL; 
+        }
         else
             // Default image? 
             HybridLabelsBrandingData.BackgroundImageURL = "url('../../../Images/LoginScreen/shadow2.png')"
     }
 
     public static GetMainImage() {
+        console.log("main Image  : " + HybridLabelsBrandingData.MainImageURL);
+        if (HybridLabelsBrandingData.MainImageURL != null)
+            return HybridLabelsBrandingData.MainImageURL;
+        else
+            // Default image? 
+            HybridLabelsBrandingData.MainImageURL = "url('../../../Images/LoginScreen/shadow2.png')"
+    }
+
+
+    public static GetAMainImage() {
         if (HybridLabelsBrandingData.Tenant && HybridLabelsBrandingData.MainImageURL != null)
             return HybridLabelsBrandingData.MainImageURL;
         else

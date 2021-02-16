@@ -140,10 +140,25 @@
             position: relative;
             top: 1px;
         }
+
+    .backgroundImage {
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-position: center center;
+        position: absolute;
+    }
+
+    .MainImage {
+        background-position: center center;
+        background-repeat: no-repeat; 
+        background-size: 100% 100%; 
+    }
+
 </style>
 
-<!--  <table class="PreventSelect" [ngStyle]="{ 'background-image': 'url(' + BackgroundImage + ')'}" center center;background-size: 100% 100%;position: absolute;"> -->
-<table class="PreventSelect" style="background: url(Images/LoginScreen/screen_bg.jpg) center center;background-size: 100% 100%;position: absolute;">
+ 
+ 
+<table class="PreventSelect backgroundImage" [style.background-image]="this.BackgroundImage">
     <tr>
         <td style="width:30%;">
             <div></div>
@@ -163,7 +178,7 @@
                         <a>
                             <img src="./Images/LoginScreen/HeaderLogo.jpg" id="loginlogo" style="width:290px; height:114px;float:left;" />
                         </a>
-                    </td> 
+                    </td>
                 </tr>
 
                 <tr style="height: 20px;">
@@ -365,36 +380,36 @@
                                                                         </td>
                                                                     </tr>
                                                                     <!--<tr style="height:35px">
-                                                                        <td class="column1">
-                                                                            <div style="margin-top:5px">
-                                                                                <div class="col-sm-6 col-md-6">
+                    <td class="column1">
+                        <div style="margin-top:5px">
+                            <div class="col-sm-6 col-md-6">
 
-                                                                                    <select (change)="TenantListChangeSelected($event.target.value)" style="width:150px;border:1px solid gray;border-radius:3px">
+                                <select (change)="TenantListChangeSelected($event.target.value)" style="width:150px;border:1px solid gray;border-radius:3px">
 
-                                                                                        <option *ngFor="let item of TenantList" [value]="item.Id">{{item.CompanyName}}</option>
-                                                                                    </select>
-                                                                                </div>
+                                    <option *ngFor="let item of TenantList" [value]="item.Id">{{item.CompanyName}}</option>
+                                </select>
+                            </div>
 
-                                                                            </div>
+                        </div>
 
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr style="height:10px">
-                                                                        <td></td>
-                                                                    </tr>
+                    </td>
+                </tr>
+                <tr style="height:10px">
+                    <td></td>
+                </tr>
 
-                                                                    <tr style="height:50px">
-                                                                        <td class="column1">
+                <tr style="height:50px">
+                    <td class="column1">
 
 
-                                                                            <button [disabled]="!SelectedCompany" style="width:120px;height:35px;background-color:green;color:white" (click)="ContinueClicked()">Continue ></button>
+                        <button [disabled]="!SelectedCompany" style="width:120px;height:35px;background-color:green;color:white" (click)="ContinueClicked()">Continue ></button>
 
-                                                                        </td>
-                                                                    </tr>
+                    </td>
+                </tr>
 
-                                                                    <tr>
-                                                                        <td></td>
-                                                                    </tr>-->
+                <tr>
+                    <td></td>
+                </tr>-->
                                                                 </table>
 
 
@@ -405,112 +420,112 @@
 
 
                                                                 <!--<form [hidden]="HideLoginForm" #LoginForm="ngForm" name="LoginForm" id="LoginForm" (ngSubmit)="Login(LoginForm, LoginForm.value)" novalidate>
-                                                                    <table>
-                                                                        <tr style="height: 25px;">
-                                                                            <td>
-                                                                                <div></div>
-                                                                            </td>
-                                                                        </tr>
+                <table>
+                    <tr style="height: 25px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
 
-                                                                        <tr style="height: 60px;">
-                                                                            <td>
-                                                                                <label>E-mail</label>
-                                                                                <div>
-                                                                                    <input autocomplete="on" size="10" class="auto-style1" [(ngModel)]="Email" ngControl="emailF" #emailF="ngForm" required type="email" />
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
+                    <tr style="height: 60px;">
+                        <td>
+                            <label>E-mail</label>
+                            <div>
+                                <input autocomplete="on" size="10" class="auto-style1" [(ngModel)]="Email" ngControl="emailF" #emailF="ngForm" required type="email" />
+                            </div>
+                        </td>
+                    </tr>
 
-                                                                        <tr style="height: 60px;">
-                                                                            <td>
-                                                                                <label>password</label>
-                                                                                <div>
-                                                                                    <input class="auto-style1" [(ngModel)]="Password" ngControl="passwordF" #passwordF="ngForm" required type="password" />
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
+                    <tr style="height: 60px;">
+                        <td>
+                            <label>password</label>
+                            <div>
+                                <input class="auto-style1" [(ngModel)]="Password" ngControl="passwordF" #passwordF="ngForm" required type="password" />
+                            </div>
+                        </td>
+                    </tr>
 
-                                                                        <tr style="height: 10px;">
-                                                                            <td>
-                                                                                <div></div>
-                                                                            </td>
-                                                                        </tr>
+                    <tr style="height: 10px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
 
-                                                                        <tr style="height: 30px">
-                                                                            <td>
-                                                                                <input [disabled]="!HidePendingLoading" class="LoginButton" style="height: 30px; min-height: 30px; max-height: 30px; line-height: 30px;" type="submit" value="Login >" />
-                                                                            </td>
-                                                                        </tr>
+                    <tr style="height: 30px">
+                        <td>
+                            <input [disabled]="!HidePendingLoading" class="LoginButton" style="height: 30px; min-height: 30px; max-height: 30px; line-height: 30px;" type="submit" value="Login >" />
+                        </td>
+                    </tr>
 
-                                                                        <tr style="height: 10px;">
-                                                                            <td>
-                                                                                <div></div>
-                                                                            </td>
-                                                                        </tr>
+                    <tr style="height: 10px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
 
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div></div>
-                                                                            </td>
-                                                                        </tr>
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
 
-                                                                        <tr style="height: 50px;">
-                                                                            <td>
-                                                                                <div *ngIf="HidePendingLoading"></div>
-                                                                                <div *ngIf="!HidePendingLoading" style="width: 50px; height: 50px; margin: auto; background: url(Images/LoginScreen/indicator.gif) center center no-repeat; background-size: 50px 50px;"></div>
-                                                                            </td>
-                                                                        </tr>
+                    <tr style="height: 50px;">
+                        <td>
+                            <div *ngIf="HidePendingLoading"></div>
+                            <div *ngIf="!HidePendingLoading" style="width: 50px; height: 50px; margin: auto; background: url(Images/LoginScreen/indicator.gif) center center no-repeat; background-size: 50px 50px;"></div>
+                        </td>
+                    </tr>
 
-                                                                        <tr style="height: 10px;">
-                                                                            <td>
-                                                                                <div></div>
-                                                                            </td>
-                                                                        </tr>
+                    <tr style="height: 10px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
 
-                                                                    </table>
-                                                                </form>-->
+                </table>
+            </form>-->
                                                                 <!--<form [hidden]="HideTenantForm" #TenantForm="ngForm" name="TenantForm" (ngSubmit)="ChooseTenant(TenantForm, TenantForm.value)" novalidate>
-                                                                    <table id="comboForm" style="margin-right:20px">
-                                                                        <tr>
-                                                                            <td style="text-align:left;width:300px;font-family:Myriad Pro;font-size:14px;color:teal;">
-                                                                                You have more than one account, please choose which one you want to log in.
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td class="column1">
-                                                                                <div style="margin-top:5px">
-                                                                                    <div class="col-sm-6 col-md-6">
+                <table id="comboForm" style="margin-right:20px">
+                    <tr>
+                        <td style="text-align:left;width:300px;font-family:Myriad Pro;font-size:14px;color:teal;">
+                            You have more than one account, please choose which one you want to log in.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="column1">
+                            <div style="margin-top:5px">
+                                <div class="col-sm-6 col-md-6">
 
-                                                                                        <select class="form-control" required
-                                                                                                [(ngModel)]="Tenant"
-                                                                                                ngControl="tenantF" #tenantF="ngForm">
-                                                                                            <option *ngFor="let p of TenantList" [value]="p.Tenant">{{p.CompanyName}}</option>
-                                                                                        </select>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <img id="busyIndicator" [hidden]="HidePendingLoading" style="height:25px;width:25px;vertical-align:bottom;" src="./Images/LoginScreen/indicator.gif" alt='loading' />
-                                                                                <div [hidden]="!TenantForm.form.valid">
-                                                                                    <div class="label label-sm label-danger" [hidden]="tenantF.valid">You must choose a Tenant!</div>
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td class="column1">
-                                                                                <input style="width:120px;height:35px;margin-left:0px;" class="cmdSubmit" type="submit" [disabled]="!HidePendingLoading" value="Continue >" id="cmdContinue" data-bind="click: continueMethod" />
-                                                                                <a style="margin-left:15px;margin-top:50px;color:#4B4A4A;font-size:12px;font-family:Arial;vertical-align:central" href="login.aspx">Back to login page</a>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr style="height:50px;width:50px" [hidden]="HidePendingLoading">
-                                                                            <td>
-                                                                                <div>
-                                                                                    <img width="50" height="50" src="./Images/LoginScreen/indicator.gif" alt='loading' />
-                                                                                </div>
-                                                                            </td>
+                                    <select class="form-control" required
+                                            [(ngModel)]="Tenant"
+                                            ngControl="tenantF" #tenantF="ngForm">
+                                        <option *ngFor="let p of TenantList" [value]="p.Tenant">{{p.CompanyName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <img id="busyIndicator" [hidden]="HidePendingLoading" style="height:25px;width:25px;vertical-align:bottom;" src="./Images/LoginScreen/indicator.gif" alt='loading' />
+                            <div [hidden]="!TenantForm.form.valid">
+                                <div class="label label-sm label-danger" [hidden]="tenantF.valid">You must choose a Tenant!</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="column1">
+                            <input style="width:120px;height:35px;margin-left:0px;" class="cmdSubmit" type="submit" [disabled]="!HidePendingLoading" value="Continue >" id="cmdContinue" data-bind="click: continueMethod" />
+                            <a style="margin-left:15px;margin-top:50px;color:#4B4A4A;font-size:12px;font-family:Arial;vertical-align:central" href="login.aspx">Back to login page</a>
+                        </td>
+                    </tr>
+                    <tr style="height:50px;width:50px" [hidden]="HidePendingLoading">
+                        <td>
+                            <div>
+                                <img width="50" height="50" src="./Images/LoginScreen/indicator.gif" alt='loading' />
+                            </div>
+                        </td>
 
-                                                                            <td></td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </form>-->
+                        <td></td>
+                    </tr>
+                </table>
+            </form>-->
                                                             </div>
 
                                                             <div style="height:100%" *ngIf="IsShowPasswordExpirationDateArea">
@@ -566,7 +581,8 @@
                                                             </div>
                                                         </td>
 
-                                                        <td style="background:url(Images/LoginScreen/screen_boy.jpg) center center no-repeat; background-size: 100% 100%;">
+                                                        <!-- MainImage --> 
+                                                        <td class="MainImage" [style.background-image]="this.MainImage">
                                                             <div></div>
                                                         </td>
                                                     </tr>
@@ -622,4 +638,4 @@
             <div></div>
         </td>
     </tr>
-</table>
+</table> 

@@ -8,12 +8,16 @@ import { LoginService } from './LoginService';
 import { PasswordChangeService } from './PasswordChangeService';
 import { HybridLabelsBrandingDataService } from './HybridLabels/Services/HybridLabelsBrandingDataService';
 import { BrandingDataService } from './HybridLabels/Services/BrandingDataService';
+import { CommonModule } from '@angular/common';
+export function getBaseUrl() {
+    return document.getElementsByTagName('base')[0].href;
+}
 export var LogitudeLoginModuleAOT = (function () {
     function LogitudeLoginModuleAOT() {
     }
     LogitudeLoginModuleAOT.decorators = [
         { type: NgModule, args: [{
-                    imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule],
+                    imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule, CommonModule],
                     declarations: [
                         RootComponentAOT
                     ].concat(LoginComponents),
@@ -32,7 +36,8 @@ export var LogitudeLoginModuleAOT = (function () {
                         LoginService,
                         PasswordChangeService,
                         HybridLabelsBrandingDataService,
-                        BrandingDataService
+                        BrandingDataService,
+                        { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] }
                     ],
                     bootstrap: [RootComponentAOT]
                 },] },

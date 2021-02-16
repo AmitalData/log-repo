@@ -9,7 +9,7 @@ export var HybridLabelsBrandingDataService = (function () {
         this.httpHeaders = BrandingDataService.GetHeaders();
         this._apiUrl = BrandingDataService.GetAppURL(baseUrl) + 'api/TenantManagmentPrivateLabels';
     }
-    HybridLabelsBrandingDataService.prototype.GetBrandingData = function (BrandingDataRequest) {
+    HybridLabelsBrandingDataService.prototype.GetABrandingData = function (BrandingDataRequest) {
         var url = '/PutGetHybridLabelsBrandingData';
         var callUrl = this._apiUrl.concat(url);
         return this._http.put(callUrl, BrandingDataRequest, { headers: this.httpHeaders }).map(function (response) {
@@ -17,6 +17,22 @@ export var HybridLabelsBrandingDataService = (function () {
             return result;
         });
         // catchError(null));
+    };
+    HybridLabelsBrandingDataService.prototype.GetUserDashboardBrandingData = function (BrandingDataRequest) {
+        var url = '/PutGetHybridLabelsBrandingData';
+        var callUrl = this._apiUrl.concat(url);
+        return this._http.put(callUrl, BrandingDataRequest, { headers: this.httpHeaders }).map(function (response) {
+            var result = response.json();
+            return result;
+        });
+    };
+    HybridLabelsBrandingDataService.prototype.GetBrandingData = function (BrandingDataRequest) {
+        var url = '/PutGetHybridLabelsBrandingData';
+        var callUrl = this._apiUrl.concat(url);
+        return this._http.post(callUrl, BrandingDataRequest, { headers: this.httpHeaders }).map(function (response) {
+            var result = response.json();
+            return result;
+        });
     };
     HybridLabelsBrandingDataService.decorators = [
         { type: Injectable },
