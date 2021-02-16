@@ -22,6 +22,7 @@ import { QuoteTool } from '../../../Quote/Tools';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 import { QuoteChargesBehaviours } from '../Behaviours/QuoteChargesBehaviours';
 import { QuoteTariffsBehaviours } from '../Behaviours/QuoteTariffsBehaviours';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 @Component({
     selector: 'LCLChargesComponent',    
@@ -902,6 +903,21 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         if (this.EntityPM.RegionalTaxPercentage != newValue) {
             this.EntityPM.RegionalTaxPercentage = AppTool.Round(newValue, 2);
             this.ComputeTotals();
+        }
+    }
+
+    DeleteAllClicked() {
+        if (this.IsEditingEnabled) {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Show("Please note that deleting will erase all the lines with the amounts inserted");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.EntityPM.QuoteCharges = [];
+                    this.EntityPM.IsDirty = true;
+                    this.BuildItemsSource();
+                    this.ComputeTotals();
+                }
+            });
         }
     }
 }

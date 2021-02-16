@@ -45,9 +45,9 @@
 	DECLARE PartnersCursor CURSOR READ_ONLY
 	FOR
 	SELECT dw_Partners.Id,dw_Partners.Code ,dw_Partners.EnglishName,dw_Partners.LocalName , dw_Partners.CityName, dw_Partners.CountryName , dw_States.EnglishName , dw_Partners.ZipCode, dw_Contacts.EnglishName ,accountManagerUser.EnglishName, salesmanUser.EnglishName ,dw_Ranks.Name,dw_PartnerTypes.Name, dw_Partners.Tenant, dw_DWHSettings.ParentTenant ,dw_Countries.Code,dw_Contacts.Email ,  dw_Partners.ReceivablesAccountingCard, dw_Partners.address1,dw_Partners.address2, dw_Partners.Phone
-	,dw_Regions.Name , dw_CustomerSizes.Name ,dw_Industries.Name , dw_Partners.VatNumber , dw_Customers.CreditLimitAmount , dw_Customers.CreditLimitOpenBalance,dw_LeadSources.Name, dw_Partners.AutomaticLastUpdateDate, dw_Partners.InActive, dw_Customers.FirstShipmentDate, dw_Customers.LastShipmentDate , billTo.EnglishName
+	,dw_Regions.Name , dw_CustomerSizes.Name ,dw_Industries.Name , dw_Partners.VatNumber , dw_Customers.CreditLimitAmount , dw_Customers.CreditLimitOpenBalance,dw_LeadSources.Name, dw_Partners.AutomaticLastUpdateDate, dw_Partners.InActive, dw_Customers.FirstShipmentDate, dw_Customers.LastShipmentDate ,null
 	From dw_Partners
-	inner JOIN dw_Partners billTo ON dw_Partners.BillToId = billTo.Id
+	--inner JOIN dw_Partners billTo ON dw_Partners.BillToId = billTo.Id
 	left JOIN dw_Customers ON dw_Partners.Id = dw_Customers.Id
 
 	inner JOIN dw_Contacts ON dw_Partners.PrimaryContactId = dw_Contacts.Id
@@ -64,7 +64,7 @@
 	inner join dw_PartnerTypes  on dw_Partners.PartnerTypeId=dw_PartnerTypes.Id
 	inner JOIN dw_DWHSettings ON dw_Partners.Tenant = dw_DWHSettings.Tenant
 	inner JOIN dw_Countries ON dw_Partners.CountryId = dw_Countries.Id
-	where dw_Partners.id !='-1'
+	--where dw_Partners.id !='-1'
 	OPEN PartnersCursor FETCH NEXT FROM PartnersCursor INTO @Id ,@Code, @Name, @LocalName ,@City , @Country, @State , @ZipCode , @PrimaryContact , @AccountManager , @Salesman , @Rank , @PartnerType  , @SourceTenant, @ParentTenant,  @CountryCode,@PrimaryContactEmail,@ReceivablesAccountingCard,@address1, @address2, @Phone , @Region,@CustomerSize,@Industry ,@VatNumber , @CreditLimitAmount , @CreditLimitOpenBalance,@LeadSource, @AutomaticLastUpdateDate, @InActive, @FirstShipmentDate, @LastShipmentDate ,@BillTo
 	WHILE @@FETCH_STATUS = 0																																																																								
 	BEGIN																																																																													

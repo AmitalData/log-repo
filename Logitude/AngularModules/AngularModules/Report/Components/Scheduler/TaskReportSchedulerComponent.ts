@@ -209,6 +209,15 @@ export class TaskReportSchedulerComponent implements OnInit {
         this.TasksCustomColumnsReady.emit(this.Taskscolumns);
     }
 
+    private firstLoad = true;
+    LogGridDataCountReady(event) {
+        if (this.firstLoad) {
+            console.log('reloaded...');
+            this.RefreshButtonClicked();
+            this.firstLoad = false;
+        }
+    }
+
     TasksDataSource = {
         pageSize: 20,
         rowCount: null,
