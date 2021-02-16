@@ -5936,6 +5936,12 @@ namespace WebFreight.Web.Helpers
 
 
             string pageLink = (url + @"/SharedDocuments.aspx").ToLower() + "?securitykey=" + key + ":" + entityId + ":" + tenant + ":" + hideSharedlogistics;
+
+            if (!pageLink.Contains("//"))
+            {
+                pageLink = "https://" + pageLink;
+            }
+
             string styleLink = "'font-family:Arial;font-size:18px;color:#0000FF'";
 
             string Textlink = "<a style=" + styleLink + " href='" + pageLink + "'" + ">View Documents</a>";
