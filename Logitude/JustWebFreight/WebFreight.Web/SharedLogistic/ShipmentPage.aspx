@@ -26,7 +26,7 @@
     <script src="../HtmlHelpers/JS/Logitude.Converters.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/Logitude.Entites.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/ContactActivityLog.js" type="text/javascript"></script>
-    <script src="../HtmlHelpers/JS/Logitude.Tools.js" type="text/javascript"></script>   
+    <script src="../HtmlHelpers/JS/LogitudeTools.js" type="text/javascript"></script>   
 
 <style type="text/css">
     img[src] {
