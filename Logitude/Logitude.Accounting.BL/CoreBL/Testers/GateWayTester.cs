@@ -1,16 +1,21 @@
-﻿using Logitude.Accounting.BL.CoreBL.Reports;
+﻿using Logitude.Accounting.BL.CoreBL.BuildTenant;
+using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Web;
 
 namespace Logitude.Accounting.BL.CoreBL.Testers
@@ -62,7 +67,23 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                         return CardIndexNew_Click(tenant, _TextBoxParam);
                     }
                     break;
-
+                case "YearTransfer_Click":
+                    {
+                        return YearTransfer_Click(tenant, _TextBoxParam);
+                    }
+                    break;
+                case "YearTransferCancel_Click":
+                    {
+                        return YearTransferCancel_Click(tenant, _TextBoxParam);
+                    }
+                    break;
+                
+                case "BuildTenant_Click":
+                    {
+                        return BuildTenant_Click(tenant, _TextBoxParam);
+                    }
+                    break;
+                    
                 default:
                     return new GateWayTesterResult()
                     {
@@ -149,8 +170,202 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             return gateWayTesterResult;
         }
 
+
+
         
-             
+            
+        private GateWayTesterResult BuildTenant_Click(int tenant, string textBoxParam)
+        {
+
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+                var accountingContext = AccountingContext.GetContext(tenant);
+                FullAccountingSetting fullSetting = null; ;
+
+                var chartOfAccountProvider = new ChartOfAccountProvider();
+                var displayNumberProvider = new DisplayNumberProvider();
+              
+
+                dynamic param = LogitudeXmlSerializer.JsonConvertDeserializeObject(textBoxParam);
+                int YYYY = param.YYYY;
+                //using (
+                int BuildGLAccountEachType = param.BuildGLAccountEachType;
+                int BuildJournalEachMonth = param.BuildJournalEachMonth;
+                CacheManager.ClearCacheItems();
+
+                if (BuildGLAccountEachType > 0)
+                {
+                    var dummyTenantProviderArg = new DummyTenantProviderArg()
+                    {
+                        CreateJobs = BuildGLAccountEachType,
+                        CreateCustomers = BuildGLAccountEachType,
+                        CreateExpanse = BuildGLAccountEachType,
+                        CreateFiles = BuildGLAccountEachType,
+                        CreateRevenue = BuildGLAccountEachType,
+                        CreateVendors = BuildGLAccountEachType,
+
+                    };
+                    var g = new DummyTenantProvider();
+                    g.GenrateGLAccount(dummyTenantProviderArg, accountingContext, chartOfAccountProvider, displayNumberProvider, fullSetting, tenant);
+                    accountingContext.SaveChanges();
+                }
+                CacheManager.ClearCacheItems();
+                if (BuildJournalEachMonth > 0)
+                {
+                    var g = new DummyTenantProvider();
+                    g.GenrateJournals(BuildJournalEachMonth, accountingContext, YYYY, tenant);
+                    accountingContext.SaveChanges();
+                }
+
+                //gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<JournalPM>(journal);
+
+
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+                gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
+                gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+        private GateWayTesterResult YearTransferCancel_Click(int tenant, string textBoxParam)
+        {
+
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+                dynamic param = LogitudeXmlSerializer.JsonConvertDeserializeObject(textBoxParam);
+                //using (
+                int YY = param.YY;
+                //int tenant = param.Tenant;
+                using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
+                {
+                    var accountingContext = AccountingContext.GetContext(tenant);
+                    string userId = AuthenticationUtil.ResolveUserId(tenant);
+                    ICancelYearTransferService yearTransferService = new YearTransferService();
+                    JournalPM journal = yearTransferService.CancelYear(accountingContext, YY, tenant/*, userId*/);
+                    if (journal != null)
+                    {
+                     
+                        
+                        bool toComplete = true;
+                        if (!toComplete)
+                        {
+                            throw new Exception("!toComplete");
+                        }
+                        scope.Complete();
+                    }
+
+                    gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<JournalPM>(journal);
+                }
+
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+                gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
+                gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+        private GateWayTesterResult YearTransfer_Click(int tenant, string textBoxParam)
+        {
+
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+                dynamic param = LogitudeXmlSerializer.JsonConvertDeserializeObject(textBoxParam);
+                //using (
+                int YY = param.YY;
+                //int tenant = param.Tenant;
+                bool Immediate = param.Immediate;
+                JournalPM journal = null;
+                if (Immediate)
+                {
+                    journal = ImmediateYearTransferthod(YY, tenant);
+                    gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<JournalPM>(journal);
+                }
+                else
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        var accountingContext = AccountingContext.GetContext(tenant);
+                        string userId = AuthenticationUtil.ResolveUserId(tenant);
+                        ICheckAndQYearTransferService yearTransferService = new YearTransferService();
+                        string taskiD = yearTransferService.Check_CreateQBatchTaskYearTransfer(YY, tenant, userId);
+                        gateWayTesterResult.JsonOut = $"{{taskiD : {taskiD} }}";
+                        scope.Complete();
+                    }
+                }
+              
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+                gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
+                gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+        private JournalPM ImmediateYearTransferthod(int YY, int tenant)
+        {
+            JournalPM journal;
+            using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
+            {
+                var accountingContext = AccountingContext.GetContext(tenant);
+                string userId = AuthenticationUtil.ResolveUserId(tenant);
+                IYearTransferService yearTransferService = new YearTransferService();
+                journal = yearTransferService.ProccessJournal(accountingContext, YY, tenant, userId);
+                if (journal != null)
+                {
+                    bool toComplete = true;
+                    if (!toComplete)
+                    {
+                        throw new Exception("!toComplete");
+                    }
+
+                    scope.Complete();
+                }
+
+
+            }
+           
+
+            return journal;
+        }
+
         private GateWayTesterResult CardIndexNew_Click(int tenant, string textBoxParam)
         {
 
