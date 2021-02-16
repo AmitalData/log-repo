@@ -149,8 +149,8 @@ Then("the invoice should create successfully", () => {
 
 //#region Create Consolidation Invoice
 Given("a consolidation invoice with the following details", (dataTable) => {
-  cy.BackButton("Shipment: " + shipmentNumber)
-  cy.BackButton("Operations")
+  cy.BackButton(BaseSelectors.ContainsShipment + shipmentNumber)
+  cy.BackButton(BaseSelectors.ContainsOperations)
   const ARInvoiceData = dataTable.hashes()[0] as ARInvoiceDetails
   ARInvoiceData.Partner = customerCode
   AccountingActions.FillconsolidationInvoiceDetails(ARInvoiceData)
@@ -175,7 +175,7 @@ Then("the consolidation invoice should approve successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200).then((interception) => {
     consolidationInvoiceNumber = interception.response.body.InvoiceNumber;
   })
-  cy.BackButton("Accounting")
+  cy.BackButton(BaseSelectors.ContainsAccounting)
 });
 //#endregion
 

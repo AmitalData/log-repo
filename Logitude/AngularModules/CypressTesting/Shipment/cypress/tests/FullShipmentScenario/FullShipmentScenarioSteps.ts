@@ -119,8 +119,8 @@ Then("the APInvoice should approve successfully", () => {
 });
 Given("an APPayment with the following details", (dataTable) => {
     APPaymentData = dataTable.hashes()[0] as APPaymentDetails
-    cy.BackButton("Shipment: " + ShipmentData.ShipmentNumber)
-    cy.BackButton("Operations")
+    cy.BackButton(BaseSelectors.ContainsShipment + ShipmentData.ShipmentNumber)
+    cy.BackButton(BaseSelectors.ContainsOperations)
     AccountingActions.FillAPPayment(APPaymentData, APInvoiceNumber)
 });
 When("pay the APInvoice", () => {
@@ -134,7 +134,7 @@ Then("the APInvoice should pay successfully", () => {
 Given("a receivable with the following details",
     (dataTable) => {
         const ReceivableData = dataTable.hashes() as ReceivableDetails[];
-        cy.BackButton("Accounting")
+        cy.BackButton(BaseSelectors.ContainsAccounting)
         cy.Click(BaseSelectors.OperationsMenu, null)
         cy.Click(ShipmentSelectors.ShipmentTab, null)
         Actions.OpenShipment(ShipmentData.ShipmentNumber);
@@ -180,8 +180,8 @@ Then("the ARInvoice should pay successfully", () => {
 });
 
 Given("a credit ARInvoice with the following details", (dataTable) => {
-    cy.BackButton("Back")
-    cy.BackButton("Shipment: " + ShipmentData.ShipmentNumber)
+    cy.BackButton(BaseSelectors.ContainsBack)
+    cy.BackButton(BaseSelectors.ContainsShipment + ShipmentData.ShipmentNumber)
     const ARInvoiceData = dataTable.hashes()[0] as ARInvoiceDetails
     cy.Click(AccountingSelectors.CreateCreditNoteARInvoiceButton, null);
     AccountingActions.FillARInvoiceDetails(ARInvoiceData)
@@ -215,14 +215,14 @@ Then("the credit ARInvoice should set successfully", () => {
 
 Given("a credit ARPayment with the following details", (dataTable) => {
     const ARPaymentDat = dataTable.hashes()[0] as ARPaymentDetails
-    cy.BackButton("Shipment: " + ShipmentData.ShipmentNumber)
-    cy.BackButton("Operations")
+    cy.BackButton(BaseSelectors.ContainsShipment+ ShipmentData.ShipmentNumber)
+    cy.BackButton(BaseSelectors.ContainsOperations)
     AccountingActions.NewARPaymentFromAccounting(ARPaymentDat, ARInvoiceNumber)
 });
 
 
 When("send docs", () => {
-    cy.BackButton("Back")
+    cy.BackButton(BaseSelectors.ContainsBack)
     cy.Click(BaseSelectors.OperationsMenu, null)
     cy.Click(ShipmentSelectors.ShipmentTab, null)
     Actions.OpenShipment(ShipmentData.ShipmentNumber);
