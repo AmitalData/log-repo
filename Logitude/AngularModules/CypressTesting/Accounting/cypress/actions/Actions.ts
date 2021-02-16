@@ -255,9 +255,8 @@ export function PayARInvoice() {
 }
 
 export function NewARPaymentFromAccounting(aRPaymentDetails: ARPaymentDetails, invoiceNumber: string) {
-    cy.Click(BaseSelectors.AccountingMenu, null)
-    cy.Click(AccountingSelectors.ReceivableAccounting, null)
-    cy.Click(AccountingSelectors.QueryLink, "New Payment")
+    NavigatesToAccountsReceivableWorkspace()
+    cy.Click(AccountingSelectors.QueryLink, AccountingSelectors.NewPayment)
     FillARPaymentDetails(aRPaymentDetails)
     cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViews, RequestAliases.ARInvoiceviews)
     cy.FillLogTextBox(BaseSelectors.SearchField, invoiceNumber);
