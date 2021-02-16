@@ -1,4 +1,8 @@
 export class AccountingSelectors {
+   //#region contain
+   public static readonly NewPayment="New Payment"
+
+   //#endregion
    //#region APInvoice
    public static readonly APInvoiceVendor = '#APInvoice_VendorId';
    public static readonly APInvoiceInvoiceNumber = '#APInvoice_InvoiceNumber';
