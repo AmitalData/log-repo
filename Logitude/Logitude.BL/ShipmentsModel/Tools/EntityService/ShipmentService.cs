@@ -338,7 +338,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
 
                 shipmentAdditionalCloudDataRepository.SubmitChanges();
-                AddVIRExternalTaskQueue(); //After Create Shipment Additional Cloud Data
                 followUpRepository.SubmitChanges();
                 shipmentPickUpDeliveryRepository.SubmitChanges();
 
@@ -357,7 +356,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void AddVIRExternalTaskQueue()
         {
-            if (entityPM.IsHybrid)
+            if (entityPM.IsHybrid && entityPM.ExternalStatuses == "VIR")
             {
                 ExternalTasksQueueService externalTasksQueueService = new ExternalTasksQueueService(entityPM.Tenant);
                 externalTasksQueueService.AddVIRExternalTaskQueue(entityPM);
@@ -2667,6 +2666,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         }
                         if (true)
                         {
+                            AddVIRExternalTaskQueue();
                             shipmentAdditionalCloudData.IsUserIDNumberRequired = entityPM.IsUserIDNumberRequired;
                             shipmentAdditionalCloudData.UserIdNumberXMLData = entityPM.UserIdNumberXMLData;
                             //shipmentAdditionalCloudData.UserIdNumberUpdateDate = entityPM.UserIdNumberUpdateDate;
