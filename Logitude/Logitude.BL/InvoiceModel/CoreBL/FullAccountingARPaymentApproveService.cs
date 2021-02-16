@@ -47,7 +47,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         int tenant;
         ARPaymentChequePM newlyAddedCheque = null;
         bool isNewEntity = false;
-        bool IsCashPayment {  get { return paymentPM.AccountingPaymentMethodCode == "CA"; } }
+        bool IsCashPayment { get { return paymentPM.AccountingPaymentMethodCode == "CA"; } }
         bool IsChequePayment { get { return paymentPM.AccountingPaymentMethodCode == "CH"; } }
 
 
@@ -355,6 +355,11 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         {
             IJournalQueryServiceExt journalQueryService = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
             var journal = journalQueryService.GetJournalByAccountingEntityIdAndCode(paymentPM.Id, "3", tenant);
+
+            bool isStornoJournal = journal != null && journal.OriginalJournalId != null;
+            if (isStornoJournal)
+                return null;
+
             return journal;
         }
 
@@ -661,7 +666,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         private CashBookPM GetPaymentCashbook()
         {
             ICashBookQueryServiceExt cashQuery = ContainerAccessor.Container.Resolve(typeof(ICashBookQueryServiceExt), "CashBookQueryServiceExt", new ParameterOverride("", 1)) as ICashBookQueryServiceExt;
-            CashBookPM cashBook = cashQuery.GetByPaymentAndCurrencyAndBranch(paymentPM.PaymentCurrencyId, IsCashPayment? "1":"2", paymentPM.BranchId, tenant);
+            CashBookPM cashBook = cashQuery.GetByPaymentAndCurrencyAndBranch(paymentPM.PaymentCurrencyId, IsCashPayment ? "1" : "2", paymentPM.BranchId, tenant);
             PaymentCashbook = cashBook;
             return cashBook;
         }
