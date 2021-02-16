@@ -1,7 +1,7 @@
 @smoke @release @stable @all
-Feature: Actions Ticket test
-    This file will create ticket then test the following Actions
-    Cancel , Reactivate and Close Without Notifying
+Feature: Save Ticket Test
+    This file will create ticket then test the following
+    Save as close , as open and as resolved
 
     Scenario: Create new ticket
         Given the user logged in and navigated to ticket workspace
@@ -11,15 +11,15 @@ Feature: Actions Ticket test
         When create ticket
         Then the ticket should create successfully
 
-    Scenario: Cancel the ticket
+    Scenario: Save as close the ticket
         Given the user in the ticket's main page
-        When cancel
-        Then the ticket should cancel successfully
+        When save as close
+        Then the ticket should save successfully
 
-    Scenario: Reactivate the ticket
-        When reactivate
-        Then the ticket should reactivate successfully
+    Scenario: Save as open the ticket
+        When save as open
+        Then the ticket should save successfully
 
-    Scenario: Close Without Notifying
-        When close without notifying
-        Then the ticket should close successfully
+    Scenario: Save as resolved the ticket
+        When save as resolve
+        Then the ticket should save successfully

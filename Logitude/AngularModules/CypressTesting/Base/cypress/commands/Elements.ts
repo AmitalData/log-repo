@@ -26,7 +26,7 @@ declare global {
 }
 
 Cypress.Commands.add("BackButton", (contains) => {
-    cy.Click(".BackBottonBody", contains);
+    cy.Click(BaseSelectors.BackBottonBodyClass, contains);
 })
 
 Cypress.Commands.add("FillDate", (selector, value) => {

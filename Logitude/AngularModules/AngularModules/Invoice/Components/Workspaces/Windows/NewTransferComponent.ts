@@ -35,11 +35,16 @@ export class NewTransferComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
+        this.CreateNewAccountingTransferHeader();
+        this.Listen();
+    }
+
+    private CreateNewAccountingTransferHeader() {
         this.EntityPM = new AccountingTransferHeaderPM();
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.UserId = SessionLocator.LoggedUserId;
         this.EntityPM.TransferDate = DateTool.GetCurrentDateTimeAsUtc();
-        this.Listen();
+        this.EntityPM.AccountingTransferTypeCode = this.TransferTypeCode;
     }
 
     private Listen() {
@@ -412,7 +417,8 @@ export class NewTransferComponent extends BaseComponent {
                 });
 
                 comp.Export(this.EntityPM);
-            });            
+                this.CreateNewAccountingTransferHeader();
+            });
         }
     }
 

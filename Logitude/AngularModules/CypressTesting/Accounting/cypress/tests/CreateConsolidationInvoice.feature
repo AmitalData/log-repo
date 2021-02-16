@@ -1,9 +1,9 @@
 @release  @all
 Feature: Create Consolidation Invoice
     After the user logging in the system and navigate to customers workspace
-    will create a customer as shipper in the new shipments,
-    after update packages tab, add payables, generate receivables from payables and create an ARInvoice and connect it to
-    Consolidation invoice and approve
+    will create a customer as shipper in the new shipment, after update packages and payables tabs,
+    generate receivables from payables and create an ARInvoice and connect it to consolidation invoice and approve
+
     Scenario: Create customer
         Given the user logged in and navigates to customers workspace
         And a customer with the following details
@@ -31,6 +31,7 @@ Feature: Create Consolidation Invoice
             | 5        | 1      | 2     | 3      | 100         |
         When update shipment
         Then the direct should update successfully
+
     Scenario: Add Payables
         Given a payable with the following details
             | ChargesType | UOM  | Quantity | UnitPrice | Currency | Vendor     |
@@ -38,7 +39,7 @@ Feature: Create Consolidation Invoice
         When add payables
         Then the payables should add successfully
 
-    Scenario: Add Charges in Receivables by generating from payables
+    Scenario: Generating receivables from payables
         When generate receivables from payables
         Then the receivables should generate successfully
 
@@ -49,13 +50,24 @@ Feature: Create Consolidation Invoice
         When create invoice
         Then the invoice should create successfully
 
-    Scenario:Create a new Consolidation Invoice
-        Given a Consolidation Invoice with the following details
+    Scenario: Create a new consolidation invoice
+        Given a consolidation invoice with the following details
             | PartnerType | Partner     | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATNo | Branch      |
             | Customer    | TestCompany | EUR             | 4                   | Today       | Cash         | Today   | Zero  | Main Office |
         When create consolidation invoice
         Then the consolidation invoice should create successfully
 
-    Scenario:Approve Consolidation Invoice
+    Scenario: Approve Consolidation Invoice
         When approve consolidation invoice
         Then the consolidation invoice should approve successfully
+
+    Scenario: Pay consolidation invoice
+        Given a payment with the following details
+            | PartnerType | Partner           | BillToAddress | PaymentCurrency | RegisterDate | PaymentMethod | PaymentAmount |
+            | Customer    | TestShipperExport | Main Address  | EUR             | Today        | Cash          | 50            |
+        When pay the consolidation invoice
+        Then the consolidation invoice should pay successfully
+
+    Scenario: Approve payment
+        When approve the payment
+        Then the cpayment should approve successfully

@@ -422,8 +422,17 @@ namespace Logitude.Server.Tools.Helpers
 
 
 
+            try
+            {
+                //AppDomain.CurrentDomain.SetThreadPrincipal(null);
+                //AppDomain.CurrentDomain.SetThreadPrincipal(claimsPrincipal);
+            }
+            catch (Exception)
+            {
 
-            AppDomain.CurrentDomain.SetThreadPrincipal(claimsPrincipal);
+                //throw;
+            }
+           
 
 
 

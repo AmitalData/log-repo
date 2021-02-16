@@ -18,6 +18,10 @@ export class BaseSelectors extends RegexSelectors {
     //#region Contains
     public static readonly ContainsApplytoall = 'Apply to all';
     public static readonly ContainsOK = 'OK';
+    public static readonly ContainsShipment="Shipment: "
+    public static readonly ContainsOperations= "Operations"
+    public static readonly ContainsAccounting="Accounting"
+    public static readonly ContainsBack="Back"
     //#endregion
     //#region general
     public static readonly ToggleButtonClass = '.ToggleButton';
@@ -32,6 +36,8 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly DivElement = "div";
     public static readonly FirstRecentEntityItem = ".RecentEntityItem:first";
     public static readonly ToggleIcon='[src="./Images/ToggleIcon.png"]'
+    public static readonly BackBottonBodyClass = ".BackBottonBody"
+
 
 
     //Abed Malakh

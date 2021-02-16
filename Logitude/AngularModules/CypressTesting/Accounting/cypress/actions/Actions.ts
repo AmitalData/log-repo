@@ -28,12 +28,12 @@ export function NavigatesToAccountsPayablesWorkspace() {
     cy.Click(BaseSelectors.AccountingMenu, null)
     cy.Click(AccountingSelectors.PayableAccountingTab, null)
 }
-export function NavigatesToAccountsReceivableWorkspace(){
-    cy.Click(BaseSelectors.AccountingMenu,null)
-    cy.Click(AccountingSelectors.ReceivableAccounting,null)
+export function NavigatesToAccountsReceivableWorkspace() {
+    cy.Click(BaseSelectors.AccountingMenu, null)
+    cy.Click(AccountingSelectors.ReceivableAccounting, null)
 }
 //#region APInvoice
-export function FillAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails, multiple = false,havePayableVendor?:string) {
+export function FillAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails, multiple = false, havePayableVendor?: string) {
     var generatedInvoiceNumber = "AP" + gr.GenerateRandomNumber(10000, 99999).toString();
     cy.FillLogLov(AccountingSelectors.APInvoiceVendor, aPInvoiceDetails.Vendor, false);
     cy.FillLogTextBox(AccountingSelectors.APInvoiceInvoiceNumber, generatedInvoiceNumber)
@@ -44,11 +44,11 @@ export function FillAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails, multipl
     cy.FillLogLov(AccountingSelectors.APInvoicePaymentTerm, aPInvoiceDetails.PaymentTerms, true);
     cy.FillDate(AccountingSelectors.APInvoiceDueDate, aPInvoiceDetails.DueDate)
     cy.FillLogTextBox(AccountingSelectors.APInvoiceVATNumber, aPInvoiceDetails.VatNo.toString())
+    cy.FillLogLov(AccountingSelectors.APInvoiceBranch, aPInvoiceDetails.Branch, true)
     cy.Click(AccountingSelectors.OkCreateAPInvoiceButton, null);
     if (!multiple) {
-        if(!havePayableVendor)
-        {
-        cy.Click(BaseSelectors.CheckBoxLine, null)
+        if (!havePayableVendor) {
+            cy.Click(BaseSelectors.CheckBoxLine, null)
         }
         cy.FillLogLov(AccountingSelectors.APInvoiceVatType, aPInvoiceDetails.VATType, true)
         cy.Click(AccountingSelectors.VatTypeApplyToAll, null)
@@ -86,8 +86,8 @@ export function VoidAPInvoice() {
 export function FillARInvoiceDetails(aRInvoiceDetails: ARInvoiceDetails) {
     // cy.get(".ComboBox").click();
     // cy.get(".FillParent").find(".TextTrimming").contains("Customer").click()
-    if(aRInvoiceDetails.Partner){
-        cy.FillLogLov(AccountingSelectors.ARInvoicePartner,aRInvoiceDetails.Partner,false)
+    if (aRInvoiceDetails.Partner) {
+        cy.FillLogLov(AccountingSelectors.ARInvoicePartner, aRInvoiceDetails.Partner, false)
     }
     cy.FillLogLov(AccountingSelectors.ARInvoiceInvoiceCurrency, aRInvoiceDetails.InvoiceCurrency, true)
     cy.FillLogTextBox(AccountingSelectors.ARInvoiceExchangeRate, aRInvoiceDetails.InvoiceExchangeRate.toString());
@@ -96,24 +96,27 @@ export function FillARInvoiceDetails(aRInvoiceDetails: ARInvoiceDetails) {
     cy.FillDate(AccountingSelectors.ARInvoiceDueDate, aRInvoiceDetails.DueDate)
     cy.FillLogTextBox(AccountingSelectors.ARInvoiceVatNumber, aRInvoiceDetails.VATNo)
     cy.FillLogLov(AccountingSelectors.ARInvoiceBranch, aRInvoiceDetails.Branch, true)
-    if(aRInvoiceDetails.Partner){
-        cy.Click(BaseSelectors.RedButton,"OK")
-        cy.Click(BaseSelectors.CheckBoxLine,null)
+    if (aRInvoiceDetails.Partner) {
+        cy.Click(BaseSelectors.RedButton, "OK")
+        cy.Click(BaseSelectors.CheckBoxLine, null)
     }
-    else{
-    cy.Click(AccountingSelectors.OkCreateARInvoiceButton, null);
-    cy.FillLogLov(AccountingSelectors.ARInvoiceVatType, aRInvoiceDetails.VATType, true)
-    cy.Click(AccountingSelectors.VatTypeApplyToAll, null)
+    else {
+        cy.Click(AccountingSelectors.OkCreateARInvoiceButton, null);
+        cy.FillLogLov(AccountingSelectors.ARInvoiceVatType, aRInvoiceDetails.VATType, true)
+        cy.DefineRequestWait(RestAPI.GET, AccountingURLs.VatTypePercentageCall, RequestAliases.GetVatTypePercentage)
+        cy.Click(AccountingSelectors.VatTypeApplyToAll, null)
+        cy.wait('@' + RequestAliases.GetVatTypePercentage);
+
     }
 }
 
-export function CreateARInvoice(Constituent?:boolean) {
+export function CreateARInvoice(Constituent?: boolean) {
     cy.DefineRequestWait(RestAPI.POST, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
-    if(Constituent){
+    if (Constituent) {
         cy.Click(AccountingSelectors.GeneralSave, null)
 
     }
-    else{
+    else {
         cy.Click(AccountingSelectors.ARInvoiceSaveButton, null)
 
     }
@@ -156,7 +159,7 @@ export function AddTwoShipmentLinesAndEditAmount(shipmentNumbers: string[], VATT
             Value: shipmentNumbers[i]
         } as QuickSearchDetails;
         cy.SelectQuickSearchFirstElement(quickSearchDetails);
-        
+
         cy.get(AccountingSelectors.EditShipmentLine).children().eq(i).click();
         cy.FillLogTextBox(AccountingSelectors.APInvoiceLineForiegnCurrencyAmount, amount.toString());
         cy.FillLogLov(AccountingSelectors.APInvoiceVatType, VATType, true);
@@ -170,20 +173,22 @@ export function AddTwoShipmentLinesAndEditAmount(shipmentNumbers: string[], VATT
 }
 //#endregion
 //#region CalculateAmount
-function CalculateAmount(Quantity: number, UnitPrice: number) : number {
+function CalculateAmount(Quantity: number, UnitPrice: number): number {
     return Quantity * UnitPrice;
 }
 //#endregion
 //#region ConsolidationInvoice
-export function FillconsolidationInvoiceDetails(ARInvoiceData:ARInvoiceDetails){
+export function FillconsolidationInvoiceDetails(ARInvoiceData: ARInvoiceDetails) {
     NavigatesToAccountsReceivableWorkspace()
     cy.Click(BaseSelectors.ToggleIcon,null)
     cy.Click(BaseSelectors.button,"New consolidation invoice")
     FillARInvoiceDetails(ARInvoiceData)
 
 }
-export function ApproveConsilidationInvoice(){
-    cy.DefineRequestWait(RestAPI.POST, AccountingURLs.ConsilidationInvoiceDomain, RequestAliases.ConsilidationInvoiceDomain)
+export function ApproveConsilidationInvoice() {
+    //cy.DefineRequestWait(RestAPI.POST, AccountingURLs.ConsilidationInvoiceDomain, RequestAliases.ConsilidationInvoiceDomain)
+    cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoicesGetSingle, RequestAliases.ARInvoicesRequest)
+
     cy.Click(AccountingSelectors.ARInvoiceApproveButton, null)
 }
 //#endregion
@@ -237,7 +242,6 @@ export function FillARPaymentDetails(aRPaymentDetails: ARPaymentDetails) {
 export function SaveARPayment() {
     cy.DefineRequestWait(RestAPI.POST, AccountingURLs.ARPayments, RequestAliases.ARPayments)
     cy.Click(AccountingSelectors.ARPaymentSave, null)
-    BaseAssertion.AssertStatusCode(RequestAliases.ARPayments, 200)
 }
 
 export function ApproveARPayment() {
@@ -247,13 +251,13 @@ export function ApproveARPayment() {
 
 export function PayARInvoice() {
     SaveARPayment()
+    BaseAssertion.AssertStatusCode(RequestAliases.ARPayments, 200)
     ApproveARPayment()
 }
 
 export function NewARPaymentFromAccounting(aRPaymentDetails: ARPaymentDetails, invoiceNumber: string) {
-    cy.Click(BaseSelectors.AccountingMenu, null)
-    cy.Click(AccountingSelectors.ReceivableAccounting, null)
-    cy.Click(AccountingSelectors.QueryLink, "New Payment")
+    NavigatesToAccountsReceivableWorkspace()
+    cy.Click(AccountingSelectors.QueryLink, AccountingSelectors.NewPayment)
     FillARPaymentDetails(aRPaymentDetails)
     cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViews, RequestAliases.ARInvoiceviews)
     cy.FillLogTextBox(BaseSelectors.SearchField, invoiceNumber);

@@ -296,7 +296,7 @@
                                     </log-column>
 
                                     <!-- Sale Currency -->
-                                    <log-column [width]="'40'" [SortFieldName]="'SaleCurrencyCode'" [header]="'QuoteCharge.CH.SaleCurrencyIdListLable' | TextCodeTranslationPipe" [Alignment]="'center'" *ngIf="IsMultiCurrency">
+                                    <log-column [width]="'40'" [SortFieldName]="'SaleCurrencyCode'" [header]="'QuoteCharge.CH.SaleCurrencyIdListLable' | TextCodeTranslationPipe" [Alignment]="'center'">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [Alignment]="'center'" [IsEnabled]="false">
                                                 {{item.SaleCurrencyCode}}

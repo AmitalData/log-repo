@@ -517,6 +517,8 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
         {
             List<QuoteChargePM> lines = entityPM.QuoteCharges.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
 
+            QuoteChargePM freightCharge = lines.Where(d => d.ChargesGroupCode == "FRT").FirstOrDefault();
+
             if (lines.Count > 0)
             {
                 foreach (QuoteChargePM item in lines)
@@ -531,9 +533,12 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
 
                     if (item.IsAllIN)
                     {
-                        if (item.SaleCurrencyId != entityPM.SaleCurrencyId)
+                        if (freightCharge != null)
                         {
-                            throw new ApplicationException("All in charges must be same as quote sale currency");
+                            if (item.SaleCurrencyId != freightCharge.SaleCurrencyId)
+                            {
+                                throw new ApplicationException("All in charges must be same as freight Charge sale currency");
+                            }
                         }
                     }
 
