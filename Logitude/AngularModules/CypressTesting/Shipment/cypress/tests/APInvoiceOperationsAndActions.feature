@@ -44,8 +44,8 @@ Feature: APInvoice operations and actions
 
     Scenario: Create APInvoice
         Given an APInvoice with a random invoice number and the following details
-            | Vendor     | InvoiceAmount | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATType | VatNo |
-            | TestVendor | 50            | EUR             | 4                   | Today       | Cash         | Today   | Zero    | 5     |
+            | Vendor     | InvoiceAmount | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATType | VatNo | Branch      |
+            | TestVendor | 50            | EUR             | 4                   | Today       | Cash         | Today   | Zero    | 5     | Main Office |
         When receive invoice
         Then the invoice should create successfully
 

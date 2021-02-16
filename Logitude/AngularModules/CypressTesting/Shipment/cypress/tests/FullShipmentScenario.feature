@@ -55,8 +55,8 @@ Feature:  Full Shipment Scenario
 
     Scenario: Create APInvoice
         And an APInvoice with the following details and a random invoice number
-            | Vendor     | InvoiceAmount | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VatNo | VATType |
-            | TestVendor | 50            | EUR             | 4                   | Today       | Cash         | Today   | 55    | Zero    |
+            | Vendor     | InvoiceAmount | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VatNo | VATType | Branch      |
+            | TestVendor | 50            | EUR             | 4                   | Today       | Cash         | Today   | 55    | Zero    | Main Office |
         When receive APInvoice
         Then the APInvoice should create successfully
 
