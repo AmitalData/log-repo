@@ -41,7 +41,9 @@ namespace WebFreight.Web.Helpers.BIReport
                 }
                 else
                 {
-                    throw new Exception("The report size is too big to be downloaded in PDF. Try by downloading it to Excel format.");
+                    throw new Exception("The report size is too big to be downloaded in PDF. " +
+                        "The number of report columns and rows shouldn't exceed 15 and 40000, respectively. " +
+                        "You can download the report in Excel format.");
                 }
             }
             return pdfData;

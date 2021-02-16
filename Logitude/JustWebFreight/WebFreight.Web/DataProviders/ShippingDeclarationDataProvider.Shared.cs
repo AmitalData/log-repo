@@ -302,10 +302,17 @@ namespace WebFreight.Web.DataProviders
         public string FreightForwardedAddress { get; set; }
         public string FreightForwardedAddressWithoutCountry { get; set; }
         public string Incoterm { get; set; }
-
         public string Salesman { get; set; }
         public string SalesmanEmail { get; set; }
+        public string UserPhoneNumber { get; set; }    
+
         public string UserPhoneNumber { get; set; }
+=========
+        public string UserPhoneNumber { get; set; }    
+>>>>>>>>> Temporary merge branch 2
+=========
+        public string UserPhoneNumber { get; set; }
+>>>>>>>>> Temporary merge branch 2
         public double? TotalPayables { get; set; }
         public string CustomsAgent { get; set; }
         public double? TotalPayablesForMainCarriageCarrier { get; set; }

@@ -228,6 +228,7 @@ namespace WebFreight.Web.WebServices
                     salesmanData = (from a in commonContext.Contacts where a.Id == shipment.SalesmanUserId select a).FirstOrDefault();
                 }
 
+
                 #endregion
 
                 #region Ports
@@ -272,7 +273,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.CustomsDeclarationNumber = shipment.CustomsDeclarationNumber != null ? shipment.CustomsDeclarationNumber : "";
                 myDataProvider.InsidePackagesDetails = shipment.NumberOfInsidePackagesDetails;
                 myDataProvider.Incoterm = shipment.IncotermName;
-                myDataProvider.Salesman = shipment.SalesmanUserName;
+                myDataProvider.Salesman = shipment.SalesmanUserName;            
                 myDataProvider.TotalPayables = shipment.OpenPayablesInLocalCurrency + shipment.AccountedPayablesInLocalCurrency;
                 myDataProvider.ValueOfGoods = shipment.ValueOfGoods;
                 myDataProvider.ENSNumber = shipment.ENSNumber;
@@ -306,11 +307,13 @@ namespace WebFreight.Web.WebServices
                         myDataProvider.ValueOfGoodsCurrency = currency.EnglishName;
                     }
                 }
+
                 if (salesmanData != null)
                 {
                     myDataProvider.SalesmanEmail = salesmanData.Email;
 
                 }
+                
                 #region Tenant
                 Tenant myTenant = (from a in commonContext.Tenants where a.Id == tenant select a).FirstOrDefault();
                 if (myTenant != null)
@@ -1106,6 +1109,7 @@ namespace WebFreight.Web.WebServices
                         myDataProvider.UserPhoneNumber = currentContact.BusinessPhone;
                     }
                 }
+
                 #endregion
 
                 #region Agent

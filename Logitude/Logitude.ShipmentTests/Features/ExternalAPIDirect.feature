@@ -1,5 +1,4 @@
-﻿@Pre-Prepare
-Feature: External API – Direct Shipment
+﻿Feature: External API – Direct Shipment
 	With pre-prepared base and shipment data
 	We want to create direct shipment with main carriage leg
 	And update ETD, ATD, ETA, and ATA dates.
