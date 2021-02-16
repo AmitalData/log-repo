@@ -338,7 +338,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                         isMeasurmentFixed = true;
                     }
 
-                    if (iMeasurement.Code == 'PRFR' || iMeasurement.Code == 'PRVL') {
+                    if (iMeasurement.Code == 'PRFR' ) { 
                         this['Surcharge' + index + 'PricePercentageVisibility'] = true;
                     } else {
                         this['Surcharge' + index + 'PricePercentageVisibility'] = false;
