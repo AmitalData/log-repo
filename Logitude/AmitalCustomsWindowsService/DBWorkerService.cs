@@ -284,23 +284,23 @@ namespace AmitalCustomsWindowsService
                     StopThread(i);
 
                 }
-                if (WorkerRoleServiceLocator.HaveCourierTenant)
-                {
-                    Logger.LogMe("Is Courier Wait 60Sec", false);
-                    var sw = Stopwatch.StartNew();
-                    while (sw.Elapsed < TimeSpan.FromSeconds(60))
-                    {
-                        if (!_Threads.Any(r => !r.IsAlive))
-                        {
-                            break;
-                        }
-                        Thread.Sleep(300);
-                    }
-                    bool b = _Threads.Any(r => !r.IsAlive);
-                    Logger.LogMe($"All thread down == _Threads.Any(r => !r.IsAlive)? ={b} ", false);
-                    Thread.Sleep(100);
-                }
-                else
+                //if (WorkerRoleServiceLocator.HaveCourierTenant)
+                //{
+                //    Logger.LogMe("Is Courier Wait 60Sec", false);
+                //    var sw = Stopwatch.StartNew();
+                //    while (sw.Elapsed < TimeSpan.FromSeconds(60))
+                //    {
+                //        if (!_Threads.Any(r => !r.IsAlive))
+                //        {
+                //            break;
+                //        }
+                //        Thread.Sleep(300);
+                //    }
+                //    bool b = _Threads.Any(r => !r.IsAlive);
+                //    Logger.LogMe($"All thread down == _Threads.Any(r => !r.IsAlive)? ={b} ", false);
+                //    Thread.Sleep(100);
+                //}
+                //else
                 {
                     Thread.Sleep(1000);
                 }
