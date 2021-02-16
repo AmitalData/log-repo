@@ -44,6 +44,7 @@ export function FillAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails, multipl
     cy.FillLogLov(AccountingSelectors.APInvoicePaymentTerm, aPInvoiceDetails.PaymentTerms, true);
     cy.FillDate(AccountingSelectors.APInvoiceDueDate, aPInvoiceDetails.DueDate)
     cy.FillLogTextBox(AccountingSelectors.APInvoiceVATNumber, aPInvoiceDetails.VatNo.toString())
+    cy.FillLogLov(AccountingSelectors.APInvoiceBranch, aPInvoiceDetails.Branch, true)
     cy.Click(AccountingSelectors.OkCreateAPInvoiceButton, null);
     if (!multiple) {
         if (!havePayableVendor) {

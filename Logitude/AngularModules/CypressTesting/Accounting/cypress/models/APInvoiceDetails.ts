@@ -9,4 +9,5 @@ export interface APInvoiceDetails {
     DueDate: string,
     VATType:string,
     VatNo:string,
+    Branch:string,
 }

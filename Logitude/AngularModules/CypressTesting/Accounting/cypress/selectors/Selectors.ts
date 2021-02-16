@@ -72,6 +72,8 @@ export class AccountingSelectors {
    public static readonly ContainsCustoms = 'Customs';
    public static readonly GeneralSave = "#GeneralBSave"
    public static readonly VatTypeApplyToAll = '#VATApplyToAll';
+   public static readonly APInvoiceBranch = '#APInvoice_BranchId';
+
 
    //#endregion
 }
