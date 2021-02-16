@@ -18,6 +18,10 @@ export class BaseSelectors extends RegexSelectors {
     //#region Contains
     public static readonly ContainsApplytoall = 'Apply to all';
     public static readonly ContainsOK = 'OK';
+    public static readonly ContainsShipment="Shipment: "
+    public static readonly ContainsOperations= "Operations"
+    public static readonly ContainsAccounting="Accounting"
+    public static readonly ContainsBack="Back"
     //#endregion
     //#region general
     public static readonly ToggleButtonClass = '.ToggleButton';
