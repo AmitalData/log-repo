@@ -306,6 +306,7 @@ namespace WebFreight.Web.DataProviders
         public string SalesmanEmail { get; set; }
         public string UserPhoneNumber { get; set; }    
 
+     
         public double? TotalPayables { get; set; }
         public string CustomsAgent { get; set; }
         public double? TotalPayablesForMainCarriageCarrier { get; set; }

@@ -87,6 +87,7 @@ namespace WebFreight.Web.WcfApi
             ShipmentPM shipmentPM = shipmentQuery.GetSingleShipmentPMByNumber(userIdNumberRequestPM.ForwarderShipmentNumber, tenant);
             if (shipmentPM!=null)
             {
+                shipmentPM.ExternalStatuses = GetVIRStatusIfIsFirstUserIdNumberRequest(shipmentPM);
                 shipmentPM.IsHybrid = true;
                 shipmentPM.IsShipmentAdditionalCloudDataChange = true;
                 shipmentPM.UserIdNumberXMLData = LogitudeXmlSerializer.SerializeObjectToUTF8XmlString(userIdNumberRequestPM);
@@ -99,6 +100,22 @@ namespace WebFreight.Web.WcfApi
             }
             return shipmentId;
 
+        }
+
+        private string GetVIRStatusIfIsFirstUserIdNumberRequest(ShipmentPM shipmentPM)
+        {
+            string externalStatuses = string.Empty;
+            if (IsFirstUserIdNumberRequest(shipmentPM))
+            {
+                externalStatuses = "VIR";
+            }
+
+            return externalStatuses;
+        }
+
+        private bool IsFirstUserIdNumberRequest(ShipmentPM shipmentPM)
+        {
+            return string.IsNullOrEmpty(shipmentPM.UserIdNumber) && shipmentPM.UserIdNumberUpdateDate == null && !shipmentPM.IsUserIDNumberRequired;
         }
 
         private Response HandleExceptionAsResponse(Exception ex)

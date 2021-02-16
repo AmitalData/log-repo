@@ -172,7 +172,7 @@ export function FillReceivablesTab(receivableDetails: ReceivableDetails[]) {
 export function GenerateReceivablesFromPayables(profit?:boolean) {
     cy.Click(ShipmentSelectors.ReceivablesTab, null)
     cy.Click(ShipmentSelectors.ReceivableFromPayables, null)
-    cy.Click(BaseSelectors.CheckBoxLine, null)
+    cy.get(BaseSelectors.CheckBoxLine).eq(0).click()
     cy.Click(BaseSelectors.RedButton, "Ok")
     // if(profit){
     // cy.Click("#Edit",null)

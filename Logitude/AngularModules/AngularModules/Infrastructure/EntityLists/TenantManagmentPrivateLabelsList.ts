@@ -11,6 +11,7 @@ export class TenantManagmentPrivateLabelsList {
 		PrivateLabelName: string;
 		PrivateLabelShortName: string;
 		PrivateLabelUrl: string;
+		PrivateLabelDomain: string;
 		MainLogo: string;
 		ContactUsEmail: string;
 		ReceiveAllStatuses: boolean;

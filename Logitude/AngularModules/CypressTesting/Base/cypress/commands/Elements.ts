@@ -26,12 +26,15 @@ declare global {
 }
 
 Cypress.Commands.add("BackButton", (contains) => {
-    cy.Click(".BackBottonBody", contains);
+    cy.Click(BaseSelectors.BackBottonBodyClass, contains);
 })
 
 Cypress.Commands.add("FillDate", (selector, value) => {
     if (value.toUpperCase() == "TODAY") {
         cy.get(selector).focus().clear().type(".{enter}")
+    }
+    else if (value.toUpperCase() == "TOMORROW") {
+        cy.get(selector).focus().clear().type("+1{enter}")
     }
     else {
         cy.get(selector).focus().clear().type(value)

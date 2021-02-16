@@ -59,8 +59,8 @@ Feature: Create multiple shipment AP Invoice
   Scenario: Create multiple shipment AP Invoice
     Given the user in Accounts Payable workspace
     And a multiple AP invoice  with a random invoice number and the following details
-      | Vendor     | InvoiceAmount | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VatNo | VATType |
-      | TestVendor | 50            | EUR             | 4                   | Today       | Cash         | Today   | 5     | Zero    |
+      | Vendor     | InvoiceAmount | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VatNo | VATType | Branch      |
+      | TestVendor | 50            | EUR             | 4                   | Today       | Cash         | Today   | 5     | Zero    | Main Office |
     When create invoice
     Then the invoice should create successfully
 

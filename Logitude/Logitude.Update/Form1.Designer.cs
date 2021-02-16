@@ -208,6 +208,7 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.button51 = new System.Windows.Forms.Button();
             this.updateBluesnapTransactionsLabel = new System.Windows.Forms.Label();
+            this.fixJournalsButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -2028,6 +2029,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.fixJournalsButton);
             this.tabPage4.Controls.Add(this.button51);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
@@ -2055,6 +2057,16 @@
             this.updateBluesnapTransactionsLabel.Size = new System.Drawing.Size(16, 13);
             this.updateBluesnapTransactionsLabel.TabIndex = 101;
             this.updateBluesnapTransactionsLabel.Text = "...";
+            // 
+            // fixJournalsButton
+            // 
+            this.fixJournalsButton.Location = new System.Drawing.Point(18, 63);
+            this.fixJournalsButton.Name = "fixJournalsButton";
+            this.fixJournalsButton.Size = new System.Drawing.Size(180, 36);
+            this.fixJournalsButton.TabIndex = 1;
+            this.fixJournalsButton.Text = "Fix Duplicated Journals";
+            this.fixJournalsButton.UseVisualStyleBackColor = true;
+            this.fixJournalsButton.Click += new System.EventHandler(this.fixJournalsButton_Click);
             // 
             // Form1
             // 
@@ -2288,6 +2300,7 @@
         private System.Windows.Forms.Button button51;
         private System.Windows.Forms.Button bluesnapBtn;
         private System.Windows.Forms.Label updateBluesnapTransactionsLabel;
+        private System.Windows.Forms.Button fixJournalsButton;
     }
 }
 

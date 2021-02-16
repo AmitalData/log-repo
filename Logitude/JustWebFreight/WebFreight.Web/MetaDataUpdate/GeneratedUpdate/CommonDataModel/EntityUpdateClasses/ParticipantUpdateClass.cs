@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ParticipantUpdateClass
    {  		
-		public const string HashString = "724203c62d857bfb7b335ba88513b411";
+		public const string HashString = "1f80486a0696c558782e78fdd7bf6df3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "Participant",
 			      				    IsNew =  false,
 			      				    DBTableName =  "Participants",
-			      				    OldDBTableName =  "Participants",
 			      				    ObjectTableSingular =  "Participant",
 			      				    ObjectTablePlural =  "Participants",
 			      				    HasCustomFilter =  true,
@@ -145,7 +144,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "TTY",
-					  						OldFieldName =  "TTY",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  7,
@@ -210,7 +208,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Registered",
-					  						OldFieldName =  "Registered",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -275,7 +272,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "RegistrationRequested",
-					  						OldFieldName =  "RegistrationRequested",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -340,7 +336,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Website",
-					  						OldFieldName =  "Website",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -405,7 +400,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -470,7 +464,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "EnglishName",
-					  						OldFieldName =  "EnglishName",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -535,7 +528,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LocalName",
-					  						OldFieldName =  "LocalName",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -600,7 +592,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ComputedLocalName",
-					  						OldFieldName =  "ComputedLocalName",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -663,7 +654,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InActive",
-					  						OldFieldName =  "InActive",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -728,7 +718,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "VatNumber",
-					  						OldFieldName =  "VatNumber",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -793,7 +782,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AccountingCard",
-					  						OldFieldName =  "AccountingCard",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -802,11 +790,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
+					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
@@ -857,7 +845,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PaymentTermId",
-					  						OldFieldName =  "PaymentTermId",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PaymentTerm",
@@ -921,7 +908,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PaymentTermEnglishName",
-					  						OldFieldName =  "PaymentTermEnglishName",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -986,7 +972,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1052,7 +1037,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InvoiceCurrencyId",
-					  						OldFieldName =  "InvoiceCurrencyId",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Currency",
@@ -1116,7 +1100,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "VatTypeId",
-					  						OldFieldName =  "VatTypeId",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "VatType",
@@ -1180,7 +1163,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "BankName",
-					  						OldFieldName =  "BankName",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1243,7 +1225,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "BankAddress",
-					  						OldFieldName =  "BankAddress",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1306,7 +1287,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Swift",
-					  						OldFieldName =  "Swift",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1369,7 +1349,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AccountNumber",
-					  						OldFieldName =  "AccountNumber",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1432,7 +1411,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IBANNumber",
-					  						OldFieldName =  "IBANNumber",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1495,7 +1473,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ForwarderTenant",
-					  						OldFieldName =  "ForwarderTenant",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1560,7 +1537,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsDirect",
-					  						OldFieldName =  "IsDirect",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1625,7 +1601,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CityName",
-					  						OldFieldName =  "CityName",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1692,7 +1667,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CountryId",
-					  						OldFieldName =  "CountryId",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Country",
@@ -1760,7 +1734,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CountryName",
-					  						OldFieldName =  "CountryName",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1826,7 +1799,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "FWBNotifyContacts",
-					  						OldFieldName =  "FWBNotifyContacts",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Emails",
 					  						MinLength =  0,
@@ -1889,7 +1861,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "FHLNotifyContacts",
-					  						OldFieldName =  "FHLNotifyContacts",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Emails",
 					  						MinLength =  0,
@@ -1952,7 +1923,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "FFRNotifyContacts",
-					  						OldFieldName =  "FFRNotifyContacts",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Emails",
 					  						MinLength =  0,
@@ -2015,7 +1985,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ReceivablesAccountingCard",
-					  						OldFieldName =  "ReceivablesAccountingCard",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2080,7 +2049,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PayablesAccountingCard",
-					  						OldFieldName =  "PayablesAccountingCard",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2145,7 +2113,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PrimaryContactName",
-					  						OldFieldName =  "PrimaryContactName",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2210,7 +2177,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PrimaryContactEmail",
-					  						OldFieldName =  "PrimaryContactEmail",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2275,7 +2241,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PrimaryContactPhone",
-					  						OldFieldName =  "PrimaryContactPhone",
 					  						ObjectTableName =  "Participant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2357,6 +2322,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "StateName",
 					  						ListPropertyPath =  "StateName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

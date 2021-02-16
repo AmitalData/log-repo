@@ -4606,6 +4606,12 @@ User/Pass",
             thread.IsBackground = true;
             thread.Start();
         }
+
+        private void fixJournalsButton_Click(object sender, EventArgs e)
+        {
+            FixDuplicatedJournals fixDuplicatedJournalsForm = new FixDuplicatedJournals();
+            fixDuplicatedJournalsForm.ShowDialog(this);
+        }
     }
 
     public class TenantMailBox

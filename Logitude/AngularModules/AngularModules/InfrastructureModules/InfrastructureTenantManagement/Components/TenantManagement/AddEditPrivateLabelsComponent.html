@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .subTitle {
         color: #1b90cb;
         font-size: 15px;
@@ -44,7 +44,7 @@
     <tr>
         <td>
 
-            <table style="table-layout: fixed;">              
+            <table style="table-layout: fixed;">
 
                 <!-- Name -->
                 <tr class="FormFieldRow">
@@ -86,7 +86,23 @@
                     </td>
                     <td>
                         <LogTextBox [ObjectFieldName]="'PrivateLabelUrl'" [ObjectTableName]="ObjectTableName"
-                                    [DataContext]="DataContext" [HideColumns]="true" ></LogTextBox>
+                                    [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                    </td>
+
+                    <td></td>
+
+                </tr>
+
+                <!-- Domain -->
+                <tr class="FormFieldRow">
+
+                    <td>
+                        <LogLabel [Text]="'Domain'" [ObjectFieldName]="'PrivateLabelDomain'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'PrivateLabelDomain'" [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
                     </td>
 
                     <td></td>
@@ -199,7 +215,7 @@
 
                     <!-- Image Display -->
                     <td>
-                       
+
                     </td>
                     <td style="vertical-align:top">
                         <div style="width:300px;vertical-align:top; border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:5px">
@@ -265,8 +281,8 @@
 
                     </td>
                 </tr>
-                
-               
+
+
 
             </table>
 
