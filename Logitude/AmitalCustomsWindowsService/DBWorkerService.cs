@@ -294,6 +294,7 @@ namespace AmitalCustomsWindowsService
                         {
                             break;
                         }
+                        Thread.Sleep(300);
                     }
                     bool b = _Threads.Any(r => !r.IsAlive);
                     Logger.LogMe($"All thread down == _Threads.Any(r => !r.IsAlive)? ={b} ", false);
