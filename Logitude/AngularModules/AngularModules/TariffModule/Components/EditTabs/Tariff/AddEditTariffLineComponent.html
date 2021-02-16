@@ -303,14 +303,16 @@
                                 <table>
                                     <!-- Surcharge1Price -->
                                     <tr *ngIf="DataContext.FatherComponent.Surcharge1PriceVisibility" class="FormFieldRow">
-                                        <td style="width:100px;"  [title]="DataContext.FatherComponent.Surcharge1PriceLabel">
+                                        <td style="width:100px;" [title]="DataContext.FatherComponent.Surcharge1PriceLabel">
                                             <LogLabel [ObjectFieldName]="'Surcharge1Price'" [Text]="DataContext.FatherComponent.Surcharge1PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td style="width:72px;">
                                             <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge1Price'" [Text]="DataContext.Surcharge1Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
-
+                                        <td style="width:5px;">
+                                            <label *ngIf ="DataContext.FatherComponent.Surcharge1PricePercentageVisibility" class="FormFieldRow">%</label>
+                                        </td>
                                         <td style="width:40px;">
                                             <LogLabel [ObjectFieldName]="'Surcharge1MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
@@ -326,14 +328,16 @@
 
                                     <!-- Surcharge2Price -->
                                     <tr *ngIf="DataContext.FatherComponent.Surcharge2PriceVisibility" class="FormFieldRow">
-                                        <td  [title]="DataContext.FatherComponent.Surcharge2PriceLabel">
+                                        <td [title]="DataContext.FatherComponent.Surcharge2PriceLabel">
                                             <LogLabel [ObjectFieldName]="'Surcharge2Price'" [Text]="DataContext.FatherComponent.Surcharge2PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
                                             <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge2Price'" [Text]="DataContext.Surcharge2Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
-
+                                        <td style="width:5px;">
+                                            <label *ngIf ="DataContext.FatherComponent.Surcharge2PricePercentageVisibility" class="FormFieldRow">%</label>
+                                        </td>
                                         <td>
                                             <LogLabel [ObjectFieldName]="'Surcharge2MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
@@ -349,14 +353,16 @@
 
                                     <!-- Surcharge3Price -->
                                     <tr *ngIf="DataContext.FatherComponent.Surcharge3PriceVisibility" class="FormFieldRow">
-                                        <td  [title]="DataContext.FatherComponent.Surcharge3PriceLabel">
+                                        <td [title]="DataContext.FatherComponent.Surcharge3PriceLabel">
                                             <LogLabel [ObjectFieldName]="'Surcharge3Price'" [Text]="DataContext.FatherComponent.Surcharge3PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
                                             <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge3Price'" [Text]="DataContext.Surcharge3Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
-
+                                        <td style="width:5px;">
+                                            <label *ngIf ="DataContext.FatherComponent.Surcharge3PricePercentageVisibility" class="FormFieldRow">%</label>
+                                        </td>
                                         <td>
                                             <LogLabel [ObjectFieldName]="'Surcharge3MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
@@ -372,14 +378,16 @@
 
                                     <!-- Surcharge4Price -->
                                     <tr *ngIf="DataContext.FatherComponent.Surcharge4PriceVisibility" class="FormFieldRow">
-                                        <td  [title]="DataContext.FatherComponent.Surcharge4PriceLabel">
+                                        <td [title]="DataContext.FatherComponent.Surcharge4PriceLabel">
                                             <LogLabel [ObjectFieldName]="'Surcharge4Price'" [Text]="DataContext.FatherComponent.Surcharge4PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
                                             <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge4Price'" [Text]="DataContext.Surcharge4Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
-
+                                        <td style="width:5px;">
+                                            <label *ngIf ="DataContext.FatherComponent.Surcharge4PricePercentageVisibility" class="FormFieldRow">%</label>
+                                        </td>
                                         <td>
                                             <LogLabel [ObjectFieldName]="'Surcharge4MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
@@ -395,14 +403,16 @@
 
                                     <!-- Surcharge5Price -->
                                     <tr *ngIf="DataContext.FatherComponent.Surcharge5PriceVisibility" class="FormFieldRow">
-                                        <td  [title]="DataContext.FatherComponent.Surcharge5PriceLabel">
+                                        <td [title]="DataContext.FatherComponent.Surcharge5PriceLabel">
                                             <LogLabel [ObjectFieldName]="'Surcharge5Price'" [Text]="DataContext.FatherComponent.Surcharge5PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
                                             <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge5Price'" [Text]="DataContext.Surcharge5Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
-
+                                        <td style="width:5px;">
+                                            <label *ngIf ="DataContext.FatherComponent.Surcharge5PricePercentageVisibility" class="FormFieldRow">%</label>
+                                        </td>
                                         <td>
                                             <LogLabel [ObjectFieldName]="'Surcharge5MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
@@ -418,14 +428,16 @@
 
                                     <!-- Surcharge6Price -->
                                     <tr *ngIf="DataContext.FatherComponent.Surcharge6PriceVisibility" class="FormFieldRow">
-                                        <td  [title]="DataContext.FatherComponent.Surcharge6PriceLabel">
+                                        <td [title]="DataContext.FatherComponent.Surcharge6PriceLabel">
                                             <LogLabel [ObjectFieldName]="'Surcharge6Price'" [Text]="DataContext.FatherComponent.Surcharge6PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
                                             <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge6Price'" [Text]="DataContext.Surcharge6Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
-
+                                        <td style="width:5px;">
+                                            <label *ngIf ="DataContext.FatherComponent.Surcharge6PricePercentageVisibility" class="FormFieldRow">%</label>
+                                        </td>
                                         <td>
                                             <LogLabel [ObjectFieldName]="'Surcharge6MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
@@ -441,14 +453,16 @@
 
                                     <!-- Surcharge7Price -->
                                     <tr *ngIf="DataContext.FatherComponent.Surcharge7PriceVisibility" class="FormFieldRow">
-                                        <td  [title]="DataContext.FatherComponent.Surcharge7PriceLabel">
+                                        <td [title]="DataContext.FatherComponent.Surcharge7PriceLabel">
                                             <LogLabel [ObjectFieldName]="'Surcharge7Price'" [Text]="DataContext.FatherComponent.Surcharge7PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
                                             <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge7Price'" [Text]="DataContext.Surcharge7Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
-
+                                        <td style="width:5px;">
+                                            <label *ngIf ="DataContext.FatherComponent.Surcharge7PricePercentageVisibility" class="FormFieldRow">%</label>
+                                        </td>
                                         <td>
                                             <LogLabel [ObjectFieldName]="'Surcharge7MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
@@ -464,14 +478,16 @@
 
                                     <!-- Surcharge8Price -->
                                     <tr *ngIf="DataContext.FatherComponent.Surcharge8PriceVisibility" class="FormFieldRow">
-                                        <td  [title]="DataContext.FatherComponent.Surcharge8PriceLabel">
+                                        <td [title]="DataContext.FatherComponent.Surcharge8PriceLabel">
                                             <LogLabel [ObjectFieldName]="'Surcharge8Price'" [Text]="DataContext.FatherComponent.Surcharge8PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
                                             <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge8Price'" [Text]="DataContext.Surcharge8Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
-
+                                        <td style="width:5px;">
+                                            <label *ngIf ="DataContext.FatherComponent.Surcharge8PricePercentageVisibility" class="FormFieldRow">%</label>
+                                        </td>
                                         <td>
                                             <LogLabel [ObjectFieldName]="'Surcharge8MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
@@ -487,14 +503,16 @@
 
                                     <!-- Surcharge9Price -->
                                     <tr *ngIf="DataContext.FatherComponent.Surcharge9PriceVisibility" class="FormFieldRow">
-                                        <td  [title]="DataContext.FatherComponent.Surcharge9PriceLabel">
+                                        <td [title]="DataContext.FatherComponent.Surcharge9PriceLabel">
                                             <LogLabel [ObjectFieldName]="'Surcharge9Price'" [Text]="DataContext.FatherComponent.Surcharge9PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
                                             <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge9Price'" [Text]="DataContext.Surcharge9Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
-
+                                        <td style="width:5px;">
+                                            <label *ngIf ="DataContext.FatherComponent.Surcharge9PricePercentageVisibility" class="FormFieldRow">%</label>
+                                        </td>
                                         <td>
                                             <LogLabel [ObjectFieldName]="'Surcharge9MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
@@ -510,14 +528,16 @@
 
                                     <!-- Surcharge10Price -->
                                     <tr *ngIf="DataContext.FatherComponent.Surcharge10PriceVisibility" class="FormFieldRow">
-                                        <td  [title]="DataContext.FatherComponent.Surcharge10PriceLabel">
+                                        <td [title]="DataContext.FatherComponent.Surcharge10PriceLabel">
                                             <LogLabel [ObjectFieldName]="'Surcharge10Price'" [Text]="DataContext.FatherComponent.Surcharge10PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
                                             <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge10Price'" [Text]="DataContext.Surcharge10Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
-
+                                        <td style="width:5px;">
+                                            <label *ngIf ="DataContext.FatherComponent.Surcharge10PricePercentageVisibility" class="FormFieldRow">%</label>
+                                        </td>
                                         <td>
                                             <LogLabel [ObjectFieldName]="'Surcharge10MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
