@@ -111,6 +111,8 @@
     <Content Include="Login\Components\DSVMobileLoginComponent.html" />
     <Content Include="Login\Components\DSVResetPasswordComponent.html" />
     <Content Include="Login\Components\ResetPasswordComponent.html" />
+    <Content Include="Login\HybridLabels\Components\HybridLoginComponent.css" />
+    <Content Include="Login\HybridLabels\Components\HybridLoginComponent.html" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -317,6 +319,7 @@
     <TypeScriptCompile Include="Login\Components\DSVResetPasswordComponent.ts" />
     <TypeScriptCompile Include="Login\Components\LoginComponent.ts" />
     <TypeScriptCompile Include="Login\Components\ResetPasswordComponent.ts" />
+    <TypeScriptCompile Include="Login\HybridLabels\Components\HybridLoginComponent.ts" />
     <TypeScriptCompile Include="Login\HybridLabels\DataContracts\HybridLabelsBrandingData.ts" />
     <TypeScriptCompile Include="Login\HybridLabels\DataContracts\HybridLabelsBrandingDataRequest.ts" />
     <TypeScriptCompile Include="Login\HybridLabels\DataContracts\HybridLabelsImage.ts" />

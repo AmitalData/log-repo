@@ -19,8 +19,8 @@ using System.Web;
 using System.Web.Http;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
-using WebFreight.Web.Security;
- 
+using WebFreight.Web.Security; 
+
 
 namespace WebFreight.Web.Controllers.GlobalModel.Extended
 {
@@ -43,8 +43,8 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-        }
-          
+        } 
+
         public HttpResponseMessage GetSingle(string id)
         {
             try

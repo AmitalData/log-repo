@@ -1,12 +1,16 @@
 ﻿export class HybridLabelsBrandingData {
 
+    public static Id: string;
     public static PrivateLabelName: string
     public static PrivateLabelUrl: string
     public static MainLogo: any
     public static SmallLogo: any 
     public static Tenant: number 
     public static MainColor: string
-  
+
+    public static MainLogoURL: string;
+
+    
     public static BackgroundImage: string;
     public static BackgroundImageId: string
     public static BackgroundImageURL: string;

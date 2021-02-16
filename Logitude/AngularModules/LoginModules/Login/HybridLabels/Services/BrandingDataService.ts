@@ -20,6 +20,10 @@ export class BrandingDataService {
         
     }
 
+    public static getId() {
+        return HybridLabelsBrandingData.Id;
+    }
+
     public static GetHybridLabelsDataRequest(baseUrl: string) {
         let BackgroundImageId: string = this.GetImageIdFromStorage("BackgroundImageId");
         let MainImageId: string = this.GetImageIdFromStorage("MainImageId");
@@ -57,7 +61,25 @@ export class BrandingDataService {
         this.SetMainImage(BrandingData, baseUrl);
         this.SetLoginProgressImage(BrandingData);
         this.SetForgetPasswordImage(BrandingData); 
+        this.SetMainLogo(BrandingData); 
     }
+
+    private static SetMainLogo(BrandingData: any) {
+
+        console.log("SetMainLogo" + BrandingData.MainLogo);
+        if (BrandingData.MainLogo) {
+            HybridLabelsBrandingData.MainLogoURL = BrandingDataService.GetImageFromBytes(BrandingData.MainLogo);
+            this.StoreImageInStorage("MainLogo", BrandingData.MainLogoId, BrandingData.MainLogoBytes);
+        }
+        else {
+            var StorageMainImage: HybridLabelsImage = BrandingDataService.GetImageFromStorage("MainLogo");
+            if (StorageMainImage && StorageMainImage.Id != null && StorageMainImage.Id == BrandingData.MainLogoId) {
+                HybridLabelsBrandingData.MainLogoURL = BrandingDataService.GetImageFromBytes(StorageMainImage.Data);
+            }
+        }
+
+    }
+
 
     private static SetBackgroundImage(BrandingData: any, baseUrl: string) {
         if (BrandingData.BackgroundImageBytes) {
@@ -143,7 +165,7 @@ export class BrandingDataService {
         return ImgId;
     }
 
-  
+     
 
 
     public static GetBackgroundImage() {
@@ -173,6 +195,16 @@ export class BrandingDataService {
             // Default image? 
             HybridLabelsBrandingData.BackgroundImageURL = "url('../../../Images/LoginScreen/shadow2.png')"
     }
+
+    public static GetMainLogo() {
+        console.log("MainLogoURL Image  : " + HybridLabelsBrandingData.MainLogoURL);
+        if (HybridLabelsBrandingData.MainImageURL != null)
+            return HybridLabelsBrandingData.MainLogoURL;
+        else
+            // Default image? 
+            HybridLabelsBrandingData.MainImageURL = "url('../../../Images/LoginScreen/shadow2.png')"
+    }
+
 
     public static GetMainImage() {
         console.log("main Image  : " + HybridLabelsBrandingData.MainImageURL);
