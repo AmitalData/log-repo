@@ -189,12 +189,20 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 }
 
                 for (var i = 0; i < menuButtons.length; i++) {
-                     var button = menuButtons[i];
+                    var button = menuButtons[i];
                     if (button.EventCode == "More") {
                         button.IsDisabled = true;
                         button.IsHidden = true;
-                  
+                         
                     }
+                    if (button.EventCode == "CloseDeclaration") {
+                        button.Width = 100;
+                        if (this.EntityPM.Direction == "E") {
+                            button.IsHidden = false;
+                        } else {
+                            button.IsHidden = true;
+                        }
+                    } 
  
                     if (button.EventCode == "SendDeclaration") {
                         if (this.IsDisplayOnly) {
@@ -530,7 +538,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         this.PrintReleaseMethod();
                         break;
                     }
-
+                case "CloseDeclaration": 
+                    {
+                        this.CloseDeclarationMethod();
+                        break;
+                    }
                 // moran 5.6.16 - AMI-56804 - add TransferToCollector
                 case "TransferToCollector":
                     {
@@ -1211,6 +1223,21 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         }
         ///Yuval Chalup 29.07.2015 TASK-14849 --->
 
+    }
+    private CloseDeclarationMethod() {
+        var args: any = {
+            EntityPM: this.EntityPM,
+        };
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1000;
+        logWindow.Height = 700;
+        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.Payments");
+        logWindow.WindowArgs = args;
+        logWindow.ShowCloseButton = true;
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        });
     }
 
     private PrintReleaseMethod() // moran 29.2.16 - Task 19807

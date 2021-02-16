@@ -957,7 +957,7 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="TransshipmentApprovalDateTime"   
+    Name="TransshipmentApprovalDateTime"
     Type="datetime">
     <Constraints
       Nullable="true" />

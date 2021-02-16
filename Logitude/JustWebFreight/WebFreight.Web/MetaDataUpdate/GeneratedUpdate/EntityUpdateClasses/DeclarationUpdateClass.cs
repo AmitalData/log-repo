@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "e16f8ac4df17aaa69e2b16a3a37c6ddc";
+		public const string HashString = "ed6667d2cf3054b57cb113e2cff0424a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -14236,6 +14236,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "PhysicalCheck",
 					  						ListPropertyPath =  "PhysicalCheck",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -16458,28 +16459,32 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
              			   Feature DeclarationFeature_MB23 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTRELEASE", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.PrintRelease", NameTextCodeDefaultText = "Print Release", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
                    
     
-			   Feature DeclarationFeature_MB3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DECLARATIONPAYMENT", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Payment", NameTextCodeDefaultText = "Declaration Payment", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+			   Feature DeclarationFeature_MB3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CloseDeclaration", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.CloseDeclaration", NameTextCodeDefaultText = "Close Declaration", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
 
       
     
-			   Feature DeclarationFeature_MB4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACTIONS", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Actions", NameTextCodeDefaultText = "Actions", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+			   Feature DeclarationFeature_MB4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DECLARATIONPAYMENT", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Payment", NameTextCodeDefaultText = "Declaration Payment", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
 
-			   Feature DeclarationFeature_MB40 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATUSREQUEST", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.StatusRequest", NameTextCodeDefaultText = "Status Request", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
-             			   Feature DeclarationFeature_MB41 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DECLARATIONRESTORE", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.DeclarationRestore", NameTextCodeDefaultText = "Declaration Restore", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
-             			   Feature DeclarationFeature_MB42 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RESETDECLARATIONNUMBER", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ResetDeclarationNumber", NameTextCodeDefaultText = "Reset Delaration Number", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
-             			   Feature DeclarationFeature_MB43 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COPY", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Copy", NameTextCodeDefaultText = "Copy", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
-             			   Feature DeclarationFeature_MB44 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRANSFERTOCOLLECTOR", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.TransferToCollector", NameTextCodeDefaultText = "Transfer To Collector", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
-             			   Feature DeclarationFeature_MB45 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VEHICLEMODIFICATION", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.VehicleModification", NameTextCodeDefaultText = "Vehicle Modification", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
-             			   Feature DeclarationFeature_MB46 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DECLARATIONSPECIALACTION", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.SpecialActionRequest", NameTextCodeDefaultText = "Special Action Request", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
-             			   Feature DeclarationFeature_MB47 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierPendingReason", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.CourierPendingReason", NameTextCodeDefaultText = "Courier Pending Reason", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
-             			   Feature DeclarationFeature_MB48 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierPendingReasonDel", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.CourierPendingReasonDel", NameTextCodeDefaultText = "Courier Pending Reason Del", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
-             			   Feature DeclarationFeature_MB49 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationClosure", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.DeclarationClosure", NameTextCodeDefaultText = "Declaration Closure", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
-             			   Feature DeclarationFeature_MB410 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Cancel Declaration Closure", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.CancelDeclarationClosure", NameTextCodeDefaultText = "Cancel Declaration Closure", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
-             			   Feature DeclarationFeature_MB411 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationCustomsRequests", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.DeclarationCustomsRequests", NameTextCodeDefaultText = "Declaration Customs Requests", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
-             			   Feature DeclarationFeature_MB412 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationCancellation", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.DeclarationCancellation", NameTextCodeDefaultText = "Declaration Cancellation", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+      
+    
+			   Feature DeclarationFeature_MB5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACTIONS", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Actions", NameTextCodeDefaultText = "Actions", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+
+			   Feature DeclarationFeature_MB50 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATUSREQUEST", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.StatusRequest", NameTextCodeDefaultText = "Status Request", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+             			   Feature DeclarationFeature_MB51 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DECLARATIONRESTORE", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.DeclarationRestore", NameTextCodeDefaultText = "Declaration Restore", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+             			   Feature DeclarationFeature_MB52 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RESETDECLARATIONNUMBER", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ResetDeclarationNumber", NameTextCodeDefaultText = "Reset Delaration Number", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+             			   Feature DeclarationFeature_MB53 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COPY", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Copy", NameTextCodeDefaultText = "Copy", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+             			   Feature DeclarationFeature_MB54 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRANSFERTOCOLLECTOR", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.TransferToCollector", NameTextCodeDefaultText = "Transfer To Collector", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+             			   Feature DeclarationFeature_MB55 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VEHICLEMODIFICATION", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.VehicleModification", NameTextCodeDefaultText = "Vehicle Modification", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+             			   Feature DeclarationFeature_MB56 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DECLARATIONSPECIALACTION", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.SpecialActionRequest", NameTextCodeDefaultText = "Special Action Request", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+             			   Feature DeclarationFeature_MB57 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierPendingReason", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.CourierPendingReason", NameTextCodeDefaultText = "Courier Pending Reason", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+             			   Feature DeclarationFeature_MB58 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierPendingReasonDel", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.CourierPendingReasonDel", NameTextCodeDefaultText = "Courier Pending Reason Del", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+             			   Feature DeclarationFeature_MB59 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationClosure", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.DeclarationClosure", NameTextCodeDefaultText = "Declaration Closure", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+             			   Feature DeclarationFeature_MB510 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Cancel Declaration Closure", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.CancelDeclarationClosure", NameTextCodeDefaultText = "Cancel Declaration Closure", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+             			   Feature DeclarationFeature_MB511 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationCustomsRequests", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.DeclarationCustomsRequests", NameTextCodeDefaultText = "Declaration Customs Requests", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+             			   Feature DeclarationFeature_MB512 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationCancellation", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.DeclarationCancellation", NameTextCodeDefaultText = "Declaration Cancellation", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
                    
     
-			   Feature DeclarationFeature_MB5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCUMENTSPANEL", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.DocumentsPanel", NameTextCodeDefaultText = "Declaration Documents Panel", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+			   Feature DeclarationFeature_MB6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCUMENTSPANEL", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.DocumentsPanel", NameTextCodeDefaultText = "Declaration Documents Panel", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
 
  
 
@@ -16496,7 +16501,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   MenuButton DeclarationMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "SendDeclaration",
-						Index = 1, 
+						Index = 0, 
 						IsActive = true,
 						LabelTextCodeCode = "Customs.Declaration.B.SendDeclaration",
 						LabelTextCodeDefaultText = "Send Declaration",
@@ -16516,7 +16521,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   MenuButton DeclarationMenuButton1 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "SendManifest",
-						Index = 2, 
+						Index = 1, 
 						IsActive = true,
 						LabelTextCodeCode = "Customs.Declaration.B.SendManifest",
 						LabelTextCodeDefaultText = "Send Manifest",
@@ -16635,6 +16640,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
 			   MenuButton DeclarationMenuButton3 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
+						EventCode = "CloseDeclaration",
+						Index = 2, 
+						IsActive = true,
+						LabelTextCodeCode = "Declaration.B.CloseDeclaration",
+						LabelTextCodeDefaultText = "Close Declaration",
+						Tenant = 0,
+						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
+						ObjectTableId = DeclarationObjectTable.Id,
+						MenuButtonType = "button",
+						FeatureId = DeclarationFeature_MB3.Id,
+						Style = null,
+						LocalDefaultText = "סגירת הצהרה",
+						FeatureUniqeCode = DeclarationFeature_MB3.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+       
+   
+			   MenuButton DeclarationMenuButton4 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
 						EventCode = "DeclarationPayment",
 						Index = 3, 
 						IsActive = true,
@@ -16644,16 +16669,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
 						ObjectTableId = DeclarationObjectTable.Id,
 						MenuButtonType = "button",
-						FeatureId = DeclarationFeature_MB3.Id,
+						FeatureId = DeclarationFeature_MB4.Id,
 						Style = null,
 						LocalDefaultText = "הגשת תשלום",
-						FeatureUniqeCode = DeclarationFeature_MB3.FeatureUniqeCode,
+						FeatureUniqeCode = DeclarationFeature_MB4.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
-			   MenuButton DeclarationMenuButton4 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton DeclarationMenuButton5 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "Actions",
 						Index = 4, 
@@ -16664,15 +16689,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
 						ObjectTableId = DeclarationObjectTable.Id,
 						MenuButtonType = "dropdownbutton",
-						FeatureId = DeclarationFeature_MB4.Id,
+						FeatureId = DeclarationFeature_MB5.Id,
 						Style = null,
 						LocalDefaultText = "פעולות",
-						FeatureUniqeCode = DeclarationFeature_MB4.FeatureUniqeCode,
+						FeatureUniqeCode = DeclarationFeature_MB5.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
-			   MenuButton DeclarationMenuButton40 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton DeclarationMenuButton50 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "DeclarationsStatusRequest",
 						Index = 1, 
@@ -16681,18 +16706,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LabelTextCodeDefaultText = "Declarations Status Request",
 						Tenant = 0,
 						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
-						ParentMenuButtonId = DeclarationMenuButton4.Id,
+						ParentMenuButtonId = DeclarationMenuButton5.Id,
 						ObjectTableId = DeclarationObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  DeclarationFeature_MB40.Id,
+						FeatureId=  DeclarationFeature_MB50.Id,
 						Style = null,
 						LocalDefaultText = "בדיקת סטטוס הצהרה",
                         HtmlComponentPath=null,
                         Width=0,
-						FeatureUniqeCode=  DeclarationFeature_MB40.FeatureUniqeCode,
+						FeatureUniqeCode=  DeclarationFeature_MB50.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton DeclarationMenuButton41 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton DeclarationMenuButton51 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "DeclarationRestore",
 						Index = 2, 
@@ -16701,18 +16726,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LabelTextCodeDefaultText = "Declaration Restore",
 						Tenant = 0,
 						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
-						ParentMenuButtonId = DeclarationMenuButton4.Id,
+						ParentMenuButtonId = DeclarationMenuButton5.Id,
 						ObjectTableId = DeclarationObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  DeclarationFeature_MB41.Id,
+						FeatureId=  DeclarationFeature_MB51.Id,
 						Style = null,
 						LocalDefaultText = "שחזור נתוני הצהרה",
                         HtmlComponentPath=null,
                         Width=0,
-						FeatureUniqeCode=  DeclarationFeature_MB41.FeatureUniqeCode,
+						FeatureUniqeCode=  DeclarationFeature_MB51.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton DeclarationMenuButton42 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton DeclarationMenuButton52 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "ResetDeclarationNumber",
 						Index = 3, 
@@ -16721,18 +16746,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LabelTextCodeDefaultText = "Reset Declaration Number",
 						Tenant = 0,
 						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
-						ParentMenuButtonId = DeclarationMenuButton4.Id,
+						ParentMenuButtonId = DeclarationMenuButton5.Id,
 						ObjectTableId = DeclarationObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  DeclarationFeature_MB42.Id,
+						FeatureId=  DeclarationFeature_MB52.Id,
 						Style = null,
 						LocalDefaultText = "איפוס מספר הצהרה",
                         HtmlComponentPath=null,
                         Width=0,
-						FeatureUniqeCode=  DeclarationFeature_MB42.FeatureUniqeCode,
+						FeatureUniqeCode=  DeclarationFeature_MB52.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton DeclarationMenuButton43 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton DeclarationMenuButton53 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "Copy",
 						Index = 4, 
@@ -16741,18 +16766,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LabelTextCodeDefaultText = "Copy",
 						Tenant = 0,
 						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
-						ParentMenuButtonId = DeclarationMenuButton4.Id,
+						ParentMenuButtonId = DeclarationMenuButton5.Id,
 						ObjectTableId = DeclarationObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  DeclarationFeature_MB43.Id,
+						FeatureId=  DeclarationFeature_MB53.Id,
 						Style = null,
 						LocalDefaultText = "העתקת הצהרה",
                         HtmlComponentPath=null,
                         Width=0,
-						FeatureUniqeCode=  DeclarationFeature_MB43.FeatureUniqeCode,
+						FeatureUniqeCode=  DeclarationFeature_MB53.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton DeclarationMenuButton44 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton DeclarationMenuButton54 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "TransferToCollector",
 						Index = 5, 
@@ -16761,18 +16786,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LabelTextCodeDefaultText = "Transfer To Collector",
 						Tenant = 0,
 						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
-						ParentMenuButtonId = DeclarationMenuButton4.Id,
+						ParentMenuButtonId = DeclarationMenuButton5.Id,
 						ObjectTableId = DeclarationObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  DeclarationFeature_MB44.Id,
+						FeatureId=  DeclarationFeature_MB54.Id,
 						Style = null,
 						LocalDefaultText = "העברה לגובה",
                         HtmlComponentPath=null,
                         Width=0,
-						FeatureUniqeCode=  DeclarationFeature_MB44.FeatureUniqeCode,
+						FeatureUniqeCode=  DeclarationFeature_MB54.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton DeclarationMenuButton45 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton DeclarationMenuButton55 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "Vehicle Modifications",
 						Index = 6, 
@@ -16781,18 +16806,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LabelTextCodeDefaultText = "Vehicle Modifications",
 						Tenant = 0,
 						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
-						ParentMenuButtonId = DeclarationMenuButton4.Id,
+						ParentMenuButtonId = DeclarationMenuButton5.Id,
 						ObjectTableId = DeclarationObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  DeclarationFeature_MB45.Id,
+						FeatureId=  DeclarationFeature_MB55.Id,
 						Style = null,
 						LocalDefaultText = "הפחתות לשילדה",
                         HtmlComponentPath=null,
                         Width=0,
-						FeatureUniqeCode=  DeclarationFeature_MB45.FeatureUniqeCode,
+						FeatureUniqeCode=  DeclarationFeature_MB55.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton DeclarationMenuButton46 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton DeclarationMenuButton56 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "SpecialActionRequest",
 						Index = 7, 
@@ -16801,18 +16826,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LabelTextCodeDefaultText = "Special Action Request",
 						Tenant = 0,
 						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
-						ParentMenuButtonId = DeclarationMenuButton4.Id,
+						ParentMenuButtonId = DeclarationMenuButton5.Id,
 						ObjectTableId = DeclarationObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  DeclarationFeature_MB46.Id,
+						FeatureId=  DeclarationFeature_MB56.Id,
 						Style = null,
 						LocalDefaultText = "בקשה לפעולה מיוחדת",
                         HtmlComponentPath=null,
                         Width=0,
-						FeatureUniqeCode=  DeclarationFeature_MB46.FeatureUniqeCode,
+						FeatureUniqeCode=  DeclarationFeature_MB56.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton DeclarationMenuButton47 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton DeclarationMenuButton57 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "CourierPendingReason",
 						Index = 8, 
@@ -16821,18 +16846,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LabelTextCodeDefaultText = "Courier Pending Reason",
 						Tenant = 0,
 						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
-						ParentMenuButtonId = DeclarationMenuButton4.Id,
+						ParentMenuButtonId = DeclarationMenuButton5.Id,
 						ObjectTableId = DeclarationObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  DeclarationFeature_MB47.Id,
+						FeatureId=  DeclarationFeature_MB57.Id,
 						Style = null,
 						LocalDefaultText = "Pending",
                         HtmlComponentPath=null,
                         Width=0,
-						FeatureUniqeCode=  DeclarationFeature_MB47.FeatureUniqeCode,
+						FeatureUniqeCode=  DeclarationFeature_MB57.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton DeclarationMenuButton48 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton DeclarationMenuButton58 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "CourierPendingReasonDel",
 						Index = 10, 
@@ -16841,18 +16866,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LabelTextCodeDefaultText = "Courier Pending Reason Del",
 						Tenant = 0,
 						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
-						ParentMenuButtonId = DeclarationMenuButton4.Id,
+						ParentMenuButtonId = DeclarationMenuButton5.Id,
 						ObjectTableId = DeclarationObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  DeclarationFeature_MB48.Id,
+						FeatureId=  DeclarationFeature_MB58.Id,
 						Style = null,
 						LocalDefaultText = "מחיקת Pending",
                         HtmlComponentPath=null,
                         Width=0,
-						FeatureUniqeCode=  DeclarationFeature_MB48.FeatureUniqeCode,
+						FeatureUniqeCode=  DeclarationFeature_MB58.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton DeclarationMenuButton49 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton DeclarationMenuButton59 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "Declaration Closure",
 						Index = 11, 
@@ -16861,18 +16886,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LabelTextCodeDefaultText = "Declaration Closure",
 						Tenant = 0,
 						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
-						ParentMenuButtonId = DeclarationMenuButton4.Id,
+						ParentMenuButtonId = DeclarationMenuButton5.Id,
 						ObjectTableId = DeclarationObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  DeclarationFeature_MB49.Id,
+						FeatureId=  DeclarationFeature_MB59.Id,
 						Style = null,
 						LocalDefaultText = "סגירת הצהרה",
                         HtmlComponentPath=null,
                         Width=0,
-						FeatureUniqeCode=  DeclarationFeature_MB49.FeatureUniqeCode,
+						FeatureUniqeCode=  DeclarationFeature_MB59.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton DeclarationMenuButton410 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton DeclarationMenuButton510 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "Cancel Declaration Closure",
 						Index = 12, 
@@ -16881,18 +16906,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LabelTextCodeDefaultText = "Cancel Declaration Closure",
 						Tenant = 0,
 						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
-						ParentMenuButtonId = DeclarationMenuButton4.Id,
+						ParentMenuButtonId = DeclarationMenuButton5.Id,
 						ObjectTableId = DeclarationObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  DeclarationFeature_MB410.Id,
+						FeatureId=  DeclarationFeature_MB510.Id,
 						Style = null,
 						LocalDefaultText = "ביטול סגירת הצהרה",
                         HtmlComponentPath=null,
                         Width=0,
-						FeatureUniqeCode=  DeclarationFeature_MB410.FeatureUniqeCode,
+						FeatureUniqeCode=  DeclarationFeature_MB510.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton DeclarationMenuButton411 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton DeclarationMenuButton511 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "Declaration Customs Requests",
 						Index = 13, 
@@ -16901,18 +16926,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LabelTextCodeDefaultText = "Declaration Customs Requests",
 						Tenant = 0,
 						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
-						ParentMenuButtonId = DeclarationMenuButton4.Id,
+						ParentMenuButtonId = DeclarationMenuButton5.Id,
 						ObjectTableId = DeclarationObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  DeclarationFeature_MB411.Id,
+						FeatureId=  DeclarationFeature_MB511.Id,
 						Style = null,
 						LocalDefaultText = "בקשות מכס",
                         HtmlComponentPath=null,
                         Width=0,
-						FeatureUniqeCode=  DeclarationFeature_MB411.FeatureUniqeCode,
+						FeatureUniqeCode=  DeclarationFeature_MB511.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton DeclarationMenuButton412 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton DeclarationMenuButton512 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "DeclarationCancellation",
 						Index = 14, 
@@ -16921,19 +16946,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LabelTextCodeDefaultText = "Declaration Cancellation",
 						Tenant = 0,
 						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
-						ParentMenuButtonId = DeclarationMenuButton4.Id,
+						ParentMenuButtonId = DeclarationMenuButton5.Id,
 						ObjectTableId = DeclarationObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  DeclarationFeature_MB412.Id,
+						FeatureId=  DeclarationFeature_MB512.Id,
 						Style = null,
 						LocalDefaultText = "ביטול הצהרה",
                         HtmlComponentPath="./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationCancellation/DeclarationCancellationComponent",
                         Width=0,
-						FeatureUniqeCode=  DeclarationFeature_MB412.FeatureUniqeCode,
+						FeatureUniqeCode=  DeclarationFeature_MB512.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	          
    
-			   MenuButton DeclarationMenuButton5 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton DeclarationMenuButton6 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "DocumentsPanel",
 						Index = 99, 
@@ -16944,10 +16969,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
 						ObjectTableId = DeclarationObjectTable.Id,
 						MenuButtonType = "control",
-						FeatureId = DeclarationFeature_MB5.Id,
+						FeatureId = DeclarationFeature_MB6.Id,
 						Style = null,
 						LocalDefaultText = "רשימת מסמכים",
-						FeatureUniqeCode = DeclarationFeature_MB5.FeatureUniqeCode,
+						FeatureUniqeCode = DeclarationFeature_MB6.FeatureUniqeCode,
 						HtmlComponentPath = "./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DocumentsPanel/DocumentsPanelComponent",
 						Width = 30,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);

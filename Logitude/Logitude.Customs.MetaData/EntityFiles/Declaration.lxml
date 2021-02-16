@@ -55,6 +55,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;DECL&quot;"
   Name1="&quot;Customs.Declaration&quot;"
   CustomFieldsCount="0"
@@ -17430,6 +17431,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;PhysicalCheck&quot;"
     ListPropertyPath="&quot;PhysicalCheck&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -20181,7 +20183,7 @@
       EventCode="&quot;SendDeclaration&quot;"
       DefaultText="&quot;Send Declaration&quot;"
       MenuButtonType="&quot;control&quot;"
-      IndexOrder="1"
+      IndexOrder="0"
       LocalDefaultText="&quot;שלח הצהרה&quot;"
       FeatureCode="&quot;SENDDECLARATION&quot;"
       IsPackagable="false"
@@ -20193,7 +20195,7 @@
       EventCode="&quot;SendManifest&quot;"
       DefaultText="&quot;Send Manifest&quot;"
       MenuButtonType="&quot;control&quot;"
-      IndexOrder="2"
+      IndexOrder="1"
       LocalDefaultText="&quot;שלח מצהר&quot;"
       FeatureCode="&quot;SENDMANIFEST&quot;"
       IsPackagable="true"
@@ -20258,10 +20260,17 @@
         FeatureDefaultText="&quot;Print Release&quot;" />
     </MenuButton>
     <MenuButton
+      EventCode="&quot;CloseDeclaration&quot;"
+      DefaultText="&quot;Close Declaration&quot;"
+      MenuButtonType="&quot;button&quot;"
+      IndexOrder="3"
+      LocalDefaultText="&quot;סגירת הצהרה&quot;"
+      IsPackagable="true" />
+    <MenuButton
       EventCode="&quot;DeclarationPayment&quot;"
       DefaultText="&quot;Declaration Payment&quot;"
       MenuButtonType="&quot;button&quot;"
-      IndexOrder="3"
+      IndexOrder="2"
       LocalDefaultText="&quot;הגשת תשלום&quot;"
       FeatureCode="&quot;DECLARATIONPAYMENT&quot;"
       IsPackagable="true"
