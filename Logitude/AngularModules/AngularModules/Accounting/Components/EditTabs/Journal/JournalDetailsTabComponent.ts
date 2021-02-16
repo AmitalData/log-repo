@@ -596,51 +596,72 @@ getHeaderCurrency(CurrencyId:string){
         });
     }
 
+    header_year: number;
+    header_month: number;
+    header_day: number;
+    GetHeaderDateParts() {
+        this.header_year = this.headerDate.getFullYear();
+        this.header_month = this.headerDate.getMonth() + 1;
+        this.header_day = this.headerDate.getDate();
+    }
+   line_year:number;
+   line_month:number;
+   line_day:number;
+
+    GetLineDateParts() {
+        this.line_year = this.lineDate.getFullYear();
+        this.line_month = this.lineDate.getMonth() + 1;
+        this.line_day = this.lineDate.getDate();
+    }
+    SetLineDateParts() {
+        if (this.line_year != this.header_year)
+            this.line_year = this.header_year;
+
+        if (this.line_month != this.header_month)
+            this.line_month = this.header_month;
+
+        if (this.line_day != this.header_day)
+            this.line_day = this.header_day;
+    }
+
+    ValidateDayAccordingToMonth(line: JournalLineModel) {
+        if (this.line_day > this.lastDay(this.line_year, this.line_month - 1)) {
+            return false;
+        } else {
+         return true
+        }
+    }
+
+    SetLineDate(line: JournalLineModel) {
+        this.lineDate.setFullYear(this.line_year);
+        this.lineDate.setMonth(this.line_month - 1);
+        this.lineDate.setDate(this.line_day);
+        line.accDay = this.line_day;
+    }
+    lineDate: Date;
+    headerDate: Date;
     UpdateLinesAccountingDates() {
         var lines = this.JournalLines.Collection;
         if (lines) {
             lines.forEach((line: JournalLineModel) => {
-                var headerDate = this.AccountingDate;
-                if (headerDate && line.AccountingDate && !line.ActionCode)
-                {
-                    var header_year = headerDate.getFullYear();
-                    var header_month = headerDate.getMonth() + 1;
-                    var header_day = headerDate.getDate();
-
-                    var lineDate = new Date(line.AccountingDate.toString()); // somtimes this.AccountingDate contains string date o.O
-
-                    var line_year = lineDate.getFullYear();
-                    var line_month = lineDate.getMonth() + 1;
-                    var line_day = lineDate.getDate();
-
-
-                    if (line_year != header_year)
-                        line_year = header_year;
-
-                    if (line_month != header_month)
-                        line_month = header_month;
-
-                    if (line_day != header_day)
-                        line_day = header_day;
-                    //validate day according to month
-                    if (line_day > this.lastDay(line_year, line_month - 1)) {
-                        // Set new Date
-                        lineDate = null;
+                this.headerDate = this.AccountingDate;
+                if (this.headerDate && !line.ActionCode) {
+                    this.GetHeaderDateParts();
+                    this.lineDate = this.AccountingDate;
+                    if (line.AccountingDate) {
+                         this.lineDate = new Date(line.AccountingDate.toString());
+                        this.GetLineDateParts();
+                    }
+                   this.SetLineDateParts();
+                    if (!this.ValidateDayAccordingToMonth(line)) {
+                        this.lineDate = null;
                         line.AccDay = null;
-
-                        console.log("[!] the value of day (" + line_day + ") is outside month range (" + line_month + ")");
-                    } else {
-                        // Set new Date
-                        lineDate.setFullYear(line_year);
-                        lineDate.setMonth(line_month - 1);
-                        lineDate.setDate(line_day);
-                        line.accDay = line_day;
-
-                       // console.log("[!] AccountingDate for line " + line.Line + " is changed to " + lineDate.toString());
+                    }
+                    else {
+                        this.SetLineDate(line);
+                      
                     }
                 }
-
-
             });
         }
     }
