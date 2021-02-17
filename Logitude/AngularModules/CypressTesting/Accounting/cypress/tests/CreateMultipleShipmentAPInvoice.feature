@@ -29,8 +29,8 @@ Feature: Create multiple shipment AP Invoice
 
   Scenario: Update first shipment's payables tab
     Given the user add payable with the following details
-      | ChargesType | UOM  | Quantity | UnitPrice | Currency | Vendor     |
-      | AFT         | GRWT | 5        | 10        | EUR      | TestVendor |
+      | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate | Vendor     |
+      | AFT         | GRWT | 5        | 10        | EUR      | 4            | TestVendor |
     When update shipment
     Then the direct should update successfully
 
@@ -51,8 +51,8 @@ Feature: Create multiple shipment AP Invoice
 
   Scenario: Update second shipment's payables tab
     Given the user add payable with the following details
-      | ChargesType | UOM  | Quantity | UnitPrice | Currency | Vendor     |
-      | AFT         | GRWT | 5        | 10        | EUR      | TestVendor |
+      | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate | Vendor     |
+      | AFT         | GRWT | 5        | 10        | EUR      | 4            | TestVendor |
     When update shipment
     Then the direct should update successfully
 
