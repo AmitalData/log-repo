@@ -37,8 +37,8 @@ Feature: APInvoice operations and actions
         Then the direct should update successfully
     Scenario: Add Payables
         Given a payable with the following details
-            | ChargesType | UOM  | Quantity | UnitPrice | Currency |
-            | AFT         | GRWT | 5        | 10        | EUR      |
+            | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
+            | AFT         | GRWT | 5        | 10        | EUR      | 4            |
         When add payables
         Then the payables should add successfully
 

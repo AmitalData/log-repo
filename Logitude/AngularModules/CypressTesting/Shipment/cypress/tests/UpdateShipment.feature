@@ -28,7 +28,7 @@ Feature: Update direct export air shipment
   Scenario: Update partners tab
     Given the user add partners with following details
       | Consignee           | Agent     | CustomsAgentExport | CustomsAgentImport | Notify1   | Notify2   | ShipperNotExporter | ConsigneeNotImporter | FreightForwarder | Coloader  | CustomClearancePoint | Consolidator | ReleasingAgent |
-      | TestConsigneeExport | TestAgent | TestCustomAgent   | TestCustomAgent   | TestAgent | TestAgent | TestShipperExport  | TestConsigneeExport  | TestAgent        | TestAgent | TestWarehouse        | TestAgent    | TestAgent      |
+      | TestConsigneeExport | TestAgent | TestCustomAgent    | TestCustomAgent    | TestAgent | TestAgent | TestShipperExport  | TestConsigneeExport  | TestAgent        | TestAgent | TestWarehouse        | TestAgent    | TestAgent      |
     When update shipment
     Then the direct should update successfully
 
@@ -55,7 +55,7 @@ Feature: Update direct export air shipment
 
   Scenario: Update payables tab
     Given the user add payable with the following details
-      | ChargesType | UOM  | Quantity | UnitPrice | Currency |
-      | AFT         | GRWT | 5        | 10        | EUR      |
+      | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
+      | AFT         | GRWT | 5        | 10        | EUR      | 4            |
     When update shipment
     Then the direct should update successfully
