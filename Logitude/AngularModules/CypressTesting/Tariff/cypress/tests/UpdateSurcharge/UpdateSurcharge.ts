@@ -1,49 +1,38 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import * as Actions from "../../actions/Actions";
-import * as gr from '../../../../Base/cypress/actions/GenerateRandoms'
 import { TariffDetails } from "../../models/TariffDetails";
 import { SurchargeDetails } from "../../models/SurchargeDetails";
-import { QuickSearchDetails } from "../../../../Base/cypress/models/QuickSearchDetails";
-import { BaseURLs } from "../../../../Base/cypress/constants/URLs";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
 import { TariffSelectors } from "../../../../Tariff/cypress/selectors/Selectors";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
+import { TariffLine } from "cypress/models/TariffLine";
+import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 
-var Code ;
+var SellerCode;
 
-Given("the user logged in and navigate to maintenance workspace",()=>{
-cy.Login();
-cy.Click("#GeneralMHMaintenance",null)
-cy.Click("#MaintenanceItemMTSL",null);
-cy.DefineRequestWait("GET","**/carrierviews/**", "get1")
-cy.Click(BaseSelectors.Button , "Add");
+//#region Create Shipping Line 
+Given("the user logged in and navigate to Shipping Line in Maintenance workspace", () => {
+    Actions.LoginAndNavigateToShippingLineWorkspace();
 });
 
-When("create new shipping line",()=>{
- Code = Actions.createSeller();
- cy.DefineRequestWait("POST","**/shippinglines", "WaitPostShippinglinesRequest")
- cy.Click(BaseSelectors.RedButton,"Ok");
+When("create new shipping line", () => {
+    SellerCode = Actions.CreateSeller();
 });
 
-Then("the shipping line should create successfully",()=>{
-    BaseAssertion.AssertStatusCode("WaitPostShippinglinesRequest", 200)
+Then("the shipping line should create successfully", () => {
+    BaseAssertion.AssertStatusCode(RequestAliases.PostShippinglinesRequest, 200)
 })
+//#endregion
 
 //#region  Create ocean FCL surcharge cost
-Given("the user logged in and navigate to tariff workspace", () => {
-    //  Actions.LoginAndNavigateToTariffWorkspace();
+Given("the user navigate to tariff workspace", () => {
     cy.Click(TariffSelectors.TariffMenu, null);
 });
 
-Given("create new seller",()=>{
-    Actions.OpenNewSurchargeCostWizard("Ocean FCL");
-});
-
-Given("an ocean FCL surcharge cost with new seller and the following details", (dataTable) => {
+Given("an ocean FCL surcharge cost with the following details", (dataTable) => {
     let tariffDetails = dataTable.hashes()[0] as TariffDetails;
-    //fill
-    cy.FillLogTextBox(TariffSelectors.TariffName, tariffDetails.Name);
-    cy.FillLogLov(TariffSelectors.TariffSeller, Code, false);
+    tariffDetails.Seller = SellerCode;
+    Actions.FillNewOceanFCLSurchargesCost("Ocean FCL", tariffDetails);
 });
 
 Given("the follwing surcharges details", (dataTable) => {
@@ -62,36 +51,40 @@ Then("the surcharge cost should create successfully", () => {
 
 //#region Add tariff lines
 Given("the user open the created surcharge cost", () => {
-
+    Actions.OpenLastCreatedTariff();
 });
 
-Given("add the follwing tariff lines", () => {
-
+Given("add the follwing tariff lines", (dataTable) => {
+    let tariffDetails = dataTable.hashes()[0] as TariffLine;
+    Actions.FillTariffLine(tariffDetails)
 });
 
 When("add the tariff line", () => {
-
+    cy.Click(BaseSelectors.RedButton, "Ok");
+    Actions.UpdateTariff();
 });
 
 Then("the surcharge cost should update successfully", () => {
-
+    Actions.AssertPutTariff();
 });
 //#endregion
 
 //#region  Update surcharges
-Given("the follwing update details", () => {
-
+Given("the follwing update details", (dataTable) => {
+    let tariffDetails = dataTable.hashes()[0] as TariffLine;
+    Actions.FillUpdateSurcharges(tariffDetails);
 });
 
-Given("the following price details", () => {
-
+Given("the following price details", (dataTable) => {
+    let tariffDetails = dataTable.hashes()[0] as TariffLine;
+    Actions.FillUpdatePrice(tariffDetails);
 });
 
 When("update", () => {
-
+    Actions.CreateUpdateTariff();
 });
 
 Then("the surcharge update should create successfully", () => {
-
+    Actions.AssertPostUpdateTariff();
 });
 //#endregion
