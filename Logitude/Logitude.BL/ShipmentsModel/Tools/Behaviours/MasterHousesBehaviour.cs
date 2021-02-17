@@ -19,6 +19,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
         private bool isNewEntity;
         private List<Shipment> allHouses;
         private List<InsideShipmentPackagePM> masterInsidePackages;
+        private ShipmentPM iHousePM;
 
         public MasterHousesBehaviour(ShipmentServiceInitializer initializer, List<Shipment> allHouses, bool isNewEntity)
         {
@@ -68,19 +69,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
                     ShipmentQuery iShipmentQuery = new ShipmentQuery(initializer.Repository);
                     foreach (string id in ids)
                     {
-                        ShipmentPM iHousePM = iShipmentQuery.GetSinglePM(id, initializer.Tenant);
+                        iHousePM = iShipmentQuery.GetSinglePM(id, initializer.Tenant);
                         if (iHousePM != null)
                         {
-                            MapMasterHouseFields(iHousePM);
-                            MapMasterHouseFromPortFields(iHousePM);
-                            MapMasterHouseToPortFields(iHousePM);
-                            UpdateShipment(iHousePM);
+                            MapMasterHouseFields();
+                            MapMasterHouseFromPortFields();
+                            MapMasterHouseToPortFields();
+                            UpdateShipment();
                         }
                     }
                 }
             }
         }
-        private void MapMasterHouseFields(ShipmentPM iHousePM)
+        private void MapMasterHouseFields()
         {
             iHousePM.IsCancelled = initializer.EntityPM.IsCancelled;
             iHousePM.CancelledDate = this.initializer.EntityPM.CancelledDate;
@@ -92,7 +93,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
             iHousePM.AccountingCloseDate = this.initializer.EntityPM.AccountingCloseDate;
             iHousePM.FirstAccountingCloseDate = this.initializer.EntityPM.FirstAccountingCloseDate;
         }
-        private void MapMasterHouseFromPortFields(ShipmentPM iHousePM)
+        private void MapMasterHouseFromPortFields()
         {
             if (iHousePM.FromPortId != this.initializer.EntityPM.MainCarriageFromPortId)
             {
@@ -104,7 +105,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
                 }
             }
         }
-        private void MapMasterHouseToPortFields(ShipmentPM iHousePM)
+        private void MapMasterHouseToPortFields()
         {
             if (iHousePM.ToPortId != this.initializer.EntityPM.MainCarriageFinalDestinationPortId)
             {
@@ -140,7 +141,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
                 }
             }
         }
-        private void UpdateShipment(ShipmentPM iHousePM, bool mapComposition = false)
+        private void UpdateShipment(bool mapComposition = false)
         {
             ShipmentService iShipmentService = new ShipmentService(initializer.ShipmentContext, iHousePM, initializer.LoggedContactEmail);
             iShipmentService.Update(mapComposition);
@@ -153,11 +154,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
 
                 foreach (string id in ids)
                 {
-                    ShipmentPM iHousePM = iShipmentQuery.GetSinglePM(id, initializer.Tenant);
+                    iHousePM = iShipmentQuery.GetSinglePM(id, initializer.Tenant);
 
                     if (iHousePM != null)
                     {
-                        UpdateShipment(iHousePM);
+                        UpdateShipment();
                     }
                 }
             }
@@ -181,15 +182,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
                 ShipmentQuery iShipmentQuery = new ShipmentQuery(initializer.Repository);
                 foreach (string houseId in housesShipmentsIds)
                 {
-                    ShipmentPM iHousePM = iShipmentQuery.GetSinglePM(houseId, this.initializer.Tenant);
-                    UpdateHousePackagesLCLCOntainerType(iHousePM);
-                    UpdateShipment(iHousePM, true);
+                    iHousePM = iShipmentQuery.GetSinglePM(houseId, this.initializer.Tenant);
+                    UpdateHousePackagesLCLCOntainerType();
+                    UpdateShipment(true);
                 }
 
                 initializer.EntityPM.IsGroupageHousesUpdated = false;
             }
         }
-        private void UpdateHousePackagesLCLCOntainerType(ShipmentPM iHousePM)
+        private void UpdateHousePackagesLCLCOntainerType()
         {
             foreach (ShipmentPackagePM package in iHousePM.ShipmentPackages)
             {
