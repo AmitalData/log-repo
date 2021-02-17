@@ -134,7 +134,7 @@ namespace Logitude.Test.Warmup.Steps
 
             return new ShipmentBuilder().WithDefualtValues()
                 .DirectionId((string)dataTable.Direction)
-                //.TransportModeId((string)dataTable.TransportMode)
+                .TransportModeId((string)dataTable.TransportMode)
                 .ShipmentLevelCode((string)dataTable.ShipmentLevel)
                 .OtherPrepaidCollectId((string)dataTable.OtherPrepaidCollect)
                 .FreightPrepaidCollectId((string)dataTable.FreightPrepaidCollect)
