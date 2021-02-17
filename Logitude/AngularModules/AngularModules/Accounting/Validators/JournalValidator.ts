@@ -21,7 +21,7 @@ export class JournalValidator
         return [];
     }
 
-    public static ValidateJournalLine(line: any) {
+    public static ValidateJournalLines(line: any) {
 
         var errors = [];
         if (line) {
@@ -139,18 +139,33 @@ export class JournalValidator
         }
         return errors;
     }
-
+    FillErrorList(result:string[]) {
+        if (result.length > 0) {
+            for (var error in result) {
+                this.errorList.push(result[error]);
+            }
+        }
+      }
+    errorList: string[];
     public Validate(entityPM: JournalPM) {
 
         JournalValidator.CurrentSession = SessionLocator.SelectedSession;
 
-        var errors = [];
+        this.errorList = [];
         var result = [];
         // Validate last row of journal lines
-        if (!AppTool.IsNullOrEmpty(entityPM.JournalLines)) {
-            var lastRow = entityPM.JournalLines[entityPM.JournalLines.length - 1];
+        //if (!AppTool.IsNullOrEmpty(entityPM.JournalLines)) {
+        //    var lastRow = entityPM.JournalLines[entityPM.JournalLines.length - 1];
+        //}
+    
+        for (var line in entityPM.JournalLines) {
+            var journalLine = entityPM.JournalLines[line];
+            result = JournalValidator.ValidateJournalLines(journalLine);
+            this.FillErrorList(result); 
+       
         }
-        result = JournalValidator.ValidateJournalLine(lastRow)
+         
+     
         if (result.length > 0) {
             return result;
         }
@@ -161,7 +176,7 @@ export class JournalValidator
             return result;
         }
 
-        return errors;
+        return this.errorList ;
     }
 
     public static Abs(number: number) {
