@@ -302,43 +302,55 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 
         }
 
-        public TimeSpan? GetAutomationDelayTime(DelaytimeDetails delaytimeDetails, List<Field> automationFieldLists)
+        public TimeSpan? GetAutomationDelayTime(DelaytimeDetails delaytimeDetails, List<Field> automationFieldLists, int tenant)
         {
             TimeSpan? delayTime = null;
             int delay = delaytimeDetails.Delaytime;
-            bool newDelayedQueue = false;
-            DateTime nextRunDate = DateTime.UtcNow;
             if (delaytimeDetails.DelaytimeIndicator == "OO" && delaytimeDetails.Delaytime != 0) delay = delaytimeDetails.Delaytime * 60;
             if (delaytimeDetails.DelaytimeIndicator == "DD" && delaytimeDetails.Delaytime != 0) delay = delaytimeDetails.Delaytime * 60 * 24;
 
             if (!string.IsNullOrEmpty(delaytimeDetails.SelectedDelaytimeFieldCode) && !string.IsNullOrEmpty(delaytimeDetails.DelaytimeOp) && delaytimeDetails.DelaytimeOp != "NL")
             {
-                DateTime nextRunDateBeforeAddDelayed = DateTime.UtcNow;
                 Field field = automationFieldLists.Where(d => d.FieldCode == delaytimeDetails.SelectedDelaytimeFieldCode).FirstOrDefault();
-                if (field != null && !string.IsNullOrEmpty(field.Value))
-                {
-                    nextRunDateBeforeAddDelayed = ConvertToDate(field.Value) ?? nextRunDateBeforeAddDelayed;
-                    nextRunDateBeforeAddDelayed = TimeZoneInfo.ConvertTimeToUtc(nextRunDateBeforeAddDelayed);
-                    //TimeSpan timeSpan = TimeZoneInfo.Local.GetUtcOffset(nextRunDateBeforeAddDelayed);
-                    //nextRunDateBeforeAddDelayed = nextRunDateBeforeAddDelayed.Subtract(timeSpan);
-                    newDelayedQueue = true;
-                }
-                if (delaytimeDetails.DelaytimeOp == "BF") delay = delay * -1;
-                nextRunDate = nextRunDateBeforeAddDelayed.AddMinutes((double)delay);
+                delay = delaytimeDetails.DelaytimeOp == "BF" ? delay * -1 : delay;
+                delayTime = GetFieldServerDelayTime(field, delay, tenant);
             }
             else
             {
-                nextRunDate = nextRunDate.AddMinutes((double)delay);
-                newDelayedQueue = true;
+                DateTime nextRunDate = DateTime.UtcNow.AddMinutes((double)delay);
+                delayTime = nextRunDate - DateTime.UtcNow;
             }
 
-            if (newDelayedQueue)
+            return delayTime;
+        }
+
+        private TimeSpan? GetFieldServerDelayTime(Field field, int delay, int tenant)
+        {
+            TimeSpan? delayTime = null;
+            DateTime nextRunDateBeforeAddDelayed = DateTime.UtcNow;
+            if (field != null && !string.IsNullOrEmpty(field.Value))
             {
+                DateTime? fieldDateValue = ConvertToDate(field.Value);
+                delay = GetServerDelay(fieldDateValue, delay, tenant);
+                DateTime nextRunDate = nextRunDateBeforeAddDelayed.AddMinutes((double)delay);
                 delayTime = nextRunDate - DateTime.UtcNow;
             }
             return delayTime;
+        }
 
+        private int GetServerDelay(DateTime? fieldDateValue, int delay, int tenant)
+        {
+            int serverDelay = 0;
+            if (fieldDateValue != null)
+            {
+                DateTime tenantDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                DateTime fieldDateTime = (DateTime)fieldDateValue;
+                DateTime fieldDateTimeWithTenantDelay = fieldDateTime.AddMinutes((double)delay);
+                TimeSpan serverDelaySpanValue = fieldDateTimeWithTenantDelay - tenantDateTime;
+                serverDelay = (fieldDateTimeWithTenantDelay > tenantDateTime) ? (int)serverDelaySpanValue.TotalMinutes : 0;
+            }
 
+            return serverDelay;
         }
 
         public DateTime? ConvertToDate(string value)
