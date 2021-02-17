@@ -843,7 +843,9 @@ export class AWBPackagesTabComponent extends BaseComponent {
             logitudeWindow.Show("./ShipmentModules/ShipmentAWB/Components/AWBWizard/Packages/AWBAddEditCommodityComponent");
         });
     }
+    AddCommodityPackageClicked(itemComponent: ShipmentCommodityItem,) {
 
+    }
 
     // Single | Multiple Commodities
     // Commodities

@@ -194,8 +194,9 @@
                                                                                 <div style="width: 100%; height: 100%; position: relative;">
                                                                                     <div class="LeftCenter" style="height: 20px;">
                                                                                         <span class="CellSeparator"></span>
+                                                                                        <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddCommodityPackageClicked(item)" [IsEnabled]="IsEditingEnabled"></IconButton>
                                                                                         <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditCommodityClicked(item)"></IconButton>
-                                                                                        <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteCommodityClicked(item)" [disabled]="!item.IsEditingEnabled" *ngIf="item.IsFirstLine"></IconButton>
+                                                                                        <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteCommodityClicked(item)" [IsEnabled]="IsEditingEnabled" *ngIf="!item.IsFirstLine"></IconButton>
                                                                                     </div>
                                                                                 </div>
                                                                             </td>
