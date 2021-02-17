@@ -324,14 +324,12 @@
                                 <div class="value">{{ shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneName : shipment.FutureMilstoneName }} <span *ngIf="shipment.CurrentMilestoneName == null && shipment.FutureMilstoneName!=null"> on {{  shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneDate : shipment.FutureMilstoneDate | date: "d-MMM-y, HH:MM" }}</span></div>
 
                                 <div class="subtitle">Last Updated</div>
-                                <div class="value">{{  shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneDate : shipment.FutureMilstoneDate | date: "d-MMM-y, h:mm" }}</div>
+                                <div class="value">{{  (shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneDate : shipment.FutureMilstoneDate) | date: 'dd/MM/yyyy, HH:MM' }}</div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
-
         </div>
     </div>
 </div>
