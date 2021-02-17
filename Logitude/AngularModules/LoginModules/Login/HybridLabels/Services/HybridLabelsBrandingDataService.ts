@@ -10,7 +10,6 @@ import { ServiceResponse } from '../DataContracts/ServiceResponse';
 @Injectable()
 
 export class HybridLabelsBrandingDataService {
-    private http: Http;
     private _apiUrl: string;
     private httpHeaders: Headers;
     constructor(private _http: Http, @Inject('BASE_URL') baseUrl: string) {

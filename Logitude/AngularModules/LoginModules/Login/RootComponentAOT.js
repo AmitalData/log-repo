@@ -120,7 +120,7 @@ export var RootComponentAOT = (function () {
     };
     RootComponentAOT.prototype.LoadDSVLoginPage = function () {
         console.log("LoadDSVLoginPage");
-        DynamicLoaderAOT.Load("./Login/HybridLabels/Components/HybridResetPasswordComponent", this.location)
+        DynamicLoaderAOT.Load("./Login/HybridLabels/Components/HybridLoginComponent", this.location)
             .then(function (cmpRef) { });
     };
     RootComponentAOT.prototype.LoadDSVMobileLoginPage = function () {

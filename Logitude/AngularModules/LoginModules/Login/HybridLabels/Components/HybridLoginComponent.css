@@ -228,10 +228,7 @@ input:not(.DSVLoginButton) {
         position: relative;
         top: 1px;
     }
-
-
-
-
+      
 .promptButton {
     display: inline-block;
     outline: none;
@@ -275,4 +272,10 @@ MainLogo {
     width: 290px;
     height: 114px;
     float: left; 
-}  
+}
+.image-container {
+    display: flex; 
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}

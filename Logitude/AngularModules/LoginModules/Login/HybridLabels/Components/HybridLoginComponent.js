@@ -10,7 +10,6 @@ import { SessionInfo } from '../../SessionInfo';
 import { Tools } from '../../Utilities/Tools';
 import { BrandingDataService } from '../Services/BrandingDataService';
 import { HybridLabelsBrandingDataService } from '../Services/HybridLabelsBrandingDataService';
-;
 export var HybridLoginComponent = (function (_super) {
     __extends(HybridLoginComponent, _super);
     function HybridLoginComponent(ss, hybridLabelsBrandingDataService) {
@@ -20,17 +19,14 @@ export var HybridLoginComponent = (function (_super) {
         this.MainColor = null;
         this.BackgroundImage = "";
         this.MainImage = "";
-        this.Id = "";
         this.MainLogo = "";
-        this.show = true;
-        this.privateUrl = "http://localhost:9996/";
+        this.SmallLogo = "";
+        this.showSpinner = true;
     }
     HybridLoginComponent.prototype.ngOnInit = function () {
-        console.log("ngOnInit");
         this.get_cookie_data();
         this.privateUrl = SessionInfo.GetLogitudeURL();
         this.GetHybridLabelsData(this.privateUrl);
-        console.log("on init " + this.BackgroundImage);
     };
     HybridLoginComponent.prototype.GetHybridLabelsData = function (privateUrl) {
         var _this = this;
@@ -39,20 +35,14 @@ export var HybridLoginComponent = (function (_super) {
                 _this.Tenant = response.Result.Tenant;
                 BrandingDataService.SetHybridLabelsDataRequest(response.Result, privateUrl);
                 _this.MainColor = response.Result.MainColor;
-                console.log("MainColor " + _this.MainColor);
                 _this.BackgroundImage = BrandingDataService.GetBackgroundImage();
                 _this.MainImage = BrandingDataService.GetMainImage();
-                _this.Id = response.Result.Id;
-                _this.MainLogo = response.Result.MainLogo;
-                console.log("before main logo " + _this.MainLogo);
                 _this.MainLogo = BrandingDataService.GetMainLogo();
-                console.log("after main logo " + _this.MainLogo);
+                _this.SmallLogo = BrandingDataService.GetSmallLogo();
+                _this.showSpinner = false;
             }
         });
     };
-    //  private GoToError401() {
-    //    this.router.navigate(['Error401']);
-    // }
     HybridLoginComponent.prototype.ClearLocation = function () {
         if (SessionInfo.MainLocation) {
             SessionInfo.MainLocation.clear();
@@ -60,7 +50,7 @@ export var HybridLoginComponent = (function (_super) {
     };
     HybridLoginComponent.prototype.ForgotPasswordClicked = function () {
         this.ClearLocation();
-        Tools.DynamicLoader.Load("./Login/Components/DSVResetPasswordComponent", SessionInfo.MainLocation)
+        Tools.DynamicLoader.Load("/Login/HybridLabels/Components/HybridResetPasswordComponent", SessionInfo.MainLocation)
             .then(function (cmpRef) {
         });
     };

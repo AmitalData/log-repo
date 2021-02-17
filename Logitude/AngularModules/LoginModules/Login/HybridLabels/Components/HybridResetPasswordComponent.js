@@ -21,13 +21,11 @@ export var HybridResetPasswordComponent = (function (_super) {
         this.Id = "";
         this.MainLogo = "";
         this.ContactUsEmail = "";
+        this.showSpinner = true;
         this.show = true;
-        //this.privateUrl = "http://localhost:9996/";
     }
     HybridResetPasswordComponent.prototype.ngOnInit = function () {
-        console.log("ngOnInit");
         this.privateUrl = SessionInfo.GetLogitudeURL();
-        console.log("on init " + this.privateUrl);
         this.GetHybridLabelsData(this.privateUrl);
     };
     HybridResetPasswordComponent.prototype.GetHybridLabelsData = function (privateUrl) {
@@ -38,19 +36,11 @@ export var HybridResetPasswordComponent = (function (_super) {
                 _this.ContactUsEmail = response.Result.ContactUsEmail;
                 _this.MainColor = response.Result.MainColor;
                 _this.BackgroundImage = BrandingDataService.GetBackgroundImage();
-                _this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage();
-                _this.Id = response.Result.Id;
-                _this.MainLogo = response.Result.MainLogo;
                 _this.MainLogo = BrandingDataService.GetMainLogo();
-                console.log("BackgroundImage " + _this.BackgroundImage);
-                console.log("ForgetPasswordImage " + _this.ForgetPasswordImage);
-                console.log("MainLogo " + _this.MainLogo);
+                _this.showSpinner = false;
             }
         });
     };
-    //  private GoToError401() {
-    //    this.router.navigate(['Error401']);
-    // }
     HybridResetPasswordComponent.decorators = [
         { type: Component, args: [{
                     selector: 'HybridResetPasswordComponent',

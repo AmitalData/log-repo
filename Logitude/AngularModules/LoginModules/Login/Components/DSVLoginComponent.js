@@ -19,17 +19,13 @@ export var DSVLoginComponent = (function (_super) {
         this.MainColor = null;
         this.BackgroundImage = "";
         this.MainImage = "";
-        this.show = true;
-        this.privateUrl = "http://localhost:9996/";
-        //this.GetHybridLabelsData(this.privateUrl);
-        //console.log("const " + this.BackgroundImage);
+        this.MainLogo = "";
+        this.showSpinner = true;
     }
     DSVLoginComponent.prototype.ngOnInit = function () {
-        console.log("ngOnInit");
         this.get_cookie_data();
         this.privateUrl = SessionInfo.GetLogitudeURL();
         this.GetHybridLabelsData(this.privateUrl);
-        console.log("on init " + this.BackgroundImage);
     };
     DSVLoginComponent.prototype.GetHybridLabelsData = function (privateUrl) {
         var _this = this;
@@ -37,23 +33,14 @@ export var DSVLoginComponent = (function (_super) {
             if (response.Result) {
                 _this.Tenant = response.Result.Tenant;
                 BrandingDataService.SetHybridLabelsDataRequest(response.Result, privateUrl);
-                _this.MainColor = response.Result.MainColor != null ? BrandingDataService.ConvertHexaToRGBA(response.Result.MainColor) : null;
+                _this.MainColor = response.Result.MainColor;
                 _this.BackgroundImage = BrandingDataService.GetBackgroundImage();
                 _this.MainImage = BrandingDataService.GetMainImage();
-                console.log("Inside " + _this.BackgroundImage);
-                //  this.BackgroundImage = `background: url(${this.BackgroundImage})`; 
-                _this.MainImage = BrandingDataService.GetMainImage();
-                console.log("Inside " + _this.MainImage);
+                _this.MainLogo = BrandingDataService.GetMainLogo();
+                _this.showSpinner = false;
             }
-            _this.show = false;
-            //else {
-            //     this.GoToError401();
-            // }
         });
     };
-    //  private GoToError401() {
-    //    this.router.navigate(['Error401']);
-    // }
     DSVLoginComponent.prototype.ClearLocation = function () {
         if (SessionInfo.MainLocation) {
             SessionInfo.MainLocation.clear();

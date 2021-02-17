@@ -2,13 +2,20 @@
 
     public static Id: string;
     public static PrivateLabelName: string
-    public static PrivateLabelUrl: string
-    public static MainLogo: any
-    public static SmallLogo: any 
+    public static PrivateLabelUrl: string 
+     
     public static Tenant: number 
-    public static MainColor: string
+    public static MainColor: string 
 
-    public static MainLogoURL: string;
+    public static MainLogo: any
+    public static MainLogoId: string; 
+    public static MainLogoURL: string; 
+    public static MainLogoBytes: string;
+
+    public static SmallLogo: any 
+    public static SmallLogoId: string;
+    public static SmallLogoURL: string; 
+    public static SmallLogoByte: string; 
 
     
     public static BackgroundImage: string;
