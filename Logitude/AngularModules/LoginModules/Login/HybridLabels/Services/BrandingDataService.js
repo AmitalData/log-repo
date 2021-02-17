@@ -91,6 +91,34 @@ export var BrandingDataService = (function () {
             }
         }
     };
+    BrandingDataService.SetForgetPasswordImage = function (BrandingData) {
+        if (BrandingData.ForgetPasswordImageBytes) {
+            HybridLabelsBrandingData.ForgetPasswordImageURL = "url(" + BrandingDataService.GetImageFromBytes(BrandingData.ForgetPasswordImageBytes) + ")";
+            this.StoreImageInStorage("ForgetPasswordImage", BrandingData.ForgetPasswordImageId, BrandingData.ForgetPasswordImageBytes);
+        }
+        else {
+            var StorageForgetPasswordImage = BrandingDataService.GetImageFromStorage("ForgetPasswordImage");
+            if (StorageForgetPasswordImage && StorageForgetPasswordImage.Id != null && StorageForgetPasswordImage.Id == BrandingData.ForgetPasswordImageId) {
+                HybridLabelsBrandingData.ForgetPasswordImageURL = "url(" + BrandingDataService.GetImageFromBytes(StorageForgetPasswordImage.Data) + ")";
+            }
+            else {
+                // Default
+                HybridLabelsBrandingData.ForgetPasswordImageURL = "url('../../../Images/LoginScreen/shadow2.png')";
+            }
+        }
+    };
+    BrandingDataService.SetFSorgetPasswordImage = function (BrandingData) {
+        if (BrandingData.ForgetPasswordImageBytes) {
+            HybridLabelsBrandingData.ForgetPasswordImageURL = BrandingDataService.GetImageFromBytes(BrandingData.ForgetPasswordImageBytes);
+            this.StoreImageInStorage("ForgetPasswordImage", BrandingData.InvertedLogoId, BrandingData.ForgetPasswordImageBytes);
+        }
+        else {
+            var StorageForgetPasswordImage = BrandingDataService.GetImageFromStorage("ForgetPasswordImage");
+            if (StorageForgetPasswordImage && StorageForgetPasswordImage.Id != null && StorageForgetPasswordImage.Id == BrandingData.ForgetPasswordImage) {
+                HybridLabelsBrandingData.ForgetPasswordImageURL = BrandingDataService.GetImageFromBytes(StorageForgetPasswordImage.Data);
+            }
+        }
+    };
     BrandingDataService.SetLoginProgressImage = function (BrandingData) {
         if (BrandingData.LoginProgressImageBytes) {
             HybridLabelsBrandingData.LoginProgressImageURL = BrandingDataService.GetImageFromBytes(BrandingData.ShipmentHeaderBytes);
@@ -100,18 +128,6 @@ export var BrandingDataService = (function () {
             var StorageLoginProgressImage = BrandingDataService.GetImageFromStorage("LoginProgressImage");
             if (StorageLoginProgressImage && StorageLoginProgressImage.Id != null && StorageLoginProgressImage.Id == BrandingData.LoginProgressImageId) {
                 HybridLabelsBrandingData.LoginProgressImageURL = BrandingDataService.GetImageFromBytes(StorageLoginProgressImage.Data);
-            }
-        }
-    };
-    BrandingDataService.SetForgetPasswordImage = function (BrandingData) {
-        if (BrandingData.ForgetPasswordImageBytes) {
-            HybridLabelsBrandingData.ForgetPasswordImageURL = BrandingDataService.GetImageFromBytes(BrandingData.ForgetPasswordImageBytes);
-            this.StoreImageInStorage("ForgetPasswordImage", BrandingData.InvertedLogoId, BrandingData.ForgetPasswordImageBytes);
-        }
-        else {
-            var StorageForgetPasswordImage = BrandingDataService.GetImageFromStorage("ForgetPasswordImage");
-            if (StorageForgetPasswordImage && StorageForgetPasswordImage.Id != null && StorageForgetPasswordImage.Id == BrandingData.InvertedLogoId) {
-                HybridLabelsBrandingData.ForgetPasswordImageURL = BrandingDataService.GetImageFromBytes(StorageForgetPasswordImage.Data);
             }
         }
     };
@@ -132,31 +148,29 @@ export var BrandingDataService = (function () {
         }
         return ImgId;
     };
+    BrandingDataService.GetForgetPasswordImage = function () {
+        if (HybridLabelsBrandingData.ForgetPasswordImageURL != null)
+            return HybridLabelsBrandingData.ForgetPasswordImageURL;
+        else
+            HybridLabelsBrandingData.ForgetPasswordImageURL = "url('../../../Images/LoginScreen/shadow2.png')";
+    };
     BrandingDataService.GetBackgroundImage = function () {
-        console.log("main Background image  : " + HybridLabelsBrandingData.BackgroundImageURL);
         if (HybridLabelsBrandingData.BackgroundImageURL != null)
             return HybridLabelsBrandingData.BackgroundImageURL;
         else
             HybridLabelsBrandingData.BackgroundImageURL = "url('../../../Images/LoginScreen/shadow2.png')";
     };
     BrandingDataService.GetABackgroundImage = function () {
-        console.log("BACK GROUND : " + HybridLabelsBrandingData.BackgroundImageURL);
-        console.log("BACK tenant : " + HybridLabelsBrandingData.Tenant);
-        console.log(" TTTT " + HybridLabelsBrandingData.Tenant && HybridLabelsBrandingData.BackgroundImageURL != null);
         if (HybridLabelsBrandingData.Tenant && HybridLabelsBrandingData.BackgroundImageURL != null) {
-            console.log("Inside IFFFF  " + HybridLabelsBrandingData.BackgroundImageURL);
             return HybridLabelsBrandingData.BackgroundImageURL;
         }
         else
-            // Default image? 
             HybridLabelsBrandingData.BackgroundImageURL = "url('../../../Images/LoginScreen/shadow2.png')";
     };
     BrandingDataService.GetMainLogo = function () {
-        console.log("MainLogoURL Image  : " + HybridLabelsBrandingData.MainLogoURL);
         if (HybridLabelsBrandingData.MainImageURL != null)
             return HybridLabelsBrandingData.MainLogoURL;
         else
-            // Default image? 
             HybridLabelsBrandingData.MainImageURL = "url('../../../Images/LoginScreen/shadow2.png')";
     };
     BrandingDataService.GetMainImage = function () {
@@ -164,14 +178,6 @@ export var BrandingDataService = (function () {
         if (HybridLabelsBrandingData.MainImageURL != null)
             return HybridLabelsBrandingData.MainImageURL;
         else
-            // Default image? 
-            HybridLabelsBrandingData.MainImageURL = "url('../../../Images/LoginScreen/shadow2.png')";
-    };
-    BrandingDataService.GetAMainImage = function () {
-        if (HybridLabelsBrandingData.Tenant && HybridLabelsBrandingData.MainImageURL != null)
-            return HybridLabelsBrandingData.MainImageURL;
-        else
-            // Default image? 
             HybridLabelsBrandingData.MainImageURL = "url('../../../Images/LoginScreen/shadow2.png')";
     };
     BrandingDataService.GetHeaders = function () {

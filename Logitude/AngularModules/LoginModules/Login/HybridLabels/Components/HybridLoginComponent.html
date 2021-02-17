@@ -1,4 +1,4 @@
-﻿ 
+﻿ HEBA!!!!
 <table class="PreventSelect backgroundImage" [style.background-image]="this.BackgroundImage">
     <tr>
         <td style="width:30%;">
@@ -10,16 +10,15 @@
             <table>
                 <tr style="height: 50px;">
                     <td>
-                        <div [style.background-image]="this.MainLogo">
-
+                        <div> 
                         </div>
                     </td>
                 </tr>
                 
                 <tr style="height: 114px;">
                     <td style="text-align: center;">
-                        <a>
-                            <img class="MainLogo" [src]="MainLogo">
+                        <a> 
+                            <img [src]="MainLogo" id="loginlogo" style="width:290px; height:114px;float:left;" />
                         </a>
                     </td>
                 </tr>
@@ -72,7 +71,7 @@
 
                                                                     <tr [style.height]="IsShowAreaCaptcha ?'50px':'70px'">
                                                                         <td>
-                                                                            <label>E-mail</label>
+                                                                            <label>E-mail HEBA!!!</label>
                                                                             <div>
                                                                                 <input autocomplete="on" size="10" class="auto-style1" [(ngModel)]="Email" ngControl="emailF" required type="email" (blur)="onEmailBlur($event)" (keydown)="OnMouseDownEvt($event)" />
                                                                             </div>
@@ -135,7 +134,7 @@
                                                                                                 <td>
                                                                                                     <div style="margin-left:15px;color:#4B4A4A;font-size:12px;font-family:Arial;float:left;margin-top:2px;">
                                                                                                         Don't have account?
-                                                                                                    </div><a style="margin-left:6px;color:#23347B;font-size:12px;font-weight:bold;font-family:Arial; cursor:pointer;" target="_blank" href="http://digital.dsv.co.il/joinus.html">Join us</a>
+                                                                                                    </div><a  [ngStyle]="MainColor != null ? {'color': MainColor} : {}"  style="margin-left:6px;font-size:12px;font-weight:bold;font-family:Arial; cursor:pointer;" target="_blank" href="http://digital.dsv.co.il/joinus.html">Join us</a>
                                                                                                 </td>
                                                                                             </tr>
                                                                                         </table>

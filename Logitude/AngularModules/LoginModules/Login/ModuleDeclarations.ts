@@ -6,7 +6,8 @@ import {DSVChangePasswordComponent} from './Components/DSVChangePasswordComponen
 import {ResetPasswordComponent} from './Components/ResetPasswordComponent'
 import {RootComponent}   from './RootComponent';
 import {DSVResetPasswordComponent} from './Components/DSVResetPasswordComponent'
-import { HybridLoginComponent } from './HybridLabels/Components/HybridLoginComponent';
+import { HybridLoginComponent } from './HybridLabels/Components/HybridLoginComponent';  
+import { HybridResetPasswordComponent } from './HybridLabels/Components/HybridResetPasswordComponent';
 export const LoginComponents =
     [
         LoginComponent,
@@ -17,7 +18,8 @@ export const LoginComponents =
         ResetPasswordComponent,
         DSVResetPasswordComponent,
         DSVMobileLoginComponent,
-        HybridLoginComponent
+        HybridLoginComponent,
+        HybridResetPasswordComponent
     ];
 
 export class LoginModuleDeclarations {
@@ -36,6 +38,9 @@ export class LoginModuleDeclarations {
             case "DSVResetPasswordComponent": { myResult = DSVResetPasswordComponent; break; }
             case "DSVMobileLoginComponent": { myResult = DSVMobileLoginComponent; break; }
             case "HybridLoginComponent": { myResult = HybridLoginComponent; break; }
+            case "HybridResetPasswordComponent": { myResult = HybridResetPasswordComponent; break; }
+
+                 
 
         }
 

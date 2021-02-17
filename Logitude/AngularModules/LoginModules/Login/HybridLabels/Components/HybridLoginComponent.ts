@@ -29,6 +29,7 @@ export class HybridLoginComponent extends LoginComponent implements OnInit {
 
     public show = true;
     constructor( 
+        private router: Router,
         private ss: LoginService,
         private hybridLabelsBrandingDataService: HybridLabelsBrandingDataService) {
         super(ss);
@@ -49,7 +50,9 @@ export class HybridLoginComponent extends LoginComponent implements OnInit {
             if (response.Result) {
                 this.Tenant = response.Result.Tenant;
                 BrandingDataService.SetHybridLabelsDataRequest(response.Result, privateUrl);
-                this.MainColor = response.Result.MainColor != null ? BrandingDataService.ConvertHexaToRGBA(response.Result.MainColor) : null;
+                this.MainColor = response.Result.MainColor;
+
+                console.log("MainColor " + this.MainColor);
                 this.BackgroundImage = BrandingDataService.GetBackgroundImage();
                 this.MainImage = BrandingDataService.GetMainImage();
                 this.Id = response.Result.Id;
