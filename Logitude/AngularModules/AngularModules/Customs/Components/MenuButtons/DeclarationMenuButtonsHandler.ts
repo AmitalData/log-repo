@@ -1263,7 +1263,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     }
 
     ActivateUnifreightInstruction() {
-        if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+        if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse || this.EntityPM.Direction == "E") {
             this.OpenDeclarationPaymentComponent();
             return;
         }
