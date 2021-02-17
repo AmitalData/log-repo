@@ -389,8 +389,28 @@ export class ConsigmentTabContentComponent
         this.Tab.Header = (newValue ? (newValue + '-') : '') + this.EntityPM.SequenceNumeric;
     }
 
-    public get IsLastReleaseFromWarehous() { return this.EntityPM.IsLastReleaseFromWarehous == "T" ? true : false; }
-    public set IsLastReleaseFromWarehous(newValue: boolean) { newValue ? this.EntityPM.IsLastReleaseFromWarehous = "T" : this.EntityPM.IsLastReleaseFromWarehous = "N" ; }
+    //public get IsLastReleaseFromWarehous() { return this.EntityPM.IsLastReleaseFromWarehous == "T" ? true : false; }
+    //public set IsLastReleaseFromWarehous(newValue: boolean) { newValue ? this.EntityPM.IsLastReleaseFromWarehous = "T" : this.EntityPM.IsLastReleaseFromWarehous = "N" ; }
+
+    public get IsLastReleaseFromWarehous() {
+        ///return this.EntityPM ? this.EntityPM.IsLastReleaseFromWarehous : null;
+        if (this.EntityPM == null) {
+            return null;
+        }
+        if (this.declarationPM.Direction == "E") {
+            return this.EntityPM.IsLastReleaseFromWarehous == "T" ? true : false; 
+        }
+        return this.EntityPM.IsLastReleaseFromWarehous;
+    }
+    public set IsLastReleaseFromWarehous(newValue: any/* string | boolean*/) {
+        if (this.declarationPM.Direction == "E") {
+            newValue ? this.EntityPM.IsLastReleaseFromWarehous = "T" : this.EntityPM.IsLastReleaseFromWarehous = "N";
+        } else {
+            let myIsLastReleaseFromWarehous: string = newValue
+            this.EntityPM.IsLastReleaseFromWarehous = myIsLastReleaseFromWarehous;
+        }
+    }
+
 
     public get OriginalCountryCode() { return this.EntityPM ? this.EntityPM.OriginCountryCode : null; }
     public set OriginalCountryCode(newValue: string) { this.EntityPM.OriginCountryCode = newValue; }
