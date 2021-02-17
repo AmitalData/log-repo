@@ -509,22 +509,26 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.CustomerPaymentTerm = item.AccountTermLocalName;
                     record.GLAccountStandardInterestRate = item.GLAccountStandardInterestRate;
 
-                    //record.AccountSalesmanName = item.AccountSalesmanName;
-                    //record.AccountSalesmanLocalName = item.AccountSalesmanLocalName;
-                    //record.AccountCollectorName = item.AccountCollectorName;
-                    //record.AccountCollectorLocalName = item.AccountCollectorLocalName;
-                    //record.Category1Name = item.Category1Name;
-                    //record.Category2Name = item.Category2Name;
-                    //record.Category3Name = item.Category3Name;
-                    //record.Category4Name = item.Category4Name;
-                    //record.Category5Name = item.Category5Name;
-                    //record.Category6Name = item.Category6Name;
-                    //record.Category1LocalName = item.Category1LocalName;
-                    //record.Category2LocalName = item.Category2LocalName;
-                    //record.Category3LocalName = item.Category3LocalName;
-                    //record.Category4LocalName = item.Category4LocalName;
-                    //record.Category5LocalName = item.Category5LocalName;
-                    //record.Category6LocalName = item.Category6LocalName;
+                    record.ChartOfAccountsLocalName = item.ChartOfAccountsLocalName;
+                    record.ChartOfAccountsEnglishName = item.ChartOfAccountsEnglishName;
+                    record.ChartOfAccountsTypeEnglishName = item.ChartOfAccountsTypeEnglishName;
+                    record.ChartOfAccountsTypeLocalName = item.ChartOfAccountsTypeLocalName;
+
+
+                    record.AccountSalesmanName = item.AccountSalesmanName;
+                    record.AccountSalesmanLocalName = item.AccountSalesmanLocalName;
+                    record.AccountCollectorName = item.AccountCollectorName;
+                    record.AccountCollectorLocalName = item.AccountCollectorLocalName;
+                    record.Category1Name = item.Category1Name;
+                    record.Category2Name = item.Category2Name;
+                    record.Category3Name = item.Category3Name;
+                    record.Category4Name = item.Category4Name;
+                    record.Category5Name = item.Category5Name;
+                    record.Category1LocalName = item.Category1LocalName;
+                    record.Category2LocalName = item.Category2LocalName;
+                    record.Category3LocalName = item.Category3LocalName;
+                    record.Category4LocalName = item.Category4LocalName;
+                    record.Category5LocalName = item.Category5LocalName;
 
                     record.Total = item.Total;
 
@@ -549,22 +553,26 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.CustomerVatNumber = item.CustomerVatNumber;
                     record.CustomerPaymentTerm = item.AccountTermLocalName;
                     record.GLAccountStandardInterestRate = item.GLAccountStandardInterestRate;
-                    //record.AccountSalesmanName = item.AccountSalesmanName;
-                    //record.AccountSalesmanLocalName = item.AccountSalesmanLocalName;
-                    //record.AccountCollectorName = item.AccountCollectorName;
-                    //record.AccountCollectorLocalName = item.AccountCollectorLocalName;
-                    //record.Category1Name = item.Category1Name;
-                    //record.Category2Name = item.Category2Name;
-                    //record.Category3Name = item.Category3Name;
-                    //record.Category4Name = item.Category4Name;
-                    //record.Category5Name = item.Category5Name;
-                    //record.Category6Name = item.Category6Name;
-                    //record.Category1LocalName = item.Category1LocalName;
-                    //record.Category2LocalName = item.Category2LocalName;
-                    //record.Category3LocalName = item.Category3LocalName;
-                    //record.Category4LocalName = item.Category4LocalName;
-                    //record.Category5LocalName = item.Category5LocalName;
-                    //record.Category6LocalName = item.Category6LocalName;
+
+                    record.ChartOfAccountsLocalName = item.ChartOfAccountsLocalName;
+                    record.ChartOfAccountsEnglishName = item.ChartOfAccountsEnglishName;
+                    record.ChartOfAccountsTypeEnglishName = item.ChartOfAccountsTypeEnglishName;
+                    record.ChartOfAccountsTypeLocalName = item.ChartOfAccountsTypeLocalName;
+
+                    record.AccountSalesmanName = item.AccountSalesmanName;
+                    record.AccountSalesmanLocalName = item.AccountSalesmanLocalName;
+                    record.AccountCollectorName = item.AccountCollectorName;
+                    record.AccountCollectorLocalName = item.AccountCollectorLocalName;
+                    record.Category1Name = item.Category1Name;
+                    record.Category2Name = item.Category2Name;
+                    record.Category3Name = item.Category3Name;
+                    record.Category4Name = item.Category4Name;
+                    record.Category5Name = item.Category5Name;
+                    record.Category1LocalName = item.Category1LocalName;
+                    record.Category2LocalName = item.Category2LocalName;
+                    record.Category3LocalName = item.Category3LocalName;
+                    record.Category4LocalName = item.Category4LocalName;
+                    record.Category5LocalName = item.Category5LocalName;
 
                     record.Total = item.Total;
 
