@@ -439,3 +439,13 @@ function FillTariffUpdatePrice(stepNumber: number, price: string) {
     }
 }
 
+export function UploadExcelFile(){
+    cy.Click(TariffSelectors.TariffActionsMenu, "Actions");
+    const fileName = 'Tariff-1168-17-02-2021.xls'
+    cy.DefineRequestWait(RestAPI.POST, Urls.PostUploadExcelFile, RequestAliases.WaitUpload)
+    cy.fixture(fileName,'binary')
+    .then(Cypress.Blob.binaryStringToBlob)
+    .then(fileContent => {
+      cy.get('input.upload').attachFile({ fileContent, fileName, mimeType:'application/vnd.ms-excel',encoding:'utf8' })
+    })
+}
