@@ -111,8 +111,6 @@
                 <p style="font-size: 14px;">
                     An error occurred while searching, please try again.
                 </p>
-                <p *ngIf="!showErrorMessage" style="cursor: pointer;text-decoration: underline;">Show Error</p>
-
                 <p *ngIf="showErrorMessage">{{ServiceError.ErrorMessage}}</p>
 
             </div>
