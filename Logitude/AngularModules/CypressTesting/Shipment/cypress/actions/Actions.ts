@@ -262,6 +262,8 @@ export function FillPayablesTab(payableDetails: PayableDetails) {
     cy.FillLogTextBox(ShipmentSelectors.ShipmentPayableQuantity, payableDetails.Quantity.toString());
     cy.FillLogTextBox(ShipmentSelectors.ShipmentPayableUnitPrice, payableDetails.UnitPrice.toString());
     cy.FillLogLov(ShipmentSelectors.ShipmentPayableCurrency, payableDetails.Currency, true)
+    cy.FillLogTextBox(ShipmentSelectors.ShipmentPayableRate,payableDetails.ExchangeRate.toString());
+
     if (payableDetails.Vendor) {
         cy.FillLogLov(ShipmentSelectors.ShipmentPayableVendor, payableDetails.Vendor, true)
         cy.DefineRequestWait(RestAPI.GET, '**/cardviews/**', 'cardviews')
