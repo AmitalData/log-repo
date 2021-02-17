@@ -37,12 +37,13 @@ export class AWBPackagesTabComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     private firstDigit: string = ",";
     private secondDigit: string = ".";
+    IsMultipleCommoditiesVisible: boolean = false;
     constructor() {
         super();
         this.DomainService = new ShipmentDomainService();
         this.ItemsSource = [];
         this.ItemsSourceOfCommodities = new ObservableCollection([]);
-        this.setDigits();
+        this.setDigits();       
     }
 
     InitTab(wizard: AWBWizardComponent) {
@@ -55,6 +56,13 @@ export class AWBPackagesTabComponent extends BaseComponent {
         this.Listen();
         this.Validate();
         this.SetUIProperties();
+
+        if (this.EntityPM.ShipmentLevelCode != 'H') {
+            var hasToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "AMC" && d.TenantNumber == SessionLocator.Tenant)[0]
+            if (hasToggleFeature) {
+                this.IsMultipleCommoditiesVisible = true;
+            }
+        }
     }
 
     RefreshTab() {

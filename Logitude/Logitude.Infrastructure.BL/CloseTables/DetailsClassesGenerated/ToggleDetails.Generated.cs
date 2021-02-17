@@ -224,14 +224,23 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "TAR,All Tariffs", 
                 Description = "Hide Tariffs Menu", 
 			});
-
-			 all.Add(new ToggleDetails()
+			 
+            all.Add(new ToggleDetails()
             {    
                 Code = "QMC", 
                 Name = "Quote Multi Currency Mode", 
                 SearchFields = "QMC, Quote Multi Currency Mode", 
                 Description = "Quote Multi Currency Mode", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "AWB Multiple Commodities", 
+                Code = "AMC", 
+                SearchFields = "AMC,AWB Multiple Commodities", 
+                Description = "AWB Multiple Commodities", 
+			});
+			
             return all;
        }
 

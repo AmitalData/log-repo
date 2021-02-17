@@ -9,11 +9,11 @@
                             <td>
                                 <table>
                                     <tr>
-                                        <td *ngIf="ShipmentLevelCode != 'H'" style="width: 1px;">
+                                        <td *ngIf="IsMultipleCommoditiesVisible" style="width: 1px;">
                                             <RadioButton [Name]="'MultipleCommoditiesRadio'" [IsChecked]="!IsMultipleCommodities" (Checked)="SetMultipleCommodities(false)" [Text]="'Single Commodity'" [IsEnabled]="IsEditingEnabled"></RadioButton>
                                         </td>
 
-                                        <td *ngIf="ShipmentLevelCode != 'H'" style="width: 1px; padding-left: 10px;">
+                                        <td *ngIf="IsMultipleCommoditiesVisible" style="width: 1px; padding-left: 10px;">
                                             <RadioButton [Name]="'MultipleCommoditiesRadio'" [IsChecked]="IsMultipleCommodities" (Checked)="SetMultipleCommodities(true)" [Text]="'Multiple Commodities'" [IsEnabled]="IsEditingEnabled"></RadioButton>
                                         </td>
 
