@@ -716,11 +716,11 @@
     <div class="footer-summery">
       <div class="footer-cell" [class.border-left]="isRTL" style="text-align: right;" [style.float]="isRTL ? 'right' : 'left'">
         <div style="font-size: 15px; color: #008c7a; font-weight: bold;">{{creditTotal | NumbersPipe:'N2'}}</div>
-        <div style="font-size: 13px; color: #6f6f6f;">{{'Accounting.General.O.Credit' | TextCodeTranslationPipe}}({{Currency ? Currency.Code : ''}})</div>
+        <div style="font-size: 13px; color: #6f6f6f;">{{'Accounting.General.O.Credit' | TextCodeTranslationPipe}}({{TenantCurrency}})</div>
       </div>
       <div class="footer-cell" [class.border-left]="!isRTL" style="text-align: left;" [style.float]="isRTL ? 'right' : 'left'">
         <div style="font-size: 15px; color: #9e4300; font-weight: bold;">{{debitTotal | NumbersPipe:'N2'}}</div>
-        <div style="font-size: 13px; color: #6f6f6f;">{{'Accounting.General.O.Debit' | TextCodeTranslationPipe}}({{Currency ? Currency.Code : ''}})</div>
+        <div style="font-size: 13px; color: #6f6f6f;">{{'Accounting.General.O.Debit' | TextCodeTranslationPipe}}({{TenantCurrency}})</div>
       </div>
     </div>
 
