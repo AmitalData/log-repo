@@ -32,7 +32,7 @@ export class AWBAddEditCommodityComponent {
 
     public ChargeableWeightLabel: string;
     SetLabels() {
-        this.ChargeableWeightLabel = TextCodeTranslator.Translate("ShipmentCommodity.F.ChargeableWeight").replace('%ChargWeightCode', this.DataContext.ShipmentPM.ChargeableWeightUnitCode);
+        this.ChargeableWeightLabel = this.DataContext.fatherComponent.ChargeableWeightLabel;
     }
 
     CancelButtonClicked() {

@@ -16,6 +16,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 import { ShipmentCommodityPM } from '../../../../../Shipment/EntityPMs/ShipmentCommodityPM';
 import { CommodityPackagePM } from '../../../../../Shipment/EntityPMs/CommodityPackagePM';
 import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
+import { forEach } from 'cypress/types/lodash';
 
 @Component({    
     selector: 'AWBPackagesTabComponent',
@@ -658,54 +659,91 @@ export class AWBPackagesTabComponent extends BaseComponent {
     }
     ComputeTotals() {
 
-        if (this.EntityPM.ShipmentPackages.length == 0) {
-            this.EntityPM.NumberOfPackages = null;
-            this.EntityPM.GrossWeight = null;
-            this.EntityPM.Volume = null;
-            this.EntityPM.VolumetricWeight = null;
-            this.EntityPM.ChargeableWeight = null;
-            this.EntityPM.AWBCommodityItemNumber = null;
-            this.EntityPM.GrossWeightEdited = false;
-            this.EntityPM.ChargeableWeightEdited = false;
+        if (this.IsMultipleCommodities) {
+            if (this.ItemsSourceOfCommodities.Length == 0) {
+                this.EntityPM.NumberOfPackages = null;
+                this.EntityPM.GrossWeight = null;
+                this.EntityPM.Volume = null;
+                this.EntityPM.VolumetricWeight = null;
+                this.EntityPM.ChargeableWeight = null;
+                this.EntityPM.AWBCommodityItemNumber = null;
+                this.EntityPM.GrossWeightEdited = false;
+                this.EntityPM.ChargeableWeightEdited = false;
+                this.EntityPM.AWBChargeAmount = null;
+            }
+
+            else {
+                if (this.EntityPM.ShipmentCommodities.length == 0) {
+                    this.EntityPM.GrossWeightEdited = false;
+                    this.EntityPM.ChargeableWeightEdited = false;
+                }
+
+                this.NumberOfPackages = ArrayTool.Sum(this.ItemsSourceOfCommodities.Collection, 'NumberOfPackages');
+                this.Volume = ArrayTool.Sum(this.ItemsSourceOfCommodities.Collection, 'Volume');
+                this.VolumetricWeight = ArrayTool.Sum(this.ItemsSourceOfCommodities.Collection, 'VolumetricWeight');
+
+                if (!this.EntityPM.GrossWeightEdited) {
+                    this.GrossWeight = ArrayTool.Sum(this.ItemsSourceOfCommodities.Collection, 'GrossWeight');
+                }
+
+                if (!this.EntityPM.ChargeableWeightEdited) {
+                    this.ChargeableWeight = ArrayTool.Sum(this.ItemsSourceOfCommodities.Collection, 'ChargeableWeight');
+                }
+
+                this.EntityPM.AWBChargeAmount = ArrayTool.Sum(this.ItemsSourceOfCommodities.Collection, 'ChargeAmount');
+            }
         }
 
         else {
+            if (this.EntityPM.ShipmentPackages.length == 0) {
+                this.EntityPM.NumberOfPackages = null;
+                this.EntityPM.GrossWeight = null;
+                this.EntityPM.Volume = null;
+                this.EntityPM.VolumetricWeight = null;
+                this.EntityPM.ChargeableWeight = null;
+                this.EntityPM.AWBCommodityItemNumber = null;
+                this.EntityPM.GrossWeightEdited = false;
+                this.EntityPM.ChargeableWeightEdited = false;
+            }
 
-            var myQuantity: number = 0;
-            var myVolume: number = 0;
-            var myGrossWeight: number = 0;
-            var myVolumetricWeight: number = 0;
+            else {
 
-            this.EntityPM.ShipmentPackages.forEach((item) => {
+                var myQuantity: number = 0;
+                var myVolume: number = 0;
+                var myGrossWeight: number = 0;
+                var myVolumetricWeight: number = 0;
 
-                if (!AppTool.IsNullOrEmpty(item.Quantity)) {
-                    myQuantity += item.Quantity;
-                }
+                this.EntityPM.ShipmentPackages.forEach((item) => {
 
-                if (!AppTool.IsNullOrEmpty(item.Volume)) {
-                    myVolume += item.Volume;
-                }
+                    if (!AppTool.IsNullOrEmpty(item.Quantity)) {
+                        myQuantity += item.Quantity;
+                    }
 
-                if (!AppTool.IsNullOrEmpty(item.VolumetricWeight)) {
-                    myVolumetricWeight += item.VolumetricWeight;
-                }
+                    if (!AppTool.IsNullOrEmpty(item.Volume)) {
+                        myVolume += item.Volume;
+                    }
 
-                if (!AppTool.IsNullOrEmpty(item.Weight)) {
-                    myGrossWeight += item.Weight;
-                }
-            })
-        }
+                    if (!AppTool.IsNullOrEmpty(item.VolumetricWeight)) {
+                        myVolumetricWeight += item.VolumetricWeight;
+                    }
 
-        this.NumberOfPackages = myQuantity;
-        this.Volume = myVolume;
-        this.VolumetricWeight = myVolumetricWeight;
+                    if (!AppTool.IsNullOrEmpty(item.Weight)) {
+                        myGrossWeight += item.Weight;
+                    }
+                })
+            }
 
-        if (!this.EntityPM.GrossWeightEdited) {
-            this.GrossWeight = AppTool.Round(myGrossWeight, 3);
-        }
+            this.NumberOfPackages = myQuantity;
+            this.Volume = myVolume;
+            this.VolumetricWeight = myVolumetricWeight;
 
-        if (!this.EntityPM.ChargeableWeightEdited) {
-            this.ChargeableWeight = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+            if (!this.EntityPM.GrossWeightEdited) {
+                this.GrossWeight = AppTool.Round(myGrossWeight, 3);
+            }
+
+            if (!this.EntityPM.ChargeableWeightEdited) {
+                this.ChargeableWeight = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+            }
         }
 
         this.SetUIProperties();
@@ -843,9 +881,6 @@ export class AWBPackagesTabComponent extends BaseComponent {
             logitudeWindow.Show("./ShipmentModules/ShipmentAWB/Components/AWBWizard/Packages/AWBAddEditCommodityComponent");
         });
     }
-    AddCommodityPackageClicked(itemComponent: ShipmentCommodityItem,) {
-
-    }
 
     // Single | Multiple Commodities
     // Commodities
@@ -908,6 +943,9 @@ export class AWBPackagesTabComponent extends BaseComponent {
         }
 
         if (this.IsMultipleCommodities) {
+
+            baseCommodityPM.CommodityPackages = [];
+
             this.EntityPM.ShipmentPackages.forEach((item: ShipmentPackagePM) => {
                 var newItem: CommodityPackagePM = new CommodityPackagePM(baseCommodityPM);
                 newItem.ShipmentId = item.ShipmentId;
@@ -1240,14 +1278,14 @@ export class ShipmentCommodityItem extends BaseComponent {
     public ObjectTableName: string = "ShipmentCommodity";
     public IsNewEntity: boolean = false;
     public IsWindowMode: boolean = false;
-    public CommodityPackages: any[] = [];
+    public ItemsSource: CommodityPackageItem[] = [];
     constructor(entityPM: ShipmentCommodityPM, isNew: boolean, public fatherComponent: AWBPackagesTabComponent) {
         super();
         this.EntityPM = entityPM;
         this.ShipmentPM = fatherComponent.EntityPM;
-        this.CommodityPackages = this.EntityPM.CommodityPackages;
         this.IsNewEntity = isNew;
         this.SetUIProperties();
+        this.BuildItemsSource();
     }
 
     IsEditingEnabled: boolean = false;
@@ -1257,7 +1295,7 @@ export class ShipmentCommodityItem extends BaseComponent {
 
         var isFieldEnabled = false;
         if (this.IsEditingEnabled) {
-            if (this.CommodityPackages.length == 0) {
+            if (this.ItemsSource.length == 0) {
                 isFieldEnabled = true;
             }
         }
@@ -1409,7 +1447,16 @@ export class ShipmentCommodityItem extends BaseComponent {
         }
     }
 
-    public ComputeTotals() {
+    BuildItemsSource() {
+
+        this.ItemsSource = [];
+
+        this.EntityPM.CommodityPackages.forEach((item: CommodityPackagePM) => {
+            this.ItemsSource.push(new CommodityPackageItem(item, this, false));
+        });
+    }
+
+    ComputeTotals() {
         if (this.EntityPM.CommodityPackages.length == 0) {
             this.EntityPM.Volume = null;
             this.EntityPM.GrossWeight = null;
@@ -1451,12 +1498,50 @@ export class ShipmentCommodityItem extends BaseComponent {
         this.fatherComponent.ComputeTotals();
     }
 
+    AddCommodityPackageClicked() {
+        var newItem: CommodityPackagePM = new CommodityPackagePM(null);
+        newItem.ShipmentId = this.ShipmentPM.Id;
+        newItem.ShipmentNumber = this.ShipmentPM.ShipmentNumber;
+        newItem.CommodityId = this.EntityPM.Id;
+        newItem.Tenant = SessionLocator.Tenant;
+        var itemComponent = new CommodityPackageItem(newItem, this, true);
+        this.RunCommodityPackageWindow(itemComponent, "Add Commodity Package");
+
+    }
+    EditCommodityPackageClicked(itemComponent: CommodityPackageItem) {
+        this.RunCommodityPackageWindow(itemComponent, "Edit Commodity Package");
+    }
+    DeleteCommodityPackageClicked(itemComponent: CommodityPackageItem) {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("Delete this Package?");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+
+                this.EntityPM.RemoveCommodityPackagePM(itemComponent.EntityPM);
+
+                this.BuildItemsSource();
+                this.ComputeTotals();
+
+                if (this.EntityPM.CommodityPackages.length == 0) {
+                    this.fatherComponent.BuildData();
+                }
+            }
+        });
+    }
+    RunCommodityPackageWindow(itemComponent: CommodityPackageItem, windowTitle: string) {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Title = windowTitle;
+        logitudeWindow.DataContext = itemComponent;
+        logitudeWindow.Show("./ShipmentModules/ShipmentAWB/Components/AWBWizard/Packages/AWBAddEditCommodityPackageComponent");
+    }
+
 }
 export class CommodityPackageItem extends BaseComponent {
     public DataContext: CommodityPackageItem = this;
     public EntityPM: CommodityPackagePM;
     public ShipmentPM: ShipmentPM;
-    public ObjectTableName: string = "CommodityPackage";
+    public CommodityPM: ShipmentCommodityPM;
+    public ObjectTableName: string = "ShipmentPackage";
     public IsNewEntity: boolean = false;
     public IsWindowMode: boolean = false;
     constructor(entityPM: CommodityPackagePM, public fatherComponent: ShipmentCommodityItem, isNew: boolean) {
@@ -1464,6 +1549,7 @@ export class CommodityPackageItem extends BaseComponent {
 
         this.EntityPM = entityPM;
         this.ShipmentPM = fatherComponent.ShipmentPM;
+        this.CommodityPM = fatherComponent.EntityPM;
         this.IsNewEntity = isNew;
         this.SetUIProperties();
     }

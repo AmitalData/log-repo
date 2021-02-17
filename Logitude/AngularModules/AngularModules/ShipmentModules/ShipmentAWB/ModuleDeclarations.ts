@@ -8,6 +8,7 @@ import {AWBHouseRoutingsTabComponent} from './Components/AWBWizard/Routings/AWBH
 import {AWBPackagesTabComponent} from './Components/AWBWizard/Packages/AWBPackagesTabComponent';
 import { AWBAddEditPackageComponent } from './Components/AWBWizard/Packages/AWBAddEditPackageComponent';
 import { AWBAddEditCommodityComponent } from './Components/AWBWizard/Packages/AWBAddEditCommodityComponent';
+import { AWBAddEditCommodityPackageComponent } from './Components/AWBWizard/Packages/AWBAddEditCommodityPackageComponent';
 import {AWBChooseCommodityComponent} from './Components/AWBWizard/Packages/AWBChooseCommodityComponent';
 import {AWBDangerousPackageComponent} from './Components/AWBWizard/Packages/AWBDangerousPackageComponent';
 import {FreightChargesTabComponent} from './Components/AWBWizard/FreightCharges/FreightChargesTabComponent';
@@ -40,6 +41,7 @@ export const Components =
         AWBPackagesTabComponent,
         AWBAddEditPackageComponent,
         AWBAddEditCommodityComponent,
+        AWBAddEditCommodityPackageComponent,
         AWBChooseCommodityComponent,
         AWBDangerousPackageComponent,
         FreightChargesTabComponent,
@@ -76,7 +78,8 @@ export class ModuleDeclarations {
             case "AWBHouseRoutingsTabComponent": { myResult = AWBHouseRoutingsTabComponent; break; }
             case "AWBPackagesTabComponent": { myResult = AWBPackagesTabComponent; break; }
             case "AWBAddEditPackageComponent": { myResult = AWBAddEditPackageComponent; break; }
-            case "AWBAddEditCommodityComponent": { myResult = AWBAddEditCommodityComponent; break; }                
+            case "AWBAddEditCommodityComponent": { myResult = AWBAddEditCommodityComponent; break; }
+            case "AWBAddEditCommodityPackageComponent": { myResult = AWBAddEditCommodityPackageComponent; break; }                
             case "AWBChooseCommodityComponent": { myResult = AWBChooseCommodityComponent; break; }
             case "AWBDangerousPackageComponent": { myResult = AWBDangerousPackageComponent; break; }
             case "FreightChargesTabComponent": { myResult = FreightChargesTabComponent; break; }

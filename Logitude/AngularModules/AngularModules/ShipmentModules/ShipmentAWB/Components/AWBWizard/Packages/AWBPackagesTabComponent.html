@@ -147,7 +147,7 @@
                                         <log-row-details>
                                             <row-template>
                                                 <ng-template let-item>
-                                                    <div style="min-height: 80px; width: 100%; background: #E8F7FF; position: relative;" [style.height.px]="(item.CommodityPackages.length * 26) + 20 + 28 + 25">
+                                                    <div style="min-height: 80px; width: 100%; background: #E8F7FF; position: relative;" [style.height.px]="(item.ItemsSource.length * 26) + 20 + 28 + 25">
                                                         <div style="position: absolute; top: 10px; right: 10px; bottom: 10px; left: 10px;">
                                                             <div class="SimpleGridView" style="background: none; border: 1px solid #85CBED;">
                                                                 <div class="SimpleGridViewHeader" style="background: none; border: none; border-bottom: 1px solid #85CBED;">
@@ -168,7 +168,7 @@
 
                                                                 <div class="SimpleGridViewBody">
                                                                     <table>
-                                                                        <tr class="SimpleGridViewRow" *ngFor="let insideItem of item.CommodityPackages">
+                                                                        <tr class="SimpleGridViewRow" *ngFor="let insideItem of item.ItemsSource">
 
                                                                             <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px; text-align: right;">
                                                                                 {{insideItem.Quantity}}
@@ -194,9 +194,8 @@
                                                                                 <div style="width: 100%; height: 100%; position: relative;">
                                                                                     <div class="LeftCenter" style="height: 20px;">
                                                                                         <span class="CellSeparator"></span>
-                                                                                        <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddCommodityPackageClicked(item)" [IsEnabled]="IsEditingEnabled"></IconButton>
-                                                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditCommodityClicked(item)"></IconButton>
-                                                                                        <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteCommodityClicked(item)" [IsEnabled]="IsEditingEnabled" *ngIf="!item.IsFirstLine"></IconButton>
+                                                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="item.EditCommodityPackageClicked(insideItem)"></IconButton>
+                                                                                        <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="item.DeleteCommodityPackageClicked(insideItem)" [IsEnabled]="IsEditingEnabled"></IconButton>
                                                                                     </div>
                                                                                 </div>
                                                                             </td>
@@ -204,24 +203,24 @@
 
                                                                         <tr style="height: 25px;">
 
-                                                                            <td style="width: 100px; min-width: 100px; max-width: 100px;">
-                                                                                <div></div>
-                                                                            </td>
-
-                                                                            <td style="width: 160px; min-width: 160px; max-width: 160px; text-align: right;">
-                                                                                {{item.SumOfQuantity | NumbersPipe:'N2'}}
-                                                                            </td>
-
-                                                                            <td style="width: 120px; min-width: 120px; max-width: 120px;">
-                                                                                <div></div>
+                                                                            <td style="width: 100px; min-width: 100px; max-width: 100px; text-align: right;">
+                                                                                {{item.EntityPM.NumberOfPackages}}
                                                                             </td>
 
                                                                             <td style="width: 160px; min-width: 160px; max-width: 160px; text-align: right;">
                                                                                 <div></div>
                                                                             </td>
 
-                                                                            <td style="width: 120px; min-width: 120px; max-width: 120px;">
-                                                                                <div></div>
+                                                                            <td style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
+                                                                                {{item.EntityPM.Volume | NumbersPipe:'N3'}}
+                                                                            </td>
+
+                                                                            <td style="width: 160px; min-width: 160px; max-width: 160px; text-align: right;">
+                                                                                {{item.EntityPM.VolumetricWeight | NumbersPipe:'N3'}}
+                                                                            </td>
+
+                                                                            <td style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
+                                                                                {{item.EntityPM.GrossWeight | NumbersPipe:'N3'}}
                                                                             </td>
 
                                                                             <td>
@@ -263,7 +262,7 @@
                                         </log-column>
 
                                         <!-- ChargeableWeight  -->
-                                        <log-column [width]="'150'" [header]="'ShipmentCommodity.F.ChargeableWeight' | TextCodeTranslationPipe">
+                                        <log-column [width]="'150'" [header]="ChargeableWeightLabel">
                                             <ng-template let-item>
                                                 <log-cell-template #logcelltemplate [IsEnabled]="false">
                                                     {{item.ChargeableWeight | NumbersPipe:'N3'}}
@@ -281,14 +280,15 @@
                                         </log-column>
 
                                         <!-- Buttons -->
-                                        <log-column [width]="'55'">
+                                        <log-column [width]="'85'">
                                             <ng-template let-item>
                                                 <log-cell-template #logcelltemplate [TabIndex]="-1">
                                                     <div style="width: 100%; height: 100%; position: relative;">
                                                         <div class="LeftCenter" style="height: 20px;">
                                                             <span class="CellSeparator"></span>
+                                                            <IconButton [Name]="'Add'" [IsSmall]="true" (click)="item.AddCommodityPackageClicked(item)" [IsEnabled]="IsEditingEnabled"></IconButton>
                                                             <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditCommodityClicked(item)"></IconButton>
-                                                            <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteCommodityClicked(item)" [disabled]="!item.IsEditingEnabled" *ngIf="item.IsFirstLine"></IconButton>
+                                                            <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteCommodityClicked(item)" [disabled]="!item.IsEditingEnabled" *ngIf="!item.IsFirstLine"></IconButton>
                                                         </div>
                                                     </div>
                                                 </log-cell-template>
