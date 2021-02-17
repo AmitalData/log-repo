@@ -947,17 +947,12 @@ namespace Logitude.TariffModule.BL.Helpers
             {
                 string[] code_sign_array = code_sign.Split(',');
 
-                if (uom == "PRFR")
-                {
-                    sign = "%";
-                }
-                else
-                {
+
                     if (code_sign_array.Count() > 1)
                     {
                         sign = code_sign_array[1];
                     }
-                }
+             
             }
             return sign;
         }

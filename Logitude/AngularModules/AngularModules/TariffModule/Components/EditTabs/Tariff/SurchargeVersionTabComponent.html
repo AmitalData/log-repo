@@ -304,8 +304,9 @@
                                                     <div></div>
                                                 </td>
 
-                                                <td [ngStyle]="{color: item.Surcharge1PriceColor}" style="width: 1px;">
-                                                    <span>{{item.Surcharge1PriceValue}}</span>
+                                                <td [ngStyle]="{color: item.Surcharge1PriceColor}" style="width: 1px;">                           
+                                                    <span *ngIf="Surcharge1PricePercentageVisibility && item.Surcharge1PriceValue != null">{{item.Surcharge1PriceValue}}%</span>
+                                                    <span *ngIf="!Surcharge1PricePercentageVisibility">{{item.Surcharge1PriceValue}}</span>
                                                 </td>
                                             </tr>
                                         </table>
@@ -357,7 +358,8 @@
                                                 </td>
 
                                                 <td [ngStyle]="{color: item.Surcharge2PriceColor}" style="width: 1px;">
-                                                    <span>{{item.Surcharge2PriceValue}}</span>
+                                                    <span *ngIf="Surcharge2PricePercentageVisibility && item.Surcharge2PriceValue != null">{{item.Surcharge2PriceValue}}%</span>
+                                                    <span *ngIf="!Surcharge2PricePercentageVisibility">{{item.Surcharge2PriceValue}}</span>
                                                 </td>
                                             </tr>
                                         </table>
@@ -408,7 +410,8 @@
                                                 </td>
 
                                                 <td [ngStyle]="{color: item.Surcharge3PriceColor}" style="width: 1px;">
-                                                    <span>{{item.Surcharge3PriceValue}}</span>
+                                                    <span *ngIf="Surcharge3PricePercentageVisibility && item.Surcharge3PriceValue != null">{{item.Surcharge3PriceValue}}%</span>
+                                                    <span *ngIf="!Surcharge3PricePercentageVisibility">{{item.Surcharge3PriceValue}}</span>
                                                 </td>
                                             </tr>
                                         </table>
@@ -459,7 +462,8 @@
                                                 </td>
 
                                                 <td [ngStyle]="{color: item.Surcharge4PriceColor}" style="width: 1px;">
-                                                    <span>{{item.Surcharge4PriceValue}}</span>
+                                                    <span *ngIf="Surcharge4PricePercentageVisibility && item.Surcharge4PriceValue != null">{{item.Surcharge4PriceValue}}%</span>
+                                                    <span *ngIf="!Surcharge4PricePercentageVisibility">{{item.Surcharge4PriceValue}}</span>
                                                 </td>
                                             </tr>
                                         </table>
@@ -510,7 +514,8 @@
                                                 </td>
 
                                                 <td [ngStyle]="{color: item.Surcharge5PriceColor}" style="width: 1px;">
-                                                    <span>{{item.Surcharge5PriceValue}}</span>
+                                                    <span *ngIf="Surcharge5PricePercentageVisibility && item.Surcharge5PriceValue != null">{{item.Surcharge5PriceValue}}%</span>
+                                                    <span *ngIf="!Surcharge5PricePercentageVisibility">{{item.Surcharge5PriceValue}}</span>
                                                 </td>
                                             </tr>
                                         </table>
@@ -561,7 +566,8 @@
                                                 </td>
 
                                                 <td [ngStyle]="{color: item.Surcharge6PriceColor}" style="width: 1px;">
-                                                    <span>{{item.Surcharge6PriceValue}}</span>
+                                                    <span *ngIf="Surcharge6PricePercentageVisibility && item.Surcharge6PriceValue != null">{{item.Surcharge6PriceValue}}%</span>
+                                                    <span *ngIf="!Surcharge6PricePercentageVisibility">{{item.Surcharge6PriceValue}}</span>
                                                 </td>
                                             </tr>
                                         </table>
@@ -612,7 +618,8 @@
                                                 </td>
 
                                                 <td [ngStyle]="{color: item.Surcharge7PriceColor}" style="width: 1px;">
-                                                    <span>{{item.Surcharge7PriceValue}}</span>
+                                                    <span *ngIf="Surcharge7PricePercentageVisibility && item.Surcharge7PriceValue != null">{{item.Surcharge7PriceValue}}%</span>
+                                                    <span *ngIf="!Surcharge7PricePercentageVisibility">{{item.Surcharge7PriceValue}}</span>
                                                 </td>
                                             </tr>
                                         </table>
@@ -663,7 +670,8 @@
                                                 </td>
 
                                                 <td [ngStyle]="{color: item.Surcharge8PriceColor}" style="width: 1px;">
-                                                    <span>{{item.Surcharge8PriceValue}}</span>
+                                                    <span *ngIf="Surcharge8PricePercentageVisibility && item.Surcharge8PriceValue != null">{{item.Surcharge8PriceValue}}%</span>
+                                                    <span *ngIf="!Surcharge8PricePercentageVisibility">{{item.Surcharge8PriceValue}}</span>
                                                 </td>
                                             </tr>
                                         </table>
@@ -714,7 +722,8 @@
                                                 </td>
 
                                                 <td [ngStyle]="{color: item.Surcharge9PriceColor}" style="width: 1px;">
-                                                    <span>{{item.Surcharge9PriceValue}}</span>
+                                                    <span *ngIf="Surcharge9PricePercentageVisibility && item.Surcharge9PriceValue != null">{{item.Surcharge9PriceValue}}%</span>
+                                                    <span *ngIf="!Surcharge9PricePercentageVisibility">{{item.Surcharge9PriceValue}}</span>
                                                 </td>
                                             </tr>
                                         </table>
@@ -765,7 +774,8 @@
                                                 </td>
 
                                                 <td [ngStyle]="{color: item.Surcharge10PriceColor}" style="width: 1px;">
-                                                    <span>{{item.Surcharge10PriceValue}}</span>
+                                                    <span *ngIf="Surcharge10PricePercentageVisibility && item.Surcharge10PriceValue != null">{{item.Surcharge10PriceValue}}%</span>
+                                                    <span *ngIf="!Surcharge10PricePercentageVisibility">{{item.Surcharge10PriceValue}}</span>
                                                 </td>
                                             </tr>
                                         </table>
