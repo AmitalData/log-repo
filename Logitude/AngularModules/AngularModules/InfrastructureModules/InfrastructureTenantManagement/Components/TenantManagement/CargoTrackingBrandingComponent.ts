@@ -93,6 +93,10 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
             this.EntityPM.BackgroundId=null;
             this.BackgroundId=null;
         }
+        if (name == 'ShipmentHeader') {
+            this.EntityPM.ShipmentHeaderImageId = null;
+            this.ShipmentHeaderImageId = null;
+        }
     }
     ngAfterViewInit()
     {

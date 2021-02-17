@@ -1,6 +1,6 @@
 @smoke @release @stable @all
 Feature: ARInvoice operations and actions
-  After the user logging in the system and navigate to shipments workspace
+    After the user logging in the system and navigate to shipments workspace
     will create a direct shipment,update routing tab,packages.
     add payables, generate receivables from payables, create and approve an ARInvoice,
     set as sent and void the invoice.
@@ -37,14 +37,14 @@ Feature: ARInvoice operations and actions
         Then the direct should update successfully
     Scenario: Add Payables
         Given a payable with the following details
-            | ChargesType | UOM  | Quantity | UnitPrice | Currency |
-            | AFT         | GRWT | 5        | 10        | EUR      |
+            | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
+            | AFT         | GRWT | 5        | 10        | EUR      | 4            |
         When add payables
         Then the payables should add successfully
     Scenario: Add Charges in Receivables by generating from payables
         When generate receivables from payables
         Then the receivables should generate successfully
-  Scenario: Create ARInvoice
+    Scenario: Create ARInvoice
         Given an ARInvoice with a random invoice number and the following details
             | PartnerType | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATNo | Branch      | VATType |
             | Customer    | EUR             | 4                   | Today       | Cash         | Today   | Zero  | Main Office | Zero    |

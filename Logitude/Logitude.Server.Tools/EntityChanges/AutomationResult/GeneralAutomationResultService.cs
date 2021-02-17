@@ -318,8 +318,9 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 if (field != null && !string.IsNullOrEmpty(field.Value))
                 {
                     nextRunDateBeforeAddDelayed = ConvertToDate(field.Value) ?? nextRunDateBeforeAddDelayed;
-                    TimeSpan timeSpan = TimeZoneInfo.Local.GetUtcOffset(nextRunDateBeforeAddDelayed);
-                    nextRunDateBeforeAddDelayed = nextRunDateBeforeAddDelayed.Subtract(timeSpan);
+                    nextRunDateBeforeAddDelayed = TimeZoneInfo.ConvertTimeToUtc(nextRunDateBeforeAddDelayed);
+                    //TimeSpan timeSpan = TimeZoneInfo.Local.GetUtcOffset(nextRunDateBeforeAddDelayed);
+                    //nextRunDateBeforeAddDelayed = nextRunDateBeforeAddDelayed.Subtract(timeSpan);
                     newDelayedQueue = true;
                 }
                 if (delaytimeDetails.DelaytimeOp == "BF") delay = delay * -1;

@@ -3,6 +3,8 @@ import * as CommonActions from '../../../../Common/cypress/actions/Actions';
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
 import { ShipmentDetails } from '../../models/ShipmentDetails';
 import * as BaseAssertion from '../../../../Base/cypress/actions/Assertion';
+import * as BaseActions from '../../../../Base/cypress/actions/Actions';
+import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors';
 import { CustomerDetails } from '../../../../Common/cypress/models/CustomerDetails';
 import { ShipmentSelectors } from '../../selectors/Selectors';
 import { MainCarriageLeg } from 'cypress/models/MainCarriageLeg';
@@ -39,7 +41,16 @@ Then("the customer should create successfully", () => {
       });;
 });
 //#endregion
-
+//#region Activate Customs Management in Shipments
+When("the user activate customs settings", () => {
+    BaseActions.ActivateCustomsManagementInShipments();
+    
+    
+});
+Then("the customs settings should activate successfully", () => {
+    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow)
+});
+//#endregion
 //#region Create direct export air shipment
 Given("the user navigates to shipments workspace", () => {
     ShipmentActions.NavigatesToShipmentsWorkspace()

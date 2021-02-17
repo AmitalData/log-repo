@@ -12,8 +12,11 @@ Feature: Create customs ARInvoice
             | TestCompany | LAS  | US      | AK    |
         When create customer
         Then the customer should create successfully
-
-    Scenario: Create direct export air shipment
+    Scenario: Activate Customs Management in Shipments
+        When the user activate customs settings
+        Then the customs settings should activate successfully
+  
+  Scenario: Create direct export air shipment
         Given the user navigates to shipments workspace
         And a direct shipment with the following details
             | ShipmentLevel | Direction | TransportMode | Shipper     | MainCarriageFromPort | MainCarriageToPort |
