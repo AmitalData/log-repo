@@ -131,8 +131,8 @@ namespace WebFreight.Web.ReportsWebServices
                 // tenant data
                 if (tenantSettings != null)
                 {
-                    
-
+                    paymentDataProvider.Address1 = tenantSettings.InvoiceSection1;
+                    paymentDataProvider.Address2 = tenantSettings.InvoiceSection2;
                     paymentDataProvider.TenantName = tenantSettings.Company != null ? tenantSettings.Company : "";
                     paymentDataProvider.TenantVatNo = tenantSettings.VatNumber != null ? tenantSettings.VatNumber : "";
                     paymentDataProvider.Signature = tenantSettings.Signature != null ? tenantSettings.Signature : "";
@@ -141,8 +141,6 @@ namespace WebFreight.Web.ReportsWebServices
 
                     if (address != null)
                     {
-                        paymentDataProvider.Address1 = address.Address1;
-                        paymentDataProvider.Address2 = address.Address2;
                         paymentDataProvider.TenantAddress = paymentDataProvider.TenantName + DataProviders.General.GetAddress(address);
                         paymentDataProvider.TelLable = address.PhoneNumber != null ? "Tel:" : "";
                         paymentDataProvider.Phone = address.PhoneNumber != null ? address.PhoneNumber : "";
