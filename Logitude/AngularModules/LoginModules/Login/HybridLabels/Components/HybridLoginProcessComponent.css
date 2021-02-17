@@ -1,0 +1,46 @@
+﻿label {
+	font-size: 13px;
+	text-align: left;
+}
+
+input:not(.LoginButton) {
+	width: 280px;
+	height: 30px;
+	min-height: 30px;
+	font-size: 13px;
+	font-family: tahoma, arial, sans-serif;
+	background: #dbdbdb;
+	background: -moz-linear-gradient(top, #dbdbdb 0%, #f2f2f2 28%, #ffffff 41%, #ffffff 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dbdbdb), color-stop(28%,#f2f2f2), color-stop(41%,#ffffff), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* Opera 11.10+ */
+	background: linear-gradient(to bottom, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* W3C */
+}
+
+#myBar {
+	width: 1%;
+	height: 10px;
+	background: red;
+	background: -webkit-linear-gradient(left,red,orange,yellow,green,blue,indigo);
+	background: -o-linear-gradient(left,red,orange,yellow,green,blue,indigo);
+	background: -moz-linear-gradient(left,red,orange,yellow,green,blue,indig);
+	background: linear-gradient(to right, red,orange,yellow,green,blue,indigo);
+}
+
+.backgroundImage {
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-position: center center;
+	position: absolute;
+}
+
+.MainImage {
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+.loginProcess {
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-position: center center;
+} 

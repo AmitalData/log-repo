@@ -111,6 +111,7 @@
     <Content Include="Login\Components\DSVMobileLoginComponent.html" />
     <Content Include="Login\Components\DSVResetPasswordComponent.html" />
     <Content Include="Login\Components\ResetPasswordComponent.html" />
+    <Content Include="Login\HybridLabels\Components\HybridLoginProcessComponent.css" />
     <Content Include="Login\HybridLabels\Components\HybridResetPasswordComponent.css" />
     <Content Include="Login\HybridLabels\Components\HybridLoginComponent.css" />
     <Content Include="Login\HybridLabels\Components\HybridLoginComponent.html" />

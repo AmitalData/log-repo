@@ -160,6 +160,12 @@ export var BrandingDataService = (function () {
         }
         return ImgId;
     };
+    BrandingDataService.GetLoginProgressImage = function () {
+        if (HybridLabelsBrandingData.LoginProgressImageURL != null)
+            return HybridLabelsBrandingData.LoginProgressImageURL;
+        else
+            HybridLabelsBrandingData.LoginProgressImageURL = this.DefaultLoginProgress;
+    };
     BrandingDataService.GetForgetPasswordImage = function () {
         if (HybridLabelsBrandingData.ForgetPasswordImageURL != null)
             return HybridLabelsBrandingData.ForgetPasswordImageURL;

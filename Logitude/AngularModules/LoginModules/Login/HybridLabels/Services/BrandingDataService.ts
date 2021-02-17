@@ -9,7 +9,7 @@ export class BrandingDataService {
     public static DefaultBackground: string = "url('../../../Images/LoginScreen/map.png')";
     public static DefaultMainImage: string = "url('../../../Images/LoginScreen/screen_trucks.jpg')";
     public static DefaultLoginProgress: string = "url('../../../Images/LoginScreen/screen_kids.jpg')";
-    public static DefaultForgetPassword: string = "url('../../../Images/LoginScreen/screen_kids.jpg')";
+    public static DefaultForgetPassword: string = "url('./Images/LoginScreen/screen_kids.jpg')";
     public static DefaultMainLogo: string = "'../../../Images/LoginScreen/header.jpg'";
     public static DefaultSmallLogo: string = "'../../../Images/LoginScreen/sheader.jpg'"; 
 
@@ -200,7 +200,14 @@ export class BrandingDataService {
         }
         return ImgId;
     } 
-     
+      
+
+    public static GetLoginProgressImage() {
+        if (HybridLabelsBrandingData.LoginProgressImageURL != null)
+            return HybridLabelsBrandingData.LoginProgressImageURL;
+        else
+            HybridLabelsBrandingData.LoginProgressImageURL = this.DefaultLoginProgress;
+    }
 
     public static GetForgetPasswordImage() { 
         if (HybridLabelsBrandingData.ForgetPasswordImageURL != null)
