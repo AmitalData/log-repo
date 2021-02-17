@@ -112,7 +112,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             var contact = LoggedContactResolver.GetLoggedContact(paymentChequePM.Tenant);
             if (contact != null)
             {
-                paymentChequePM.UpdatedByUserId = LoggedContactResolver.GetLoggedContact(paymentChequePM.Tenant).Id;
+                paymentChequePM.UpdatedByUserId = contact.Id;
             }
         }
         private static bool CheckIfPaymentChequeHasAjournal(PaymentChequePM paymentCheque)
