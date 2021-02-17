@@ -136,6 +136,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentPayableChargesType = '#ShipmentPayable_ChargesTypeId';
   public static readonly ShipmentPayableMeasurement = '#ShipmentPayable_MeasurementId';
   public static readonly ShipmentPayableCurrency = '#ShipmentPayable_CurrencyId';
+  public static readonly ShipmentPayableRate ="#ShipmentPayable_Rate"
   public static readonly ShipmentPayableUnitPrice = '#ShipmentPayable_UnitPrice';
   public static readonly ShipmentPayableQuantity = '#ShipmentPayable_Quantity';
   public static readonly ShipmentPayableVendor = '#ShipmentPayable_VendorId';

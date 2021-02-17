@@ -165,7 +165,8 @@ export function FillReceivablesTab(receivableDetails: ReceivableDetails[]) {
         cy.get(ShipmentSelectors.ReceivableQuantity).type(receivableDetails[i].Quantity.toString());
         cy.get(ShipmentSelectors.ReceivableUnitPrice).type(receivableDetails[i].UnitPrice.toString());
         cy.FillLogLov(ShipmentSelectors.ReceivableCurrency, receivableDetails[i].Currency, true)
-        cy.get(ShipmentSelectors.ShipmentReceivableRate).clear().type(receivableDetails[i].ExchangeRate.toString());
+        cy.FillLogTextBox(ShipmentSelectors.ShipmentReceivableRate,receivableDetails[i].ExchangeRate.toString());
+
         cy.Click(ShipmentSelectors.AddReceivableOkButton, null)
     }
 }
