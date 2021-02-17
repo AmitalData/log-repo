@@ -652,6 +652,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             reportParameters.AgingMethod = GetFilterValue<string>("AgingMethod") == "Open Transaction" ? AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString() : AgingReportParam.MethodEnum.TotalByMonthFIFOMethod.ToString();
             reportParameters.Aging4AccountTypeCode = (GetFilterValue<string>("GLAccountType") == "2") ? AgingReportParam.Aging4AccountTypeCodeEnum.Customer2 : AgingReportParam.Aging4AccountTypeCodeEnum.Vendor3;
 
+            reportParameters.ChartOfAccountsTypeCode = GetFilterValue<string>("ChartOfAccountsTypeCode");
+            reportParameters.ChartOfAccountsId = GetFilterValue<string>("ChartOfAccountId");
+
+
             SetReportCategoryParameters(reportParameters);
 
             return reportParameters;
