@@ -204,6 +204,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     Category5LocalName = d.First().Category5LocalName,
                     Category6LocalName = d.First().Category6LocalName,
 
+
+                    ChartOfAccountsLocalName = d.First().ChartOfAccountsLocalName,
+                    ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
+                    ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
+                    ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
+
+
                 }).ToList();
             else
                 groupedPeriodsByAccount = result.GroupBy(d => d.AccountId).Select(d => new AgingPeriod()
@@ -235,6 +242,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     Category4LocalName = d.First().Category4LocalName,
                     Category5LocalName = d.First().Category5LocalName,
                     Category6LocalName = d.First().Category6LocalName,
+
+
+
+                    ChartOfAccountsLocalName = d.First().ChartOfAccountsLocalName,
+                    ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
+                    ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
+                    ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
 
                 }).ToList();
             totalData.AgingPeriods.AddRange(groupedPeriodsByAccount);
@@ -278,7 +292,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     Category5LocalName = d.First().Category5LocalName,
                     Category6LocalName = d.First().Category6LocalName,
 
-                }).ToList();
+                    ChartOfAccountsLocalName = d.First().ChartOfAccountsLocalName,
+                    ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
+                    ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
+                    ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
+
+
+
+            }).ToList();
             totalData.AgingPeriods.AddRange(groupedPeriodsByAccount);
                 groupedPeriodsByAccount = result.Where(d => d.Total != null && d.CurrencyCode != totalData.TenantCurrencyCode).GroupBy(d => d.AccountAndCurr).Distinct().Select(d => new AgingPeriod()
                 {
@@ -310,6 +331,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     Category4LocalName = d.First().Category4LocalName,
                     Category5LocalName = d.First().Category5LocalName,
                     Category6LocalName = d.First().Category6LocalName,
+
+                    ChartOfAccountsLocalName = d.First().ChartOfAccountsLocalName,
+                    ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
+                    ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
+                    ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
 
                 }).ToList();
             }
@@ -343,6 +369,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     Category4LocalName = d.First().Category4LocalName,
                     Category5LocalName = d.First().Category5LocalName,
                     Category6LocalName = d.First().Category6LocalName,
+
+                    ChartOfAccountsLocalName = d.First().ChartOfAccountsLocalName,
+                    ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
+                    ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
+                    ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
 
                 }).ToList();
 
@@ -651,6 +682,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             reportParameters.GroupByDate = GetFilterValue<string>("GroupByDate") == "filter_Due" ? AgingReportParam.DateEnum.DueDate : AgingReportParam.DateEnum.AccountingDate;
             reportParameters.AgingMethod = GetFilterValue<string>("AgingMethod") == "Open Transaction" ? AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString() : AgingReportParam.MethodEnum.TotalByMonthFIFOMethod.ToString();
             reportParameters.Aging4AccountTypeCode = (GetFilterValue<string>("GLAccountType") == "2") ? AgingReportParam.Aging4AccountTypeCodeEnum.Customer2 : AgingReportParam.Aging4AccountTypeCodeEnum.Vendor3;
+
+
+            reportParameters.ChartOfAccountsTypeCode = GetFilterValue<string>("ChartOfAccountsTypeCode");
+            reportParameters.ChartOfAccountsId = GetFilterValue<string>("ChartOfAccountId");
+
 
             SetReportCategoryParameters(reportParameters);
 
