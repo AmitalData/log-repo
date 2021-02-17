@@ -22,4 +22,8 @@ export class RequestAliases {
     public static readonly GetTariffVersionLines = "GetTariffVersionLines";
     public static readonly GetSingleTariff = "GetSingleTariff";
     public static readonly GetVatTypePercentage = 'GetVatTypePercentage';
+    public static readonly PostUpdateRequest = 'WaitPostUpdateRequest';
+    public static readonly PostShippinglinesRequest = 'WaitPostShippinglinesRequest';
+    public static readonly GetCarrierViews = 'WaitGetCarrierViews';
+
 }

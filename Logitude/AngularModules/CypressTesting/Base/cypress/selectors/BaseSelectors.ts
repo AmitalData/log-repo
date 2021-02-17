@@ -14,6 +14,7 @@ export class BaseSelectors extends RegexSelectors {
     //#endregion
     //#region Buttons
     public static readonly RedButton = '.RedButton';
+    public static readonly GreenButton = '.GreenButton';
     public static readonly Button = '.Button';
     public static readonly Row0 = '#row0';
     public static readonly UploadDocumentdbtn = "#UploadDocumentdbtn";
@@ -34,6 +35,8 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly button = "button"
     public static readonly typeCheckbox = '[type="checkbox"]'
     public static readonly LogitudeWindow = ".LogitudeWindow";
+    public static readonly Label = ".Label"
+
     //#endregion
     //#endregion
 
@@ -44,9 +47,4 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly FirstRecentEntityItem = ".RecentEntityItem:first";
     public static readonly ToggleIcon = '[src="./Images/ToggleIcon.png"]'
     public static readonly BackBottonBodyClass = ".BackBottonBody"
-
-
-
-    //Abed Malakh
-    public static readonly GreenButton = ".GreenButton";
 }
