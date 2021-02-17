@@ -4107,25 +4107,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-        //private void UpdateMasterHouses(List<string> ids)
-        //{
-        //    if (ids.Count > 0)
-        //    {
-        //        ShipmentQuery iShipmentQuery = new ShipmentQuery(this.entityRepository);
-
-        //        foreach (string id in ids)
-        //        {
-        //            ShipmentPM iHousePM = iShipmentQuery.GetSinglePM(id, this.tenant);
-
-        //            if (iHousePM != null)
-        //            {
-        //                ShipmentService iShipmentService = new ShipmentService(this.objectContext, iHousePM, this.initializer.LoggedContactEmail);
-        //                iShipmentService.Update();
-        //            }
-        //        }
-        //    }
-        //}
-
         //private void CreateShipmentOrderPackage(ShipmentOrderPackagePM itemPM)
         //{
         //    itemPM.Id = IdCounter.GetNumber("ShipmentOrderPackage", tenant).ToString();
