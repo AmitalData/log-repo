@@ -25,5 +25,6 @@ export class RequestAliases {
     public static readonly PostUpdateRequest = 'WaitPostUpdateRequest';
     public static readonly PostShippinglinesRequest = 'WaitPostShippinglinesRequest';
     public static readonly GetCarrierViews = 'WaitGetCarrierViews';
+    public static readonly WaitUpload = 'WaitUpload';
 
 }

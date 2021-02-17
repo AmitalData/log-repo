@@ -34,6 +34,7 @@ export class TariffSelectors
     public static readonly ShippingLineSCACCode="#ShippingLine_SCACCode"
     public static readonly ShippingLineCode="#ShippingLine_Code"
     public static readonly ShippingLineName = "#ShippingLine_EnglishName"
+    public static readonly TariffActionsMenu = ".ToggleButton"
     // public static readonly
 
     
