@@ -2644,13 +2644,35 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             if (type == "AMAS")
             {
-                if (string.IsNullOrEmpty(item.AirlinePrefix) && string.IsNullOrEmpty(item.Master))
+                if (!string.IsNullOrEmpty(item.AirlinePrefix) && !string.IsNullOrEmpty(item.Master))
                 {
-                    myResult = "Missing Master B/L";
+                    // nothing
                 }
                 else
                 {
-                    myResult = "Invalid Master B/L";
+                    if(string.IsNullOrEmpty(item.AirlinePrefix) && string.IsNullOrEmpty(item.Master))
+                    {
+                        if (string.IsNullOrEmpty(myResult))
+                        {
+                            myResult = "Missing Master B/L";
+                        }
+                        else
+                        {
+                            myResult = myResult + ", Missing Master B/L";
+                        }
+                    }
+
+                    else
+                    {
+                        if (string.IsNullOrEmpty(myResult))
+                        {
+                            myResult = "Invalid Master B/L";
+                        }
+                        else
+                        {
+                            myResult = myResult + ", Invalid Master B/L";
+                        }
+                    }
                 }
 
                 if (string.IsNullOrEmpty(item.MainCarriageFromPortCode))
