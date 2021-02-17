@@ -229,8 +229,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 TotalOpenShipments = customerPeriods.First().TotalOpenShipments ?? 0,
                 ExternalTransactionsTotal = ExternalTransactions.Where(d => d.AccountId == customerPeriods.First().AccountId).Sum(d => d.LocalAmountCredit),
 
-                AccountingBalance = GetBalanceSummationForSpliitedAccounts(customerPeriods) ?? 0,
+                AccountingBalance = GetBalanceSummationForSplittedAccounts(customerPeriods) ?? 0,
+                TotalForeign = customerPeriods.Sum(d => d.Total),
+                TotalLocal = GetBalanceSummationForSplittedAccounts(customerPeriods) ?? 0,
                 Periods = GetStatusPeriods(customerPeriods),
+
                 AccountSalesmanName = customerPeriods.First().AccountSalesmanName,
                 AccountSalesmanLocalName = customerPeriods.First().AccountSalesmanLocalName,
                 AccountCollectorName = customerPeriods.First().AccountCollectorName,
@@ -252,7 +255,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             return customerStatus;
         }
 
-        private static decimal? GetBalanceSummationForSpliitedAccounts(IGrouping<string, PeriodMExtended> customerPeriods)
+        private static decimal? GetBalanceSummationForSplittedAccounts(IGrouping<string, PeriodMExtended> customerPeriods)
         {
             return customerPeriods
                             .GroupBy(d => new { d.CurrencyId, d.SplitAccountId })

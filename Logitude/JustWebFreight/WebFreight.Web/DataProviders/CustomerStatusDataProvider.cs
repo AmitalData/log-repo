@@ -58,6 +58,8 @@ namespace WebFreight.Web.DataProviders
         public decimal Obligo { get { return TotalToCollect + FutureChequesTotal; } }
         public decimal CreditUsed { get { return CreditLimit - Obligo; } }
 
+        public decimal TotalLocal { get; set; } = 0;
+        public decimal TotalForeign { get; set; } = 0;
 
         public List<StatusPeriod> Periods { get; set; } = new List<StatusPeriod>();
 
