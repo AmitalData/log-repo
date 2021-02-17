@@ -2698,6 +2698,7 @@
     <Compile Include="ShipmentsModel\EntityQueries\SpecialServicesTypeQuery.cs" />
     <Compile Include="ShipmentsModel\Testing\General.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\IShipmentBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\MasterHousesBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviourFacade.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\CompositionBehaviours\OrderPackagesBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\MapCompositionBehaviour.cs" />
