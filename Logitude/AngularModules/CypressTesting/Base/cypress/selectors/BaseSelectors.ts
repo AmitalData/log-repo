@@ -42,4 +42,5 @@ export class BaseSelectors extends RegexSelectors {
 
     //Abed Malakh
     public static readonly GreenButton = ".GreenButton";
+    public static readonly QueryLink = ".QueryLink";
 }

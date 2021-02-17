@@ -22,7 +22,7 @@ Given("an ocean FCL surcharge cost with the following details", (dataTable) => {
   Actions.FillNewSurchargeCost("Ocean FCL", tariffDetails);
 });
 
-Given("add the follwing surcharges", (dataTable) => {
+Given("add the following surcharges", (dataTable) => {
   let surchargeDetailsList = dataTable.hashes() as SurchargeDetails[];
   Actions.FillSurcharges(surchargeDetailsList);
 });

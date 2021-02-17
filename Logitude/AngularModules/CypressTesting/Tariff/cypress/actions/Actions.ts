@@ -4,6 +4,7 @@ import { TariffDetails } from "../models/TariffDetails";
 import { ChargeTypeDetails } from "../models/ChargeTypeDetails";
 import { SurchargeDetails } from "../models/SurchargeDetails";
 import { FreightCostTariffLineDetails } from "../models/FreightCostTariffLineDetails";
+import { OceanFCLPriceCheckDetails } from "../models/OceanFCLPriceCheckDetails";
 import { Urls } from "../constants/Urls";
 import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
@@ -109,9 +110,10 @@ export function ValidateUpdateTariff() {
     AssertPutTariff();
 }
 
-export function ValidateCreateFreightCost() {
-    AssertPostTariff();
+export function ValidateCreateFreightCost(): string {
+    let tariffNumber: string = AssertPostTariff();
     AssertGetRecentTariffs();
+    return tariffNumber;
 }
 
 export function ValidateCreateSurchargeCost() {
@@ -141,12 +143,64 @@ export function ValidateCopyTariffVersion() {
     AssertApproveOrCopyTariffVersion();
 }
 
-export function ValidateApprovedVersionsAppear(){
+export function ValidateApprovedVersionsAppear() {
     cy.Click(TariffSelectors.TariffVersionHistoryComboBox, null);
     BaseAssertion.AssertElementExist(TariffSelectors.TariffVersionHistoryComboBoxItem(1));
     BaseAssertion.AssertElementExist(TariffSelectors.TariffVersionHistoryComboBoxItem(2));
 }
 
+export function BackToTariffWorkspace() {
+    cy.Click(BaseSelectors.BackBottonBodyClass, "Tariffs");
+}
+
+export function OpenPriceCheckWizard(priceCheckType: string) {
+    cy.Click(BaseSelectors.QueryLink, priceCheckType);
+}
+
+export function FillOceanFCLPriceCheckWizard(oceanFCLPriceCheckDetails: OceanFCLPriceCheckDetails) {
+    FillTariffLinePorts(oceanFCLPriceCheckDetails.FromPort, oceanFCLPriceCheckDetails.ToPort);
+    FillPriceCheckDate(oceanFCLPriceCheckDetails.Date);
+    FillPriceCheckQuantity(1, oceanFCLPriceCheckDetails.Quantity1);
+    FillPriceCheckQuantity(2, oceanFCLPriceCheckDetails.Quantity2);
+    FillPriceCheckQuantity(3, oceanFCLPriceCheckDetails.Quantity3);
+    FillPriceCheckQuantity(4, oceanFCLPriceCheckDetails.Quantity4);
+    FillPriceCheckQuantity(5, oceanFCLPriceCheckDetails.Quantity5);
+}
+
+export function PriceCheckSearch() {
+    cy.Click(TariffSelectors.PriceCheckSearch, "Search");
+}
+
+export function CalculateOceanFCLPrice(oceanFCLPriceCheck: OceanFCLPriceCheckDetails, freightCostTariffLines: FreightCostTariffLineDetails[]): number {
+    let filteredTariffLines = freightCostTariffLines.filter(l =>
+        l.FromPort.toLowerCase() === oceanFCLPriceCheck.FromPort.toLowerCase() &&
+        l.ToPort.toLowerCase() === oceanFCLPriceCheck.ToPort.toLowerCase());
+
+    if (filteredTariffLines.length === 0) {
+        return null;
+    }
+
+    let filteredTariffLine = filteredTariffLines[0];
+    let oceanFCLPrice = 0;
+
+    if (oceanFCLPriceCheck.Quantity1 && filteredTariffLine.Step1Price) {
+        oceanFCLPrice += (oceanFCLPriceCheck.Quantity1 * filteredTariffLine.Step1Price);
+    }
+    if (oceanFCLPriceCheck.Quantity2 && filteredTariffLine.Step2Price) {
+        oceanFCLPrice += (oceanFCLPriceCheck.Quantity2 * filteredTariffLine.Step2Price);
+    }
+    if (oceanFCLPriceCheck.Quantity3 && filteredTariffLine.Step3Price) {
+        oceanFCLPrice += (oceanFCLPriceCheck.Quantity3 * filteredTariffLine.Step3Price);
+    }
+    if (oceanFCLPriceCheck.Quantity4 && filteredTariffLine.Step4Price) {
+        oceanFCLPrice += (oceanFCLPriceCheck.Quantity4 * filteredTariffLine.Step4Price);
+    }
+    if (oceanFCLPriceCheck.Quantity5 && filteredTariffLine.Step5Price) {
+        oceanFCLPrice += (oceanFCLPriceCheck.Quantity5 * filteredTariffLine.Step5Price);
+    }
+
+    return oceanFCLPrice;
+}
 
 function DefineRequestsForApproveOrCopyTariffVersion() {
     DefineRequestPutTariff();
@@ -300,6 +354,18 @@ function FillTariffLineNotes(notes: string) {
     }
 }
 
+function FillPriceCheckDate(date: string) {
+    if (date) {
+        cy.FillDate(TariffSelectors.PriceCheckDate, date);
+    }
+}
+
+function FillPriceCheckQuantity(quantityNumber: number, quantity: number) {
+    if (quantity) {
+        cy.FillLogTextBox(TariffSelectors.PriceCheckQuantity(quantityNumber), quantity.toString());
+    }
+}
+
 function DefineRequestGetAllVersionsForTariff() {
     cy.DefineRequestWait(RestAPI.GET, Urls.GetAllTariffVersionsForTariff, RequestAliases.GetAllTariffVersionsForTariff);
 }
@@ -328,8 +394,14 @@ function AssertPutTariff() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutTariff, 200);
 }
 
-function AssertPostTariff() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PostTariff, 200);
+function AssertPostTariff(): string {
+    let tariffNumber: string = null;
+
+    BaseAssertion.AssertStatusCode(RequestAliases.PostTariff, 200).then((interception) => {
+        tariffNumber = interception.response.body.TariffNumber;
+    });
+
+    return tariffNumber;
 }
 
 function AssertGetRecentTariffs() {

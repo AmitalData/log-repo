@@ -23,7 +23,7 @@ Feature: ARInvoice operations and actions
 
     Scenario: Update routing tab
         Given the user in the shipment's rounting tab
-        And edit main carriage leg with the follwing details
+        And edit main carriage leg with the following details
             | Airline | FlightNumber | MAWB   |
             | AA      | Random       | Random |
         When update shipment
