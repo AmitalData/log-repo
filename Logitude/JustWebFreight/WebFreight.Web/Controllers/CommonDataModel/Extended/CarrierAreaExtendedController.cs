@@ -165,7 +165,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                             excelPort.PortId = port.Id;
                             excelPort.PortCode = port.Code;
                             excelPort.PortName = port.EnglishName;
-                            excelPort.PortCountryCode = port.CountryCode;
+                            excelPort.PortCountryCode = port.Country == null ? null : port.Country.Code;
                         }
 
                         else
