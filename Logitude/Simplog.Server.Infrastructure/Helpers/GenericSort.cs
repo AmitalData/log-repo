@@ -14,7 +14,6 @@ namespace Simplog.Server.Infrastructure.Helpers
         public IQueryable<QueryType> GetSorterQuery<QueryType, FirstSortType>(QueryOperations queryOperations, IQueryable<QueryType> querableData)
         {
             string keyName = null;
-            string keyType = null;
             if (!string.IsNullOrEmpty(queryOperations.ObjectTableName))
             {
                 keyName = GetObjectTableKeyName(queryOperations);
@@ -24,20 +23,55 @@ namespace Simplog.Server.Infrastructure.Helpers
             sortParams.QuerableData = querableData;
             sortParams.SortDirection = queryOperations.SortDirectin;
             sortParams.FirstSortExpression= GetFirstSortExpression<QueryType, FirstSortType>(queryOperations.SortByColumnName);
-            
-            if (!string.IsNullOrEmpty(keyName))
-            {
-                sortParams.SecondarySortByField = keyName;
-                keyType = GetObjectFieldDataType(queryOperations, keyName);
-                sortParams.SecondSortExpression = GetSecondarySortExpression<QueryType,FirstSortType>(keyName, keyType);
-                return GetSortedQueryWithSecondarySort<QueryType, FirstSortType>(sortParams);
-            }
-            else
-            {
-                return GetSortedQuery<QueryType, FirstSortType>(sortParams);
-            }
-           
+            return GetSortedQuery(sortParams);
+            //if (!string.IsNullOrEmpty(keyName))
+            //{
+            //    sortParams.SecondarySortByField = keyName;
+            //    sortParams.SecondarySortByFieldDataType = GetObjectFieldDataType(queryOperations, keyName);
+            //    sortParams = SetSecondarySortParams(sortParams);
+            //    return GetSortedQueryWithSecondarySort(sortParams);
+            //}
+            //else
+            //{
+            //    return GetSortedQuery(sortParams);
+            //}
+
         }
+
+        private SortParams<QueryType, FirstSortType> SetSecondarySortParams<QueryType, FirstSortType>
+            (SortParams<QueryType, FirstSortType> sortParams)
+        {
+            var keyType = sortParams.SecondarySortByFieldDataType;
+            switch (keyType)
+            {
+                case "System.Int32": 
+                    {
+                        sortParams.SecondIntegerSortExpression = GetSecondarySortExpression<QueryType, int>(sortParams.SecondarySortByField);
+                        break; 
+                    }
+                case "System.Int64":
+                    {
+                        sortParams.SecondLongSortExpression = GetSecondarySortExpression<QueryType, long>(sortParams.SecondarySortByField);
+                        break;
+                    }
+                case "System.String":
+                    {
+                        sortParams.SecondStringSortExpression = GetSecondarySortExpression<QueryType, string>(sortParams.SecondarySortByField);
+                        break;
+                    }
+
+            }
+            return sortParams;
+        }
+
+        private Expression<Func<QueryType, SecondaryType>> GetSecondarySortExpression<QueryType, SecondaryType>(string secondarySortByField)
+        {
+            var param = Expression.Parameter(typeof(QueryType), "item");
+            var sortExpression = Expression.Lambda<Func<QueryType, SecondaryType>>
+               (Expression.Convert(Expression.Property(param, secondarySortByField), typeof(SecondaryType)), param);
+            return sortExpression;
+        }
+
         private IQueryable<QueryType> GetSortedQuery<QueryType, FirstSortType>(SortParams<QueryType, FirstSortType> sortParams)
         {
             if (sortParams.SortDirection.ToLower() == "ascending")
@@ -51,13 +85,25 @@ namespace Simplog.Server.Infrastructure.Helpers
         }
         private IQueryable<QueryType> GetSortedQueryWithSecondarySort<QueryType, FirstSortType>(SortParams<QueryType, FirstSortType> sortParams)
         {
-            if(sortParams.SortDirection.ToLower()== "ascending")
+            var keyType = sortParams.SecondarySortByFieldDataType;
+            switch (keyType)
             {
-                return sortParams.QuerableData.AsQueryable<QueryType>().OrderBy<QueryType, FirstSortType>(sortParams.FirstSortExpression).ThenBy(sortParams.SecondSortExpression);
-            }
-            else
-            {
-                return sortParams.QuerableData.AsQueryable<QueryType>().OrderByDescending<QueryType, FirstSortType>(sortParams.FirstSortExpression).ThenByDescending(sortParams.SecondSortExpression);
+                case "System.Int32":
+                    {
+                        return GetSortedQueryWithIntegerSecondarySort(sortParams);
+                    }
+                case "System.Int64":
+                    {
+                        return GetSortedQueryWithLongSecondarySort(sortParams);
+                    }
+                case "System.String":
+                    {
+                        return GetSortedQueryWithStringSecondarySort(sortParams);
+                    }
+                default:
+                    {
+                        throw new NotSupportedException("secondary sort data type is not supported");
+                    }
             }
         }
 
@@ -66,13 +112,6 @@ namespace Simplog.Server.Infrastructure.Helpers
             var param = Expression.Parameter(typeof(QueryType), "item");
             var sortExpression = Expression.Lambda<Func<QueryType, FirstSortType>>
                (Expression.Convert(Expression.Property(param, sortByFieldName), typeof(FirstSortType)), param);
-            return sortExpression;
-        }
-        private Expression<Func<QueryType, FirstSortType>> GetSecondarySortExpression<QueryType, FirstSortType>(string sortByFieldName,string secondarySortType)
-        {
-            var param = Expression.Parameter(typeof(QueryType), "item");
-            var sortExpression = Expression.Lambda<Func<QueryType,FirstSortType>>
-               (Expression.Convert(Expression.Property(param, sortByFieldName), Type.GetType(secondarySortType)), param);
             return sortExpression;
         }
 
@@ -95,14 +134,51 @@ namespace Simplog.Server.Infrastructure.Helpers
             return type;
         }
 
+        private IQueryable<QueryType> GetSortedQueryWithStringSecondarySort<QueryType, FirstSortType>(SortParams<QueryType, FirstSortType> sortParams)
+        {
+            if (sortParams.SortDirection.ToLower() == "ascending")
+            {
+                return sortParams.QuerableData.AsQueryable().OrderBy(sortParams.FirstSortExpression).ThenBy(sortParams.SecondStringSortExpression);
+            }
+            else
+            {
+                return sortParams.QuerableData.AsQueryable().OrderByDescending(sortParams.FirstSortExpression).ThenByDescending(sortParams.SecondStringSortExpression);
+            }
+        }
+        private IQueryable<QueryType> GetSortedQueryWithIntegerSecondarySort<QueryType, FirstSortType>(SortParams<QueryType, FirstSortType> sortParams)
+        {
+            if (sortParams.SortDirection.ToLower() == "ascending")
+            {
+                return sortParams.QuerableData.AsQueryable().OrderBy(sortParams.FirstSortExpression).ThenBy(sortParams.SecondIntegerSortExpression);
+            }
+            else
+            {
+                return sortParams.QuerableData.AsQueryable().OrderByDescending(sortParams.FirstSortExpression).ThenByDescending(sortParams.SecondIntegerSortExpression);
+            }
+        }
+        private IQueryable<QueryType> GetSortedQueryWithLongSecondarySort<QueryType, FirstSortType>(SortParams<QueryType, FirstSortType> sortParams)
+        {
+            if (sortParams.SortDirection.ToLower() == "ascending")
+            {
+                return sortParams.QuerableData.AsQueryable().OrderBy(sortParams.FirstSortExpression).ThenBy(sortParams.SecondLongSortExpression);
+            }
+            else
+            {
+                return sortParams.QuerableData.AsQueryable().OrderByDescending(sortParams.FirstSortExpression).ThenByDescending(sortParams.SecondLongSortExpression);
+            }
+        }
+
     }
 
     public class SortParams<QueryType, FirstSortType>
     {
         public string SecondarySortByField { get; set; }
         public Expression<Func<QueryType, FirstSortType>> FirstSortExpression { get; set; }
-        public Expression<Func<QueryType,FirstSortType>> SecondSortExpression { get; set; }
+        public Expression<Func<QueryType,string>> SecondStringSortExpression { get; set; }
+        public Expression<Func<QueryType, int>> SecondIntegerSortExpression { get; set; }
+        public Expression<Func<QueryType, long>> SecondLongSortExpression { get; set; }
         public IQueryable<QueryType> QuerableData { get; set; }
         public string SortDirection { get; set; }
+        public string SecondarySortByFieldDataType { get; set; }
     }
 }
