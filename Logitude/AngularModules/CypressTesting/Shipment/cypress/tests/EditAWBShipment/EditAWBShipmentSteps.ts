@@ -53,7 +53,7 @@ Given("the user in the AWB wizard packages tab", () => {
     cy.Click(ShipmentSelectors.PackagesTabInAWBWizard, null);
 });
 
-Given("add the follwing packages", (dataTable) => {
+Given("add the following packages", (dataTable) => {
     let packagesDetailsList = dataTable.hashes() as PackagesDetails[];
     Actions.FillAWBWizardPackagesTab(packagesDetailsList);
 });

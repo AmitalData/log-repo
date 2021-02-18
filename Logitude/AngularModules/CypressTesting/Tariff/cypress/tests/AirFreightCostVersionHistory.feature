@@ -15,7 +15,7 @@ Feature: Air Freight Cost Tariff Version History
 
     Scenario: Add tariff lines in draft version tab
         Given the user open the freight cost
-        And add the follwing tariff lines
+        And add the following tariff lines
             | FromPort | ToPort | MinPrice | Step1Price | Step2Price | Step3Price |
             | LHR      | MIA    | 10       | 20         | 30         | 40         |
             | AMM      | TLV    | 20       | 30         | 40         | 50         |
@@ -27,7 +27,7 @@ Feature: Air Freight Cost Tariff Version History
         Then the version should copy successfully
 
     Scenario: Edit tariff lines in the new version tab
-        Given the follwing new values for the tariff lines
+        Given the following new values for the tariff lines
             | MinPrice | Step1Price | Step2Price | Step3Price |
             | 20       | 30         | 40         | 50         |
             | 30       | 40         | 50         | 60         |

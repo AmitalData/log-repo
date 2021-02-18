@@ -1315,6 +1315,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         line.ForiegnCurrencyCode = "";
         line.ForiegnExchangeRate = this.InvoiceCurrencyExchangeRate;
         line.LineActionCode = "1";
+        line.InvoiceCurrencyCode = this.InvoiceCurrencyCode;
         var logWindow = new LogitudeWindow();
         logWindow.Title = TextCodeTranslator.Translate("ARInvoiceLine.O.EditInvoiceLine");
         var addEditViewModel: ARInvoiceLineItem = new ARInvoiceLineItem(line, this, true);

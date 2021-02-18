@@ -1,6 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var ModuleDeclarations_1 = require("../ModuleDeclarations");
+import { LoginModuleDeclarations } from '../ModuleDeclarations';
 //import {ControlsModuleDeclarations} from '../../Controls/ModuleDeclarations';
 //import {CommonModuleDeclarations} from '../../Common/ModuleDeclarations';
 //import {ShipmentModuleDeclarations} from '../../Shipment/ModuleDeclarations';
@@ -24,7 +22,7 @@ var ModuleDeclarations_1 = require("../ModuleDeclarations");
 //import {DashboardModuleProviders} from '../../Dashboard/ModuleProviders';
 //import {SharedLogisticsModuleProviders} from '../../SharedLogistics/ModuleProviders';
 //import {WarehouseModuleProviders} from '../../Warehouse/ModuleProviders';
-var DynamicLoaderAOT = /** @class */ (function () {
+export var DynamicLoaderAOT = (function () {
     function DynamicLoaderAOT() {
     }
     DynamicLoaderAOT.Load = function (myComponentPath, location) {
@@ -43,60 +41,9 @@ var DynamicLoaderAOT = /** @class */ (function () {
                 var factory = null;
                 switch (myModuleName_1) {
                     case "LogitudeLoginModule": {
-                        type = ModuleDeclarations_1.LoginModuleDeclarations.Get(myComponentName_1);
+                        type = LoginModuleDeclarations.Get(myComponentName_1);
                         break;
                     }
-                    //case "LogitudeControlsModule": {
-                    //    type = ControlsModuleDeclarations.Get(myComponentName);
-                    //    break;
-                    //}
-                    //case "LogitudeCommonModule": {
-                    //    type = CommonModuleDeclarations.Get(myComponentName);
-                    //    break;
-                    //}
-                    //case "LogitudeShipmentModule": {
-                    //    type = ShipmentModuleDeclarations.Get(myComponentName);
-                    //    break;
-                    //}
-                    //case "LogitudeBookingModule": {
-                    //    type = BookingModuleDeclarations.Get(myComponentName);
-                    //    break;
-                    //}
-                    //case "LogitudeReportModule": {
-                    //    type = ReportModuleDeclarations.Get(myComponentName);
-                    //    break;
-                    //}
-                    //case "LogitudeCRMModule": {
-                    //    type = CRMModuleDeclarations.Get(myComponentName);
-                    //    break;
-                    //}
-                    //case "LogitudeInvoiceModule": {
-                    //    type = InvoiceModuleDeclarations.Get(myComponentName);
-                    //    break;
-                    //}
-                    //case "LogitudeAccountingModule": {
-                    //    type = AccountingModuleDeclarations.Get(myComponentName);
-                    //    break;
-                    //}
-                    //case "LogitudeQuoteModule": {
-                    //    type = QuoteModuleDeclarations.Get(myComponentName);
-                    //    break;
-                    //}
-                    //case "LogitudeDashboardModule": {
-                    //    type = DashboardModuleDeclarations.Get(myComponentName);
-                    //    break;
-                    //}
-                    //case "LogitudeDashboardModule": {
-                    //    break;
-                    //}
-                    //case "LogitudeSharedLogisticsModule": {
-                    //    type = SharedLogisticsModuleDeclarations.Get(myComponentName);
-                    //    break;
-                    //}                       
-                    //case "LogitudeWarehouseModule": {
-                    //    type = WarehouseModuleDeclarations.Get(myComponentName);
-                    //    break;
-                    //}
                 }
                 if (type) {
                     factory = _this.Resolver.resolveComponentFactory(type);
@@ -113,5 +60,4 @@ var DynamicLoaderAOT = /** @class */ (function () {
     };
     return DynamicLoaderAOT;
 }());
-exports.DynamicLoaderAOT = DynamicLoaderAOT;
 //# sourceMappingURL=DynamicLoaderAOT.js.map

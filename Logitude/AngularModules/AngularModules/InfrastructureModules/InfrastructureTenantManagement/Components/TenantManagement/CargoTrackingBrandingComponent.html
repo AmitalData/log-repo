@@ -390,7 +390,7 @@
 
                         <td style="vertical-align:top">
                             <div style="width:160px;height:100px">
-                                <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'200px'"
+                                <ImageComponent [KeepOriginalSize]="true" [ImageResizeHeight]="83" 
                                                 [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="ComapnylogoId"
                                                 [EntityId]="EntityId" [EntityName]="'TenantManagement'" [Extension]="'png'"
                                                 (UploadCompleted)="ComapnylogoUploadedCompleted($event)"
@@ -473,9 +473,9 @@
                         </td>
 
                         <td style="vertical-align:top">
-                            <div style="width:200px;height:100px">
-                                <ImageComponent [KeepOriginalSize]="'true'" [WidthImage]="'200px'"
-                                                [class.disabled]="!EnableBranding" [HeightImage]="'100px'" [ImageId]="ShipmentHeaderImageId"
+                            <div style="width:160px;height:100px">
+                                <ImageComponent [KeepOriginalSize]="'true'" [WidthImage]="'160px'"
+                                                [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="ShipmentHeaderImageId"
                                                 [EntityId]="EntityId" [EntityName]="'TenantManagement'" [Extension]="'png'"
                                                 (UploadCompleted)="ShipmentHeaderImageUploadedCompleted($event)"
                                                 style="height:72px;width:72px">

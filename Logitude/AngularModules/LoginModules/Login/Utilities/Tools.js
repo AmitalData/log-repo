@@ -1,6 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var Tools = /** @class */ (function () {
+export var Tools = (function () {
     function Tools() {
     }
     Tools.newGuid = function () {
@@ -20,5 +18,4 @@ var Tools = /** @class */ (function () {
     Tools.DynamicLoader = null;
     return Tools;
 }());
-exports.Tools = Tools;
 //# sourceMappingURL=Tools.js.map
