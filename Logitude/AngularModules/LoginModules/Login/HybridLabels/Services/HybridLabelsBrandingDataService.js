@@ -17,14 +17,6 @@ export var HybridLabelsBrandingDataService = (function () {
             return result;
         });
     };
-    HybridLabelsBrandingDataService.prototype.GetBrandingData = function (BrandingDataRequest) {
-        var url = '/PutGetHybridLabelsBrandingData';
-        var callUrl = this._apiUrl.concat(url);
-        return this._http.post(callUrl, BrandingDataRequest, { headers: this.httpHeaders }).map(function (response) {
-            var result = response.json();
-            return result;
-        });
-    };
     HybridLabelsBrandingDataService.decorators = [
         { type: Injectable },
     ];

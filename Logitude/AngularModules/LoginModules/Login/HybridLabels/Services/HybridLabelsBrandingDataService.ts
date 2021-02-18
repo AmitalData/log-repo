@@ -26,18 +26,8 @@ export class HybridLabelsBrandingDataService {
             return result;
         });
     }
-     
-    GetBrandingData(BrandingDataRequest: HybridLabelsBrandingDataRequest) {
-            var url = '/PutGetHybridLabelsBrandingData';
-            var callUrl = this._apiUrl.concat(url);
-
-            return this._http.post(callUrl, BrandingDataRequest , { headers: this.httpHeaders }).map(response => {
-                var result = response.json();
-                return result;
-            });
-
-        } 
-    }  
+ 
+  }  
 
 
  

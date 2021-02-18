@@ -1,17 +1,16 @@
 ﻿ import { Headers } from '@angular/http';
-import { HybridLabelsBrandingData } from '../DataContracts/HybridLabelsBrandingData';
- 
+import { HybridLabelsBrandingData } from '../DataContracts/HybridLabelsBrandingData'; 
 import { HybridLabelsBrandingDataRequest } from '../DataContracts/HybridLabelsBrandingDataRequest';
 import { HybridLabelsImage } from '../DataContracts/HybridLabelsImage';
 
 export class BrandingDataService {
      
-    public static DefaultBackground: string = "url('../../../Images/LoginScreen/map.png')";
-    public static DefaultMainImage: string = "url('../../../Images/LoginScreen/screen_trucks.jpg')";
-    public static DefaultLoginProgress: string = "url('../../../Images/LoginScreen/screen_kids.jpg')";
+    public static DefaultBackground: string = "url('./Images/LoginScreen/map.png')";
+    public static DefaultMainImage: string = "url('./Images/LoginScreen/screen_trucks.jpg')";
+    public static DefaultLoginProgress: string = "url('./Images/LoginScreen/screen_kids.jpg')";
     public static DefaultForgetPassword: string = "url('./Images/LoginScreen/screen_kids.jpg')";
-    public static DefaultMainLogo: string = "'../../../Images/LoginScreen/header.jpg'";
-    public static DefaultSmallLogo: string = "'../../../Images/LoginScreen/sheader.jpg'"; 
+    public static DefaultMainLogo: string = "'./Images/LoginScreen/header.jpg'";
+    public static DefaultSmallLogo: string = "'./Images/LoginScreen/sheader.jpg'"; 
 
     constructor() {
 
@@ -68,8 +67,8 @@ export class BrandingDataService {
         }
     }
     private static SetHybridLabelsImages(BrandingData: any, baseUrl: string) {
-        this.SetBackgroundImage(BrandingData, baseUrl);
-        this.SetMainImage(BrandingData, baseUrl);
+        this.SetBackgroundImage(BrandingData);
+        this.SetMainImage(BrandingData);
         this.SetLoginProgressImage(BrandingData);
         this.SetForgetPasswordImage(BrandingData); 
         this.SetMainLogo(BrandingData); 
@@ -112,7 +111,7 @@ export class BrandingDataService {
     }
 
     // Binding as [style.background-image] url
-    private static SetBackgroundImage(BrandingData: any, baseUrl: string) {
+    private static SetBackgroundImage(BrandingData: any) {
         if (BrandingData.BackgroundImageBytes) {
             HybridLabelsBrandingData.BackgroundImageURL = "url(" + BrandingDataService.GetImageFromBytes(BrandingData.BackgroundImageBytes) + ")";
             this.StoreImageInStorage("BackgroundImage", BrandingData.BackgroundImageId, BrandingData.BackgroundImageBytes);
@@ -128,7 +127,7 @@ export class BrandingDataService {
         }
     }
 
-    private static SetMainImage(BrandingData: any, baseUrl: string) {
+    private static SetMainImage(BrandingData) {
         if (BrandingData.MainImageBytes) {
             HybridLabelsBrandingData.MainImageURL = "url(" + BrandingDataService.GetImageFromBytes(BrandingData.MainImageBytes) + ")";
             this.StoreImageInStorage("MainImage", BrandingData.MainImageId, BrandingData.MainImageBytes);
@@ -216,6 +215,46 @@ export class BrandingDataService {
             HybridLabelsBrandingData.ForgetPasswordImageURL = this.DefaultForgetPassword;
     }
 
+    public static GetBackgroundImageFromStorage() {
+
+        let background: HybridLabelsImage = BrandingDataService.GetImageFromStorage("BackgroundImage");
+        if (background && background.Id != null) {
+            HybridLabelsBrandingData.BackgroundImageURL = "url(" + BrandingDataService.GetImageFromBytes(background.Data) + ")";
+        }
+        else {
+            HybridLabelsBrandingData.BackgroundImageURL = this.DefaultBackground;
+
+        } 
+        return HybridLabelsBrandingData.BackgroundImageURL;
+    }
+
+
+    public static GetMainLogoFromStorage() {
+
+       let StorageMainImage: HybridLabelsImage = BrandingDataService.GetImageFromStorage("MainLogo");
+        if (StorageMainImage && StorageMainImage.Id != null) {
+            HybridLabelsBrandingData.MainLogoURL = BrandingDataService.GetImageFromBytes(StorageMainImage.Data);
+        }
+        else {
+            HybridLabelsBrandingData.MainLogoURL = this.DefaultMainLogo;
+        }
+        return HybridLabelsBrandingData.MainLogoURL;
+    }
+
+
+    public static GetLoginProgressFromStorage() {
+
+        let loginProcess: HybridLabelsImage = BrandingDataService.GetImageFromStorage("LoginProgressImage");
+        if (loginProcess && loginProcess.Id != null) {
+            HybridLabelsBrandingData.LoginProgressImage = "url(" + BrandingDataService.GetImageFromBytes(loginProcess.Data) + ")";
+        }
+        else {
+            HybridLabelsBrandingData.LoginProgressImageURL = this.DefaultLoginProgress;
+
+        }
+        return HybridLabelsBrandingData.LoginProgressImageURL;
+    }
+     
 
 
     public static GetBackgroundImage() { 

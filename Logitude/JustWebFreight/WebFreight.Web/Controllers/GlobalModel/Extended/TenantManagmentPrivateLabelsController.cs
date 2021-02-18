@@ -50,14 +50,15 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
 
         }
 
-        // Hybrid Labels
+        // Hybrid Labels   
+        
         public HttpResponseMessage PutGetHybridLabelsBrandingData(HybridLabelsBrandingDataRequest BrandingDataRequest)
         {
 
             try
             {
                 HybridLabelsBrandingDataService hybridLabelsBrandingDataService = new HybridLabelsBrandingDataService();
-                HybridLabelsBrandingData brandingData = hybridLabelsBrandingDataService.GeHybridLabelsBrandingDataByUrl(BrandingDataRequest, true);
+                HybridLabelsBrandingData brandingData = hybridLabelsBrandingDataService.GeHybridLabelsBrandingDataByUrl(BrandingDataRequest);
                 ServiceResponse response = new ServiceResponse();
                 response.Result = brandingData;
                 return Request.CreateResponse(HttpStatusCode.OK, response);

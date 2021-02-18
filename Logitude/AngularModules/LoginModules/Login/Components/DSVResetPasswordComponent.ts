@@ -25,8 +25,7 @@ export class DSVResetPasswordComponent extends ResetPasswordComponent {
     public ForgetPasswordImage: string = "";
     public Id = "";
     public MainLogo: string = "";
-    public ContactUsEmail: string = "";
-    public showSpinner = true; 
+    public ContactUsEmail: string = ""; 
 
     public show = true;
     constructor(
@@ -45,15 +44,14 @@ export class DSVResetPasswordComponent extends ResetPasswordComponent {
     GetHybridLabelsData(privateUrl: string) {
         this.hybridLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetHybridLabelsDataRequest(privateUrl)).subscribe((response: ServiceResponse) => {
             if (response.Result) {
-                BrandingDataService.SetHybridLabelsDataRequest(response.Result, privateUrl);
+                //BrandingDataService.SetHybridLabelsDataRequest(response.Result, privateUrl);
                 this.ContactUsEmail = response.Result.ContactUsEmail;
                 this.MainColor = response.Result.MainColor;
                 this.BackgroundImage = BrandingDataService.GetBackgroundImage(); 
                 this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage();
                 this.Id = response.Result.Id;
                 this.MainLogo = response.Result.MainLogo;
-                this.MainLogo = BrandingDataService.GetMainLogo();
-                this.showSpinner = true; 
+                this.MainLogo = BrandingDataService.GetMainLogo(); 
             }
             else {
                 this.GoToError401();

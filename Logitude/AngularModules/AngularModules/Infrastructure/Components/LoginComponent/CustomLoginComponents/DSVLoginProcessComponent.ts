@@ -31,6 +31,7 @@ import {CommonDomainService} from '../../../../Common/Services/CommonDomainServi
 import {DateTool} from '../../../Tools';
 import {Guid} from '../../../Utilities/Guid';
 import {LoginComponent} from '../LoginComponent';
+import { HybridLabelsBrandingDataService } from '../../../Services/WebServices/HybridLabelsBrandingDataService';
 declare var changeFavicon: any;
 declare var changeTitle: any;
 
@@ -41,7 +42,11 @@ declare var changeTitle: any;
 })
 
 export class DSVLoginProcessComponent extends LoginComponent implements OnInit {
-     
+
+    public BackgroundImage: string = "";
+    public LoginProgressImage: string = "";
+    public MainLogo: string = "";
+
     constructor(private mylogitudeApplicationService: LogitudeApplicationService, private myloginService: LoginService, public myIndexedDbService: IndexedDbService, private myentityResourceService: EntityResourceService, private _myapplicationTimersManager: ApplicationTimersManager, public myentityListService: EntityListService,
         private _myuserLastLoginPMService: UserLastLoginPMService
     ) {
@@ -50,6 +55,13 @@ export class DSVLoginProcessComponent extends LoginComponent implements OnInit {
     
     ngOnInit() {
         this.StartLoginProcess(); 
+        this.StartLoginProcess();
+    }
+
+    GetHybridLabelsData() {
+        this.BackgroundImage = HybridLabelsBrandingDataService.GetBackgroundImageFromStorage();
+        this.MainLogo = HybridLabelsBrandingDataService.GetMainLogoFromStorage();
+        this.LoginProgressImage = HybridLabelsBrandingDataService.GetLoginProgressFromStorage();
     } 
 }
 

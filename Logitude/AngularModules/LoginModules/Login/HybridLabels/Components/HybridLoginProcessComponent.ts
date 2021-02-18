@@ -1,11 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { LoginComponent } from '../../Components/LoginComponent';
-import { ResetPasswordComponent } from '../../Components/ResetPasswordComponent';
-import { LoginService } from '../../LoginService';
-import { SessionInfo } from '../../SessionInfo';
-import { ServiceResponse } from '../DataContracts/ServiceResponse';
-import { BrandingDataService } from '../Services/BrandingDataService';
-import { HybridLabelsBrandingDataService } from '../Services/HybridLabelsBrandingDataService';
+import { LoginComponent } from '../../Components/LoginComponent'; 
+import { LoginService } from '../../LoginService'; 
+import { BrandingDataService } from '../Services/BrandingDataService'; 
 
 @Component({
     selector: 'HybridLoginProcessComponent',
@@ -15,42 +11,28 @@ import { HybridLabelsBrandingDataService } from '../Services/HybridLabelsBrandin
 })
 export class HybridLoginProcessComponent extends LoginComponent implements OnInit {
 
-    public authHeader;
-    private privateUrl;
+    public authHeader; 
     public MainColor: string = null;
     public BackgroundImage: string = "";
     public ForgetPasswordImage: string = "";
     public LoginProgressImage: string = "";  
     public Id = "";
     public MainLogo: string = "";
-    public ContactUsEmail: string = "";
-    public showSpinner = true;
+    public ContactUsEmail: string = ""; 
 
     public show = true;
     constructor(
-        private ss: LoginService,
-        private hybridLabelsBrandingDataService: HybridLabelsBrandingDataService) {
+        private ss: LoginService ) {
         super(ss);
     }
 
-    ngOnInit() {
-        this.privateUrl = SessionInfo.GetLogitudeURL();
-        this.GetHybridLabelsData(this.privateUrl);
+    ngOnInit() { 
+        this.GetHybridLabelsData();
     }
-
-
-    GetHybridLabelsData(privateUrl: string) {
-        this.hybridLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetHybridLabelsDataRequest(privateUrl)).subscribe((response: ServiceResponse) => {
-            if (response.Result) {
-                BrandingDataService.SetHybridLabelsDataRequest(response.Result, privateUrl);
-                this.ContactUsEmail = response.Result.ContactUsEmail;
-                this.MainColor = response.Result.MainColor;
-                this.BackgroundImage = BrandingDataService.GetBackgroundImage();
-                this.MainLogo = BrandingDataService.GetMainLogo();
-                this.LoginProgressImage = BrandingDataService.GetLoginProgressImage();
-                console.log(this.LoginProgressImage);
-                this.showSpinner = false;
-            }
-        });
+     
+    GetHybridLabelsData() { 
+        this.BackgroundImage = BrandingDataService.GetBackgroundImageFromStorage();
+        this.MainLogo = BrandingDataService.GetMainLogoFromStorage();
+        this.LoginProgressImage = BrandingDataService.GetLoginProgressFromStorage();  
     }
 }

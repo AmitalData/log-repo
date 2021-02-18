@@ -114,7 +114,7 @@
     Name="LoginProgressImageId"
     OldNames="LoginProgressImage"
     Type="varchar"
-    Size="-1">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>

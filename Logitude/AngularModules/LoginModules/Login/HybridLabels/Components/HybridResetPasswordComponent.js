@@ -21,7 +21,6 @@ export var HybridResetPasswordComponent = (function (_super) {
         this.Id = "";
         this.MainLogo = "";
         this.ContactUsEmail = "";
-        this.showSpinner = true;
         this.show = true;
     }
     HybridResetPasswordComponent.prototype.ngOnInit = function () {
@@ -32,12 +31,11 @@ export var HybridResetPasswordComponent = (function (_super) {
         var _this = this;
         this.hybridLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetHybridLabelsDataRequest(privateUrl)).subscribe(function (response) {
             if (response.Result) {
-                BrandingDataService.SetHybridLabelsDataRequest(response.Result, privateUrl);
+                //BrandingDataService.SetHybridLabelsDataRequest(response.Result, privateUrl);
                 _this.ContactUsEmail = response.Result.ContactUsEmail;
                 _this.MainColor = response.Result.MainColor;
                 _this.BackgroundImage = BrandingDataService.GetBackgroundImage();
                 _this.MainLogo = BrandingDataService.GetMainLogo();
-                _this.showSpinner = false;
             }
         });
     };
