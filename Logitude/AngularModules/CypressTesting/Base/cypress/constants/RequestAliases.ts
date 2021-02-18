@@ -23,4 +23,9 @@ export class RequestAliases {
     public static readonly GetSingleTariff = "GetSingleTariff";
     public static readonly GetVatTypePercentage = 'GetVatTypePercentage';
     public static readonly PostAvailableTariffs = 'PostAvailableTariffs';
+    public static readonly PostUpdateRequest = 'WaitPostUpdateRequest';
+    public static readonly PostShippinglinesRequest = 'WaitPostShippinglinesRequest';
+    public static readonly GetCarrierViews = 'WaitGetCarrierViews';
+    public static readonly WaitUpload = 'WaitUpload';
+
 }

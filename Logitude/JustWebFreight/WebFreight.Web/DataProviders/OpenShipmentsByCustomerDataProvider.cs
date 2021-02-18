@@ -49,6 +49,7 @@ namespace WebFreight.Web.DataProviders
         public string PortOfDischargeName { get; set; }
         public int? NumberOfContainers { get; set; }
         public DateTime? ETA { get; set; }
+        public DateTime? ATA { get; set; }
         public bool IsCancelled { get; set; }
         public string ContainersNumbersArray { get; set; }
         public string ContainersNumbersAndTypesArray { get; set; }

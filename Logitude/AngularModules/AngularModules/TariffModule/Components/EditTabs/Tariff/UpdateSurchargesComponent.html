@@ -124,7 +124,7 @@
                                                                         </td>
 
                                                                         <td style="width: 50px;">
-                                                                            <button style="height:20px;" class="Button" (click)="AddPort('From')">
+                                                                            <button id="FromPort" style="height:20px;" class="Button" (click)="AddPort('From')">
                                                                                 <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
                                                                                 Port
                                                                             </button>
@@ -256,7 +256,7 @@
                                                                         </td>
 
                                                                         <td style="width: 50px;">
-                                                                            <button style="height:20px;" class="Button" (click)="AddPort('To')">
+                                                                            <button id="ToPort" style="height:20px;" class="Button" (click)="AddPort('To')">
                                                                                 <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
                                                                                 Port
                                                                             </button>
@@ -451,7 +451,7 @@
                                                                                         <table>
                                                                                             <tr class="SimpleGridViewRow" *ngFor="let item of ContainerPricesItemsSource">
                                                                                                 <td class="GridViewCell" style="width: 25px; min-width: 25px; max-width: 25px;">
-                                                                                                    <CheckBox [IsChecked]="item.IsChargeChecked" (Checked)="item.IsChargeChecked = $event"></CheckBox>
+                                                                                                    <CheckBox id="{{'IsSurchargeChecked' | IdGeneratorPipe}}"  [IsChecked]="item.IsChargeChecked" (Checked)="item.IsChargeChecked = $event"></CheckBox>
                                                                                                 </td>
 
                                                                                                 <td class="GridViewCell" style="width: 85px; min-width: 85px; max-width: 85px; color:#6E7172">

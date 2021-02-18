@@ -77,6 +77,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                             SmallLogo = entityPM.SmallLogo,
                             ReceiveAllStatuses = entityPM.ReceiveAllStatuses,
                             PrivateLabelUrl = entityPM.PrivateLabelUrl,
+                            PrivateLabelDomain = entityPM.PrivateLabelDomain,
                             PrivateLabelShortName = entityPM.PrivateLabelShortName,
                             SearchFields = entityPM.PrivateLabelName+","+entityPM.PrivateLabelShortName+","+entityPM.PrivateLabelUrl+","+entityPM.ContactUsEmail+",",
                             Id=IdCounter.GetNumber("TenantManagmentPrivateLabels",0).ToString(),

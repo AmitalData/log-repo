@@ -220,15 +220,15 @@
 
 
                             <!-- Balance -->
-                            <td style="width: 75px; " [style.width.px]="IsSalesmanRestricted?'185':'75'" class="Label"
+                            <td style="width: 75px; " [style.width.px]="IsSalesmanRestricted?'185':'75'"  class="Label"
                                 text-start>
                                 <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'GLAccount.O.Balance'"
                                     [ObjectFieldName]="'NumberOfMonths'" [DataContext]="DataContext"></LogLabel>
                             </td>
-                            <td style="width: 230px;">
+                            <td style="width: 230px;"  [attr.colspan]="IsSalesmanRestricted ? '2' : '1'">
                                 <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
                                     <li float-start id="filter_All" (click)="BalanceFilterItemClicked('filter_All')"
-                                        style="height: 22px;width: fit-content;"
+                                        style="height: 22px;width: 50px;"
                                         [class.SelectedFilter]="balanceFilterSelectedValue === 'filter_All'">
                                         &nbsp;&nbsp;
                                         {{ 'Accounting.General.O.All' | TextCodeTranslationPipe }}
@@ -236,25 +236,26 @@
                                     </li>
                                     <li float-start id="filter_Debtors"
                                         (click)="BalanceFilterItemClicked('filter_Debtors')"
-                                        style="height: 22px;width: fit-content;"
+                                        style="height: 22px;width: 90px;"
                                         [class.SelectedFilter]="balanceFilterSelectedValue === 'filter_Debtors'">
                                         {{ 'GLAccount.O.DebtorsOnly' | TextCodeTranslationPipe }}
                                     </li>
                                     <li float-start id="filter_DebtAbove"
                                         (click)="BalanceFilterItemClicked('filter_DebtAbove')"
-                                        style="height: 22px;width: fit-content;"
+                                        style="height: 22px;width: 90px;"
                                         [class.SelectedFilter]="balanceFilterSelectedValue === 'filter_DebtAbove'">
                                         {{ 'GLaccount.O.DebtAbove' | TextCodeTranslationPipe }}
                                     </li>
                                 </ul>
                             </td>
-                            <td style="width: 120px;">
-
-                                <LogTextBox *ngIf="balanceFilterSelectedValue === 'filter_DebtAbove'"
-                                    [ObjectFieldName]="'Balance'" [InputType]="'decimal'" [DataContext]="DataContext"
-                                    [Text]="Balance" [NoObjectField]="true" [ObjectTableName]="'GLAccount'"
-                                    [HideColumns]="true">
-                                </LogTextBox>
+                            <td [style.width.px]="IsSalesmanRestricted?'305':'120'" >
+                                <div style="max-width: 120px;">
+                                    <LogTextBox *ngIf="balanceFilterSelectedValue === 'filter_DebtAbove'"
+                                        [ObjectFieldName]="'Balance'" [InputType]="'decimal'" [DataContext]="DataContext"
+                                        [Text]="Balance" [NoObjectField]="true" [ObjectTableName]="'GLAccount'"
+                                        [HideColumns]="true">
+                                    </LogTextBox>
+                                </div>
                             </td>
 
 
@@ -312,10 +313,10 @@
                             <!-- NumberOfMonths -->
                             <td colspan="2" style="width: 120px; padding-right: 5px;" class="Label">
 
-                                <LogLabel style="width: 190px;padding-top: 3px;"  float-start [ObjectTableName]="'GLAccount'" [TextCode]="'AgingReport.O.NumberMonthsBackwards'"
+                                <LogLabel style="padding-top: 3px;" [style.width.px]="IsSalesmanRestricted?'130':'205'"   float-start [ObjectTableName]="'GLAccount'" [TextCode]="'AgingReport.O.NumberMonthsBackwards'"
                                     [ObjectFieldName]="'NumberOfMonths'" [DataContext]="DataContext"></LogLabel>
 
-                                <div  style="width: 110px;" float-start>
+                                <div  style="width: 90px;" float-start>
                                     <LogTextBox [ObjectFieldName]="'NumberOfMonths'" [InputType]="'unsinteger'" [DataContext]="DataContext"
                                         [Text]="NumberOfMonths" [NoObjectField]="true" [ObjectTableName]="'GLAccount'" [HideColumns]="true">
                                     </LogTextBox>
@@ -372,7 +373,7 @@
                                     [TextCode]="'General.Accounting.O.AgingMethod'" [DataContext]="DataContext">
                                 </LogLabel>
 
-                                <ComboBox float-start style="width: 170px;" [ItemsSource]="AgingMethodsList" [Binding]="Name"
+                                <ComboBox float-start style="width: 163px;" [ItemsSource]="AgingMethodsList" [Binding]="Name"
                                     [SelectedItem]="SelectedAgingMethod"
                                     (SelectedItemChanged)="SelectedAgingMethod = $event"></ComboBox>
                             </td>

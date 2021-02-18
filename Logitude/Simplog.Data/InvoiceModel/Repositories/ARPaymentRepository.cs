@@ -12,7 +12,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
     public class ARPaymentRepository: IRepository<ARPayment>
     {
         IInvoiceContext invoiceContext;
-
+        ICommonDataContext commonContext;
         public ARPaymentRepository(IInvoiceContext context)
         {
             invoiceContext = context;
@@ -26,6 +26,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
         public ARPaymentRepository(int tenant)
         {
             invoiceContext = InvoiceContext.GetContext(tenant);
+            commonContext = CommonDataContext.GetContext(tenant);
         }
 
         public ARPayment GetSingleARPayment(string id, int tenant)
@@ -68,6 +69,14 @@ namespace Simplog.Data.InvoiceModel.Repositories
             }
 
             return list;
+        }
+
+        public User getUserByARPayment(ARPayment aRPayment)
+        {
+            User createByUser = (from user in commonContext.Users.Include("Contact")
+                                   where user.Id == aRPayment.CreatedByUserId
+                                   select user).FirstOrDefault();
+            return createByUser;
         }
 
         public IQueryable<ARPayment> GetDraftsARPayments(int tenant)

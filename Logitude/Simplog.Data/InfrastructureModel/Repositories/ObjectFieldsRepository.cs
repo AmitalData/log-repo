@@ -515,8 +515,45 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         }
 
+        public ObjectField GetObjectFieldByName(string name, string objectTableId, int tenant)
+        {
+            ObjectField field;
+            string fieldCacheKey = "ObjectField" + name + tenant;
 
-    
+            if (CacheManager.CacheWrapper.Get(fieldCacheKey) == null)
+            {
+                field = GetObjectFieldFromDatabase(name, objectTableId, tenant);
+
+                if (field != null)
+                {
+                    InsertObjectFieldIntoCache(field, fieldCacheKey);
+                }
+            }
+            else
+            {
+                field = GetObjectFieldFromCache(fieldCacheKey);
+
+            }
+            return field;
+        }
+
+        private ObjectField GetObjectFieldFromDatabase(string name, string objectTableId, int tenant)
+        {
+           var field = context.ObjectFields.Where(d => d.FieldName == name && d.ObjectTableId == objectTableId
+                && (d.Tenant == tenant || d.Tenant == 0)).FirstOrDefault();
+            return field;
+        }
+
+        private void InsertObjectFieldIntoCache(ObjectField field,string fieldCacheKey)
+        {
+            CacheManager.CacheWrapper.Insert(fieldCacheKey, field, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+        }
+
+        private ObjectField GetObjectFieldFromCache(string fieldCacheKey)
+        {
+            return (ObjectField)CacheManager.CacheWrapper.Get(fieldCacheKey);
+        }
+
 
     }
 }

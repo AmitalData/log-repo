@@ -34,8 +34,8 @@ Feature: Create Consolidation Invoice
 
     Scenario: Add Payables
         Given a payable with the following details
-            | ChargesType | UOM  | Quantity | UnitPrice | Currency | Vendor     |
-            | AFT         | GRWT | 5        | 10        | EUR      | TestVendor |
+            | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate | Vendor     |
+            | AFT         | GRWT | 5        | 10        | EUR      | 4            | TestVendor |
         When add payables
         Then the payables should add successfully
 

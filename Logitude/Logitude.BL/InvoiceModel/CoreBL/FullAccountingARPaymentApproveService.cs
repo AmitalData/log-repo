@@ -337,6 +337,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
 
         }
 
+
         private JournalPM CreateNewPaymentJournal()
         {
             JournalPM journal = GetNewJournalForPayment();

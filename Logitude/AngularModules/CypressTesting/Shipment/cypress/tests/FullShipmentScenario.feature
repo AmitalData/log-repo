@@ -48,8 +48,8 @@ Feature:  Full Shipment Scenario
 
     Scenario: Add Payable
         Given a payable with the following details
-            | ChargesType | UOM  | Quantity | UnitPrice | Currency |
-            | AFT         | GRWT | 5        | 10        | EUR      |
+            | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
+            | AFT         | GRWT | 5        | 10        | EUR      | 4            |
         When save shipment
         Then the direct shipment should save successfully
 

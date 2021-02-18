@@ -27,6 +27,20 @@ export class TariffSelectors
     public static readonly PriceCheckDate = "#Date";
     public static readonly PriceCheckSearch = ".SearchButton";
     
+    public static readonly AddButton  = "#Add" ; 
+    public static readonly TariffLineStartDate = "#date_TariffLine_StartDate"
+    public static readonly TariffUpdateStartDate = "#StartDate"
+    public static readonly TariffUpdatePortSelector = "#Tariff_PortId"
+    public static readonly FromPort = "#FromPort"
+    public static readonly ToPort = "#ToPort"
+    public static readonly TariffUpdateSurchargeCheckBox = "checkbox[id^='IsSurchargeChecked']"
+    public static readonly ShippingLineSCACCode="#ShippingLine_SCACCode"
+    public static readonly ShippingLineCode="#ShippingLine_Code"
+    public static readonly ShippingLineName = "#ShippingLine_EnglishName"
+    public static readonly TariffActionsMenu = ".ToggleButton"
+    // public static readonly
+
+    
     public static TariffSurcharge(number: number): string{
         return "#Tariff_Surcharge" + number.toString() + "Id";
     }
@@ -37,6 +51,10 @@ export class TariffSelectors
 
     public static TariffLineStepPrice(number: number): string{
         return "#TariffLine_Step" + number.toString() + "Price";
+    }
+
+    public static TariffUpdatePrice(number: number): string{
+        return "#Price" + number.toString();
     }
 
     public static TariffLineEditButton(lineNumber: number): string{

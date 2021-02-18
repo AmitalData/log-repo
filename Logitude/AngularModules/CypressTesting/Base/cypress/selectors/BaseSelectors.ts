@@ -6,9 +6,15 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly AccountingMenu = '#GeneralMHAccounting';
     public static readonly CustomersMenu = '#GeneralMHCustomers';
     public static readonly TicketsMenu = '#GeneralMHTicket';
+    public static readonly MaintenanceMenu = "#GeneralMHMaintenance"
+    //#endregion
+    //#region Maintenance
+    public static readonly SystemSettings = "#CMS"
+    public static readonly CustomsSettings = "#MaintenanceItemCISE"
     //#endregion
     //#region Buttons
     public static readonly RedButton = '.RedButton';
+    public static readonly GreenButton = '.GreenButton';
     public static readonly Button = '.Button';
     public static readonly Row0 = '#row0';
     public static readonly UploadDocumentdbtn = "#UploadDocumentdbtn";
@@ -18,15 +24,19 @@ export class BaseSelectors extends RegexSelectors {
     //#region Contains
     public static readonly ContainsApplytoall = 'Apply to all';
     public static readonly ContainsOK = 'OK';
-    public static readonly ContainsShipment="Shipment: "
-    public static readonly ContainsOperations= "Operations"
-    public static readonly ContainsAccounting="Accounting"
-    public static readonly ContainsBack="Back"
+    public static readonly ContainsShipment = "Shipment: "
+    public static readonly ContainsOperations = "Operations"
+    public static readonly ContainsAccounting = "Accounting"
+    public static readonly ContainsBack = "Back"
     //#endregion
     //#region general
     public static readonly ToggleButtonClass = '.ToggleButton';
     public static readonly label = "label"
     public static readonly button = "button"
+    public static readonly typeCheckbox = '[type="checkbox"]'
+    public static readonly LogitudeWindow = ".LogitudeWindow";
+    public static readonly Label = ".Label"
+
     //#endregion
     //#endregion
 
@@ -35,12 +45,9 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly SpanElement = "span";
     public static readonly DivElement = "div";
     public static readonly FirstRecentEntityItem = ".RecentEntityItem:first";
-    public static readonly ToggleIcon='[src="./Images/ToggleIcon.png"]'
+    public static readonly ToggleIcon = '[src="./Images/ToggleIcon.png"]'
     public static readonly BackBottonBodyClass = ".BackBottonBody"
 
-
-
-    //Abed Malakh
     public static readonly GreenButton = ".GreenButton";
     public static readonly QueryLink = ".QueryLink";
 }

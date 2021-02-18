@@ -147,7 +147,15 @@ namespace WebFreight.Web.Controllers.AccountingModel
                             scope.Complete();
                            
                         }
-                        var res1 = new { Success = true, Message = "The System 1000 file load process will be performed in the background" };// $"Send to Batch Task {batchTaskId}" };
+                        string transText = "";
+                        bool useLocal = true;
+                        transText = TranslateTextsClassTranslate("Accounting.O.Sys1000Background", 0, useLocal);
+                        if (String.IsNullOrWhiteSpace(transText))
+                        {
+                            transText = "The System 1000 file load process will be performed in the background";
+                        }
+
+                        var res1 = new { Success = true, Message = transText }; 
                         return Request.CreateResponse(HttpStatusCode.Accepted, res1);
                     }
                     //response.Result = bankAccountPageAnalyzer.MyResultLoadBankPage;
@@ -168,6 +176,16 @@ namespace WebFreight.Web.Controllers.AccountingModel
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+        public static ITextCodeTranslator OverrideITextCodeTranslator { get; set; }
+
+        public virtual string TranslateTextsClassTranslate(string textCodeCode, int tenant, bool getLocalDefaultText)
+        {
+            if (OverrideITextCodeTranslator != null)
+            {
+                return OverrideITextCodeTranslator.Translate(textCodeCode, tenant);
+            }
+            return TranslateTextsClass.Translate(textCodeCode, tenant, getLocalDefaultText);
         }
 
         public HttpResponseMessage PutFunctionalTestXLS(ImageParameter fileUploadParamerter)

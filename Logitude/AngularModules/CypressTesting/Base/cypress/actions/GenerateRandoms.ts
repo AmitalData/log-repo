@@ -18,3 +18,13 @@ export function GenerateRandomNumber(minimum:number, maximum: number) {
 
     return (Math.floor(Math.random() * (maximum - minimum + 1) + minimum))
 }
+
+export function GenerateRandomNumberAndString(length: number){
+    let randomString = ""
+    let possible = "abcdefghijklmnopqrstuvwxyz0123456789"
+
+    for (let i = 0; i < length; i++)
+        randomString += possible.charAt(Math.floor(Math.random() * possible.length))
+
+    return randomString
+}

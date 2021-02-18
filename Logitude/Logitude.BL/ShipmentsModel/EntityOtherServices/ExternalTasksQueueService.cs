@@ -31,10 +31,12 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
     public class ExternalTasksQueueService
     {
         private int tenant;
+        private string subject;
         private ICommonDataContext commonContext;
-        public ExternalTasksQueueService(int tenant)
+        public ExternalTasksQueueService(int tenant, string subject)
         {
             this.tenant = tenant;
+            this.subject = subject;
             commonContext = CommonDataContext.GetContext(tenant);
         }
         public StatusUpdateExternalTasksQueueResult AddStatusUpdateExternalTaskQueue(ShipmentAdditionalCloudDataAM Data)
@@ -126,7 +128,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                 LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 InOut = "O",
                 ObjectTableId = (objectTable != null && !string.IsNullOrEmpty(objectTable.Id)) ? objectTable.Id : null,
-                Subject = "Status Update",
+                Subject = subject,
                 Tenant = tenant,
                 CommunicationLogTypeCode = "Q",
                 CommunicationStatusTypeCode = "W",
