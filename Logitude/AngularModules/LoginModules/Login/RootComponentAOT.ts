@@ -74,8 +74,9 @@ export class RootComponentAOT implements OnInit {
     ngOnInit() {
 
         var url = window.location.href;
-       
-        this.isDSV = url.toLowerCase().indexOf(".dsv.") > -1 ? true : false;
+        const queryString = window.location.search;
+        this.isDSV = (url.toLowerCase().indexOf(".dsv.") > -1 || url.toLowerCase().indexOf("dsvlocal") > -1) ? true : false;
+        console.log("================================>" + this.isDSV, url, queryString);
         if (this.isDSV) {
             SessionInfo.PlShortName = "DSV";
             //Temp Code, must changed to dynamic 
@@ -149,6 +150,7 @@ export class RootComponentAOT implements OnInit {
     }
 
     LoadDSVLoginPage() {
+        console.log("LoadDSVLoginPage");
         DynamicLoaderAOT.Load("./Login/Components/DSVLoginComponent", this.location)
             .then(cmpRef => { });
     }

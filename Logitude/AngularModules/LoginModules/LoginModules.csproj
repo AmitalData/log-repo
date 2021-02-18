@@ -317,6 +317,12 @@
     <TypeScriptCompile Include="Login\Components\DSVResetPasswordComponent.ts" />
     <TypeScriptCompile Include="Login\Components\LoginComponent.ts" />
     <TypeScriptCompile Include="Login\Components\ResetPasswordComponent.ts" />
+    <TypeScriptCompile Include="Login\HybridLabels\DataContracts\HybridLabelsBrandingData.ts" />
+    <TypeScriptCompile Include="Login\HybridLabels\DataContracts\HybridLabelsBrandingDataRequest.ts" />
+    <TypeScriptCompile Include="Login\HybridLabels\DataContracts\HybridLabelsImage.ts" />
+    <TypeScriptCompile Include="Login\HybridLabels\DataContracts\ServiceResponse.ts" />
+    <TypeScriptCompile Include="Login\HybridLabels\Services\BrandingDataService.ts" />
+    <TypeScriptCompile Include="Login\HybridLabels\Services\HybridLabelsBrandingDataService.ts" />
     <TypeScriptCompile Include="Login\LoginService.ts" />
     <TypeScriptCompile Include="Login\LogitudeLoginModuleAOT.ts" />
     <TypeScriptCompile Include="Login\LogitudeLoginModule.ts" />
