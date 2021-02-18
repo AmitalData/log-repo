@@ -5,4 +5,5 @@ export class Urls
     public static readonly GetAllTariffVersionsForTariff = "**/tariffversionextended/GetAllTariffVersionsForTariff?**";
     public static readonly GetTariffVersionLines = "**/TariffDomain/GetTariffVersionLines?**";
     public static readonly GetSingleTariff = "**/tariffs/getsingle?**";
+    public static readonly PostAvailableTariffs = "**/TariffDomain/PostAvailableAirlineFreightTariffs";
 }

@@ -9,6 +9,7 @@ import { Urls } from "../constants/Urls";
 import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
+import { Tariff } from "../models/Tariff";
 
 export function LoginAndNavigateToTariffWorkspace() {
     cy.Login();
@@ -110,10 +111,9 @@ export function ValidateUpdateTariff() {
     AssertPutTariff();
 }
 
-export function ValidateCreateFreightCost(): string {
-    let tariffNumber: string = AssertPostTariff();
+export function ValidateCreateFreightCost() {
+    AssertPostTariff();
     AssertGetRecentTariffs();
-    return tariffNumber;
 }
 
 export function ValidateCreateSurchargeCost() {
@@ -149,6 +149,10 @@ export function ValidateApprovedVersionsAppear() {
     BaseAssertion.AssertElementExist(TariffSelectors.TariffVersionHistoryComboBoxItem(2));
 }
 
+export function ValidateTariffPriceCheck(expectedPrice: string){
+    AssertTariffPriceCheck(expectedPrice);
+}
+
 export function BackToTariffWorkspace() {
     cy.Click(BaseSelectors.BackBottonBodyClass, "Tariffs");
 }
@@ -168,38 +172,8 @@ export function FillOceanFCLPriceCheckWizard(oceanFCLPriceCheckDetails: OceanFCL
 }
 
 export function PriceCheckSearch() {
+    DefineRequestPostAvailableTariffs();
     cy.Click(TariffSelectors.PriceCheckSearch, "Search");
-}
-
-export function CalculateOceanFCLPrice(oceanFCLPriceCheck: OceanFCLPriceCheckDetails, freightCostTariffLines: FreightCostTariffLineDetails[]): number {
-    let filteredTariffLines = freightCostTariffLines.filter(l =>
-        l.FromPort.toLowerCase() === oceanFCLPriceCheck.FromPort.toLowerCase() &&
-        l.ToPort.toLowerCase() === oceanFCLPriceCheck.ToPort.toLowerCase());
-
-    if (filteredTariffLines.length === 0) {
-        return null;
-    }
-
-    let filteredTariffLine = filteredTariffLines[0];
-    let oceanFCLPrice = 0;
-
-    if (oceanFCLPriceCheck.Quantity1 && filteredTariffLine.Step1Price) {
-        oceanFCLPrice += (oceanFCLPriceCheck.Quantity1 * filteredTariffLine.Step1Price);
-    }
-    if (oceanFCLPriceCheck.Quantity2 && filteredTariffLine.Step2Price) {
-        oceanFCLPrice += (oceanFCLPriceCheck.Quantity2 * filteredTariffLine.Step2Price);
-    }
-    if (oceanFCLPriceCheck.Quantity3 && filteredTariffLine.Step3Price) {
-        oceanFCLPrice += (oceanFCLPriceCheck.Quantity3 * filteredTariffLine.Step3Price);
-    }
-    if (oceanFCLPriceCheck.Quantity4 && filteredTariffLine.Step4Price) {
-        oceanFCLPrice += (oceanFCLPriceCheck.Quantity4 * filteredTariffLine.Step4Price);
-    }
-    if (oceanFCLPriceCheck.Quantity5 && filteredTariffLine.Step5Price) {
-        oceanFCLPrice += (oceanFCLPriceCheck.Quantity5 * filteredTariffLine.Step5Price);
-    }
-
-    return oceanFCLPrice;
 }
 
 function DefineRequestsForApproveOrCopyTariffVersion() {
@@ -390,18 +364,18 @@ function DefineRequestGetSingleTariff() {
     cy.DefineRequestWait(RestAPI.GET, Urls.GetSingleTariff, RequestAliases.GetSingleTariff);
 }
 
+function DefineRequestPostAvailableTariffs(){
+    cy.DefineRequestWait(RestAPI.POST, Urls.PostAvailableTariffs, RequestAliases.PostAvailableTariffs);
+}
+
 function AssertPutTariff() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutTariff, 200);
 }
 
-function AssertPostTariff(): string {
-    let tariffNumber: string = null;
-
+function AssertPostTariff() {
     BaseAssertion.AssertStatusCode(RequestAliases.PostTariff, 200).then((interception) => {
-        tariffNumber = interception.response.body.TariffNumber;
+        Tariff.Number = interception.response.body.TariffNumber;
     });
-
-    return tariffNumber;
 }
 
 function AssertGetRecentTariffs() {
@@ -418,4 +392,11 @@ function AssertGetTariffVersionLines() {
 
 function AssertGetSingleTariff() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetSingleTariff, 200);
+}
+
+function AssertTariffPriceCheck(expectedPrice: string){
+    BaseAssertion.AssertStatusCode(RequestAliases.PostAvailableTariffs, 200).then((interception) => {
+        let actualPrice = interception.response.body.filter((t: { TariffNumber: string; }) => t.TariffNumber === Tariff.Number)[0].Price;
+        assert.equal(actualPrice, expectedPrice);
+    });
 }
