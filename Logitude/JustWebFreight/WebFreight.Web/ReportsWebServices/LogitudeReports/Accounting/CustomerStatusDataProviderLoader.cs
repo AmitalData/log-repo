@@ -232,7 +232,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 ExternalTransactionsTotal = ExternalTransactions.Where(d => d.AccountId == customerPeriods.First().AccountId).Sum(d => d.LocalAmountCredit),
 
                 AccountingBalance = GetBalanceSummationForSplittedAccounts(customerPeriods) ?? 0,
+                TotalForeign = customerPeriods.Sum(d => d.Total),
+                TotalLocal = GetBalanceSummationForSplittedAccounts(customerPeriods) ?? 0,
                 Periods = GetStatusPeriods(customerPeriods),
+
                 //AccountSalesmanName = customerPeriods.First().AccountSalesmanName,
                 //AccountSalesmanLocalName = customerPeriods.First().AccountSalesmanLocalName,
                 //AccountCollectorName = customerPeriods.First().AccountCollectorName,

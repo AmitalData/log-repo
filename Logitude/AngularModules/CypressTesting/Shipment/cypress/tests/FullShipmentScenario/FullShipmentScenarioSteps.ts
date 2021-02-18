@@ -262,7 +262,7 @@ Given("the user in the direct's shipment rounting tab", () => {
     cy.Click(ShipmentSelectors.RoutingsTab, null);
 });
 
-Given("edit Main Carriage Leg with the follwing details", (dataTable) => {
+Given("edit Main Carriage Leg with the following details", (dataTable) => {
     let mainCarriageLeg = dataTable.hashes()[0] as MainCarriageLeg;
     Actions.EditMainCarriageLegs(mainCarriageLeg.Airline);
     cy.Click(ShipmentSelectors.ShipmentSaveButton, null);
