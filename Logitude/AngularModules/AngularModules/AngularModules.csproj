@@ -278,6 +278,7 @@
     <Content Include="CustomsModules\CustomsCourier\Components\MamanSpecialAction\DeclarationMamanSpecialActionComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\PendingByKeyword\AddEditPendingByKeywordComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationCargoSplit\Components\EditTabs\DecCargoSplitConsPackDetComponent.html" />
+    <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\CloseDeclaration\ExportDeclarationClosingDataComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\DeclarationCancellationComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\NewEntity\NewExportDeclarationComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\SendDeclaration\SendManifestComponent.html" />
@@ -292,7 +293,6 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.html" />
     <Content Include="CustomsModules\CustomsReferant\Components\ReferantWorkspaces\ReferantWorkspaceComponent.html" />
     <Content Include="_Resources\js\UnifreightJSBridge.js" />
-
     <TypeScriptCompile Include="App\DynamicLoader\LazyWidgetsLogitude.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\CopyJournalComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ShippingLine\ShippinglineGeneralTabComponent.ts" />
@@ -302,8 +302,8 @@
     <TypeScriptCompile Include="Common\CustomFilters\ChargesTypeCustomFilter.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\CarrierAreaExtendedPMService.ts" />
     <TypeScriptCompile Include="Common\Tools.ts" />
-
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetUnloadPortCodeComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\CloseDeclaration\ExportDeclarationClosingDataComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\DeclarationCancellationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\Documents\DeclarationCancellationCustomsDocumentsController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\NewEntity\NewExportDeclarationComponent.ts" />
@@ -396,12 +396,9 @@
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\ListHeaderTemplates\TransportModeListHeaderTemplate.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddExceptionReasonToUnifreightStatusComponent.ts" />
- 
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\ReferantWorkspaces\ReferantWorkspaceComponent.ts" />
- 
     <TypeScriptCompile Include="Customs\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsControls\Components\RemarksPopUp.ts" />
- 
     <Content Include="CustomsModules\InvoiceQueue\Components\InvoiceQueueComponent.html" />
     <Content Include="CustomsModules\CustomsReferant\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.html" />
     <Content Include="Customs\Components\ListActionBar\DeclarationReferantDataListActionBarComponent.html" />
@@ -1309,6 +1306,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\DeficitDecisionList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\DocumentRejectTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ExceptionReasonList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\ExportDeclarationClosingDataList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ExporterRoleTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\GatepassRequestList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\GatepassReturnCodeList.ts" />
@@ -1366,6 +1364,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\DeficitDecisionPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DocumentRejectTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ExceptionReasonPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\ExportDeclarationClosingDataPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ExporterRoleTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\Extended\InvoiceQueue.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\Extended\DeclarationRemarks.ts" />
@@ -1450,6 +1449,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationRefernatDataListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeficitDecisionListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ExceptionReasonListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\ExportDeclarationClosingDataListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ExporterRoleTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassRequestListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassRequestsListService.ts" />
@@ -1498,6 +1498,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationPendingPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationReferantDataPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\ExceptionReasonPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\ExportDeclarationClosingDataPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\GatepassRequestPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\GatepassRequestsPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\NbcDeclarationTypePMService.ts" />
@@ -8335,7 +8336,6 @@
     <Folder Include="Customs\Components\Courier\" />
     <Folder Include="Customs\Components\CustomsCollateral\" />
     <Folder Include="Customs\Components\DeclarationCargoSplit\" />
-    <Folder Include="Customs\Components\FiltersMenu\" />
     <Folder Include="Customs\CustomFilters\" />
     <Folder Include="Customs\EntityPMInitServices\" />
     <Folder Include="Dashboard\Components\Graphs\" />

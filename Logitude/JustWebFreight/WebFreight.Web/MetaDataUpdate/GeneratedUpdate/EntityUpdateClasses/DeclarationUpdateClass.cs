@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "ed6667d2cf3054b57cb113e2cff0424a";
+		public const string HashString = "f79d74eb1c5144698aafbd7febbf1d96";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -16641,7 +16641,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   MenuButton DeclarationMenuButton3 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "CloseDeclaration",
-						Index = 2, 
+						Index = 3, 
 						IsActive = true,
 						LabelTextCodeCode = "Declaration.B.CloseDeclaration",
 						LabelTextCodeDefaultText = "Close Declaration",
@@ -16661,7 +16661,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   MenuButton DeclarationMenuButton4 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "DeclarationPayment",
-						Index = 3, 
+						Index = 2, 
 						IsActive = true,
 						LabelTextCodeCode = "Customs.Declaration.B.DeclarationPayment",
 						LabelTextCodeDefaultText = "Declaration Payment",

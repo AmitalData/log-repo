@@ -1231,10 +1231,10 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 1000;
         logWindow.Height = 700;
-        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.Payments");
+        logWindow.Title = "סגירת הצהרה";
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
-        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentComponent');
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/CloseDeclaration/ExportDeclarationClosingDataComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
