@@ -20,7 +20,7 @@
             <img src="./assets/images/icons/left-arrow.png" (click)="back()" />
         </div>
         <!-- <div class="title">Cargo Tracking</div> -->
-        <img *ngIf="ComapnyLogo"  style="width:76px;height:26px" [attr.src]="ComapnyLogo" routerLink="/search" alt="" />
+        <img *ngIf="ComapnyLogo" [attr.src]="ComapnyLogo" routerLink="/search" alt="" />
 
 
     </div>
@@ -30,7 +30,7 @@
         <div class="web-header hide-mobile">
             <div class="logo-wrapper">
                 <div class="logo">
-                    <img class="vertical-center" *ngIf="ComapnyLogo" style="border:0;outline:none" [attr.src]="ComapnyLogo"  />
+                    <img *ngIf="ComapnyLogo" style="border:0;outline:none" [attr.src]="ComapnyLogo"  />
                 </div>
             </div>
 
