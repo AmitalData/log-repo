@@ -9,6 +9,7 @@ export class Urls
     public static readonly PostUpdateSurcharge = "**/PostUpdateSurcharge";
     public static readonly ShippingLine = "**/shippinglines";
     public static readonly PostUploadExcelFile = "**/PostUploadExcelFile";
+    public static readonly PostAvailableAirlineFreightTariffs = "**/PostAvailableAirlineFreightTariffs";
 
 
 }

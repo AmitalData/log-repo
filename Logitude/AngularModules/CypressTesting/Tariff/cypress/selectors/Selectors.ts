@@ -35,6 +35,10 @@ export class TariffSelectors
     public static readonly ShippingLineCode="#ShippingLine_Code"
     public static readonly ShippingLineName = "#ShippingLine_EnglishName"
     public static readonly TariffActionsMenu = ".ToggleButton"
+    public static readonly TariffChargeableWeight = "#TariffLine_Weight";
+    public static readonly TariffEditBackbutton = "#EditBackbutton";
+    public static readonly PriceCheckQuery = ".QueryLink"
+    public static readonly SearchButton = ".SearchButton"
     // public static readonly
 
     

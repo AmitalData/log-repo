@@ -10,6 +10,7 @@ import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import * as gr from '../../../Base/cypress/actions/GenerateRandoms'
 import { TariffLine } from "cypress/models/TariffLine";
+import { AirPriceCheck } from "cypress/models/AirPriceCheck";
 
 
 export function LoginAndNavigateToTariffWorkspace() {
@@ -105,6 +106,11 @@ export function CreateTariff() {
 export function UpdateTariff() {
     DefineRequestPutTariff();
     cy.Click(TariffSelectors.SaveTariff, null);
+}
+
+export function UpdateApprovedTariff() {
+    DefineRequestPutTariff();
+    cy.Click(BaseSelectors.GreenButton, "Approve Version");
 }
 
 export function CreateUpdateTariff() {
@@ -356,7 +362,7 @@ function AssertPostTariff() {
     BaseAssertion.AssertStatusCode(RequestAliases.PostTariff, 200);
 }
 
-function AssertGetRecentTariffs() {
+export function AssertGetRecentTariffs() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetRecentTariffs, 200);
 }
 
@@ -447,5 +453,20 @@ export function UploadExcelFile(){
     .then(Cypress.Blob.binaryStringToBlob)
     .then(fileContent => {
       cy.get('input.upload').attachFile({ fileContent, fileName, mimeType:'application/vnd.ms-excel',encoding:'utf8' })
+    })
+}
+
+export function FillAirPriceCheck(priceCheck : AirPriceCheck){
+    cy.FillLogLov(TariffSelectors.TariffLineFromPort, priceCheck.FromPort, false)
+    cy.FillLogLov(TariffSelectors.TariffLineToPort, priceCheck.ToPort, false)
+    cy.FillLogTextBox(TariffSelectors.TariffChargeableWeight, priceCheck.ChargeableWeight)
+    cy.DefineRequestWait(RestAPI.POST, Urls.PostAvailableAirlineFreightTariffs, RequestAliases.PostTariff)
+    cy.Click(TariffSelectors.SearchButton, "Search");
+}
+
+export function PriceCheckAssertion(CreatedTariffNumber:string ,ExpectedResult:string){
+    BaseAssertion.AssertStatusCode(RequestAliases.PostTariff, 200).then((interception) => {
+        let actualPrice = interception.response.body.filter((t: { TariffNumber: string; }) => t.TariffNumber === CreatedTariffNumber)[0].Price;
+        assert.equal(actualPrice ,ExpectedResult);
     })
 }
