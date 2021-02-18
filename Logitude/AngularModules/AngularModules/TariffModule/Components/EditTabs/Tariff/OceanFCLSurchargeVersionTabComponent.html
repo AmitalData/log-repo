@@ -453,7 +453,10 @@
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                        {{item.Surcharge1PriceValue}}
+                                        <!--{{item.Surcharge1PriceValue}}-->
+                                        <span *ngFor="let itemArray of item.Surcharge1PriceArray">
+                                            {{itemArray.Price}}
+                                        </span>
                                     </div>
                                 </log-cell-template>
                             </ng-template>
