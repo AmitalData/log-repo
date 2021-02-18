@@ -9,10 +9,6 @@ Feature: Ocean FCL Price Check
         And an ocean FCL freight cost with the following details
             | Name                    | Seller | StartDate |
             | TestOceanFCLFreightCost | MAEU   | Today     |
-        And the following All-In charges
-            | Name                     |
-            | Bunker Adjustment Factor |
-            | B/L Fee                  |
         When create freight cost
         Then the freight cost should create successfully
 

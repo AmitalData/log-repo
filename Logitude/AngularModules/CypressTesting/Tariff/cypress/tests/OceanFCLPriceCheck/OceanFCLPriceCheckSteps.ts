@@ -1,7 +1,6 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import * as Actions from "../../actions/Actions";
 import { TariffDetails } from "../../models/TariffDetails";
-import { ChargeTypeDetails } from "../../models/ChargeTypeDetails";
 import { FreightCostTariffLineDetails } from "../../models/FreightCostTariffLineDetails";
 import { OceanFCLPriceCheckDetails } from "../../models/OceanFCLPriceCheckDetails";
 
@@ -12,11 +11,6 @@ Given("the user logged in and navigate to tariff workspace", () => {
 Given("an ocean FCL freight cost with the following details", (dataTable) => {
   let tariffDetails = dataTable.hashes()[0] as TariffDetails;
   Actions.FillNewFreightCost("Ocean FCL", tariffDetails);
-});
-
-Given("the following All-In charges", (dataTable) => {
-  let chargeTypeDetailsList = dataTable.hashes() as ChargeTypeDetails[];
-  Actions.FillAllInCharges(chargeTypeDetailsList);
 });
 
 Given("the user open the freight cost", () => {
