@@ -3719,6 +3719,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CopiedFrom&quot;"
     ListPropertyPath="&quot;CopiedFrom&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -4831,8 +4832,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Journal.M.JournalAmountNotMatched&quot;"
-      DefaultText="&quot;Journal credit amount does not match the debit amount&quot;"
-      LocalDefaultText="&quot;סכום חובה שונה מסכום זכות &quot;"
+      DefaultText="&quot;Total debit amount must be equal to total credit amount. There is a difference of: &quot;"
+      LocalDefaultText="&quot; :סכום חובה שונה מסכום זכות. קיים הפרש של  &quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode

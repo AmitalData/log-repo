@@ -1,3 +1,4 @@
+@Release @not-stable
 Feature:  Full Shipment Scenario
     this file will create a direct shipment,fill general,order,package tab
     create AP/AR invoices,Payment,and docs in, docs out, close operationally/Accountly
@@ -25,8 +26,8 @@ Feature:  Full Shipment Scenario
 
     # Scenario: Add Partners
     #     Given  partners with following details
-    #         | Consignee       | Agent            | CustomsAgentExport     | CustomsAgentImport     | Notify1 | Notify2 | ShipperNotExporter   | ConsigneeNotImporter   | FreightForwarder     | Coloader     | CustomClearancePoint     | Consolidator     | ReleasingAgent  |
-    #         | ConsigneeExport | IntegrationAgent | InegrationCustomsAgent | InegrationCustomsAgent | notify  | notify  | shipper not exporter | consignee not importer | FreightForwarderTest | ColoaderTest | CustomClearancePointTest | ConsolidatorTest | releasing agent |
+    #         | Consignee           | Agent     | CustomsAgentExport | CustomsAgentImport | Notify1   | Notify2   | ShipperNotExporter | ConsigneeNotImporter | FreightForwarder | Coloader  | CustomClearancePoint | Consolidator | ReleasingAgent |
+    #         | TestConsigneeExport | TestAgent | TestCustomAgent   | TestCustomAgent   | TestAgent | TestAgent | TestShipperExport  | TestConsigneeExport  | TestAgent        | TestAgent | TestWarehouse        | TestAgent    | TestAgent      |
     #     When save shipment
     #     Then the direct shipment should save successfully
 
@@ -47,15 +48,15 @@ Feature:  Full Shipment Scenario
 
     Scenario: Add Payable
         Given a payable with the following details
-            | ChargesType | UOM  | Quantity | UnitPrice | Currency |
-            | AFT         | GRWT | 5        | 10        | EUR      |
+            | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
+            | AFT         | GRWT | 5        | 10        | EUR      | 4            |
         When save shipment
         Then the direct shipment should save successfully
 
     Scenario: Create APInvoice
         And an APInvoice with the following details and a random invoice number
-            | Vendor     | InvoiceAmount | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VatNo | VATType |
-            | TestVendor | 50            | EUR             | 4                   | Today       | Cash         | Today   | 55    | Zero    |
+            | Vendor     | InvoiceAmount | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VatNo | VATType | Branch      |
+            | TestVendor | 50            | EUR             | 4                   | Today       | Cash         | Today   | 55    | Zero    | Main Office |
         When receive APInvoice
         Then the APInvoice should create successfully
 
@@ -80,8 +81,8 @@ Feature:  Full Shipment Scenario
 
     Scenario: Create ARInvoice
         Given an ARInvoice with the following details
-            | PartnerType | Partner           | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATNo | Branch      | VATType |
-            | Customer    | TestShipperExport | EUR             | 4                   | Today       | Cash         | Today   | Zero  | Main Office | Zero    |
+            | PartnerType | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATNo | Branch      | VATType |
+            | Customer    | EUR             | 4                   | Today       | Cash         | Today   | Zero  | Main Office | Zero    |
         When create ARInvoice
         Then the ARInvoice should create successfully
 
@@ -119,37 +120,37 @@ Feature:  Full Shipment Scenario
         Given a credit ARPayment with the following details
             | PartnerType | Partner           | BillToAddress | PaymentCurrency | RegisterDate | PaymentMethod | PaymentAmount |
             | Customer    | TestShipperExport | Main Address  | EUR             | Today        | Offsetting    | -50           |
-         When pay the ARInvoice
+        When pay the ARInvoice
         Then the ARInvoice should pay successfully
 
-         Scenario: Send docs
+    Scenario: Send docs
         When send docs
         Then the docs should send successfully
 
     Scenario: Upload docs
         When upload docs
         Then the docs should upload successfully
-         
+
     Scenario: Delete Attachment
         When delete Attachment
         Then the attachment should delete successfully
 
-         Scenario: Close Direct Shipment operationally
-    Given the user in the direct's shipment rounting tab
-    And  edit Main Carriage Leg with the follwing details
-      | Airline | FlightNumber | MAWB   | ATD   |
-      | AA      | Random       | Random | Today |
-    When close shipment operationally
-    Then the shipment should close successfully
+    Scenario: Close Direct Shipment operationally
+        Given the user in the direct's shipment rounting tab
+        And  edit Main Carriage Leg with the follwing details
+            | Airline | FlightNumber | MAWB   | ATD   |
+            | AA      | Random       | Random | Today |
+        When close shipment operationally
+        Then the shipment should close successfully
 
-  Scenario: Close Direct Shipment Accountly
-    When close shipment Accountly
-    Then the shipment should close successfully
+    Scenario: Close Direct Shipment Accountly
+        When close shipment Accountly
+        Then the shipment should close successfully
 
-  Scenario: Reopen Direct Shipment Accountly
-    When reopen shipment Accountly
-    Then the shipment should Reopen successfully
+    Scenario: Reopen Direct Shipment Accountly
+        When reopen shipment Accountly
+        Then the shipment should Reopen successfully
 
-  Scenario: Reopen Direct Shipment operationally
-    When reopen shipment operationally
-    Then the shipment should Reopen successfully
+    Scenario: Reopen Direct Shipment operationally
+        When reopen shipment operationally
+        Then the shipment should Reopen successfully

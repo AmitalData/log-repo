@@ -24,7 +24,8 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
                 roles = roleQuery.GetRolesByUser(entityPM.Id, entityPM.Tenant).ToList();
             }
 
-            List<string> parentRolesIds = roles.Where(d => d.Exists && !string.IsNullOrEmpty(d.ParentRoleId)).Select(a => a.ParentRoleId).ToList();
+            roles = roles.Where(d => d.Exists).ToList();
+            List<string> parentRolesIds = roles.Where(d => !string.IsNullOrEmpty(d.ParentRoleId)).Select(a => a.ParentRoleId).ToList();
 
             if (roles.Where(d => parentRolesIds.Contains(d.Id)).Any())
             {

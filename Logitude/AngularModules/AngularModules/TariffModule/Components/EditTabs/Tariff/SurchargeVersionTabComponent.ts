@@ -290,7 +290,18 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public Surcharge8MinPriceVisibility: boolean;
     public Surcharge9MinPriceVisibility: boolean;
     public Surcharge10MinPriceVisibility: boolean;
-    
+
+    public Surcharge1PricePercentageVisibility: boolean;
+    public Surcharge2PricePercentageVisibility: boolean;
+    public Surcharge3PricePercentageVisibility: boolean;
+    public Surcharge4PricePercentageVisibility: boolean;
+    public Surcharge5PricePercentageVisibility: boolean;
+    public Surcharge6PricePercentageVisibility: boolean;
+    public Surcharge7PricePercentageVisibility: boolean;
+    public Surcharge8PricePercentageVisibility: boolean;
+    public Surcharge9PricePercentageVisibility: boolean;
+    public Surcharge10PricePercentageVisibility: boolean;
+
     private tariffCharges: CodeNameClass[] = [];
     SetSurchargesLabelsAndVisibility() {
         this.tariffCharges = [];
@@ -325,6 +336,12 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
                     if (iMeasurement.Code == "FIXD") {
                         isMeasurmentFixed = true;
+                    }
+
+                    if (iMeasurement.Code == 'PRFR' || iMeasurement.Code == 'PRVL') { 
+                        this['Surcharge' + index + 'PricePercentageVisibility'] = true;
+                    } else {
+                        this['Surcharge' + index + 'PricePercentageVisibility'] = false;
                     }
                 }
 

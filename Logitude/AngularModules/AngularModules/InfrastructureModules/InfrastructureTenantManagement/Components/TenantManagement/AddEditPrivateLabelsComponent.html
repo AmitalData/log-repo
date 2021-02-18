@@ -170,14 +170,30 @@
                         <!-- URL -->
                         <tr class="FormFieldRow">
 
-                            <td>
-                                <LogLabel [Text]="'URL'" [ObjectFieldName]="'PrivateLabelUrl'" [ObjectTableName]="ObjectTableName"
-                                          [DataContext]="DataContext"></LogLabel>
-                            </td>
-                            <td>
-                                <LogTextBox [ObjectFieldName]="'PrivateLabelUrl'" [ObjectTableName]="ObjectTableName"
-                                            [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                            </td>
+                    <td>
+                        <LogLabel [Text]="'URL'" [ObjectFieldName]="'PrivateLabelUrl'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'PrivateLabelUrl'" [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                    </td>
+
+                    <td></td>
+
+                </tr>
+
+                <!-- Domain -->
+                <tr class="FormFieldRow">
+
+                    <td>
+                        <LogLabel [Text]="'Domain'" [ObjectFieldName]="'PrivateLabelDomain'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'PrivateLabelDomain'" [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
+                    </td>
 
                             <td></td>
 

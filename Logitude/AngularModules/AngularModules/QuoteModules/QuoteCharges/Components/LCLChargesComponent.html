@@ -91,6 +91,10 @@
                                         <button class="Button" id="{{ 'AddCharges' | IdGeneratorPipe}}" (click)="AddChargeClicked()" [disabled]="!IsEditingEnabled">{{'Quote.B.Charges.AddCharge' | TextCodeTranslationPipe}}</button>
                                     </td>
 
+                                    <td style="width: 1px; padding-left: 5px;">
+                                        <button id="{{'DeleteAll' | IdGeneratorPipe}}" class="Button" [disabled]="IsEditingEnabled == false || ItemsSource.Length == 0" (click)="DeleteAllClicked()">Delete All</button>
+                                    </td>
+
                                     <td style="width: 1px; padding-left: 5px;" *ngIf="DisplayTariffs == true">
                                         <button class="Button" (click)="ShowTariffsClicked()" [disabled]="!IsEditingEnabled">
                                             <img style="left:-10px;" src="./Images/Icons/Window.png" width="16" height="16" />
@@ -292,7 +296,7 @@
                                     </log-column>
 
                                     <!-- Sale Currency -->
-                                    <log-column [width]="'40'" [SortFieldName]="'SaleCurrencyCode'" [header]="'QuoteCharge.CH.SaleCurrencyIdListLable' | TextCodeTranslationPipe" [Alignment]="'center'" *ngIf="IsMultiCurrency">
+                                    <log-column [width]="'40'" [SortFieldName]="'SaleCurrencyCode'" [header]="'QuoteCharge.CH.SaleCurrencyIdListLable' | TextCodeTranslationPipe" [Alignment]="'center'">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [Alignment]="'center'" [IsEnabled]="false">
                                                 {{item.SaleCurrencyCode}}

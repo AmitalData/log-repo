@@ -1052,7 +1052,7 @@ namespace Logitude.BL.Helpers
 
                                 if (setting.TotalPerContainersCurrencyType == "LOCAL")
                                 {
-                                    value = value * (double)totalPerContainersLists[0].SaleExchangeRate;
+                                    value = value * (double)quotePM.ExchangeRate;
                                 }
                                 totals.Add(new TotalPerContainerClass() { Value = value, FieldCode = totalPerContainersLists[0].FieldCode });
                                 HtmlTemplate.Append(BuildTableColumn(value.ToString("N"), totalPerContainersTableLines, totalPerContainersTableDesign, "Field", null, true));
@@ -3657,7 +3657,7 @@ namespace Logitude.BL.Helpers
 
         private static string GetChargeCurrencyCode(QuotePM quotePM, QuoteSaleChargePM chargePM)
         {
-            return (quotePM.IsSaleCurrencySameAsCost ? chargePM.CurrencyCode : quotePM.SaleCurrencyCode);
+            return (quotePM.IsSaleCurrencySameAsCost || quotePM.IsMultiCurrency) ? chargePM.CurrencyCode : quotePM.SaleCurrencyCode;
         }
 
         private static string GetFormatDisplayAmountWithCurrencyCode(string saleTotalAmount, string currencyCode, QuoteTemplateSettingPM setting)

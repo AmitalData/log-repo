@@ -42,7 +42,7 @@ export class HomeComponent implements OnDestroy{
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     @ViewChild("ApplicationLocation", { read: ViewContainerRef, static: false }) ApplicationLocation: ViewContainerRef;
     SettingBtnVisibility: boolean = false;
-    IsShowLastSuccessfulLoginComponent: boolean = true;
+    IsShowUserDetailsArea: boolean = true;
     public IfBlueSnapContracts: boolean = false;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private BluesnapContractService: BluesnapContractPMService = new BluesnapContractPMService();
@@ -754,7 +754,7 @@ export class HomeComponent implements OnDestroy{
         this.Retries = 0;
         this.RunComponentTimer();
 
-        if (this.Tabs.length > 4) this.IsShowLastSuccessfulLoginComponent = false;
+        if (this.Tabs.length > 4) this.IsShowUserDetailsArea = false;
   
     }
     SelectionChanged(clickdTab: SessionTabItem) {
@@ -789,6 +789,21 @@ export class HomeComponent implements OnDestroy{
             }
         }
     }
+
+
+
+    CurrenciesRatesClicked() {
+        var windowTitle = "Edit exchange rates";
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = windowTitle;
+        this._entityResourceService.getEntityResourceByTableName("RatesTable").subscribe((response: any) => {
+            logWindow.Show('./Common/Components/Maintenance/RatesMainTabComponent');
+        });
+    }
+
+
+
+
     CreateSession(tabItem: SessionTabItem) {
         if (this.isLoaderReady) {
             if (tabItem.IsSelected) {
@@ -909,7 +924,7 @@ export class HomeComponent implements OnDestroy{
             tabItem = null;
 
             if (this.Tabs.length <= 4) {
-                if (!this.IsShowLastSuccessfulLoginComponent) this.IsShowLastSuccessfulLoginComponent = true;
+                if (!this.IsShowUserDetailsArea) this.IsShowUserDetailsArea = true;
             }
         }
     }
@@ -1008,14 +1023,7 @@ export class HomeComponent implements OnDestroy{
         }
 
     }
-    CurrenciesRatesClicked() {
-        var windowTitle = "Edit exchange rates";
-        var logWindow = new LogitudeWindow();
-        logWindow.Title = windowTitle;
-        this._entityResourceService.getEntityResourceByTableName("RatesTable").subscribe((response:any) => {
-            logWindow.Show('./Common/Components/Maintenance/RatesMainTabComponent');
-        });
-    }
+
     DataBackupClicked() {
 
 
@@ -1631,7 +1639,7 @@ export class HomeComponent implements OnDestroy{
             tabItem = null;
 
             if (this.Tabs.length <= 4) {
-                if (!this.IsShowLastSuccessfulLoginComponent) this.IsShowLastSuccessfulLoginComponent = true;
+                if (!this.IsShowUserDetailsArea) this.IsShowUserDetailsArea = true;
             }
         }
     }

@@ -463,7 +463,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                     if(paymentPoco.SATXML == null && paymentPoco.SATTransferStatusCode == "TE")
                     {
-                        paymentPoco.SATTransferStatusCode = theEntityPm.SATTransferStatusCode = "NT";
+                        paymentPoco.SATTransferStatusCode = theEntityPm.SATTransferStatusCode = "ND";
                         paymentPoco.TransmissionError = theEntityPm.TransmissionError = null;
                     }
 
