@@ -1174,7 +1174,8 @@ export class RoutingItem extends BaseComponent {
                 this.IsAddChildPickUpVisible = true;
             }
 
-            if (this.LegType == "Delivery" && AppTool.IsNullOrEmpty(this.Delivery.ParentPickUpDeliveryId)) {
+            if (this.LegType == "Delivery" && AppTool.IsNullOrEmpty(this.Delivery.ParentPickUpDeliveryId)
+                && (this.Delivery.AllConnectedPackagesId == null || (this.Delivery.AllConnectedPackagesId && this.Delivery.AllConnectedPackagesId.length == 0))) {
                 this.IsAddChildDeliveryVisible = true;
             }
 
