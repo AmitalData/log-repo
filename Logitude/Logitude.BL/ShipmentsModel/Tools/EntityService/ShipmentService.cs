@@ -358,7 +358,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             if (entityPM.IsHybrid && entityPM.ExternalStatuses == "VIR")
             {
-                ExternalTasksQueueService externalTasksQueueService = new ExternalTasksQueueService(entityPM.Tenant);
+                ExternalTasksQueueService externalTasksQueueService = new ExternalTasksQueueService(entityPM.Tenant, "User ID Link Received");
                 externalTasksQueueService.AddVIRExternalTaskQueue(entityPM);
             }
         }
