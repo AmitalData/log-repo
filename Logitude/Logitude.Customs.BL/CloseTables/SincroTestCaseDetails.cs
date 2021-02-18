@@ -17,7 +17,7 @@ namespace Logitude.Customs.BL.CloseTables
                     Code = "2754Valid",
                     Name = "הצהרת יבוא תקינה",
                     Entity="Declaration",
-                    
+
                 },
                  new SincroTestCaseDetail()
                 {
@@ -83,8 +83,8 @@ MainInterfaceCode ="5002"
                     Param1= @"{ ""RequestNumber"" :""1"" ,  ""Content32"" :""1"" , 
                               ""Content29"" :""test 29"" , ""Content27"" :""test 27"",  ""Content16"" :""PaymentID"" ,""status"" :""13"" , ""error"" :""true"" ,
                                ""constrain"" :""false"" , ""amendmentDocumentDetails"" :""false""  }",
-                                                   
-                                               
+
+
                     MainInterfaceCode="5117",
                 },
 
@@ -190,7 +190,7 @@ MainInterfaceCode ="5002"
                     Param2= @"{}",
                     MainInterfaceCode="3050",
                 },
-                
+
                    new SincroTestCaseDetail()
                 {
                     Code = "8211",
@@ -240,6 +240,17 @@ MainInterfaceCode ="5002"
                     Param1= @"{}",
                     Param2= @"{}",
                     MainInterfaceCode="8251",
+                },
+                         new SincroTestCaseDetail()
+                {
+                    Code = "5101O_I",
+                    Name = "הודעה לסוכן",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{""entityType"" :"""" ,  ""entityIdKey1"" :"""" , ""msgCode"" :"""" , ""msgString"" :""""}",
+                    Param2= @"{}",
+                    MainInterfaceCode="5101O_I",
+
                 }
 
 
@@ -252,7 +263,7 @@ MainInterfaceCode ="5002"
     public class SincroTestCaseDetail
     {
         public string Code { get; set; }
-        public string Name { get; set; }    
+        public string Name { get; set; }
         public string Entity { get; set; }
         public bool IsDCA { get; set; }
         public string Param1 { get; set; }
