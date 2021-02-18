@@ -873,7 +873,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             if (errorItem.ValidationCode != null && errorItem.ValidationCode.Value == "2382")
                             {
                                 CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(context);
-                                CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle("901", false, false);
+                                CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingleCourierPendingReasonByCode("901", requestParams.Tenant);
                                 if (courierPendingReasonPM == null)
                                 {
                                     LogMessagingUtil.Instance.AppendLine("לא קיים קוד Pending - הצהרה פלסטינאית = 901 בטבלת סיבות Pending");
@@ -923,7 +923,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         if (declarationPendingPM_900 == null)
                         {
                             CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(context);
-                            CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle("900", false, false);
+                            CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingleCourierPendingReasonByCode("900", requestParams.Tenant);
                             if (courierPendingReasonPM == null)
                             {
                                 LogMessagingUtil.Instance.AppendLine("לא קיים קוד תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900 בטבלת סיבות Pending");
