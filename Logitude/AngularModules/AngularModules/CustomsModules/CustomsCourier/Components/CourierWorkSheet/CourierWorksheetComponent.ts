@@ -1992,9 +1992,9 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         currRequestParams.Tenant = SessionLocator.Tenant;
         currRequestParams.CourierMasterId = this.entityPM.Id;
         currRequestParams.HAWB = this.entityPM.HAWB;
-        /*if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
+        if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
-        }*/
+        }
 
         currRequestParams.SelectedAvailableValue = this._SelectedAvailableValue;
         currRequestParams.SelectedBOLValue = this._SelectedBOLValue;
