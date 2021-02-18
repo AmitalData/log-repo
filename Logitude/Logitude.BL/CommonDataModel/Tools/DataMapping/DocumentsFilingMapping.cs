@@ -10,6 +10,7 @@ using Logitude.BL.Security;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Logitude.Customs.Def.Messaging.Customs;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 {
@@ -21,8 +22,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             
             
             ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
-            var resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
-            Contact loggedContact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
+            //var resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
+            ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(entityPM.Tenant); //contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
             DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(entityPM.Tenant);
 
             DocumentType docType = documentTypeRepository.GetSingleDocumentTypes(entityPM.DocumentTypeId, entityPM.Tenant);
