@@ -14,11 +14,14 @@ import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors'
 import { ARInvoiceDetails } from '../../models/ARInvoiceDetails';
 import { AccountingSelectors } from "../../selectors/Selectors";
 import { ARPaymentDetails } from '../../models/ARPaymentDetails';
-
+import {ReceivableDetails}from"../../../../Shipment/cypress/models/ReceivableDetails"
+import { AccountingURLs } from '../../constants/URLs';
+import { RestAPI } from '../../../../Base/cypress/constants/RestAPI';
 //#region variables
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
 let consolidationInvoiceNumber: string;
+let draftConsolidationInvoiceNumber:string
 let customerCode: string;
 let PayableData: PayableDetails
 //#endregion
@@ -162,10 +165,45 @@ When("create consolidation invoice", () => {
 });
 
 Then("the consolidation invoice should create successfully", () => {
-  BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200)
+  BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200).then((interception) => {
+    draftConsolidationInvoiceNumber = interception.response.body.DraftNumber;
+    cy.log(draftConsolidationInvoiceNumber)
+  })});
+//#endregion
+//#region back to Accounting workspace
+Given("the user back to Accounting workspace", () => {
+  cy.BackButton(BaseSelectors.ContainsAccounting)
+});
+  //#endregion
+  //#region add receivable
+  Given("a receivable with the following details", (dataTable) => {
+    ShipmentActions.OpenShipment(shipmentNumber);
+    const ReceivableData = dataTable.hashes()as ReceivableDetails[];
+    ShipmentActions.FillReceivablesTab(ReceivableData)
+});
+When("add receivable", () => {
+  ShipmentActions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
+
+});
+
+Then("the receivable should add successfully", () => {
+  BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
 });
 //#endregion
+//#region Edit Consolidation Invoice
+Given("the user navigates to draft consolidation invoice", () => {
+  cy.BackButton(BaseSelectors.ContainsShipment + shipmentNumber)
+  cy.BackButton(BaseSelectors.ContainsOperations)
+  AccountingActions.NavigatesToDraftInvoice(draftConsolidationInvoiceNumber)
+});
+When("edit the invoice", () => {
+  AccountingActions.AddSecondInvoiceToConsolidation()
+});
+Then("the invoice should update successfully", () => {
+  BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200)
 
+});
+//#endregion
 //#region Approve Consolidation Invoice
 When("approve consolidation invoice", () => {
   AccountingActions.ApproveConsilidationInvoice()
@@ -175,6 +213,7 @@ Then("the consolidation invoice should approve successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200).then((interception) => {
     consolidationInvoiceNumber = interception.response.body.InvoiceNumber;
   })
+  cy.BackButton("Draft Invoices")
   cy.BackButton(BaseSelectors.ContainsAccounting)
 });
 //#endregion

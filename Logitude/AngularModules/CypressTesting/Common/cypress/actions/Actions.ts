@@ -44,7 +44,7 @@ export function OpenCustomer(customerCode: string) {
     BaseAssertion.AssertStatusCode(RequestAliases.CustomerViews, 200)
     cy.DefineRequestWait(RestAPI.GET, URLs.CustomerViews, RequestAliases.CustomerViews)
     BaseAssertion.AssertStatusCode(RequestAliases.CustomerViews, 200)
-    cy.Click(CommonSelectors.CustomerListItem, null, false)
+    cy.Click(BaseSelectors.ListItem, null, false)
 }
 //#endregion
 
