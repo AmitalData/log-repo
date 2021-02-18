@@ -524,6 +524,14 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return count;
         }
 
+        public int GetCancelledShipmentsCountForCustomer(int tenant, string customerid)
+        {
+            int count = (from a in context.Shipments
+                         where a.ShipmentLevelCode != "C" && a.Tenant == tenant  && a.CustomerId == customerid && a.IsCancelled == true
+                         select a).Count();
+            return count;
+        }
+
         public int GetAllShipmentsCountForCustomer(int tenant, string customerid)
         {
             int count = (from a in context.Shipments
