@@ -24,6 +24,9 @@ export class TariffSelectors
     public static readonly TariffActionsToggleButtonItem = ".TabControlBody[id!='ApplicationSession'] .MediaFillAbsolute:visible .ToggleButton button";
     public static readonly ContainsCopyIntoNewVersion = "Copy into new Version";
     public static readonly TariffVersionHistoryComboBox = ".TabControlBody[id!='ApplicationSession'] .MediaFillAbsolute:visible .ComboBox";
+    public static readonly PriceCheckDate = "#Date";
+    public static readonly PriceCheckSearch = ".SearchButton";
+    
     public static readonly AddButton  = "#Add" ; 
     public static readonly TariffLineStartDate = "#date_TariffLine_StartDate"
     public static readonly TariffUpdateStartDate = "#StartDate"
@@ -60,5 +63,9 @@ export class TariffSelectors
 
     public static TariffVersionHistoryComboBoxItem(versionNumber: number): string{
         return ".TabControlBody[id!='ApplicationSession'] .MediaFillAbsolute:visible .ComboBox .ComboBoxItem span[title^='Version " + versionNumber.toString() + "']";
+    }
+
+    public static PriceCheckQuantity(quantityNumber: number): string{
+        return "#Quantity" + quantityNumber.toString();
     }
 }

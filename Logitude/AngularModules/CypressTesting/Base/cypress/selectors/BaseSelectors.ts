@@ -47,4 +47,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly FirstRecentEntityItem = ".RecentEntityItem:first";
     public static readonly ToggleIcon = '[src="./Images/ToggleIcon.png"]'
     public static readonly BackBottonBodyClass = ".BackBottonBody"
+
+    public static readonly GreenButton = ".GreenButton";
+    public static readonly QueryLink = ".QueryLink";
 }
