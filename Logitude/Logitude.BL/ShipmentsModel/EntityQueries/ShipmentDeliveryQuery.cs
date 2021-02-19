@@ -81,6 +81,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     EmptyDeliveryContainerPartnerId = entityPOCO.EmptyDeliveryContainerPartnerId,
                     EmptyDeliveryDepotReference = entityPOCO.EmptyDeliveryDepotReference,
                     TransportModeCode = entityPOCO.TransportModeCode,
+                    ParentPickUpDeliveryId = entityPOCO.ParentPickUpDeliveryId,
+                    ChildDeliveryIndex = entityPOCO.ChildDeliveryIndex,
                 };
 
                 ShipmentPickUpDeliveryPackageQuery packagesQuery = new ShipmentPickUpDeliveryPackageQuery(tenant);
@@ -352,6 +354,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                      EmptyDeliveryDepotReference = entityPOCO.EmptyDeliveryDepotReference,
                                                      TransportModeCode = entityPOCO.TransportModeCode,
                                                      TransportModeName = entityPOCO.TransportMode == null ? null : entityPOCO.TransportMode.Name,
+                                                     ParentPickUpDeliveryId = entityPOCO.ParentPickUpDeliveryId,
+                                                     ChildDeliveryIndex = entityPOCO.ChildDeliveryIndex,
                                                  }).ToList();
 
             if (dataList.Count > 0)
@@ -624,6 +628,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                            EmptyDeliveryContainerPartnerId = entity.EmptyDeliveryContainerPartnerId,
                                                            EmptyDeliveryDepotReference = entity.EmptyDeliveryDepotReference,
                                                            TransportModeCode = entity.TransportModeCode,
+                                                           ParentPickUpDeliveryId = entity.ParentPickUpDeliveryId,
+                                                           ChildDeliveryIndex = entity.ChildDeliveryIndex,
                                                        }).ToList();            
 
             if (dataList.Count() > 0)
@@ -887,6 +893,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          EmptyDeliveryDepotReference = entityPOCO.EmptyDeliveryDepotReference,
                                                          TransportModeCode = entityPOCO.TransportModeCode,
                                                          TransportModeName = entityPOCO.TransportMode == null ? null : entityPOCO.TransportMode.Name,
+                                                         ParentPickUpDeliveryId = entityPOCO.ParentPickUpDeliveryId,
+                                                         ChildDeliveryIndex = entityPOCO.ChildDeliveryIndex,
                                                      }).FirstOrDefault();
 
             if (shipmentDeliveryPM!=null)
@@ -897,7 +905,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 AddressRepository addressRepository = new AddressRepository(tenant);
                 CountryRepository countryRepository = new CountryRepository(tenant);
                 CardRepository cardRepository = new CardRepository(tenant);
-
 
                 shipmentDeliveryPM.ShipmentPickUpDeliveryPackages = packagesQuery.GetShipmentPickUpDeliveryPackages(shipmentDeliveryPM.Id, tenant);
 
@@ -1090,12 +1097,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentDeliveryPM.ToAddressCity_Dummy = shipmentDeliveryPM.ToAddressCity;
                 }
                 #endregion
-
             }
 
             return shipmentDeliveryPM;
         }
-
-
     }
 }

@@ -97055,5 +97055,14 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;CHILDPICKUPDELIVERY&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Shipment.Features.CHILDPICKUPDELIVERY&quot;"
+      FeatureDefaultText="&quot;Add Child Pick Up / Delivery&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
