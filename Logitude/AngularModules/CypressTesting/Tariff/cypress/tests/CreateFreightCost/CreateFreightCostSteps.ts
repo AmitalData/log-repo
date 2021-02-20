@@ -22,7 +22,7 @@ Given("an ocean FCL freight cost with the following details", (dataTable) => {
   Actions.FillNewFreightCost("Ocean FCL", tariffDetails);
 });
 
-Given("the follwing All-In charges", (dataTable) => {
+Given("the following All-In charges", (dataTable) => {
   let chargeTypeDetailsList = dataTable.hashes() as ChargeTypeDetails[];
   Actions.FillAllInCharges(chargeTypeDetailsList);
 });

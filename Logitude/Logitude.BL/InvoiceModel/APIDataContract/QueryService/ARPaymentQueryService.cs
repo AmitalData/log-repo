@@ -5,9 +5,11 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
+using Simplog.Data.InvoiceModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -160,9 +162,6 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
         //        }
         //    }
         //}
-
-
-
 
     }
 }

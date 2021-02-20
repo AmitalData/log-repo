@@ -9,13 +9,13 @@ describe('Activities', () => {
         Resolvers.MainMenuResolver.Selector('#GeneralMHCRM').Select();
         Resolvers.MainMenuResolver.Selector('#CRMACT').Select();
     });
- it('Test New Activities', () => {
+ it('Test New/Edit Task', () => {
         scenarios.RunScenario('T');  
     });
-    it('Test New Activities', () => {
+    it('Test New/Edit Phone call', () => {
         scenarios.RunScenario('P');
     });
-    it('Test New Activities', () => {
+    it('Test New/Edit Appointment', () => {
         scenarios.RunScenario('A');
     });
 });

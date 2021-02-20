@@ -16,12 +16,12 @@ Given("the user open the freight cost", () => {
     Actions.OpenLastCreatedTariff();
 });
 
-Given("add the follwing tariff lines", (dataTable) => {
+Given("add the following tariff lines", (dataTable) => {
     let freightCostTariffLineDetailsList = dataTable.hashes() as FreightCostTariffLineDetails[];
     Actions.AddFreightCostTariffLines("Air", freightCostTariffLineDetailsList);
 });
 
-Given("the follwing new values for the tariff lines", (dataTable) => {
+Given("the following new values for the tariff lines", (dataTable) => {
     let freightCostTariffLineDetailsList = dataTable.hashes() as FreightCostTariffLineDetails[];
     Actions.EditFreightCostTariffLines("Air", freightCostTariffLineDetailsList);
 });

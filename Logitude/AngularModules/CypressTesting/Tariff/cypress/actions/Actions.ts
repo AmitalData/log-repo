@@ -4,12 +4,14 @@ import { TariffDetails } from "../models/TariffDetails";
 import { ChargeTypeDetails } from "../models/ChargeTypeDetails";
 import { SurchargeDetails } from "../models/SurchargeDetails";
 import { FreightCostTariffLineDetails } from "../models/FreightCostTariffLineDetails";
+import { OceanFCLPriceCheckDetails } from "../models/OceanFCLPriceCheckDetails";
 import { Urls } from "../constants/Urls";
 import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import * as gr from '../../../Base/cypress/actions/GenerateRandoms'
 import { TariffLine } from "cypress/models/TariffLine";
+import { Tariff } from "../models/Tariff";
 
 
 export function LoginAndNavigateToTariffWorkspace() {
@@ -167,6 +169,32 @@ export function ValidateApprovedVersionsAppear() {
     BaseAssertion.AssertElementExist(TariffSelectors.TariffVersionHistoryComboBoxItem(2));
 }
 
+export function ValidateTariffPriceCheck(expectedPrice: string){
+    AssertTariffPriceCheck(expectedPrice);
+}
+
+export function BackToTariffWorkspace() {
+    cy.Click(BaseSelectors.BackBottonBodyClass, "Tariffs");
+}
+
+export function OpenPriceCheckWizard(priceCheckType: string) {
+    cy.Click(BaseSelectors.QueryLink, priceCheckType);
+}
+
+export function FillOceanFCLPriceCheckWizard(oceanFCLPriceCheckDetails: OceanFCLPriceCheckDetails) {
+    FillTariffLinePorts(oceanFCLPriceCheckDetails.FromPort, oceanFCLPriceCheckDetails.ToPort);
+    FillPriceCheckDate(oceanFCLPriceCheckDetails.Date);
+    FillPriceCheckQuantity(1, oceanFCLPriceCheckDetails.Quantity1);
+    FillPriceCheckQuantity(2, oceanFCLPriceCheckDetails.Quantity2);
+    FillPriceCheckQuantity(3, oceanFCLPriceCheckDetails.Quantity3);
+    FillPriceCheckQuantity(4, oceanFCLPriceCheckDetails.Quantity4);
+    FillPriceCheckQuantity(5, oceanFCLPriceCheckDetails.Quantity5);
+}
+
+export function PriceCheckSearch() {
+    DefineRequestPostAvailableTariffs();
+    cy.Click(TariffSelectors.PriceCheckSearch, "Search");
+}
 
 function DefineRequestsForApproveOrCopyTariffVersion() {
     DefineRequestPutTariff();
@@ -320,6 +348,18 @@ function FillTariffLineNotes(notes: string) {
     }
 }
 
+function FillPriceCheckDate(date: string) {
+    if (date) {
+        cy.FillDate(TariffSelectors.PriceCheckDate, date);
+    }
+}
+
+function FillPriceCheckQuantity(quantityNumber: number, quantity: number) {
+    if (quantity) {
+        cy.FillLogTextBox(TariffSelectors.PriceCheckQuantity(quantityNumber), quantity.toString());
+    }
+}
+
 function DefineRequestGetAllVersionsForTariff() {
     cy.DefineRequestWait(RestAPI.GET, Urls.GetAllTariffVersionsForTariff, RequestAliases.GetAllTariffVersionsForTariff);
 }
@@ -344,7 +384,11 @@ function DefineRequestGetSingleTariff() {
     cy.DefineRequestWait(RestAPI.GET, Urls.GetSingleTariff, RequestAliases.GetSingleTariff);
 }
 
-export function AssertPutTariff() {
+function DefineRequestPostAvailableTariffs(){
+    cy.DefineRequestWait(RestAPI.POST, Urls.PostAvailableTariffs, RequestAliases.PostAvailableTariffs);
+}
+
+function AssertPutTariff() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutTariff, 200);
 }
 
@@ -353,7 +397,9 @@ export function AssertPostUpdateTariff() {
 }
 
 function AssertPostTariff() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PostTariff, 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.PostTariff, 200).then((interception) => {
+        Tariff.Number = interception.response.body.TariffNumber;
+    });
 }
 
 function AssertGetRecentTariffs() {
@@ -370,6 +416,13 @@ function AssertGetTariffVersionLines() {
 
 function AssertGetSingleTariff() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetSingleTariff, 200);
+}
+
+function AssertTariffPriceCheck(expectedPrice: string) {
+    BaseAssertion.AssertStatusCode(RequestAliases.PostAvailableTariffs, 200).then((interception) => {
+        let actualPrice = interception.response.body.filter((t: { TariffNumber: string; }) => t.TariffNumber === Tariff.Number)[0].Price;
+        assert.equal(actualPrice, expectedPrice);
+    });
 }
 
 function NavigateToMaintenance() {
