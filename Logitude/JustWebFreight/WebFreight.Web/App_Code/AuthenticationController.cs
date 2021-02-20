@@ -60,7 +60,7 @@ namespace WebFreight.Web
     /// </summary>
 
 #endif
-    public class AuthenticationController : ApiController
+    public class AuthenticationController : ApiController 
     {
         public AuthenticationController()
         {

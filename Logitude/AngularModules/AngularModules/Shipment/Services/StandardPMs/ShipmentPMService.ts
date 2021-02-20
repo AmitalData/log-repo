@@ -32,6 +32,7 @@ import { ShipmentAssemblyPM } from '../../EntityPMs/ShipmentAssemblyPM';
 import { ShipmentStoragePricingPM } from '../../EntityPMs/ShipmentStoragePricingPM';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { PickUpDeliveryPackageHarmonizePM } from '../../EntityPMs/PickUpDeliveryPackageHarmonizePM';
+import { CommodityPackagePM } from '../../EntityPMs/CommodityPackagePM';
 
 @Injectable()
 
@@ -522,11 +523,6 @@ export class ShipmentPMService {
                 entityPM.OldEntityPM.AWBOCIPMs.push(this.clone(entityPM.AWBOCIPMs[item]));
             }
 
-            entityPM.OldEntityPM.ShipmentCommodities = [];
-            for (var item in entityPM.ShipmentCommodities) {
-                entityPM.OldEntityPM.ShipmentCommodities.push(this.clone(entityPM.ShipmentCommodities[item]));
-            }
-
             entityPM.OldEntityPM.ShipmentOrderPackages = [];
             for (var item in entityPM.ShipmentOrderPackages) {
                 entityPM.OldEntityPM.ShipmentOrderPackages.push(this.clone(entityPM.ShipmentOrderPackages[item]));
@@ -588,6 +584,20 @@ export class ShipmentPMService {
                 }
 
                 entityPM.OldEntityPM.ShipmentPackages.push(newPackage);
+            }
+
+            entityPM.OldEntityPM.ShipmentCommodities = [];
+            for (var item in entityPM.ShipmentCommodities) {
+
+                var myShipmentCommodity = entityPM.ShipmentCommodities[item];
+                var newCommodity: ShipmentCommodityPM = this.clone(myShipmentCommodity);
+                newCommodity.CommodityPackages = [];
+
+                for (var k1 in myShipmentCommodity.CommodityPackages) {
+                    newCommodity.CommodityPackages.push(this.clone(myShipmentCommodity.CommodityPackages[k1]));
+                }
+
+                entityPM.OldEntityPM.ShipmentCommodities.push(newCommodity);
             }
 
             entityPM.OldEntityPM.ShipmentPickUps = [];
@@ -768,8 +778,7 @@ export class ShipmentPMService {
 
                 itemPM.UniqueKey = Guid.newGuid();
                 itemPM.ChangeSetOp = "None";
-                itemJson.ChangeSetOp = "None";
-
+                itemJson.ChangeSetOp = "None";            
                 itemPM.OldEntityPM = this.clone(itemPM);
 
                 this.MapInsideShipmentPackages(itemPM, itemJson, mapParent);
@@ -853,12 +862,14 @@ export class ShipmentPMService {
         }       
     }
     MapShipmentCommodities(entityPM: ShipmentPM, jsonPM: any, mapParent: boolean = true) {
+
         var oldCollection: ShipmentCommodityPM[] = [];
         if (entityPM.OldEntityPM && !mapParent) {
             oldCollection = entityPM.OldEntityPM.ShipmentCommodities;
         }
 
         entityPM.ShipmentCommodities = new Array<ShipmentCommodityPM>();
+
         for (var item in jsonPM.ShipmentCommodities) {
            
             var itemJson = jsonPM.ShipmentCommodities[item];
@@ -874,6 +885,7 @@ export class ShipmentPMService {
                 itemPM = new ShipmentCommodityPM(null);
             }
 
+            itemPM.DisableMarkAsDirty = true;
             var pmKeys = Object.keys(itemJson);
             for (var key in pmKeys) {
 
@@ -884,14 +896,20 @@ export class ShipmentPMService {
                 var property = pmKeys[key];
                 itemPM[property] = itemJson[property];
             }
-
            
             if (mapParent) {
 
-                itemPM.OldEntityPM = this.clone(itemPM);
                 itemPM.UniqueKey = Guid.newGuid();
                 itemPM.ChangeSetOp = "None";
                 itemJson.ChangeSetOp = "None";
+                itemPM.OldEntityPM = this.clone(itemPM);
+
+                this.MapShipmentCommodityPackage(itemPM, itemJson, mapParent);
+                itemPM.OldEntityPM.CommodityPackages = [];
+                for (var k3 in itemPM.CommodityPackages) {
+                    var clonedInside = this.clone(itemPM.CommodityPackages[k3]);
+                    itemPM.OldEntityPM.CommodityPackages.push(clonedInside);
+                }
             }
 
             else {
@@ -905,8 +923,12 @@ export class ShipmentPMService {
                     itemPM.ChangeSetOp = "Insert";
                 }
 
+                this.MapShipmentCommodityPackage(itemPM, itemJson, mapParent);
+                itemPM.EntityParentPM = null;
                 itemPM.OldEntityPM = null;
             }
+
+            itemPM.DisableMarkAsDirty = false;
             itemPM.IsDirty = false;
             entityPM.ShipmentCommodities.push(itemPM);
         }
@@ -2332,6 +2354,88 @@ export class ShipmentPMService {
                         oldCollection[pack].ChangeSetOp = "Delete";
                         oldCollection[pack].OldEntityPM = null;
                         entityPM.InsidePackageHarmonizes.push(oldCollection[pack]);
+                    }
+                }
+            }
+        }
+    }
+    MapShipmentCommodityPackage(entityPM: ShipmentCommodityPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldCollection: CommodityPackagePM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldCollection = entityPM.OldEntityPM.CommodityPackages;
+        }
+
+        entityPM.CommodityPackages = new Array<CommodityPackagePM>();
+
+        for (var pack in jsonPM.CommodityPackages) {
+
+            var itemJson = jsonPM.CommodityPackages[pack];
+            if (mapParent && (itemJson.ChangeSetOp == "Delete" || itemJson.ChangeSetOp == 3)) {
+                continue;
+            }
+
+
+            var itemPM: CommodityPackagePM;
+            if (mapParent) { // get mapping
+                itemPM = new CommodityPackagePM(entityPM);
+            }
+
+            else {// update mapping             
+                itemPM = new CommodityPackagePM(null);
+            }
+
+            var pmKeys = Object.keys(itemJson);
+            for (var key in pmKeys) {
+
+                if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties") {
+                    continue;
+                }
+
+                var property = pmKeys[key];
+                itemPM[property] = itemJson[property];
+            }
+
+
+            if (mapParent) {
+                itemPM.UniqueKey = Guid.newGuid();
+                itemPM.ChangeSetOp = "None";
+                itemJson.ChangeSetOp = "None";
+                itemPM.OldEntityPM = this.clone(itemPM);
+
+            }
+
+            else {
+                if (entityPM.ChangeSetOp === "Delete") {
+                    itemPM.ChangeSetOp = "Delete";
+                }
+                else {
+                    if (itemPM.UniqueKey) {
+                        if (itemJson.IsDirty) {
+                            itemPM.ChangeSetOp = "Update";
+                        }
+                    }
+
+                    else {
+                        itemPM.ChangeSetOp = "Insert";
+                    }
+                }
+
+                itemPM.OldEntityPM = null;
+                itemPM.EntityParentPM = null;
+            }
+            itemPM.IsDirty = false;
+            entityPM.CommodityPackages.push(itemPM);
+        }
+
+        if (oldCollection) {
+
+            for (var pack in oldCollection) {
+                if (entityPM.CommodityPackages.filter(p => p.UniqueKey === oldCollection[pack].UniqueKey).length === 0) {
+                    if (oldCollection[pack]) {
+                        oldCollection[pack].ChangeSetOp = "Delete";
+                        oldCollection[pack].OldEntityPM = null;
+                        entityPM.CommodityPackages.push(oldCollection[pack]);
                     }
                 }
             }

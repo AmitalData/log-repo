@@ -3,13 +3,16 @@ import * as CommonActions from '../../../../Common/cypress/actions/Actions';
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
 import { ShipmentDetails } from '../../models/ShipmentDetails';
 import * as BaseAssertion from '../../../../Base/cypress/actions/Assertion';
+import * as BaseActions from '../../../../Base/cypress/actions/Actions';
+import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors';
 import { CustomerDetails } from '../../../../Common/cypress/models/CustomerDetails';
 import { ShipmentSelectors } from '../../selectors/Selectors';
 import { MainCarriageLeg } from 'cypress/models/MainCarriageLeg';
 import { PackagesDetails } from 'cypress/models/PackagesDetails';
 import { ReceivableDetails } from 'cypress/models/ReceivableDetails';
-import { ARInvoiceDetails } from 'cypress/models/ARInvoiceDetails';
+import { ARInvoiceDetails } from '../../../../Accounting/cypress/models/ARInvoiceDetails';
 import { RequestAliases } from '../../../../Base/cypress/constants/RequestAliases';
+import * as AccountingActions from '../../../../Accounting/cypress/actions/Actions';
 
 //#region variables
 let shipmentDetails: ShipmentDetails;
@@ -38,7 +41,16 @@ Then("the customer should create successfully", () => {
       });;
 });
 //#endregion
-
+//#region Activate Customs Management in Shipments
+When("the user activate customs settings", () => {
+    BaseActions.ActivateCustomsManagementInShipments();
+    
+    
+});
+Then("the customs settings should activate successfully", () => {
+    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow)
+});
+//#endregion
 //#region Create direct export air shipment
 Given("the user navigates to shipments workspace", () => {
     ShipmentActions.NavigatesToShipmentsWorkspace()
@@ -47,7 +59,6 @@ Given("the user navigates to shipments workspace", () => {
 Given("a direct shipment with the following details", (dataTable) => {
     shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
     ShipmentActions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
-    shipmentDetails.Shipper = customerCode;
     ShipmentActions.FillShipmentWizardsFields(shipmentDetails);
 });
 
@@ -68,7 +79,7 @@ Given("the user in the shipment's rounting tab",()=>{
     cy.Click(ShipmentSelectors.RoutingsTab, null);
 });
 
-Given("edit main carriage leg with the follwing details",(dataTable)=>{
+Given("edit main carriage leg with the following details",(dataTable)=>{
     let mainCarriageLeg = dataTable.hashes()[0] as MainCarriageLeg;
     ShipmentActions.EditMainCarriageLegs(mainCarriageLeg.Airline);
 }); 
@@ -103,12 +114,12 @@ Given("a receivable with the following details", (dataTable) => {
 
 Given("a customs credit note ARInvoice with a random invoice number and the following details", (dataTable) => {
     let ARInvoiceDetails = dataTable.hashes()[0] as ARInvoiceDetails;
-    ShipmentActions.NewCustomsCreditNoteARInvoice()
-    ShipmentActions.FillARInvoiceDetails(ARInvoiceDetails);
+    AccountingActions.NewCustomsCreditNoteARInvoice()
+    AccountingActions.FillARInvoiceDetails(ARInvoiceDetails);
 });
 
 When("create invoice", () => {
-    ShipmentActions.CreateARInvoice()
+    AccountingActions.CreateARInvoice()
 });
 
 Then("the invoice should create successfully", () => {
@@ -118,7 +129,7 @@ Then("the invoice should create successfully", () => {
 
 //#region Approve customs credit note ARInvoice
 When("approve invoice", () => {
-    ShipmentActions.ARApproveInvoice()
+    AccountingActions.ARApproveInvoice()
 });
 Then("the invoice should approve successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);

@@ -10,6 +10,7 @@ import { JournalPMService } from '../../../Services/StandardPMs/JournalPMService
 import { ajax } from 'rxjs/ajax';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 declare var attachmentUploader, ResultAsArray: any;
 
 @Component({
@@ -52,7 +53,7 @@ export class AccountingMainTesterComponent extends BaseComponent {
         this._MenuList.push("JournalApproveService");
         this._MenuList.push("Reports");
         
-        this._MenuList.push("Aging");
+        this._MenuList.push("MSIC");
         this._MenuList.push("Alex");
 
         this.UIProperties.SetRequired("Email", this.ObjectTableName, true);
@@ -65,6 +66,7 @@ export class AccountingMainTesterComponent extends BaseComponent {
 
     JournalSend_Click() {
         if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this.SetJournalExample();
             this.ErrorMess = "Set Journal json";
             return;
         }
@@ -145,51 +147,6 @@ export class AccountingMainTesterComponent extends BaseComponent {
         });
 
     }
-    //XXX_Click() {
-
-    //}
-    //YYY_Click() {
-
-    //}
-    //Aging_Click() {
-    //    let aging_params = {
-    //        Tenant: 1,
-    //        "AgingForDate": new Date(),
-    //        "NumberOfmonthsbackwards": 6,
-    //        VendorCustomerId: "1-1",
-    //        Aging4AccountTypeCode: 'Customer2',
-    //        Category1Id: "",
-    //        Category2Id: "",
-    //        Category3Id: "",
-    //        Category4Id: "",
-    //        Category5Id: "",
-    //        Category6Id: "",
-    //        CollectorId: "",
-    //        SalesmanId: "",
-    //        ChartOfAccountsTypeCode: "",
-    //        ChartOfAccountsId: "",
-    //        AggregateByGLAccountCurrencies: false,
-    //        AggregateByGLAccountChildren: false,
-    //        AgingMethod_Options: 'TotalByMonthMethod;TotalByMonthFIFOMethod;ReconcileOpenBalanceMethod',
-    //        AgingMethod: 'ReconcileOpenBalanceMethod',
-    //        GroupByDate: 'DueDate',
-    //        GroupByDate_Options: 'DueDate;AccountingDate',
-    //        Aging4AccountTypeCode_Options: 'ControlAccountOnly1;Customer2;Vendor3',
-    //        BuildPivot: true,
-    //    };
-        
-    //    let opr = "Aging_Click";
-
-    //    this.StrandartOp(opr, aging_params, () => {
-    //        //if (aging_params.BuildPivot) {
-    //            let resObj = JSON.parse(this.JsonOut);
-    //            if (Array.isArray(resObj)) {
-    //                this.JsonList = resObj;
-    //            }
-    //        //}
-    //    });
-
-    //}
 
 
     CardIndexNew_Click() {
@@ -343,5 +300,220 @@ export class AccountingMainTesterComponent extends BaseComponent {
             })
         }
         return headers;
+    }
+    CreateJournalTask_Click() {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 750;
+        logitudeWindow.Height = 500;
+        logitudeWindow.Title = "Accounting Load Test";
+        logitudeWindow.Show('./Accounting/Components/Maintenance/AccountingLoadTestComponent');
+    }
+    BuildTenant_Click() {
+        let paramDefault: any =
+        {
+            ///Tenant: 1,
+            YYYY: 2020,
+          
+            //BuildAccountingTenant:
+            //{
+            //    VatAccounts: false,
+            //    ControlAccounts: false,
+            //    ExchangeRateDiff: false,
+            //    RevenueExpense: false,
+            //    TaxWithholding: false
+            //},
+
+            BuildGLAccountEachType: 2,
+            BuildJournalEachMonth: 2,
+        };
+        let opr = "BuildTenant_Click";
+        this.StrandartOp(opr, paramDefault, () => { });
+    }
+    YearTransfer_Click() {
+        let paramDefault: any =
+        {
+            Tenant: 1,
+            YY: 20,
+            Immediate: false
+        };
+        let opr = "YearTransfer_Click";
+        //let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        this.StrandartOp(opr, paramDefault, () => { });
+    }
+    YearTransferCancel_Click() {
+        let paramDefault: any =
+        {
+            Tenant: 1,
+            YY: 20,
+           
+        };
+        let opr = "YearTransferCancel_Click";
+        //let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        this.StrandartOp(opr, paramDefault, () => { });
+    }
+    ButtonReconcileStageCBatch_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.GLAccountId = "Id, or empty value to get all";
+        defaultParam.AccountTypeCode = "2=Client, 3=Vendor";
+        defaultParam.UpToDueDate = "01.01.2020";
+        defaultParam.LT_LinesMaximum = 50;
+        defaultParam.MaxPageSize = 1000;
+        defaultParam.CloseOnlyZeroes = "FALSE";
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _ReconciliationStageCUrl = ServiceHelper.GetLogitudeURL() + '/api/ReconciliationStageC';
+        //let myUrl = _ReconciliationStageCUrl + "?tenant=" + objToCheck1.Tenant;
+        //myUrl = myUrl + "&gLAccountId=" + objToCheck1.GLAccountId;
+        //myUrl = myUrl + "&accountTypeCode=" + objToCheck1.AccountTypeCode;
+        //myUrl = myUrl + "&upToDueDate=" + objToCheck1.UpToDueDate;
+        //myUrl = myUrl + "&lT_LinesMaximum=" + objToCheck1.LT_LinesMaximum;
+        //myUrl = myUrl + "&maximalPageSize=" + objToCheck1.MaxPageSize;///dif !!!
+        //myUrl = myUrl + "&closeOnlyZeroes=" + objToCheck1.CloseOnlyZeroes;
+        let myUrl = _ReconciliationStageCUrl + "?tenant=" + objToCheck1.Tenant;
+        myUrl = myUrl + "&gLAccountId=" + objToCheck1.GLAccountId;
+        myUrl = myUrl + "&accountTypeCode=" + objToCheck1.AccountTypeCode;
+        myUrl = myUrl + "&upToDueDate=" + objToCheck1.UpToDueDate;
+        myUrl = myUrl + "&lT_LinesMaximum=" + objToCheck1.LT_LinesMaximum;
+        myUrl = myUrl + "&maxPageSize=" + objToCheck1.MaxPageSize;
+        myUrl = myUrl + "&closeOnlyZeroes=" + objToCheck1.CloseOnlyZeroes;
+        myUrl = myUrl + "&noBatch=0";
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+    }
+    ButtonReconcileStageCNoBatch_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.GLAccountId = "Id, or empty value to get all";
+        defaultParam.AccountTypeCode = "2=Client, 3=Vendor";
+        defaultParam.UpToDueDate = "01.01.2020";
+        defaultParam.LT_LinesMaximum = 50;
+        defaultParam.MaxPageSize = 1000;
+        defaultParam.CloseOnlyZeroes = "FALSE";
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _ReconciliationStageCUrl = ServiceHelper.GetLogitudeURL() + '/api/ReconciliationStageC';
+        let myUrl = _ReconciliationStageCUrl + "?tenant=" + objToCheck1.Tenant;
+        myUrl = myUrl + "&gLAccountId=" + objToCheck1.GLAccountId;
+        myUrl = myUrl + "&accountTypeCode=" + objToCheck1.AccountTypeCode;
+        myUrl = myUrl + "&upToDueDate=" + objToCheck1.UpToDueDate;
+        myUrl = myUrl + "&lT_LinesMaximum=" + objToCheck1.LT_LinesMaximum;
+        myUrl = myUrl + "&maxPageSize=" + objToCheck1.MaxPageSize;
+        myUrl = myUrl + "&closeOnlyZeroes=" + objToCheck1.CloseOnlyZeroes;
+        myUrl = myUrl + "&noBatch=1";
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+
+    }
+    SetJournalExample() {
+        let journal = {
+            "Id": null,
+            "Tenant": "1",
+            "JournalNumber": null,
+            "AccountingDate": "2016-12-11",
+            "StatusCode": "2",
+            "CreateDate": "2021-02-09",
+            "TypeCode": "0",
+            "CreatedByUserId": "1-587933",
+            "AccountingEntityCode": "1",
+            "ExternalNo": "2016:05:05027",
+            "TypeName": null,
+            "StatusName": null,
+            "ConversionJournal": "true",
+            "CreatedByUserName": null,
+            "JournalLines": [
+                {
+                    "JournalId": null,
+                    "Tenant": "1",
+                    "Line": "1",
+                    "EncodeBase64NVARCHARFieldsBy": "windows-1255",
+                    "ActionCode": "1",
+                    "CreditAccountId": "dmy",
+                    "DebitAccountId": "dmy",
+                    "DebitAccountNumber": "2910247",
+                    "CreditAccountNumber": null,
+                    "DocumentDate": "2016-12-01",
+                    "AccountingDate": "2016-12-11",
+                    "DueDate": "2016-12-01",
+                    "LocalAmount": 2188.84,
+                    "CurrencyCode": "USD",
+                    "ForeignAmount": 564.00,
+                    "ExchangeRate": "3.88092",
+                    "ExternalOpenAmount": 0.00,
+                    "ExternalReconcileNumber": null,
+                    "Reference1": "ODMyNzc=",
+                    "Reference2": null,
+                    "Reference3": null,
+                    "ActionName": null,
+                    "ActionTypeCode": "1",
+                    "CurrencyName": null,
+                    "Notes": "8ucg6fr4+iDn5eE="
+                },
+                {
+                    "JournalId": null,
+                    "Tenant": "1",
+                    "Line": "2",
+                    "EncodeBase64NVARCHARFieldsBy": "windows-1255",
+                    "ActionCode": "2",
+                    "CreditAccountId": "dmy",
+                    "DebitAccountId": "dmy",
+                    "DebitAccountNumber": "2910247",
+                    "CreditAccountNumber": null,
+                    "DocumentDate": "2016-12-01",
+                    "AccountingDate": "2016-12-11",
+                    "DueDate": "2016-12-01",
+                    "LocalAmount": 2188.84,
+                    "CurrencyCode": "USD",
+                    "ForeignAmount": 564.00,
+                    "ExchangeRate": "3.88092",
+                    "ExternalOpenAmount": 0.00,
+                    "ExternalReconcileNumber": null,
+                    "Reference1": "ODMyNzc=",
+                    "Reference2": null,
+                    "Reference3": null,
+                    "ActionName": null,
+                    "ActionTypeCode": "2",
+                    "CurrencyName": null,
+                    "Notes": "8ucg6fr4+iDn5eE="
+                }
+            ],
+            "DeletedJournalLines": [],
+            "UpdateDate": null,
+            "UpdatedByUserId": null,
+            "ApproveDate": null,
+            "ApprovedByUserId": null,
+            "UpdatedByUserName": null,
+            "ApprovedByUserName": null,
+            "SearchFields": null,
+            "AccountingEntityReference": null,
+            "OriginalJournalId": null,
+            "VoidedByUserId": null,
+            "VoidDate": null,
+            "OriginalJournalName": null,
+            "VoidedByUserName": null,
+            "IsVoided": null,
+            "VoidedBy": null,
+            "ExternalSystem": "AMITAL"
+        };
+        this._TextBoxParam = JSON.stringify(journal);
+
     }
 }

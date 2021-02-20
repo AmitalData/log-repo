@@ -198,6 +198,7 @@
     <Compile Include="CoreBL\AutomaticReconcileService.cs" />
     <Compile Include="CoreBL\BankAccountPages\BankAccountPageAnalyzer.cs" />
     <Compile Include="CoreBL\BankAccountPages\BankAccountPagesExample.cs" />
+    <Compile Include="CoreBL\DuplicatedJournalsVoidingService.cs" />
     <Compile Include="CoreBL\BankDepositRedeemedChequesVerifyService.cs" />
     <Compile Include="CoreBL\BankDeposit\BankDepositJournalCreator.cs" />
     <Compile Include="CoreBL\BankDeposit\BankDepositingService.cs" />
@@ -235,6 +236,7 @@
     <Compile Include="CoreBL\ExternalReconcile\MoveBankCheckFromTransfer2GLAccount\CreateJournal\ExternalReconcileMoveBankCheckFromTransfer2GLAccountService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\TransferTransactionsExternalReconciliationService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\Utils\ExternalReconcileTypeService.cs" />
+    <Compile Include="CoreBL\GLAccountChequesTotalCalculator.cs" />
     <Compile Include="CoreBL\GLAccountCounterService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\CreateAutoExternalReconcileWhileStreamingService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\ExternalReconcileDataProvider.cs" />

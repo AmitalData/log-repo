@@ -1,4 +1,4 @@
-@release
+@smoke @release @all
 Feature: Create multiple shipment AP Invoice
   After the user logging in the system and navigate to customers workspace
   will create a customer as shipper in the new shipments
@@ -11,11 +11,6 @@ Feature: Create multiple shipment AP Invoice
       | TestCompany | LAS  | US      | AK    |
     When create customer
     Then the customer should create successfully
-
-  Scenario: Update customer
-    Given the user in the customer's billing tab
-    When activate consolidated invoice option
-    Then the customer should update successfully
 
   Scenario: Create first direct export air shipment
     Given the user in shipments workspace
@@ -34,8 +29,8 @@ Feature: Create multiple shipment AP Invoice
 
   Scenario: Update first shipment's payables tab
     Given the user add payable with the following details
-      | ChargesType | UOM  | Quantity | UnitPrice | Currency | Vendor     |
-      | AFT         | GRWT | 5        | 10        | EUR      | TestVendor |
+      | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate | Vendor     |
+      | AFT         | GRWT | 5        | 10        | EUR      | 4            | TestVendor |
     When update shipment
     Then the direct should update successfully
 
@@ -56,16 +51,16 @@ Feature: Create multiple shipment AP Invoice
 
   Scenario: Update second shipment's payables tab
     Given the user add payable with the following details
-      | ChargesType | UOM  | Quantity | UnitPrice | Currency | Vendor     |
-      | AFT         | GRWT | 5        | 10        | EUR      | TestVendor |
+      | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate | Vendor     |
+      | AFT         | GRWT | 5        | 10        | EUR      | 4            | TestVendor |
     When update shipment
     Then the direct should update successfully
 
   Scenario: Create multiple shipment AP Invoice
     Given the user in Accounts Payable workspace
     And a multiple AP invoice  with a random invoice number and the following details
-      | Vendor     | InvoiceAmount | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VatNo | VATType |
-      | TestVendor | 50            | EUR             | 4                   | Today       | Cash         | Today   | 5     | Zero    |
+      | Vendor     | InvoiceAmount | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VatNo | VATType | Branch      |
+      | TestVendor | 50            | EUR             | 4                   | Today       | Cash         | Today   | 5     | Zero    | Main Office |
     When create invoice
     Then the invoice should create successfully
 

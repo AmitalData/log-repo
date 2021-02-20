@@ -1,16 +1,13 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { TicketDetails } from "../../models/TicketDetails"
-import { ShipmentDetails } from "../../../../Shipment/cypress/models/ShipmentDetails"
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
-import { TicketSelectors } from "../../selectors/TicketSelectors";
-import { ShipmentSelector } from "../../../../Shipment/cypress/selectors/Selectors";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import * as Actions from "../../actions/Actions";
-import * as ShipmentActions from "../../../../Shipment/cypress/actions/Actions"
 import { URLs } from "../../constants/URLs";
 
 let TicketData: TicketDetails;
 
+//#region Create Ticket
 Given("the user logged in and navigated to ticket workspace", () => {
     cy.Login();
     cy.Click(BaseSelectors.TicketsMenu, null)
@@ -33,6 +30,7 @@ Then("the ticket should create successfully", () => {
         TicketData.TicketNumber = interception.response.body.TicketNumber;
     })
 });
+//#endregion
 
 Given("the user edit the description", () => {
     Actions.OpenTicket(TicketData.TicketNumber);

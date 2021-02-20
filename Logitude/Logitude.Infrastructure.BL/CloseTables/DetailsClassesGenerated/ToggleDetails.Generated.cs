@@ -218,7 +218,6 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "QMC, Quote Multi Currency Mode", 
                 Description = "Quote Multi Currency Mode", 
 			});
-			 
             all.Add(new ToggleDetails()
             {    
                 Code = "ADC", 
@@ -233,6 +232,14 @@ namespace Logitude.Infrastructure.BL
                 Name = "Documents Send Result in AP Invoices Automation", 
                 Description = "Documents Send Result in AP Invoices Automation", 
                 SearchFields = "DSR,Documents Send Result in AP Invoices Automation", 
+			});
+			
+            all.Add(new ToggleDetails()
+            {    
+                Name = "AWB Multiple Commodities", 
+                Code = "AMC", 
+                SearchFields = "AMC,AWB Multiple Commodities", 
+                Description = "AWB Multiple Commodities", 
 			});
 			
             return all;

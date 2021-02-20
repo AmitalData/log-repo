@@ -11,6 +11,7 @@ export class TenantManagmentPrivateLabelsList {
 		PrivateLabelName: string;
 		PrivateLabelShortName: string;
 		PrivateLabelUrl: string;
+		PrivateLabelDomain: string;
 		MainLogo: string;
 		ContactUsEmail: string;
 		ReceiveAllStatuses: boolean;
@@ -18,5 +19,10 @@ export class TenantManagmentPrivateLabelsList {
 		InActive: boolean;
 		SearchFields: string;
 		SmallLogo: string;
+		BackgroundImageId: string;
+		MainImageId: string;
+		MainColor: string;
+		LoginProgressImageId: string;
+		ForgetPasswordImageId: string;
 	
 }

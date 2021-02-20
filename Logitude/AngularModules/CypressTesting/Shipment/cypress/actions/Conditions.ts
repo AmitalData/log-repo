@@ -35,7 +35,7 @@ export function IsInlandDomestic(direction: string, transportMode: string) {
 }
 
 export function IsFCL(shipmentType: string) {
-    return shipmentType === "FCLD";
+    return shipmentType === "FCL";
 }
 
 export function IsFTL(shipmentType: string) {
@@ -43,7 +43,7 @@ export function IsFTL(shipmentType: string) {
 }
 
 export function IsLCL(shipmentType: string) {
-    return shipmentType === "LCLD";
+    return shipmentType === "LCL";
 }
 
 export function IsLTL(shipmentType: string) {

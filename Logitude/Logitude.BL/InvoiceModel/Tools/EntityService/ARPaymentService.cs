@@ -463,7 +463,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                     if(paymentPoco.SATXML == null && paymentPoco.SATTransferStatusCode == "TE")
                     {
-                        paymentPoco.SATTransferStatusCode = theEntityPm.SATTransferStatusCode = "NT";
+                        paymentPoco.SATTransferStatusCode = theEntityPm.SATTransferStatusCode = "ND";
                         paymentPoco.TransmissionError = theEntityPm.TransmissionError = null;
                     }
 
@@ -653,6 +653,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         #region PaymentInvoice
         private void CreatePaymentInvoice(ARPaymentInvoicePM item)
         {
+            this.ValidateIfSameRecordAdded(item);
+
             item.ARPaymentId = paymentPM.Id;
             item.ForeignCurrencyId = paymentPM.PaymentCurrencyId;
             item.Id = IdCounter.GetNumber("ARInvoicePayment", paymentPM.Tenant);
@@ -665,6 +667,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             ////    CreateInterestTransactionLine(item);
             //}
         }
+
         private int originalEntityLineNumber = 0;
         private void CreateInterestTransactionLine(ARPaymentPM payment,bool isFromVoidARPayment=false)
         {
@@ -723,6 +726,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     invoicePaymentRepository.Remove(deletedItem);
                 }
+            }
+        }
+
+        private void ValidateIfSameRecordAdded(ARPaymentInvoicePM item)
+        {
+            IQueryable<ARInvoicePayment> invoicePayments = invoicePaymentRepository.GetARInvoicePayments(item.ARPaymentId, item.ARInvoiceId, paymentPM.Tenant);
+            if (invoicePayments.Count() > 0)
+            {
+                throw new Exception("This payment already connected to same invoice");
             }
         }
         #endregion

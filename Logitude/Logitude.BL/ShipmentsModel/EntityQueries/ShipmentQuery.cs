@@ -4086,6 +4086,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 returnShipment.DocsSentToAgent = CLoudData.DocsSentToAgent;
                 returnShipment.ApprovedBy = CLoudData.ApprovedByUserName;
                 returnShipment.DocumentsApprovedByUserName = CLoudData.DocumentsApprovedByUserName;
+                returnShipment.IsUserIDNumberRequired = CLoudData.IsUserIDNumberRequired;
+                returnShipment.UserIdNumberUpdateDate = CLoudData.UserIdNumberUpdateDate;
+                returnShipment.UserIdNumberXMLData = CLoudData.UserIdNumberXMLData;
+                returnShipment.UserIdNumber = CLoudData.UserIdNumber;
+                returnShipment.PaymentRequestXML = CLoudData.PaymentRequestXML;
+                returnShipment.PaymentDateTime = CLoudData.PaymentDateTime;
+                returnShipment.IsPaymentRequired = CLoudData.IsPaymentRequired;
             }
             return returnShipment;
         }
@@ -12527,6 +12534,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ENSNumber = f.ENSNumber,
                     ENSDate = f.ENSDate,
                     WarehouseLegWarehouseId = f.WarehouseLegWarehouseId,
+                    WarehouseLegTerminalName = f.WarehouseLegTerminalName,
                     WarehouseLegAddressId = f.WarehouseLegAddressId,
                     WarehouseLegTerminalCode = f.WarehouseLegTerminalCode,
                     WarehouseLegExpectedEntryDate = f.WarehouseLegExpectedEntryDate,

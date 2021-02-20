@@ -12,4 +12,20 @@ export class RequestAliases {
     public static readonly CustomerViews = 'CustomerViews';
     public static readonly Customers = 'Customers';
     public static readonly InvoiceDomain = 'InvoiceDomain';
+    public static readonly ConsilidationInvoiceDomain = "ConsilidationInvoiceDomain"
+    public static readonly Quotes = 'Quotes';
+    public static readonly QuickSearchDataLoaded = 'QuickSearchDataLoaded';
+    public static readonly PostTariff = 'PostTariff';
+    public static readonly PutTariff = 'PutTariff';
+    public static readonly GetRecentTariffs = 'GetRecentTariffs';
+    public static readonly GetAllTariffVersionsForTariff = 'GetAllTariffVersionsForTariff';
+    public static readonly GetTariffVersionLines = "GetTariffVersionLines";
+    public static readonly GetSingleTariff = "GetSingleTariff";
+    public static readonly GetVatTypePercentage = 'GetVatTypePercentage';
+    public static readonly PostAvailableTariffs = 'PostAvailableTariffs';
+    public static readonly PostUpdateRequest = 'WaitPostUpdateRequest';
+    public static readonly PostShippinglinesRequest = 'WaitPostShippinglinesRequest';
+    public static readonly GetCarrierViews = 'WaitGetCarrierViews';
+    public static readonly WaitUpload = 'WaitUpload';
+
 }

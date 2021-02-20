@@ -401,6 +401,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 invoice.TransferStatusCode = "TR";
                 invoice.TransferError = null;
                 aRInvoiceRepository.Update(invoice);
+
             }
         }
         private void UpdateAPInvoice(string myEntityId)
