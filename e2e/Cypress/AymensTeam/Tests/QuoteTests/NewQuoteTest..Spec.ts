@@ -21,7 +21,7 @@ describe('Quotes Modules', () => {
         Resolvers.MainMenuResolver.Selector('#CRMQUT').Select();
     });
 
-    it('Test New Quote ', () => {
+    it('Test New/Edit Quote ', () => {
         quoteType = 'RR'; // RR: Routing Rate , SR : spot Rate 
         direction = 'E';
         transportMode = 'A';

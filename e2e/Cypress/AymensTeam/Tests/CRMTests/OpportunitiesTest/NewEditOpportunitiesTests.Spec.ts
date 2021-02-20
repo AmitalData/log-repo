@@ -9,7 +9,7 @@ describe('Opportunities', () => {
         Resolvers.MainMenuResolver.Selector('#GeneralMHCRM').Select();
         Resolvers.MainMenuResolver.Selector('#CRMOPP').Select();
     });
-    it('Test New Opportunites', () => {
+    it('Test New\Edit Opportunity', () => {
         scenarios.RunScenario();
     });
 });
