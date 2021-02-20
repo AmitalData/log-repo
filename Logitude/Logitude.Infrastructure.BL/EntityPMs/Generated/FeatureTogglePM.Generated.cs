@@ -296,6 +296,29 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private string toggleDescription ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToggleDescription  
+	   {
+	    
+	     get
+		{
+		   return toggleDescription;
+		 }
+		 set
+		 {
+		   if(toggleDescription != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToggleDescription",OldValue=toggleDescription,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toggleDescription=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
