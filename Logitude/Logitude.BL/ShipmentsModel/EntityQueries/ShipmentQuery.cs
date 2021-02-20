@@ -12527,6 +12527,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ENSNumber = f.ENSNumber,
                     ENSDate = f.ENSDate,
                     WarehouseLegWarehouseId = f.WarehouseLegWarehouseId,
+                    WarehouseLegTerminalName = f.WarehouseLegTerminalName,
                     WarehouseLegAddressId = f.WarehouseLegAddressId,
                     WarehouseLegTerminalCode = f.WarehouseLegTerminalCode,
                     WarehouseLegExpectedEntryDate = f.WarehouseLegExpectedEntryDate,
@@ -12567,6 +12568,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     NotInvoicedReceivablesAmount = f.NotInvoicedReceivablesAmount,
                     IsDangerous = f.IsDangerous,
                     DangerousUnNumber = f.DangerousUnNumber,
+                    MainCarriageVesselName = f.MainCarriageVesselName,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

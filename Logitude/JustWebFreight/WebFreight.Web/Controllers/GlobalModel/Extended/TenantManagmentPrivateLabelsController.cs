@@ -98,6 +98,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                             SmallLogo = entityPM.SmallLogo,
                             ReceiveAllStatuses = entityPM.ReceiveAllStatuses,
                             PrivateLabelUrl = entityPM.PrivateLabelUrl,
+                            PrivateLabelDomain = entityPM.PrivateLabelDomain,
                             PrivateLabelShortName = entityPM.PrivateLabelShortName,
                             MainColor = entityPM.MainColor,
                             BackgroundImageId = entityPM.BackgroundImageId,
@@ -152,6 +153,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                         Poco.PrivateLabelName = entityPM.PrivateLabelName;
                         Poco.PrivateLabelShortName = entityPM.PrivateLabelShortName;
                         Poco.PrivateLabelUrl = entityPM.PrivateLabelUrl;
+                        Poco.PrivateLabelDomain = entityPM.PrivateLabelDomain;
                         Poco.ReceiveAllStatuses = entityPM.ReceiveAllStatuses;
                         Poco.SmallLogo = entityPM.SmallLogo;
                         Poco.MainColor = entityPM.MainColor;

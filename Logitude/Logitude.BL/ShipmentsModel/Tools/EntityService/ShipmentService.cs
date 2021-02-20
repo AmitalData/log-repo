@@ -53,6 +53,7 @@ using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.Server.Tools.EntityChanges;
 using Logitude.BL.ShipmentsModel.Tools.Initializers;
+using Logitude.BL.ShipmentsModel.EntityOtherServices;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -352,7 +353,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 scope.Complete();
             }
         }
-        
+
+        private void AddVIRExternalTaskQueue()
+        {
+            if (entityPM.IsHybrid && entityPM.ExternalStatuses == "VIR")
+            {
+                ExternalTasksQueueService externalTasksQueueService = new ExternalTasksQueueService(entityPM.Tenant);
+                externalTasksQueueService.AddVIRExternalTaskQueue(entityPM);
+            }
+        }
+
         string CustomerChanged = "false";
         public void Update(bool mapComposition = false)
         {
@@ -2310,6 +2320,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 shipmentAdditionalCloudData.IsImporterApprovalRequried = entityPM.IsImporterApprovalRequired;
                 shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
                 shipmentAdditionalCloudData.DeclarationWCOXml = entityPM.DeclarationWCOXml;
+                shipmentAdditionalCloudData.IsUserIDNumberRequired = entityPM.IsUserIDNumberRequired;
                 if (!string.IsNullOrEmpty(entityPM.DeclarationWCOXml))
                 {
                     shipmentAdditionalCloudData.DeclarationXmlData = null;
@@ -2655,6 +2666,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         }
                         if (true)
                         {
+                            AddVIRExternalTaskQueue();
                             shipmentAdditionalCloudData.IsUserIDNumberRequired = entityPM.IsUserIDNumberRequired;
                             shipmentAdditionalCloudData.UserIdNumberXMLData = entityPM.UserIdNumberXMLData;
                             //shipmentAdditionalCloudData.UserIdNumberUpdateDate = entityPM.UserIdNumberUpdateDate;

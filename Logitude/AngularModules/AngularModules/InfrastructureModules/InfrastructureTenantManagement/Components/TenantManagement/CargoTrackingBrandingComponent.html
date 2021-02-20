@@ -410,16 +410,16 @@
                         </td>
                         <td style="width:180px;height:22px; vertical-align:top">
                             <LogLabel [ObjectFieldName]="'InvertedLogoId'" [ObjectTableName]="'TenantManagement'"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td style="vertical-align:top">
                             <div style="width:160px;height:100px">
                                 <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'200px'"
-                                    [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="InvertedLogoId"
-                                    [EntityId]="EntityId" [EntityName]="'TenantManagement'" [Extension]="'png'"
-                                    (UploadCompleted)="InvertedLogoUploadedCompleted($event)"
-                                    style="height:72px;width:72px">
+                                                [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="InvertedLogoId"
+                                                [EntityId]="EntityId" [EntityName]="'TenantManagement'" [Extension]="'png'"
+                                                (UploadCompleted)="InvertedLogoUploadedCompleted($event)"
+                                                style="height:72px;width:72px">
                                 </ImageComponent>
                             </div>
                             <a (click)="RemoveImage('inverted')">remove</a>
@@ -481,6 +481,7 @@
                                                 style="height:72px;width:72px">
                                 </ImageComponent>
                             </div>
+                            <a (click)="RemoveImage('ShipmentHeader')">remove</a>
                         </td>
                         <td>
                             <div></div>

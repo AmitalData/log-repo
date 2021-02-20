@@ -226,6 +226,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "ADC,Automation Document Copies", 
                 Description = "Automation Document Copies", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "DSR", 
+                Name = "Documents Send Result in AP Invoices Automation", 
+                Description = "Documents Send Result in AP Invoices Automation", 
+                SearchFields = "DSR,Documents Send Result in AP Invoices Automation", 
+			});
 			
             return all;
        }

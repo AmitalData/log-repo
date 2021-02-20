@@ -408,6 +408,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string MainCarriageToPortCountryCode { get; set; }
         public string MainCarriageToPortCountryName { get; set; }
         public string MainCarriageVesselId { get; set; }
+        public string MainCarriageVesselName { get; set; }
         public bool? MainCarriageIsFromStack { get; set; }
         public string MainCarriageCarrierNumber { get; set; }
         public string MainCarriageCarrierId { get; set; }
@@ -623,6 +624,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public double? GrossWeightPerTon { get; set; }
 
         public string WarehouseLegWarehouseId { get; set; }
+        public string WarehouseLegTerminalName { get; set; }
         public string WarehouseLegAddressId { get; set; }
         public string WarehouseLegTerminalCode { get; set; }
         public DateTime? WarehouseLegExpectedEntryDate { get; set; }

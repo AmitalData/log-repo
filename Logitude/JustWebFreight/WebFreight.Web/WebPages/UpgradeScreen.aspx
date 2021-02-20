@@ -13,7 +13,7 @@
     <link href="../HtmlHelpers/CSS/sunburst.css" rel="stylesheet" type="text/css"/>
     <link href="../HtmlHelpers/CSS/app.css" rel="stylesheet" type="text/css"/>
     <link href="../HtmlHelpers/CSS/LogitudeMainCss.css" rel="stylesheet" type="text/css"/>
-    <script src="../HtmlHelpers/JS/Logitude.Tools.js" type="text/javascript"></script>       
+    <script src="../HtmlHelpers/JS/LogitudeTools.js" type="text/javascript"></script>       
 </head>
 
 <body>

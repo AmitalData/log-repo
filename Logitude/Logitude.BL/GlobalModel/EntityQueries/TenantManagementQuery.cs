@@ -1277,36 +1277,63 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
         public string GetSystemDomain(int id)
         {
-            string workEnvironment = Simplog.Server.Infrastructure.LogitudeSettings.WorkEnvironment;
-            string deploymentStage = Simplog.Server.Infrastructure.LogitudeSettings.DeploymentStage;
-            string fromEmail = "no-reply@" + (workEnvironment == "cloud" 
-                ? "amital.co.il" : deploymentStage != null && (deploymentStage.ToLower() == "logboxwe1" || deploymentStage.ToLower() == "test2")
-                ? GetLogboxDomain(id) : "LogitudeWorld.com");
+            string fromEmail = "no-reply@";
+            fromEmail += IsCloudEnvironment() ? "amital.co.il" : (IsLogboxEnvironment() ? GetLogboxDomainByTenant(id) : "LogitudeWorld.com");
 
             return fromEmail;
         }
 
-        private string GetLogboxDomain(int tenantId)
+        private bool IsCloudEnvironment()
         {
-            string privateLabelId = (from a in repository.context.GlobalTenants
-                                     where a.Id == tenantId
-                                     select a.PrivateLabelId).FirstOrDefault();
+            string workEnvironment = Simplog.Server.Infrastructure.LogitudeSettings.WorkEnvironment;
+            bool isCloudEnvironment = workEnvironment == "cloud";
+            return isCloudEnvironment;
+        }
 
+        private bool IsLogboxEnvironment()
+        {
+            string deploymentStage = Simplog.Server.Infrastructure.LogitudeSettings.DeploymentStage;
+            bool isLogboxEnvironment = deploymentStage != null && (deploymentStage.ToLower() == "logboxwe1" || deploymentStage.ToLower() == "test2");
+            return isLogboxEnvironment;
+        }
 
-            if (!string.IsNullOrEmpty(privateLabelId))
+        private string GetLogboxDomainByTenant(int tenantId)
+        {
+            string logboxDomain = "logbox.co.il";
+            string privateLabelDomain = GetPrivateLableDomain(tenantId);
+            if (!string.IsNullOrEmpty(privateLabelDomain))
             {
-                string privateLabelUrl = (from a in repository.context.TenantManagmentPrivateLabels
-                                          where a.Id == privateLabelId
-                                          select a.PrivateLabelUrl).FirstOrDefault();
-
-                if (!string.IsNullOrEmpty(privateLabelUrl))
-                {
-                    privateLabelUrl = privateLabelUrl.Replace("system.", "");
-                    return privateLabelUrl;
-                }
-
+                return privateLabelDomain;
             }
-            return "logbox.co.il";
+            return logboxDomain;
+        }
+
+        private string GetPrivateLableDomain(int tenant)
+        {
+            string privateLabelId = GetPrivateLabelIdByTenant(tenant);
+            string privateLabelDomain = GetPrivateLableDomainById(privateLabelId);
+
+            return privateLabelDomain;
+        }
+
+        private string GetPrivateLableDomainById(string id)
+        {
+            string privateLabelDomain = "";
+            if (!string.IsNullOrEmpty(id))
+            {
+                privateLabelDomain = (from a in repository.context.TenantManagmentPrivateLabels
+                                             where a.Id == id
+                                             select a.PrivateLabelDomain).FirstOrDefault();
+            }
+
+            return privateLabelDomain;
+        }
+
+        private string GetPrivateLabelIdByTenant(int tenant)
+        {
+            return (from a in repository.context.GlobalTenants
+                    where a.Id == tenant
+                    select a.PrivateLabelId).FirstOrDefault();
         }
     }
 }

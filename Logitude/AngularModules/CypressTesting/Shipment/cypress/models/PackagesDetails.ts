@@ -1,8 +1,9 @@
 export interface PackagesDetails{
-    Quantity:number,
+    Quantity: number,
     Length: number,
     Width: number,
     Height:number,
+    Volume: number,
     GrossWeight:number,
     PackageType:string
 }

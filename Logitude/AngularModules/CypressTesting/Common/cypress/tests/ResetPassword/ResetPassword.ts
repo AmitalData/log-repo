@@ -1,7 +1,6 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
-import { Selectors } from "../../selectors/Selectors"
+import { CommonSelectors } from "../../selectors/Selectors"
 import * as Actions from "../../actions/Actions";
-import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 
 Given("{string} as a paswword without confirm password",(password)=>{
     cy.OpenChangePasswordPage();
@@ -30,11 +29,11 @@ Given("{string} as a new paswword and confirm password",(password)=>{
 });
 
 When("sumbit",()=>{
-    cy.Click(Selectors.ConfirmPassword, null);
+    cy.Click(CommonSelectors.ConfirmPassword, null);
 });
 
 Then("validate message should appear successfully",()=>{
-    cy.ValidateElementColor(Selectors.ErrorList,"rgb(255, 0, 0)"); //assertion for red color
+    cy.ValidateElementColor(CommonSelectors.ErrorList,"rgb(255, 0, 0)"); //assertion for red color
 
 });
 

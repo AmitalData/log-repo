@@ -88,6 +88,14 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="PrivateLabelDomain"
+    Type="varchar"
+    Size="100"
+    DefaultValue="'dsv.co.il'">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="BackgroundImageId"
     OldNames="BackgroundImage"
     Type="varchar"

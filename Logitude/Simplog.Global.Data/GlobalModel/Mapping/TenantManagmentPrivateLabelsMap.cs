@@ -13,6 +13,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.PrivateLabelName).IsRequired().HasMaxLength(60).IsUnicode(true);
             this.Property(t => t.PrivateLabelShortName).IsRequired().HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.PrivateLabelUrl).IsRequired().HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.PrivateLabelDomain).HasMaxLength(100).IsUnicode(false);
             //this.Property(t => t.MainLogo).IsRequired();
             this.Property(t => t.ContactUsEmail).IsRequired().HasMaxLength(70).IsUnicode(true);
             this.Property(t => t.ReceiveAllStatuses).IsRequired();
@@ -31,6 +32,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.PrivateLabelName).HasColumnName("PrivateLabelName");
             this.Property(t => t.PrivateLabelShortName).HasColumnName("PrivateLabelShortName");
             this.Property(t => t.PrivateLabelUrl).HasColumnName("PrivateLabelUrl");
+            this.Property(t => t.PrivateLabelDomain).HasColumnName("PrivateLabelDomain");
             this.Property(t => t.MainLogo).HasColumnName("MainLogo");
             this.Property(t => t.ContactUsEmail).HasColumnName("ContactUsEmail");
             this.Property(t => t.ReceiveAllStatuses).HasColumnName("ReceiveAllStatuses");

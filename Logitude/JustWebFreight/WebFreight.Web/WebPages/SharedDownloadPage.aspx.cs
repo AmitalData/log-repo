@@ -135,7 +135,7 @@ namespace WebFreight.Web.WebPages
 
                 bool isAuothenticatedRequest = true;
                 bool CheckForTenantAvailability = true;
-
+                bool isValidDownloadLimitation = true;
 
 
                 if (string.IsNullOrEmpty(downloadAllDocumentsArgs.PartnerType))
@@ -157,9 +157,7 @@ namespace WebFreight.Web.WebPages
 
                 else if (downloadAllDocumentsArgs.Securitykey != null)
                 {
-                    string linkName = (Request.Url.ToString().Contains("SharedDownloadPage.aspx")) ? "SharedDownloadPage" : "DocumentsApprovalPage";
-                    UserViewLinkLimitationService userViewLinkLimitationService = new UserViewLinkLimitationService();
-                    userViewLinkLimitationService.Run(linkName, AuthenticationUtil.GetIP4Address());
+                    isValidDownloadLimitation = ValidateDownloadLimitation();
                 }
 
                 else
@@ -170,7 +168,7 @@ namespace WebFreight.Web.WebPages
                 }
 
 
-                if (CheckForTenantAvailability && isAuothenticatedRequest)
+                if (CheckForTenantAvailability && isAuothenticatedRequest && isValidDownloadLimitation)
                 {
                     Uploader up = new Uploader();
                     List<DocumentsFilingPM> documents = null;
@@ -275,6 +273,24 @@ namespace WebFreight.Web.WebPages
             {
                 throw e;
             }
+        }
+
+        private bool ValidateDownloadLimitation()
+        {
+            bool isValid = true;
+            try
+            {
+                string linkName = (Request.Url.ToString().Contains("SharedDownloadPage.aspx")) ? "SharedDownloadPage" : "DocumentsApprovalPage";
+                UserViewLinkLimitationService userViewLinkLimitationService = new UserViewLinkLimitationService();
+                userViewLinkLimitationService.Run(linkName, AuthenticationUtil.GetIP4Address());
+            }
+            catch (Exception ex)
+            {
+                isValid = false;
+                Response.Clear();
+                Response.Output.Write(ex.Message.ToString());
+            }
+            return isValid;
         }
 
         public static byte[] CompressionData(string listKey, Dictionary<string, byte[]> dataBackList, bool saveetodisk = false)
@@ -551,13 +567,6 @@ namespace WebFreight.Web.WebPages
             catch (Exception errorInfo)
             {
                 throw errorInfo;
-
-                if (errorInfo.Message != null)
-                {
-                    Response.Clear();
-                    Response.Output.Write(errorInfo.Message.ToString());
-                }
-        
 
 
 

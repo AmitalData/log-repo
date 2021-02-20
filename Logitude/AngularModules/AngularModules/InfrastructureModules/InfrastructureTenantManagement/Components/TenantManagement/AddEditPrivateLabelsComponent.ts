@@ -433,7 +433,17 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
              this.EntityPM.PrivateLabelUrl = value;
 
          }
-     }
+    }
+
+    get PrivateLabelDomain() {
+        return this.EntityPM.PrivateLabelDomain;
+    }
+    set PrivateLabelDomain(value: string) {
+        if (value != this.EntityPM.PrivateLabelDomain) {
+            this.EntityPM.PrivateLabelDomain = value;
+
+        }
+    }
 
    
 

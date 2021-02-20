@@ -1030,7 +1030,7 @@ namespace Logitude.XSD.INTTRA_Booking
                             {
                                 if (iHarmonizeDescription == null)
                                 {
-                                    iHarmonizeDescription = "HS Code: " + itemHarmonize.Harmonize;
+                                    iHarmonizeDescription =  itemHarmonize.Harmonize;
                                 }
 
                                 else
@@ -1050,7 +1050,7 @@ namespace Logitude.XSD.INTTRA_Booking
                     {
                         if (!string.IsNullOrEmpty(myShipmentPackage.Harmonize))
                         {
-                            string iHarmonizeDescription = "HS Code: " + myShipmentPackage.Harmonize;
+                            string iHarmonizeDescription =  myShipmentPackage.Harmonize;
 
                             commodityClassificationTypeList.Add(new INTTRA_Booking.CommodityClassificationType()
                             {
@@ -1065,7 +1065,7 @@ namespace Logitude.XSD.INTTRA_Booking
             {
                 if (!string.IsNullOrEmpty(Shipment.MainHarmonize))
                 {
-                    string iHarmonizeDescription = "HS Code: " + Shipment.MainHarmonize;
+                    string iHarmonizeDescription = Shipment.MainHarmonize;
                     commodityClassificationTypeList.Add(new INTTRA_Booking.CommodityClassificationType()
                     {
                         Type = INTTRA_Booking.CommodityClassificationTypeValues.USHTS,

@@ -45,6 +45,11 @@ export class TenantManagmentPrivateLabelsPM {
     public set PrivateLabelUrl(newValue: string) { if (this.privateLabelUrl != newValue) { this.privateLabelUrl = newValue; this.MarkAsDirty("PrivateLabelUrl"); } }
        
 	 
+    private privateLabelDomain: string;
+    public get PrivateLabelDomain() { return this.privateLabelDomain; }
+    public set PrivateLabelDomain(newValue: string) { if (this.privateLabelDomain != newValue) { this.privateLabelDomain = newValue; this.MarkAsDirty("PrivateLabelDomain"); } }
+       
+	 
     private mainLogo: string;
     public get MainLogo() { return this.mainLogo; }
     public set MainLogo(newValue: string) { if (this.mainLogo != newValue) { this.mainLogo = newValue; this.MarkAsDirty("MainLogo"); } }

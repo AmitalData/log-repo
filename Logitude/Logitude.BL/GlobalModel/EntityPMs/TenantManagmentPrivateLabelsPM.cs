@@ -14,6 +14,7 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public string PrivateLabelName { get; set; }
         public string PrivateLabelShortName { get; set; }
         public string PrivateLabelUrl { get; set; }
+        public string PrivateLabelDomain { get; set; }
         public byte[] MainLogo { get; set; }
         public string ContactUsEmail { get; set; }
         public bool ReceiveAllStatuses { get; set; }

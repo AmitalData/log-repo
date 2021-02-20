@@ -39,6 +39,15 @@
             <td style="width:200px" class="Button" (click)="CardIndexNewDrillDown1st_Click()">CardIndexNewDrillDown1st</td>
             <td style="width:200px"></td>
         </tr>
+        <tr>
+            <td style="width:200px">
+                <button class="Button" (click)="Aging_Click()">Aging Report</button>
+            </td>
+            <td style="width:200px">
+            </td>
+            <td style="width:200px"></td>
+            <td style="width:200px"></td>
+        </tr>
 
     </table>
 
@@ -47,12 +56,17 @@
 </div>
 <div *ngIf="SelectedItem=='JournalApproveService'">
     <table>
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td style="padding-left: 10px; padding-right: 10px; overflow-x: auto;" colspan="4">
+                <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+            </td>
+        </tr>
         <tr>
             <td style="width:200px">
                 <button class="Button" (click)="WorkWithoutQueue_Click()">WorkWithoutQueue</button>
             </td>
             <td style="width:200px">
-                <button class="Button">WorkWithQueue</button>
+                <button class="Button" (click)="JournalApproveQueue_Click()">Queue</button>
             </td>
             <td style="width:200px"></td>
             <td style="width:200px"></td>
@@ -96,14 +110,15 @@
 </div>
 
 
-<div *ngIf="SelectedItem=='Aging'">
+<div *ngIf="SelectedItem=='MSIC'">
     <table>
        
         <tr>
             <td style="width:200px">
-                <button class="Button" (click)="Aging_Click()">Aging Report</button>
+                <button class="Button" (click)="BuildTenant_Click()">Build Tenant</button>
             </td>
             <td style="width:200px">
+                <button class="Button" (click)="CreateJournalTask_Click()">Create journal -Task  </button>
             </td>
             <td style="width:200px"></td>
             <td style="width:200px"></td>
@@ -118,18 +133,20 @@
 
         <tr>
             <td style="width:200px">
-                <button class="Button" (click)="XXX_Click()">XXX</button>
+                <button class="Button" (click)="ButtonReconcileStageCNoBatch_Click()">ReconcileStageC NoBatch</button>
             </td>
             <td style="width:200px">
+                <button class="Button" (click)="ButtonReconcileStageCBatch_Click()">ReconcileStageC Batch</button>
             </td>
             <td style="width:200px"></td>
             <td style="width:200px"></td>
         </tr>
         <tr>
             <td style="width:200px">
-                <button class="Button" (click)="YYY_Click()">YYY</button>
+                <button class="Button" (click)="YearTransfer_Click()">YearTransfer</button>
             </td>
             <td style="width:200px">
+                <button class="Button" (click)="YearTransferCancel_Click()">YearTransfer Cancel</button>
             </td>
             <td style="width:200px"></td>
             <td style="width:200px"></td>

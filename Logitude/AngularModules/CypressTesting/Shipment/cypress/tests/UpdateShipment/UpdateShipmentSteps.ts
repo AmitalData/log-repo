@@ -1,6 +1,5 @@
 import * as Actions from "../../actions/Actions"
-import { Selectors } from "../../selectors/Selectors"
-import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
+import { ShipmentSelectors } from "../../selectors/Selectors"
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { PartnersDetails } from "cypress/models/PartnersDetails";
 import { PayableDetails } from "cypress/models/PayableDetails"
@@ -8,6 +7,7 @@ import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { ShipmentDetails } from "cypress/models/ShipmentDetails";
 import { ReceivableDetails } from "cypress/models/ReceivableDetails"
 import { PackagesDetails } from "cypress/models/PackagesDetails";
+import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 
 //#region variables
 let shipmentDetails: ShipmentDetails;
@@ -29,7 +29,7 @@ Given("a direct shipment with the following details", (dataTable) => {
 
 //#region Update general tab given step
 Given("the user fill {string} as GrossWeight and {string} as a MoveType", (GrossWeight, MoveType) => {
-    Actions.OpenShipment(shipmentDetails.ShipmentNumber);
+    Actions.OpenShipment(shipmentDetails.QuoteShipmentNumber);
     Actions.FillGeneralTab(GrossWeight, MoveType)
 });
 //#endregion
@@ -88,18 +88,18 @@ When("create shipment", () => {
 });
 
 When("update shipment", () => {
-    Actions.UpdateShipment(Selectors.ShipmentSaveButton)
+    Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
 });
 //#endregion
 
 //#region Assert steps
 Then("the direct should create successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200).then((interception) => {
-        shipmentDetails.ShipmentNumber = interception.response.body.ShipmentNumber;
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
+        shipmentDetails.QuoteShipmentNumber = interception.response.body.ShipmentNumber;
     })
 });
 
 Then("the direct should update successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutShipmentRequest", 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });
 //#endregion

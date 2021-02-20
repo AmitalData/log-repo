@@ -54,7 +54,7 @@
 
             </div>
             <div class="value">
-
+                <div *ngIf="Shipment.House != null">{{Shipment.House}}</div>
                 <div *ngIf="IsLoadingReferences">
                     Loading...
                 </div>
@@ -222,18 +222,13 @@
                 <h2 class="hide-mobile hide-tablet">Shipment Details</h2>
 
                 <div class="field">
-                    <div class="label">Creation Date</div>
-                    <div class="value">{{ Shipment.CreateDate | date: 'dd/MM/yyyy' }}</div>
+                    <div class="label">House</div>
+                    <div class="value">{{ Shipment.House}}</div>
                 </div>
 
                 <div class="field">
                     <div class="label">Gross Weight</div>
                     <div class="value">{{ Shipment.GrossWeight }}</div>
-                </div>
-
-                <div class="field">
-                    <div class="label">Requested Delivery date</div>
-                    <div class="value">21-Mar-2020, 23:00</div>
                 </div>
 
                 <div class="field">
