@@ -923,6 +923,30 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="LastTariffUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastTariffUsageDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastWeekCreatedTariffs"
+    Type="int" DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LastMonthCreatedTariffs"
+    Type="int" DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="GlobalTenants"

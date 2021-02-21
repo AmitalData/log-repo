@@ -155,6 +155,11 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.NumberOfSISentLastWeek = entityPM.NumberOfSISentLastWeek;
             entityPOCO.LastContainerStatusReceived = entityPM.LastContainerStatusReceived;
 
+            entityPOCO.LastTariffUpdateDate = entityPM.LastTariffUpdateDate;
+            entityPOCO.LastTariffUsageDate = entityPM.LastTariffUsageDate;
+            entityPOCO.LastWeekCreatedTariffs = entityPM.LastWeekCreatedTariffs;
+            entityPOCO.LastMonthCreatedTariffs = entityPM.LastMonthCreatedTariffs;
+
             string packageName = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
