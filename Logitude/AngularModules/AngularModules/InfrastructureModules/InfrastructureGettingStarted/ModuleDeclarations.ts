@@ -16,6 +16,7 @@ import {InvoiceSettingsComponent} from './Components/InvoiceSettings/InvoiceSett
 import {AirlineSettingsComponent} from './Components/AirlineSettings/AirlineSettingsComponent';
 import {UploadLogoComponent} from './Components/UploadImage/UploadLogoComponent';
 import { PaymentGatewayComponent } from './Components/PaymentGateway/PaymentGatewayComponent';
+import { ChangeCurrencyComponent } from './Components/SystemCurrencies/ChangeCurrencyComponent';
 
 export const Components =
     [
@@ -37,7 +38,7 @@ export const Components =
         AirlineSettingsComponent,
         UploadLogoComponent,
         PaymentGatewayComponent,
-
+        ChangeCurrencyComponent,
     ];
 
 export class ModuleDeclarations {
@@ -64,6 +65,7 @@ export class ModuleDeclarations {
             case "AirlineSettingsComponent": { myResult = AirlineSettingsComponent; break; }
             case "UploadLogoComponent": { myResult = UploadLogoComponent; break; }
             case "PaymentGatewayComponent": { myResult = PaymentGatewayComponent; break; }
+            case "ChangeCurrencyComponent": { myResult = ChangeCurrencyComponent; break; }  
         }
 
         return myResult;

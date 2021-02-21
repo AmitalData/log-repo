@@ -192,11 +192,93 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        [ActionName("PostChangeCurrency")]
+        public HttpResponseMessage PostChangeCurrency(ChangeCurrencyArgs args)
+        {
+            try
+            {
+                string token = System.Web.HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                args.Tenant = authToken.Tenant;
+                ChangeCurrencyManager changeCurrencyManager = new ChangeCurrencyManager(args);
+                changeCurrencyManager.StartChange();
+
+                return Request.CreateResponse(HttpStatusCode.OK, "OK");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 
     public class AccountingCurrencyHelper
     {
         public TenantPM TenantPM { get; set; }
+        public List<LastRate> LastRates { get; set; }
+    }
+
+    public class ChangeCurrencyManager
+    {
+        private ChangeCurrencyArgs myArgs;
+        public ChangeCurrencyManager(ChangeCurrencyArgs args)
+        {
+            this.myArgs = args;
+        }
+
+        public void StartChange()
+        {
+            this.ChangeTenantCurrency();
+            this.UpdateRates();
+            this.ComputeTotals();
+        }
+
+        private void ChangeTenantCurrency()
+        {
+            switch(myArgs.Type)
+            {
+                case "Accounting":
+                    {
+                        this.CallLocalCurrencyProcedure();
+                        break;
+                    }
+
+                case "Profit":
+                    {
+                        this.CallProfitCurrencyProcedure();
+                        break;
+                    }
+            }            
+        }
+
+        private void CallLocalCurrencyProcedure()
+        {
+            RunStoredProcedureClass.RunChangeSystemCurrencyProcedure("dbo.usp_ChangeTenantLocalCurrency", myArgs.NewCurrencyCode, myArgs.Tenant);
+        }
+        private void CallProfitCurrencyProcedure()
+        {
+            RunStoredProcedureClass.RunChangeSystemCurrencyProcedure("dbo.usp_ChangeTenantProfitCurrency", myArgs.NewCurrencyCode, myArgs.Tenant);
+        }
+        private void UpdateRates()
+        {
+
+        }
+        private void ComputeTotals()
+        {
+
+        }
+    }
+
+    public class ChangeCurrencyArgs
+    {
+        public int Tenant { get; set; }
+        public string NewCurrencyId { get; set; }
+        public string NewCurrencyCode { get; set; }
+        public string Type { get; set; }
         public List<LastRate> LastRates { get; set; }
     }
 }

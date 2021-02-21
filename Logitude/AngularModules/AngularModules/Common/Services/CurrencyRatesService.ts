@@ -27,7 +27,7 @@ export class CurrencyRatesService {
         var url = this._apiUrl + '/getall?baseCurrencyId=' + baseCurrencyId + '&dateString=' + ServiceHelper.GetDateString(date);
 
         return defer(() => {
-            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
                 var _mappedListsArray: Array<LastRate> = [];
@@ -42,7 +42,7 @@ export class CurrencyRatesService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetCurrenciesExchangeRateByValueDate(currencyId: string, loadingDate: Date) {
@@ -53,7 +53,7 @@ export class CurrencyRatesService {
 
         return defer(() => {
 
-            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
                 var _mappedListsArray: Array<LastRate> = [];
@@ -72,7 +72,7 @@ export class CurrencyRatesService {
 
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetRatesByValueDate(currencyId: string, date: Date) {
@@ -82,7 +82,7 @@ export class CurrencyRatesService {
         var url = this._apiUrl + '/GetRatesByValueDate?currencyId=' + currencyId + '&dateString=' + ServiceHelper.GetDateString(date);
 
         return defer(() => {
-            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
                 var _mappedListsArray: Array<RatesTablePM> = [];
@@ -100,7 +100,7 @@ export class CurrencyRatesService {
 
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -113,7 +113,7 @@ export class CurrencyRatesService {
 
             var mappedEntity: AccountingCurrencyHelper = this.MapJsonToAccountingCurrencyHelper(entityPM, false);
 
-            return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+            return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                 var myJsonResult = res;
 
                 var myPMService = new TenantPMService();
@@ -127,7 +127,7 @@ export class CurrencyRatesService {
                 myResponse.Result = mappedResult;
                 return myResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -143,7 +143,7 @@ export class CurrencyRatesService {
     //        }),catchError(ServiceHelper.HandleServiceError));
     //    });
     //}
-    
+
     MapJsonToEntityList(jsonList: any) {
         var entityList: LastRate;
         entityList = new LastRate();
@@ -173,7 +173,7 @@ export class CurrencyRatesService {
             entity = new AccountingCurrencyHelper();
         }
 
-        var jsonPMKeys = Object.keys(jsonPM);       
+        var jsonPMKeys = Object.keys(jsonPM);
 
         for (var key in jsonPMKeys) {
             var property = jsonPMKeys[key];
@@ -181,8 +181,8 @@ export class CurrencyRatesService {
             if (property === "TenantPM") {
 
                 var myPMService = new TenantPMService();
-                
-                entity.TenantPM = myPMService.MapJsonToEntityPM(jsonPM[property], getCallMap);                
+
+                entity.TenantPM = myPMService.MapJsonToEntityPM(jsonPM[property], getCallMap);
             }
 
             else if (property === "LastRates") {
@@ -206,7 +206,19 @@ export class CurrencyRatesService {
         return entity;
     }
 
+    PostChangeCurrency(args: ChangeCurrencyArgs) {
+        return defer(() => {
+            return this._http.post(this._apiUrl + "/PostChangeCurrency", JSON.stringify(args), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = result;
+                return pmresponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 }
+
 export class LastRate {
     Id: string;
     Tenant: number;
@@ -222,5 +234,11 @@ export class LastRate {
 }
 export class AccountingCurrencyHelper {
     TenantPM: TenantPM;
+    LastRates: LastRate[];
+}
+
+export class ChangeCurrencyArgs {
+    NewCurrencyId: string;
+    Type: string;
     LastRates: LastRate[];
 }

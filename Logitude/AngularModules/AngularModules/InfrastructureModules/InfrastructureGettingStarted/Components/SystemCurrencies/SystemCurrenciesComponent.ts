@@ -11,10 +11,11 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     selector: 'SystemCurrenciesComponent',
-    
     templateUrl: './SystemCurrenciesComponent.html',
 })
 
@@ -28,12 +29,13 @@ export class SystemCurrenciesComponent extends BaseComponent {
     private ShipmentsQuotesCount: number = 0;
     private entityPMService: TenantPMService;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsChangeCurrencyVisible: boolean = false;
     constructor(private entityResourceService: EntityResourceService) {
         super();
 
         this.entityPMService = new TenantPMService();
 
-        entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((res:any) => {
+        entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((res: any) => {
             this.GetDemoMessageVisibility();
 
             this.entityPMService.get(SessionLocator.TenantPM.Id).subscribe((myResponse: ServiceResponse) => {
@@ -46,6 +48,10 @@ export class SystemCurrenciesComponent extends BaseComponent {
 
                         if (!myResponse2.HasError) {
                             this.ShipmentsQuotesCount = myResponse2.Result;
+                        }
+
+                        if (FeatureLocator.HasFeaturePermession("General", "ChangeLocalProfitCurrency")) {
+                            this.IsChangeCurrencyVisible = true;
                         }
 
                         this.SetUIProperties();
@@ -130,7 +136,7 @@ export class SystemCurrenciesComponent extends BaseComponent {
         var windowTitle = "Edit exchange rates";
         var logWindow = new LogitudeWindow();
         logWindow.Title = windowTitle;
-        this.entityResourceService.getEntityResourceByTableName("RatesTable").subscribe(response=> {
+        this.entityResourceService.getEntityResourceByTableName("RatesTable").subscribe(response => {
             logWindow.Show('./Common/Components/Maintenance/RatesMainTabComponent');
         });
     }
@@ -160,7 +166,7 @@ export class SystemCurrenciesComponent extends BaseComponent {
         this.CurrentSession.CloseCurrentWindow();
     }
 
-    OkButtonClicked() {
+    OkButtonClicked(doChange: boolean = false) {
         if (!this.TenantPM.IsDirty) {
             this.CurrentSession.CloseCurrentWindow();
         }
@@ -190,6 +196,10 @@ export class SystemCurrenciesComponent extends BaseComponent {
                     if (!myResponse.HasError) {
                         InfraSettings.TenantPM = myResponse.Result;
                         this.CurrentSession.CloseCurrentWindowEmit("ok");
+
+                        if (doChange) {
+                            this.OpenChangeCurrencyWindow();
+                        }
                     }
 
                     else {
@@ -198,5 +208,54 @@ export class SystemCurrenciesComponent extends BaseComponent {
                 });
             }
         }
+    }
+
+    private Type: string;
+    ChangeCurrencyClicked(type: string) {
+        this.Type = type;
+
+        if (this.TenantPM.IsDirty) {
+            this.OkButtonClicked(true);
+        }
+
+        else {
+            this.OpenChangeCurrencyWindow();
+        }        
+    }
+
+    private OpenChangeCurrencyWindow() {
+        this.entityResourceService.getEntityResourceByTableName("RatesTable").subscribe(response => {
+            var confirmWindow: ConfirmWindow = new ConfirmWindow();
+            confirmWindow.Show("Are you sure you want to change " + this.Type + " currency?");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    var logWindow = new LogitudeWindow();
+                    logWindow.Width = 500;
+                    logWindow.Height = 500;
+                    logWindow.WindowArgs = { TenantPM: this.TenantPM, Type: this.Type };
+                    logWindow.Title = "Change " + this.Type + " Currency";
+
+                    logWindow.ComponentLoaded.subscribe(s => {
+                        logWindow.WindowClosed.subscribe(d => {
+                            //if (s && d == "ok") {
+                            //    var deletedItem: TariffLineExpirationDatePM = new TariffLineExpirationDatePM();
+                            //    deletedItem.OriginPortId = item.EntityPM.OriginPortId;
+                            //    deletedItem.DestinationPortId = item.EntityPM.DestinationPortId;
+                            //    deletedItem.ExpirationDate = item.EntityPM.ExpirationDate;
+
+                            //    this.deletedLinesExpirationDates.push(deletedItem);
+                            //    this.CurrentVersion.RemoveTariffLine(item.EntityPM);
+                            //    this.TariffsLinesSource.Remove(item);
+                            //    this.FillTariffLines(this.CurrentVersion.TariffLines);
+
+                            //    this.isTariffLinesDeleted = true;
+                            //}
+                        });
+                    });
+
+                    logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/SystemCurrencies/ChangeCurrencyComponent');
+                }
+            });
+        });
     }
 }

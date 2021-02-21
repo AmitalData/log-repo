@@ -422,5 +422,36 @@ namespace Logitude.BL.DataContracts
                 scope.Complete();
             }
         }
+
+        public static void RunChangeSystemCurrencyProcedure(string procedureName, string currencyCode, int tenant)
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                string strConnString = GetConnection(tenant);
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    SqlCommand cmd = new SqlCommand(procedureName, cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    SqlParameter param1 = new SqlParameter("@CurrencyCode", SqlDbType.VarChar);
+                    SqlParameter param2 = new SqlParameter("@Tenant", SqlDbType.Int);
+                    param1.Direction = ParameterDirection.Input;
+                    param2.Direction = ParameterDirection.Input;
+                    param1.Value = currencyCode;
+                    param2.Value = tenant;
+                    cmd.Parameters.Add(param1);
+                    cmd.Parameters.Add(param2);
+
+                    cmd.CommandTimeout = 6000;
+
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
+
+                }
+
+                scope.Complete();
+            }
+        }
     }
 }
