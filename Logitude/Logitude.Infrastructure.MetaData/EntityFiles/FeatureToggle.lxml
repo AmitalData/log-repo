@@ -956,6 +956,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ToggleDescription&quot;"
     ListPropertyPath="&quot;ToggleDescription&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -975,7 +976,7 @@
     FullFieldLable="&quot;ToggleDescription&quot;"
     DefaultText="&quot;Description&quot;"
     ListFieldLable="&quot;ToggleDescriptionListLable&quot;"
-    ListLableDefaultText="&quot;Toggle&quot;"
+    ListLableDefaultText="&quot;Description&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -1024,7 +1025,7 @@
         QueryCode="&quot;AllFeatureToggles&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;ToggleDescription&quot;"
-        ColumnWidth="150" />
+        ColumnWidth="250" />
       <QueryColumn
         QueryCode="&quot;AllFeatureToggles&quot;"
         IndexOrder="2"
