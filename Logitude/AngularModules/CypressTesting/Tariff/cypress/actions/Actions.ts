@@ -15,15 +15,6 @@ import { PriceCheckDetails } from "cypress/models/PriceCheckDetails";
 
 export function LoginAndNavigateToTariffWorkspace() {
     cy.Login();
-    NavigateToTariffWorkspace();
-}
-
-export function LoginAndNavigateToShippingLineWorkspace() {
-    cy.Login();
-    OpenNewShippingLineWizardInMaintenance();
-}
-
-export function NavigateToTariffWorkspace() {
     cy.Click(BaseSelectors.TariffMenu, null);
 }
 
@@ -37,7 +28,6 @@ export function FillNewSurchargeCost(surchargeCostType: string, tariffDetails: T
     FillSurchargeCostWizardFields(tariffDetails);
 }
 
-//use when the error is fixed 
 export function FillNewSurchargeCostForUpdate(surchargeCostType: string, tariffDetails: TariffDetails) {
     OpenNewSurchargeCostWizard(surchargeCostType);
     OpenNewShippingLineWizard();
@@ -529,36 +519,22 @@ function AssertTariffPriceCheck(expectedPrice: string) {
     });
 }
 
-function OpenNewShippingLineWizard() { //Weird problem need to be checked
-    DefineRequestsForCreateSeller();
-    cy.Click(TariffSelectors.TariffSearchIcon, null);
-    AssertGetCardView();
-    cy.Click(TariffSelectors.AddButton, null);
-    cy.Click(BaseSelectors.Button,TariffSelectors.ContainsCancel,true)
-    cy.Click(BaseSelectors.Button,TariffSelectors.ContainsCancel,true)
-    cy.Click(TariffSelectors.TariffSearchIcon, null);
-    cy.Click(TariffSelectors.AddButton, null);
+function OpenNewShippingLineWizard() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetCarrierViews, RequestAliases.GetCarrierViews);
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetEntityResource, RequestAliases.GetEntityResource);
+    cy.get(TariffSelectors.TariffSeller).type(TariffSelectors.DownArrow);
+    AssertEntityResource();
+    cy.get(BaseSelectors.LogLOVFooterHyperLink).eq(0).click();
     AssertGetCarrierViews();
     cy.Click(BaseSelectors.Button,TariffSelectors.ContainsNewShippingLine);
 }
 
-function OpenNewShippingLineWizardInMaintenance() {
-    cy.Click(BaseSelectors.MaintenanceMenu, null);
-    cy.Click(BaseSelectors.ShippingLine, null);
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetCarrierViews, RequestAliases.GetCarrierViews);
-    cy.Click(BaseSelectors.Button, TariffSelectors.ContainsAdd);
-    BaseAssertion.AssertStatusCode(RequestAliases.GetCarrierViews, 200)
-    cy.Click(BaseSelectors.Button, TariffSelectors.ContainsNewShippingLine);
-}
-
-
-export function CreateNewShippingLine() {
+function CreateNewShippingLine() {
     var Code = FillShippingLineCode();
     FillSellerName("SellerTest");
     DefineRequestPostShippinglines();
     cy.Click(BaseSelectors.RedButton +TariffSelectors.Last, null);
-    // ValidateShippingLine();
-    // cy.Click(BaseSelectors.Button,"Cancel",true)
+    ValidateShippingLine();
     return Code;
 }
 
@@ -575,19 +551,15 @@ function FillShippingLineCode() {
     return code
 }
 
-function DefineRequestsForCreateSeller() {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetCardviews, RequestAliases.GetCardviews);
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetCarrierViews, RequestAliases.GetCarrierViews);
-}
 
-function AssertGetCardView() {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetCardviews, 200);
+function AssertEntityResource() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetEntityResource, 200);
 }
 
 function AssertGetCarrierViews() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetCarrierViews, 200);
 }
 
-export function ValidateShippingLine() {
+function ValidateShippingLine() {
     BaseAssertion.AssertStatusCode(RequestAliases.PostShippingline, 200)
 }

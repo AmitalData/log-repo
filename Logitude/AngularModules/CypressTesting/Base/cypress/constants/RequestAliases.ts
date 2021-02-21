@@ -28,5 +28,7 @@ export class RequestAliases {
     public static readonly PostUploadExcelFile = 'WaitUpload';
     public static readonly GetCarrierViews = "GetCarrierViews";
     public static readonly GetCardviews = "GetCardViews";
+    public static readonly GetEntityResource = "EntityResourceShippingLineTable";
+
 
 }

@@ -3,13 +3,8 @@ Feature: Update Surcharge Tariff
     The authenticated user will create new ocean FCL surcharge cost tariff.
     then Update it .
 
-    Scenario: creare Shipping Line
-        Given the user logged in and navigate to Shipping Line in Maintenance workspace
-        When create new shipping line
-        Then the shipping line should create successfully
-
     Scenario: Create ocean FCL surcharge cost with new seller 
-        Given the user in tariff workspace
+        Given the user logged in and navigate to tariff workspace
         And an ocean FCL surcharge cost with the following details
             | Name                      | Seller     |
             | TestOceanFCLSurchargeCost | SellerTest |

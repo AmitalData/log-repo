@@ -11,4 +11,6 @@ export class Urls
     public static readonly PostUploadExcelFile = "**/PostUploadExcelFile";
     public static readonly GetCarrierViews = "**/carrierviews/**";
     public static readonly GetCardviews = "**/cardviews/**";
+    public static readonly GetEntityResource = "**/EntityResource?objectTableName=ShippingLine&tenant=0";
+
 }

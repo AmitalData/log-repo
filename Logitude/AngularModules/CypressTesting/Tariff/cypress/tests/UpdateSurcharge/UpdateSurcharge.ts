@@ -4,32 +4,14 @@ import { TariffDetails } from "../../models/TariffDetails";
 import { SurchargeDetails } from "../../models/SurchargeDetails";
 import { SurchargeCostTariffLineDetails} from "cypress/models/SurchargeCostTariffLineDetails";
 
-var SellerCode ;
-
-//#region Create Shipping Line 
-Given("the user logged in and navigate to Shipping Line in Maintenance workspace", () => {
-    Actions.LoginAndNavigateToShippingLineWorkspace();
-});
-
-When("create new shipping line", () => {
-    SellerCode = Actions.CreateNewShippingLine();
-});
-
-Then("the shipping line should create successfully", () => {
-    Actions.ValidateShippingLine();
-})
-//#endregion
-
 //#region  Create ocean FCL surcharge cost
-Given("the user in tariff workspace", () => {
-    Actions.NavigateToTariffWorkspace()
+Given("the user logged in and navigate to tariff workspace", () => {
+    Actions.LoginAndNavigateToTariffWorkspace();
 });
 
 Given("an ocean FCL surcharge cost with the following details", (dataTable) => {
     let tariffDetails = dataTable.hashes()[0] as TariffDetails;
-    tariffDetails.Seller = SellerCode ;
-    Actions.FillNewSurchargeCost("Ocean FCL", tariffDetails);
-    // Actions.FillNewSurchargeCostForUpdate("Ocean FCL", tariffDetails);
+    Actions.FillNewSurchargeCostForUpdate("Ocean FCL", tariffDetails);
 });
 
 Given("the follwing surcharges details", (dataTable) => {
