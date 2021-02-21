@@ -50,6 +50,9 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ToggleIcon = '[src="./Images/ToggleIcon.png"]'
     public static readonly BackBottonBodyClass = ".BackBottonBody"
 
-    public static readonly GreenButton = ".GreenButton";
     public static readonly QueryLink = ".QueryLink";
+
+    public static readonly LogLOVFooterHyperLink = ".LogLOVFooter a";
+    public static readonly DownArrowImage = "img[src='./Images/Buttons/downarrow.png']";
+    public static readonly Hyperlink = ".hyperlink";
 }

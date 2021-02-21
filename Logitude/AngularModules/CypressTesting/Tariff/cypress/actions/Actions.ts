@@ -35,7 +35,7 @@ export function FillNewSurchargeCost(surchargeCostType: string, tariffDetails: T
     FillSurchargeCostWizardFields(tariffDetails);
 }
 
-export function FillNewOceanFCLSurchargesCost( surchargeCostType: string ,tariffDetails: TariffDetails){
+export function FillNewOceanFCLSurchargesCost(surchargeCostType: string, tariffDetails: TariffDetails) {
     OpenNewSurchargeCostWizard(surchargeCostType);
     cy.FillLogTextBox(TariffSelectors.TariffName, tariffDetails.Name);
     cy.FillLogLov(TariffSelectors.TariffSeller, tariffDetails.Seller, false);
@@ -169,7 +169,7 @@ export function ValidateApprovedVersionsAppear() {
     BaseAssertion.AssertElementExist(TariffSelectors.TariffVersionHistoryComboBoxItem(2));
 }
 
-export function ValidateTariffPriceCheck(expectedPrice: string){
+export function ValidateTariffPriceCheck(expectedPrice: string) {
     AssertTariffPriceCheck(expectedPrice);
 }
 
@@ -384,7 +384,7 @@ function DefineRequestGetSingleTariff() {
     cy.DefineRequestWait(RestAPI.GET, Urls.GetSingleTariff, RequestAliases.GetSingleTariff);
 }
 
-function DefineRequestPostAvailableTariffs(){
+function DefineRequestPostAvailableTariffs() {
     cy.DefineRequestWait(RestAPI.POST, Urls.PostAvailableTariffs, RequestAliases.PostAvailableTariffs);
 }
 
@@ -422,6 +422,17 @@ function AssertTariffPriceCheck(expectedPrice: string) {
     BaseAssertion.AssertStatusCode(RequestAliases.PostAvailableTariffs, 200).then((interception) => {
         let actualPrice = interception.response.body.filter((t: { TariffNumber: string; }) => t.TariffNumber === Tariff.Number)[0].Price;
         assert.equal(actualPrice, expectedPrice);
+        let indexOfTariff = interception.response.body.map(function (t: { TariffNumber: string; }) { return t.TariffNumber; }).indexOf(Tariff.Number);
+        cy.get(TariffSelectors.PriceCheckResultTableRow).eq(indexOfTariff).find(BaseSelectors.DownArrowImage).click();
+        cy.get(TariffSelectors.PriceCheckResultTableRow).eq(indexOfTariff).find(TariffSelectors.PriceCheckFreightResult).then((priceCell) => {
+            assert.equal(priceCell.text().trim(), expectedPrice);
+        });
+        DefineRequestGetSingleTariff();
+        cy.get(TariffSelectors.PriceCheckResultTableRow).eq(indexOfTariff).find(BaseSelectors.Hyperlink).contains(TariffSelectors.ContainsViewTariff).click();
+        AssertGetSingleTariff();
+        cy.get(TariffSelectors.TariffNumberShortTitleDiv).then((tariffNumberDiv) => {
+            assert.equal(tariffNumberDiv.text().replace(":", "").trim(), Tariff.Number);
+        });
     });
 }
 
@@ -448,7 +459,7 @@ export function CreateSeller() {
 function FillShippingLineCode() {
     let code: string = gr.GenerateRandomNumberAndString(4);
     cy.get(TariffSelectors.ShippingLineCode).clear().type(code);
-    cy.FillLogTextBox(TariffSelectors.ShippingLineSCACCode,code)
+    cy.FillLogTextBox(TariffSelectors.ShippingLineSCACCode, code)
     cy.get(BaseSelectors.Label).contains("Code:").click();
     cy.get(BaseSelectors.RedButton).then($btn => {
         if ($btn.is(":disabled")) {
@@ -458,32 +469,32 @@ function FillShippingLineCode() {
     return code
 }
 
-export function FillTariffLine(tariffDetails : TariffLine){
+export function FillTariffLine(tariffDetails: TariffLine) {
     cy.Click(TariffSelectors.AddButton, null);
     cy.FillLogLov(TariffSelectors.TariffLineFromPort, tariffDetails.FromPort, false)
     cy.FillLogLov(TariffSelectors.TariffLineToPort, tariffDetails.ToPort, false)
     cy.FillDate(TariffSelectors.TariffLineStartDate, tariffDetails.StartDate);
 }
 
-export function FillUpdateSurcharges(tariffDetails:TariffLine){
+export function FillUpdateSurcharges(tariffDetails: TariffLine) {
     cy.Click(BaseSelectors.Button, "Update Surcharges")
-    FillUpdatePorts(TariffSelectors.FromPort ,tariffDetails.FromPort);
-    FillUpdatePorts(TariffSelectors.ToPort ,tariffDetails.ToPort);
+    FillUpdatePorts(TariffSelectors.FromPort, tariffDetails.FromPort);
+    FillUpdatePorts(TariffSelectors.ToPort, tariffDetails.ToPort);
     cy.FillDate(TariffSelectors.TariffUpdateStartDate, tariffDetails.StartDate);
 }
 
-function FillUpdatePorts(PortSelector : string , PortData:string){
+function FillUpdatePorts(PortSelector: string, PortData: string) {
     cy.Click(PortSelector, null)
     cy.FillLogLov(TariffSelectors.TariffUpdatePortSelector, PortData, false);
     cy.Click(BaseSelectors.Button, "Add")
     cy.Click(BaseSelectors.Button, "Close", true)
 }
 
-export function FillUpdatePrice(tariffDetails:TariffLine ){
+export function FillUpdatePrice(tariffDetails: TariffLine) {
     cy.Click(TariffSelectors.TariffUpdateSurchargeCheckBox, null);
-    FillTariffUpdatePrice(1 , tariffDetails.Step1Price )
-    FillTariffUpdatePrice(2 , tariffDetails.Step2Price )
-    FillTariffUpdatePrice(3 , tariffDetails.Step3Price )
+    FillTariffUpdatePrice(1, tariffDetails.Step1Price)
+    FillTariffUpdatePrice(2, tariffDetails.Step2Price)
+    FillTariffUpdatePrice(3, tariffDetails.Step3Price)
 }
 
 function FillTariffUpdatePrice(stepNumber: number, price: string) {
@@ -492,13 +503,13 @@ function FillTariffUpdatePrice(stepNumber: number, price: string) {
     }
 }
 
-export function UploadExcelFile(){
+export function UploadExcelFile() {
     cy.Click(TariffSelectors.TariffActionsMenu, "Actions");
     const fileName = 'Tariff-1168-17-02-2021.xls'
     cy.DefineRequestWait(RestAPI.POST, Urls.PostUploadExcelFile, RequestAliases.WaitUpload)
-    cy.fixture(fileName,'binary')
-    .then(Cypress.Blob.binaryStringToBlob)
-    .then(fileContent => {
-      cy.get('input.upload').attachFile({ fileContent, fileName, mimeType:'application/vnd.ms-excel',encoding:'utf8' })
-    })
+    cy.fixture(fileName, 'binary')
+        .then(Cypress.Blob.binaryStringToBlob)
+        .then(fileContent => {
+            cy.get('input.upload').attachFile({ fileContent, fileName, mimeType: 'application/vnd.ms-excel', encoding: 'utf8' })
+        })
 }

@@ -38,7 +38,10 @@ export class TariffSelectors
     public static readonly ShippingLineCode="#ShippingLine_Code"
     public static readonly ShippingLineName = "#ShippingLine_EnglishName"
     public static readonly TariffActionsMenu = ".ToggleButton"
-    // public static readonly
+    public static readonly PriceCheckResultTableRow = ".LogitudeScrollViewer.LogitudeSmallScrollViewer > table > tr";
+    public static readonly TariffNumberShortTitleDiv = ".LogitudeWindow:last .ShortTitleDiv:first";
+    public static readonly ContainsViewTariff = "View Tariff";
+    public static readonly PriceCheckFreightResult = "td > table > tr:nth-child(1) > td > table > tr:nth-child(2) > td > table > tr > td:nth-child(2) > table > tr:nth-child(3) > td";
 
     
     public static TariffSurcharge(number: number): string{
