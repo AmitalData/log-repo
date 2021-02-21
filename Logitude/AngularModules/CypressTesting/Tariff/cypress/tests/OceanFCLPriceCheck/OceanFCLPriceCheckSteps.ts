@@ -2,7 +2,7 @@ import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import * as Actions from "../../actions/Actions";
 import { TariffDetails } from "../../models/TariffDetails";
 import { FreightCostTariffLineDetails } from "../../models/FreightCostTariffLineDetails";
-import { OceanFCLPriceCheckDetails } from "../../models/OceanFCLPriceCheckDetails";
+import { PriceCheckDetails } from "cypress/models/PriceCheckDetails";
 
 Given("the user logged in and navigate to tariff workspace", () => {
   Actions.LoginAndNavigateToTariffWorkspace();
@@ -28,8 +28,9 @@ Given("the user back into tariff workspace and open price check wizard", () => {
 });
 
 Given("fill the following price check details", (dataTable) => {
-  let oceanFCLPriceCheckDetails = dataTable.hashes()[0] as OceanFCLPriceCheckDetails;
-  Actions.FillOceanFCLPriceCheckWizard(oceanFCLPriceCheckDetails);
+  let oceanFCLPriceCheckDetails = dataTable.hashes()[0] as PriceCheckDetails;
+  Actions.FillPriceCheckWizard("Ocean FCL",oceanFCLPriceCheckDetails)
+
 });
 
 When("create freight cost", () => {

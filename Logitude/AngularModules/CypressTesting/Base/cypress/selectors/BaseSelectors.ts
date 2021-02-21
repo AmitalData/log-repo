@@ -7,6 +7,8 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly CustomersMenu = '#GeneralMHCustomers';
     public static readonly TicketsMenu = '#GeneralMHTicket';
     public static readonly MaintenanceMenu = "#GeneralMHMaintenance"
+	public static readonly TariffMenu = "#GeneralMHTariffModule";
+    public static readonly ShippingLine = "#MaintenanceItemMTSL"
     //#endregion
     //#region Maintenance
     public static readonly SystemSettings = "#CMS"
