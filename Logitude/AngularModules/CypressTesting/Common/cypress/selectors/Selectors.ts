@@ -13,7 +13,6 @@ export class CommonSelectors {
     public static readonly CustomerCountry = '#Address_CountryId';
     public static readonly CustomerState = '#Address_StateId';
     public static readonly AddCustomer = '#Ok-AddCustomer';
-    public static readonly CustomerListItem = '[class="Row ag-row tooltip"]';
     public static readonly CustomerBillingTab = '#CustomerTHBilling';
     public static readonly EnableConsolidationInvoices = '[for="Customer_EnableConsolidationInvoices"]';
     public static readonly CustomerSave = '#Customer-Save';

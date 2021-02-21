@@ -515,6 +515,17 @@ function AssertTariffPriceCheck(expectedPrice: string) {
     BaseAssertion.AssertStatusCode(RequestAliases.PostAvailableTariffs, 200).then((interception) => {
         let actualPrice = interception.response.body.filter((t: { TariffNumber: string; }) => t.TariffNumber === Tariff.Number)[0].Price;
         assert.equal(actualPrice, expectedPrice);
+        let indexOfTariff = interception.response.body.map(function (t: { TariffNumber: string; }) { return t.TariffNumber; }).indexOf(Tariff.Number);
+        cy.get(TariffSelectors.PriceCheckResultTableRow).eq(indexOfTariff).find(BaseSelectors.DownArrowImage).click();
+        cy.get(TariffSelectors.PriceCheckResultTableRow).eq(indexOfTariff).find(TariffSelectors.PriceCheckFreightResult).then((priceCell) => {
+            assert.equal(priceCell.text().trim(), expectedPrice);
+        });
+        DefineRequestGetSingleTariff();
+        cy.get(TariffSelectors.PriceCheckResultTableRow).eq(indexOfTariff).find(BaseSelectors.Hyperlink).contains(TariffSelectors.ContainsViewTariff).click();
+        AssertGetSingleTariff();
+        cy.get(TariffSelectors.TariffNumberShortTitleDiv).then((tariffNumberDiv) => {
+            assert.equal(tariffNumberDiv.text().replace(":", "").trim(), Tariff.Number);
+        });
     });
 }
 

@@ -9,26 +9,20 @@
                             <td>
                                 <table>
                                     <tr>
-                                        <!--<td *ngIf="ShipmentLevelCode != 'H'" style="vertical-align: middle; width: 130px;">
-                                            <div class="RadioButton">
-                                                <input id="SingleCommodityRadio" type="radio" name="CommoditiesRadio" [checked]="!IsMultipleCommodities" (click)="SetMultipleCommodities(false)" [disabled]="true" />
-                                                <label for="SingleCommodityRadio">Single Commodity</label>
-                                            </div>
+                                        <td *ngIf="IsMultipleCommoditiesVisible" style="width: 1px;">
+                                            <RadioButton [Name]="'MultipleCommoditiesRadio'" [IsChecked]="!IsMultipleCommodities" (Checked)="SetMultipleCommodities(false)" [Text]="'Single Commodity'" [IsEnabled]="IsEditingEnabled"></RadioButton>
                                         </td>
 
-                                        <td *ngIf="ShipmentLevelCode != 'H'" style="vertical-align: middle;">
-                                            <div class="RadioButton">
-                                                <input id="MultipleCommoditiesRadio" type="radio" name="CommoditiesRadio" [checked]="IsMultipleCommodities" (click)="SetMultipleCommodities(true)" [disabled]="true" />
-                                                <label for="MultipleCommoditiesRadio">Multiple Commodities</label>
-                                            </div>
-                                        </td>-->
+                                        <td *ngIf="IsMultipleCommoditiesVisible" style="width: 1px; padding-left: 10px;">
+                                            <RadioButton [Name]="'MultipleCommoditiesRadio'" [IsChecked]="IsMultipleCommodities" (Checked)="SetMultipleCommodities(true)" [Text]="'Multiple Commodities'" [IsEnabled]="IsEditingEnabled"></RadioButton>
+                                        </td>
 
                                         <td>
                                             <div></div>
                                         </td>
 
                                         <td style="width: 1px;">
-                                            <button  id="{{'AddPackageBtn' | IdGeneratorPipe}}" class="Button" (click)="AddPackage()" [disabled]="!IsEditingEnabled">Add line</button>
+                                            <button id="{{'AddPackageBtn' | IdGeneratorPipe}}" class="Button" (click)="AddLineClicked()" [disabled]="!IsEditingEnabled">Add line</button>
                                         </td>
 
                                         <td style="width: 5px;" *ngIf="IsRebuildButtonVisible">
@@ -36,7 +30,7 @@
                                         </td>
 
                                         <td style="width: 1px;" *ngIf="IsRebuildButtonVisible">
-                                            <button  id="{{'RebuildBtn' | IdGeneratorPipe}}" class="Button" (click)="RebuildClicked()" [disabled]="!IsEditingEnabled">{{'Shipment.B.Packages.Rebuild' | TextCodeTranslationPipe}}</button>
+                                            <button id="{{'RebuildBtn' | IdGeneratorPipe}}" class="Button" (click)="RebuildClicked()" [disabled]="!IsEditingEnabled">{{'Shipment.B.Packages.Rebuild' | TextCodeTranslationPipe}}</button>
                                         </td>
                                     </tr>
                                 </table>
@@ -51,7 +45,7 @@
 
                         <tr>
                             <td>
-                                <div class="MediaFill">
+                                <div class="MediaFill" *ngIf="!IsMultipleCommodities">
                                     <div class="SimpleGridView">
                                         <div class="SimpleGridViewHeader">
                                             <table>
@@ -123,7 +117,7 @@
                                                     <td class="CellTools">
                                                         <span class="CellSeparator"></span>
                                                         <IconButton [ExternalId]="'Package_'+i" [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackage(item)"></IconButton>
-                                                        <IconButton [ExternalId]="'Package_'+i"  [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackage(item)" [IsEnabled]="IsEditingEnabled"></IconButton>
+                                                        <IconButton [ExternalId]="'Package_'+i" [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackage(item)" [IsEnabled]="IsEditingEnabled"></IconButton>
                                                     </td>
                                                 </tr>
 
@@ -140,6 +134,168 @@
                                         <div *ngIf="IsBuildFromShipmentsVisible" class="hyperlink" style="text-align:center" [class.HyperlinkDisabled]="!IsEditingEnabled" (click)="GenerateClicked()">{{BuildFromShipmentsLabel}}</div>
                                         <div *ngIf="IsNoPackagesLoadedTextVisible" class="NoDataTextStyle">{{'ShipmentPackage.M.ContainNoPackages' | TextCodeTranslationPipe}}</div>
                                     </div>
+                                </div>
+
+                                <div class="MediaFill" *ngIf="IsMultipleCommodities">
+                                    <logitude-edit-grid GridWidth="100%"
+                                                        GridHeight="100%"
+                                                        [ItemSource]="ItemsSourceOfCommodities"
+                                                        [SelectedRow]="SelectedRow"
+                                                        (RowDataLoaded)="OnRowLoaded($event)"
+                                                        (SelectedItemChanged)="OnRowSelected($event)">
+
+                                        <log-row-details>
+                                            <row-template>
+                                                <ng-template let-item>
+                                                    <div style="min-height: 80px; width: 100%; background: #E8F7FF; position: relative;" [style.height.px]="(item.ItemsSource.length * 26) + 20 + 28 + 25">
+                                                        <div style="position: absolute; top: 10px; right: 10px; bottom: 10px; left: 10px;">
+                                                            <div class="SimpleGridView" style="background: none; border: 1px solid #85CBED;">
+                                                                <div class="SimpleGridViewHeader" style="background: none; border: none; border-bottom: 1px solid #85CBED;">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width: 100px; min-width: 100px; max-width: 100px; color : #6E7172;">{{'ShipmentPackage.F.Quantity' | TextCodeTranslationPipe}}</td>
+                                                                            <td style="width: 160px; min-width: 160px; max-width: 160px; color : #6E7172;">{{DimensionsColumnHeader}}</td>
+                                                                            <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;">{{VolumeColumnHeader}}</td>
+                                                                            <td style="width: 160px; min-width: 160px; max-width: 160px; color : #6E7172;">{{VolumetricWeightColumnHeader}}</td>
+                                                                            <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;">{{WeightColumnHeader}}</td>
+
+                                                                            <td class="LastChild">
+                                                                                <div></div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+
+                                                                <div class="SimpleGridViewBody">
+                                                                    <table>
+                                                                        <tr class="SimpleGridViewRow" *ngFor="let insideItem of item.ItemsSource">
+
+                                                                            <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px; text-align: right;">
+                                                                                {{insideItem.Quantity}}
+                                                                            </td>
+
+                                                                            <td class="GridViewCell" style="width: 160px; min-width: 160px; max-width: 160px; text-align: right;">
+                                                                                {{insideItem.Dimensions}}
+                                                                            </td>
+
+                                                                            <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
+                                                                                {{insideItem.Volume | NumbersPipe:'N3'}}
+                                                                            </td>
+
+                                                                            <td class="GridViewCell" style="width: 160px; min-width: 160px; max-width: 160px; text-align: right;">
+                                                                                {{insideItem.VolumetricWeight | NumbersPipe:'N3'}}
+                                                                            </td>
+
+                                                                            <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
+                                                                                {{insideItem.Weight | NumbersPipe:'N3'}}
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <div style="width: 100%; height: 100%; position: relative;">
+                                                                                    <div class="LeftCenter" style="height: 20px;">
+                                                                                        <span class="CellSeparator"></span>
+                                                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="item.EditCommodityPackageClicked(insideItem)"></IconButton>
+                                                                                        <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="item.DeleteCommodityPackageClicked(insideItem)" [IsEnabled]="IsEditingEnabled"></IconButton>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                        <tr style="height: 25px;">
+
+                                                                            <td style="width: 100px; min-width: 100px; max-width: 100px; text-align: right;">
+                                                                                {{item.EntityPM.NumberOfPackages}}
+                                                                            </td>
+
+                                                                            <td style="width: 160px; min-width: 160px; max-width: 160px; text-align: right;">
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                            <td style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
+                                                                                {{item.EntityPM.Volume | NumbersPipe:'N3'}}
+                                                                            </td>
+
+                                                                            <td style="width: 160px; min-width: 160px; max-width: 160px; text-align: right;">
+                                                                                {{item.EntityPM.VolumetricWeight | NumbersPipe:'N3'}}
+                                                                            </td>
+
+                                                                            <td style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
+                                                                                {{item.EntityPM.GrossWeight | NumbersPipe:'N3'}}
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                            <td colspan="6">
+                                                                                <div></div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </ng-template>
+                                            </row-template>
+                                        </log-row-details>
+
+                                        <!-- CommodityNumber -->
+                                        <log-column [width]="'100'" [header]="'ShipmentCommodity.F.CommodityNumber' | TextCodeTranslationPipe">
+                                            <ng-template let-item>
+                                                <log-cell-template #logcelltemplate [IsEnabled]="false">
+                                                    {{item.CommodityNumber}}
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                        <!-- Rate Class -->
+                                        <log-column [width]="'100'" [header]="'ShipmentCommodity.F.RateClassCode' | TextCodeTranslationPipe">
+                                            <ng-template let-item>
+                                                <log-cell-template #logcelltemplate [IsEnabled]="false">
+                                                    {{item.RateClassCode}}
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                        <!-- ChargeableWeight  -->
+                                        <log-column [width]="'150'" [header]="ChargeableWeightLabel">
+                                            <ng-template let-item>
+                                                <log-cell-template #logcelltemplate [IsEnabled]="false">
+                                                    {{item.ChargeableWeight | NumbersPipe:'N3'}}
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                        <!-- DescriptionOfGoods -->
+                                        <log-column [width]="'400'" [header]="'ShipmentCommodity.F.DescriptionOfGoods' | TextCodeTranslationPipe">
+                                            <ng-template let-item>
+                                                <log-cell-template #logcelltemplate [IsEnabled]="false">
+                                                    {{item.DescriptionOfGoods}}
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                        <!-- Buttons -->
+                                        <log-column [width]="'85'">
+                                            <ng-template let-item>
+                                                <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                                    <div style="width: 100%; height: 100%; position: relative;">
+                                                        <div class="LeftCenter" style="height: 20px;">
+                                                            <span class="CellSeparator"></span>
+                                                            <IconButton [Name]="'Add'" [IsSmall]="true" (click)="item.AddCommodityPackageClicked(item)" [IsEnabled]="IsEditingEnabled"></IconButton>
+                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditCommodityClicked(item)"></IconButton>
+                                                            <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteCommodityClicked(item)" [disabled]="!item.IsEditingEnabled" *ngIf="!item.IsFirstLine"></IconButton>
+                                                        </div>
+                                                    </div>
+                                                </log-cell-template>
+                                            </ng-template>
+                                        </log-column>
+
+                                    </logitude-edit-grid>
                                 </div>
                             </td>
                         </tr>

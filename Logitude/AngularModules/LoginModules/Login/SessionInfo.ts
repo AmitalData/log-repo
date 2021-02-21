@@ -48,7 +48,7 @@ export class SessionInfo {
         var logitude_url = location.href.replace('index.html', '');
 
         if (location.href.indexOf('localhost') > -1) {
-            logitude_url = 'https://localhost:9996/';// test.logitudeworld.com/test/';
+            logitude_url = 'http://localhost:9996/';// test.logitudeworld.com/test/';
         }
 
         else {

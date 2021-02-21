@@ -19,7 +19,7 @@ describe('Operations', () => {
         Resolvers.MainMenuResolver.Selector('#SHIP').Select();
     });
 
-    it('Test New Shipment Wizard', () => {
+    it('Test New/Edit Shipment', () => {
         levelCode='D'
         direction = 'E';
         transportMode = 'A';

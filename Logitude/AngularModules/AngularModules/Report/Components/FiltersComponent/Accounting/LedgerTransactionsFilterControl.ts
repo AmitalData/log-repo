@@ -736,13 +736,20 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     set GLAccountId(value: string)
     {
         if (this._GLAccountId != value) {
+            this.SetGLAccountChanged(this._GLAccountId);
             this._GLAccountId = value;
-            this.GLAccountChanged = true;
-
         }
     }
 
+
+    private SetGLAccountChanged(value: string) {
+        if (value != undefined)
+            this.GLAccountChanged = true;
+    }
+
+
     private glaccountPM: any;
+    
     get GLAccount() { return this.glaccountPM; }
     set GLAccount(value: any)
     {

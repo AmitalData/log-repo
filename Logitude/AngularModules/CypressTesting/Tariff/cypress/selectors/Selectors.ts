@@ -81,6 +81,11 @@ export class TariffSelectors
     public static readonly ExcelType = "application/vnd.ms-excel"
     //#endregion
 
+    public static readonly PriceCheckResultTableRow = ".LogitudeScrollViewer.LogitudeSmallScrollViewer > table > tr";
+    public static readonly TariffNumberShortTitleDiv = ".LogitudeWindow:last .ShortTitleDiv:first";
+    public static readonly ContainsViewTariff = "View Tariff";
+    public static readonly PriceCheckFreightResult = "td > table > tr:nth-child(1) > td > table > tr:nth-child(2) > td > table > tr > td:nth-child(2) > table > tr:nth-child(3) > td";
+
     
     public static TariffSurcharge(number: number): string{
         return "#Tariff_Surcharge" + number.toString() + "Id";

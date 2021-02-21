@@ -25,9 +25,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ReadyForActivationDate).HasColumnName("ReadyForActivationDate");
             this.Property(t => t.PayablesAccountingCard).HasColumnName("PayablesAccountingCard");
             this.Property(t => t.AccountManagerUserEnglishName).HasColumnName("AccountManagerUserEnglishName");
-            this.Property(t => t.BeforeDeactiveStatusCode).HasColumnName("BeforeDeactiveStatusCode");
-            this.Property(t => t.BillToId).HasColumnName("BillToId");
-            this.Property(t => t.BillToName).HasColumnName("BillToName");            
+            this.Property(t => t.BeforeDeactiveStatusCode).HasColumnName("BeforeDeactiveStatusCode");          
             this.Property(t => t.ClassifierId).HasColumnName("ClassifierId");
             this.Property(t => t.ClassifierName).HasColumnName("ClassifierName");
             this.Property(t => t.Code).HasColumnName("Code");

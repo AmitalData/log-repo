@@ -38,7 +38,9 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly typeCheckbox = '[type="checkbox"]'
     public static readonly LogitudeWindow = ".LogitudeWindow";
     public static readonly Label = ".Label"
+    public static readonly ListItem='[class="Row ag-row tooltip"]'
 
+    public static readonly RowHover=".RowHover"
     //#endregion
     //#endregion
 
@@ -51,4 +53,8 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly BackBottonBodyClass = ".BackBottonBody"
 
     public static readonly QueryLink = ".QueryLink";
+
+    public static readonly LogLOVFooterHyperLink = ".LogLOVFooter a";
+    public static readonly DownArrowImage = "img[src='./Images/Buttons/downarrow.png']";
+    public static readonly Hyperlink = ".hyperlink";
 }

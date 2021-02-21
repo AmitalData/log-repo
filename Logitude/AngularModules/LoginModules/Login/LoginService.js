@@ -1,21 +1,9 @@
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var http_1 = require("@angular/http");
-require("rxjs/add/operator/map");
-require("rxjs/add/operator/catch");
-//import {Http, Headers, Response} from '@angular/http';
-var SessionInfo_1 = require("./SessionInfo");
-var LoginService = /** @class */ (function () {
+import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import { SessionInfo } from './SessionInfo';
+export var LoginService = (function () {
     function LoginService(_http) {
         this._http = _http;
         this.logitudeURL = null;
@@ -24,10 +12,10 @@ var LoginService = /** @class */ (function () {
         this._iisBaseApiUrl = "http://192.168.1.100/main/api/";
         this._iisMetaDataApiUrl = "http://192.168.1.100/main/api/ngMetaData";
         //this._http = ServiceHelper.Http;
-        this.logitudeURL = SessionInfo_1.SessionInfo.GetLogitudeURL();
+        this.logitudeURL = SessionInfo.GetLogitudeURL();
         this.baseUrlApi = this.logitudeURL + "api/";
         this.baseMetaUrlApi = this.logitudeURL + "api/ngMetaData";
-        this.AuthHeader = new http_1.Headers();
+        this.AuthHeader = new Headers();
         this.AuthHeader.append('Content-Type', 'application/json');
         this.AuthHeader.append('Accept', 'application/json');
         console.log("this.AuthHeader From Const" + this.AuthHeader.get('Content-Type'));
@@ -97,8 +85,8 @@ var LoginService = /** @class */ (function () {
     };
     LoginService.prototype.GetTenantManagement = function () {
         var url = this.baseUrlApi + 'TenantManagement/GetSingleTenantManagementPM?id=' + this.CurrentTenant;
-        var authHeader = new http_1.Headers();
-        authHeader.append('Token', SessionInfo_1.SessionInfo.Token);
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
         return this._http.get(url, { headers: authHeader }).map(function (response) {
             return response.json();
         });
@@ -255,29 +243,28 @@ var LoginService = /** @class */ (function () {
             return response.json();
         });
     };
-    LoginService = __decorate([
-        core_1.Injectable(),
-        __metadata("design:paramtypes", [http_1.Http])
-    ], LoginService);
+    LoginService.decorators = [
+        { type: Injectable },
+    ];
+    /** @nocollapse */
+    LoginService.ctorParameters = [
+        { type: Http, },
+    ];
     return LoginService;
 }());
-exports.LoginService = LoginService;
-var LoginParameters = /** @class */ (function () {
+export var LoginParameters = (function () {
     function LoginParameters() {
     }
     return LoginParameters;
 }());
-exports.LoginParameters = LoginParameters;
-var LoginTokenParameter = /** @class */ (function () {
+export var LoginTokenParameter = (function () {
     function LoginTokenParameter() {
     }
     return LoginTokenParameter;
 }());
-exports.LoginTokenParameter = LoginTokenParameter;
-var ChangePasswordParameter = /** @class */ (function () {
+export var ChangePasswordParameter = (function () {
     function ChangePasswordParameter() {
     }
     return ChangePasswordParameter;
 }());
-exports.ChangePasswordParameter = ChangePasswordParameter;
 //# sourceMappingURL=LoginService.js.map

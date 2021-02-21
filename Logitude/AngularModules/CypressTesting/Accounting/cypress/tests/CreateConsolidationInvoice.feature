@@ -2,7 +2,9 @@
 Feature: Create Consolidation Invoice
     After the user logging in the system and navigate to customers workspace
     will create a customer as shipper in the new shipment, after update packages and payables tabs,
-    generate receivables from payables and create an ARInvoice and connect it to consolidation invoice and approve
+    generate receivables from payables and create an ARInvoice and connect it to consolidation invoice , 
+    create second shipment for the same shipper, add receivable, create another ARInvoice and coonect 
+    it to the same consolidation, approve it and pay it
 
     Scenario: Create customer
         Given the user logged in and navigates to customers workspace
@@ -56,6 +58,31 @@ Feature: Create Consolidation Invoice
             | Customer    | TestCompany | EUR             | 4                   | Today       | Cash         | Today   | Zero  | Main Office |
         When create consolidation invoice
         Then the consolidation invoice should create successfully
+
+  Scenario: Create direct export air shipment
+       Given the user back to Accounting workspace 
+        And the user navigates to shipments workspace
+        And a direct shipment with the following details
+            | ShipmentLevel | Direction | TransportMode | Shipper     | MainCarriageFromPort | MainCarriageToPort |
+            | Direct        | Export    | Air           | TestCompany | LHR                  | MIA                |
+        When create shipment
+        Then the direct should create successfully
+    Scenario: Add receivable
+        Given a receivable with the following details
+            | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
+            | AFT         | GRWT | 5        | 10        | EUR      | 4            |
+        When add receivable
+        Then the receivable should add successfully
+    Scenario: Create ARInvoice
+        Given an ARInvoice with a random invoice number and the following details
+            | PartnerType | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATNo | Branch      | VATType | IsConstituent |
+            | Customer    | EUR             | 4                   | Today       | Cash         | Today   | Zero  | Main Office | Zero    | Yes           |
+        When create invoice
+        Then the invoice should create successfully
+    Scenario: Edit Consolidation Invoice
+        Given the user navigates to draft consolidation invoice
+        When edit the invoice
+        Then the invoice should update successfully
 
     Scenario: Approve Consolidation Invoice
         When approve consolidation invoice

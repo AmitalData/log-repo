@@ -13,7 +13,7 @@ describe('Test New Shipment Wizard : ', () => {
         Resolvers.MainMenuResolver.Selector('#SHIP').Select();
     });
 
-    it('Create a Direct AWB shipment', () => {
+    it('Create a Direct AWB shipment Wizard', () => {
         levelCode = 'D';
      
         scenarios.RunScenario(levelCode);

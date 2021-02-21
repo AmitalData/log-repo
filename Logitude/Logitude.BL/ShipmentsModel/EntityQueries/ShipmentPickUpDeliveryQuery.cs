@@ -92,6 +92,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         EmptyDeliveryContainerPartnerId = entityPOCO.EmptyDeliveryContainerPartnerId,
                         EmptyDeliveryDepotReference = entityPOCO.EmptyDeliveryDepotReference,
                         TransportModeCode = entityPOCO.TransportModeCode,
+                        ParentPickUpDeliveryId = entityPOCO.ParentPickUpDeliveryId,
+                        ChildPickUpIndex = entityPOCO.ChildPickUpIndex,
                     };
 
                     ShipmentPickUpDeliveryPackageQuery packagesQuery = new ShipmentPickUpDeliveryPackageQuery(tenant);
@@ -341,6 +343,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         EmptyDeliveryContainerPartnerId = entityPOCO.EmptyDeliveryContainerPartnerId,
                         EmptyDeliveryDepotReference = entityPOCO.EmptyDeliveryDepotReference,
                         TransportModeCode = entityPOCO.TransportModeCode,
+                        ParentPickUpDeliveryId = entityPOCO.ParentPickUpDeliveryId,
+                        ChildDeliveryIndex = entityPOCO.ChildDeliveryIndex,
                     };
 
                     ShipmentPickUpDeliveryPackageQuery packagesQuery = new ShipmentPickUpDeliveryPackageQuery(tenant);

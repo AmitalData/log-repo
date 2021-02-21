@@ -96,6 +96,7 @@ namespace Logitude.IntegrationTest.Shipment.Tests.ExternalAPIs
                 Deliveries = new List<Delivery>(),
                 PickUps = new List<PickUp>(),
                 Houses = new List<House>(),
+                MainCarriageLegs=new List<MainCarriageLeg>(),    
             };
 
        
