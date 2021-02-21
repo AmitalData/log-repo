@@ -12,7 +12,7 @@ declare global {
             FillDate(selector: string, value: string): Chainable<Element>
             FillLogTextBox(selector: string, value: string): Chainable<Element>
             FillLogLov(selector: string, value: string, fromCache: boolean): Chainable<Element>
-            ClickAddFromLogLov(selector: string, fromCache: boolean): Chainable<Element>
+            ClickAddNewInLogLov(selector: string, fromCache: boolean): Chainable<Element>
             FillRandomString(selector: string, length: number, upperCase: boolean): Chainable<Element>
             FillRandomNumber(selector: string, minimum: number, maximum: number): Chainable<Element>
             Click(selector: string, contains: string, force?: boolean): Chainable<Element>
@@ -64,7 +64,7 @@ Cypress.Commands.add("FillLogLov", (selector, value, fromCache) => {
 
 })
 
-Cypress.Commands.add("ClickAddFromLogLov", (selector, fromCache) => {
+Cypress.Commands.add("ClickAddNewInLogLov", (selector, fromCache) => {
 
     if (!fromCache) {
         cy.intercept(BaseURLs.GetByCompactFilters).as("LOVDataLoaded");
