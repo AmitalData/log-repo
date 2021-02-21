@@ -1,0 +1,227 @@
+<table *ngIf="IsReady">
+    <tr>
+        <td><div></div></td>
+        <td><div></div></td>
+        <td><div></div></td>
+        <td>
+            <div style="float: left;display: inline-block;width: 110px;">
+                <custom-send-options [IsDisabled]="!SendButtonEnabled"
+                                     [AvoidDoubleClick]="true"
+                                     [HaveTestCase]="'true'"
+                                     #MyCustomSendOptionsComponent
+                                     (SendButtonClicked)="SendButtonClicked($event)">
+                </custom-send-options>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <span><b><ins>נתוני סגירה</ins></b>  </span>
+        </td>
+        <td><div></div></td>
+        <td>
+            <span><b><ins>נתוני הצהרה</ins></b>  </span>
+        </td>
+        <td>
+            <span><b><ins>נתוני תיק תפעולי</ins></b>  </span>
+        </td>
+
+    </tr>
+    <tr>
+        <td width="25%">
+            <table>
+                <tr>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'LoadingDateTime'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogDatePicker [ObjectFieldName]="'LoadingDateTime'" [ObjectTableName]="ObjectTableName"
+                                       [DataContext]="DataContext" [InputType]="'date'"
+                                       [HideColumns]="true"></LogDatePicker>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+        <td width="25%"><div></div></td>
+        <td width="25%"><span>{{DecPM.LoadingDateTime | DateTimeToDatePipe}}</span></td>
+        <td width="25%"><span>{{EntityPM.LoadingDateTime | DateTimeToDatePipe}}</span></td>
+    </tr>
+    <tr>
+        <td width="25%">
+            <table>
+                <tr>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'FinalShipCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'FinalShipCode'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.CustomsShip'"
+                                [DisplayMemberPath]="'LocalName'"
+                                [SelectedValue]="FinalShipCode"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+        <td><div></div></td>
+        <td><span>{{DecPM.ShipCodeName}}</span></td>
+        <td><span>{{EntityPM.FinalShipCodeName}}</span></td>
+    </tr>
+    <tr>
+        <td width="25%">
+            <table>
+                <tr>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'FinalLoadingSite'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'FinalLoadingSite'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.LoadingSiteType'"
+                                [DisplayMemberPath]="'LocalName'"
+                                [SelectedValue]="FinalLoadingSite"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+        <td><div></div></td>
+        <td><span>{{DecPM.FinalLoadingSiteName}}</span></td>
+        <td><span>{{EntityPM.FinalLoadingSiteName}}</span></td>
+    </tr>
+    <tr>
+        <td width="25%">
+            <table>
+                <tr>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'FinalCargoTypeCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'FinalCargoTypeCode'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.CargoIdentifireType'"
+                                [DisplayMemberPath]="'LocalName'"
+                                [SelectedValue]="FinalCargoTypeCode"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+        <td><div></div></td>
+        <td><span>{{ConPM.CargoTypeName}}</span></td>
+        <td><span>{{EntityPM.FinalCargoTypeName}}</span></td>
+    </tr>
+    <tr>
+        <td width="25%">
+            <table>
+                <tr>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'FinalManifestNumber'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'FinalManifestNumber'"
+                                    [InputType]="'text'"
+                                    [DataContext]="DataContext"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [HideColumns]="true"
+                                    [Text]="FinalManifestNumber"></LogTextBox>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+        <td><div></div></td>
+        <td><span>{{ConPM.ManifestNumber}}</span></td>
+        <td><span>{{EntityPM.FinalManifestNumber}}</span></td>
+    </tr>
+    <tr>
+        <td width="25%">
+            <table>
+                <tr>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'FinalSecondCargoId'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'FinalSecondCargoId'"
+                                    [InputType]="'text'"
+                                    [DataContext]="DataContext"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [HideColumns]="true"
+                                    [Text]="FinalSecondCargoId"></LogTextBox>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+        <td><div></div></td>
+        <td><span>{{ConPM.SecondCargoID}}</span></td>
+        <td><span>{{EntityPM.FinalSecondCargoId}}</span></td>
+    </tr>
+    <tr>
+        <td width="25%">
+            <table>
+                <tr>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'FinalThirdCargoId'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'FinalThirdCargoId'"
+                                    [InputType]="'text'"
+                                    [DataContext]="DataContext"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [HideColumns]="true"
+                                    [Text]="FinalThirdCargoId"></LogTextBox>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+        <td><div></div></td>
+        <td><span>{{ConPM.ThirdCargoID}}</span></td>
+        <td><span>{{EntityPM.FinalThirdCargoId}}</span></td>
+    </tr>
+    <tr style="height: 40px;">
+        <td>
+            <div></div>
+        </td>
+        <td>
+            <div></div>
+        </td>
+        <td>
+            <div></div>
+        </td>
+        <td>
+            <table>
+                <tr>
+                    <td><div></div></td>
+                    <td style="width: 57px;vertical-align: bottom;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
+                    </td>
+                    <td style="width: 67px;vertical-align: bottom; padding-right: 10px;">
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="false">{{'General.B.Save' |TextCodeTranslationPipe}}</button>
+                    </td>
+                    <td><div></div></td>
+                </tr>
+            </table>
+        </td>
+
+    </tr>
+</table>

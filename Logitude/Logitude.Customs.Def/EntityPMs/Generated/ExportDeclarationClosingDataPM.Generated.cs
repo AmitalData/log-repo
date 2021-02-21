@@ -227,6 +227,75 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string finalLoadingSiteName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FinalLoadingSiteName  
+	   {
+	    
+	     get
+		{
+		   return finalLoadingSiteName;
+		 }
+		 set
+		 {
+		   if(finalLoadingSiteName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FinalLoadingSiteName",OldValue=finalLoadingSiteName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   finalLoadingSiteName=value;
+		   }
+			
+		 }
+	   }
+	  private string finalCargoTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FinalCargoTypeName  
+	   {
+	    
+	     get
+		{
+		   return finalCargoTypeName;
+		 }
+		 set
+		 {
+		   if(finalCargoTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FinalCargoTypeName",OldValue=finalCargoTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   finalCargoTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string finalShipCodeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FinalShipCodeName  
+	   {
+	    
+	     get
+		{
+		   return finalShipCodeName;
+		 }
+		 set
+		 {
+		   if(finalShipCodeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FinalShipCodeName",OldValue=finalShipCodeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   finalShipCodeName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
