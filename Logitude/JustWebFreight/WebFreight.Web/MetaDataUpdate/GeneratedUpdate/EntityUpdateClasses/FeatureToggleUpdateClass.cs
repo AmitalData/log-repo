@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class FeatureToggleUpdateClass
    {  		
-		public const string HashString = "df6183f71bcc825ee1cf84d35e795f79";
+		public const string HashString = "710adf4af44176f877a2a88692644bef";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -730,6 +730,64 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ToggleDescription",
+					  						ObjectTableName =  "FeatureToggle",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  400,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  400,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ToggleDescription",
+					  						ListPropertyPath =  "ToggleDescription",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "FeatureToggle",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ToggleDescription",
+					  						DefaultText =  "Description",
+					  						ListFieldLable =  "ToggleDescriptionListLable",
+					  						ListLableDefaultText =  "Toggle",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -770,11 +828,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn AllFeatureTogglesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFeatureTogglesQuery.Id,QueryCode = AllFeatureTogglesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "FeatureToggle.CreateDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllFeatureTogglesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFeatureTogglesQuery.Id,QueryCode = AllFeatureTogglesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "FeatureToggle.CreatedByUser" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn AllFeatureTogglesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFeatureTogglesQuery.Id,QueryCode = AllFeatureTogglesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "FeatureToggle.ToggleDescription" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllFeatureTogglesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFeatureTogglesQuery.Id,QueryCode = AllFeatureTogglesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "FeatureToggle.ToggleName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn AllFeatureTogglesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFeatureTogglesQuery.Id,QueryCode = AllFeatureTogglesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "FeatureToggle.CreatedByUser" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllFeatureTogglesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFeatureTogglesQuery.Id,QueryCode = AllFeatureTogglesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "FeatureToggle.TenantNumber" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn AllFeatureTogglesQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFeatureTogglesQuery.Id,QueryCode = AllFeatureTogglesQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "FeatureToggle.ToggleName" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn AllFeatureTogglesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFeatureTogglesQuery.Id,QueryCode = AllFeatureTogglesQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "FeatureToggle.TenantNumber" , ColumnWidth = 150 }, addedQueryColumns);
   
 	      
 

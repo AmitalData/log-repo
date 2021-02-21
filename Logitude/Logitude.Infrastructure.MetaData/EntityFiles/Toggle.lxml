@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;4d27&quot;"
+  Code="&quot;dca8&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -295,7 +295,7 @@
     MaxLength="400"
     IsRequired="false"
     CopyToDW="false"
-    DisplayOnLookUp="false"
+    DisplayOnLookUp="true"
     DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
@@ -306,13 +306,13 @@
     IsCustomFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
-    DisplayInSearchWindowList="false"
+    DisplayInSearchWindowList="true"
     PMPropertyPath="&quot;Description&quot;"
     ListPropertyPath="&quot;Description&quot;"
-    DisplayInLookUpIndex="0"
+    DisplayInLookUpIndex="2"
     AutomaticField="false"
     UniqueField="false"
-    DisplayInSearchWindowListIndex="0"
+    DisplayInSearchWindowListIndex="2"
     IsMulti="false"
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
@@ -400,114 +400,112 @@
     <Record
       Name="&quot;EnableAzureRootFolder&quot;"
       SearchFields="&quot;EZR,EnableAzureRootFolder&quot;"
-      Code="&quot;EZR&quot;" />
+      Code="&quot;EZR&quot;"
+      Description="&quot;Enable storing azure files under main root folder&quot;" />
     <Record
       Code="&quot;LEX&quot;"
       Name="&quot;LogBoxExport&quot;"
-      SearchFields="&quot;LEX,LogBoxExport&quot;" />
+      SearchFields="&quot;LEX,LogBoxExport&quot;"
+      Description="&quot;Enable Export Shipment&quot;" />
     <Record
       Code="&quot;URT&quot;"
       Name="&quot;Unicargo Report Toggle&quot;"
-      SearchFields="&quot;URT,Unicargo Report Toggle&quot;" />
-    <Record
-      Code="&quot;BDR&quot;"
-      Name="&quot;Build Document Report Service&quot;"
-      SearchFields="&quot;BDR,Build Document Report Service&quot;" />
-    <Record
-      Code="&quot;RRW&quot;"
-      Name="&quot;Run Report Via WorkerRole&quot;"
-      SearchFields="&quot;RRW,Run Report Via WorkerRole&quot;" />
+      SearchFields="&quot;URT,Unicargo Report Toggle,Activated a special report for Unicargo&quot;"
+      Description="&quot;Activated a special report for Unicargo&quot;" />
     <Record
       Code="&quot;FPG&quot;"
       Name="&quot;ARPayment Fetcha Pago&quot;"
-      SearchFields="&quot;FPG,ARPayment Fetcha Pago&quot;" />
-    <Record
-      Code="&quot;BDW&quot;"
-      Name="&quot;Build Document Via WorkerRole&quot;"
-      SearchFields="&quot;BDW,Build Document Via WorkerRole&quot;" />
+      SearchFields="&quot;FPG,ARPayment Fetcha Pago&quot;"
+      Description="&quot;Display Fetcha Pago in ARPayment  Screens&quot;" />
     <Record
       Code="&quot;RRS&quot;"
       Name="&quot;Run Report on Secondary DB&quot;"
-      SearchFields="&quot;RRS,Run Report on Secondary DB&quot;" />
+      SearchFields="&quot;RRS,Run Report on Secondary DB&quot;"
+      Description="&quot;Running Report on Secondery DB&quot;" />
     <Record
       Code="&quot;LV2&quot;"
       Name="&quot;LogGrid V2&quot;"
-      SearchFields="&quot;LGV2,LogGrid V2&quot;" />
-    <Record
-      Name="&quot;Card Searchs Toggle&quot;"
-      Code="&quot;CST&quot;"
-      SearchFields="&quot;CST,Card Searchs Toggle&quot;" />
+      SearchFields="&quot;LGV2,LogGrid V2&quot;"
+      Description="&quot;Use Logitude Grid  version 2&quot;" />
     <Record
       Code="&quot;SUB&quot;"
       Name="&quot;Shipment Sub Type&quot;"
-      SearchFields="&quot;SUB,Shipment Sub Type&quot;" />
+      SearchFields="&quot;SUB,Shipment Sub Type,Enables users to manage the shipment sub-types,&quot;"
+      Description="&quot;Enables users to manage the shipment sub-types&quot;" />
     <Record
       Code="&quot;HRS&quot;"
       Name="&quot;Horse&quot;"
-      SearchFields="&quot;HRS,Horse&quot;" />
+      SearchFields="&quot;HRS,Horse,Activates Horse Management in shipments&quot;"
+      Description="&quot;Activates Horse Management in shipments&quot;" />
     <Record
       Code="&quot;KPI&quot;"
       Name="&quot;KPI Document Fields&quot;"
-      SearchFields="&quot;KPI,KPI Document Fields&quot;" />
+      SearchFields="&quot;KPI,KPI Document Fields&quot;"
+      Description="&quot;Display KPI documents fields in Bi report&quot;" />
     <Record
       Code="&quot;STR&quot;"
-      SearchFields="&quot;STR,Storage Pricing&quot;"
-      Name="&quot;Storage Pricing&quot;" />
+      SearchFields="&quot;STR,Storage Pricing,Enables the storage invoicing mechanism&quot;"
+      Name="&quot;Storage Pricing&quot;"
+      Description="&quot;Enables the storage invoicing mechanism&quot;" />
     <Record
       Code="&quot;OI2&quot;"
       Name="&quot;OceanInsightsV2&quot;"
-      SearchFields="&quot;OI2,OceanInsightsV2&quot;" />
+      SearchFields="&quot;OI2,OceanInsightsV2&quot;"
+      Description="&quot;Use Ocean insights tracking api version 2&quot;" />
     <Record
       Name="&quot;Shipment Warning Checkbox&quot;"
       Code="&quot;SWC&quot;"
-      SearchFields="&quot;SWC,Shipment Warning Checkbox&quot;" />
+      SearchFields="&quot;SWC,Shipment Warning Checkbox,Enables the credit limit new shipment warning&quot;"
+      Description="&quot;Enables the credit limit new shipment warning&quot;" />
     <Record
       Code="&quot;AMS&quot;"
       Name="&quot;AMS in Export&quot;"
-      SearchFields="&quot;AMS,AMS in Export&quot;" />
+      SearchFields="&quot;AMS,AMS in Export,Activates AMS customs transmission in export shipments&quot;"
+      Description="&quot;Activates AMS customs transmission in export shipments&quot;" />
     <Record
       Code="&quot;API&quot;"
-      SearchFields="&quot;API,API Update&quot;"
-      Name="&quot;API Update&quot;" />
+      SearchFields="&quot;API,API Update,Allows tenants to update shipments via API&quot;"
+      Name="&quot;API Update&quot;"
+      Description="&quot;Allows tenants to update shipments via API&quot;" />
     <Record
       Name="&quot;CRM Customer Quick Search&quot;"
       Code="&quot;CQS&quot;"
-      SearchFields="&quot;CQS,CRM Customer Quick Search&quot;"
+      SearchFields="&quot;CQS,CRM Customer Quick Search,CRM Customer Quick Search&quot;"
       Description="&quot;CRM Customer Quick Search&quot;" />
     <Record
       Name="&quot;Charges Types Direction Restrictions&quot;"
       Code="&quot;CTR&quot;"
-      SearchFields="&quot;CTR,Charges Types Direction Restrictions&quot;"
+      SearchFields="&quot;CTR,Charges Types Direction Restrictions,Charges Types Direction Restrictions&quot;"
       Description="&quot;Charges Types Direction Restrictions&quot;" />
     <Record
       Name="&quot;Branch Code in Counters&quot;"
-      SearchFields="&quot;Branch Code in Counters&quot;"
+      SearchFields="&quot;BCC,Branch Code in Counters,Branch Code in Counters&quot;"
       Description="&quot;Branch Code in Counters&quot;"
       Code="&quot;BCC&quot;" />
     <Record
       Code="&quot;ACP&quot;"
-      SearchFields="&quot;ACP,Accruals Approvement&quot;"
+      SearchFields="&quot;ACP,Accruals Approvement,Activates the accruals approve checkbox in shipment profit&quot;"
       Name="&quot;Accruals Approvement&quot;"
-      Description="&quot;Accruals Approvement Toggle&quot;" />
+      Description="&quot;Activates the accruals approve checkbox in shipment profit&quot;" />
     <Record
       Code="&quot;EQW&quot;"
       Name="&quot;Export Query Data Via WorkerRole&quot;"
       Description="&quot;Export Query Data to Excel Via WorkerRole&quot;"
-      SearchFields="&quot;Export Query Data Via WorkerRole&quot;" />
+      SearchFields="&quot;EQW,Export Query Data Via WorkerRole,Export Query Data to Excel Via WorkerRole&quot;" />
     <Record
       Name="&quot; Improved Search in Customers Views&quot;"
       Code="&quot;SCV&quot;"
-      SearchFields="&quot;SCV, Improved Search in Customers Views&quot;"
-      Description="&quot; Improved Search in Customers Views&quot;" />
+      SearchFields="&quot;SCV, Improved Search in Customers Views, Improved Search in Customers Views&quot;"
+      Description="&quot;Improved Search in Customers Views&quot;" />
     <Record
       Code="&quot;TAR&quot;"
       Name="&quot;All Tariffs&quot;"
-      SearchFields="&quot;TAR,All Tariffs&quot;"
+      SearchFields="&quot;TAR,All Tariffs,Hide Tariffs Menu&quot;"
       Description="&quot;Hide Tariffs Menu&quot;" />
     <Record
       Code="&quot;QMC&quot;"
       Name="&quot;Quote Multi Currency Mode&quot;"
-      SearchFields="&quot;QMC, Quote Multi Currency Mode&quot;"
+      SearchFields="&quot;QMC,Quote Multi Currency Mode,Quote Multi Currency Mode&quot;"
       Description="&quot;Quote Multi Currency Mode&quot;" />
     <Record
       Code="&quot;ADC&quot;"
@@ -524,6 +522,11 @@
       Code="&quot;AMC&quot;"
       SearchFields="&quot;AMC,AWB Multiple Commodities&quot;"
       Description="&quot;AWB Multiple Commodities&quot;" />
+    <Record
+      Code="&quot;MAP&quot;"
+      Name="&quot;Multipile AP Shipment&quot;"
+      SearchFields="&quot;MAP,Multipile AP Shipment&quot;"
+      Description="&quot;Multipile AP Shipment&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
