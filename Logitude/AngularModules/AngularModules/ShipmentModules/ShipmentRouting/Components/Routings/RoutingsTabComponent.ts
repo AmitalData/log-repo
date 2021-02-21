@@ -629,7 +629,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                         var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
                         if (storageReceivable) {
                             this.EntityPM.RemoveReceivable(storageReceivable);
-                            this.CurrentSession.FireEvent("StorageReceivableRemoved");
+                                this.CurrentSession.FireEvent("StorageReceivableCalculationsChanged");
                         }
 
                         if (this.EntityPM.ShipmentStoragePricings.length > 0) {
