@@ -2156,6 +2156,7 @@ export class ShipmentPackageItem extends BaseComponent {
             this.UIProperties.SetRequired('PackageTypeId', this.ObjectTableName, AppTool.IsNullOrEmpty(this.PackageTypeId) ? true : false);
 
             this.UIProperties.SetEnabled("PackageTypeId", this.ObjectTableName, this.IsEditingFieldsEnabled);
+            this.UIProperties.SetEnabled("LCLContainerTypeId", this.ObjectTableName, this.IsEditingEnabled);
             this.UIProperties.SetEnabled("ContainerNumber", this.ObjectTableName, this.IsEditingFieldsEnabled);
             this.UIProperties.SetEnabled("Quantity", this.ObjectTableName, this.IsEditingFieldsEnabled);
 
@@ -3632,7 +3633,7 @@ export class InsideShipmentPackageItem extends BaseComponent {
         }
 
         this.SetUIProperties_Harmonize();
-
+        this.UIProperties.SetEnabled("LCLContainerTypeId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("PackageTypeId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Description", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Quantity", this.ObjectTableName, this.IsEditingEnabled);

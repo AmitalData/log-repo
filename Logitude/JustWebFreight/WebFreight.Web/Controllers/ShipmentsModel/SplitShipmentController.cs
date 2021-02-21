@@ -749,6 +749,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 MethodUsed = oldEntity.MethodUsed,
                 Notes = oldEntity.Notes,
                 PackageTypeCode = oldEntity.PackageTypeCode,
+                LCLContainerTypeId = oldEntity.LCLContainerTypeId,
                 PackageTypeId = oldEntity.PackageTypeId,
                 PackageTypeIsAir = oldEntity.PackageTypeIsAir,
                 PackageTypeIsInland = oldEntity.PackageTypeIsInland,
