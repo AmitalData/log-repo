@@ -273,6 +273,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string finalShipCodeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FinalShipCodeName  
+	   {
+	    
+	     get
+		{
+		   return finalShipCodeName;
+		 }
+		 set
+		 {
+		   if(finalShipCodeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FinalShipCodeName",OldValue=finalShipCodeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   finalShipCodeName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

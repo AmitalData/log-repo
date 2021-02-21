@@ -19,7 +19,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(ExportDeclarationClosingDataPM entityPM, ExportDeclarationClosingData entityPOCO)
         {
-            //throw new NotImplementedException();
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+                entityPOCO.DeclarationId = entityPM.DeclarationId;
+                entityPOCO.Tenant = entityPM.Tenant;
+            }
         }
 
         public void CustomPOCOToPM(ExportDeclarationClosingDataPM entityPM, ExportDeclarationClosingData entityPOCO)
@@ -31,6 +36,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if(entityPOCO.FinalLoadingSiteType != null)
             {
                 entityPM.FinalLoadingSiteName = entityPOCO.FinalLoadingSiteType.LocalName;
+            }
+            if(entityPOCO.FinalCustomsShip != null)
+            {
+                entityPM.FinalShipCodeName = entityPOCO.FinalCustomsShip.LocalName;
             }
         }
    }

@@ -79,6 +79,11 @@ export class ExportDeclarationClosingDataPM {
     public set FinalCargoTypeName(newValue: string) { if (this.finalCargoTypeName != newValue) { this.finalCargoTypeName = newValue; this.MarkAsDirty("FinalCargoTypeName"); } }
        
 	 
+    private finalShipCodeName: string;
+    public get FinalShipCodeName() { return this.finalShipCodeName; }
+    public set FinalShipCodeName(newValue: string) { if (this.finalShipCodeName != newValue) { this.finalShipCodeName = newValue; this.MarkAsDirty("FinalShipCodeName"); } }
+       
+	 
 
     public OldEntityPM: ExportDeclarationClosingDataPM;
 		

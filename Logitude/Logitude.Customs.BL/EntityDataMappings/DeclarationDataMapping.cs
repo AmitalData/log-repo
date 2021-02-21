@@ -468,6 +468,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
                     entityPM.FastIndividualProcessCode = "�����";
                 }
             }
+            if(entityPOCO.CustomsShip != null)
+            {
+                entityPM.ShipCodeName = entityPOCO.CustomsShip.LocalName;
+            }
+            if (entityPOCO.LoadingSiteType != null)
+            {
+                entityPM.FinalLoadingSiteName = entityPOCO.LoadingSiteType.LocalName;
+            }
+
 
         }
 

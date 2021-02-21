@@ -6,6 +6,8 @@ import { EntityResourceService } from '../../../../../Infrastructure/Services/En
 import { ExportDeclarationClosingDataPMService } from '../../../../../Customs/Services/StandardPMs/ExportDeclarationClosingDataPMService';
 import { Time } from '@angular/common';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
+import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ConsignmentPM } from '../../../../../Customs/EntityPMs/ConsignmentPM';
 
 @Component({
     selector: 'ExportDeclarationClosingDataComponent',
@@ -16,12 +18,13 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     public DataContext: any = this;
     public EntityPM: ExportDeclarationClosingDataPM;
     public DecPM: DeclarationPM;
+    public ConPM: ConsignmentPM;
     public SendButtonEnabled: boolean = false;
     public ObjectTableName: string = "Customs.ExportDeclarationClosingData";
     public IsReady: boolean = false;
     exportDeclarationClosingDataPMService: ExportDeclarationClosingDataPMService = new ExportDeclarationClosingDataPMService();
     private CurrentSession = SessionLocator.SelectedSession;
-
+    public IsNew: boolean = false;
 
     constructor(private EntityResourceService: EntityResourceService) {
         super();
@@ -44,16 +47,20 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         });
     }
 
-    GetExportDeclarationClosingData(id :string) {
+    GetExportDeclarationClosingData(id: string) {
         if (id != null) {
             this.exportDeclarationClosingDataPMService.get(id).subscribe((response: any) => {
+                debugger;
                 this.EntityPM = response.Result;
                 if (this.EntityPM == null) {
                     this.EntityPM = new ExportDeclarationClosingDataPM();
-                    debugger;
-                }
+                    this.EntityPM.DeclarationId = id;
+                    this.EntityPM.Tenant = this.DecPM.Tenant;
+                    this.IsNew = true;
+                } 
                 this.IsReady = true;
-            });
+                this.ConPM = this.DecPM.Consignments[0];
+            }); 
         }
     }
 
@@ -104,7 +111,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             this.EntityPM.FinalThirdCargoId = value;
         }
     }
- 
+
 
     SendButtonClicked(event) {
     }
@@ -113,10 +120,18 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
     }
     OkButtonClicked() {
-
+        if (this.IsNew) {
+            this.exportDeclarationClosingDataPMService.insert(this.EntityPM).subscribe((response: ServiceResponse) => {
+                SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
+            });
+        } else {
+            this.exportDeclarationClosingDataPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
+                SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
+            });
+        }
     }
 }
 
 
-     
+
 
