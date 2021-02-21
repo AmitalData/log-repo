@@ -77,6 +77,7 @@ export class AccountingSelectors {
    public static readonly GeneralSave = "#GeneralBSave"
    public static readonly VatTypeApplyToAll = '#VATApplyToAll';
    public static readonly APInvoiceBranch = '#APInvoice_BranchId';
+   public static readonly IsConsolidationChecked="checkbox[id^='IsConsolidationChecked']"
    //#region contain 
    public static readonly ContainDraftInvoices = "Draft Invoices"
 
