@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .NotesBox {
         border: 1px solid gray;
         border-radius: 5px;
@@ -630,8 +630,9 @@
 
                                         <tr style="height: 55px;">
                                             <td style="width: 250px;">
-                                                <div style="width: 100%; height:95%; text-align:center; border: 1px solid gray; border-radius: 5px;">
-                                                    <textarea [(ngModel)]="Reason" style="box-shadow:none; background: #faf5c0;" readonly="readonly"></textarea>
+                                                <div style="width: 100%; height:95%; text-align:center; border: 1px solid gray; border-radius: 5px;"><b>
+                                                    <textarea [(ngModel)]="Reason" style="font-size: larger;font-weight:bold; box-shadow: none; background: #faf5c0;" readonly="readonly"></textarea>
+                                                    </b>
                                                 </div>
                                             </td>
 
@@ -639,7 +640,7 @@
 
                                             <td style="width: 250px;">
                                                 <div style="width: 100%; height:95%; text-align:center; border: 1px solid gray; border-radius: 5px;">
-                                                    <textarea [(ngModel)]="InternalNotes" style="box-shadow:none; background: #faf5c0;"></textarea>
+                                                    <textarea [(ngModel)]="InternalNotes" style=" font-size:larger;font-weight:bold; box-shadow:none; background: #faf5c0;"></textarea>
                                                 </div>
                                             </td>
 
