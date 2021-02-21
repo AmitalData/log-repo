@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure" Pre="true">
-  <Sql Version="2">
+  <Sql Version="3">
     <![CDATA[
       DELETE FROM Toggles WHERE code = 'BDR' or  code = 'BDW' or code = 'CST' or code = 'RRW' or code = 'TJC' or code = 'CWH';
     ]]>       
