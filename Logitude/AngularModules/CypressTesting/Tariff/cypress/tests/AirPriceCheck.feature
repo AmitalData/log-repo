@@ -1,17 +1,14 @@
-@release @all
-Feature: Create New Freight Cost Tariff
-    The authenticated user will create new air freight cost tariff.
-    add tariff line and check the cost
+@release @all    
+Feature: Air Price Check
+    The authenticated user will create new air freight cost tariff,
+    add tariff line in draft version tab, then approve it,
+    and open price check wizard to show price offers.
 
     Scenario: Login and create new air freight cost
         Given the user logged in and navigate to tariff workspace
         And an air freight cost with the following details
             | Name               | Seller | StartDate | Product |
             | TestAirFreightCost | AA     | Today     | General |
-        And the follwing All-In charges
-            | Name             |
-            | Agent Commission |
-            | Air Waybill Fee  |
         When create freight cost
         Then the freight cost should create successfully
 
@@ -20,12 +17,13 @@ Feature: Create New Freight Cost Tariff
         And add the follwing tariff line
             | FromPort | ToPort | Step3Price | Notes       |
             | LHR      | MIA    | 3          | Test Line 1 |
-        When update freight cost
-        Then the freight cost should update successfully
+        When approve version
+        Then the version should approve successfully
 
-    Scenario: Check Air Price Check
-        Given the user in the air's price check workspace
-        When enter the following details
+    Scenario: Open price check wizard to show price offers
+        Given the user back into tariff workspace and open price check wizard
+        And fill the following price check details
             | FromPort | ToPort | ChargeableWeight |
             | LHR      | MIA    | 240              |
-        Then the result should be "720.00"
+        When search about prices
+        Then air price should equal "720.00"

@@ -4,26 +4,27 @@ import { TariffDetails } from "../models/TariffDetails";
 import { ChargeTypeDetails } from "../models/ChargeTypeDetails";
 import { SurchargeDetails } from "../models/SurchargeDetails";
 import { FreightCostTariffLineDetails } from "../models/FreightCostTariffLineDetails";
-import { OceanFCLPriceCheckDetails } from "../models/OceanFCLPriceCheckDetails";
 import { Urls } from "../constants/Urls";
 import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import * as gr from '../../../Base/cypress/actions/GenerateRandoms'
-import { TariffLine } from "cypress/models/TariffLine";
-import { AirPriceCheck } from "cypress/models/AirPriceCheck";
+import { SurchargeCostTariffLineDetails } from "cypress/models/SurchargeCostTariffLineDetails";
 import { Tariff } from "../models/Tariff";
-
+import { PriceCheckDetails } from "cypress/models/PriceCheckDetails";
 
 export function LoginAndNavigateToTariffWorkspace() {
     cy.Login();
-    cy.Click(TariffSelectors.TariffMenu, null);
+    NavigateToTariffWorkspace();
 }
 
 export function LoginAndNavigateToShippingLineWorkspace() {
     cy.Login();
-    NavigateToMaintenance();
-    NavigateToShippingLine();
+    OpenNewShippingLineWizardInMaintenance();
+}
+
+export function NavigateToTariffWorkspace() {
+    cy.Click(BaseSelectors.TariffMenu, null);
 }
 
 export function FillNewFreightCost(freightCostType: string, tariffDetails: TariffDetails) {
@@ -36,10 +37,12 @@ export function FillNewSurchargeCost(surchargeCostType: string, tariffDetails: T
     FillSurchargeCostWizardFields(tariffDetails);
 }
 
-export function FillNewOceanFCLSurchargesCost( surchargeCostType: string ,tariffDetails: TariffDetails){
+//use when the error is fixed 
+export function FillNewSurchargeCostForUpdate(surchargeCostType: string, tariffDetails: TariffDetails) {
     OpenNewSurchargeCostWizard(surchargeCostType);
-    cy.FillLogTextBox(TariffSelectors.TariffName, tariffDetails.Name);
-    cy.FillLogLov(TariffSelectors.TariffSeller, tariffDetails.Seller, false);
+    OpenNewShippingLineWizard();
+    tariffDetails.Seller = CreateNewShippingLine();
+    FillSurchargeCostWizardFields(tariffDetails);
 }
 
 export function FillAllInCharges(chargeTypeDetailsList: ChargeTypeDetails[]) {
@@ -51,7 +54,7 @@ export function FillAllInCharges(chargeTypeDetailsList: ChargeTypeDetails[]) {
             cy.FillLogLov(TariffSelectors.TariffVersionAllInChargeType, chargeTypeDetailsList[i].Name, true);
         }
     }
-    cy.Click(BaseSelectors.RedButton + ":last", null);
+    cy.Click(BaseSelectors.RedButton+TariffSelectors.Last, null);
 }
 
 export function FillSurcharges(surchargeDetailsList: SurchargeDetails[]) {
@@ -71,11 +74,15 @@ export function OpenLastCreatedTariff() {
 }
 
 export function OpenGeneralTab() {
-    cy.Click(BaseSelectors.DivElement, "General");
+    cy.Click(BaseSelectors.DivElement, TariffSelectors.ContainsGeneral);
 }
 
 export function OpenVersionHistoryTab() {
-    cy.Click(BaseSelectors.DivElement, "Version History");
+    cy.Click(BaseSelectors.DivElement,TariffSelectors.ContainsVersionHistory);
+}
+
+export function OpenUpdateTab() {
+    cy.Click(BaseSelectors.Button,TariffSelectors.ContainsUpdateSurcharges)
 }
 
 export function AddFreightCostTariffLines(freightCostType: string, freightCostTariffLineDetailsList: FreightCostTariffLineDetails[]) {
@@ -86,14 +93,18 @@ export function EditFreightCostTariffLines(freightCostType: string, freightCostT
     FillFreightCostTariffLines(freightCostType, freightCostTariffLineDetailsList, false);
 }
 
+export function AddSurchargeCostTariffLines(surchargeTariffLineDetailsList: SurchargeCostTariffLineDetails[]) {
+    FillSurchargeCostTariffLines(surchargeTariffLineDetailsList, true);
+}
+
 export function EditFreightCostGeneralTab(freightCostType: string, tariffDetails: TariffDetails) {
     FillTariffName(tariffDetails.Name);
     FillTariffContractNumber(tariffDetails.ContractNumber);
     FillTariffSeller(tariffDetails.Seller);
-    if (freightCostType !== "Air") {
+    if (freightCostType !== TariffSelectors.ContainsAir) {
         FillCurrency(tariffDetails.Currency);
     }
-    if (freightCostType === "Air") {
+    if (freightCostType === TariffSelectors.ContainsAir) {
         FillTariffProduct(tariffDetails.Product);
     }
     FillTariffNotes(tariffDetails.Notes);
@@ -102,7 +113,7 @@ export function EditFreightCostGeneralTab(freightCostType: string, tariffDetails
 export function CreateTariff() {
     DefineRequestPostTariff();
     DefineRequestGetRecentTariffs();
-    cy.Click(BaseSelectors.RedButton + ":last", null);
+    cy.Click(BaseSelectors.RedButton + TariffSelectors.Last, null);
 }
 
 export function UpdateTariff() {
@@ -110,19 +121,14 @@ export function UpdateTariff() {
     cy.Click(TariffSelectors.SaveTariff, null);
 }
 
-export function UpdateApprovedTariff() {
-    DefineRequestPutTariff();
-    cy.Click(BaseSelectors.GreenButton, "Approve Version");
-}
-
 export function CreateUpdateTariff() {
-    cy.DefineRequestWait(RestAPI.POST, Urls.PostUpdateSurcharge, RequestAliases.PostUpdateRequest);
-    cy.Click(BaseSelectors.GreenButton, "Update")
+    DefineRequestPostUpdateRequest();
+    cy.Click(BaseSelectors.GreenButton,TariffSelectors.ContainsUpdate);
 }
 
 export function ApproveTariffVersion() {
     DefineRequestsForApproveOrCopyTariffVersion();
-    cy.Click(BaseSelectors.GreenButton, "Approve Version");
+    cy.Click(BaseSelectors.GreenButton,TariffSelectors.ContainsApproveVersion);
 }
 
 export function CopyTariffVersion(newVersionStartDate: string) {
@@ -137,6 +143,10 @@ export function ValidateUpdateTariff() {
     AssertPutTariff();
 }
 
+export function ValidatePostUpdateTariff() {
+    AssertPostUpdateTariff();
+}
+
 export function ValidateCreateFreightCost() {
     AssertPostTariff();
     AssertGetRecentTariffs();
@@ -146,16 +156,16 @@ export function ValidateCreateSurchargeCost() {
     let intercept = cy.wait("@" + RequestAliases.PostTariff);
     intercept.then((interception) => {
         if (interception.response.statusCode === 400) {
-            if (interception.response.body.ErrorMessage.indexOf("Tariff surcharge seller should be unique") !== -1) {
-                cy.Click(BaseSelectors.Button, "Cancel");
+            if (interception.response.body.ErrorMessage.indexOf(TariffSelectors.ContainsUniqueSellerError) !== -1) {
+                cy.Click(BaseSelectors.Button,TariffSelectors.ContainsCancel);
             } else {
-                throw new Error("Create Tariff Failed");
+                throw new Error(TariffSelectors.ContainsTariffFailedError);
             }
         } else {
             if (interception.response.statusCode === 200) {
                 AssertGetRecentTariffs();
             } else {
-                throw new Error("Create Tariff Failed");
+                throw new Error(TariffSelectors.ContainsTariffFailedError);
             }
         }
     })
@@ -175,31 +185,57 @@ export function ValidateApprovedVersionsAppear() {
     BaseAssertion.AssertElementExist(TariffSelectors.TariffVersionHistoryComboBoxItem(2));
 }
 
-export function ValidateTariffPriceCheck(expectedPrice: string){
+export function ValidateTariffPriceCheck(expectedPrice: string) {
     AssertTariffPriceCheck(expectedPrice);
 }
 
+export function ValidateUploadExcelFile() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PostUploadExcelFile, 200)
+}
+
 export function BackToTariffWorkspace() {
-    cy.Click(BaseSelectors.BackBottonBodyClass, "Tariffs");
+    cy.Click(BaseSelectors.BackBottonBodyClass,TariffSelectors.ContainsTariffs);
 }
 
 export function OpenPriceCheckWizard(priceCheckType: string) {
     cy.Click(BaseSelectors.QueryLink, priceCheckType);
 }
 
-export function FillOceanFCLPriceCheckWizard(oceanFCLPriceCheckDetails: OceanFCLPriceCheckDetails) {
-    FillTariffLinePorts(oceanFCLPriceCheckDetails.FromPort, oceanFCLPriceCheckDetails.ToPort);
-    FillPriceCheckDate(oceanFCLPriceCheckDetails.Date);
-    FillPriceCheckQuantity(1, oceanFCLPriceCheckDetails.Quantity1);
-    FillPriceCheckQuantity(2, oceanFCLPriceCheckDetails.Quantity2);
-    FillPriceCheckQuantity(3, oceanFCLPriceCheckDetails.Quantity3);
-    FillPriceCheckQuantity(4, oceanFCLPriceCheckDetails.Quantity4);
-    FillPriceCheckQuantity(5, oceanFCLPriceCheckDetails.Quantity5);
+export function FillPriceCheckWizard(priceCheckType: string, priceCheck: PriceCheckDetails) {
+    FillTariffLinePorts(priceCheck.FromPort, priceCheck.ToPort);
+    FillTariffDate(TariffSelectors.PriceCheckDate, priceCheck.Date)
+    if (priceCheckType === TariffSelectors.ContainsOceanFCL) {
+        FillPriceCheckQuantity(1, priceCheck.Quantity1);
+        FillPriceCheckQuantity(2, priceCheck.Quantity2);
+        FillPriceCheckQuantity(3, priceCheck.Quantity3);
+        FillPriceCheckQuantity(4, priceCheck.Quantity4);
+        FillPriceCheckQuantity(5, priceCheck.Quantity5);
+    } else {
+        FillTariffChargeableWeight(priceCheck.ChargeableWeight)
+    }
 }
 
 export function PriceCheckSearch() {
     DefineRequestPostAvailableTariffs();
-    cy.Click(TariffSelectors.PriceCheckSearch, "Search");
+    cy.Click(TariffSelectors.PriceCheckSearch,TariffSelectors.ContainsSearch);
+}
+
+export function FillUpdateSurcharges(tariffDetails: SurchargeCostTariffLineDetails) {
+    FillUpdatePorts(TariffSelectors.FromPort, tariffDetails.FromPort);
+    FillUpdatePorts(TariffSelectors.ToPort, tariffDetails.ToPort);
+    FillTariffDate(TariffSelectors.TariffUpdateStartDate, tariffDetails.StartDate)
+    FillUpdateSurchargesPrice(tariffDetails);
+}
+
+export function UploadExcelFile() {
+    cy.Click(TariffSelectors.TariffActionsMenu,TariffSelectors.ContainsActions);
+    const fileName = 'Tariff-1168-17-02-2021.xls'
+    DefineRequestPostUploadExcelFile()
+    cy.fixture(fileName,TariffSelectors.Binary)
+        .then(Cypress.Blob.binaryStringToBlob)
+        .then(fileContent => {
+            cy.get(TariffSelectors.InputUpload).attachFile({ fileContent, fileName, mimeType: TariffSelectors.ExcelType, encoding: 'utf8' })
+        })
 }
 
 function DefineRequestsForApproveOrCopyTariffVersion() {
@@ -224,7 +260,7 @@ function FillFreightCostTariffLines(freightCostType: string, freightCostTariffLi
             cy.Click(TariffSelectors.TariffLineEditButton(i), null);
         }
         FillTariffLinePorts(freightCostTariffLineDetailsList[i].FromPort, freightCostTariffLineDetailsList[i].ToPort);
-        if (freightCostType === "Ocean FCL") {
+        if (freightCostType === TariffSelectors.ContainsOceanFCL) {
             FillTariffLineSurchargePrice(1, freightCostTariffLineDetailsList[i].Step1Price);
             FillTariffLineSurchargePrice(2, freightCostTariffLineDetailsList[i].Step2Price);
             FillTariffLineSurchargePrice(3, freightCostTariffLineDetailsList[i].Step3Price);
@@ -243,6 +279,19 @@ function FillFreightCostTariffLines(freightCostType: string, freightCostTariffLi
     }
 }
 
+function FillSurchargeCostTariffLines(surchargeTariffLineDetailsList: SurchargeCostTariffLineDetails[], isNew: boolean) {
+    for (let i = 0; i < surchargeTariffLineDetailsList.length; i++) {
+        if (isNew) {
+            cy.Click(BaseSelectors.AddButton, null);
+        } else {
+            cy.Click(TariffSelectors.TariffLineEditButton(i), null);
+        }
+        FillTariffLinePorts(surchargeTariffLineDetailsList[i].FromPort, surchargeTariffLineDetailsList[i].ToPort);
+        FillTariffDate(TariffSelectors.TariffLineStartDate, surchargeTariffLineDetailsList[i].StartDate)
+        cy.Click(BaseSelectors.RedButton, null);
+    }
+}
+
 function OpenNewFreightCostWizard(freightCostType: string) {
     cy.Click(TariffSelectors.NewFreightCostToggleButton, null);
     cy.Click(TariffSelectors.NewFreightCostToggleMenuButton, freightCostType);
@@ -253,8 +302,8 @@ function FillFreightCostWizardFields(freightCostType: string, tariffDetails: Tar
     FillTariffContractNumber(tariffDetails.ContractNumber);
     FillTariffSeller(tariffDetails.Seller);
     FillCurrency(tariffDetails.Currency);
-    FillTariffStartDate(tariffDetails.StartDate);
-    if (freightCostType === "Air") {
+    FillTariffDate(TariffSelectors.TariffStartDate, tariffDetails.StartDate)
+    if (freightCostType === TariffSelectors.ContainsAir) {
         FillTariffProduct(tariffDetails.Product);
     }
     FillTariffNotes(tariffDetails.Notes);
@@ -273,9 +322,29 @@ function FillSurchargeCostWizardFields(tariffDetails: TariffDetails) {
     FillTariffNotes(tariffDetails.Notes);
 }
 
+function FillUpdatePorts(PortSelector: string, PortData: string) {
+    cy.Click(PortSelector, null)
+    cy.FillLogLov(TariffSelectors.TariffUpdatePortSelector, PortData, false);
+    cy.Click(BaseSelectors.Button, TariffSelectors.ContainsAdd)
+    cy.Click(BaseSelectors.Button, TariffSelectors.ContainsClose, true)
+}
+
+function FillUpdateSurchargesPrice(tariffDetails: SurchargeCostTariffLineDetails) {
+    cy.Click(TariffSelectors.TariffUpdateSurchargeCheckBox, null);
+    FillTariffUpdatePrice(1, tariffDetails.Step1Price)
+    FillTariffUpdatePrice(2, tariffDetails.Step2Price)
+    FillTariffUpdatePrice(3, tariffDetails.Step3Price)
+}
+
 function FillTariffName(tariffName: string) {
     if (tariffName) {
         cy.FillLogTextBox(TariffSelectors.TariffName, tariffName);
+    }
+}
+
+function FillTariffDate(dateSelector: string, date: string) {
+    if (date) {
+        cy.FillDate(dateSelector, date);
     }
 }
 
@@ -300,12 +369,6 @@ function FillCurrency(currency: string) {
 function FillTariffNotes(notes: string) {
     if (notes) {
         cy.FillLogTextBox(TariffSelectors.TariffNotes, notes);
-    }
-}
-
-function FillTariffStartDate(startDate: string) {
-    if (startDate) {
-        cy.FillDate(TariffSelectors.TariffStartDate, startDate);
     }
 }
 
@@ -354,15 +417,27 @@ function FillTariffLineNotes(notes: string) {
     }
 }
 
-function FillPriceCheckDate(date: string) {
-    if (date) {
-        cy.FillDate(TariffSelectors.PriceCheckDate, date);
-    }
-}
-
 function FillPriceCheckQuantity(quantityNumber: number, quantity: number) {
     if (quantity) {
         cy.FillLogTextBox(TariffSelectors.PriceCheckQuantity(quantityNumber), quantity.toString());
+    }
+}
+
+function FillSellerName(sellerName: string) {
+    if (sellerName) {
+        cy.FillLogTextBox(TariffSelectors.ShippingLineName, sellerName)
+    }
+}
+
+function FillTariffUpdatePrice(stepNumber: number, price: string) {
+    if (price) {
+        cy.FillLogTextBox(TariffSelectors.TariffUpdatePrice(stepNumber), price);
+    }
+}
+
+function FillTariffChargeableWeight(ChargeableWeight: string) {
+    if (ChargeableWeight) {
+        cy.FillLogTextBox(TariffSelectors.TariffChargeableWeight, ChargeableWeight)
     }
 }
 
@@ -382,6 +457,10 @@ function DefineRequestPutTariff() {
     cy.DefineRequestWait(RestAPI.PUT, Urls.Tariffs, RequestAliases.PutTariff);
 }
 
+function DefineRequestPostUpdateRequest() {
+    cy.DefineRequestWait(RestAPI.POST, Urls.PostUpdateSurcharge, RequestAliases.PostUpdateRequest);
+}
+
 function DefineRequestGetTariffVersionLines() {
     cy.DefineRequestWait(RestAPI.GET, Urls.GetTariffVersionLines, RequestAliases.GetTariffVersionLines);
 }
@@ -390,15 +469,23 @@ function DefineRequestGetSingleTariff() {
     cy.DefineRequestWait(RestAPI.GET, Urls.GetSingleTariff, RequestAliases.GetSingleTariff);
 }
 
-function DefineRequestPostAvailableTariffs(){
+function DefineRequestPostAvailableTariffs() {
     cy.DefineRequestWait(RestAPI.POST, Urls.PostAvailableTariffs, RequestAliases.PostAvailableTariffs);
+}
+
+function DefineRequestPostShippinglines() {
+    cy.DefineRequestWait(RestAPI.POST, Urls.PostShippingLine, RequestAliases.PostShippingline)
+}
+
+function DefineRequestPostUploadExcelFile() {
+    cy.DefineRequestWait(RestAPI.POST, Urls.PostUploadExcelFile, RequestAliases.PostUploadExcelFile)
 }
 
 function AssertPutTariff() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutTariff, 200);
 }
 
-export function AssertPostUpdateTariff() {
+function AssertPostUpdateTariff() {
     BaseAssertion.AssertStatusCode(RequestAliases.PostUpdateRequest, 200)
 }
 
@@ -408,7 +495,7 @@ function AssertPostTariff() {
     });
 }
 
-export function AssertGetRecentTariffs() {
+function AssertGetRecentTariffs() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetRecentTariffs, 200);
 }
 
@@ -431,95 +518,65 @@ function AssertTariffPriceCheck(expectedPrice: string) {
     });
 }
 
-function NavigateToMaintenance() {
-    cy.Click("#GeneralMHMaintenance", null)
-    cy.Click("#MaintenanceItemMTSL", null);
+function OpenNewShippingLineWizard() { //Weird problem need to be checked
+    DefineRequestsForCreateSeller();
+    cy.Click(TariffSelectors.TariffSearchIcon, null);
+    AssertGetCardView();
+    cy.Click(TariffSelectors.AddButton, null);
+    cy.Click(BaseSelectors.Button,TariffSelectors.ContainsCancel,true)
+    cy.Click(BaseSelectors.Button,TariffSelectors.ContainsCancel,true)
+    cy.Click(TariffSelectors.TariffSearchIcon, null);
+    cy.Click(TariffSelectors.AddButton, null);
+    AssertGetCarrierViews();
+    cy.Click(BaseSelectors.Button,TariffSelectors.ContainsNewShippingLine);
 }
 
-function NavigateToShippingLine() {
-    cy.DefineRequestWait(RestAPI.GET, Urls.CarrierViews, RequestAliases.GetCarrierViews)
-    cy.Click(BaseSelectors.Button, "Add");
+function OpenNewShippingLineWizardInMaintenance() {
+    cy.Click(BaseSelectors.MaintenanceMenu, null);
+    cy.Click(BaseSelectors.ShippingLine, null);
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetCarrierViews, RequestAliases.GetCarrierViews);
+    cy.Click(BaseSelectors.Button, TariffSelectors.ContainsAdd);
     BaseAssertion.AssertStatusCode(RequestAliases.GetCarrierViews, 200)
-    cy.Click(BaseSelectors.Button, "New Shipping Line");
+    cy.Click(BaseSelectors.Button, TariffSelectors.ContainsNewShippingLine);
 }
 
-export function CreateSeller() {
+
+export function CreateNewShippingLine() {
     var Code = FillShippingLineCode();
-    cy.FillLogTextBox(TariffSelectors.ShippingLineName, "SellerTest")
-    cy.DefineRequestWait(RestAPI.POST, Urls.ShippingLine, RequestAliases.PostShippinglinesRequest)
-    cy.Click(BaseSelectors.RedButton, "Ok");
+    FillSellerName("SellerTest");
+    DefineRequestPostShippinglines();
+    cy.Click(BaseSelectors.RedButton +TariffSelectors.Last, null);
+    // ValidateShippingLine();
+    // cy.Click(BaseSelectors.Button,"Cancel",true)
     return Code;
 }
 
 function FillShippingLineCode() {
     let code: string = gr.GenerateRandomNumberAndString(4);
     cy.get(TariffSelectors.ShippingLineCode).clear().type(code);
-    cy.FillLogTextBox(TariffSelectors.ShippingLineSCACCode,code)
-    cy.get(BaseSelectors.Label).contains("Code:").click();
+    cy.FillLogTextBox(TariffSelectors.ShippingLineSCACCode, code)
+    cy.get(BaseSelectors.Label).contains(TariffSelectors.ContainsCode).click();
     cy.get(BaseSelectors.RedButton).then($btn => {
-        if ($btn.is(":disabled")) {
+        if ($btn.is(TariffSelectors.Disabled)) {
             FillShippingLineCode();
         }
-    });
+    })
     return code
 }
 
-export function FillTariffLine(tariffDetails : TariffLine){
-    cy.Click(TariffSelectors.AddButton, null);
-    cy.FillLogLov(TariffSelectors.TariffLineFromPort, tariffDetails.FromPort, false)
-    cy.FillLogLov(TariffSelectors.TariffLineToPort, tariffDetails.ToPort, false)
-    cy.FillDate(TariffSelectors.TariffLineStartDate, tariffDetails.StartDate);
+function DefineRequestsForCreateSeller() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetCardviews, RequestAliases.GetCardviews);
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetCarrierViews, RequestAliases.GetCarrierViews);
 }
 
-export function FillUpdateSurcharges(tariffDetails:TariffLine){
-    cy.Click(BaseSelectors.Button, "Update Surcharges")
-    FillUpdatePorts(TariffSelectors.FromPort ,tariffDetails.FromPort);
-    FillUpdatePorts(TariffSelectors.ToPort ,tariffDetails.ToPort);
-    cy.FillDate(TariffSelectors.TariffUpdateStartDate, tariffDetails.StartDate);
+function AssertGetCardView() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetCardviews, 200);
 }
 
-function FillUpdatePorts(PortSelector : string , PortData:string){
-    cy.Click(PortSelector, null)
-    cy.FillLogLov(TariffSelectors.TariffUpdatePortSelector, PortData, false);
-    cy.Click(BaseSelectors.Button, "Add")
-    cy.Click(BaseSelectors.Button, "Close", true)
+function AssertGetCarrierViews() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetCarrierViews, 200);
 }
 
-export function FillUpdatePrice(tariffDetails:TariffLine ){
-    cy.Click(TariffSelectors.TariffUpdateSurchargeCheckBox, null);
-    FillTariffUpdatePrice(1 , tariffDetails.Step1Price )
-    FillTariffUpdatePrice(2 , tariffDetails.Step2Price )
-    FillTariffUpdatePrice(3 , tariffDetails.Step3Price )
-}
-
-function FillTariffUpdatePrice(stepNumber: number, price: string) {
-    if (price) {
-        cy.FillLogTextBox(TariffSelectors.TariffUpdatePrice(stepNumber), price);
-    }
-}
-
-export function UploadExcelFile(){
-    cy.Click(TariffSelectors.TariffActionsMenu, "Actions");
-    const fileName = 'Tariff-1168-17-02-2021.xls'
-    cy.DefineRequestWait(RestAPI.POST, Urls.PostUploadExcelFile, RequestAliases.WaitUpload)
-    cy.fixture(fileName,'binary')
-    .then(Cypress.Blob.binaryStringToBlob)
-    .then(fileContent => {
-      cy.get('input.upload').attachFile({ fileContent, fileName, mimeType:'application/vnd.ms-excel',encoding:'utf8' })
-    })
-}
-
-export function FillAirPriceCheck(priceCheck : AirPriceCheck){
-    cy.FillLogLov(TariffSelectors.TariffLineFromPort, priceCheck.FromPort, false)
-    cy.FillLogLov(TariffSelectors.TariffLineToPort, priceCheck.ToPort, false)
-    cy.FillLogTextBox(TariffSelectors.TariffChargeableWeight, priceCheck.ChargeableWeight)
-    cy.DefineRequestWait(RestAPI.POST, Urls.PostAvailableAirlineFreightTariffs, RequestAliases.PostTariff)
-    cy.Click(TariffSelectors.SearchButton, "Search");
-}
-
-export function PriceCheckAssertion(CreatedTariffNumber:string ,ExpectedResult:string){
-    BaseAssertion.AssertStatusCode(RequestAliases.PostTariff, 200).then((interception) => {
-        let actualPrice = interception.response.body.filter((t: { TariffNumber: string; }) => t.TariffNumber === CreatedTariffNumber)[0].Price;
-        assert.equal(actualPrice ,ExpectedResult);
-    })
+export function ValidateShippingLine() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PostShippingline, 200)
 }

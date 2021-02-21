@@ -2,13 +2,9 @@ import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import * as Actions from "../../actions/Actions";
 import { TariffDetails } from "../../models/TariffDetails";
 import { SurchargeDetails } from "../../models/SurchargeDetails";
-import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
-import { TariffSelectors } from "../../../../Tariff/cypress/selectors/Selectors";
-import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
-import { TariffLine } from "cypress/models/TariffLine";
-import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
+import { SurchargeCostTariffLineDetails} from "cypress/models/SurchargeCostTariffLineDetails";
 
-var SellerCode;
+var SellerCode ;
 
 //#region Create Shipping Line 
 Given("the user logged in and navigate to Shipping Line in Maintenance workspace", () => {
@@ -16,23 +12,24 @@ Given("the user logged in and navigate to Shipping Line in Maintenance workspace
 });
 
 When("create new shipping line", () => {
-    SellerCode = Actions.CreateSeller();
+    SellerCode = Actions.CreateNewShippingLine();
 });
 
 Then("the shipping line should create successfully", () => {
-    BaseAssertion.AssertStatusCode(RequestAliases.PostShippinglinesRequest, 200)
+    Actions.ValidateShippingLine();
 })
 //#endregion
 
 //#region  Create ocean FCL surcharge cost
-Given("the user navigate to tariff workspace", () => {
-    cy.Click(TariffSelectors.TariffMenu, null);
+Given("the user in tariff workspace", () => {
+    Actions.NavigateToTariffWorkspace()
 });
 
 Given("an ocean FCL surcharge cost with the following details", (dataTable) => {
     let tariffDetails = dataTable.hashes()[0] as TariffDetails;
-    tariffDetails.Seller = SellerCode;
-    Actions.FillNewOceanFCLSurchargesCost("Ocean FCL", tariffDetails);
+    tariffDetails.Seller = SellerCode ;
+    Actions.FillNewSurchargeCost("Ocean FCL", tariffDetails);
+    // Actions.FillNewSurchargeCostForUpdate("Ocean FCL", tariffDetails);
 });
 
 Given("the follwing surcharges details", (dataTable) => {
@@ -55,29 +52,27 @@ Given("the user open the created surcharge cost", () => {
 });
 
 Given("add the follwing tariff lines", (dataTable) => {
-    let tariffDetails = dataTable.hashes()[0] as TariffLine;
-    Actions.FillTariffLine(tariffDetails)
+    let tariffDetails = dataTable.hashes() as SurchargeCostTariffLineDetails[];
+    Actions.AddSurchargeCostTariffLines(tariffDetails)
 });
 
 When("add the tariff line", () => {
-    cy.Click(BaseSelectors.RedButton, "Ok");
     Actions.UpdateTariff();
 });
 
 Then("the surcharge cost should update successfully", () => {
-    Actions.AssertPutTariff();
+    Actions.ValidateUpdateTariff();
 });
 //#endregion
 
 //#region  Update surcharges
-Given("the follwing update details", (dataTable) => {
-    let tariffDetails = dataTable.hashes()[0] as TariffLine;
-    Actions.FillUpdateSurcharges(tariffDetails);
+Given("the user in update tab", () => {
+    Actions.OpenUpdateTab();
 });
 
-Given("the following price details", (dataTable) => {
-    let tariffDetails = dataTable.hashes()[0] as TariffLine;
-    Actions.FillUpdatePrice(tariffDetails);
+Given("the follwing surcharge cost update details", (dataTable) => {
+    let tariffDetails = dataTable.hashes()[0] as SurchargeCostTariffLineDetails;
+    Actions.FillUpdateSurcharges(tariffDetails);
 });
 
 When("update", () => {
@@ -85,6 +80,6 @@ When("update", () => {
 });
 
 Then("the surcharge update should create successfully", () => {
-    Actions.AssertPostUpdateTariff();
+    Actions.ValidatePostUpdateTariff();
 });
 //#endregion

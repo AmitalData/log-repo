@@ -2,9 +2,6 @@ import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import * as Actions from "../../actions/Actions";
 import { TariffDetails } from "../../models/TariffDetails";
 import { ChargeTypeDetails } from "../../models/ChargeTypeDetails";
-import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
-import { TariffSelectors } from "cypress/selectors/Selectors";
-import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 
 //#region Create Air freight cost
 Given("the user logged in and navigate to tariff workspace", () => {
@@ -40,6 +37,6 @@ When("upload excel file", () => {
 });
 
 Then("the file should load successfully", () => {
-  BaseAssertion.AssertStatusCode(RequestAliases.WaitUpload, 200)
+  Actions.ValidateUploadExcelFile();
 });
 //#endregion

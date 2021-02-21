@@ -1,4 +1,4 @@
-export interface OceanFCLPriceCheckDetails {
+export interface PriceCheckDetails {
     FromPort: string,
     ToPort: string,
     Date: string,
@@ -7,4 +7,5 @@ export interface OceanFCLPriceCheckDetails {
     Quantity3: number,
     Quantity4: number,
     Quantity5: number,
+    ChargeableWeight: string,
 }
