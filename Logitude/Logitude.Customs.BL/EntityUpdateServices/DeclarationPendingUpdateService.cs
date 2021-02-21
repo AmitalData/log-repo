@@ -35,6 +35,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 entityPM.Status = "A";
             }
+            if (entityPM.Tenant < 1 && entityParentPM != null)
+            {
+                entityPM.Tenant = entityParentPM.Tenant;
+            }
             //base.OnCreating(entityPM, entityParentPM);
         }
 
