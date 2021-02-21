@@ -285,5 +285,6 @@ export function AddSecondInvoiceToConsolidation(){
   cy.DefineRequestWait(RestAPI.GET,AccountingURLs.ARInvoiceViews,RequestAliases.ARInvoiceviews)
   BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200)
 cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
-  cy.get(BaseSelectors.RowHover).eq(1).find(BaseSelectors.typeCheckbox).check({force: true})
+//   cy.get(BaseSelectors.RowHover).eq(1).find(BaseSelectors.typeCheckbox).check({force: true})
+cy.Click( AccountingSelectors.IsConsolidationChecked+":last",null);
 }
