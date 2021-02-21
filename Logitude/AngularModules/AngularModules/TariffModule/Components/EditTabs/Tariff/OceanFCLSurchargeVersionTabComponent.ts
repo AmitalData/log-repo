@@ -1375,45 +1375,39 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         }
     }
    
-    ////////////////////////////
-    public Surcharge1PriceValue: string;
-    public Surcharge2PriceValue: string;
-    public Surcharge3PriceValue: string;
-    public Surcharge4PriceValue: string;
-    public Surcharge5PriceValue: string;
-    public Surcharge6PriceValue: string;
-    public Surcharge7PriceValue: string;
-    public Surcharge8PriceValue: string;
-    public Surcharge9PriceValue: string;
-    public Surcharge10PriceValue: string;
     public ComputeSurchargePricesValues() {
-        this.Surcharge1PriceValue  = this.ComputePriceValue(this.TariffPM.Surcharge1Id,1);
-        this.Surcharge2PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge2Id, 2);
-        this.Surcharge3PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge3Id, 3);
-        this.Surcharge4PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge4Id, 4);
-        this.Surcharge5PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge5Id, 5);
-        this.Surcharge6PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge6Id, 6);
-        this.Surcharge7PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge7Id, 7);
-        this.Surcharge8PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge8Id, 8);
-        this.Surcharge9PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge9Id, 9);
-        this.Surcharge10PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge10Id, 10);
+        this.Surcharge1PriceArray = this.ComputePriceArrayValue(this.TariffPM.Surcharge1Id,1);
+        this.Surcharge2PriceArray = this.ComputePriceArrayValue(this.TariffPM.Surcharge2Id, 2);
+        this.Surcharge3PriceArray = this.ComputePriceArrayValue(this.TariffPM.Surcharge3Id, 3);
+        this.Surcharge4PriceArray = this.ComputePriceArrayValue(this.TariffPM.Surcharge4Id, 4);
+        this.Surcharge5PriceArray = this.ComputePriceArrayValue(this.TariffPM.Surcharge5Id, 5);
+        this.Surcharge6PriceArray = this.ComputePriceArrayValue(this.TariffPM.Surcharge6Id, 6);
+        this.Surcharge7PriceArray = this.ComputePriceArrayValue(this.TariffPM.Surcharge7Id, 7);
+        this.Surcharge8PriceArray = this.ComputePriceArrayValue(this.TariffPM.Surcharge8Id, 8);
+        this.Surcharge9PriceArray = this.ComputePriceArrayValue(this.TariffPM.Surcharge9Id, 9);
+        this.Surcharge10PriceArray = this.ComputePriceArrayValue(this.TariffPM.Surcharge10Id, 10);
     }
 
-    public Surcharge1PriceArray: any;
-    private ComputePriceValue(ichargeTypeId, index): string {
-        var myValue: string = "";
+    public Surcharge1PriceArray: PriceColorClass[];
+    public Surcharge2PriceArray: PriceColorClass[];
+    public Surcharge3PriceArray: PriceColorClass[];
+    public Surcharge4PriceArray: PriceColorClass[];
+    public Surcharge5PriceArray: PriceColorClass[];
+    public Surcharge6PriceArray: PriceColorClass[];
+    public Surcharge7PriceArray: PriceColorClass[];
+    public Surcharge8PriceArray: PriceColorClass[];
+    public Surcharge9PriceArray: PriceColorClass[];
+    public Surcharge10PriceArray: PriceColorClass[];
+    private ComputePriceArrayValue(ichargeTypeId, index): PriceColorClass[] {
+        var myarray: PriceColorClass[] = [];
 
         var iMeasurement = this.FatherComponent.AllMeasurements.filter(f => f.Id == this.FatherComponent.EntityPM['Surcharge' + index + 'UOM'])[0];
         if (!AppTool.IsNullOrEmpty(ichargeTypeId)) {
             if (this.EntityPM.ContainersPrices.filter(d => d.SurchargeId == ichargeTypeId).length > 0) {
                 this.EntityPM.ContainersPrices.filter(d => d.SurchargeId == ichargeTypeId).forEach((item) => {
-
-                    type PriceColorItem = { Price: string; Color: string; };
-                    let myarray: PriceColorItem[] = [];                   
-
                     if (iMeasurement != null && (iMeasurement.Code == "FIXD" || iMeasurement.Code == "BTEU")) {
                         if (!AppTool.IsNullOrZero(item.CostPrice))
-                            myValue = item.CostPrice.toString();
+                            myarray.push(new PriceColorClass(item.CostPrice.toString(), FontTool.Gray));
                     }
 
                     else {
@@ -1421,75 +1415,62 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
                         if (containerPriceItem) {
                             if (!AppTool.IsNullOrEmpty(this.TariffPM.ContainerType1Id)) {
                                 if (AppTool.IsNullOrZero(item.Price1)) {
-                                    myValue = "-";
-                                    myarray.push({ Price: "-", Color: FontTool.Gray });
+                                    myarray.push(new PriceColorClass("-", FontTool.Gray));
                                 }
 
                                 else {
-                                    myValue = item.Price1.toString();
-                                    myarray.push({ Price: item.Price1.toString(), Color: containerPriceItem.Price1ComparingTextColor });
+                                    myarray.push(new PriceColorClass(item.Price1.toString(), containerPriceItem.Price1ComparingTextColor));
                                 }
                             }
 
                             if (!AppTool.IsNullOrEmpty(this.TariffPM.ContainerType2Id)) {
                                 if (AppTool.IsNullOrZero(item.Price2)) {
-                                    myValue = myValue + " / -";
-                                    myarray.push({ Price: " / -", Color: FontTool.Gray });
+                                    myarray.push(new PriceColorClass(" / -", FontTool.Gray));
                                 }
 
                                 else {
-                                    myValue = myValue + " / " + item.Price2.toString();
-                                    myarray.push({ Price: item.Price2.toString(), Color: containerPriceItem.Price2ComparingTextColor });
+                                    myarray.push(new PriceColorClass(" / " + item.Price2.toString(), containerPriceItem.Price2ComparingTextColor));
                                 }
                             }
 
                             if (!AppTool.IsNullOrEmpty(this.TariffPM.ContainerType3Id)) {
                                 if (AppTool.IsNullOrZero(item.Price3)) {
-                                    myValue = myValue + " / -";
-                                    myarray.push({ Price: " / -", Color: FontTool.Gray });
+                                    myarray.push(new PriceColorClass(" / -", FontTool.Gray));
                                 }
 
                                 else {
-                                    myValue = myValue + " / " + item.Price3.toString();
-                                    myarray.push({ Price: item.Price3.toString(), Color: containerPriceItem.Price3ComparingTextColor });
+                                    myarray.push(new PriceColorClass(" / " + item.Price3.toString(), containerPriceItem.Price3ComparingTextColor));
                                 }
                             }
 
                             if (!AppTool.IsNullOrEmpty(this.TariffPM.ContainerType4Id)) {
                                 if (AppTool.IsNullOrZero(item.Price4)) {
-                                    myValue = myValue + " / -";
-                                    myarray.push({ Price: " / -", Color: FontTool.Gray });
+                                    myarray.push(new PriceColorClass(" / -", FontTool.Gray));
                                 }
 
                                 else {
-                                    myValue = myValue + " / " + item.Price4.toString();
-                                    myarray.push({ Price: item.Price4.toString(), Color: containerPriceItem.Price4ComparingTextColor });
+                                    myarray.push(new PriceColorClass(" / " + item.Price4.toString(), containerPriceItem.Price4ComparingTextColor));
                                 }
                             }
 
                             if (!AppTool.IsNullOrEmpty(this.TariffPM.ContainerType5Id)) {
                                 if (AppTool.IsNullOrZero(item.Price5)) {
-                                    myValue = myValue + " / -";
-                                    myarray.push({ Price: " / -", Color: FontTool.Gray });
+                                    myarray.push(new PriceColorClass(" / -", FontTool.Gray ));
                                 }
 
                                 else {
-                                    myValue = myValue + " / " + item.Price5.toString();
-                                    myarray.push({ Price: item.Price5.toString(), Color: containerPriceItem.Price5ComparingTextColor });
+                                    myarray.push(new PriceColorClass(" / " + item.Price5.toString(), containerPriceItem.Price5ComparingTextColor));
                                 }
                             }
                         }
-
-                        this['Surcharge' + index + 'PriceArray'] = myarray;
                     }
                 });
             }
         }
 
-
-        return myValue;
+        return myarray;
     }
-    ////////////////////////////
+
     get IsFromAllOtherPorts() { return this.EntityPM.IsFromAllOtherPorts; }
     set IsFromAllOtherPorts(value: boolean) {
         if (this.EntityPM.IsFromAllOtherPorts != value) {
@@ -1856,4 +1837,14 @@ export class VersionClass {
 export class ContainerChargesClass {
     public Header: string;
     public Index: number;
+}
+
+export class PriceColorClass {
+    public Price: string;
+    public Color: string;
+
+    constructor(price: string, color: string) {
+        this.Price = price;
+        this.Color = color;
+    }
 }
