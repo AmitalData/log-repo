@@ -161,9 +161,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     Boolean physicalchecksclosed = true;
                     foreach (var item in physicalchecks)
                     {
-                        if (!item.IsClosed)
+                        if (item.CheckId == phsicalCheckPM.CheckId)
                         {
-                            physicalchecksclosed = false;
+                            if (!phsicalCheckPM.IsClosed)
+                            {
+                                physicalchecksclosed = false;
+                            }
+                        }
+                        else
+                        {
+                            if (!item.IsClosed)
+                            {
+                                physicalchecksclosed = false;
+                            }
                         }
                     }
                     if (physicalchecksclosed)
