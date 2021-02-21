@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
-import {LoginService, LoginParameters} from '../LoginService';
-import {Headers} from '@angular/http';
-import {SessionInfo} from '../SessionInfo';
-import {LoginComponent} from './LoginComponent';
-import {DynamicLoaderTSC} from '../Utilities/DynamicLoaderTSC';
-import {Tools} from '../Utilities/Tools';
+import { LoginService, LoginParameters } from '../LoginService';
+import { Headers } from '@angular/http';
+import { SessionInfo } from '../SessionInfo';
+import { LoginComponent } from './LoginComponent';
+import { DynamicLoaderTSC } from '../Utilities/DynamicLoaderTSC';
+import { Tools } from '../Utilities/Tools';
 
 @Component({
     selector: 'DSVLoginComponent',
@@ -27,7 +27,7 @@ export class DSVLoginComponent extends LoginComponent implements OnInit {
         if (SessionInfo.MainLocation) {
             SessionInfo.MainLocation.clear();
         }
-    } 
+    }
     ForgotPasswordClicked() {
         this.ClearLocation();
         Tools.DynamicLoader.Load("./Login/Components/DSVResetPasswordComponent", SessionInfo.MainLocation)

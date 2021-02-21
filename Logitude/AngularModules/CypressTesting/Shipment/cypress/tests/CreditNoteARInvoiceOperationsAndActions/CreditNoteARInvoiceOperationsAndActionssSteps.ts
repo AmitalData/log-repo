@@ -3,9 +3,11 @@ import { ShipmentSelectors } from "../../selectors/Selectors"
 import { ShipmentDetails } from "../../models/ShipmentDetails";
 import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
 import { ReceivableDetails } from "cypress/models/ReceivableDetails"
-import { ARInvoiceDetails } from "cypress/models/ARInvoiceDetails"
+import { ARInvoiceDetails } from "../../../../Accounting/cypress/models/ARInvoiceDetails"
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
+import * as AccountingActions from '../../../../Accounting/cypress/actions/Actions';
+import {AccountingSelectors} from '../../../../Accounting/cypress/selectors/Selectors'
 
 let ShipmentData: ShipmentDetails;
 let shipmentNumber: string;
@@ -38,33 +40,33 @@ Then("the shipment should create successfully", () => {
     Given("a credit ARInvoice with a random invoice number and the following details",
         (dataTable) => {
             const ARInvoiceData = dataTable.hashes()[0] as ARInvoiceDetails
-            cy.Click(ShipmentSelectors.CreateCreditNoteARInvoiceButton, null);
-            Actions.FillARInvoiceDetails(ARInvoiceData)
+            cy.Click(AccountingSelectors.CreateCreditNoteARInvoiceButton, null);
+            AccountingActions.FillARInvoiceDetails(ARInvoiceData)
         });
 });
 When("create invoice", () => {
-    Actions.CreateARInvoice()
+    AccountingActions.CreateARInvoice()
 });
 Then("the invoice should create successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });
 
 When("approve invoice", () => {
-    Actions.ARApproveInvoice()
+    AccountingActions.ARApproveInvoice()
 });
 Then("the invoice should approve successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });
 
 When("set invoice as sent", () => {
-    Actions.SetAsSentARInvoice()
+    AccountingActions.SetAsSentARInvoice()
 });
 Then("the invoice should set as sent successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });
 
 When("void invoice", () => {
-    Actions.VoidARInvoice()
+    AccountingActions.VoidARInvoice()
 });
 Then("the invoice should void successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);

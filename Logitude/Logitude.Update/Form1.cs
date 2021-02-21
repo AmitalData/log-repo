@@ -4579,34 +4579,38 @@ User/Pass",
             frm.Show(this);
         }
 
-        private void updateBluesnapTransactionsBtn_Click(object sender, EventArgs e)
-        {
-            Thread thread = new Thread(() => UpdateBluesnapTransactions());
-            thread.IsBackground = true;
-            thread.Start();
-
-        }
-
         private void UpdateBluesnapTransactions()
         {
-            //SetControlPropertyValue(updateBluesnapTransactionsLabel, "Text", "Updating...");
-            //SetControlPropertyValue(updateBluesnapTransactionsLabel, "ForeColor", Color.Black);
+            SetControlPropertyValue(updateBluesnapTransactionsLabel, "Text", "Updating...");
+            SetControlPropertyValue(updateBluesnapTransactionsLabel, "ForeColor", Color.Black);
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
             timer1.Enabled = true;
             timer1.Start();
             BluesnapTransactionUppdateOld.Run();
             stopWatch.Stop();
-            //SetControlPropertyValue(updateBluesnapTransactionsLabel, "ForeColor", Color.Green);
-            //SetControlPropertyValue(updateBluesnapTransactionsLabel, "Text", "Done in " + stopWatch.Elapsed.ToString(@"hh\:mm\:ss"));
+            SetControlPropertyValue(updateBluesnapTransactionsLabel, "ForeColor", Color.Green);
+            SetControlPropertyValue(updateBluesnapTransactionsLabel, "Text", "Done in " + stopWatch.Elapsed.ToString(@"hh\:mm\:ss"));
         }
-       
 
         private void CargoTracking_btn_Click(object sender, EventArgs e)
         {
             Thread thread = new Thread(() => UpdateModule(0, "cargotracking", UpdateAccountinglbl));
             thread.IsBackground = true;
             thread.Start();
+        }
+
+        private void bluesnapBtn_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateBluesnapTransactions());
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private void fixJournalsButton_Click(object sender, EventArgs e)
+        {
+            FixDuplicatedJournals fixDuplicatedJournalsForm = new FixDuplicatedJournals();
+            fixDuplicatedJournalsForm.ShowDialog(this);
         }
     }
 

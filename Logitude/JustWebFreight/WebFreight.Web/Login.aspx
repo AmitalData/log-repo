@@ -24,7 +24,7 @@
     <link href="HtmlHelpers/CSS/sunburst.css" rel="stylesheet" type="text/css"/>
     <link href="HtmlHelpers/CSS/app.css" rel="stylesheet" type="text/css"/>
     <link href="HtmlHelpers/CSS/LogitudeMainCss.css" rel="stylesheet" type="text/css"/>
-    <script src="HtmlHelpers/JS/Logitude.Tools.js" type="text/javascript"></script>        	    
+    <script src="HtmlHelpers/JS/LogitudeTools.js" type="text/javascript"></script>        	    
     <script src="Scripts/json2.min.js" type="text/javascript"></script>
     <script src="HtmlHelpers/JS/highlight.pack.js" type="text/javascript"></script>     	
        
@@ -1908,7 +1908,8 @@
         function OnLoad() {
 
             var url = window.location.href;
-            var isDSV = url.toLowerCase().indexOf("dsv.co.il") > -1 ? true : false;
+           
+            var isDSV = (url.toLowerCase().indexOf("dsv.co.il") > -1 || IsDSVLocalRun()) ? true : false;
             var myDomain = url.split('/')[2];
 
 
@@ -1960,7 +1961,13 @@
 
         }
 
-
+        function IsDSVLocalRun() {
+            const queryString = window.location.search;
+            if (queryString)
+                return queryString.toLowerCase().indexOf("dsvlocal") > -1;
+            else
+                return false;
+        }
 
         function DSVLogin(myDomain) {
 
@@ -1991,8 +1998,8 @@
                         document.location.href = "AngularLogin" + "/index.html" + ("?Menu=" + urlMenu);
                     }
                     else {
-
-                        document.location.href = "AngularLogin" + "/index.html";
+                        const dsvLocal = IsDSVLocalRun() ? "?dsvlocal" : "";
+                        document.location.href = "AngularLogin" + "/index.html" + dsvLocal;
                     }
                     //document.location.href = "AngularLogin" + "/index.html";
                 },
@@ -2081,7 +2088,7 @@
 
         }
 
-</script>
+    </script>
 
     <script type="text/javascript"> 
 <!-- 

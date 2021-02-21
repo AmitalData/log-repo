@@ -1,4 +1,4 @@
-@smoke
+@release @all
 Feature: Edit AWB Shipment
     The authenticated user will create a direct export air shipment,
     and open AWB wizard screen to show overview tab and add packages from AWB wizard.
@@ -19,7 +19,7 @@ Feature: Edit AWB Shipment
 
     Scenario: Edit direct AWB by add packages
         Given the user in the AWB wizard packages tab
-        And add the follwing packages
+        And add the following packages
             | Quantity | Length | Width | Height | GrossWeight |
             | 1        | 20     | 40    | 60     | 100         |
             | 2        | 30     | 50    | 70     | 200         |

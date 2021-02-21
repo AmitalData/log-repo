@@ -877,5 +877,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             string arPaymentNo = aRPaymentRepository.GetARPaymentNumber(arPaymentId, tenant);
             return arPaymentNo;
         }
+
+        public User getUserByARPayment(ARPayment aRPayment)
+        {
+            User createByUser = repository.getUserByARPayment(aRPayment);
+            return createByUser;
+        }
     }
 }

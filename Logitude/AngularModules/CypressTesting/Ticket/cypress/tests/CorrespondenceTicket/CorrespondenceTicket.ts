@@ -32,6 +32,7 @@ Then("the ticket should create successfully", () => {
 });
 //#endregion
 
+//#region Correspondence
 Given("the user in the ticket's main page", () => {
     Actions.OpenTicket(TicketData.TicketNumber);
 });
@@ -53,3 +54,4 @@ When("add an internal note", () => {
 Then("the internal note should appear successfully", () => {
     BaseAssertion.AssertStatusCode("WaitPostCorrespondenceRequest", 200);
 });
+//#endregion

@@ -102,6 +102,8 @@
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant" />
+   <Index
+    Columns="Code,Tenant" />
   <UniqueConstraint
     Columns="Tenant,Code,ObjectTableId" />
 </Table>

@@ -87,10 +87,22 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     if (CLoudData != null)
                     {
                         returnShipment.DeclarationXMLData = CLoudData.DeclarationXmlData;
+                        returnShipment.DeclarationWCOXml = CLoudData.DeclarationWCOXml;
                         returnShipment.ApproveDateTime = CLoudData.ApproveDateTime;
                         returnShipment.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                         returnShipment.VersionApproved = CLoudData.VersionApproved;
                         returnShipment.ShipmentAddtionalDataXML = CLoudData.ShipmentAddtionalDataXML;
+                        returnShipment.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
+                        returnShipment.DocsSentToAgent = CLoudData.DocsSentToAgent;
+                        returnShipment.ApprovedBy = CLoudData.ApprovedByUserName;
+                        returnShipment.DocumentsApprovedByUserName = CLoudData.DocumentsApprovedByUserName;
+                        returnShipment.IsUserIDNumberRequired = CLoudData.IsUserIDNumberRequired;
+                        returnShipment.UserIdNumberUpdateDate = CLoudData.UserIdNumberUpdateDate;
+                        returnShipment.UserIdNumberXMLData = CLoudData.UserIdNumberXMLData;
+                        returnShipment.UserIdNumber = CLoudData.UserIdNumber;
+                        returnShipment.PaymentRequestXML = CLoudData.PaymentRequestXML;
+                        returnShipment.PaymentDateTime = CLoudData.PaymentDateTime;
+                        returnShipment.IsPaymentRequired = CLoudData.IsPaymentRequired;
                     }
                     return returnShipment;
                 }
@@ -3872,6 +3884,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         returnShipment.ShipmentAddtionalDataXML = CLoudData.ShipmentAddtionalDataXML;
                         returnShipment.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         returnShipment.DocsSentToAgent = CLoudData.DocsSentToAgent;
+                        returnShipment.ApprovedBy = CLoudData.ApprovedByUserName;
+                        returnShipment.DocumentsApprovedByUserName = CLoudData.DocumentsApprovedByUserName;
+                        returnShipment.IsUserIDNumberRequired = CLoudData.IsUserIDNumberRequired;
+                        returnShipment.UserIdNumberUpdateDate = CLoudData.UserIdNumberUpdateDate;
+                        returnShipment.UserIdNumberXMLData = CLoudData.UserIdNumberXMLData;
+                        returnShipment.UserIdNumber = CLoudData.UserIdNumber;
+                        returnShipment.PaymentRequestXML = CLoudData.PaymentRequestXML;
+                        returnShipment.PaymentDateTime = CLoudData.PaymentDateTime;
+                        returnShipment.IsPaymentRequired = CLoudData.IsPaymentRequired;
                     }
 
                     MapShipmentComputedFields(returnShipment);
@@ -3987,6 +4008,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         shipmentPM.ApprovedBy = CLoudData.ApprovedByUserName;
                         shipmentPM.DocumentsApprovedByUserName = CLoudData.DocumentsApprovedByUserName;
+                        shipmentPM.IsUserIDNumberRequired = CLoudData.IsUserIDNumberRequired;
+                        shipmentPM.UserIdNumberUpdateDate = CLoudData.UserIdNumberUpdateDate;
+                        shipmentPM.UserIdNumberXMLData = CLoudData.UserIdNumberXMLData;
+                        shipmentPM.UserIdNumber = CLoudData.UserIdNumber;
+                        shipmentPM.PaymentRequestXML = CLoudData.PaymentRequestXML;
+                        shipmentPM.PaymentDateTime = CLoudData.PaymentDateTime;
+                        shipmentPM.IsPaymentRequired = CLoudData.IsPaymentRequired;
                     }
                     return shipmentPM;
                 }
@@ -4040,6 +4068,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         shipmentPM.ApprovedBy = CLoudData.ApprovedByUserName;
                         shipmentPM.DocumentsApprovedByUserName = CLoudData.DocumentsApprovedByUserName;
+                        shipmentPM.IsUserIDNumberRequired = CLoudData.IsUserIDNumberRequired;
+                        shipmentPM.UserIdNumberUpdateDate = CLoudData.UserIdNumberUpdateDate;
+                        shipmentPM.UserIdNumberXMLData = CLoudData.UserIdNumberXMLData;
+                        shipmentPM.UserIdNumber = CLoudData.UserIdNumber;
+                        shipmentPM.PaymentRequestXML = CLoudData.PaymentRequestXML;
+                        shipmentPM.PaymentDateTime = CLoudData.PaymentDateTime;
+                        shipmentPM.IsPaymentRequired = CLoudData.IsPaymentRequired;
                     }
                     return shipmentPM;
                 }
@@ -4086,6 +4121,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 returnShipment.DocsSentToAgent = CLoudData.DocsSentToAgent;
                 returnShipment.ApprovedBy = CLoudData.ApprovedByUserName;
                 returnShipment.DocumentsApprovedByUserName = CLoudData.DocumentsApprovedByUserName;
+                returnShipment.IsUserIDNumberRequired = CLoudData.IsUserIDNumberRequired;
+                returnShipment.UserIdNumberUpdateDate = CLoudData.UserIdNumberUpdateDate;
+                returnShipment.UserIdNumberXMLData = CLoudData.UserIdNumberXMLData;
+                returnShipment.UserIdNumber = CLoudData.UserIdNumber;
+                returnShipment.PaymentRequestXML = CLoudData.PaymentRequestXML;
+                returnShipment.PaymentDateTime = CLoudData.PaymentDateTime;
+                returnShipment.IsPaymentRequired = CLoudData.IsPaymentRequired;
             }
             return returnShipment;
         }
@@ -5032,6 +5074,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         returnShipment.ShipmentAddtionalDataXML = CLoudData.ShipmentAddtionalDataXML;
                         returnShipment.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         returnShipment.DocsSentToAgent = CLoudData.DocsSentToAgent;
+                        returnShipment.ApprovedBy = CLoudData.ApprovedByUserName;
+                        returnShipment.DocumentsApprovedByUserName = CLoudData.DocumentsApprovedByUserName;
+                        returnShipment.IsUserIDNumberRequired = CLoudData.IsUserIDNumberRequired;
+                        returnShipment.UserIdNumberUpdateDate = CLoudData.UserIdNumberUpdateDate;
+                        returnShipment.UserIdNumberXMLData = CLoudData.UserIdNumberXMLData;
+                        returnShipment.UserIdNumber = CLoudData.UserIdNumber;
+                        returnShipment.PaymentRequestXML = CLoudData.PaymentRequestXML;
+                        returnShipment.PaymentDateTime = CLoudData.PaymentDateTime;
+                        returnShipment.IsPaymentRequired = CLoudData.IsPaymentRequired;
                     }
 
                     return returnShipment;
@@ -12527,6 +12578,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ENSNumber = f.ENSNumber,
                     ENSDate = f.ENSDate,
                     WarehouseLegWarehouseId = f.WarehouseLegWarehouseId,
+                    WarehouseLegTerminalName = f.WarehouseLegTerminalName,
                     WarehouseLegAddressId = f.WarehouseLegAddressId,
                     WarehouseLegTerminalCode = f.WarehouseLegTerminalCode,
                     WarehouseLegExpectedEntryDate = f.WarehouseLegExpectedEntryDate,
@@ -12768,6 +12820,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     if (CLoudData != null)
                     {
                         shipmentPM.DeclarationXMLData = CLoudData.DeclarationXmlData;
+                        shipmentPM.DeclarationWCOXml = CLoudData.DeclarationWCOXml;
                         shipmentPM.ApproveDateTime = CLoudData.ApproveDateTime;
                         shipmentPM.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                         shipmentPM.VersionApproved = CLoudData.VersionApproved;
@@ -12775,11 +12828,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         shipmentPM.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         shipmentPM.ApprovedBy = CLoudData.ApprovedByUserName;
-                        shipmentPM.UserIdNumberXMLData = CLoudData.UserIdNumberXMLData;
-                        shipmentPM.UserIdNumberUpdateDate = CLoudData.UserIdNumberUpdateDate;
-                        shipmentPM.IsUserIDNumberRequired = CLoudData.IsUserIDNumberRequired;
-                        shipmentPM.UserIdNumber = CLoudData.UserIdNumber;
                         shipmentPM.DocumentsApprovedByUserName = CLoudData.DocumentsApprovedByUserName;
+                        shipmentPM.IsUserIDNumberRequired = CLoudData.IsUserIDNumberRequired;
+                        shipmentPM.UserIdNumberUpdateDate = CLoudData.UserIdNumberUpdateDate;
+                        shipmentPM.UserIdNumberXMLData = CLoudData.UserIdNumberXMLData;
+                        shipmentPM.UserIdNumber = CLoudData.UserIdNumber;
+                        shipmentPM.PaymentRequestXML = CLoudData.PaymentRequestXML;
+                        shipmentPM.PaymentDateTime = CLoudData.PaymentDateTime;
+                        shipmentPM.IsPaymentRequired = CLoudData.IsPaymentRequired;
 
                     }
                     return shipmentPM;

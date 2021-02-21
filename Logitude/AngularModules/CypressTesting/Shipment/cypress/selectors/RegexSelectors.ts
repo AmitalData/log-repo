@@ -14,6 +14,6 @@ export class RegexSelectors {
     }
 
     public static ShipmentTypeRadio(shipmentType: string): string{
-        return "input[id^='ShipmentTypeRadio_'][id$='" + shipmentType + "']";
+        return "input[id^='ShipmentTypeRadio_'][id$='" + shipmentType + 'D' + "']";
     }
 }

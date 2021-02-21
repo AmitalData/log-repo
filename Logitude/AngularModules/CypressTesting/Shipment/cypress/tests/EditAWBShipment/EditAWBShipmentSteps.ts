@@ -4,6 +4,8 @@ import { ShipmentDetails } from "../../models/ShipmentDetails";
 import { PackagesDetails } from "../../models/PackagesDetails";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
+import { ShipmentSelectors } from "../../selectors/Selectors";
+import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 
 let ShipmentData: ShipmentDetails;
 let ShipmentNumber: string;
@@ -29,7 +31,7 @@ When("create shipment", () => {
 });
 
 Then("the shipment should create successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200).then((interception) => {
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
         ShipmentNumber = interception.response.body.ShipmentNumber;
     });
 });
@@ -43,15 +45,15 @@ When("open the AWB wizard", () => {
 });
 
 Then("the overview tab should appear successfully", () => {
-    BaseAssertion.AssertElementExist("overviewtabcomponent");
-    BaseAssertion.AssertElementHaveClass("#OVE", "Selected");
+    BaseAssertion.AssertElementExist(ShipmentSelectors.OverviewTabComponentInAWBWizard);
+    BaseAssertion.AssertElementHaveClass(ShipmentSelectors.OverviewTabInAWBWizard, "Selected");
 });
 
 Given("the user in the AWB wizard packages tab", () => {
-    cy.Click("#PAC", null);
+    cy.Click(ShipmentSelectors.PackagesTabInAWBWizard, null);
 });
 
-Given("add the follwing packages", (dataTable) => {
+Given("add the following packages", (dataTable) => {
     let packagesDetailsList = dataTable.hashes() as PackagesDetails[];
     Actions.FillAWBWizardPackagesTab(packagesDetailsList);
 });
@@ -61,5 +63,5 @@ When("save the AWB wizard", () => {
 });
 
 Then("the shipment should update successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutShipmentRequest", 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });

@@ -29,7 +29,7 @@ Given("a direct shipment with the following details", (dataTable) => {
 
 //#region Update general tab given step
 Given("the user fill {string} as GrossWeight and {string} as a MoveType", (GrossWeight, MoveType) => {
-    Actions.OpenShipment(shipmentDetails.ShipmentNumber);
+    Actions.OpenShipment(shipmentDetails.QuoteShipmentNumber);
     Actions.FillGeneralTab(GrossWeight, MoveType)
 });
 //#endregion
@@ -95,7 +95,7 @@ When("update shipment", () => {
 //#region Assert steps
 Then("the direct should create successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
-        shipmentDetails.ShipmentNumber = interception.response.body.ShipmentNumber;
+        shipmentDetails.QuoteShipmentNumber = interception.response.body.ShipmentNumber;
     })
 });
 

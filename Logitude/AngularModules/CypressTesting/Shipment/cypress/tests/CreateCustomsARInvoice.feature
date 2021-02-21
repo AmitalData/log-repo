@@ -1,4 +1,5 @@
-@stable @smoke @release
+@smoke @release @stable @all
+
 Feature: Create customs ARInvoice
     After the user logging in the system and navigate to shipments workspace
     will create a customer and direct shipment, after that update routing
@@ -11,8 +12,11 @@ Feature: Create customs ARInvoice
             | TestCompany | LAS  | US      | AK    |
         When create customer
         Then the customer should create successfully
-
-    Scenario: Create direct export air shipment
+    Scenario: Activate Customs Management in Shipments
+        When the user activate customs settings
+        Then the customs settings should activate successfully
+  
+  Scenario: Create direct export air shipment
         Given the user navigates to shipments workspace
         And a direct shipment with the following details
             | ShipmentLevel | Direction | TransportMode | Shipper     | MainCarriageFromPort | MainCarriageToPort |
@@ -22,7 +26,7 @@ Feature: Create customs ARInvoice
 
     Scenario: Update routing tab
         Given the user in the shipment's rounting tab
-        And edit main carriage leg with the follwing details
+        And edit main carriage leg with the following details
             | Airline | FlightNumber | MAWB   |
             | AA      | Random       | Random |
         When update shipment

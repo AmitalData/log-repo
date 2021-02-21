@@ -480,20 +480,21 @@
                                     <li class="NewTabItem" (click)="AddTab()" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="!_AmitalBrowserInUse && !IsApplicationBlocked">+</li>
                                 </ul>
 
-                       
 
-                                <div *ngIf="IsShowUserDetailsArea" [style.float]="LayoutDirection!='rtl' ? 'left' : 'right'" style="height:20px;margin-top:-23px;display:inline">
+                             
+
+                                <div *ngIf="IsShowUserDetailsArea" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'" style="height:20px;margin-top:-23px;display:inline">
 
                                     <table>
                                         <tr>
                                             <td style="width:70px">
 
-                                                <span class="hyperlink" (click)="CurrenciesRatesClicked()()">Currencies Rates</span>
+                                                <span class="hyperlink" (click)="CurrenciesRatesClicked()">Currencies Rates</span>
 
                                             </td>
                                             <td style="width:5px"></td>
                                             <td>
-                                                <LastSuccessfulLoginComponent ></LastSuccessfulLoginComponent>
+                                                <LastSuccessfulLoginComponent></LastSuccessfulLoginComponent>
 
                                             </td>
                                         </tr>
@@ -501,10 +502,10 @@
 
 
                                 </div>
-                              
 
 
-                              
+
+
                             </div>
 
                             <div class="TabControlBody" (mouseup)="OnSessionMouseUp($event)" style="background: white;" id="ApplicationSession">

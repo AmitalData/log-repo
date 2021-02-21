@@ -10213,6 +10213,7 @@ namespace WebFreight.Web.ReportsWebServices
                     myRecord.HouseNumber = a.House;
                     myRecord.NumberOfContainers = a.NumberOfContainers;
                     myRecord.ETA = a.MainCarriageETA;
+                    myRecord.ATA = a.MainCarriageATA;
                     myRecord.IsCancelled = a.IsCancelled;
                     myRecord.LastSharedEventDate = a.LastSharedEventDate;
                     myRecord.LastSharedEventNote = a.LastSharedEventNotes;

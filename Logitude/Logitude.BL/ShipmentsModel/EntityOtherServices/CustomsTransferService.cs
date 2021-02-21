@@ -540,6 +540,11 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                             {
                                 row[16] = countryCity.Code;
                             }
+
+                            else
+                            {
+                                row[16] = shipperAddress.City;
+                            }
                         }
 
                         row[17] = shipperAddress.City;
@@ -563,6 +568,11 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                             if (countryCity != null)
                             {
                                 row[22] = countryCity.Code;
+                            }
+
+                            else
+                            {
+                                row[22] = consigneeAddress.City;
                             }
                         }
 

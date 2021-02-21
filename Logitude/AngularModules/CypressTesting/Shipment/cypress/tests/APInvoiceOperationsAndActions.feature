@@ -1,4 +1,4 @@
-@stable @smoke @release
+@smoke @release @stable @all
 Feature: APInvoice operations and actions
     After the user logging in the system and navigate to shipments workspace
     will create a direct shipment,update routing tab,packages.
@@ -23,7 +23,7 @@ Feature: APInvoice operations and actions
 
     Scenario: Update routing tab
         Given the user in the shipment's rounting tab
-        And edit main carriage leg with the follwing details
+        And edit main carriage leg with the following details
             | Airline | FlightNumber | MAWB   |
             | AA      | Random       | Random |
         When update shipment
@@ -37,15 +37,15 @@ Feature: APInvoice operations and actions
         Then the direct should update successfully
     Scenario: Add Payables
         Given a payable with the following details
-            | ChargesType | UOM  | Quantity | UnitPrice | Currency |
-            | AFT         | GRWT | 5        | 10        | EUR      |
+            | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
+            | AFT         | GRWT | 5        | 10        | EUR      | 4            |
         When add payables
         Then the payables should add successfully
 
     Scenario: Create APInvoice
         Given an APInvoice with a random invoice number and the following details
-            | Vendor     | InvoiceAmount | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATType | VatNo |
-            | TestVendor | 50            | EUR             | 4                   | Today       | Cash         | Today   | Zero    | 5     |
+            | Vendor     | InvoiceAmount | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATType | VatNo | Branch      |
+            | TestVendor | 50            | EUR             | 4                   | Today       | Cash         | Today   | Zero    | 5     | Main Office |
         When receive invoice
         Then the invoice should create successfully
 

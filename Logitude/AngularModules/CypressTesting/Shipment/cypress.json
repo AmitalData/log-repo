@@ -11,8 +11,8 @@
         "Mode": "Development"
     },
     "defaultCommandTimeout": 20000,
-    "responseTimeout": 120000,
-    "requestTimeout": 120000,
+    "responseTimeout": 180000,
+    "requestTimeout": 180000,
     "video": false,
     "screenshotOnRunFailure": true,
     "screenshots": true,
@@ -29,7 +29,7 @@
         }
     },
     "retries": { 
-        "runMode": 5,
+        "runMode": 3,
         "openMode": 0
       }
 }

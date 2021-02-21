@@ -1,3 +1,4 @@
+@smoke @release @stable @all
 Feature: Edit Ticket Test
 
     Scenario: Create new ticket

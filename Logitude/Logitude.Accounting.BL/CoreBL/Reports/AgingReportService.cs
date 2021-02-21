@@ -533,23 +533,23 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                              CurrencyId = acc.ReconcileMethodCode == "0" ? tenant.CurrencyId : acc.CurrencyId,
 
-                         //AccountTermLocalName = card.PaymentTerm.LocalName,
-                         //AccountSalesmanName = card.SalesmanUser.Contact.EnglishName,
-                         //AccountSalesmanLocalName = card.SalesmanUser.Contact.LocalName,
-                         //AccountCollectorName = card.CollectorUser.Contact.EnglishName,
-                         //AccountCollectorLocalName = card.CollectorUser.Contact.LocalName,
+                         AccountTermLocalName = card.PaymentTerm.LocalName,
+                         AccountSalesmanName = card.SalesmanUser.Contact.EnglishName,
+                         AccountSalesmanLocalName = card.SalesmanUser.Contact.LocalName,
+                         AccountCollectorName = card.CollectorUser.Contact.EnglishName,
+                         AccountCollectorLocalName = card.CollectorUser.Contact.LocalName,
 
-                         //Category1Name = acc.Category1Name,
-                         //Category2Name = acc.Category2Name,
-                         //Category3Name = acc.Category3Name,
-                         //Category4Name = acc.Category4Name,
-                         //Category5Name = acc.Category5Name,
+                         Category1Name = acc.Category1Name,
+                         Category2Name = acc.Category2Name,
+                         Category3Name = acc.Category3Name,
+                         Category4Name = acc.Category4Name,
+                         Category5Name = acc.Category5Name,
 
-                         //Category1LocalName = acc.Category1LocalName,
-                         //Category2LocalName = acc.Category2LocalName,
-                         //Category3LocalName = acc.Category3LocalName,
-                         //Category4LocalName = acc.Category4LocalName,
-                         //Category5LocalName = acc.Category5LocalName,
+                         Category1LocalName = acc.Category1LocalName,
+                         Category2LocalName = acc.Category2LocalName,
+                         Category3LocalName = acc.Category3LocalName,
+                         Category4LocalName = acc.Category4LocalName,
+                         Category5LocalName = acc.Category5LocalName,
 
                          ChartOfAccountsLocalName = acc.ChartOfAccountsLocalName,
                          ChartOfAccountsEnglishName = acc.ChartOfAccountsEnglishName,
@@ -671,22 +671,22 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         BalanceInLocalDueDate = d.LocalAmountDebit - d.LocalAmountCredit,
 
 
-                        //AccountSalesmanName = r.AccountSalesmanName,
-                        //AccountSalesmanLocalName = r.AccountSalesmanLocalName,
-                        //AccountCollectorName = r.AccountCollectorName,
-                        //AccountCollectorLocalName = r.AccountCollectorLocalName,
+                        AccountSalesmanName = r.AccountSalesmanName,
+                        AccountSalesmanLocalName = r.AccountSalesmanLocalName,
+                        AccountCollectorName = r.AccountCollectorName,
+                        AccountCollectorLocalName = r.AccountCollectorLocalName,
 
-                        //Category1Name = r.Category1Name,
-                        //Category2Name = r.Category2Name,
-                        //Category3Name = r.Category3Name,
-                        //Category4Name = r.Category4Name,
-                        //Category5Name = r.Category5Name,
+                        Category1Name = r.Category1Name,
+                        Category2Name = r.Category2Name,
+                        Category3Name = r.Category3Name,
+                        Category4Name = r.Category4Name,
+                        Category5Name = r.Category5Name,
 
-                        //Category1LocalName = r.Category1LocalName,
-                        //Category2LocalName = r.Category2LocalName,
-                        //Category3LocalName = r.Category3LocalName,
-                        //Category4LocalName = r.Category4LocalName,
-                        //Category5LocalName = r.Category5LocalName,
+                        Category1LocalName = r.Category1LocalName,
+                        Category2LocalName = r.Category2LocalName,
+                        Category3LocalName = r.Category3LocalName,
+                        Category4LocalName = r.Category4LocalName,
+                        Category5LocalName = r.Category5LocalName,
 
 
                         ChartOfAccountsLocalName = r.ChartOfAccountsLocalName,
@@ -698,6 +698,28 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                     }
                     ).ToList();
+                if (ToCalcOpenTransactionsFutureDueDate())
+                {
+                     
+                    reportList.ForEach(r =>
+                    {
+
+                        if (r.OrderDate == graterThen_OpenTransactionsFutureDueDate)
+                        {
+                            r.OrderAfterOpenrECODueDate = true;
+                        }
+                    });
+
+                    namedPeriods.ForEach(r =>
+                    {
+
+                        if (r.OrderDate == graterThen_OpenTransactionsFutureDueDate)
+                        {
+                            r.OrderAfterOpenrECODueDate = true;
+                        }
+                    });
+
+                }
 
                 MyPeriodList = reportList;
                 MyPeriodExtendedList = namedPeriods;
@@ -994,22 +1016,22 @@ _Param.AgingForDate.Date, false, true, true,false);
                                                       CustomerVatNumber = account.CustomerVatNumber,
                                                       AccountTermLocalName = account.AccountTermLocalName,
 
-                                                      //AccountSalesmanName = account.AccountSalesmanName,
-                                                      //AccountSalesmanLocalName = account.AccountSalesmanLocalName,
-                                                      //AccountCollectorName = account.AccountCollectorName,
-                                                      //AccountCollectorLocalName = account.AccountCollectorLocalName,
+                                                      AccountSalesmanName = account.AccountSalesmanName,
+                                                      AccountSalesmanLocalName = account.AccountSalesmanLocalName,
+                                                      AccountCollectorName = account.AccountCollectorName,
+                                                      AccountCollectorLocalName = account.AccountCollectorLocalName,
 
-                                                      //Category1Name = account.Category1Name,
-                                                      //Category2Name = account.Category2Name,
-                                                      //Category3Name = account.Category3Name,
-                                                      //Category4Name = account.Category4Name,
-                                                      //Category5Name = account.Category5Name,
+                                                      Category1Name = account.Category1Name,
+                                                      Category2Name = account.Category2Name,
+                                                      Category3Name = account.Category3Name,
+                                                      Category4Name = account.Category4Name,
+                                                      Category5Name = account.Category5Name,
 
-                                                      //Category1LocalName = account.Category1LocalName,
-                                                      //Category2LocalName = account.Category2LocalName,
-                                                      //Category3LocalName = account.Category3LocalName,
-                                                      //Category4LocalName = account.Category4LocalName,
-                                                      //Category5LocalName = account.Category5LocalName,
+                                                      Category1LocalName = account.Category1LocalName,
+                                                      Category2LocalName = account.Category2LocalName,
+                                                      Category3LocalName = account.Category3LocalName,
+                                                      Category4LocalName = account.Category4LocalName,
+                                                      Category5LocalName = account.Category5LocalName,
 
 
                                                       ChartOfAccountsLocalName = account.ChartOfAccountsLocalName,
@@ -1744,7 +1766,7 @@ Period	Acc	Currency	Total
                 }
                 else if (OrderAfterOpenrECODueDate)
                 {
-                    return " >= " + month;
+                    return "FutureAmount";// " >= " + month;
 
                 }
                 else

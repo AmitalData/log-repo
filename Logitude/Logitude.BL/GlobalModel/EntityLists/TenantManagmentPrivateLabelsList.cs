@@ -10,6 +10,7 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public string PrivateLabelName { get; set; }
         public string PrivateLabelShortName { get; set; }
         public string PrivateLabelUrl { get; set; }
+        public string PrivateLabelDomain { get; set; }
         public byte[] MainLogo { get; set; }
         public string ContactUsEmail { get; set; }
         public bool ReceiveAllStatuses { get; set; }
@@ -17,5 +18,12 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public bool InActive { get; set; }
         public string SearchFields { get; set; }
         public byte[] SmallLogo { get; set; }
+
+        public string BackgroundImageId { get; set; }
+        public string MainImageId { get; set; }
+        public string MainColor { get; set; }
+        public string LoginProgressImageId { get; set; }
+        public string ForgetPasswordImageId { get; set; }
+
     }
 }

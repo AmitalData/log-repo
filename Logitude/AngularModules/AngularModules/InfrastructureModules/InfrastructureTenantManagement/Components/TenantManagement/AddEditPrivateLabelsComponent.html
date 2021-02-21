@@ -31,54 +31,144 @@
     .FormFieldRow {
         height: 32px;
     }
+
+    .slidecontainer {
+        width: 80px;
+        height: 22px;
+        background-color: var(--sliderBackground);
+    }
+
+    .slidecontainer2 {
+        width: 80px;
+        height: 22px;
+        background-color: var(--sliderBackground2);
+    }
+
+    .color-picker-wrapper {
+        border: 1px solid #464646;
+        height: 21px;
+        margin-top: 3px;
+    }
+
+    .colorPicker {
+        width: 65px;
+        height: 22px;
+        max-height: 99px;
+        box-shadow: none;
+        background: none;
+        border-radius: 0;
+        /* margin-top: 2px; */
+        border: none !important;
+        cursor: pointer;
+    }
+
+
+    .range input::-ms-track {
+        width: 100%;
+        cursor: pointer;
+        background: transparent;
+        border-color: transparent;
+        color: transparent;
+    }
+
+    .range-labels {
+        /* margin: 38px 0 0 -30px; */
+        position: absolute;
+        top: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+        .range-labels li {
+            position: relative;
+            float: left;
+            /* width: 90.25px; */
+            text-align: center;
+            color: #b2b2b2;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+            .range-labels li::before {
+                position: absolute;
+                top: -25px;
+                right: 0;
+                left: 0;
+                content: "";
+                margin: 0 auto;
+                width: 9px;
+                height: 9px;
+                background: #b2b2b2;
+                border-radius: 50%;
+            }
+
+        .range-labels .active {
+            color: #37adbf;
+        }
+
+    ::-webkit-color-swatch {
+        border: none !important;
+        margin: -4px -2px;
+        height: 19px;
+    }
+
+    div.scroll { 
+        overflow: scroll;
+    }
+
+
 </style>
-<table>
+ 
 
-    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-        <td colspan="4">
-            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
-        </td>
-    </tr>
+    <div class="scroll" style="height:520px;width:100%">
 
-    <!-- Filters Fields-->
-    <tr>
-        <td>
+        <table>
 
-            <table style="table-layout: fixed;">              
+            <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+                <td colspan="4">
+                    <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+                </td>
+            </tr>
 
-                <!-- Name -->
-                <tr class="FormFieldRow">
+            <!-- Filters Fields-->
+            <tr>
+                <td>
 
-                    <td style="width:130px">
-                        <LogLabel [Text]="'Name'" [ObjectFieldName]="'PrivateLabelName'" [ObjectTableName]="ObjectTableName"
-                                  [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td>
-                        <LogTextBox [ObjectFieldName]="'PrivateLabelName'" [ObjectTableName]="ObjectTableName"
-                                    [DataContext]="DataContext" [HideColumns]="true" ></LogTextBox>
-                    </td>
+                    <table style="table-layout: fixed;">
 
-                    <td></td>
-                </tr>
+                        <!-- Name -->
+                        <tr class="FormFieldRow">
 
-                <!-- Short Name -->
-                <tr class="FormFieldRow">
+                            <td style="width:130px">
+                                <LogLabel [Text]="'Name'" [ObjectFieldName]="'PrivateLabelName'" [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext"></LogLabel>
+                            </td>
+                            <td>
+                                <LogTextBox [ObjectFieldName]="'PrivateLabelName'" [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                            </td>
 
-                    <td>
-                        <LogLabel [Text]="'Short Name'" [ObjectFieldName]="'PrivateLabelShortName'" [ObjectTableName]="ObjectTableName"
-                                  [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td>
-                        <LogTextBox [ObjectFieldName]="'PrivateLabelShortName'" [ObjectTableName]="ObjectTableName"
-                                    [DataContext]="DataContext" [HideColumns]="true" ></LogTextBox>
-                    </td>
+                            <td></td>
+                        </tr>
 
-                    <td></td>
+                        <!-- Short Name -->
+                        <tr class="FormFieldRow">
 
-                </tr>
+                            <td>
+                                <LogLabel [Text]="'Short Name'" [ObjectFieldName]="'PrivateLabelShortName'" [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext"></LogLabel>
+                            </td>
+                            <td>
+                                <LogTextBox [ObjectFieldName]="'PrivateLabelShortName'" [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                            </td>
 
-                <!-- URL -->
-                <tr class="FormFieldRow">
+                            <td></td>
+
+                        </tr>
+
+                        <!-- URL -->
+                        <tr class="FormFieldRow">
 
                     <td>
                         <LogLabel [Text]="'URL'" [ObjectFieldName]="'PrivateLabelUrl'" [ObjectTableName]="ObjectTableName"
@@ -86,209 +176,365 @@
                     </td>
                     <td>
                         <LogTextBox [ObjectFieldName]="'PrivateLabelUrl'" [ObjectTableName]="ObjectTableName"
-                                    [DataContext]="DataContext" [HideColumns]="true" ></LogTextBox>
+                                    [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                     </td>
 
                     <td></td>
 
                 </tr>
 
-                <!-- Contact Us Email -->
+                <!-- Domain -->
                 <tr class="FormFieldRow">
 
                     <td>
-                        <LogLabel [Text]="'Contact Us Email'" [ObjectFieldName]="'ContactUsEmail'" [ObjectTableName]="ObjectTableName"
+                        <LogLabel [Text]="'Domain'" [ObjectFieldName]="'PrivateLabelDomain'" [ObjectTableName]="ObjectTableName"
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <LogTextBox [ObjectFieldName]="'ContactUsEmail'" [ObjectTableName]="ObjectTableName"
-                                    [DataContext]="DataContext" [HideColumns]="true" ></LogTextBox>
+                        <LogTextBox [ObjectFieldName]="'PrivateLabelDomain'" [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
                     </td>
 
-                    <td></td>
+                            <td></td>
 
-                </tr>
+                        </tr>
 
-                <!-- Hybrid Partner. -->
-                <tr class="FormFieldRow">
+                        <!-- Contact Us Email -->
+                        <tr class="FormFieldRow">
 
-                    <td>
-                        <LogLabel [Text]="'Hybrid Partner'" [ObjectFieldName]="'HybridPartnerId'" [ObjectTableName]="ObjectTableName"
-                                  [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td>
-                        <LogLov [ObjectFieldName]="'HybridPartnerId'"
-                                [ObjectTableName]="ObjectTableName"
-                                [SelectedValue]="HybridPartnerId"
-                                [DataContext]="DataContext"
-                                [DisplayMemberPath]="'Name'"
-                                [LookUpTableName]="'HybridPartner'"
-                                [HideColumns]="true">
-                        </LogLov>
-                    </td>
+                            <td>
+                                <LogLabel [Text]="'Contact Us Email'" [ObjectFieldName]="'ContactUsEmail'" [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext"></LogLabel>
+                            </td>
+                            <td>
+                                <LogTextBox [ObjectFieldName]="'ContactUsEmail'" [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                            </td>
 
-                    <td></td>
+                            <td></td>
 
-                </tr>
+                        </tr>
 
-                <tr class="FormFieldRow">
+                        <!-- Hybrid Partner -->
+                        <tr class="FormFieldRow">
 
-                    <!-- Receive All Statuses -->
-                    <td>
-                        <LogLabel [Text]="'Receive All Statuses'" [ObjectFieldName]="'ReceiveAllStatuses'" [ObjectTableName]="ObjectTableName"
-                                  [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td>
-                        <LogCheckBox [ObjectFieldName]="'ReceiveAllStatuses'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                    </td>
+                            <td>
+                                <LogLabel [Text]="'Hybrid Partner'" [ObjectFieldName]="'HybridPartnerId'" [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext"></LogLabel>
+                            </td>
+                            <td>
+                                <LogLov [ObjectFieldName]="'HybridPartnerId'"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [SelectedValue]="HybridPartnerId"
+                                        [DataContext]="DataContext"
+                                        [DisplayMemberPath]="'Name'"
+                                        [LookUpTableName]="'HybridPartner'"
+                                        [HideColumns]="true">
+                                </LogLov>
+                            </td>
 
-                    <td></td>
+                            <td></td>
 
-                </tr>
+                        </tr>
 
-                <tr class="FormFieldRow">
+                        <tr class="FormFieldRow">
 
-                    <!-- Inactive -->
-                    <td>
-                        <LogLabel [Text]="'In Active'" [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName"
-                                  [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td>
-                        <LogCheckBox [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                    </td>
+                            <!-- Receive All Statuses -->
+                            <td>
+                                <LogLabel [Text]="'Receive All Statuses'" [ObjectFieldName]="'ReceiveAllStatuses'" [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext"></LogLabel>
+                            </td>
+                            <td>
+                                <LogCheckBox [ObjectFieldName]="'ReceiveAllStatuses'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                            </td>
 
-                    <td></td>
+                            <td></td>
 
-                </tr>
+                        </tr>
 
-                <tr class="FormFieldRow">
+                        <tr class="FormFieldRow">
 
-                    <!-- Main Logo -->
-                    <td>
-                        <LogLabel [Text]="'Main Logo'" [ObjectFieldName]="'MainLogo'" [ObjectTableName]="ObjectTableName"
-                                  [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td>
-                        <button [class.HyperlinkDisabled]="DemoMessageVisibility" style="width: 57px;" class="Button" (click)="OpenUpLoadMainLogo()">Upload</button>
-                        <input [attr.id]="LogoMainFileHtmlId" accept=".jpg,.jpeg,.JPG,.JPEG" type="file" (change)="UploadogoFileMain($event)" style="display:none" class="upload" />
+                            <!-- Inactive -->
+                            <td>
+                                <LogLabel [Text]="'In Active'" [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext"></LogLabel>
+                            </td>
+                            <td>
+                                <LogCheckBox [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                            </td>
 
-                    </td>
+                            <td></td>
 
-                    <td>
-                        <table>
-                            <tr>
-                                <td style="width:80px">
-                                    <LogLabel [Text]="'Small Logo'" [ObjectFieldName]="'SmallLogo'" [ObjectTableName]="ObjectTableName"
-                                              [DataContext]="DataContext"></LogLabel>
-                                </td>
-                                <td>
-                                    <button [class.HyperlinkDisabled]="DemoMessageVisibility" style="width: 57px;" class="Button" (click)="OpenUpLoadSmallLogo()">Upload</button>
-                                    <input [attr.id]="LogoSmallFileHtmlId" accept=".jpg,.jpeg,.JPG,.JPEG" type="file"  (change)="UploadogoFileSmall($event)" style="display:none" class="upload" />
+                        </tr>
 
-                                </td>
-
-                                <td></td>
-                            </tr>
-                        </table>
-                    </td>
-
-                </tr>
-
-
-                <tr class="FormFieldRow">
-
-                    <!-- Image Display -->
-                    <td>
-                       
-                    </td>
-                    <td style="vertical-align:top">
-                        <div style="width:300px;vertical-align:top; border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:5px">
-                            <table style="height:100%;width:100%; ">
-
-                                <tr>
-
-                                    <td>
-                                        <div style="background-color:#EDEDED;height:25px;color:black;border-top:2px solid #E4E3E1;border-bottom:0px solid gray;border-radius:0px">
-                                            <p style="font-size:12px;margin-left:5px;margin-top:0px;color:#1B90CB;text-align:left;vertical-align:central">Logo</p>
-                                        </div>
-                                    </td>
-
-
-                                <tr style="height:100%">
-                                    <td align="center" style="height:100%;vertical-align:central">
-
-                                        <div valign="center" align="center" style="vertical-align:top;background-color:white;text-align:center;height:135px">
-                                            <img style="width:auto;height:135px;  top: 2px; left: 0; right: 0;bottom: 2px; margin: auto;vertical-align:central;background-color:white;max-width: 100%;max-height: 100%;position: absolute;border:0px solid #ffffff" [attr.id]="MainLogoImageHtmlId" src="#" />
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </td>
-
-                    <td style="vertical-align:top">
-                        <table>
-                            <tr>
-                                <td></td>
-                                <td style="vertical-align:top">
-                                    <div style="width:150px;vertical-align:top; border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:5px">
-                                        <table style="height:100%;width:100%; ">
-
-                                            <tr>
-
-                                                <td>
-                                                    <div style="background-color:#EDEDED;height:25px;color:black;border-top:2px solid #E4E3E1;border-bottom:0px solid gray;border-radius:0px">
-                                                        <p style="font-size:12px;margin-left:5px;margin-top:0px;color:#1B90CB;text-align:left;vertical-align:central">Small Logo</p>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            <tr style="height:100%">
-                                                <td align="center" style="height:100%;vertical-align:central">
-                                                    <div valign="center" align="center" style="vertical-align:top;background-color:white;text-align:center;height:80px">
-                                                        <img style="width:auto;height:80px;  top: 2px; left: 0; right: 0;bottom: 2px; margin: auto;vertical-align:central;height:auto;background-color:white;max-width: 100%;max-height: 100%;position: absolute;border:0px solid #ffffff" [attr.id]="SmallLogoImageHtmlId" src="#" />
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </td>
-
-                                <td></td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td colspan="3">
-
-                    </td>
-                </tr>
-                
-               
-
-            </table>
-
+                        <br>
+                        <!-- Main Color -->
+                        <tr style="vertical-align:top;height:33px">
+                            <!--
+        <td style="width:8px">
+            <div></div>
         </td>
-    </tr>
+            -->
+                            <td style="width:200px;">
+                                <LogLabel [Text]="'Main Color'" [ObjectFieldName]="'MainColor'" [ObjectTableName]="'ObjectTableName'"
+                                          [DataContext]="DataContext"></LogLabel>
+                            </td>
 
-    <tr style="min-height: 40px;max-height:40px;height:40px">
-        <td>
-            <table>
-                <tr>
-                    <td>
-                        <div></div>
-                    </td>
-                    <td style="width: 57px;vertical-align: bottom;">
-                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' |TextCodeTranslationPipe}}</button>
-                    </td>
-                    <td style="width: 10px;"><div></div></td>
-                    <td style="width: 50px;vertical-align: bottom;">
-                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' |TextCodeTranslationPipe}}</button>
-                    </td>
-                </tr>
-            </table>
-        </td>       
-    </tr>
-</table>
+                            <td colspan="3">
+                                <div style="width:70px; direction: ltr;" float-start>
+                                    <LogTextBox [HideColumns]="true" [ObjectFieldName]="'MainColorCode'"
+                                                [ObjectTableName]="'ObjectTableName'" [Text]="MainColorCode" [DataContext]="DataContext">
+                                    </LogTextBox>
+                                </div>
+                                <div float-start style="width: 5px;height: 10px;"></div>
+                                <div class="color-picker-wrapper" float-start>
+                                    <input type="color" [(ngModel)]="MainColorCode" class="colorPicker" id="color" [style.opacity]="MainColorOpacity/100"
+                                           value="">
+                                </div>
+                                <div float-start style="width: 20px;height: 10px;"></div>
+                                <div float-start style="color: #757575;padding: 5px 5px 0 5px">
+                                    Opacity:
+                                </div>
+                                <div float-start class="range">
+                                    <input [(ngModel)]="MainColorOpacity" class="slider"
+                                           id="slider0" min="25" max="100" step="25" type="range" />
+                                    <span style="position: absolute;top: 7px; padding: 0 7px;">{{MainColorOpacity}}%</span>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+
+                        <br>
+
+                        <tr class="FormFieldRow">
+
+                            <!-- Main Logo -->
+                            <td>
+                                <LogLabel [Text]="'Main Logo'" [ObjectFieldName]="'MainLogo'" [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext"></LogLabel>
+                            </td>
+                            <td>
+                                <button [class.HyperlinkDisabled]="DemoMessageVisibility" style="width: 57px;" class="Button" (click)="OpenUpLoadMainLogo()">Upload</button>
+                                <input [attr.id]="LogoMainFileHtmlId" accept=".jpg,.jpeg,.JPG,.JPEG" type="file" (change)="UploadogoFileMain($event)" style="display:none" class="upload" />
+
+                            </td>
+
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td style="width:80px; left: 160px;">
+                                            <LogLabel [Text]="'Small Logo'" [ObjectFieldName]="'SmallLogo'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td style="left: 235px;">
+                                            <button [class.HyperlinkDisabled]="DemoMessageVisibility" style="width: 57px;" class="Button" (click)="OpenUpLoadSmallLogo()">Upload</button>
+                                            <input [attr.id]="LogoSmallFileHtmlId" accept=".jpg,.jpeg,.JPG,.JPEG" type="file" (change)="UploadogoFileSmall($event)" style="display:none" class="upload" />
+
+                                        </td>
+
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                        </tr>
+
+
+                        <tr class="FormFieldRow">
+
+                            <!-- Image Display -->
+                            <td>
+                            </td>
+                            <td style="vertical-align:top">
+                                <div style="width:300px;vertical-align:top; border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:5px">
+                                    <table style="height:100%;width:100%; ">
+
+                                        <tr>
+
+                                            <td>
+                                                <div style="background-color:#EDEDED;height:25px;color:black;border-top:2px solid #E4E3E1;border-bottom:0px solid gray;border-radius:0px">
+                                                    <p style="font-size:12px;margin-left:5px;margin-top:0px;color:#1B90CB;text-align:left;vertical-align:central">Logo</p>
+                                                </div>
+                                            </td>
+
+
+                                        <tr style="height:100%">
+                                            <td align="center" style="height:100%;vertical-align:central">
+
+                                                <div valign="center" align="center" style="vertical-align:top;background-color:white;text-align:center;height:135px">
+                                                    <img style="width:auto;height:135px;  top: 2px; left: 0; right: 0;bottom: 2px; margin: auto;vertical-align:central;background-color:white;max-width: 100%;max-height: 100%;position: absolute;border:0px solid #ffffff" [attr.id]="MainLogoImageHtmlId" src="#" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+
+
+                            <td style="vertical-align:top">
+                                <table>
+                                    <tr>
+                                        <td></td>
+                                        <td style="left: 315px; vertical-align:top">
+                                            <div style="width:150px;vertical-align:top; border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:5px">
+                                                <table style="height:100%;width:100%; ">
+
+                                                    <tr>
+
+                                                        <td>
+                                                            <div style="background-color:#EDEDED;height:25px;color:black;border-top:2px solid #E4E3E1;border-bottom:0px solid gray;border-radius:0px">
+                                                                <p style="font-size:12px;margin-left:5px;margin-top:0px;color:#1B90CB;text-align:left;vertical-align:central">Small Logo</p>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height:100%">
+                                                        <td align="center" style="height:100%;vertical-align:central">
+                                                            <div valign="center" align="center" style="vertical-align:top;background-color:white;text-align:center;height:80px">
+                                                                <img style="width:auto;height:80px;  top: 2px; left: 0; right: 0;bottom: 2px; margin: auto;vertical-align:central;height:auto;background-color:white;max-width: 100%;max-height: 100%;position: absolute;border:0px solid #ffffff" [attr.id]="SmallLogoImageHtmlId" src="#" />
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </td>
+
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="3">
+                            </td>
+                        </tr>
+
+                        <br>
+
+                        <!-- BackgroundImage and MainImage-->
+
+                        <tr class="FormFieldRow">
+                            <!--   <td style="width:8px">
+           <div></div>
+        </td>-->
+                            <td style="width:180px;height:22px; vertical-align:top">
+                                <LogLabel [Text]="'Background Image'" [ObjectFieldName]="'BackgroundImageId'" [ObjectTableName]="'ObjectTableName'"
+                                          [DataContext]="DataContext"></LogLabel>
+                            </td>
+
+                            <td style="vertical-align:top; overflow:hidden;">
+                                <div style="width:160px;height:100px">
+                                    <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'200px'"
+                                                    [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="BackgroundImageId"
+                                                    [EntityId]="EntityId" [EntityName]="'ObjectTableName'" [Extension]="'png'"
+                                                    (UploadCompleted)="BackgroundImageUploadedCompleted($event)"
+                                                    style="height:72px;width:72px">
+                                    </ImageComponent>
+                                </div>
+                                <a (click)="RemoveImage('BackgroundImage')">remove</a>
+
+                            </td>
+
+                            <td colspan="1">
+                            </td>
+
+                            <td style="width:180px;height:22px; vertical-align:top">
+                                <LogLabel [Text]="'Main Image'" [ObjectFieldName]="'MainImageId'" [ObjectTableName]="'ObjectTableName'"
+                                          [DataContext]="DataContext"></LogLabel>
+                            </td>
+
+                            <td style="vertical-align:top; overflow:hidden;">
+                                <div style="width:160px;height:100px">
+                                    <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'200px'"
+                                                    [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="MainImageId"
+                                                    [EntityId]="EntityId" [EntityName]="'ObjectTableName'" [Extension]="'png'"
+                                                    (UploadCompleted)="MainImageImageUploadedCompleted($event)"
+                                                    style="height:72px;width:72px">
+                                    </ImageComponent>
+                                </div>
+                                <a (click)="RemoveImage('MainImage')">remove</a>
+
+                            </td>
+
+                            <td></td>
+
+                        </tr>
+                        <br>
+
+                        <!-- LoginProgressImage and ForgetPasswordImage-->
+
+                        <tr class="FormFieldRow">
+                            <!--   <td style="width:8px">
+           <div></div>
+        </td>-->
+                            <td style="width:180px;height:22px; vertical-align:top">
+                                <LogLabel [Text]="'Login Progress Image'" [ObjectFieldName]="'LoginProgressImageId'" [ObjectTableName]="'ObjectTableName'"
+                                          [DataContext]="DataContext"></LogLabel>
+                            </td>
+
+                            <td style="vertical-align:top; overflow:hidden;">
+                                <div style="width:160px;height:100px">
+                                    <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'200px'"
+                                                    [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="LoginProgressImageId"
+                                                    [EntityId]="EntityId" [EntityName]="'ObjectTableName'" [Extension]="'png'"
+                                                    (UploadCompleted)="LoginProgressImageUploadedCompleted($event)"
+                                                    style="height:72px;width:72px">
+                                    </ImageComponent>
+                                </div>
+                                <a (click)="RemoveImage('LoginProgressImage')">remove</a>
+
+                            </td>
+
+                            <td colspan="1">
+                            </td>
+
+                            <td style="width:180px;height:22px; vertical-align:top">
+                                <LogLabel [Text]="'Forget Password Image'" [ObjectFieldName]="'ForgetPasswordImageId'" [ObjectTableName]="'ObjectTableName'"
+                                          [DataContext]="DataContext"></LogLabel>
+                            </td>
+
+                            <td style="vertical-align:top; overflow:hidden;">
+                                <div style="width:160px;height:100px">
+                                    <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'200px'"
+                                                    [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="ForgetPasswordImageId"
+                                                    [EntityId]="EntityId" [EntityName]="'ObjectTableName'" [Extension]="'png'"
+                                                    (UploadCompleted)="ForgetPasswordImageUploadedCompleted($event)"
+                                                    style="height:72px;width:72px">
+                                    </ImageComponent>
+                                </div>
+                                <a (click)="RemoveImage('ForgetPasswordImage')">remove</a>
+
+                            </td>
+
+                            <td></td>
+                        </tr>
+
+                    </table>
+
+                </td>
+            </tr>
+
+            <tr style="min-height: 40px;max-height:40px;height:40px">
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <div></div>
+                            </td>
+                            <td style="width: 57px;vertical-align: bottom;">
+                                <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' |TextCodeTranslationPipe}}</button>
+                            </td>
+                            <td style="width: 10px;"><div></div></td>
+                            <td style="width: 50px;vertical-align: bottom;">
+                                <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' |TextCodeTranslationPipe}}</button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>

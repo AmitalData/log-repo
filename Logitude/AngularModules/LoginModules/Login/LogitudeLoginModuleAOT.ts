@@ -9,6 +9,8 @@ import {LoginComponents} from './ModuleDeclarations';
 import {ErrorHandler} from '@angular/core';
 import {LoginService} from './LoginService';
 import {PasswordChangeService} from './PasswordChangeService';
+import { HybridLabelsBrandingDataService } from './HybridLabels/Services/HybridLabelsBrandingDataService';
+import { BrandingDataService } from './HybridLabels/Services/BrandingDataService';
 @NgModule({
     imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule],
 
@@ -39,7 +41,9 @@ import {PasswordChangeService} from './PasswordChangeService';
     providers:
     [
         LoginService,
-        PasswordChangeService
+            PasswordChangeService,
+            HybridLabelsBrandingDataService,
+            BrandingDataService
     ],
 
     bootstrap: [RootComponentAOT]

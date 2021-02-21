@@ -3171,6 +3171,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void CreateInvoicePayment(ARInvoicePaymentPM itemPM)
         {
+            this.ValidateIfSameRecordAdded(itemPM);
+
             itemPM.Id = IdCounter.GetNumber("ARInvoicePayment", tenant);
 
             ARInvoicePayment invoicePayment = new ARInvoicePayment()
@@ -3419,6 +3421,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             invoice.PaidDate = entityPM.PaidDate;
         }
 
+        private void ValidateIfSameRecordAdded(ARInvoicePaymentPM item)
+        {
+            IQueryable<ARInvoicePayment> invoicePayments = invoicePaymentRepository.GetARInvoicePayments(item.ARPaymentId, item.ARInvoiceId, entityPM.Tenant);
+            if (invoicePayments.Count() > 0)
+            {
+                throw new Exception("This invoice already connected to same payment");
+            }
+        }
         #endregion
 
         #region SearchField
