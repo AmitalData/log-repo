@@ -157,6 +157,7 @@
     <Compile Include="FakeMessagingServices\Fake_DCAInDF_8211_CollateralRequestMsgMessagingServices.cs" />
     <Compile Include="FakeMessagingServices\Fake_DCAInDF_NG_2470_MSG16001_ReleaseGoodsMessagingService.cs" />
     <Compile Include="FakeMessagingServices\Fake_DCAInTSH_MSG2_3050_PaymentOrderReplyMessagingService.cs" />
+    <Compile Include="FakeMessagingServices\Fake_SendDOC_MSG5101_GNMessageToAgent.cs" />
     <Compile Include="FakeMessagingServices\Fake_VAL_NG_8228_RequiredDocumentVerificationDecisionResponseService.cs" />
     <Compile Include="FakeMessagingServices\Fake_VAL_NG_8227_MSG_520_RequiredDocumentMessage.cs" />
     <Compile Include="FakeMessagingServices\Fake_DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg.cs" />
