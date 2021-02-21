@@ -130,7 +130,7 @@ export class TenantManagmentPrivateLabelsPMService {
             if (errorsArray.length == 0) {
                 var mappedEntity: TenantManagmentPrivateLabelsPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-
+                this._apiUrl += '/Put';
                 return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
                     .pipe(
                         map((response: HttpResponse<any>) => {

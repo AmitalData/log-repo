@@ -1026,9 +1026,7 @@
     ListLocalDefaultText="&quot;BackgroundImageId&quot;"
     IsNullable="false"
     IsForeignKey="false"
-    ForeignEntity=""
     DontBuildRelationOnDB="false"
-    NavigationPropertyName=""
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1102,9 +1100,7 @@
     ListLocalDefaultText="&quot;MainImageId&quot;"
     IsNullable="false"
     IsForeignKey="false"
-    ForeignEntity=""
     DontBuildRelationOnDB="false"
-    NavigationPropertyName=""
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1326,9 +1322,7 @@
     ListLocalDefaultText="&quot;LoginProgressImageId&quot;"
     IsNullable="false"
     IsForeignKey="false"
-    ForeignEntity=""
     DontBuildRelationOnDB="false"
-    NavigationPropertyName=""
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1402,9 +1396,7 @@
     ListLocalDefaultText="&quot;ForgetPasswordImageId&quot;"
     IsNullable="false"
     IsForeignKey="false"
-    ForeignEntity=""
     DontBuildRelationOnDB="false"
-    NavigationPropertyName=""
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1516,6 +1508,17 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;TenantManagmentPrivateLabels.S.Main&quot;"
+      DefaultText="&quot;Main&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TenantManagmentPrivateLabels.S.BrandingData&quot;"
+      DefaultText="&quot;Branding Data&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
