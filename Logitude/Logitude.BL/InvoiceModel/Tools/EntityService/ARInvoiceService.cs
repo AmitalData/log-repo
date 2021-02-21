@@ -45,6 +45,7 @@ using System.Text;
 using System.IO;
 using Logitude.BL.Resolvers;
 using Logitude.BL.ExternalService;
+using Logitude.BL.InvoiceModel.CloseTables;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -3076,8 +3077,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
         private InterestTransactionPM CreateInterestTransactionLineForVatLine(ARInvoiceTotalVAT invoiceTotalVat,GLAccountPM account)
         {
-            ARInvoiceLinePM invoiceLine = entityPM.InvoiceLines.Where(d => d.VatTypeId == invoiceTotalVat.VatTypeId).FirstOrDefault();
-            dateForInterest = invoiceLine.DateForInterest == null ? (invoiceLine.ValueDate == null ? entityPM.DueDate : invoiceLine.ValueDate) : invoiceLine.DateForInterest;
+            ARInvoiceLinePM invoiceLine = GetInvoiceLineForTotalVat(invoiceTotalVat);
 
             InterestTransactionPM InterestTransactionVatLine = new InterestTransactionPM()
             {
@@ -3087,18 +3087,36 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 OriginalEntityLineNumber = invoiceLineNumber,
                 LocalAmount = (decimal)invoiceTotalVat.LocalVATAmount,
                 ForeignAmount = (decimal?)invoiceTotalVat.InvoiceCurrencyVATAmount,
-                InterestValueDate = (DateTime)dateForInterest,
+                InterestValueDate = GetIntrestValueDate(invoiceLine),
                 Tenant = entityPM.Tenant,
-                GLAccountId = account != null? account.Id : null,
+                GLAccountId = account != null ? account.Id : null,
                 CurrencyId = entityPM.InvoiceCurrencyId,
                 ChangeSetOp = ChangeSetOperation.Insert,
             };
             return InterestTransactionVatLine;
         }
 
+        private DateTime GetIntrestValueDate(ARInvoiceLinePM invoiceLine)
+        {
+            DateTime dateForInterest;
+
+            if (entityPM.ARInvoiceTypeCode == ARInvoiceTypeValues.InterestInvoice)
+                dateForInterest = entityPM.InvoiceDate.Value;
+            else if (invoiceLine.ValueDate != null)
+                dateForInterest = invoiceLine.ValueDate.Value;
+            else
+                dateForInterest = entityPM.DueDate.Value;
+
+            return dateForInterest;
+        }
+
+        private ARInvoiceLinePM GetInvoiceLineForTotalVat(ARInvoiceTotalVAT invoiceTotalVat)
+        {
+            return entityPM.InvoiceLines.Where(d => d.VatTypeId == invoiceTotalVat.VatTypeId).FirstOrDefault();
+        }
+
         private InterestTransactionPM CreateInterestTransactionLineForInvoiceLine(ARInvoiceLinePM invoiceLine, GLAccountPM account)
         {
-            dateForInterest = invoiceLine.DateForInterest == null ? (invoiceLine.ValueDate==null? entityPM.DueDate: invoiceLine.ValueDate)  : invoiceLine.DateForInterest;
             InterestTransactionPM interestTransaction = new InterestTransactionPM()
             {
                 InterestEntityTypeCode = "1",
@@ -3107,7 +3125,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 LocalAmount = (decimal)invoiceLine.LocalCurrencyAmount,
                 GLAccountId = account != null? account.Id:null,
                 ForeignAmount = (decimal?)invoiceLine.ForiegnCurrencyAmount,
-                InterestValueDate = (DateTime)dateForInterest,//(DateTime)invoiceLine.DateForInterest == null? DateTime.Now : (DateTime)invoiceLine.DateForInterest ,
+                InterestValueDate = GetIntrestValueDate(invoiceLine),
                 Tenant = invoiceLine.Tenant,
                 ChangeSetOp = ChangeSetOperation.Insert,
                 CurrencyId = invoiceLine.ForiegnCurrencyId,
