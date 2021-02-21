@@ -69,6 +69,21 @@ export class ExportDeclarationClosingDataPM {
     public set FinalLoadingSite(newValue: string) { if (this.finalLoadingSite != newValue) { this.finalLoadingSite = newValue; this.MarkAsDirty("FinalLoadingSite"); } }
        
 	 
+    private finalLoadingSiteName: string;
+    public get FinalLoadingSiteName() { return this.finalLoadingSiteName; }
+    public set FinalLoadingSiteName(newValue: string) { if (this.finalLoadingSiteName != newValue) { this.finalLoadingSiteName = newValue; this.MarkAsDirty("FinalLoadingSiteName"); } }
+       
+	 
+    private finalCargoTypeName: string;
+    public get FinalCargoTypeName() { return this.finalCargoTypeName; }
+    public set FinalCargoTypeName(newValue: string) { if (this.finalCargoTypeName != newValue) { this.finalCargoTypeName = newValue; this.MarkAsDirty("FinalCargoTypeName"); } }
+       
+	 
+    private finalShipCodeName: string;
+    public get FinalShipCodeName() { return this.finalShipCodeName; }
+    public set FinalShipCodeName(newValue: string) { if (this.finalShipCodeName != newValue) { this.finalShipCodeName = newValue; this.MarkAsDirty("FinalShipCodeName"); } }
+       
+	 
 
     public OldEntityPM: ExportDeclarationClosingDataPM;
 		

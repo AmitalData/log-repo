@@ -1349,6 +1349,16 @@ export class DeclarationPM {
     public set PhysicalCheck(newValue: number) { if (this.physicalCheck != newValue) { this.physicalCheck = newValue; this.MarkAsDirty("PhysicalCheck"); } }
        
 	 
+    private finalLoadingSiteName: string;
+    public get FinalLoadingSiteName() { return this.finalLoadingSiteName; }
+    public set FinalLoadingSiteName(newValue: string) { if (this.finalLoadingSiteName != newValue) { this.finalLoadingSiteName = newValue; this.MarkAsDirty("FinalLoadingSiteName"); } }
+       
+	 
+    private shipCodeName: string;
+    public get ShipCodeName() { return this.shipCodeName; }
+    public set ShipCodeName(newValue: string) { if (this.shipCodeName != newValue) { this.shipCodeName = newValue; this.MarkAsDirty("ShipCodeName"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
