@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs">
+  <Sql Version="1">
+  </Sql>
+
+  <Oracle Version="1">
+    <![CDATA[
+
+
+update declarations 
+set physicalcheck=2 
+where id in (select declarationid from physicalchecks where isclosed=1)
+
+update declarations 
+set physicalcheck=1 
+where id in (select declarationid from physicalchecks where isclosed != 1)
+]]>
+  </Oracle>
+</Script>
