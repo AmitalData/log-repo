@@ -7,7 +7,7 @@ Feature: Create New Surcharge Cost Tariff
         And an air surcharge cost with the following details
             | Name                 | Seller |
             | TestAirSurchargeCost | AA     |
-        And add the follwing surcharges
+        And add the following surcharges
             | Name             |
             | Agent Commission |
             | Air Waybill Fee  |
@@ -18,7 +18,7 @@ Feature: Create New Surcharge Cost Tariff
         Given an ocean LCL surcharge cost with the following details
             | Name                      | Seller |
             | TestOceanLCLSurchargeCost | MAEU   |
-        And add the follwing surcharges
+        And add the following surcharges
             | Name                     |
             | Bunker Adjustment Factor |
             | B/L Fee                  |
@@ -29,7 +29,7 @@ Feature: Create New Surcharge Cost Tariff
         Given an ocean FCL surcharge cost with the following details
             | Name                      | Seller |
             | TestOceanFCLSurchargeCost | MAEU   |
-        And add the follwing surcharges
+        And add the following surcharges
             | Name                     |
             | Bunker Adjustment Factor |
             | B/L Fee                  |

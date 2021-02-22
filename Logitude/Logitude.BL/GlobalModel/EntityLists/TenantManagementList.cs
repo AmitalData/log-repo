@@ -158,5 +158,10 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public int NumberOfBookingSentLastWeek { get; set; }
         public int NumberOfSISentLastWeek { get; set; }
         public DateTime? LastContainerStatusReceived { get; set; }
+
+        public DateTime? LastTariffUpdateDate { get; set; }
+        public DateTime? LastTariffUsageDate { get; set; }
+        public int LastWeekCreatedTariffs { get; set; }
+        public int LastMonthCreatedTariffs { get; set; }
     }
 }

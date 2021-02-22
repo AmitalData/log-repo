@@ -2,7 +2,8 @@
 <Table
   Name="ShipmentPickUpDeliveries"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Shipment">
   <Column
     Name="Id"
     Type="varchar"
@@ -258,6 +259,25 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ParentPickUpDeliveryId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ChildPickUpIndex"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ChildDeliveryIndex"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ToAddressId"
     ReferencedTable="Addresses"
@@ -337,5 +357,10 @@
     ForeignKeyColumn="TransportModeCode"
     ReferencedTable="PickUpDeliveryTransportModes"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ParentPickUpDeliveryId"
+    ReferencedTable="ShipmentPickUpDeliveries"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

@@ -13,7 +13,7 @@ Feature:  Closing and reopening direct shipment
 
   Scenario: Close direct shipment operationally
     Given the user in the direct's shipment rounting tab
-    And edit main carriage leg with the follwing details
+    And edit main carriage leg with the following details
       | Airline | FlightNumber | MAWB   | ATD   |
       | AA      | Random       | Random | Today |
     When close shipment operationally

@@ -22,9 +22,13 @@ export class RequestAliases {
     public static readonly GetTariffVersionLines = "GetTariffVersionLines";
     public static readonly GetSingleTariff = "GetSingleTariff";
     public static readonly GetVatTypePercentage = 'GetVatTypePercentage';
+    public static readonly PostAvailableTariffs = 'PostAvailableTariffs';
     public static readonly PostUpdateRequest = 'WaitPostUpdateRequest';
-    public static readonly PostShippinglinesRequest = 'WaitPostShippinglinesRequest';
-    public static readonly GetCarrierViews = 'WaitGetCarrierViews';
-    public static readonly WaitUpload = 'WaitUpload';
+    public static readonly PostShippingline = 'WaitPostShippinglinesRequest';
+    public static readonly PostUploadExcelFile = 'WaitUpload';
+    public static readonly GetCarrierViews = "GetCarrierViews";
+    public static readonly GetCardviews = "GetCardViews";
+    public static readonly GetEntityResource = "EntityResourceShippingLineTable";
+
 
 }

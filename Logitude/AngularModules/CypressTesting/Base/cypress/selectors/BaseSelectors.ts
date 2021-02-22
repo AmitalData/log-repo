@@ -7,6 +7,8 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly CustomersMenu = '#GeneralMHCustomers';
     public static readonly TicketsMenu = '#GeneralMHTicket';
     public static readonly MaintenanceMenu = "#GeneralMHMaintenance"
+	public static readonly TariffMenu = "#GeneralMHTariffModule";
+    public static readonly ShippingLine = "#MaintenanceItemMTSL"
     //#endregion
     //#region Maintenance
     public static readonly SystemSettings = "#CMS"
@@ -36,7 +38,9 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly typeCheckbox = '[type="checkbox"]'
     public static readonly LogitudeWindow = ".LogitudeWindow";
     public static readonly Label = ".Label"
+    public static readonly ListItem='[class="Row ag-row tooltip"]'
 
+    public static readonly RowHover=".RowHover"
     //#endregion
     //#endregion
 
@@ -47,4 +51,10 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly FirstRecentEntityItem = ".RecentEntityItem:first";
     public static readonly ToggleIcon = '[src="./Images/ToggleIcon.png"]'
     public static readonly BackBottonBodyClass = ".BackBottonBody"
+
+    public static readonly QueryLink = ".QueryLink";
+
+    public static readonly LogLOVFooterHyperLink = ".LogLOVFooter a";
+    public static readonly DownArrowImage = "img[src='./Images/Buttons/downarrow.png']";
+    public static readonly Hyperlink = ".hyperlink";
 }

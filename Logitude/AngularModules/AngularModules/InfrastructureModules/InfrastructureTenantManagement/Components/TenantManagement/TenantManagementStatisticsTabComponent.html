@@ -927,6 +927,85 @@
                                 <td></td>
                             </tr>
 
+                            <!--Tariff-->
+                            <tr>
+                                <td style="width:420px;">
+                                    <fieldset class="FieldSet">
+                                        <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">Tariff Statistics</legend>
+
+                                        <table style="margin:5px;">
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'LastTariffUpdateDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 65px;">{{LastTariffUpdateDate | DateTimeToDatePipe}}</td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 30px; text-align: right;">{{LastTariffUpdateDate | DateTimeToTimePipe: 'S12'}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'LastTariffUsageDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 65px;">{{LastTariffUsageDate | DateTimeToDatePipe}}</td>
+
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="width: 30px; text-align: right;">{{LastTariffUsageDate | DateTimeToTimePipe: 'S12'}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'LastWeekCreatedTariffs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td colspan="3">{{LastWeekCreatedTariffs}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'LastMonthCreatedTariffs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td colspan="3">{{LastMonthCreatedTariffs}}</td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </fieldset>
+                                </td>
+
+                                <td style="width:10px;"></td>
+
+                                <td style="width:420px;">
+                                </td>
+
+                                <td></td>
+                            </tr>
+
                         </table>
                     </ScrollViewer>
                 </div>

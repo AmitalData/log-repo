@@ -137,7 +137,7 @@ Feature:  Full Shipment Scenario
 
     Scenario: Close Direct Shipment operationally
         Given the user in the direct's shipment rounting tab
-        And  edit Main Carriage Leg with the follwing details
+        And  edit Main Carriage Leg with the following details
             | Airline | FlightNumber | MAWB   | ATD   |
             | AA      | Random       | Random | Today |
         When close shipment operationally

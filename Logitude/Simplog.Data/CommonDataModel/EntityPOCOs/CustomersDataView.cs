@@ -20,7 +20,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool InActive { get; set; }
         public string Notes { get; set; }
         public string SupportNotes { get; set; }
-        public string BillToId { get; set; }
         public string Website { get; set; }
         public string SalesmanUserId { get; set; }
         public string PaymentTermId { get; set; }
@@ -40,7 +39,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string CollectorName { get; set; }
         public string ClassifierName { get; set; }
         public string VatTypeId { get; set; }
-        public string BillToName { get; set; }
         public string Field1 { get; set; }
         public string Field2 { get; set; }
         public string Field3 { get; set; }

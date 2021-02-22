@@ -48,7 +48,8 @@ namespace Logitude.CommonTests.Steps.Security
         [Then(@"should receive error message say no permission to do this operation on tenant")]
         public void ThenShouldReceiveErrorMessageSayNoPermissionToDoThisOperationOnTenant()
         {
-            Context.act.Should().ThrowExactly<Exception>().Where(m => m.Message.Contains("Sorry! you have no permission to do this operation on Tenant"));
+            Context.act.Should().ThrowExactly<AggregateException>()
+                .And.InnerExceptions[0].Message.Contains("Sorry! you have no permission to do this operation on Tenant");
         }
         #endregion
 

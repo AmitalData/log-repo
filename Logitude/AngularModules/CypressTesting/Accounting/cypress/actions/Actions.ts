@@ -267,3 +267,24 @@ export function NewARPaymentFromAccounting(aRPaymentDetails: ARPaymentDetails, i
 
 }
 //#endregion
+//#region navigates to draft invoice
+export function NavigatesToDraftInvoice(draftConsolidationInvoiceNumber:string){
+    NavigatesToAccountsReceivableWorkspace()
+    cy.Click(AccountingSelectors.QueryLink,AccountingSelectors.ContainDraftInvoices)
+    cy.FillLogTextBox(BaseSelectors.SearchField, draftConsolidationInvoiceNumber);
+    cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViews, RequestAliases.ARInvoiceviews)
+    BaseAssertion.AssertStatusCode( RequestAliases.ARInvoiceviews, 200)
+    cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViews, RequestAliases.ARInvoiceviews)
+    BaseAssertion.AssertStatusCode( RequestAliases.ARInvoiceviews, 200)
+    cy.Click(BaseSelectors.ListItem, null, false)
+}
+//#endregion
+export function AddSecondInvoiceToConsolidation(){
+    cy.DefineRequestWait(RestAPI.GET,AccountingURLs.ARInvoiceViews,RequestAliases.ARInvoiceviews)
+  BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200)
+  cy.DefineRequestWait(RestAPI.GET,AccountingURLs.ARInvoiceViews,RequestAliases.ARInvoiceviews)
+  BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200)
+cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
+//   cy.get(BaseSelectors.RowHover).eq(1).find(BaseSelectors.typeCheckbox).check({force: true})
+cy.Click( AccountingSelectors.IsConsolidationChecked+":last",null);
+}

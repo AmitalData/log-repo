@@ -7,7 +7,7 @@ Feature: Create New Freight Cost Tariff
         And an air freight cost with the following details
             | Name               | Seller | StartDate | Product |
             | TestAirFreightCost | AA     | Today     | General |
-        And the follwing All-In charges
+        And the following All-In charges
             | Name             |
             | Agent Commission |
             | Air Waybill Fee  |
@@ -18,7 +18,7 @@ Feature: Create New Freight Cost Tariff
         Given an ocean LCL freight cost with the following details
             | Name                    | Seller | StartDate |
             | TestOceanLCLFreightCost | MAEU   | Today     |
-        And the follwing All-In charges
+        And the following All-In charges
             | Name                     |
             | Bunker Adjustment Factor |
             | B/L Fee                  |
@@ -29,7 +29,7 @@ Feature: Create New Freight Cost Tariff
         Given an ocean FCL freight cost with the following details
             | Name                    | Seller | StartDate |
             | TestOceanFCLFreightCost | MAEU   | Today     |
-        And the follwing All-In charges
+        And the following All-In charges
             | Name                     |
             | Bunker Adjustment Factor |
             | B/L Fee                  |
