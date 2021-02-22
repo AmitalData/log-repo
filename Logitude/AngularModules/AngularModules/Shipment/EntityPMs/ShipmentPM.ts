@@ -4653,6 +4653,10 @@ export class ShipmentPM {
     public get AccrualsApprovalDate() { return this.accrualsApprovalDate; }
     public set AccrualsApprovalDate(newValue: Date) { if (this.accrualsApprovalDate != newValue) { this.accrualsApprovalDate = newValue; this.MarkAsDirty("AccrualsApprovalDate"); } }
 
+    private isGroupageHousesUpdated: boolean;
+    public get IsGroupageHousesUpdated() { return this.isGroupageHousesUpdated; }
+    public set IsGroupageHousesUpdated(newValue: boolean) { if (this.isGroupageHousesUpdated != newValue) { this.isGroupageHousesUpdated = newValue; this.MarkAsDirty("IsGroupageHousesUpdated"); } }
+
 
 
     public OldEntityPM: ShipmentPM;

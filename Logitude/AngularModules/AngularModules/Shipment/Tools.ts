@@ -577,6 +577,7 @@ export class ShipmentTool {
                 newItem.VolumetricWeight = item.VolumetricWeight;
                 newItem.Weight = item.Weight;
                 newItem.Width = item.Width;
+                newItem.LCLContainerTypeId = item.LCLContainerTypeId;
                 shipmentPM.ShipmentPackages.push(newItem);
 
                 item.InsideShipmentPackages.forEach(inside => {
@@ -782,7 +783,7 @@ export class ShipmentTool {
             newItem.MaterialDescription = item.MaterialDescription;
             newItem.IsDangerous = item.IsDangerous;
             newItem.CommodityId = item.CommodityId;
-
+            newItem.LCLContainerTypeId = item.LCLContainerTypeId;
             shipmentPM.ShipmentPackages.push(newItem);
         });
     }

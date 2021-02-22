@@ -893,5 +893,15 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                                        select s).Count();
             return count;
         }
+
+        public IQueryable<Shipment> GetShipmentsFromPackagesIds(List<string> packagesIds, int tenant)
+        {
+            IQueryable<Shipment> shipments = (from shipment in context.Shipments
+                                              join shipmentPackage in context.ShipmentPackages.Where(t => packagesIds.Contains(t.Id))
+                                              on shipment.Id equals shipmentPackage.ShipmentId
+                                              where shipment.Tenant == tenant
+                                              select shipment).Distinct();
+            return shipments;
+        }
     }
 }
