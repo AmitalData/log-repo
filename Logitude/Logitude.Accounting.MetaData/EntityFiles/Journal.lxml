@@ -4991,6 +4991,12 @@
       LocalDefaultText="&quot;אסמכתאות \ הערות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.O.ExchangeRateValidation&quot;"
+      DefaultText="&quot;There is no exchange rate for the selected currency on the accounting date for line&quot;"
+      LocalDefaultText="&quot;לא הוגדר שער חליפין של המטבע שנבחר בתאריך החשבונאי שצויין בשורה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
