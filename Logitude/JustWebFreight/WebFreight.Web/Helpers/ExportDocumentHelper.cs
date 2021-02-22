@@ -724,6 +724,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                 case "COO":
                 case "BCO":
                 case "716SD":
+                case "PND":
                 case "SFBL":
                 case "BCS":
                 case "IFI":
