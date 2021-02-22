@@ -150,6 +150,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string ForwarderId  { get; set; }
        [DataMember]
        public string ForwarderName  { get; set; }
+       [DataMember]
+       public string FclLclName  { get; set; }
    }
 
 }
