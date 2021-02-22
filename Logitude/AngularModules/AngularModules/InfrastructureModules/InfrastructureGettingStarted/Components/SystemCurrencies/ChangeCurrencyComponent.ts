@@ -114,7 +114,13 @@ export class ChangeCurrencyComponent extends BaseComponent {
 
             if (value) {
                 if (this.Type == "Profit") {
-                    this.LoadProfitCurrencyRate();
+                    if (value == this.TenantPM.CurrencyId) {
+                        this.ProfitCurrencyRate = 1;
+                    }
+
+                    else {
+                        this.LoadProfitCurrencyRate();
+                    }
                 }
 
                 else {
@@ -151,7 +157,7 @@ export class ChangeCurrencyComponent extends BaseComponent {
     get ProfitCurrencyRate() { return this.profitCurrencyRate; }
     set ProfitCurrencyRate(value: number) {
         if (this.profitCurrencyRate != value) {
-            this.profitCurrencyRate = value;            
+            this.profitCurrencyRate = value;
         }
     }
 
@@ -170,10 +176,20 @@ export class ChangeCurrencyComponent extends BaseComponent {
             if (this.NewCurrencyId == this.oldCurrencyId) {
                 errors.push("You have to select different currency");
             }
+        }
+
+        if (this.Type == "Accounting" && this.ItemsSource.filter(d => AppTool.IsNullOrZero(d.Rate)).length > 0) {
+            errors.push("Some rates are missing");
+        }
+
+        if (this.Type == "Profit") {
+            if (AppTool.IsNullOrZero(this.ProfitCurrencyRate)) {
+                errors.push("Profit currency rate is required");
+            }
 
             else {
-                if (this.ItemsSource.filter(d => AppTool.IsNullOrZero(d.Rate)).length > 0) {
-                    errors.push("Some rates are missing");
+                if (this.NewCurrencyId == this.TenantPM.CurrencyId && this.ProfitCurrencyRate != 1) {
+                    errors.push("Rate should be 1 where profit currency is same as accounting currency");
                 }
             }
         }
