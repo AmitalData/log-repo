@@ -180,7 +180,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //Task 44476 remove if in order to always create task - in case another field was changed but cfi don't has updated value
             //            if (entityPM.HAWB != entityPOCO.HAWB || entityPM.MAWB != entityPOCO.MAWB || entityPM.AirlineId != entityPOCO.AirlineId)
             //            {
-            if (entityPM.HAWB != entityPOCO.HAWB || entityPM.MAWB != entityPOCO.MAWB || entityPM.AirlineId != entityPOCO.AirlineId || entityPM.TruckerId != entityPOCO.TruckerId || entityPM.IsCancelled != entityPOCO.IsCancelled || entityPM.IsReadyForInvoice != entityPOCO.IsReadyForInvoice || entityPM.EstimatedArrivalDate != entityPOCO.EstimatedArrivalDate || entityPM.GatewayPortCode != entityPOCO.GatewayPortCode)
+            if (entityPM.HAWB != entityPOCO.HAWB || entityPM.MAWB != entityPOCO.MAWB || entityPM.AirlineId != entityPOCO.AirlineId || entityPM.TruckerId != entityPOCO.TruckerId || 
+                entityPM.IsCancelled != entityPOCO.IsCancelled || entityPM.IsReadyForInvoice != entityPOCO.IsReadyForInvoice || 
+                ((entityPM.EstimatedArrivalDateOnly.HasValue && (!entityPOCO.EstimatedArrivalDate.HasValue || entityPOCO.EstimatedArrivalDate.Value.Date != entityPM.EstimatedArrivalDateOnly)) || 
+                (!entityPM.EstimatedArrivalDateOnly.HasValue && entityPOCO.EstimatedArrivalDate.HasValue)) || 
+                entityPM.GatewayPortCode != entityPOCO.GatewayPortCode)
             {
                 if (entityPM.ConnectedDeclarations != null && entityPM.ConnectedDeclarations.Length > 0)
                 {
