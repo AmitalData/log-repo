@@ -470,14 +470,18 @@ export class AddressItemClass extends BaseComponent {
     }
 
     get CityLineText() {
-        var myResult = this.City;
+        var myResult = "";
+
+        if (!AppTool.IsNullOrEmpty(this.City)) {
+            myResult = this.City;
+        }
 
         if (!AppTool.IsNullOrEmpty(this.StateEnglishName)) {
-            myResult += ", " + this.StateEnglishName;
+            myResult += !AppTool.IsNullOrEmpty(myResult) ? ", " + this.StateEnglishName : this.StateEnglishName;
         }
 
         if (!AppTool.IsNullOrEmpty(this.ZipCode)) {
-            myResult += ", " + this.ZipCode;
+            myResult += !AppTool.IsNullOrEmpty(myResult) ? ", " + this.ZipCode : this.ZipCode;
         }
 
         return myResult;
