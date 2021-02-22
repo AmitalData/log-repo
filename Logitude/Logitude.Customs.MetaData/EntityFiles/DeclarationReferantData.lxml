@@ -5223,7 +5223,7 @@
     IsForeignKey="true"
     ForeignEntity="FclLclCode"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="FclLclCode"
+    NavigationPropertyName="FclLclCodeTable"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
