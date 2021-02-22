@@ -1572,6 +1572,10 @@ namespace WebFreight.Web.MetaDataUpdate
 
             foreach (ObjectTable objectTable in ObjectTableList)//Where(d => d.IsClosed == false && d.IsComposition == false)// 
             {
+                if (objectTable.DBTableName.Contains("LeadDocumentType"))
+                {
+
+                }
                 List<string> tableNames = new List<string>();
                 Dictionary<string, byte[]> dataList = new Dictionary<string, byte[]>();
                 //Object Field
