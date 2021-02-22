@@ -9,14 +9,13 @@ export var HybridLabelsBrandingDataService = (function () {
         this.httpHeaders = BrandingDataService.GetHeaders();
         this._apiUrl = BrandingDataService.GetAppURL(baseUrl) + 'api/TenantManagmentPrivateLabels';
     }
-    HybridLabelsBrandingDataService.prototype.GetBrandingData = function (BrandingDataRequest) {
+    HybridLabelsBrandingDataService.prototype.GetUserDashboardBrandingData = function (BrandingDataRequest) {
         var url = '/PutGetHybridLabelsBrandingData';
         var callUrl = this._apiUrl.concat(url);
         return this._http.put(callUrl, BrandingDataRequest, { headers: this.httpHeaders }).map(function (response) {
             var result = response.json();
             return result;
         });
-        // catchError(null));
     };
     HybridLabelsBrandingDataService.decorators = [
         { type: Injectable },

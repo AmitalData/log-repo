@@ -4,17 +4,15 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 import { Component } from '@angular/core';
-import { LoginService } from '../LoginService';
-import { SessionInfo } from '../SessionInfo';
-import { ResetPasswordComponent } from './ResetPasswordComponent';
-import { Router } from '@angular/router';
-import { HybridLabelsBrandingDataService } from '../HybridLabels/Services/HybridLabelsBrandingDataService';
-import { BrandingDataService } from '../HybridLabels/Services/BrandingDataService';
-export var DSVResetPasswordComponent = (function (_super) {
-    __extends(DSVResetPasswordComponent, _super);
-    function DSVResetPasswordComponent(router, ss, hybridLabelsBrandingDataService) {
+import { ResetPasswordComponent } from '../../Components/ResetPasswordComponent';
+import { LoginService } from '../../LoginService';
+import { SessionInfo } from '../../SessionInfo';
+import { BrandingDataService } from '../Services/BrandingDataService';
+import { HybridLabelsBrandingDataService } from '../Services/HybridLabelsBrandingDataService';
+export var HybridResetPasswordComponent = (function (_super) {
+    __extends(HybridResetPasswordComponent, _super);
+    function HybridResetPasswordComponent(ss, hybridLabelsBrandingDataService) {
         _super.call(this, ss);
-        this.router = router;
         this.ss = ss;
         this.hybridLabelsBrandingDataService = hybridLabelsBrandingDataService;
         this.MainColor = null;
@@ -25,11 +23,11 @@ export var DSVResetPasswordComponent = (function (_super) {
         this.ContactUsEmail = "";
         this.show = true;
     }
-    DSVResetPasswordComponent.prototype.ngOnInit = function () {
+    HybridResetPasswordComponent.prototype.ngOnInit = function () {
         this.privateUrl = SessionInfo.GetLogitudeURL();
         this.GetHybridLabelsData(this.privateUrl);
     };
-    DSVResetPasswordComponent.prototype.GetHybridLabelsData = function (privateUrl) {
+    HybridResetPasswordComponent.prototype.GetHybridLabelsData = function (privateUrl) {
         var _this = this;
         this.hybridLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetHybridLabelsDataRequest(privateUrl)).subscribe(function (response) {
             if (response.Result) {
@@ -37,33 +35,23 @@ export var DSVResetPasswordComponent = (function (_super) {
                 _this.ContactUsEmail = response.Result.ContactUsEmail;
                 _this.MainColor = response.Result.MainColor;
                 _this.BackgroundImage = BrandingDataService.GetBackgroundImage();
-                _this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage();
-                _this.Id = response.Result.Id;
-                _this.MainLogo = response.Result.MainLogo;
                 _this.MainLogo = BrandingDataService.GetMainLogo();
-            }
-            else {
-                _this.GoToError401();
             }
         });
     };
-    DSVResetPasswordComponent.prototype.GoToError401 = function () {
-        this.router.navigate(['Error401']);
-    };
-    DSVResetPasswordComponent.decorators = [
+    HybridResetPasswordComponent.decorators = [
         { type: Component, args: [{
-                    selector: 'DSVResetPasswordComponent',
+                    selector: 'HybridResetPasswordComponent',
                     moduleId: './Login/Components/',
-                    templateUrl: 'DSVResetPasswordComponent.html',
-                    styleUrls: ['ChangePasswordComponent.css']
+                    templateUrl: 'HybridResetPasswordComponent.html',
+                    styleUrls: ['HybridResetPasswordComponent.css']
                 },] },
     ];
     /** @nocollapse */
-    DSVResetPasswordComponent.ctorParameters = [
-        { type: Router, },
+    HybridResetPasswordComponent.ctorParameters = [
         { type: LoginService, },
         { type: HybridLabelsBrandingDataService, },
     ];
-    return DSVResetPasswordComponent;
+    return HybridResetPasswordComponent;
 }(ResetPasswordComponent));
-//# sourceMappingURL=DSVResetPasswordComponent.js.map
+//# sourceMappingURL=HybridResetPasswordComponent.js.map

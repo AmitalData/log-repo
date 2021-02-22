@@ -5,6 +5,10 @@ import { SessionInfo } from '../SessionInfo';
 import { LoginComponent } from './LoginComponent';
 import { DynamicLoaderTSC } from '../Utilities/DynamicLoaderTSC';
 import { Tools } from '../Utilities/Tools';
+import { Router } from '@angular/router';
+import { HybridLabelsBrandingDataService } from '../HybridLabels/Services/HybridLabelsBrandingDataService';
+import { ServiceResponse } from '../HybridLabels/DataContracts/ServiceResponse';
+import { BrandingDataService } from '../HybridLabels/Services/BrandingDataService';
 
 @Component({
     selector: 'DSVLoginComponent',
@@ -15,13 +19,37 @@ import { Tools } from '../Utilities/Tools';
 export class DSVLoginComponent extends LoginComponent implements OnInit {
 
     public authHeader;
-    constructor(private ss: LoginService) {
-        super(ss);
+    private privateUrl;
+    public MainColor: string = null;
+    public BackgroundImage: string = "";
+    public MainImage: string = "";
+    public MainLogo: string = "";
+    public showSpinner = true; 
+
+    constructor(
+        private ss: LoginService,
+        private hybridLabelsBrandingDataService: HybridLabelsBrandingDataService) {
+        super(ss); 
     }
-    ngOnInit() {
-        console.log("ngOnInit");
-        this.get_cookie_data();
+    ngOnInit() { 
+        this.get_cookie_data(); 
+        this.privateUrl = SessionInfo.GetLogitudeURL();
+        this.GetHybridLabelsData(this.privateUrl);  
     }
+      
+    GetHybridLabelsData(privateUrl: string) {
+        this.hybridLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetHybridLabelsDataRequest(privateUrl)).subscribe((response: ServiceResponse) => {
+            if (response.Result) {
+                this.Tenant = response.Result.Tenant;
+                BrandingDataService.SetHybridLabelsDataRequest(response.Result, privateUrl);
+                this.MainColor = response.Result.MainColor;
+                this.BackgroundImage = BrandingDataService.GetBackgroundImage();
+                this.MainImage = BrandingDataService.GetMainImage();
+                this.MainLogo = BrandingDataService.GetMainLogo();
+                this.showSpinner = false; 
+            } 
+        }); 
+    } 
 
     private ClearLocation() {
         if (SessionInfo.MainLocation) {

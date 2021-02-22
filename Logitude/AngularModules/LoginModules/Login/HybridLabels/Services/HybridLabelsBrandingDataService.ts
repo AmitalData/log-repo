@@ -10,15 +10,14 @@ import { ServiceResponse } from '../DataContracts/ServiceResponse';
 @Injectable()
 
 export class HybridLabelsBrandingDataService {
-    private http: Http;
     private _apiUrl: string;
     private httpHeaders: Headers;
     constructor(private _http: Http, @Inject('BASE_URL') baseUrl: string) {
         this.httpHeaders = BrandingDataService.GetHeaders();
         this._apiUrl = BrandingDataService.GetAppURL(baseUrl) + 'api/TenantManagmentPrivateLabels';
-    }
+    } 
 
-    GetBrandingData(BrandingDataRequest: HybridLabelsBrandingDataRequest) {
+    GetUserDashboardBrandingData(BrandingDataRequest: HybridLabelsBrandingDataRequest) {
         var url = '/PutGetHybridLabelsBrandingData';
         var callUrl = this._apiUrl.concat(url);
 
@@ -26,8 +25,9 @@ export class HybridLabelsBrandingDataService {
             var result: ServiceResponse = response.json();
             return result;
         });
-           // catchError(null));
-    }  
+    }
+ 
+  }  
 
 
-}
+ 

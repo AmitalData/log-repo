@@ -2,9 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
- 
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-
+  
 
 
 namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
