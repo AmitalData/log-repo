@@ -3,8 +3,10 @@ import { TicketDetails } from "../../models/TicketDetails"
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import * as Actions from "../../actions/Actions";
-import { URLs } from "../../constants/URLs";
 import { TicketSelectors } from "../../selectors/TicketSelectors";
+import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
+import { RestAPI } from "../../../../Base/cypress/constants/RestAPI";
+import { URLs } from "../../constants/URLs";
 
 let TicketData: TicketDetails;
 
@@ -15,19 +17,17 @@ Given("the user logged in and navigated to ticket workspace", () => {
 });
 
 Given("a ticket with the following details", (dataTable) => {
-    let ticketDetails = dataTable.hashes()[0] as TicketDetails;
-    TicketData = ticketDetails;
-    cy.Click(BaseSelectors.Button, "New");
+    TicketData = dataTable.hashes()[0] as TicketDetails;
+    cy.Click(BaseSelectors.Button, TicketSelectors.ContainsNew);
     Actions.FillTicketFields(TicketData);
 });
 
 When("create ticket", () => {
-    cy.DefineRequestWait("POST", URLs.CRMDomain, "WaitPostTicketRequest")
-    cy.Click(BaseSelectors.RedButton, "Create");
+    Actions.CreateTicket();
 });
 
 Then("the ticket should create successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPostTicketRequest", 200).then((interception) => {
+    BaseAssertion.AssertStatusCode(RequestAliases.PostTicket,200).then((interception) => {
         TicketData.TicketNumber = interception.response.body.TicketNumber;
     })
 });
@@ -39,32 +39,29 @@ Given("the user in the ticket's main page", () => {
 });
 
 When("create phone call activity", () => {
-    cy.DefineRequestWait("POST", URLs.Activity, "WaitPostActivityRequest");
     Actions.CreateActivity(TicketSelectors.AddCall);
 });
 
 Then("the call activity should appear successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPostActivityRequest", 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.PostTicketActivity,200);
 });
 
 When("create task activity", () => {
-    cy.DefineRequestWait("POST", URLs.Activity, "WaitPostActivityRequest");
     Actions.CreateActivity(TicketSelectors.AddTask);
 });
 
 Then("the task activity should appear successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPostActivityRequest", 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.PostTicketActivity,200);
 });
 
 When("create appointment activity", () => {
-    cy.DefineRequestWait("POST", URLs.Activity, "WaitPostActivityRequest");
-    cy.DefineRequestWait("POST", "performancelogs", "WailAllLoad");
+    cy.DefineRequestWait(RestAPI.POST, URLs.Performancelogs,RequestAliases.WailAllLoad);
     Actions.CreateActivity(TicketSelectors.AddAppoinment);
 });
 
 Then("the appointment activity should appear successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPostActivityRequest", 200);
-    BaseAssertion.AssertStatusCode("WailAllLoad", 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.PostTicketActivity,200);
+    BaseAssertion.AssertStatusCode(RequestAliases.WailAllLoad, 200);
 });
 //#endregion
 
@@ -74,8 +71,8 @@ When("complete phone call activity", () => {
 });
 
 Then("the call activity should complete successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutActivityRequest", 200);
-    cy.Click(TicketSelectors.BackButton, null);
+    BaseAssertion.AssertStatusCode(RequestAliases.PutTicketActivity,200);
+    cy.Click(TicketSelectors.BackButton, null); 
 });
 
 When("complete task activity", () => {
@@ -83,7 +80,7 @@ When("complete task activity", () => {
 });
 
 Then("the task activity should complete successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutActivityRequest", 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.PutTicketActivity,200);
     cy.Click(TicketSelectors.BackButton, null);
 });
 
@@ -92,7 +89,7 @@ When("complete appointment activity", () => {
 });
 
 Then("the appointment activity should complete successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutActivityRequest", 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.PutTicketActivity,200);
     cy.Click(TicketSelectors.BackButton, null);
 });
 //#endregion

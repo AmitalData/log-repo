@@ -17,4 +17,20 @@ export class TicketSelectors extends RegexSelectors
 	public static readonly SaveMenuButton = ".x-button-drop-menu"
 	public static readonly ActivitySubject = "#Activity_Subject"
 	public static readonly MarkAsComplete = "#ActivityBMarkAsComplete"
+	public static readonly TicketParent = "quicksearchtextbox"
+	public static readonly TicketParentClass = ".LogitudeQuickSearchTextBox"
+
+	//#region Contains
+	public static readonly ContainsOk="Ok"
+	public static readonly ContainsYes="Yes"
+	public static readonly ContainsNew="New"
+	public static readonly ContainsCreate = "Create"
+	public static readonly ContainsSendReply = "Send Reply"
+	public static readonly ContainsSendInternalNote = "Send Internal Note"
+	public static readonly ContainsSaveAsOpen = "Save as Open"
+	public static readonly ContainsSaveAsClosed = "Save as Closed"
+	public static readonly ContainsSaveAsResolved = "Save as Resolved"
+	public static readonly ContainsSendAndSetAsOpen = "Send and set as Open"
+	public static readonly ContainsCreateActivityTest = "Create Activity Test"
+	//#endregion
 }
