@@ -17,6 +17,7 @@ import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors'
 //#region variables
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
+let customerCode: string;
 //#endregion
 
 //#region Create customer
@@ -35,8 +36,10 @@ When("create customer", () => {
 });
 
 Then("the customer should create successfully", () => {
-    BaseAssertion.AssertStatusCode(RequestAliases.PartnersDomainRequest, 200);
-});
+    BaseAssertion.AssertStatusCode(RequestAliases.PartnersDomainRequest, 200).then((interception) => {
+        customerCode = interception.response.body.Customer.Code;
+      });
+    });
 //#endregion
 
 //#region Activate Customs Management in Shipments
@@ -57,6 +60,7 @@ Given("the user navigates to shipments workspace", () => {
 Given("a direct shipment with the following details", (dataTable) => {
     shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
     ShipmentActions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
+    shipmentDetails.Shipper = customerCode;
     ShipmentActions.FillShipmentWizardsFields(shipmentDetails);
 });
 
