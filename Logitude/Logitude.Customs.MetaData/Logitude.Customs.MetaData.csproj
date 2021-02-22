@@ -322,6 +322,7 @@
     <None Include="DBTables\ExporterRoleType.dxml" />
     <None Include="DBTables\FacilitationType.dxml" />
     <None Include="DBTables\FaultInspectionType.dxml" />
+    <None Include="DBTables\FclLclCode.dxml" />
     <None Include="DBTables\FreightPaymentMethod.dxml" />
     <None Include="DBTables\FuelType.dxml" />
     <None Include="DBTables\GatepassRequest.dxml" />
@@ -483,6 +484,7 @@
     <None Include="EntityFiles\DeclarationReferantData.lxml" />
     <None Include="EntityFiles\DocumentRejectType.lxml" />
     <None Include="EntityFiles\ExporterRoleType.lxml" />
+    <None Include="EntityFiles\FclLclCode.lxml" />
     <None Include="EntityFiles\LoadingSiteType.lxml" />
     <None Include="EntityFiles\NbcDeclarationType.lxml" />
     <None Include="EntityFiles\CargoSeal.lxml" />
