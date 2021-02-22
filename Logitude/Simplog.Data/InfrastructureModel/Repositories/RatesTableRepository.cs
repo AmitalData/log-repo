@@ -67,6 +67,18 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return query;
         }
 
+        public RatesTable GetExchageRateByValueAndDate(string baseCurrenyId, string foreignCurrencyId, DateTime? date, int tenent)
+        {
+            var query = (from a in webFreightContext.RatesTable
+                         where a.BaseCurrencyId == baseCurrenyId
+                         && a.ForeignCurrencyId == foreignCurrencyId
+                         && a.Tenant == tenent
+                         && a.ValueDate <= date
+                         select a).OrderByDescending(a => a.ValueDate).ThenByDescending(a => a.Id).FirstOrDefault();
+         
+            return query;
+        }
+
         public void Add(RatesTable entity)
         {
             context.RatesTable.Add(entity);
