@@ -18,17 +18,17 @@ namespace WebFreight.Web.Helpers
         string imageBrandingData = "";
         string imageBrandingDataRequest = "";
         string[] imagesFields = { "BackgroundImage", "MainImage", "LoginProgressImage", "ForgetPasswordImage" };
-        public HybridLabelsBrandingData GeHybridLabelsBrandingDataByUrl(HybridLabelsBrandingDataRequest BrandingDataRequest, bool isFromPrivateSite = false)
+        public HybridLabelsBrandingData GeHybridLabelsBrandingDataByUrl(HybridLabelsBrandingDataRequest BrandingDataRequest)
         {
 
             TenantManagmentPrivateLabelsQuery tenantManagementQuery = new TenantManagmentPrivateLabelsQuery();
             TenantManagmentPrivateLabelsPM tenantManagementPM = tenantManagementQuery.GetSingleActivePMByUrl(BrandingDataRequest.PrivateLabelUrl);
-            HybridLabelsBrandingData BrandingData = MapBrandingData(tenantManagementPM, BrandingDataRequest, isFromPrivateSite);
+            HybridLabelsBrandingData BrandingData = MapBrandingData(tenantManagementPM, BrandingDataRequest);
 
             return BrandingData;
         }
 
-        private HybridLabelsBrandingData MapBrandingData(TenantManagmentPrivateLabelsPM tenantManagementPM, HybridLabelsBrandingDataRequest BrandingDataRequest, bool isFromPrivateSite)
+        private HybridLabelsBrandingData MapBrandingData(TenantManagmentPrivateLabelsPM tenantManagementPM, HybridLabelsBrandingDataRequest BrandingDataRequest)
         {
             HybridLabelsBrandingData hybridBrandingData = null;
             if (tenantManagementPM != null)
@@ -53,14 +53,13 @@ namespace WebFreight.Web.Helpers
                     LoginProgressImageId = tenantManagementPM.LoginProgressImageId,
                     ForgetPasswordImageId = tenantManagementPM.ForgetPasswordImageId,
                 };
-                SetPrivateLabelsImages(hybridBrandingData, BrandingDataRequest, isFromPrivateSite);
+                SetPrivateLabelsImages(hybridBrandingData, BrandingDataRequest);
             }
 
             return hybridBrandingData;
         }
         private void SetPrivateLabelsImages(HybridLabelsBrandingData hybridLabelsBrandingData,
-                                            HybridLabelsBrandingDataRequest hybridLabelsBrandingDataRequest,
-                                            bool isFromPrivateSite)
+                                            HybridLabelsBrandingDataRequest hybridLabelsBrandingDataRequest)
         {
 
             // SetBackgroundImageBase64(hybridLabelsBrandingData, hybridLabelsBrandingDataRequest, isFromPrivateSite); 

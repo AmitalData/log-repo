@@ -11,9 +11,10 @@ import {LoginService} from './LoginService';
 import {PasswordChangeService} from './PasswordChangeService';
 import { HybridLabelsBrandingDataService } from './HybridLabels/Services/HybridLabelsBrandingDataService';
 import { BrandingDataService } from './HybridLabels/Services/BrandingDataService';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
-    imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule],
+    imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule, CommonModule],
 
     declarations:
     [
