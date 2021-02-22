@@ -123,7 +123,7 @@
                             </tr>
 
                             <!-- City -->
-                            <tr class="FormFieldRow">
+                            <tr >
                                 <td>
                                     <LogLabel [ObjectFieldName]="'City'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
@@ -131,7 +131,7 @@
                                 <td>
                                     <table>
                                         <tr>
-                                            <td style="width: 194px;">
+                                           <td class="FormFieldRow" style="width: 194px;">
                                                 <LogTextBox [ObjectFieldName]="'City'" [Text]="DataContext.City" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                             </td>
 

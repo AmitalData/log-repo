@@ -1015,7 +1015,46 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-      
+
+        public HttpResponseMessage PutAddress(AddressPM entityPM)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                    string entityName = "Address" + entityPM.Id + entityPM.Tenant;
+                    string entityPmName = "AddressPM" + entityPM.Id + entityPM.Tenant;
+                    if (CacheManager.CacheWrapper.Get(entityName) != null)
+                    {
+                        CacheManager.CacheWrapper.Invalidate(entityName);
+                    }
+                    if (CacheManager.CacheWrapper.Get(entityPmName) != null)
+                    {
+                        CacheManager.CacheWrapper.Invalidate(entityPmName);
+                    }
+
+                    ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
+                    AddressService service = new AddressService(MyContext, entityPM.Tenant);
+
+                    service.Update(entityPM);
+                    scope.Complete();
+                    PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetRecentCustomers(string ownerId, string businessUnitId)
         {
             try

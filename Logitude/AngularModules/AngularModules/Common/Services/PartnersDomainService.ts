@@ -47,6 +47,7 @@ import { CarrierAreasPortPM } from '../EntityPMs/CarrierAreasPortPM';
 import { AccountingPartnerPMService } from './StandardPMs/AccountingPartnerPMService';
 import { TariffCarrierTranslationPM } from '../EntityPMs/TariffCarrierTranslationPM';
 import { WarehouseStoragePricingPM } from '../EntityPMs/WarehouseStoragePricingPM';
+import { CustomFieldClass } from '../../Infrastructure/DataContracts/CustomFieldClass'
 
 @Injectable()
 
@@ -56,6 +57,27 @@ export class PartnersDomainService {
     constructor() {
         this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/PartnersDomain';
+    }
+
+    PutAddress(entityPM: AddressPM) {
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
+
+            var mappedEntity: AddressPM = this.MapJsonToAddressPM(entityPM, false);
+
+            return this._http.put(this._apiUrl + "/PutAddress", JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                var myJsonResult = res;
+                var mappedResult: AddressPM = this.MapJsonToAddressPM(myJsonResult, true, entityPM);
+
+                var myResponse = new ServiceResponse();
+                myResponse.Result = mappedResult;
+                return myResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
     }
 
     GetAllowedAirlineId() {
@@ -1941,6 +1963,58 @@ export class PartnersDomainService {
 
         return entityPM;
     }
+
+    MapJsonToAddressPM(jsonPM: any, mapParent: boolean = true, entityPM: AddressPM = null) {
+
+
+        if (!entityPM) {
+
+            entityPM = new AddressPM();
+            entityPM.DisableMarkAsDirty = true;
+        }
+
+        var customFields: Array<string> = [];
+        for (var i = 1; i < 11; i++) {
+            customFields.push("Field" + i);
+        }
+        var jsonPMKeys = Object.keys(jsonPM);
+
+        for (var key in jsonPMKeys) {
+            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
+
+                continue;
+            }
+            var property = jsonPMKeys[key];
+
+            if (customFields.indexOf(property) > -1) {
+                if (jsonPM[property]) {
+                    var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
+                    entityPM[property] = customFieldClass;
+                }
+            }
+            else {
+                entityPM[property] = jsonPM[property];
+            }
+
+        }
+
+
+
+
+        if (mapParent) {
+            entityPM.OldEntityPM = this.clone(entityPM);
+
+        }
+        else {
+
+            entityPM.OldEntityPM = null;
+        }
+        entityPM.IsDirty = false;
+        entityPM.DisableMarkAsDirty = false;
+
+        return entityPM;
+    }
+
 }
 export class AirlineMessagingRuleList {
     Id: string;

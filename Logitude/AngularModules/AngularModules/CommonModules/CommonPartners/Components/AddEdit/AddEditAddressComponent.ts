@@ -9,6 +9,7 @@ import {AddressValidator} from '../../../../Infrastructure/Validators/AddressVal
 import {PartnersDomainService, PartnerServicePM} from '../../../../Common/Services/PartnersDomainService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
+import { AddressItem } from '../../../../InfrastructureModules/InfrastructureGettingStarted/Components/CompanyAddress/CompanyAddressSettingsComponent';
 
 @Component({
     
@@ -73,30 +74,31 @@ export class AddEditAddressComponent implements OnInit {
         }
     }
 
+    private errors: string[];
     private Validate() {
         var isValid = true;
-        var errors: string[] = [];
+        this.errors = [];
 
         if (this.EntityPM != null) {
             var msg: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-            
-            Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+
+            this.ValidateAddress();
 
             var isLanguageValid = AddressValidator.IsMainAddressEnglishCharacters(this.EntityPM);
             if (!isLanguageValid) {
-                errors.push("Main address does not allow non-english characters");
+                this.errors.push("Main address does not allow non-english characters");
             }
 
             if (this.EntityPM.AddressTypeId == "O") {
                 if (AppTool.IsNullOrEmpty(this.EntityPM.Description)) {
-                    errors.push(msg.replace("%FieldName", "Description"));
+                    this.errors.push(msg.replace("%FieldName", "Description"));
                 }
             }
 
             if (this.DataContext.Country != null) {
                 if (this.DataContext.State == null) {
                     if (this.DataContext.Country.IsStateRequired) {
-                        errors.push(msg.replace("%FieldName", "State"));
+                        this.errors.push(msg.replace("%FieldName", "State"));
                     }
                 }
             }
@@ -106,13 +108,13 @@ export class AddEditAddressComponent implements OnInit {
                     if (this.DataContext.fatherComponent.Customer.PartnerTypeId == "CS") {
                         if (SessionLocator.TenantPM.IsCustomerTelRequired) {
                             if (AppTool.IsNullOrEmpty(this.EntityPM.PhoneNumber)) {
-                                errors.push("Phone Number is required");
+                                this.errors.push("Phone Number is required");
                             }
                         }
 
                         if (SessionLocator.TenantPM.IsCustomerFaxRequired) {
                             if (AppTool.IsNullOrEmpty(this.EntityPM.FaxNumber)) {
-                                errors.push("Fax Number is required");
+                                this.errors.push("Fax Number is required");
                             }
                         }
                     }
@@ -120,13 +122,13 @@ export class AddEditAddressComponent implements OnInit {
                     else if (this.DataContext.fatherComponent.Customer.PartnerTypeId == "PO") {
                         if (SessionLocator.TenantPM.IsPotentialTelRequired) {
                             if (AppTool.IsNullOrEmpty(this.EntityPM.PhoneNumber)) {
-                                errors.push("Phone Number is required");
+                                this.errors.push("Phone Number is required");
                             }
                         }
 
                         if (SessionLocator.TenantPM.IsPotentialFaxRequired) {
                             if (AppTool.IsNullOrEmpty(this.EntityPM.FaxNumber)) {
-                                errors.push("Fax Number is required");
+                                this.errors.push("Fax Number is required");
                             }
                         }
                     }
@@ -134,9 +136,22 @@ export class AddEditAddressComponent implements OnInit {
             }
         }
 
-        isValid = errors.length == 0 ? true : false;
-        this.ValidationErrorsList = errors;
+        isValid = this.errors.length == 0 ? true : false;
+        this.ValidationErrorsList = this.errors;
         return isValid;
+    }
+
+    private ValidateAddress() {
+        var newPotentialAddressCity = this.EntityPM.City;
+        if (AppTool.IsNullOrEmpty(this.EntityPM.City) && this.DataContext.fatherComponent.Customer.PartnerTypeId == "PO") {
+            this.EntityPM.City = (AppTool.IsNullOrEmpty(this.EntityPM.City) ? " Potential city " : this.EntityPM.City);
+        }
+
+        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, this.errors);
+
+        if (this.DataContext.fatherComponent.Customer.PartnerTypeId == "PO") {
+            this.EntityPM.City = newPotentialAddressCity;
+        }
     }
 
     private LoadCompletedEvent: any = null;
