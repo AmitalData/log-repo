@@ -522,7 +522,8 @@ export class AddEditPartnerAddressComponent extends BaseComponent {
             this.CurrentSession.StartBusyIndicatorSaving();
 
             if (this.IsNewEntity) {
-                this.entityPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+
+                this.PartnersDomainService.AddAddress(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
                     if (myResponse.HasError) {
                         this.ValidationErrorsList = myResponse.ErrorsArray;
                     }
@@ -533,6 +534,18 @@ export class AddEditPartnerAddressComponent extends BaseComponent {
 
                     this.CurrentSession.StopBusyIndicator();
                 });
+
+                //this.entityPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+                //    if (myResponse.HasError) {
+                //        this.ValidationErrorsList = myResponse.ErrorsArray;
+                //    }
+
+                //    else {
+                //        this.CurrentSession.CloseCurrentWindowEmit("OK");
+                //    }
+
+                //    this.CurrentSession.StopBusyIndicator();
+                //});
             }
 
             else {

@@ -59,6 +59,27 @@ export class PartnersDomainService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/PartnersDomain';
     }
 
+    AddAddress(entityPM: AddressPM) {
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
+
+            var mappedEntity: AddressPM = this.MapJsonToAddressPM(entityPM, false);
+
+            return this._http.post(this._apiUrl + "/PostAddress", JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                var myJsonResult = res;
+                var mappedResult: AddressPM = this.MapJsonToAddressPM(myJsonResult, true, entityPM);
+
+                var myResponse = new ServiceResponse();
+                myResponse.Result = mappedResult;
+                return myResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     PutAddress(entityPM: AddressPM) {
         return defer(() => {
 
