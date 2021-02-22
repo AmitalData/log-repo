@@ -59,6 +59,7 @@ Given("the user navigates to shipments workspace", () => {
 Given("a direct shipment with the following details", (dataTable) => {
     shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
     ShipmentActions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
+    shipmentDetails.Shipper = customerCode;
     ShipmentActions.FillShipmentWizardsFields(shipmentDetails);
 });
 

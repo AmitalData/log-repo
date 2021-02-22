@@ -1,4 +1,4 @@
-@smoke @release @stable @all
+@smoke @release @all
 
 Feature: Create customs credit note ARInvoice
     After the user logging in the system and navigate to shipments workspace
