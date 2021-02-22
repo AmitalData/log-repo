@@ -1781,7 +1781,13 @@ export class HomeComponent implements OnDestroy{
     }
     
     ViewReleaseNotes() {
-        window.open(ObjectsLocator.GlobalSetting.ReleaseNotesURL);
+        ServiceLocator.SendTotangoUserActivity("Help Center", "How-To");
+        //var url = ServiceHelper.GetLogitudeURL() + 'WebPages/HowToDownloadPage.aspx';
+        var url = ObjectsLocator.GlobalSetting.ReleaseNotesURL;
+        var params: any[] = [{ name: "Token", value: SessionInfo.DocumentDownloadToken }]
+        ServiceHelper.OpenWindowWithParams(url, params);
+
+        //window.open(ObjectsLocator.GlobalSetting.ReleaseNotesURL);
     }
 
     HideReleaseMessageClicked() {        
