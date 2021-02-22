@@ -410,6 +410,7 @@ export class ShipmentList {
 		INTTRABookingStatusCode: string;
 		INTTRABookingTransStatusName: string;
 		INTTRABookingStatusName: string;
+		INTTRALastEBbookingSendDate: Date;
 		From: string;
 		To: string;
 		Origin: string;
