@@ -156,9 +156,8 @@ export class AddEditReportSchedulerComponent implements OnInit {
     }
 
     SetRecepientsDetails(isReloaded) {
-        if (this.PageChild_PRREP.IsPartnersChanged("3")) {
-            this.PageChild_OPEMA.CleanRecepientsLists();
-        }
+        const isPartnersChanged = this.PageChild_PRREP.IsPartnersChanged("3");
+        if (isPartnersChanged) this.PageChild_OPEMA.CleanRecepientsLists();
         this.PageChild_PRREP.PrepareContactList();
         var windowArgs: any = {};
         var recepients: ReportSchedulerRecepients = this.PageChild_RETASK.DataContext.SchedulerDetails.ReportDetails.Recepients;
@@ -171,6 +170,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
         windowArgs.IsUserFromReport = this.PageChild_PRREP.PartnersObslist ? true : false;
         windowArgs.IsSchedulerReport = true;
         windowArgs.isReloaded = isReloaded;
+        windowArgs.ClearRecepients = isPartnersChanged;
         this.PageChild_OPEMA.SetWindowArgs(windowArgs);
     }
 
