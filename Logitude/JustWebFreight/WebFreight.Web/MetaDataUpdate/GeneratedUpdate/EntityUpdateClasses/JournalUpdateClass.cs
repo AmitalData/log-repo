@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "6a4e1fc8151f0a8ebee2a13fc9527d2c";
+		public const string HashString = "6692c693d54e687e617f8df67b321dde";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3528,7 +3528,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "button",
 						FeatureId = JournalFeature_MB0.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "שמור כטיוטה",
 						FeatureUniqeCode = JournalFeature_MB0.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -3568,7 +3568,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "button",
 						FeatureId = JournalFeature_MB2.Id,
 						Style = "ApproveButtonStyle",
-						LocalDefaultText = null,
+						LocalDefaultText = "אישור",
 						FeatureUniqeCode = JournalFeature_MB2.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -3588,7 +3588,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "dropdownbutton",
 						FeatureId = null,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "נוספים",
 						FeatureUniqeCode = null,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -3608,7 +3608,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  JournalFeature_MB30.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "ביטול",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  JournalFeature_MB30.FeatureUniqeCode,
@@ -3628,7 +3628,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  JournalFeature_MB31.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "הדפסה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  JournalFeature_MB31.FeatureUniqeCode,

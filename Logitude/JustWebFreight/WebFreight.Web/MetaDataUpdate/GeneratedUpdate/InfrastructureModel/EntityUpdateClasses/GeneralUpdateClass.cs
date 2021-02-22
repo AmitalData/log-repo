@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "d2db9195946bffd5d0fb6391631d02f2";
+		public const string HashString = "7389ac8330ac54fafef1c66f2313e7f2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "7059",
+			      				    Code =  "7bc0",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -2420,6 +2420,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_AccountingGeneralONewUserDefinedReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NewUserDefinedReport", DefaultText = "New User Defined Report",LocalDefaultText = "הוגדר מחדש ע''י", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMApprovalPaymentWarning = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.ApprovalPaymentWarning", DefaultText = "Please note that in addition to paying VAT, %br We need your approval to pay: %br Purchase tax in the amount of %PurchaseTax ₪ %br Customs in the amount of %CustomsTax ₪ %br Do you confirm?",LocalDefaultText = "אנא תשומת ליבך כי בנוסף לתשלום המע''מ, %br יש לנו צורך באישורך לשלם: %br מס קנייה בסך של %PurchaseTax ₪ %br מכס בסך של %CustomsTax ₪ %br האם אתה מאשר?", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralOLastLogin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.LastLogin", DefaultText = "Last login",LocalDefaultText = @"תאריך חיבור אחרון", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
