@@ -1405,21 +1405,33 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(ichargeTypeId)) {
             if (this.EntityPM.ContainersPrices.filter(d => d.SurchargeId == ichargeTypeId).length > 0) {
                 this.EntityPM.ContainersPrices.filter(d => d.SurchargeId == ichargeTypeId).forEach((item) => {
-                    if (iMeasurement != null && (iMeasurement.Code == "FIXD" || iMeasurement.Code == "BTEU")) {
-                        if (!AppTool.IsNullOrZero(item.CostPrice))
-                            myarray.push(new PriceColorClass(item.CostPrice.toString(), FontTool.Gray));
-                    }
+                    var containerPriceItem: ContainerPricesItem = this.ContainersItemsSourceView.filter(d => d.EntityPM.Id == item.Id)[0];
+                    if (containerPriceItem) {
+                        if (iMeasurement != null && (iMeasurement.Code == "FIXD" || iMeasurement.Code == "BTEU")) {
+                            if (!AppTool.IsNullOrZero(item.CostPrice))
+                                if (containerPriceItem.ComparingCostPrice) {
+                                    myarray.push(new PriceColorClass(item.CostPrice.toString(), containerPriceItem.CostPriceComparingTextColor));
+                                }
 
-                    else {
-                        var containerPriceItem: ContainerPricesItem = this.ContainersItemsSourceView.filter(d => d.EntityPM.Id == item.Id)[0];
-                        if (containerPriceItem) {
+                                else {
+                                    myarray.push(new PriceColorClass(item.CostPrice.toString(), FontTool.Gray));
+                                }
+                        }
+
+                        else {
                             if (!AppTool.IsNullOrEmpty(this.TariffPM.ContainerType1Id)) {
                                 if (AppTool.IsNullOrZero(item.Price1)) {
                                     myarray.push(new PriceColorClass("-", FontTool.Gray));
                                 }
 
                                 else {
-                                    myarray.push(new PriceColorClass(item.Price1.toString(), containerPriceItem.Price1ComparingTextColor));
+                                    if (containerPriceItem.ComparingPrice1) {
+                                        myarray.push(new PriceColorClass(item.Price1.toString(), containerPriceItem.Price1ComparingTextColor));
+                                    }
+
+                                    else {
+                                        myarray.push(new PriceColorClass(item.Price1.toString(), FontTool.Gray));
+                                    }
                                 }
                             }
 
@@ -1429,7 +1441,13 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
                                 }
 
                                 else {
-                                    myarray.push(new PriceColorClass(" / " + item.Price2.toString(), containerPriceItem.Price2ComparingTextColor));
+                                    if (containerPriceItem.ComparingPrice2) {
+                                        myarray.push(new PriceColorClass(" / " + item.Price2.toString(), containerPriceItem.Price2ComparingTextColor));
+                                    }
+
+                                    else {
+                                        myarray.push(new PriceColorClass(" / " + item.Price2.toString(), FontTool.Gray));
+                                    }
                                 }
                             }
 
@@ -1439,7 +1457,13 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
                                 }
 
                                 else {
-                                    myarray.push(new PriceColorClass(" / " + item.Price3.toString(), containerPriceItem.Price3ComparingTextColor));
+                                    if (containerPriceItem.ComparingPrice3) {
+                                        myarray.push(new PriceColorClass(" / " + item.Price3.toString(), containerPriceItem.Price3ComparingTextColor));
+                                    }
+
+                                    else {
+                                        myarray.push(new PriceColorClass(" / " + item.Price3.toString(), FontTool.Gray));
+                                    }
                                 }
                             }
 
@@ -1449,17 +1473,29 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
                                 }
 
                                 else {
-                                    myarray.push(new PriceColorClass(" / " + item.Price4.toString(), containerPriceItem.Price4ComparingTextColor));
+                                    if (containerPriceItem.ComparingPrice4) {
+                                        myarray.push(new PriceColorClass(" / " + item.Price4.toString(), containerPriceItem.Price4ComparingTextColor));
+                                    }
+
+                                    else {
+                                        myarray.push(new PriceColorClass(" / " + item.Price4.toString(), FontTool.Gray));
+                                    }
                                 }
                             }
 
                             if (!AppTool.IsNullOrEmpty(this.TariffPM.ContainerType5Id)) {
                                 if (AppTool.IsNullOrZero(item.Price5)) {
-                                    myarray.push(new PriceColorClass(" / -", FontTool.Gray ));
+                                    myarray.push(new PriceColorClass(" / -", FontTool.Gray));
                                 }
 
                                 else {
-                                    myarray.push(new PriceColorClass(" / " + item.Price5.toString(), containerPriceItem.Price5ComparingTextColor));
+                                    if (containerPriceItem.ComparingPrice5) {
+                                        myarray.push(new PriceColorClass(" / " + item.Price5.toString(), containerPriceItem.Price5ComparingTextColor));
+                                    }
+
+                                    else {
+                                        myarray.push(new PriceColorClass(" / " + item.Price5.toString(), FontTool.Gray));
+                                    }
                                 }
                             }
                         }
