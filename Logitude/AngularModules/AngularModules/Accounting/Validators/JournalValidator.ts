@@ -164,16 +164,12 @@ export class JournalValidator
             this.FillErrorList(result); 
        
         }
-         
      
-        if (result.length > 0) {
-            return result;
-        }
-
         // Validate Totals
         result = JournalValidator.ValidateTotals(entityPM)
         if (result.length > 0) {
-            return result;
+            this.FillErrorList(result); 
+            return this.errorList;
         }
 
         return this.errorList ;
