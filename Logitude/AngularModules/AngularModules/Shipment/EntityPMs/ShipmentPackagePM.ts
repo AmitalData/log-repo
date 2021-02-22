@@ -686,6 +686,11 @@ export class ShipmentPackagePM {
     public get HorseName() { return this.horseName; }
     public set HorseName(newValue: string) { if (this.horseName != newValue) { this.horseName = newValue; this.MarkAsDirty("HorseName"); } }
 
+    private lCLContainerTypeId: string;
+    public get LCLContainerTypeId() { return this.lCLContainerTypeId; }
+    public set LCLContainerTypeId(newValue: string) { if (this.lCLContainerTypeId != newValue) { this.lCLContainerTypeId = newValue; this.MarkAsDirty("LCLContainerTypeId"); } }
+
+
     public OldEntityPM: ShipmentPackagePM;
 
     private entityParentPM: any;

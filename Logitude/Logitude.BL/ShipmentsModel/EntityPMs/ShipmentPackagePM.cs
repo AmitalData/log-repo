@@ -413,5 +413,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string HorseId { get; set; }
         public string HorseName { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string LCLContainerTypeId { get; set; }
     }
 }
