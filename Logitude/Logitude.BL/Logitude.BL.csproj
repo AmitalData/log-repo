@@ -2569,6 +2569,7 @@
     <Compile Include="ShipmentsModel\EntityLists\ShipmentTypeList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\SpecialServicesTypeList.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\APILogsDataPM.cs" />
+    <Compile Include="ShipmentsModel\EntityOtherServices\ExternalTasksQueueService.cs" />
     <Compile Include="ShipmentsModel\EntityOtherServices\CustomsTransferService.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\AWBAdditionalHandlingInfoPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\AWBChargesCodePM.cs" />
