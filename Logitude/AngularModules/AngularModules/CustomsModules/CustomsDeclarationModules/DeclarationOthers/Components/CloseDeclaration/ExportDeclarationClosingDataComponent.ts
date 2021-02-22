@@ -50,7 +50,6 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     GetExportDeclarationClosingData(id: string) {
         if (id != null) {
             this.exportDeclarationClosingDataPMService.get(id).subscribe((response: any) => {
-                debugger;
                 this.EntityPM = response.Result;
                 if (this.EntityPM == null) {
                     this.EntityPM = new ExportDeclarationClosingDataPM();
@@ -65,7 +64,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
 
 
-    get LoadingDateTime() { return this.EntityPM.LoadingDateTime ? this.EntityPM.LoadingDateTime : new Date(); }
+    get LoadingDateTime() { return this.EntityPM ? this.EntityPM.LoadingDateTime : null; }
     set LoadingDateTime(value: Date) {
         if (this.EntityPM.LoadingDateTime != value) {
             this.EntityPM.LoadingDateTime = value;
