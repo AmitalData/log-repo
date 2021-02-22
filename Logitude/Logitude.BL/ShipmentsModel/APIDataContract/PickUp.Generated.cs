@@ -50,6 +50,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public string TransportModeCode { get; set; }
     
     public string Notes { get; set; }
+    
+    public string TruckerNumber { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 
