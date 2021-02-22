@@ -23,7 +23,7 @@ namespace Logitude.Customs.Data.EntityMapping
 		
 		    this.HasKey(t => new { t.Code });
 	 
-            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(1).IsUnicode(true);
+            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(1).IsUnicode(false);
 
             this.Property(t => t.Name).HasColumnName("Name").HasMaxLength(10).IsUnicode(false);
 

@@ -6,7 +6,7 @@
   Module="Customs">
   <Column
     Name="Code"
-    Type="nvarchar"
+    Type="varchar"
     Size="1">
     <Constraints
       PrimaryKey="true"

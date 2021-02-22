@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class FclLclCodeUpdateClass
    {  		
-		public const string HashString = "913c948b4765f64f146f294ab89f795d";
+		public const string HashString = "2ade0cbbba5da36412e459e041c51122";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -122,7 +122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "FCL/LCL",
 			      				    DefaultText =  "FCL/LCL",
-			      				    Code =  "7f1a",
+			      				    Code =  "363a",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -150,7 +150,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "Code",
 					  						ObjectTableName =  "Customs.FclLclCode",
-					  						FieldsDataType =  "nText",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  1,
 					  						IsRequired =  true,
