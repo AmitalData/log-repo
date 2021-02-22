@@ -106,7 +106,7 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  OrderMoney = a.OrderMoney,
                                                                  FclLcl = a.FclLcl,
                                                                  ForwarderName = a.ForwarderCard.LocalName,
-                                                                 PackageQuantity = a.PackageQuantity,
+                                                                 PackageQuantity = a.PackageQuantity!=0? a.PackageQuantity :null ,
 
                                                                  StorageSiteCode =d.StorageSiteCode,
                                                                  HatraDate=d.HatraDate,
