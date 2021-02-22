@@ -8,5 +8,6 @@
         public string PartnerTypeId { get; set; }
         public string CarrierTypeId { get; set; }
         public string Code { get; set; }
+        public bool IsCustomer { get; set; }
     }
 }

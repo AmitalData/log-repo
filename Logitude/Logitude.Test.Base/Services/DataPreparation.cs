@@ -37,22 +37,22 @@ namespace Logitude.Test.Base.Services
         {
             return new PartnersVariables
             {
-                VendorId = GetPartnerId("VD", "TestVendor", null),
-                AgentId = GetPartnerId("AG", "TestAgentExport", null),
-                CustomerId = GetPartnerId("CS", "TestCustomer", null),
-                PotentialCustomerId = GetPartnerId("PO", "TestPotentialCustomer", null),
-                CustomAgentId = GetPartnerId("CG", "TestCustomAgent", null),
-                ShippingAgentId = GetPartnerId("SG", "TestShippingAgent", null),
+                VendorId = GetPartnerId("VD", "TestVendor"),
+                AgentId = GetPartnerId("AG", "TestAgentExport"),
+                CustomerId = GetPartnerId("CS", "TestCustomer", isCustomer: true),
+                PotentialCustomerId = GetPartnerId("PO", "TestPotentialCustomer"),
+                CustomAgentId = GetPartnerId("CG", "TestCustomAgent"),
+                ShippingAgentId = GetPartnerId("SG", "TestShippingAgent"),
                 TruckerTLONId = GetPartnerId("TR", "TestTLONTrucker", "TLON"),
                 TruckerTNYCId = GetPartnerId("TR", "TestTNYCTrucker", "TNYC"),
-                ShipperExportId = GetPartnerId("CS", "TestShipperExport", null),
-                ShipperImportId = GetPartnerId("CS", "TestShipperImport", null),
-                ConsigneeExportId = GetPartnerId("CS", "TestConsigneeExport", null),
-                ConsigneeImportId = GetPartnerId("CS", "TestConsigneeImport", null),
-                AirlineAAId = GetPartnerId("AL", "TestAAAirline", "AA", true),
-                AirlineBAId = GetPartnerId("AL", "TestBAAirline", "BA", true),
-                ShippingLineMAEUId = GetPartnerId("SL", "TestMAEUShippingLine", "MAEU", true),
-                ShippingLineMSCUId = GetPartnerId("SL", "TestMSCUShippingLine", "MSCU", true),
+                ShipperExportId = GetPartnerId("CS", "TestShipperExport"),
+                ShipperImportId = GetPartnerId("CS", "TestShipperImport"),
+                ConsigneeExportId = GetPartnerId("CS", "TestConsigneeExport"),
+                ConsigneeImportId = GetPartnerId("CS", "TestConsigneeImport"),
+                AirlineAAId = GetPartnerId("AL", "TestAAAirline", "AA", copyFromTenantZero: true),
+                AirlineBAId = GetPartnerId("AL", "TestBAAirline", "BA", copyFromTenantZero: true),
+                ShippingLineMAEUId = GetPartnerId("SL", "TestMAEUShippingLine", "MAEU", copyFromTenantZero: true),
+                ShippingLineMSCUId = GetPartnerId("SL", "TestMSCUShippingLine", "MSCU", copyFromTenantZero: true),
                 WarehouseId = GetPartnerId("WH", "TestWarehouse", "TSWHE")
             };
         }
@@ -167,14 +167,14 @@ namespace Logitude.Test.Base.Services
 
         #region Partners Data Preparation
 
-        private static string GetPartnerId(string partnerTypeCode, string partnerName, string partnerCode, bool copyFromTenantZero = false)
+        private static string GetPartnerId(string partnerTypeCode, string partnerName, string partnerCode = null, bool isCustomer = false, bool copyFromTenantZero = false)
         {
             string userTenantPartnerId = GetPartnerIdFromTenant(partnerTypeCode, partnerName, partnerCode, false);
             if (string.IsNullOrEmpty(userTenantPartnerId))
             {
                 if (!copyFromTenantZero)
                 {
-                    userTenantPartnerId = CreatePartnerForUserTenant(partnerTypeCode, partnerName, partnerCode);
+                    userTenantPartnerId = CreatePartnerForUserTenant(partnerTypeCode, partnerName, partnerCode, isCustomer);
                 }
                 else
                 {
@@ -203,9 +203,9 @@ namespace Logitude.Test.Base.Services
             return response.Data?.FirstOrDefault()?["Id"];
         }
 
-        private static string CreatePartnerForUserTenant(string partnerTypeCode, string partnerName, string partnerCode)
+        private static string CreatePartnerForUserTenant(string partnerTypeCode, string partnerName, string partnerCode, bool isCustomer)
         {
-            Partner partner = BuildPartner(partnerTypeCode, partnerName, partnerCode);
+            Partner partner = BuildPartner(partnerTypeCode, partnerName, partnerCode, isCustomer);
             ApiResponse<Partner> response = APICaller.CallPost<Partner>(partner, Urls.PartnersDomainController, UserTenant.Token);
             return response.Data?.PartnerId;
         }
@@ -217,7 +217,7 @@ namespace Logitude.Test.Base.Services
             return response.Data?["Id"];
         }
 
-        private static Partner BuildPartner(string partnerTypeCode, string partnerName, string partnerCode)
+        private static Partner BuildPartner(string partnerTypeCode, string partnerName, string partnerCode, bool isCustomer)
         {
             Partner partner = new Partner
             {
@@ -239,7 +239,8 @@ namespace Logitude.Test.Base.Services
                 EnglishName = partnerName,
                 LocalName = partnerName,
                 PartnerTypeId = partnerTypeCode,
-                Code = partnerCode
+                Code = partnerCode,
+                IsCustomer = isCustomer
             };
 
             switch (partnerTypeCode)
