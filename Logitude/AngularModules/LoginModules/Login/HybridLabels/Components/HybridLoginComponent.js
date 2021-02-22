@@ -4,15 +4,15 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 import { Component } from '@angular/core';
-import { LoginService } from '../LoginService';
-import { SessionInfo } from '../SessionInfo';
-import { LoginComponent } from './LoginComponent';
-import { Tools } from '../Utilities/Tools';
-import { HybridLabelsBrandingDataService } from '../HybridLabels/Services/HybridLabelsBrandingDataService';
-import { BrandingDataService } from '../HybridLabels/Services/BrandingDataService';
-export var DSVLoginComponent = (function (_super) {
-    __extends(DSVLoginComponent, _super);
-    function DSVLoginComponent(ss, hybridLabelsBrandingDataService) {
+import { LoginComponent } from '../../Components/LoginComponent';
+import { LoginService } from '../../LoginService';
+import { SessionInfo } from '../../SessionInfo';
+import { Tools } from '../../Utilities/Tools';
+import { BrandingDataService } from '../Services/BrandingDataService';
+import { HybridLabelsBrandingDataService } from '../Services/HybridLabelsBrandingDataService';
+export var HybridLoginComponent = (function (_super) {
+    __extends(HybridLoginComponent, _super);
+    function HybridLoginComponent(ss, hybridLabelsBrandingDataService) {
         _super.call(this, ss);
         this.ss = ss;
         this.hybridLabelsBrandingDataService = hybridLabelsBrandingDataService;
@@ -20,14 +20,15 @@ export var DSVLoginComponent = (function (_super) {
         this.BackgroundImage = "";
         this.MainImage = "";
         this.MainLogo = "";
+        this.SmallLogo = "";
         this.showSpinner = true;
     }
-    DSVLoginComponent.prototype.ngOnInit = function () {
+    HybridLoginComponent.prototype.ngOnInit = function () {
         this.get_cookie_data();
         this.privateUrl = SessionInfo.GetLogitudeURL();
         this.GetHybridLabelsData(this.privateUrl);
     };
-    DSVLoginComponent.prototype.GetHybridLabelsData = function (privateUrl) {
+    HybridLoginComponent.prototype.GetHybridLabelsData = function (privateUrl) {
         var _this = this;
         this.hybridLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetHybridLabelsDataRequest(privateUrl)).subscribe(function (response) {
             if (response.Result) {
@@ -37,34 +38,35 @@ export var DSVLoginComponent = (function (_super) {
                 _this.BackgroundImage = BrandingDataService.GetBackgroundImage();
                 _this.MainImage = BrandingDataService.GetMainImage();
                 _this.MainLogo = BrandingDataService.GetMainLogo();
+                _this.SmallLogo = BrandingDataService.GetSmallLogo();
                 _this.showSpinner = false;
             }
         });
     };
-    DSVLoginComponent.prototype.ClearLocation = function () {
+    HybridLoginComponent.prototype.ClearLocation = function () {
         if (SessionInfo.MainLocation) {
             SessionInfo.MainLocation.clear();
         }
     };
-    DSVLoginComponent.prototype.ForgotPasswordClicked = function () {
+    HybridLoginComponent.prototype.ForgotPasswordClicked = function () {
         this.ClearLocation();
-        Tools.DynamicLoader.Load("./Login/Components/DSVResetPasswordComponent", SessionInfo.MainLocation)
+        Tools.DynamicLoader.Load("/Login/HybridLabels/Components/HybridResetPasswordComponent", SessionInfo.MainLocation)
             .then(function (cmpRef) {
         });
     };
-    DSVLoginComponent.decorators = [
+    HybridLoginComponent.decorators = [
         { type: Component, args: [{
-                    selector: 'DSVLoginComponent',
+                    selector: 'HybridLoginComponent',
                     moduleId: './Login/Components/',
-                    templateUrl: 'DSVLoginComponent.html',
-                    styleUrls: ['DSVLoginComponent.css']
+                    templateUrl: 'HybridLoginComponent.html',
+                    styleUrls: ['HybridLoginComponent.css']
                 },] },
     ];
     /** @nocollapse */
-    DSVLoginComponent.ctorParameters = [
+    HybridLoginComponent.ctorParameters = [
         { type: LoginService, },
         { type: HybridLabelsBrandingDataService, },
     ];
-    return DSVLoginComponent;
+    return HybridLoginComponent;
 }(LoginComponent));
-//# sourceMappingURL=DSVLoginComponent.js.map
+//# sourceMappingURL=HybridLoginComponent.js.map

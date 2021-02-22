@@ -185,6 +185,7 @@ import { SendInterfaceResultComponent } from './Components/Maintenance/Automatio
 import { FTPAutomationDetailsComponent } from './Components/Maintenance/Automation/AutomationResult/FTPAutomationDetailsComponent';
 import { ToolTipFloatDirective } from './Utilities/RTLDirectives/ToolTipFloatDirective';
 import { SendDocumentResultComponent } from './Components/Maintenance/Automation/AutomationResult/SendDocumentResultComponent';
+import { HybridLoginProcessComponent } from './Components/LoginComponent/CustomLoginComponents/HybridLabels/Components/HybridLoginProcessComponent';
 
 
 
@@ -381,7 +382,7 @@ export const Components =
         BTEParameterTabComponent,
         LastSuccessfulLoginComponent,
         FTBSchedulerTemplateComponent,
-        
+        HybridLoginProcessComponent,
         
     ];
 
@@ -488,11 +489,11 @@ export class ModuleDeclarations {
             case 'FTPAutomationDetailsComponent': { myResult = FTPAutomationDetailsComponent; break; }
             case 'SendDocumentResultComponent': { myResult = SendDocumentResultComponent; break; }
 
+            case 'HybridLoginProcessComponent': { myResult = HybridLoginProcessComponent; break; }
                 
+                 
 
-
-                
-
+                 
         }
 
         return myResult;

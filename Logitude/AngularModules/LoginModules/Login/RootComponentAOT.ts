@@ -151,6 +151,7 @@ export class RootComponentAOT implements OnInit {
 
     LoadDSVLoginPage() {
         console.log("LoadDSVLoginPage");
+        //DynamicLoaderAOT.Load("./Login/HybridLabels/Components/HybridLoginComponent", this.location)
         DynamicLoaderAOT.Load("./Login/Components/DSVLoginComponent", this.location)
             .then(cmpRef => { });
     }

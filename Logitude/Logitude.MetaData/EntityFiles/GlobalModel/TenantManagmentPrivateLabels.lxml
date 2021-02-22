@@ -1327,7 +1327,7 @@
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
-    IsMaxLength="true"
+    IsMaxLength="false"
     NoMetaDataField="true"
     GenerateInList="true"
     IsFixedLength="false"
