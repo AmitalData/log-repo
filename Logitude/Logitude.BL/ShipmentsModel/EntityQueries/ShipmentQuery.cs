@@ -11447,6 +11447,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          LongMaster = s.TransportModeId == "A" ? (m.AirlinePrefix != null && m.Master != null ? m.AirlinePrefix + "-" + m.Master : m.Master) : m.Master,
                                                          IsDangerous = s.IsDangerous,
                                                          DangerousUnNumber = s.DangerousUnNumber,
+                                                         BookingConfirmationNumber = m.BookingConfirmationNumber,
                                                      };
 
             return shipmentsList;
@@ -12620,6 +12621,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     IsDangerous = f.IsDangerous,
                     DangerousUnNumber = f.DangerousUnNumber,
                     MainCarriageVesselName = f.MainCarriageVesselName,
+                    BookingConfirmationNumber = f.BookingConfirmationNumber,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -12949,6 +12951,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                      where s.Tenant == tenant
                                                      select new ShipmentList()
                                                      {
+                                                         BookingConfirmationNumber =m.BookingConfirmationNumber,
                                                          ProfitExchangeRate = s.ProfitExchangeRate,
                                                          OpenPayablesInLocalCurrency = s.OpenPayablesInLocalCurrency,
                                                          AccountedPayablesInLocalCurrency = s.AccountedPayablesInLocalCurrency,
