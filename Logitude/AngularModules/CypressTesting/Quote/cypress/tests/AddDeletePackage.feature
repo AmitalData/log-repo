@@ -1,4 +1,4 @@
-@smoke @release
+@smoke @release @all
 Feature: Add and delete package from a quote
   After the user logging in the system and navigate to quotes workspace
   will create a customer as shipper in the new quote
