@@ -348,6 +348,9 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                              WarehouseLegLastFreeDate = f.WarehouseLegLastFreeDate,
                              LastFinalDestination = f.LastFinalDestination,
                              EstimatedFinalArrivalDate = f.EstimatedFinalArrivalDate,
+                             MainCarriageVesselName = f.MainCarriageVesselName, 
+                             WarehouseLegTerminalName = f.WarehouseLegTerminalName,
+                             BookingConfirmationNumber = f.BookingConfirmationNumber,
                          };
 
             query2 = filter.GetFilteredQuery<ShipmentList>(listQueryOperation, query2);
