@@ -42,6 +42,7 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     public MainImageId: string;
     public LoginProgressImageId: string;
     public ForgetPasswordImageId: string;
+    public SelectedTabCode: string;
 
 
     private entityResourceService: EntityResourceService = new EntityResourceService();
@@ -52,14 +53,17 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
+        this.SelectedTabCode = "TMM";
         this.EntityPM = new TenantManagmentPrivateLabelsPM();
          
     }
      
 
     ngOnInit() {
+        this.SelectedTabCode = "TMM";
         this.UIProperties.SetRequired("HybridPartnerId", this.ObjectTableName, true); 
     }
+
 
     private InitializeImageIds() {
         this.BackgroundImageId = this.EntityPM.BackgroundImageId;
