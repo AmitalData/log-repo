@@ -433,7 +433,7 @@ namespace Logitude.BL.DataContracts
                     SqlCommand cmd = new SqlCommand(procedureName, cn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    SqlParameter param1 = new SqlParameter("@CurrencyCode", SqlDbType.VarChar);
+                    SqlParameter param1 = new SqlParameter("@NewCurrencyCode", SqlDbType.VarChar);
                     SqlParameter param2 = new SqlParameter("@Tenant", SqlDbType.Int);
                     param1.Direction = ParameterDirection.Input;
                     param2.Direction = ParameterDirection.Input;

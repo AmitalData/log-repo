@@ -16,6 +16,7 @@ import { LastRate, CurrencyRatesService, ChangeCurrencyArgs } from '../../../../
 import { RatesTablePM } from '../../../../Infrastructure/EntityPMs/RatesTablePM';
 import { CurrencyListService } from '../../../../Common/Services/StandardLists/CurrencyListService';
 import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'ChangeCurrencyComponent',
@@ -30,8 +31,10 @@ export class ChangeCurrencyComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     private oldCurrencyId: string;
     public ItemsSource: RatesItem[] = [];
+    private currencyRatesService: CurrencyRatesService;
     constructor() {
         super();
+        this.currencyRatesService = new CurrencyRatesService()
     }
 
     SetWindowArgs(args: any) {
@@ -39,7 +42,20 @@ export class ChangeCurrencyComponent extends BaseComponent {
         this.Type = args["Type"];
 
         this.SetOldCurrency();
-        this.LoadTenantCurrencies();
+
+        switch (this.Type) {
+            case "Accounting":
+                {
+                    this.LoadTenantCurrencies();
+                    break
+                }
+
+            case "Profit":
+                {
+                    this.LoadProfitCurrencyRate();
+                    break
+                }
+        }        
     }
 
     private SetOldCurrency() {
@@ -59,11 +75,22 @@ export class ChangeCurrencyComponent extends BaseComponent {
     }
 
     private currencies: CurrencyList[] = [];
-    public LoadTenantCurrencies() {
+    private profitCurrencyLastRate: LastRate;
+    private LoadTenantCurrencies() {
         var service: CurrencyListService = new CurrencyListService();
         service.getAllFromCache().subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 this.currencies = response.Result;
+            }
+        });
+    }
+    private LoadProfitCurrencyRate() {
+        this.currencyRatesService.GetProfitCurrencyLastRate(this.TenantPM.CurrencyId, this.NewCurrencyId, DateTool.GetCurrentDateTimeAsUtc()).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                this.profitCurrencyLastRate = response.Result;
+                if (this.profitCurrencyLastRate) {
+                    this.ProfitCurrencyRate = this.profitCurrencyLastRate.Rate;
+                }
             }
         });
     }
@@ -86,8 +113,45 @@ export class ChangeCurrencyComponent extends BaseComponent {
             this.newCurrencyId = value;
 
             if (value) {
-                this.BuildRates();
+                if (this.Type == "Profit") {
+                    this.LoadProfitCurrencyRate();
+                }
+
+                else {
+                    this.BuildRates();
+                }
             }
+        }
+    }
+
+    private newCurrency: CurrencyList;
+    get NewCurrency() { return this.newCurrency; }
+    set NewCurrency(value: CurrencyList) {
+        if (this.newCurrency != value) {
+            this.newCurrency = value;
+        }
+
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.NewCurrencyCode = value.Code;
+        }
+        else {
+            this.NewCurrencyCode = null;
+        }
+    }
+
+    private newCurrencyCode: string;
+    get NewCurrencyCode() { return this.newCurrencyCode; }
+    set NewCurrencyCode(value: string) {
+        if (this.newCurrencyCode != value) {
+            this.newCurrencyCode = value;
+        }
+    }
+
+    private profitCurrencyRate: number;
+    get ProfitCurrencyRate() { return this.profitCurrencyRate; }
+    set ProfitCurrencyRate(value: number) {
+        if (this.profitCurrencyRate != value) {
+            this.profitCurrencyRate = value;            
         }
     }
 
@@ -130,18 +194,21 @@ export class ChangeCurrencyComponent extends BaseComponent {
                 lastRateItem.Rate = item.Rate;
                 myRates.push(lastRateItem);
             });
-
-            var myService: CurrencyRatesService = new CurrencyRatesService();
+                       
             var myArgs = new ChangeCurrencyArgs();
             myArgs.Type = this.Type;
             myArgs.NewCurrencyId = this.NewCurrencyId;
+            myArgs.NewCurrencyCode = this.NewCurrencyCode;
             myArgs.LastRates = myRates;
+            myArgs.ProfitCurrencyRate = this.ProfitCurrencyRate;
 
-            myService.PostChangeCurrency(myArgs).subscribe((myResponse: ServiceResponse) => {
+            this.currencyRatesService.PostChangeCurrency(myArgs).subscribe((myResponse: ServiceResponse) => {
                 this.CurrentSession.StopBusyIndicator();
 
                 if (!myResponse.HasError) {
                     this.CurrentSession.CloseCurrentWindowEmit("ok");
+                    var messageWindow: MessageWindow = new MessageWindow();
+                    messageWindow.Show("Please logout and login again to refresh data");
                 }
 
                 else {

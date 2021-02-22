@@ -108,5 +108,50 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public RatesTable GetLastRateByValueDate(int tenant, string foreignCurrencyId, string baseCurrencyId, DateTime? date)
+        {
+            RatesTable myResult = null;
+
+            RatesTable lastRecord =
+                (from r in context.RatesTable
+                 where r.Tenant == tenant
+                 && r.ForeignCurrencyId == foreignCurrencyId
+                 && r.BaseCurrencyId == baseCurrencyId
+                 && r.ValueDate <= date
+                 select r).OrderByDescending(r => r.ValueDate).FirstOrDefault();
+
+
+            if (lastRecord == null)
+            {
+                lastRecord =
+                    (from r in context.RatesTable
+                     where r.Tenant == tenant
+                     && r.ForeignCurrencyId == foreignCurrencyId
+                     && r.BaseCurrencyId == baseCurrencyId
+                     select r).OrderByDescending(r => r.ValueDate).ThenByDescending(o => o.LogDateTime).FirstOrDefault();
+            }
+
+
+            if (lastRecord != null)
+            {
+                DateTime? lastExistingDateTime = lastRecord.ValueDate;
+                RatesTable resultRecord =
+                    (from r in context.RatesTable
+                     where r.Tenant == tenant
+                     && r.ForeignCurrencyId == foreignCurrencyId
+                     && r.BaseCurrencyId == baseCurrencyId
+                     && r.ValueDate == lastExistingDateTime
+                     select r).OrderByDescending(r => r.LogDateTime).FirstOrDefault();
+
+
+                if (resultRecord != null)
+                {
+                    myResult = resultRecord;                   
+                }
+            }
+
+            return myResult;
+        }
     }
 }

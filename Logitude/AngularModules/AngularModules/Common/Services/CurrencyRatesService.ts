@@ -131,19 +131,6 @@ export class CurrencyRatesService {
         });
     }
 
-    //InsertListOfRatesTable(ratesTables: LastRate[]) {
-    //    var authHeader = new Headers();
-    //    authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
-    //    var url = this._apiUrl + '/GetInsertListOfRatesTable?ratesTables=' + ratesTables;
-
-    //    return defer(() => {
-    //        return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-    //            return response;
-    //        }),catchError(ServiceHelper.HandleServiceError));
-    //    });
-    //}
-
     MapJsonToEntityList(jsonList: any) {
         var entityList: LastRate;
         entityList = new LastRate();
@@ -206,6 +193,31 @@ export class CurrencyRatesService {
         return entity;
     }
 
+    GetProfitCurrencyLastRate(baseCurrencyId: string, profitCurrencyId: string, loadingDate: Date) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetProfitCurrencyLastRate?baseCurrencyId=' + baseCurrencyId + '&profitCurrencyId=' + profitCurrencyId + '&dateString=' + ServiceHelper.GetDateString(loadingDate);
+
+        return defer(() => {
+
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
+                var _mappedList: LastRate;
+
+                if (allLists) {
+                    _mappedList = this.MapJsonToEntityList(allLists);
+                }
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = _mappedList;
+                return serviceResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     PostChangeCurrency(args: ChangeCurrencyArgs) {
         return defer(() => {
             return this._http.post(this._apiUrl + "/PostChangeCurrency", JSON.stringify(args), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
@@ -239,6 +251,8 @@ export class AccountingCurrencyHelper {
 
 export class ChangeCurrencyArgs {
     NewCurrencyId: string;
+    NewCurrencyCode: string;
     Type: string;
+    ProfitCurrencyRate: number;
     LastRates: LastRate[];
 }

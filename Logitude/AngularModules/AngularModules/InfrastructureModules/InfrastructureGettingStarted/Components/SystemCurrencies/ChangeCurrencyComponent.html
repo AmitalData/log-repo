@@ -22,7 +22,8 @@
                                             [NoObjectField]="true"
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'Currency'"
-                                            [SelectedValue]="NewCurrencyId">
+                                            [SelectedValue]="NewCurrencyId"
+                                            (SelectedItemChanged)="NewCurrency = $event">
                                     </LogLov>
                                 </td>
 
@@ -34,11 +35,37 @@
                     </td>
                 </tr>
 
-                <tr class="FormFieldRow">
+                <tr class="FormFieldRow" *ngIf="Type=='Profit'">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 150px;">
+                                    <LogLabel [NoObjectField]="true" [DataContext]="DataContext" [Text]="'Rate'"></LogLabel>
+                                </td>
+
+                                <td style="width: 230px;">
+                                    <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'ProfitCurrencyRate'" [DataContext]="DataContext" [Text]="ProfitCurrencyRate"></LogTextBox>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr *ngIf="Type=='Profit'">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow" *ngIf="Type=='Accounting'">
                     <td class="BlueTitle">Rates</td>
                 </tr>
 
-                <tr>
+                <tr *ngIf="Type=='Accounting'">
                     <td>
                         <div class="MediaFill">
                             <div class="SimpleGridView">

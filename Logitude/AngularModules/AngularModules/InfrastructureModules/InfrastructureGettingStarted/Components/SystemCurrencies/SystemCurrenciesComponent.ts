@@ -234,25 +234,6 @@ export class SystemCurrenciesComponent extends BaseComponent {
                     logWindow.Height = 500;
                     logWindow.WindowArgs = { TenantPM: this.TenantPM, Type: this.Type };
                     logWindow.Title = "Change " + this.Type + " Currency";
-
-                    logWindow.ComponentLoaded.subscribe(s => {
-                        logWindow.WindowClosed.subscribe(d => {
-                            //if (s && d == "ok") {
-                            //    var deletedItem: TariffLineExpirationDatePM = new TariffLineExpirationDatePM();
-                            //    deletedItem.OriginPortId = item.EntityPM.OriginPortId;
-                            //    deletedItem.DestinationPortId = item.EntityPM.DestinationPortId;
-                            //    deletedItem.ExpirationDate = item.EntityPM.ExpirationDate;
-
-                            //    this.deletedLinesExpirationDates.push(deletedItem);
-                            //    this.CurrentVersion.RemoveTariffLine(item.EntityPM);
-                            //    this.TariffsLinesSource.Remove(item);
-                            //    this.FillTariffLines(this.CurrentVersion.TariffLines);
-
-                            //    this.isTariffLinesDeleted = true;
-                            //}
-                        });
-                    });
-
                     logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/SystemCurrencies/ChangeCurrencyComponent');
                 }
             });

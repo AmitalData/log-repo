@@ -3,6 +3,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
@@ -10,6 +11,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -193,6 +195,34 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+        public HttpResponseMessage GetProfitCurrencyLastRate(string baseCurrencyId, string profitCurrencyId, string dateString)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                DateTime? loadingDate = DateHelper.GetDate(dateString);
+                if (loadingDate == null)
+                {
+                    loadingDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+                }
+
+                IWebFreightContext objectContext = WebFreightContext.GetContext(authToken.Tenant);
+                RatesTableRepository myRepository = new RatesTableRepository(objectContext);
+                RatesTableQuery myQuery = new RatesTableQuery(myRepository);
+                LastRate lastRate = myQuery.GetLastRecordByValueDate(authToken.Tenant, profitCurrencyId, baseCurrencyId, loadingDate);
+
+                return Request.CreateResponse(HttpStatusCode.OK, lastRate);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         [ActionName("PostChangeCurrency")]
         public HttpResponseMessage PostChangeCurrency(ChangeCurrencyArgs args)
         {
@@ -225,60 +255,142 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
     public class ChangeCurrencyManager
     {
         private ChangeCurrencyArgs myArgs;
+        private Tenant myTenant;
+        private TenantRepository tenantRepository;
+        private RatesTableRepository ratesTableRepository;
         public ChangeCurrencyManager(ChangeCurrencyArgs args)
         {
             this.myArgs = args;
+
+            IWebFreightContext objectContext = WebFreightContext.GetContext(myArgs.Tenant);
+            ratesTableRepository = new RatesTableRepository(objectContext);
+            tenantRepository = new TenantRepository(myArgs.Tenant);
+
+            this.GetTenant();
         }
 
+        private void GetTenant()
+        {
+            myTenant = tenantRepository.GetSingleTenant(myArgs.Tenant);
+        }
         public void StartChange()
         {
-            this.ChangeTenantCurrency();
-            this.UpdateRates();
-            this.ComputeTotals();
+            if (myTenant != null)
+            {
+                this.UpdateTenantCurrency();
+                this.CreateRates();
+                this.SaveToDatabase();
+                this.ComputeTotals();
+            }
         }
 
-        private void ChangeTenantCurrency()
+        private void UpdateTenantCurrency()
         {
             switch(myArgs.Type)
             {
                 case "Accounting":
                     {
-                        this.CallLocalCurrencyProcedure();
+                        this.myTenant.CurrencyId = myArgs.NewCurrencyId;
                         break;
                     }
 
                 case "Profit":
                     {
-                        this.CallProfitCurrencyProcedure();
+                        this.myTenant.ProfitCurrencyId = myArgs.NewCurrencyId;
                         break;
                     }
-            }            
-        }
+            }
 
-        private void CallLocalCurrencyProcedure()
-        {
-            RunStoredProcedureClass.RunChangeSystemCurrencyProcedure("dbo.usp_ChangeTenantLocalCurrency", myArgs.NewCurrencyCode, myArgs.Tenant);
+            tenantRepository.Update(myTenant);            
         }
-        private void CallProfitCurrencyProcedure()
+        private void CreateRates()
         {
-            RunStoredProcedureClass.RunChangeSystemCurrencyProcedure("dbo.usp_ChangeTenantProfitCurrency", myArgs.NewCurrencyCode, myArgs.Tenant);
-        }
-        private void UpdateRates()
-        {
+            switch (myArgs.Type)
+            {
+                case "Accounting":
+                    {
+                        this.CreateLocalCurrencyRates();
+                        break;
+                    }
 
+                case "Profit":
+                    {
+                        this.CheckProfitCurrencyRate();
+                        break;
+                    }
+            }
+        }
+        private void CreateLocalCurrencyRates()
+        {
+            foreach (LastRate item in myArgs.LastRates)
+            {
+                RatesTable ratesTable = this.CreateSingleRatesTable(item);                
+                ratesTableRepository.Add(ratesTable);
+            }
+        }
+        private void CheckProfitCurrencyRate()
+        {
+            RatesTable lastRate = ratesTableRepository.GetLastRateByValueDate(myArgs.Tenant, myArgs.NewCurrencyId, myTenant.CurrencyId, TenantServerConfigration.GetCurrentDateTime(myArgs.Tenant));
+            if (lastRate != null)
+            {
+                lastRate.Rate = myArgs.ProfitCurrencyRate;
+                ratesTableRepository.Update(lastRate);
+            }
+
+            else
+            {
+                RatesTable ratesTable = this.CreateSingleRatesTable(null);                
+                ratesTableRepository.Add(ratesTable);
+            }
+        }
+        private RatesTable CreateSingleRatesTable(LastRate lastRate)
+        {
+            RatesTable ratesTable = new RatesTable();
+            ratesTable.Id = IdCounter.GetNumber("RatesTable", myArgs.Tenant).ToString();
+            ratesTable.Tenant = myArgs.Tenant;
+            ratesTable.BaseCurrencyId = lastRate != null ? lastRate.BaseCurrencyId : myTenant.CurrencyId;
+            ratesTable.ForeignCurrencyId = lastRate != null ? lastRate.ForeignCurrencyId : myArgs.NewCurrencyId;
+            ratesTable.LogDateTime = TenantServerConfigration.GetCurrentDateTime(myArgs.Tenant);
+            ratesTable.ValueDate = TenantServerConfigration.GetCurrentDateTime(myArgs.Tenant);
+            ratesTable.Rate = lastRate != null ? lastRate.Rate : myArgs.ProfitCurrencyRate;
+            return ratesTable;
+        }
+        private void SaveToDatabase()
+        {
+            tenantRepository.SubmitChanges();
+            ratesTableRepository.SubmitChanges();
         }
         private void ComputeTotals()
         {
+            switch (myArgs.Type)
+            {
+                case "Accounting":
+                    {
+                        RunStoredProcedureClass.RunChangeSystemCurrencyProcedure("dbo.usp_ChangeTenantLocalCurrency_Shipments", myArgs.NewCurrencyCode, myArgs.Tenant);
+                        RunStoredProcedureClass.RunChangeSystemCurrencyProcedure("dbo.usp_ChangeTenantLocalCurrency_Quotes", myArgs.NewCurrencyCode, myArgs.Tenant);
+                        RunStoredProcedureClass.RunChangeSystemCurrencyProcedure("dbo.usp_ChangeTenantLocalCurrency_ARInvoices", myArgs.NewCurrencyCode, myArgs.Tenant);
+                        RunStoredProcedureClass.RunChangeSystemCurrencyProcedure("dbo.usp_ChangeTenantLocalCurrency_APInvoices", myArgs.NewCurrencyCode, myArgs.Tenant);
+                        RunStoredProcedureClass.RunChangeSystemCurrencyProcedure("dbo.usp_ChangeTenantLocalCurrency_ARPayments", myArgs.NewCurrencyCode, myArgs.Tenant);
+                        RunStoredProcedureClass.RunChangeSystemCurrencyProcedure("dbo.usp_ChangeTenantLocalCurrency_APPayments", myArgs.NewCurrencyCode, myArgs.Tenant);
+                        break;
+                    }
 
+                case "Profit":
+                    {
+                        RunStoredProcedureClass.RunChangeSystemCurrencyProcedure("dbo.usp_ChangeTenantProfitCurrency", myArgs.NewCurrencyCode, myArgs.Tenant);
+                        break;
+                    }
+            }
         }
     }
-
+    
     public class ChangeCurrencyArgs
     {
         public int Tenant { get; set; }
         public string NewCurrencyId { get; set; }
         public string NewCurrencyCode { get; set; }
         public string Type { get; set; }
+        public int? ProfitCurrencyRate { get; set; }
         public List<LastRate> LastRates { get; set; }
     }
 }
