@@ -5,7 +5,7 @@
     "viewportHeight": 800,
     "integrationFolder": "cypress/tests",
     "screenshotsFolder": "cypress/Reports/html/screenshots",
-  
+    "ProjectId":"k5gju5",
     "ignoreTestFiles": "*.ts",
     "env": {
         "Mode": "Development"
