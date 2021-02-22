@@ -107,7 +107,7 @@
                 </tr>
 
                 <!-- Hyperlink -->
-                <tr class="FormFieldRow" *ngIf="IsChangeCurrencyVisible">
+                <tr class="FormFieldRow" >
                     <td></td>
                     <td>
                         <span class="hyperlink" style="font-size:13px;font-weight:bold;color:blue;" (click)="DailyExchangeRates()" [class.HyperlinkDisabled]="!IsEditingEnabled"> Daily Exchange Rates </span>
@@ -125,7 +125,7 @@
                     <td colspan="2"></td>
                 </tr>
 
-                <tr class="FormFieldRow">
+                <tr class="FormFieldRow" *ngIf="IsChangeCurrencyVisible">
                     <td></td>
                     <td>
                         <span class="hyperlink" style="font-size:13px;font-weight:bold;color:blue;" (click)="ChangeCurrencyClicked('Profit')">Change Profit Currency</span>
