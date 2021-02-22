@@ -4331,6 +4331,7 @@
       DefaultText="&quot;Save As Draft&quot;"
       MenuButtonType="&quot;button&quot;"
       IndexOrder="0"
+      LocalDefaultText="&quot;שמור כטיוטה&quot;"
       IsPackagable="false" />
     <MenuButton
       EventCode="&quot;JournalSave&quot;"
@@ -4344,24 +4345,28 @@
       MenuButtonType="&quot;button&quot;"
       Style="&quot;ApproveButtonStyle&quot;"
       IndexOrder="2"
+      LocalDefaultText="&quot;אישור&quot;"
       IsPackagable="false" />
     <MenuButton
       EventCode="&quot;More&quot;"
       DefaultText="&quot;More&quot;"
       MenuButtonType="&quot;dropdownbutton&quot;"
       IndexOrder="3"
+      LocalDefaultText="&quot;נוספים&quot;"
       IsPackagable="false">
       <MenuItem
         EventCode="&quot;JournalVoid&quot;"
         DefaultText="&quot;Void&quot;"
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="0"
+        LocalDefaultText="&quot;ביטול&quot;"
         IsPackagable="false" />
       <MenuItem
         EventCode="&quot;JournalPrint&quot;"
         DefaultText="&quot;Print&quot;"
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="1"
+        LocalDefaultText="&quot;הדפסה&quot;"
         IsPackagable="false" />
       <MenuItem
         EventCode="&quot;CopyJournal&quot;"
