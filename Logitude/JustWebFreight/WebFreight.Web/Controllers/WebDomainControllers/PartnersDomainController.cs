@@ -789,8 +789,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
+
         // Partners, Address, Contact
+        [ActionName("PostPartnerAddress")]
         public HttpResponseMessage PostPartnerAddress(PartnerServicePM args)
         {
             try
@@ -1016,6 +1017,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+        [ActionName("PostAddress")]
         public HttpResponseMessage PostAddress(AddressPM entityPM)
         {
             try
@@ -2023,7 +2025,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
         }
 
-        public HttpResponseMessage Put(PartnerExternalAccountsServicePM args)
+        public HttpResponseMessage PutPartnerExternalAccounts(PartnerExternalAccountsServicePM args)
         {
             try
             {

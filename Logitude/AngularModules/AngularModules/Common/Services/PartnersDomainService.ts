@@ -60,24 +60,17 @@ export class PartnersDomainService {
     }
 
     AddAddress(entityPM: AddressPM) {
+        var mappedEntity: AddressPM = this.MapJsonToAddressPM(entityPM, false);
         return defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
-
-            var mappedEntity: AddressPM = this.MapJsonToAddressPM(entityPM, false);
-
-            return this._http.post(this._apiUrl + "/PostAddress", JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                var myJsonResult = res;
+            return this._http.post(this._apiUrl + "/PostAddress", JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myJsonResult = response;
                 var mappedResult: AddressPM = this.MapJsonToAddressPM(myJsonResult, true, entityPM);
-
                 var myResponse = new ServiceResponse();
                 myResponse.Result = mappedResult;
                 return myResponse;
-
             }), catchError(ServiceHelper.HandleServiceError));
-        });
+        }
+        );
     }
 
     PutAddress(entityPM: AddressPM) {
@@ -351,7 +344,7 @@ export class PartnersDomainService {
 
             var mappedEntity: PartnerServicePM = this.MapJsonToPartnerAddress(entityPM, false);
 
-            return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+            return this._http.post(this._apiUrl +"/PostPartnerAddress", JSON.stringify(mappedEntity),ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                 var myJsonResult = res;
 
                 var mappedResult: PartnerServicePM = this.MapJsonToPartnerAddress(myJsonResult, true, entityPM);
@@ -372,7 +365,7 @@ export class PartnersDomainService {
 
             var mappedEntity: PartnerExternalAccountsServicePM = this.MapJsonToPartnerExternalAccounts(entityPM, false);
 
-            return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+            return this._http.put(this._apiUrl + "/PutPartnerExternalAccounts", JSON.stringify(mappedEntity),ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                 var myJsonResult = res;
 
                 var mappedResult: PartnerExternalAccountsServicePM = this.MapJsonToPartnerExternalAccounts(myJsonResult, true, entityPM);
