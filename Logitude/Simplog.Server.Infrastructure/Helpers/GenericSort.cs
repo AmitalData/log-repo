@@ -22,7 +22,11 @@ namespace Simplog.Server.Infrastructure.Helpers
             sortParams.QuerableData = querableData;
             sortParams.SortDirection = queryOperations.SortDirectin;
             sortParams.FirstSortExpression= GetSortExpression<T, N>(queryOperations.SortByColumnName);
-            
+            if (!String.IsNullOrWhiteSpace(keyName) && LogitudeSettings.DatabaseManagementSystem == "oracle" &&
+                typeof(T).GetProperty(keyName).PropertyType == typeof(Guid))
+            {
+                return GetSortedQuery<T, N>(sortParams);
+            }
             if (!string.IsNullOrEmpty(keyName))
             {
                 sortParams.SecondarySortByField = keyName;

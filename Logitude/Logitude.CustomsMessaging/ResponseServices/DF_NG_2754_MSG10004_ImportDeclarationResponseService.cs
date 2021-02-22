@@ -825,7 +825,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 if (errorItem.ValidationCode != null && errorItem.ValidationCode.Value == "2382")
                             {
                                 CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(context);
-                                CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle("901", false, false);
+                                CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingleCourierPendingReasonByCode("901", requestParams.Tenant);
                                 if (courierPendingReasonPM == null)
                                 {
                                     LogMessagingUtil.Instance.AppendLine("לא קיים קוד Pending - הצהרה פלסטינאית = 901 בטבלת סיבות Pending");
@@ -836,7 +836,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 if (declarationPendingPM_901 == null)
                                 {
                                     declarationPendingPM_901 = new DeclarationPendingPM();
-                                    declarationPendingPM_901.CourierPendingReasonCode = "901";
+                                    if (courierPendingReasonPM != null && courierPendingReasonPM.Code == "901")
+                                    {
+                                        declarationPendingPM_901.CourierPendingReasonCode = courierPendingReasonPM.Id;
+                                    }
                                     declarationPendingPM_901.Status = "A";
                                     declarationPendingPM_901.ChangeSetOp = ChangeSetOperation.Insert;
                                     _MyDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_901);
@@ -869,13 +872,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     CourierMasterPM courierMaster = courierMasterService.GetSingle(_MyDeclarationPM.CourierMasterId, false, false);
                     if (courierMaster != null)
                     {
+                        CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(context);
+                        CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingleCourierPendingReasonByCode("900", requestParams.Tenant);
+
                         var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
                         var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_ACT_COLLECT", "NON", courierMaster.IntegratorNumber, false, true);
                         bool isCollectActive = def.DEFDATA == "Y";
                         if (declarationPendingPM_900 == null)
                         {
-                            CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(context);
-                            CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle("900", false, false);
                             if (courierPendingReasonPM == null)
                             {
                                 LogMessagingUtil.Instance.AppendLine("לא קיים קוד תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900 בטבלת סיבות Pending");
@@ -906,7 +910,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 if (declarationPendingPM_900 == null)
                                 {
                                     declarationPendingPM_900 = new DeclarationPendingPM();
-                                    declarationPendingPM_900.CourierPendingReasonCode = "900";
+                                    if (courierPendingReasonPM != null && courierPendingReasonPM.Code == "900")
+                                    {
+                                        declarationPendingPM_900.CourierPendingReasonCode = courierPendingReasonPM.Id;
+                                    }
                                     declarationPendingPM_900.Status = "A";
                                     declarationPendingPM_900.ChangeSetOp = ChangeSetOperation.Insert;
                                     _MyDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_900);
