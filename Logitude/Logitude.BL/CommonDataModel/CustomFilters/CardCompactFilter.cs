@@ -17,6 +17,9 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
         {
             if (compactSeachvalue != null)
             {
+                if (LogitudeSettings.IsCostomsDeploy)
+                    return entityLists = GetCardCompactSearchResults(compactSeachvalue, queryOperations, filter, entityLists, tenant);
+
                 CardDataSearchService cardDataSearchService = new CardDataSearchService();
                 entityLists = cardDataSearchService.Run(new CardSearchArgs() { SearchText = compactSeachvalue != null ? compactSeachvalue.ToString() : "", Tenant = tenant, EntityLists = entityLists, SortByColumnName = queryOperations.SortByColumnName, SortDirectin = queryOperations.SortDirectin, PageSize = queryOperations.PageSize, FilterItems = queryOperations.QueryFilterItems });
             }
