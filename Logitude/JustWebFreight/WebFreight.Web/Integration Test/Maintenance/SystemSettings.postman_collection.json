@@ -938,6 +938,126 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "CardSearchWithAirlinePrefix",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"CardSearchWithAirlinePrefix\", function () {\r",
+							"       pm.response.to.have.status(200);\r",
+							"     \r",
+							"      \r",
+							"      var idvalue1=  pm.response.json().Result.filter(a=>a.EnglishName == 'American Airlines')[0].Id;\r",
+							"      var idvalue2=  pm.response.json().Result.filter(a=>a.EnglishName == 'American Airlines')[0].EnglishName;\r",
+							"      var idvalue3=  pm.response.json().Result.filter(a=>a.EnglishName == 'American Airlines')[0].Code;\r",
+							"      \r",
+							"      var id1exist = idvalue1 !== null;\r",
+							"      var id2exist = idvalue2 == \"American Airlines\"; \r",
+							"      var id3exist = idvalue3 == \"AA\"; \r",
+							"\r",
+							"\r",
+							"      \r",
+							"      pm.expect(id1exist); \r",
+							"      pm.expect(id2exist);      \r",
+							"      pm.expect(id3exist);      \r",
+							"     \r",
+							"    \r",
+							"     if (id1exist && id2exist && id3exist)  {\r",
+							"      tests[\"Get Result With AirlinePrefix successfully finished: \" + [(idvalue2) , (idvalue3)]] = responseBody.has(idvalue1,idvalue2,idvalue3);\r",
+							"   \r",
+							"    } \r",
+							"\r",
+							"\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/cardviews/getbyfilters?&&ForceCacheRefresh=false&DontApplyVirtualization=true&GetAll=false&GetCount=true&PageIndex=0&PageSize=100&SortBy=&SortDirection=Ascending&Tenant={{Tenant}}&AdditionalFilters=[{%22FieldName%22:%22PartnerTypeId%22,%22FieldValue%22:%22AL%22,%22Operator%22:%22InList%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:%22Text%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false},{%22FieldName%22:%22CardSearchField%22,%22FieldValue%22:%22001%22,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:null,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false},{%22FieldName%22:%22InActive%22,%22FieldValue%22:false,%22Operator%22:%22Equals%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:null,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false}]",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"cardviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "DontApplyVirtualization",
+							"value": "true"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "100"
+						},
+						{
+							"key": "SortBy",
+							"value": ""
+						},
+						{
+							"key": "SortDirection",
+							"value": "Ascending"
+						},
+						{
+							"key": "Tenant",
+							"value": "{{Tenant}}"
+						},
+						{
+							"key": "AdditionalFilters",
+							"value": "[{%22FieldName%22:%22PartnerTypeId%22,%22FieldValue%22:%22AL%22,%22Operator%22:%22InList%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:%22Text%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false},{%22FieldName%22:%22CardSearchField%22,%22FieldValue%22:%22001%22,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:null,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false},{%22FieldName%22:%22InActive%22,%22FieldValue%22:false,%22Operator%22:%22Equals%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:null,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false}]"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
