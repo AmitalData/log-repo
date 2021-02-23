@@ -1296,6 +1296,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             }
 
             if (objectField.AutomationEmailRecipient && (objectField.ObjectTable_LookUpTableName == "User" || objectField.ObjectTable_LookUpTableName == "Contact" || objectField.DataTypeCode == "Emails")) {
+
                 this.AutomationEmailRecipientFieldLists.push(new AutomationEmailRecipientFieldItem(objectField));
             }
 
@@ -1303,6 +1304,12 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
             if (objectField.FieldName == "CreatedByUserId" || objectField.FieldName == "SalesmanUserId" || objectField.FieldName == "UpdatedByUserId" || objectField.FieldName == "AccountManagerUserId") {
                 this.FollowUpOwnerObjectFieldLists.push(objectField);
+            }
+
+            if (this.ObjectTableName == "Quote") {
+                if (objectField.FieldName == "ETA" || objectField.FieldName == "ETD" || objectField.FieldName == "StartDate" || objectField.FieldName == "AutomaticallyCloseDate" || objectField.FieldName == "ExpirationDate") {
+                    this.FollowUpDateObjectFieldLists.push(objectField);
+                }
             }
 
             if (objectField.FieldName == "MainCarriageETD" || objectField.FieldName == "MainCarriageATD" || objectField.FieldName == "MainCarriageFinalDestinationETA" || objectField.FieldName == "MainCarriageFinalDestinationATA") {
