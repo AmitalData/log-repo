@@ -2,11 +2,14 @@
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Web;
 
 namespace WebFreight.Web
@@ -124,8 +127,34 @@ namespace WebFreight.Web
                 IShipmentsContext myContext = ShipmentsContext.GetContext((int)Tenant);
                 ShipmentConsoleShipmentQuery shipmentConsoleShipmentQuery = new ShipmentConsoleShipmentQuery(myContext);
                 List<Shipment> connectedHousesShipments = shipmentConsoleShipmentQuery.GetMasterConnectedHouseShipments(CurrentEntityId, (int)Tenant);
-                if (connectedHousesShipments != null) ConnectedHousesShipments = connectedHousesShipments;
+                SetConnectedHousesShipmentsWithMoreDetails(connectedHousesShipments);
             }
+        }
+
+        private void SetConnectedHousesShipmentsWithMoreDetails(List<Shipment> connectedHouses)
+        {
+            if (connectedHouses != null)
+            {
+                List<Shipment> connectedHousesShipments = FillMissingShipperDetails(connectedHouses);
+                ConnectedHousesShipments = connectedHousesShipments;
+            }
+        }
+
+        private List<Shipment> FillMissingShipperDetails(List<Shipment> connectedHouses)
+        {
+            List<Shipment> connectedHousesShipmentsWithShipperDetails = connectedHouses;
+            connectedHousesShipmentsWithShipperDetails.Where(ship => ShipmentHaveShipperIdWithoutShipperName(ship)).ToList()?.ForEach(shipment =>
+            {
+                Card card = CardRepository.GetSingleCard(shipment.ShipperId, (int)Tenant, true);
+                shipment.ShipperName = card != null ? card.EnglishName : shipment.ShipperName;
+            });
+
+            return connectedHousesShipmentsWithShipperDetails;
+        }
+
+        private bool ShipmentHaveShipperIdWithoutShipperName(Shipment ship)
+        {
+            return string.IsNullOrEmpty(ship.ShipperName) && !string.IsNullOrEmpty(ship.ShipperId);
         }
 
         private string ConvertHexaToRGBA(string hexString)
