@@ -769,8 +769,13 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 CourierMasterListQueryService courierMasterListQueryService = new CourierMasterListQueryService(MyContext);
                 List<CourierMasterList> entityLists = courierMasterListQueryService.GetList(queryOperations, tenant);
 
+                CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(MyContext);
+                CourierPendingReasonPM courierPendingReasonPM_902 = myCourierPendingReasonQueryService.GetSingleCourierPendingReasonByCode("902", tenant);
+                CourierPendingReasonPM courierPendingReasonPM_900 = myCourierPendingReasonQueryService.GetSingleCourierPendingReasonByCode("900", tenant);
+                string courierPendingReasonPM_902_Id = courierPendingReasonPM_902 != null ? courierPendingReasonPM_902.Id : "902";
+                string courierPendingReasonPM_900_Id = courierPendingReasonPM_900 != null ? courierPendingReasonPM_900.Id : "900";
 
-                entityLists = courierMasterListQueryService.AddCalcFields(entityLists);
+                entityLists = courierMasterListQueryService.AddCalcFields(entityLists, courierPendingReasonPM_900_Id, courierPendingReasonPM_902_Id);
 
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
