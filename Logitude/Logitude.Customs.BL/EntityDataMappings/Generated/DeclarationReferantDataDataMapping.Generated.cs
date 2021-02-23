@@ -97,7 +97,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FclLcl, 
 	         PackageQuantity, 
 	         ForwarderId, 
-	         ForwarderName,
+	         ForwarderName, 
+	         FclLclName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
