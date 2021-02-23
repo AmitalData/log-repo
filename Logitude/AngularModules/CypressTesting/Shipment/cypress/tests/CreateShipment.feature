@@ -1,4 +1,4 @@
-@smoke @stable @all
+@smoke @stable @all @shipments1
 Feature: Create shipments
   After the user logging in the system and navigate to shipments workspace
   will will create a direct shipment.
