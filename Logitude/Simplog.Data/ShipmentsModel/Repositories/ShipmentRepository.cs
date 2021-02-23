@@ -754,7 +754,11 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public bool IsCustomerConnectedToShipments(string customerId, int tenant)
         {
-            return (from f in context.Shipments where f.CustomerId == customerId && f.Tenant == tenant select f).Any();
+            return (from f in context.Shipments where (f.CustomerId == customerId || f.AgentId == customerId || f.ConsigneeId == customerId 
+                    || f.ShipperId == customerId || f.IssuingCarrierAgentId == customerId || f.CustomAgentExportId == customerId || f.CustomAgentImportId == customerId
+                    || f.Notify1Id == customerId || f.Notify2Id == customerId || f.ShipperNotExporterId == customerId || f.ConsigneeNotImporterId == customerId
+                    || f.FreightForwarderId == customerId || f.ColoaderId == customerId || f.CustomClearancePointId == customerId || f.ConsolidatorId == customerId
+                    || f.ReleasingAgentId == customerId) && f.Tenant == tenant select f).Any();
         }
 
         public ShipmentDataView GetSingleShipmentDataView(string shipmentId, int tenant)
