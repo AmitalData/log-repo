@@ -1,4 +1,4 @@
-﻿import {ViewContainerRef, Directive, Input, Output, EventEmitter, AfterViewInit , OnInit, OnDestroy} from '@angular/core';
+import {ViewContainerRef, Directive, Input, Output, EventEmitter, AfterViewInit , OnInit, OnDestroy} from '@angular/core';
 import {ObjectsLocator} from '../Locators/ObjectsLocator';
 
 @Directive({
@@ -15,6 +15,7 @@ export class FixedPositionDirective implements AfterViewInit, OnDestroy {
     @Input() PopupWidth: number; 
     @Input() VertDisplacement: number;
     @Input() HorizDisplacement: number;
+    @Input() UseDefaultPosition: boolean = false;
     PaintTop: boolean = false;
     PaintRight: boolean = false;
     LayoutDirection: string ;
@@ -86,6 +87,10 @@ export class FixedPositionDirective implements AfterViewInit, OnDestroy {
     }
 
     DrawLeftToRight() {
+
+        if (this.UseDefaultPosition) {
+            return;
+        }
         if (this.RelativeElementId) {
             var item = document.getElementById(this.RelativeElementId);
             if (item) {
@@ -136,6 +141,9 @@ export class FixedPositionDirective implements AfterViewInit, OnDestroy {
     }
 
     DrawRightToLeft() {
+        if (this.UseDefaultPosition) {
+            return;
+        }
         if (this.RelativeElementId) {
             var item = document.getElementById(this.RelativeElementId);
             if (item) {

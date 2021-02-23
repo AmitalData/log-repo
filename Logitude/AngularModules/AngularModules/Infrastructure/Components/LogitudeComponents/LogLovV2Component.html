@@ -629,6 +629,7 @@
                         <!-- BEGIN: Dropdown panel -->
                         <div (mouseover)="OnDropDownMouseOver()" (mouseout)="OnDropDownMouseOut()"
                              FixedPosition
+                            [UseDefaultPosition]="UseDefaultPosition"
                             [ElementId]="DropdownId"
                             [RelativeElementId]="DivLogLovId"
                             [VertDisplacement]="22"
