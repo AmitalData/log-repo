@@ -15,7 +15,10 @@ Feature: Create customs ARInvoice
     Scenario: Activate Customs Management in Shipments
         When the user activate customs settings
         Then the customs settings should activate successfully
-  
+   Scenario: Update Accounting System
+        Given accounting System as "None"
+        When change the accounting system
+        Then the accounting system should update successfully
   Scenario: Create direct export air shipment
         Given the user navigates to shipments workspace
         And a direct shipment with the following details
