@@ -81,6 +81,7 @@ export class LogDatePickerComponent
     public InputType: string;
     public IsFreeValue: boolean = false;
     public ForceSubscribe: boolean = false;
+    @Input() UseDefaultPosition: boolean = false;
 
     private dataContext: BaseComponent;
     public uiProperty: UIProperty;
