@@ -362,6 +362,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 externalTasksQueueService.AddVIRExternalTaskQueue(entityPM);
             }
         }
+
         string CustomerChanged = "false";
         public void Update(bool mapComposition = false)
         {

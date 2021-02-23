@@ -407,8 +407,8 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
             }
         });
 
-      this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
-      this.LinesCount = this.TariffsLinesSource.Length;
+        this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
+        this.LinesCount = this.TariffsLinesSource.Length;
         this.DoCompare();
         if (isSelectRowExist) {
             this.changeScrollPosition.emit({
@@ -588,9 +588,11 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
     }
 
-    EditTariffButtonClicked(item: OceanFCLSurchargeTariffLineData) {
-        var logWindow = new LogitudeWindow();
+    EditTariffButtonClicked(item: OceanFCLSurchargeTariffLineData) {        
         item.BuildContainerPricesItemsSource();
+        item.ComputeSurchargePricesValues();
+
+        var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = { DataContext: item, EntityPM: item.EntityPM, TariffType: this.EntityPM.TypeCode };
         logWindow.Title = "Edit Tariff Line";
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
@@ -1152,6 +1154,8 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
                     item.IsNewEntity = true;
                 }
             });
+
+            this.ComputeSurchargePricesValues();
         }
     }
 
@@ -1371,102 +1375,138 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         }
     }
    
-    ////////////////////////////
-    public Surcharge1PriceValue: string;
-    public Surcharge2PriceValue: string;
-    public Surcharge3PriceValue: string;
-    public Surcharge4PriceValue: string;
-    public Surcharge5PriceValue: string;
-    public Surcharge6PriceValue: string;
-    public Surcharge7PriceValue: string;
-    public Surcharge8PriceValue: string;
-    public Surcharge9PriceValue: string;
-    public Surcharge10PriceValue: string;
     public ComputeSurchargePricesValues() {
-        this.Surcharge1PriceValue  = this.ComputePriceValue(this.TariffPM.Surcharge1Id,1);
-        this.Surcharge2PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge2Id, 2);
-        this.Surcharge3PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge3Id, 3);
-        this.Surcharge4PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge4Id, 4);
-        this.Surcharge5PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge5Id, 5);
-        this.Surcharge6PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge6Id, 6);
-        this.Surcharge7PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge7Id, 7);
-        this.Surcharge8PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge8Id, 8);
-        this.Surcharge9PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge9Id, 9);
-        this.Surcharge10PriceValue = this.ComputePriceValue(this.TariffPM.Surcharge10Id, 10);
+        this.Surcharge1PriceArray = this.ComputePriceArrayValue(this.TariffPM.Surcharge1Id,1);
+        this.Surcharge2PriceArray = this.ComputePriceArrayValue(this.TariffPM.Surcharge2Id, 2);
+        this.Surcharge3PriceArray = this.ComputePriceArrayValue(this.TariffPM.Surcharge3Id, 3);
+        this.Surcharge4PriceArray = this.ComputePriceArrayValue(this.TariffPM.Surcharge4Id, 4);
+        this.Surcharge5PriceArray = this.ComputePriceArrayValue(this.TariffPM.Surcharge5Id, 5);
+        this.Surcharge6PriceArray = this.ComputePriceArrayValue(this.TariffPM.Surcharge6Id, 6);
+        this.Surcharge7PriceArray = this.ComputePriceArrayValue(this.TariffPM.Surcharge7Id, 7);
+        this.Surcharge8PriceArray = this.ComputePriceArrayValue(this.TariffPM.Surcharge8Id, 8);
+        this.Surcharge9PriceArray = this.ComputePriceArrayValue(this.TariffPM.Surcharge9Id, 9);
+        this.Surcharge10PriceArray = this.ComputePriceArrayValue(this.TariffPM.Surcharge10Id, 10);
     }
-    private ComputePriceValue(ichargeTypeId, index): string {
-        var myValue: string = "";
+
+    public Surcharge1PriceArray: PriceColorClass[];
+    public Surcharge2PriceArray: PriceColorClass[];
+    public Surcharge3PriceArray: PriceColorClass[];
+    public Surcharge4PriceArray: PriceColorClass[];
+    public Surcharge5PriceArray: PriceColorClass[];
+    public Surcharge6PriceArray: PriceColorClass[];
+    public Surcharge7PriceArray: PriceColorClass[];
+    public Surcharge8PriceArray: PriceColorClass[];
+    public Surcharge9PriceArray: PriceColorClass[];
+    public Surcharge10PriceArray: PriceColorClass[];
+    private ComputePriceArrayValue(ichargeTypeId, index): PriceColorClass[] {
+        var myarray: PriceColorClass[] = [];
 
         var iMeasurement = this.FatherComponent.AllMeasurements.filter(f => f.Id == this.FatherComponent.EntityPM['Surcharge' + index + 'UOM'])[0];
         if (!AppTool.IsNullOrEmpty(ichargeTypeId)) {
             if (this.EntityPM.ContainersPrices.filter(d => d.SurchargeId == ichargeTypeId).length > 0) {
                 this.EntityPM.ContainersPrices.filter(d => d.SurchargeId == ichargeTypeId).forEach((item) => {
+                    var containerPriceItem: ContainerPricesItem = this.ContainersItemsSourceView.filter(d => d.EntityPM.Id == item.Id)[0];
+                    if (containerPriceItem) {
+                        if (iMeasurement != null && (iMeasurement.Code == "FIXD" || iMeasurement.Code == "BTEU")) {
+                            if (!AppTool.IsNullOrZero(item.CostPrice))
+                                if (containerPriceItem.ComparingCostPrice) {
+                                    myarray.push(new PriceColorClass(item.CostPrice.toString(), containerPriceItem.CostPriceComparingTextColor));
+                                }
 
-                    if (iMeasurement != null && (iMeasurement.Code == "FIXD" || iMeasurement.Code == "BTEU")) {
-                        if (!AppTool.IsNullOrZero(item.CostPrice))
-                            myValue = item.CostPrice.toString();      
+                                else {
+                                    myarray.push(new PriceColorClass(item.CostPrice.toString(), FontTool.Gray));
+                                }
+                        }
+
+                        else {
+                            if (!AppTool.IsNullOrEmpty(this.TariffPM.ContainerType1Id)) {
+                                if (AppTool.IsNullOrZero(item.Price1)) {
+                                    myarray.push(new PriceColorClass("-", FontTool.Gray));
+                                }
+
+                                else {
+                                    if (containerPriceItem.ComparingPrice1) {
+                                        myarray.push(new PriceColorClass(item.Price1.toString(), containerPriceItem.Price1ComparingTextColor));
+                                    }
+
+                                    else {
+                                        myarray.push(new PriceColorClass(item.Price1.toString(), FontTool.Gray));
+                                    }
+                                }
+                            }
+
+                            if (!AppTool.IsNullOrEmpty(this.TariffPM.ContainerType2Id)) {
+                                if (AppTool.IsNullOrZero(item.Price2)) {
+                                    myarray.push(new PriceColorClass(" / -", FontTool.Gray));
+                                }
+
+                                else {
+                                    if (containerPriceItem.ComparingPrice2) {
+                                        myarray.push(new PriceColorClass(" / " + item.Price2.toString(), containerPriceItem.Price2ComparingTextColor));
+                                    }
+
+                                    else {
+                                        myarray.push(new PriceColorClass(" / " + item.Price2.toString(), FontTool.Gray));
+                                    }
+                                }
+                            }
+
+                            if (!AppTool.IsNullOrEmpty(this.TariffPM.ContainerType3Id)) {
+                                if (AppTool.IsNullOrZero(item.Price3)) {
+                                    myarray.push(new PriceColorClass(" / -", FontTool.Gray));
+                                }
+
+                                else {
+                                    if (containerPriceItem.ComparingPrice3) {
+                                        myarray.push(new PriceColorClass(" / " + item.Price3.toString(), containerPriceItem.Price3ComparingTextColor));
+                                    }
+
+                                    else {
+                                        myarray.push(new PriceColorClass(" / " + item.Price3.toString(), FontTool.Gray));
+                                    }
+                                }
+                            }
+
+                            if (!AppTool.IsNullOrEmpty(this.TariffPM.ContainerType4Id)) {
+                                if (AppTool.IsNullOrZero(item.Price4)) {
+                                    myarray.push(new PriceColorClass(" / -", FontTool.Gray));
+                                }
+
+                                else {
+                                    if (containerPriceItem.ComparingPrice4) {
+                                        myarray.push(new PriceColorClass(" / " + item.Price4.toString(), containerPriceItem.Price4ComparingTextColor));
+                                    }
+
+                                    else {
+                                        myarray.push(new PriceColorClass(" / " + item.Price4.toString(), FontTool.Gray));
+                                    }
+                                }
+                            }
+
+                            if (!AppTool.IsNullOrEmpty(this.TariffPM.ContainerType5Id)) {
+                                if (AppTool.IsNullOrZero(item.Price5)) {
+                                    myarray.push(new PriceColorClass(" / -", FontTool.Gray));
+                                }
+
+                                else {
+                                    if (containerPriceItem.ComparingPrice5) {
+                                        myarray.push(new PriceColorClass(" / " + item.Price5.toString(), containerPriceItem.Price5ComparingTextColor));
+                                    }
+
+                                    else {
+                                        myarray.push(new PriceColorClass(" / " + item.Price5.toString(), FontTool.Gray));
+                                    }
+                                }
+                            }
+                        }
                     }
-
-                    else {
-                        if (!AppTool.IsNullOrEmpty(this.TariffPM.ContainerType1Id)) {
-                            if (AppTool.IsNullOrZero(item.Price1)) {
-                                myValue = "-";
-                            }
-
-                            else {
-                                myValue = item.Price1.toString();
-                            }
-                        }
-
-                        if (!AppTool.IsNullOrEmpty(this.TariffPM.ContainerType2Id)) {
-                            if (AppTool.IsNullOrZero(item.Price2)) {
-                                myValue = myValue + " / -";
-                            }
-
-                            else {
-                                myValue = myValue + " / " + item.Price2.toString();
-                            }
-                        }
-
-                        if (!AppTool.IsNullOrEmpty(this.TariffPM.ContainerType3Id)) {
-                            if (AppTool.IsNullOrZero(item.Price3)) {
-                                myValue = myValue + " / -";
-                            }
-
-                            else {
-                                myValue = myValue + " / " + item.Price3.toString();
-                            }
-                        }
-
-                        if (!AppTool.IsNullOrEmpty(this.TariffPM.ContainerType4Id)) {
-                            if (AppTool.IsNullOrZero(item.Price4)) {
-                                myValue = myValue + " / -";
-                            }
-
-                            else {
-                                myValue = myValue + " / " + item.Price4.toString();
-                            }
-                        }
-
-                        if (!AppTool.IsNullOrEmpty(this.TariffPM.ContainerType5Id)) {
-                            if (AppTool.IsNullOrZero(item.Price5)) {
-                                myValue = myValue + " / -";
-                            }
-
-                            else {
-                                myValue = myValue + " / " + item.Price5.toString();
-                            }
-                        }
-                    }
-
                 });
             }
         }
 
-        return myValue;
+        return myarray;
     }
 
-    ////////////////////////////
     get IsFromAllOtherPorts() { return this.EntityPM.IsFromAllOtherPorts; }
     set IsFromAllOtherPorts(value: boolean) {
         if (this.EntityPM.IsFromAllOtherPorts != value) {
@@ -1833,4 +1873,14 @@ export class VersionClass {
 export class ContainerChargesClass {
     public Header: string;
     public Index: number;
+}
+
+export class PriceColorClass {
+    public Price: string;
+    public Color: string;
+
+    constructor(price: string, color: string) {
+        this.Price = price;
+        this.Color = color;
+    }
 }

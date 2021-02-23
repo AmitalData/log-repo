@@ -10,6 +10,6 @@ Feature: Edit Ticket Test
         Then the ticket should create successfully
 
     Scenario: Edit the ticket
-        Given the user edit the description
+        Given the user fill the description with "Ticket Test Edited"
         When save as open
         Then the ticket should save successfully

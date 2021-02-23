@@ -56,6 +56,7 @@ export class AccountingMainTesterComponent extends BaseComponent {
         this._MenuList.push("MSIC");
         this._MenuList.push("Alex");
 
+
         this.UIProperties.SetRequired("Email", this.ObjectTableName, true);
         this.CurrentSession.StopBusyIndicator();
         this._AccountingOpService = new AccountingOpService();
@@ -423,6 +424,26 @@ export class AccountingMainTesterComponent extends BaseComponent {
             );
 
     }
+    ButtonCardGLAccountConnect_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _CardGLAccountConnectUrl = ServiceHelper.GetLogitudeURL() + '/api/CardGLAccountConnect';
+        let myUrl = _CardGLAccountConnectUrl + "?tenant=" + objToCheck1.Tenant;
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+    }
+
     SetJournalExample() {
         let journal = {
             "Id": null,

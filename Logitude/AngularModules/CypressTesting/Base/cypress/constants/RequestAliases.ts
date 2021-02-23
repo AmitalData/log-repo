@@ -15,6 +15,7 @@ export class RequestAliases {
     public static readonly ConsilidationInvoiceDomain = "ConsilidationInvoiceDomain"
     public static readonly Quotes = 'Quotes';
     public static readonly QuickSearchDataLoaded = 'QuickSearchDataLoaded';
+    // Tariff
     public static readonly PostTariff = 'PostTariff';
     public static readonly PutTariff = 'PutTariff';
     public static readonly GetRecentTariffs = 'GetRecentTariffs';
@@ -29,6 +30,15 @@ export class RequestAliases {
     public static readonly GetCarrierViews = "GetCarrierViews";
     public static readonly GetCardviews = "GetCardViews";
     public static readonly GetEntityResource = "EntityResourceShippingLineTable";
+    //Tickets
+    public static readonly PostTicket = "PostTicket";
+    public static readonly PostTicketActivity = "PostTicketActivity";
+    public static readonly PostTicketCorrespondences = "PostTicketCorrespondences";
+    public static readonly PutTicket = "PutTicket";
+    public static readonly PutTicketActivity = "PutTicketActivity";
+    public static readonly WailAllLoad = "WailAllLoad";
+   
 
+    
 
 }

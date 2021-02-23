@@ -448,7 +448,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
             // Validation
             var lastRow = this.JournalLines.Collection[this.JournalLines.Collection.length - 1];
-            errors = JournalValidator.ValidateJournalLine(lastRow);
+            errors = JournalValidator.ValidateJournalLines(lastRow);
 
             this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
             if (errors.length > 0) {

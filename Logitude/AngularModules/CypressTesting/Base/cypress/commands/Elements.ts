@@ -19,7 +19,6 @@ declare global {
             ClickRadio(selector: string): Chainable<Element>
             ValidateElementColor(selector: string, expectedcolor: string): Chainable<Element>
             SelectQuickSearchFirstElement(quickSearchDetails: QuickSearchDetails): Chainable<Element>
-            SelectQuickSearchFirstElement2(selector: string, value: string): Chainable<Element>
             BackButton(contains:string): Chainable<Element>
         }
     }
@@ -104,16 +103,6 @@ Cypress.Commands.add("SelectQuickSearchFirstElement", (quickSearchDetails: Quick
             cy.get(quickSearchDetails.Selector).focus().clear().type(quickSearchDetails.Value).then(() => {
                 BaseAssertion.AssertStatusCode(RequestAliases.QuickSearchDataLoaded, 200);
                 cy.get(BaseSelectors.FirstElementInList).eq(0).click({ force: true });
-            })
-        })
-})
-
-Cypress.Commands.add("SelectQuickSearchFirstElement2", (selector, value) => {
-    cy.intercept(BaseURLs.GetQuickSearch).as("QuickSearchDataLoaded")
-    cy.get(selector).parents("quicksearchtextbox").eq(0).find(".LogitudeQuickSearchTextBox")
-        .within(() => {
-            cy.get(selector).focus().clear().type(value).then(() => {
-                cy.get("ul > li").eq(0).click({ force: true })
             })
         })
 })
