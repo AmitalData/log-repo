@@ -13,6 +13,7 @@ export class BaseSelectors extends RegexSelectors {
     //#region Maintenance
     public static readonly SystemSettings = "#CMS"
     public static readonly CustomsSettings = "#MaintenanceItemCISE"
+    public static readonly MaintenanceSearch = "#null_Search"
     //#endregion
     //#region Buttons
     public static readonly RedButton = '.RedButton';

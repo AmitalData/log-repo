@@ -14,6 +14,7 @@ import { AccountingURLs } from '../../../Accounting/cypress/constants/URLs';
 import { AccountingSelectors } from '../../../Accounting/cypress/selectors/Selectors';
 import { BaseURLs } from '../../../Base/cypress/constants/URLs';
 import { QuickSearchDetails } from '../../../Base/cypress/models/QuickSearchDetails';
+import { verify } from 'cypress/types/sinon';
 
 //#region ShipmentsWorkspace
 export function NavigatesToShipmentsWorkspace() {
@@ -304,6 +305,45 @@ export function DeleteAttachment() {
     cy.contains("Delete Attachment").click()
 }
 //#endregion
+
+//#region AMANAC 
+export function NavigatesTocustomSettingsInMaintenance(maintenanceSearchValue: string) {
+    cy.Click(BaseSelectors.MaintenanceMenu, null);
+    cy.FillLogTextBox(BaseSelectors.MaintenanceSearch, maintenanceSearchValue);
+    cy.Click(BaseSelectors.CustomsSettings, null);
+}
+
+export function UpdateLocalCustomsInterface(localCustomsInterfaceValue: string) {
+    cy.get(BaseSelectors.typeCheckbox).check({force: true})
+    cy.FillLogLov("#LogLov_CustomsInterfaceSetting_LocalCustomsInterfaceCode", localCustomsInterfaceValue, true);
+    cy.Click(BaseSelectors.RedButton, "OK")
+}
+
+export function NavigatesToAMANACWorkspace() {
+    cy.Click(BaseSelectors.OperationsMenu, null)
+    cy.Click("#AMANAC", null)
+}
+
+export function AMANACView(AMANACView: string) {
+    cy.get("Button[id^='ReportID']").eq(0).click()
+}
+
+export function AMANACmarketheshipmentasblocked(ShipmentNumber: string) {
+    cy.DefineRequestWait(RestAPI.GET, "**/shipmentviews/getbyfilters?**"+ShipmentNumber+"**", "shipmentviews1")
+   //cy.FillLogLov("#null_Search", ShipmentNumber, true);
+   cy.get("#null_Search").type("{selectall}" + ShipmentNumber,{delay:5})
+   BaseAssertion.AssertStatusCode("shipmentviews1", 200);
+   //cy.DefineRequestWait(RestAPI.GET, "**/shipmentviews/getbyfilters?**", "shipmentviews2")
+
+   //BaseAssertion.AssertStatusCode("shipmentviews1", 200);
+
+  // cy.get(".DropDownListItem").children().eq(0).click()
+    cy.Click("button[data-cy^=MarkAsBlocked_" + ShipmentNumber +"]", null)
+    cy.Click(".Button", "Close")
+
+}
+//#endregion
+
 export function FillMainCarriage(airline: string) {
     cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageCarrierId, airline, false);
     cy.FillRandomNumber(ShipmentSelectors.ShipmentFlightNumber, 100, 999);
