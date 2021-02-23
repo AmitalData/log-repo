@@ -8,12 +8,28 @@ import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 import * as AccountingActions from '../../../../Accounting/cypress/actions/Actions';
 import {AccountingSelectors} from '../../../../Accounting/cypress/selectors/Selectors'
+import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 
 let ShipmentData: ShipmentDetails;
 let shipmentNumber: string;
-
-Given("the user logged in and navigates to shipments workspace", () => {
+let AccountingSystem:string;
+//#region Update Accounting System
+Given("the user logged in", () => {
     cy.Login()
+});
+Given("accounting System as {string}", (accountingSystem) => {
+    AccountingSystem=accountingSystem;
+  });
+  
+  When("change the accounting system", () => {
+    AccountingActions.changeAccountingsSystem(AccountingSystem)
+  });
+  
+  Then("the accounting system should update successfully", () => {
+    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
+  });
+  //#endregion
+Given("the user navigates to shipments workspace", () => {
     Actions.NavigatesToShipmentsWorkspace()
 });
 Given("a direct shipment with the following details",(dataTable) => {

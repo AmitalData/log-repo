@@ -14,6 +14,32 @@ import { ARPaymentDetails } from 'cypress/models/ARPaymentDetails';
 import { BaseURLs } from '../../../Base/cypress/constants/URLs';
 import { QuickSearchDetails } from '../../../Base/cypress/models/QuickSearchDetails';
 
+export function NavigatesToAccountingMenu() {
+    cy.Click(BaseSelectors.AccountingMenu, null)
+}
+export function NavigatesToAccountingSettings() {
+    NavigatesToAccountingMenu();
+    cy.Click(AccountingSelectors.AccountingSettings, null);
+
+
+}
+export function changeAccountingsSystem(AccountingsSystem: string,ExternalTransmissionType?:string) {
+    NavigatesToAccountingSettings()
+    cy.Click("button span",AccountingSelectors.ContainAccountingSystem,true)
+    cy.FillLogLov(AccountingSelectors.AccountingSystemType, AccountingsSystem, true)
+    if (AccountingsSystem != AccountingSelectors.ContainNone) {
+        cy.get(AccountingSelectors.IsARInvoicesTransferEnabled).check({ force: true })
+        cy.get(AccountingSelectors.IsAPInvoicesTransferEnabled).check({ force: true })
+        cy.get(AccountingSelectors.IsARPaymentsTransferEnabled).check({ force: true })
+        cy.get(AccountingSelectors.IsAPPaymentsTransferEnabled).check({ force: true })
+        ExternalTransmission(ExternalTransmissionType);
+    }
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
+}
+export function ExternalTransmission(ExternalTransmissionType:string){
+    cy.get("div[id^=ComboBox_]:last").click();
+    cy.get(".FillParent").find(".TextTrimming").contains(ExternalTransmissionType).click()
+}
 //#region CustomInvoices
 export function NewCustomsCreditNoteARInvoice() {
     cy.Click(BaseSelectors.ToggleButtonClass, AccountingSelectors.ContainsCustoms, true);
@@ -25,11 +51,11 @@ export function NewCustomsARInvoice() {
 }
 //#endregion
 export function NavigatesToAccountsPayablesWorkspace() {
-    cy.Click(BaseSelectors.AccountingMenu, null)
+    NavigatesToAccountingMenu();
     cy.Click(AccountingSelectors.PayableAccountingTab, null)
 }
 export function NavigatesToAccountsReceivableWorkspace() {
-    cy.Click(BaseSelectors.AccountingMenu, null)
+    NavigatesToAccountingMenu();
     cy.Click(AccountingSelectors.ReceivableAccounting, null)
 }
 //#region APInvoice
@@ -196,7 +222,7 @@ export function ApproveConsilidationInvoice() {
 
 //#region APPayment
 export function FillAPPayment(aPPaymentDetails: APPaymentDetails, invoiceNumber: string) {
-    cy.Click(BaseSelectors.AccountingMenu, null)
+    NavigatesToAccountingMenu();
     cy.Click(AccountingSelectors.PayableAccountingTab, null)
     cy.Click(AccountingSelectors.NewAPPayment, null)
     cy.FillLogLov(AccountingSelectors.APPaymentVendor, aPPaymentDetails.Vendor, false)
