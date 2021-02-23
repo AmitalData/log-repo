@@ -143,13 +143,26 @@ namespace WebFreight.Web
         private List<Shipment> FillMissingShipperDetails(List<Shipment> connectedHouses)
         {
             List<Shipment> connectedHousesShipmentsWithShipperDetails = connectedHouses;
-            connectedHousesShipmentsWithShipperDetails.Where(ship => ShipmentHaveShipperIdWithoutShipperName(ship)).ToList()?.ForEach(shipment =>
+            List<Card> shippers = GetShippersWhoHaveAnIdAndNoName(connectedHouses);
+            if (shippers != null && shippers.Count > 0)
             {
-                Card card = CardRepository.GetSingleCard(shipment.ShipperId, (int)Tenant, true);
-                shipment.ShipperName = card != null ? card.EnglishName : shipment.ShipperName;
-            });
+                connectedHousesShipmentsWithShipperDetails.Where(ship => ShipmentHaveShipperIdWithoutShipperName(ship)).ToList()?.ForEach(shipment =>
+                {
+                    Card card = shippers.Where(myCard => myCard.Id == shipment.ShipperId).FirstOrDefault();
+                    shipment.ShipperName = card != null ? card.EnglishName : shipment.ShipperName;
+                });
+            }
 
             return connectedHousesShipmentsWithShipperDetails;
+        }
+
+        private List<Card> GetShippersWhoHaveAnIdAndNoName(List<Shipment> connectedHouses)
+        {
+            List<string> shipperIds = connectedHouses.Where(ship => ShipmentHaveShipperIdWithoutShipperName(ship)).Select(shipment => shipment.ShipperId).ToList();
+            int tenant = (int)Tenant;
+            CardRepository cardRepository = new CardRepository(tenant);
+            List<Card> shippers = cardRepository.GetCardsFromIdList(shipperIds, tenant);
+            return shippers;
         }
 
         private bool ShipmentHaveShipperIdWithoutShipperName(Shipment ship)
