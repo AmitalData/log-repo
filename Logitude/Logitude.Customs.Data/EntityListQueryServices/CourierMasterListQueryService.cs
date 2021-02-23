@@ -10,9 +10,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
+using Logitude.Customs.Data.EntityMapping;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
 {
@@ -129,8 +129,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             public int IsSuspendedDeclarations { get; set; }
         }
 
-        public List<CourierMasterList> AddCalcFields(List<CourierMasterList> entityLists)
+        public List<CourierMasterList> AddCalcFields(List<CourierMasterList> entityLists, string courierPendingReasonPM_900_Id, string courierPendingReasonPM_902_Id)
         {
+
             var today = DateTime.Now.Date;
             var ids = entityLists.Select(x => x.Id).ToList();
             var qJoin =
@@ -157,10 +158,10 @@ select new { p.CourierMasterId, myDeclarations, myDeclarationCourierStatuses });
                       CourierMasterId = g.Key,
                       IsClosedForFollowUp0 = g.Count(r => r.myDeclarationCourierStatuses.IsClosedForFollowUp == false),
                       P900 = g.Count(
-                          r => r.myDeclarationCourierStatuses.CourierPendingReasonList != null && r.myDeclarationCourierStatuses.CourierPendingReasonList.Contains("900")),
+                          r => r.myDeclarationCourierStatuses.CourierPendingReasonList != null && r.myDeclarationCourierStatuses.CourierPendingReasonList.Contains(courierPendingReasonPM_900_Id)),
                       IsCourierMissingClassification = g.Count(r => r.myDeclarationCourierStatuses.IsCourierMissingClassification == true),
                       IsMissingImporterId = g.Count(
-                          r => (r.myDeclarationCourierStatuses.CourierPendingReasonList != null && r.myDeclarationCourierStatuses.CourierPendingReasonList.Contains("902"))
+                          r => (r.myDeclarationCourierStatuses.CourierPendingReasonList != null && r.myDeclarationCourierStatuses.CourierPendingReasonList.Contains(courierPendingReasonPM_902_Id))
                           && r.myDeclarationCourierStatuses.IsClosedForFollowUp == false),
                       IsPendingCustoms = g.Count(r => r.myDeclarations.CourierCustomStatusCode == "2" && r.myDeclarationCourierStatuses.IsClosedForFollowUp == false),
                       IsSuspendedDeclarations = g.Count(r => r.myDeclarationCourierStatuses.IsClosedForFollowUp == false && r.myDeclarations.CourierCustomStatusCode == "2")
