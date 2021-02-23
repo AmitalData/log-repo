@@ -5,6 +5,7 @@ export class RequestAliases {
     public static readonly AddressViewsRequest = 'AddressViewsRequest';
     public static readonly APInvoicesRequest = 'APInvoicesRequest';
     public static readonly ARInvoicesRequest = 'ARInvoicesRequest';
+    public static readonly ARInvoicesPutRequest = 'ARInvoicesPutRequest';
     public static readonly APInvoiceView = 'APInvoiceView';
     public static readonly ARInvoiceviews = 'ARInvoiceviews';
     public static readonly APPayments = 'APPayments';
