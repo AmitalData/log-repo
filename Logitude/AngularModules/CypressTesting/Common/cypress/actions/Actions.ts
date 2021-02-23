@@ -29,7 +29,7 @@ export function AddNewCustomer(customerDetails: CustomerDetails) {
 }
 
 export function CreateCustomer() {
-    cy.DefineRequestWait(RestAPI.POST, URLs.PartnersDomain, RequestAliases.PartnersDomainRequest)
+    cy.DefineRequestWait(RestAPI.POST, URLs.PartnersDomainPostPartnerAddress, RequestAliases.PartnersDomainRequest)
     cy.Click(CommonSelectors.AddCustomer, null);
 }
 
