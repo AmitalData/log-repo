@@ -59,7 +59,7 @@ namespace WebFreight.Web.WcfApi
 
                     if (string.IsNullOrEmpty(entityPM.PaymentTermId))
                     {
-                        entityPM.PaymentTermId = "--";
+                        //entityPM.PaymentTermId = "--";
                     }
                    
                     ClassLevelValidator validationClass = new ClassLevelValidator("Customer", entityPM.Tenant) { IsHybrid = true };
