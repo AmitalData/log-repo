@@ -438,3 +438,4 @@ __pycache__/
 /Logitude/JustWebFreight/WebFreight.Web/CargoTracking/CargoTrackingImages/*
 /Logitude/JustWebFreight/WebFreight.Web/CargoTracking/CargoTrackingImages
 *.png
+/Logitude/AngularModules/CypressTesting/Shipment/cypress/Reports
