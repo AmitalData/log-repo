@@ -975,6 +975,14 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 }
             }
 
+            //Quotes
+            if (this.ObjectTableName == "Quote") {
+                this.ResultCodeList.push(new ResultCode("F/U Creation", "FOLLOWUP"));
+                this.ResultCodeList.push(new ResultCode("Docs Out F/U Creation", "DOCOUTFOLLOWUP"));
+                this.ResultCodeList.push(new ResultCode("Docs In F/U Creation", "DOCINFOLLOWUP")); 
+             
+            }
+
             this.ResultCodeSelected = this.ResultCodeList.filter(d => d.Code == this.AutomatedBackupClass.ResultCode)[0];
 
             if (!this.ResultCodeSelected) {

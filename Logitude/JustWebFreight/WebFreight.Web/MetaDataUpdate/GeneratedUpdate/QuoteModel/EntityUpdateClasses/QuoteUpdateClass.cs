@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteUpdateClass
    {  		
-		public const string HashString = "7733be6cbc58e113810dd96eedea8e54";
+		public const string HashString = "fa2f1d0e0e7d72d526236d6a12be3cb5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -15385,6 +15385,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 		   Feature QuoteFeature_QuotePriceCheck = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuotePriceCheck", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.QuotePriceCheck", NameTextCodeDefaultText = @"Price Check" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteObjectTable);
 
 		   Feature QuoteFeature_QuoteClosedAutomatically = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuoteClosedAutomatically", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.QuoteClosedAutomatically", NameTextCodeDefaultText = @"Quote Closed Automatically" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteObjectTable);
+
+		   Feature QuoteFeature_AUTOMATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTOMATION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.AUTOMATION", NameTextCodeDefaultText = @"Automation" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteObjectTable);
 
    
 	    
