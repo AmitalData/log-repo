@@ -213,7 +213,7 @@ When("edit the invoice", () => {
   AccountingActions.AddSecondInvoiceToConsolidation()
 });
 Then("the invoice should update successfully", () => {
-  BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200)
+  BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesPutRequest, 200);
 
 });
 //#endregion
@@ -252,7 +252,7 @@ When("approve the payment", () => {
   AccountingActions.ApproveARPayment()
 });
 
-Then("the cpayment should approve successfully", () => {
+Then("the payment should approve successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ARPayments, 200)
 });
 //#endregion

@@ -102,4 +102,4 @@ Feature: Create Consolidation Invoice
 
     Scenario: Approve payment
         When approve the payment
-        Then the cpayment should approve successfully
+        Then the payment should approve successfully
