@@ -365,12 +365,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (String.IsNullOrWhiteSpace(customFileNo)) return "";
             return repository.GetIdByCustomFileNo(customFileNo, tenant);
         }
-        public string IsShaamByCustomFileNo(string customFileNo, int tenant)
-        {
-
-            if (String.IsNullOrWhiteSpace(customFileNo)) return "";
-            return repository.GetIdByCustomFileNo(customFileNo, tenant);
-        }
+       
 
         public string GetIdByExternalDeclarationNumber(string externalDeclarationNumber, int tenant)
         {
