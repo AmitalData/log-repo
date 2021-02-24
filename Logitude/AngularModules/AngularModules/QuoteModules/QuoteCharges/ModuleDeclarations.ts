@@ -1,3 +1,4 @@
+import { QuoteAuditTabComponent } from '../QuoteTabs/Components/Audit/QuoteAuditTabComponent';
 import {AddEditFCLChargeComponent} from './Components/AddEditFCLChargeComponent';
 import {AddEditLCLChargeComponent} from './Components/AddEditLCLChargeComponent';
 import {AddEditPriceStepComponent} from './Components/AddEditPriceStepComponent';
@@ -17,6 +18,7 @@ export const Components =
         LCLChargesComponent,
         QuoteVATDetailsComponent,
         SelectBreaksComponent,
+        QuoteAuditTabComponent,
     ];
 
 export class ModuleDeclarations {
@@ -32,7 +34,9 @@ export class ModuleDeclarations {
             case "FCLChargesComponent": { myResult = FCLChargesComponent; break; }
             case "LCLChargesComponent": { myResult = LCLChargesComponent; break; }
             case "QuoteVATDetailsComponent": { myResult = QuoteVATDetailsComponent; break; }
-            case "SelectBreaksComponent": { myResult = SelectBreaksComponent; break; }                
+            case "SelectBreaksComponent": { myResult = SelectBreaksComponent; break; }
+            case "QuoteAuditTabComponent": { myResult = QuoteAuditTabComponent; break; }
+                 
         }
 
         return myResult;

@@ -1,3 +1,4 @@
+import { QuoteAuditTabComponent } from './Components/Audit/QuoteAuditTabComponent';
 import {ConnectionsTabComponent} from './Components/Connections/ConnectionsTabComponent';
 import {QuoteDocsInTabComponent} from './Components/DocsIn/QuoteDocsInTabComponent';
 import {QuoteDocsOutTabComponent} from './Components/DocsOut/QuoteDocsOutTabComponent';
@@ -26,7 +27,8 @@ export const Components =
         InlandDomesticRoutingsComponent,
         OrdinaryRoutingsComponent,
         RoutingsTabComponent,
-        TariffsComponent,        
+        TariffsComponent,
+        QuoteAuditTabComponent,
     ];
 
 export class ModuleDeclarations {
@@ -47,7 +49,8 @@ export class ModuleDeclarations {
             case "InlandDomesticRoutingsComponent": { myResult = InlandDomesticRoutingsComponent; break; }
             case "OrdinaryRoutingsComponent": { myResult = OrdinaryRoutingsComponent; break; }
             case "RoutingsTabComponent": { myResult = RoutingsTabComponent; break; }
-            case "TariffsComponent": { myResult = TariffsComponent; break; }           
+            case "TariffsComponent": { myResult = TariffsComponent; break; }
+            case "QuoteAuditTabComponent": { myResult = QuoteAuditTabComponent; break; }  
         }
 
         return myResult;
