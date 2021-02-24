@@ -294,7 +294,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 dataProvider.ZipCode = tenantAddress.ZipCode;
             }
 
-            if (FilterdCustomer != null)
+            if (FilterdCustomerAddress!= null)
             {
                 dataProvider.Address = DataProviders.General.GetAddress(FilterdCustomerAddress);
                 dataProvider.Phone = FilterdCustomerAddress.PhoneNumber;
