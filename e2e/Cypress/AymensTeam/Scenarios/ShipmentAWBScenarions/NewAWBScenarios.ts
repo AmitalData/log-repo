@@ -14,7 +14,7 @@ export class NewAWBScenarios {
         this.FillPackages();
         this.FillFreightCharges();
         this.FillOtherCharges();
-        this.FillRADetails();
+        //this.FillRADetails();
         this.FillGeneralDetails();
         this.SaveShipment();
     }
