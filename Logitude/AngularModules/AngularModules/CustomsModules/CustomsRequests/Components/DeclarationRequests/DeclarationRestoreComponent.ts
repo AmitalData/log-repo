@@ -364,4 +364,7 @@ export class DeclarationRestoreComponent
             .subscribe((myServiceResponse: ServiceResponse) => {
             });
     }
+    OnEscHotKeyPressed() {
+        SessionLocator.SelectedSession.CloseCurrentWindow();
+    }
 }
