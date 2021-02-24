@@ -817,7 +817,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         windowArgs.CurrentEntityPM = this.DocumentTypeSelected;
         windowArgs.DocumentTypeTemplateLists = this.DocumentTypeTemplateLists;
         windowArgs.TypeTab = "Document";
-        windowArgs.RequestAreaName = "Automtaion";
+        windowArgs.RequestAreaName = "Automation";
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 800;
         logitudeWindow.Height = 550;
