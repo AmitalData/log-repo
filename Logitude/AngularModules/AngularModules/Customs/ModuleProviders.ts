@@ -635,7 +635,6 @@ export class ModuleProviders {
             case "DocumentRejectTypeListService": { myResult = new DocumentRejectTypeListService(); break; }
             case "AmendmentFieldStatusTypeListService": { myResult = new AmendmentFieldStatusTypeListService(); break; }
             case "LoadingSiteTypeListService": { myResult = new LoadingSiteTypeListService(); break; }
-            case "FclLclCodeListService": { myResult = new FclLclCodeListService(); break; }
 
             case "AmendCancellRequestInitiatorListService": { myResult = new AmendCancellRequestInitiatorListService(); break; }
 
