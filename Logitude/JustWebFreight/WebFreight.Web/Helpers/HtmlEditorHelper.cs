@@ -5433,35 +5433,25 @@ namespace WebFreight.Web.Helpers
                 PropertyInfo propertyPathPi = theEntity.GetType().GetProperty(fields[0].Trim());
                 if (propertyPathPi != null)
                 {
-                    value = " ";
-                    object datetimevalue = propertyPathPi.GetValue(theEntity, null);
-                    if (datetimevalue != null)
+                    object objectFieldValue = objectField.IsCustom ? GetCustomFieldValue(objectField, theEntity, tenant) : propertyPathPi.GetValue(theEntity, null);
+                    DateTime? dateTimeValue = (objectFieldValue!=null && !string.IsNullOrEmpty(objectFieldValue.ToString())) ? dateTimeValue = DateTime.Parse(objectFieldValue.ToString()) : null ;
+                    string resultValue = " ";
+                  
+                    if (dateTimeValue != null)
                     {
-                        DateTime? datetime = datetimevalue as DateTime?;
-                        if (datetime != null)
+                        if (fields[1].Trim().ToLower() == "date")
                         {
-                            string resultValue = " ";
-                            if (fields[1].Trim().ToLower() == "date")
-                            {
-                                resultValue = datetime.Value.ToShortDateString();
-                            }
-                            else
-                            {
-                                resultValue = datetime.Value.ToShortTimeString();
-                            }
-
-                            node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", resultValue);
-                            nodeTextValue = resultValue;
-                            value = resultValue;
+                            resultValue = dateTimeValue.Value.ToShortDateString();
+                        }
+                        else
+                        {
+                            resultValue = dateTimeValue.Value.ToShortTimeString();
                         }
                     }
-                    else
-                    {
-                        node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", " ");
-                        nodeTextValue = " ";
-                        value = " ";
-                    }
 
+                    node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", resultValue);
+                    nodeTextValue = resultValue;
+                    value = resultValue;
                 }
             }
 
@@ -5573,8 +5563,12 @@ namespace WebFreight.Web.Helpers
             return value;
         }
 
-
-
+        private object GetCustomFieldValue(ObjectField objectField, object entity, int tenant)
+        {
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            object customFieldValue = customFieldResolver.GetFieldValue(entity, objectField, tenant);
+            return customFieldValue;
+        }
 
         private HtmlNode GetNewTableHtml(HtmlNode oldRow, HtmlNode oldTable, IList multidataList, List<ObjectField> multiEntityObjectFields, object theEntity, List<ObjectField> theEntityObjectFields, GeneralDomainService theGeneralService, int tenant, SystemDataPM systemEntity, List<ObjectField> systemEntityObjectFields, ObjectField multiObjectField)
         {
