@@ -1451,6 +1451,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\ExceptionReasonListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ExportDeclarationClosingDataListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ExporterRoleTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\FclLclCodeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassRequestListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassRequestsListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassReturnCodeListService.ts" />

@@ -115,8 +115,8 @@ export class DropdownMenuFilterComponent implements OnInit {
                 // event.stopPropagation();
             }
             
-            document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
-                (myTop/*itemRect.top*/ /*+ 27*/ /*-5*/) + 'px';
+            //document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
+            //    (myTop/*itemRect.top*/ /*+ 27*/ /*-5*/) + 'px';
 
             let DDLHeight = 65+70;//    height: 22px; * 3 +30 
             let Extra = 22 + 1 + 1; //    height: 22px; +1 UP +1 DOWN 
