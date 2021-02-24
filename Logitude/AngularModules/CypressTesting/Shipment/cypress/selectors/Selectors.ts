@@ -7,6 +7,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentSearchBar = '#Shipment_Search';
   public static readonly ShipmentSearchParent = 'searchbox';
   public static readonly ShipmentSearchParentClass = '.SearchBox';
+  public static readonly ShipmentEventNote = '#EventNotes';
   //public static readonly InvoiceMoreList = '#MenuButtons_1';
   public static readonly ConfirmWindowYes = '#ConfirmWindow_Yes_0';
   public static readonly SaveClose = '#SaveClose';
@@ -36,10 +37,12 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PayablesTab = '#ShipmentTHPayables';
   public static readonly DocsOutTab = '#ShipmentTHDocsOut';
   public static readonly DocsInTabb = '#ShipmentTHDocsIn';
+  public static readonly Events = '#ShipmentTHEvents';
   //#endregion
   //#region General tab
   public static readonly ShipmentGrossWeight = '#Shipment_GrossWeightInKG';
   public static readonly ShipmentMoveType = '#Shipment_MoveTypeId';
+  public static readonly ShipmentValueOfGoods = '#Shipment_ValueOfGoods';
   //#endregion
   //#region Shipment tab
   public static readonly ShipmentCustomer = '#Shipment_CustomerId';
@@ -55,6 +58,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly OrderOKButton = '#OrderOKbtn';
   //#endregion
   //#region Partner tab
+  public static readonly PartnerToggle = '#PartnerToggle';
   public static readonly AddShipperButton = '#SHIPR';
   public static readonly AddConsigneeButton = '#CONSI';
   public static readonly AddAgentButton = '#AGENT';
@@ -84,6 +88,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentConsolidator = '#Shipment_ConsolidatorId';
   public static readonly ShipmentReleasingAgent = '#Shipment_ReleasingAgentId';
   public static readonly PartnerOKButton = '#PartnerOKbtn';
+  public static readonly PartnerEditShipper = '#Edit-Shipper';
   //#endregion 
   //#region Package tab fields
   public static readonly AddPackage = '#AddPackage';
@@ -103,6 +108,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PreCarriage = '#PreCarriage';
   public static readonly EditRoutingMainCarriage = '#Edit-MainCarriage';
   public static readonly ShipmentMainCarriageCarrierId = '#Shipment_MainCarriageCarrierId';
+  public static readonly ShipmentBookingNumberOfPackages = '#Shipment_BookingNumberOfPackages';
   public static readonly ShipmentFlightNumber = '#Shipment_MainCarriageCarrierNumber';
   public static readonly ShipmentMAWB = '#Shipment_Master';
   public static readonly ShipmentDateMaincarriageATD = '#calendarbutton_date_Shipment_MainCarriageATD';
@@ -145,6 +151,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly NewAttachedHouse = '#NewHouseBtn';
   public static readonly CopyShipmentButton = '#ShipmentBCopyShipment';
   public static readonly CancelShipmentButton = '#ShipmentBCancelShipment';
+  public static readonly ReactivateShipmentButton = '#ShipmentBReactivateShipment';
   public static readonly OperationalCloseButton = '#ShipmentBOperationalClose';
   public static readonly AccountllyCloseButton = '#ShipmentBAccountingClose';
   public static readonly OperationalReopenButton = '#ShipmentBOperationalReopen';
@@ -167,4 +174,8 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly OverviewTabInAWBWizard = "#OVE";
   public static readonly PackagesTabInAWBWizard = "#PAC";
   //#endregion
+
+  public static readonly ContainsToggleButtonDisabled = "ToggleButtonDisabled"
+  public static readonly ShortTitleControl = ".ShortTitleControl"
+
 }

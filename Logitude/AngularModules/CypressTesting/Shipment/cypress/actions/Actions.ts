@@ -40,7 +40,7 @@ export function CreateShipment(shipmentLevel: string) {
     cy.DefineRequestWait(RestAPI.POST, URLs.Shipment, RequestAliases.ShipmentRequest)
     cy.Click(createSelector, null)
 }
-//#endregion 
+//#endregion
 //#region Open And UpdateShipment
 export function UpdateShipment(saveButtonSelector: string, saveButtonSelectorContains?: string) {
     cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
@@ -60,10 +60,72 @@ export function OpenShipment(shipmentNumber: string) {
     cy.SelectQuickSearchFirstElement(quickSearchDetails);
 }
 
-export function CancelShipment() {
+export function CancelShipment(note :string) {
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
     cy.Click(ShipmentSelectors.CancelShipmentButton, null);
+    cy.FillLogTextBox(ShipmentSelectors.ShipmentEventNote ,note)
     UpdateShipment(ShipmentSelectors.ConfirmActionButton);
+}
+
+export function ReactiveShipment(note :string) {
+    cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
+    cy.Click(ShipmentSelectors.ReactivateShipmentButton, null);
+    cy.FillLogTextBox(ShipmentSelectors.ShipmentEventNote , note)
+    UpdateShipment(ShipmentSelectors.ConfirmActionButton);
+}
+
+export function ValidateCancelIconExist(IsCancelled:boolean){
+    if(IsCancelled){
+        cy.get(ShipmentSelectors.ShortTitleControl).should(BaseSelectors.Exist)
+    }else{
+        cy.get(ShipmentSelectors.ShortTitleControl).should(BaseSelectors.NotExist)
+    }
+}
+
+export function ValidateShipmentEventActions(excpectedMSG : string){
+    cy.DefineRequestWait(RestAPI.GET,URLs.TraceEventsDomain,RequestAliases.GetTraceEvent);
+    cy.Click(ShipmentSelectors.Events,null);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetTraceEvent, 200).then((interception) => {
+        let actualMsg = interception.response.body[0].Notes;
+        assert.equal(actualMsg, excpectedMSG);
+    });
+}
+
+export function ValidateShipmentFields(IsCanceled:boolean){
+    cy.Click(ShipmentSelectors.GeneralTab,null);
+    EditGeneralField();
+    if(IsCanceled){
+        BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentValueOfGoods,BaseSelectors.BeEmpty)
+    }else{
+        BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentValueOfGoods,'123.00')
+    }
+    CheckIfDisable(ShipmentSelectors.OrdersTab,ShipmentSelectors.ShipmentBookingNumberOfPackages,IsCanceled);
+    CheckIfDisable(ShipmentSelectors.OrdersTab,ShipmentSelectors.ShipmentMainCarriageCarrierId,IsCanceled);
+    CheckIfHaveClass(ShipmentSelectors.PartnersTab,ShipmentSelectors.PartnerToggle,"ToggleButtonDisabled",IsCanceled);
+    CheckIfDisable(ShipmentSelectors.PartnerEditShipper,BaseSelectors.RedButton,IsCanceled);
+    cy.Click(BaseSelectors.Button,BaseSelectors.ContainsCancel);
+    CheckIfDisable(ShipmentSelectors.PackagesTab,ShipmentSelectors.AddPackage,IsCanceled);
+    CheckIfHaveClass(ShipmentSelectors.RoutingsTab,ShipmentSelectors.RoutingToggle,'ToggleButtonDisabled',IsCanceled)
+    CheckIfDisable(ShipmentSelectors.EditRoutingMainCarriage,BaseSelectors.RedButton,IsCanceled);
+    cy.Click(BaseSelectors.Button,BaseSelectors.ContainsCancel);
+    CheckIfDisable(ShipmentSelectors.PayablesTab,BaseSelectors.AddButton,IsCanceled);
+    CheckIfDisable(ShipmentSelectors.ReceivablesTab,BaseSelectors.AddButton,IsCanceled);
+}
+
+function EditGeneralField(){
+    cy.FillLogTextBox(ShipmentSelectors.ShipmentValueOfGoods,"123");
+    UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+}
+
+function CheckIfDisable(tabSelector:string , fieldSelector:string , IsDisable:boolean){
+    cy.Click(tabSelector,null);
+    BaseAssertion.AssertElementDisabled(fieldSelector,IsDisable?BaseSelectors.BeDisabled:BaseSelectors.NotBeDisabled)
+}
+
+function CheckIfHaveClass(tabSelector:string , fieldSelector:string ,classValue:string ,IsHaveCLass:boolean){
+    cy.Click(tabSelector,null);
+    BaseAssertion.AssertElementHaveClasss(fieldSelector,IsHaveCLass?BaseSelectors.HaveClass:BaseSelectors.NotHaveClass,classValue)
 }
 
 export function ConnectOrDisconnectShipment() {
@@ -274,7 +336,7 @@ export function FillPayablesTab(payableDetails: PayableDetails) {
     }
 }
 //#endregion
-//#region Copy Shipment 
+//#region Copy Shipment
 export function CopyShipment(shipmentLevel: string) {
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true)
     cy.Click(ShipmentSelectors.CopyShipmentButton, null)
