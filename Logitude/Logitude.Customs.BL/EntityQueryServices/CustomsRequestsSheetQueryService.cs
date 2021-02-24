@@ -268,7 +268,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 throw new Exception("GetRequestInProgress !displayOnlyMode && string.IsNullOrWhiteSpace(InterfaceTypeCode) ");
             }
-
+            requestInProgressParams.InterfaceTypeCode = requestInProgressParams.InterfaceTypeCode.Trim();// angular send " 2750" why  ??
             var intrefaceTypeList =
                 new string[]
                 {
