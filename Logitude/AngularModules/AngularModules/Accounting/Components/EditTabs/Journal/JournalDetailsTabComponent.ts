@@ -905,7 +905,7 @@ class JournalLineModel extends BaseComponent {
             if (!AppTool.IsNullOrEmpty(value) && !AppTool.IsNullOrEmpty(this.parent.currency)) {
                 if (value != SessionLocator.TenantPM.CurrencyId) {
                     this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, true);
-                    if (this.parent.currency.Id != value) {
+                    if (this.parent.defaultCurrencyId != value) {
                         this.GetExchangeRate(value);
                     }
                     else this.currencyRate = 1;
