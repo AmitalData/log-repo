@@ -167,4 +167,22 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly OverviewTabInAWBWizard = "#OVE";
   public static readonly PackagesTabInAWBWizard = "#PAC";
   //#endregion
+
+  //#region INTTRA
+  public static readonly INTTRASettingId = "#INTTRASetting_INTTRAId";
+  public static readonly INTTRASettingAlias = "#INTTRASetting_INTTRAAlias";
+  public static readonly FTPDetailUserName = "#FTPDetail_UserName";
+  public static readonly FTPDetailPassword = "#FTPDetail_Password";
+  public static readonly FTPDetailHost = "#FTPDetail_Host";
+  public static readonly FTPDetailFolder = "#FTPDetail_Folder";
+  public static readonly ContainsOutSettings = "Out Settings:";
+  public static readonly ContainsInSettings = "In Settings:";
+  public static readonly SaveFTPDetailButton = ".RedButton:last";
+  public static readonly BranchINTTRAId = "#Branch_INTTRAId";
+  public static readonly BranchINTTRAAlias = "#Branch_INTTRAAlias";
+  public static readonly BranchINTTRAContact = "#Branch_INTTRAContactId";
+  public static readonly ContainsBranchesSettings = "Branches Settings";
+  public static readonly ContainsRegistration = "Registration";
+  public static readonly ContainsSendEBooking = "Send e-booking";
+  //#endregion
 }

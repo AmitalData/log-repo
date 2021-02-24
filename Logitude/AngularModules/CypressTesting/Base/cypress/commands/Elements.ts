@@ -11,7 +11,7 @@ declare global {
         interface Chainable {
             FillDate(selector: string, value: string): Chainable<Element>
             FillLogTextBox(selector: string, value: string): Chainable<Element>
-            FillLogLov(selector: string, value: string, fromCache: boolean): Chainable<Element>
+            FillLogLov(selector: string, value: string, fromCache: boolean, getByFilters?: boolean): Chainable<Element>
             FillRandomString(selector: string, length: number, upperCase: boolean): Chainable<Element>
             FillRandomNumber(selector: string, minimum: number, maximum: number): Chainable<Element>
             Click(selector: string, contains: string, force?: boolean): Chainable<Element>
@@ -46,10 +46,13 @@ Cypress.Commands.add("FillLogTextBox", (selector, value) => {
 })
 
 
-Cypress.Commands.add("FillLogLov", (selector, value, fromCache) => {
+Cypress.Commands.add("FillLogLov", (selector, value, fromCache, getByFilters = false) => {
 
     if (!fromCache) {
-        cy.intercept(BaseURLs.GetByCompactFilters).as("LOVDataLoaded")
+        cy.intercept({
+            method: RestAPI.GET,
+            url: getByFilters ? BaseURLs.GetByFilters : BaseURLs.GetByCompactFilters
+        }).as("LOVDataLoaded")
     }
 
     //cy.get(selector).clear().type(value)

@@ -16,4 +16,8 @@ export class RegexSelectors {
     public static ShipmentTypeRadio(shipmentType: string): string{
         return "input[id^='ShipmentTypeRadio_'][id$='" + shipmentType + 'D' + "']";
     }
+
+    public static INTTRASettingsModeRadio(mode: string): string{
+        return "#" + mode.charAt(0).toUpperCase() + mode.slice(1) + "_ModeRadio";
+    }
 }

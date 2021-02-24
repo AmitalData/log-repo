@@ -48,7 +48,7 @@ export function UpdateShipment(saveButtonSelector: string, saveButtonSelectorCon
 }
 
 export function OpenShipment(shipmentNumber: string) {
-    cy.DefineRequestWait("GET", "**/ngMetaData/getmenubuttongrouppms?**", "WaitLoadShipmentMenuButtons");
+    cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetMenuButtonGroups, RequestAliases.WaitLoadShipmentMenuButtons);
 
     var quickSearchDetails = {
         Selector: ShipmentSelectors.ShipmentSearchBar,
@@ -57,7 +57,10 @@ export function OpenShipment(shipmentNumber: string) {
         WaitURL: BaseURLs.GetQuickSearch,
         Value: shipmentNumber
     } as QuickSearchDetails;
+
     cy.SelectQuickSearchFirstElement(quickSearchDetails);
+    
+    BaseAssertion.AssertStatusCode(RequestAliases.WaitLoadShipmentMenuButtons, 200);
 }
 
 export function CancelShipment() {
@@ -311,7 +314,6 @@ export function FillMainCarriage(airline: string) {
 }
 
 export function OpenAWBWizard(shipmentLevel: string) {
-    cy.wait("@WaitLoadShipmentMenuButtons");
     cy.Click(BaseSelectors.Button, shipmentLevel + " AWB Wizard");
 }
 

@@ -2,5 +2,7 @@
   "url": "https://test.logitudeworld.com/test",
   "email": "specflowtest@logitudeworld.com",
   "password": "Spec_Flow21",
-  "tenant": null
+  "customerCareEmail": "specflowtest_customercare@logitudeworld.com",
+  "customerCarePassword": "Spec_Flow_CC21",
+  "tenant": 1311
 }

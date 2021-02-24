@@ -40,6 +40,12 @@ export class RequestAliases {
     public static readonly WailAllLoad = "WailAllLoad";
    
 
-    
+    public static readonly WaitLoadShipmentMenuButtons = "WaitLoadShipmentMenuButtons";
+    public static readonly GetSingleShipment = "GetSingleShipment";
+    public static readonly GetBookingMessageResultValidate = "GetBookingMessageResultValidate";
 
+    //INTTRA
+    public static readonly SaveFTPDetails = "SaveFTPDetails";
+    public static readonly GetINTTRASettings = "GetINTTRASettings";
+    public static readonly PutINTTRASettings = "PutINTTRASettings";
 }

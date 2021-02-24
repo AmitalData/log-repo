@@ -57,4 +57,16 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly LogLOVFooterHyperLink = ".LogLOVFooter a";
     public static readonly DownArrowImage = "img[src='./Images/Buttons/downarrow.png']";
     public static readonly Hyperlink = ".hyperlink";
+
+    //Abed Malakh
+    public static readonly MaintenanceTransmissionsTab = "#TRANS";
+    public static readonly INTTRAMaintenanceItem = "#MaintenanceItemINTTRA_S";
+    public static readonly FormFieldRow = ".FormFieldRow";
+    public static readonly StartsWithAddButton = "button[id^='Add']";
+    public static readonly StartsWithEditButton = "button[id^='Edit']";
+    public static readonly SimpleGridViewRow = ".SimpleGridViewRow";
+    public static readonly SimpleGridViewHeaderDark = ".SimpleGridViewHeaderDark";
+    public static readonly table = "table";
+    public static readonly CheckBoxLabel = "label[id^='CheckBox']";
+    public static readonly td = "td";
 }
