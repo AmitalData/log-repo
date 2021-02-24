@@ -214,6 +214,11 @@ export class DeclarationReferantDataPM {
     public set ForwarderName(newValue: string) { if (this.forwarderName != newValue) { this.forwarderName = newValue; this.MarkAsDirty("ForwarderName"); } }
        
 	 
+    private fclLclName: string;
+    public get FclLclName() { return this.fclLclName; }
+    public set FclLclName(newValue: string) { if (this.fclLclName != newValue) { this.fclLclName = newValue; this.MarkAsDirty("FclLclName"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		

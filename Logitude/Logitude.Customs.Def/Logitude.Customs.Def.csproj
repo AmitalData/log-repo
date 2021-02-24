@@ -80,6 +80,7 @@
     <Compile Include="EntityPMs\Generated\ExceptionReasonPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExportDeclarationClosingDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExporterRoleTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\FclLclCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LoadingSiteTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\NbcDeclarationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PartyRelationshipTypePM.Generated.cs" />

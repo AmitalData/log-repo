@@ -92,8 +92,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ImporterFile { get; set; }
         [Column("FileOpenDate")]
 	    public DateTime? FileOpenDate { get; set; }
+        [ForeignKey("FclLclCodeTable")]
         [Column("FclLcl")]
 	    public string FclLcl { get; set; }
+	      
+        public virtual FclLclCode FclLclCodeTable { get; set; }
         [Column("PackageQuantity")]
 	    public int? PackageQuantity { get; set; }
         [ForeignKey("ForwarderCard")]

@@ -73,10 +73,10 @@ export class DeclarationReferantDataList {
 	PaymentDate_Date: Date;
 	PaymentDate_Time: string;
 	PhysicalCheck: number;
-	FclLcl: string;
 	PackageQuantity: number;
 	ForwarderId: string;
 	ForwarderName: string;
+	FclLclName: string;
 	
 }
  

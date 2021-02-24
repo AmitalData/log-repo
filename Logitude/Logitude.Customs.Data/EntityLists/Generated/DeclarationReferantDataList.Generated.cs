@@ -145,13 +145,13 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public int? PhysicalCheck  { get; set; }
        [DataMember]
-       public string FclLcl  { get; set; }
-       [DataMember]
        public int? PackageQuantity  { get; set; }
        [DataMember]
        public string ForwarderId  { get; set; }
        [DataMember]
        public string ForwarderName  { get; set; }
+       [DataMember]
+       public string FclLclName  { get; set; }
    }
 
 }
