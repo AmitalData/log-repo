@@ -868,15 +868,15 @@ namespace WebFreight.Web.Helpers
                 {
                     htmlEditorResolveResult = ResolveHtmlData(htmlEditorResolveArgs, null);
                 }
-                else htmlEditorResolveResult.HtmlString = htmlEditorResolveArgs.HtmlString;
+                else htmlEditorResolveResult = MapHtmlEditorArgsToResult(htmlEditorResolveArgs);
             }
 
 
             return htmlEditorResolveResult;
         }
-        
-        
-        
+
+
+
         private bool CheckIfTemplateHaveDataVariable(HtmlEditorResolveArgs htmlEditorResolveArgs )
         {
             bool result = false;
@@ -920,7 +920,7 @@ namespace WebFreight.Web.Helpers
         }
         public HtmlEditorResolveResult ResolveHtmlData(HtmlEditorResolveArgs htmlEditorResolveArgs ,object customEntity )
         {
-            string htmlString = htmlEditorResolveArgs.HtmlString; 
+            string htmlString = htmlEditorResolveArgs.HtmlString;
             string to = htmlEditorResolveArgs.To;
             string from = htmlEditorResolveArgs.From;
             string replyTo = htmlEditorResolveArgs.ReplyTo;
@@ -928,7 +928,7 @@ namespace WebFreight.Web.Helpers
             string bcc = htmlEditorResolveArgs.Bcc;
             string subject = htmlEditorResolveArgs.Subject;
 
-            
+
 
 
 
@@ -1147,7 +1147,7 @@ namespace WebFreight.Web.Helpers
             bcc = ResolveVariableField(bcc, resolveVariableFieldArgs);
             to = ResolveVariableField(to, resolveVariableFieldArgs);
 
-            
+
 
             if (signatureNodeList.Count() != 0)
             {
@@ -1371,7 +1371,7 @@ namespace WebFreight.Web.Helpers
                     if (securityKeyNode.ParentNode != null)
                     {
                         HtmlNode newLogoSection = GetNewNodeHtml(GetSharedDocumentLinkHtml(securityKey, htmlEditorResolveArgs.EntityId, securityKeyNode.OuterHtml, tenant, HideSharedlogistics, SystemUrl));
-                        
+
                         foreach (HtmlNode childNode in newLogoSection.ChildNodes)
                         {
                             if (securityKeyNode.ParentNode != null && securityKeyNode.ParentNode.ParentNode != null)
@@ -1403,7 +1403,7 @@ namespace WebFreight.Web.Helpers
 
             return new HtmlEditorResolveResult()
             {
-                HtmlString = result, 
+                HtmlString = result,
                 Subject = subject,
                 From = from,
                 To= to,
@@ -1411,6 +1411,21 @@ namespace WebFreight.Web.Helpers
                 Bcc = bcc,
                 ReplyTo = replyTo
             };
+        }
+
+        private HtmlEditorResolveResult MapHtmlEditorArgsToResult(HtmlEditorResolveArgs htmlEditorResolveArgs)
+        {
+            HtmlEditorResolveResult htmlEditorResolveResult = new HtmlEditorResolveResult{
+                HtmlString = htmlEditorResolveArgs.HtmlString,
+                To = htmlEditorResolveArgs.To,
+                Cc = htmlEditorResolveArgs.Cc,
+                Bcc = htmlEditorResolveArgs.Bcc,
+                From = htmlEditorResolveArgs.From,
+                ReplyTo = htmlEditorResolveArgs.ReplyTo,
+                Subject = htmlEditorResolveArgs.Subject
+            };
+
+            return htmlEditorResolveResult;
         }
 
         private string ResolveVariableField( string fieldVaue, ResolveVariableFieldArgs resolveVariableFieldArgs)
