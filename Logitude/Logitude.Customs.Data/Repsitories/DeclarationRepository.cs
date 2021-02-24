@@ -287,6 +287,20 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.Id == keys.Id
                     select a);
         }
+        public Declaration GetByCustomFileNo(string customFileNo, int tenant)
+        {
+
+            if (String.IsNullOrWhiteSpace(customFileNo)) return null;
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+            return
+                  (
+                  from rec in context.Declarations
+                  where rec.CustomFileNo == customFileNo && rec.Tenant == tenant
+                  select rec
+                  )
+                  .FirstOrDefault();
+        }
         public string GetIdByCustomFileNo(string customFileNo, int tenant)
         {
          
@@ -595,7 +609,7 @@ namespace Logitude.Customs.Data.Repsitories
             return dec != null ? dec.CustomFileNo : null;
         }
 
-        public Declaration GetByCustomFileNo(string customFileNo, int tenant)
+        public Declaration GetDeclarationByCustomFileNo(string customFileNo, int tenant)
         {
             if (String.IsNullOrWhiteSpace(customFileNo)) return null;
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 

@@ -53,6 +53,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         {
             try
             {
+                InterfaceTypeCode = InterfaceTypeCode.Trim();//why " 2750"
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
@@ -60,11 +61,36 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+                Boolean include8250IsShaam = false; 
+                if (InterfaceTypeCode == "2750" && !string.IsNullOrWhiteSpace( CustomFileNo ))
+                {
+                    var decQS = new DeclarationQueryService(customContext);
 
+                    var declaration =decQS.GetSingleByCustomFileNoFromCache(CustomFileNo, authToken.Tenant);
+                    if (declaration!=null)
+                    {
+                        include8250IsShaam = declaration.ProcedureCurrentCode == "4070001"; //"ProcedureCurrentCode":"4070001","ProcedureCurrentName":"יבוא מסחרי-שח\"מ
+                    }
+                    
+
+                }
                 CustomsRequestsSheetQueryService customsRequestsSheetQuery = new CustomsRequestsSheetQueryService(customContext);
-                List<CustomsRequestsSheetPM> requestSheets = customsRequestsSheetQuery.GetRequestInProgress(Tenant, InterfaceTypeCode, ObjectTableId1, EntityId1,
-                    ObjectTableId2, EntityId2,
-                    CustomFileNo, displayOnlyMode);
+                //List<CustomsRequestsSheetPM> requestSheets = customsRequestsSheetQuery.GetRequestInProgress(Tenant, InterfaceTypeCode, ObjectTableId1, EntityId1,
+                //    ObjectTableId2, EntityId2,
+                //    CustomFileNo, displayOnlyMode);
+
+                List<CustomsRequestsSheetPM> requestSheets = customsRequestsSheetQuery.GetRequestInProgress(new RequestInProgressParams()
+                {
+                    Tenant = Tenant,
+                    InterfaceTypeCode = InterfaceTypeCode,
+                    ObjectTableId1 = ObjectTableId1,
+                    EntityId1 = EntityId1,
+                    ObjectTableId2 = ObjectTableId2,
+                    EntityId2 = EntityId2,
+                    CustomFileNo = CustomFileNo,
+                    DisplayOnlyMode = displayOnlyMode,
+                    Include8250IsShaam= include8250IsShaam
+                });
                 var payRequest = requestSheets.FirstOrDefault(r => r.InterfaceTypeCode == "2755");
                 if (payRequest != null)
                 {
