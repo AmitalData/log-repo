@@ -347,11 +347,31 @@ export class CargoTrackingShipmentPM {
     private packagesQuantity: number;
     public get PackagesQuantity() { return this.packagesQuantity; }
     public set PackagesQuantity(newValue: number) { if (this.packagesQuantity != newValue) { this.packagesQuantity = newValue; this.MarkAsDirty("PackagesQuantity"); } }
-
+       
 	 
     private directionId: string;
     public get DirectionId() { return this.directionId; }
     public set DirectionId(newValue: string) { if (this.directionId != newValue) { this.directionId = newValue; this.MarkAsDirty("DirectionId"); } }
+       
+	 
+    private assignedTruckerDone: boolean;
+    public get AssignedTruckerDone() { return this.assignedTruckerDone; }
+    public set AssignedTruckerDone(newValue: boolean) { if (this.assignedTruckerDone != newValue) { this.assignedTruckerDone = newValue; this.MarkAsDirty("AssignedTruckerDone"); } }
+       
+	 
+    private assignedTruckerDate: Date;
+    public get AssignedTruckerDate() { return this.assignedTruckerDate; }
+    public set AssignedTruckerDate(newValue: Date) { if (this.assignedTruckerDate != newValue) { this.assignedTruckerDate = newValue; this.MarkAsDirty("AssignedTruckerDate"); } }
+       
+	 
+    private assignedTruckerEstimationDate: Date;
+    public get AssignedTruckerEstimationDate() { return this.assignedTruckerEstimationDate; }
+    public set AssignedTruckerEstimationDate(newValue: Date) { if (this.assignedTruckerEstimationDate != newValue) { this.assignedTruckerEstimationDate = newValue; this.MarkAsDirty("AssignedTruckerEstimationDate"); } }
+       
+	 
+    private assignedTruckerNotes: string;
+    public get AssignedTruckerNotes() { return this.assignedTruckerNotes; }
+    public set AssignedTruckerNotes(newValue: string) { if (this.assignedTruckerNotes != newValue) { this.assignedTruckerNotes = newValue; this.MarkAsDirty("AssignedTruckerNotes"); } }
        
 	 
 
@@ -382,4 +402,4 @@ export class CargoTrackingShipmentPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

@@ -376,6 +376,31 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="AssignedTruckerDone"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AssignedTruckerDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AssignedTruckerEstimationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AssignedTruckerNotes"
+    Type="nvarchar"
+    Size="32">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="EntityType"
     ReferencedTable="CargoTrackingHeaderEntityTypes"

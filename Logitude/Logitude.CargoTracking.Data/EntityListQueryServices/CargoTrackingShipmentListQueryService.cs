@@ -215,6 +215,14 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                    PackagesQuantity = poco.PackagesQuantity,
 
                    CustomerReference = poco.CustomerReference,
+
+                   AssignedTruckerDate = poco.AssignedTruckerDate,
+                   AssignedTruckerDone  = poco.AssignedTruckerDone,
+                   AssignedTruckerEstimationDate = poco.AssignedTruckerEstimationDate,
+                   AssignedTruckerNotes = poco.AssignedTruckerNotes,
+                   
+                   
+                   
                 };
             if(list != null)
             {
