@@ -106,7 +106,7 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
             
             if (this.TypeTab == "Document") {
                 this.ValueEditorRadio = "StimulSoft";
-                if (this.RequestAreaName == "Automation") {
+                if (this.RequestAreaName != "Automation") {
                     this.EditorTypeVisibility = true;
                 }
             }
