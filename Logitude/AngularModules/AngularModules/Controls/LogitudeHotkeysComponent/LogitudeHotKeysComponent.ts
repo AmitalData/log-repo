@@ -31,11 +31,14 @@ export class LogitudeHotKeysComponent{
         let rightKey=39;
         let leftKey=37;
         let escKey=27;
+        let pageDown=34;
+        let pageUp=33;
         let isCTRSSHotkey=(event.ctrlKey && event.which == saveKey);
         let isCTRLShiftSHotkey=(event.ctrlKey && event.shiftKey && event.which == saveKey);
-        let isRightHotKey=(event.ctrlKey&&event.altKey&& event.which==rightKey);
-        let isLeftHotKey=(event.ctrlKey&&event.altKey&& event.which==leftKey);
+        let isRightHotKey=(event.altKey && event.which==pageUp);//(event.ctrlKey&&event.altKey&& event.which==rightKey);
+        let isLeftHotKey=(event.altKey&& event.which==pageDown);//(event.ctrlKey&&event.altKey&& event.which==leftKey);
         let isEscHotkey=(event.which==escKey);
+        //let isLeftHotkey2=()
         if(isCTRLShiftSHotkey){
             this.EmitCtrlShiftSHotkey();
             return false;
