@@ -11,6 +11,8 @@ using Unifreight.Data.AmitalModel.Repsitories;
 using Simplog.Server.Infrastructure;
 using Unifreight.BL.EntityDataMappings;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Models;
 
 namespace Unifreight.BL.EntityQueryServices
 {
@@ -81,5 +83,34 @@ namespace Unifreight.BL.EntityQueryServices
             return (this.Repository as CCUFILEMRepository).GetCCUFILEMByRESHIMONNO(reshimonNumber);
         }
         //Yuval Chalup 19.11.2015 TASK-17450 --->
+
+        public void VirtualCCUQUELOCK_LockNOWAIT(int tenant, string declaration_CustomFileNo)
+        {
+            LogMessagingUtil.Instance.AppendLine("VirtualCCUQUELOCK_LockNOWAIT");
+
+            long lCUSTOMFILENO;
+            if (!long.TryParse(declaration_CustomFileNo, out lCUSTOMFILENO))
+            {
+                throw new BusinessErrorException("declaration_CustomFileNo could not convert to long ");
+            }
+            var myCCUFILEMRepository = new CCUFILEMRepository(tenant);
+            var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
+
+
+            var myCCUQUELOCKRepository = new CCUQUELOCKRepository(tenant);
+            try
+            {
+                var cculock = myCCUQUELOCKRepository.GetSingleGeneralLockNOWAIT("CCUFILEM", ccufilem.ToString());
+
+            }
+            catch (System.Exception)
+            {
+
+                LogMessagingUtil.Instance.AppendLine($"GetSingleGeneralLockNOWAIT(CCUFILEM, {ccufilem.ToString()}) ==> Already Lock => try later (*5) ");
+                throw;
+            }
+
+
+        }
     }
 }
