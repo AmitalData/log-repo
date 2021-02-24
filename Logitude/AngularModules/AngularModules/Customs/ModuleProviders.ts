@@ -379,7 +379,6 @@ import { CancellationRequestStatusListService } from './Services/StandardLists/C
 import { AmendmentFieldStatusTypeListService } from './Services/StandardLists/AmendmentFieldStatusTypeListService';
 import { LoadingSiteTypeListService } from './Services/StandardLists/LoadingSiteTypeListService';
 import { AmendCancellRequestInitiatorListService } from './Services/StandardLists/AmendCancellRequestInitiatorListService';
-import { FclLclCodeListService } from './Services/StandardLists/FclLclCodeListService';
 
 
 export class ModuleProviders {
