@@ -235,6 +235,7 @@ namespace CommunicationWorkerRole
         private void CreateTenant(LogitudeLead lead)
         {
 
+                lead.LeadSource = "";
                 int crmTenant = LogitudeSettings.LogitudeCRMTenantNumber;
                 int demoTenant = GetDemoTenant(lead);
 
