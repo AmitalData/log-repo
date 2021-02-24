@@ -242,11 +242,21 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                         }
                         _declarationPendingPM.ChangeSetOp = ChangeSetOperation.Update;
                         _declarationPendingPM.Status = "S";
-                        LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code " + declarationPendingCode + " as Solved"); 
+                        LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code " + declarationPendingCode + " as Solved");
                         if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                         DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                         declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
                     }
+
+                    FeatureQuery featureQuery = new FeatureQuery();
+                    var usrid = AuthenticationUtil.ResolveUserId(_MyDeclarationPM.Tenant);
+                    var features = featureQuery.GetAllowedFeaturesForLoggedUser(usrid, _MyDeclarationPM.Tenant);
+                    var feature = features.Features.FirstOrDefault(x => x.Code == "SendDeclaration902");
+                    if (feature != null)
+                    {
+                        SendGenericRequest();
+                    }
+
                 }
             }
             else
