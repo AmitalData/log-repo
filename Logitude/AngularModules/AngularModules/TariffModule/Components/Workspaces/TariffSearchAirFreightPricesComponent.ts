@@ -967,6 +967,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             payableItem.CurrencyId = shipmentPayable.CurrencyId;
             payableItem.UnitPrice = shipmentPayable.UnitPrice;
             payableItem.MinAmount = shipmentPayable.MinAmount;
+            payableItem.ComputeTotalAmount();
         });
         this.ReloadTariffPayables();
     }
