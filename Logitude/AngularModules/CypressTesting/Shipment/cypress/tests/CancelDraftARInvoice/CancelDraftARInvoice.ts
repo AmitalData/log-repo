@@ -12,9 +12,24 @@ import {AccountingSelectors} from '../../../../Accounting/cypress/selectors/Sele
 
 let ShipmentData: ShipmentDetails;
 let shipmentNumber: string;
-
-Given("the user logged in and navigates to shipments workspace", () => {
+let AccountingSystem:string;
+//#region Update Accounting System
+Given("the user logged in", () => {
     cy.Login()
+});
+Given("accounting System as {string}", (accountingSystem) => {
+    AccountingSystem=accountingSystem;
+  });
+  
+  When("change the accounting system", () => {
+    AccountingActions.changeAccountingsSystem(AccountingSystem)
+  });
+  
+  Then("the accounting system should update successfully", () => {
+    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
+  });
+  //#endregion
+Given("the user navigates to shipments workspace", () => {
     Actions.NavigatesToShipmentsWorkspace()
 });
 Given("a direct shipment with the following details",(dataTable) => {

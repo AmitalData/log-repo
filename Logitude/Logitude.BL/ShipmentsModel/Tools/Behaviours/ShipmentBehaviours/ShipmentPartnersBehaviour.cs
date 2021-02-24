@@ -51,7 +51,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 entityPM.ShipperReference2 = null;
             }
 
-            else if (entityPM.IsExternalAPI)
+            else if (entityPM.IsExternalAPI || entityPM.IsHybrid)
             {
                 Card card = CardRepository.GetSingleCard(cardId, initializer.Tenant, true);
                 if (card != null)

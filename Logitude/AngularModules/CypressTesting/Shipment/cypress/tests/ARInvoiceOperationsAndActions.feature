@@ -1,4 +1,4 @@
-@smoke @release @all @shipments2
+@smoke @release @all@tests
 Feature: ARInvoice operations and actions
     After the user logging in the system and navigate to shipments workspace
     will create a direct shipment,update routing tab,packages.
@@ -13,6 +13,11 @@ Feature: ARInvoice operations and actions
         When create customer
         Then the customer should create successfully
 
+   Scenario: Update Accounting System
+        Given accounting System as "None"
+        When change the accounting system
+        Then the accounting system should update successfully
+        
     Scenario: Create direct export air shipment
         Given the user navigates to shipments workspace
         And a direct shipment with the following details

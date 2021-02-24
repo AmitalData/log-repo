@@ -1,9 +1,9 @@
-@release  @all
+@release  @all@tests
 Feature: Create Consolidation Invoice
     After the user logging in the system and navigate to customers workspace
     will create a customer as shipper in the new shipment, after update packages and payables tabs,
-    generate receivables from payables and create an ARInvoice and connect it to consolidation invoice , 
-    create second shipment for the same shipper, add receivable, create another ARInvoice and coonect 
+    generate receivables from payables and create an ARInvoice and connect it to consolidation invoice ,
+    create second shipment for the same shipper, add receivable, create another ARInvoice and coonect
     it to the same consolidation, approve it and pay it
 
     Scenario: Create customer
@@ -18,6 +18,11 @@ Feature: Create Consolidation Invoice
         Given the user in the customer's billing tab
         When activate consolidated invoice option
         Then the customer should update successfully
+        
+    Scenario: Update Accounting System
+        Given accounting System as "None"
+        When change the accounting system
+        Then the accounting system should update successfully
 
     Scenario: Create direct export air shipment
         Given the user navigates to shipments workspace
@@ -59,8 +64,8 @@ Feature: Create Consolidation Invoice
         When create consolidation invoice
         Then the consolidation invoice should create successfully
 
-  Scenario: Create direct export air shipment
-       Given the user back to Accounting workspace 
+    Scenario: Create direct export air shipment
+        Given the user back to Accounting workspace
         And the user navigates to shipments workspace
         And a direct shipment with the following details
             | ShipmentLevel | Direction | TransportMode | Shipper     | MainCarriageFromPort | MainCarriageToPort |
@@ -97,4 +102,4 @@ Feature: Create Consolidation Invoice
 
     Scenario: Approve payment
         When approve the payment
-        Then the cpayment should approve successfully
+        Then the payment should approve successfully

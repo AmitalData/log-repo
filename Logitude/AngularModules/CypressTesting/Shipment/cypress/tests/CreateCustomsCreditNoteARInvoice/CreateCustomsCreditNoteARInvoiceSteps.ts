@@ -18,6 +18,7 @@ import * as AccountingActions from '../../../../Accounting/cypress/actions/Actio
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
 let customerCode: string;
+let AccountingSystem:string;
 //#endregion
 
 //#region Create customer
@@ -51,6 +52,19 @@ Then("the customs settings should activate successfully", () => {
     BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow)
 });
 //#endregion
+//#region Update Accounting System
+Given("accounting System as {string}", (accountingSystem) => {
+    AccountingSystem=accountingSystem;
+  });
+  
+  When("change the accounting system", () => {
+    AccountingActions.changeAccountingsSystem(AccountingSystem)
+  });
+  
+  Then("the accounting system should update successfully", () => {
+    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
+  });
+  //#endregion
 //#region Create direct export air shipment
 Given("the user navigates to shipments workspace", () => {
     ShipmentActions.NavigatesToShipmentsWorkspace()
