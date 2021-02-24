@@ -107,7 +107,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
 
                 var screenCode = "NewMaster";
                 cmpRef.instance.LabelWidth = 110;
-                cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
+                cmpRef.instance.Run(this.EntityPM, "Shipment", screenCode, false, false, this.ObjectTableName);
             });
     }
 
