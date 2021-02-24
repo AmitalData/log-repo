@@ -1,6 +1,7 @@
 export class RequestAliases {
     public static readonly PartnersDomainRequest = 'PartnersDomainRequest';
     public static readonly ShipmentRequest = 'ShipmentRequest';
+    public static readonly GetTraceEvent = 'GetTraceEvent';
     public static readonly CardViewsRequest = 'CardViewsRequest';
     public static readonly AddressViewsRequest = 'AddressViewsRequest';
     public static readonly APInvoicesRequest = 'APInvoicesRequest';

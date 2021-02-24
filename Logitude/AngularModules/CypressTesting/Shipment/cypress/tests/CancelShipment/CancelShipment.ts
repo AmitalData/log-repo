@@ -6,7 +6,9 @@ import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliase
 
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
+let EventNote ; 
 
+//#region  Create Direct Shipment
 Given("the user logged in and navigates to shipments workspace", () => {
   cy.Login()
   Actions.NavigatesToShipmentsWorkspace()
@@ -28,15 +30,36 @@ Then("the direct should create successfully", () => {
     shipmentNumber = interception.response.body.ShipmentNumber;
   });
 });
+//#endregion
 
 Given("the user open the shipment", () => {
+  // cy.Login();
+  // Actions.NavigatesToShipmentsWorkspace()
+  // Actions.OpenShipment("6412");
   Actions.OpenShipment(shipmentNumber);
 });
 
-When("cancel the shipment", () => {
-  Actions.CancelShipment();
+When("cancel the shipment with {string} Note", (note) => {
+  EventNote = note
+  Actions.CancelShipment(note);
 });
 
 Then("the shipment should cancel successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+  Actions.ValidateCancelIconExist(true);
+  Actions.ValidateShipmentEventActions(EventNote);
+  Actions.ValidateShipmentFields(true);
 }); 
+
+When("reactive the shipment with {string} Note",(note)=>{
+  EventNote = note
+  Actions.ReactiveShipment(note);
+})
+
+Then("the shipment should reactive successfully",()=>{
+  BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+  Actions.ValidateCancelIconExist(false);
+  Actions.ValidateShipmentEventActions(EventNote);
+  Actions.ValidateShipmentFields(false);
+
+})
