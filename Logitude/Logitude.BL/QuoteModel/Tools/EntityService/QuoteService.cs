@@ -251,7 +251,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                     SendQuoteToIntegratedSystem(objecttable.Id);
                 }
-
+                EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = entityPoco, EntityPM = entityPM, OldEntityPM = new QuotePM(), AutomationType = "OnUpdate", ObjectTableName = "Quote", Tenant = entityPM.Tenant, EntityId = entityPM.Id });
                 QuoteMapping.MapEntity(entityPM, entityPoco, isNewEntity);
 
                 entityRepository.Update(entityPoco);
@@ -262,6 +262,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Quote");
                 ActivityLogger.AddAcitivityLog(entityPM.Id, objecttable.Id, entityPM.Tenant, "U", initializer.LoggedContactId);
+
+                entityAutomationService.RunAutomation();
             }
 
             else
@@ -295,8 +297,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                 entityPM.FollowUps = new List<QuoteFollowUpPM>();
             }
-            EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = entityPoco, EntityPM = entityPM, OldEntityPM = new QuotePM(), AutomationType = "OnUpdate", ObjectTableName = "Quote", Tenant = entityPM.Tenant, EntityId = entityPM.Id });
-            entityAutomationService.RunAutomation();
+            
         }
 
 
