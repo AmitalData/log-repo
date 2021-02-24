@@ -36,8 +36,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             if (isValidToCreateRefrences)
             {
                 AddShipmentNumberReference(tableRow, bulkDataPreperation.InnerDataTable);
-                AddSplittedData(tableRow, bulkDataPreperation.InnerDataTable, "CustomerReference1");
-                AddSplittedData(tableRow, bulkDataPreperation.InnerDataTable, "CustomerReference2");
+                AddSplittedData(new SplittedDataArguments(tableRow, bulkDataPreperation.InnerDataTable, "CustomerReference1",','));
+                AddSplittedData(new SplittedDataArguments(tableRow, bulkDataPreperation.InnerDataTable, "CustomerReference2",','));
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "Master");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "House");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwarderShipmentNumber");
@@ -45,7 +45,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "CustomsDeclarationNumber");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ShipperName");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ConsigneeName");
-                AddSplittedData(tableRow, bulkDataPreperation.InnerDataTable, "ContainersNumbers");
+                AddSplittedData(new SplittedDataArguments(tableRow, bulkDataPreperation.InnerDataTable, "ContainersNumbers",','));
+                AddSplittedData(new SplittedDataArguments(tableRow, bulkDataPreperation.InnerDataTable, "House", '-'));
             }
 
         }
@@ -106,21 +107,21 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
 
         }
 
-        private static void AddSplittedData(DataRow tableRow, DataTable dataTable, string coulmnName)
+        private static void AddSplittedData(SplittedDataArguments splittedDataArguments)
         {
-            if (!IsNullOrEmpty(tableRow, coulmnName))
+            if (!IsNullOrEmpty(splittedDataArguments.tableRow, splittedDataArguments.coulmnName))
             {
-                var Value = tableRow[coulmnName];
+                var Value = splittedDataArguments.tableRow[splittedDataArguments.coulmnName];
                 string SearchField = (string)Value;
-                string[] SearchArr = SearchField.Split(',');
+                string[] SearchArr = SearchField.Split(splittedDataArguments.delimiter);
                 for (int i = 0; i < SearchArr.Length; i++)
                 {
                     ReferencecArgs ReferencecArgs = new ReferencecArgs()
                     {
-                        DataTable = dataTable,
-                        CoulmnName = coulmnName,
+                        DataTable = splittedDataArguments.dataTable,
+                        CoulmnName = splittedDataArguments.coulmnName,
                         SearchField = SearchArr[i],
-                        TableRow = tableRow,
+                        TableRow = splittedDataArguments.tableRow,
 
                     };
                     AddNewReference(ReferencecArgs);
