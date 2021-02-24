@@ -9,6 +9,7 @@ import { RestAPI } from "../../../../Base/cypress/constants/RestAPI";
 import { URLs } from "../../constants/URLs";
 
 let TicketData: TicketDetails;
+let TicketActivitySubject : string ;
 
 //#region Create Ticket 
 Given("the user logged in and navigated to ticket workspace", () => {
@@ -38,8 +39,12 @@ Given("the user in the ticket's main page", () => {
     Actions.OpenTicket(TicketData.TicketNumber);
 });
 
+Given("a subject as {string}", (subject) => {
+    TicketActivitySubject =subject
+});
+
 When("create phone call activity", () => {
-    Actions.CreateActivity(TicketSelectors.AddCall);
+    Actions.CreateActivity(TicketSelectors.AddCall , TicketActivitySubject);
 });
 
 Then("the call activity should appear successfully", () => {
@@ -47,7 +52,7 @@ Then("the call activity should appear successfully", () => {
 });
 
 When("create task activity", () => {
-    Actions.CreateActivity(TicketSelectors.AddTask);
+    Actions.CreateActivity(TicketSelectors.AddTask,TicketActivitySubject);
 });
 
 Then("the task activity should appear successfully", () => {
@@ -56,7 +61,7 @@ Then("the task activity should appear successfully", () => {
 
 When("create appointment activity", () => {
     cy.DefineRequestWait(RestAPI.POST, URLs.Performancelogs,RequestAliases.WailAllLoad);
-    Actions.CreateActivity(TicketSelectors.AddAppoinment);
+    Actions.CreateActivity(TicketSelectors.AddAppoinment,TicketActivitySubject);
 });
 
 Then("the appointment activity should appear successfully", () => {
