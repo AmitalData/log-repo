@@ -20,7 +20,7 @@
   <Column
     Name="Prefix"
     Type="varchar"
-    Size="10">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>

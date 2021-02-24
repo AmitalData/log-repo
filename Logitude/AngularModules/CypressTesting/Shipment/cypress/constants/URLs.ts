@@ -5,4 +5,5 @@ export class URLs
     public static readonly AddressViews = '**/addressviews/**';
     public static readonly HtmlEditor = '**/HtmlEditor/**';
     public static readonly DocumentsFilingExtended = '**/DocumentsFilingExtended/**';
+    public static readonly TraceEventsDomain = "**/TraceEventsDomain/GetTraceEventsForEntity?**"
 }

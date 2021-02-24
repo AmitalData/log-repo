@@ -57,10 +57,10 @@ namespace WebFreight.Web.WcfApi
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
 
-                    if (string.IsNullOrEmpty(entityPM.PaymentTermId))
-                    {
-                        entityPM.PaymentTermId = "--";
-                    }
+                    //if (string.IsNullOrEmpty(entityPM.PaymentTermId))
+                    //{
+                    //    entityPM.PaymentTermId = "--";
+                    //}
                    
                     ClassLevelValidator validationClass = new ClassLevelValidator("Customer", entityPM.Tenant) { IsHybrid = true };
                     if (!validationClass.IsValid(entityPM, entityPM, null))

@@ -1,6 +1,6 @@
 @smoke @release @all
 Feature: Activities Ticket Test
-    This file will create ticket then test the following 
+    This file will create ticket then test the following
     Create and complete Call, Task and Appointment activities
 
     Scenario: Create new ticket
@@ -13,14 +13,17 @@ Feature: Activities Ticket Test
 
     Scenario: Create Call Activity
         Given the user in the ticket's main page
+        And a subject as "Create Call Activity Test"
         When create phone call activity
         Then the call activity should appear successfully
 
     Scenario: Create Task Activity
+        Given a subject as "Create Task Activity Test"
         When create task activity
         Then the task activity should appear successfully
 
     Scenario: Create Appointment Activity
+        Given a subject as "Create Appointment Activity Test"
         When create appointment activity
         Then the appointment activity should appear successfully
 
