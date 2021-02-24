@@ -137,7 +137,8 @@ namespace AmitalCustomsWindowsService
 
         private void AllThreadsAreAlive()
         {
-
+            
+            Logger.LogMe("WorkerRoleServiceLocator.PleaseShutDown = false;", false);
             for (Int32 iWorker = 0; iWorker < _Workers.Count; iWorker++)
             {
                 _Workers[iWorker].ServiceStarted = true;//startIt
