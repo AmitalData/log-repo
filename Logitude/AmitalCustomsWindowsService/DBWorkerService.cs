@@ -137,8 +137,12 @@ namespace AmitalCustomsWindowsService
 
         private void AllThreadsAreAlive()
         {
-            WorkerRoleServiceLocator.PleaseShutDown = false;
-            Logger.LogMe("WorkerRoleServiceLocator.PleaseShutDown = false;", false);
+            if (WorkerRoleServiceLocator.PleaseShutDown)
+            {
+                WorkerRoleServiceLocator.PleaseShutDown = false;
+                Logger.LogMe("WorkerRoleServiceLocator.PleaseShutDown = false;", false);
+
+            }
             for (Int32 iWorker = 0; iWorker < _Workers.Count; iWorker++)
             {
                 _Workers[iWorker].ServiceStarted = true;//startIt
@@ -278,7 +282,7 @@ namespace AmitalCustomsWindowsService
             }
             try
             {
-                WorkerRoleServiceLocator.PleaseShutDown = true;
+                ///WorkerRoleServiceLocator.PleaseShutDown = true;
 
                 for (int i = 0; i < _Workers.Count; i++)
                 {
