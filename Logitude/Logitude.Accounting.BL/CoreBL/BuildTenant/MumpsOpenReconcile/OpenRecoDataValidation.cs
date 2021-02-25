@@ -25,7 +25,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant.MumpsOpenReconcile
                 }
                 try
                 {
-                    GoodRows.Add(new MMPSDataM()
+                    var newRow = new MMPSDataM(line)
                     {
                         InternalNumber = fields[0],
                         ExternalNo = fields[1],
@@ -36,7 +36,26 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant.MumpsOpenReconcile
                         OpenAmount = decimal.Parse(fields[6]),
 
 
-                    });
+                    };
+                    if (string.IsNullOrWhiteSpace(newRow.InternalNumber))
+                    {
+                        Errors.AppendLine($"error InternalNumber is null field {line}");
+                        continue;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(newRow.ExternalNo))
+                    {
+                        Errors.AppendLine($"error ExternalNo is null field {line}");
+                        continue;
+                    }
+                    if (string.IsNullOrWhiteSpace(newRow.Ref1))
+                    {
+                        Errors.AppendLine($"error Ref1 is null field {line}");
+                        continue;
+                    }
+
+                    GoodRows.Add(newRow);
+
                 }
                 catch (Exception)
                 {
@@ -51,6 +70,14 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant.MumpsOpenReconcile
     }
     public class MMPSDataM
     {
+        public string TheLine
+        { get; internal set; }
+
+        public MMPSDataM(string line)
+        {
+            this.TheLine = line;
+        }
+
         public string InternalNumber { get; internal set; }
         public string ExternalNo { get; internal set; }
         public string MyDate { get; internal set; }
