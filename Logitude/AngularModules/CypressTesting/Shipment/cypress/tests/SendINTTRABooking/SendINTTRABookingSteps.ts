@@ -5,9 +5,12 @@ import { BranchSettingsDetails } from "../../models/INTTRA/BranchSettingsDetails
 import { GeneralSettingsDetails } from "../../models/INTTRA/GeneralSettingsDetails";
 import { InOutSettingsDetails } from "../../models/INTTRA/InOutSettingsDetails";
 import { RegistrationSettingsDetails } from "../../models/INTTRA/RegistrationSettingsDetails";
+import { RequiredToSendBookingDetails } from "../../models/INTTRA/RequiredToSendBookingDetails";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
+import { PackagesDetails } from "../../models/PackagesDetails";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion";
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
+import { ShipmentSelectors } from "../../selectors/Selectors";
 
 let ShipmentNumber: string;
 
@@ -27,12 +30,12 @@ Given("fill the following general settings", (dataTable) => {
 
 Given("fill the following out settings", (dataTable) => {
     let inOutSettingsDetails = dataTable.hashes()[0] as InOutSettingsDetails;
-    INTTRAActions.FillINTTRAInOutSettings(inOutSettingsDetails, true);
+    INTTRAActions.FillINTTRAInOutSettings(inOutSettingsDetails, "Out");
 });
 
 Given("fill the following in settings", (dataTable) => {
     let inOutSettingsDetails = dataTable.hashes()[0] as InOutSettingsDetails;
-    INTTRAActions.FillINTTRAInOutSettings(inOutSettingsDetails, false);
+    INTTRAActions.FillINTTRAInOutSettings(inOutSettingsDetails, "In");
 });
 
 Given("fill the following branches settings", (dataTable) => {
@@ -83,5 +86,39 @@ When("open INTTRA e-booking wizard", () => {
 });
 
 Then("validation messages for sending e-booking should appear", () => {
-    //BaseAssertion.AssertElementExist(ShipmentSelectors.OverviewTabComponentInAWBWizard);
+    INTTRAActions.ValidateMessagesForSendingEBooking();
+});
+
+Given("the user fill the following information to send e-booking", (dataTable) => {
+    let requiredToSendBookingDetails = dataTable.hashes()[0] as RequiredToSendBookingDetails;
+    INTTRAActions.FillRequiredToSendBooking(requiredToSendBookingDetails);
+});
+
+Given("add the following package", (dataTable) => {
+    let packagesDetailsList = dataTable.hashes() as PackagesDetails[];
+    ShipmentActions.FillPackageTab("Ocean", packagesDetailsList, "FCL");
+});
+
+When("save the shipment", () => {
+    ShipmentActions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton);
+});
+
+Then("the shipment should save successfully", () => {
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+});
+
+Given("the user in INTTRA e-booking wizard", () => {
+    INTTRAActions.OpenSendBookingWizard();
+});
+
+When("send booking request", () => {
+    INTTRAActions.SendBookingRequest();
+});
+
+Then("the request should send successfully", () => {
+    INTTRAActions.ValidateSendBookingRequest();
+});
+
+Then("booking request status should be {string}", (status) => {
+    INTTRAActions.ValidateBookingRequestStatus(status);
 });

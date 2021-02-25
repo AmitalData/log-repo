@@ -184,5 +184,27 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ContainsBranchesSettings = "Branches Settings";
   public static readonly ContainsRegistration = "Registration";
   public static readonly ContainsSendEBooking = "Send e-booking";
+  public static readonly ShipmentINTTRAContractNumber = "#Shipment_INTTRAContractNumber";
+  public static readonly ShipmentMainCarriageVessel = "input[id^='Shipment_MainCarriageVesselId']:last";
+  public static readonly ShipmentMainCarriageETDDate = "#date_Shipment_MainCarriageETD";
+  public static readonly ShipmentMainCarriageETDTime = "#time_Shipment_MainCarriageETD";
+  public static readonly ShipmentDescriptionOfGoods = "#Shipment_DescriptionOfGoods";
+  public static readonly EditShipper = "#Edit-Shipper";
+  public static readonly ShipmentShipperContact = "#Shipment_ShipperContactId";
+
+  public static readonly AddEditPartnerComponent = "addeditpartnercomponent";
+
+  public static readonly ContactEnglishName = "#Contact_EnglishName";
+  public static readonly ContactEmail = "#Contact_Email";
+
+  public static readonly ShipmentBranch = "#Shipment_BranchId";
+
+  public static readonly ContainsMainCarriageCarrierRequired = "Main Carriage Carrier is required";
+  public static readonly ContainsContractNumberRequired = "Contract Number is required";
+  public static readonly ContainsETDOrVesselAndVoyageMustProvided = "ETD or Main-Carriage Vessel and Voyage must be provided";
+  public static readonly ContainsShipmentDescriptionOfGoodsRequired = "Shipment Description of Goods is required";
+  public static readonly ContainsShipmentPackagesRequired = "Shipment Order Packages or Shipment Packages are required";
+  public static readonly ContainsRequestBooking = "Request Booking";
+  public static readonly ContainsStatus = "Status:";
   //#endregion
 }

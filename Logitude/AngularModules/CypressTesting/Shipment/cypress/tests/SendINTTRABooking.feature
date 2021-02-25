@@ -30,8 +30,8 @@ Feature: Send INTTRA E-Booking
     Scenario: Login and create master export ocean FCL shipment
         Given the user logged in and navigate to shipments workspace
         And a master shipment with the following details
-            | ShipmentLevel | Direction | TransportMode | ShipmentType | Shipper           | MainCarriageFromPort | MainCarriageToPort |
-            | Master        | Export    | Ocean         | FCL          | TestShipperExport | LHR                  | MIA                |
+            | ShipmentLevel | Direction | TransportMode | ShipmentType | Agent     | MainCarriageFromPort | MainCarriageToPort |
+            | Master        | Export    | Ocean         | FCL          | TestAgent | LHR                  | MIA                |
         When create shipment
         Then the shipment should create successfully
 
@@ -39,3 +39,19 @@ Feature: Send INTTRA E-Booking
         Given the user open the master shipment
         When open INTTRA e-booking wizard
         Then validation messages for sending e-booking should appear
+
+    Scenario: Fill required information to send INTTRA e-booking
+        Given the user fill the following information to send e-booking
+            | BranchName  | ShippingLine | ContractNumber | DescriptionOfGoods | ETDDate | ETDTime | Vessel | ShipperContact      |
+            | Main Office | MSCU         | 53454          | Send booking test  | Today   | 14:00   | PT     | TestShipperContact3 |
+        And add the following package
+            | PackageType | GrossWeight |
+            | 40GP        | 200         |
+        When save the shipment
+        Then the shipment should save successfully
+
+    Scenario: Open INTTRA e-booking wizard and send booking request
+        Given the user in INTTRA e-booking wizard
+        When send booking request
+        Then the request should send successfully
+        And booking request status should be "Sent"

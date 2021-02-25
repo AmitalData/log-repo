@@ -69,4 +69,10 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly table = "table";
     public static readonly CheckBoxLabel = "label[id^='CheckBox']";
     public static readonly td = "td";
+    public static readonly ul = "ul";
+    public static readonly li = "li";
+    public static readonly ContainsClose = "Close";
+    public static readonly ValidationSummaryBlock = ".ValidationSummary table tr td";
+    public static readonly DropDownListItem = ".DropDownListItem";
+    public static readonly Value = ".Value";
 }
