@@ -2616,7 +2616,7 @@
     EnableAutoFill="false"
     IncludeInSearchField="false"
     AllowedinAutomationConditions="false"
-    AutomationEmailRecipient="false"
+    AutomationEmailRecipient="true"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
