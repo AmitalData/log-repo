@@ -19,3 +19,7 @@ export function AssertElementHaveClass(selector: string, classValue: string){
 export function AssertElementNotExist(selector: string){
     cy.get(selector).should("not.exist");
 }
+
+export function AssertElementContain(selector: string, Value: string){
+    cy.get(selector).should('contain', Value)
+}

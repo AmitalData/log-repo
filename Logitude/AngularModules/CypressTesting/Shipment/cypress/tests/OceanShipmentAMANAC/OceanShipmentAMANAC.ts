@@ -1,18 +1,18 @@
 import * as Actions from "../../actions/Actions"
-import { ShipmentSelectors } from "../../selectors/Selectors"
+import * as Assertion from "../../actions/Assertion"
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
-import { PartnersDetails } from "cypress/models/PartnersDetails";
-import { PayableDetails } from "cypress/models/PayableDetails"
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { ShipmentDetails } from "cypress/models/ShipmentDetails";
-import { ReceivableDetails } from "cypress/models/ReceivableDetails"
-import { PackagesDetails } from "cypress/models/PackagesDetails";
+import { AMANACStatusDetails } from "cypress/models/AMANACStatusDetails";
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
-import { RestAPI } from "../../../../Base/cypress/constants/RestAPI";
+import { ShipmentSelectors } from "../../selectors/Selectors";
+import { PackagesDetails } from "../../models/PackagesDetails";
 
 //#region Variables
 let shipmentDetails: ShipmentDetails;
+let amanacStatusDetails: AMANACStatusDetails;
+let packagesDetails: PackagesDetails[];
 //#endregion
 
 //#region AMANAC Setup
@@ -27,7 +27,7 @@ When("set local customs interface to {string}", (localCustomsInterfaceValue) => 
 
 Then("the AMANAC workspace should appear in operations menu", () => {
     cy.Click(BaseSelectors.OperationsMenu, null);
-    cy.get("#AMANAC").should('exist');
+    BaseAssertion.AssertElementExist(ShipmentSelectors.AMANACTab);
 });
 //#endregion
 
@@ -53,33 +53,95 @@ Then("the shipment should create successfully", () => {
 });
 //#endregion
 
-//#region Marked as blocked for transfer
-When("marke the shipment as blocked for transfer", () => {
+//#region Marked as (not)blocked for transfer
+When("the user marke the shipment {string} for transfer in {string} view", (MarkAs, AMANACView) => {
     Actions.NavigatesToAMANACWorkspace();
-    Actions.AMANACView("New Transfer");
-    Actions.AMANACmarketheshipmentasblocked(shipmentDetails.ShipmentNumber);
+    Actions.AMANACView(shipmentDetails.TransportMode, AMANACView);
+    Actions.AMANACMarkeShipmentAs(MarkAs, shipmentDetails.ShipmentNumber);
 });
 
-Then("the shipment should appear in the {string} view in the AMANAC workspace", (AMANACview) => {
-    //Actions.AMANACView(AMANACview);
-    cy.get("Button[id^='ReportID']").eq(1).click()
-
-    cy.DefineRequestWait(RestAPI.GET, "**/shipmentviews/getbyfilters?**"+shipmentDetails.ShipmentNumber+"**", "shipmentviews1")
-   //cy.FillLogLov("#null_Search", ShipmentNumber, true);
-   cy.get("#null_Search").type("{selectall}" + shipmentDetails.ShipmentNumber,{delay:5})
-  // BaseAssertion.AssertStatusCode("shipmentviews1", 200);
-   //cy.DefineRequestWait(RestAPI.GET, "**/shipmentviews/getbyfilters?**", "shipmentviews2")
-
-   BaseAssertion.AssertStatusCode("shipmentviews1", 200);
-
-    cy.get("td[data-cy^=ShipmentNumber_" + shipmentDetails.ShipmentNumber +"]").should('contain',shipmentDetails.ShipmentNumber)
-    cy.Click(".Button", "Close")
+Then("the shipment should appear in the {string} view in the AMANAC workspace", (AMANACView) => {
+    Actions.AMANACView(shipmentDetails.TransportMode, AMANACView);
+    Actions.SearchAShipmentInNullSearch(shipmentDetails.ShipmentNumber);
+    BaseAssertion.AssertElementContain(ShipmentSelectors.AMANACShipmentNumber(shipmentDetails.ShipmentNumber), shipmentDetails.ShipmentNumber);
+    cy.Click(ShipmentSelectors.CloseAMANACView, null);
 });
 
-Then("AMANAC Status should be {string}", (AMANACstatus) => {
-    Actions.NavigatesToShipmentsWorkspace()
+Then("should not appear in the {string} view in the AMANAC workspace", (AMANACView) => {
+    Actions.AMANACView(shipmentDetails.TransportMode, AMANACView);
+    Actions.SearchAShipmentInNullSearch(shipmentDetails.ShipmentNumber);
+    BaseAssertion.AssertElementNotExist(ShipmentSelectors.AMANACShipmentNumber(shipmentDetails.ShipmentNumber));
+    cy.Click(ShipmentSelectors.CloseAMANACView, null);
+});
+
+Then("AMANAC and customs transmissions statuses should be {string}", (AMANACstatus) => {
+    Actions.NavigatesToShipmentsWorkspace();
     Actions.OpenShipment(shipmentDetails.ShipmentNumber);
-    cy.Click("#ShipmentTHCustoms", null);
-    //expect(cy.get(".SummayRow").contains("Status:")).to.contain(AMANACstatus)
+    Assertion.AssertAMANAandCustomsTransmissionsStatuses(AMANACstatus);
+    cy.Click(BaseSelectors.Backbutton, null);
 });
 //#endregion
+
+//#region New transfer before fill all mandatory fields
+When("the user export the shipment in {string} view", (AMANACView) => {
+    Actions.NavigatesToAMANACWorkspace();
+    Actions.AMANACView(shipmentDetails.TransportMode, AMANACView);
+    Actions.AMANACExportAShipment(shipmentDetails.ShipmentNumber);
+});
+
+Then("a validation message {string} should appear", (ValidationMssage) => {
+    BaseAssertion.AssertElementContain(ShipmentSelectors.ValidationMsg, ValidationMssage);
+    cy.Click(ShipmentSelectors.CloseExportingScreen, null)
+    cy.Click(ShipmentSelectors.CloseAMANACView, null)
+});
+//#endregion 
+
+//#region Fill/Update mandatory fields
+Given("the user add {string} as shipping line", (ShippingLine) => {
+    Actions.NavigatesToShipmentsWorkspace()
+    Actions.OpenShipment(shipmentDetails.ShipmentNumber);
+    Actions.FillShippingLineInOrdersTab(ShippingLine);
+});
+
+Given("add package with the following details", (dataTable) => {
+    packagesDetails = dataTable.hashes() as PackagesDetails[];
+    Actions.FillPackageTab(shipmentDetails.TransportMode, packagesDetails, shipmentDetails.ShipmentType)
+});
+
+Given("edit main carriage leg with {string} as voyage no and {string} as vessel", (VoyageNo, Vessel) => {
+    Actions.FillVoyageNoVesselInRoutingsTab(VoyageNo, Vessel);
+});
+
+Given("the user edit package with {string} as GrossWeight", (GrossWeight) => {
+    Actions.OpenShipment(shipmentDetails.ShipmentNumber);
+    Actions.EditPackageGrossWeightPackagesTab(GrossWeight);
+});
+
+When("update shipment", () => {
+    Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
+});
+
+Then("the shipment should update successfully", () => {
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+    cy.Click(BaseSelectors.Backbutton, null);
+});
+//#endregion
+
+//#region New Transfer After fill/update mandatory fields
+Then("AMANAC and customs transmissions statuses should be as following", (dataTable) => {
+    amanacStatusDetails = dataTable.hashes()[0] as AMANACStatusDetails;
+    Actions.NavigatesToShipmentsWorkspace()
+    Actions.OpenShipment(shipmentDetails.ShipmentNumber);
+    Assertion.AssertAMANAandCustomsTransmissionsStatusDetails(amanacStatusDetails);
+    cy.Click(BaseSelectors.Backbutton, null);
+});
+//#endregion
+
+//#region Retransfer
+When("the user retransfer the shipment", () => {
+    Actions.OpenShipment(shipmentDetails.ShipmentNumber);
+    Actions.Retransfer();
+    cy.Click(BaseSelectors.Backbutton, null);
+});
+//#endregion
+

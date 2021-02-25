@@ -13,7 +13,7 @@ export class BaseSelectors extends RegexSelectors {
     //#region Maintenance
     public static readonly SystemSettings = "#CMS"
     public static readonly CustomsSettings = "#MaintenanceItemCISE"
-    public static readonly MaintenanceSearch = "#null_Search"
+    public static readonly NullSearch = "#null_Search"
     //#endregion
     //#region Buttons
     public static readonly RedButton = '.RedButton';
@@ -31,6 +31,10 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ContainsOperations = "Operations"
     public static readonly ContainsAccounting = "Accounting"
     public static readonly ContainsBack = "Back"
+    public static readonly ContainsClose = "Close"
+    public static readonly ContainsExport = 'Export'
+    public static readonly ContainsSendtoCustoms = "Send to Customs"
+
     //#endregion
     //#region general
     public static readonly ToggleButtonClass = '.ToggleButton';
@@ -58,4 +62,9 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly LogLOVFooterHyperLink = ".LogLOVFooter a";
     public static readonly DownArrowImage = "img[src='./Images/Buttons/downarrow.png']";
     public static readonly Hyperlink = ".hyperlink";
+
+    //#region Customs settings
+    public static readonly LocalCustomsInterfaceCode = "#LogLov_CustomsInterfaceSetting_LocalCustomsInterfaceCode";
+
+    //#endregion
 }
