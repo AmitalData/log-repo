@@ -141,6 +141,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public int? PackagesQuantity { get; set; }
         [Column("DirectionId")]
 	    public string DirectionId { get; set; }
+        [Column("ShipmentLevelCode")]
+	    public string ShipmentLevelCode { get; set; }
     }
 }
 	 

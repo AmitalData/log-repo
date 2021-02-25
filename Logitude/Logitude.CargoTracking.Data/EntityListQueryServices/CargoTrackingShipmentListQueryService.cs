@@ -91,7 +91,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                DirectionId = a.DirectionId,
 
                                                                CustomerReference = a.CustomerReference,
-
+                                                               ShipmentLevelCode = a.ShipmentLevelCode,
                                                            });
             return query;
         }
@@ -215,6 +215,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                    PackagesQuantity = poco.PackagesQuantity,
 
                    CustomerReference = poco.CustomerReference,
+                    ShipmentLevelCode = poco.ShipmentLevelCode,
                 };
             if(list != null)
             {

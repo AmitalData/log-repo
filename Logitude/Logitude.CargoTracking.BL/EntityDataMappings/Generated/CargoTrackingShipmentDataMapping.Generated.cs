@@ -79,7 +79,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         Id, 
 	         ContainersNumbers, 
 	         PackagesQuantity, 
-	         DirectionId,
+	         DirectionId, 
+	         ShipmentLevelCode,
 	      }
 
 
@@ -151,7 +152,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         IsFavorite, 
 	         ContainersNumbers, 
 	         PackagesQuantity, 
-	         DirectionId,
+	         DirectionId, 
+	         ShipmentLevelCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -444,6 +446,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
 				entityPOCO.DirectionId = entityPM.DirectionId;
 			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentLevelCode))
+            {
+				entityPOCO.ShipmentLevelCode = entityPM.ShipmentLevelCode;
+			}
 			}
 
 		public void POCOToPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipment entityPOCO)
@@ -729,18 +736,19 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.ContainersNumbers = entityPOCO.ContainersNumbers;
             }
 
-
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PackagesQuantity))
             {
 					entityPM.PackagesQuantity = entityPOCO.PackagesQuantity;
             }
 
-
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DirectionId))
             {
 					entityPM.DirectionId = entityPOCO.DirectionId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShipmentLevelCode))
+            {
+					entityPM.ShipmentLevelCode = entityPOCO.ShipmentLevelCode;
             }
 
 		}
@@ -1034,9 +1042,9 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
                 oldEntityPM.DirectionId = entityPM.DirectionId;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DirectionId))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentLevelCode))
             {
-                oldEntityPM.DirectionId = entityPM.DirectionId;
+                oldEntityPM.ShipmentLevelCode = entityPM.ShipmentLevelCode;
             }
 			
 		}
