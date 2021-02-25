@@ -84,6 +84,8 @@ namespace WebFreight.Web.ReportsWebServices
                     if (loggedContact.DontShowLocalLabels)
                     {
                         apPaymentDataProvider.BankAccountName = bankAccount.EnglishName;
+                        apPaymentDataProvider.BankAccountEnglishName = bankAccount.EnglishName;
+
                     }
                     else
                     {
