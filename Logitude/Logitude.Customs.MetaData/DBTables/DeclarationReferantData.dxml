@@ -202,7 +202,7 @@
   </Column>
   <Column
     Name="FclLcl"
-    Type="nvarchar"
+    Type="varchar"
     Size="1">
     <Constraints
       Nullable="true" />
@@ -243,6 +243,11 @@
   <Relation
     ForeignKeyColumn="Team"
     ReferencedTable="ReferantTeams"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="FclLcl"
+    ReferencedTable="FclLclCodes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Relation

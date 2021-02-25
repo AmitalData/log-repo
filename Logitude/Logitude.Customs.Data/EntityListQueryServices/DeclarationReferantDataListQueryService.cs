@@ -104,10 +104,9 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  LastStatusDate = a.LastStatusDate,
                                                                  LastStatusName = a.LastStatusName,
                                                                  OrderMoney = a.OrderMoney,
-                                                                 FclLcl = a.FclLcl,
                                                                  ForwarderName = a.ForwarderCard.LocalName,
-                                                                 PackageQuantity = a.PackageQuantity!=0? a.PackageQuantity :null ,
-
+                                                                 PackageQuantity = a.PackageQuantity,
+                                                                 FclLclName = a.FclLclCodeTable == null ? null : a.FclLclCodeTable.Name,
                                                                  StorageSiteCode =d.StorageSiteCode,
                                                                  HatraDate=d.HatraDate,
                                                                  PaymentDate=d.PaymentDate,
@@ -131,7 +130,7 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  PaymentDate_Time= d.PaymentDate!= null ? System.Data.Entity.DbFunctions.CreateTime(d.PaymentDate.Value. Hour, d.PaymentDate.Value.Minute, d.PaymentDate.Value.Second).Value.Hours.ToString() +":" + System.Data.Entity.DbFunctions.CreateTime(d.PaymentDate.Value.Hour, d.PaymentDate.Value.Minute, d.PaymentDate.Value.Second).Value.Minutes.ToString() : "" ,
                                                                  IsClose=d.IsClose,
                                                                  PhysicalCheck=  d.PhysicalCheck ,
-
+                                                                 FclLcl=a.FclLcl
 
                                                               }) ;
                                                                 

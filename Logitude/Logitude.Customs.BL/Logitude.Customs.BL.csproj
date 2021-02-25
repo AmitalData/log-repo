@@ -154,6 +154,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomsShipDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\DocumentRejectTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ExporterRoleTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\FclLclCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\LoadingSiteTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PartyRelationshipTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ReleaseMessageTypeDetails.Generated.cs" />
@@ -463,6 +464,7 @@
     <Compile Include="EntityDataMappings\ExporterRoleTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\FacilitationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\FaultInspectionTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\FclLclCodeDataMapping.cs" />
     <Compile Include="EntityDataMappings\FreightPaymentMethodDataMapping.cs" />
     <Compile Include="EntityDataMappings\FuelTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\GatepassRequestDataMapping.cs" />
@@ -650,6 +652,7 @@
     <Compile Include="EntityDataMappings\Generated\ExporterRoleTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FacilitationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FaultInspectionTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\FclLclCodeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FreightPaymentMethodDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FuelTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GatepassRequestDataMapping.Generated.cs" />
@@ -978,6 +981,7 @@
     <Compile Include="EntityQueryServices\Generated\DocumentRejectTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExportDeclarationClosingDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExporterRoleTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\FclLclCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\LoadingSiteTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ReferantTeamQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ReleaseMessageTypeQueryService.Generated.cs" />
@@ -1484,6 +1488,7 @@
     <Compile Include="EntityUpdateServices\Generated\DocumentRejectTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ExportDeclarationClosingDataUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ExporterRoleTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\FclLclCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LoadingSiteTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\NbcDeclarationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PartyRelationshipTypeUpdateService.Generated.cs" />

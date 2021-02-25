@@ -1,5 +1,5 @@
-<div style="min-height: 150px; width: 100%; border: 1px solid #6A8299; background-color:#E8F7FF; ">
-    <div style="height: 150px; position: absolute; left: 5px; right: 5px; top: 5px;">
+<div style="height:100%; width: 100%; border: 1px solid #6A8299; background-color:#E8F7FF; ">
+    <div style="height:100%; position: absolute; padding-top:5px;">
         <div class="MediaFillRelative"style="overflow-x: auto;overflow-y: hidden;">
             <table style="width:80%;">
                 <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
@@ -24,50 +24,51 @@
                                 <!-- ExceptionReasonsCode -->
                                 <log-column [header]="'Customs.DeclarationReferantData.O.ExceptionReasonsCode '| TextCodeTranslationPipe"  [binding]="'ExceptionReasonsCode'" [width]="'130'" [Alignment]="'center'">
                                      <ng-template let-item>
-<log-cell-template  #logcelltemplate [IsEnabled]="!item.ShowCode">
-                                        <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                            <span>{{item.ExceptionReasonName}}</span>
-                                        </div>
-                                        <div *ngIf="logcelltemplate.IsEditMode">
-                                            <LogLov #ReferantReasonLovBox
-                                                    [ObjectFieldName]="'ExceptionReasonsCode'"
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [DataContext]="item"
-                                                    [LookUpTableName]="'Customs.ExceptionReason'"
-                                                    (SelectedItemChanged)="item.SetLocalName($event, 'ExceptionReasonName')"
-                                                    [FocusOnMe]="'true'"
-                                                    [HideColumns]="true">
-                                            </LogLov>
-                                        </div>
-                                    </log-cell-template>
-</ng-template>
+                                        <log-cell-template  #logcelltemplate [IsEnabled]="!item.ShowCode">
+                                            <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.ExceptionReasonName}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogLov #ReferantReasonLovBox
+                                                        [ObjectFieldName]="'ExceptionReasonsCode'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="item"
+                                                        [LookUpTableName]="'Customs.ExceptionReason'"
+                                                        (SelectedItemChanged)="item.SetLocalName($event, 'ExceptionReasonName')"
+                                                        [FocusOnMe]="'true'"
+                                                        [HideColumns]="true"
+                                                        [UseDefaultPosition]="true">
+                                                </LogLov>
+                                            </div>
+                                       </log-cell-template>
+                                    </ng-template>
                                 </log-column>
                                 <log-column [header]="'Customs.DeclarationReferantData.O.ExceptionRemarks ' | TextCodeTranslationPipe" [width]="'130'" [Editable]="true" [Alignment]="'center'">
                                      <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
-                                            <span>{{item.ExceptionRemarks}}</span>
-                                        </div>
-                                        <div *ngIf="logcelltemplate.IsEditMode">
-                                            <LogTextBox [ObjectFieldName]="'ExceptionRemarks'" [InputType]="'ntext'" [DataContext]="item"
-                                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsMultiline]="true"></LogTextBox>
-                                        </div>
-                                    </log-cell-template>
-</ng-template>
+                                        <log-cell-template  #logcelltemplate>
+                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.ExceptionRemarks}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [ObjectFieldName]="'ExceptionRemarks'" [InputType]="'ntext'" [DataContext]="item"
+                                                            [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsMultiline]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
                                 </log-column>
 
                                 <!-- Status --> <!-- [Text]="item.Status" -->
                                 <log-column [header]="'Customs.DeclarationReferantData.O.Status ' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'center'">
                                      <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
-                                            <span>{{item.SelectedItemStatus.Value}}</span>
-                                        </div>
-                                        <div *ngIf="logcelltemplate.IsEditMode">
-                                            <ComboBox [ItemsSource]="item._StatusItems" [Binding]="'Value'" [SelectedItem]="item.SelectedItemStatus" (SelectedItemChanged)="item.StatusChanged($event)"></ComboBox>
-                                        </div>
-                                    </log-cell-template>
-</ng-template>
+                                         <log-cell-template  #logcelltemplate>
+                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.SelectedItemStatus.Value}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <ComboBox [ItemsSource]="item._StatusItems" [Binding]="'Value'" [SelectedItem]="item.SelectedItemStatus" (SelectedItemChanged)="item.StatusChanged($event)"></ComboBox>
+                                            </div>
+                                        </log-cell-template>
+                                      </ng-template>
                                 </log-column>
                                 <log-column [width]="'75'" [Editable]="true" [Alignment]="'center'" [visibility]="'collapsed'">
                                      <ng-template let-item>
@@ -94,7 +95,7 @@
                         </LogLabel>
                     </td>
                     <td style="width:10%; padding-bottom:115px; left:180px; ">
-                        <LogDatePicker [ObjectFieldName]="'FollowUpDate'" [ObjectTableName]="ObjectTableName"
+                        <LogDatePicker [UseDefaultPosition]="true" [ObjectFieldName]="'FollowUpDate'" [ObjectTableName]="ObjectTableName"
                                        [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                     </td>
                     <td *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="width:10%; right:250px; bottom:4.2px;">

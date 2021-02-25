@@ -65,6 +65,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         this.forceFocus = false;
     }
     CopyValueSubs: any;
+    @Input() UseDefaultPosition: boolean = false;
     public ForceShowValidation: boolean = false;
     public ShowHelp: boolean = false;
     public ObjectField: ObjectFieldPM;
