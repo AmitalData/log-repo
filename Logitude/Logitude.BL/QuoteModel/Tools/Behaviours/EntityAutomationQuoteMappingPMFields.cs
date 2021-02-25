@@ -25,8 +25,7 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
             quoteOldEntityPM.FromPortCountry = fromPort != null ? fromPort.CountryName : null;
              
             Port toPort = quoteRepository.GetSinglePort(quoteOldEntityPM.ToPortId, quoteOldEntityPM.Tenant);
-
-            quoteOldEntityPM.ToPort = toPort != null ? toPort.Id : null;
+             
             quoteOldEntityPM.ToPortCountry = toPort != null ? toPort.CountryName : null; 
 
         }
