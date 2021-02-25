@@ -130,7 +130,7 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  PaymentDate_Time= d.PaymentDate!= null ? System.Data.Entity.DbFunctions.CreateTime(d.PaymentDate.Value. Hour, d.PaymentDate.Value.Minute, d.PaymentDate.Value.Second).Value.Hours.ToString() +":" + System.Data.Entity.DbFunctions.CreateTime(d.PaymentDate.Value.Hour, d.PaymentDate.Value.Minute, d.PaymentDate.Value.Second).Value.Minutes.ToString() : "" ,
                                                                  IsClose=d.IsClose,
                                                                  PhysicalCheck=  d.PhysicalCheck ,
-
+                                                                 FclLcl=a.FclLcl
 
                                                               }) ;
                                                                 
