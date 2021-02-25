@@ -39,7 +39,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 AddSplittedData(new SplittedDataArguments(tableRow, bulkDataPreperation.InnerDataTable, "CustomerReference1",','));
                 AddSplittedData(new SplittedDataArguments(tableRow, bulkDataPreperation.InnerDataTable, "CustomerReference2",','));
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "Master");
-                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "House");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwarderShipmentNumber");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "CustomFileNumber");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "CustomsDeclarationNumber");
@@ -47,6 +46,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ConsigneeName");
                 AddSplittedData(new SplittedDataArguments(tableRow, bulkDataPreperation.InnerDataTable, "ContainersNumbers",','));
                 AddSplittedData(new SplittedDataArguments(tableRow, bulkDataPreperation.InnerDataTable, "House", '-'));
+                
+                if (tableRow["House"].ToString().Contains('-'))
+                {
+                    AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "House");
+                }
             }
 
         }
