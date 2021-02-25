@@ -106,7 +106,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             if (
                                 (
-                                ///requestParams.RequestVIA == SendRequestVIA.WebServiceBatch ||
+                                requestParams.RequestVIA == SendRequestVIA.WebServiceBatch ||
                                 requestParams.RequestVIA == SendRequestVIA.DCABatch)
                                 &&
                                 declarationPM.ProcedureCurrentCode == "4070001" //"ProcedureCurrentCode":"4070001","ProcedureCurrentName":"יבוא מסחרי-שח\"מ"
