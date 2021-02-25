@@ -1,4 +1,5 @@
 ﻿using AmitalCustomsWindowsService.BL;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Utils;
 using Simplog.Server.Infrastructure;
 using System;
@@ -245,7 +246,7 @@ namespace AmitalCustomsWindowsService
         {
             // TODO: Add code here to perform any tear-down necessary to stop your service.
             Logger.LogMe("OnStop()", false);
-
+            WorkerRoleServiceLocator.PleaseShutDown = true;
             _DBWorkerService.StopThreads();
         }
     }

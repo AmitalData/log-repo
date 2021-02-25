@@ -282,7 +282,7 @@ namespace AmitalCustomsWindowsService
             }
             try
             {
-                WorkerRoleServiceLocator.PleaseShutDown = true;
+                ///WorkerRoleServiceLocator.PleaseShutDown = true;
 
                 for (int i = 0; i < _Workers.Count; i++)
                 {
