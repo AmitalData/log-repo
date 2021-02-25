@@ -178,4 +178,39 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ContainsToggleButtonDisabled = "ToggleButtonDisabled"
   public static readonly ShortTitleControl = ".ShortTitleControl"
 
+  //#region INTTRA
+  public static readonly INTTRASettingId = "#INTTRASetting_INTTRAId";
+  public static readonly INTTRASettingAlias = "#INTTRASetting_INTTRAAlias";
+  public static readonly FTPDetailUserName = "#FTPDetail_UserName";
+  public static readonly FTPDetailPassword = "#FTPDetail_Password";
+  public static readonly FTPDetailHost = "#FTPDetail_Host";
+  public static readonly FTPDetailFolder = "#FTPDetail_Folder";
+  public static readonly ContainsOutSettings = "Out Settings:";
+  public static readonly ContainsInSettings = "In Settings:";
+  public static readonly SaveFTPDetailButton = ".RedButton:last";
+  public static readonly BranchINTTRAId = "#Branch_INTTRAId";
+  public static readonly BranchINTTRAAlias = "#Branch_INTTRAAlias";
+  public static readonly BranchINTTRAContact = "#Branch_INTTRAContactId";
+  public static readonly ContainsBranchesSettings = "Branches Settings";
+  public static readonly ContainsRegistration = "Registration";
+  public static readonly ContainsSendEBooking = "Send e-booking";
+  public static readonly ShipmentINTTRAContractNumber = "#Shipment_INTTRAContractNumber";
+  public static readonly ShipmentMainCarriageVessel = "input[id^='Shipment_MainCarriageVesselId']:last";
+  public static readonly ShipmentMainCarriageETDDate = "#date_Shipment_MainCarriageETD";
+  public static readonly ShipmentMainCarriageETDTime = "#time_Shipment_MainCarriageETD";
+  public static readonly ShipmentDescriptionOfGoods = "#Shipment_DescriptionOfGoods";
+  public static readonly EditShipper = "#Edit-Shipper";
+  public static readonly ShipmentShipperContact = "#Shipment_ShipperContactId";
+  public static readonly AddEditPartnerComponent = "addeditpartnercomponent";
+  public static readonly ContactEnglishName = "#Contact_EnglishName";
+  public static readonly ContactEmail = "#Contact_Email";
+  public static readonly ShipmentBranch = "#Shipment_BranchId";
+  public static readonly ContainsMainCarriageCarrierRequired = "Main Carriage Carrier is required";
+  public static readonly ContainsContractNumberRequired = "Contract Number is required";
+  public static readonly ContainsETDOrVesselAndVoyageMustProvided = "ETD or Main-Carriage Vessel and Voyage must be provided";
+  public static readonly ContainsShipmentDescriptionOfGoodsRequired = "Shipment Description of Goods is required";
+  public static readonly ContainsShipmentPackagesRequired = "Shipment Order Packages or Shipment Packages are required";
+  public static readonly ContainsRequestBooking = "Request Booking";
+  public static readonly ContainsStatus = "Status:";
+  //#endregion
 }

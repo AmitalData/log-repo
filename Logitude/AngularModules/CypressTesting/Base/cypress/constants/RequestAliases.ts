@@ -41,6 +41,14 @@ export class RequestAliases {
     public static readonly WailAllLoad = "WailAllLoad";
    
 
-    
+    public static readonly WaitLoadShipmentMenuButtons = "WaitLoadShipmentMenuButtons";
 
+    //INTTRA
+    public static readonly SaveFTPDetails = "SaveFTPDetails";
+    public static readonly GetINTTRASettings = "GetINTTRASettings";
+    public static readonly PutINTTRASettings = "PutINTTRASettings";
+    public static readonly GetBookingMessageResultValidate = "GetBookingMessageResultValidate";
+    public static readonly ContactLogLovLoad = "ContactLogLovLoad";
+    public static readonly PostContact = "PostContact";
+    public static readonly INTTRAWebServiceSendEBooking = "INTTRAWebServiceSendEBooking";
 }

@@ -67,4 +67,21 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly Exist = 'exist'
     public static readonly NotExist = 'not.exist'
     //#endregion
+
+    public static readonly MaintenanceTransmissionsTab = "#TRANS";
+    public static readonly INTTRAMaintenanceItem = "#MaintenanceItemINTTRA_S";
+    public static readonly FormFieldRow = ".FormFieldRow";
+    public static readonly StartsWithAddButton = "button[id^='Add']";
+    public static readonly StartsWithEditButton = "button[id^='Edit']";
+    public static readonly SimpleGridViewRow = ".SimpleGridViewRow";
+    public static readonly SimpleGridViewHeaderDark = ".SimpleGridViewHeaderDark";
+    public static readonly table = "table";
+    public static readonly CheckBoxLabel = "label[id^='CheckBox']";
+    public static readonly td = "td";
+    public static readonly ul = "ul";
+    public static readonly li = "li";
+    public static readonly ContainsClose = "Close";
+    public static readonly ValidationSummaryBlock = ".ValidationSummary table tr td";
+    public static readonly DropDownListItem = ".DropDownListItem";
+    public static readonly Value = ".Value";
 }
