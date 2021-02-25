@@ -394,29 +394,39 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         {
             List<Milestone> shipmentMilestones = BuildCargoTrackingShipmentMilstones(Shipment);
 
-            SetCurrentMilestone(shipmentMilestones);
+            var currentMilstone = SetCurrentMilestone(shipmentMilestones);
+            SetDoneMilstones(shipmentMilestones, currentMilstone);
             SetFutureMilstoneForShipment(Shipment, shipmentMilestones);
-            
+
             return shipmentMilestones;
         }
 
-        private void SetCurrentMilestone(List<Milestone> milestones)
+        private static void SetDoneMilstones(List<Milestone> shipmentMilestones, Milestone currentMilstone)
         {
-            string CurrentMilestoneCode = GetCurrentMilstoneCode(milestones);
-
-            for (int i = 0; i < milestones.Count; i++)
+            var doneMilstones = shipmentMilestones.Where(milstone => milstone.Id < currentMilstone.Id).ToList();
+            doneMilstones.ForEach(doneMilstone =>
             {
-                if (milestones[i].Code == CurrentMilestoneCode)
-                {
-                    milestones[i].IsCurrent = true;
-                    break;
-                }
-            }
+                doneMilstone.Done = true;
+                doneMilstone.IsEstimation = false;
+            });
         }
 
-        private string GetCurrentMilstoneCode(List<Milestone> milestones)
+        private Milestone SetCurrentMilestone(List<Milestone> milestones)
         {
-            return milestones.Where(s => s.IsEstimation == false).OrderByDescending(s => s.Date).ThenByDescending(s => s.Id).Select(s => s.Code).FirstOrDefault();
+            Milestone currentMilstone = GetCurrentMilstone(milestones);
+            if (currentMilstone != null)
+            {
+                currentMilstone.IsCurrent = true;
+
+              
+            }
+
+            return currentMilstone;
+        }
+
+        private Milestone GetCurrentMilstone(List<Milestone> milestones)
+        {
+            return milestones.Where(s => s.IsEstimation == false).OrderByDescending(s => s.Date).ThenByDescending(s => s.Id).FirstOrDefault();
         }
         private List<Milestone> BuildCargoTrackingShipmentMilstones(CargoTrackingShipmentList Shipment)
         {
@@ -431,6 +441,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             milestones.Add(new Milestone() { Id = 9, Code = "Clearance", Name = "Clearance", Date = Shipment.ClearanceDate, EstimationDate = null, Done = Shipment.ClearanceDone, Notes = null, IsCurrent = false, IsEstimation = Shipment.ClearanceDone == true ? false : true });
             milestones.Add(new Milestone() { Id = 11, Code = "Delivered", Name = "Delivered", Date = Shipment.DeliveredDate, EstimationDate = Shipment.DeliveredEstimationDate, Done = Shipment.DeliveredDone, Notes = null, IsCurrent = false, IsEstimation = Shipment.DeliveredDone == true ? false : true });
             milestones = milestones.OrderByDescending(s => s.IsEstimation == true ? s.EstimationDate : s.Date).ThenByDescending(s => s.Id).ToList();
+            
+
             return milestones;
         }
 
