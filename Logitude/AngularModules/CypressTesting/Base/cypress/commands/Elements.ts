@@ -101,6 +101,7 @@ Cypress.Commands.add("FillRandomNumber", (selector, minimum, maximum) => {
 
 Cypress.Commands.add("Click", (selector, contains, force = false) => {
     //let element = //.should('exist')
+    cy.wait(1000);
     if (contains) {
         cy.getAttached(selector).contains(contains, { matchCase: false }).click({force:force})
     }
