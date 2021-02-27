@@ -44,7 +44,7 @@ export function CreateShipment(shipmentLevel: string) {
 //#region Open And UpdateShipment
 export function UpdateShipment(saveButtonSelector: string, saveButtonSelectorContains?: string) {
     cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
-    cy.Click(saveButtonSelector, saveButtonSelectorContains)
+    cy.Click(saveButtonSelector, saveButtonSelectorContains,false)
 }
 
 export function OpenShipment(shipmentNumber: string) {
@@ -66,7 +66,7 @@ export function OpenShipment(shipmentNumber: string) {
 export function CancelShipment(note :string) {
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
     cy.Click(ShipmentSelectors.CancelShipmentButton, null);
-    cy.FillLogTextBox(ShipmentSelectors.ShipmentEventNote ,note)
+    cy.FillLogTextBox(ShipmentSelectors.ShipmentEventNote ,note,true)
     UpdateShipment(ShipmentSelectors.ConfirmActionButton);
 }
 

@@ -10,7 +10,7 @@ declare global {
     namespace Cypress {
         interface Chainable {
             FillDate(selector: string, value: string): Chainable<Element>
-            FillLogTextBox(selector: string, value: string): Chainable<Element>
+            FillLogTextBox(selector: string, value: string,ValidateInputDone? :boolean): Chainable<Element>
             FillLogLov(selector: string, value: string, fromCache: boolean, getByFilters?: boolean): Chainable<Element>
             FillRandomString(selector: string, length: number, upperCase: boolean): Chainable<Element>
             FillRandomNumber(selector: string, minimum: number, maximum: number): Chainable<Element>
@@ -40,8 +40,14 @@ Cypress.Commands.add("FillDate", (selector, value) => {
     }
 })
 
-Cypress.Commands.add("FillLogTextBox", (selector, value) => {
-    cy.get(selector).clear().type(value)//.should('have.value', value)
+Cypress.Commands.add("FillLogTextBox", (selector, value,ValidateInputDone = false) => {
+
+    if(ValidateInputDone){
+        cy.get(selector).clear().type(value)//.should('have.value', value)
+    }
+    else{
+        cy.get(selector).clear().type(value).should('have.value', value)
+    }
 
 })
 
