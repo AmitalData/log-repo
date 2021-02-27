@@ -76,11 +76,13 @@ Cypress.Commands.add("FillRandomNumber", (selector, minimum, maximum) => {
 })
 
 Cypress.Commands.add("Click", (selector, contains, force = false) => {
-    let element = cy.get(selector)//.should('exist')
+    //let element = //.should('exist')
     if (contains) {
-        element = element.contains(contains, { matchCase: false })
+        cy.get(selector).contains(contains, { matchCase: false }).click({force:force})
     }
-    element.click({force:force})
+    else{
+        cy.get(selector).click({force:force})
+    }
 })
 
 Cypress.Commands.add("ClickCheckBox", (selector) => {
