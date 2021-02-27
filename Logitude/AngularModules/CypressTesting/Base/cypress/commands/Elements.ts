@@ -20,9 +20,27 @@ declare global {
             ValidateElementColor(selector: string, expectedcolor: string): Chainable<Element>
             SelectQuickSearchFirstElement(quickSearchDetails: QuickSearchDetails): Chainable<Element>
             BackButton(contains:string): Chainable<Element>
+            getAttached(selector: any): Chainable<Element>
+
         }
     }
 }
+
+/**
+ * getAttached(selector)
+ * getAttached(selectorFn)
+ *
+ * Waits until the selector finds an attached element, then yields it (wrapped).
+ * selectorFn, if provided, is passed $(document). Don't use cy methods inside selectorFn.
+ */
+Cypress.Commands.add("getAttached", selector => {
+    const getElement = typeof selector === "function" ? selector : $d => $d.find(selector);
+    let $el = null;
+    return cy.document().should($d => {
+      $el = getElement(Cypress.$($d));
+      expect(Cypress.dom.isDetached($el)).to.be.false;
+    }).then(() => cy.wrap($el));
+  });
 
 Cypress.Commands.add("BackButton", (contains) => {
     cy.Click(BaseSelectors.BackBottonBodyClass, contains);
@@ -84,10 +102,10 @@ Cypress.Commands.add("FillRandomNumber", (selector, minimum, maximum) => {
 Cypress.Commands.add("Click", (selector, contains, force = false) => {
     //let element = //.should('exist')
     if (contains) {
-        cy.get(selector).contains(contains, { matchCase: false }).click({force:force})
+        cy.getAttached(selector).contains(contains, { matchCase: false }).click({force:force})
     }
     else{
-        cy.get(selector).click({force:force})
+        cy.getAttached(selector).click({force:force})
     }
 })
 
