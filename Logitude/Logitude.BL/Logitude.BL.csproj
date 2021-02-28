@@ -2456,6 +2456,7 @@
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\PickUpQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\ReceivableQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\ShipmentLevelQueryService.Generated.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\QueryService\ShipmentPickUpDeliveryPackageQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\ShipmentTypeQueryService.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\ShipmentTypeQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\SpecialServicesTypeQueryService.Generated.cs" />
@@ -2463,6 +2464,7 @@
     <Compile Include="ShipmentsModel\APIDataContract\Receivable.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\ShipmentLevel.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\GetShipmentNumbers.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\ShipmentPickUpDeliveryPackage.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\ShipmentType.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\SpecialServicesType.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\MainCarriageLeg.cs" />

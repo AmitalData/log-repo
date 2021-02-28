@@ -17,29 +17,23 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 {
    
-    public partial class Delivery
+    public partial class ShipmentPickUpDeliveryPackage
     {
 
 	    
     public string Id { get; set; }
     
-    public DateTime? ATD { get; set; }
+    public PackageType PackageType { get; set; }
     
-    public DateTime? ATA { get; set; }
+    public int? Quantity { get; set; }
     
-    public DateTime? ETD { get; set; }
+    public string ContainerNumber { get; set; }
     
-    public DateTime? ETA { get; set; }
+    public double? Volume { get; set; }
     
-    public Port FromPort { get; set; }
+    public double? Weight { get; set; }
     
-    public Port ToPort { get; set; }
-    
-    public Card FromPartnerCard { get; set; }
-    
-    public Card ToPartnerCard { get; set; }
-    
-    public List<ShipmentPickUpDeliveryPackage> ShipmentPickUpDeliveryPackages { get; set; }
+    public string Description { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

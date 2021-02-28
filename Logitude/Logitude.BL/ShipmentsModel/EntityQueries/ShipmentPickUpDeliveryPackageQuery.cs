@@ -108,5 +108,46 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return myResult;
         }
+
+        public ShipmentPickUpDeliveryPackagePM GetSinglePM(string id, int tenant)
+        {
+            PickUpDeliveryPackageHarmonizeRepository myRepository = new PickUpDeliveryPackageHarmonizeRepository(repository.context);
+            PickUpDeliveryPackageHarmonizeQuery query = new PickUpDeliveryPackageHarmonizeQuery(myRepository);
+
+            ShipmentPickUpDeliveryPackagePM myResult = (from a in repository.context.ShipmentPickUpDeliveryPackages.Include("PackageType")
+                                                        where a.Id == id && a.Tenant == tenant
+                                                        select new ShipmentPickUpDeliveryPackagePM()
+                                                        {
+                                                            ContainerNumber = a.ContainerNumber,
+                                                            Description = a.Description,
+                                                            Id = a.Id,
+                                                            PackageTypeId = a.PackageTypeId,
+                                                            PackageTypeName = a.PackageType == null ? null : a.PackageType.EnglishName,
+                                                            PackageTypeTEU = a.PackageType == null ? 0 : a.PackageType.TEU,
+                                                            Quantity = a.Quantity,
+                                                            Tenant = a.Tenant,
+                                                            ShipmentPickUpDeliveryId = a.ShipmentPickUpDeliveryId,
+                                                            Volume = a.Volume,
+                                                            Weight = a.Weight,
+                                                            ShipperSeal = a.ShipperSeal,
+                                                            Harmonize = a.Harmonize,
+                                                            Width = a.Width,
+                                                            Height = a.Height,
+                                                            Length = a.Length,
+                                                            OriginalShipmentPackageId = a.OriginalShipmentPackageId,
+                                                            IsMultiHarmonize = a.IsMultiHarmonize,
+                                                            Make = a.Make,
+                                                            Year = a.Year,
+                                                            Model = a.Model,
+                                                            Color = a.Color,
+                                                            ChassisNumber = a.ChassisNumber,
+                                                            RegistrationNumber = a.RegistrationNumber,
+                                                            CountryId = a.CountryId,
+                                                        }).FirstOrDefault();
+
+            myResult.PickUpDeliveryPackageHarmonizes = query.GetPickUpDeliveryPackageHarmonizes(myResult.Id, tenant);
+
+            return myResult;
+        }
     }
 }

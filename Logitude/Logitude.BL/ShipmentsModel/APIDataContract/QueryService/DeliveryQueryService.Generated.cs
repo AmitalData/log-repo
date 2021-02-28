@@ -86,7 +86,14 @@ using Simplog.Data.ShipmentsModel;
 					   					   temp.ToPartnerCard = CardService3.GetCardById(item.ToPartnerCardId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
-				   					
+				   
+				if(item.ShipmentPickUpDeliveryPackages != null && item.ShipmentPickUpDeliveryPackages.Count > 0)
+				{
+					 ShipmentPickUpDeliveryPackageQueryService ShipmentPickUpDeliveryPackageService4 = new ShipmentPickUpDeliveryPackageQueryService(Tenant);
+					 temp.ShipmentPickUpDeliveryPackages = ShipmentPickUpDeliveryPackageService4.ShipmentPickUpDeliveryPackageDataMapping(item.ShipmentPickUpDeliveryPackages,Tenant,ComputingPartnerName);
+				}
+
+							 					
 					MyList.Add(temp);
 				}
 					
@@ -247,7 +254,23 @@ using Simplog.Data.ShipmentsModel;
 
 					}
 			
-										   
+					 
+
+					if(item.ShipmentPickUpDeliveryPackages != null && item.ShipmentPickUpDeliveryPackages.Count > 0)
+					{
+						ShipmentPickUpDeliveryPackageQueryService ShipmentPickUpDeliveryPackageService4 = new ShipmentPickUpDeliveryPackageQueryService(Tenant);
+						  
+						if(!IsUpdate)
+						{								//throw new ApplicationException("ShipmentPickUpDeliveryPackages Can't be update"); 
+								temp.ShipmentPickUpDeliveryPackages = ShipmentPickUpDeliveryPackageService4.ShipmentPickUpDeliveryPackageDataMappingAndValidatin(item.ShipmentPickUpDeliveryPackages,Tenant,ComputingPartnerName,IsUpdate);
+
+					 
+						}  
+
+						
+					}
+
+								 					   
 						MyList.Add(temp);
 					}
 						

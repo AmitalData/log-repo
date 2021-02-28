@@ -38,6 +38,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public Card FromPartnerCard { get; set; }
     
     public Card ToPartnerCard { get; set; }
+    
+    public List<ShipmentPickUpDeliveryPackage> ShipmentPickUpDeliveryPackages { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 
