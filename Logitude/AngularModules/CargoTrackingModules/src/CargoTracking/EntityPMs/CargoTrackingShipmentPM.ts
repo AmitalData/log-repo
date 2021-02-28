@@ -347,11 +347,16 @@ export class CargoTrackingShipmentPM {
     private packagesQuantity: number;
     public get PackagesQuantity() { return this.packagesQuantity; }
     public set PackagesQuantity(newValue: number) { if (this.packagesQuantity != newValue) { this.packagesQuantity = newValue; this.MarkAsDirty("PackagesQuantity"); } }
-
+       
 	 
     private directionId: string;
     public get DirectionId() { return this.directionId; }
     public set DirectionId(newValue: string) { if (this.directionId != newValue) { this.directionId = newValue; this.MarkAsDirty("DirectionId"); } }
+       
+	 
+    private shipmentLevelCode: string;
+    public get ShipmentLevelCode() { return this.shipmentLevelCode; }
+    public set ShipmentLevelCode(newValue: string) { if (this.shipmentLevelCode != newValue) { this.shipmentLevelCode = newValue; this.MarkAsDirty("ShipmentLevelCode"); } }
        
 	 
 
@@ -382,4 +387,4 @@ export class CargoTrackingShipmentPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
