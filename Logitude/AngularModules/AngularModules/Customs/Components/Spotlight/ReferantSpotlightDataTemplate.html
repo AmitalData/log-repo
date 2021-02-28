@@ -37,7 +37,9 @@
                                                         (SelectedItemChanged)="item.SetLocalName($event, 'ExceptionReasonName')"
                                                         [FocusOnMe]="'true'"
                                                         [HideColumns]="true"
-                                                        [UseDefaultPosition]="true">
+                                                        [UseDefaultPosition]="true"
+                                                        [QueryFilterItems]="isActiveFilterItems">
+                                                    
                                                 </LogLov>
                                             </div>
                                        </log-cell-template>

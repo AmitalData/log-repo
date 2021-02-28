@@ -258,6 +258,16 @@ namespace Logitude.Customs.BL.EntityQueryServices
             //    base.GetComposition(entityKeys);
         }
 
+        public Declaration GetSingleByCustomFileNoFromCache(string customFileNo, int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(customFileNo)) return null;
+            string entityKeyString = $"GetSingleByCustomFileNoFromCache{customFileNo}";
+            var res=CacheManager.GetOrInsertNewObject(entityKeyString,()=>{ 
+                return repository.GetDeclarationByCustomFileNo(customFileNo, tenant);
+            });
+            return res;
+        }
+
         public List<DeclarationPendingPM> GetDeclarationPendingListPMByDeclarationId(string declarationId, int tenant)
         {
             if (string.IsNullOrWhiteSpace(declarationId))
@@ -354,6 +364,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (String.IsNullOrWhiteSpace(customFileNo)) return "";
             return repository.GetIdByCustomFileNo(customFileNo, tenant);
         }
+       
 
         public string GetIdByExternalDeclarationNumber(string externalDeclarationNumber, int tenant)
         {
