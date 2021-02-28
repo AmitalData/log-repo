@@ -1053,6 +1053,7 @@
     <Compile Include="DataContracts\HybridLabelsBrandingData.cs" />
     <Compile Include="DataContracts\HybridLabelsBrandingDataRequest.cs" />
     <Compile Include="DataProviders\UserDefinedReportDataProvider.cs" />
+    <Compile Include="ExternalAPIs\RatesUpdateController.cs" />
     <Compile Include="ExternalAPIs\ShipmentNumbersController.cs" />
     <Compile Include="FileNotFound.aspx.cs">
       <DependentUpon>FileNotFound.aspx</DependentUpon>

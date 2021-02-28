@@ -45,14 +45,29 @@ namespace RestClientApplication
             this.apiCombo.Items.Add("CustomerOpenFilesAmount");
             apiCombo.Items.Add("APInvoiceCancellation");
             apiCombo.Items.Add("GLAccountMoreData");
-            this.operationCombo.Items.Add("Create (POST)");
-            this.operationCombo.Items.Add("Update (PUT)");
-            this.operationCombo.Items.Add("Get");
-            this.operationCombo.Items.Add("Cancel");
-
+            apiCombo.Items.Add("Rates Update");
+            this.BuildOperationComboBox();
             this.actionCombo.Items.Add("Accept");
             this.actionCombo.Items.Add("Decline");
             this.actionCombo.Items.Add("Cancel");
+        }
+
+        private void BuildOperationComboBox()
+        {
+            var ratesUpdateIndex = 17;
+            if(apiCombo.SelectedIndex == ratesUpdateIndex)
+            {
+                this.operationCombo.Items.Clear();
+                this.operationCombo.Items.Add("Update (PUT)");
+            }
+            else
+            {
+                this.operationCombo.Items.Clear();
+                this.operationCombo.Items.Add("Create (POST)");
+                this.operationCombo.Items.Add("Update (PUT)");
+                this.operationCombo.Items.Add("Get");
+                this.operationCombo.Items.Add("Cancel");
+            }
         }
 
         private bool isConnected;
@@ -117,6 +132,7 @@ namespace RestClientApplication
             this.ChangeFormState();
 
             groupBox3.Visible = apiCombo.Text == "ARInvoice";
+            this.BuildOperationComboBox();
 
         }
 
@@ -135,6 +151,7 @@ namespace RestClientApplication
         private void actionCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.CheckAPI();
+            this.BuildOperationComboBox();
         }
 
         private bool isSendButtonEnabled;
@@ -177,7 +194,7 @@ namespace RestClientApplication
             textBox4.Visible = false;
             label16.Visible = false;
 
-           panel1.Visible = false;
+            panel1.Visible = false;
             switch (apiCombo.SelectedIndex)
             {
                 #region House
@@ -983,7 +1000,7 @@ namespace RestClientApplication
                         label16.Text = "External ID:";
                         textBox7.Visible = true;
                         apiName = "APInvoice";
-                      
+
                         break;
                     }
                 #endregion
@@ -992,7 +1009,7 @@ namespace RestClientApplication
                 #region ARInvoiceAdditionalData
                 case 13:
                     {
-               
+
                         apiName = "ARInvoiceAdditionalData";
 
                         break;
@@ -1015,7 +1032,7 @@ namespace RestClientApplication
                     {
 
                         lblParameter.Text = "External ID:";
-                        lblParameter.Visible  =true;
+                        lblParameter.Visible = true;
                         textBox4.Visible = true;
                         apiName = "APInvoiceCancellation";
                         break;
@@ -1024,7 +1041,7 @@ namespace RestClientApplication
                 #endregion
 
                 #region GLAccountMoreData
-             
+
                 case 16:
                     {
 
@@ -1035,10 +1052,31 @@ namespace RestClientApplication
                         break;
                     }
 
+                #endregion
+
+                #region Rates Update
+                case 17:
+                    {
+                        lblParameter.Visible = false;
+                        txtParameter.Visible = false;
+                        requestText = @"<RatesUpdate xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+	                                        <ComputingPartnerCode></ComputingPartnerCode>
+	                                        <RateUpdate>
+		                                        <Currency Code='' PartnerCode=''/>
+		                                        <RateDate></RateDate>
+		                                        <Rate></Rate>
+	                                        </RateUpdate>
+	                                        <RateUpdate>
+		                                        <Currency Code='' PartnerCode=''/>
+		                                        <RateDate></RateDate>
+		                                        <Rate></Rate>
+	                                        </RateUpdate>
+                                        </RatesUpdate>";
+                        apiName = "RatesUpdate";
+                        break;
+                    }
                     #endregion
 
-
-                 
             }
 
             txtRequestBody.Text = requestText;
