@@ -653,8 +653,8 @@ namespace Logitude.TariffModule.BL.Helpers
                         tariffsSummary.LineId = SelectedLine.Id;
                     }
 
-
-                    this.CalculateTariffActualPriceAndMinPrice(item, minprice);
+                    this.CalculateTariffActualPrice(item, minprice);
+                    this.CalculateTariffMinPrice(item, minprice);
                     tariffsSummary.TransitTime = SelectedLine.TransitTime;
                     tariffsSummary.Price = Math.Round((double)CalculateLocalAmount(item.Price != null ? item.Price.Value : 0, currencyId, result.CurrencyId), 2).ToString("0.00");
                     List<TariffVersionAllInCharge> allinList = TariffVersionAllInChargesList.Where(p => p.TariffId == item.tariffid && p.Version == item.TariffVersion).ToList();
@@ -916,39 +916,48 @@ namespace Logitude.TariffModule.BL.Helpers
             return tariffSearchSummaries;
         }
 
-        private void CalculateTariffActualPriceAndMinPrice(TariffResult tariff, decimal? minprice)
+        private void CalculateTariffActualPrice(TariffResult tariff, decimal? minprice)
         {
             decimal? actualPrice = 0;
             if (tariff.PriceIndex != 0)
             {
-                if ((tariff.Price * (decimal)weight) < minprice)
+                actualPrice = tariff.Price * (decimal)weight;
+                if (actualPrice < minprice)
                 {
-                    actualPrice = tariff.Price;
-                    tariff.Price = minprice;
-                    tariffsSummary.IsMinIconVisible = true;
-                }
-                else
-                {
-                    tariff.Price = tariff.Price * (decimal)weight;
                     actualPrice = tariff.Price;
                 }
             }
             else
             {
+                actualPrice = 0;
                 if (minprice != null)
                 {
                     actualPrice = tariff.Price;
+                }
+            }
+            tariffsSummary.ActualPrice = actualPrice;
+        }
+
+        private void CalculateTariffMinPrice(TariffResult tariff, decimal? minprice)
+        {
+            if (tariff.PriceIndex != 0)
+            {
+                tariff.Price = tariff.Price * (decimal)weight;
+                if (tariff.Price < minprice)
+                {
                     tariff.Price = minprice;
                     tariffsSummary.IsMinIconVisible = true;
                 }
-                else
+            }
+            else
+            {
+                tariff.Price = 0;
+                if (minprice != null)
                 {
-                    tariff.Price = 0;
-                    actualPrice = tariff.Price;
+                    tariff.Price = minprice;
+                    tariffsSummary.IsMinIconVisible = true;
                 }
             }
-
-            tariffsSummary.ActualPrice = actualPrice;
         }
 
         private string AssignSignCode(Dictionary<string, string> currencies, string currencyId, string uom)
