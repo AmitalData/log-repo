@@ -54,8 +54,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 
             }
 
-            UpdatePendingByKeyWords(entityPM);
-
+            UpdatePendingByKeyWords(entityPM);  
             base.OnUpdating(entityPM, entityPOCO);
         }
 
