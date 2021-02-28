@@ -368,10 +368,11 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                 this.ValidateDates(value,"AccountingDate");
 
             }
-
+        
             this.EntityPM.AccountingDate = value;
           this.UpdateLinesAccountingDates();
-          this.UpdateLinesDates();
+            this.UpdateLinesDates();
+            if (this.CurrencyId) this.getHeadercurrencyRate(this.CurrencyId);
         }
 
 
@@ -1067,7 +1068,7 @@ class JournalLineModel extends BaseComponent {
 
     AmountChanged(type,localAmount,foreignAmount){
         console.log("[AmountChanged] local: ", localAmount, ", foreign: ", foreignAmount);
-
+        if (!this.currencyRate) this.currencyRate = this.parent.HeadercurrencyRate;
         if (type == 'local')
             this.isLocalEntered = !AppTool.IsNullOrEmpty(localAmount);
 
