@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.CoreBL.BuildTenant.MumpsOpenReconcile
 {
-    public class OpenRecoDataValidation
+    public class OpenRecoDataValidationService
     {
         public StringBuilder Errors = new StringBuilder();
         public List<MMPSDataM> GoodRows = new List<MMPSDataM>();
+        public HashSet<string> BadAccounts = new HashSet<string>();
+
         public void GetDataAndValid(string csvText)
         { 
 
@@ -19,33 +21,39 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant.MumpsOpenReconcile
             foreach (var line in list)
             {
                 var fields=line.Split(',').ToList();
-                if (fields.Count!= 7)
+                if (fields.Count!= 8)
                 {
-                    LogIt($"error 7 field {line}");
+                    if (fields.Count > 0)
+                    {
+                        BadAccounts.Add(fields[0]);
+                    }
+                    LogIt($"error 8 field {line}");
                     continue;
                 }
                 try
                 {
-                    if (string.IsNullOrWhiteSpace(fields[5]))
+                    if (string.IsNullOrWhiteSpace(fields[6]))
                     {
                         LogIt($"error OriginAmount is null field {line}");
                         continue;
                     }
-                    if (string.IsNullOrWhiteSpace(fields[6]))
+                    if (string.IsNullOrWhiteSpace(fields[7]))
                     {
                         LogIt($"error OpenAmount is null field {line}");
                         continue;
                     }
+                    
 
                     var newRow = new MMPSDataM(line)
                     {
                         InternalNumber = fields[0],
                         ExternalNo = fields[1],
-                        MyDate = fields[2],
-                        Ref1 = fields[3],
-                        Ref2 = fields[4],
-                        OriginAmount = decimal.Parse(fields[5]),
-                        OpenAmount = decimal.Parse(fields[6]),
+                        JLineNumber = int.Parse(fields[2]),
+                        MyDate = fields[3],
+                        Ref1 = fields[4],
+                        Ref2 = fields[5],
+                        OriginAmount = decimal.Parse(fields[6]),
+                        OpenAmount = decimal.Parse(fields[7]),
 
 
                     };
@@ -53,6 +61,13 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant.MumpsOpenReconcile
                     {
                         LogIt($"error InternalNumber is null field {line}");
                         
+                        continue;
+                    }
+
+                    if (newRow.JLineNumber<1)
+                    {
+                        LogIt($"JLineNumber is null field {line}");
+
                         continue;
                     }
 
@@ -66,6 +81,8 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant.MumpsOpenReconcile
                         //LogIt($"warning Ref1 is null field {line}");
                         //continue;
                     }
+                    newRow.Ref1 = newRow.Ref1.Replace('~', ',');
+                    newRow.Ref2 = newRow.Ref2.Replace('~', ',');
                     if (newRow.OriginAmount>=0)
                     {
                         if (newRow.OpenAmount<0)
@@ -138,5 +155,6 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant.MumpsOpenReconcile
 
 
         public string RecordValidation { get; internal set; }
+        public int JLineNumber { get; internal set; }
     }
 }
