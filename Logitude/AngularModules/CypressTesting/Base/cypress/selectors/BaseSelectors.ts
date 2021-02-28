@@ -14,6 +14,21 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly SystemSettings = "#CMS"
     public static readonly CustomsSettings = "#MaintenanceItemCISE"
     //#endregion
+    //#region charge Types
+    public static readonly ChargesTypeAccounting="#ChargesTypeTHAccounting"
+    public static readonly ChargesTypeReceivableCreditAccount="#ChargesType_ReceivableCreditAccount"
+    public static readonly ChargesTypeSaveClose="#ChargesType-SaveClose"
+    //#endregion
+    //#region Currency
+    public static readonly CurrencyAccounting="#CurrencyTHAccounting"
+    public static readonly CurrencyAccountingExternalCode="#Currency_AccountingExternalCode"
+    public static readonly CurrencySaveClose="#Currency-SaveClose"
+    //#endregion
+    //#region Customer
+    public static readonly CustomerAccounting= "#CustomerTHAccounting"
+    public static readonly CustomerReceivablesAccountingCard="#Customer_ReceivablesAccountingCard"
+    public static readonly CustomerSaveClose="#Customer-SaveClose"
+    //#endregion
     //#region Buttons
     public static readonly RedButton = '.RedButton';
     public static readonly GreenButton = '.GreenButton';
@@ -30,6 +45,14 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ContainsOperations = "Operations"
     public static readonly ContainsAccounting = "Accounting"
     public static readonly ContainsBack = "Back"
+    public static readonly ContainsEdit="Edit"
+    public static readonly EUR="EUR"
+    public static readonly TestCompany="TestCompany"
+    public static readonly AirFreight="Air Freight"
+    public static readonly ChargesType="ChargesType"
+    public static readonly Currency="Currency"
+    public static readonly Partner="Partner"
+    public static readonly ContainClose="Close"
     //#endregion
     //#region general
     public static readonly ToggleButtonClass = '.ToggleButton';
@@ -39,8 +62,10 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly LogitudeWindow = ".LogitudeWindow";
     public static readonly Label = ".Label"
     public static readonly ListItem='[class="Row ag-row tooltip"]'
-
+    public static readonly DivListItem='div[class="Row ag-row tooltip"]'
+    public static readonly MaintenanceButton=".MaintenanceButton"
     public static readonly RowHover=".RowHover"
+    public static readonly MouseoverTrigger='mouseover'
     //#endregion
     //#endregion
 
@@ -53,8 +78,23 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly BackBottonBodyClass = ".BackBottonBody"
 
     public static readonly QueryLink = ".QueryLink";
-
+    public static readonly MTCPopup='#MTCPopup';
     public static readonly LogLOVFooterHyperLink = ".LogLOVFooter a";
     public static readonly DownArrowImage = "img[src='./Images/Buttons/downarrow.png']";
     public static readonly Hyperlink = ".hyperlink";
+    public static readonly HeaderScreen= ".HeaderScreen"
+    public static readonly HeaderScreenLable=".HeaderScreenLable"
+    public static readonly tr="tr"
+    public static readonly HeaderScreenValue=".HeaderScreenValue"
+    public static readonly RowCellClass=".row-cell"
+    public static readonly RowClass='.Row'
+    public static readonly TextTrimming='.TextTrimming'
+    public static readonly SimpleGridViewRow= ".SimpleGridViewRow"
+    public static readonly EditPng='[src="./Images/Buttons/Edit.png"]'
+    public static readonly GridViewCell='.GridViewCell'
+    public static readonly HyperlinkButtonControl='.HyperlinkButtonControl'
+    public static readonly ColorGreenClass=".ColorGreen"
+    public static readonly buttonspan= "button span"
+    public static readonly FillParentClass=".FillParent"
+    
 }

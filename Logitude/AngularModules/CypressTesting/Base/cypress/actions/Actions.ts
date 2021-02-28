@@ -1,4 +1,10 @@
 import { BaseSelectors } from '../selectors/BaseSelectors';
+import * as BaseAssertion from '../../cypress/actions/Assertion';
+import { AccountingSelectors } from '../../../Accounting/cypress/selectors/Selectors';
+import { ShipmentSelectors } from '../../../Shipment/cypress/selectors/Selectors';
+import { RestAPI } from '../constants/RestAPI';
+import { AccountingURLs } from '../../../Accounting/cypress/constants/URLs';
+import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 
 export function NavigatesToMaintenanceMenu(){
     cy.Click(BaseSelectors.MaintenanceMenu,null)
@@ -13,4 +19,56 @@ export function ActivateCustomsManagementInShipments(){
     cy.get(BaseSelectors.typeCheckbox).check({force: true})
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK)
 
+}
+export function ClickOnMaintenanceButton(LogLovSelector:string){
+    cy.ClickingAfterHovering(LogLovSelector,BaseSelectors.MaintenanceButton)
+}
+export function ClickOnEditInMaintenanceButton(){
+    cy.get(BaseSelectors.MTCPopup).contains(BaseSelectors.ContainsEdit).click({ force: true })
+
+}
+export function ClearExternalIDFromShipmentLevel(ExternalIDName:string){
+    let EntitySelector:string;
+    let ExternalIdSelectorTextBox:string
+    let SaveCloseButton:string;
+    if(ExternalIDName==BaseSelectors.ChargesType){
+        EntitySelector=ShipmentSelectors.LogLovShipmentReceivableChargesTypeId;
+        ExternalIdSelectorTextBox=BaseSelectors.ChargesTypeReceivableCreditAccount
+        SaveCloseButton=BaseSelectors.ChargesTypeSaveClose
+    }
+    else if(ExternalIDName==BaseSelectors.Currency){
+        EntitySelector=ShipmentSelectors.LogLovShipmentReceivableCurrencyId;
+        ExternalIdSelectorTextBox=BaseSelectors.CurrencyAccountingExternalCode
+        SaveCloseButton=BaseSelectors.CurrencySaveClose
+    }
+    else if(ExternalIDName==BaseSelectors.Partner){
+        EntitySelector=AccountingSelectors.LogLovARInvoicePartnerId;
+        ExternalIdSelectorTextBox=BaseSelectors.CustomerReceivablesAccountingCard;
+        SaveCloseButton=BaseSelectors.CustomerSaveClose
+    }
+    ClickOnMaintenanceButton(EntitySelector)
+    ClickOnEditInMaintenanceButton();
+    cy.Click(BaseSelectors.LogitudeWindow, BaseSelectors.ContainsAccounting);
+    if(ExternalIDName==BaseSelectors.ChargesType){
+        cy.DefineRequestWait(RestAPI.GET,AccountingURLs.EntityResourceAccountingPeriod,RequestAliases.EntityResourceAccountingPeriod)
+        BaseAssertion.AssertStatusCode(RequestAliases.EntityResourceAccountingPeriod,200)
+    }
+    cy.get(ExternalIdSelectorTextBox).clear();
+    cy.Click(SaveCloseButton, null);
+    BaseAssertion.AssertElementNotExist(SaveCloseButton)
+}
+export function GetstringWithoutLastCharacter(text:string){
+    let textWithoutLastCharacter = text.substring(0, (text.length - 1)).toString();
+return textWithoutLastCharacter;
+}
+export function GetLastCharacter(text:string){
+    let lastCharacterOfText = text.slice(text.length - 1).toString();
+    return lastCharacterOfText
+} 
+export function ClickOnRowDependingOnValue(value:string){
+    cy.get(BaseSelectors.RowCellClass).find(BaseSelectors.TextTrimming).contains(value)
+  .parents(BaseSelectors.ListItem).click({force:true})
+}
+export function CloseWindow(){
+    cy.Click(BaseSelectors.button,BaseSelectors.ContainClose)
 }

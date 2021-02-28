@@ -1,13 +1,15 @@
 @smoke @stable @all@tests
 Feature: Credit note ARInvoice operations and actions
-    After the user logging in the system and navigate to shipments workspace
-    will create a direct shipmen, after that create and approve a credit note ARInvoice
+    After the user logging in the system and Update Accounting System to be None,navigates to shipments workspace
+    will create a direct shipment, after that create and approve a credit note ARInvoice
     set as sent and void the invoice.
-     Scenario: Update Accounting System
+    
+    Scenario: Update Accounting System
         Given the user logged in
         Given accounting System as "None"
         When change the accounting system
         Then the accounting system should update successfully
+
     Scenario: Create direct export air shipment
         Given the user navigates to shipments workspace
         And a direct shipment with the following details

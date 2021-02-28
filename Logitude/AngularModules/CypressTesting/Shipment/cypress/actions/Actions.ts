@@ -14,6 +14,7 @@ import { AccountingURLs } from '../../../Accounting/cypress/constants/URLs';
 import { AccountingSelectors } from '../../../Accounting/cypress/selectors/Selectors';
 import { BaseURLs } from '../../../Base/cypress/constants/URLs';
 import { QuickSearchDetails } from '../../../Base/cypress/models/QuickSearchDetails';
+import * as BaseActions from '../../../Base/cypress/actions/Actions';
 
 //#region ShipmentsWorkspace
 export function NavigatesToShipmentsWorkspace() {
@@ -156,7 +157,7 @@ export function FillHouseInShipmentsTab(Shipper: string) {
 }
 //#endregion
 //#region Receivables Tab
-export function FillReceivablesTab(receivableDetails: ReceivableDetails[]) {
+export function FillReceivablesTab(receivableDetails: ReceivableDetails[], HaveAccountingSystem?: boolean) {
     cy.Click(ShipmentSelectors.ReceivablesTab, null)
     for (let i = 0; i < receivableDetails.length; i++) {
         cy.Click(ShipmentSelectors.AddNewReceivableLine, null)
@@ -165,22 +166,19 @@ export function FillReceivablesTab(receivableDetails: ReceivableDetails[]) {
         cy.get(ShipmentSelectors.ReceivableQuantity).type(receivableDetails[i].Quantity.toString());
         cy.get(ShipmentSelectors.ReceivableUnitPrice).type(receivableDetails[i].UnitPrice.toString());
         cy.FillLogLov(ShipmentSelectors.ReceivableCurrency, receivableDetails[i].Currency, true)
-        cy.FillLogTextBox(ShipmentSelectors.ShipmentReceivableRate,receivableDetails[i].ExchangeRate.toString());
-
+        if (HaveAccountingSystem) {
+            BaseActions.ClearExternalIDFromShipmentLevel(BaseSelectors.ChargesType)
+            BaseActions.ClearExternalIDFromShipmentLevel(BaseSelectors.Currency)
+        }
+        cy.FillLogTextBox(ShipmentSelectors.ShipmentReceivableRate, receivableDetails[i].ExchangeRate.toString());
         cy.Click(ShipmentSelectors.AddReceivableOkButton, null)
     }
 }
-export function GenerateReceivablesFromPayables(profit?:boolean) {
+export function GenerateReceivablesFromPayables() {
     cy.Click(ShipmentSelectors.ReceivablesTab, null)
     cy.Click(ShipmentSelectors.ReceivableFromPayables, null)
     cy.get(BaseSelectors.CheckBoxLine).eq(0).click()
-    cy.Click(BaseSelectors.RedButton, "Ok")
-    // if(profit){
-    // cy.Click("#Edit",null)
-    // cy.get(ShipmentSelectors.ReceivableUnitPrice).clear().type("20");
-    // cy.Click(ShipmentSelectors.AddReceivableOkButton, null)
-
-    // }
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK)
     UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
 }
 //#endregion
@@ -262,7 +260,7 @@ export function FillPayablesTab(payableDetails: PayableDetails) {
     cy.FillLogTextBox(ShipmentSelectors.ShipmentPayableQuantity, payableDetails.Quantity.toString());
     cy.FillLogTextBox(ShipmentSelectors.ShipmentPayableUnitPrice, payableDetails.UnitPrice.toString());
     cy.FillLogLov(ShipmentSelectors.ShipmentPayableCurrency, payableDetails.Currency, true)
-    cy.FillLogTextBox(ShipmentSelectors.ShipmentPayableRate,payableDetails.ExchangeRate.toString());
+    cy.FillLogTextBox(ShipmentSelectors.ShipmentPayableRate, payableDetails.ExchangeRate.toString());
 
     if (payableDetails.Vendor) {
         cy.FillLogLov(ShipmentSelectors.ShipmentPayableVendor, payableDetails.Vendor, true)

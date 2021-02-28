@@ -8,6 +8,7 @@ export class RequestAliases {
     public static readonly ARInvoicesPutRequest = 'ARInvoicesPutRequest';
     public static readonly APInvoiceView = 'APInvoiceView';
     public static readonly ARInvoiceviews = 'ARInvoiceviews';
+    public static readonly ARInvoiceViewsGetByFilters="ARInvoiceViewsGetByFilters"
     public static readonly APPayments = 'APPayments';
     public static readonly ARPayments = 'ARPayments';
     public static readonly CustomerViews = 'CustomerViews';
@@ -16,6 +17,7 @@ export class RequestAliases {
     public static readonly ConsilidationInvoiceDomain = "ConsilidationInvoiceDomain"
     public static readonly Quotes = 'Quotes';
     public static readonly QuickSearchDataLoaded = 'QuickSearchDataLoaded';
+    public static readonly EntityResourceAccountingPeriod="EntityResource"
     // Tariff
     public static readonly PostTariff = 'PostTariff';
     public static readonly PutTariff = 'PutTariff';

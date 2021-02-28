@@ -20,10 +20,19 @@ declare global {
             ValidateElementColor(selector: string, expectedcolor: string): Chainable<Element>
             SelectQuickSearchFirstElement(quickSearchDetails: QuickSearchDetails): Chainable<Element>
             BackButton(contains:string): Chainable<Element>
+            ClickingAfterHovering(LogLovSelector:string,HiddenElementSelector:string): Chainable<Element>
+            SelectCheckBox(Selector:string): Chainable<Element>
         }
     }
 }
+Cypress.Commands.add("SelectCheckBox", (Selector:string) => {
+    cy.get(Selector).check({ force: true })
 
+})
+Cypress.Commands.add("ClickingAfterHovering", (LogLovSelector:string,HiddenElementSelector:string) => {
+    cy.get(LogLovSelector).trigger(BaseSelectors.MouseoverTrigger).find(HiddenElementSelector).click()
+
+})
 Cypress.Commands.add("BackButton", (contains) => {
     cy.Click(BaseSelectors.BackBottonBodyClass, contains);
 })

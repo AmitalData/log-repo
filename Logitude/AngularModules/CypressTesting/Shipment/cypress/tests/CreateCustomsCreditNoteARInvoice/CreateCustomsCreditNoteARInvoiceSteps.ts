@@ -18,11 +18,32 @@ import * as AccountingActions from '../../../../Accounting/cypress/actions/Actio
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
 let customerCode: string;
-let AccountingSystem:string;
+let AccountingSystem: string;
 //#endregion
-
+//#region Update Accounting System
+Given("the user logged in", () => {
+    cy.Login();
+});
+Given("accounting System as {string}", (accountingSystem) => {
+    AccountingSystem = accountingSystem;
+});
+When("change the accounting system", () => {
+    AccountingActions.changeAccountingsSystem(AccountingSystem)
+});
+Then("the accounting system should update successfully", () => {
+    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
+});
+//#endregion
+//#region Activate Customs Management in Shipments
+When("the user activate customs settings", () => {
+    BaseActions.ActivateCustomsManagementInShipments();
+});
+Then("the customs settings should activate successfully", () => {
+    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow)
+});
+//#endregion
 //#region Create customer
-Given("the user logged in and navigates to customers workspace", () => {
+Given("the user navigates to customers workspace", () => {
     cy.Login();
     CommonActions.NavigatesToCustomersWorkspace();
 });
@@ -39,32 +60,10 @@ When("create customer", () => {
 Then("the customer should create successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.PartnersDomainRequest, 200).then((interception) => {
         customerCode = interception.response.body.Customer.Code;
-      });;
+    });;
 });
 //#endregion
-//#region Activate Customs Management in Shipments
-When("the user activate customs settings", () => {
-    BaseActions.ActivateCustomsManagementInShipments();
-    
-    
-});
-Then("the customs settings should activate successfully", () => {
-    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow)
-});
-//#endregion
-//#region Update Accounting System
-Given("accounting System as {string}", (accountingSystem) => {
-    AccountingSystem=accountingSystem;
-  });
-  
-  When("change the accounting system", () => {
-    AccountingActions.changeAccountingsSystem(AccountingSystem)
-  });
-  
-  Then("the accounting system should update successfully", () => {
-    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
-  });
-  //#endregion
+
 //#region Create direct export air shipment
 Given("the user navigates to shipments workspace", () => {
     ShipmentActions.NavigatesToShipmentsWorkspace()
@@ -89,15 +88,15 @@ Then("the direct should create successfully", () => {
 //#endregion
 
 //#region Update routing tab
-Given("the user in the shipment's rounting tab",()=>{
+Given("the user in the shipment's rounting tab", () => {
     ShipmentActions.OpenShipment(shipmentNumber);
     cy.Click(ShipmentSelectors.RoutingsTab, null);
 });
 
-Given("edit main carriage leg with the following details",(dataTable)=>{
+Given("edit main carriage leg with the following details", (dataTable) => {
     let mainCarriageLeg = dataTable.hashes()[0] as MainCarriageLeg;
     ShipmentActions.EditMainCarriageLegs(mainCarriageLeg.Airline);
-}); 
+});
 //#endregion
 
 //#region Update packages tab
@@ -149,4 +148,3 @@ When("approve invoice", () => {
 Then("the invoice should approve successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });
- 

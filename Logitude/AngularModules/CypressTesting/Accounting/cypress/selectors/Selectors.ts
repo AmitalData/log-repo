@@ -2,12 +2,15 @@ export class AccountingSelectors {
     //#region Accounting settings
     public static readonly AccountingSettings="#SETTINGSAccounting"
     //#endregion
-    //#region 
+    //#region AccountingSystem
     public static readonly AccountingSystemType="#AccountingSetting_AccountingSystemCode"
     public static readonly IsARInvoicesTransferEnabled ="#AccountingSetting_IsARInvoicesTransferEnabled"
     public static readonly IsAPInvoicesTransferEnabled="#AccountingSetting_IsAPInvoicesTransferEnabled"
     public static readonly IsARPaymentsTransferEnabled="#AccountingSetting_IsARPaymentsTransferEnabled"
     public static readonly IsAPPaymentsTransferEnabled="#AccountingSetting_IsAPPaymentsTransferEnabled"
+    //#endregion
+    //#region AccountingTransfer
+    public static readonly AccountingTransfer="#TRANSFERAccounting"
     //#endregion
    //#region contain
    public static readonly NewPayment = "New Payment"
@@ -15,6 +18,7 @@ export class AccountingSelectors {
    public static readonly ContainNone="None"
    public static readonly ContainLogitudeGenericInterface="Logitude Generic Interface"
    public static readonly ContainLogitudeAdvancedGenericInterface="Logitude Advanced Generic Interface"
+   public static readonly ContainTransferStatus="Transfer Status:"
 
    //#endregion
    //#region APInvoice
@@ -91,9 +95,23 @@ export class AccountingSelectors {
    public static readonly GeneralSave = "#GeneralBSave"
    public static readonly VatTypeApplyToAll = '#VATApplyToAll';
    public static readonly APInvoiceBranch = '#APInvoice_BranchId';
+   public static readonly LogLovARInvoicePartnerId="#LogLov_ARInvoice_PartnerId"
    public static readonly IsConsolidationChecked="checkbox[id^='IsConsolidationChecked']"
    //#region contain 
    public static readonly ContainDraftInvoices = "Draft Invoices"
-
+   public static readonly ContainExport="Export"
+   public static readonly ContainTransferredSuccessfully="Transferred Successfully"
+   public static readonly ContainNotReadyInvoices= "Not Ready Invoices"
+   public static readonly ContainNewTransfer="New Transfer"
+   //#endregion
+   //#region Transfer Status contain
+   public static readonly ContainNotReady="Not Ready"
+   public static readonly ContainReady="Ready"
+   public static readonly ContainTransferred="Transferred"
+   //#endregion
+   //#region  Error Message
+   public static readonly MissingcustomerErrorMessage='Bill to Debit Account is missing'
+   public static readonly MissingCurrencyErrorMessage = 'Currency External Code is missing'
+   public static readonly MissingAirFreightChargeTypeErrorMessage='Air Freight Charge Type Receivable Credit Account is missing'
    //#endregion
 }
