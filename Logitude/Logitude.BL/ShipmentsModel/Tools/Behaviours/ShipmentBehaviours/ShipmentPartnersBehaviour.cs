@@ -41,7 +41,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
             if (string.IsNullOrEmpty(cardId))
             {
-                entityPM.ShipperName = IsShipmentFromToLogbox() ? entityPM.ShipperName : null;
+                entityPM.ShipperName = IsShipmentFromToLogbox() || entityPM.IsExternalAPI ? entityPM.ShipperName : null;
                 entityPM.ShipperNote = null;
                 entityPM.ShipperContactId = null;
                 entityPM.ShipperAddressId = null;

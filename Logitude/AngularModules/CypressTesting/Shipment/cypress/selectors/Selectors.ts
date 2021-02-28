@@ -38,6 +38,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly DocsOutTab = '#ShipmentTHDocsOut';
   public static readonly DocsInTabb = '#ShipmentTHDocsIn';
   public static readonly Events = '#ShipmentTHEvents';
+  public static readonly CustomsTab = '#ShipmentTHCustoms';
   //#endregion
   //#region General tab
   public static readonly ShipmentGrossWeight = '#Shipment_GrossWeightInKG';
@@ -102,6 +103,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PackageContainerNumber = '#ShipmentPackage_ContainerNumber';
   public static readonly AirPackageOKButton = '#OkAirPackage';
   public static readonly OceanPackageOKButton = '#OkOceanPackage';
+  public static readonly EditPackage = '#Edit';
   public static readonly PackageGrossWeight = '#Shipment_GrossWeight';
   public static readonly PackagePartialSplit = '#PartialSplit';
 
@@ -128,6 +130,9 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly OnCarriage = '#OnCarriage';
   public static readonly ShipmentOnCarriageToPort = '#Shipment_OnCarriageToPortId';
   public static readonly OnCarriageOKBtn = '#OnCarriageOKBtn';
+  public static readonly MainCarrigeVessel = 'input[id^=Shipment_MainCarriageVesselId_]';
+  public static readonly MainCarrigeVoyageNo = 'input[id^=Shipment_MainCarriageCarrierNumber_]';
+
   //#endregion
   //#region Receivable tab fields
   public static readonly AddNewReceivableLine = '#AddReceivable button';
@@ -164,7 +169,6 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly AccountllyReopenButton = '#ShipmentBAccountedReopen';
   public static readonly ConfirmActionButton = '#ConfirmAction';
   //#endregion
-
   //#region Send docs tab
   public static readonly SendMessageButton = '#SendMessagebtn';
   public static readonly EmailSearchInput = '.LogitudeEmailSearchInput';
@@ -185,4 +189,53 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ContainsSplit = "Split"
   public static readonly ShortTitleControl = ".ShortTitleControl"
 
+  //#region INTTRA
+  public static readonly INTTRASettingId = "#INTTRASetting_INTTRAId";
+  public static readonly INTTRASettingAlias = "#INTTRASetting_INTTRAAlias";
+  public static readonly FTPDetailUserName = "#FTPDetail_UserName";
+  public static readonly FTPDetailPassword = "#FTPDetail_Password";
+  public static readonly FTPDetailHost = "#FTPDetail_Host";
+  public static readonly FTPDetailFolder = "#FTPDetail_Folder";
+  public static readonly ContainsOutSettings = "Out Settings:";
+  public static readonly ContainsInSettings = "In Settings:";
+  public static readonly SaveFTPDetailButton = ".RedButton:last";
+  public static readonly BranchINTTRAId = "#Branch_INTTRAId";
+  public static readonly BranchINTTRAAlias = "#Branch_INTTRAAlias";
+  public static readonly BranchINTTRAContact = "#Branch_INTTRAContactId";
+  public static readonly ContainsBranchesSettings = "Branches Settings";
+  public static readonly ContainsRegistration = "Registration";
+  public static readonly ContainsSendEBooking = "Send e-booking";
+  public static readonly ShipmentINTTRAContractNumber = "#Shipment_INTTRAContractNumber";
+  public static readonly ShipmentMainCarriageVessel = "input[id^='Shipment_MainCarriageVesselId']:last";
+  public static readonly ShipmentMainCarriageETDDate = "#date_Shipment_MainCarriageETD";
+  public static readonly ShipmentMainCarriageETDTime = "#time_Shipment_MainCarriageETD";
+  public static readonly ShipmentDescriptionOfGoods = "#Shipment_DescriptionOfGoods";
+  public static readonly EditShipper = "#Edit-Shipper";
+  public static readonly ShipmentShipperContact = "#Shipment_ShipperContactId";
+  public static readonly AddEditPartnerComponent = "addeditpartnercomponent";
+  public static readonly ContactEnglishName = "#Contact_EnglishName";
+  public static readonly ContactEmail = "#Contact_Email";
+  public static readonly ShipmentBranch = "#Shipment_BranchId";
+  public static readonly ContainsMainCarriageCarrierRequired = "Main Carriage Carrier is required";
+  public static readonly ContainsContractNumberRequired = "Contract Number is required";
+  public static readonly ContainsETDOrVesselAndVoyageMustProvided = "ETD or Main-Carriage Vessel and Voyage must be provided";
+  public static readonly ContainsShipmentDescriptionOfGoodsRequired = "Shipment Description of Goods is required";
+  public static readonly ContainsShipmentPackagesRequired = "Shipment Order Packages or Shipment Packages are required";
+  public static readonly ContainsRequestBooking = "Request Booking";
+  public static readonly ContainsStatus = "Status:";
+  //#endregion
+  //#region AMANAC
+  public static readonly AMANACTab = '#AMANAC';
+  public static readonly StatusValue = 'td[data-cy^=StatusValue]';
+  public static readonly StatusDate = 'td[data-cy^=StatusDate]';
+  public static readonly UserName = 'td[data-cy^=UserName]';
+  public static readonly CloseAMANACView = 'button[data-cy^=CloseAMANACView]';
+  public static readonly CloseExportingScreen = 'button[data-cy^=CloseExportingScreen]';
+  public static readonly ValidationMsg = 'div[data-cy^=ValidationMsg]';
+  public static readonly CustomsTransmissionsStatusValue = 'td[data-cy^=CustomsTransmissionsStatusValue]';
+  public static readonly CustomsTransmissionsStatusDate = 'td[data-cy^=CustomsTransmissionsStatusDate]';
+  public static readonly CustomsTransmissionsUserName = 'td[data-cy^=CustomsTransmissionsUserName]';
+  public static readonly CloseCustomsTransmissions = 'button[data-cy^=CloseCustomsTransmissions]';
+  public static readonly CustomsTransmissionsRetransfer = 'button[data-cy^=CustomsTransmissionsRetransfer]';
+  //#endregion
 }

@@ -1,4 +1,4 @@
-@smoke @stable @all
+@smoke @stable @all @shipments1
 Feature: House connection and disconnection inside master
   After the user logging in the system and navigate to shipments workspace
   will create a master shipment, after that create house inside master and disconnect it.

@@ -14,6 +14,7 @@ import { AccountingURLs } from '../../../Accounting/cypress/constants/URLs';
 import { AccountingSelectors } from '../../../Accounting/cypress/selectors/Selectors';
 import { BaseURLs } from '../../../Base/cypress/constants/URLs';
 import { QuickSearchDetails } from '../../../Base/cypress/models/QuickSearchDetails';
+import { verify } from 'cypress/types/sinon';
 
 //#region ShipmentsWorkspace
 export function NavigatesToShipmentsWorkspace() {
@@ -44,11 +45,11 @@ export function CreateShipment(shipmentLevel: string) {
 //#region Open And UpdateShipment
 export function UpdateShipment(saveButtonSelector: string, saveButtonSelectorContains?: string) {
     cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
-    cy.Click(saveButtonSelector, saveButtonSelectorContains)
+    cy.Click(saveButtonSelector, saveButtonSelectorContains,false)
 }
 
 export function OpenShipment(shipmentNumber: string) {
-    cy.DefineRequestWait("GET", "**/ngMetaData/getmenubuttongrouppms?**", "WaitLoadShipmentMenuButtons");
+    cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetMenuButtonGroups, RequestAliases.WaitLoadShipmentMenuButtons);
 
     var quickSearchDetails = {
         Selector: ShipmentSelectors.ShipmentSearchBar,
@@ -57,7 +58,10 @@ export function OpenShipment(shipmentNumber: string) {
         WaitURL: BaseURLs.GetQuickSearch,
         Value: shipmentNumber
     } as QuickSearchDetails;
+
     cy.SelectQuickSearchFirstElement(quickSearchDetails);
+    
+    BaseAssertion.AssertStatusCode(RequestAliases.WaitLoadShipmentMenuButtons, 200);
 }
 export function SplitShipment(packageNumber:string){
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
@@ -79,7 +83,7 @@ export function PartialSplitShipment(packagesDetails: PackagesDetails){
 export function CancelShipment(note :string) {
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
     cy.Click(ShipmentSelectors.CancelShipmentButton, null);
-    cy.FillLogTextBox(ShipmentSelectors.ShipmentEventNote ,note)
+    cy.FillLogTextBox(ShipmentSelectors.ShipmentEventNote ,note,true)
     UpdateShipment(ShipmentSelectors.ConfirmActionButton);
 }
 
@@ -273,12 +277,12 @@ export function FillReceivablesTab(receivableDetails: ReceivableDetails[]) {
         cy.get(ShipmentSelectors.ReceivableQuantity).type(receivableDetails[i].Quantity.toString());
         cy.get(ShipmentSelectors.ReceivableUnitPrice).type(receivableDetails[i].UnitPrice.toString());
         cy.FillLogLov(ShipmentSelectors.ReceivableCurrency, receivableDetails[i].Currency, true)
-        cy.FillLogTextBox(ShipmentSelectors.ShipmentReceivableRate,receivableDetails[i].ExchangeRate.toString());
+        cy.FillLogTextBox(ShipmentSelectors.ShipmentReceivableRate, receivableDetails[i].ExchangeRate.toString());
 
         cy.Click(ShipmentSelectors.AddReceivableOkButton, null)
     }
 }
-export function GenerateReceivablesFromPayables(profit?:boolean) {
+export function GenerateReceivablesFromPayables(profit?: boolean) {
     cy.Click(ShipmentSelectors.ReceivablesTab, null)
     cy.Click(ShipmentSelectors.ReceivableFromPayables, null)
     cy.get(BaseSelectors.CheckBoxLine).eq(0).click()
@@ -370,7 +374,7 @@ export function FillPayablesTab(payableDetails: PayableDetails) {
     cy.FillLogTextBox(ShipmentSelectors.ShipmentPayableQuantity, payableDetails.Quantity.toString());
     cy.FillLogTextBox(ShipmentSelectors.ShipmentPayableUnitPrice, payableDetails.UnitPrice.toString());
     cy.FillLogLov(ShipmentSelectors.ShipmentPayableCurrency, payableDetails.Currency, true)
-    cy.FillLogTextBox(ShipmentSelectors.ShipmentPayableRate,payableDetails.ExchangeRate.toString());
+    cy.FillLogTextBox(ShipmentSelectors.ShipmentPayableRate, payableDetails.ExchangeRate.toString());
 
     if (payableDetails.Vendor) {
         cy.FillLogLov(ShipmentSelectors.ShipmentPayableVendor, payableDetails.Vendor, true)
@@ -412,6 +416,82 @@ export function DeleteAttachment() {
     cy.contains("Delete Attachment").click()
 }
 //#endregion
+
+//#region AMANAC 
+export function NavigatesTocustomSettingsInMaintenance(maintenanceSearchValue: string) {
+    cy.Click(BaseSelectors.MaintenanceMenu, null);
+    cy.FillLogTextBox(BaseSelectors.NullSearch, maintenanceSearchValue);
+    cy.Click(BaseSelectors.CustomsSettings, null);
+}
+
+export function UpdateLocalCustomsInterface(localCustomsInterfaceValue: string) {
+    cy.get(BaseSelectors.typeCheckbox).check({ force: true });
+    cy.FillLogLov(BaseSelectors.LocalCustomsInterfaceCode, localCustomsInterfaceValue, true);
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
+}
+
+export function NavigatesToAMANACWorkspace() {
+    cy.Click(BaseSelectors.OperationsMenu, null);
+    cy.Click(ShipmentSelectors.AMANACTab, null);
+}
+
+export function AMANACView(TransportMode: string, AMANACView: string) {
+    AMANACView = AMANACView.replace(/\s/g, "");
+    cy.get(ShipmentSelectors.AMANACView(TransportMode, AMANACView)).children().first().click();
+}
+
+export function AMANACMarkeShipmentAs(MarkAs: string, ShipmentNumber: string) {
+    MarkAs = MarkAs.replace(/\s/g, "");
+    SearchAShipmentInNullSearch(ShipmentNumber);
+    cy.Click(ShipmentSelectors.AMANACMarkeShipmentAs(MarkAs, ShipmentNumber), null)
+    cy.Click(BaseSelectors.Button, BaseSelectors.ContainsClose)
+}
+
+export function AMANACExportAShipment(ShipmentNumber: string) {
+    SearchAShipmentInNullSearch(ShipmentNumber);
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsExport);
+}
+
+export function SearchAShipmentInNullSearch(ShipmentNumber: string) {
+    cy.DefineRequestWait(RestAPI.GET, URLs.ShipmentviewsGetbyfilters(ShipmentNumber), RequestAliases.ShipmentviewsGetbyfilters)
+    cy.FillLogTextBox(BaseSelectors.NullSearch, ShipmentNumber);
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentviewsGetbyfilters, 200);
+}
+
+export function FillShippingLineInOrdersTab(ShippingLine: string) {
+    cy.Click(ShipmentSelectors.OrdersTab, null);
+    cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageCarrierId, ShippingLine, true);
+}
+
+export function FillVoyageNoVesselInRoutingsTab(VoyageNo: string, Vessel: string) {
+    cy.Click(ShipmentSelectors.RoutingsTab, null);
+    cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
+    cy.FillLogTextBox(ShipmentSelectors.MainCarrigeVoyageNo, VoyageNo)
+    cy.FillLogLov(ShipmentSelectors.MainCarrigeVessel, Vessel, true)
+    cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
+}
+
+export function EditPackageGrossWeightPackagesTab(GrossWeight: string) {
+    cy.Click(ShipmentSelectors.PackagesTab, null)
+    cy.Click(ShipmentSelectors.EditPackage, null)
+    cy.FillLogTextBox(ShipmentSelectors.PackageWeight, GrossWeight)
+    cy.Click(ShipmentSelectors.OceanPackageOKButton, null)
+}
+
+export function Retransfer() {
+    cy.Click(ShipmentSelectors.CustomsTab, null);
+    cy.Click(BaseSelectors.Button, BaseSelectors.ContainsSendtoCustoms)
+    cy.Click(ShipmentSelectors.CustomsTransmissionsRetransfer, null)
+    cy.Click(ShipmentSelectors.CloseCustomsTransmissions, null)
+}
+
+export function FormatDate(date: string): string{
+    var dateString = date == 'Today' ? new Date().toDateString() : date;
+    var currentDateArray = dateString.split(" ");
+    return currentDateArray[2] + " " + currentDateArray[1] + " " + currentDateArray[3];
+}
+//#endregion
+
 export function FillMainCarriage(airline: string) {
     cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageCarrierId, airline, false);
     cy.FillRandomNumber(ShipmentSelectors.ShipmentFlightNumber, 100, 999);
@@ -419,7 +499,6 @@ export function FillMainCarriage(airline: string) {
 }
 
 export function OpenAWBWizard(shipmentLevel: string) {
-    cy.wait("@WaitLoadShipmentMenuButtons");
     cy.Click(BaseSelectors.Button, shipmentLevel + " AWB Wizard");
 }
 

@@ -1,35 +1,49 @@
 declare namespace Cypress {
     interface Chainable {
-        Login(): Chainable<Element>
+        Login(customerCareUser?: boolean): Chainable<Element>
+        LogoutThenLogin(customerCareUser?: boolean): Chainable<Element>
         OpenChangePasswordPage(): Chainable<Element>
         RedirectToLogin(): Chainable<Element>
     } 
 }
 
-Cypress.Commands.add("Login", () => {
-    let mode = Cypress.env("Mode")
-    
+Cypress.Commands.add("Login", (customerCareUser = false) => {
+    let mode = Cypress.env("Mode");
     if(mode.toLowerCase() === "development"){ 
-        cy.fixture("Login.json").then((LoginData) => {
-            CompleteLoginProcess(LoginData.email, LoginData.password, LoginData.url, LoginData.tenant);
-        })
+        cy.fixture("Login.json").then(loginData => {
+            let email = customerCareUser ? loginData.customerCareEmail : loginData.email;
+            let password = customerCareUser ? loginData.customerCarePassword : loginData.password;
+            let url = loginData.url;
+            let tenant = customerCareUser ? loginData.tenant : null;
+            CompleteLoginProcess(email, password, url, tenant);
+        });
     }
-    else{
-        CompleteLoginProcess(Cypress.env("Email"), Cypress.env("Password"), Cypress.env("Url"), Cypress.env("Tenant")); 
+    else
+    {
+        let email = customerCareUser ? Cypress.env("CustomerCareEmail") : Cypress.env("Email");
+        let password = customerCareUser ? Cypress.env("CustomerCarePassword") : Cypress.env("Password");
+        let url = Cypress.env("Url");
+        let tenant = Cypress.env("Tenant");
+        CompleteLoginProcess(email, password, url, tenant);
     }
 })
 
+Cypress.Commands.add("LogoutThenLogin", (customerCareUser = false) => {
+    cy.intercept("**/Login.aspx").as("LoginPage");
+    cy.get("iconbutton[title='Sign Out'] img").click();
+    cy.wait("@LoginPage");
+    cy.Login(customerCareUser);
+})
+
 Cypress.Commands.add("OpenChangePasswordPage", () => {
-    var Env = Cypress.env("Env");
     cy.fixture("Login.json").then((LoginData) => {
-        var ResetURL = LoginData.url + "/PasswordChangePage.aspx?email=" + LoginData.email;
-        cy.visit(ResetURL);
+        var resetURL = LoginData.url + "/PasswordChangePage.aspx?email=" + LoginData.email;
+        cy.visit(resetURL);
     }) 
 })
 
 Cypress.Commands.add("RedirectToLogin", () => {
     let mode = Cypress.env("Mode")
-    
     if(mode.toLowerCase() === "development"){ 
         cy.fixture("Login.json").then((LoginData) => {
             CompleteRedirectToLoginProcess(LoginData.url + '/login.aspx');

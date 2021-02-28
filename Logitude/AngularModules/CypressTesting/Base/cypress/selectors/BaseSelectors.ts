@@ -13,6 +13,7 @@ export class BaseSelectors extends RegexSelectors {
     //#region Maintenance
     public static readonly SystemSettings = "#CMS"
     public static readonly CustomsSettings = "#MaintenanceItemCISE"
+    public static readonly NullSearch = "#null_Search"
     //#endregion
     //#region Buttons
     public static readonly RedButton = '.RedButton';
@@ -32,6 +33,10 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ContainsAccounting = "Accounting"
     public static readonly ContainsBack = "Back"
     public static readonly ContainsCancel = "Cancel"
+    public static readonly ContainsClose = "Close"
+    public static readonly ContainsExport = 'Export'
+    public static readonly ContainsSendtoCustoms = "Send to Customs"
+
     //#endregion
     //#region general
     public static readonly ToggleButtonClass = '.ToggleButton';
@@ -68,5 +73,29 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly NotHaveClass = 'not.have.class'
     public static readonly Exist = 'exist'
     public static readonly NotExist = 'not.exist'
+    //#endregion
+
+    public static readonly MaintenanceTransmissionsTab = "#TRANS";
+    public static readonly INTTRAMaintenanceItem = "#MaintenanceItemINTTRA_S";
+    public static readonly FormFieldRow = ".FormFieldRow";
+    public static readonly StartsWithAddButton = "button[id^='Add']";
+    public static readonly StartsWithEditButton = "button[id^='Edit']";
+    public static readonly SimpleGridViewRow = ".SimpleGridViewRow";
+    public static readonly SimpleGridViewHeaderDark = ".SimpleGridViewHeaderDark";
+    public static readonly table = "table";
+    public static readonly CheckBoxLabel = "label[id^='CheckBox']";
+    public static readonly td = "td";
+    public static readonly ul = "ul";
+    public static readonly li = "li";
+    public static readonly ContainsClose = "Close";
+    public static readonly ValidationSummaryBlock = ".ValidationSummary table tr td";
+    public static readonly DropDownListItem = ".DropDownListItem";
+    public static readonly Value = ".Value";
+    public static readonly CheckboxInput = "input[type='checkbox']";
+
+
+    //#region Customs settings
+    public static readonly LocalCustomsInterfaceCode = "#LogLov_CustomsInterfaceSetting_LocalCustomsInterfaceCode";
+
     //#endregion
 }

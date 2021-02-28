@@ -74,10 +74,10 @@ export function CloseTicket() {
     cy.Click(BaseSelectors.RedButton,TicketSelectors.ContainsOk);
 }
 
-export function CreateActivity(ActivityTypeButton: string) {
+export function CreateActivity(ActivityTypeButton: string ,ticketActivitySubject:string) {
     cy.DefineRequestWait(RestAPI.POST, URLs.Activity,RequestAliases.PostTicketActivity);
     cy.Click(ActivityTypeButton, null);
-    cy.FillLogTextBox(TicketSelectors.ActivitySubject,TicketSelectors.ContainsCreateActivityTest);
+    cy.FillLogTextBox(TicketSelectors.ActivitySubject,ticketActivitySubject);
     cy.Click(BaseSelectors.RedButton,TicketSelectors.ContainsOk);
 }
 

@@ -1806,6 +1806,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     if (itemContactPM.SetAsPrimaryForCard)
                     {
                         entityPM.PrimaryContactId = itemContactPM.Id;
+                        entityPM.PrimaryContactPhone = itemContactPM.BusinessPhone;
+                        entityPM.PrimaryContactName = itemContactPM.EnglishName;
                     }
                 }
 

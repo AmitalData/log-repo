@@ -10,8 +10,8 @@ declare global {
     namespace Cypress {
         interface Chainable {
             FillDate(selector: string, value: string): Chainable<Element>
-            FillLogTextBox(selector: string, value: string): Chainable<Element>
-            FillLogLov(selector: string, value: string, fromCache: boolean): Chainable<Element>
+            FillLogTextBox(selector: string, value: string,ValidateInputDone? :boolean): Chainable<Element>
+            FillLogLov(selector: string, value: string, fromCache: boolean, getByFilters?: boolean): Chainable<Element>
             FillRandomString(selector: string, length: number, upperCase: boolean): Chainable<Element>
             FillRandomNumber(selector: string, minimum: number, maximum: number): Chainable<Element>
             Click(selector: string, contains: string, force?: boolean): Chainable<Element>
@@ -21,9 +21,27 @@ declare global {
             ValidateElementColor(selector: string, expectedcolor: string): Chainable<Element>
             SelectQuickSearchFirstElement(quickSearchDetails: QuickSearchDetails): Chainable<Element>
             BackButton(contains:string): Chainable<Element>
+            getAttached(selector: any): Chainable<Element>
+
         }
     }
 }
+
+/**
+ * getAttached(selector)
+ * getAttached(selectorFn)
+ *
+ * Waits until the selector finds an attached element, then yields it (wrapped).
+ * selectorFn, if provided, is passed $(document). Don't use cy methods inside selectorFn.
+ */
+Cypress.Commands.add("getAttached", selector => {
+    const getElement = typeof selector === "function" ? selector : $d => $d.find(selector);
+    let $el = null;
+    return cy.document().should($d => {
+      $el = getElement(Cypress.$($d));
+      expect(Cypress.dom.isDetached($el)).to.be.false;
+    }).then(() => cy.wrap($el));
+  });
 
 Cypress.Commands.add("BackButton", (contains) => {
     cy.Click(BaseSelectors.BackBottonBodyClass, contains);
@@ -41,16 +59,25 @@ Cypress.Commands.add("FillDate", (selector, value) => {
     }
 })
 
-Cypress.Commands.add("FillLogTextBox", (selector, value) => {
-    cy.get(selector).clear().type(value)//.should('have.value', value)
+Cypress.Commands.add("FillLogTextBox", (selector, value,ValidateInputDone = false) => {
+
+    if(ValidateInputDone){
+        cy.get(selector).clear().type(value)//.should('have.value', value)
+    }
+    else{
+        cy.get(selector).clear().type(value).should('have.value', value)
+    }
 
 })
 
 
-Cypress.Commands.add("FillLogLov", (selector, value, fromCache) => {
+Cypress.Commands.add("FillLogLov", (selector, value, fromCache, getByFilters = false) => {
 
     if (!fromCache) {
-        cy.intercept(BaseURLs.GetByCompactFilters).as("LOVDataLoaded")
+        cy.intercept({
+            method: RestAPI.GET,
+            url: getByFilters ? BaseURLs.GetByFilters : BaseURLs.GetByCompactFilters
+        }).as("LOVDataLoaded")
     }
 
     //cy.get(selector).clear().type(value)
@@ -74,11 +101,14 @@ Cypress.Commands.add("FillRandomNumber", (selector, minimum, maximum) => {
 })
 
 Cypress.Commands.add("Click", (selector, contains, force = false) => {
-    let element = cy.get(selector)//.should('exist')
+    //let element = //.should('exist')
+    cy.wait(1000);
     if (contains) {
-        element = element.contains(contains, { matchCase: false })
+        cy.getAttached(selector).contains(contains, { matchCase: false }).click({force:force})
     }
-    element.click({force:force})
+    else{
+        cy.getAttached(selector).click({force:force})
+    }
 })
 
 Cypress.Commands.add("Navigate", (selector, force = false) => {
