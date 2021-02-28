@@ -84,4 +84,5 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ValidationSummaryBlock = ".ValidationSummary table tr td";
     public static readonly DropDownListItem = ".DropDownListItem";
     public static readonly Value = ".Value";
+    public static readonly HeaderScreen = ".HeaderScreen";
 }

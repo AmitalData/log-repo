@@ -5,6 +5,7 @@ import { BaseSelectors } from '../../../Base/cypress/selectors/BaseSelectors';
 import { PayableDetails } from 'cypress/models/PayableDetails';
 import { ReceivableDetails } from 'cypress/models/ReceivableDetails';
 import * as BaseAssertion from '../../../Base/cypress/actions/Assertion';
+import * as GenerateRandoms from '../../../Base/cypress/actions/GenerateRandoms';
 import { PackagesDetails } from 'cypress/models/PackagesDetails';
 import { URLs } from '../constants/URLs';
 import { RestAPI } from '../../../Base/cypress/constants/RestAPI';
@@ -193,11 +194,12 @@ export function FillPartnersTab(direction: string, transportMode: string, partne
 //#region Package Tab
 export function FillPackageTab(transportMode: string, packagesDetails: PackagesDetails[], shipmentType?: string) {
     cy.Click(ShipmentSelectors.PackagesTab, null)
-
     for (let i = 0; i < packagesDetails.length; i++) {
+    packagesDetails[i].ContainerNumber = packagesDetails[i].ContainerNumber == 'Random' ? GetGeneratedRandomContainerNumber() : packagesDetails[i].ContainerNumber;
         cy.Click(ShipmentSelectors.AddPackage, null)
         if (Conditions.HasPacakageType(shipmentType)) {
             cy.FillLogLov(ShipmentSelectors.PackageType, packagesDetails[i].PackageType, true)
+            cy.FillLogTextBox(ShipmentSelectors.ContainerNumber, packagesDetails[i].ContainerNumber)
         }
         if (!Conditions.IsFCL(shipmentType) && !Conditions.IsFTL(shipmentType)) {
             cy.FillLogTextBox(ShipmentSelectors.PackageQuantity, packagesDetails[i].Quantity.toString())
@@ -270,6 +272,20 @@ export function EditMainCarriageLegs(Airline: string) {
     cy.Click(BaseSelectors.Button, "Today")
     cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
     //cy.Click(ShipmentSelectors.ShipmentSaveButton, null);
+}
+
+export function AddMainCarriageATDDateAndTime(date: string, time: string) {
+    cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null);
+    cy.FillDate(ShipmentSelectors.MainCarriageATDDate, date);
+    cy.FillLogTextBox(ShipmentSelectors.MainCarriageATDTime, time);
+    cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
+}
+
+export function AddMainCarriageATADateAndTime(date: string, time: string) {
+    cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null);
+    cy.FillDate(ShipmentSelectors.MainCarriageATADate, date);
+    cy.FillLogTextBox(ShipmentSelectors.MainCarriageATATime, time);
+    cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
 }
 
 export function FillDeliveryRouting(partner: string) {
@@ -367,6 +383,25 @@ export function SendDocs() {
 export function DeleteAttachment() {
     cy.DefineRequestWait(RestAPI.GET, URLs.DocumentsFilingExtended, "WaitDelete")
     cy.contains("Delete Attachment").click()
+}
+//#endregion
+
+//#region Containers
+export function NavigatesToAContainersWorkspace() {
+    cy.Click(BaseSelectors.OperationsMenu, null);
+    cy.Click(ShipmentSelectors.ContainersTab, null);
+}
+
+export function ContainersView(containerView: string) {
+    containerView = containerView.replace(/\s/g, "");
+    cy.get(ShipmentSelectors.ContainersView(containerView)).children().first().click();
+}
+
+function GetGeneratedRandomContainerNumber(): string{
+    var RandomString = GenerateRandoms.GenerateRandomString(4, true)
+    var RandomNumber = GenerateRandoms.GenerateRandomNumber(100000, 999999)
+    var CheckDigit = 
+    return RandomString + RandomNumber + CheckDigit;
 }
 //#endregion
 export function FillMainCarriage(airline: string) {

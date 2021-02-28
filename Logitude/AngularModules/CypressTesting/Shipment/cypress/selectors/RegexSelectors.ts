@@ -20,4 +20,8 @@ export class RegexSelectors {
     public static INTTRASettingsModeRadio(mode: string): string{
         return "#" + mode.charAt(0).toUpperCase() + mode.slice(1) + "_ModeRadio";
     }
+
+    public static ContainersView(containerView: string): string{
+        return "p[data-cy^=Containers" + containerView + "View]";
+    }
 }
