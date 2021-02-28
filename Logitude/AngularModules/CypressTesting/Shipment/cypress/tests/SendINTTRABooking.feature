@@ -42,8 +42,8 @@ Feature: Send INTTRA E-Booking
 
     Scenario: Fill required information to send INTTRA e-booking
         Given the user fill the following information to send e-booking
-            | BranchName  | ShippingLine | ContractNumber | DescriptionOfGoods | ETDDate | ETDTime | Vessel | ShipperContact      |
-            | Main Office | MSCU         | 53454          | Send booking test  | Today   | 14:00   | PT     | TestShipperContact3 |
+            | BranchName  | ShippingLine | ContractNumber | DescriptionOfGoods | ETDDate | ETDTime | Vessel | ShipperContact     |
+            | Main Office | MSCU         | 53454          | Send booking test  | Today   | 14:00   | PT     | TestShipperContact |
         And add the following package
             | PackageType | GrossWeight |
             | 40GP        | 200         |

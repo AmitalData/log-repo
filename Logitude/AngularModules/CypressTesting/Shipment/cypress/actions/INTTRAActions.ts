@@ -12,10 +12,6 @@ import { RequestAliases } from '../../../Base/cypress/constants/RequestAliases';
 import { BaseURLs } from '../../../Base/cypress/constants/URLs';
 
 
-export function LoginAsCustomerCare() {
-    cy.Login(true);
-}
-
 export function NavigateToMaintenanceMenu() {
     cy.Click(BaseSelectors.MaintenanceMenu, null);
 }
@@ -71,12 +67,8 @@ export function FillINTTRARegistrationSettings(registrationSettingsDetailsList: 
                     .contains(registrationSettingsDetailsList[i].RegistrationCode)
                     .parents(BaseSelectors.SimpleGridViewRow)
                     .within(() => {
-                        let checkBoxLabelIndex = index - 2;
-                        cy.get(BaseSelectors.CheckBoxLabel).eq(checkBoxLabelIndex).then($label => {
-                            if ($label.css("background").indexOf("CheckBoxIcon.png") === -1) {
-                                cy.get(BaseSelectors.CheckBoxLabel).eq(checkBoxLabelIndex).click();
-                            }
-                        });
+                        let checkBoxIndex = index - 2;
+                        cy.get(BaseSelectors.CheckboxInput).eq(checkBoxIndex).check({ force: true });
                     });
             });
     }
