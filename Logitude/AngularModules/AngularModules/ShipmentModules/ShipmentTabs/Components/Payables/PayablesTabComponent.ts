@@ -2454,7 +2454,7 @@ export class ShipmentPayableItem extends BaseComponent {
             }
         }
     }
-    ComputeTotalAmount() {
+    public ComputeTotalAmount() {
 
         var iAmount: number = null;
 

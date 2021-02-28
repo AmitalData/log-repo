@@ -13,7 +13,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             // Properties
             this.Property(t => t.Prefix)
-                .HasMaxLength(10)
+                .HasMaxLength(15)
                 .IsUnicode(false);
 
             this.Property(t => t.CounterId)

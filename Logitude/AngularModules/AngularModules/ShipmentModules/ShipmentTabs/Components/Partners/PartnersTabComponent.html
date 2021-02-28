@@ -111,7 +111,7 @@
                         </td>
 
                         <td style="width: 100px" *ngIf="ShowAddPartners">
-                            <div tabindex="0" class="ToggleButton" [class.ToggleButtonDisabled]="!IsEditingEnabled">
+                            <div tabindex="0" id="{{ 'PartnerToggle' | IdGeneratorPipe}}" class="ToggleButton" [class.ToggleButtonDisabled]="!IsEditingEnabled">
                                 <label>{{'Shipment.B.Partners.AddPartners' | TextCodeTranslationPipe}}</label>
                                 <img src="./Images/ToggleIcon.png" />
                                 <div class="ToggleButtonMenu" style="width: 200px">

@@ -1,6 +1,8 @@
 export class RequestAliases {
     public static readonly PartnersDomainRequest = 'PartnersDomainRequest';
     public static readonly ShipmentRequest = 'ShipmentRequest';
+    public static readonly SplitShipmentRequest = 'SplitShipmentRequest';
+    public static readonly GetTraceEvent = 'GetTraceEvent';
     public static readonly CardViewsRequest = 'CardViewsRequest';
     public static readonly AddressViewsRequest = 'AddressViewsRequest';
     public static readonly APInvoicesRequest = 'APInvoicesRequest';
@@ -17,6 +19,9 @@ export class RequestAliases {
     public static readonly ConsilidationInvoiceDomain = "ConsilidationInvoiceDomain"
     public static readonly Quotes = 'Quotes';
     public static readonly QuickSearchDataLoaded = 'QuickSearchDataLoaded';
+    public static readonly ShipmentviewsGetbyfilters = 'ShipmentviewsGetbyfilters';
+
+    public static readonly GetAll = 'GetAll';
     public static readonly EntityResourceAccountingPeriod="EntityResource"
     // Tariff
     public static readonly PostTariff = 'PostTariff';
@@ -42,6 +47,14 @@ export class RequestAliases {
     public static readonly WailAllLoad = "WailAllLoad";
    
 
-    
+    public static readonly WaitLoadShipmentMenuButtons = "WaitLoadShipmentMenuButtons";
 
+    //INTTRA
+    public static readonly SaveFTPDetails = "SaveFTPDetails";
+    public static readonly GetINTTRASettings = "GetINTTRASettings";
+    public static readonly PutINTTRASettings = "PutINTTRASettings";
+    public static readonly GetBookingMessageResultValidate = "GetBookingMessageResultValidate";
+    public static readonly ContactLogLovLoad = "ContactLogLovLoad";
+    public static readonly PostContact = "PostContact";
+    public static readonly INTTRAWebServiceSendEBooking = "INTTRAWebServiceSendEBooking";
 }

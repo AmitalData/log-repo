@@ -5,5 +5,6 @@ export interface PackagesDetails{
     Height:number,
     Volume: number,
     GrossWeight:number,
-    PackageType:string
+    PackageType:string,
+    PackageNumber:string,
 }

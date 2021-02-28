@@ -3,10 +3,13 @@ import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
+import { ShipmentSelectors } from "cypress/selectors/Selectors";
 
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
+let EventNote ; 
 
+//#region  Create Direct Shipment
 Given("the user logged in and navigates to shipments workspace", () => {
   cy.Login()
   Actions.NavigatesToShipmentsWorkspace()
@@ -28,15 +31,33 @@ Then("the direct should create successfully", () => {
     shipmentNumber = interception.response.body.ShipmentNumber;
   });
 });
+//#endregion
 
 Given("the user open the shipment", () => {
   Actions.OpenShipment(shipmentNumber);
 });
 
-When("cancel the shipment", () => {
-  Actions.CancelShipment();
+When("cancel the shipment with {string} Note", (note) => {
+  EventNote = note
+  Actions.CancelShipment(note);
 });
 
 Then("the shipment should cancel successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+  Actions.ValidateCancelIconExist(true);
+  Actions.ValidateShipmentEventActions(ShipmentSelectors.Events,EventNote);
+  Actions.ValidateShipmentFields(true);
 }); 
+
+When("reactive the shipment with {string} Note",(note)=>{
+  EventNote = note
+  Actions.ReactiveShipment(note);
+})
+
+Then("the shipment should reactive successfully",()=>{
+  BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+  Actions.ValidateCancelIconExist(false);
+  Actions.ValidateShipmentEventActions(ShipmentSelectors.Events,EventNote);
+  Actions.ValidateShipmentFields(false);
+
+})

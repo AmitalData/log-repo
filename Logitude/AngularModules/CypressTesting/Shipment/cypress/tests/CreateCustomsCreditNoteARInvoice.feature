@@ -1,5 +1,4 @@
-@smoke @release @all@tests
-
+@release @all
 Feature: Create customs credit note ARInvoice
     After the user logging in the system and Update Accounting System to be None,Activate Customs Management in Shipments,
     navigates to shipments workspace

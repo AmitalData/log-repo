@@ -31,6 +31,5 @@ export class TicketSelectors extends RegexSelectors
 	public static readonly ContainsSaveAsClosed = "Save as Closed"
 	public static readonly ContainsSaveAsResolved = "Save as Resolved"
 	public static readonly ContainsSendAndSetAsOpen = "Send and set as Open"
-	public static readonly ContainsCreateActivityTest = "Create Activity Test"
 	//#endregion
 }

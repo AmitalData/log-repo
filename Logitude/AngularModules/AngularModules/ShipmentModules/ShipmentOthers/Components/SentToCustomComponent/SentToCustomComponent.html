@@ -368,7 +368,7 @@
                                                                     <td>
                                                                         <table>
                                                                             <tr>
-                                                                                <td style="width: 120px;" [ngStyle]="{color: LocalCustomsTransmissionsStatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
+                                                                                <td attr.data-cy="{{'CustomsTransmissionsStatusValue' | IdGeneratorPipe}}" style="width: 120px;" [ngStyle]="{color: LocalCustomsTransmissionsStatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
                                                                                     {{LocalCustomsTransmissionsStatusName}}
                                                                                 </td>
 
@@ -391,7 +391,7 @@
                                                                         <LogLabel [ObjectFieldName]="'LastSendDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                     </td>
 
-                                                                    <td style="text-align: left;">{{LocalCustomsTransmissionsStatusDate | DateTimePipe: 'SHWH'}}</td>
+                                                                    <td attr.data-cy="{{'CustomsTransmissionsStatusDate' | IdGeneratorPipe}}" style="text-align: left;">{{LocalCustomsTransmissionsStatusDate | DateTimePipe: 'SHWH'}}</td>
                                                                 </tr>
 
                                                                 <tr class="StatRow">
@@ -403,14 +403,14 @@
                                                                         <LogLabel [Text]="'By'" [DataContext]="DataContext"></LogLabel>
                                                                     </td>
 
-                                                                    <td>{{LocalCustomsTransmissionsByUserName}}</td>
+                                                                    <td attr.data-cy="{{'CustomsTransmissionsUserName' | IdGeneratorPipe}}" >{{LocalCustomsTransmissionsByUserName}}</td>
                                                                 </tr>
                                                             </table>
                                                         </td>
 
                                                         <td style="width: 57px;">
                                                             <button *ngIf="!IsRetransferAMANACVisible" class="Button" [disabled]="IsAMANACDisabled" (click)="SendButtonClicked('AMC')">Send</button>
-                                                            <button *ngIf="IsRetransferAMANACVisible" class="Button" (click)="RetransferAMANACClicked()">Re-transfer</button>
+                                                            <button attr.data-cy="{{'CustomsTransmissionsRetransfer' | IdGeneratorPipe}}" *ngIf="IsRetransferAMANACVisible" class="Button" (click)="RetransferAMANACClicked()">Re-transfer</button>
                                                         </td>
 
                                                         <td style="width: 30px;">
@@ -456,7 +456,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
+                        <button attr.data-cy="{{'CloseCustomsTransmissions' | IdGeneratorPipe}}" class="Button" (click)="CloseButtonClicked()">Close</button>
                     </td>
                 </tr>
             </table>

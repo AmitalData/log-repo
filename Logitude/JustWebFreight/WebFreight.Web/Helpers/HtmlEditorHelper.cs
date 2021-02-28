@@ -868,15 +868,15 @@ namespace WebFreight.Web.Helpers
                 {
                     htmlEditorResolveResult = ResolveHtmlData(htmlEditorResolveArgs, null);
                 }
-                else htmlEditorResolveResult.HtmlString = htmlEditorResolveArgs.HtmlString;
+                else htmlEditorResolveResult = MapHtmlEditorArgsToResult(htmlEditorResolveArgs);
             }
 
 
             return htmlEditorResolveResult;
         }
-        
-        
-        
+
+
+
         private bool CheckIfTemplateHaveDataVariable(HtmlEditorResolveArgs htmlEditorResolveArgs )
         {
             bool result = false;
@@ -920,7 +920,7 @@ namespace WebFreight.Web.Helpers
         }
         public HtmlEditorResolveResult ResolveHtmlData(HtmlEditorResolveArgs htmlEditorResolveArgs ,object customEntity )
         {
-            string htmlString = htmlEditorResolveArgs.HtmlString; 
+            string htmlString = htmlEditorResolveArgs.HtmlString;
             string to = htmlEditorResolveArgs.To;
             string from = htmlEditorResolveArgs.From;
             string replyTo = htmlEditorResolveArgs.ReplyTo;
@@ -928,7 +928,7 @@ namespace WebFreight.Web.Helpers
             string bcc = htmlEditorResolveArgs.Bcc;
             string subject = htmlEditorResolveArgs.Subject;
 
-            
+
 
 
 
@@ -1147,7 +1147,7 @@ namespace WebFreight.Web.Helpers
             bcc = ResolveVariableField(bcc, resolveVariableFieldArgs);
             to = ResolveVariableField(to, resolveVariableFieldArgs);
 
-            
+
 
             if (signatureNodeList.Count() != 0)
             {
@@ -1371,7 +1371,7 @@ namespace WebFreight.Web.Helpers
                     if (securityKeyNode.ParentNode != null)
                     {
                         HtmlNode newLogoSection = GetNewNodeHtml(GetSharedDocumentLinkHtml(securityKey, htmlEditorResolveArgs.EntityId, securityKeyNode.OuterHtml, tenant, HideSharedlogistics, SystemUrl));
-                        
+
                         foreach (HtmlNode childNode in newLogoSection.ChildNodes)
                         {
                             if (securityKeyNode.ParentNode != null && securityKeyNode.ParentNode.ParentNode != null)
@@ -1403,7 +1403,7 @@ namespace WebFreight.Web.Helpers
 
             return new HtmlEditorResolveResult()
             {
-                HtmlString = result, 
+                HtmlString = result,
                 Subject = subject,
                 From = from,
                 To= to,
@@ -1411,6 +1411,21 @@ namespace WebFreight.Web.Helpers
                 Bcc = bcc,
                 ReplyTo = replyTo
             };
+        }
+
+        private HtmlEditorResolveResult MapHtmlEditorArgsToResult(HtmlEditorResolveArgs htmlEditorResolveArgs)
+        {
+            HtmlEditorResolveResult htmlEditorResolveResult = new HtmlEditorResolveResult{
+                HtmlString = htmlEditorResolveArgs.HtmlString,
+                To = htmlEditorResolveArgs.To,
+                Cc = htmlEditorResolveArgs.Cc,
+                Bcc = htmlEditorResolveArgs.Bcc,
+                From = htmlEditorResolveArgs.From,
+                ReplyTo = htmlEditorResolveArgs.ReplyTo,
+                Subject = htmlEditorResolveArgs.Subject
+            };
+
+            return htmlEditorResolveResult;
         }
 
         private string ResolveVariableField( string fieldVaue, ResolveVariableFieldArgs resolveVariableFieldArgs)
@@ -5433,35 +5448,25 @@ namespace WebFreight.Web.Helpers
                 PropertyInfo propertyPathPi = theEntity.GetType().GetProperty(fields[0].Trim());
                 if (propertyPathPi != null)
                 {
-                    value = " ";
-                    object datetimevalue = propertyPathPi.GetValue(theEntity, null);
-                    if (datetimevalue != null)
+                    object objectFieldValue = objectField.IsCustom ? GetCustomFieldValue(objectField, theEntity, tenant) : propertyPathPi.GetValue(theEntity, null);
+                    DateTime? dateTimeValue = (objectFieldValue!=null && !string.IsNullOrEmpty(objectFieldValue.ToString())) ? dateTimeValue = DateTime.Parse(objectFieldValue.ToString()) : null ;
+                    string resultValue = " ";
+                  
+                    if (dateTimeValue != null)
                     {
-                        DateTime? datetime = datetimevalue as DateTime?;
-                        if (datetime != null)
+                        if (fields[1].Trim().ToLower() == "date")
                         {
-                            string resultValue = " ";
-                            if (fields[1].Trim().ToLower() == "date")
-                            {
-                                resultValue = datetime.Value.ToShortDateString();
-                            }
-                            else
-                            {
-                                resultValue = datetime.Value.ToShortTimeString();
-                            }
-
-                            node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", resultValue);
-                            nodeTextValue = resultValue;
-                            value = resultValue;
+                            resultValue = dateTimeValue.Value.ToShortDateString();
+                        }
+                        else
+                        {
+                            resultValue = dateTimeValue.Value.ToShortTimeString();
                         }
                     }
-                    else
-                    {
-                        node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", " ");
-                        nodeTextValue = " ";
-                        value = " ";
-                    }
 
+                    node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", resultValue);
+                    nodeTextValue = resultValue;
+                    value = resultValue;
                 }
             }
 
@@ -5573,8 +5578,12 @@ namespace WebFreight.Web.Helpers
             return value;
         }
 
-
-
+        private object GetCustomFieldValue(ObjectField objectField, object entity, int tenant)
+        {
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            object customFieldValue = customFieldResolver.GetFieldValue(entity, objectField, tenant);
+            return customFieldValue;
+        }
 
         private HtmlNode GetNewTableHtml(HtmlNode oldRow, HtmlNode oldTable, IList multidataList, List<ObjectField> multiEntityObjectFields, object theEntity, List<ObjectField> theEntityObjectFields, GeneralDomainService theGeneralService, int tenant, SystemDataPM systemEntity, List<ObjectField> systemEntityObjectFields, ObjectField multiObjectField)
         {

@@ -18,6 +18,8 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
     //public EntityArgs: EntityArgs;
     public ObjectTableId: string;
     public ObjectTableName: string;
+    public ChildObjectTableId: string;
+    public ChildObjectTableName: string;
     public ScreenCode: string;
     public ScreenColumns: ScreenColumn[];
     public LabelWidth: number = 160;
@@ -34,13 +36,15 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
         this.IsCustomerCareOrDistributor = SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.LoggedUserPM.IsDistributor;
     }
 
-    public Run(entityPM: any, objectTableName: string, screenCode: string, isNewEntityCall: boolean = false, showTitle: boolean = false) {
+    public Run(entityPM: any, objectTableName: string, screenCode: string, isNewEntityCall: boolean = false, showTitle: boolean = false, childObjectTableName: string = null) {
         this.EntityPM = entityPM;
         this.ScreenCode = screenCode ? screenCode.replace("Customs.", "") : screenCode;
         this.ObjectTableName = objectTableName;
         this.ObjectTableId = window.ObjectTables.filter((x: any) => x.Name === this.ObjectTableName)[0].Id;
         this.IsNewEntityCall = isNewEntityCall;
         this.ShowTitle = showTitle;
+        this.ChildObjectTableName = childObjectTableName;
+        this.ChildObjectTableId = window.ObjectTables.filter((x: any) => x.Name === this.ChildObjectTableName)[0].Id;
         this.BuildScreen();
         this.Listen();
     }
@@ -83,7 +87,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
             if (this.isViewEnited == true) {
 
                 var myScreenColumns: ScreenColumn[] = [];
-                var myScreen = window.Screens.filter((x: any) => x.ObjectTableId === this.ObjectTableId && x.Code.toLowerCase() == this.ScreenCode.toLowerCase())[0];
+                var myScreen = window.Screens.filter((x: any) => x.ObjectTableId === (!AppTool.IsNullOrEmpty(this.ChildObjectTableId) ? this.ChildObjectTableId : this.ObjectTableId) && x.Code.toLowerCase() == this.ScreenCode.toLowerCase())[0];
                 
                 if (myScreen != null) {
 
@@ -99,6 +103,8 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
 
                     else {
                         var myObjectFields = window.ObjectFields.filter((x: any) => x.ObjectTableId === this.ObjectTableId);
+                        if (!AppTool.IsNullOrEmpty(this.ChildObjectTableId))
+                            myObjectFields = myObjectFields.concat(window.ObjectFields.filter((x: any) => x.ObjectTableId === this.ChildObjectTableId));
 
                         for (var c = 0; c < myScreen.NumberOfColumns; c++) {
                             var myScreenColumn = new ScreenColumn(c);

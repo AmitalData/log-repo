@@ -269,14 +269,17 @@ namespace Logitude.DBMigrations.Models
             generatedScript = AddToGeneratedScript(generatedScript, dxmlGeneratedScript.GeneratedScript);
             generatedScript = AddToGeneratedScript(generatedScript, dxmlGeneratedScript.RelationsScript);
 
-            GeneratedScript generatedScriptFromDXMLViews = GenerateScriptsFromDXMLViews(dxmlViews);
-            generatedScript = AddToGeneratedScript(generatedScript, generatedScriptFromDXMLViews);
+            if (!ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME))
+            {
+                GeneratedScript generatedScriptFromDXMLViews = GenerateScriptsFromDXMLViews(dxmlViews);
+                generatedScript = AddToGeneratedScript(generatedScript, generatedScriptFromDXMLViews);
 
-            GeneratedScript generatedScriptFromDXMLProcedures = GenerateScriptsFromDXMLProcedures(dxmlProcedures);
-            generatedScript = AddToGeneratedScript(generatedScript, generatedScriptFromDXMLProcedures);
+                GeneratedScript generatedScriptFromDXMLProcedures = GenerateScriptsFromDXMLProcedures(dxmlProcedures);
+                generatedScript = AddToGeneratedScript(generatedScript, generatedScriptFromDXMLProcedures);
 
-            GeneratedScript generatedScriptFromDXMLTriggers = GenerateScriptsFromDXMLTriggers(dxmlTriggers);
-            generatedScript = AddToGeneratedScript(generatedScript, generatedScriptFromDXMLTriggers);
+                GeneratedScript generatedScriptFromDXMLTriggers = GenerateScriptsFromDXMLTriggers(dxmlTriggers);
+                generatedScript = AddToGeneratedScript(generatedScript, generatedScriptFromDXMLTriggers);
+            }
 
             return generatedScript;
         }
@@ -1417,7 +1420,7 @@ namespace Logitude.DBMigrations.Models
                 if (aotScripts.Any() && !ToolArguments.IsArgumentProvided(Arguments.DEV))
                 {
                     string scriptsSxmlNames = string.Join("\n", aotScripts.Select(s => s.SxmlFileName).ToArray());
-                    ExitTool("Error: There Is Some Not Executed Scripts That Defined As AOT And You Need To Run The Tool With -Dev Argument, The Scripts Are:\n" + scriptsSxmlNames);
+                    ExitTool("Error: There Is Some Not Executed Scripts That Defined As AOT. You Need To Run The Tool With -Dev Argument. The Scripts Are:\n" + scriptsSxmlNames);
                 }
             }
         }
@@ -2138,7 +2141,7 @@ namespace Logitude.DBMigrations.Models
 
             if (databaseType.ToLower() == "oracle" && (ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME) || ToolArguments.IsArgumentProvided(Arguments.DEV)))
             {
-                ExitTool("Error: Zero Down Time Mode For Oracle Not Ready To Use");
+                ExitTool("Error: Zero Down Time Mode Not Supported For Oracle");
             }
         }
 
