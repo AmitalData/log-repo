@@ -78,6 +78,7 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
 						 dbo.Shipments.ConsolidatorId,dbo.Shipments.ConsolidatorAddressId,dbo.Shipments.ConsolidatorContactId,dbo.Shipments.ConsolidatorReference,
              dbo.Shipments.ShipmentSubTypeId,
 						 dbo.Shipments.ARInvoices,
+             dbo.Shipments.EmergencyContactId,
 						 dbo.Shipments.NotInvoicedReceivablesAmount,
 						 dbo.Shipments.ReleasingAgentId,
 						 dbo.Shipments.ContainerLastStatusDate,
