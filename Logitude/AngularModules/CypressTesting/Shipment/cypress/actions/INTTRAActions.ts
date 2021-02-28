@@ -41,36 +41,19 @@ export function FillINTTRAInOutSettings(inOutSettingsDetails: InOutSettingsDetai
 
 export function FillINTTRABranchesSettings(branchSettingsDetailsList: BranchSettingsDetails[]) {
     for (let i = 0; i < branchSettingsDetailsList.length; i++) {
-        cy.contains(ShipmentSelectors.ContainsBranchesSettings)
-            .parents(BaseSelectors.table)
-            .find(BaseSelectors.SimpleGridViewRow)
-            .contains(branchSettingsDetailsList[i].BranchName)
-            .parents(BaseSelectors.SimpleGridViewRow)
-            .within(() => {
-                cy.FillLogTextBox(ShipmentSelectors.BranchINTTRAId, branchSettingsDetailsList[i].INTTRAID);
-                cy.FillLogTextBox(ShipmentSelectors.BranchINTTRAAlias, branchSettingsDetailsList[i].PartyAlias);
-                cy.FillLogLov(ShipmentSelectors.BranchINTTRAContact, branchSettingsDetailsList[i].Contact, false, true);
-            });
+        let branchName = branchSettingsDetailsList[i].BranchName
+        FillBranchINTTRAId(branchName, branchSettingsDetailsList[i].INTTRAID);
+        FillBranchINTTRAAlias(branchName, branchSettingsDetailsList[i].PartyAlias);
+        FillBranchINTTRAContact(branchName, branchSettingsDetailsList[i].Contact);
     }
 }
 
 export function FillINTTRARegistrationSettings(registrationSettingsDetailsList: RegistrationSettingsDetails[]) {
     for (let i = 0; i < registrationSettingsDetailsList.length; i++) {
-        cy.contains(ShipmentSelectors.ContainsRegistration)
-            .parents(BaseSelectors.table)
-            .find(BaseSelectors.SimpleGridViewHeaderDark)
-            .contains(BaseSelectors.td, registrationSettingsDetailsList[i].BranchName)
-            .invoke("index").then((index) => {
-                cy.contains(ShipmentSelectors.ContainsRegistration)
-                    .parents(BaseSelectors.table)
-                    .find(BaseSelectors.SimpleGridViewRow)
-                    .contains(registrationSettingsDetailsList[i].RegistrationCode)
-                    .parents(BaseSelectors.SimpleGridViewRow)
-                    .within(() => {
-                        let checkBoxIndex = index - 2;
-                        cy.get(BaseSelectors.CheckboxInput).eq(checkBoxIndex).check({ force: true });
-                    });
-            });
+        let branchName = registrationSettingsDetailsList[i].BranchName;
+        let registrationCode = registrationSettingsDetailsList[i].RegistrationCode;
+        let registrationCheckBoxSelector = ShipmentSelectors.INTTRARegistrationCheckBox(branchName, registrationCode);
+        cy.get(registrationCheckBoxSelector).check({ force: true });
     }
 }
 
@@ -118,11 +101,7 @@ export function ValidateSendBookingRequest() {
 }
 
 export function ValidateBookingRequestStatus(status: string) {
-    cy.get(BaseSelectors.Label)
-        .contains(ShipmentSelectors.ContainsStatus)
-        .parent()
-        .find(BaseSelectors.Value)
-        .should("have.text", status);
+    cy.get(ShipmentSelectors.INTTRABookingStatus).should("have.text", status);
 }
 
 function FillINTTRAMode(mode: string) {
@@ -168,21 +147,15 @@ function FillFTPDetailFolder(folder: string) {
 }
 
 function OpenFTPDetailWizard(settingsType: string) {
-    cy.get(BaseSelectors.Label)
-        .contains(settingsType === "Out" ? ShipmentSelectors.ContainsOutSettings : ShipmentSelectors.ContainsInSettings)
-        .parents(BaseSelectors.FormFieldRow)
-        .find(BaseSelectors.StartsWithEditButton)
-        .then($btn => {
-            let isEditButtonDisabled = $btn.is(":disabled");
-            let requestType: string = isEditButtonDisabled ? RestAPI.POST : RestAPI.PUT;
-            let openFTPDetailWizardSelector: string = isEditButtonDisabled ? BaseSelectors.StartsWithAddButton : BaseSelectors.StartsWithEditButton;
-
+    let addButtonSelector = ShipmentSelectors.InOutSettingsHostAddButton(settingsType);
+    let editButtonSelector = ShipmentSelectors.InOutSettingsHostEditButton(settingsType);
+    cy.get(editButtonSelector)
+        .then($editButton => {
+            let isEditButtonDisabled = $editButton.is(":disabled");
+            let requestType = isEditButtonDisabled ? RestAPI.POST : RestAPI.PUT;
+            let openFTPDetailWizardSelector = isEditButtonDisabled ? addButtonSelector : editButtonSelector;
             cy.DefineRequestWait(requestType, URLs.FTPDetails, RequestAliases.SaveFTPDetails);
-            cy.get(BaseSelectors.Label)
-                .contains(settingsType === "Out" ? ShipmentSelectors.ContainsOutSettings : ShipmentSelectors.ContainsInSettings)
-                .parents(BaseSelectors.FormFieldRow)
-                .find(openFTPDetailWizardSelector)
-                .click();
+            cy.Click(openFTPDetailWizardSelector, null);
         });
 }
 
@@ -209,17 +182,13 @@ function FillRequiredToSendBookingInOrdersTab(requiredToSendBookingDetails: Requ
 function FillRequiredToSendBookingInPartnersTab(requiredToSendBookingDetails: RequiredToSendBookingDetails) {
     cy.Click(ShipmentSelectors.PartnersTab, null);
     cy.Click(ShipmentSelectors.EditShipper, null);
-    if (requiredToSendBookingDetails.ShipperContact) {
+    let shipperContact = requiredToSendBookingDetails.ShipperContact;
+    if (shipperContact) {
         cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetByFilters, RequestAliases.ContactLogLovLoad);
-        cy.get(ShipmentSelectors.ShipmentShipperContact).type(requiredToSendBookingDetails.ShipperContact);
+        cy.get(ShipmentSelectors.ShipmentShipperContact).type(shipperContact);
         BaseAssertion.AssertStatusCode(RequestAliases.ContactLogLovLoad, 200).then(interception => {
-            if (interception.response.body.Result.filter(c => c.EnglishName === requiredToSendBookingDetails.ShipperContact).length === 0) {
-                cy.get(ShipmentSelectors.AddEditPartnerComponent).find(BaseSelectors.StartsWithAddButton).eq(2).click();
-                cy.FillLogTextBox(ShipmentSelectors.ContactEmail, requiredToSendBookingDetails.ShipperContact + "@test.com")
-                cy.FillLogTextBox(ShipmentSelectors.ContactEnglishName, requiredToSendBookingDetails.ShipperContact);
-                cy.DefineRequestWait(RestAPI.POST, BaseURLs.Contacts, RequestAliases.PostContact);
-                cy.Click(BaseSelectors.RedButton + ":last", null);
-                BaseAssertion.AssertStatusCode(RequestAliases.PostContact, 200);
+            if (interception.response.body.Result.filter(c => c.EnglishName === shipperContact).length === 0) {
+                AddNewShipperContact(shipperContact);
             } else {
                 cy.get(BaseSelectors.DropDownListItem).children().eq(0).click();
             }
@@ -228,15 +197,49 @@ function FillRequiredToSendBookingInPartnersTab(requiredToSendBookingDetails: Re
     cy.Click(ShipmentSelectors.PartnerOKButton, null);
 }
 
+function AddNewShipperContact(shipperContact: string) {
+    if(shipperContact){
+        cy.Click(ShipmentSelectors.AddShipperContactButton, null);
+        cy.FillLogTextBox(ShipmentSelectors.ContactEmail, shipperContact + "@test.com")
+        cy.FillLogTextBox(ShipmentSelectors.ContactEnglishName, shipperContact);
+        cy.DefineRequestWait(RestAPI.POST, BaseURLs.Contacts, RequestAliases.PostContact);
+        cy.Click(ShipmentSelectors.SaveShipperContactButton, null);
+        BaseAssertion.AssertStatusCode(RequestAliases.PostContact, 200);
+    }
+}
+
 function FillRequiredToSendBookingInRoutingsTab(requiredToSendBookingDetails: RequiredToSendBookingDetails) {
     cy.Click(ShipmentSelectors.RoutingsTab, null);
     cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null);
-    if (requiredToSendBookingDetails.ETDDate && requiredToSendBookingDetails.ETDTime) {
-        cy.FillDate(ShipmentSelectors.ShipmentMainCarriageETDDate, requiredToSendBookingDetails.ETDDate);
-        cy.FillLogTextBox(ShipmentSelectors.ShipmentMainCarriageETDTime, requiredToSendBookingDetails.ETDTime);
+    let ETDDate = requiredToSendBookingDetails.ETDDate;
+    let ETDTime = requiredToSendBookingDetails.ETDTime;
+    let vessel = requiredToSendBookingDetails.Vessel;
+    if (ETDDate) {
+        cy.FillDate(ShipmentSelectors.ShipmentMainCarriageETDDate, ETDDate);
     }
-    if (requiredToSendBookingDetails.Vessel) {
-        cy.FillLogTextBox(ShipmentSelectors.ShipmentMainCarriageVessel, requiredToSendBookingDetails.Vessel);
+    if(ETDTime){
+        cy.FillLogTextBox(ShipmentSelectors.ShipmentMainCarriageETDTime, ETDTime);
+    }
+    if (vessel) {
+        cy.FillLogTextBox(ShipmentSelectors.ShipmentMainCarriageVessel, vessel);
     }
     cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
+}
+
+function FillBranchINTTRAId(branchName: string, INTTRAId: string) {
+    if (branchName && INTTRAId) {
+        cy.FillLogTextBox(ShipmentSelectors.BranchINTTRAId(branchName), INTTRAId);
+    }
+}
+
+function FillBranchINTTRAAlias(branchName: string, INTTRAAlias: string) {
+    if (branchName && INTTRAAlias) {
+        cy.FillLogTextBox(ShipmentSelectors.BranchINTTRAAlias(branchName), INTTRAAlias);
+    }
+}
+
+function FillBranchINTTRAContact(branchName: string, INTTRAContact: string) {
+    if (branchName && INTTRAContact) {
+        cy.FillLogLov(ShipmentSelectors.BranchINTTRAContact(branchName), INTTRAContact, false, true);
+    }
 }
