@@ -145,6 +145,8 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly AddReceivableOkButton = '#Ok-AddReceivableBtn';
   public static readonly ShipmentReceivableRate = '#ShipmentReceivable_Rate'
   public static readonly ReceivableFromPayables="#PAYB-Receivable"
+  public static readonly LogLovShipmentReceivableChargesTypeId="#LogLov_ShipmentReceivable_ChargesTypeId"
+  public static readonly LogLovShipmentReceivableCurrencyId="#LogLov_ShipmentReceivable_CurrencyId"
   //#endregion 
   //#region Payable tab fields
   public static readonly AddNewPayableLine = '#AddPayable button';

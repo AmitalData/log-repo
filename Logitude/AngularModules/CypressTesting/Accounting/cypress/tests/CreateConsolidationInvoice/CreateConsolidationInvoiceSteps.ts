@@ -14,22 +14,36 @@ import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors'
 import { ARInvoiceDetails } from '../../models/ARInvoiceDetails';
 import { AccountingSelectors } from "../../selectors/Selectors";
 import { ARPaymentDetails } from '../../models/ARPaymentDetails';
-import {ReceivableDetails}from"../../../../Shipment/cypress/models/ReceivableDetails"
+import { ReceivableDetails } from "../../../../Shipment/cypress/models/ReceivableDetails"
 import { AccountingURLs } from '../../constants/URLs';
 import { RestAPI } from '../../../../Base/cypress/constants/RestAPI';
 //#region variables
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
 let consolidationInvoiceNumber: string;
-let draftConsolidationInvoiceNumber:string
+let draftConsolidationInvoiceNumber: string
 let customerCode: string;
 let PayableData: PayableDetails
-let AccountingSystem:string;
+let AccountingSystem: string;
 //#endregion
-
-//#region Create customer
-Given("the user logged in and navigates to customers workspace", () => {
+//#region Update Accounting System
+Given("the user logged in", () => {
   cy.Login();
+});
+Given("accounting System as {string}", (accountingSystem) => {
+  AccountingSystem = accountingSystem;
+});
+
+When("change the accounting system", () => {
+  AccountingActions.changeAccountingsSystem(AccountingSystem)
+});
+
+Then("the accounting system should update successfully", () => {
+  BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
+});
+//#endregion
+//#region Create customer
+Given("the user navigates to customers workspace", () => {
   CommonActions.NavigatesToCustomersWorkspace();
 });
 
@@ -63,19 +77,6 @@ When("activate consolidated invoice option", () => {
 Then("the customer should update successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.Customers, 200)
   cy.Click(BaseSelectors.Backbutton, null, false);
-});
-//#endregion
-//#region Update Accounting System
-Given("accounting System as {string}", (accountingSystem) => {
-  AccountingSystem=accountingSystem;
-});
-
-When("change the accounting system", () => {
-  AccountingActions.changeAccountingsSystem(AccountingSystem)
-});
-
-Then("the accounting system should update successfully", () => {
-  BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
 });
 //#endregion
 //#region Create direct export air shipment
@@ -139,7 +140,7 @@ Then("the payables should add successfully", () => {
 
 //#region generate receivables from payables
 When("generate receivables from payables", () => {
-  ShipmentActions.GenerateReceivablesFromPayables(true)
+  ShipmentActions.GenerateReceivablesFromPayables()
 });
 
 Then("the receivables should generate successfully", () => {
@@ -181,18 +182,19 @@ Then("the consolidation invoice should create successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200).then((interception) => {
     draftConsolidationInvoiceNumber = interception.response.body.DraftNumber;
     cy.log(draftConsolidationInvoiceNumber)
-  })});
+  })
+});
 //#endregion
 //#region back to Accounting workspace
 Given("the user back to Accounting workspace", () => {
   cy.BackButton(BaseSelectors.ContainsAccounting)
 });
-  //#endregion
-  //#region add receivable
-  Given("a receivable with the following details", (dataTable) => {
-    ShipmentActions.OpenShipment(shipmentNumber);
-    const ReceivableData = dataTable.hashes()as ReceivableDetails[];
-    ShipmentActions.FillReceivablesTab(ReceivableData)
+//#endregion
+//#region add receivable
+Given("a receivable with the following details", (dataTable) => {
+  ShipmentActions.OpenShipment(shipmentNumber);
+  const ReceivableData = dataTable.hashes() as ReceivableDetails[];
+  ShipmentActions.FillReceivablesTab(ReceivableData)
 });
 When("add receivable", () => {
   ShipmentActions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
