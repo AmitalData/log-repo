@@ -303,7 +303,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             totalData.AgingPeriods.AddRange(groupedPeriodsByAccount);
                 groupedPeriodsByAccount = result.Where(d => d.Total != null && d.CurrencyCode != totalData.TenantCurrencyCode).GroupBy(d => d.AccountAndCurr).Distinct().Select(d => new AgingPeriod()
                 {
-                    PeriodName = showLocals ? "יתרה בשח" : "Local",
+                    PeriodName = showLocals ? "יתרה בשח להיום" : "Local",
                     Total = d.First().BalanceInLocalCurrency,
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName) + " / " + d.First().CurrencyCode,
                     AccountLocalName = d.First().AccountLocalName + " / " + d.First().CurrencyCode,
@@ -342,7 +342,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             else
                 groupedPeriodsByAccount = result.Where(d => d.Total != null).GroupBy(d => d.AccountId).Distinct().Select(d => new AgingPeriod()
                 {
-                    PeriodName = showLocals ? "יתרה בשח" : "Local",
+                    PeriodName = showLocals ? "יתרה בשח להיום" : "Local",
                     Total = d.FirstOrDefault() == null ? 0 : d.FirstOrDefault().BalanceInLocalCurrency,
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName),
                     AccountLocalName = d.First().AccountLocalName,
