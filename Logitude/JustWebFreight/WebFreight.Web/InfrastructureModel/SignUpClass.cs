@@ -1841,6 +1841,7 @@ namespace WebFreight.Web.InfrastructureModel
                     IsManuallySet = a.IsManuallySet,
                     DisplayInLOV = a.DisplayInLOV,
                     FromDateTypeCode = "INV",
+                    Code = a.Code,
                 };
 
                 thePaymentTermRepository.Add(newPaymentTerm);

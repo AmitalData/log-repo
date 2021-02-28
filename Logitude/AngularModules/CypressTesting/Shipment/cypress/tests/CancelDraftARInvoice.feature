@@ -1,10 +1,14 @@
-@smoke @stable @all
+@smoke  @all@tests
 Feature: ARInvoice operations and actions
     After the user logging in the system and navigate to shipments workspace
     will create a direct shipment, after that create an ARInvoice and cancel draft.
-
+    Scenario: Update Accounting System
+        Given the user logged in
+        Given accounting System as "None"
+        When change the accounting system
+        Then the accounting system should update successfully
     Scenario: Create direct export air shipment
-        Given the user logged in and navigates to shipments workspace
+        Given the user navigates to shipments workspace
         Given a direct shipment with the following details
             | ShipmentLevel | Direction | TransportMode | Shipper           | MainCarriageFromPort | MainCarriageToPort |
             | Direct        | Export    | Air           | TestShipperExport | LHR                  | MIA                |

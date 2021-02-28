@@ -1,6 +1,20 @@
 export class AccountingSelectors {
+    //#region Accounting settings
+    public static readonly AccountingSettings="#SETTINGSAccounting"
+    //#endregion
+    //#region 
+    public static readonly AccountingSystemType="#AccountingSetting_AccountingSystemCode"
+    public static readonly IsARInvoicesTransferEnabled ="#AccountingSetting_IsARInvoicesTransferEnabled"
+    public static readonly IsAPInvoicesTransferEnabled="#AccountingSetting_IsAPInvoicesTransferEnabled"
+    public static readonly IsARPaymentsTransferEnabled="#AccountingSetting_IsARPaymentsTransferEnabled"
+    public static readonly IsAPPaymentsTransferEnabled="#AccountingSetting_IsAPPaymentsTransferEnabled"
+    //#endregion
    //#region contain
    public static readonly NewPayment = "New Payment"
+   public static readonly ContainAccountingSystem="Accounting System"
+   public static readonly ContainNone="None"
+   public static readonly ContainLogitudeGenericInterface="Logitude Generic Interface"
+   public static readonly ContainLogitudeAdvancedGenericInterface="Logitude Advanced Generic Interface"
 
    //#endregion
    //#region APInvoice

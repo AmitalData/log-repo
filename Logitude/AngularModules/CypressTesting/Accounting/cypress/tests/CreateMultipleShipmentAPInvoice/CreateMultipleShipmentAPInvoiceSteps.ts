@@ -18,6 +18,8 @@ let apInvoiceDetails: APInvoiceDetails;
 let payableDetails: PayableDetails;
 let shipmentNumbers: string[] = [];
 let customerCode: string;
+let AccountingSystem:string;
+
 //#endregion
 
 //#region Create customer
@@ -41,7 +43,19 @@ Then("the customer should create successfully", () => {
   });;
 });
 //#endregion
+//#region Update Accounting System
+Given("accounting System as {string}", (accountingSystem) => {
+  AccountingSystem=accountingSystem;
+});
 
+When("change the accounting system", () => {
+  AccountingActions.changeAccountingsSystem(AccountingSystem)
+});
+
+Then("the accounting system should update successfully", () => {
+  BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
+});
+//#endregion
 //#region Create first/second direct export air shipment
 Given("the user in shipments workspace", () => {
   ShipmentActions.NavigatesToShipmentsWorkspace();

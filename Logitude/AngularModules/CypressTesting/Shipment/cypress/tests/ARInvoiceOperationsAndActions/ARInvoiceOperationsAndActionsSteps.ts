@@ -12,10 +12,14 @@ import { ARInvoiceDetails } from "../../../../Accounting/cypress/models/ARInvoic
 import * as CommonActions from '../../../../Common/cypress/actions/Actions';
 import * as AccountingActions from '../../../../Accounting/cypress/actions/Actions';
 import { AccountingSelectors } from '../../../../Accounting/cypress/selectors/Selectors'
+import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors';
+
 //#region variables
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
 let customerCode: string;
+let AccountingSystem:string;
+
 //#endregion
 //#region Create customer
 Given("the user logged in and navigates to customers workspace", () => {
@@ -36,7 +40,19 @@ Then("the customer should create successfully", () => {
       });
     });
 //#endregion
-
+//#region Update Accounting System
+Given("accounting System as {string}", (accountingSystem) => {
+    AccountingSystem=accountingSystem;
+  });
+  
+  When("change the accounting system", () => {
+    AccountingActions.changeAccountingsSystem(AccountingSystem)
+  });
+  
+  Then("the accounting system should update successfully", () => {
+    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
+  });
+  //#endregion
 //#region Create direct export air shipment
 Given("the user navigates to shipments workspace", () => {
     Actions.NavigatesToShipmentsWorkspace()

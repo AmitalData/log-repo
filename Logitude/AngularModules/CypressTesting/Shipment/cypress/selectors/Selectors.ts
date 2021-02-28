@@ -7,6 +7,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentSearchBar = '#Shipment_Search';
   public static readonly ShipmentSearchParent = 'searchbox';
   public static readonly ShipmentSearchParentClass = '.SearchBox';
+  public static readonly ShipmentEventNote = '#EventNotes';
   //public static readonly InvoiceMoreList = '#MenuButtons_1';
   public static readonly ConfirmWindowYes = '#ConfirmWindow_Yes_0';
   public static readonly SaveClose = '#SaveClose';
@@ -36,11 +37,13 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PayablesTab = '#ShipmentTHPayables';
   public static readonly DocsOutTab = '#ShipmentTHDocsOut';
   public static readonly DocsInTabb = '#ShipmentTHDocsIn';
+  public static readonly Events = '#ShipmentTHEvents';
   public static readonly CustomsTab = '#ShipmentTHCustoms';
   //#endregion
   //#region General tab
   public static readonly ShipmentGrossWeight = '#Shipment_GrossWeightInKG';
   public static readonly ShipmentMoveType = '#Shipment_MoveTypeId';
+  public static readonly ShipmentValueOfGoods = '#Shipment_ValueOfGoods';
   //#endregion
   //#region Shipment tab
   public static readonly ShipmentCustomer = '#Shipment_CustomerId';
@@ -56,6 +59,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly OrderOKButton = '#OrderOKbtn';
   //#endregion
   //#region Partner tab
+  public static readonly PartnerToggle = '#PartnerToggle';
   public static readonly AddShipperButton = '#SHIPR';
   public static readonly AddConsigneeButton = '#CONSI';
   public static readonly AddAgentButton = '#AGENT';
@@ -85,6 +89,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentConsolidator = '#Shipment_ConsolidatorId';
   public static readonly ShipmentReleasingAgent = '#Shipment_ReleasingAgentId';
   public static readonly PartnerOKButton = '#PartnerOKbtn';
+  public static readonly PartnerEditShipper = '#Edit-Shipper';
   //#endregion 
   //#region Package tab fields
   public static readonly AddPackage = '#AddPackage';
@@ -105,6 +110,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PreCarriage = '#PreCarriage';
   public static readonly EditRoutingMainCarriage = '#Edit-MainCarriage';
   public static readonly ShipmentMainCarriageCarrierId = '#Shipment_MainCarriageCarrierId';
+  public static readonly ShipmentBookingNumberOfPackages = '#Shipment_BookingNumberOfPackages';
   public static readonly ShipmentFlightNumber = '#Shipment_MainCarriageCarrierNumber';
   public static readonly ShipmentMAWB = '#Shipment_Master';
   public static readonly ShipmentDateMaincarriageATD = '#calendarbutton_date_Shipment_MainCarriageATD';
@@ -150,6 +156,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly NewAttachedHouse = '#NewHouseBtn';
   public static readonly CopyShipmentButton = '#ShipmentBCopyShipment';
   public static readonly CancelShipmentButton = '#ShipmentBCancelShipment';
+  public static readonly ReactivateShipmentButton = '#ShipmentBReactivateShipment';
   public static readonly OperationalCloseButton = '#ShipmentBOperationalClose';
   public static readonly AccountllyCloseButton = '#ShipmentBAccountingClose';
   public static readonly OperationalReopenButton = '#ShipmentBOperationalReopen';
@@ -170,6 +177,45 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly OverviewTabComponentInAWBWizard = "overviewtabcomponent";
   public static readonly OverviewTabInAWBWizard = "#OVE";
   public static readonly PackagesTabInAWBWizard = "#PAC";
+  //#endregion
+
+  public static readonly ContainsToggleButtonDisabled = "ToggleButtonDisabled"
+  public static readonly ShortTitleControl = ".ShortTitleControl"
+
+  //#region INTTRA
+  public static readonly INTTRASettingId = "#INTTRASetting_INTTRAId";
+  public static readonly INTTRASettingAlias = "#INTTRASetting_INTTRAAlias";
+  public static readonly FTPDetailUserName = "#FTPDetail_UserName";
+  public static readonly FTPDetailPassword = "#FTPDetail_Password";
+  public static readonly FTPDetailHost = "#FTPDetail_Host";
+  public static readonly FTPDetailFolder = "#FTPDetail_Folder";
+  public static readonly ContainsOutSettings = "Out Settings:";
+  public static readonly ContainsInSettings = "In Settings:";
+  public static readonly SaveFTPDetailButton = ".RedButton:last";
+  public static readonly BranchINTTRAId = "#Branch_INTTRAId";
+  public static readonly BranchINTTRAAlias = "#Branch_INTTRAAlias";
+  public static readonly BranchINTTRAContact = "#Branch_INTTRAContactId";
+  public static readonly ContainsBranchesSettings = "Branches Settings";
+  public static readonly ContainsRegistration = "Registration";
+  public static readonly ContainsSendEBooking = "Send e-booking";
+  public static readonly ShipmentINTTRAContractNumber = "#Shipment_INTTRAContractNumber";
+  public static readonly ShipmentMainCarriageVessel = "input[id^='Shipment_MainCarriageVesselId']:last";
+  public static readonly ShipmentMainCarriageETDDate = "#date_Shipment_MainCarriageETD";
+  public static readonly ShipmentMainCarriageETDTime = "#time_Shipment_MainCarriageETD";
+  public static readonly ShipmentDescriptionOfGoods = "#Shipment_DescriptionOfGoods";
+  public static readonly EditShipper = "#Edit-Shipper";
+  public static readonly ShipmentShipperContact = "#Shipment_ShipperContactId";
+  public static readonly AddEditPartnerComponent = "addeditpartnercomponent";
+  public static readonly ContactEnglishName = "#Contact_EnglishName";
+  public static readonly ContactEmail = "#Contact_Email";
+  public static readonly ShipmentBranch = "#Shipment_BranchId";
+  public static readonly ContainsMainCarriageCarrierRequired = "Main Carriage Carrier is required";
+  public static readonly ContainsContractNumberRequired = "Contract Number is required";
+  public static readonly ContainsETDOrVesselAndVoyageMustProvided = "ETD or Main-Carriage Vessel and Voyage must be provided";
+  public static readonly ContainsShipmentDescriptionOfGoodsRequired = "Shipment Description of Goods is required";
+  public static readonly ContainsShipmentPackagesRequired = "Shipment Order Packages or Shipment Packages are required";
+  public static readonly ContainsRequestBooking = "Request Booking";
+  public static readonly ContainsStatus = "Status:";
   //#endregion
   //#region AMANAC
   public static readonly AMANACTab = '#AMANAC';

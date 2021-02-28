@@ -24,6 +24,7 @@ let consolidationInvoiceNumber: string;
 let draftConsolidationInvoiceNumber:string
 let customerCode: string;
 let PayableData: PayableDetails
+let AccountingSystem:string;
 //#endregion
 
 //#region Create customer
@@ -64,7 +65,19 @@ Then("the customer should update successfully", () => {
   cy.Click(BaseSelectors.Backbutton, null, false);
 });
 //#endregion
+//#region Update Accounting System
+Given("accounting System as {string}", (accountingSystem) => {
+  AccountingSystem=accountingSystem;
+});
 
+When("change the accounting system", () => {
+  AccountingActions.changeAccountingsSystem(AccountingSystem)
+});
+
+Then("the accounting system should update successfully", () => {
+  BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
+});
+//#endregion
 //#region Create direct export air shipment
 Given("the user navigates to shipments workspace", () => {
   ShipmentActions.NavigatesToShipmentsWorkspace()
@@ -200,7 +213,7 @@ When("edit the invoice", () => {
   AccountingActions.AddSecondInvoiceToConsolidation()
 });
 Then("the invoice should update successfully", () => {
-  BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200)
+  BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesPutRequest, 200);
 
 });
 //#endregion
@@ -239,7 +252,7 @@ When("approve the payment", () => {
   AccountingActions.ApproveARPayment()
 });
 
-Then("the cpayment should approve successfully", () => {
+Then("the payment should approve successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ARPayments, 200)
 });
 //#endregion

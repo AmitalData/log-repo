@@ -373,7 +373,7 @@ namespace WebFreight.Web.WebPages
                     {
                         string token = Request["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                        email = authToken.Email;
+                        email = authToken?.Email;
                     }
                 }
 

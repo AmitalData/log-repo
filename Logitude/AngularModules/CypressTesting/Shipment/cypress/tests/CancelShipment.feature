@@ -1,4 +1,4 @@
-@smoke @stable @all
+@smoke @all @shipments2
 Feature: Cancel shipment
   After the user logging in the system and navigate to shipments workspace
   will create a direct shipment and cancel it.
@@ -13,5 +13,9 @@ Feature: Cancel shipment
 
   Scenario: Cancel direct shipment
     Given the user open the shipment
-    When cancel the shipment
+    When cancel the shipment with "Cancel The Shipment" Note
     Then the shipment should cancel successfully
+
+  Scenario: Reactive direct shipment
+    When reactive the shipment with "Reactive The Shipment" Note
+    Then the shipment should reactive successfully

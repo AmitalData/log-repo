@@ -1780,8 +1780,10 @@ export class HomeComponent implements OnDestroy{
         document.cookie = `${name}=${value}; ${expires}${cpath}`;
     }
     
-    ViewReleaseNotes() {
-        window.open(ObjectsLocator.GlobalSetting.ReleaseNotesURL);
+    ViewReleaseNotes() {        
+        var url = ServiceHelper.GetLogitudeURL() + 'WebPages/HowToDownloadPage.aspx';
+        var params: any[] = [{ name: "Token", value: SessionInfo.DocumentDownloadToken }, { name: "Code", value: ObjectsLocator.GlobalSetting.ReleaseNotesURL }]
+        ServiceHelper.OpenWindowWithParams(url, params);
     }
 
     HideReleaseMessageClicked() {        
