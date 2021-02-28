@@ -618,6 +618,7 @@
     <Compile Include="QuoteModel\EntityQueries\Charts\TopFiveSalesmanQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\QuotesByCountryQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\StageFunnelQuery.cs" />
+    <Compile Include="QuoteModel\Tools\Behaviours\EntityAutomationQuoteMappingPMFields.cs" />
     <Compile Include="QuoteModel\Tools\Behaviours\QuoteBehaviours\QuoteFieldsBehaviour.cs" />
     <Compile Include="QuoteModel\Tools\Behaviours\QuoteBehaviours\QuoteSalesmanBehavior.cs" />
     <Compile Include="QuoteModel\Tools\DataMapping\QuoteMapping.QuoteClosingReasonService.cs" />
