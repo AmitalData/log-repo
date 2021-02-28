@@ -20,6 +20,20 @@ Feature: Air Price Check
         When approve version
         Then the version should approve successfully
 
+    Scenario: Edit air surcharge cost
+        Given the user in air surchage workspace
+        And open surchage with "AA" seller
+        When create new version
+        Then new version should create successfully
+
+    Scenario: Add tariff lines in draft verstion tab
+        Given the user remove the old tariff line 
+        And add the follwing tariff line
+            | FromPort | ToPort | StartDate |
+            | LHR      | LAS    | Today     |
+        When approve version
+        Then the version should approve successfully
+
     Scenario: Open price check wizard to show price offers
         Given the user back into tariff workspace and open price check wizard
         And fill the following price check details
