@@ -406,6 +406,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours
 
                 invoiceTotalVatRepository.Add(itemPOCO);
             }
+            invoiceTotalVatRepository.SubmitChanges();
         }
         private void InitializeAmountDueFields()
         {
