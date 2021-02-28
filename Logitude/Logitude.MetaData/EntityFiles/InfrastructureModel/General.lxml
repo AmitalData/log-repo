@@ -35,7 +35,8 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;7bc0&quot;"
+
+  Code="&quot;aa9f&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -7059,6 +7060,15 @@
       FeatureTextCodeCode="&quot;General.Features.AGENTDOCUMENTSPERMISSION&quot;"
       FeatureDefaultText="&quot;Documents Permission Agent View&quot;"
       IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;ChangeLocalProfitCurrency&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.ChangeLocalProfitCurrency&quot;"
+      FeatureDefaultText="&quot;Change Local/Profit Currency&quot;"
+      IsPackagable="false"
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />

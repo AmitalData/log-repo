@@ -335,7 +335,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                         LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant),
                         Rate = currecyRate,
                         Tenant = tenant,
-                        ValueDate = ratedate,//TenantServerConfigration.GetCurrentDateTime(tenant),
+                        ValueDate = ratedate.Date,//TenantServerConfigration.GetCurrentDateTime(tenant),
 
                     };
 
