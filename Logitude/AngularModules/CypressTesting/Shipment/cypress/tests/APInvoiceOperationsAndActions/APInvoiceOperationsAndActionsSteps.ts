@@ -18,11 +18,25 @@ import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors'
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
 let customerCode: string;
-let AccountingSystem:string;
+let AccountingSystem: string;
+//#endregion
+//#region Update Accounting System
+Given("the user logged in", () => {
+  cy.Login();
+});
+Given("accounting System as {string}", (accountingSystem) => {
+  AccountingSystem = accountingSystem;
+});
+
+When("change the accounting system", () => {
+  AccountingActions.changeAccountingsSystem(AccountingSystem)
+});
+Then("the accounting system should update successfully", () => {
+  BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
+});
 //#endregion
 //#region Create customer
-Given("the user logged in and navigates to customers workspace", () => {
-  cy.Login();
+Given("the user navigates to customers workspace", () => {
   CommonActions.NavigatesToCustomersWorkspace();
 });
 Given("a customer with the following details", (dataTable) => {
@@ -32,26 +46,13 @@ Given("a customer with the following details", (dataTable) => {
 When("create customer", () => {
   CommonActions.CreateCustomer();
 });
-
 Then("the customer should create successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.PartnersDomainRequest, 200).then((interception) => {
     customerCode = interception.response.body.Customer.Code;
   });
 });
 //#endregion
-//#region Update Accounting System
-Given("accounting System as {string}", (accountingSystem) => {
-  AccountingSystem=accountingSystem;
-});
 
-When("change the accounting system", () => {
-  AccountingActions.changeAccountingsSystem(AccountingSystem)
-});
-
-Then("the accounting system should update successfully", () => {
-  BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
-});
-//#endregion
 //#region Create direct export air shipment
 Given("the user navigates to shipments workspace", () => {
   Actions.NavigatesToShipmentsWorkspace()
@@ -70,20 +71,20 @@ When("create shipment", () => {
 
 Then("the direct should create successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
-      shipmentNumber = interception.response.body.ShipmentNumber;
+    shipmentNumber = interception.response.body.ShipmentNumber;
   })
 });
 //#endregion
 
 //#region Update routing tab
-Given("the user in the shipment's rounting tab",()=>{
+Given("the user in the shipment's rounting tab", () => {
   Actions.OpenShipment(shipmentNumber);
   cy.Click(ShipmentSelectors.RoutingsTab, null);
 });
-Given("edit main carriage leg with the following details",(dataTable)=>{
+Given("edit main carriage leg with the following details", (dataTable) => {
   let mainCarriageLeg = dataTable.hashes()[0] as MainCarriageLeg;
   Actions.EditMainCarriageLegs(mainCarriageLeg.Airline);
-}); 
+});
 //#endregion
 
 //#region Update packages tab
@@ -98,16 +99,16 @@ Given("a payable with the following details",
     const PayableData = dataTable.hashes()[0] as PayableDetails;
     Actions.FillPayablesTab(PayableData)
   });
-  When("add payables",
+When("add payables",
   () => {
     Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
 
   });
-  Then("the payables should add successfully",
+Then("the payables should add successfully",
   () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
   });
-  //#endregion
+//#endregion
 //#region Create APInvoice
 Given("an APInvoice with a random invoice number and the following details",
   (dataTable) => {
@@ -121,7 +122,7 @@ When("receive invoice", () => {
 Then("the invoice should create successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
 });
-  //#endregion
+//#endregion
 //#region Approve APInvoice
 When("approve invoice", () => {
   AccountingActions.APApproveInvoice()
@@ -129,7 +130,7 @@ When("approve invoice", () => {
 Then("the invoice should approve successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
 });
-  //#endregion
+//#endregion
 //#region Cancel the APInvoice approvement
 When("cancel the invoice approvement", () => {
   AccountingActions.APInvoiceCancelApproval()
@@ -137,7 +138,7 @@ When("cancel the invoice approvement", () => {
 Then("the invoice should cancel successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
 });
-  //#endregion
+//#endregion
 //#region Void APInvoice
 When("void invoice", () => {
   AccountingActions.VoidAPInvoice()
@@ -145,7 +146,7 @@ When("void invoice", () => {
 Then("the invoice should void successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
 });
-  //#endregion
+//#endregion
 
 //#region update shipment step
 When("update shipment", () => {

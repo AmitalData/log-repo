@@ -18,13 +18,27 @@ let apInvoiceDetails: APInvoiceDetails;
 let payableDetails: PayableDetails;
 let shipmentNumbers: string[] = [];
 let customerCode: string;
-let AccountingSystem:string;
+let AccountingSystem: string;
 
 //#endregion
-
-//#region Create customer
-Given("the user logged in and navigates to customers workspace", () => {
+//#region Update Accounting System
+Given("the user logged in", () => {
   cy.Login();
+});
+Given("accounting System as {string}", (accountingSystem) => {
+  AccountingSystem = accountingSystem;
+});
+
+When("change the accounting system", () => {
+  AccountingActions.changeAccountingsSystem(AccountingSystem)
+});
+
+Then("the accounting system should update successfully", () => {
+  BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
+});
+//#endregion
+//#region Create customer
+Given("the user navigates to customers workspace", () => {
   CommonActions.NavigatesToCustomersWorkspace();
 });
 
@@ -43,19 +57,7 @@ Then("the customer should create successfully", () => {
   });;
 });
 //#endregion
-//#region Update Accounting System
-Given("accounting System as {string}", (accountingSystem) => {
-  AccountingSystem=accountingSystem;
-});
 
-When("change the accounting system", () => {
-  AccountingActions.changeAccountingsSystem(AccountingSystem)
-});
-
-Then("the accounting system should update successfully", () => {
-  BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
-});
-//#endregion
 //#region Create first/second direct export air shipment
 Given("the user in shipments workspace", () => {
   ShipmentActions.NavigatesToShipmentsWorkspace();

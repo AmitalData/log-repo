@@ -23,9 +23,13 @@ declare global {
             BackButton(contains:string): Chainable<Element>
             getAttached(selector: any): Chainable<Element>
 
+            ClickingAfterHovering(LogLovSelector:string,HiddenElementSelector:string): Chainable<Element>
+            SelectCheckBox(Selector:string): Chainable<Element>
         }
     }
 }
+Cypress.Commands.add("SelectCheckBox", (Selector:string) => {
+    cy.get(Selector).check({ force: true })
 
 /**
  * getAttached(selector)
@@ -43,6 +47,11 @@ Cypress.Commands.add("getAttached", selector => {
     }).then(() => cy.wrap($el));
   });
 
+})
+Cypress.Commands.add("ClickingAfterHovering", (LogLovSelector:string,HiddenElementSelector:string) => {
+    cy.get(LogLovSelector).trigger(BaseSelectors.MouseoverTrigger).find(HiddenElementSelector).click()
+
+})
 Cypress.Commands.add("BackButton", (contains) => {
     cy.Click(BaseSelectors.BackBottonBodyClass, contains);
 })
@@ -104,10 +113,10 @@ Cypress.Commands.add("Click", (selector, contains, force = false) => {
     //let element = //.should('exist')
     cy.wait(1000);
     if (contains) {
-        cy.getAttached(selector).contains(contains, { matchCase: false }).click({force:force})
+        cy.get(selector).contains(contains, { matchCase: false }).click({force:force})
     }
     else{
-        cy.getAttached(selector).click({force:force})
+        cy.get(selector).click({force:force})
     }
 })
 

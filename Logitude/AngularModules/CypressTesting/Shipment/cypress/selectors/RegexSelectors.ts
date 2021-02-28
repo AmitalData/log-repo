@@ -46,6 +46,30 @@ export class RegexSelectors {
     public static PackageGrid(cellNumber: string): string{
         return "div[id^='edit-log-grid_'][id$='" + cellNumber +"_0"+ "']";
     }
+
+    public static InOutSettingsHostAddButton(settingsType: string): string{
+        return "[data-cy='" + settingsType + "SettingsHostActions'] button[id^='Add']";
+    }
+
+    public static InOutSettingsHostEditButton(settingsType: string): string{
+        return "[data-cy='" + settingsType + "SettingsHostActions'] button[id^='Edit']";
+    }
+
+    public static BranchINTTRAId(branchName: string){
+        return "[data-cy='" + branchName + "_INTTRAId'] #Branch_INTTRAId";
+    }
+
+    public static BranchINTTRAAlias(branchName: string){
+        return "[data-cy='" + branchName + "_INTTRAAlias'] #Branch_INTTRAAlias";
+    }
+
+    public static BranchINTTRAContact(branchName: string){
+        return "[data-cy='" + branchName + "_INTTRAContact'] #Branch_INTTRAContactId";
+    }
+
+    public static INTTRARegistrationCheckBox(branchName: string, registrationCode: string){
+        return "[data-cy='" + registrationCode + "_" + branchName + "_Registration'] input[type='checkbox']";
+    }
     
     public static OkButton(mode: string): string{
         return "Ok" + mode +"Package";
