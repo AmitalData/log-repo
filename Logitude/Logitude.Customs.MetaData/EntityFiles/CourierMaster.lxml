@@ -54,6 +54,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;4e4d&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -5461,6 +5462,15 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.CourierMaster.Features.SendDeclaration&quot;"
       FeatureDefaultText="&quot;SendAutoDeclaration&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;SendDeclaration902&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.CourierMaster.Features.SendDeclaration902&quot;"
+      FeatureDefaultText="&quot;Send Declaration After Deleting Pending 902&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
