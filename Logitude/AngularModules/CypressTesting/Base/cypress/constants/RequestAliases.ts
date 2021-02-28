@@ -1,6 +1,7 @@
 export class RequestAliases {
     public static readonly PartnersDomainRequest = 'PartnersDomainRequest';
     public static readonly ShipmentRequest = 'ShipmentRequest';
+    public static readonly SplitShipmentRequest = 'SplitShipmentRequest';
     public static readonly GetTraceEvent = 'GetTraceEvent';
     public static readonly CardViewsRequest = 'CardViewsRequest';
     public static readonly AddressViewsRequest = 'AddressViewsRequest';
@@ -19,6 +20,7 @@ export class RequestAliases {
     public static readonly QuickSearchDataLoaded = 'QuickSearchDataLoaded';
     public static readonly ShipmentviewsGetbyfilters = 'ShipmentviewsGetbyfilters';
 
+    public static readonly GetAll = 'GetAll';
     // Tariff
     public static readonly PostTariff = 'PostTariff';
     public static readonly PutTariff = 'PutTariff';
