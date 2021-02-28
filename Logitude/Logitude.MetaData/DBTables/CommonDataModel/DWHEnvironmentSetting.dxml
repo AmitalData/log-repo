@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="DWHEnvironmentSettings"
+  Schema="dbo"
+  DBType="Main"
+  Module="Common">
+ <Column
+    Name="Id"
+    Type="int"
+    Identity="true">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="FactCodes"
+    Type="varchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  
+</Table>
