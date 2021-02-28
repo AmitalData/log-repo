@@ -96,10 +96,15 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PackageLength = '#ShipmentPackage_Length';
   public static readonly PackageWidth = '#ShipmentPackage_Width';
   public static readonly PackageHeight = '#ShipmentPackage_Height';
+  public static readonly PackageVolume = '#ShipmentPackage_Volume';
   public static readonly PackageType = '#ShipmentPackage_PackageTypeId';
   public static readonly PackageWeight = '#ShipmentPackage_Weight';
+  public static readonly PackageContainerNumber = '#ShipmentPackage_ContainerNumber';
   public static readonly AirPackageOKButton = '#OkAirPackage';
   public static readonly OceanPackageOKButton = '#OkOceanPackage';
+  public static readonly PackageGrossWeight = '#Shipment_GrossWeight';
+  public static readonly PackagePartialSplit = '#PartialSplit';
+
   //#endregion
   //#region Routing tab fields
   public static readonly RoutingToggle = '#RoutingToggle';
@@ -152,6 +157,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly CopyShipmentButton = '#ShipmentBCopyShipment';
   public static readonly CancelShipmentButton = '#ShipmentBCancelShipment';
   public static readonly ReactivateShipmentButton = '#ShipmentBReactivateShipment';
+  public static readonly SplitShipmentButton = '#ShipmentBSplitShipment';
   public static readonly OperationalCloseButton = '#ShipmentBOperationalClose';
   public static readonly AccountllyCloseButton = '#ShipmentBAccountingClose';
   public static readonly OperationalReopenButton = '#ShipmentBOperationalReopen';
@@ -176,6 +182,7 @@ export class ShipmentSelectors extends RegexSelectors {
   //#endregion
 
   public static readonly ContainsToggleButtonDisabled = "ToggleButtonDisabled"
+  public static readonly ContainsSplit = "Split"
   public static readonly ShortTitleControl = ".ShortTitleControl"
 
 }

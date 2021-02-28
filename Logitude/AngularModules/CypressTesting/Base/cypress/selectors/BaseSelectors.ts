@@ -48,7 +48,8 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly LastElement = ":last";
     public static readonly AddButton = "#Add";
     public static readonly SpanElement = "span";
-    public static readonly DivElement = "div";
+    public static readonly DivElement = 'div';
+    public static readonly TextElement = 'text';
     public static readonly FirstRecentEntityItem = ".RecentEntityItem:first";
     public static readonly ToggleIcon = '[src="./Images/ToggleIcon.png"]'
     public static readonly BackBottonBodyClass = ".BackBottonBody"
@@ -63,6 +64,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly BeDisabled = 'be.disabled'
     public static readonly NotBeDisabled = 'not.be.disabled'
     public static readonly HaveClass = 'have.class'
+    public static readonly HaveValue = 'have.value'
     public static readonly NotHaveClass = 'not.have.class'
     public static readonly Exist = 'exist'
     public static readonly NotExist = 'not.exist'

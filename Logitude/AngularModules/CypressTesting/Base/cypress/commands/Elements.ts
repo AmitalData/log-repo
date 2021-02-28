@@ -15,6 +15,7 @@ declare global {
             FillRandomString(selector: string, length: number, upperCase: boolean): Chainable<Element>
             FillRandomNumber(selector: string, minimum: number, maximum: number): Chainable<Element>
             Click(selector: string, contains: string, force?: boolean): Chainable<Element>
+            Navigate(selector: string, force?: boolean): Chainable<Element>
             ClickCheckBox(selector: string): Chainable<Element>
             ClickRadio(selector: string): Chainable<Element>
             ValidateElementColor(selector: string, expectedcolor: string): Chainable<Element>
@@ -77,6 +78,11 @@ Cypress.Commands.add("Click", (selector, contains, force = false) => {
     if (contains) {
         element = element.contains(contains, { matchCase: false })
     }
+    element.click({force:force})
+})
+
+Cypress.Commands.add("Navigate", (selector, force = false) => {
+    let element = cy.get(selector)
     element.click({force:force})
 })
 
