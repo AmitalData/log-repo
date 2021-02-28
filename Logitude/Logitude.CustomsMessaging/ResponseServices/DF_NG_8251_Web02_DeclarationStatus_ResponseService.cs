@@ -106,7 +106,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             if (
                                 (
-                                requestParams.RequestVIA == SendRequestVIA.WebServiceBatch ||
+                                //the VirtualCCUQUELOCK happend also when "לתצוגה בלבד - קיימת בקשה בתהליך (הצהרת יבוא) יש לבטל את הבקשה או להמתין לסיום הטיפול בה -רענן"
+                                ///requestParams.RequestVIA == SendRequestVIA.WebServiceBatch ||
                                 requestParams.RequestVIA == SendRequestVIA.DCABatch)
                                 &&
                                 declarationPM.ProcedureCurrentCode == "4070001" //"ProcedureCurrentCode":"4070001","ProcedureCurrentName":"יבוא מסחרי-שח\"מ"
