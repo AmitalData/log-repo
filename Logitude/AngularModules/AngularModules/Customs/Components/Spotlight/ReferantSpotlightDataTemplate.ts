@@ -21,6 +21,7 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { SpotlightSharedDataService } from '../../../Customs/Services/DataChange/SpotlightSharedDataService';
 import { ExceptionReasonPMService } from '../../Services/StandardPMs/ExceptionReasonPMService';
 import { ExceptionReasonExtendedListService } from '../../Services/ExtendedLists/ExceptionReasonExtendedListService';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
     templateUrl: './ReferantSpotlightDataTemplate.html',
@@ -44,6 +45,7 @@ export class ReferantSpotlightDataTemplate
     private _declarationReferantDataPMService: DeclarationReferantDataPMService = new DeclarationReferantDataPMService();
     private _referantExceptionPMService: ReferantExceptionPMService = new ReferantExceptionPMService();
     private _referantExceptionExtendedPMService: ReferantExceptionExtendedPMService = new ReferantExceptionExtendedPMService();
+    public isActiveFilterItems: ApiQueryFilters;
 
 
     public spotlightSharedDataService = new SpotlightSharedDataService();
@@ -55,7 +57,8 @@ export class ReferantSpotlightDataTemplate
         });
         this.ReferantExceptionItemsSource = new ObservableCollection([]);
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-
+        this.isActiveFilterItems = new ApiQueryFilters();
+        this.isActiveFilterItems.addAdditionalFilter("IsActive", true, null, null, "Equals", false, false, false, "boolean");
     }
     
     IsChanged: boolean = false;

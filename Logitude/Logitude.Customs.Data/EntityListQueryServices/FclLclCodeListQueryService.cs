@@ -37,9 +37,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<FclLclCode> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<FclLclCode> iQueryable)
         {
-			throw new NotImplementedException();
-		}
-			}
+ 
+            return iQueryable;
+
+        }
+ 			}
 
 
 }

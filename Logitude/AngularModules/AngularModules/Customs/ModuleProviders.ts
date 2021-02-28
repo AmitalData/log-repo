@@ -239,6 +239,7 @@ import { ReferantTeamListService } from './Services/StandardLists/ReferantTeamLi
 import { AmendRequestRejectReasonTypeListService } from './Services/StandardLists/AmendRequestRejectReasonTypeListService';
 import { ReleaseMessageTypeListService } from './Services/StandardLists/ReleaseMessageTypeListService';
 import { DocumentRejectTypeListService } from './Services/StandardLists/DocumentRejectTypeListService';
+import { FclLclCodeListService } from './Services/StandardLists/FclLclCodeListService';
 
 
 //#endregion
@@ -639,6 +640,7 @@ export class ModuleProviders {
             case "FclLclCodeListService": { myResult = new FclLclCodeListService(); break; }
 
             case "AmendCancellRequestInitiatorListService": { myResult = new AmendCancellRequestInitiatorListService(); break; }
+            case "FclLclCodeListService": { myResult = new FclLclCodeListService(); break; }
 
              //#endregion                
 

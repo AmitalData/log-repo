@@ -65,7 +65,7 @@ namespace Logitude.Customs.Data.Repsitories
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
             return (from a in context.Declarations
-                    where ((a.Id == id && a.AmendmentDontDisplayInList == false) || (a.AmendmentOriginalDeclartation == id && a.AmendmentDontDisplayInList == false))
+                    where ((a.Id == id && a.AmendmentDontDisplayInList == false && a.DeclarationNumber != null) || (a.AmendmentOriginalDeclartation == id &&    a.DeclarationNumber != null && a.AmendmentDontDisplayInList == false))
                     && a.Tenant == tenant
                     select a).FirstOrDefault();
         }

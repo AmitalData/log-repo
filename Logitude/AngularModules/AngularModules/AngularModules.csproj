@@ -1308,6 +1308,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\ExceptionReasonList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ExportDeclarationClosingDataList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ExporterRoleTypeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\FclLclCodeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\GatepassRequestList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\GatepassReturnCodeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\HazardousSubstanceList.ts" />
@@ -1368,6 +1369,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\ExporterRoleTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\Extended\InvoiceQueue.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\Extended\DeclarationRemarks.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\FclLclCodePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\GatepassRequestPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\GatepassReturnCodePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\HazardousSubstancePM.ts" />
