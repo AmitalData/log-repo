@@ -38,7 +38,7 @@
         public static string MoveTypeViewsGetByFilters = "MoveTypeViews/GetByFilters";
         #endregion
 
-        public static string PartnersDomainController = "PartnersDomain";
+        public static string PartnersDomainController = "PartnersDomain/PostPartnerAddress";
         public static string VendorViewsGetByFilters = "VendorViews/GetByFilters";
         public static string AgentViewsGetByFilters = "AgentViews/GetByFilters";
         public static string CustomerViewsGetByFilters = "CustomerViews/GetByFilters";

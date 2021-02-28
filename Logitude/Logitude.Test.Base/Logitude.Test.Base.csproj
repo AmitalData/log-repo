@@ -88,6 +88,7 @@
     <Compile Include="Models\Infrastructure\Configurations.cs" />
     <Compile Include="Models\LocationsPreparation\Country.cs" />
     <Compile Include="Models\PartnersPreparation\Address.cs" />
+    <Compile Include="Models\PartnersPreparation\Contact.cs" />
     <Compile Include="Models\UserTenantPreparation\Credentials.cs" />
     <Compile Include="Models\PartnersPreparation\Partner.cs" />
     <Compile Include="Models\LocationsPreparation\Port.cs" />

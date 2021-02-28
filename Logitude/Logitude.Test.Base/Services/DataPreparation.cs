@@ -223,14 +223,8 @@ namespace Logitude.Test.Base.Services
             {
                 Tenant = UserTenant.Tenant,
                 PartnerTypeId = partnerTypeCode,
-                Address = new Address
-                {
-                    Tenant = UserTenant.Tenant,
-                    Name = partnerName + " Address",
-                    Description = "Main Address",
-                    AddressTypeId = "M",
-                    IsCreatedWithPartner = true
-                }
+                Address = BuildPartnerAddress(partnerName),
+                Contact = BuildPartnerContact(partnerName)
             };
 
             PartnerInformation partnerInformation = new PartnerInformation
@@ -243,6 +237,42 @@ namespace Logitude.Test.Base.Services
                 IsCustomer = isCustomer
             };
 
+            partner = SetPartnerInformation(partner, partnerInformation, partnerTypeCode);
+            return partner;
+        }
+
+        private static Address BuildPartnerAddress(string partnerName)
+        {
+            return new Address
+            {
+                Tenant = UserTenant.Tenant,
+                Name = partnerName + " Address",
+                Description = "Main Address",
+                AddressTypeId = "M",
+                Address1 = "Test Address",
+                StateId = GetStateId("AK"),
+                CountryId = GetCountryId("US"),
+                //City = "Anchorage",
+                IsCreatedWithPartner = true
+            };
+        }
+
+        private static Contact BuildPartnerContact(string partnerName)
+        {
+            return new Contact
+            {
+                Tenant = UserTenant.Tenant,
+                EnglishName = partnerName + " Contact",
+                Email = partnerName.ToLower() + "@test.com",
+                Mobile = "9999999999",
+                Fax = "999999",
+                SetAsPrimaryForCard = true,
+                IsCreatedWithPartner = true
+            };
+        }
+
+        private static Partner SetPartnerInformation(Partner partner, PartnerInformation partnerInformation, string partnerTypeCode)
+        {
             switch (partnerTypeCode)
             {
                 case "VD":
