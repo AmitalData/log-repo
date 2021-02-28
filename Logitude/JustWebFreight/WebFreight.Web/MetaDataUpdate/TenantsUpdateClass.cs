@@ -2524,11 +2524,12 @@ namespace WebFreight.Web.MetaDataUpdate
                 if (currentTenantEventTypes.Keys.Contains(eventType.Code + eventType.ObjectTableId))
                 {
                     EventType updatedEventType = currentTenantEventTypes[eventType.Code + eventType.ObjectTableId];
-                    if((updatedEventType.UpdateDate != eventType.UpdateDate) && !updatedEventType.IsNotModified)
+                    if((updatedEventType.UpdateDate != eventType.UpdateDate))
                     {
                         updatedEventType.EnglishName = eventType.EnglishName;
                         updatedEventType.AddedManually = eventType.AddedManually;
-                        updatedEventType.EntityStatusId = currentTenantEntityStatu != null ? currentTenantEntityStatu.Id : null;
+                        if (!updatedEventType.IsNotModified)
+                            updatedEventType.EntityStatusId = currentTenantEntityStatu != null ? currentTenantEntityStatu.Id : null;
                         updatedEventType.FollowUpEnglishName = eventType.FollowUpEnglishName;
                         updatedEventType.FollowUpLocalName = eventType.FollowUpLocalName;
                         updatedEventType.InActive = eventType.InActive;
