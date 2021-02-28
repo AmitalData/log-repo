@@ -166,7 +166,7 @@ export class SystemCurrenciesComponent extends BaseComponent {
         this.CurrentSession.CloseCurrentWindow();
     }
 
-    OkButtonClicked(doChange: boolean = false) {
+    OkButtonClicked(isChanging: boolean = false) {
         if (!this.TenantPM.IsDirty) {
             this.CurrentSession.CloseCurrentWindow();
         }
@@ -197,7 +197,7 @@ export class SystemCurrenciesComponent extends BaseComponent {
                         InfraSettings.TenantPM = myResponse.Result;
                         this.CurrentSession.CloseCurrentWindowEmit("ok");
 
-                        if (doChange) {
+                        if (isChanging) {
                             this.OpenChangeCurrencyWindow();
                         }
                     }

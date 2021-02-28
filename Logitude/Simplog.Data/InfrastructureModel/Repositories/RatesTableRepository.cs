@@ -113,25 +113,12 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             RatesTable myResult = null;
 
-            RatesTable lastRecord =
-                (from r in context.RatesTable
-                 where r.Tenant == tenant
-                 && r.ForeignCurrencyId == foreignCurrencyId
-                 && r.BaseCurrencyId == baseCurrencyId
-                 && r.ValueDate <= date
-                 select r).OrderByDescending(r => r.ValueDate).FirstOrDefault();
-
+            RatesTable lastRecord = this.GetSingleRatesTableByCurrenciesAndDate(tenant, foreignCurrencyId, baseCurrencyId, date);
 
             if (lastRecord == null)
             {
-                lastRecord =
-                    (from r in context.RatesTable
-                     where r.Tenant == tenant
-                     && r.ForeignCurrencyId == foreignCurrencyId
-                     && r.BaseCurrencyId == baseCurrencyId
-                     select r).OrderByDescending(r => r.ValueDate).ThenByDescending(o => o.LogDateTime).FirstOrDefault();
+                lastRecord = this.GetSingleRatesTableByCurrencies(tenant, foreignCurrencyId, baseCurrencyId);                    
             }
-
 
             if (lastRecord != null)
             {
@@ -144,7 +131,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                      && r.ValueDate == lastExistingDateTime
                      select r).OrderByDescending(r => r.LogDateTime).FirstOrDefault();
 
-
                 if (resultRecord != null)
                 {
                     myResult = resultRecord;                   
@@ -152,6 +138,25 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             }
 
             return myResult;
+        }
+        private RatesTable GetSingleRatesTableByCurrenciesAndDate(int tenant, string foreignCurrencyId, string baseCurrencyId, DateTime? date)
+        {
+            return
+                (from r in context.RatesTable
+                 where r.Tenant == tenant
+                 && r.ForeignCurrencyId == foreignCurrencyId
+                 && r.BaseCurrencyId == baseCurrencyId
+                 && r.ValueDate <= date
+                 select r).OrderByDescending(r => r.ValueDate).FirstOrDefault();
+        }
+        private RatesTable GetSingleRatesTableByCurrencies(int tenant, string foreignCurrencyId, string baseCurrencyId)
+        {
+            return
+                (from r in context.RatesTable
+                 where r.Tenant == tenant
+                 && r.ForeignCurrencyId == foreignCurrencyId
+                 && r.BaseCurrencyId == baseCurrencyId
+                 select r).OrderByDescending(r => r.ValueDate).ThenByDescending(o => o.LogDateTime).FirstOrDefault();
         }
     }
 }

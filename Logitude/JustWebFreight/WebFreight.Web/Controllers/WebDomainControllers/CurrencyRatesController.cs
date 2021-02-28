@@ -233,7 +233,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 args.Tenant = authToken.Tenant;
-                ChangeCurrencyManager changeCurrencyManager = new ChangeCurrencyManager(args);
+                SystemCurrencyChanger changeCurrencyManager = new SystemCurrencyChanger(args);
                 changeCurrencyManager.StartChange();
 
                 return Request.CreateResponse(HttpStatusCode.OK, "OK");
@@ -252,13 +252,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public List<LastRate> LastRates { get; set; }
     }
 
-    public class ChangeCurrencyManager
+    public class SystemCurrencyChanger
     {
         private ChangeCurrencyArgs myArgs;
         private Tenant myTenant;
         private TenantRepository tenantRepository;
         private RatesTableRepository ratesTableRepository;
-        public ChangeCurrencyManager(ChangeCurrencyArgs args)
+        public SystemCurrencyChanger(ChangeCurrencyArgs args)
         {
             this.myArgs = args;
 
@@ -366,21 +366,29 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 case "Accounting":
                     {
-                        RunStoredProcedureClass.RunChangeSystemCurrencyProcedure("dbo.usp_ChangeTenantLocalCurrency_Shipments", myArgs.NewCurrencyCode, myArgs.Tenant);
-                        RunStoredProcedureClass.RunChangeSystemCurrencyProcedure("dbo.usp_ChangeTenantLocalCurrency_Quotes", myArgs.NewCurrencyCode, myArgs.Tenant);
-                        RunStoredProcedureClass.RunChangeSystemCurrencyProcedure("dbo.usp_ChangeTenantLocalCurrency_ARInvoices", myArgs.NewCurrencyCode, myArgs.Tenant);
-                        RunStoredProcedureClass.RunChangeSystemCurrencyProcedure("dbo.usp_ChangeTenantLocalCurrency_APInvoices", myArgs.NewCurrencyCode, myArgs.Tenant);
-                        RunStoredProcedureClass.RunChangeSystemCurrencyProcedure("dbo.usp_ChangeTenantLocalCurrency_ARPayments", myArgs.NewCurrencyCode, myArgs.Tenant);
-                        RunStoredProcedureClass.RunChangeSystemCurrencyProcedure("dbo.usp_ChangeTenantLocalCurrency_APPayments", myArgs.NewCurrencyCode, myArgs.Tenant);
+                        this.RunAccountingStoredProcedures(myArgs.NewCurrencyCode, myArgs.Tenant);
                         break;
                     }
 
                 case "Profit":
                     {
-                        RunStoredProcedureClass.RunChangeSystemCurrencyProcedure("dbo.usp_ChangeTenantProfitCurrency", myArgs.NewCurrencyCode, myArgs.Tenant);
+                        this.RunProfitStoredProcedure(myArgs.NewCurrencyCode, myArgs.Tenant);
                         break;
                     }
             }
+        }
+        private void RunAccountingStoredProcedures(string newCurrencyCode, int tenant)
+        {
+            RunStoredProcedureClass.RunChangeSystemCurrencyProcedure("dbo.usp_ChangeTenantLocalCurrency_Shipments", newCurrencyCode, tenant);
+            RunStoredProcedureClass.RunChangeSystemCurrencyProcedure("dbo.usp_ChangeTenantLocalCurrency_Quotes", newCurrencyCode, tenant);
+            RunStoredProcedureClass.RunChangeSystemCurrencyProcedure("dbo.usp_ChangeTenantLocalCurrency_ARInvoices", newCurrencyCode, tenant);
+            RunStoredProcedureClass.RunChangeSystemCurrencyProcedure("dbo.usp_ChangeTenantLocalCurrency_APInvoices", newCurrencyCode, tenant);
+            RunStoredProcedureClass.RunChangeSystemCurrencyProcedure("dbo.usp_ChangeTenantLocalCurrency_ARPayments", newCurrencyCode, tenant);
+            RunStoredProcedureClass.RunChangeSystemCurrencyProcedure("dbo.usp_ChangeTenantLocalCurrency_APPayments", newCurrencyCode, tenant);
+        }
+        private void RunProfitStoredProcedure(string newCurrencyCode, int tenant)
+        {
+            RunStoredProcedureClass.RunChangeSystemCurrencyProcedure("dbo.usp_ChangeTenantProfitCurrency", newCurrencyCode, tenant);
         }
     }
     
