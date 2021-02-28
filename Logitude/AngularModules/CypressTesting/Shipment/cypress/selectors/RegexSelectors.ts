@@ -20,4 +20,16 @@ export class RegexSelectors {
     public static INTTRASettingsModeRadio(mode: string): string{
         return "#" + mode.charAt(0).toUpperCase() + mode.slice(1) + "_ModeRadio";
     }
+
+    public static AMANACView(TransportMode: string, AMANACView: string): string{
+        return "HyperlinkQuery[data-cy^=" + TransportMode + AMANACView + "]";
+    }
+
+    public static AMANACMarkeShipmentAs(MarkAs: string, ShipmentNumber: string): string{
+        return "button[data-cy^=Mark" + MarkAs + "_" + ShipmentNumber + "]";
+    }
+
+    public static AMANACShipmentNumber(ShipmentNumber: string): string{
+        return "td[data-cy^=ShipmentNumber_" + ShipmentNumber + "]";
+    }
 }

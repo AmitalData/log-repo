@@ -38,6 +38,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly DocsOutTab = '#ShipmentTHDocsOut';
   public static readonly DocsInTabb = '#ShipmentTHDocsIn';
   public static readonly Events = '#ShipmentTHEvents';
+  public static readonly CustomsTab = '#ShipmentTHCustoms';
   //#endregion
   //#region General tab
   public static readonly ShipmentGrossWeight = '#Shipment_GrossWeightInKG';
@@ -100,6 +101,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PackageWeight = '#ShipmentPackage_Weight';
   public static readonly AirPackageOKButton = '#OkAirPackage';
   public static readonly OceanPackageOKButton = '#OkOceanPackage';
+  public static readonly EditPackage = '#Edit';
   //#endregion
   //#region Routing tab fields
   public static readonly RoutingToggle = '#RoutingToggle';
@@ -123,6 +125,9 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly OnCarriage = '#OnCarriage';
   public static readonly ShipmentOnCarriageToPort = '#Shipment_OnCarriageToPortId';
   public static readonly OnCarriageOKBtn = '#OnCarriageOKBtn';
+  public static readonly MainCarrigeVessel = 'input[id^=Shipment_MainCarriageVesselId_]';
+  public static readonly MainCarrigeVoyageNo = 'input[id^=Shipment_MainCarriageCarrierNumber_]';
+
   //#endregion
   //#region Receivable tab fields
   public static readonly AddNewReceivableLine = '#AddReceivable button';
@@ -158,7 +163,6 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly AccountllyReopenButton = '#ShipmentBAccountedReopen';
   public static readonly ConfirmActionButton = '#ConfirmAction';
   //#endregion
-
   //#region Send docs tab
   public static readonly SendMessageButton = '#SendMessagebtn';
   public static readonly EmailSearchInput = '.LogitudeEmailSearchInput';
@@ -212,5 +216,19 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ContainsShipmentPackagesRequired = "Shipment Order Packages or Shipment Packages are required";
   public static readonly ContainsRequestBooking = "Request Booking";
   public static readonly ContainsStatus = "Status:";
+  //#endregion
+  //#region AMANAC
+  public static readonly AMANACTab = '#AMANAC';
+  public static readonly StatusValue = 'td[data-cy^=StatusValue]';
+  public static readonly StatusDate = 'td[data-cy^=StatusDate]';
+  public static readonly UserName = 'td[data-cy^=UserName]';
+  public static readonly CloseAMANACView = 'button[data-cy^=CloseAMANACView]';
+  public static readonly CloseExportingScreen = 'button[data-cy^=CloseExportingScreen]';
+  public static readonly ValidationMsg = 'div[data-cy^=ValidationMsg]';
+  public static readonly CustomsTransmissionsStatusValue = 'td[data-cy^=CustomsTransmissionsStatusValue]';
+  public static readonly CustomsTransmissionsStatusDate = 'td[data-cy^=CustomsTransmissionsStatusDate]';
+  public static readonly CustomsTransmissionsUserName = 'td[data-cy^=CustomsTransmissionsUserName]';
+  public static readonly CloseCustomsTransmissions = 'button[data-cy^=CloseCustomsTransmissions]';
+  public static readonly CustomsTransmissionsRetransfer = 'button[data-cy^=CustomsTransmissionsRetransfer]';
   //#endregion
 }
