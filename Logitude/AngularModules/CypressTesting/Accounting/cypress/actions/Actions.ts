@@ -349,22 +349,26 @@ export function FillExternalID(NotReadyValue:string,ExternalID:string){
     let EntitySelector:string;
     let ExternalIdSelectorTextBox:string
     let SaveCloseButton:string;
+    let Edit:string
 if(NotReadyValue==BaseSelectors.TestCompany){
     EntitySelector=AccountingSelectors.LogLovARInvoicePartnerId;
     ExternalIdSelectorTextBox=BaseSelectors.CustomerReceivablesAccountingCard;
     SaveCloseButton=BaseSelectors.CustomerSaveClose
+    Edit=AccountingSelectors.EditBillTo
 }
 else if(NotReadyValue==BaseSelectors.EUR){
     EntitySelector=ShipmentSelectors.LogLovShipmentReceivableCurrencyId;
     ExternalIdSelectorTextBox=BaseSelectors.CurrencyAccountingExternalCode
     SaveCloseButton=BaseSelectors.CurrencySaveClose
+    Edit=AccountingSelectors.EditInvoiceCurrency
 }
 else if(NotReadyValue==BaseSelectors.AirFreight){
     EntitySelector=ShipmentSelectors.LogLovShipmentReceivableChargesTypeId;
     ExternalIdSelectorTextBox=BaseSelectors.ChargesTypeReceivableCreditAccount
     SaveCloseButton=BaseSelectors.ChargesTypeSaveClose
+    Edit=AccountingSelectors.EditChargeType
 }
-  cy.get(BaseSelectors.SimpleGridViewRow).contains(NotReadyValue).parents(BaseSelectors.SimpleGridViewRow).find(BaseSelectors.EditPng).click()
+cy.Click(Edit,null,true)
   cy.Click(BaseSelectors.LogitudeWindow, BaseSelectors.ContainsAccounting);
   cy.FillLogTextBox(ExternalIdSelectorTextBox,ExternalID)
   cy.Click(SaveCloseButton, null);
@@ -394,7 +398,7 @@ export function ClickOnRowDependingOnARInvoiceNumber(ARInvoiceNumber:string){
 export function ExportARInvoice(ARInvoiceNumber:string){
     cy.get(BaseSelectors.SimpleGridViewRow).find(BaseSelectors.GridViewCell).contains(ARInvoiceNumber)
     .parents(BaseSelectors.SimpleGridViewRow)
-    .find(BaseSelectors.CheckBoxLabel).click({force:true})
+    .find(BaseSelectors.CheckBox).click({force:true})
     cy.Click(BaseSelectors.RedButton,AccountingSelectors.ContainExport)
 }
 export function CloseExportingInvoiceTransferWindow(){

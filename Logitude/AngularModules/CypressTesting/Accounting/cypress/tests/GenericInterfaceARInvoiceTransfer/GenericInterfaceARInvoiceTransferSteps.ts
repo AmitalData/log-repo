@@ -4,7 +4,7 @@ import { CustomerDetails } from '../../../../Common/cypress/models/CustomerDetai
 import * as BaseAssertion from '../../../../Base/cypress/actions/Assertion';
 import { ShipmentDetails } from '../../../../Shipment/cypress/models/ShipmentDetails';
 import { RequestAliases } from '../../../../Base/cypress/constants/RequestAliases';
-import * as AccountingActions from '../../../../Accounting/cypress/actions/Actions';
+import * as AccountingActions from '../../actions/Actions';
 import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors';
 import * as ShipmentActions from '../../../../Shipment/cypress/actions/Actions';
 import { ReceivableDetails } from "../../../../Shipment/cypress/models/ReceivableDetails"
@@ -12,7 +12,7 @@ import { ShipmentSelectors } from '../../../../Shipment/cypress/selectors/Select
 import { ARInvoiceDetails } from '../../models/ARInvoiceDetails';
 import { AccountingSelectors } from "../../selectors/Selectors";
 import * as BaseActions from '../../../../Base/cypress/actions/Actions';
-import { AccountingURLs } from '../../../cypress/constants/URLs';
+import { AccountingURLs } from '../../constants/URLs';
 import { RestAPI } from '../../../../Base/cypress/constants/RestAPI'
 
 //#region variables

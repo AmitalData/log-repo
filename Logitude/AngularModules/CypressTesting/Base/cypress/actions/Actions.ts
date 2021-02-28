@@ -31,24 +31,28 @@ export function ClearExternalIDFromShipmentLevel(ExternalIDName:string){
     let EntitySelector:string;
     let ExternalIdSelectorTextBox:string
     let SaveCloseButton:string;
+    let AccountingSelector:string
     if(ExternalIDName==BaseSelectors.ChargesType){
         EntitySelector=ShipmentSelectors.LogLovShipmentReceivableChargesTypeId;
         ExternalIdSelectorTextBox=BaseSelectors.ChargesTypeReceivableCreditAccount
         SaveCloseButton=BaseSelectors.ChargesTypeSaveClose
+        AccountingSelector=BaseSelectors.ChargesTypeAccounting
     }
     else if(ExternalIDName==BaseSelectors.Currency){
         EntitySelector=ShipmentSelectors.LogLovShipmentReceivableCurrencyId;
         ExternalIdSelectorTextBox=BaseSelectors.CurrencyAccountingExternalCode
         SaveCloseButton=BaseSelectors.CurrencySaveClose
+        AccountingSelector=BaseSelectors.CurrencyAccounting
     }
     else if(ExternalIDName==BaseSelectors.Partner){
         EntitySelector=AccountingSelectors.LogLovARInvoicePartnerId;
         ExternalIdSelectorTextBox=BaseSelectors.CustomerReceivablesAccountingCard;
         SaveCloseButton=BaseSelectors.CustomerSaveClose
+        AccountingSelector=BaseSelectors.CustomerAccounting
     }
     ClickOnMaintenanceButton(EntitySelector)
     ClickOnEditInMaintenanceButton();
-    cy.Click(BaseSelectors.LogitudeWindow, BaseSelectors.ContainsAccounting);
+    cy.Click(AccountingSelector, null);
     if(ExternalIDName==BaseSelectors.ChargesType){
         cy.DefineRequestWait(RestAPI.GET,AccountingURLs.EntityResourceAccountingPeriod,RequestAliases.EntityResourceAccountingPeriod)
         BaseAssertion.AssertStatusCode(RequestAliases.EntityResourceAccountingPeriod,200)

@@ -13,7 +13,6 @@ export class BaseSelectors extends RegexSelectors {
     //#region Maintenance
     public static readonly SystemSettings = "#CMS"
     public static readonly CustomsSettings = "#MaintenanceItemCISE"
-    public static readonly NullSearch = "#null_Search"
     //#endregion
     //#region charge Types
     public static readonly ChargesTypeAccounting="#ChargesTypeTHAccounting"
@@ -107,14 +106,12 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly FormFieldRow = ".FormFieldRow";
     public static readonly StartsWithAddButton = "button[id^='Add']";
     public static readonly StartsWithEditButton = "button[id^='Edit']";
-    public static readonly SimpleGridViewRow = ".SimpleGridViewRow";
     public static readonly SimpleGridViewHeaderDark = ".SimpleGridViewHeaderDark";
     public static readonly table = "table";
     public static readonly CheckBoxLabel = "label[id^='CheckBox']";
     public static readonly td = "td";
     public static readonly ul = "ul";
     public static readonly li = "li";
-    public static readonly ContainsClose = "Close";
     public static readonly ValidationSummaryBlock = ".ValidationSummary table tr td";
     public static readonly DropDownListItem = ".DropDownListItem";
     public static readonly Value = ".Value";

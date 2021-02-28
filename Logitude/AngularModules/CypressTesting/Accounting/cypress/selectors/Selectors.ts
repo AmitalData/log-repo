@@ -114,4 +114,14 @@ export class AccountingSelectors {
    public static readonly MissingCurrencyErrorMessage = 'Currency External Code is missing'
    public static readonly MissingAirFreightChargeTypeErrorMessage='Air Freight Charge Type Receivable Credit Account is missing'
    //#endregion
+   //#region  External
+   public static readonly ChargesTypeAccounting="#ChargesTypeTHAccounting"
+   public static readonly CurrencyAccounting="#CurrencyTHAccounting"
+   public static readonly CustomerAccounting= "#CustomerTHAccounting"
+   //#endregion
+   //#region edit external ARINvoice
+   public static readonly EditBillTo ='[data-cy="EditBillTo"]'
+   public static readonly EditInvoiceCurrency ='[data-cy="EditInvoiceCurrency"]'
+   public static readonly EditChargeType='[data-cy="EditChargeType"]'
+   //#endregion
 }

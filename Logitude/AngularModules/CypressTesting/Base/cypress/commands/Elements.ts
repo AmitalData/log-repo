@@ -113,10 +113,10 @@ Cypress.Commands.add("Click", (selector, contains, force = false) => {
     //let element = //.should('exist')
     cy.wait(1000);
     if (contains) {
-        cy.getAttached(selector).contains(contains, { matchCase: false }).click({force:force})
+        cy.get(selector).contains(contains, { matchCase: false }).click({force:force})
     }
     else{
-        cy.getAttached(selector).click({force:force})
+        cy.get(selector).click({force:force})
     }
 })
 
