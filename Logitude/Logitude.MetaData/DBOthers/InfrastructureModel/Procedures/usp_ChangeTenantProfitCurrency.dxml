@@ -18,13 +18,9 @@ AS
 
 declare @NewProfitCurrencyId as varchar(15)
 declare @CurrentLocalCurrencyId as varchar(15)
-declare @CurrentProfitCurrencyId as varchar(15)
-declare @CurrentProfitCurrencyCode as varchar(3)
 
 set @NewProfitCurrencyId = (select Id from Currencies where Tenant = @Tenant and Code = @NewCurrencyCode)
 set @CurrentLocalCurrencyId = (select CurrencyId from Tenants where Id = @Tenant)
-set @CurrentProfitCurrencyId = (select ProfitCurrencyId from Tenants where Id = @Tenant)
-set @CurrentProfitCurrencyCode = (select Code from Currencies where Tenant = @Tenant and Id = @CurrentProfitCurrencyId)
 
 if not exists (select * from Tenants where Id = @Tenant)
 begin
@@ -44,14 +40,7 @@ end
 else
 begin
        SET NOCOUNT ON
-       print 'Starting...'
-       print ''
-       print 'Tenant: ' + Convert(varchar,@Tenant)
-       print 'Current Profit Currency: ' + @CurrentProfitCurrencyCode
-       print 'The New Profit Currency: ' + @NewCurrencyCode
-       print ''
-       
-       update Tenants set ProfitCurrencyId = @NewProfitCurrencyId where Id = @Tenant
+       print 'Starting...'       
        update Shipments set ProfitCurrencyId = @NewProfitCurrencyId where Tenant = @Tenant
        update ARInvoices set ProfitCurrencyId = @NewProfitCurrencyId where Tenant = @Tenant
        update APInvoices set ProfitCurrencyId = @NewProfitCurrencyId where Tenant = @Tenant
@@ -309,7 +298,7 @@ begin
                            declare @APInvoiceAmountDueInProfit as float
 
                            set @APInvoiceRate = dbo.GetLastRate(@Tenant,@APInvoiceDate,@CurrentLocalCurrencyId,@NewProfitCurrencyId)
-
+                                                       
                            -- Update APInvoiceLines
                            BEGIN
                                   declare @APInvoiceLineNumber as varchar(15)

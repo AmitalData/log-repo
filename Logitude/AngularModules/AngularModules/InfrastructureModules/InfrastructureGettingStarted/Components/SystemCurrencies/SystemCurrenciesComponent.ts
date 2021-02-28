@@ -230,8 +230,7 @@ export class SystemCurrenciesComponent extends BaseComponent {
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     var logWindow = new LogitudeWindow();
-                    logWindow.Width = 500;
-                    logWindow.Height = 500;
+                    logWindow.IsOverWindow = true;
                     logWindow.WindowArgs = { TenantPM: this.TenantPM, Type: this.Type };
                     logWindow.Title = "Change " + this.Type + " Currency";
                     logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/SystemCurrencies/ChangeCurrencyComponent');

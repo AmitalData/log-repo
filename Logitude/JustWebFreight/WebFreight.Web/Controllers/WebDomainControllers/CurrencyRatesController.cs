@@ -351,7 +351,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             ratesTable.BaseCurrencyId = lastRate != null ? lastRate.BaseCurrencyId : myTenant.CurrencyId;
             ratesTable.ForeignCurrencyId = lastRate != null ? lastRate.ForeignCurrencyId : myArgs.NewCurrencyId;
             ratesTable.LogDateTime = TenantServerConfigration.GetCurrentDateTime(myArgs.Tenant);
-            ratesTable.ValueDate = TenantServerConfigration.GetCurrentDateTime(myArgs.Tenant);
+            ratesTable.ValueDate = TenantServerConfigration.GetCurrentDateTime(myArgs.Tenant).Date;
             ratesTable.Rate = lastRate != null ? lastRate.Rate : myArgs.ProfitCurrencyRate;
             return ratesTable;
         }
@@ -390,7 +390,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string NewCurrencyId { get; set; }
         public string NewCurrencyCode { get; set; }
         public string Type { get; set; }
-        public int? ProfitCurrencyRate { get; set; }
+        public double? ProfitCurrencyRate { get; set; }
         public List<LastRate> LastRates { get; set; }
     }
 }

@@ -44,7 +44,7 @@
                                 </td>
 
                                 <td style="width: 230px;">
-                                    <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'ProfitCurrencyRate'" [DataContext]="DataContext" [Text]="ProfitCurrencyRate"></LogTextBox>
+                                    <LogTextBox [InputType]="'double'" [NoObjectField]="true" [ObjectFieldName]="'ProfitCurrencyRate'" [DataContext]="DataContext" [Text]="ProfitCurrencyRate"></LogTextBox>
                                 </td>
 
                                 <td>
@@ -90,7 +90,7 @@
                                             </td>
 
                                             <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;">
-                                                <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'Rate'" [DataContext]="item.DataContext" [HideColumns]="true" [Text]="item.Rate"></LogTextBox>
+                                                <LogTextBox [NoObjectField]="true" [InputType]="'double'" [ObjectFieldName]="'Rate'" [DataContext]="item.DataContext" [HideColumns]="true" [Text]="item.Rate"></LogTextBox>
                                             </td>
 
                                             <td class="CellTools">
