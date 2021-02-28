@@ -248,13 +248,16 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                         declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
                     }
 
-                    FeatureQuery featureQuery = new FeatureQuery();
-                    var usrid = AuthenticationUtil.ResolveUserId(_MyDeclarationPM.Tenant);
-                    var features = featureQuery.GetAllowedFeaturesForLoggedUser(usrid, _MyDeclarationPM.Tenant);
-                    var feature = features.Features.FirstOrDefault(x => x.Code == "SendDeclaration902");
-                    if (feature != null)
+                    if (_MyDeclarationPM.ImporterId != null || _MyDeclarationPM.ImporterCode != null)
                     {
-                        SendGenericRequest();
+                        FeatureQuery featureQuery = new FeatureQuery();
+                        var usrid = AuthenticationUtil.ResolveUserId(_MyDeclarationPM.Tenant);
+                        var features = featureQuery.GetAllowedFeaturesForLoggedUser(usrid, _MyDeclarationPM.Tenant);
+                        var feature = features.Features.FirstOrDefault(x => x.Code == "SendDeclaration902");
+                        if (feature != null)
+                        {
+                            SendGenericRequest();
+                        }
                     }
 
                 }
