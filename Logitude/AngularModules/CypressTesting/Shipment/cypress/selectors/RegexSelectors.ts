@@ -46,4 +46,8 @@ export class RegexSelectors {
     public static PackageGrid(cellNumber: string): string{
         return "div[id^='edit-log-grid_'][id$='" + cellNumber +"_0"+ "']";
     }
+    
+    public static OkButton(mode: string): string{
+        return "Ok" + mode +"Package";
+    }
 }

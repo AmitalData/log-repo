@@ -1,21 +1,20 @@
 @release @all
-Feature: AMANAC - Ocean Shipment
+Feature: AMANAC Air Shipment Validations, Marked as Blocked, Marked as Not Blocked, Transfers and Retransfer
 
-    After the user logging in the system and setup AMANAC settings
-    will create an export ocean FCL shipment, after that marke it as (not)blocked for transfer.
-    then check the validation message when export it before filling all mandatory fields
-    fill them it will be exported successfully, finally will retransfer it. 
+    The user configures AMANAC customs for the tenant, creates Direct Export Air shipment,
+    adds packages, marks the shipment as blocked for transfer, marks the shipment as not blocked for transfer,
+    transfers shipment, checks and fixes validation, transfers shipment again, edit shipment and retransfers.
 
     Scenario: AMANAC setup
         Given the user logged in and navigates to "customs settings" in maintenance menu
         When set local customs interface to "AMANAC ( Mexico )"
         Then the AMANAC workspace should appear in operations menu
 
-    Scenario: Create export ocean FCL shipment
+    Scenario: Create export air shipment
         Given the user in shipment workspace
         And a shipment with the following details
-            | ShipmentLevel | Direction | TransportMode | ShipmentType | Shipper           | MainCarriageFromPort | MainCarriageToPort |
-            | Direct        | Export    | Ocean         | FCL          | TestShipperExport | LHR                  | MIA                |
+            | ShipmentLevel | Direction | TransportMode | Shipper           | MainCarriageFromPort | MainCarriageToPort |
+            | Direct        | Export    | Air           | TestShipperExport | LHR                  | MIA                |
         When create shipment
         Then the shipment should create successfully
 
@@ -35,11 +34,11 @@ Feature: AMANAC - Ocean Shipment
         Then a validation message "Please fill all the mandatory fields before exporting to AMANAC" should appear
 
     Scenario: Fill all mandatory fields
-        Given the user add "MSCU" as shipping line
+        Given the user add "AA" as air line
         And add package with the following details
-            | PackageType | GrossWeight |
-            | PC2         | 100         |
-        And edit main carriage leg with "123456" as voyage no and "PT" as vessel
+            | Quantity | Length | Width | Height | GrossWeight |
+            | 1        | 20     | 40    | 60     | 100         |
+        And edit main carriage leg with random MAWB number
         When update shipment
         Then the shipment should update successfully
 
