@@ -15,7 +15,7 @@ import { ShipmentSelectors } from "../../selectors/Selectors";
 let ShipmentNumber: string;
 
 Given("the customer care user logged in and navigate to maintenance menu", () => {
-    INTTRAActions.LoginAsCustomerCare();
+    cy.Login(true);
     INTTRAActions.NavigateToMaintenanceMenu();
 });
 
