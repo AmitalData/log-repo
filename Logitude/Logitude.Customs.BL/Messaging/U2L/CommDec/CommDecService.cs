@@ -650,6 +650,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                             if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD != null && currentDeclarationCourierStatusPM.TotalInvoiceAmountInUSD < 150)
                             {
                                 this._MyDeclarationPM.ImporterCode = null;
+                                this._MyDeclarationPM.ImporterId = null;
                             }
                         }
                     }
