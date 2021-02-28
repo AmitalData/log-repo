@@ -342,8 +342,8 @@ export function AssertTransferStatus(TransferStatus:string){
 }
 export function AssertTransferError(ARInvoiceNumber:string,ErrorMessage:string){
     cy.get(BaseSelectors.DivListItem).find(BaseSelectors.TextTrimming).contains(ARInvoiceNumber)
-  .parents(BaseSelectors.RowClass).find(BaseSelectors.TextTrimming).eq(3)
-  .should('contain',ErrorMessage)
+  .parents(BaseSelectors.RowClass).find(BaseSelectors.TextTrimming)
+  .contains(ErrorMessage)
 }
 export function FillExternalID(NotReadyValue:string,ExternalID:string){
     let EntitySelector:string;
