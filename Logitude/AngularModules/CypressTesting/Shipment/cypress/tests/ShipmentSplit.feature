@@ -1,7 +1,9 @@
 @smoke @not-stable @all
 Feature: Split shipment
-    After the user logging in the system and navigate to shipments workspace
-    will create a direct shipment , Add Containers then split it.
+    The user creates a shipment, adds two containers,
+    splits the shipment by moving one of the containers to a new shipment,
+    checks to make sure that the new shipment has the moved container and checks the original shipment to
+    make sure it has the remaining container.
 
     Scenario: Create direct export air shipment
         Given the user logged in and navigates to shipments workspace

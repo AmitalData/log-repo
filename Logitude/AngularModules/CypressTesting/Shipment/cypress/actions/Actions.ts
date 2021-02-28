@@ -10,8 +10,6 @@ import { URLs } from '../constants/URLs';
 import { RestAPI } from '../../../Base/cypress/constants/RestAPI';
 import { RequestAliases } from '../../../Base/cypress/constants/RequestAliases';
 import * as Conditions from "../actions/Conditions";
-import { AccountingURLs } from '../../../Accounting/cypress/constants/URLs';
-import { AccountingSelectors } from '../../../Accounting/cypress/selectors/Selectors';
 import { BaseURLs } from '../../../Base/cypress/constants/URLs';
 import { QuickSearchDetails } from '../../../Base/cypress/models/QuickSearchDetails';
 import { verify } from 'cypress/types/sinon';
@@ -84,7 +82,7 @@ export function PartialSplitShipment(packagesDetails: PackagesDetails){
 export function CancelShipment(note :string) {
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
     cy.Click(ShipmentSelectors.CancelShipmentButton, null);
-    cy.FillLogTextBox(ShipmentSelectors.ShipmentEventNote ,note,true)
+    cy.FillLogTextBox(ShipmentSelectors.ShipmentEventNote ,note)
     UpdateShipment(ShipmentSelectors.ConfirmActionButton);
 }
 
@@ -462,10 +460,15 @@ export function FillShippingLineInOrdersTab(ShippingLine: string) {
 }
 
 export function FillVoyageNoVesselInRoutingsTab(VoyageNo: string, Vessel: string) {
-    cy.Click(ShipmentSelectors.RoutingsTab, null);
-    cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
+    NavigateToEditMAinCarriage()
     cy.FillLogTextBox(ShipmentSelectors.MainCarrigeVoyageNo, VoyageNo)
     cy.FillLogLov(ShipmentSelectors.MainCarrigeVessel, Vessel, true)
+    cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
+}
+
+export function FillMAWBInRoutingsTab() {
+    NavigateToEditMAinCarriage()
+    cy.FillRandomNumber(ShipmentSelectors.ShipmentMAWB, 10000000, 99999999);
     cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
 }
 
@@ -473,7 +476,7 @@ export function EditPackageGrossWeightPackagesTab(GrossWeight: string) {
     cy.Click(ShipmentSelectors.PackagesTab, null)
     cy.Click(ShipmentSelectors.EditPackage, null)
     cy.FillLogTextBox(ShipmentSelectors.PackageWeight, GrossWeight)
-    cy.Click(ShipmentSelectors.OceanPackageOKButton, null)
+    cy.Click(BaseSelectors.RedButton, null)
 }
 
 export function Retransfer() {
@@ -590,4 +593,9 @@ function FillMainCarriagePorts(shipmentDetails: ShipmentDetails) {
 
 function FillMasterAgent(shipmentDetails: ShipmentDetails) {
     cy.FillLogLov(ShipmentSelectors.MasterAgent, shipmentDetails.Agent, false)
+}
+
+function NavigateToEditMAinCarriage(){
+    cy.Click(ShipmentSelectors.RoutingsTab, null);
+    cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
 }

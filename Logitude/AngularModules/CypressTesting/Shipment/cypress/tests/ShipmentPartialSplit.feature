@@ -1,7 +1,9 @@
 @smoke @not-stable @all
 Feature: Partial Split shipment
-    After the user logging in the system and navigate to shipments workspace
-    will create a direct shipment , Add Packages then split it.
+    The user creates a shipment, adds packages,
+    splits the shipment by moving part of the packages to a new shipment,
+    checks to make sure that the new shipment has the moved parts of the packages and checks the original shipment to
+    make sure it has the remaining parts of the packages.
 
     Scenario: Create direct export air shipment
         Given the user logged in and navigates to shipments workspace
