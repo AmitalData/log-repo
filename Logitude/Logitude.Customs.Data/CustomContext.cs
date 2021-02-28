@@ -430,6 +430,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new FaultInspectionTypeMap());
 	
+            modelBuilder.Configurations.Add(new FclLclCodeMap());
+	
             modelBuilder.Configurations.Add(new FreightPaymentMethodMap());
 	
             modelBuilder.Configurations.Add(new FuelTypeMap());
@@ -2324,6 +2326,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<FaultInspectionType> FaultInspectionTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<FclLclCode> FclLclCodes 
 	 {
 	      get; set;
 	 

@@ -97,7 +97,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FclLcl, 
 	         PackageQuantity, 
 	         ForwarderId, 
-	         ForwarderName,
+	         ForwarderName, 
+	         FclLclName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -608,10 +609,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.Team)) //T4 find type == nText 
             {
                 entityPM.Team = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Team));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.FclLcl)) //T4 find type == nText 
-            {
-                entityPM.FclLcl = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.FclLcl));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

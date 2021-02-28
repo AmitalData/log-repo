@@ -65,7 +65,7 @@ namespace Logitude.Customs.Data.Repsitories
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
             return (from a in context.Declarations
-                    where ((a.Id == id && a.AmendmentDontDisplayInList == false) || (a.AmendmentOriginalDeclartation == id && a.AmendmentDontDisplayInList == false))
+                    where ((a.Id == id && a.AmendmentDontDisplayInList == false && a.DeclarationNumber != null) || (a.AmendmentOriginalDeclartation == id &&    a.DeclarationNumber != null && a.AmendmentDontDisplayInList == false))
                     && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
@@ -287,6 +287,20 @@ namespace Logitude.Customs.Data.Repsitories
             return (from a in context.Declarations
                     where a.Id == keys.Id
                     select a);
+        }
+        public Declaration GetByCustomFileNo(string customFileNo, int tenant)
+        {
+
+            if (String.IsNullOrWhiteSpace(customFileNo)) return null;
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+            return
+                  (
+                  from rec in context.Declarations
+                  where rec.CustomFileNo == customFileNo && rec.Tenant == tenant
+                  select rec
+                  )
+                  .FirstOrDefault();
         }
         public string GetIdByCustomFileNo(string customFileNo, int tenant)
         {
@@ -596,7 +610,7 @@ namespace Logitude.Customs.Data.Repsitories
             return dec != null ? dec.CustomFileNo : null;
         }
 
-        public Declaration GetByCustomFileNo(string customFileNo, int tenant)
+        public Declaration GetDeclarationByCustomFileNo(string customFileNo, int tenant)
         {
             if (String.IsNullOrWhiteSpace(customFileNo)) return null;
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 

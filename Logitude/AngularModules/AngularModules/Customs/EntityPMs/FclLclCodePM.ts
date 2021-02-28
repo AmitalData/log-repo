@@ -14,7 +14,7 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
-export class ReleaseMessageTypePM {
+export class FclLclCodePM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -29,9 +29,9 @@ export class ReleaseMessageTypePM {
     public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
        
 	 
-    private englishName: string;
-    public get EnglishName() { return this.englishName; }
-    public set EnglishName(newValue: string) { if (this.englishName != newValue) { this.englishName = newValue; this.MarkAsDirty("EnglishName"); } }
+    private name: string;
+    public get Name() { return this.name; }
+    public set Name(newValue: string) { if (this.name != newValue) { this.name = newValue; this.MarkAsDirty("Name"); } }
        
 	 
     private searchFields: string;
@@ -39,18 +39,8 @@ export class ReleaseMessageTypePM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
-    private localName: string;
-    public get LocalName() { return this.localName; }
-    public set LocalName(newValue: string) { if (this.localName != newValue) { this.localName = newValue; this.MarkAsDirty("LocalName"); } }
-       
-	 
-    private inactive: boolean;
-    public get Inactive() { return this.inactive; }
-    public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
-       
-	 
 
-    public OldEntityPM: ReleaseMessageTypePM;
+    public OldEntityPM: FclLclCodePM;
 		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
@@ -61,13 +51,13 @@ export class ReleaseMessageTypePM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.ReleaseMessageType");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.FclLclCode");
            
         }
        }
     }
 
-    private MyClone: ReleaseMessageTypePM;
+    private MyClone: FclLclCodePM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);
