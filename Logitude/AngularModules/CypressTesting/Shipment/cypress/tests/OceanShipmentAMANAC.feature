@@ -1,3 +1,4 @@
+@release @all
 Feature: AMANAC - Ocean Shipment
 
     After the user logging in the system and setup AMANAC settings
