@@ -166,7 +166,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             
             */
 
-
             var qJoin =
 (from p in context.CourierDeclarations
  //join dec in context.Declarations
@@ -185,42 +184,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
  select new { p.CourierMasterId, p.CourierMaster/*, myDeclarations*/, myDeclarationCourierStatuses }
  );
 
-            int tenant = 1;
-            try
-            {
-
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                tenant = authToken.Tenant;
-            }
-            catch (Exception)
-            {
-
-                // throw;
-            }
-            string id900 = "900";
-            string id902 = "902";
-
-            bool isCourierEnv = context.CustomsSettings.FirstOrDefault(r => r.Tenant == tenant).CompanyType == "B";
-            if (isCourierEnv)
-            {
-                var pend900 = context.CourierPendingReasons.FirstOrDefault(r => r.Code == "900" && r.Tenant==tenant);
-                id900 = pend900 != null ? pend900.Id : "900";
-                var pend902 = context.CourierPendingReasons.FirstOrDefault(r => r.Code == "902" && r.Tenant == tenant);
-                id902 = pend902 != null ? pend902.Id : "902";
-            }
-            
-            
-
             var qMyJoin =
                 (
                 from rec in qJoin
-
-                //join p in context.CourierPendingReasons.Where(r=>r.Tenant = )
-                //let pend900 = context.CourierPendingReasons.FirstOrDefault(r => r.Code == "900"  && r.Tenant== rec.CourierMaster.Tenant)
-                //let id900 = pend900 != null ? pend900.Id : "900"
-                //let pend902 = context.CourierPendingReasons.FirstOrDefault(r => r.Code == "902" && r.Tenant == rec.CourierMaster.Tenant)
-                //let id902 = pend902 != null ? pend902.Id : "902"
                 select new MyDecJoin
                 {
                     DeclarationId = rec.myDeclarationCourierStatuses.DeclarationId/*myDeclarations.Id*/,
@@ -229,8 +195,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     //FastIndividualProcessName = "",
                     FastIndividualProcessCode = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.FastIndividualProcessCode : null,
                     TotalInvoiceAmountInUSD = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.TotalInvoiceAmountInUSD : null,
-                    IsPending902 = rec.myDeclarationCourierStatuses != null ? (rec.myDeclarationCourierStatuses.CourierPendingReasonList.Contains(id902) ? true : false) : false,
-                    IsPending900 = rec.myDeclarationCourierStatuses != null ? (rec.myDeclarationCourierStatuses.CourierPendingReasonList.Contains(id900) ? true : false) : false,
+                    IsPending902 = rec.myDeclarationCourierStatuses != null ? (rec.myDeclarationCourierStatuses.CourierPendingReasonList.Contains("902") ? true : false) : false,
+                    IsPending900 = rec.myDeclarationCourierStatuses != null ? (rec.myDeclarationCourierStatuses.CourierPendingReasonList.Contains("900") ? true : false) : false,
                     CourierPendingReasonList = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.CourierPendingReasonList : null,
                     MAWB = rec.CourierMaster != null ? rec.CourierMaster.MAWB : null,
                     IsCourierMissingClassification = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.IsCourierMissingClassification : false,
@@ -276,7 +242,20 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 var s = q1stConsignments.ToList();
                 /*var pr = qCourierPendingReasonLocalName.ToList();*/
             }
-            
+            int tenant = 1;
+            try
+            {
+
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                tenant = authToken.Tenant;
+            }
+            catch (Exception)
+            {
+
+                // throw;
+            }
+            bool isCourierEnv = context.CustomsSettings.FirstOrDefault(r => r.Tenant == tenant).CompanyType =="B" ;
             if (!isCourierEnv)
             {
                 qMyJoin = (from rec in context.CourierDeclarations.Where(r => r.DeclarationId == "-1")
