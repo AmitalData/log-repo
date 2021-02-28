@@ -198,9 +198,8 @@
     <Compile Include="CoreBL\AutomaticReconcileService.cs" />
     <Compile Include="CoreBL\BankAccountPages\BankAccountPageAnalyzer.cs" />
     <Compile Include="CoreBL\BankAccountPages\BankAccountPagesExample.cs" />
-    <Compile Include="CoreBL\BuildTenant\MumpsOpenReconcile\MumpsData.cs" />
     <Compile Include="CoreBL\BuildTenant\MumpsOpenReconcile\OpenRecoDataValidation.cs" />
-    <Compile Include="CoreBL\BuildTenant\MumpsOpenReconcile\UpdateAccount.cs" />
+    <Compile Include="CoreBL\BuildTenant\MumpsOpenReconcile\UpdateOpenReconcile.cs" />
     <Compile Include="CoreBL\DuplicatedJournalsVoidingService.cs" />
     <Compile Include="CoreBL\BankDepositRedeemedChequesVerifyService.cs" />
     <Compile Include="CoreBL\BankDeposit\BankDepositJournalCreator.cs" />

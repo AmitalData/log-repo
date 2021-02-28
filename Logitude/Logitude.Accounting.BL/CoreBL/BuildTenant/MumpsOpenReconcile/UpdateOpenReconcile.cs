@@ -10,23 +10,24 @@ using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.CoreBL.BuildTenant.MumpsOpenReconcile
 {
-    public class UpdateAccount
+    public class UpdateOpenReconcile
     {
-        public void DoAccount100(List<MMPSDataM> rows)
+        //int TENANT_DYS = 3;
+        public void DoAccount100(int TENANT_DYS,List<MMPSDataM> rows)
         {
             try
             {
-                using (var scope= TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(2))
+                using (var scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(2)))
                 {
 
-                
-                var currentContext = AccountingContext.GetContext(3);
+
+                    var currentContext = AccountingContext.GetContext(TENANT_DYS);
 
                     foreach (var gg in rows.GroupBy(r => r.InternalNumber))
                     {
 
 
-                        var glaccount = currentContext.GLAccounts.FirstOrDefault(r => r.InternalNumber == gg.Key && r.Tenant == 3);
+                        var glaccount = currentContext.GLAccounts.FirstOrDefault(r => r.InternalNumber == gg.Key && r.Tenant == TENANT_DYS);
                         if (glaccount == null)
                         {
                             LogMessagingUtil.Instance.AppendLine($"Error InternalNumber not exit {gg.Key} count {gg.Count()}");
@@ -36,7 +37,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant.MumpsOpenReconcile
                         foreach (MMPSDataM row in gg)
                         {
                             var qLedger = currentContext.LedgerTransactions
-                                .Where(r => r.Tenant == 3)
+                                .Where(r => r.Tenant == TENANT_DYS)
                                 .Where(r => r.AccountId == glaccount.Id)
                                 ;
                             if (!string.IsNullOrWhiteSpace(row.Ref1))
@@ -58,7 +59,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant.MumpsOpenReconcile
                             }
                             var qJoin = (from l in qLedger
                                          join j in currentContext.Journals
-                                         .Where(r => r.Tenant == 3)
+                                         .Where(r => r.Tenant == TENANT_DYS)
                                          .Where(r => r.ExternalNo == row.ExternalNo)
                                          on l.JournalId equals j.Id
                                          select l

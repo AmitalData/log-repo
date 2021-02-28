@@ -92,6 +92,7 @@ using Logitude.BL.DataContracts;
 using Logitude.Update.Helper;
 using Simplog.Server.Infrastructure.Interfaces;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.Update.SandBox;
 
 namespace Logitude.Update
 {
@@ -4611,6 +4612,17 @@ User/Pass",
         {
             FixDuplicatedJournals fixDuplicatedJournalsForm = new FixDuplicatedJournals();
             fixDuplicatedJournalsForm.ShowDialog(this);
+        }
+
+        private void mumpsOpenReconcileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void accountingTesterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var formAccountingTester = new FormAccountingTester();
+            formAccountingTester.ShowDialog();
         }
     }
 

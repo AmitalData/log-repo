@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logitude.Server.Tools.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,21 +11,32 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant.MumpsOpenReconcile
     {
         public StringBuilder Errors = new StringBuilder();
         public List<MMPSDataM> GoodRows = new List<MMPSDataM>();
-        public void GetDataAndValid()
-        {
-            var m = new MumpsData();
+        public void GetDataAndValid(string csvText)
+        { 
+
             //var sb  =new StringBuilder();
-            var list =m.GetData().Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            var list = csvText.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
             foreach (var line in list)
             {
                 var fields=line.Split(',').ToList();
                 if (fields.Count!= 7)
                 {
-                    Errors.AppendLine($"error 7 field {line}");
+                    LogIt($"error 7 field {line}");
                     continue;
                 }
                 try
                 {
+                    if (string.IsNullOrWhiteSpace(fields[5]))
+                    {
+                        LogIt($"error OriginAmount is null field {line}");
+                        continue;
+                    }
+                    if (string.IsNullOrWhiteSpace(fields[6]))
+                    {
+                        LogIt($"error OpenAmount is null field {line}");
+                        continue;
+                    }
+
                     var newRow = new MMPSDataM(line)
                     {
                         InternalNumber = fields[0],
@@ -39,33 +51,71 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant.MumpsOpenReconcile
                     };
                     if (string.IsNullOrWhiteSpace(newRow.InternalNumber))
                     {
-                        Errors.AppendLine($"error InternalNumber is null field {line}");
+                        LogIt($"error InternalNumber is null field {line}");
+                        
                         continue;
                     }
 
                     if (string.IsNullOrWhiteSpace(newRow.ExternalNo))
                     {
-                        Errors.AppendLine($"error ExternalNo is null field {line}");
+                        LogIt($"error ExternalNo is null field {line}");
                         continue;
                     }
                     if (string.IsNullOrWhiteSpace(newRow.Ref1))
                     {
-                        Errors.AppendLine($"error Ref1 is null field {line}");
-                        continue;
+                        //LogIt($"warning Ref1 is null field {line}");
+                        //continue;
                     }
+                    if (newRow.OriginAmount>=0)
+                    {
+                        if (newRow.OpenAmount<0)
+                        {
+                            LogIt($"error OriginAmount>=0 but newRow.OpenAmount<0 {line}");
+                            continue;
 
+                        }
+                        if (newRow.OriginAmount <newRow.OpenAmount )
+                        {
+                            LogIt($"error OriginAmount>=0 but newRow.OriginAmount <newRow.OpenAmount {line}");
+                            continue;
+
+                        }
+
+                    }
+                    else//OriginAmount < 0
+                    {
+                        
+                        if (newRow.OpenAmount >= 0)
+                        {
+                            LogIt($"error OriginAmount<0 but newRow.OpenAmount > 0{line}");
+                            continue;
+
+                        }
+                        if ( newRow.OpenAmount< newRow.OriginAmount)
+                        {
+                            LogIt($"error OriginAmount>=0 but newRow.OpenAmount< newRow.OriginAmount {line}");
+                            continue;
+
+                        }
+                    }
                     GoodRows.Add(newRow);
 
                 }
                 catch (Exception)
                 {
 
-                    Errors.AppendLine($"error decimal  {line}");
+                    LogIt($"error decimal  {line}");
                 }
                 
 
             }
 
+        }
+
+        private void LogIt(string mess)
+        {
+            LogMessagingUtil.Instance.AppendLine(mess);
+            
         }
     }
     public class MMPSDataM
@@ -85,5 +135,8 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant.MumpsOpenReconcile
         public string Ref2 { get; internal set; }
         public decimal OriginAmount { get; internal set; }
         public decimal OpenAmount { get; internal set; }
+
+
+        public string RecordValidation { get; internal set; }
     }
 }
