@@ -58,6 +58,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ContainsClose = "Close"
     public static readonly ContainsExport = 'Export'
     public static readonly ContainsSendtoCustoms = "Send to Customs"
+    public static readonly  ContainSave="Save"
 
     //#endregion
     //#region general
@@ -138,5 +139,6 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ColorGreenClass=".ColorGreen"
     public static readonly buttonspan= "button span"
     public static readonly FillParentClass=".FillParent"
-    
+    public static readonly ConfirmWindow="[class=ConfirmWindow]"
+   
 }
