@@ -349,7 +349,7 @@ export function AddSecondInvoiceToConsolidation(ARInvoiceNumber: string) {
 export function AssertTransferStatus(TransferStatus: string) {
     cy.get(BaseSelectors.HeaderScreen).eq(1).find(BaseSelectors.HeaderScreenLable)
         .contains(AccountingSelectors.ContainTransferStatus)
-        .parents(BaseSelectors.tr)
+        .parents(BaseSelectors.tr).first()
         .find(BaseSelectors.HeaderScreenValue)
         .should("contain.text", TransferStatus)
 }
