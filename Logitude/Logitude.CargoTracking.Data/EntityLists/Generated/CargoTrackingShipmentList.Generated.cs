@@ -155,7 +155,7 @@ namespace Logitude.CargoTracking.Data.EntityLists
        [DataMember]
        public DateTime? AssignedTruckerDate  { get; set; }
        [DataMember]
-       public DateTime? AssignedTruckerEstimationDate  { get; set; }
+       public DateTime? AssignedTruckerEstimationDate { get; set; }
        [DataMember]
        public string AssignedTruckerNotes  { get; set; }
    }
