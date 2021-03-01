@@ -462,7 +462,9 @@ export function AMANACMarkeShipmentAs(MarkAs: string, ShipmentNumber: string) {
 }
 
 export function AMANACExportAShipment(ShipmentNumber: string) {
+    cy.Click(ShipmentSelectors.CheckAll, null);
     SearchAShipmentInNullSearch(ShipmentNumber);
+    cy.Click(ShipmentSelectors.CheckShipment(ShipmentNumber), null);
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsExport);
 }
 

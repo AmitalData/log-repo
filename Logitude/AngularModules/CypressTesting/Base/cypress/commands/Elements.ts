@@ -95,7 +95,7 @@ Cypress.Commands.add("FillLogLov", (selector, value, fromCache, getByFilters = f
     }
 
     //cy.get(selector).clear().type(value)
-    cy.get(selector).type("{selectall}" + value,{delay:5})
+    cy.get(selector).clear().type("{selectall}" + value,{delay:5})
 
     if (!fromCache) {
         cy.wait("@LOVDataLoaded")
