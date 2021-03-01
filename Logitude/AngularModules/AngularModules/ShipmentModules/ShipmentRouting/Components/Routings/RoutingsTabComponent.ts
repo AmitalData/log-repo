@@ -658,67 +658,91 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
     AddChildLeg(myLegType: string, myRoutingItem: RoutingItem) {
         switch (myLegType) {
             case "Pick Up": {
-                var myChildPickUpIndex = 2;
-                if (myRoutingItem.Pickup.ChildPickUpIndex) {
-                    myChildPickUpIndex = myRoutingItem.Pickup.ChildPickUpIndex + 1;
-                }
-
-                var newPickupPM = new ShipmentPickUpPM(null);
-                newPickupPM.FullResponsibility = true;
-                newPickupPM.Tenant = this.EntityPM.Tenant;
-                newPickupPM.ShipmentId = this.EntityPM.Id;
-                newPickupPM.ShipmentNumber = this.EntityPM.ShipmentNumber;
-                newPickupPM.PickUpDeliveryNumber = myRoutingItem.PickUpDeliveryNumber + "/" + myChildPickUpIndex;
-                newPickupPM.PickUpDeliveryTypeCode = "PICK";
-                newPickupPM.PickUpDeliveryFromTypeCode = "PART";
-                newPickupPM.PickUpDeliveryToTypeCode = "PORT";
-                newPickupPM.TransportModeCode = "BYTR";
-                newPickupPM.ParentPickUpDeliveryId = myRoutingItem.Pickup.Id;
-
-                var logitudeWindow = new LogitudeWindow();
-                logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddPickup");
-                logitudeWindow.WindowArgs = { ShipmentPM: this.EntityPM, EntityPM: newPickupPM, IsNewEntity: true };
-                logitudeWindow.Width = 950;
-                logitudeWindow.Height = 595;
-                logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditPickupComponent');
-
-                logitudeWindow.WindowClosed.subscribe(s => {
-                    this.BuildItemsCollection();
-                });
-
+                this.AddChildPickUp(myRoutingItem);
                 break;
             }
 
             case "Delivery": {
-                var myChildDeliveryIndex = 2;
-                if (myRoutingItem.Delivery.ChildDeliveryIndex) {
-                    myChildDeliveryIndex = myRoutingItem.Delivery.ChildDeliveryIndex + 1;
-                }
-
-                var newDeliveryPM = new ShipmentDeliveryPM(null);
-                newDeliveryPM.FullResponsibility = true;
-                newDeliveryPM.Tenant = this.EntityPM.Tenant;
-                newDeliveryPM.ShipmentId = this.EntityPM.Id;
-                newDeliveryPM.ShipmentNumber = this.EntityPM.ShipmentNumber;
-                newDeliveryPM.PickUpDeliveryNumber = myRoutingItem.PickUpDeliveryNumber + "/" + myChildDeliveryIndex;
-                newDeliveryPM.PickUpDeliveryTypeCode = "DELV";
-                newDeliveryPM.TransportModeCode = "BYTR";
-                newDeliveryPM.ParentPickUpDeliveryId = myRoutingItem.Delivery.Id;
-
-                var logitudeWindow = new LogitudeWindow();
-                logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddDelivery");
-                logitudeWindow.WindowArgs = { ShipmentPM: this.EntityPM, EntityPM: newDeliveryPM, IsNewEntity: true };
-                logitudeWindow.Width = 950;
-                logitudeWindow.Height = 595;
-                logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditDeliveryComponent');
-
-                logitudeWindow.WindowClosed.subscribe(s => {
-                    this.BuildItemsCollection();
-                });
-
+                this.AddChildDelivery(myRoutingItem);
                 break;
             }
         }
+    }
+    AddChildPickUp(myRoutingItem: RoutingItem) {
+        var newPickupPM: ShipmentPickUpPM = this.CreateChildPickUp(myRoutingItem);
+        this.OpenChildPickUpDeliveryWindow(newPickupPM, null);        
+    }    
+    AddChildDelivery(myRoutingItem: RoutingItem) {
+        var newDeliveryPM: ShipmentDeliveryPM = this.CreateChildDelivery(myRoutingItem);
+        this.OpenChildPickUpDeliveryWindow(null, newDeliveryPM);        
+    }
+
+    CreateChildPickUp(myRoutingItem: RoutingItem): ShipmentPickUpPM {
+        var myChildPickUpIndex = 2;
+        if (myRoutingItem.Pickup.ChildPickUpIndex) {
+            myChildPickUpIndex = myRoutingItem.Pickup.ChildPickUpIndex + 1;
+        }
+
+        var newPickupPM = new ShipmentPickUpPM(null);
+        newPickupPM.FullResponsibility = true;
+        newPickupPM.Tenant = this.EntityPM.Tenant;
+        newPickupPM.ShipmentId = this.EntityPM.Id;
+        newPickupPM.ShipmentNumber = this.EntityPM.ShipmentNumber;
+        newPickupPM.PickUpDeliveryNumber = myRoutingItem.PickUpDeliveryNumber + "/" + myChildPickUpIndex;
+        newPickupPM.PickUpDeliveryTypeCode = "PICK";
+        newPickupPM.PickUpDeliveryFromTypeCode = "PART";
+        newPickupPM.PickUpDeliveryToTypeCode = "PORT";
+        newPickupPM.TransportModeCode = "BYTR";
+        newPickupPM.ParentPickUpDeliveryId = myRoutingItem.Pickup.Id;
+
+        return newPickupPM;
+    }
+    CreateChildDelivery(myRoutingItem: RoutingItem): ShipmentDeliveryPM {
+        var myChildDeliveryIndex = 2;
+        if (myRoutingItem.Delivery.ChildDeliveryIndex) {
+            myChildDeliveryIndex = myRoutingItem.Delivery.ChildDeliveryIndex + 1;
+        }
+
+        var newDeliveryPM = new ShipmentDeliveryPM(null);
+        newDeliveryPM.FullResponsibility = true;
+        newDeliveryPM.Tenant = this.EntityPM.Tenant;
+        newDeliveryPM.ShipmentId = this.EntityPM.Id;
+        newDeliveryPM.ShipmentNumber = this.EntityPM.ShipmentNumber;
+        newDeliveryPM.PickUpDeliveryNumber = myRoutingItem.PickUpDeliveryNumber + "/" + myChildDeliveryIndex;
+        newDeliveryPM.PickUpDeliveryTypeCode = "DELV";
+        newDeliveryPM.TransportModeCode = "BYTR";
+        newDeliveryPM.ParentPickUpDeliveryId = myRoutingItem.Delivery.Id;
+
+        return newDeliveryPM;
+    }
+
+    OpenChildPickUpDeliveryWindow(newPickupPM: ShipmentPickUpPM, newDeliveryPM: ShipmentDeliveryPM) {
+        var title: string;
+        var componentPath: string;
+        var myEntity: any;
+
+        if (newPickupPM) {
+            title = TextCodeTranslator.Translate("Shipment.O.Routings.AddPickup");
+            componentPath = './ShipmentModules/ShipmentRouting/Components/Routings/AddEditPickupComponent';
+            myEntity = newPickupPM;
+        }
+
+        else if (newDeliveryPM) {
+            title = TextCodeTranslator.Translate("Shipment.O.Routings.AddDelivery");
+            componentPath = './ShipmentModules/ShipmentRouting/Components/Routings/AddEditDeliveryComponent';
+            myEntity = newDeliveryPM;
+        }
+
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Title = title;
+        logitudeWindow.WindowArgs = { ShipmentPM: this.EntityPM, EntityPM: myEntity, IsNewEntity: true };
+        logitudeWindow.Width = 950;
+        logitudeWindow.Height = 595;
+        logitudeWindow.Show(componentPath);
+
+        logitudeWindow.WindowClosed.subscribe(s => {
+            this.BuildItemsCollection();
+        });
     }
 
     // Inland Domestic
