@@ -59,7 +59,8 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.Messages
         }
         private void ValidateSendingFutureDate()
         {
-            var isFutureDate = ratesUpdate.RateUpdateList.Where(a => a.RateDate > TenantServerConfigration.GetCurrentDateTime(tenant)).Any();
+            var currentDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            var isFutureDate = ratesUpdate.RateUpdateList.Where(a => a.RateDate > currentDate).Any();
             if(isFutureDate)
             {
                 errorMsg = errorMsg + "Cant add future date rate. ";
@@ -89,7 +90,9 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.Messages
         }
         private void ValidateSendingTheSameCurrency()
         {
-            var isSendingTheSameCurrency = ratesUpdate.RateUpdateList.Where(a => a.RateDate > TenantServerConfigration.GetCurrentDateTime(tenant)).Any();
+            var isSendingTheSameCurrency = ratesUpdate.RateUpdateList.Where(x=>x.Currency != null).GroupBy(x => x.Currency.Code)
+              .Where(g => g.Count() > 1)
+              .Select(y => y.Key).Any();
             if (isSendingTheSameCurrency)
             {
                 errorMsg = errorMsg + "Can't send the same currency more than once. ";
