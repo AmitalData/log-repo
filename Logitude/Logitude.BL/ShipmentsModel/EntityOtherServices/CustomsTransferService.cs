@@ -420,7 +420,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
 
                     if (dangerousShipmentPackages.Count > 0 || item.IsDangerous)
                     {
-                        row[31] = "12";
+                        row[31] = "Y";
                     }
 
                     else
