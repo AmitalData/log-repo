@@ -19,6 +19,19 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="CopyExchangeRates"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AutomaticallyCloseDays"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="CopyShipper"
     Type="bit">
     <Constraints
@@ -85,19 +98,13 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="CopyExchangeRates"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="IsSaleAsCostCurrency"
     Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="AutomaticallyCloseDays"
+    Name="QuoteExpirationDays"
     Type="int"
     DefaultValue="0">
     <Constraints

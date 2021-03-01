@@ -377,6 +377,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         Tenant = tenant,
                         AutomaticallyCloseDays = 30,
+                        QuoteExpirationDays = 30,
                     };
                 }
 
@@ -400,6 +401,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         IsSaleAsCostCurrency = myPOCO.IsSaleAsCostCurrency,
                         CopyExchangeRates = myPOCO.CopyExchangeRates,
                         AutomaticallyCloseDays = myPOCO.AutomaticallyCloseDays,
+                        QuoteExpirationDays = myPOCO.QuoteExpirationDays,
                     };
                 }
 

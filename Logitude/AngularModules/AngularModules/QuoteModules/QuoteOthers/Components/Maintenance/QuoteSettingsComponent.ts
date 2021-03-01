@@ -155,6 +155,13 @@ export class QuoteSettingsComponent extends BaseComponent {
         }
     }
 
+    get QuoteExpirationDays() { return this.EntityPM.QuoteExpirationDays; }
+    set QuoteExpirationDays(value: number) {
+        if (this.EntityPM.QuoteExpirationDays != value) {
+            this.EntityPM.QuoteExpirationDays = value;
+        }
+    }
+
     private selectedSaleCurrencySetting: CodeNameClass;
     get SelectedSaleCurrencySetting() { return this.selectedSaleCurrencySetting; }
     set SelectedSaleCurrencySetting(value: CodeNameClass) {
@@ -191,6 +198,14 @@ export class QuoteSettingsComponent extends BaseComponent {
 
         if (this.AutomaticallyCloseDays == null) {
             errors.push("Automatically Close Days field is required");
+        }
+
+        if (this.QuoteExpirationDays == 0) {
+            errors.push("Quote Expiration Days field should not be Zero");
+        }
+
+        if (this.QuoteExpirationDays == null) {
+            errors.push("Quote Expiration Days field is required");
         }
 
         this.ValidationErrorsList = errors;
@@ -261,6 +276,10 @@ export class QuoteSettingsComponent extends BaseComponent {
         }
 
         else if (this.AutomaticallyCloseDays != null) {
+            myResult = true;
+        }
+
+        else if (this.QuoteExpirationDays != null) {
             myResult = true;
         }
 

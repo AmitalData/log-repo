@@ -105,6 +105,11 @@ export class QuoteSettingPM {
     public set AutomaticallyCloseDays(newValue: number) { if (this.automaticallyCloseDays != newValue) { this.automaticallyCloseDays = newValue; this.MarkAsDirty("AutomaticallyCloseDays"); } }
        
 	 
+    private quoteExpirationDays: number;
+    public get QuoteExpirationDays() { return this.quoteExpirationDays; }
+    public set QuoteExpirationDays(newValue: number) { if (this.quoteExpirationDays != newValue) { this.quoteExpirationDays = newValue; this.MarkAsDirty("QuoteExpirationDays"); } }
+       
+	 
 
     public OldEntityPM: QuoteSettingPM;
 		

@@ -32,7 +32,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.IsSaleAsCostCurrency = entityPM.IsSaleAsCostCurrency;
             entityPoco.CopyExchangeRates = entityPM.CopyExchangeRates;
             entityPoco.AutomaticallyCloseDays = entityPM.AutomaticallyCloseDays;
-
+            entityPoco.QuoteExpirationDays = entityPM.QuoteExpirationDays;
         }
     }
 }

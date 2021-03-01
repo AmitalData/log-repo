@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteSettingUpdateClass
    {  		
-		public const string HashString = "75379a151af2a620385718f62a4fe722";
+		public const string HashString = "30f90b16b341dbd3f17c041dcb32745a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	             				    ObjectTableName =  "QuoteSetting",
 			      				    IsNew =  false,
 			      				    DBTableName =  "QuoteSettings",
-			      				    OldDBTableName =  "QuoteSettings",
 			      				    ObjectTableSingular =  "Quote Setting",
 			      				    ObjectTablePlural =  "Quote Settings",
 			      				    HasCustomFilter =  false,
@@ -119,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Quote Setting",
-			      				    Code =  "7ad3",
+			      				    Code =  "b6bb",
 			      				    Name =  "QuoteSetting",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Quote",
@@ -144,7 +143,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "CopyShipper",
-					  						OldFieldName =  "CopyShipper",
 					  						ObjectTableName =  "QuoteSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -205,7 +203,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "CopyConsignee",
-					  						OldFieldName =  "CopyConsignee",
 					  						ObjectTableName =  "QuoteSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -266,7 +263,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "CopyMainCarriage",
-					  						OldFieldName =  "CopyMainCarriage",
 					  						ObjectTableName =  "QuoteSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -327,7 +323,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "CopyPickup",
-					  						OldFieldName =  "CopyPickup",
 					  						ObjectTableName =  "QuoteSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -388,7 +383,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "CopyDelivery",
-					  						OldFieldName =  "CopyDelivery",
 					  						ObjectTableName =  "QuoteSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -449,7 +443,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "CopyChargesTypes",
-					  						OldFieldName =  "CopyChargesTypes",
 					  						ObjectTableName =  "QuoteSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -510,7 +503,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "CopyChargesCost",
-					  						OldFieldName =  "CopyChargesCost",
 					  						ObjectTableName =  "QuoteSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -571,7 +563,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "CopyChargesSale",
-					  						OldFieldName =  "CopyChargesSale",
 					  						ObjectTableName =  "QuoteSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -632,7 +623,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "EditMainCarriage",
-					  						OldFieldName =  "EditMainCarriage",
 					  						ObjectTableName =  "QuoteSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -693,7 +683,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "CopyAgent",
-					  						OldFieldName =  "CopyAgent",
 					  						ObjectTableName =  "QuoteSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -754,7 +743,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "CopyNotify",
-					  						OldFieldName =  "CopyNotify",
 					  						ObjectTableName =  "QuoteSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -815,7 +803,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "IsSaleAsCostCurrency",
-					  						OldFieldName =  "IsSaleAsCostCurrency",
 					  						ObjectTableName =  "QuoteSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -867,6 +854,61 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsSaleAsCostCurrency",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "QuoteExpirationDays",
+					  						ObjectTableName =  "QuoteSetting",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "QuoteExpirationDays",
+					  						ListPropertyPath =  "QuoteExpirationDays",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "QuoteExpirationDays",
+					  						DefaultText =  "Quote Expiration Days",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
