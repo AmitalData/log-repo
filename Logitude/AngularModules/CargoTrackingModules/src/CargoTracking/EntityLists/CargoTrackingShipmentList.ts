@@ -77,6 +77,10 @@ export class CargoTrackingShipmentList {
 	PackagesQuantity: number;
 	DirectionId: string;
 	ShipmentLevelCode: string;
+	AssignedTruckerDone: boolean;
+	AssignedTruckerDate: Date;
+	AssignedTruckerEstimationDate: Date;
+	AssignedTruckerNotes: string;
 	
 }
  

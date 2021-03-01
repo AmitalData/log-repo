@@ -1561,6 +1561,98 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool assignedTruckerDone ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool AssignedTruckerDone  
+	   {
+	    
+	     get
+		{
+		   return assignedTruckerDone;
+		 }
+		 set
+		 {
+		   if(assignedTruckerDone != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AssignedTruckerDone",OldValue=assignedTruckerDone,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   assignedTruckerDone=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? assignedTruckerDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? AssignedTruckerDate  
+	   {
+	    
+	     get
+		{
+		   return assignedTruckerDate;
+		 }
+		 set
+		 {
+		   if(assignedTruckerDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AssignedTruckerDate",OldValue=assignedTruckerDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   assignedTruckerDate=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? assignedTruckerEstimationDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? AssignedTruckerEstimationDate  
+	   {
+	    
+	     get
+		{
+		   return assignedTruckerEstimationDate;
+		 }
+		 set
+		 {
+		   if(assignedTruckerEstimationDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AssignedTruckerEstimationDate",OldValue=assignedTruckerEstimationDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   assignedTruckerEstimationDate=value;
+		   }
+			
+		 }
+	   }
+	  private string assignedTruckerNotes ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AssignedTruckerNotes  
+	   {
+	    
+	     get
+		{
+		   return assignedTruckerNotes;
+		 }
+		 set
+		 {
+		   if(assignedTruckerNotes != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AssignedTruckerNotes",OldValue=assignedTruckerNotes,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   assignedTruckerNotes=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -82,11 +82,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(MyContext);
 
                 CargoTrackingShipmentList shipment = shipmentsQuery.GetShipment(SecurityKey, tenant);
-                List<Milestone> milestones = shipmentsQuery.GetCargoTrackingShipmentMilestones(shipment);
+
+                List<Milestone> shipmentMilestones = shipmentsQuery.BuildShipmentMilstones(shipment);
+                shipmentsQuery.SetMilestonesStatus(shipment, shipmentMilestones);
+
+
                 CargoTrackingShipmentWithMilestones cargoTrackingShipmentWithMilestones = new CargoTrackingShipmentWithMilestones()
                 {
                     ShipmentList = shipment,
-                    Milestones = milestones,
+                    Milestones = shipmentMilestones,
 
                 };
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, cargoTrackingShipmentWithMilestones);
