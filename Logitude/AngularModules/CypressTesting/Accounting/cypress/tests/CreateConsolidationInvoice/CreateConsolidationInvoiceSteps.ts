@@ -25,6 +25,7 @@ let draftConsolidationInvoiceNumber: string
 let customerCode: string;
 let PayableData: PayableDetails
 let AccountingSystem: string;
+let ARInvoiceNumber:string
 //#endregion
 //#region Update Accounting System
 Given("the user logged in", () => {
@@ -160,7 +161,9 @@ When("create invoice", () => {
 });
 
 Then("the invoice should create successfully", () => {
-  BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
+  BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200).then((interception) => {
+    ARInvoiceNumber = interception.response.body.InvoiceNumber;
+  })
 });
 //#endregion
 
@@ -212,7 +215,7 @@ Given("the user navigates to draft consolidation invoice", () => {
   AccountingActions.NavigatesToDraftInvoice(draftConsolidationInvoiceNumber)
 });
 When("edit the invoice", () => {
-  AccountingActions.AddSecondInvoiceToConsolidation()
+  AccountingActions.AddSecondInvoiceToConsolidation(ARInvoiceNumber)
 });
 Then("the invoice should update successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesPutRequest, 200);

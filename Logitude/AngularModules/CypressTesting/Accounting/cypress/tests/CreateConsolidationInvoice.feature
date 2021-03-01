@@ -1,4 +1,4 @@
-@release  @all
+@release  @all@open
 Feature: Create Consolidation Invoice
     After the user logging in the system,Update Accounting System to be None and navigate to customers workspace
     will create a customer as shipper in the new shipment, after update packages and payables tabs,
@@ -24,11 +24,6 @@ Feature: Create Consolidation Invoice
         Given the user in the customer's billing tab
         When activate consolidated invoice option
         Then the customer should update successfully
-
-    Scenario: Update Accounting System
-        Given accounting System as "None"
-        When change the accounting system
-        Then the accounting system should update successfully
 
     Scenario: Create direct export air shipment
         Given the user navigates to shipments workspace

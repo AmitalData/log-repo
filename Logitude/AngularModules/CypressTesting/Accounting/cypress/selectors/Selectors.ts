@@ -8,6 +8,7 @@ export class AccountingSelectors {
     public static readonly IsAPInvoicesTransferEnabled="#AccountingSetting_IsAPInvoicesTransferEnabled"
     public static readonly IsARPaymentsTransferEnabled="#AccountingSetting_IsARPaymentsTransferEnabled"
     public static readonly IsAPPaymentsTransferEnabled="#AccountingSetting_IsAPPaymentsTransferEnabled"
+    public static readonly LogLovAccountingSettingAccountingSystemCode="#LogLov_AccountingSetting_AccountingSystemCode"
     //#endregion
     //#region AccountingTransfer
     public static readonly AccountingTransfer="#TRANSFERAccounting"
