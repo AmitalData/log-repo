@@ -185,5 +185,41 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         [ForeignKey("InterlineId")]
         public virtual Card InterlineCard { get; set; }
         #endregion
+
+        //pre carriage
+        public string PreCarriageTransportModeId { get; set; }
+        public string PreCarriageFromPortId { get; set; }
+        public string PreCarriageToPortId { get; set; }
+        public string PreCarriageCarrierId { get; set; }
+        public string PreCarriageCarrierNumber { get; set; }
+        public DateTime? PreCarriageETD { get; set; }
+        public DateTime? PreCarriageATD { get; set; }
+        public DateTime? PreCarriageETA { get; set; }
+        public DateTime? PreCarriageATA { get; set; }
+        public string PreCarriageVesselId { get; set; }
+
+        //on carriage
+        public string OnCarriageTransportModeId { get; set; }
+        public string OnCarriageFromPortId { get; set; }
+        public string OnCarriageToPortId { get; set; }
+        public string OnCarriageCarrierId { get; set; }
+        public string OnCarriageCarrierNumber { get; set; }
+        public DateTime? OnCarriageETD { get; set; }
+        public DateTime? OnCarriageATD { get; set; }
+        public DateTime? OnCarriageETA { get; set; }
+        public DateTime? OnCarriageATA { get; set; }
+        public string OnCarriageVesselId { get; set; }
+
+        public Vessel PreCarriageVessel { get; set; }
+        public virtual TransportMode PreCarriageTransportMode { get; set; }
+        public virtual Port PreCarriageFromPort { get; set; }
+        public virtual Port PreCarriageToPort { get; set; }
+        public virtual Card PreCarriageCarrierCard { get; set; }
+
+        public Vessel OnCarriageVessel { get; set; }
+        public virtual TransportMode OnCarriageTransportMode { get; set; }
+        public virtual Port OnCarriageFromPort { get; set; }
+        public virtual Port OnCarriageToPort { get; set; }
+        public virtual Card OnCarriageCarrierCard { get; set; }
     }
 }

@@ -236,6 +236,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "MAP,Multipile AP Shipment", 
                 Description = "Multipile AP Shipment", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "PRE", 
+                Name = "Master Pre/On Carriage", 
+                SearchFields = "PRE,Master Pre/On Carriage", 
+                Description = "Master Pre/On Carriage", 
+			});
 			
             return all;
        }
