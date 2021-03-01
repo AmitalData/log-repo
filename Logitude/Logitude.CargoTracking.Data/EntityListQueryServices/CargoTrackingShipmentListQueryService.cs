@@ -252,22 +252,30 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             return iQueryable;
         }
 
-        public List<CargoTrackingShipmentList> GetShipments(List<string> ShipmentIds, int tenant)
+        public List<CargoTrackingShipmentList> GetShipments(List<string> shipmentIds, int tenant)
+        {
+            List<CargoTrackingShipmentList> shipments = GetShipmentsByIds(shipmentIds, tenant);
+            
+            foreach (CargoTrackingShipmentList shipment in shipments)
+            {
+                if (shipment.CurrentMilestoneCode == null)
+                {
+                    List<Milestone> shipmentMilestones = BuildShipmentMilstones(shipment);
+                    SetMilestonesStatus(shipment, shipmentMilestones);
+                }
+            }
+
+            return shipments;
+        }
+
+        private List<CargoTrackingShipmentList> GetShipmentsByIds(List<string> ShipmentIds, int tenant)
         {
             CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(context);
             IQueryable<CargoTrackingShipment> shipments = repo.GetByShipmentIds(ShipmentIds, tenant);
             List<CargoTrackingShipmentList> shipmetsLists = GetIqueryableList(shipments).ToList();
-            foreach (CargoTrackingShipmentList shipment in shipmetsLists)
-            {
-                if (shipment.CurrentMilestoneCode == null)
-                {
-                    GetCargoTrackingShipmentMilestones(shipment);
-                }
-
-            }
-
             return shipmetsLists;
         }
+
         public List<CargoTrackingShipmentList> GetShipments(int pageIndex, int pageSize, List<string> ShipmentIds, CargoTrackingShipmentFilters shipmentFilters)
         {
             IQueryable<CargoTrackingShipmentList> shipments = GetShipmentsQuerableByIds(ShipmentIds, shipmentFilters.Tenant);
@@ -314,16 +322,14 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
         private List<CargoTrackingShipmentList> AddMilstonesToShipments(List<CargoTrackingShipmentList> shipmetsLists)
         {
-
             foreach (CargoTrackingShipmentList shipment in shipmetsLists)
             {
                 if (shipment.CurrentMilestoneCode == null)
                 {
-                    GetCargoTrackingShipmentMilestones(shipment);
+                    List<Milestone> shipmentMilestones = BuildShipmentMilstones(shipment);
+                    SetMilestonesStatus(shipment, shipmentMilestones);
                 }
-
             }
-
             return shipmetsLists;
         }
 
@@ -398,33 +404,27 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             return shipmentsListQuerable;
         }
 
-        public List<Milestone> GetCargoTrackingShipmentMilestones(CargoTrackingShipmentList  Shipment)
-        {
-            List<Milestone> shipmentMilestones = BuildCargoTrackingShipmentMilstones(Shipment);
 
-            var currentMilstone = SetCurrentMilestone(shipmentMilestones);
-            SetDoneMilstones(shipmentMilestones, currentMilstone);
-            SetFutureMilstoneForShipment(Shipment, shipmentMilestones);
-            
-            return shipmentMilestones;
+        public void SetMilestonesStatus(CargoTrackingShipmentList shipment, List<Milestone> shipmentMilestones)
+        {
+            SetCurrentMilestone(shipmentMilestones);
+            SetDoneMilstones(shipmentMilestones);
+            SetFutureMilstoneForShipment(shipment, shipmentMilestones);
         }
 
-        private Milestone SetCurrentMilestone(List<Milestone> milestones)
+        private void SetCurrentMilestone(List<Milestone> milestones)
         {
-            Milestone currentMilstone = GetCurrentMilstone(milestones);
+            Milestone currentMilstone = GetMostRecentNotEstimatedMilestone(milestones);
             if (currentMilstone != null)
-            {
                 currentMilstone.IsCurrent = true;
-
-            }
-            return currentMilstone;
         }
-        private Milestone GetCurrentMilstone(List<Milestone> milestones)
+        private Milestone GetMostRecentNotEstimatedMilestone(List<Milestone> milestones)
         {
             return milestones.Where(s => s.IsEstimation == false).OrderByDescending(s => s.Date).ThenByDescending(s => s.Id).FirstOrDefault();
         }
-        private static void SetDoneMilstones(List<Milestone> shipmentMilestones, Milestone currentMilstone)
+        private void SetDoneMilstones(List<Milestone> shipmentMilestones )
         {
+            Milestone currentMilstone = shipmentMilestones.FirstOrDefault(d => d.IsCurrent == true);
             if (currentMilstone != null)
             {
                 var doneMilstones = shipmentMilestones.Where(milstone => milstone.Id < currentMilstone.Id).ToList();
@@ -439,70 +439,70 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         {
             return milestones.Where(s => s.IsEstimation == false).OrderByDescending(s => s.Date).ThenByDescending(s => s.Id).Select(s => s.Code).FirstOrDefault();
         }
-        private List<Milestone> BuildCargoTrackingShipmentMilstones(CargoTrackingShipmentList Shipment)
+        public List<Milestone> BuildShipmentMilstones(CargoTrackingShipmentList shipment)
         {
             List<Milestone> milestones = new List<Milestone>();
 
-            
+
             milestones.Add(new Milestone()
             {
                 Id = 2,
                 Code = "Pickup",
                 Name = "Pickup",
-                Date = Shipment.PickupDate,
-                EstimationDate = Shipment.PickupEstimationDate,
-                Done = Shipment.PickupDone,
+                Date = shipment.PickupDate,
+                EstimationDate = shipment.PickupEstimationDate,
+                Done = shipment.PickupDone,
                 Notes = null,
                 IsCurrent = false,
-                IsEstimation = Shipment.PickupDone == true ? false : true
+                IsEstimation = !shipment.PickupDone
             });
             milestones.Add(new Milestone()
             {
                 Id = 3,
                 Code = "FromWarehouse",
                 Name = "From Warehouse",
-                Date = Shipment.FromWarehouseDate,
-                EstimationDate = Shipment.FromWarehouseEstimationDate,
-                Done = Shipment.FromWarehouseDone,
-                Notes = Shipment.FromWarehouseNotes,
+                Date = shipment.FromWarehouseDate,
+                EstimationDate = shipment.FromWarehouseEstimationDate,
+                Done = shipment.FromWarehouseDone,
+                Notes = shipment.FromWarehouseNotes,
                 IsCurrent = false,
-                IsEstimation = Shipment.FromWarehouseDone == true ? false : true
+                IsEstimation = !shipment.FromWarehouseDone
             });
             milestones.Add(new Milestone()
             {
                 Id = 4,
                 Code = "Departure",
                 Name = "Departure",
-                Date = Shipment.DepartureDate,
-                EstimationDate = Shipment.DepartureEstimationDate,
-                Done = Shipment.DepartureDone,
+                Date = shipment.DepartureDate,
+                EstimationDate = shipment.DepartureEstimationDate,
+                Done = shipment.DepartureDone,
                 Notes = null,
                 IsCurrent = false,
-                IsEstimation = Shipment.DepartureDone == true ? false : true
+                IsEstimation = !shipment.DepartureDone
             });
             milestones.Add(new Milestone()
             {
                 Id = 5,
                 Code = "Arrival",
                 Name = "Arrival",
-                Date = Shipment.ArrivalDate,
-                EstimationDate = Shipment.ArrivalEstimationDate,
-                Done = Shipment.ArrivalDone,
+                Date = shipment.ArrivalDate,
+                EstimationDate = shipment.ArrivalEstimationDate,
+                Done = shipment.ArrivalDone,
                 Notes = null,
                 IsCurrent = false,
-                IsEstimation = Shipment.ArrivalDone == true ? false : true
+                IsEstimation = !shipment.ArrivalDone
             });
             milestones.Add(new Milestone()
             {
                 Id = 6,
                 Code = "ToWarehouse",
                 Name = "To Warehouse",
-                Date = Shipment.ToWarehouseDate,
-                EstimationDate = Shipment.ToWarehouseEstimationDate,
-                Done = Shipment.ToWarehouseDone,
-                Notes = Shipment.ToWarehouseNotes,
+                Date = shipment.ToWarehouseDate,
+                EstimationDate = shipment.ToWarehouseEstimationDate,
+                Done = shipment.ToWarehouseDone,
+                Notes = shipment.ToWarehouseNotes,
                 IsCurrent = false,
-                IsEstimation = Shipment.ToWarehouseDone == true ? false : true
+                IsEstimation = !shipment.ToWarehouseDone
             });
             milestones.Add(new Milestone()
             {
@@ -514,7 +514,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 //Done = Shipment.xxxxxxxxxxx,
                 //Notes = Shipment.zzzzzzzzzzzzz,
                 IsCurrent = false,
-                //IsEstimation = Shipment.ToWarehouseDone == true ? false : true
+                //IsEstimation = !Shipment.ToWarehouseDone
             });
             milestones.Add(new Milestone()
             {
@@ -526,7 +526,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 //Done = Shipment.CustomsPaymentDone,
                 Notes = null,
                 IsCurrent = false,
-                //IsEstimation = Shipment.CustomsPaymentDone == true ? false : true
+                //IsEstimation = !Shipment.CustomsPaymentDone
             });
 
             milestones.Add(new Milestone()
@@ -534,36 +534,36 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 Id = 9,
                 Code = "CustomsPayment",
                 Name = "Customs Payment",
-                Date = Shipment.CustomsPaymentDate,
+                Date = shipment.CustomsPaymentDate,
                 EstimationDate = null,
-                Done = Shipment.CustomsPaymentDone,
+                Done = shipment.CustomsPaymentDone,
                 Notes = null,
                 IsCurrent = false,
-                IsEstimation = Shipment.CustomsPaymentDone == true ? false : true
+                IsEstimation = !shipment.CustomsPaymentDone
             });
             milestones.Add(new Milestone()
             {
                 Id = 10,
                 Code = "Clearance",
                 Name = "Clearance",
-                Date = Shipment.ClearanceDate,
+                Date = shipment.ClearanceDate,
                 EstimationDate = null,
-                Done = Shipment.ClearanceDone,
+                Done = shipment.ClearanceDone,
                 Notes = null,
                 IsCurrent = false,
-                IsEstimation = Shipment.ClearanceDone == true ? false : true
+                IsEstimation = !shipment.ClearanceDone
             });
             milestones.Add(new Milestone()
             {
                 Id = 11,
                 Code = "AssignedToTrucker",
                 Name = "Assigned To Trucker",
-                Date = Shipment.AssignedTruckerDate,
-                EstimationDate = Shipment.AssignedTruckerEstimationDate,
-                Done = Shipment.AssignedTruckerDone,
+                Date = shipment.AssignedTruckerDate,
+                EstimationDate = shipment.AssignedTruckerEstimationDate,
+                Done = shipment.AssignedTruckerDone,
                 Notes = null,
                 IsCurrent = false,
-                IsEstimation = Shipment.AssignedTruckerDone == true ? false : true
+                IsEstimation = !shipment.AssignedTruckerDone
             });
             milestones.Add(new Milestone()
             {
@@ -575,19 +575,19 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 //Done = Shipment.DeliveredDone,
                 Notes = null,
                 IsCurrent = false,
-                //IsEstimation = Shipment.DeliveredDone == true ? false : true
+                //IsEstimation = !Shipment.DeliveredDone
             });
             milestones.Add(new Milestone()
             {
                 Id = 13,
                 Code = "Delivered",
                 Name = "Delivered",
-                Date = Shipment.DeliveredDate,
-                EstimationDate = Shipment.DeliveredEstimationDate,
-                Done = Shipment.DeliveredDone,
+                Date = shipment.DeliveredDate,
+                EstimationDate = shipment.DeliveredEstimationDate,
+                Done = shipment.DeliveredDone,
                 Notes = null,
                 IsCurrent = false,
-                IsEstimation = Shipment.DeliveredDone == true ? false : true
+                IsEstimation = !shipment.DeliveredDone
             });
             milestones.Add(new Milestone()
             {
@@ -599,10 +599,13 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 //Done = Shipment.DeliveredDone,
                 Notes = null,
                 IsCurrent = false,
-                //IsEstimation = Shipment.DeliveredDone == true ? false : true
+                //IsEstimation = !Shipment.DeliveredDone
             });
 
-            milestones = milestones.OrderByDescending(s => s.IsEstimation == true ? s.EstimationDate : s.Date).ThenByDescending(s => s.Id).ToList();
+            milestones = milestones
+                            .OrderByDescending(s => s.IsEstimation == true ? s.EstimationDate : s.Date)
+                            .ThenByDescending(s => s.Id)
+                            .ToList();
             return milestones;
         }
 
