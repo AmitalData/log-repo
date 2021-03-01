@@ -11884,7 +11884,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                MainHarmonize = f.MainHarmonize,
                                StatusId = f.StatusId,
                                StatusDate = f.StatusDate,
-                               StatusName = f.StatusName,
+                               //StatusName = f.StatusName,
                                StatusLocation = f.StatusLocation,
                                LongMaster = f.LongMaster,
                                PartnerLogoId = f.PartnerLogoId,
@@ -12002,6 +12002,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ComputedStatusDate = f.ComputedStatusDate,
                                QuoteId = f.QuoteId,
                                QuoteNumber = f.QuoteNumber,
+                               StatusName = !string.IsNullOrEmpty(f.StatusLocation) ? f.StatusName + " (" + f.StatusLocation + ")" : f.StatusName,
+                               ExactStatusName = f.StatusName,
                            };
             return myResult;
         }
@@ -12249,7 +12251,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     MainCarriageToPortName = f.MainCarriageToPortName,
                     StatusId = f.StatusId,
                     StatusDate = f.StatusDate,
-                    StatusName = f.StatusName,
+                    //StatusName = f.StatusName,
                     StatusLocation = f.StatusLocation,
                     LongMaster = f.LongMaster,
                     PartnerLogoId = f.PartnerLogoId,
@@ -12360,6 +12362,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     DangerousUnNumber = f.DangerousUnNumber,
                     QuoteId = f.QuoteId,
                     QuoteNumber = f.QuoteNumber,
+                    StatusName = !string.IsNullOrEmpty(f.StatusLocation) ? f.StatusName + "(" + f.StatusLocation + ")" : f.StatusName,
+                    ExactStatusName = f.StatusName,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
