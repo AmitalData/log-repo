@@ -922,18 +922,6 @@ namespace Logitude.TariffModule.BL.Helpers
             if (tariff.PriceIndex != 0)
             {
                 actualPrice = tariff.Price * (decimal)weight;
-                if (actualPrice < minprice)
-                {
-                    actualPrice = tariff.Price;
-                }
-            }
-            else
-            {
-                actualPrice = 0;
-                if (minprice != null)
-                {
-                    actualPrice = tariff.Price;
-                }
             }
             tariffsSummary.ActualPrice = actualPrice;
         }
