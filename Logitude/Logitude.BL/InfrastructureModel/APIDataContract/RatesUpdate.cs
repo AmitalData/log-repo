@@ -25,6 +25,11 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract
         public Currency Currency { get; set; }
         public double? Rate { get; set; }
         public DateTime? RateDate { get; set; }
+
+        public RateUpdate()
+        {
+            this.Currency = new Currency();
+        }
     }
 
     public class Currency

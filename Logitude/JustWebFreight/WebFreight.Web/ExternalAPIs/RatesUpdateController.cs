@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.APIDataContract;
+using Logitude.BL.InfrastructureModel.APIDataContract.Messages;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
@@ -13,7 +14,7 @@ namespace WebFreight.Web.ExternalAPIs
 {
     public class RatesUpdateController : ApiController
     {
-        public HttpResponseMessage Put(RatesUpdate entity)
+        public HttpResponseMessage Put(RatesUpdate ratesUpdateEntity)
         {
             if (ModelState.IsValid)
             {
@@ -23,9 +24,14 @@ namespace WebFreight.Web.ExternalAPIs
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     int tenant = authToken.Tenant;
                     SecurityUtility.AuthenticateAPICall(tenant);
-                    var response = entity;
-                    APIHelper.AddCommunicationLog("D", entity, response, "RatesTable", null, "Rates Update API", authToken.Tenant);
-                    return Request.CreateResponse(HttpStatusCode.OK, response);
+
+                    RatesUpdateService ratesUpdateService = new RatesUpdateService(ratesUpdateEntity, tenant);
+                    ratesUpdateService.CleanXMLText();
+                    ratesUpdateService.ValidateRatesDataMapping();
+                    ratesUpdateService.UpdateRatesData();
+
+                    APIHelper.AddCommunicationLog("D", ratesUpdateEntity, ratesUpdateEntity, "RatesTable", null, "Rates Update API", authToken.Tenant);
+                    return Request.CreateResponse(HttpStatusCode.OK, ratesUpdateEntity);
                 }
                 catch (Exception ex)
                 {
@@ -36,7 +42,7 @@ namespace WebFreight.Web.ExternalAPIs
             else
             {
                 var apiExceptionResult = ApiExceptionHandler.HandleModelException(ModelState);
-                APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "RatesTable", null, "Rates Update API");
+                APIHelper.AddCommunicationLog("F", ratesUpdateEntity, apiExceptionResult.Exception, "RatesTable", null, "Rates Update API");
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
