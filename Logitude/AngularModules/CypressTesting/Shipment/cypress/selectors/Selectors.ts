@@ -4,6 +4,7 @@ export class ShipmentSelectors extends RegexSelectors {
   //#region Shared
   public static readonly ShipmentMoreList = '#MenuButtons';
   public static readonly ShipmentTab = '#SHIP';
+  public static readonly ContainersTab = '#CNFU';
   public static readonly ShipmentSearchBar = '#Shipment_Search';
   public static readonly ShipmentSearchParent = 'searchbox';
   public static readonly ShipmentSearchParentClass = '.SearchBox';
@@ -99,6 +100,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PackageHeight = '#ShipmentPackage_Height';
   public static readonly PackageVolume = '#ShipmentPackage_Volume';
   public static readonly PackageType = '#ShipmentPackage_PackageTypeId';
+  public static readonly ContainerNumber = '#ShipmentPackage_ContainerNumber';
   public static readonly PackageWeight = '#ShipmentPackage_Weight';
   public static readonly PackageContainerNumber = '#ShipmentPackage_ContainerNumber';
   public static readonly AirPackageOKButton = '#OkAirPackage';
@@ -107,6 +109,14 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PackageGrossWeight = '#Shipment_GrossWeight';
   public static readonly PackagePartialSplit = '#PartialSplit';
 
+  public static readonly DeliveryATDTime = '#time_ShipmentPackage_DeliveryATD';
+  public static readonly DeliveryATDDate = '#date_ShipmentPackage_DeliveryATD';
+  public static readonly DeliveryATATime = '#time_ShipmentPackage_DeliveryATA';
+  public static readonly DeliveryATADate = '#date_ShipmentPackage_DeliveryATA';
+  public static readonly EmptyContainerReturnATDTime = '#time_ShipmentPackage_EmptyContainerReturnATD';
+  public static readonly EmptyContainerReturnATDDate = '#date_ShipmentPackage_EmptyContainerReturnATD';
+  public static readonly EmptyContainerReturnATATime = '#time_ShipmentPackage_EmptyContainerReturnATA';
+  public static readonly EmptyContainerReturnATADate = '#date_ShipmentPackage_EmptyContainerReturnATA';
   //#endregion
   //#region Routing tab fields
   public static readonly RoutingToggle = '#RoutingToggle';
@@ -119,6 +129,10 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentFlightNumber = '#Shipment_MainCarriageCarrierNumber';
   public static readonly ShipmentMAWB = '#Shipment_Master';
   public static readonly ShipmentDateMaincarriageATD = '#calendarbutton_date_Shipment_MainCarriageATD';
+  public static readonly MainCarriageATDTime = '#time_Shipment_MainCarriageATD';
+  public static readonly MainCarriageATDDate = '#date_Shipment_MainCarriageATD';
+  public static readonly MainCarriageATATime = '#time_Shipment_MainCarriageATA';
+  public static readonly MainCarriageATADate = '#date_Shipment_MainCarriageATA';
   public static readonly MainCarriageOKBtn = '#MainCarriageOKBtn';
   public static readonly ShipmentPickUpDeliveryToPartnerCard = '#ShipmentPickUpDelivery_ToPartnerCardId';
   public static readonly ShipmentPreCarriageTransportMode = '#Shipment_PreCarriageTransportModeId';

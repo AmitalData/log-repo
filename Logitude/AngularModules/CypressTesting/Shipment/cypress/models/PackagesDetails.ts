@@ -1,10 +1,10 @@
-export interface PackagesDetails{
+export interface PackagesDetails {
     Quantity: number,
     Length: number,
     Width: number,
-    Height:number,
+    Height: number,
     Volume: number,
-    GrossWeight:number,
-    PackageType:string,
-    PackageNumber:string,
+    GrossWeight: number,
+    PackageType: string
+    ContainerNumber: string
 }

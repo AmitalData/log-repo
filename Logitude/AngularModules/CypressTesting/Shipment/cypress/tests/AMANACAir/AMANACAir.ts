@@ -2,8 +2,8 @@ import * as Actions from "../../actions/Actions"
 import * as Assertion from "../../actions/Assertion"
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
-import { ShipmentDetails } from "cypress/models/ShipmentDetails";
-import { AMANACStatusDetails } from "cypress/models/AMANACStatusDetails";
+import { ShipmentDetails } from "../../models/ShipmentDetails";
+import { AMANACStatusDetails } from "../../models/AMANACStatusDetails";
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
 import { ShipmentSelectors } from "../../selectors/Selectors";

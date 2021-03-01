@@ -59,6 +59,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ContainsExport = 'Export'
     public static readonly ContainsSendtoCustoms = "Send to Customs"
 
+    public static readonly ContainsAddFollowup = "Add Follow up"
     //#endregion
     //#region general
     public static readonly ToggleButtonClass = '.ToggleButton';

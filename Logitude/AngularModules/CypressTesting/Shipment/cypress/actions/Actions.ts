@@ -5,6 +5,7 @@ import { BaseSelectors } from '../../../Base/cypress/selectors/BaseSelectors';
 import { PayableDetails } from 'cypress/models/PayableDetails';
 import { ReceivableDetails } from 'cypress/models/ReceivableDetails';
 import * as BaseAssertion from '../../../Base/cypress/actions/Assertion';
+import * as GenerateRandoms from '../../../Base/cypress/actions/GenerateRandoms';
 import { PackagesDetails } from 'cypress/models/PackagesDetails';
 import { URLs } from '../constants/URLs';
 import { RestAPI } from '../../../Base/cypress/constants/RestAPI';
@@ -59,7 +60,7 @@ export function OpenShipment(shipmentNumber: string) {
     } as QuickSearchDetails;
 
     cy.SelectQuickSearchFirstElement(quickSearchDetails);
-    
+
     BaseAssertion.AssertStatusCode(RequestAliases.WaitLoadShipmentMenuButtons, 200);
 }
 export function SplitShipment(packageNumber:string){
@@ -82,21 +83,21 @@ export function PartialSplitShipment(packagesDetails: PackagesDetails){
 export function CancelShipment(note :string) {
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
     cy.Click(ShipmentSelectors.CancelShipmentButton, null);
-    cy.FillLogTextBox(ShipmentSelectors.ShipmentEventNote ,note)
+    cy.FillLogTextBox(ShipmentSelectors.ShipmentEventNote, note)
     UpdateShipment(ShipmentSelectors.ConfirmActionButton);
 }
 
-export function ReactiveShipment(note :string) {
+export function ReactiveShipment(note: string) {
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
     cy.Click(ShipmentSelectors.ReactivateShipmentButton, null);
-    cy.FillLogTextBox(ShipmentSelectors.ShipmentEventNote , note)
+    cy.FillLogTextBox(ShipmentSelectors.ShipmentEventNote, note)
     UpdateShipment(ShipmentSelectors.ConfirmActionButton);
 }
 
-export function ValidateCancelIconExist(IsCancelled:boolean){
-    if(IsCancelled){
+export function ValidateCancelIconExist(IsCancelled: boolean) {
+    if (IsCancelled) {
         cy.get(ShipmentSelectors.ShortTitleControl).should(BaseSelectors.Exist)
-    }else{
+    } else {
         cy.get(ShipmentSelectors.ShortTitleControl).should(BaseSelectors.NotExist)
     }
 }
@@ -112,25 +113,25 @@ export function ValidateShipmentEventActions(eventSelector : string , excpectedM
     });
 }
 
-export function ValidateShipmentFields(IsCanceled:boolean){
-    cy.Click(ShipmentSelectors.GeneralTab,null);
+export function ValidateShipmentFields(IsCanceled: boolean) {
+    cy.Click(ShipmentSelectors.GeneralTab, null);
     EditGeneralField();
-    if(IsCanceled){
-        BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentValueOfGoods,BaseSelectors.BeEmpty)
-    }else{
-        BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentValueOfGoods,'123.00')
+    if (IsCanceled) {
+        BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentValueOfGoods, BaseSelectors.BeEmpty)
+    } else {
+        BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentValueOfGoods, '123.00')
     }
-    CheckIfDisable(ShipmentSelectors.OrdersTab,ShipmentSelectors.ShipmentBookingNumberOfPackages,IsCanceled);
-    CheckIfDisable(ShipmentSelectors.OrdersTab,ShipmentSelectors.ShipmentMainCarriageCarrierId,IsCanceled);
-    CheckIfHaveClass(ShipmentSelectors.PartnersTab,ShipmentSelectors.PartnerToggle,"ToggleButtonDisabled",IsCanceled);
-    CheckIfDisable(ShipmentSelectors.PartnerEditShipper,BaseSelectors.RedButton,IsCanceled);
-    cy.Click(BaseSelectors.Button,BaseSelectors.ContainsCancel);
-    CheckIfDisable(ShipmentSelectors.PackagesTab,ShipmentSelectors.AddPackage,IsCanceled);
-    CheckIfHaveClass(ShipmentSelectors.RoutingsTab,ShipmentSelectors.RoutingToggle,'ToggleButtonDisabled',IsCanceled)
-    CheckIfDisable(ShipmentSelectors.EditRoutingMainCarriage,BaseSelectors.RedButton,IsCanceled);
-    cy.Click(BaseSelectors.Button,BaseSelectors.ContainsCancel);
-    CheckIfDisable(ShipmentSelectors.PayablesTab,BaseSelectors.AddButton,IsCanceled);
-    CheckIfDisable(ShipmentSelectors.ReceivablesTab,BaseSelectors.AddButton,IsCanceled);
+    CheckIfDisable(ShipmentSelectors.OrdersTab, ShipmentSelectors.ShipmentBookingNumberOfPackages, IsCanceled);
+    CheckIfDisable(ShipmentSelectors.OrdersTab, ShipmentSelectors.ShipmentMainCarriageCarrierId, IsCanceled);
+    CheckIfHaveClass(ShipmentSelectors.PartnersTab, ShipmentSelectors.PartnerToggle, "ToggleButtonDisabled", IsCanceled);
+    CheckIfDisable(ShipmentSelectors.PartnerEditShipper, BaseSelectors.RedButton, IsCanceled);
+    cy.Click(BaseSelectors.Button, BaseSelectors.ContainsCancel);
+    CheckIfDisable(ShipmentSelectors.PackagesTab, ShipmentSelectors.AddPackage, IsCanceled);
+    CheckIfHaveClass(ShipmentSelectors.RoutingsTab, ShipmentSelectors.RoutingToggle, 'ToggleButtonDisabled', IsCanceled)
+    CheckIfDisable(ShipmentSelectors.EditRoutingMainCarriage, BaseSelectors.RedButton, IsCanceled);
+    cy.Click(BaseSelectors.Button, BaseSelectors.ContainsCancel);
+    CheckIfDisable(ShipmentSelectors.PayablesTab, BaseSelectors.AddButton, IsCanceled);
+    CheckIfDisable(ShipmentSelectors.ReceivablesTab, BaseSelectors.AddButton, IsCanceled);
 }
 
 export function ValidatePackageDetails(tabSelector :string,partialSplitDetails:PackagesDetails,grossWeightSelector:string,isPackage:boolean){
@@ -162,14 +163,14 @@ function EditGeneralField(){
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 }
 
-function CheckIfDisable(tabSelector:string , fieldSelector:string , IsDisable:boolean){
-    cy.Click(tabSelector,null);
-    BaseAssertion.AssertElementDisabled(fieldSelector,IsDisable?BaseSelectors.BeDisabled:BaseSelectors.NotBeDisabled)
+function CheckIfDisable(tabSelector: string, fieldSelector: string, IsDisable: boolean) {
+    cy.Click(tabSelector, null);
+    BaseAssertion.AssertElementDisabled(fieldSelector, IsDisable ? BaseSelectors.BeDisabled : BaseSelectors.NotBeDisabled)
 }
 
-function CheckIfHaveClass(tabSelector:string , fieldSelector:string ,classValue:string ,IsHaveCLass:boolean){
-    cy.Click(tabSelector,null);
-    BaseAssertion.AssertElementHaveClasss(fieldSelector,IsHaveCLass?BaseSelectors.HaveClass:BaseSelectors.NotHaveClass,classValue)
+function CheckIfHaveClass(tabSelector: string, fieldSelector: string, classValue: string, IsHaveCLass: boolean) {
+    cy.Click(tabSelector, null);
+    BaseAssertion.AssertElementHaveClasss(fieldSelector, IsHaveCLass ? BaseSelectors.HaveClass : BaseSelectors.NotHaveClass, classValue)
 }
 
 function FillPartialSplitWizard(packagesDetails: PackagesDetails){
@@ -242,10 +243,11 @@ export function FillPartnersTab(direction: string, transportMode: string, partne
 export function FillPackageTab(transportMode: string, packagesDetails: PackagesDetails[], shipmentType?: string) {
     cy.Click(ShipmentSelectors.PackagesTab, null)
     for (let i = 0; i < packagesDetails.length; i++) {
+        packagesDetails[i].ContainerNumber = packagesDetails[i].ContainerNumber == 'Random' ? GetGeneratedRandomContainerNumber() : packagesDetails[i].ContainerNumber;
         cy.Click(ShipmentSelectors.AddPackage, null)
         if (Conditions.HasPacakageType(shipmentType)) {
             cy.FillLogLov(ShipmentSelectors.PackageType, packagesDetails[i].PackageType, true)
-            cy.FillLogTextBox(ShipmentSelectors.PackageContainerNumber,packagesDetails[i].PackageNumber)
+            cy.FillLogTextBox(ShipmentSelectors.ContainerNumber, packagesDetails[i].ContainerNumber)
         }
         if (!Conditions.IsFCL(shipmentType) && !Conditions.IsFTL(shipmentType)) {
             cy.FillLogTextBox(ShipmentSelectors.PackageQuantity, packagesDetails[i].Quantity.toString())
@@ -315,6 +317,20 @@ export function EditMainCarriageLegs(Airline: string) {
     cy.Click(BaseSelectors.Button, "Today")
     cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
     //cy.Click(ShipmentSelectors.ShipmentSaveButton, null);
+}
+
+export function AddMainCarriageATDDateAndTime(date: string, time: string) {
+    cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null);
+    cy.FillDate(ShipmentSelectors.MainCarriageATDDate, date);
+    cy.FillLogTextBox(ShipmentSelectors.MainCarriageATDTime, time);
+    cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
+}
+
+export function AddMainCarriageATADateAndTime(date: string, time: string) {
+    cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null);
+    cy.FillDate(ShipmentSelectors.MainCarriageATADate, date);
+    cy.FillLogTextBox(ShipmentSelectors.MainCarriageATATime, time);
+    cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
 }
 
 export function FillDeliveryRouting(partner: string) {
@@ -492,6 +508,68 @@ export function FormatDate(date: string): string{
     var dateString = date == 'Today' ? new Date().toDateString() : date;
     var currentDateArray = dateString.split(" ");
     return currentDateArray[2] + " " + currentDateArray[1] + " " + currentDateArray[3];
+}
+//#endregion
+
+//#region Containers
+export function NavigatesToAContainersWorkspace() {
+    cy.Click(BaseSelectors.OperationsMenu, null);
+    cy.Click(ShipmentSelectors.ContainersTab, null);
+}
+
+export function ContainersView(containerView: string) {
+    containerView = containerView.replace(/\s/g, "");
+    cy.get(ShipmentSelectors.ContainersView(containerView)).first().click();
+}
+
+function GetGeneratedRandomContainerNumber(): string {
+    return GenerateRandoms.GetValidContainerNumber(GenerateRandoms.GenerateRandomString(4, true) + GenerateRandoms.GenerateRandomNumber(1000000, 9999999));
+}
+
+export function AddDeliveryFollowUpActualDepartureDateAndTime(date: string, time: string, ContainerNumber: string) {
+    cy.Click(ShipmentSelectors.PackagesTab, null)
+
+    cy.Click(ShipmentSelectors.AddContainerDelivery(ContainerNumber), null);
+    cy.Click(BaseSelectors.Button, BaseSelectors.ContainsAddFollowup);
+    cy.FillDate(ShipmentSelectors.DeliveryATDDate, date);
+    cy.FillLogTextBox(ShipmentSelectors.DeliveryATDTime, time);
+}
+
+export function AddDeliveryFollowUpActualArrivalDateAndTime(date: string, time: string, ContainerNumber: string) {
+    cy.Click(ShipmentSelectors.PackagesTab, null)
+
+    cy.Click(ShipmentSelectors.EditContainerDelivery(ContainerNumber), null)
+    cy.FillDate(ShipmentSelectors.DeliveryATADate, date);
+    cy.FillLogTextBox(ShipmentSelectors.DeliveryATATime, time);
+}
+
+export function AddContainerReturnFollowUpActualDepartureDateAndTime(date: string, time: string, ContainerNumber: string) {
+    cy.Click(ShipmentSelectors.PackagesTab, null)
+
+    cy.Click(ShipmentSelectors.AddContainerReturn(ContainerNumber), null)
+    cy.Click(BaseSelectors.Button, BaseSelectors.ContainsAddFollowup);
+    cy.FillDate(ShipmentSelectors.EmptyContainerReturnATDDate, date);
+    cy.FillLogTextBox(ShipmentSelectors.EmptyContainerReturnATDTime, time);
+}
+
+export function AddContainerReturnFollowUpActualArrivalDateAndTime(date: string, time: string, ContainerNumber: string) {
+    cy.Click(ShipmentSelectors.PackagesTab, null)
+
+    cy.Click(ShipmentSelectors.EditContainerReturn(ContainerNumber), null)
+    cy.FillDate(ShipmentSelectors.EmptyContainerReturnATADate, date);
+    cy.FillLogTextBox(ShipmentSelectors.EmptyContainerReturnATATime, time);
+}
+
+export function SearchAContainer(ContainerNumber: string) {
+    cy.FillLogTextBox(BaseSelectors.SearchField, ContainerNumber);
+    cy.DefineRequestWait(RestAPI.GET, URLs.ContainerFollowUpViewsGetbyfilters, RequestAliases.ContainerFollowUpViewsGetbyfilters)
+    BaseAssertion.AssertStatusCode(RequestAliases.ContainerFollowUpViewsGetbyfilters, 200)
+    cy.DefineRequestWait(RestAPI.GET, URLs.ContainerFollowUpViewsGetbyfilters, RequestAliases.ContainerFollowUpViewsGetbyfilters)
+    BaseAssertion.AssertStatusCode(RequestAliases.ContainerFollowUpViewsGetbyfilters, 200)
+}
+export function UpdateFollowUp() {
+    cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK)
 }
 //#endregion
 
