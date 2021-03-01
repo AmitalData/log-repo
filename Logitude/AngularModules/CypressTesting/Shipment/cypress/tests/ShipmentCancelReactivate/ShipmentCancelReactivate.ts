@@ -3,7 +3,7 @@ import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
-import { ShipmentSelectors } from "cypress/selectors/Selectors";
+import { ShipmentSelectors } from "../../selectors/Selectors";
 
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;

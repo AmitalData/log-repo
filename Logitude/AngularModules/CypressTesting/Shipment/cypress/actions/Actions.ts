@@ -1,4 +1,4 @@
-import { ShipmentSelectors } from '../selectors/Selectors';
+import { ShipmentSelectors } from '../../../Shipment/cypress/selectors/Selectors';
 import { ShipmentDetails } from '../models/ShipmentDetails';
 import { PartnersDetails } from 'cypress/models/PartnersDetails';
 import { BaseSelectors } from '../../../Base/cypress/selectors/BaseSelectors';
@@ -105,8 +105,10 @@ export function ValidateShipmentEventActions(eventSelector : string , excpectedM
     cy.DefineRequestWait(RestAPI.GET,URLs.TraceEventsDomain,RequestAliases.GetTraceEvent);
     cy.Click(eventSelector,null);
     BaseAssertion.AssertStatusCode(RequestAliases.GetTraceEvent, 200).then((interception) => {
-        let actualMSG = interception.response.body[0].Notes;
-        assert.equal(actualMSG, excpectedMSG);
+        // let actualMSG = interception.response.body[0].Notes;
+        // assert.equal(actualMSG, excpectedMSG);
+        let IndexOfEvent = interception.response.body.map(function (t: { Notes: string; }) { return t.Notes; }).indexOf(excpectedMSG);
+        assert.notEqual(IndexOfEvent,"-1")
     });
 }
 
