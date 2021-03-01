@@ -14,18 +14,22 @@ namespace Logitude.Test.Base.Services
 
         public static LocationsVariables GetLocationsVariables()
         {
-            return new LocationsVariables {
+            return new LocationsVariables
+            {
                 PortLHRId = GetPortId("LHR", null),
-                PortLASDomesticId = GetPortId("LAS", "us"),
-                PortMIADomesticId = GetPortId("MIA", "us"),
-                PortAirJFKId = GetPortId("JFK", "us"),
+                PortLASDomesticId = GetPortId("LAS", "US"),
+                PortMIADomesticId = GetPortId("MIA", "US"),
+                PortAirJFKId = GetPortId("JFK", "US"),
+                PortOceanNYCId = GetPortId("USNYC", null, true),
                 PortOceanSOUId = GetPortId("USSOU", null, true),
                 PortInlandNYCId = GetPortId("NYC", null),
                 PortLONId = GetPortId("LON", null),
                 PortMANId = GetPortId("MAN", null),
                 StateAKId = GetStateId("AK"),
                 CountryUSId = GetCountryId("US"),
-                CountryGBId = GetCountryId("GB")
+                CountryGBId = GetCountryId("GB"),
+                CityAnchorageId = GetCityId("Anchorage", "US", "AK"),
+                CityManchesterId = GetCityId("Manchester", "GB")
             };
         }
 
@@ -37,23 +41,26 @@ namespace Logitude.Test.Base.Services
         {
             return new PartnersVariables
             {
-                VendorId = GetPartnerId("VD", "TestVendor"),
-                AgentId = GetPartnerId("AG", "TestAgentExport"),
-                CustomerId = GetPartnerId("CS", "TestCustomer", isCustomer: true),
-                PotentialCustomerId = GetPartnerId("PO", "TestPotentialCustomer"),
-                CustomAgentId = GetPartnerId("CG", "TestCustomAgent"),
-                ShippingAgentId = GetPartnerId("SG", "TestShippingAgent"),
-                TruckerTLONId = GetPartnerId("TR", "TestTLONTrucker", "TLON"),
-                TruckerTNYCId = GetPartnerId("TR", "TestTNYCTrucker", "TNYC"),
-                ShipperExportId = GetPartnerId("CS", "TestShipperExport"),
-                ShipperImportId = GetPartnerId("CS", "TestShipperImport"),
-                ConsigneeExportId = GetPartnerId("CS", "TestConsigneeExport"),
-                ConsigneeImportId = GetPartnerId("CS", "TestConsigneeImport"),
-                AirlineAAId = GetPartnerId("AL", "TestAAAirline", "AA", copyFromTenantZero: true),
-                AirlineBAId = GetPartnerId("AL", "TestBAAirline", "BA", copyFromTenantZero: true),
-                ShippingLineMAEUId = GetPartnerId("SL", "TestMAEUShippingLine", "MAEU", copyFromTenantZero: true),
-                ShippingLineMSCUId = GetPartnerId("SL", "TestMSCUShippingLine", "MSCU", copyFromTenantZero: true),
-                WarehouseId = GetPartnerId("WH", "TestWarehouse", "TSWHE")
+                VendorId = GetPartnerId(new PartnerParameters { TypeCode = "VD", Name = "TestVendor" }),
+                AgentId = GetPartnerId(new PartnerParameters { TypeCode = "AG", Name = "TestAgentExport" }),
+                AgentCode = GetPartnerCode(new PartnerParameters { TypeCode = "AG", Name = "TestAgentExport" }),
+                CustomerId = GetPartnerId(new PartnerParameters { TypeCode = "CS", Name = "TestCustomer", IsCustomer = true }),
+                PotentialCustomerId = GetPartnerId(new PartnerParameters { TypeCode = "PO", Name = "TestPotentialCustomer" }),
+                CustomAgentId = GetPartnerId(new PartnerParameters { TypeCode = "CG", Name = "TestCustomAgent" }),
+                ShippingAgentId = GetPartnerId(new PartnerParameters { TypeCode = "SG", Name = "TestShippingAgent" }),
+                TruckerTLONId = GetPartnerId(new PartnerParameters { TypeCode = "TR", Name = "TestTLONTrucker", Code = "TLON" }),
+                TruckerTNYCId = GetPartnerId(new PartnerParameters { TypeCode = "TR", Name = "TestTNYCTrucker", Code = "TNYC" }),
+                ShipperExportId = GetPartnerId(new PartnerParameters { TypeCode = "CS", Name = "TestShipperExport" }),
+                ShipperExportCode = GetPartnerCode(new PartnerParameters { TypeCode = "CS", Name = "TestShipperExport" }),
+                ShipperImportId = GetPartnerId(new PartnerParameters { TypeCode = "CS", Name = "TestShipperImport" }),
+                ShipperImportCode = GetPartnerCode(new PartnerParameters { TypeCode = "CS", Name = "TestShipperImport" }),
+                ConsigneeExportId = GetPartnerId(new PartnerParameters { TypeCode = "CS", Name = "TestConsigneeExport" }),
+                ConsigneeImportId = GetPartnerId(new PartnerParameters { TypeCode = "CS", Name = "TestConsigneeImport" }),
+                AirlineAAId = GetPartnerId(new PartnerParameters { TypeCode = "AL", Name = "TestAAAirline", Code = "AA", CopyFromTenantZero = true }),
+                AirlineBAId = GetPartnerId(new PartnerParameters { TypeCode = "AL", Name = "TestBAAirline", Code = "BA", CopyFromTenantZero = true }),
+                ShippingLineMAEUId = GetPartnerId(new PartnerParameters { TypeCode = "SL", Name = "TestMAEUShippingLine", Code = "MAEU", CopyFromTenantZero = true }),
+                ShippingLineMSCUId = GetPartnerId(new PartnerParameters { TypeCode = "SL", Name = "TestMSCUShippingLine", Code = "MSCU", CopyFromTenantZero = true }),
+                WarehouseId = GetPartnerId(new PartnerParameters { TypeCode = "WH", Name = "TestWarehouse", Code = "TSWHE" })
             };
         }
 
@@ -146,6 +153,55 @@ namespace Logitude.Test.Base.Services
         }
         #endregion
 
+        #region Cities
+        private static string GetCityId(string cityCode, string countryCode, string stateCode = null)
+        {
+            string countryId = GetCountryId(countryCode);
+            string stateId = stateCode == null ? null : GetStateId(stateCode);
+
+            ApiQueryFilters apiQueryFilters = new ApiQueryFilters
+            {
+                PageIndex = 0,
+                PageSize = 1,
+                Filter1Name = "Code",
+                Filter1Operator = "equals",
+                Filter1Value = cityCode,
+                Filter2Name = "CountryId",
+                Filter2Operator = "equals",
+                Filter2Value = countryId
+            };
+
+            string userTenantCityId = GetCityIdFromUserTenant(apiQueryFilters);
+            if (string.IsNullOrEmpty(userTenantCityId))
+            {
+                userTenantCityId = CreateCityForUserTenant(cityCode, countryId, stateId);
+            }
+
+            return userTenantCityId;
+        }
+
+        private static string GetCityIdFromUserTenant(ApiQueryFilters apiQueryFilters)
+        {
+            ApiResponse<IEnumerable<City>> response = APICaller.CallGetByFilters<IEnumerable<City>>(Urls.CountryCityViewsGetByFilters, UserTenant.Token, apiQueryFilters);
+            return response.Data?.FirstOrDefault()?.Id;
+        }
+
+        private static string CreateCityForUserTenant(string cityCode, string countryId, string stateId)
+        {
+            City city = new City
+            {
+                Tenant = UserTenant.Tenant,
+                Code = cityCode,
+                EnglishName = cityCode,
+                CountryId = countryId,
+                StateId = stateId
+            };
+
+            ApiResponse<City> response = APICaller.CallPost<City>(city, Urls.CountryCities, UserTenant.Token);
+            return response.Data?.Id;
+        }
+        #endregion
+
         #region Build ApiQueryFilters
         private static ApiQueryFilters BuildApiQueryFilters(string code, string countryCode)
         {
@@ -167,82 +223,134 @@ namespace Logitude.Test.Base.Services
 
         #region Partners Data Preparation
 
-        private static string GetPartnerId(string partnerTypeCode, string partnerName, string partnerCode = null, bool isCustomer = false, bool copyFromTenantZero = false)
+        private static string GetPartnerId(PartnerParameters partnerParameters)
         {
-            string userTenantPartnerId = GetPartnerIdFromTenant(partnerTypeCode, partnerName, partnerCode, false);
+            string userTenantPartnerId = GetPartnerIdFromTenant(partnerParameters, false);
             if (string.IsNullOrEmpty(userTenantPartnerId))
             {
-                if (!copyFromTenantZero)
+                if (partnerParameters.CopyFromTenantZero)
                 {
-                    userTenantPartnerId = CreatePartnerForUserTenant(partnerTypeCode, partnerName, partnerCode, isCustomer);
+                    string tenantZeroPartnerId = GetPartnerIdFromTenant(partnerParameters, true);
+                    userTenantPartnerId = GetCopiedPartnerIdFromTenantZero(tenantZeroPartnerId);
                 }
                 else
                 {
-                    string tenantZeroPartnerId = GetPartnerIdFromTenant(partnerTypeCode, partnerName, partnerCode, true);
-                    userTenantPartnerId = GetCopiedPartnerFromTenantZero(tenantZeroPartnerId);
+                    userTenantPartnerId = CreatePartnerForUserTenant(partnerParameters);
                 }
             }
 
             return userTenantPartnerId;
         }
 
-        private static string GetPartnerIdFromTenant(string partnerTypeCode, string partnerName, string partnerCode, bool getFromTenantZero)
+        private static string GetPartnerCode(PartnerParameters partnerParameters)
         {
-            string requestUrl = getFromTenantZero ? Urls.CarrierViewsGetTenantImportByFilters : GetUrlForUserTenantPartnerRequest(partnerTypeCode);
+            string userTenantPartnerId = GetPartnerId(partnerParameters);
+            string requestUrl = GetUrlForUserTenantPartnerRequest(partnerParameters.TypeCode);
 
             ApiQueryFilters apiQueryFilters = new ApiQueryFilters
             {
                 PageIndex = 0,
                 PageSize = 1,
-                Filter1Name = string.IsNullOrEmpty(partnerCode) ? "EnglishName" : "Code",
+                Filter1Name = "Id",
                 Filter1Operator = "equals",
-                Filter1Value = string.IsNullOrEmpty(partnerCode) ? partnerName : partnerCode,
+                Filter1Value = userTenantPartnerId
+            };
+
+            ApiResponse<IEnumerable<dynamic>> response = APICaller.CallGetByFilters<IEnumerable<dynamic>>(requestUrl, UserTenant.Token, apiQueryFilters);
+            return response.Data?.FirstOrDefault()?["Code"];
+        }
+
+        private static string GetPartnerIdFromTenant(PartnerParameters partnerParameters, bool getFromTenantZero)
+        {
+            string requestUrl = getFromTenantZero ? Urls.CarrierViewsGetTenantImportByFilters : GetUrlForUserTenantPartnerRequest(partnerParameters.TypeCode);
+
+            ApiQueryFilters apiQueryFilters = new ApiQueryFilters
+            {
+                PageIndex = 0,
+                PageSize = 1,
+                Filter1Name = string.IsNullOrEmpty(partnerParameters.Code) ? "EnglishName" : "Code",
+                Filter1Operator = "equals",
+                Filter1Value = string.IsNullOrEmpty(partnerParameters.Code) ? partnerParameters.Name : partnerParameters.Code
             };
 
             ApiResponse<IEnumerable<dynamic>> response = APICaller.CallGetByFilters<IEnumerable<dynamic>>(requestUrl, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault()?["Id"];
         }
 
-        private static string CreatePartnerForUserTenant(string partnerTypeCode, string partnerName, string partnerCode, bool isCustomer)
+        private static string CreatePartnerForUserTenant(PartnerParameters partnerParameters)
         {
-            Partner partner = BuildPartner(partnerTypeCode, partnerName, partnerCode, isCustomer);
+            Partner partner = BuildPartner(partnerParameters);
             ApiResponse<Partner> response = APICaller.CallPost<Partner>(partner, Urls.PartnersDomainController, UserTenant.Token);
             return response.Data?.PartnerId;
         }
 
-        private static string GetCopiedPartnerFromTenantZero(string tenantZeroPartnerId)
+        private static string GetCopiedPartnerIdFromTenantZero(string tenantZeroPartnerId)
         {
             string requestUrl = Urls.PartnersDomainGetCarrierCopyToCurrentTenant(tenantZeroPartnerId);
             ApiResponse<dynamic> response = APICaller.CallGet<dynamic>(requestUrl, UserTenant.Token);
             return response.Data?["Id"];
         }
 
-        private static Partner BuildPartner(string partnerTypeCode, string partnerName, string partnerCode, bool isCustomer)
+        private static Partner BuildPartner(PartnerParameters partnerParameters)
         {
             Partner partner = new Partner
             {
                 Tenant = UserTenant.Tenant,
-                PartnerTypeId = partnerTypeCode,
-                Address = new Address
-                {
-                    Tenant = UserTenant.Tenant,
-                    Name = partnerName + " Address",
-                    Description = "Main Address",
-                    AddressTypeId = "M",
-                    IsCreatedWithPartner = true
-                }
+                PartnerTypeId = partnerParameters.TypeCode,
+                Address = BuildPartnerAddress(partnerParameters.Name),
+                Contact = BuildPartnerContact(partnerParameters.Name)
             };
 
-            PartnerInformation partnerInformation = new PartnerInformation
+            PartnerInformation partnerInformation = BuidPartnerInformation(partnerParameters);
+
+            partner = SetPartnerInformation(partner, partnerInformation, partnerParameters.TypeCode);
+            return partner;
+        }
+
+        private static Address BuildPartnerAddress(string partnerName)
+        {
+            return new Address
             {
                 Tenant = UserTenant.Tenant,
-                EnglishName = partnerName,
-                LocalName = partnerName,
-                PartnerTypeId = partnerTypeCode,
-                Code = partnerCode,
-                IsCustomer = isCustomer
+                Name = partnerName + " Address",
+                Description = "Main Address",
+                AddressTypeId = "M",
+                Address1 = "Test Address",
+                StateId = GetStateId("AK"),
+                CountryId = GetCountryId("US"),
+                IsCreatedWithPartner = true
             };
+        }
 
+        private static Contact BuildPartnerContact(string partnerName)
+        {
+            return new Contact
+            {
+                Tenant = UserTenant.Tenant,
+                EnglishName = partnerName + " Contact",
+                Email = partnerName.ToLower() + "@test.com",
+                Mobile = "9999999999",
+                Fax = "999999",
+                SetAsPrimaryForCard = true,
+                IsCreatedWithPartner = true
+            };
+        }
+
+        private static PartnerInformation BuidPartnerInformation(PartnerParameters partnerParameters)
+        {
+            return new PartnerInformation
+            {
+                Tenant = UserTenant.Tenant,
+                EnglishName = partnerParameters.Name,
+                LocalName = partnerParameters.Name,
+                PartnerTypeId = partnerParameters.TypeCode,
+                Code = partnerParameters.Code,
+                IsCustomer = partnerParameters.IsCustomer
+            };
+        }
+
+        private static Partner SetPartnerInformation(Partner partner, PartnerInformation partnerInformation, string partnerTypeCode)
+        {
             switch (partnerTypeCode)
             {
                 case "VD":

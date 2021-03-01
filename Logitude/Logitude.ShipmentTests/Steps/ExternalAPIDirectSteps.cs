@@ -64,7 +64,7 @@ namespace Logitude.ShipmentTests.Steps
         [Then(@"should receive error message say cannot set main carriage ATA to future date")]
         public void ThenShouldReceiveErrorMessageSayCannotSetMainCarriageATAToFutureDate()
         {
-            Context.act.Should().ThrowExactly<Exception>().Where(e => e.Message.Contains("Can't set MainCarriageATA to future date"));
+            Context.act.Should().ThrowExactly<AggregateException>().And.InnerExceptions[0].Message.Contains("Can't set MainCarriageATA to future date");
         }
         #endregion
 
@@ -79,7 +79,7 @@ namespace Logitude.ShipmentTests.Steps
         [Then(@"should receive error message say cannot set main carriage ATD to future date")]
         public void ThenShouldReceiveErrorMessageSayCannotSetMainCarriageATDToFutureDate()
         {
-            Context.act.Should().ThrowExactly<Exception>().Where(e => e.Message.Contains("Can't set MainCarriageATD to future date"));
+            Context.act.Should().ThrowExactly<AggregateException>().And.InnerExceptions[0].Message.Contains("Can't set MainCarriageATD to future date");
         }
         #endregion
 
@@ -141,11 +141,10 @@ namespace Logitude.ShipmentTests.Steps
         {
             dynamic directShipment = directShipmentTable.CreateDynamicInstance();
 
-            return new DirectBuilder().Agent((string)directShipment.Agent.ToString())
+            return new DirectBuilder().WithDefualtValues()
                 .Direction((string)directShipment.Direction.ToString())
                 .TransportMode((string)directShipment.TransportMode.ToString())
                 .ShipmentType((string)directShipment.ShipmentType.ToString())
-                .Shipper((string)directShipment.Shipper.ToString())
                 .ShipperReference1((string)directShipment.ShipperReference1.ToString())
                 .ShipperReference2((string)directShipment.ShipperReference2.ToString())
                 .GrossWeightUnit((string)directShipment.GrossWeightUnit.ToString())
@@ -153,7 +152,7 @@ namespace Logitude.ShipmentTests.Steps
                 .VolumeUnit((string)directShipment.VolumeUnit.ToString())
                 .Incoterm((string)directShipment.Incoterm.ToString())
                 .MainCarriageCarrier((string)directShipment.MainCarriageCarrier.ToString())
-                .MainCarriageATD((DateTime)directShipment.MainCarriageATD)
+                .MainCarriageATD(DateTime.Now.Date)
                 .Build();
         }
         #endregion

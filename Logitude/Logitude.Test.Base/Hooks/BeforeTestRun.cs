@@ -153,6 +153,7 @@ namespace Logitude.Test.Base.Hooks
             LocationsData.PortLASDomesticId = locationsVariables.PortLASDomesticId;
             LocationsData.PortMIADomesticId = locationsVariables.PortMIADomesticId;
             LocationsData.PortAirJFKId = locationsVariables.PortAirJFKId;
+            LocationsData.PortOceanNYCId = locationsVariables.PortOceanNYCId;
             LocationsData.PortOceanSOUId = locationsVariables.PortOceanSOUId;
             LocationsData.PortInlandNYCId = locationsVariables.PortInlandNYCId;
             LocationsData.PortLONId = locationsVariables.PortLONId;
@@ -160,12 +161,15 @@ namespace Logitude.Test.Base.Hooks
             LocationsData.CountryUSId = locationsVariables.CountryUSId;
             LocationsData.CountryGBId = locationsVariables.CountryGBId;
             LocationsData.StateAKId = locationsVariables.StateAKId;
+            LocationsData.CityAnchorageId = locationsVariables.CityAnchorageId;
+            LocationsData.CityManchesterId = locationsVariables.CityManchesterId;
         }
 
         private static void PartnersDataMap(PartnersVariables partnersVariables)
         {
             PartnersData.VendorId = partnersVariables.VendorId;
             PartnersData.AgentId = partnersVariables.AgentId;
+            PartnersData.AgentCode = partnersVariables.AgentCode;
             PartnersData.CustomerId = partnersVariables.CustomerId;
             PartnersData.CustomAgentId = partnersVariables.CustomAgentId;
             PartnersData.ShippingAgentId = partnersVariables.ShippingAgentId;
@@ -173,7 +177,9 @@ namespace Logitude.Test.Base.Hooks
             PartnersData.TruckerTLONId = partnersVariables.TruckerTLONId;
             PartnersData.TruckerTNYCId = partnersVariables.TruckerTNYCId;
             PartnersData.ShipperExportId = partnersVariables.ShipperExportId;
+            PartnersData.ShipperExportCode = partnersVariables.ShipperExportCode;
             PartnersData.ShipperImportId = partnersVariables.ShipperImportId;
+            PartnersData.ShipperImportCode = partnersVariables.ShipperImportCode;
             PartnersData.ConsigneeExportId = partnersVariables.ConsigneeExportId;
             PartnersData.ConsigneeImportId = partnersVariables.ConsigneeImportId;
             PartnersData.AirlineAAId = partnersVariables.AirlineAAId;
