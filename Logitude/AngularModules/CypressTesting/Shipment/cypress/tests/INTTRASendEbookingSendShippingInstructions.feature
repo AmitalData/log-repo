@@ -1,10 +1,13 @@
 @release @all
-Feature: Send INTTRA E-Booking
-    The authenticated customer care user will adjust INTTRA settings,
-    the other authenticated user will create new master export ocean FCL shipment,
-    open the INTTRA e-booking wizard to ensure that validation messages for sending e-booking are appear,
-    fill all required information to send e-booking,
-    and ensure INTTRA e-booking have status sent after make booking request.
+Feature: INTTRA Sending E-Booking and Shipping Instructions
+    The Customer Care user configures INTTRA for the tenant,
+    the other user creates an Ocean Export FCL shipment,
+    sends e-booking request,
+    fixes the validations preventing the sending of e-booking,
+    sends the e-booking again,
+    sends shipping instructions,
+    fixes the validations preventing the sending of shipping instructions,
+    and sends the shipping instructions again.
 
     Scenario: Login as customer care user and adjust INTTRA settings
         Given the customer care user logged in and navigate to maintenance menu
@@ -42,8 +45,8 @@ Feature: Send INTTRA E-Booking
 
     Scenario: Fill required information to send INTTRA e-booking
         Given the user fill the following information to send e-booking
-            | BranchName  | ShippingLine | ContractNumber | DescriptionOfGoods | ETDDate | ETDTime | Vessel | ShipperContact      |
-            | Main Office | MSCU         | 53454          | Send booking test  | Today   | 14:00   | PT     | TestShipperContact3 |
+            | BranchName  | ShippingLine | ContractNumber | DescriptionOfGoods | ETDDate | ETDTime | Vessel | ShipperContact     |
+            | Main Office | MSCU         | 53454          | Send booking test  | Today   | 14:00   | PT     | TestShipperContact |
         And add the following package
             | PackageType | GrossWeight |
             | 40GP        | 200         |

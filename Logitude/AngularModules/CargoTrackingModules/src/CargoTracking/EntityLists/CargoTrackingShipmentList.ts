@@ -76,6 +76,7 @@ export class CargoTrackingShipmentList {
 	ContainersNumbers: string;
 	PackagesQuantity: number;
 	DirectionId: string;
+	ShipmentLevelCode: string;
 	
 }
  

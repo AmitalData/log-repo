@@ -153,6 +153,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
 
         public string StatusId { get; set; }
         public string StatusName { get; set; }
+        public string ExactStatusName { get; set; }
         public DateTime? StatusDate { get; set; }
         public string StatusLocation { get; set; }
 

@@ -1,8 +1,9 @@
-@smoke @stable @all @shipments2
-Feature: Cancel shipment
-  After the user logging in the system and navigate to shipments workspace
-  will create a direct shipment and cancel it.
-  
+@smoke @not-stable @all
+Feature: Cancel and Reactive shipment
+  The user creates a shipment, cancels the shipment,
+  makes sure that the system does not allow the user to edit the shipment,
+  reactivates the shipment and makes sure that the system allows the user to edit the shipment again.
+
   Scenario: Create direct export air shipment
     Given the user logged in and navigates to shipments workspace
     And a direct shipment with the following details

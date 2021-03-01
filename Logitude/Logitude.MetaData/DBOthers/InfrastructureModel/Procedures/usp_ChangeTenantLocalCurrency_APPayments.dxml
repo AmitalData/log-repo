@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="Main"
+  Name="usp_ChangeTenantLocalCurrency_APPayments"
+  Schema="dbo"
+  Module="Infrastructure">
+  <SqlScript>
+    <![CDATA[
+
+    
+CREATE PROCEDURE [dbo].[usp_ChangeTenantLocalCurrency_APPayments]
+(
+  @Tenant AS INT,
+  @NewCurrencyCode AS VARCHAR(30)
+)
+AS
+
+SET NOCOUNT ON
+
+declare @IsRunningScript as bit
+set @IsRunningScript = 0
+
+declare @LocalCurrencyId as varchar(15)
+set @LocalCurrencyId = (select Id from Currencies where Tenant = @Tenant and Code = @NewCurrencyCode)
+
+if not exists (select * from Tenants where Id = @Tenant)
+begin
+       print 'Error 01: This Tenant is not exists!'
+end
+
+else if not exists (select * from Currencies where Tenant = @Tenant and Id = @LocalCurrencyId)
+begin
+       print 'Error 02: This Currency is not exists!'
+end
+
+else
+begin
+		
+	declare @CurrencyId as varchar(15)
+	declare @CurrencyName as varchar(40)
+	declare @AllCurrenciesRatesExists as bit
+	set @AllCurrenciesRatesExists = 1
+
+	DECLARE CurrenciesCursor CURSOR READ_ONLY
+	FOR
+	SELECT Id, EnglishName
+	FROM Currencies
+	WHERE Tenant = @Tenant
+	OPEN CurrenciesCursor FETCH NEXT FROM CurrenciesCursor INTO @CurrencyId, @CurrencyName
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+
+		if (@CurrencyId != @LocalCurrencyId) AND not exists (select * from RatesTables where Tenant = @Tenant and BaseCurrencyId = @LocalCurrencyId and ForeignCurrencyId = @CurrencyId)
+		begin
+			set @AllCurrenciesRatesExists = 0
+			print 'Error 03: ' + @CurrencyName + ' Currency has no rates in this Tenant'
+		end		
+
+	FETCH NEXT FROM CurrenciesCursor INTO @CurrencyId, @CurrencyName	
+	END
+	CLOSE CurrenciesCursor
+	DEALLOCATE CurrenciesCursor
+
+	IF (@AllCurrenciesRatesExists = 1)
+	set @IsRunningScript = 1
+end
+
+IF (@IsRunningScript = 1)
+BEGIN
+
+	print 'Start...'	
+	update Tenants set CurrencyId = @LocalCurrencyId where Id = @Tenant and CurrencyId <> @LocalCurrencyId
+
+	-- Payments
+	BEGIN
+
+		update APPayments set LocalCurrencyId = @LocalCurrencyId where Tenant = @Tenant
+		update APPayments set RegisterDate = UpdateDate where RegisterDate is null and Tenant = @Tenant
+		update APPayments set RegisterDate = CreateDate where RegisterDate is null and Tenant = @Tenant
+
+		declare @PaymentId as varchar(15)
+		declare @PaymentDate as datetime
+		declare @PaymentCurrencyId as varchar(15)
+		declare @PaymentCurrencyRate as float
+
+		declare @Amount as float
+		declare @AmountLocal as float
+
+		DECLARE PaymentsCursor CURSOR READ_ONLY
+		FOR
+		SELECT Id, RegisterDate, PaymentCurrencyId, PaymentCurrencyExchangeRate, AmountInPaymentCurrency
+		FROM APPayments
+		WHERE Tenant = @Tenant
+		OPEN PaymentsCursor FETCH NEXT FROM PaymentsCursor INTO @PaymentId, @PaymentDate, @PaymentCurrencyId, @PaymentCurrencyRate, @Amount
+		WHILE @@FETCH_STATUS = 0
+		BEGIN
+
+			-- Rate + AmountLocal
+			if (@PaymentCurrencyId = @LocalCurrencyId)
+			begin
+				set @PaymentCurrencyRate = 1
+				set @AmountLocal = @Amount
+			end
+			else
+			begin
+				set @PaymentCurrencyRate = dbo.GetLastRate(@Tenant, @PaymentDate, @LocalCurrencyId, @PaymentCurrencyId)
+				set @AmountLocal = @Amount * @PaymentCurrencyRate
+			end
+
+			update APPayments
+			set
+			PaymentCurrencyExchangeRate = Round(@PaymentCurrencyRate, 5),
+			AmountInLocalCurrency = Round(@AmountLocal, 5)
+			where Id = @PaymentId and Tenant = @Tenant
+
+		FETCH NEXT FROM PaymentsCursor INTO @PaymentId, @PaymentDate, @PaymentCurrencyId, @PaymentCurrencyRate, @Amount
+		END
+		CLOSE PaymentsCursor
+		DEALLOCATE PaymentsCursor
+	END
+
+	print 'End Successfully...'
+	SET NOCOUNT OFF
+END
+
+
+
+    
+]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</Procedure>

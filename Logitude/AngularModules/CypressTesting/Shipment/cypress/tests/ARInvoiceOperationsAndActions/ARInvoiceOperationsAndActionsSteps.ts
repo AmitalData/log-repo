@@ -18,12 +18,26 @@ import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors'
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
 let customerCode: string;
-let AccountingSystem:string;
+let AccountingSystem: string;
 
 //#endregion
-//#region Create customer
-Given("the user logged in and navigates to customers workspace", () => {
+//#region Update Accounting System
+Given("the user logged in", () => {
     cy.Login();
+});
+Given("accounting System as {string}", (accountingSystem) => {
+    AccountingSystem = accountingSystem;
+});
+
+When("change the accounting system", () => {
+    AccountingActions.changeAccountingsSystem(AccountingSystem)
+});
+Then("the accounting system should update successfully", () => {
+    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
+});
+//#endregion
+//#region Create customer
+Given("the user navigates to customers workspace", () => {
     CommonActions.NavigatesToCustomersWorkspace();
 });
 Given("a customer with the following details", (dataTable) => {
@@ -33,26 +47,12 @@ Given("a customer with the following details", (dataTable) => {
 When("create customer", () => {
     CommonActions.CreateCustomer();
 });
-
 Then("the customer should create successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.PartnersDomainRequest, 200).then((interception) => {
         customerCode = interception.response.body.Customer.Code;
-      });
     });
+});
 //#endregion
-//#region Update Accounting System
-Given("accounting System as {string}", (accountingSystem) => {
-    AccountingSystem=accountingSystem;
-  });
-  
-  When("change the accounting system", () => {
-    AccountingActions.changeAccountingsSystem(AccountingSystem)
-  });
-  
-  Then("the accounting system should update successfully", () => {
-    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
-  });
-  //#endregion
 //#region Create direct export air shipment
 Given("the user navigates to shipments workspace", () => {
     Actions.NavigatesToShipmentsWorkspace()

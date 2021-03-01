@@ -1091,7 +1091,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     DeleteAllClicked() {
         if (this.IsEditingEnabled) {
             var confirmWindow = new ConfirmWindow();
-            confirmWindow.Show("Please note that deleting will erase all the lines with the amounts inserted");
+            confirmWindow.Show("Please note that deleting will erase all the charges lines");
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     this.EntityPM.QuoteCharges = [];
