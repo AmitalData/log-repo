@@ -41,6 +41,8 @@ using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.BL.QuoteModel.Tools.Initializers;
 using Logitude.BL.ExternalService;
 using Logitude.BL.QuoteModel.Tools.Behaviours;
+using Simplog.Data.InfrastructureModel;
+using System.Reflection;
 
 namespace Logitude.BL.QuoteModel.Tools.EntityService
 {
@@ -299,9 +301,188 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                 entityPM.FollowUps = new List<QuoteFollowUpPM>();
             }
-            
+
+            this.RefreshFollowUpDate();
+            this.UpdateExtendedTasksDueDate();
+
         }
 
+        private void RefreshFollowUpDate()
+        {
+            IWebFreightContext freightContext = WebFreightContext.GetContext(tenant);
+            FollowUpRepository followUpsRepository = new FollowUpRepository(freightContext);
+            List<FollowUp> allFollowupLists = null;
+            List<FollowUp> followupLists = null;
+
+            if (entityPM.IsRefreshQuoteFollowUps)
+            {
+                allFollowupLists = followUpsRepository.GetFollowUpsByShipmentId(entityPM.Id, entityPM.Tenant);
+                followupLists = allFollowupLists.Where(d => !string.IsNullOrEmpty(d.DateFieldName)).ToList();
+
+                followupLists = followUpsRepository.GetFollowUpsThatHaveDateFileName(entityPM.Tenant).Where(d => d.QuoteId == entityPM.Id).ToList();
+
+
+                if (followupLists.Count > 0)
+                {
+                    bool isAnyOneChange = false;
+                    foreach (FollowUp follow in followupLists)
+                    {
+                        bool isChange = false;
+
+                        if (!string.IsNullOrEmpty(follow.DateFieldName))
+                        {
+                            PropertyInfo propInfo = entityPM.GetType().GetProperty(follow.DateFieldName);
+                            if (propInfo != null)
+                            {
+                                object fieldValue = propInfo.GetValue(entityPM);
+
+                                if (fieldValue != null)
+                                {
+                                    DateTime? fieldValuedate = (DateTime?)fieldValue;
+
+                                    if (follow.DateEscalationActionTimeIndicatorCode != "IM" && follow.DateEscalationTime != 0)
+                                    {
+                                        int dateEscalationTime = follow.DateEscalationActionTimeIndicatorCode == "AF" ? follow.DateEscalationTime : follow.DateEscalationTime * -1;
+                                        fieldValuedate = fieldValuedate.Value.AddDays(dateEscalationTime);
+
+                                    }
+
+                                    if (follow.Date != fieldValuedate)
+                                    {
+                                        follow.Date = fieldValuedate;
+
+                                        if (!entityPM.IsRefreshQuoteFollowUps)
+                                        {
+                                            QuoteFollowUpPM followUpPM = entityPM.FollowUps.Where(d => d.Id == follow.Id).FirstOrDefault();
+                                            if (followUpPM != null) followUpPM.Date = follow.Date;
+                                        }
+
+                                        isChange = true;
+                                        isAnyOneChange = true;
+                                    }
+
+
+
+                                }
+
+                                if (isChange) followUpsRepository.Update(follow);
+                            }
+                        }
+                    }
+                    if (isAnyOneChange) followUpsRepository.SubmitChanges();
+
+                }
+
+                if (entityPM.IsRefreshQuoteFollowUps && allFollowupLists.Count > 0) RefreshQuoteFollowUps(allFollowupLists);
+
+            }
+        }
+       private void RefreshQuoteFollowUps(List<FollowUp> followupList = null)
+            {
+                entityPM.IsRefreshQuoteFollowUps = false;
+                entityPM.IsRefreshFollowUp = true;
+                IWebFreightContext myFreightContext = WebFreightContext.GetContext(tenant);
+                FollowUpRepository followUpsRepository = new FollowUpRepository(myFreightContext);
+
+                if (entityPM.FollowUps.Count != 0)
+                {
+                    entityPM.FollowUps.Clear();
+                }
+
+                if (followupList == null)
+                {
+                    followupList = followUpsRepository.GetFollowUpsByQuoteId(entityPM.Id, entityPM.Tenant);
+                }
+                foreach (FollowUp follow in followupList)
+                {
+                    QuoteFollowUpPM followUpPM = new QuoteFollowUpPM()
+                    {
+                        Tenant = follow.Tenant,
+                        Date = follow.Date,
+                        Done = follow.Done,
+                        DoneDateTime = follow.DoneDateTime,
+                        DoneNote = follow.DoneNote,
+                        ExternalDocumentId = follow.DocumentsFilingId,
+                        Id = follow.Id,
+                        InternalDocumentId = follow.InternalDocumentId,
+                        IsNew = follow.IsNew,
+                        JobId = follow.JobId,
+                        LegType = follow.LegType,
+                        Note = follow.Notes,
+                        ShipmentId = follow.ShipmentId,
+                        QuoteId = follow.QuoteId,
+                        EventTypeId = follow.EventTypeId,
+                        EventTypeFollowUpName = follow.EventType.FollowUpEnglishName,
+                        ManualActivatedFollowUp = follow.EventType.ManualActivatedFollowUp,
+                        OwnerUserId = follow.OwnerUserId,
+                        OwnerUserName = follow.OwnerUser.Contact.EnglishName,
+                        Area = follow.Area,
+                        DocumentTypeId = follow.DocumentTypeId,
+                        AutomationId = follow.AutomationId, 
+
+                    };
+                    entityPM.FollowUps.Add(followUpPM);
+                }
+            }
+
+        private void UpdateExtendedTasksDueDate()
+        {
+            ActivityRepository activityRepository = new ActivityRepository(tenant);
+            List<Activity> extendedActivities = activityRepository.GetExtendedActivitiesByQuoteId(entityPM.Id, tenant).ToList();
+
+            bool changeFound = false;
+            foreach (Activity item in extendedActivities)
+            {
+                if (!string.IsNullOrEmpty(item.DueDateDateField))
+                {
+                    PropertyInfo propInfo = entityPM.GetType().GetProperty(item.DueDateDateField);
+                    if (propInfo != null)
+                    {
+                        object fieldValue = propInfo.GetValue(entityPM);
+                        if (fieldValue != null)
+                        {
+                            DateTime? fieldValuedate = (DateTime?)fieldValue;
+                            fieldValuedate = fieldValuedate.Value.AddHours((double)item.DueDateOffset);
+
+                            if (item.DueDate != fieldValuedate)
+                            {
+                                item.DueDate = fieldValuedate;
+                            }
+                        }
+
+                        else
+                        {
+                            item.DueDate = null;
+                        }
+
+                        activityRepository.Update(item);
+
+                        ContactRepository contactRepository = new ContactRepository(tenant);
+                        Contact contact = contactRepository.GetContactByUserTypeAndTenant("S", tenant);
+                        if (contact != null)
+                        {
+                            EventTracer.CreateTraceEvent(new EventTracerArgs()
+                            {
+                                Tenant = tenant,
+                                EventTypeCode = "UPAV",
+                                UserId = contact.Id,
+                                EntityId = item.Id,
+                                ObjectTableName = "Activity",
+                                Entity = item,
+
+                            });
+                        }
+
+                        changeFound = true;
+                    }
+                }
+            }
+
+            if (changeFound)
+            {
+                activityRepository.SubmitChanges();
+            }
+        }
 
         private void GetQuoteSettings()
         {

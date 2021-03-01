@@ -208,7 +208,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             followUp.Id = IdCounter.GetNumber("FollowUp", tenant).ToString();
             followUp.EventTypeId = eventTypeId;
             if (automationFollowUp.ObjectTableName == "Shipment" || automationFollowUp.ObjectTableName == "Master") followUp.ShipmentId = entityChange.EntityId;
-
+            if (automationFollowUp.ObjectTableName == "Quote") followUp.QuoteId = entityChange.EntityId;
             followUp.OwnerUserId = ownerId;
             followUp.Notes = note;
             followUp.Date = date;
@@ -231,7 +231,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 EventTypeCode = "SFCR",
                 UserId = userId,
                 EntityId = entityChange.EntityId,
-                ObjectTableName = "Shipment",
+                ObjectTableName = automationFollowUp.ObjectTableName == "Master" ? "Shipment" : automationFollowUp.ObjectTableName,
                 Notes = automationFollowUp.FollowUpEnglishName + "\n" + "Resulted from Automation",
 
             });

@@ -336,6 +336,11 @@ export class EventsTabComponent implements OnDestroy {
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
 
             }
+            if (this.ObjectTableName == "Quote" && this.CurrentSession.CurrentEditComponent && this.entityArgs && this.entityArgs.EntityPM && event != "Cancel") {
+                this.IsRefreshFollowUp = true;
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+
+            }
         });
 
     }
