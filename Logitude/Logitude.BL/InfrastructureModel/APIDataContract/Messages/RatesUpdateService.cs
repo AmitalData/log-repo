@@ -97,7 +97,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.Messages
         }
         private void ValidateComputingPartner()
         {
-            var isComputingPartnerRequired = ratesUpdate.RateUpdateList.Where(a => a.Currency.PartnerCode != null && string.IsNullOrEmpty(ratesUpdate.ComputingPartnerCode)).Any();
+            var isComputingPartnerRequired = ratesUpdate.RateUpdateList.Where(a => !string.IsNullOrEmpty(a.Currency.PartnerCode) && string.IsNullOrEmpty(ratesUpdate.ComputingPartnerCode)).Any();
             if (isComputingPartnerRequired)
             {
                 errorMsg = errorMsg + "ComputingPartnerCode is required. ";
