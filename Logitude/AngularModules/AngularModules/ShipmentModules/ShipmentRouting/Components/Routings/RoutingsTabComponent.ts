@@ -658,7 +658,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
     AddChildLeg(myLegType: string, myRoutingItem: RoutingItem) {
         switch (myLegType) {
             case "Pick Up": {
-                var myChildPickUpIndex = 1;
+                var myChildPickUpIndex = 2;
                 if (myRoutingItem.Pickup.ChildPickUpIndex) {
                     myChildPickUpIndex = myRoutingItem.Pickup.ChildPickUpIndex + 1;
                 }
@@ -690,7 +690,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             }
 
             case "Delivery": {
-                var myChildDeliveryIndex = 1;
+                var myChildDeliveryIndex = 2;
                 if (myRoutingItem.Delivery.ChildDeliveryIndex) {
                     myChildDeliveryIndex = myRoutingItem.Delivery.ChildDeliveryIndex + 1;
                 }
