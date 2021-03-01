@@ -114,8 +114,10 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly li = "li";
     public static readonly ValidationSummaryBlock = ".ValidationSummary table tr td";
     public static readonly DropDownListItem = ".DropDownListItem";
+    public static readonly DropDownList=".DropDownList"
     public static readonly Value = ".Value";
     public static readonly CheckboxInput = "input[type='checkbox']";
+    public static readonly DownArrow='[src="Images/ToggleIcon.png"]'
 
 
     //#region Customs settings

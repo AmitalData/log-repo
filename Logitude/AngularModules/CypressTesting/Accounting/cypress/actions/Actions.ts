@@ -38,7 +38,8 @@ export function NavigatesToNewTransferARInvoices(){
 export function changeAccountingsSystem(AccountingsSystem: string, ExternalTransmissionType?: string) {
     NavigatesToAccountingSettings()
     cy.Click(BaseSelectors.buttonspan, AccountingSelectors.ContainAccountingSystem, true)
-    cy.FillLogLov(AccountingSelectors.AccountingSystemType, AccountingsSystem, true)
+    cy.SelectDropDownListItem(AccountingSelectors.LogLovAccountingSettingAccountingSystemCode,AccountingsSystem)
+    //cy.FillLogLov(AccountingSelectors.AccountingSystemType, AccountingsSystem, true)
     if (AccountingsSystem != AccountingSelectors.ContainNone) {
         cy.SelectCheckBox(AccountingSelectors.IsARInvoicesTransferEnabled)
         cy.SelectCheckBox(AccountingSelectors.IsAPInvoicesTransferEnabled)
@@ -329,9 +330,10 @@ export function NavigatesToDraftInvoice(draftConsolidationInvoiceNumber: string)
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200);
 }
 //#endregion
-export function AddSecondInvoiceToConsolidation() {
+export function AddSecondInvoiceToConsolidation(ARInvoiceNumber:string) {
     cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesPutRequest);
-    cy.get(AccountingSelectors.IsConsolidationChecked).eq(1).find(BaseSelectors.label).click({});
+
+    cy.get("[data-cy='CheckBox" + ARInvoiceNumber + "']").click();
 }
 export function AssertTransferStatus(TransferStatus:string){
     cy.get(BaseSelectors.HeaderScreen).eq(1).find(BaseSelectors.HeaderScreenLable)
