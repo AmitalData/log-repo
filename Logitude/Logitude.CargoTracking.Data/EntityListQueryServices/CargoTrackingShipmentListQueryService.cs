@@ -421,16 +421,19 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         }
         private Milestone GetCurrentMilstone(List<Milestone> milestones)
         {
-            return milestones.Where(s => s.IsEstimation == false|| s.IsEstimation == null).OrderByDescending(s => s.Date).ThenByDescending(s => s.Id).FirstOrDefault();
+            return milestones.Where(s => s.IsEstimation == false).OrderByDescending(s => s.Date).ThenByDescending(s => s.Id).FirstOrDefault();
         }
         private static void SetDoneMilstones(List<Milestone> shipmentMilestones, Milestone currentMilstone)
         {
-            var doneMilstones = shipmentMilestones.Where(milstone => milstone.Id < currentMilstone.Id).ToList();
-            doneMilstones.ForEach(doneMilstone =>
+            if (currentMilstone != null)
             {
-                doneMilstone.Done = true;
-                doneMilstone.IsEstimation = false;
-            });
+                var doneMilstones = shipmentMilestones.Where(milstone => milstone.Id < currentMilstone.Id).ToList();
+                doneMilstones.ForEach(doneMilstone =>
+                {
+                    doneMilstone.Done = true;
+                    doneMilstone.IsEstimation = false;
+                });
+            }
         }
         private string GetCurrentMilstoneCode(List<Milestone> milestones)
         {
@@ -560,7 +563,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 Done = Shipment.AssignedTruckerDone,
                 Notes = null,
                 IsCurrent = false,
-                IsEstimation = Shipment.AssignedTruckerEstimationDate == null ? false : true
+                IsEstimation = Shipment.AssignedTruckerDone == true ? false : true
             });
             milestones.Add(new Milestone()
             {
@@ -588,7 +591,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             });
             milestones.Add(new Milestone()
             {
-                Id = 13,
+                Id = 14,
                 Code = "Invoiced",
                 Name = "Invoiced",
                 //Date = Shipment.invoi,
