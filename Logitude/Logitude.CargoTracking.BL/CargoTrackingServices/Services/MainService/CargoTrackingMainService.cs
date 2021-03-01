@@ -723,12 +723,5 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             updateCargoTrackingRecords.NumberRecordUpdated += updateCargoTrackingRecords.RecordUpdated.NumberOfRecordUpdated;
             updateCargoTrackingRecords.NumberRecordUpdated2 += updateCargoTrackingRecords.RecordUpdated.NumberOfRecordUpdated2;
         }
-
-
     }
-
- 
-  
- 
-
 }

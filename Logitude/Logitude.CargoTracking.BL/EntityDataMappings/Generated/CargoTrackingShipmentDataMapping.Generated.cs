@@ -79,7 +79,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         Id, 
 	         ContainersNumbers, 
 	         PackagesQuantity, 
-	         DirectionId,
+	         DirectionId, 
+	         AssignedTruckerDone, 
+	         AssignedTruckerDate, 
+	         AssignedTruckerEstimationDate, 
+	         AssignedTruckerNotes,
 	      }
 
 
@@ -151,7 +155,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         IsFavorite, 
 	         ContainersNumbers, 
 	         PackagesQuantity, 
-	         DirectionId,
+	         DirectionId, 
+	         AssignedTruckerDone, 
+	         AssignedTruckerDate, 
+	         AssignedTruckerEstimationDate, 
+	         AssignedTruckerNotes,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -444,6 +452,26 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
 				entityPOCO.DirectionId = entityPM.DirectionId;
 			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedTruckerDone))
+            {
+				entityPOCO.AssignedTruckerDone = entityPM.AssignedTruckerDone;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedTruckerDate))
+            {
+				entityPOCO.AssignedTruckerDate = entityPM.AssignedTruckerDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedTruckerEstimationDate))
+            {
+				entityPOCO.AssignedTruckerEstimationDate = entityPM.AssignedTruckerEstimationDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedTruckerNotes))
+            {
+				entityPOCO.AssignedTruckerNotes = entityPM.AssignedTruckerNotes;
+			}
 			}
 
 		public void POCOToPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipment entityPOCO)
@@ -729,18 +757,34 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.ContainersNumbers = entityPOCO.ContainersNumbers;
             }
 
-
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PackagesQuantity))
             {
 					entityPM.PackagesQuantity = entityPOCO.PackagesQuantity;
             }
 
-
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DirectionId))
             {
 					entityPM.DirectionId = entityPOCO.DirectionId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AssignedTruckerDone))
+            {
+					entityPM.AssignedTruckerDone = entityPOCO.AssignedTruckerDone;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AssignedTruckerDate))
+            {
+					entityPM.AssignedTruckerDate = entityPOCO.AssignedTruckerDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AssignedTruckerEstimationDate))
+            {
+					entityPM.AssignedTruckerEstimationDate = entityPOCO.AssignedTruckerEstimationDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AssignedTruckerNotes))
+            {
+					entityPM.AssignedTruckerNotes = entityPOCO.AssignedTruckerNotes;
             }
 
 		}
@@ -1034,9 +1078,24 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
                 oldEntityPM.DirectionId = entityPM.DirectionId;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DirectionId))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedTruckerDone))
             {
-                oldEntityPM.DirectionId = entityPM.DirectionId;
+                oldEntityPM.AssignedTruckerDone = entityPM.AssignedTruckerDone;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedTruckerDate))
+            {
+                oldEntityPM.AssignedTruckerDate = entityPM.AssignedTruckerDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedTruckerEstimationDate))
+            {
+                oldEntityPM.AssignedTruckerEstimationDate = entityPM.AssignedTruckerEstimationDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedTruckerNotes))
+            {
+                oldEntityPM.AssignedTruckerNotes = entityPM.AssignedTruckerNotes;
             }
 			
 		}
@@ -1063,6 +1122,10 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.ContainersNumbers)) //T4 find type == nText 
             {
                 entityPM.ContainersNumbers = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ContainersNumbers));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.AssignedTruckerNotes)) //T4 find type == nText 
+            {
+                entityPM.AssignedTruckerNotes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AssignedTruckerNotes));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
