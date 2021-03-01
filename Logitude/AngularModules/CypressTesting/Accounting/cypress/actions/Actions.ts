@@ -198,7 +198,7 @@ export function AddTwoShipmentLinesAndEditAmount(shipmentNumbers: string[], VATT
         } as QuickSearchDetails;
         cy.SelectQuickSearchFirstElement(quickSearchDetails);
 
-        cy.get(AccountingSelectors.EditShipmentLine).children().eq(i).click();
+        cy.Click(AccountingSelectors.EditShipmentLineIcon(shipmentNumbers[i]), null, true)
         cy.FillLogTextBox(AccountingSelectors.APInvoiceLineForiegnCurrencyAmount, amount.toString());
         cy.FillLogLov(AccountingSelectors.APInvoiceVatType, VATType, true);
         cy.Click(BaseSelectors.Button, BaseSelectors.ContainsApplytoall);
