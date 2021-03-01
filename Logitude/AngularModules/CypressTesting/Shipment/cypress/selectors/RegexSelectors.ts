@@ -39,6 +39,10 @@ export class RegexSelectors {
         return "td[data-cy^=ShipmentNumber_" + ShipmentNumber + "]";
     }
 
+    public static CheckShipment(ShipmentNumber: string): string{
+        return "CheckBox[data-cy^=Check_" + ShipmentNumber + "]";
+    }
+
     public static SplitButton(packageNumber: string): string{
         return "button[data-cy^='Split_'][data-cy$='" + packageNumber + "']";
     }

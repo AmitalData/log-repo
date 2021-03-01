@@ -74,7 +74,7 @@
                                 <td style="width: 25px; min-width: 25px; max-width: 25px; padding:0 !important;">
                                     <div class="MediaFill">
                                         <div class="CenterCenter" style="width: 16px; height: 16px;">
-                                            <CheckBox [IsChecked]="IsAllChecked" (Checked)="IsAllChecked = $event"></CheckBox>
+                                            <CheckBox attr.data-cy="{{'CheckAll' | IdGeneratorPipe}}" [IsChecked]="IsAllChecked" (Checked)="IsAllChecked = $event"></CheckBox>
                                         </div>
                                     </div>
                                 </td>
@@ -102,7 +102,7 @@
                                 <td style="width: 25px; min-width: 25px; max-width: 25px; padding:0 !important;">
                                     <div class="MediaFill">
                                         <div class="CenterCenter" style="width: 16px; height: 16px; padding-left: 1px;">
-                                            <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
+                                            <CheckBox attr.data-cy="{{'Check_' + item.ShipmentNumber | IdGeneratorPipe}}" [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
                                         </div>
                                     </div>
                                 </td>

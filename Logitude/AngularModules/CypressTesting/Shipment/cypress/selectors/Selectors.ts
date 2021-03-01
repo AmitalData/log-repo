@@ -247,5 +247,6 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly CustomsTransmissionsUserName = 'td[data-cy^=CustomsTransmissionsUserName]';
   public static readonly CloseCustomsTransmissions = 'button[data-cy^=CloseCustomsTransmissions]';
   public static readonly CustomsTransmissionsRetransfer = 'button[data-cy^=CustomsTransmissionsRetransfer]';
+  public static readonly CheckAll = "CheckBox[data-cy^=CheckAll]";
   //#endregion
 }
