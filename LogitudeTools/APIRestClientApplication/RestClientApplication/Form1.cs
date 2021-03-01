@@ -20,7 +20,7 @@ namespace RestClientApplication
     {
         //string uri = "http://localhost:9996/api/";
         string Token;
-
+        private int ratesUpdateIndex = 17;
         public Form1()
         {
             InitializeComponent();
@@ -54,7 +54,6 @@ namespace RestClientApplication
 
         private void BuildOperationComboBox()
         {
-            var ratesUpdateIndex = 17;
             if(apiCombo.SelectedIndex == ratesUpdateIndex)
             {
                 this.operationCombo.Items.Clear();
@@ -1060,18 +1059,13 @@ namespace RestClientApplication
                         lblParameter.Visible = false;
                         txtParameter.Visible = false;
                         requestText = @"<RatesUpdate xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
-	                                        <ComputingPartnerCode></ComputingPartnerCode>
+	                                        <ComputingPartnerCode>AMS</ComputingPartnerCode>
 	                                        <RateUpdate>
-		                                        <Currency Code='' PartnerCode=''/>
-		                                        <RateDate></RateDate>
-		                                        <Rate></Rate>
-	                                        </RateUpdate>
-	                                        <RateUpdate>
-		                                        <Currency Code='' PartnerCode=''/>
-		                                        <RateDate></RateDate>
-		                                        <Rate></Rate>
-	                                        </RateUpdate>
-                                        </RatesUpdate>";
+		                                        <Currency Code='USD' PartnerCode='USD'></Currency>
+                                                < RateDate>2021 - 11 - 29</ RateDate >
+                                                < Rate> 5 </Rate>
+                                            </RateUpdate>
+                                            </RatesUpdate>";
                         apiName = "RatesUpdate";
                         break;
                     }
@@ -1112,7 +1106,12 @@ namespace RestClientApplication
 
                     if (operationCombo.SelectedIndex == 0)
                     {
-                        response = await client.PostAsync(txtServerUrl.Text + "/" + api, content);
+                        if (apiCombo.SelectedIndex == ratesUpdateIndex)
+                        {
+                            response = await client.PutAsync(txtServerUrl.Text + "/" + api, content);
+                        }
+                        else 
+                            response = await client.PostAsync(txtServerUrl.Text + "/" + api, content);
                     }
                     else if (operationCombo.SelectedIndex == 1)
                     {
