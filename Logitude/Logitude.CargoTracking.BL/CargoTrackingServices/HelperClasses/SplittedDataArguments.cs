@@ -1,25 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
+
 
 namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
 {
-    class SplittedDataArguments
+    public class SplittedDataArguments
     {
-        public DataRow tableRow { get; set; }
-        public DataTable dataTable { get; set; }
-        public string coulmnName { get; set; }
-        public char delimiter { get; set; }
+        public DataRow TableRow;
+        public DataTable DataTable;
+        public string CoulmnName;
+        public char Delimiter;
 
-        public SplittedDataArguments(DataRow tableRow, DataTable dataTable, string coulmnName, char delimiter)
+        public class Builder
         {
-            this.tableRow = tableRow;
-            this.dataTable = dataTable;
-            this.coulmnName = coulmnName;
-            this.delimiter = delimiter;
-        }
+            SplittedDataArguments splittedDataArguments = new SplittedDataArguments();
+
+            public Builder()
+            {
+            }
+
+            public Builder TableRow(DataRow tableRow)
+            {
+                splittedDataArguments.TableRow = tableRow;
+                return this;
+            }
+
+            public Builder DataTable(DataTable dataTable)
+            {
+                splittedDataArguments.DataTable = dataTable;
+                return this;
+            }
+
+            public Builder CoulmnName(string coulmnName)
+            {
+                splittedDataArguments.CoulmnName = coulmnName;
+                return this;
+            }
+
+            public Builder Delimiter(char delimiter)
+            {
+                splittedDataArguments.Delimiter = delimiter;
+                return this;
+            }
+            public SplittedDataArguments Build()
+            {
+                return splittedDataArguments;
+            }
+        } 
     }
 }

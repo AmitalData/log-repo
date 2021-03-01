@@ -36,16 +36,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             if (isValidToCreateRefrences)
             {
                 AddShipmentNumberReference(tableRow, bulkDataPreperation.InnerDataTable);
-                AddSplittedData(new SplittedDataArguments(tableRow, bulkDataPreperation.InnerDataTable, "CustomerReference1",','));
-                AddSplittedData(new SplittedDataArguments(tableRow, bulkDataPreperation.InnerDataTable, "CustomerReference2",','));
+                AddSplittedData(new SplittedDataArguments.Builder().TableRow(tableRow).DataTable(bulkDataPreperation.InnerDataTable).CoulmnName("CustomerReference1").Delimiter(',').Build());
+                AddSplittedData(new SplittedDataArguments.Builder().TableRow(tableRow).DataTable(bulkDataPreperation.InnerDataTable).CoulmnName("CustomerReference2").Delimiter(',').Build());
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "Master");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwarderShipmentNumber");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "CustomFileNumber");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "CustomsDeclarationNumber");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ShipperName");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ConsigneeName");
-                AddSplittedData(new SplittedDataArguments(tableRow, bulkDataPreperation.InnerDataTable, "ContainersNumbers",','));
-                AddSplittedData(new SplittedDataArguments(tableRow, bulkDataPreperation.InnerDataTable, "House", '-'));
+                AddSplittedData(new SplittedDataArguments.Builder().TableRow(tableRow).DataTable(bulkDataPreperation.InnerDataTable).CoulmnName("ContainersNumbers").Delimiter(',').Build());
+                AddSplittedData(new SplittedDataArguments.Builder().TableRow(tableRow).DataTable(bulkDataPreperation.InnerDataTable).CoulmnName("House").Delimiter('-').Build());
                 
                 if (tableRow["House"].ToString().Contains('-'))
                 {
@@ -113,19 +113,19 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
 
         private static void AddSplittedData(SplittedDataArguments splittedDataArguments)
         {
-            if (!IsNullOrEmpty(splittedDataArguments.tableRow, splittedDataArguments.coulmnName))
+            if (!IsNullOrEmpty(splittedDataArguments.TableRow, splittedDataArguments.CoulmnName))
             {
-                var Value = splittedDataArguments.tableRow[splittedDataArguments.coulmnName];
+                var Value = splittedDataArguments.TableRow[splittedDataArguments.CoulmnName];
                 string SearchField = (string)Value;
-                string[] SearchArr = SearchField.Split(splittedDataArguments.delimiter);
+                string[] SearchArr = SearchField.Split(splittedDataArguments.Delimiter);
                 for (int i = 0; i < SearchArr.Length; i++)
                 {
                     ReferencecArgs ReferencecArgs = new ReferencecArgs()
                     {
-                        DataTable = splittedDataArguments.dataTable,
-                        CoulmnName = splittedDataArguments.coulmnName,
+                        DataTable = splittedDataArguments.DataTable,
+                        CoulmnName = splittedDataArguments.CoulmnName,
                         SearchField = SearchArr[i],
-                        TableRow = splittedDataArguments.tableRow,
+                        TableRow = splittedDataArguments.TableRow,
 
                     };
                     AddNewReference(ReferencecArgs);
