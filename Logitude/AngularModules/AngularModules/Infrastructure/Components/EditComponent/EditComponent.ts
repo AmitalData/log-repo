@@ -1188,8 +1188,13 @@ export class EditComponent implements OnDestroy {
 
     // Commands
     BackButtonClicked() {
+        var isFullAccountingNeedingConfirmation = this.FullAccountingNeedCloseConfirmation();
         var isNeedingConfirmation = this.NeedCloseConfirmation();
-        if (isNeedingConfirmation) {
+        if (isFullAccountingNeedingConfirmation) {
+            this.ShowConfirmMessageForCloseARInvoiceInFullAccounting();
+        }
+
+        else if (isNeedingConfirmation) {
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 450;
             confirmWindow.Height = 190;
@@ -1211,6 +1216,25 @@ export class EditComponent implements OnDestroy {
         else {
             this.Close();
         }
+
+     
+    }
+
+    private ShowConfirmMessageForCloseARInvoiceInFullAccounting() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 450;
+        confirmWindow.Height = 190;
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate('Accounting.General.B.OK');
+        confirmWindow.NoButtonText = TextCodeTranslator.Translate('Accounting.General.B.Cancel');
+        confirmWindow.Show(TextCodeTranslator.Translate("ARInvoice.M.ConfirmNotAutoCreditedIfNotApproveInvoice"));
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.Close();
+            }
+            else if (confirmWindow.No) {
+                confirmWindow.Close();
+            }
+        });
     }
 
     public NeedCloseConfirmation() {
@@ -1238,6 +1262,19 @@ export class EditComponent implements OnDestroy {
 
         this.DestroyEditControl();
         this.BackCompleted.emit(true);
+    }
+
+    FullAccountingNeedCloseConfirmation() {
+        const StatusCode_AutoCreditARInvoice = "AC";  
+        if (this.ObjectTableName == "ARInvoice" && SessionLocator.TenantPM.AccountingActivated) {
+            if (!this.EntityPM.IsDirty) {
+                return false;
+            }
+
+            if (this.EntityPM.StatusCode == StatusCode_AutoCreditARInvoice) {
+                return true;
+            }
+        }
     }
 
     SaveChanges(busyIndicatorText: string = null) {
