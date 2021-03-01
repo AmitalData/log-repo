@@ -32,6 +32,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ContainsAccounting = "Accounting"
     public static readonly ContainsBack = "Back"
     public static readonly ContainsCancel = "Cancel"
+    public static readonly ContainsAddFollowup = "Add Follow up"
     //#endregion
     //#region general
     public static readonly ToggleButtonClass = '.ToggleButton';

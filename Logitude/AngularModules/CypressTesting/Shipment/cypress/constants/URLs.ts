@@ -6,6 +6,7 @@ export class URLs
     public static readonly HtmlEditor = '**/HtmlEditor/**';
     public static readonly DocumentsFilingExtended = '**/DocumentsFilingExtended/**';
     public static readonly TraceEventsDomain = "**/TraceEventsDomain/GetTraceEventsForEntity?**"
+    public static readonly ContainerFollowUpViewsGetbyfilters = "**/ContainerFollowUpViews/getbyfilters?**"
 
     //INTTRA
     public static readonly FTPDetails = "**/ftpdetails";

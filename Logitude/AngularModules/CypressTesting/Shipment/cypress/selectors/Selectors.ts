@@ -102,6 +102,14 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PackageWeight = '#ShipmentPackage_Weight';
   public static readonly AirPackageOKButton = '#OkAirPackage';
   public static readonly OceanPackageOKButton = '#OkOceanPackage';
+  public static readonly DeliveryATDTime = '#time_ShipmentPackage_DeliveryATD';
+  public static readonly DeliveryATDDate = '#date_ShipmentPackage_DeliveryATD';
+  public static readonly DeliveryATATime = '#time_ShipmentPackage_DeliveryATA';
+  public static readonly DeliveryATADate = '#date_ShipmentPackage_DeliveryATA';
+  public static readonly EmptyContainerReturnATDTime = '#time_ShipmentPackage_EmptyContainerReturnATD';
+  public static readonly EmptyContainerReturnATDDate = '#date_ShipmentPackage_EmptyContainerReturnATD';
+  public static readonly EmptyContainerReturnATATime = '#time_ShipmentPackage_EmptyContainerReturnATA';
+  public static readonly EmptyContainerReturnATADate = '#date_ShipmentPackage_EmptyContainerReturnATA';
   //#endregion
   //#region Routing tab fields
   public static readonly RoutingToggle = '#RoutingToggle';

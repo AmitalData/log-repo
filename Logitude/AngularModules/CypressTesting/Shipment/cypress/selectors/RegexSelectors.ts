@@ -24,4 +24,24 @@ export class RegexSelectors {
     public static ContainersView(containerView: string): string{
         return "p[data-cy^=Containers" + containerView + "View]";
     }
+
+    public static AddContainerDelivery(ContainerNumber: string): string{
+        return "div[data-cy^=AddContainerDelivery_" + ContainerNumber + "]";
+    }
+
+    public static EditContainerDelivery(ContainerNumber: string): string{
+        return "img[data-cy^=EditContainerDelivery_" + ContainerNumber + "]";
+    }
+
+    public static AddContainerReturn(ContainerNumber: string): string{
+        return "div[data-cy^=AddContainerReturn_" + ContainerNumber + "]";
+    }
+
+    public static EditContainerReturn(ContainerNumber: string): string{
+        return "img[data-cy^=EditContainerReturn_" + ContainerNumber + "]";
+    }
+
+    public static GridFitstRow(): string{
+        return "div[id^='LogGrid_'][id$='row0']";
+    }
 }

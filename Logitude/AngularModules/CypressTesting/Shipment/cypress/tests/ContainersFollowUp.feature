@@ -1,7 +1,9 @@
 @release @all
 Feature: Containers Follow-Up
 
-    Feature Description
+    The user creates a Direct Import Ocean FCL shipment, adds a containermodifies the dates of the shipment
+    add follow-ups for the container to reflect the different stages of In TransitArrived Not Delivered
+    and Delivered Not Returned.
 
     Scenario: Create import ocean FCL shipment
         Given the user logged in and navigates to shipments workspace
@@ -32,3 +34,27 @@ Feature: Containers Follow-Up
         Then the shipment should update successfully
         And it's status is "Arrived"
         And the container should not appear in the "In Transit" view
+
+    Scenario: Add delivery follow up
+        Given the user add a delivery follow up with "Today" at "14:00" as actual departure
+        When update follow up
+        Then the follow up should update successfully
+        And the container should appear in the "Arrived Not Delivered" view
+
+    Scenario: Edit delivery follow up
+        Given the user edit a delivery follow up with "Today" at "14:00" as actual arrival
+        When update follow up
+        Then the follow up should update successfully
+        And the container should not appear in the "Arrived Not Delivered" view
+
+    Scenario: Add empty container return follow up
+        Given the user add an empty container return follow up with "Today" at "14:00" as actual departure
+        When update follow up
+        Then the follow up should update successfully
+        And the container should appear in the "Delivered Not Returned" view
+
+    Scenario: Edit empty container return follow up
+        Given the user edit an empty container return follow up with "Today" at "14:00" as actual arrival
+        When update follow up
+        Then the follow up should update successfully
+        And the container should not appear in the "Delivered Not Returned" view
