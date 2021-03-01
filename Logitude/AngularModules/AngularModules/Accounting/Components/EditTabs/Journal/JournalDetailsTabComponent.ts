@@ -1180,7 +1180,7 @@ class JournalLineModel extends BaseComponent {
             else {
                 //this.CurrencyId = null;
                 //this.CurrencyCode = null;
-                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+                //this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
             }
 
             if (!AppTool.IsNullOrEmpty(this.Currency)) {
@@ -1215,7 +1215,7 @@ class JournalLineModel extends BaseComponent {
             else {
                 //this.CurrencyId = null;
                 //this.CurrencyCode = null;
-                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+              //  this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
             }
             if (!AppTool.IsNullOrEmpty(this.Currency)) {
                 this.SplittedCheck();
