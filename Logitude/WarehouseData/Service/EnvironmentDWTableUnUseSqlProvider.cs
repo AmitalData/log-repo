@@ -13,7 +13,6 @@ namespace WarehouseData.Service
         private StringBuilder sqlStringBuilder = null;
         private List<TableClass> dataWarehouseTables = null;
         private List<TableClass> factTables = null;
-        private List<TableClass> dimTables = null;
         private List<TableClass> dwTables = null;
 
 
@@ -22,24 +21,29 @@ namespace WarehouseData.Service
             generalDataWarehouseService = new GeneralDataWarehouseService();
             dataWarehouseTables = GetDWTableListsNotUsedInEnvironment(connectionString);
             factTables = dataWarehouseTables.Where(d => d.HasFactTable).ToList();
-            dimTables = dataWarehouseTables.Where(d => d.HasDimensionTable).ToList();
-            dwTables = dataWarehouseTables.Where(d => !d.HasDimensionTable && !d.HasFactTable).ToList();
+            dwTables = dataWarehouseTables.Where(d => !d.HasFactTable).ToList();
         }
 
 
         public string GetUnUseDataWarehouseSQL()
         {
             sqlStringBuilder = new StringBuilder();
-            AppendDataWarehouseUnUseSql(factTables);
-            AppendDataWarehouseUnUseSql(dimTables);
-            AppendDataWarehouseUnUseSql(dwTables);
+            AppendFactDataWarehouseUnUseSql();
+            AppendDataWarehouseUnUseSql();
             return sqlStringBuilder.ToString();
         }
 
-
-        private void AppendDataWarehouseUnUseSql(List<TableClass> dataWarehouseTables)
+        private void AppendFactDataWarehouseUnUseSql()
         {
-            foreach (TableClass tableClass in dataWarehouseTables)
+            foreach (TableClass tableClass in factTables)
+            {
+                sqlStringBuilder.Append("IF OBJECT_ID('" + tableClass.DWObjectTableCode + "', 'U')  IS NOT NULL begin drop table " + tableClass.DWObjectTableCode + " end \r\n");
+            }
+        }
+
+        private void AppendDataWarehouseUnUseSql()
+        {
+            foreach (TableClass tableClass in dwTables)
             {
                 sqlStringBuilder.Append("IF OBJECT_ID('" + tableClass.Dw_TableName + "', 'U')  IS NOT NULL begin drop table " + tableClass.Dw_TableName + " end \r\n");
                 if (!string.IsNullOrEmpty(tableClass.DWObjectTableCode))
@@ -47,7 +51,6 @@ namespace WarehouseData.Service
                     sqlStringBuilder.Append("IF OBJECT_ID('" + tableClass.DWObjectTableCode + "', 'U')  IS NOT NULL begin drop table " + tableClass.DWObjectTableCode + " end \r\n");
                 }
             }
-
         }
 
         private List<TableClass> GetDWTableListsNotUsedInEnvironment(string connectionString)
@@ -57,7 +60,6 @@ namespace WarehouseData.Service
             dataWarehouseTables = dataWarehouseTables.Where(dwTable => !environmentFactTableCodes.Any(environmentFactCode => dwTable.RelatedFactTables.Any(factCode => factCode == environmentFactCode))).ToList();
             return dataWarehouseTables;
         }
-
 
     }
 }

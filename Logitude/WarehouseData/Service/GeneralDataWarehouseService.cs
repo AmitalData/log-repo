@@ -121,13 +121,6 @@ namespace WarehouseData.Helper
         public List<TableClass> FillDataWarehouseTable()
         {
             List<TableClass> tableNameLists = new List<TableClass>();
-            //DW Table
-
-
-            	//Tenants , Settings  ,dw_CustomObjectFields ,  Directions , TransportModes , Types ,Departments , Branches , Partners , Incoterms , Users , Currencies , Ports , Countries
-
-
-
             tableNameLists.Add(new TableClass() { TableName = "DWHSetting", DBTableName = "DWHSettings", Dw_TableName = "dw_DWHSettings", KeyName = "Tenant", HasConstraint = true, HasNotSpecifiedValue = true, RelatedFactTables = GetAllFactTableLists() });
             tableNameLists.Add(new TableClass() { TableName = "Address", DBTableName = "Addresses", Dw_TableName = "dw_Addresses", KeyName = "Id", HasConstraint = true, HasNotSpecifiedValue = true, RelatedFactTables = GetAllFactTableLists() });
             tableNameLists.Add(new TableClass() { TableName = "Country", DBTableName = "Countries", DispayInScreen = true, Dw_TableName = "dw_Countries", KeyName = "Id", HasNotSpecifiedValue = true, HasDimensionTable = true, DWObjectTableCode = "DIM_Countries", BuildScriptName = "BuildCountriesDimensionTable", IncrementalScriptName = "UpdateCountriesDimensionTable" , RelatedFactTables = GetAllFactTableLists() });
