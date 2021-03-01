@@ -49,7 +49,9 @@
         public static string ShippingLineViewsGetByFilters = "ShippingLineViews/GetByFilters";
         public static string WarehouseViewsGetByFilters = "WarehouseViews/GetByFilters";
         public static string CarrierViewsGetTenantImportByFilters = "CarrierViews/GetTenantImportByFilters";
-
+        public static string CountryCityViewsGetByFilters = "CountryCityViews/GetByFilters";
+        public static string CountryCities = "CountryCities";
+        public static string ChargesTypes = "ChargesTypes";
 
         public static string TenantsGetSingle(int id)
         {

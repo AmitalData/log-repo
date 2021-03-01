@@ -9,7 +9,6 @@
         public string Address1 { get; set; }
         public string CountryId { get; set; }
         public string StateId { get; set; }
-        //public string City { get; set; }
         public bool IsCreatedWithPartner { get; set; }
     }
 }

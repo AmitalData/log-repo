@@ -14,6 +14,7 @@ export class URLs
     public static readonly PutINTTRASettings = "**/INTTRADomain/PutINTTRASettings";
     public static readonly GetBookingMessageResultValidate = "**/INTRAWebService/GetBookingMessageResultValidate?**";
     public static readonly INTTRAWebServiceSendEBooking = "**/INTRAWebService/GetSendEBooking?**";
+    public static readonly ContactViewsGetByFilters = "**/contactviews/getbyfilters?**";
 
     public static ShipmentviewsGetbyfilters(ShipmentNumber: string): string{
         return "**/shipmentviews/getbyfilters?**" + ShipmentNumber + "**";
