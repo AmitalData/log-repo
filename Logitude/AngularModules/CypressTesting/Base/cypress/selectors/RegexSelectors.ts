@@ -7,4 +7,20 @@ export class RegexSelectors {
     public static readonly SaveAsOpenButton= "Button[id^='SendButtom_']";
     public static readonly NullSearch='input[id^="null_Search"]'
     public static readonly ComboBoxLast="div[id^=ComboBox_]:last"
+
+
+    public static SaveClose(entityType: string): string {
+        return "#"+RegexSelectors.SwitchToCustomer(entityType)+"-SaveClose"
+    }
+
+    public static AccountTab(entityType: string): string {
+        return "#"+RegexSelectors.SwitchToCustomer(entityType)+"THAccounting"
+    }
+
+    private static SwitchToCustomer(entityType:string): string{
+        if(entityType=="Partner"){
+            return "Customer" 
+        }
+        return entityType;
+    }
 }

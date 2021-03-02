@@ -1,4 +1,6 @@
-export class AccountingSelectors {
+import { RegexSelectors } from './RegexSelectors';
+
+export class AccountingSelectors extends RegexSelectors {
     //#region Accounting settings
     public static readonly AccountingSettings="#SETTINGSAccounting"
     //#endregion

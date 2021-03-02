@@ -1,10 +1,10 @@
 @release@all @open
-Feature: Generic Interface AR Invoice Transfer
-   The user disables the Accounting Transfer in settings, 
-   creates AR invoice, changes the settings for Accounting Transfer to Generic Interface, 
-   checks the created invoice in the Not Ready Entities in Accounting Interfaces, 
-   fixes the accounting external IDs validations preventing the invoice from being transferred and exports/transfers the invoice.
-
+Feature: Advanced Generic Interface AR Invoice Transfer
+    The user disables the Accounting Transfer in settings, creates AR invoice,
+    changes the settings for Accounting Transfer to Advanced Generic Interface,
+    checks the created invoice in the Not Ready Entities in Accounting Interfaces,
+    fixes the accounting external IDs validations preventing the invoice from being transferred and exports/transfers the invoice.
+    
     Scenario: Update Accounting System
         Given the user logged in and navigate to accounting settings
         Given accounting System as "None"
@@ -48,7 +48,7 @@ Feature: Generic Interface AR Invoice Transfer
         Then the invoice should approve successfully
 
     Scenario: Update Accounting System
-        Given accounting System as "Logitude Generic Interface" and external transmission as "None"
+        Given accounting System as "Logitude Advanced Generic Interface" and external transmission as "None"
         When update the accounting system
         Then the accounting system should update successfully
         And the ARInvoice should appear in AR Not Ready Invoices

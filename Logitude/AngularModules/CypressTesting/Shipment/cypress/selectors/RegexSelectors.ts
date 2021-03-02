@@ -72,6 +72,6 @@ export class RegexSelectors {
     }
     
     public static OkButton(mode: string): string{
-        return "Ok" + mode +"Package";
+        return "#Ok" + mode +"Package";
     }
 }
