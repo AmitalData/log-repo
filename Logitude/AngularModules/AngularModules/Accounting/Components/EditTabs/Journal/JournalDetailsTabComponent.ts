@@ -83,6 +83,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                     if (myResponse.Result != undefined && myResponse.Result != null) {
                         var rate = myResponse.Result;
                         this.HeadercurrencyRate = rate.Rate;
+                        this.UpdateLinesExchangeRate();
                         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
 
                     } else {
@@ -90,7 +91,10 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                         this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Journal.O.ExchangeRateValidation"));
                     }
                 }
+             
             }
+         
+         
         });
     }
     public isRTL: boolean = false;
@@ -370,8 +374,8 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             }
         
             this.EntityPM.AccountingDate = value;
-          this.UpdateLinesAccountingDates();
             this.UpdateLinesDates();
+            this.UpdateLinesAccountingDates();
             if (this.CurrencyId) this.getHeadercurrencyRate(this.CurrencyId);
         }
 
@@ -683,7 +687,19 @@ getHeaderCurrency(CurrencyId:string){
                 if (!line.ActionCode) {
                     if (line.AccountingDate != this.AccountingDate ) line.AccountingDate = this.AccountingDate;
                     if (line.DueDate != this.DueDate) line.DueDate = this.DueDate;
-                    if (line.DocumentDate != this.DocumentDate) line.DocumentDate = this.DocumentDate;
+                    if (line.DocumentDate != this.DocumentDate) line.DocumentDate = this.DocumentDate;                 
+                }
+            });
+
+
+        }
+    }
+    UpdateLinesExchangeRate() {
+        var lines = this.JournalLines.Collection;
+        if (lines) {
+            lines.forEach((line: JournalLineModel) => {
+                if (!line.ActionCode) {
+                    if (line.CurrencyId == this.CurrencyId) line.currencyRate = this.headercurrencyRate;
                 }
             });
 
