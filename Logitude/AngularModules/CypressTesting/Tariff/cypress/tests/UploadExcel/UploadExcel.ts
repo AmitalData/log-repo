@@ -2,6 +2,8 @@ import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import * as Actions from "../../actions/Actions";
 import { TariffDetails } from "../../models/TariffDetails";
 import { ChargeTypeDetails } from "../../models/ChargeTypeDetails";
+import { FreightCostTariffLineDetails } from "cypress/models/FreightCostTariffLineDetails";
+import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
 
 //#region Create Air freight cost
 Given("the user logged in and navigate to tariff workspace", () => {
@@ -36,7 +38,10 @@ When("upload excel file", () => {
   Actions.UploadExcelFile();
 });
 
-Then("the file should load successfully", () => {
+Then("the file should load successfully with the following details", (dataTable) => {
+  let freightCostTariffLineDetailsList = dataTable.hashes()[0] as FreightCostTariffLineDetails;
   Actions.ValidateUploadExcelFile();
+  Actions.ValidateTariffLineRow(freightCostTariffLineDetailsList)
+
 });
 //#endregion
