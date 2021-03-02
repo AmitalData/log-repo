@@ -45,8 +45,10 @@ export class AddEditExceptionReasonComponent extends BaseComponent {
 
     constructor(private entityResourceService: EntityResourceService) {
         super();
-        this.entityResourceService.getEntityResourceByTableName("Customs.DeclarationReferantData").subscribe((response: any) => {
-            this._IsReady = true;
+        this.entityResourceService.getEntityResourceByTableName("Customs.DeclarationReferantData").subscribe(response => {
+            this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+                this._IsReady = true; 
+            });
         });
         this.ReferantExceptionItemsSource = new ObservableCollection([]);
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -58,7 +60,6 @@ export class AddEditExceptionReasonComponent extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(args)) {
             this.EntityPM = args.EntityPM;
             this.LoadReferantException();
-            this.IsDisplayOnly = false;
             this.exceptionReasonSharedDataService.IsDirty = false;
 
         }
@@ -147,7 +148,7 @@ export class AddEditExceptionReasonComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        if (!this.IsDisplayOnly ) {
+        if (!this.IsDisplayOnly && this.IsChanged) {
             var confirm = new ConfirmWindow();
             confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
             confirm.ShowNoButton = true;

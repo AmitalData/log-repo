@@ -1,6 +1,6 @@
 <table *ngIf="_IsReady">
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-        <td colspan="2">
+        <td colspan="7">
             <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
         </td>
     </tr>
@@ -83,7 +83,7 @@
                                 <log-column [header]="'Customs.DeclarationReferantData.O.Status ' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'center'">
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <div class="TextTrimming" style="text-align:center" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.SelectedItemStatus.Value}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
@@ -92,10 +92,10 @@
                                         </log-cell-template>
                                     </ng-template>
                                 </log-column>
-                                <log-column [width]="'35'" [Editable]="true" [Alignment]="'center'" [visibility]="'collapsed'">
+                                <log-column [width]="'40'" [Editable]="true" [Alignment]="'center'" [visibility]="'collapsed'">
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                            <div style="   width: 30px;
+                                            <div style="
         float: right;
         height: 20px;
         padding-top: 3px">
