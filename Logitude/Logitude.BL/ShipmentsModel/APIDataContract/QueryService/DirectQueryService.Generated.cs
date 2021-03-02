@@ -90,7 +90,7 @@ using Simplog.Data.ShipmentsModel;
 				   if(MyEntityPM.ShipmentTypeId != null)
 				   {
 					   ShipmentTypeQueryService ShipmentTypeService0 = new ShipmentTypeQueryService(Tenant);
-					   					   temp.ShipmentType = ShipmentTypeService0.GetShipmentTypeById(MyEntityPM.ShipmentTypeId,Tenant,ComputingPartnerName); 
+					   					   temp.ShipmentType = ShipmentTypeService0.ShipmentTypeCustomDataMapping(MyEntityPM.ShipmentTypeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -485,7 +485,7 @@ using Simplog.Data.ShipmentsModel;
 					ShipmentTypeQueryService ShipmentTypeShipmentTypeService = new ShipmentTypeQueryService(Tenant);
 					if(MyEntity.ShipmentType != null)
 					{
-						var myShipmentTypePM = ShipmentTypeShipmentTypeService.ShipmentTypeDataMappingAndValidatin(MyEntity.ShipmentType,Tenant,ComputingPartnerName,IsUpdate);
+						var myShipmentTypePM = ShipmentTypeShipmentTypeService.ShipmentTypeCustomDataMappingAndValidatin(MyEntity.ShipmentType,Tenant);
 						
 						if(myShipmentTypePM != null)
 						{ 
