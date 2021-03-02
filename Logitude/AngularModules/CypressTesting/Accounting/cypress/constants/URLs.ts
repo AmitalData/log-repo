@@ -10,6 +10,7 @@ export class AccountingURLs {
     public static readonly ConsilidationInvoiceDomain = "**/ConsilidationInvoiceDomain"
     public static readonly VatTypePercentageCall = "**/GetVatTypePercentagePMByDate?**"
     public static readonly EntityResourceAccountingPeriod="**/EntityResource?objectTableName=AccountingPeriod&**"
+    public static readonly PerformancelogsPostLogsList="**/performancelogs/PostLogsList"
 
 
 }
