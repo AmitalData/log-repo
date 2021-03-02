@@ -209,6 +209,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? OnCarriageETA { get; set; }
         public DateTime? OnCarriageATA { get; set; }
         public string OnCarriageVesselId { get; set; }
+        public string OnCarriageAdditionalTransportModeCode { get; set; }
+        public bool SplitOnCarriage { get; set; }
 
         public Vessel PreCarriageVessel { get; set; }
         public virtual TransportMode PreCarriageTransportMode { get; set; }
@@ -221,5 +223,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public virtual Port OnCarriageFromPort { get; set; }
         public virtual Port OnCarriageToPort { get; set; }
         public virtual Card OnCarriageCarrierCard { get; set; }
+        public virtual PickUpDeliveryTransportMode OnCarriageAdditionalTransportMode { get; set; }
     }
 }
