@@ -1,5 +1,6 @@
 import { ShipmentSelectors } from '../../../Shipment/cypress/selectors/Selectors';
 import { ShipmentDetails } from '../models/ShipmentDetails';
+import { ConvertShipmentDirectionDetails } from '../models/ConvertShipmentDirectionDetails';
 import { PartnersDetails } from 'cypress/models/PartnersDetails';
 import { BaseSelectors } from '../../../Base/cypress/selectors/BaseSelectors';
 import { PayableDetails } from 'cypress/models/PayableDetails';
@@ -15,6 +16,7 @@ import { BaseURLs } from '../../../Base/cypress/constants/URLs';
 import { QuickSearchDetails } from '../../../Base/cypress/models/QuickSearchDetails';
 import { verify } from 'cypress/types/sinon';
 import * as BaseActions from '../../../Base/cypress/actions/Actions';
+
 
 //#region ShipmentsWorkspace
 export function NavigatesToShipmentsWorkspace() {
@@ -683,3 +685,60 @@ function NavigateToEditMAinCarriage(){
     cy.Click(ShipmentSelectors.RoutingsTab, null);
     cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
 }
+
+
+
+
+
+//#region Shipment Conversions
+
+function OpenConvertShipmentWizard(convertButtonSelector: string){
+    cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
+    cy.Click(convertButtonSelector, null);
+}
+
+function FillEventNotes(notes: string){
+    if(notes){
+        cy.FillLogTextBox("#EventNotes", notes);
+    }
+}
+
+function FillConvertShipmentDirectionWizard(convertShipmentDirectionDetails: ConvertShipmentDirectionDetails, transportMode: string){
+    let shipmentDetails = {
+        Direction: convertShipmentDirectionDetails.Direction,
+        TransportMode: transportMode,
+        Shipper: convertShipmentDirectionDetails.Shipper,
+        Consignee: convertShipmentDirectionDetails.Consignee
+    } as ShipmentDetails
+
+    FillDirection(shipmentDetails.Direction);
+    FillShipperAndConsignee(shipmentDetails);
+}
+
+function ConfirmShipmentConversion(){
+    cy.Click(BaseSelectors.RedButton + ":last", null);
+}
+
+function ValidateShipmentType(expectedShipmentType: string){
+    if(expectedShipmentType){
+        cy.get("[data-cy]='ShipmentTypeValue'").should("have.text", expectedShipmentType);
+        if(expectedShipmentType.toLowerCase().indexOf("house") !== -1){
+            cy.get("[data-cy='ShipmentNotConnectedIcon']").should("exist");
+        }
+    }
+}
+
+function ValidateEventType(event: string, notes: string){
+    if(event){
+        cy.DefineRequestWait(RestAPI.GET, "**/TraceEventsDomain/GetTraceEventsForEntity?**", "GetTraceEventsForEntity");
+        cy.Click("#ShipmentTHEvents", null);
+        BaseAssertion.AssertStatusCode("GetTraceEventsForEntity", 200);
+        cy.get("td").contains(event).should("exist");
+    }
+    if(event && notes){
+        cy.get("td").contains(event).parents(".EventItemBox").find("textarea").should("have.value", notes);
+        cy.Click("#ShipmentTHOverview", null);
+    }
+}
+
+//#endregion

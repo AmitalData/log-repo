@@ -41,11 +41,11 @@
                                 <table *ngIf="FieldName == 'ShipmentType' || FieldName == 'ShipmentTypeViewField'">
                                     <tr>
                                         <td style="width: 15px; max-width: 15px;" *ngIf="IsHouseIconVisible">
-                                            <img *ngIf="IsHouseNotConnected" style="vertical-align: middle; float: left;" src="./Images/NotConnected.png" />
+                                            <img *ngIf="IsHouseNotConnected" style="vertical-align: middle; float: left;" src="./Images/NotConnected.png" data-cy="ShipmentNotConnectedIcon" />
                                             <div *ngIf="!IsHouseNotConnected" style="width:15px; background: red;"></div>
                                         </td>
 
-                                        <td style="text-align: left;">{{FieldValue}}</td>
+                                        <td style="text-align: left;" data-cy="ShipmentTypeValue">{{FieldValue}}</td>
                                     </tr>
                                 </table>
 
