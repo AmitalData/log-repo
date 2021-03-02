@@ -190,7 +190,11 @@ function FillRequiredToSendBookingInPartnersTab(requiredToSendBookingDetails: Re
             cy.log("ContactLogLovLoad Result Length: " +
             interception.response.body.Result.filter(c => c.Email.toLowerCase() === (shipperContact + "@test.com").toLowerCase()).length.toString()
             );
-            
+
+            cy.log("ContactLogLovLoad Result: " +
+            interception.response.body.Result
+            );
+
             if (interception.response.body.Result.filter(c => c.Email.toLowerCase() === (shipperContact + "@test.com").toLowerCase()).length === 0) {
                 AddNewShipperContact(shipperContact);
             } else {
