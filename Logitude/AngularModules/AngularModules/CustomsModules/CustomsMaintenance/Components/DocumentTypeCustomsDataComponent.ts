@@ -68,36 +68,39 @@ export class DocumentTypeCustomsDataComponent
     ngOnInit() {
         this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response: any) => {
-            if (!AppTool.IsNullOrEmpty(this.entityArgs)) {
-                if (!AppTool.IsNullOrEmpty(this.entityArgs.EntityPM)) {
+            if (!AppTool.IsNullOrEmpty(this.entityArgs.EntityPM)) {
 
-                    var docType: DocumentTypePM = this.entityArgs.EntityPM;
+                var docType: DocumentTypePM = this.entityArgs.EntityPM;
 
-                    this.DocumentTypeId = docType.Code;
-                    this.UnifaceNAME_HEB = docType.Name;
-                    this._DocumentTypeCustomsDataPMService
-                        .get(this.DocumentTypeId)
-                        .subscribe((res: any) => {
-                            this.entityPM = res.Result;
-                            if (this.entityPM == null) {
-                                this.IsNew = true;
-                                this.entityPM = new DocumentTypeCustomsDataPM();
-                                this.entityPM.DocumentTypeId = this.DocumentTypeId;
-                                this.entityPM.Tenant = SessionLocator.Tenant;
-                            }
-                            // this.fromLog = true;
+                this.DocumentTypeId = docType.Code;
+                this.UnifaceNAME_HEB = docType.Name;
+                this._DocumentTypeCustomsDataPMService
+                    .get(this.DocumentTypeId)
+                    .subscribe((res: any) => {
+                        this.entityPM = res.Result;
+                        if (this.entityPM == null) {
+                            this.IsNew = true;
+                            this.entityPM = new DocumentTypeCustomsDataPM();
+                            this.entityPM.DocumentTypeId = this.DocumentTypeId;
+                            this.entityPM.Tenant = SessionLocator.Tenant;
 
-                            if (this.entityPM) {
-                                //  this.DocumentTypeId = this.entityPM.;
-                                //  this.UnifaceNAME_HEB = this.entityPM.u;
-                                this.Loaded = true;
-                            }
-                            this.EntityResource = true;
-                            if (this.EntityResource && this.Loaded) {
-                                this.CurrentSession.StopBusyIndicator();
-                            }
-                        });
-                }
+
+                        }
+                       // this.fromLog = true;
+
+                        if (this.entityPM) {
+                            //  this.DocumentTypeId = this.entityPM.;
+                            //  this.UnifaceNAME_HEB = this.entityPM.u;
+                            this.Loaded = true;
+                        }
+
+
+
+                        this.EntityResource = true;
+                        if (this.EntityResource && this.Loaded) {
+                            this.CurrentSession.StopBusyIndicator();
+                        }
+                    });
             }
             else {
                 this.EntityResource = true;
