@@ -36,6 +36,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public override void Update(DCAInUCUW2LResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
+            this.MyResponseData = new INF_MSG_GenericResponseData();
+
+
             bool lockit = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("Singleton.CRS:UCUW2L"));
            string key = ProcessLockTableUtil.Instance.GetKey4DocumentsFilingId(customResponse.CustomFileNo, requestParams.Tenant);
 
@@ -46,10 +49,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     string error = "";
                     string moreParams = customResponse.MoreParams;
                     CommDecService.ProccessGenericRequest(customResponse.LOGICOMMDEC, ref moreParams, out error);
+
+
+                    this.MyResponseData.ApplicationID = requestParams.AppicationId;
+                    this.MyResponseData.HasException = false;
+                    this.MyResponseData.Succeeded = true;
                     }
                 catch (Exception ex)
                 {
-
+                    this.MyResponseData.ApplicationID = requestParams.AppicationId;
+                    this.MyResponseData.HasException = true;
+                    this.MyResponseData.Succeeded = true;
+                    this.MyResponseData.UserMessage = ex.Message;
                 }
             }
         }
