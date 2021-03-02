@@ -251,7 +251,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                 PaymentOrderUpdateService pOUpdateservice = new PaymentOrderUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
                                                 pOUpdateservice.Update(paymentOrder, false);
 
-                                                _MyDeclarationPM = declarationQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+                                                //_MyDeclarationPM = declarationQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
 
                                             }
                                         }
