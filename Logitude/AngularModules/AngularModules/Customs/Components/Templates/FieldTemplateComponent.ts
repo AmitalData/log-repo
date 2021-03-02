@@ -646,6 +646,25 @@ export class FieldTemplateComponent {
         }
     }
 
+    ShowAddOrEditExceptionReason() {
+        var logitudeWindow = new LogitudeWindow();
+        var windowArgs: any = {};
+        this._declarationReferantDataPMService.get(this.Entity.DeclarationId).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                windowArgs.EntityPM = response.Result
+                logitudeWindow.Width = 470;
+                logitudeWindow.Height = 350;
+                logitudeWindow.IsShowCloseButton = false;
+                logitudeWindow.Title = "הזנת חריג";
+                logitudeWindow.WindowArgs = windowArgs;
+                logitudeWindow.Show('./CustomsModules/CustomsReferant/Components/ReferantExceptionReason/AddEditExceptionReasonComponent');
+                logitudeWindow.WindowClosed.subscribe(($event: any) => {
+                    this.OnBackFromEdit(this.Entity.DeclarationId, event);
+                });
+            }
+        });
+    }
+
     ShowCFIUFILEFromDeclarationReferantData() {
 
         let myDeclarationReferantDataList: DeclarationReferantDataList = this.Entity;
