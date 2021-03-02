@@ -71,10 +71,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var transmitionDateTime = DateTime.Now;
             string xmlESBResponseXmlClass = null;
 
+            Random random = new Random();
+
+            int x = random.Next(40000, 80000);
+
             var myDCAInUCBCMSSWithResponseContentHeader = new DCAInUCUW2LResponseContentHeader()
             {
                 LoggingUserId = "1-9",
-                CustomFileNo = "122198",
+                CustomFileNo = x.ToString(),
                 LOGICOMMDEC = @"<LOGICOMMDEC>
 
 <LogitudeCommDecFile>
@@ -83,7 +87,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
   <LoadingPortCode>USBOS</LoadingPortCode>
 
-  <MAWB>1111223</MAWB>
+  <MAWB>10022444</MAWB>
 
   <CarrierPrefix>114</CarrierPrefix>
 
@@ -129,7 +133,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
   <OriginCountryCode>US</OriginCountryCode>
 
-  <CustomFileNo>206207</CustomFileNo>
+  <CustomFileNo>" + x.ToString() + @"</CustomFileNo>
 
   <Id/>
 
@@ -149,13 +153,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
   <DepartmentId>MSC</DepartmentId>
 
-  <MAWB>1111223</MAWB>
+  <MAWB>10022444</MAWB>
 
   <DealId/>
 
   <HAWB/>
 
-  <ManifestNumber>680680</ManifestNumber>
+  <ManifestNumber>XLT" + x.ToString() +@"</ManifestNumber>
 
   <LoadingPortCode/>
 
@@ -211,7 +215,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
   <CasualSupplierAddress>Jishigang Fengtai Road no. 99 Shenz China</CasualSupplierAddress>
 
-  <CourierHawb>680680</CourierHawb>
+  <CourierHawb>"+ x.ToString() +@"</CourierHawb>
 
   <HAWBDATE/>
 

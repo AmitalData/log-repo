@@ -395,21 +395,37 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
- 
-                DF_MSG10000_ImportDeclarationRequestService _dF_MSG10000_ImportDeclarationRequestService = new DF_MSG10000_ImportDeclarationRequestService();
-                var request = _dF_MSG10000_ImportDeclarationRequestService.GetRequest(requestParams);
-                string error="";
-                DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService = new DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService();
 
-                DeclarationPM declarationPM =    dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(request.Declaration, requestParams.Tenant, true , requestParams.AppicationId ,out error,user: requestParams.LoggingUserId);
+                //DF_MSG10000_ImportDeclarationRequestService _dF_MSG10000_ImportDeclarationRequestService = new DF_MSG10000_ImportDeclarationRequestService();
+                //var request = _dF_MSG10000_ImportDeclarationRequestService.GetRequest(requestParams);
+                //string error="";
+                //DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService = new DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService();
 
-                XmlSerializer xsSubmit = new XmlSerializer(typeof(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration));
- 
+                //DeclarationPM declarationPM =    dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(request.Declaration, requestParams.Tenant, true , requestParams.AppicationId ,out error,user: requestParams.LoggingUserId);
 
-                if (declarationPM != null)
-                return Request.CreateResponse(HttpStatusCode.OK, declarationPM);
+                //XmlSerializer xsSubmit = new XmlSerializer(typeof(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration));
 
-                return Request.CreateResponse(HttpStatusCode.BadRequest, error);
+
+                //if (declarationPM != null)
+                //return Request.CreateResponse(HttpStatusCode.OK, declarationPM);
+
+
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                int i = 0;
+                
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+                var messagingService = new DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceMessagingService();
+                for (  i = 0; i < 3000; i++)
+                {
+                    var sts = messagingService.CreateCRS(tenant, null, null);
+
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+
+
+                //return Request.CreateResponse(HttpStatusCode.BadRequest, error);
 
 
             }
