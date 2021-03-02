@@ -36,23 +36,56 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             if (isValidToCreateRefrences)
             {
                 AddShipmentNumberReference(tableRow, bulkDataPreperation.InnerDataTable);
-                AddSplittedData(new SplittedDataArguments.Builder().TableRow(tableRow).DataTable(bulkDataPreperation.InnerDataTable).CoulmnName("CustomerReference1").Delimiter(',').Build());
-                AddSplittedData(new SplittedDataArguments.Builder().TableRow(tableRow).DataTable(bulkDataPreperation.InnerDataTable).CoulmnName("CustomerReference2").Delimiter(',').Build());
+                AddSplittedData(new SplittedDataArguments
+                    .Builder()
+                    .TableRow(tableRow)
+                    .DataTable(bulkDataPreperation.InnerDataTable)
+                    .CoulmnName("CustomerReference1")
+                    .Delimiter(',')
+                    .Build());
+
+                AddSplittedData(new SplittedDataArguments
+                    .Builder()
+                    .TableRow(tableRow)
+                    .DataTable(bulkDataPreperation.InnerDataTable)
+                    .CoulmnName("CustomerReference2")
+                    .Delimiter(',')
+                    .Build());
+
+                AddSplittedData(new SplittedDataArguments
+                    .Builder()
+                    .TableRow(tableRow)
+                    .DataTable(bulkDataPreperation.InnerDataTable)
+                    .CoulmnName("ContainersNumbers")
+                    .Delimiter(',')
+                    .Build());
+
+                AddSplittedData(new SplittedDataArguments
+                    .Builder()
+                    .TableRow(tableRow)
+                    .DataTable(bulkDataPreperation.InnerDataTable)
+                    .CoulmnName("House")
+                    .Delimiter('-')
+                    .Build());
+
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "Master");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwarderShipmentNumber");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "CustomFileNumber");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "CustomsDeclarationNumber");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ShipperName");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ConsigneeName");
-                AddSplittedData(new SplittedDataArguments.Builder().TableRow(tableRow).DataTable(bulkDataPreperation.InnerDataTable).CoulmnName("ContainersNumbers").Delimiter(',').Build());
-                AddSplittedData(new SplittedDataArguments.Builder().TableRow(tableRow).DataTable(bulkDataPreperation.InnerDataTable).CoulmnName("House").Delimiter('-').Build());
-                
-                if (tableRow["House"].ToString().Contains('-'))
-                {
-                    AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "House");
-                }
+
+                SaveTheWholeHouseReferenceinSearchTable(tableRow, bulkDataPreperation);
             }
 
+        }
+
+        private static void SaveTheWholeHouseReferenceinSearchTable(DataRow tableRow, BulkDataPreperation bulkDataPreperation)
+        {
+            if (tableRow["House"].ToString().Contains('-'))
+            {
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "House");
+            }
         }
 
         private static bool IsShipmentValidToCreateRefrences(DataRow tableRow, BulkDataPreperation bulkDataPreperation)
