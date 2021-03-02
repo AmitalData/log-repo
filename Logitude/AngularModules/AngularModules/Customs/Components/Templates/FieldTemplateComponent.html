@@ -424,7 +424,7 @@
                 </div>
 
                 <div *ngIf="FieldName == 'Actions'" (click)="ButtonClick()">
-                    <div (click)="ButtonClick()">
+                    <div (click)="ButtonClick()" style="z-index:3;">
                         <courier-filter-button #MyDropdownMenuFilterComponent
                                                [IsDisabled]="IsDisplayOnly" [DivLeft]="20">
                             <div class="class-filter-content">
@@ -438,7 +438,7 @@
                                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();ShowDeclaration($event);  ">
                                         <span>כניסה להצהרה</span>
                                     </li>
-                                    <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();ShowAddOrEditExceptionReason($event);  ">
+                                    <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();ShowAddOrEditExceptionReason();">
                                         <span>הזנת חריג</span>
                                     </li>
                                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowCFIFILEMMoveToQueueScreen();">
