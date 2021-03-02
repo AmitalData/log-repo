@@ -1,5 +1,5 @@
 @smoke @not-stable @all
-Feature: Cancel and Reactive shipment
+Feature: Cancel and Reactivate Shipment
   The user creates a shipment, cancels the shipment,
   makes sure that the system does not allow the user to edit the shipment,
   reactivates the shipment and makes sure that the system allows the user to edit the shipment again.
