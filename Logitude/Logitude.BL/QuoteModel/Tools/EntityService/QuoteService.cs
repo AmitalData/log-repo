@@ -316,12 +316,9 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
             if (entityPM.IsRefreshQuoteFollowUps)
             {
-                allFollowupLists = followUpsRepository.GetFollowUpsByShipmentId(entityPM.Id, entityPM.Tenant);
+                allFollowupLists = followUpsRepository.GetFollowUpsByQuoteId(entityPM.Id, entityPM.Tenant);
                 followupLists = allFollowupLists.Where(d => !string.IsNullOrEmpty(d.DateFieldName)).ToList();
-
-                followupLists = followUpsRepository.GetFollowUpsThatHaveDateFileName(entityPM.Tenant).Where(d => d.QuoteId == entityPM.Id).ToList();
-
-
+                   
                 if (followupLists.Count > 0)
                 {
                     bool isAnyOneChange = false;
