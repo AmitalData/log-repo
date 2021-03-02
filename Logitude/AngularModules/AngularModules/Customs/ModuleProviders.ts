@@ -380,7 +380,6 @@ import { CancellationRequestStatusListService } from './Services/StandardLists/C
 import { AmendmentFieldStatusTypeListService } from './Services/StandardLists/AmendmentFieldStatusTypeListService';
 import { LoadingSiteTypeListService } from './Services/StandardLists/LoadingSiteTypeListService';
 import { AmendCancellRequestInitiatorListService } from './Services/StandardLists/AmendCancellRequestInitiatorListService';
-import { FclLclCodeListService } from './Services/StandardLists/FclLclCodeListService';
 
 
 export class ModuleProviders {
@@ -640,7 +639,6 @@ export class ModuleProviders {
             case "FclLclCodeListService": { myResult = new FclLclCodeListService(); break; }
 
             case "AmendCancellRequestInitiatorListService": { myResult = new AmendCancellRequestInitiatorListService(); break; }
-            case "FclLclCodeListService": { myResult = new FclLclCodeListService(); break; }
 
              //#endregion                
 
