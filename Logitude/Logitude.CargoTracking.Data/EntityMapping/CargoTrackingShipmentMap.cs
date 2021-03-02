@@ -146,6 +146,8 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.AssignedTruckerEstimationDate).HasColumnName("AssignedTruckerEstimationDate");
 
             this.Property(t => t.AssignedTruckerNotes).HasColumnName("AssignedTruckerNotes").HasMaxLength(32).IsUnicode(true);
+
+            this.Property(t => t.GrossWeightUnitCode).HasColumnName("GrossWeightUnitCode").HasMaxLength(3).IsUnicode(false);
         }
     }
 }

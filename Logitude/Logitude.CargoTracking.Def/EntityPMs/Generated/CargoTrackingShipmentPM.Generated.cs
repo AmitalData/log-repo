@@ -1630,6 +1630,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private string grossWeightUnitCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string GrossWeightUnitCode  
+	   {
+	    
+	     get
+		{
+		   return grossWeightUnitCode;
+		 }
+		 set
+		 {
+		   if(grossWeightUnitCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GrossWeightUnitCode",OldValue=grossWeightUnitCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   grossWeightUnitCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -149,6 +149,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public DateTime? AssignedTruckerEstimationDate { get; set; }
         [Column("AssignedTruckerNotes")]
 	    public string AssignedTruckerNotes { get; set; }
+        [Column("GrossWeightUnitCode")]
+	    public string GrossWeightUnitCode { get; set; }
     }
 }
 	 

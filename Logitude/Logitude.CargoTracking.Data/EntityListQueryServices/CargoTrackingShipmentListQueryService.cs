@@ -91,7 +91,9 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                DirectionId = a.DirectionId,
 
                                                                CustomerReference = a.CustomerReference,
-
+                                                               AssignedTruckerDate = a.AssignedTruckerDate,
+                                                               AssignedTruckerDone = a.AssignedTruckerDone,
+                                                               GrossWeightUnitCode = a.GrossWeightUnitCode
                                                            });
             return query;
         }
@@ -220,6 +222,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                    AssignedTruckerDone  = poco.AssignedTruckerDone,
                    AssignedTruckerEstimationDate = poco.AssignedTruckerEstimationDate,
                    AssignedTruckerNotes = poco.AssignedTruckerNotes,
+
+                   GrossWeightUnitCode = poco.GrossWeightUnitCode
                    
                    
                    
