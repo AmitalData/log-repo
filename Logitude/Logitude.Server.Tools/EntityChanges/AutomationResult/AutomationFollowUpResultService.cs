@@ -189,7 +189,16 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                             {
                                 propInfo.SetValue(entityPM, true, null);
                             }
+                            else
+                            {
+                                PropertyInfo QuotePropInfo = entityPM.GetType().GetProperty("IsRefreshQuoteFollowUps");
+                                if (QuotePropInfo != null)
+                                {
+                                    QuotePropInfo.SetValue(entityPM, true, null);
+                                }
+                            }
                         }
+                       
                     }
                 }
 
