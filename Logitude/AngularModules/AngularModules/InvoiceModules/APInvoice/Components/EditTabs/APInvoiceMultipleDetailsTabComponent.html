@@ -304,7 +304,7 @@
                                                 <td style="min-width: 50px;">
                                                     <div class="LeftCenter" style="height: 20px;">
                                                         <span class="CellSeparator"></span>
-                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditShipmentLine(item)" [IsEnabled]="IsEditingEnabled"></IconButton>
+                                                        <IconButton attr.data-cy="{{'EditShipmentLine_' + item.ShipmentNumber | IdGeneratorPipe}}" [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditShipmentLine(item)" [IsEnabled]="IsEditingEnabled"></IconButton>
                                                         <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteShipmentLine(item)" [IsEnabled]="IsEditingEnabled"></IconButton>
                                                     </div>
                                                 </td>

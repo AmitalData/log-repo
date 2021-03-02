@@ -7,6 +7,7 @@ export class URLs
     public static readonly HtmlEditor = '**/HtmlEditor/**';
     public static readonly DocumentsFilingExtended = '**/DocumentsFilingExtended/**';
     public static readonly TraceEventsDomain = "**/TraceEventsDomain/GetTraceEventsForEntity?**"
+    public static readonly ContainerFollowUpViewsGetbyfilters = "**/ContainerFollowUpViews/getbyfilters?**"
 
     //INTTRA
     public static readonly FTPDetails = "**/ftpdetails";
@@ -14,6 +15,7 @@ export class URLs
     public static readonly PutINTTRASettings = "**/INTTRADomain/PutINTTRASettings";
     public static readonly GetBookingMessageResultValidate = "**/INTRAWebService/GetBookingMessageResultValidate?**";
     public static readonly INTTRAWebServiceSendEBooking = "**/INTRAWebService/GetSendEBooking?**";
+    public static readonly ContactViewsGetByFilters = "**/contactviews/getbyfilters?**";
 
     public static ShipmentviewsGetbyfilters(ShipmentNumber: string): string{
         return "**/shipmentviews/getbyfilters?**" + ShipmentNumber + "**";

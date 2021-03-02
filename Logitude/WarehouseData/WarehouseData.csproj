@@ -93,6 +93,7 @@
     <Compile Include="BuildWarehouseForm.Designer.cs">
       <DependentUpon>BuildWarehouseForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Service\EnvironmentDWTableUnUseSqlProvider.cs" />
     <Compile Include="Service\FeatureDataWarehouseService.cs" />
     <Compile Include="Service\WarehouseHelper.cs" />
     <Compile Include="Service\CustomFieldWarehouseService.cs" />
@@ -356,6 +357,7 @@
     <Content Include="WarehouseScript\Others\Day 21 [Abed ] AddIndexesToFactTables.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\Others\[Abed] FillDWHEnvironmentSettingsTable.sql" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">

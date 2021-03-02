@@ -4,6 +4,7 @@
     {
         public string VendorId { get; set; }
         public string AgentId { get; set; }
+        public string AgentCode { get; set; }
         public string CustomerId { get; set; }
         public string PotentialCustomerId { get; set; }
         public string CustomAgentId { get; set; }
@@ -11,7 +12,9 @@
         public string TruckerTLONId { get; set; }
         public string TruckerTNYCId { get; set; }
         public string ShipperExportId { get; set; }
+        public string ShipperExportCode { get; set; }
         public string ShipperImportId { get; set; }
+        public string ShipperImportCode { get; set; }
         public string ConsigneeExportId { get; set; }
         public string ConsigneeImportId { get; set; }
         public string AirlineAAId { get; set; }

@@ -183,6 +183,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\CheckDigitControlAlgorithm.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CreditLimitSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerOpenFilesAmount.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\DWHEnvironmentSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\Horse.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TariffCarrierTranslation.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UserLastSettings.cs" />
@@ -426,6 +427,7 @@
     <Compile Include="CommonDataModel\Mapping\DocumentTypeCategoryMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DocumentTypeMetaDataMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DWHBuildStatusMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\DWHEnvironmentSettingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DWHSettingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\EmailProviderMap.cs" />
     <Compile Include="CommonDataModel\Mapping\EntityCasualDataMap.cs" />

@@ -39,6 +39,10 @@ export class RegexSelectors {
         return "td[data-cy^=ShipmentNumber_" + ShipmentNumber + "]";
     }
 
+    public static CheckShipment(ShipmentNumber: string): string{
+        return "CheckBox[data-cy^=Check_" + ShipmentNumber + "]";
+    }
+
     public static SplitButton(packageNumber: string): string{
         return "button[data-cy^='Split_'][data-cy$='" + packageNumber + "']";
     }
@@ -73,5 +77,29 @@ export class RegexSelectors {
     
     public static OkButton(mode: string): string{
         return "#Ok" + mode +"Package";
+    }
+
+    public static ContainersView(containerView: string): string{
+        return "p[data-cy^=Containers" + containerView + "View]";
+    }
+
+    public static AddContainerDelivery(ContainerNumber: string): string{
+        return "div[data-cy^=AddContainerDelivery_" + ContainerNumber + "]";
+    }
+
+    public static EditContainerDelivery(ContainerNumber: string): string{
+        return "img[data-cy^=EditContainerDelivery_" + ContainerNumber + "]";
+    }
+
+    public static AddContainerReturn(ContainerNumber: string): string{
+        return "div[data-cy^=AddContainerReturn_" + ContainerNumber + "]";
+    }
+
+    public static EditContainerReturn(ContainerNumber: string): string{
+        return "img[data-cy^=EditContainerReturn_" + ContainerNumber + "]";
+    }
+
+    public static GridFitstRow(): string{
+        return "div[id^='LogGrid_'][id$='row0']";
     }
 }

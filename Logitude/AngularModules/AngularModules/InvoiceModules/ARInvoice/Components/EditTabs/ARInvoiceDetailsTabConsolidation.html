@@ -345,7 +345,7 @@
                                                 <td style="padding:0; width: 25px; min-width: 25px; max-width: 25px;">
                                                     <div class="MediaFill">
                                                         <div class="CenterCenter" style="width: 16px;">
-                                                            <CheckBox id="{{'IsConsolidationChecked' | IdGeneratorPipe}}" *ngIf="item.IsMatched" [IsChecked]="item.IsConnected" (Checked)="item.IsConnected = $event" [IsEnabled]="IsEditingEnabled"></CheckBox>
+                                                            <CheckBox id="{{'IsConsolidationChecked' | IdGeneratorPipe}}"attr.data-cy="{{'CheckBox' + item.InvoiceNumber | IdGeneratorPipe}}" *ngIf="item.IsMatched" [IsChecked]="item.IsConnected" (Checked)="item.IsConnected = $event" [IsEnabled]="IsEditingEnabled"></CheckBox>
                                                             <img *ngIf="!item.IsMatched" src="./Images/Info.png" class="CenterCenter" [attr.title]="'Not matched due to currency'" />
                                                         </div>
                                                     </div>

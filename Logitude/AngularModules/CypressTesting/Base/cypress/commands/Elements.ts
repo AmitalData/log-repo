@@ -25,9 +25,14 @@ declare global {
 
             ClickingAfterHovering(LogLovSelector:string,HiddenElementSelector:string): Chainable<Element>
             SelectCheckBox(Selector:string): Chainable<Element>
+            SelectDropDownListItem(Selector:string,contain:string): Chainable<Element>
         }
     }
 }
+Cypress.Commands.add("SelectDropDownListItem", (Selector:string,contain:string) => {
+    cy.get(Selector).find(BaseSelectors.DownArrow).click()
+    cy.get(BaseSelectors.DropDownList).find(BaseSelectors.DropDownListItem).contains(contain).click()
+})
 Cypress.Commands.add("SelectCheckBox", (Selector:string) => {
     cy.get(Selector).check({ force: true })
 
@@ -71,10 +76,10 @@ Cypress.Commands.add("FillDate", (selector, value) => {
 Cypress.Commands.add("FillLogTextBox", (selector, value,ValidateInputDone = false) => {
 
     if(ValidateInputDone){
-        cy.get(selector).clear().type(value)//.should('have.value', value)
+        cy.get(selector).clear().type("{selectall}" + value)//.should('have.value', value)
     }
     else{
-        cy.get(selector).clear().type(value).should('have.value', value)
+        cy.get(selector).clear().type("{selectall}" + value).should('have.value', value)
     }
 
 })
@@ -90,7 +95,7 @@ Cypress.Commands.add("FillLogLov", (selector, value, fromCache, getByFilters = f
     }
 
     //cy.get(selector).clear().type(value)
-    cy.get(selector).type("{selectall}" + value,{delay:5})
+    cy.get(selector).clear().type("{selectall}" + value,{delay:5})
 
     if (!fromCache) {
         cy.wait("@LOVDataLoaded")

@@ -12,7 +12,7 @@ export class QuoteSelectors {
      //#region Package
      public static readonly PackagesTab = '#QuoteTHPackages';
      public static readonly AddPackage = '#AddPackage';
-     public static readonly PackageType = '#LogLov_QuotePackage_PackageTypeId';
+     public static readonly PackageType = '#QuotePackage_PackageTypeId';
      public static readonly PackageQuantity = '#QuotePackage_Quantity';
      public static readonly PackageLength = '#QuotePackage_Length';
      public static readonly PackageWidth = '#QuotePackage_Width';

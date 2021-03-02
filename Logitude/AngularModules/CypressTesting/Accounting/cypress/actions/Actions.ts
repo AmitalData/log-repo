@@ -14,6 +14,7 @@ import { BaseURLs } from '../../../Base/cypress/constants/URLs';
 import { QuickSearchDetails } from '../../../Base/cypress/models/QuickSearchDetails';
 import { RestAPI } from '../../../Base/cypress/constants/RestAPI'
 import * as BaseActions from '../../../Base/cypress/actions/Actions';
+import { intersection } from 'cypress/types/lodash';
 
 export function NavigatesToAccountingMenu() {
     cy.Click(BaseSelectors.AccountingMenu, null)
@@ -37,7 +38,8 @@ export function NavigatesToNewTransferARInvoices() {
 }
 export function changeAccountingsSystem(AccountingsSystem: string, ExternalTransmissionType?: string) {
     cy.Click(BaseSelectors.buttonspan, AccountingSelectors.ContainAccountingSystem, true)
-    cy.FillLogLov(AccountingSelectors.AccountingSystemType, AccountingsSystem, true)
+    cy.SelectDropDownListItem(AccountingSelectors.LogLovAccountingSettingAccountingSystemCode, AccountingsSystem)
+    //cy.FillLogLov(AccountingSelectors.AccountingSystemType, AccountingsSystem, true)
     if (AccountingsSystem != AccountingSelectors.ContainNone) {
         cy.SelectCheckBox(AccountingSelectors.IsARInvoicesTransferEnabled)
         cy.SelectCheckBox(AccountingSelectors.IsAPInvoicesTransferEnabled)
@@ -94,17 +96,28 @@ export function FillAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails, multipl
 }
 export function ReceiveAPInvoice() {
     cy.DefineRequestWait(RestAPI.POST, AccountingURLs.APInvoices, RequestAliases.APInvoicesRequest)
+    cy.DefineRequestWait(RestAPI.POST, AccountingURLs.InvoiceDomain, RequestAliases.InvoiceDomain)
     cy.Click(AccountingSelectors.APInvoiceSaveButton, null)
+    BaseAssertion.AssertStatusCode(RequestAliases.InvoiceDomain, 200).then((interception) => {
+        if (interception.response.body) {
+            ClickOnSaveOnConfirmWindow()
+        }
+    })
 }
 
 export function SaveAPInvoice() {
     cy.DefineRequestWait(RestAPI.POST, AccountingURLs.InvoiceDomain, RequestAliases.InvoiceDomain)
     cy.Click(AccountingSelectors.APInvoiceSaveButton, null)
 }
-
 export function APApproveInvoice() {
     cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.APInvoices, RequestAliases.APInvoicesRequest)
+    cy.DefineRequestWait(RestAPI.POST, AccountingURLs.InvoiceDomain, RequestAliases.InvoiceDomain)
     cy.Click(AccountingSelectors.APInvoiceApproveButton, null)
+    BaseAssertion.AssertStatusCode(RequestAliases.InvoiceDomain, 200).then((interception) => {
+        if (interception.response.body) {
+            ClickOnSaveOnConfirmWindow()
+        }
+    })
 }
 export function APInvoiceCancelApproval() {
     cy.Click(BaseSelectors.MoreList, null, true)
@@ -198,7 +211,7 @@ export function AddTwoShipmentLinesAndEditAmount(shipmentNumbers: string[], VATT
         } as QuickSearchDetails;
         cy.SelectQuickSearchFirstElement(quickSearchDetails);
 
-        cy.get(AccountingSelectors.EditShipmentLine).children().eq(i).click();
+        cy.Click(AccountingSelectors.EditShipmentLineIcon(shipmentNumbers[i]), null, true)
         cy.FillLogTextBox(AccountingSelectors.APInvoiceLineForiegnCurrencyAmount, amount.toString());
         cy.FillLogLov(AccountingSelectors.APInvoiceVatType, VATType, true);
         cy.Click(BaseSelectors.Button, BaseSelectors.ContainsApplytoall);
@@ -331,14 +344,14 @@ export function NavigatesToDraftInvoice(draftConsolidationInvoiceNumber: string)
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200);
 }
 //#endregion
-export function AddSecondInvoiceToConsolidation() {
+export function AddSecondInvoiceToConsolidation(ARInvoiceNumber: string) {
     cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesPutRequest);
-    cy.get(AccountingSelectors.IsConsolidationChecked).eq(1).find(BaseSelectors.label).click({});
+    cy.get("[data-cy='CheckBox" + ARInvoiceNumber + "']").click();
 }
 export function AssertTransferStatus(TransferStatus: string) {
     cy.get(BaseSelectors.HeaderScreen).eq(1).find(BaseSelectors.HeaderScreenLable)
         .contains(AccountingSelectors.ContainTransferStatus)
-        .parents(BaseSelectors.tr)
+        .parents(BaseSelectors.tr).first()
         .find(BaseSelectors.HeaderScreenValue)
         .should("contain.text", TransferStatus)
 }
@@ -405,7 +418,10 @@ export function CloseExportingInvoiceTransferWindow() {
         .parents(BaseSelectors.LogitudeWindow)
         .find(BaseSelectors.button).contains(BaseSelectors.ContainClose).click()
 }
-
 export function AssertTransferredInvoice() {
     cy.get(BaseSelectors.ColorGreenClass).should('contain.text', AccountingSelectors.ContainTransferredSuccessfully)
+}
+function ClickOnSaveOnConfirmWindow() {
+    cy.get(BaseSelectors.ConfirmWindow).find(BaseSelectors.RedButton).contains(BaseSelectors.ContainSave).click()
+
 }

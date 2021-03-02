@@ -58,7 +58,9 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ContainsClose = "Close"
     public static readonly ContainsExport = 'Export'
     public static readonly ContainsSendtoCustoms = "Send to Customs"
+    public static readonly  ContainSave="Save"
 
+    public static readonly ContainsAddFollowup = "Add Follow up"
     //#endregion
     //#region general
     public static readonly ToggleButtonClass = '.ToggleButton';
@@ -114,12 +116,14 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly li = "li";
     public static readonly ValidationSummaryBlock = ".ValidationSummary table tr td";
     public static readonly DropDownListItem = ".DropDownListItem";
+    public static readonly DropDownList=".DropDownList"
     public static readonly Value = ".Value";
     public static readonly CheckboxInput = "input[type='checkbox']";
+    public static readonly DownArrow='[src="Images/ToggleIcon.png"]'
 
 
     //#region Customs settings
-    public static readonly LocalCustomsInterfaceCode = "#LogLov_CustomsInterfaceSetting_LocalCustomsInterfaceCode";
+    public static readonly LocalCustomsInterfaceCode = "#CustomsInterfaceSetting_LocalCustomsInterfaceCode";
 
     //#endregion
     public static readonly HeaderScreen= ".HeaderScreen"
@@ -136,5 +140,6 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ColorGreenClass=".ColorGreen"
     public static readonly buttonspan= "button span"
     public static readonly FillParentClass=".FillParent"
-    
+    public static readonly ConfirmWindow="[class=ConfirmWindow]"
+   
 }

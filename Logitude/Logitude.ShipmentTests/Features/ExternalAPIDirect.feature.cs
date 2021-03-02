@@ -84,9 +84,6 @@ namespace Logitude.ShipmentTests.Features
                         "Field",
                         "Value"});
             table3.AddRow(new string[] {
-                        "Agent",
-                        "10026"});
-            table3.AddRow(new string[] {
                         "Direction",
                         "Export"});
             table3.AddRow(new string[] {
@@ -95,9 +92,6 @@ namespace Logitude.ShipmentTests.Features
             table3.AddRow(new string[] {
                         "ShipmentType",
                         "FCLD"});
-            table3.AddRow(new string[] {
-                        "Shipper",
-                        "10009"});
             table3.AddRow(new string[] {
                         "ShipperReference1",
                         "SR1"});
@@ -115,13 +109,10 @@ namespace Logitude.ShipmentTests.Features
                         "TES"});
             table3.AddRow(new string[] {
                         "Incoterm",
-                        "CIF"});
+                        "LDE"});
             table3.AddRow(new string[] {
                         "MainCarriageCarrier",
-                        "CA20"});
-            table3.AddRow(new string[] {
-                        "MainCarriageATD",
-                        "2021-01-07"});
+                        "MSCU"});
 #line 7
  testRunner.Given("a direct shipment with the following fields", ((string)(null)), table3, "Given ");
 #line hidden
@@ -132,16 +123,16 @@ namespace Logitude.ShipmentTests.Features
                         "ToPort"});
             table4.AddRow(new string[] {
                         "1",
-                        "CA20",
-                        "DE222",
-                        "DE223"});
-#line 22
+                        "MSCU",
+                        "USNYC",
+                        "USSOU"});
+#line 19
  testRunner.And("a main carriage leg", ((string)(null)), table4, "And ");
 #line hidden
-#line 25
+#line 22
  testRunner.When("create shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 26
+#line 23
  testRunner.Then("shipment should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
         }
@@ -159,7 +150,7 @@ namespace Logitude.ShipmentTests.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update main carriage ATA to future date", null, tagsOfScenario, argumentsOfScenario);
-#line 28
+#line 26
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -182,10 +173,10 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 this.FeatureBackground();
 #line hidden
-#line 29
+#line 27
  testRunner.When("update ATA to future date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 30
+#line 28
  testRunner.Then("should receive error message say cannot set main carriage ATA to future date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -200,7 +191,7 @@ this.FeatureBackground();
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update main carriage ATD to future date", null, tagsOfScenario, argumentsOfScenario);
-#line 32
+#line 30
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -223,10 +214,10 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 this.FeatureBackground();
 #line hidden
-#line 33
+#line 31
  testRunner.When("update ATD to future date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 34
+#line 32
  testRunner.Then("should receive error message say cannot set main carriage ATD to future date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -241,7 +232,7 @@ this.FeatureBackground();
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update main carriage ETD, ATD, ETA, and ATA to vaild dates", null, tagsOfScenario, argumentsOfScenario);
-#line 36
+#line 34
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -264,10 +255,10 @@ this.ScenarioInitialize(scenarioInfo);
 #line 6
 this.FeatureBackground();
 #line hidden
-#line 37
+#line 35
  testRunner.When("update ETD, ATD, ETA, and ATA to vaild dates", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 38
+#line 36
  testRunner.Then("shipment should update successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

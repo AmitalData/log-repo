@@ -108,5 +108,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return myResult;
         }
+        public ShipmentPickUpDeliveryPackagePM GetSinglePM(string id, int tenant)
+        {
+            return GetSingleShipmentPickUpDeliveryPackagePM( id,  tenant);       
+        }
+            
     }
 }

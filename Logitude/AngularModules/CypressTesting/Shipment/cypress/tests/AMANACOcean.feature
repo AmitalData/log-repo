@@ -35,8 +35,8 @@ Feature: AMANAC Ocean Shipment Validations, Marked as Blocked, Marked as Not Blo
     Scenario: Fill all mandatory fields
         Given the user add "MSCU" as shipping line
         And add package with the following details
-            | PackageType | PackageNumber | GrossWeight |
-            | PC2         | ABCD1234560   | 100         |
+            | PackageType | ContainerNumber | GrossWeight |
+            | PC2         | ABCD1234560     | 100         |
         And edit main carriage leg with "123456" as voyage no and "PT" as vessel
         When update shipment
         Then the shipment should update successfully

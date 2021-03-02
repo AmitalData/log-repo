@@ -184,10 +184,10 @@ function FillRequiredToSendBookingInPartnersTab(requiredToSendBookingDetails: Re
     cy.Click(ShipmentSelectors.EditShipper, null);
     let shipperContact = requiredToSendBookingDetails.ShipperContact;
     if (shipperContact) {
-        cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetByFilters, RequestAliases.ContactLogLovLoad);
-        cy.get(ShipmentSelectors.ShipmentShipperContact).type(shipperContact);
+        cy.DefineRequestWait(RestAPI.GET, URLs.ContactViewsGetByFilters, RequestAliases.ContactLogLovLoad);
+        cy.get(ShipmentSelectors.ShipmentShipperContact).type("{selectall}" + shipperContact, { delay:5 });
         BaseAssertion.AssertStatusCode(RequestAliases.ContactLogLovLoad, 200).then(interception => {
-            if (interception.response.body.Result.filter(c => c.EnglishName === shipperContact).length === 0) {
+            if (interception.response.body.Result.filter(c => c.EnglishName === shipperContact).length == 0) {
                 AddNewShipperContact(shipperContact);
             } else {
                 cy.get(BaseSelectors.DropDownListItem).children().eq(0).click();

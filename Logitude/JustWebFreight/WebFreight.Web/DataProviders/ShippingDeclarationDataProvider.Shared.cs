@@ -285,6 +285,7 @@ namespace WebFreight.Web.DataProviders
         public string InsidePackagesDetails { get; set; }
 
         public string PickupTruckerName { get; set; }
+        public string PickupTruckerNumber { get; set; }
         public string PickupTruckerInfo { get; set; }
         public string DeliveryTruckerName { get; set; }
         public string DeliveryTruckerInfo { get; set; }
