@@ -349,11 +349,8 @@ export function AddSecondInvoiceToConsolidation(ARInvoiceNumber: string) {
     cy.get("[data-cy='CheckBox" + ARInvoiceNumber + "']").click();
 }
 export function AssertTransferStatus(TransferStatus: string) {
-    cy.get(BaseSelectors.HeaderScreen).eq(1).find(BaseSelectors.HeaderScreenLable)
-        .contains(AccountingSelectors.ContainTransferStatus)
-        .parents(BaseSelectors.tr).first()
-        .find(BaseSelectors.HeaderScreenValue)
-        .should("contain.text", TransferStatus)
+    cy.get(BaseSelectors.HeaderScreen).eq(1)
+        .should("contain", TransferStatus)
 }
 export function AssertTransferError(ARInvoiceNumber: string, ErrorMessage: string) {
     cy.get(BaseSelectors.DivListItem).find(BaseSelectors.TextTrimming).contains(ARInvoiceNumber)
@@ -383,14 +380,9 @@ export function FillExternalID(ExternalIDName: string, EntityName: string, Exter
 }
 
 export function ARInvoiceSearch(ARInvoiceNumber: string) {
-    let ARInvoiceNumberWithoutLastNumber = BaseActions.GetstringWithoutLastCharacter(ARInvoiceNumber)
-    let LastNumberOFARInvoice = BaseActions.GetLastCharacter(ARInvoiceNumber)
-    cy.get(BaseSelectors.SearchField).type(ARInvoiceNumberWithoutLastNumber)
-    cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViewsGetByFilters, RequestAliases.ARInvoiceViewsGetByFilters);
-    cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViewsGetByFilters, RequestAliases.ARInvoiceViewsGetByFilters);
-    cy.get(BaseSelectors.SearchField).type(LastNumberOFARInvoice)
-    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceViewsGetByFilters, 200);
-    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceViewsGetByFilters, 200);
+    cy.DefineRequestWait(RestAPI.POST, AccountingURLs.PerformancelogsPostLogsList, RequestAliases.performancelogs);
+    cy.FillLogTextBox(BaseSelectors.SearchField,ARInvoiceNumber)
+    BaseAssertion.AssertStatusCode(RequestAliases.performancelogs, 200);
 }
 
 export function ARInvoiceSearchInTransferScreen(ARInvoiceNumber: string) {
@@ -407,9 +399,7 @@ export function ClickOnRowDependingOnARInvoiceNumber(ARInvoiceNumber: string) {
 }
 
 export function ExportARInvoice(ARInvoiceNumber: string) {
-    cy.get(BaseSelectors.SimpleGridViewRow).find(BaseSelectors.GridViewCell).contains(ARInvoiceNumber)
-        .parents(BaseSelectors.SimpleGridViewRow)
-        .find(BaseSelectors.CheckBox).click({ force: true })
+    cy.get(AccountingSelectors.TransferCheckBox(ARInvoiceNumber)).click();
     cy.Click(BaseSelectors.RedButton, AccountingSelectors.ContainExport)
 }
 

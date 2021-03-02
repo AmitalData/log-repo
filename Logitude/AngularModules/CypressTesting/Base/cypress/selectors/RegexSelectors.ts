@@ -7,6 +7,7 @@ export class RegexSelectors {
     public static readonly SaveAsOpenButton= "Button[id^='SendButtom_']";
     public static readonly NullSearch='input[id^="null_Search"]'
     public static readonly ComboBoxLast="div[id^=ComboBox_]:last"
+    public static readonly InputCheckBox="input[id^='CheckBox_']"
 
 
     public static SaveClose(entityType: string): string {
