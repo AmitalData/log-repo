@@ -123,7 +123,7 @@ export class BaseSelectors extends RegexSelectors {
 
 
     //#region Customs settings
-    public static readonly LocalCustomsInterfaceCode = "#LogLov_CustomsInterfaceSetting_LocalCustomsInterfaceCode";
+    public static readonly LocalCustomsInterfaceCode = "#CustomsInterfaceSetting_LocalCustomsInterfaceCode";
 
     //#endregion
     public static readonly HeaderScreen= ".HeaderScreen"

@@ -76,10 +76,10 @@ Cypress.Commands.add("FillDate", (selector, value) => {
 Cypress.Commands.add("FillLogTextBox", (selector, value,ValidateInputDone = false) => {
 
     if(ValidateInputDone){
-        cy.get(selector).clear().type(value)//.should('have.value', value)
+        cy.get(selector).clear().type("{selectall}" + value)//.should('have.value', value)
     }
     else{
-        cy.get(selector).clear().type(value).should('have.value', value)
+        cy.get(selector).clear().type("{selectall}" + value).should('have.value', value)
     }
 
 })
