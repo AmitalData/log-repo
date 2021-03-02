@@ -374,6 +374,31 @@ export class CargoTrackingShipmentPM {
     public set AssignedTruckerNotes(newValue: string) { if (this.assignedTruckerNotes != newValue) { this.assignedTruckerNotes = newValue; this.MarkAsDirty("AssignedTruckerNotes"); } }
        
 	 
+    private deliveryDone: boolean;
+    public get DeliveryDone() { return this.deliveryDone; }
+    public set DeliveryDone(newValue: boolean) { if (this.deliveryDone != newValue) { this.deliveryDone = newValue; this.MarkAsDirty("DeliveryDone"); } }
+       
+	 
+    private deliveryDate: Date;
+    public get DeliveryDate() { return this.deliveryDate; }
+    public set DeliveryDate(newValue: Date) { if (this.deliveryDate != newValue) { this.deliveryDate = newValue; this.MarkAsDirty("DeliveryDate"); } }
+       
+	 
+    private deliveryEstimationDate: Date;
+    public get DeliveryEstimationDate() { return this.deliveryEstimationDate; }
+    public set DeliveryEstimationDate(newValue: Date) { if (this.deliveryEstimationDate != newValue) { this.deliveryEstimationDate = newValue; this.MarkAsDirty("DeliveryEstimationDate"); } }
+       
+	 
+    private deliveryNotes: string;
+    public get DeliveryNotes() { return this.deliveryNotes; }
+    public set DeliveryNotes(newValue: string) { if (this.deliveryNotes != newValue) { this.deliveryNotes = newValue; this.MarkAsDirty("DeliveryNotes"); } }
+       
+	 
+    private deliveryExceptionReason: string;
+    public get DeliveryExceptionReason() { return this.deliveryExceptionReason; }
+    public set DeliveryExceptionReason(newValue: string) { if (this.deliveryExceptionReason != newValue) { this.deliveryExceptionReason = newValue; this.MarkAsDirty("DeliveryExceptionReason"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		

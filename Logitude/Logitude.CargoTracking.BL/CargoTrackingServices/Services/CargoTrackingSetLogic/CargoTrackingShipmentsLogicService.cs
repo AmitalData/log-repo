@@ -44,6 +44,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             SetDeliveredMilestones(tableRow);
 
             SetTruckerMilestoneFields(tableRow);
+            SetDeliveryMilestones(tableRow);
         }
         private static void SetDeliveredMilestones(DataRow tableRow)
         {
@@ -58,6 +59,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             tableRow.SetField("AssignedTruckerDone", !IsFieldNullOrEmpty(tableRow, "AssignedToTruckerDate"));
             //tableRow.SetField("AssignedTruckerEstimationDate", tableRow["AssignedTruckerEstimationDate"]);
             //tableRow.SetField("AssignedTruckerNotes", tableRow["AssignedTruckerNotes"]);
+        }
+        private static void SetDeliveryMilestones(DataRow tableRow)
+        {
+            tableRow.SetField("DeliveryEstimationDate", tableRow["FinalDeliveryETD"]);
+            tableRow.SetField("DeliveryDate", tableRow["FinalDeliveryATD"]);
+            SetDeliveryDone(tableRow);
+
         }
         private static void SetClearanceMilestones(DataRow tableRow)
         {
@@ -332,6 +340,21 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             else
             {
                 tableRow.SetField("DeliveredDone", false);
+
+            }
+
+
+        }
+
+        private static void SetDeliveryDone(DataRow tableRow)
+        {
+            if (!IsFieldNullOrEmpty(tableRow, "DeliveryDate"))
+            {
+                tableRow.SetField("DeliveryDone", true);
+            }
+            else
+            {
+                tableRow.SetField("DeliveryDone", false);
 
             }
 

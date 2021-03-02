@@ -146,6 +146,16 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.AssignedTruckerEstimationDate).HasColumnName("AssignedTruckerEstimationDate");
 
             this.Property(t => t.AssignedTruckerNotes).HasColumnName("AssignedTruckerNotes").HasMaxLength(32).IsUnicode(true);
+
+            this.Property(t => t.DeliveryDone).HasColumnName("DeliveryDone");
+
+            this.Property(t => t.DeliveryDate).HasColumnName("DeliveryDate");
+
+            this.Property(t => t.DeliveryEstimationDate).HasColumnName("DeliveryEstimationDate");
+
+            this.Property(t => t.DeliveryNotes).HasColumnName("DeliveryNotes").HasMaxLength(32).IsUnicode(true);
+
+            this.Property(t => t.DeliveryExceptionReason).HasColumnName("DeliveryExceptionReason").HasMaxLength(32).IsUnicode(true);
         }
     }
 }

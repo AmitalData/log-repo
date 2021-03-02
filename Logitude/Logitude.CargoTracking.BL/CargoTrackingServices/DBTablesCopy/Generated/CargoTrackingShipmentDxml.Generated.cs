@@ -195,6 +195,21 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='AssignedTruckerNotes' Type='nvarchar' Size='32'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
+"  <Column Name='DeliveryDone' Type='bit'>"+
+"    <Constraints Nullable='false' />"+
+"  </Column>"+
+"  <Column Name='DeliveryDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='DeliveryEstimationDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='DeliveryNotes' Type='nvarchar' Size='32'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='DeliveryExceptionReason' Type='nvarchar' Size='32'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
 "  <Relation ForeignKeyColumn='EntityType' ReferencedTable='CargoTrackingHeaderEntityTypes' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='CurrentMilestoneCode' ReferencedTable='CargoTrackingMilestones' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+
 "  <Index Columns='EntityId' />"+

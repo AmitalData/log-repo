@@ -220,9 +220,17 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                    AssignedTruckerDone  = poco.AssignedTruckerDone,
                    AssignedTruckerEstimationDate = poco.AssignedTruckerEstimationDate,
                    AssignedTruckerNotes = poco.AssignedTruckerNotes,
-                   
-                   
-                   
+
+                   DeliveryDone = poco.DeliveryDone,
+
+                   DeliveryDate = poco.DeliveryDate,
+
+                   DeliveryEstimationDate= poco.DeliveryEstimationDate,
+
+                   DeliveryNotes= poco.DeliveryNotes,
+
+                   DeliveryExceptionReason = poco.DeliveryExceptionReason,
+
                 };
             if(list != null)
             {

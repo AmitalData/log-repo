@@ -155,9 +155,19 @@ namespace Logitude.CargoTracking.Data.EntityLists
        [DataMember]
        public DateTime? AssignedTruckerDate  { get; set; }
        [DataMember]
-       public DateTime? AssignedTruckerEstimationDate { get; set; }
+       public DateTime? AssignedTruckerEstimationDate  { get; set; }
        [DataMember]
        public string AssignedTruckerNotes  { get; set; }
+       [DataMember]
+       public bool DeliveryDone  { get; set; }
+       [DataMember]
+       public DateTime? DeliveryDate  { get; set; }
+       [DataMember]
+       public DateTime? DeliveryEstimationDate  { get; set; }
+       [DataMember]
+       public string DeliveryNotes  { get; set; }
+       [DataMember]
+       public string DeliveryExceptionReason  { get; set; }
    }
 
 }

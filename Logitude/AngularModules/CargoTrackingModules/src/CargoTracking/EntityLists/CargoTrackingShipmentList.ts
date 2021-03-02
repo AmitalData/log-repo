@@ -80,6 +80,11 @@ export class CargoTrackingShipmentList {
 	AssignedTruckerDate: Date;
 	AssignedTruckerEstimationDate: Date;
 	AssignedTruckerNotes: string;
+	DeliveryDone: boolean;
+	DeliveryDate: Date;
+	DeliveryEstimationDate: Date;
+	DeliveryNotes: string;
+	DeliveryExceptionReason: string;
 	
 }
  
