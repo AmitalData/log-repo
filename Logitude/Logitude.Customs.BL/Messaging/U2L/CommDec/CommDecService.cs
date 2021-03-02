@@ -49,6 +49,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
         public string UpsertActionConst = "Logitude.Customs.BL.Messaging.U2L.CommDec.CommDecService.Upsert()";
         private Logitude.AmitalMessaging.Customs.CustomFile.CommDecFile.INVOICE _INVOICE;
         private DeclarationPM _MyDeclarationPM;
+
+      
+
         //private DeclarationPM _MyEntryDeclarationPM;
         private Stopwatch _Stopwatch;
         private bool _IsBuildItemsUnit = false;
