@@ -16,9 +16,9 @@ Feature: Split shipment
     Scenario: Add Containers
         Given the user open the shipment and navigate to packages workspace
         Given  a container with the following details
-            | PackageType | PackageNumber | GrossWeight |
-            | Bulk        | ABCD1234560   | 300.000     |
-            | Flat Rack   | PQRS1875433   | 900.000     |
+            | PackageType | ContainerNumber | GrossWeight |
+            | Bulk        | ABCD1234560     | 300.000     |
+            | Flat Rack   | PQRS1875433     | 900.000     |
         When save shipment
         Then the direct shipment should save successfully
 

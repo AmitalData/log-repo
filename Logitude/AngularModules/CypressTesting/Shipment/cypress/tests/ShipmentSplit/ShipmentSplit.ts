@@ -59,7 +59,7 @@ Then("the direct shipment should save successfully", () => {
 
 //#region Split Shipment
 When("split the shipment with the second container", () => {
-    Actions.SplitShipment(containerDetailsList[1].PackageNumber);
+    Actions.SplitShipment(containerDetailsList[1].ContainerNumber);
 });
 
 Then("the direct shipment should split successfully", () => {
