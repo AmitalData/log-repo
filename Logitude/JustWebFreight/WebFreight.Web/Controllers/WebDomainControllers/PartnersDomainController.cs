@@ -1848,8 +1848,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                         service.Create(args.Contact);
                         args.ContactId = args.Contact.Id;
-                        args.Customer.PrimaryContactName = args.Contact.EnglishName;
-                        args.Customer.PrimaryContactPhone = args.Contact.BusinessPhone;
                     }
 
                     else
