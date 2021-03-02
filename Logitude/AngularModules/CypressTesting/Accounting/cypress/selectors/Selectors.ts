@@ -129,4 +129,7 @@ export class AccountingSelectors {
     public static EditShipmentLineIcon(ShipmentNumber: string): string {
         return "iconbutton[data-cy^=EditShipmentLine_" + ShipmentNumber + "]";
     }
+    public static TransferCheckBox(ARInvoiceNumber:string){
+        return "[data-cy='CheckBox" + ARInvoiceNumber + "']";
+    }
 }

@@ -74,7 +74,7 @@ export class RegexSelectors {
     public static INTTRARegistrationCheckBox(branchName: string, registrationCode: string){
         return "[data-cy='" + registrationCode + "_" + branchName + "_Registration'] input[type='checkbox']";
     }
-    
+
     public static OkButton(mode: string): string{
         return "Ok" + mode +"Package";
     }
