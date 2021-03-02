@@ -1,0 +1,15 @@
+﻿<Script DBType="Main" Module="Infrastructure">
+  <Sql Version="1">
+    <![CDATA[
+     
+     if not exists (select * from Toggles where Code = 'CPH')
+     begin
+	       insert into Toggles (Code, Name, SearchFields, Description)
+	       values ('CPH', 'Consequent Pickup/Delivery', 'CPH,Consequent Pickup/Delivery', 'Consequent Pickup/Delivery')
+     end
+
+     update Features set ToggleCode = 'CPH' where Code = 'CHILDPICKUPDELIVERY'
+     
+    ]]>
+  </Sql>
+</Script>
