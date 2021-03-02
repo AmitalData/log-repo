@@ -180,21 +180,21 @@ function FillRequiredToSendBookingInOrdersTab(requiredToSendBookingDetails: Requ
 }
 
 function FillRequiredToSendBookingInPartnersTab(requiredToSendBookingDetails: RequiredToSendBookingDetails) {
-    cy.Click(ShipmentSelectors.PartnersTab, null);
-    cy.Click(ShipmentSelectors.EditShipper, null);
     let shipperContact = requiredToSendBookingDetails.ShipperContact;
-    if (shipperContact) {
-        cy.DefineRequestWait(RestAPI.GET, URLs.ContactViewsGetByFilters, RequestAliases.ContactLogLovLoad);
-        cy.get(ShipmentSelectors.ShipmentShipperContact).type("{selectall}" + shipperContact, { delay:5 });
-        BaseAssertion.AssertStatusCode(RequestAliases.ContactLogLovLoad, 200).then(interception => {
-            if (interception.response.body.Result.filter(c => c.EnglishName === shipperContact).length == 0) {
+    if(shipperContact){
+        cy.Click(ShipmentSelectors.PartnersTab, null);
+        cy.Click(ShipmentSelectors.EditShipper, null);
+        cy.DefineRequestWait(RestAPI.GET, URLs.ContactViewsGetByFilters + shipperContact + "**", RequestAliases.ContactLogLovLoad);
+        cy.get(ShipmentSelectors.ShipmentShipperContact).type("{selectall}" + shipperContact);
+        cy.wait("@" + RequestAliases.ContactLogLovLoad).then((interception) => {
+            if (interception.response.body.Result.filter((c: { EnglishName: string; }) => c.EnglishName.toLowerCase() === shipperContact.toLowerCase()).length === 0) {
                 AddNewShipperContact(shipperContact);
             } else {
                 cy.get(BaseSelectors.DropDownListItem).children().eq(0).click();
             }
         });
+        cy.Click(ShipmentSelectors.PartnerOKButton, null);
     }
-    cy.Click(ShipmentSelectors.PartnerOKButton, null);
 }
 
 function AddNewShipperContact(shipperContact: string) {

@@ -12,7 +12,8 @@ export class TariffSelectors
     public static readonly TariffUpdateSurchargeCheckBox = "checkbox[id^='IsSurchargeChecked']"
     public static readonly PriceCheckResultTableRow = ".LogitudeScrollViewer.LogitudeSmallScrollViewer > table > tr";
     public static readonly TariffNumberShortTitleDiv = ".LogitudeWindow:last .ShortTitleDiv:first";
-    public static readonly PriceCheckFreightResult = "td > table > tr:nth-child(1) > td > table > tr:nth-child(2) > td > table > tr > td:nth-child(2) > table > tr:nth-child(3) > td";
+    public static readonly PriceCheckFreightResult = "[data-cy='FreightPriceValue']";
+
     public static readonly PriceCheckSearch = ".SearchButton";
     public static readonly TariffActionsMenu = ".ToggleButton"
     public static readonly PriceCheckQuery = ".QueryLink"
