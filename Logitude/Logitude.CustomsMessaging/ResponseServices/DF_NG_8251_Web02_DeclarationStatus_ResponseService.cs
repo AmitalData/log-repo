@@ -104,6 +104,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         declarationPM = declarationQueryService.GetSingle(declarationId, true, false);
                         if (declarationPM != null) // moran 31.12.15 - Task 19428 - change handle -->
                         {
+                            if (
+                                (
+                                //the VirtualCCUQUELOCK happend also when "לתצוגה בלבד - קיימת בקשה בתהליך (הצהרת יבוא) יש לבטל את הבקשה או להמתין לסיום הטיפול בה -רענן"
+                                ///requestParams.RequestVIA == SendRequestVIA.WebServiceBatch ||
+                                requestParams.RequestVIA == SendRequestVIA.DCABatch)
+                                &&
+                                declarationPM.ProcedureCurrentCode == "4070001" //"ProcedureCurrentCode":"4070001","ProcedureCurrentName":"יבוא מסחרי-שח\"מ"
+                                && !string.IsNullOrWhiteSpace(declarationPM.CustomFileNo)
+                                )
+                            {
+                                //using (var amitalContext = AmitalContext.GetContext(declarationPM.Tenant))
+                                var amitalContext = AmitalContext.GetContext(declarationPM.Tenant);
+                                //{
+                                //AmitalContext.SetOracleMonitor();
+                                var myCCUFILEMQueryService = new CCUFILEMQueryService(amitalContext);
+
+                                myCCUFILEMQueryService.VirtualCCUQUELOCK_LockNOWAIT(declarationPM.Tenant, declarationPM.CustomFileNo);
+                                //}
+                            }
                             LogMessagingUtil.Instance.AppendLine("Declaration found (id =" + declarationPM.Id + ")");
                             Boolean paymentDateUpdated = false;
                             bool courierStatusUpdated = false;
