@@ -59,4 +59,6 @@ export class RequestAliases {
     public static readonly ContactLogLovLoad = "ContactLogLovLoad";
     public static readonly PostContact = "PostContact";
     public static readonly INTTRAWebServiceSendEBooking = "INTTRAWebServiceSendEBooking";
+
+    public static readonly PutShipment = "PutShipment";
 }

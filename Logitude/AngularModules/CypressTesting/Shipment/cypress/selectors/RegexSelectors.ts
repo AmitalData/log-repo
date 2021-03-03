@@ -102,4 +102,8 @@ export class RegexSelectors {
     public static GridFitstRow(): string{
         return "div[id^='LogGrid_'][id$='row0']";
     }
+
+    public static ShortTitleDirectionIcon(direction: string): string{
+        return ".ShortTitleDiv img[src='./Images/Directions/" + ShipmentMapping.GetDirectionCode(direction) + ".png']";
+    }
 }
