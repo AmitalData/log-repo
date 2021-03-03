@@ -596,12 +596,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 DeclarationPendingPM _declarationPendingPM = null;
                 if (currentDeclarationCourierStatusPM.DeclarationPendings != null && currentDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
                 {
-                    _declarationPendingPM = currentDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == currentDeclarationCourierStatusPM.DeclarationId && r.CourierPendingReasonCode == declarationPendingCode).FirstOrDefault();
+                    _declarationPendingPM = currentDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == currentDeclarationCourierStatusPM.DeclarationId && r.CourierPendingReasonCode == courierPendingReasonPM.Id).FirstOrDefault();
                 }
                 if (_declarationPendingPM == null)
                 {
                     _declarationPendingPM = new DeclarationPendingPM();
-                    _declarationPendingPM.CourierPendingReasonCode = declarationPendingCode;
+                    _declarationPendingPM.CourierPendingReasonCode = courierPendingReasonPM.Id;
                     _declarationPendingPM.Status = "A";
                     _declarationPendingPM.ChangeSetOp = ChangeSetOperation.Insert;
                     currentDeclarationCourierStatusPM.DeclarationPendings.Add(_declarationPendingPM);
