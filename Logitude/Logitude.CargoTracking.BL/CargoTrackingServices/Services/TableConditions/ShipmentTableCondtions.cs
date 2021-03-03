@@ -22,6 +22,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             fielsdName = " C." + fielsdName.Replace(",", " ,C.");
             string getAllCustomsShipmentsThatContainForwardingShipmentsCommand = "SELECT " + fielsdName + ", Min(P.Id) as ForwardingIdForCustom" +
                 ",com.ContainersNumbers as ContainersNumbers,com.FinalDeliveryETA as FinalDeliveryETA," +
+                "com.FinalDeliveryETD as FinalDeliveryETD,com.FinalDeliveryATD as FinalDeliveryATD," +
                 "com.FinalDeliveryATA as FinalDeliveryATA ,com.FirstPickupATD as FirstPickupATD," +
                 " Mas.MainCarriageATD as MainCarriageATD,Mas.Master as Master ,  Mas.MainCarriageETD  as MainCarriageETD" +
                 " , Mas.MainCarriageATA  as MainCarriageATA , Mas.MainCarriageETA  as MainCarriageETA "
@@ -53,7 +54,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             }
 
             getAllCustomsShipmentsThatContainForwardingShipmentsCommand += " group by " + fielsdName + ",com.ContainersNumbers,com.FinalDeliveryETA," +
-                "com.FinalDeliveryATA,com.FirstPickupATD,Mas.MainCarriageATD,Mas.Master,Mas.MainCarriageETD,Mas.MainCarriageATA,Mas.MainCarriageETA ";
+                "com.FinalDeliveryATA,com.FirstPickupATD,Mas.MainCarriageATD,Mas.Master,Mas.MainCarriageETD,Mas.MainCarriageATA,Mas.MainCarriageETA ,com.FinalDeliveryETD,com.FinalDeliveryATD";
 
 
             return getAllCustomsShipmentsThatContainForwardingShipmentsCommand;
@@ -70,7 +71,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             fieldsName = " P." + fieldsName.Replace(",", " ,P.");
             string getAllNonCustomShipmentsThatContainForwardingShipmentsCommand = "Select " + fieldsName + ",com.ContainersNumbers as ContainersNumbers," +
-                " com.FinalDeliveryETA as FinalDeliveryETA,com.FinalDeliveryATA as FinalDeliveryATA " +
+                " com.FinalDeliveryETA as FinalDeliveryETA,com.FinalDeliveryATA as FinalDeliveryATA, " +
+                "com.FinalDeliveryETD as FinalDeliveryETD,com.FinalDeliveryATD as FinalDeliveryATD" +
                 ",com.FirstPickupATD as FirstPickupATD, Mas.MainCarriageATD as MainCarriageATD, Mas.Master as Master " +
                 ",  Mas.MainCarriageETD  as MainCarriageETD , Mas.MainCarriageATA  as MainCarriageATA " +
                 ", Mas.MainCarriageETA  as MainCarriageETA FROM dbo. " + table.DBTableName +
@@ -101,7 +103,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             }
 
             getAllNonCustomShipmentsThatContainForwardingShipmentsCommand += " group by " + fieldsName + ",com.ContainersNumbers,com.FinalDeliveryETA," +
-                "com.FinalDeliveryATA,com.FirstPickupATD,Mas.MainCarriageATD,Mas.MainCarriageETD,Mas.Master,Mas.MainCarriageATA,Mas.MainCarriageETA ";
+                "com.FinalDeliveryATA,com.FirstPickupATD,Mas.MainCarriageATD,Mas.MainCarriageETD,Mas.Master,Mas.MainCarriageATA,Mas.MainCarriageETA,com.FinalDeliveryETD,com.FinalDeliveryATD";
 
             return getAllNonCustomShipmentsThatContainForwardingShipmentsCommand;
         }
