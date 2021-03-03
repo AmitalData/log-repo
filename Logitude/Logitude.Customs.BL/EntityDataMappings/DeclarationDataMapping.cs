@@ -133,7 +133,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             if (entityPOCO.IsAmendment == true && entityPOCO.AmendmentStatus != "2" && entityPOCO.AmendmentStatus != null)
             {
-                entityPM.AmendmentMessage = "������ ���� - " + TranslateTextsClass.Translate("Customs.Declaration.O.IsAmendment", entityPOCO.Tenant, true) + ' ' + entityPM.AmendmentStatusName;
+                entityPM.AmendmentMessage = "לתצוגה בלבד - " + TranslateTextsClass.Translate("Customs.Declaration.O.IsAmendment", entityPOCO.Tenant, true) + ' ' + entityPM.AmendmentStatusName;
                 entityPM.IsAmendmentDisplayOnly = true;
             }
 

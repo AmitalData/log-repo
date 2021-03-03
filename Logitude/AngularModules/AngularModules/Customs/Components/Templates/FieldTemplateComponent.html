@@ -210,7 +210,14 @@
 
                     </div>
                 </div>
+                <div *ngIf="FieldName == 'FollowUpDate'" (click)="ShowAddOrEditExceptionReason()" style="position:relative;width:100%; height: 100%;">
+                    <div  class="TextTrimming">
+                        <div *ngIf="!IsHeaderScreenTemplate" class="TextTrimming" style="display: inline; position: absolute;right: 0px;">
+                             <span>{{Entity[FieldName] | DateTimePipe:'D'}}</span>
+                        </div>
 
+                    </div>
+                </div>
 
                 <div *ngIf="FieldName == 'PreClassification'" style="position:relative;width:100%; height: 100%;" (click)="PreShowCFIFILEMMoveSIToOCRScreen(Entity['PreClassification'])">
 
@@ -256,10 +263,10 @@
 
                     </div>
                 </div>
-                <div *ngIf="FieldName == 'ExceptionReasonsList'" style="position:relative;width:100%; height: 100%;">
+                <div *ngIf="FieldName == 'ExceptionReasonsList'" (click)="ShowAddOrEditExceptionReason()" style="position:relative;width:100%; height: 100%;">
                     <div *ngIf="!IsHeaderScreenTemplate" style="display: inline; position: absolute;right: 0px;">
                         <div *ngIf="Entity['ExceptionReasonsList']!=null">
-                            <span data-toggle="tooltip" data-placement="bottom" title="{{ExceptionReasonText}}">
+                            <span  data-toggle="tooltip" data-placement="bottom" title="{{ExceptionReasonText}}">
                                 <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/irregular@2x.png" />
                             </span>
                         </div>
@@ -417,7 +424,7 @@
                 </div>
 
                 <div *ngIf="FieldName == 'Actions'" (click)="ButtonClick()">
-                    <div (click)="ButtonClick()">
+                    <div (click)="ButtonClick()" style="z-index:3;">
                         <courier-filter-button #MyDropdownMenuFilterComponent
                                                [IsDisabled]="IsDisplayOnly" [DivLeft]="20">
                             <div class="class-filter-content">
@@ -430,6 +437,9 @@
                                 <ul class="P-button-drop-menu" style="text-align:right; left:250px;">
                                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();ShowDeclaration($event);  ">
                                         <span>כניסה להצהרה</span>
+                                    </li>
+                                    <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();ShowAddOrEditExceptionReason();">
+                                        <span>הזנת חריג</span>
                                     </li>
                                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowCFIFILEMMoveToQueueScreen();">
                                         <span>העברה לתור</span>

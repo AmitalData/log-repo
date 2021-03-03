@@ -239,6 +239,7 @@ import { ReferantTeamListService } from './Services/StandardLists/ReferantTeamLi
 import { AmendRequestRejectReasonTypeListService } from './Services/StandardLists/AmendRequestRejectReasonTypeListService';
 import { ReleaseMessageTypeListService } from './Services/StandardLists/ReleaseMessageTypeListService';
 import { DocumentRejectTypeListService } from './Services/StandardLists/DocumentRejectTypeListService';
+import { FclLclCodeListService } from './Services/StandardLists/FclLclCodeListService';
 
 
 //#endregion
@@ -379,7 +380,6 @@ import { CancellationRequestStatusListService } from './Services/StandardLists/C
 import { AmendmentFieldStatusTypeListService } from './Services/StandardLists/AmendmentFieldStatusTypeListService';
 import { LoadingSiteTypeListService } from './Services/StandardLists/LoadingSiteTypeListService';
 import { AmendCancellRequestInitiatorListService } from './Services/StandardLists/AmendCancellRequestInitiatorListService';
-import { FclLclCodeListService } from './Services/StandardLists/FclLclCodeListService';
 
 
 export class ModuleProviders {

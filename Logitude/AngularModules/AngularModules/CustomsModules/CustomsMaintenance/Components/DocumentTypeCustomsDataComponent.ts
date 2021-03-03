@@ -68,7 +68,7 @@ export class DocumentTypeCustomsDataComponent
     ngOnInit() {
         this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response: any) => {
-            if (!AppTool.IsNullOrEmpty(this.entityArgs)) {
+            if (!AppTool.IsNullOrEmpty(this.entityArgs.EntityPM)) {
 
                 var docType: DocumentTypePM = this.entityArgs.EntityPM;
 
