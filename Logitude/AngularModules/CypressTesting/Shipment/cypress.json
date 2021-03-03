@@ -1,5 +1,5 @@
 {
-    "numTestsKeptInMemory":1,	
+    "numTestsKeptInMemory":50,	
     "watchForFileChanges":false,
     "includeShadowDom":true,
     "viewportWidth": 1200,
