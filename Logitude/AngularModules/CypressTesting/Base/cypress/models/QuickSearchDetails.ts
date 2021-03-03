@@ -3,5 +3,6 @@ export interface QuickSearchDetails {
     Parent: string,
     ParentClass: string,
     WaitURL: string,
-    Value: string
+    Value: string,
+    RequestAliase: string
 }
