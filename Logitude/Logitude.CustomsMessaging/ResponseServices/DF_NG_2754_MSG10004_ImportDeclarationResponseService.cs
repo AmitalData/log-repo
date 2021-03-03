@@ -843,14 +843,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 isSetPendingTo901 = true;
                                 if (declarationPendingPM_901 == null)
                                 {
-                                    declarationPendingPM_901 = new DeclarationPendingPM();
                                     if (courierPendingReasonPM_901 != null && courierPendingReasonPM_901.Code == "901")
                                     {
+                                        declarationPendingPM_901 = new DeclarationPendingPM();
                                         declarationPendingPM_901.CourierPendingReasonCode = courierPendingReasonPM_901.Id;
+                                        declarationPendingPM_901.Status = "A";
+                                        declarationPendingPM_901.ChangeSetOp = ChangeSetOperation.Insert;
+                                        _MyDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_901);
                                     }
-                                    declarationPendingPM_901.Status = "A";
-                                    declarationPendingPM_901.ChangeSetOp = ChangeSetOperation.Insert;
-                                    _MyDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_901);
                                 }
                                 else if (declarationPendingPM_901.Status != "A")
                                 {
@@ -914,14 +914,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             {
                                 if (declarationPendingPM_900 == null)
                                 {
-                                    declarationPendingPM_900 = new DeclarationPendingPM();
                                     if (courierPendingReasonPM_900 != null && courierPendingReasonPM_900.Code == "900")
                                     {
+                                        declarationPendingPM_900 = new DeclarationPendingPM();
                                         declarationPendingPM_900.CourierPendingReasonCode = courierPendingReasonPM_900.Id;
+                                        declarationPendingPM_900.Status = "A";
+                                        declarationPendingPM_900.ChangeSetOp = ChangeSetOperation.Insert;
+                                        _MyDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_900);
                                     }
-                                    declarationPendingPM_900.Status = "A";
-                                    declarationPendingPM_900.ChangeSetOp = ChangeSetOperation.Insert;
-                                    _MyDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_900);
                                 }
                                 else if (declarationPendingPM_900.Status != "A")
                                 {
