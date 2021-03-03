@@ -1577,6 +1577,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.Origin = shipment.Origin;
             shipmentPM.AgentComputed = shipment.AgentComputed;
             shipmentPM.ComputedShipmentNumber = shipment.ComputedShipmentNumber;
+            shipmentPM.TruckerId = shipment.TruckerId;
+            shipmentPM.AssignedToTruckerDate = shipment.AssignedToTruckerDate;
+            shipmentPM.AssginedToCustomsAgentDate = shipment.AssginedToCustomsAgentDate;
+            shipmentPM.AssginedtoCustomsAgentId = shipment.AssginedtoCustomsAgentId;
+
 
             if (!string.IsNullOrEmpty(shipmentPM.UpdatedByUserId))
             {
