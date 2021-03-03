@@ -80,6 +80,11 @@ export class CargoTrackingShipmentList {
 	AssignedTruckerDate: Date;
 	AssignedTruckerEstimationDate: Date;
 	AssignedTruckerNotes: string;
+	AssignedCustomsAgentDone: boolean;
+	AssignedCustomsAgentDate: Date;
+	AssignedCustomsAgentEstDate: Date;
+	AssignedCustomsAgentNotes: string;
+	AssignedCustomsAgentExcReason: string;
 	
 }
  
