@@ -172,9 +172,7 @@ export class HomeComponent implements OnDestroy{
             this.IsCurrenciesRatesVisible = true;
         }
 
-        if (!this.IsLogBox && FeatureLocator.HasFeaturePermession("General", "DailyCurrenciesRates")) {
-            this.IsDailyCurrenciesRatesVisible = true;
-        }
+        this.ShowDailyCurrenciesRates();
 
         if (FeatureLocator.HasFeaturePermession("General", "SIGNATURESETTING")) {
             this.IsSignatureVisible = true;
@@ -218,6 +216,13 @@ export class HomeComponent implements OnDestroy{
     private trialTimer: any;
     private loginService: LoginService
     private messageWindow: MessageWindow = new MessageWindow();
+
+    private ShowDailyCurrenciesRates() {
+        if (FeatureLocator.HasFeaturePermession("General", "DailyCurrenciesRates")) {
+            this.IsDailyCurrenciesRatesVisible = true;
+        }
+    }
+
     GetUserSetting() {
 
 
