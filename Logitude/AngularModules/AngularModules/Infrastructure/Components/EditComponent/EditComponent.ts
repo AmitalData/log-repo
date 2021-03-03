@@ -1189,9 +1189,9 @@ export class EditComponent implements OnDestroy {
 
     // Commands
     BackButtonClicked() {
-        var isFullAccountingNeedingConfirmation = this.CheckIfFullAccountingARInvoiceNeedsConfirmation();
+        var IsARInvoiceNeedsConfirmation = this.CheckIfFullAccountingARInvoiceNeedsConfirmation();
         var isNeedingConfirmation = this.NeedCloseConfirmation();
-        if (isFullAccountingNeedingConfirmation) {
+        if (IsARInvoiceNeedsConfirmation) {
             var yesAction = (): void => {
                 this.Close();
             }
