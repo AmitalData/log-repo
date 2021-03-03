@@ -1507,8 +1507,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.FollowUpNote = "";
         }
 
-
-        if (value.Code == "FIELDSET" && this.isResultCodeTable()) {
+         
+        if (this.HasFieldSetResult(value.Code)) {
             this.AutomatedBackupClass.Type = "Immeduiatly";
             this.IsSelectedImmediatly = true;
             this.IsSelectedDelayed = false;
@@ -1522,8 +1522,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
     }
      
-    private isResultCodeTable() {
-        return (this.ObjectTableName == "Shipment" || this.ObjectTableName == "Quote");
+    private HasFieldSetResult(resultCode: string) {
+        return (resultCode == "FIELDSET" && (this.ObjectTableName == "Shipment" || this.ObjectTableName == "Quote"));
     }
 
     ClearAutomationResult(resultCode: string) {

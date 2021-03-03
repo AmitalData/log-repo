@@ -5,28 +5,29 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
+using System.Reflection; 
 
-namespace Logitude.BL.InfrastructureModel.Tools.EntityService
+namespace Logitude.BL.QuoteModel.Tools.EntityService
 {
     class QuoteFollowUpUpdateService
     {
         private QuotePM entityPM;
         private int tenant;
+        private bool isChange = false;
         public QuoteFollowUpUpdateService(QuotePM entityPM, int tenant)
         {
             this.entityPM = entityPM;
             this.tenant = tenant;
         }
         public void RefreshFollowUps()
-        {
-            IWebFreightContext freightContext = WebFreightContext.GetContext(tenant);
-            FollowUpRepository followUpsRepository = new FollowUpRepository(freightContext);
-            List<FollowUp> allFollowupLists = null;
-            List<FollowUp> followupLists = null;
-
+        { 
             if (entityPM.IsRefreshQuoteFollowUps)
             {
+                IWebFreightContext freightContext = WebFreightContext.GetContext(tenant);
+                FollowUpRepository followUpsRepository = new FollowUpRepository(freightContext);
+                List<FollowUp> allFollowupLists = null;
+                List<FollowUp> followupLists = null;
+
                 allFollowupLists = followUpsRepository.GetFollowUpsByQuoteId(entityPM.Id, entityPM.Tenant);
                 followupLists = allFollowupLists.Where(d => !string.IsNullOrEmpty(d.DateFieldName)).ToList();
 
@@ -41,27 +42,26 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         {
             if (followupLists.Count > 0)
             {
-                bool isAnyOneChange = false;
-                isAnyOneChange = RefreshFollowUpsDateFieldList(followUpsRepository, followupLists, isAnyOneChange);
+                bool isAnyOneChange = RefreshFollowUpsDateFieldList(followUpsRepository, followupLists);
                 if (isAnyOneChange) followUpsRepository.SubmitChanges();
 
             }
         }
 
-        private bool RefreshFollowUpsDateFieldList(FollowUpRepository followUpsRepository, List<FollowUp> followupLists, bool isAnyOneChange)
+        private bool RefreshFollowUpsDateFieldList(FollowUpRepository followUpsRepository, List<FollowUp> followupLists)
         {
+            bool isAnyOneChange = false;
             foreach (FollowUp follow in followupLists)
-            {
-                bool isChange = false;
-
-                UpdateFollowUpsDateField(followUpsRepository, ref isAnyOneChange, follow, ref isChange);
+            {  
+                isAnyOneChange =  UpdateFollowUpsDateField(followUpsRepository, follow);
             }
 
             return isAnyOneChange;
         }
 
-        private void UpdateFollowUpsDateField(FollowUpRepository followUpsRepository, ref bool isAnyOneChange, FollowUp follow, ref bool isChange)
+        private bool UpdateFollowUpsDateField(FollowUpRepository followUpsRepository, FollowUp follow)
         {
+            bool isAnyOneChange = false;
             if (!string.IsNullOrEmpty(follow.DateFieldName))
             {
                 PropertyInfo propInfo = entityPM.GetType().GetProperty(follow.DateFieldName);
@@ -69,28 +69,32 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 {
                     object fieldValue = propInfo.GetValue(entityPM);
 
-                    UpdateDateField(ref isAnyOneChange, follow, ref isChange, fieldValue);
+                    isAnyOneChange = UpdateDateField(follow, fieldValue);
 
                     if (isChange) followUpsRepository.Update(follow);
                 }
             }
+            return isAnyOneChange;
         }
 
-        private void UpdateDateField(ref bool isAnyOneChange, FollowUp follow, ref bool isChange, object fieldValue)
+        private bool UpdateDateField( FollowUp follow, object fieldValue)
         {
+            bool isAnyOneChange = false;
             if (fieldValue != null)
             {
                 DateTime? fieldValuedate = (DateTime?)fieldValue;
 
-                fieldValuedate = UpdateDateFieldDays(follow, fieldValuedate);
+                fieldValuedate = AddFollowupDateEscalationTimeDays(follow, fieldValuedate);
 
-                UpdateQuoteFollowUpsDate(ref isAnyOneChange, follow, ref isChange, fieldValuedate);
+                isAnyOneChange = SetQuoteFollowUpsDate(follow, fieldValuedate);
 
             }
+            return isAnyOneChange;
         }
 
-        private void UpdateQuoteFollowUpsDate(ref bool isAnyOneChange, FollowUp follow, ref bool isChange, DateTime? fieldValuedate)
+        private bool SetQuoteFollowUpsDate(FollowUp follow, DateTime? fieldValuedate)
         {
+            bool isAnyOneChange = false;
             if (follow.Date != fieldValuedate)
             {
                 follow.Date = fieldValuedate;
@@ -104,18 +108,20 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 isChange = true;
                 isAnyOneChange = true;
             }
+            return isAnyOneChange;
         }
 
-        private static DateTime? UpdateDateFieldDays(FollowUp follow, DateTime? fieldValuedate)
+        private static DateTime? AddFollowupDateEscalationTimeDays(FollowUp follow, DateTime? fieldValuedate)
         {
+            DateTime? theFieldValuedate = fieldValuedate; 
             if (follow.DateEscalationActionTimeIndicatorCode != "IM" && follow.DateEscalationTime != 0)
             {
                 int dateEscalationTime = follow.DateEscalationActionTimeIndicatorCode == "AF" ? follow.DateEscalationTime : follow.DateEscalationTime * -1;
-                fieldValuedate = fieldValuedate.Value.AddDays(dateEscalationTime);
+                theFieldValuedate = fieldValuedate.Value.AddDays(dateEscalationTime);
 
             }
 
-            return fieldValuedate;
+            return theFieldValuedate;
         }
 
         private void RefreshQuoteFollowUps(List<FollowUp> followupList = null)
@@ -173,7 +179,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
             return followupList;
         }
-          
+
         private void ClearFollowUps()
         {
             if (entityPM.FollowUps.Count != 0)
@@ -183,3 +189,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         }
     }
 }
+
+
+ 
