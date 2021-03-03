@@ -59,8 +59,6 @@ Then("the exception should appear in events tab", () => {
 Then("has exception status should change to {string} successfully", (hasException) => {
     cy.get(BaseSelectors.CurvedEditArea).find(BaseSelectors.Refresh).click()
     ShipmentActions.CheckHasException(hasException)
-    ShipmentActions.ValidateShipmentEventActions(ShipmentSelectors.EventsTab, EventNote)
-
 });
 //#endregion
 //#region resolve the exception
@@ -74,7 +72,5 @@ Then("the exception should resolve successfully", () => {
 Then("has exception status should back to {string} successfully", (hasException) => {
     ShipmentActions.RefreshEventTab()
     ShipmentActions.CheckHasException(hasException)
-    ShipmentActions.ValidateShipmentEventActions(ShipmentSelectors.EventsTab, EventNote)
-
 });
 //#endregion
