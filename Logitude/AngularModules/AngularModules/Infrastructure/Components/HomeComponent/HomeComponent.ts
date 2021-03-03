@@ -210,18 +210,18 @@ export class HomeComponent implements OnDestroy{
 
     }
 
-    // UserSettings
-    public authHeader;   
-    public TrialMessage: string = null;
-    private trialTimer: any;
-    private loginService: LoginService
-    private messageWindow: MessageWindow = new MessageWindow();
-
     private ShowDailyCurrenciesRates() {
         if (FeatureLocator.HasFeaturePermession("General", "DailyCurrenciesRates")) {
             this.IsDailyCurrenciesRatesVisible = true;
         }
     }
+
+    // UserSettings
+    public authHeader;   
+    public TrialMessage: string = null;
+    private trialTimer: any;
+    private loginService: LoginService
+    private messageWindow: MessageWindow = new MessageWindow(); 
 
     GetUserSetting() {
 
