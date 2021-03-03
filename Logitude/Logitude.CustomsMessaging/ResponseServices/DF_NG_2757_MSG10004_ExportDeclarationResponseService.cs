@@ -961,7 +961,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             {
                                 if (declarationPendingPM_900 == null)
                                 {
-                                    if (courierPendingReasonPM_900 != null && courierPendingReasonPM_900.Code == "900")
+                                    if(courierPendingReasonPM_900 != null && courierPendingReasonPM_900.Code == "900")
                                     {
                                         declarationPendingPM_900 = new DeclarationPendingPM();
                                         declarationPendingPM_900.CourierPendingReasonCode = courierPendingReasonPM_900.Id;

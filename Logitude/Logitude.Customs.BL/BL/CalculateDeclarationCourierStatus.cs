@@ -492,6 +492,7 @@ namespace Logitude.Customs.BL.BL
                 // LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code 900");
                 if (declarationPendingPM_902 == null)
                 {
+                    
                     CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(declarationPM.Tenant);
                     CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingleCourierPendingReasonByCode("902", declarationPM.Tenant);
                     if (courierPendingReasonPM != null && courierPendingReasonPM.Code == "902")
@@ -502,6 +503,7 @@ namespace Logitude.Customs.BL.BL
                         declarationPendingPM_902.ChangeSetOp = ChangeSetOperation.Insert;
                         myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_902);
                     }
+                    
                 }
                 else if (declarationPendingPM_902.Status != "A")
                 {
