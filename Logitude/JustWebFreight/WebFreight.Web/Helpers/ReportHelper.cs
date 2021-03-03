@@ -1177,8 +1177,7 @@ namespace WebFreight.Web.Helpers
 
                 case "SHID":
                     {
-                        dataProvider = logitudeReportsWebService.LoadShipmentDetailsDataProvider(filters, reportFliter.tenant);
-                        dataProvider = IsDataProviderHaveListWithValues(dataProvider, reportFliter.IsSchedulerReport) ? dataProvider : null;
+                        dataProvider = logitudeReportsWebService.LoadShipmentDetailsDataProvider(filters, reportFliter, reportFliter.tenant);
                         break;
                     }
 
@@ -1203,8 +1202,7 @@ namespace WebFreight.Web.Helpers
 
                 case "LTRP":
                     {
-                        dataProvider = logitudeReportsWebService.LoadLedgerTransactionDataProvider(filters, reportFliter.tenant);
-                        dataProvider = IsDataProviderHaveListWithValues(dataProvider, reportFliter.IsSchedulerReport) ? dataProvider : null;
+                        dataProvider = logitudeReportsWebService.LoadLedgerTransactionDataProvider(filters, reportFliter, reportFliter.tenant);
                         break;
                     }
 
@@ -1243,23 +1241,6 @@ namespace WebFreight.Web.Helpers
                     #endregion
             }
             return dataProvider;
-        }
-
-        private bool IsDataProviderHaveListWithValues(byte[] dataProvider, bool isScheduler)
-        {
-            if (isScheduler)
-            {
-                List<PropertyInfo> properties = dataProvider?.GetType()?.GetProperties()?
-                .Where(d => d.GetValue(dataProvider) is IList).ToList();
-                foreach (PropertyInfo propInfo in properties)
-                {
-                    object value = propInfo.GetValue(dataProvider, null);
-                    List<object> genericList = (value as IEnumerable<object>)?.Cast<object>()?.ToList();
-                    if (genericList != null && genericList.Count() > 0) return true;
-                }
-                return false;
-            }
-            return true;
         }
 
         public ReportStimulDataProviderDetails GetReportStimulDataProviderDetails(byte[] dataProvider , ReportFliter reportFliter)
