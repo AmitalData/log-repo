@@ -208,13 +208,14 @@ export class AddEditExceptionReasonComponent extends BaseComponent {
                             this._referantExceptionPMService.insert(item.EntityPM).subscribe((response: any) => {
                                 item.IsNew = false;
                                 item.ShowCode = true;
+                                SessionLocator.SelectedSession.CloseCurrentWindow();
                             });
                         } else if (item.EntityPM.IsDirty == true) {
                             this._referantExceptionPMService.update(item.EntityPM).subscribe();
+                            SessionLocator.SelectedSession.CloseCurrentWindow();
                         }
                     });
                 });
-                SessionLocator.SelectedSession.CloseCurrentWindow();
             }
             this.exceptionReasonSharedDataService.IsDirty = false;
         } else {

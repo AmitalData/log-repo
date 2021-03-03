@@ -6,27 +6,35 @@
     </tr>
     <tr style="height:5px"></tr>
     <tr>
-        <td style="width:80px;">
-            <LogLabel [NoObjectField]="true"
-                      [ObjectFieldName]="'FollowUpDate'"
-                      [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"
-                      [TextCode]="'Customs.DeclarationReferantData.O.FollowUpDate'">
-            </LogLabel>
-        </td>
-        <td style="width:120px;">
-            <LogDatePicker [UseDefaultPosition]="true" [ObjectFieldName]="'FollowUpDate'" [ObjectTableName]="ObjectTableName"
-                           [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-        </td>
-        <td><div></div></td>
-        <td><div></div></td>
-        <td><div></div></td>
-        <td><div></div></td>
-        <td style="width: 25px;height: 20px;padding: 5px;padding-bottom: 0px;">
-            <div><IconButton [IsEnabled]="!IsDisplayOnly" [IsSmall]="true" [Name]="'Add'" (click)="Add()" style="float:left;"></IconButton></div>
+        <td colspan="7">
+            <fieldset style=" height:50px;border: 1px solid #3bb3e2;">
+                <table>
+                    <tr>
+                        <td style="width:80px;">
+                            <LogLabel [NoObjectField]="true"
+                                      [ObjectFieldName]="'FollowUpDate'"
+                                      [ObjectTableName]="ObjectTableName"
+                                      [DataContext]="DataContext"
+                                      [TextCode]="'Customs.DeclarationReferantData.O.FollowUpDate'">
+                            </LogLabel>
+                        </td>
+                        <td style="width:120px;">
+                            <LogDatePicker [UseDefaultPosition]="true" [ObjectFieldName]="'FollowUpDate'" [ObjectTableName]="ObjectTableName"
+                                           [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                        </td>
+                        <td><div></div></td>
+                        <td><div></div></td>
+                        <td><div></div></td>
+                        <td><div></div></td>
+                        <td style="width: 25px;height: 20px;padding: 5px;padding-bottom: 0px;">
+                            <div><IconButton [IsEnabled]="!IsDisplayOnly" [IsSmall]="true" [Name]="'Add'" (click)="Add()" style="float:left;"></IconButton></div>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
         </td>
     </tr>
-    <tr style="height:5px"></tr>
+    <tr style="height:15px"></tr>
     <tr style="height:100%;bottom:5px">
         <td colspan="7">
             <table>
