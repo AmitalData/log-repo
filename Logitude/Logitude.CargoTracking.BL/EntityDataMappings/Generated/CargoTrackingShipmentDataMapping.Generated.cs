@@ -83,7 +83,9 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         AssignedTruckerDone, 
 	         AssignedTruckerDate, 
 	         AssignedTruckerEstimationDate, 
-	         AssignedTruckerNotes,
+	         AssignedTruckerNotes, 
+	         GrossWeightUnitCode, 
+	         ForwardingShipmentNumber,
 	      }
 
 
@@ -159,7 +161,9 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         AssignedTruckerDone, 
 	         AssignedTruckerDate, 
 	         AssignedTruckerEstimationDate, 
-	         AssignedTruckerNotes,
+	         AssignedTruckerNotes, 
+	         GrossWeightUnitCode, 
+	         ForwardingShipmentNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -471,6 +475,12 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedTruckerNotes))
             {
 				entityPOCO.AssignedTruckerNotes = entityPM.AssignedTruckerNotes;
+			}
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwardingShipmentNumber))
+            {
+				entityPOCO.ForwardingShipmentNumber = entityPM.ForwardingShipmentNumber;
 			}
 			}
 
@@ -787,6 +797,13 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.AssignedTruckerNotes = entityPOCO.AssignedTruckerNotes;
             }
 
+		
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForwardingShipmentNumber))
+            {
+					entityPM.ForwardingShipmentNumber = entityPOCO.ForwardingShipmentNumber;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipmentPM oldEntityPM)
@@ -1096,6 +1113,16 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedTruckerNotes))
             {
                 oldEntityPM.AssignedTruckerNotes = entityPM.AssignedTruckerNotes;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GrossWeightUnitCode))
+            {
+                oldEntityPM.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwardingShipmentNumber))
+            {
+                oldEntityPM.ForwardingShipmentNumber = entityPM.ForwardingShipmentNumber;
             }
 			
 		}

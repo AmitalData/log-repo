@@ -20,13 +20,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName : "*";
 
             fielsdName = " C." + fielsdName.Replace(",", " ,C.");
-            string getAllCustomsShipmentsThatContainForwardingShipmentsCommand = "SELECT " + fielsdName + ", Min(P.Id) as ForwardingIdForCustom" +
+            string getAllCustomsShipmentsThatContainForwardingShipmentsCommand 
+                = "SELECT " + fielsdName + ", Min(P.Id) as ForwardingIdForCustom" +
                 ",com.ContainersNumbers as ContainersNumbers,com.FinalDeliveryETA as FinalDeliveryETA," +
                 "com.FinalDeliveryATA as FinalDeliveryATA ,com.FirstPickupATD as FirstPickupATD," +
                 " Mas.MainCarriageATD as MainCarriageATD,Mas.Master as Master ,  Mas.MainCarriageETD  as MainCarriageETD" +
                 " , Mas.MainCarriageATA  as MainCarriageATA , Mas.MainCarriageETA  as MainCarriageETA "
-                + " FROM dbo." + table.DBTableName + " P JOIN dbo." + table.DBTableName +
-                " C ON P.CustomFileId = C.Id  Left Outer JOIN dbo.ShipmentComputedFields com on com.Id = C.Id  " +
+                + ", P.ShipmentNumber as ForwardingShipmentNumber"
+                
+                + " FROM dbo." + table.DBTableName + " P JOIN dbo." + table.DBTableName + // P: forwarding shipment
+                " C ON P.CustomFileId = C.Id  Left Outer JOIN dbo.ShipmentComputedFields com on com.Id = C.Id  " + // C: custome fckn shipment
                 "Left outer JOIN dbo.ShipmentMasterDatas Mas on Mas.Id = C.MasterShipmentDataId ";
 
             if (cargoTrackingDataBaseArgs.CargoTrackingArguments == null)
@@ -52,7 +55,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                         cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date + "'";
             }
 
-            getAllCustomsShipmentsThatContainForwardingShipmentsCommand += " group by " + fielsdName + ",com.ContainersNumbers,com.FinalDeliveryETA," +
+            getAllCustomsShipmentsThatContainForwardingShipmentsCommand += " group by " + fielsdName + ",P.ShipmentNumber,com.ContainersNumbers,com.FinalDeliveryETA," +
                 "com.FinalDeliveryATA,com.FirstPickupATD,Mas.MainCarriageATD,Mas.Master,Mas.MainCarriageETD,Mas.MainCarriageATA,Mas.MainCarriageETA ";
 
 
@@ -73,7 +76,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 " com.FinalDeliveryETA as FinalDeliveryETA,com.FinalDeliveryATA as FinalDeliveryATA " +
                 ",com.FirstPickupATD as FirstPickupATD, Mas.MainCarriageATD as MainCarriageATD, Mas.Master as Master " +
                 ",  Mas.MainCarriageETD  as MainCarriageETD , Mas.MainCarriageATA  as MainCarriageATA " +
-                ", Mas.MainCarriageETA  as MainCarriageETA FROM dbo. " + table.DBTableName +
+                ", Mas.MainCarriageETA  as MainCarriageETA,P.ShipmentNumber as ForwardingShipmentNumber "
+
+                + "FROM dbo. " + table.DBTableName +
                 " P Left Outer JOIN dbo.ShipmentComputedFields com on com.Id = P.Id " +
                 " Left outer JOIN dbo.ShipmentMasterDatas Mas on Mas.Id = P.MasterShipmentDataId " + 
                 " Where P.Id not in (Select C.Id From  dbo." + table.DBTableName + " SH JOIN dbo." + table.DBTableName + " C ON SH.CustomFileId = C.Id) ";
@@ -100,7 +105,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                         + cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date + "'";
             }
 
-            getAllNonCustomShipmentsThatContainForwardingShipmentsCommand += " group by " + fieldsName + ",com.ContainersNumbers,com.FinalDeliveryETA," +
+            getAllNonCustomShipmentsThatContainForwardingShipmentsCommand += " group by " + fieldsName + ",P.ShipmentNumber,com.ContainersNumbers,com.FinalDeliveryETA," +
                 "com.FinalDeliveryATA,com.FirstPickupATD,Mas.MainCarriageATD,Mas.MainCarriageETD,Mas.Master,Mas.MainCarriageATA,Mas.MainCarriageETA ";
 
             return getAllNonCustomShipmentsThatContainForwardingShipmentsCommand;

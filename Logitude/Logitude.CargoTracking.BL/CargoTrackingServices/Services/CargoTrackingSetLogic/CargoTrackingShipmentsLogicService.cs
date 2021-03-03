@@ -213,8 +213,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                     tableRow.SetField("IsMainRecord", true);
 
                 }
+                tableRow.SetField("ForwardingShipmentNumber", DBNull.Value);
             }
-           
+
+
         }
 
 

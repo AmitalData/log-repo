@@ -18,7 +18,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
         public static List<string> PrivateRefrencesList = new List<string>() { "ConsigneeName", "ShipperName" };
 
 
-        public static void SearchService(DataRow tableRow, BulkDataPreperation bulkDataPreperation, string tableName)
+        public static void CreateSearchReferencesForShipment(DataRow tableRow, BulkDataPreperation bulkDataPreperation, string tableName)
         {
             if (tableName == "CargoTrackingShipmentSearches" || tableName == "CargoTrackingShipments")
             {
@@ -36,18 +36,28 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             if (isValidToCreateRefrences)
             {
                 AddShipmentNumberReference(tableRow, bulkDataPreperation.InnerDataTable);
+                AddForwardingShipmentNumberReference(tableRow, bulkDataPreperation.InnerDataTable);
                 AddSplittedData(tableRow, bulkDataPreperation.InnerDataTable, "CustomerReference1");
                 AddSplittedData(tableRow, bulkDataPreperation.InnerDataTable, "CustomerReference2");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "Master");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "House");
-                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwarderShipmentNumber");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "CustomFileNumber");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "CustomsDeclarationNumber");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ShipperName");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ConsigneeName");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwarderShipmentNumber");
+                //AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingShipmentNumber");
                 AddSplittedData(tableRow, bulkDataPreperation.InnerDataTable, "ContainersNumbers");
             }
 
+        }
+
+        private static void AddForwardingShipmentNumberReference(DataRow tableRow, DataTable innerDataTable)
+        {
+            if (tableRow["ShipmentLevelCode"].Equals("A"))
+            {
+                AddNewRecord(tableRow, innerDataTable, "ForwardingShipmentNumber");
+            }
         }
 
         private static bool IsShipmentValidToCreateRefrences(DataRow tableRow, BulkDataPreperation bulkDataPreperation)

@@ -374,6 +374,16 @@ export class CargoTrackingShipmentPM {
     public set AssignedTruckerNotes(newValue: string) { if (this.assignedTruckerNotes != newValue) { this.assignedTruckerNotes = newValue; this.MarkAsDirty("AssignedTruckerNotes"); } }
        
 	 
+    private grossWeightUnitCode: string;
+    public get GrossWeightUnitCode() { return this.grossWeightUnitCode; }
+    public set GrossWeightUnitCode(newValue: string) { if (this.grossWeightUnitCode != newValue) { this.grossWeightUnitCode = newValue; this.MarkAsDirty("GrossWeightUnitCode"); } }
+       
+	 
+    private forwardingShipmentNumber: string;
+    public get ForwardingShipmentNumber() { return this.forwardingShipmentNumber; }
+    public set ForwardingShipmentNumber(newValue: string) { if (this.forwardingShipmentNumber != newValue) { this.forwardingShipmentNumber = newValue; this.MarkAsDirty("ForwardingShipmentNumber"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		
