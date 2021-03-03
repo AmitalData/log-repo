@@ -117,6 +117,8 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly EmptyContainerReturnATDDate = '#date_ShipmentPackage_EmptyContainerReturnATD';
   public static readonly EmptyContainerReturnATATime = '#time_ShipmentPackage_EmptyContainerReturnATA';
   public static readonly EmptyContainerReturnATADate = '#date_ShipmentPackage_EmptyContainerReturnATA';
+  public static readonly PickUpDeliveryATDTime = '#time_ShipmentPickUpDelivery_ATD';
+  public static readonly PickUpDeliveryATDDate = '#date_ShipmentPickUpDelivery_ATD';
   //#endregion
   //#region Routing tab fields
   public static readonly RoutingToggle = '#RoutingToggle';

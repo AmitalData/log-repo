@@ -58,26 +58,26 @@ Given("edit main carriage leg ATA to {string} at {string}", (date, time) => {
 });
 //#endregion
 
-//#region Add/Edit delivery/empty container return follow up
-Given("the user add a delivery follow up with {string} at {string} as actual departure", (date, time) => {
+//#region Add/Edit delivery/empty container return container delivery
+Given("the user add a delivery container delivery with {string} at {string} as actual departure", (date, time) => {
     Actions.NavigatesToShipmentsWorkspace();
     Actions.OpenShipment(shipmentDetails.ShipmentNumber);
-    Actions.AddDeliveryFollowUpActualDepartureDateAndTime(date, time, packagesDetails[0].ContainerNumber);
+    Actions.AddDeliveryContainerDeliveryActualDepartureDateAndTime(date, time, packagesDetails[0].ContainerNumber);
 });
 
-Given("the user edit a delivery follow up with {string} at {string} as actual arrival", (date, time) => {
+Given("the user edit a delivery container delivery with {string} at {string} as actual arrival", (date, time) => {
     Actions.NavigatesToShipmentsWorkspace();
     Actions.OpenShipment(shipmentDetails.ShipmentNumber);
     Actions.AddDeliveryActualArrivalDateAndTime(date, time, packagesDetails[0].ContainerNumber);
 });
 
-Given("the user add an empty container return follow up with {string} at {string} as actual departure", (date, time) => {
+Given("the user add an empty container return container delivery with {string} at {string} as actual departure", (date, time) => {
     Actions.NavigatesToShipmentsWorkspace();
     Actions.OpenShipment(shipmentDetails.ShipmentNumber);
-    Actions.AddContainerReturnFollowUpActualDepartureDateAndTime(date, time, packagesDetails[0].ContainerNumber);
+    Actions.AddContainerReturnContainerDeliveryActualDepartureDateAndTime(date, time, packagesDetails[0].ContainerNumber);
 });
 
-Given("the user edit an empty container return follow up with {string} at {string} as actual arrival", (date, time) => {
+Given("the user edit an empty container return container delivery with {string} at {string} as actual arrival", (date, time) => {
     Actions.NavigatesToShipmentsWorkspace();
     Actions.OpenShipment(shipmentDetails.ShipmentNumber);
     Actions.AddContainerReturnActualArrivalDateAndTime(date, time, packagesDetails[0].ContainerNumber);
@@ -89,14 +89,17 @@ When("update shipment", () => {
     Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton);
 });
 
-When("update follow up", () => {
-    Actions.UpdateFollowUp();
+When("update {string} container delivery", (status: string) => {
+    Actions.UpdateContainerDelivery(status);
 });
 //#endregion
 
 //#region Assertions 
-Then("the follow up should update successfully", () => {
+Then("the {string} container delivery should update successfully", (status) => {
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+    if (status == "new") {
+        cy.Click(BaseSelectors.Button, BaseSelectors.ContainClose)
+    }
     cy.Click(BaseSelectors.Backbutton, null);
 });
 
@@ -122,6 +125,14 @@ Then("the container should not appear in the {string} view", (containerView) => 
     Actions.ContainersView(containerView)
     Actions.SearchAContainer(packagesDetails[0].ContainerNumber);
     BaseAssertion.AssertElementNotExist(ShipmentSelectors.GridFitstRow())
+    cy.Click(BaseSelectors.Backbutton, null);
+});
+
+Then("a new {string} leg will appear in the Routings tab", (legName) => {
+    Actions.NavigatesToShipmentsWorkspace()
+    Actions.OpenShipment(shipmentDetails.ShipmentNumber);
+    cy.Click(ShipmentSelectors.RoutingsTab, null)
+    Actions.AssertRoutingLegAppeared(legName, packagesDetails[0].ContainerNumber)
     cy.Click(BaseSelectors.Backbutton, null);
 });
 //#endregion

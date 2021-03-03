@@ -663,7 +663,7 @@
                                                     </div>
 
                                                     <img attr.data-cy="{{'EditContainerDelivery_' + item.ContainerNumber | IdGeneratorPipe}}" *ngIf="!item.DeliveryId && item.IsDeliveryFU" src="./Images/CellIcons/ContainerFollowup.png" class="CenterCenter" style="cursor: pointer; width: 24px; height: 24px;" (mousedown)="item.DeliveryIconClicked()" />
-                                                    <img *ngIf="item.DeliveryId" src="./Images/CellIcons/Trucker.png" class="CenterCenter" style="cursor: pointer;" (mousedown)="item.DeliveryIconClicked()" />
+                                                    <img attr.data-cy="{{'EditContainerDelivery_' + item.ContainerNumber | IdGeneratorPipe}}" *ngIf="item.DeliveryId" src="./Images/CellIcons/Trucker.png" class="CenterCenter" style="cursor: pointer;" (mousedown)="item.DeliveryIconClicked()" />
 
                                                 </div>
                                             </log-cell-template>
@@ -690,7 +690,7 @@
                                                     </div>
 
                                                     <img attr.data-cy="{{'EditContainerReturn_' + item.ContainerNumber | IdGeneratorPipe}}" *ngIf="!item.EmptyContainerReturnId && item.IsEmptyContainerReturnFU" src="./Images/CellIcons/ContainerFollowup.png" class="CenterCenter" style="cursor: pointer; width: 24px; height: 24px;" (mousedown)="item.EmptyContainerIconClicked()" />
-                                                    <img *ngIf="item.EmptyContainerReturnId" src="./Images/CellIcons/Container.png" class="CenterCenter" style="cursor: pointer;" (mousedown)="item.EmptyContainerIconClicked()" />
+                                                    <img attr.data-cy="{{'EditContainerReturn_' + item.ContainerNumber | IdGeneratorPipe}}" *ngIf="item.EmptyContainerReturnId" src="./Images/CellIcons/Container.png" class="CenterCenter" style="cursor: pointer;" (mousedown)="item.EmptyContainerIconClicked()" />
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
