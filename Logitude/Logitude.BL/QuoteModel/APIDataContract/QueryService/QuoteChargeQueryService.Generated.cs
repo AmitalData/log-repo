@@ -493,4 +493,4 @@ using Simplog.Data.QuoteModel;
         }
 		 
    }
-}
+}

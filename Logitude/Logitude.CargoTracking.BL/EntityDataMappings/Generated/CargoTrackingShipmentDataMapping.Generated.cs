@@ -84,6 +84,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         AssignedTruckerDate, 
 	         AssignedTruckerEstimationDate, 
 	         AssignedTruckerNotes, 
+	         AssignedCustomsAgentDone, 
+	         AssignedCustomsAgentDate, 
+	         AssignedCustomsAgentEstDate, 
+	         AssignedCustomsAgentNotes, 
+	         AssignedCustomsAgentExcReason,
 	         DeliveryDone, 
 	         DeliveryDate, 
 	         DeliveryEstimationDate, 
@@ -165,6 +170,12 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         AssignedTruckerDate, 
 	         AssignedTruckerEstimationDate, 
 	         AssignedTruckerNotes, 
+	         AssignedCustomsAgentDone, 
+	         AssignedCustomsAgentDate, 
+	         AssignedCustomsAgentEstDate, 
+	         AssignedCustomsAgentNotes, 
+	         AssignedCustomsAgentExcReason,
+	         
 	         DeliveryDone, 
 	         DeliveryDate, 
 	         DeliveryEstimationDate, 
@@ -483,6 +494,21 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 				entityPOCO.AssignedTruckerNotes = entityPM.AssignedTruckerNotes;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentDone))
+            {
+				entityPOCO.AssignedCustomsAgentDone = entityPM.AssignedCustomsAgentDone;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentDate))
+            {
+				entityPOCO.AssignedCustomsAgentDate = entityPM.AssignedCustomsAgentDate;
+			}
+
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentEstDate))
+			{
+				entityPOCO.AssignedCustomsAgentEstDate = entityPM.AssignedCustomsAgentEstDate; 
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeliveryDone))
             {
 				entityPOCO.DeliveryDone = entityPM.DeliveryDone;
@@ -496,6 +522,16 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeliveryEstimationDate))
             {
 				entityPOCO.DeliveryEstimationDate = entityPM.DeliveryEstimationDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentNotes))
+            {
+				entityPOCO.AssignedCustomsAgentNotes = entityPM.AssignedCustomsAgentNotes;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentExcReason))
+            {
+				entityPOCO.AssignedCustomsAgentExcReason = entityPM.AssignedCustomsAgentExcReason;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeliveryNotes))
@@ -822,11 +858,36 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.AssignedTruckerNotes = entityPOCO.AssignedTruckerNotes;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AssignedCustomsAgentDone))
+            {
+					entityPM.AssignedCustomsAgentDone = entityPOCO.AssignedCustomsAgentDone;
+            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeliveryDone))
             {
 					entityPM.DeliveryDone = entityPOCO.DeliveryDone;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AssignedCustomsAgentDate))
+            {
+					entityPM.AssignedCustomsAgentDate = entityPOCO.AssignedCustomsAgentDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AssignedCustomsAgentEstDate))
+            {
+					entityPM.AssignedCustomsAgentEstDate = entityPOCO.AssignedCustomsAgentEstDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AssignedCustomsAgentNotes))
+            {
+					entityPM.AssignedCustomsAgentNotes = entityPOCO.AssignedCustomsAgentNotes;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AssignedCustomsAgentExcReason))
+            {
+					entityPM.AssignedCustomsAgentExcReason = entityPOCO.AssignedCustomsAgentExcReason;
+            }
+
+		
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeliveryDate))
             {
 					entityPM.DeliveryDate = entityPOCO.DeliveryDate;
@@ -1158,6 +1219,30 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
                 oldEntityPM.AssignedTruckerNotes = entityPM.AssignedTruckerNotes;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentDone))
+            {
+                oldEntityPM.AssignedCustomsAgentDone = entityPM.AssignedCustomsAgentDone;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentDate))
+            {
+                oldEntityPM.AssignedCustomsAgentDate = entityPM.AssignedCustomsAgentDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentEstDate))
+            {
+                oldEntityPM.AssignedCustomsAgentEstDate = entityPM.AssignedCustomsAgentEstDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentNotes))
+            {
+                oldEntityPM.AssignedCustomsAgentNotes = entityPM.AssignedCustomsAgentNotes;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentExcReason))
+            {
+                oldEntityPM.AssignedCustomsAgentExcReason = entityPM.AssignedCustomsAgentExcReason;
+            }
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeliveryDone))
             {
                 oldEntityPM.DeliveryDone = entityPM.DeliveryDone;
@@ -1211,6 +1296,14 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.AssignedTruckerNotes)) //T4 find type == nText 
             {
                 entityPM.AssignedTruckerNotes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AssignedTruckerNotes));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.AssignedCustomsAgentNotes)) //T4 find type == nText 
+            {
+                entityPM.AssignedCustomsAgentNotes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AssignedCustomsAgentNotes));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.AssignedCustomsAgentExcReason)) //T4 find type == nText 
+            {
+                entityPM.AssignedCustomsAgentExcReason = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AssignedCustomsAgentExcReason));
             }
             if (!String.IsNullOrWhiteSpace(entityPM.DeliveryNotes)) //T4 find type == nText 
             {

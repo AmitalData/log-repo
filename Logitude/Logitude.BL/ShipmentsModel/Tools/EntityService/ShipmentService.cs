@@ -4666,7 +4666,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     if (parent.ChildPickUpIndex == null)
                     {
-                        parent.ChildPickUpIndex = 1;
+                        parent.ChildPickUpIndex = 2;
                     }
 
                     else
@@ -4791,17 +4791,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     ShipmentPickUpDelivery parent = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDelivery(tenant, itemPM.ParentPickUpDeliveryId);
                     if (parent != null)
                     {
-                        if (parent.ChildPickUpIndex == null)
+                        if (parent.ChildDeliveryIndex == null)
                         {
-                            parent.ChildPickUpIndex = 1;
+                            parent.ChildDeliveryIndex = 2;
                         }
 
                         else
                         {
-                            parent.ChildPickUpIndex += 1;
+                            parent.ChildDeliveryIndex += 1;
                         }
 
-                        itemPM.PickUpDeliveryNumber = parent.PickUpDeliveryNumber + "/" + parent.ChildPickUpIndex;
+                        itemPM.PickUpDeliveryNumber = parent.PickUpDeliveryNumber + "/" + parent.ChildDeliveryIndex;
                         shipmentPickUpDeliveryRepository.Update(parent);
                     }
                 }
