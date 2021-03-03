@@ -146,6 +146,7 @@ export class HomeComponent implements OnDestroy{
     public IsBluesnapAccount: boolean = false;
     public IsCountryIsrael: boolean = false;
     public IsBlusnapOneTimeActivated: boolean = false;
+    public IsDailyCurrenciesRatesVisible: boolean = false; 
     
     InitializeAppHeader() {
         this.EnvironmentUrl = Environment.GetEnvironmentUrl();
@@ -169,6 +170,10 @@ export class HomeComponent implements OnDestroy{
                 
         if (!this.IsLogBox && FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsCurrenciesRatesVisible = true;
+        }
+
+        if (!this.IsLogBox && FeatureLocator.HasFeaturePermession("General", "DailyCurrenciesRates")) {
+            this.IsDailyCurrenciesRatesVisible = true;
         }
 
         if (FeatureLocator.HasFeaturePermession("General", "SIGNATURESETTING")) {
