@@ -6,18 +6,18 @@ import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliase
 import { EventDetails } from 'cypress/models/EventDetails';
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
 import { ShipmentSelectors } from "../../selectors/Selectors";
-
+//#region variables
 let shipmentDetails: ShipmentDetails;
-let eventDetails:EventDetails
+let eventDetails: EventDetails
 let shipmentNumber: string;
-let EventType:string;
-let EventNote:string;
+let EventType: string;
+let EventNote: string;
+//#endregion
 //#region Create Direct Shipment
 Given("the user logged in and navigates to shipments workspace", () => {
     cy.Login()
     ShipmentActions.NavigatesToShipmentsWorkspace()
 });
-
 Given("a direct shipment with the following details",
     (dataTable) => {
         shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
@@ -40,37 +40,32 @@ Given("the initial has exception status is {string}",
         ShipmentActions.OpenShipment(shipmentNumber);
         ShipmentActions.CheckHasException(hasException)
     });
-    Given("exception event with the following details",
+Given("exception event with the following details",
     (dataTable) => {
         eventDetails = dataTable.hashes()[0] as EventDetails;
-        EventType=eventDetails.EventType
-        EventNote=eventDetails.EventNotes
+        EventType = eventDetails.EventType
+        EventNote = eventDetails.EventNotes
         ShipmentActions.FillEventDetails(eventDetails)
     });
 When("add exception", () => {
     ShipmentActions.AddEvent()
 });
 Then("the exception should add successfully", () => {
-    ShipmentActions.AssertAddEvent()
-});
-Then("the exception should appear in events tab", () => {
+    ShipmentActions.AssertAddEvent(EventNote)
     ShipmentActions.AssertEventAppearInEventTab(EventType)
-});
-Then("has exception status should change to {string} successfully", (hasException) => {
-    cy.get(BaseSelectors.CurvedEditArea).find(BaseSelectors.Refresh).click()
-    ShipmentActions.CheckHasException(hasException)
+    ShipmentActions.RefreshEventTab()
+    ShipmentActions.CheckHasException(BaseSelectors.ContainYes)
 });
 //#endregion
 //#region resolve the exception
 When("resolve the exception due to {string}", (ExceptionResolvedNote) => {
-    EventNote=ExceptionResolvedNote
+    EventNote = ExceptionResolvedNote
     ShipmentActions.ClickOnExceptionResolved(ExceptionResolvedNote)
 });
 Then("the exception should resolve successfully", () => {
-    BaseAssertion.AssertStatusCode( RequestAliases.ShipmentRequest,200)
-});
-Then("has exception status should back to {string} successfully", (hasException) => {
+    ShipmentActions.AssertExceptionResolved(EventNote)
     ShipmentActions.RefreshEventTab()
-    ShipmentActions.CheckHasException(hasException)
+    ShipmentActions.CheckHasException(BaseSelectors.ContainNo)
+    ShipmentActions.AssertEventAppearInEventTab(ShipmentSelectors.ExceptionResolved)
 });
 //#endregion

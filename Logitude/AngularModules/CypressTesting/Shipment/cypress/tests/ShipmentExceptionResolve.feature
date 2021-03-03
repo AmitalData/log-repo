@@ -19,10 +19,8 @@ Feature: Shipment Exception Resolve
             | Exception | Today     | 12:00     | Adding Exception |
         When add exception
         Then the exception should add successfully
-        And the exception should appear in events tab
-        And has exception status should change to "Yes" successfully
-
+        
     Scenario: resolve the exception
         When resolve the exception due to "ExceptionResolvedNote"
         Then the exception should resolve successfully
-        And has exception status should back to "No" successfully
+      

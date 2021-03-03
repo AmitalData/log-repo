@@ -259,6 +259,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly EventItemBox=".EventItemBox"
   public static readonly ContainHasException="Has Exception:"
   public static readonly EventNotes="#EventNotes"
+  public static readonly ExceptionResolved="Exception Resolved"
   
     //#endregion
 
