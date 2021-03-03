@@ -41,6 +41,20 @@
         </td>
     </tr>
 
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <div>
+                            <CheckBox [IsChecked]="IncludingVAT" (Checked)="IncludingVAT = $event" [Text]="'Including VAT'"></CheckBox>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
     <tr style="height: 5px;" *ngIf="IsCurrencyFilterVisible || IsAccrualsApprovingVisible">
         <td>
             <div></div>

@@ -411,6 +411,16 @@ export class ShipmentPayablePM {
     public set PayablesDisconnectedFromTariff(newValue: boolean) { if (this.payablesDisconnectedFromTariff != newValue) { this.payablesDisconnectedFromTariff = newValue; this.MarkAsDirty("PayablesDisconnectedFromTariff"); } }
        
 	 
+    private vatAmountLocal: number;
+    public get VatAmountLocal() { return this.vatAmountLocal; }
+    public set VatAmountLocal(newValue: number) { if (this.vatAmountLocal != newValue) { this.vatAmountLocal = newValue; this.MarkAsDirty("VatAmountLocal"); } }
+       
+	 
+    private vatAmountProfit: number;
+    public get VatAmountProfit() { return this.vatAmountProfit; }
+    public set VatAmountProfit(newValue: number) { if (this.vatAmountProfit != newValue) { this.vatAmountProfit = newValue; this.MarkAsDirty("VatAmountProfit"); } }
+       
+	 
 
     public OldEntityPM: ShipmentPayablePM;
 	    
