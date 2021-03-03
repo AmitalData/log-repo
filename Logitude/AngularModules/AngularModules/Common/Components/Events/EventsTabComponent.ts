@@ -331,13 +331,17 @@ export class EventsTabComponent implements OnDestroy {
         logWindow.Title = title;
         logWindow.Show('./Common/Components/Events/AddEditEventComponent');
         logWindow.WindowClosed.subscribe((event: any) => {
-            if (this.ObjectTableName == "Shipment" && this.CurrentSession.CurrentEditComponent && this.entityArgs && this.entityArgs.EntityPM && event != "Cancel") {
+            if (this.IsRefreshableTable() && this.CurrentSession.CurrentEditComponent && this.entityArgs && this.entityArgs.EntityPM && event != "Cancel") {
                 this.IsRefreshFollowUp = true;
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
 
-            }
+            } 
         });
 
+    }
+
+    private IsRefreshableTable() {
+        return (this.ObjectTableName == "Shipment" || this.ObjectTableName == "Quote");
     }
 }
 
