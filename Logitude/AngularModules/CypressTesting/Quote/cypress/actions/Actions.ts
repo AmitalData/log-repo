@@ -79,7 +79,8 @@ export function OpenQuote(QuoteNumber: string) {
         Parent: QuoteSelectors.QuoteSearchParent,
         ParentClass: QuoteSelectors.QuoteSearchParentClass,
         WaitURL: QuoteURLs.QuoteViews,
-        Value: QuoteNumber
+        Value: QuoteNumber,
+        RequestAliase: RequestAliases.QuickSearchDataLoaded
     } as QuickSearchDetails;
 
     cy.SelectQuickSearchFirstElement(quickSearchDetails);
