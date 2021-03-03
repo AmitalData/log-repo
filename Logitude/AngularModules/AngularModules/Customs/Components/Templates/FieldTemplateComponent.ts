@@ -647,6 +647,7 @@ export class FieldTemplateComponent {
     }
 
     ShowAddOrEditExceptionReason() {
+        this._ListComponentArgs.SuppressOnRowSelectedField = true;
         var logitudeWindow = new LogitudeWindow();
         var windowArgs: any = {};
         this._declarationReferantDataPMService.get(this.Entity.DeclarationId).subscribe((response: ServiceResponse) => {
