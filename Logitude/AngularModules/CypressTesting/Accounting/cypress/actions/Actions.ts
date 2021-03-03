@@ -205,8 +205,9 @@ export function AddTwoShipmentLinesAndEditAmount(shipmentNumbers: string[], VATT
             Selector: ShipmentSelectors.ShipmentSearchBar,
             Parent: ShipmentSelectors.ShipmentSearchParent,
             ParentClass: ShipmentSelectors.ShipmentSearchParentClass,
-            WaitURL: BaseURLs.GetQuickSearch,
-            Value: shipmentNumbers[i]
+            WaitURL: BaseURLs.GetQuickSearch(shipmentNumbers[i]),
+            Value: shipmentNumbers[i],
+            RequestAliase: RequestAliases.QuickSearchDataLoaded + shipmentNumbers[i]
         } as QuickSearchDetails;
         cy.SelectQuickSearchFirstElement(quickSearchDetails);
 

@@ -30,7 +30,8 @@ export function OpenTicket(TicketNumber: string) {
         Parent: TicketSelectors.TicketParent,
         ParentClass: TicketSelectors.TicketParentClass,
         WaitURL: URLs.TicketSearchURL,
-        Value: TicketNumber
+        Value: TicketNumber,
+        RequestAliase: RequestAliases.QuickSearchDataLoaded
     } as QuickSearchDetails;
     cy.SelectQuickSearchFirstElement(quickSearchDetails)
 }
