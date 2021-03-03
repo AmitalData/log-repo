@@ -5,12 +5,13 @@ import { BranchSettingsDetails } from "../../models/INTTRA/BranchSettingsDetails
 import { GeneralSettingsDetails } from "../../models/INTTRA/GeneralSettingsDetails";
 import { InOutSettingsDetails } from "../../models/INTTRA/InOutSettingsDetails";
 import { RegistrationSettingsDetails } from "../../models/INTTRA/RegistrationSettingsDetails";
-import { RequiredToSendBookingDetails } from "../../models/INTTRA/RequiredToSendBookingDetails";
+import { RequiredToSendBookingShippingInstructions } from "../../models/INTTRA/RequiredToSendBookingShippingInstructions";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
 import { PackagesDetails } from "../../models/PackagesDetails";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion";
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 import { ShipmentSelectors } from "../../selectors/Selectors";
+import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
 
 let ShipmentNumber: string;
 
@@ -89,14 +90,32 @@ Then("validation messages for sending e-booking should appear", () => {
     INTTRAActions.ValidateMessagesForSendingEBooking();
 });
 
+When("open INTTRA shipping instructions wizard", () => {
+    INTTRAActions.OpenSendShippingInstructionsWizard();
+});
+
+Then("validation messages for sending shipping instructions should appear", () => {
+    INTTRAActions.ValidateMessagesForSendingShippingInstructions();
+});
+
 Given("the user fill the following information to send e-booking", (dataTable) => {
-    let requiredToSendBookingDetails = dataTable.hashes()[0] as RequiredToSendBookingDetails;
+    let requiredToSendBookingDetails = dataTable.hashes()[0] as RequiredToSendBookingShippingInstructions;
     INTTRAActions.FillRequiredToSendBooking(requiredToSendBookingDetails);
 });
 
 Given("add the following package", (dataTable) => {
     let packagesDetailsList = dataTable.hashes() as PackagesDetails[];
     ShipmentActions.FillPackageTab("Ocean", packagesDetailsList, "FCL");
+});
+
+Given("the user fill the following information to send shipping instructions", (dataTable) => {
+    let requiredToSendShippingInstructions = dataTable.hashes()[0] as RequiredToSendBookingShippingInstructions;
+    INTTRAActions.FillRequiredToSendShippingInstructions(requiredToSendShippingInstructions);
+});
+
+Given("add an inside package with the following details", (dataTable) => {
+    let insidePackagesDetailsList = dataTable.hashes() as PackagesDetails[];
+    ShipmentActions.AddInsidePackage(insidePackagesDetailsList);
 });
 
 When("save the shipment", () => {
@@ -111,12 +130,24 @@ Given("the user in INTTRA e-booking wizard", () => {
     INTTRAActions.OpenSendBookingWizard();
 });
 
+Given("the user in INTTRA shipping instructions wizard", () => {
+    INTTRAActions.OpenSendShippingInstructionsWizard();
+});
+
 When("send booking request", () => {
     INTTRAActions.SendBookingRequest();
 });
 
+When("send shipping instructions request", () => {
+    INTTRAActions.SendShippingInstructionsRequest();
+});
+
 Then("the request should send successfully", () => {
     INTTRAActions.ValidateSendBookingRequest();
+});
+
+Then("the instructions should send successfully", () => {
+    INTTRAActions.ValidateSendInstructionsRequest();
 });
 
 Then("booking request status should be {string}", (status) => {

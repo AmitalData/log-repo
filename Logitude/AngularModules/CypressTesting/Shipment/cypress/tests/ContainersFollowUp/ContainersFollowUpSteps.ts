@@ -39,6 +39,9 @@ Then("the shipment should create successfully", () => {
 Given("the user add a container with the following details", (dataTable) => {
     Actions.OpenShipment(shipmentDetails.ShipmentNumber);
     packagesDetails = dataTable.hashes() as PackagesDetails[];
+    for (let i = 0; i < packagesDetails.length; i++) {
+        packagesDetails[i].ContainerNumber = packagesDetails[i].ContainerNumber == 'Random' ? Actions.GetGeneratedRandomContainerNumber() : packagesDetails[i].ContainerNumber;
+    }
     Actions.FillPackageTab(shipmentDetails.TransportMode, packagesDetails, shipmentDetails.ShipmentType);
 });
 //#endregion

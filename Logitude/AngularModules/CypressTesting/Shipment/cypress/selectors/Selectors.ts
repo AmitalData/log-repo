@@ -94,14 +94,19 @@ export class ShipmentSelectors extends RegexSelectors {
   //#endregion 
   //#region Package tab fields
   public static readonly AddPackage = '#AddPackage';
+  public static readonly AddInsidePackage = '#AddInsidePackage';
   public static readonly PackageQuantity = '#ShipmentPackage_Quantity';
+  public static readonly InsidePackageQuantity = '#InsideShipmentPackage_Quantity';
   public static readonly PackageLength = '#ShipmentPackage_Length';
   public static readonly PackageWidth = '#ShipmentPackage_Width';
   public static readonly PackageHeight = '#ShipmentPackage_Height';
   public static readonly PackageVolume = '#ShipmentPackage_Volume';
   public static readonly PackageType = '#ShipmentPackage_PackageTypeId';
+  public static readonly InsidePackageType = '#InsideShipmentPackage_PackageTypeId';
   public static readonly ContainerNumber = '#ShipmentPackage_ContainerNumber';
   public static readonly PackageWeight = '#ShipmentPackage_Weight';
+  public static readonly InsidePackageWeight = '#InsideShipmentPackage_Weight';
+  public static readonly InsidePackageDescription = '#InsideShipmentPackage_Description';
   public static readonly PackageContainerNumber = '#ShipmentPackage_ContainerNumber';
   public static readonly AirPackageOKButton = '#OkAirPackage';
   public static readonly OceanPackageOKButton = '#OkOceanPackage';
@@ -217,11 +222,13 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly FTPDetailFolder = "#FTPDetail_Folder";
   public static readonly SaveFTPDetailButton = ".RedButton:last";
   public static readonly ContainsSendEBooking = "Send e-booking";
+  public static readonly ContainsSendShippingInstructions = "Send Shipping Instructions";
   public static readonly ShipmentINTTRAContractNumber = "#Shipment_INTTRAContractNumber";
   public static readonly ShipmentMainCarriageVessel = "input[id^='Shipment_MainCarriageVesselId']:last";
   public static readonly ShipmentMainCarriageETDDate = "#date_Shipment_MainCarriageETD";
   public static readonly ShipmentMainCarriageETDTime = "#time_Shipment_MainCarriageETD";
   public static readonly ShipmentDescriptionOfGoods = "#Shipment_DescriptionOfGoods";
+  public static readonly ShipmentBookingConfirmationNumber = "#Shipment_BookingConfirmationNumber";
   public static readonly EditShipper = "#Edit-Shipper";
   public static readonly ShipmentShipperContact = "#Shipment_ShipperContactId";
   public static readonly ContactEnglishName = "#Contact_EnglishName";
@@ -232,10 +239,16 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ContainsETDOrVesselAndVoyageMustProvided = "ETD or Main-Carriage Vessel and Voyage must be provided";
   public static readonly ContainsShipmentDescriptionOfGoodsRequired = "Shipment Description of Goods is required";
   public static readonly ContainsShipmentPackagesRequired = "Shipment Order Packages or Shipment Packages are required";
+  public static readonly ContainsMoveTypeIsRequired = "Move type is required";
+  public static readonly ContainsBookingConfirmationNumberRequired = "Booking Confirmation Number is required";
+  public static readonly ContainsAllContainersShouldHaveContainerNumber = "All Containers should have Container Number";
+  public static readonly ContainsMessageHasBeenSentSuccessfully = "Message has been sent Successfully";
   public static readonly ContainsRequestBooking = "Request Booking";
   public static readonly SaveShipperContactButton = ".RedButton:last";
+  public static readonly ContainsSend = "Send";
   public static readonly INTTRABookingStatus = "[data-cy='INTTRABookingStatus']";
   public static readonly AddShipperContactButton = "[data-cy='AddContact'] button";
+  public static readonly ShippingInstructionsResultMessage = "td[data-cy='ResultMessage']";
   //#endregion
   //#region AMANAC
   public static readonly AMANACTab = '#AMANAC';

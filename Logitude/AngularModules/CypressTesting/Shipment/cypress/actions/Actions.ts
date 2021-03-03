@@ -106,8 +106,9 @@ export function OpenShipment(shipmentNumber: string) {
         Selector: ShipmentSelectors.ShipmentSearchBar,
         Parent: ShipmentSelectors.ShipmentSearchParent,
         ParentClass: ShipmentSelectors.ShipmentSearchParentClass,
-        WaitURL: BaseURLs.GetQuickSearch,
-        Value: shipmentNumber
+        WaitURL: BaseURLs.GetQuickSearch(shipmentNumber),
+        Value: shipmentNumber,
+        RequestAliase: RequestAliases.QuickSearchDataLoaded
     } as QuickSearchDetails;
 
     cy.SelectQuickSearchFirstElement(quickSearchDetails);
@@ -297,8 +298,7 @@ export function FillPackageTab(transportMode: string, packagesDetails: PackagesD
         cy.Click(ShipmentSelectors.AddPackage, null)
         if (Conditions.HasPacakageType(shipmentType)) {
             cy.FillLogLov(ShipmentSelectors.PackageType, packagesDetails[i].PackageType, true)
-            if (packagesDetails[i].ContainerNumber) {
-                packagesDetails[i].ContainerNumber = packagesDetails[i].ContainerNumber == 'Random' ? GetGeneratedRandomContainerNumber() : packagesDetails[i].ContainerNumber;
+            if(packagesDetails[i].ContainerNumber){
                 cy.FillLogTextBox(ShipmentSelectors.ContainerNumber, packagesDetails[i].ContainerNumber)
             }
         }
@@ -316,6 +316,18 @@ export function FillPackageTab(transportMode: string, packagesDetails: PackagesD
             cy.Click(ShipmentSelectors.OceanPackageOKButton, null)
         }
     }
+}
+
+export function AddInsidePackage(packagesDetails: PackagesDetails[]) {
+    cy.Click(ShipmentSelectors.PackagesTab, null)
+    for (let i = 0; i < packagesDetails.length; i++) {
+        cy.Click(ShipmentSelectors.AddInsidePackage, null)
+        cy.FillLogLov(ShipmentSelectors.InsidePackageType, packagesDetails[i].PackageType, true)
+        cy.FillLogTextBox(ShipmentSelectors.InsidePackageQuantity, packagesDetails[i].Quantity.toString())
+        cy.get(ShipmentSelectors.InsidePackageWeight).type(packagesDetails[i].GrossWeight.toString());
+        cy.get(ShipmentSelectors.InsidePackageDescription).type(packagesDetails[i].Description.toString());
+    }
+    cy.Click("#OKInsidePackage", null)
 }
 //#endregion
 //#region House Shipment Tab
@@ -582,7 +594,7 @@ export function ContainersView(containerView: string) {
     cy.get(ShipmentSelectors.ContainersView(containerView)).first().click();
 }
 
-function GetGeneratedRandomContainerNumber(): string {
+export function GetGeneratedRandomContainerNumber(): string {
     return GenerateRandoms.GetValidContainerNumber(GenerateRandoms.GenerateRandomString(4, true) + GenerateRandoms.GenerateRandomNumber(1000000, 9999999));
 }
 

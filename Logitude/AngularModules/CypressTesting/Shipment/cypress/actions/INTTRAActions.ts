@@ -3,7 +3,7 @@ import { GeneralSettingsDetails } from '../models/INTTRA/GeneralSettingsDetails'
 import { InOutSettingsDetails } from '../models/INTTRA/InOutSettingsDetails';
 import { BranchSettingsDetails } from '../models/INTTRA/BranchSettingsDetails';
 import { RegistrationSettingsDetails } from '../models/INTTRA/RegistrationSettingsDetails';
-import { RequiredToSendBookingDetails } from "../models/INTTRA/RequiredToSendBookingDetails";
+import { RequiredToSendBookingShippingInstructions } from "../models/INTTRA/RequiredToSendBookingShippingInstructions";
 import { BaseSelectors } from '../../../Base/cypress/selectors/BaseSelectors';
 import * as BaseAssertion from '../../../Base/cypress/actions/Assertion';
 import { URLs } from '../constants/URLs';
@@ -75,6 +75,19 @@ export function ValidateMessagesForSendingEBooking() {
             cy.get(BaseSelectors.li).contains(ShipmentSelectors.ContainsShipmentDescriptionOfGoodsRequired).should("exist");
             cy.get(BaseSelectors.li).contains(ShipmentSelectors.ContainsShipmentPackagesRequired).should("exist");
         });
+
+    cy.Click(BaseSelectors.Button, BaseSelectors.ContainsClose);
+}
+
+export function ValidateMessagesForSendingShippingInstructions() {
+    cy.get(BaseSelectors.ValidationSummaryBlock).eq(1).find(BaseSelectors.ul)
+        .within(() => {
+            cy.get(BaseSelectors.li).contains(ShipmentSelectors.ContainsMoveTypeIsRequired).should("exist");
+            cy.get(BaseSelectors.li).contains(ShipmentSelectors.ContainsBookingConfirmationNumberRequired).should("exist");
+            cy.get(BaseSelectors.li).contains(ShipmentSelectors.ContainsAllContainersShouldHaveContainerNumber).should("exist");
+        });
+
+    cy.Click(BaseSelectors.Button, BaseSelectors.ContainsClose);
 }
 
 export function OpenSendBookingWizard() {
@@ -83,12 +96,23 @@ export function OpenSendBookingWizard() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetBookingMessageResultValidate, 200);
 }
 
-export function FillRequiredToSendBooking(requiredToSendBookingDetails: RequiredToSendBookingDetails) {
-    cy.Click(BaseSelectors.Button, BaseSelectors.ContainsClose);
-    FillRequiredToSendBookingInGeneralTab(requiredToSendBookingDetails);
-    FillRequiredToSendBookingInOrdersTab(requiredToSendBookingDetails);
-    FillRequiredToSendBookingInPartnersTab(requiredToSendBookingDetails);
-    FillRequiredToSendBookingInRoutingsTab(requiredToSendBookingDetails);
+export function OpenSendShippingInstructionsWizard() {
+    cy.DefineRequestWait(RestAPI.GET, URLs.GetShippingInstructionMessageResultValidate, RequestAliases.GetShippingInstructionMessageResultValidate);
+    cy.Click(BaseSelectors.Button, ShipmentSelectors.ContainsSendShippingInstructions);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetShippingInstructionMessageResultValidate, 200);
+}
+
+export function FillRequiredToSendBooking(requiredToSendBookingShippingInstructions: RequiredToSendBookingShippingInstructions) {
+    FillRequiredToSendBookingInGeneralTab(requiredToSendBookingShippingInstructions);
+    FillRequiredToSendBookingInOrdersTab(requiredToSendBookingShippingInstructions);
+    FillRequiredToSendBookingInPartnersTab(requiredToSendBookingShippingInstructions);
+    FillRequiredToSendBookingInRoutingsTab(requiredToSendBookingShippingInstructions);
+}
+
+export function FillRequiredToSendShippingInstructions(requiredToSendBookingShippingInstructions: RequiredToSendBookingShippingInstructions) {
+    FillRequiredToSendBookingInGeneralTab(requiredToSendBookingShippingInstructions);
+    FillRequiredToSendBookingInOrdersTab(requiredToSendBookingShippingInstructions);
+    FillContainerNumberInPackagesTbe(requiredToSendBookingShippingInstructions);
 }
 
 export function SendBookingRequest() {
@@ -96,12 +120,24 @@ export function SendBookingRequest() {
     cy.Click(BaseSelectors.Button, ShipmentSelectors.ContainsRequestBooking);
 }
 
+export function SendShippingInstructionsRequest() {
+    cy.Click(BaseSelectors.RedButton, ShipmentSelectors.ContainsSend);
+}
+
 export function ValidateSendBookingRequest() {
     BaseAssertion.AssertStatusCode(RequestAliases.INTTRAWebServiceSendEBooking, 200);
 }
 
+export function ValidateSendInstructionsRequest() {
+    BaseAssertion.AssertElementContain(ShipmentSelectors.ShippingInstructionsResultMessage, ShipmentSelectors.ContainsMessageHasBeenSentSuccessfully);
+    cy.Click(BaseSelectors.Button, BaseSelectors.ContainClose);
+    OpenSendBookingWizard();
+}
+
 export function ValidateBookingRequestStatus(status: string) {
     cy.get(ShipmentSelectors.INTTRABookingStatus).should("have.text", status);
+    cy.Click(BaseSelectors.Button, BaseSelectors.ContainsClose)
+    cy.Click(BaseSelectors.Backbutton, null, false);
 }
 
 function FillINTTRAMode(mode: string) {
@@ -159,29 +195,44 @@ function OpenFTPDetailWizard(settingsType: string) {
         });
 }
 
-function FillRequiredToSendBookingInGeneralTab(requiredToSendBookingDetails: RequiredToSendBookingDetails) {
+function FillRequiredToSendBookingInGeneralTab(requiredToSendBookingShippingInstructions: RequiredToSendBookingShippingInstructions) {
     cy.Click(ShipmentSelectors.GeneralTab, null);
-    if (requiredToSendBookingDetails.BranchName) {
-        cy.FillLogLov(ShipmentSelectors.ShipmentBranch, requiredToSendBookingDetails.BranchName, true);
+    if (requiredToSendBookingShippingInstructions.BranchName) {
+        cy.FillLogLov(ShipmentSelectors.ShipmentBranch, requiredToSendBookingShippingInstructions.BranchName, true);
+    }
+    if (requiredToSendBookingShippingInstructions.MoveType) {
+        cy.FillLogLov(ShipmentSelectors.ShipmentMoveType, requiredToSendBookingShippingInstructions.MoveType, true)
     }
 }
 
-function FillRequiredToSendBookingInOrdersTab(requiredToSendBookingDetails: RequiredToSendBookingDetails) {
+function FillContainerNumberInPackagesTbe(requiredToSendBookingShippingInstructions: RequiredToSendBookingShippingInstructions) {
+    cy.Click(ShipmentSelectors.PackagesTab, null);
+    cy.Click(ShipmentSelectors.EditPackage, null)
+    if (requiredToSendBookingShippingInstructions.ContainerNumber) {
+        cy.FillLogTextBox(ShipmentSelectors.ContainerNumber, requiredToSendBookingShippingInstructions.ContainerNumber)
+    }
+    cy.Click(BaseSelectors.RedButton, null)
+}
+
+function FillRequiredToSendBookingInOrdersTab(requiredToSendBookingShippingInstructions: RequiredToSendBookingShippingInstructions) {
     cy.Click(ShipmentSelectors.OrdersTab, null);
-    if (requiredToSendBookingDetails.ShippingLine) {
-        cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageCarrierId, requiredToSendBookingDetails.ShippingLine, false);
+    if (requiredToSendBookingShippingInstructions.ShippingLine) {
+        cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageCarrierId, requiredToSendBookingShippingInstructions.ShippingLine, false);
     }
-    if (requiredToSendBookingDetails.ContractNumber) {
-        cy.FillLogTextBox(ShipmentSelectors.ShipmentINTTRAContractNumber, requiredToSendBookingDetails.ContractNumber);
+    if (requiredToSendBookingShippingInstructions.ContractNumber) {
+        cy.FillLogTextBox(ShipmentSelectors.ShipmentINTTRAContractNumber, requiredToSendBookingShippingInstructions.ContractNumber);
     }
-    if (requiredToSendBookingDetails.DescriptionOfGoods) {
-        cy.FillLogTextBox(ShipmentSelectors.ShipmentDescriptionOfGoods, requiredToSendBookingDetails.DescriptionOfGoods);
+    if (requiredToSendBookingShippingInstructions.DescriptionOfGoods) {
+        cy.FillLogTextBox(ShipmentSelectors.ShipmentDescriptionOfGoods, requiredToSendBookingShippingInstructions.DescriptionOfGoods);
+    }
+    if (requiredToSendBookingShippingInstructions.BookingConfirmationNumber) {
+        cy.FillLogTextBox(ShipmentSelectors.ShipmentBookingConfirmationNumber, requiredToSendBookingShippingInstructions.BookingConfirmationNumber);
     }
 }
 
-function FillRequiredToSendBookingInPartnersTab(requiredToSendBookingDetails: RequiredToSendBookingDetails) {
-    let shipperContact = requiredToSendBookingDetails.ShipperContact;
-    if(shipperContact){
+function FillRequiredToSendBookingInPartnersTab(requiredToSendBookingShippingInstructions: RequiredToSendBookingShippingInstructions) {
+    let shipperContact = requiredToSendBookingShippingInstructions.ShipperContact;
+    if (shipperContact) {
         cy.Click(ShipmentSelectors.PartnersTab, null);
         cy.Click(ShipmentSelectors.EditShipper, null);
         cy.DefineRequestWait(RestAPI.GET, URLs.ContactViewsGetByFilters + shipperContact + "**", RequestAliases.ContactLogLovLoad);
@@ -198,7 +249,7 @@ function FillRequiredToSendBookingInPartnersTab(requiredToSendBookingDetails: Re
 }
 
 function AddNewShipperContact(shipperContact: string) {
-    if(shipperContact){
+    if (shipperContact) {
         cy.Click(ShipmentSelectors.AddShipperContactButton, null);
         cy.FillLogTextBox(ShipmentSelectors.ContactEmail, shipperContact + "@test.com")
         cy.FillLogTextBox(ShipmentSelectors.ContactEnglishName, shipperContact);
@@ -208,20 +259,20 @@ function AddNewShipperContact(shipperContact: string) {
     }
 }
 
-function FillRequiredToSendBookingInRoutingsTab(requiredToSendBookingDetails: RequiredToSendBookingDetails) {
+function FillRequiredToSendBookingInRoutingsTab(requiredToSendBookingShippingInstructions: RequiredToSendBookingShippingInstructions) {
     cy.Click(ShipmentSelectors.RoutingsTab, null);
     cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null);
-    let ETDDate = requiredToSendBookingDetails.ETDDate;
-    let ETDTime = requiredToSendBookingDetails.ETDTime;
-    let vessel = requiredToSendBookingDetails.Vessel;
+    let ETDDate = requiredToSendBookingShippingInstructions.ETDDate;
+    let ETDTime = requiredToSendBookingShippingInstructions.ETDTime;
+    let vessel = requiredToSendBookingShippingInstructions.Vessel;
     if (ETDDate) {
         cy.FillDate(ShipmentSelectors.ShipmentMainCarriageETDDate, ETDDate);
     }
-    if(ETDTime){
+    if (ETDTime) {
         cy.FillLogTextBox(ShipmentSelectors.ShipmentMainCarriageETDTime, ETDTime);
     }
     if (vessel) {
-        cy.FillLogTextBox(ShipmentSelectors.ShipmentMainCarriageVessel, vessel);
+        cy.FillLogLov(ShipmentSelectors.ShipmentMainCarriageVessel, vessel, true);
     }
     cy.Click(ShipmentSelectors.MainCarriageOKBtn, null);
 }
