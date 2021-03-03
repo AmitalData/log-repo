@@ -455,6 +455,7 @@
     <Compile Include="InfrastructureModel\Tools\DataMapping\WorkerRoleNameMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\RuleUpdateHistoryMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\SchedulerProcedureMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\QuoteFollowUpUpdateService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\WorkerRoleNameService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\RuleUpdateHistoryService.cs" />
     <Compile Include="InfrastructureModel\Tools\Validating\TasksSchedulerValidator.cs" />

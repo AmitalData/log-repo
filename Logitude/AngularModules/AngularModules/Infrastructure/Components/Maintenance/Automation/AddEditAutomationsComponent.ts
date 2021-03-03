@@ -1491,6 +1491,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
     }
 
+    
+
     ResultCodeListValueChanged(value) {
 
         this.ClearAutomationResult(this.ResultCodeSelected.Code);
@@ -1506,7 +1508,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
 
 
-        if (value.Code == "FIELDSET" && (this.ObjectTableName == "Shipment" || this.ObjectTableName == "Quote")) {
+        if (value.Code == "FIELDSET" && this.isResultCodeTable()) {
             this.AutomatedBackupClass.Type = "Immeduiatly";
             this.IsSelectedImmediatly = true;
             this.IsSelectedDelayed = false;
@@ -1519,8 +1521,11 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         this.LoadAuomationResultComponent(value.Code);
 
     }
+     
+    private isResultCodeTable() {
+        return (this.ObjectTableName == "Shipment" || this.ObjectTableName == "Quote");
+    }
 
-    
     ClearAutomationResult(resultCode: string) {
         let myGeneratedComponentLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == resultCode)[0];
         if (myGeneratedComponentLocation != null) {
