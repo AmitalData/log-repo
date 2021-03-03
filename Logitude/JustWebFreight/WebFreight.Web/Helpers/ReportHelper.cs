@@ -19,12 +19,14 @@ using Stimulsoft.Report;
 using Stimulsoft.Report.Dictionary;
 using Stimulsoft.Report.Export;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Web;
 using System.Xml;
@@ -783,6 +785,7 @@ namespace WebFreight.Web.Helpers
             {
                 byte[] filters = GetReportFilters(reportFliter.QueryFilterItemLists);
                 byte[] reportDataProvider = BuildReportDataProvider(reportFliter, filters);
+                if (reportDataProvider == null && reportFliter.IsSchedulerReport) return report;
                 ReportsTemplatesWebService reportsTemplatesWebService = new ReportsTemplatesWebService();
                 ReportsTemplatesVersionRepository reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(reportFliter.tenant);
                 string reportDocumentId = reportsTemplatesVersionRepository.GetReportDocumentIdByReportTemplateId(reportFliter.DefaultTemplateId, reportFliter.tenant);
@@ -1175,6 +1178,7 @@ namespace WebFreight.Web.Helpers
                 case "SHID":
                     {
                         dataProvider = logitudeReportsWebService.LoadShipmentDetailsDataProvider(filters, reportFliter.tenant);
+                        dataProvider = IsDataProviderHaveListWithValues(dataProvider, reportFliter.IsSchedulerReport) ? dataProvider : null;
                         break;
                     }
 
@@ -1200,6 +1204,7 @@ namespace WebFreight.Web.Helpers
                 case "LTRP":
                     {
                         dataProvider = logitudeReportsWebService.LoadLedgerTransactionDataProvider(filters, reportFliter.tenant);
+                        dataProvider = IsDataProviderHaveListWithValues(dataProvider, reportFliter.IsSchedulerReport) ? dataProvider : null;
                         break;
                     }
 
@@ -1238,6 +1243,23 @@ namespace WebFreight.Web.Helpers
                     #endregion
             }
             return dataProvider;
+        }
+
+        private bool IsDataProviderHaveListWithValues(byte[] dataProvider, bool isScheduler)
+        {
+            if (isScheduler)
+            {
+                List<PropertyInfo> properties = dataProvider?.GetType()?.GetProperties()?
+                .Where(d => d.GetValue(dataProvider) is IList).ToList();
+                foreach (PropertyInfo propInfo in properties)
+                {
+                    object value = propInfo.GetValue(dataProvider, null);
+                    List<object> genericList = (value as IEnumerable<object>)?.Cast<object>()?.ToList();
+                    if (genericList != null && genericList.Count() > 0) return true;
+                }
+                return false;
+            }
+            return true;
         }
 
         public ReportStimulDataProviderDetails GetReportStimulDataProviderDetails(byte[] dataProvider , ReportFliter reportFliter)

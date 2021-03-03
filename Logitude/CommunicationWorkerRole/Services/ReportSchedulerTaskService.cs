@@ -375,7 +375,8 @@ namespace CommunicationWorkerRole.Services
                 QueryFilterItemLists = schedulerDetails.ReportDetails.ReportFilterItems,
                 DefaultTemplateId = schedulerDetails.ReportDetails.ReportTemplateId,
                 tenant = schedulerDetails.Tenant,
-                ReportCode = reportCode
+                ReportCode = reportCode,
+                IsSchedulerReport = true,
             };
 
             this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
