@@ -1,4 +1,4 @@
-@release @all
+@release @all @open
 
 Feature: Shipment Exception Resolve
     The user creates a shipment, adds an exception in the Events tab,
