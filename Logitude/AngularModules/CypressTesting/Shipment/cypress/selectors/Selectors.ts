@@ -38,7 +38,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PayablesTab = '#ShipmentTHPayables';
   public static readonly DocsOutTab = '#ShipmentTHDocsOut';
   public static readonly DocsInTabb = '#ShipmentTHDocsIn';
-  public static readonly Events = '#ShipmentTHEvents';
+  public static readonly EventsTab = '#ShipmentTHEvents';
   public static readonly CustomsTab = '#ShipmentTHCustoms';
   //#endregion
   //#region General tab
@@ -122,6 +122,8 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly EmptyContainerReturnATDDate = '#date_ShipmentPackage_EmptyContainerReturnATD';
   public static readonly EmptyContainerReturnATATime = '#time_ShipmentPackage_EmptyContainerReturnATA';
   public static readonly EmptyContainerReturnATADate = '#date_ShipmentPackage_EmptyContainerReturnATA';
+  public static readonly PickUpDeliveryATDTime = '#time_ShipmentPickUpDelivery_ATD';
+  public static readonly PickUpDeliveryATDDate = '#date_ShipmentPickUpDelivery_ATD';
   //#endregion
   //#region Routing tab fields
   public static readonly RoutingToggle = '#RoutingToggle';
@@ -189,6 +191,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly OperationalReopenButton = '#ShipmentBOperationalReopen';
   public static readonly AccountllyReopenButton = '#ShipmentBAccountedReopen';
   public static readonly ConfirmActionButton = '#ConfirmAction';
+  public static readonly ShipmentExceptionResolved="#ShipmentBExceptionResolved"
   //#endregion
   //#region Send docs tab
   public static readonly SendMessageButton = '#SendMessagebtn';
@@ -262,4 +265,17 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly CustomsTransmissionsRetransfer = 'button[data-cy^=CustomsTransmissionsRetransfer]';
   public static readonly CheckAll = "CheckBox[data-cy^=CheckAll]";
   //#endregion
+  //#region Event
+  public static readonly ContainAddEvent= "Add Event"
+  public static readonly EventType="#TraceEvent_EventTypeId"
+  public static readonly EventDate="#date_TraceEvent_EventDateTime"
+  public static readonly EventTime="#time_TraceEvent_EventDateTime"
+  public static readonly TraceEventNotes= "#TraceEvent_Notes"
+  public static readonly EventItemBox=".EventItemBox"
+  public static readonly ContainHasException="Has Exception:"
+  public static readonly EventNotes="#EventNotes"
+  public static readonly ExceptionResolved="Exception Resolved"
+  
+    //#endregion
+
 }

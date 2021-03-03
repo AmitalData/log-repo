@@ -41,6 +41,9 @@ using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.BL.QuoteModel.Tools.Initializers;
 using Logitude.BL.ExternalService;
 using Logitude.BL.QuoteModel.Tools.Behaviours;
+using Simplog.Data.InfrastructureModel;
+using System.Reflection;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
 
 namespace Logitude.BL.QuoteModel.Tools.EntityService
 {
@@ -68,6 +71,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         private bool isFCLQuote;
         private bool isInlandDomestic;
         private QuoteServiceInitializer initializer;
+        private QuoteFollowUpUpdateService quoteFollowUpUpdateService; 
         public QuoteService(IQuotesContext objectContext, int tenant)
         {
             this.initializer = new QuoteServiceInitializer(objectContext, tenant, HttpContext.Current.User.Identity.Name);
@@ -299,10 +303,10 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                 entityPM.FollowUps = new List<QuoteFollowUpPM>();
             }
-            
+
+            quoteFollowUpUpdateService.RefreshFollowUps(); 
         }
-
-
+         
         private void GetQuoteSettings()
         {
             QuoteSettingRepository iQuoteSettingRepository = new QuoteSettingRepository(initializer.Context);
@@ -526,6 +530,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
 
             this.entityPM.MarkFollowUpsAsDone = false;
+            this.quoteFollowUpUpdateService = new QuoteFollowUpUpdateService(this.entityPM, this.tenant);
 
             this.isAdhoc = entityPM.QuoteTypeCode == "A" ? true : false;
             this.isInlandDomestic = (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I");

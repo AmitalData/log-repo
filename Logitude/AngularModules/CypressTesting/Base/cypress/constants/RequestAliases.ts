@@ -1,4 +1,5 @@
 export class RequestAliases {
+    public static readonly ShipmentGetSingle="ShipmentGetSingle"
     public static readonly performancelogs="performancelogs"
     public static readonly PartnersDomainRequest = 'PartnersDomainRequest';
     public static readonly ShipmentRequest = 'ShipmentRequest';

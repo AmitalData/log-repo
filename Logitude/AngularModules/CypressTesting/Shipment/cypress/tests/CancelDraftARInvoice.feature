@@ -1,4 +1,4 @@
-@release  @all@tests
+@release  @all 
 Feature: ARInvoice operations and actions
     After the user logging in the system and Update Accounting System to be None,navigates to shipments workspace
     will create a direct shipment, after that create an ARInvoice and cancel draft.

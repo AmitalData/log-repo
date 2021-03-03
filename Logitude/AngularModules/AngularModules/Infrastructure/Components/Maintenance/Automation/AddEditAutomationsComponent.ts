@@ -1491,6 +1491,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
     }
 
+    
+
     ResultCodeListValueChanged(value) {
 
         this.ClearAutomationResult(this.ResultCodeSelected.Code);
@@ -1505,8 +1507,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.FollowUpNote = "";
         }
 
-
-        if (value.Code == "FIELDSET" && this.ObjectTableName == "Shipment") {
+         
+        if (this.HasFieldSetResult(value.Code)) {
             this.AutomatedBackupClass.Type = "Immeduiatly";
             this.IsSelectedImmediatly = true;
             this.IsSelectedDelayed = false;
@@ -1519,8 +1521,11 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         this.LoadAuomationResultComponent(value.Code);
 
     }
+     
+    private HasFieldSetResult(resultCode: string) {
+        return (resultCode == "FIELDSET" && (this.ObjectTableName == "Shipment" || this.ObjectTableName == "Quote"));
+    }
 
-    
     ClearAutomationResult(resultCode: string) {
         let myGeneratedComponentLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == resultCode)[0];
         if (myGeneratedComponentLocation != null) {
@@ -2305,7 +2310,18 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 this.DueDateFieldList.push(dateItem);
             }            
         });
-        
+
+        var quoteObjecttableId: string = window.ObjectTables.filter(f => f.Id == this.ObjectTableId)[0].Id;
+        var taskObjectFields: ObjectFieldPM[] = window.ObjectFields.filter(f => f.ObjectTableId == quoteObjecttableId && f.DataTypeCode == "DateTime");
+
+        taskObjectFields.forEach((item) => {
+            if (item.FieldName == "ETA" || item.FieldName == "ETD" || item.FieldName == "StartDate" || item.FieldName == "AutomaticallyCloseDate"
+                || item.FieldName == "ExpirationDate") {
+                var dateItem: CodeNameClass = new CodeNameClass(item.FieldName, item.FullNameTextCodeDefaultText);
+                this.DueDateFieldList.push(dateItem);
+            }
+        });
+
         this.TaskOffsetTypeList.push(new CodeNameClass("B", "Before"));
         this.TaskOffsetTypeList.push(new CodeNameClass("A", "After"));
 

@@ -38,6 +38,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly OKBtn = "#OKBtn";
     public static readonly SaveWizard = "#SaveWizard";
     public static readonly Backbutton = '#EditBackbutton';
+    public static readonly SaveButton = '#SaveBtn';
     //#endregion
     //#region Contains
     public static readonly ContainsApplytoall = 'Apply to all';
@@ -61,6 +62,13 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly  ContainSave="Save"
 
     public static readonly ContainsAddFollowup = "Add Follow up"
+
+    public static readonly ContainsAddContainerDelivery = "Add Container Delivery"
+    public static readonly ContainsAddEmptyContainerReturn = "Add Empty Container Return"
+
+    public static readonly ContainYes="Yes"
+    public static readonly ContainNo="No"
+
     //#endregion
     //#region general
     public static readonly ToggleButtonClass = '.ToggleButton';
@@ -141,5 +149,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly buttonspan= "button span"
     public static readonly FillParentClass=".FillParent"
     public static readonly ConfirmWindow="[class=ConfirmWindow]"
+    public static readonly CurvedEditArea=".CurvedEditArea"
+    
    
 }

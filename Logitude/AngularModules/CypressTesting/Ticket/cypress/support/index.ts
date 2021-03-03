@@ -20,7 +20,7 @@ import '../../../Base/cypress/commands/Authentication'
 import '../../../Base/cypress/commands/Elements'
 import '../../../Base/cypress/commands/Api'
 
-import addContext from 'mochawesome/addContext';
+import addContext from 'mochawesome/addContext'; 
 Cypress.on('test:after:run', (test, runnable) => {
     if (test.state === 'failed') {
       let item = runnable
@@ -38,7 +38,7 @@ Cypress.on('test:after:run', (test, runnable) => {
   
       const imageUrl = `screenshots/${
         Cypress.spec.name
-      }/${fullTestName} (failed).png`
+      }/${fullTestName} (failed) (attempt 3).png`
   
       addContext({ test }, imageUrl)
     }

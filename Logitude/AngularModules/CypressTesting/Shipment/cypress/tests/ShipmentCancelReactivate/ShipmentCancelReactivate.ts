@@ -45,7 +45,7 @@ When("cancel the shipment with {string} Note", (note) => {
 Then("the shipment should cancel successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
   Actions.ValidateCancelIconExist(true);
-  Actions.ValidateShipmentEventActions(ShipmentSelectors.Events,EventNote);
+  Actions.ValidateShipmentEventActions(ShipmentSelectors.EventsTab,EventNote);
   Actions.ValidateShipmentFields(true);
 }); 
 
@@ -57,7 +57,7 @@ When("reactive the shipment with {string} Note",(note)=>{
 Then("the shipment should reactive successfully",()=>{
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
   Actions.ValidateCancelIconExist(false);
-  Actions.ValidateShipmentEventActions(ShipmentSelectors.Events,EventNote);
+  Actions.ValidateShipmentEventActions(ShipmentSelectors.EventsTab,EventNote);
   Actions.ValidateShipmentFields(false);
 
 })

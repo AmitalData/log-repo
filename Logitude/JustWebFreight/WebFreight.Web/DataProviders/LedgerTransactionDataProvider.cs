@@ -36,6 +36,9 @@ namespace WebFreight.Web.DataProviders
         // Balance
         public List<GLAccountBalanceList> LocalOpenBalanceList { get; set; }
         public List<GLAccountBalanceList> LocalClosedBalanceList { get; set; }
+        public decimal StartTotalOpenAmount { get; set; }
+
+
     }
 
     public class ReportLedgerTransaction
@@ -88,6 +91,8 @@ namespace WebFreight.Web.DataProviders
         public string TenantCurrencySign { get; set; }
         public string Source { get; set; }
         public string JournalNumber { get; set; }
+        public decimal CumulativeOpenAmount { get; set; }
+        public decimal CalculatedForeignAmount { get; set; }
 
 
 
