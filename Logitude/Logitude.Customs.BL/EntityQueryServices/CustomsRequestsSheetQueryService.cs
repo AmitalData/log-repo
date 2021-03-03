@@ -129,7 +129,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public List<CustomsRequestsSheetPM> GetRequestInProgressByIds(
             int Tenant,
             string InterfaceTypeCode,
-            string ObjectTableId1, List<string> EntityId1,bool displayOnlyMode
+            string ObjectTableId1, List<string> EntityId1, bool displayOnlyMode
           )
         {
             if (!displayOnlyMode && string.IsNullOrWhiteSpace(InterfaceTypeCode))
@@ -187,6 +187,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 this.repository.GetAll(Tenant)
                 .Where(rec => rec.Tenant == Tenant)
                 .Where(rec => listSheetStatusInProcess.Contains(rec.RequestStatusCode)
+
                     //rec.RequestStatusCode == "1" /*EnglishName	LocalName Created	בקשה נרשמה */
                     //||
                     //rec.RequestStatusCode == "2" /*EnglishName	LocalName In Process	באמצע טיפול*/
@@ -214,10 +215,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
             //    q = q.Where(rec => rec.CustomFileNo == CustomFileNo);
             //}
 
-            if ( EntityId1!= null && !string.IsNullOrWhiteSpace(ObjectTableId1))
+            if (EntityId1 != null && !string.IsNullOrWhiteSpace(ObjectTableId1))
             {
                 haveFilter = true;
-                q = q.Where(rec => EntityId1.Contains( rec.EntityId1)  && rec.ObjectTableId1 == ObjectTableId1);
+                q = q.Where(rec => EntityId1.Contains(rec.EntityId1) && rec.ObjectTableId1 == ObjectTableId1);
                 //if (!string.IsNullOrWhiteSpace(EntityId2) && !string.IsNullOrWhiteSpace(ObjectTableId2))
                 //{
                 //    q = q.Where(rec => rec.EntityId2 == EntityId2 && rec.ObjectTableId2 == ObjectTableId2);
@@ -239,11 +240,33 @@ namespace Logitude.Customs.BL.EntityQueryServices
             string CustomFileNo,
             bool displayOnlyMode = false)
         {
-            if (!displayOnlyMode && string.IsNullOrWhiteSpace(InterfaceTypeCode))
+            return GetRequestInProgress(new RequestInProgressParams()
+            {
+                Tenant = Tenant,
+                InterfaceTypeCode = InterfaceTypeCode,
+                ObjectTableId1 = ObjectTableId1,
+                EntityId1 = EntityId1,
+                ObjectTableId2 = ObjectTableId2,
+                EntityId2 = EntityId2,
+                CustomFileNo = CustomFileNo,
+                DisplayOnlyMode = displayOnlyMode
+            });
+        }
+        public List<CustomsRequestsSheetPM> GetRequestInProgress(
+            //int tenant,
+            //string InterfaceTypeCode,
+            //string ObjectTableId1, string EntityId1,
+            //string ObjectTableId2, string EntityId2,
+            //string CustomFileNo,
+            //bool displayOnlyMode = false
+            RequestInProgressParams requestInProgressParams
+            )
+        {
+            if (!requestInProgressParams.DisplayOnlyMode && string.IsNullOrWhiteSpace(requestInProgressParams.InterfaceTypeCode))
             {
                 throw new Exception("GetRequestInProgress !displayOnlyMode && string.IsNullOrWhiteSpace(InterfaceTypeCode) ");
             }
-
+            requestInProgressParams.InterfaceTypeCode = requestInProgressParams.InterfaceTypeCode.Trim();// angular send " 2750" why  ??
             var intrefaceTypeList =
                 new string[]
                 {
@@ -279,7 +302,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             };
 
             string[] intrefaceTypeListDisplayOnly = GetintrefaceTypeListDisplayOnly();
-            if (!displayOnlyMode && !intrefaceTypeList.Contains(InterfaceTypeCode))
+            if (!requestInProgressParams.DisplayOnlyMode && !intrefaceTypeList.Contains(requestInProgressParams.InterfaceTypeCode))
             {
                 return new List<CustomsRequestsSheetPM>();
             }
@@ -291,8 +314,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             //List<CustomsRequestsSheet> requests = repository.GetCustomsRequestsSheetByCustomFileNumber(customFileNumber, tenant);
             var q = //context.CustomsRequestsSheets
-                this.repository.GetAll(Tenant)
-                .Where(rec => rec.Tenant == Tenant)
+                this.repository.GetAll(requestInProgressParams.Tenant)
+                .Where(rec => rec.Tenant == requestInProgressParams.Tenant)
                 .Where(rec => listSheetStatusInProcess.Contains(rec.RequestStatusCode)
                     //rec.RequestStatusCode == "1" /*EnglishName	LocalName Created	בקשה נרשמה */
                     //||
@@ -304,30 +327,36 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     //||
                     //rec.RequestStatusCode == "21" /* Received	התקבלה תשובה */ //Yuval Chalup 06.08.2015 TASK-15156
                     );
-            if (displayOnlyMode)
+            if (requestInProgressParams.Include8250IsShaam)
+            {
+                var my = intrefaceTypeListDisplayOnly.ToList();
+                my.Add("8250");
+                intrefaceTypeListDisplayOnly = my.ToArray();
+            }
+            if (requestInProgressParams.DisplayOnlyMode)
             {
                 q = q.Where(rec => intrefaceTypeListDisplayOnly.Contains(rec.InterfaceTypeCode));
             }
             else
             {
-                q = q.Where(rec => rec.InterfaceTypeCode == InterfaceTypeCode);
+                q = q.Where(rec => rec.InterfaceTypeCode == requestInProgressParams.InterfaceTypeCode);
             }
 
 
             var haveFilter = false;
-            if (!string.IsNullOrWhiteSpace(CustomFileNo))
+            if (!string.IsNullOrWhiteSpace(requestInProgressParams.CustomFileNo))
             {
                 haveFilter = true;
-                q = q.Where(rec => rec.CustomFileNo == CustomFileNo);
+                q = q.Where(rec => rec.CustomFileNo == requestInProgressParams.CustomFileNo);
             }
 
-            if (!string.IsNullOrWhiteSpace(EntityId1) && !string.IsNullOrWhiteSpace(ObjectTableId1))
+            if (!string.IsNullOrWhiteSpace(requestInProgressParams.EntityId1) && !string.IsNullOrWhiteSpace(requestInProgressParams.ObjectTableId1))
             {
                 haveFilter = true;
-                q = q.Where(rec => rec.EntityId1 == EntityId1 && rec.ObjectTableId1 == ObjectTableId1);
-                if (!string.IsNullOrWhiteSpace(EntityId2) && !string.IsNullOrWhiteSpace(ObjectTableId2))
+                q = q.Where(rec => rec.EntityId1 == requestInProgressParams.EntityId1 && rec.ObjectTableId1 == requestInProgressParams.ObjectTableId1);
+                if (!string.IsNullOrWhiteSpace(requestInProgressParams.EntityId2) && !string.IsNullOrWhiteSpace(requestInProgressParams.ObjectTableId2))
                 {
-                    q = q.Where(rec => rec.EntityId2 == EntityId2 && rec.ObjectTableId2 == ObjectTableId2);
+                    q = q.Where(rec => rec.EntityId2 == requestInProgressParams.EntityId2 && rec.ObjectTableId2 == requestInProgressParams.ObjectTableId2);
                 }
             }
             if (!haveFilter)
@@ -425,21 +454,21 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return pmList;
         }
 
-        public List<CustomsRequestsSheetPM> SameInterfaceCodePerEntity_InProgress(int tenant, string InterfaceTypeCode, 
-            string ObjectTableId1, string EntityId1, 
+        public List<CustomsRequestsSheetPM> SameInterfaceCodePerEntity_InProgress(int tenant, string InterfaceTypeCode,
+            string ObjectTableId1, string EntityId1,
             string CustomFileNo)
         {
- 
- 
+
+
             if (string.IsNullOrWhiteSpace(InterfaceTypeCode))
             {
                 throw new Exception("GetRequestInProgress !displayOnlyMode && string.IsNullOrWhiteSpace(InterfaceTypeCode) ");
             }
 
-         
 
-           
-           
+
+
+
             var listSheetStatusInProcess = new List<string>();
             foreach (var item in Enum.GetValues(typeof(SheetStatusInProcessEnum)))
             {
@@ -467,7 +496,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 haveFilter = true;
                 q = q.Where(rec => rec.EntityId1 == EntityId1 && rec.ObjectTableId1 == ObjectTableId1);
-                
+
             }
             if (!haveFilter)
             {
@@ -663,5 +692,22 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var pmList = q.ToList().Select(rec => this.GetEntityPM(rec)).ToList();
             return pmList;
         }
+    }
+
+    public class RequestInProgressParams
+    {
+
+
+
+
+        public int Tenant { get; set; }
+        public string InterfaceTypeCode { get; set; }
+        public string ObjectTableId1 { get; set; }
+        public string EntityId1 { get; set; }
+        public string ObjectTableId2 { get; set; }
+        public string EntityId2 { get; set; }
+        public bool DisplayOnlyMode { get; set; }
+        public string CustomFileNo { get;  set; }
+        public bool Include8250IsShaam { get; set; }
     }
 }

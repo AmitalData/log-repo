@@ -408,12 +408,26 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     ///> Logitude.Customs.BL.dll!Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.AfterUpdating(Logitude.Customs.Def.EntityPMs.DeclarationPM entityPM, Logitude.Server.Tools.EntityPM entityParentPM) Line 859  C#
 
                     var calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(this._MyDeclarationPM);
-                    calculateDeclarationCourierStatus.Update(
-                        (currentDeclarationCourierStatusPM) =>
-                        {
-                            
-                            currentDeclarationCourierStatusPM.CourierDeclarationStatusCode = "X";
-                        });
+                    if (_IsSubmitDeclarationResponse != true)
+                    {
+                        calculateDeclarationCourierStatus.Update(
+                 (currentDeclarationCourierStatusPM) =>
+                 {
+
+                     currentDeclarationCourierStatusPM.CourierDeclarationStatusCode = "X";
+                 });
+                    }
+
+                    else if(_IsSubmitDeclarationResponse==true)
+                    {
+                        calculateDeclarationCourierStatus.Update(
+                 (currentDeclarationCourierStatusPM) =>
+                 {
+
+                     currentDeclarationCourierStatusPM.CourierPaymentStatusCode = "R";
+                 });
+                    }
+                 
                 }
 
 

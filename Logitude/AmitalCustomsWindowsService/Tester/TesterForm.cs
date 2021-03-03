@@ -24,6 +24,9 @@ using System.Threading;
 using Logitude.Customs.BL.Messaging;
 using System.Net;
 using CommunicationWorkerRole;
+using Logitude.Customs.BL.Messaging.U2L.CommDec;
+using Logitude.Server.Tools.Helpers;
+using WebFreight.Web.CustomWebServices;
 //using System.Windows.Interactivity;
 
 namespace AmitalCustomsWindowsService.Tester
@@ -52,7 +55,7 @@ namespace AmitalCustomsWindowsService.Tester
 
             var t = new Thread(GetENV);
             t.Start();
-            //GetENV();
+            //GetENV();an
             ///customsMessagingSheetWRToolStripMenuItem_Click(this, null);
         }
 
@@ -918,6 +921,55 @@ namespace AmitalCustomsWindowsService.Tester
 
             
             
+        }
+
+        private void commDecServiceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            for (int i = 0; i < 9; i++)
+            {
+                try
+                {
+                    string MoreParams = "";
+                    string MessageOut = "";
+                    var ListEntry = new Dictionary<string, string>();
+                    ListEntry.Add("tenant", "1");
+                    ListEntry.Add("UNIFREIGHT_USER_ID", "ITZIK");
+
+
+
+
+                    var s = new CommDecService();
+
+                    string AssemblyQualifiedName = "Logitude.Customs.BL.Messaging.U2L.CommDec.CommDecService";
+                    string DataIn1 = s.GetExampleDataIn1();
+                    var rep="0987800" + i.ToString();
+                    DataIn1 = DataIn1.Replace("09878498", rep);
+                    string DataIn2 = "";
+                    MoreParams = UnifreightListsUtil.Serialize(ListEntry);
+                    string DataOut1 = "";
+                    string DataOut2 = "";
+                    string SUCCESS = "";
+
+                    var gw = new UnifreightGatewayService();
+                    gw.ProccessRequest(
+                        AssemblyQualifiedName,
+                DataIn1,
+                DataIn2,
+                out DataOut1,
+                out DataOut2,
+                out SUCCESS,
+                ref MoreParams,
+                out MessageOut);
+
+
+
+                }
+                catch (Exception E)
+                {
+                    //throw;
+                }
+            }
         }
     }
 }

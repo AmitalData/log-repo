@@ -1215,7 +1215,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             _CCUFILEMPM.CUSTOMERID = null;
             if (!String.IsNullOrWhiteSpace(_DirtyDeclarationPM.CustomerId))
             {
-                Card myCard = cardRepository.GetSingleCard(_DirtyDeclarationPM.CustomerId, _DirtyDeclarationPM.Tenant);
+                Card myCard = cardRepository.GetSingleCardCache(_DirtyDeclarationPM.CustomerId, _DirtyDeclarationPM.Tenant);
                 if (myCard != null)
                 {
                     _CCUFILEMPM.CUSTOMERID = myCard.Code;
@@ -2566,6 +2566,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             Decimal? ExchangeRateTo = 1;
             Decimal? amountTo = 1;
             CustomsExchangeRatePM rate = new CustomsExchangeRatePM();
+
+            if (currenceyFrom == currenceyTo) return (amountFrom.ToNullableDouble("amountFrom")); ;
+
             // moran 17.3.16 -->
             if (_CustomsExchangeRates == null || _CustomsExchangeRates.FirstOrDefault(obj => obj.CurrencyTypeCode == currenceyFrom) == null || _CustomsExchangeRates.FirstOrDefault(obj => obj.CurrencyTypeCode == currenceyTo) == null)
             {
