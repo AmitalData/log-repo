@@ -59,7 +59,7 @@
                 <div class="MediaFill">
                     <ScrollViewer>
                         <ul>
-                            <li class="BoxItem" *ngFor="let item of ItemsSource">
+                            <li class="BoxItem" *ngFor="let item of ItemsSource"  attr.data-cy="{{'Routing_' + item.LegName | IdGeneratorPipe}}">
                                 <table [style.height.px]="item.LegHeight">
                                     <tr style="height: 5px;">
                                         <td colspan="3">

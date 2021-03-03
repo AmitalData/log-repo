@@ -80,7 +80,7 @@ export class RegexSelectors {
     }
 
     public static ContainersView(containerView: string): string{
-        return "p[data-cy^=Containers" + containerView + "View]";
+        return "[data-cy^=Containers" + containerView + "View]";
     }
 
     public static AddContainerDelivery(ContainerNumber: string): string{
@@ -101,5 +101,9 @@ export class RegexSelectors {
 
     public static GridFitstRow(): string{
         return "div[id^='LogGrid_'][id$='row0']";
+    }
+
+    public static legBoxItem(legName: string): string{
+        return "[data-cy^=Routing_" + legName + "]";
     }
 }

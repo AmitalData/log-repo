@@ -380,6 +380,11 @@ export function FillOnCarriageRouting(transportMode: string, fromPort: string, t
         }
     })
 }
+
+export function AssertRoutingLegAppeared(legName:string , ContainerNumber:string){
+    legName=legName.replace(/\s/g, "");
+    BaseAssertion.AssertElementContain(ShipmentSelectors.legBoxItem(legName),ContainerNumber )
+}
 //#endregion
 //#region Payables Tab
 export function FillPayablesTab(payableDetails: PayableDetails) {
@@ -539,7 +544,16 @@ export function AddDeliveryFollowUpActualDepartureDateAndTime(date: string, time
     cy.FillLogTextBox(ShipmentSelectors.DeliveryATDTime, time);
 }
 
-export function AddDeliveryFollowUpActualArrivalDateAndTime(date: string, time: string, ContainerNumber: string) {
+export function AddDeliveryContainerDeliveryActualDepartureDateAndTime(date: string, time: string, ContainerNumber: string) {
+    cy.Click(ShipmentSelectors.PackagesTab, null)
+
+    cy.Click(ShipmentSelectors.AddContainerDelivery(ContainerNumber), null);
+    cy.Click(BaseSelectors.Button, BaseSelectors.ContainsAddContainerDelivery);
+    cy.FillDate(ShipmentSelectors.PickUpDeliveryATDDate, date);
+    cy.FillLogTextBox(ShipmentSelectors.PickUpDeliveryATDTime, time);
+}
+
+export function AddDeliveryActualArrivalDateAndTime(date: string, time: string, ContainerNumber: string) {
     cy.Click(ShipmentSelectors.PackagesTab, null)
 
     cy.Click(ShipmentSelectors.EditContainerDelivery(ContainerNumber), null)
@@ -556,7 +570,17 @@ export function AddContainerReturnFollowUpActualDepartureDateAndTime(date: strin
     cy.FillLogTextBox(ShipmentSelectors.EmptyContainerReturnATDTime, time);
 }
 
-export function AddContainerReturnFollowUpActualArrivalDateAndTime(date: string, time: string, ContainerNumber: string) {
+export function AddContainerReturnContainerDeliveryActualDepartureDateAndTime(date: string, time: string, ContainerNumber: string) {
+    cy.Click(ShipmentSelectors.PackagesTab, null)
+
+    cy.Click(ShipmentSelectors.AddContainerReturn(ContainerNumber), null)
+    cy.Click(BaseSelectors.Button,BaseSelectors.ContainsAddEmptyContainerReturn);
+    cy.FillDate(ShipmentSelectors.PickUpDeliveryATDDate, date);
+    cy.FillLogTextBox(ShipmentSelectors.PickUpDeliveryATDTime, time);
+    cy.FillLogLov(ShipmentSelectors.ShipmentPickUpDeliveryToPartnerCard,"TestConsigneeImport",true)
+}
+
+export function AddContainerReturnActualArrivalDateAndTime(date: string, time: string, ContainerNumber: string) {
     cy.Click(ShipmentSelectors.PackagesTab, null)
 
     cy.Click(ShipmentSelectors.EditContainerReturn(ContainerNumber), null)
@@ -574,6 +598,15 @@ export function SearchAContainer(ContainerNumber: string) {
 export function UpdateFollowUp() {
     cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK)
+}
+
+export function UpdateContainerDelivery(status: string) {
+    cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
+    if (status == "new") {
+        cy.Click(BaseSelectors.SaveButton, null)
+    } else {
+        cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK)
+    }
 }
 //#endregion
 
