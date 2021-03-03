@@ -7,29 +7,29 @@ import { ARInvoiceDetails } from "../../../../Accounting/cypress/models/ARInvoic
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 import * as AccountingActions from '../../../../Accounting/cypress/actions/Actions';
-import {AccountingSelectors} from '../../../../Accounting/cypress/selectors/Selectors'
+import { AccountingSelectors } from '../../../../Accounting/cypress/selectors/Selectors'
 import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors';
 
 let ShipmentData: ShipmentDetails;
 let shipmentNumber: string;
-let AccountingSystem:string;
+let AccountingSystem: string;
 
 //#region Update Accounting System
 Given("the user logged in", () => {
     cy.Login()
 });
 Given("accounting System as {string}", (accountingSystem) => {
-    AccountingSystem=accountingSystem;
-  });
-  
-  When("change the accounting system", () => {
+    AccountingSystem = accountingSystem;
+});
+
+When("change the accounting system", () => {
     AccountingActions.changeAccountingsSystem(AccountingSystem)
-  });
-  
-  Then("the accounting system should update successfully", () => {
+});
+
+Then("the accounting system should update successfully", () => {
     BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
-  });
-  //#endregion
+});
+//#endregion
 Given("the user navigates to shipments workspace", () => {
     Actions.NavigatesToShipmentsWorkspace()
 });

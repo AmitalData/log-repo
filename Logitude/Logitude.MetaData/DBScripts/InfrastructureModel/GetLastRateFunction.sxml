@@ -1,0 +1,71 @@
+﻿<Script DBType="Main" Pre="true" Module="Infrastructure">
+  <Sql Version="2">
+    <![CDATA[
+
+
+DECLARE @Sql NVARCHAR(MAX)
+SET @Sql = 
+'
+CREATE FUNCTION dbo.GetLastRate (@Tenant int, @DateTime datetime, @BaseCurrencyId varchar(15), @ForeignCurrencyId varchar(15))
+RETURNS float
+WITH EXECUTE AS CALLER
+AS
+BEGIN
+     DECLARE @Result float;
+
+       if (@BaseCurrencyId = @ForeignCurrencyId)
+       BEGIN
+       set @Result = 1
+       END
+
+       else
+       BEGIN
+              declare @ValueDate as date
+              set @ValueDate = dbo.GetDateFormate(@DateTime)
+       
+               if exists (select * from RatesTables where BaseCurrencyId = @BaseCurrencyId and ForeignCurrencyId = @ForeignCurrencyId and Tenant = @Tenant)
+              begin
+
+                     if exists (select * from RatesTables where BaseCurrencyId = @BaseCurrencyId and ForeignCurrencyId = @ForeignCurrencyId and Tenant = @Tenant and ValueDate = @ValueDate)
+                     begin
+                           set @Result = (select top(1) Rate from RatesTables 
+                                                       where BaseCurrencyId = @BaseCurrencyId 
+                                                       and ForeignCurrencyId = @ForeignCurrencyId
+                                                       and Tenant = @Tenant 
+                                                       and ValueDate = @ValueDate
+                                                       order by LogDateTime DESC
+                                                       )
+                     end
+
+                     else if exists (select * from RatesTables where BaseCurrencyId = @BaseCurrencyId and ForeignCurrencyId = @ForeignCurrencyId and Tenant = @Tenant and ValueDate < @ValueDate)
+                     begin
+                           set @Result = (select top(1) Rate from RatesTables 
+                                                       where BaseCurrencyId = @BaseCurrencyId 
+                                                       and ForeignCurrencyId = @ForeignCurrencyId
+                                                       and Tenant = @Tenant 
+                                                       and ValueDate < @ValueDate
+                                                       order by LogDateTime DESC
+                                                       )
+                     end
+
+                     else
+                     begin
+                           set @Result = (select top(1) Rate from RatesTables 
+                                                       where BaseCurrencyId = @BaseCurrencyId 
+                                                       and ForeignCurrencyId = @ForeignCurrencyId
+                                                       and Tenant = @Tenant
+                                                       order by LogDateTime DESC
+                                                       )
+                     end
+
+              end
+       END
+     RETURN(@Result);
+END;
+';
+
+EXEC(@Sql);
+
+    ]]>
+  </Sql>
+</Script>

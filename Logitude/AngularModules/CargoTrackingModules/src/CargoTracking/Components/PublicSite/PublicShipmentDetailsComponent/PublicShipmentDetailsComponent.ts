@@ -7,6 +7,7 @@ import { CargoTrackingBrandingData } from '../../../DataContracts/CargoTrackingB
 import { AppHelper } from 'src/CargoTracking/Utilities/AppHelper';
 import { CargoTrackingMilestoneService } from 'src/CargoTracking/Services/Others/CargoTrackingMilestoneService';
 import { CargoTrackingMilestoneList } from 'src/CargoTracking/EntityLists/CargoTrackingMilestoneList';
+import { CargoTrackingMilestones } from 'src/CargoTracking/DataContracts/CargoTrackingMilestones';
 
 @Component({
     selector: 'PublicShipmentDetailsComponent',
@@ -48,14 +49,14 @@ export class PublicShipmentDetailsComponent implements OnInit
     get tenant(){
        return CargoTrackingBrandingData.Tenant;
     }
-    
+
     milestones:CargoTrackingMilestoneList[];
-    
+
     public get currentMilestoneName() : string {
         return this.milestones.find(d=>d.Code == this.Shipment.CurrentMilestoneCode)?.EnglishName;
     }
-   
-    
+
+
     GetMilstones(){
         this.milestonesService.getAll(this.tenant)
             .subscribe((milestones:any) => {
@@ -107,12 +108,12 @@ export class PublicShipmentDetailsComponent implements OnInit
 
     private GetIdFromURI()
     {
- 
+
         let _id = this.route.snapshot.paramMap.get('SecurityKey');
         this.SecurityKey = _id;
         return _id;
     }
-   
+
     public get ShipmentHeaderImage(){
         return CargoTrackingBrandingData.ShipmentHeaderURL;
     }
@@ -200,7 +201,7 @@ export class PublicShipmentDetailsComponent implements OnInit
             if (this.ShipmentWithMilestones) {
                 this.Shipment = result.ShipmentList;
                 this.ShipmentReferences =result.ShipmentList.CustomerReference? result.ShipmentList.CustomerReference.split(','):null;
-                if (this.Shipment.CurrentMilestoneCode == "11") {
+                if (this.Shipment.CurrentMilestoneCode == CargoTrackingMilestones.Delivered) {
                     this.Delivered = true;
                     this.DileveredIconColor = CargoTrackingBrandingData.SecondaryColor;
                 }else if(this.Shipment.CurrentMilestoneCode){
@@ -215,9 +216,22 @@ export class PublicShipmentDetailsComponent implements OnInit
                 this.SetMilestonesFields(result);
 
             }
-
+            this.SetShipmentDetails();
 
         });
+    }
+    public ShipmentLabel: string;
+    public ShipmentReference: string;
+
+    SetShipmentDetails() {
+        if (this.Shipment.ShipmentLevelCode == ShipmentLevels.Direct) {
+            this.ShipmentLabel = "Master";
+            this.ShipmentReference = this.Shipment.Master;
+        }
+        else {
+            this.ShipmentLabel = "House";
+            this.ShipmentReference = this.Shipment.House;
+        }
     }
     SetCargoTrackingContainers(result: CargoTrackingShipmentWithMilestones){
          var Containers:string[] = [];
@@ -245,19 +259,19 @@ export class PublicShipmentDetailsComponent implements OnInit
                         this.isPlannedMilestonesExist = true;
                     }
                 }
-                
+
                 else if (!S.IsCurrent && S.Date != null) {
 
                     this.CompletedMilestoneFields.push(S);
                 }
                 else if (S.Date != null) {
-                    
+
                     this.CurrentMilestoneField = S;
                 }
             });
         }
 
-        if (this.Shipment.CurrentMilestoneCode == "11") {
+        if (this.Shipment.CurrentMilestoneCode ==  CargoTrackingMilestones.Delivered) {
             this.Date = this.CompletedMilestoneFields[0].Date;
         }
         else {
@@ -298,6 +312,10 @@ export class PublicShipmentDetailsComponent implements OnInit
 }
 
 
+ enum ShipmentLevels {
+    Direct = "D",
+    House = "H"
+}
 
 export class Milestone
 {

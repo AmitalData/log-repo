@@ -92,6 +92,7 @@ using Logitude.BL.DataContracts;
 using Logitude.Update.Helper;
 using Simplog.Server.Infrastructure.Interfaces;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.Update.SandBox;
 
 namespace Logitude.Update
 {
@@ -4267,7 +4268,7 @@ User/Pass",
 
         private void button50_Click(object sender, EventArgs e)
         {
-            Thread thread = new Thread(() => LoadClosedTables());
+            Thread thread = new Thread(() => UpdateModule(0, "cargotracking", UpdateAccountinglbl));
             thread.IsBackground = true;
             thread.Start();
         }
@@ -4611,6 +4612,17 @@ User/Pass",
         {
             FixDuplicatedJournals fixDuplicatedJournalsForm = new FixDuplicatedJournals();
             fixDuplicatedJournalsForm.ShowDialog(this);
+        }
+
+        private void mumpsOpenReconcileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void accountingTesterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var formAccountingTester = new FormAccountingTester();
+            formAccountingTester.ShowDialog();
         }
     }
 

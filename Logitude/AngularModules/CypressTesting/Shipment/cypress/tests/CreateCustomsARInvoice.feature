@@ -1,25 +1,30 @@
-@smoke @release @all@tests
+@release @all@tests
 
 Feature: Create customs ARInvoice
-    After the user logging in the system and navigate to shipments workspace
+    After the user logging in the system and Update Accounting System to be None,Activate Customs Management in Shipments,
+    navigates to shipments workspace
     will create a customer and direct shipment, after that update routing
     and packages tabs, create customs ARInvoice and approve it.
 
+    Scenario: Update Accounting System
+        Given the user logged in
+        Given accounting System as "None"
+        When change the accounting system
+        Then the accounting system should update successfully
+
+    Scenario: Activate Customs Management in Shipments
+        When the user activate customs settings
+        Then the customs settings should activate successfully
+
     Scenario: Create customer
-        Given the user logged in and navigates to customers workspace
+        Given the user navigates to customers workspace
         And a customer with the following details
             | CompanyName | City | Country | State |
             | TestCompany | LAS  | US      | AK    |
         When create customer
         Then the customer should create successfully
-    Scenario: Activate Customs Management in Shipments
-        When the user activate customs settings
-        Then the customs settings should activate successfully
-   Scenario: Update Accounting System
-        Given accounting System as "None"
-        When change the accounting system
-        Then the accounting system should update successfully
-  Scenario: Create direct export air shipment
+
+    Scenario: Create direct export air shipment
         Given the user navigates to shipments workspace
         And a direct shipment with the following details
             | ShipmentLevel | Direction | TransportMode | Shipper     | MainCarriageFromPort | MainCarriageToPort |

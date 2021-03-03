@@ -15,6 +15,7 @@ declare global {
             FillRandomString(selector: string, length: number, upperCase: boolean): Chainable<Element>
             FillRandomNumber(selector: string, minimum: number, maximum: number): Chainable<Element>
             Click(selector: string, contains: string, force?: boolean): Chainable<Element>
+            Navigate(selector: string, force?: boolean): Chainable<Element>
             ClickCheckBox(selector: string): Chainable<Element>
             ClickRadio(selector: string): Chainable<Element>
             ValidateElementColor(selector: string, expectedcolor: string): Chainable<Element>
@@ -22,9 +23,18 @@ declare global {
             BackButton(contains:string): Chainable<Element>
             getAttached(selector: any): Chainable<Element>
 
+            ClickingAfterHovering(LogLovSelector:string,HiddenElementSelector:string): Chainable<Element>
+            SelectCheckBox(Selector:string): Chainable<Element>
+            SelectDropDownListItem(Selector:string,contain:string): Chainable<Element>
         }
     }
 }
+Cypress.Commands.add("SelectDropDownListItem", (Selector:string,contain:string) => {
+    cy.get(Selector).find(BaseSelectors.DownArrow).click()
+    cy.get(BaseSelectors.DropDownList).find(BaseSelectors.DropDownListItem).contains(contain).click()
+})
+Cypress.Commands.add("SelectCheckBox", (Selector:string) => {
+    cy.get(Selector).check({ force: true })
 
 /**
  * getAttached(selector)
@@ -42,6 +52,11 @@ Cypress.Commands.add("getAttached", selector => {
     }).then(() => cy.wrap($el));
   });
 
+})
+Cypress.Commands.add("ClickingAfterHovering", (LogLovSelector:string,HiddenElementSelector:string) => {
+    cy.get(LogLovSelector).trigger(BaseSelectors.MouseoverTrigger).find(HiddenElementSelector).click()
+
+})
 Cypress.Commands.add("BackButton", (contains) => {
     cy.Click(BaseSelectors.BackBottonBodyClass, contains);
 })
@@ -61,10 +76,10 @@ Cypress.Commands.add("FillDate", (selector, value) => {
 Cypress.Commands.add("FillLogTextBox", (selector, value,ValidateInputDone = false) => {
 
     if(ValidateInputDone){
-        cy.get(selector).clear().type(value)//.should('have.value', value)
+        cy.get(selector).clear().type("{selectall}" + value)//.should('have.value', value)
     }
     else{
-        cy.get(selector).clear().type(value).should('have.value', value)
+        cy.get(selector).clear().type("{selectall}" + value).should('have.value', value)
     }
 
 })
@@ -80,7 +95,7 @@ Cypress.Commands.add("FillLogLov", (selector, value, fromCache, getByFilters = f
     }
 
     //cy.get(selector).clear().type(value)
-    cy.get(selector).type("{selectall}" + value,{delay:5})
+    cy.get(selector).clear().type("{selectall}" + value,{delay:5})
 
     if (!fromCache) {
         cy.wait("@LOVDataLoaded")
@@ -103,11 +118,16 @@ Cypress.Commands.add("Click", (selector, contains, force = false) => {
     //let element = //.should('exist')
     cy.wait(1000);
     if (contains) {
-        cy.getAttached(selector).contains(contains, { matchCase: false }).click({force:force})
+        cy.get(selector).contains(contains, { matchCase: false }).click({force:force})
     }
     else{
-        cy.getAttached(selector).click({force:force})
+        cy.get(selector).click({force:force})
     }
+})
+
+Cypress.Commands.add("Navigate", (selector, force = false) => {
+    let element = cy.get(selector)
+    element.click({force:force})
 })
 
 Cypress.Commands.add("ClickCheckBox", (selector) => {

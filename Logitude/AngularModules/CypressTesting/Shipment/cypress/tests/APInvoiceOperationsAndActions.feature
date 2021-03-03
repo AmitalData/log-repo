@@ -1,22 +1,24 @@
 @smoke @release @all@tests
 Feature: APInvoice operations and actions
-    After the user logging in the system and navigate to shipments workspace
+    After the user logging in the system and Update Accounting System to be None,navigates to shipments workspace
     will create a direct shipment,update routing tab,packages.
     add payables, create and approve an APInvoice
     cancel the approvement and void the invoice.
 
+    Scenario: Update Accounting System
+        Given the user logged in
+        Given accounting System as "None"
+        When change the accounting system
+        Then the accounting system should update successfully
+
     Scenario: Create customer
-        Given the user logged in and navigates to customers workspace
+        Given the user navigates to customers workspace
         And a customer with the following details
             | CompanyName | City | Country | State |
             | TestCompany | LAS  | US      | AK    |
         When create customer
         Then the customer should create successfully
-    Scenario: Update Accounting System
-        Given accounting System as "None"
-        When change the accounting system
-        Then the accounting system should update successfully
-        
+
     Scenario: Create direct export air shipment
         Given the user navigates to shipments workspace
         And a direct shipment with the following details
@@ -39,6 +41,7 @@ Feature: APInvoice operations and actions
             | 5        | 1      | 2     | 3      | 100         |
         When update shipment
         Then the direct should update successfully
+
     Scenario: Add Payables
         Given a payable with the following details
             | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |

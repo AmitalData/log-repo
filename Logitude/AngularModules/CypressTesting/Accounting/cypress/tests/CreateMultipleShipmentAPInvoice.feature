@@ -1,11 +1,17 @@
-@smoke @release @all@tests
+@smoke @release @all
 Feature: Create multiple shipment AP Invoice
   After the user logging in the system and navigate to customers workspace
   will create a customer as shipper in the new shipments
   after that create multiple shipment AP Invoice for these shipments.
 
+  Scenario: Update Accounting System
+    Given the user logged in
+    Given accounting System as "None"
+    When change the accounting system
+    Then the accounting system should update successfully
+
   Scenario: Create customer
-    Given the user logged in and navigates to customers workspace
+    Given the user navigates to customers workspace
     And a customer with the following details
       | CompanyName | City | Country | State |
       | TestCompany | LAS  | US      | AK    |

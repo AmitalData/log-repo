@@ -53,6 +53,14 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         private APInvoiceTotalVATRepository totalVATRepository;
         private bool UsingFTP = false;
         private string FTPDetailId;
+        private List<APInvoiceLine> allInvoicesLines;
+        private List<string> allChargesTypesIds;
+        private List<ChargesExternalAccountsByProduct> allChargesExternalByProducts;
+        private List<string> allInvoiceIds;
+        private List<string> allCardsIds;
+        private List<Card> allCards;
+        private List<APInvoiceTotalVAT> allInvoicesTotalVATs;
+
         public APInvoiceMessageHelper(List<APInvoice> invoices, string filename, int tenant, bool isDropBox = false, bool isFTP = false)
         {
             this.tenant = tenant;
@@ -130,34 +138,16 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             APInvoiceRoot log = new APInvoiceRoot();
             log.Invoices = new List<APInvoiceElement>();
 
-            List<string> allInvoiceIds = invoices.Select(s => s.Id).ToList();
-            List<string> allCardsIds = invoices.Select(s => s.VendorId).ToList();
+            allInvoiceIds = invoices.Select(s => s.Id).ToList();
+            allCardsIds = invoices.Select(s => s.VendorId).ToList();
 
-            List<Card> allCards = (from d in commonContext.Cards
+            allCards = (from d in commonContext.Cards
                                    where d.Tenant == tenant
                                    && allCardsIds.Contains(d.Id)
                                    select d).ToList();
 
-            List<APInvoiceLine> allInvoicesLines = (from d in invoiceCotnext.APInvoiceLines.Include("ChargesType").Include("VatType")
-                                                    where d.Tenant == tenant
-                                                    && allInvoiceIds.Contains(d.APInvoiceId)
-                                                    select d).ToList();
-
-            List<string> allChargesTypesIds = (from d in allInvoicesLines
-                                               group d by d.ChargesTypeId into g
-                                               select g.Key).ToList();
-
-            List<ChargesExternalAccountsByProduct> allChargesExternalByProducts
-                = (from f in commonContext.ChargesExternalAccountsByProducts
-                   where f.Tenant == tenant
-                   && allChargesTypesIds.Contains(f.ChargesTypeId)
-                   select f).ToList();
-
-            List<APInvoiceTotalVAT> allInvoicesTotalVATs = (from d in invoiceCotnext.APInvoiceTotalVATs.Include("VatType")
-                                                            where d.Tenant == tenant
-                                                            && allInvoiceIds.Contains(d.APInvoiceId)
-                                                            select d).ToList();
-
+            this.FillAllPreparedData(false);
+           
             CardExternalAccountsByProductRepository myCardExternalAccountsByProductRepository = new CardExternalAccountsByProductRepository(commonContext);
             MeasurementRepository measurementRepository = new MeasurementRepository(this.commonContext);
             AddressQuery addressQuery = new AddressQuery(new AddressRepository(this.commonContext));
@@ -273,6 +263,10 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 #region Lines
                 invoiceElement.InvoiceLines = new List<APInvoiceLineElement>();
                 List<APInvoiceLine> dueVatLines = new List<APInvoiceLine>();
+                if (item.TotalVATOnly)
+                {
+                    this.FillAllPreparedData(item.TotalVATOnly);
+                }
                 List<APInvoiceLine> lines = allInvoicesLines.Where(d => d.APInvoiceId == item.Id).OrderBy(o => o.ChargesType.ViewOrder).ToList();
                 List<string> allInvoiceLinesVATTypesIds = lines.Select(s => s.VatTypeId).Distinct().ToList();
 
@@ -1059,6 +1053,49 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             }
 
             this.BuildXMLFile(log, tenant, filename);
+        }
+
+        private void FillAllPreparedData(bool isTotalVATOnly)
+        {
+            this.FillInvoiceLines(isTotalVATOnly);
+            this.FillAllChargesTypesIds();
+            this.FillAllChargesExternalByProducts();
+            this.FillAllInvoicesTotalVATs(isTotalVATOnly);
+        }
+        private void FillInvoiceLines(bool isTotalVATOnly)
+        {
+            allInvoicesLines = isTotalVATOnly ? (from d in invoiceCotnext.APInvoiceLines.Include("ChargesType")
+                                                 where d.Tenant == tenant
+                                                 && allInvoiceIds.Contains(d.APInvoiceId)
+                                                 select d).ToList():(from d in invoiceCotnext.APInvoiceLines.Include("ChargesType").Include("VatType")
+                                                                      where d.Tenant == tenant
+                                                                      && allInvoiceIds.Contains(d.APInvoiceId)
+                                                                      select d).ToList();
+        }
+        private void FillAllChargesTypesIds()
+        {
+            allChargesTypesIds = (from d in allInvoicesLines
+                                  group d by d.ChargesTypeId into g
+                                  select g.Key).ToList();
+        }
+        private void FillAllChargesExternalByProducts()
+        {
+            allChargesExternalByProducts
+                = (from f in commonContext.ChargesExternalAccountsByProducts
+                   where f.Tenant == tenant
+                   && allChargesTypesIds.Contains(f.ChargesTypeId)
+                   select f).ToList();
+        }
+
+        private void FillAllInvoicesTotalVATs(bool isTotalVATOnly)
+        {
+            allInvoicesTotalVATs = isTotalVATOnly ? (from d in invoiceCotnext.APInvoiceTotalVATs
+                                                     where d.Tenant == tenant
+                                                     && allInvoiceIds.Contains(d.APInvoiceId)
+                                                     select d).ToList() : (from d in invoiceCotnext.APInvoiceTotalVATs.Include("VatType")
+                                                                           where d.Tenant == tenant
+                                                                           && allInvoiceIds.Contains(d.APInvoiceId)
+                                                                           select d).ToList();
         }
 
         private void GetOriginalTranferData()

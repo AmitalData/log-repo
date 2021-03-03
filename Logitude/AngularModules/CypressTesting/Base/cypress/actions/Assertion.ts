@@ -36,3 +36,7 @@ export function AssertElementDisabled(selector: string, condition: string) {
 export function AssertElementHaveClasss(selector: string, condition: string , classValue:string) {
     cy.get(selector).should(condition,classValue);
 }
+
+export function AssertElementContain(selector: string, Value: string){
+    cy.get(selector).should('contain', Value)
+}

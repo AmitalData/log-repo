@@ -234,6 +234,7 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<CardSearch> CardSearches { get; set; }
         IDbSet<Horse> Horses { get; set; }
 
+        IDbSet<DWHEnvironmentSetting> DWHEnvironmentSettings { get; set; }
 
         void SetAsModified(object entity);
         void DetectChanges();

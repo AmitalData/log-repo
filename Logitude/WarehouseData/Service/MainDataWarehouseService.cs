@@ -43,6 +43,7 @@ namespace WarehouseData.Helper
         public List<TableClass> BulidDataWarehouseTableLists (string connectionString)
         {
             List<TableClass> dataWarehouseTables = FillDataWarehouseTable();
+            dataWarehouseTables = GetEnvironmentFactDataWarehouseTables(dataWarehouseTables, connectionString);
             dataWarehouseTables = objectFieldDataWarehouseService.SetCustomObjectFieldMetaData(dataWarehouseTables, connectionString);
             dataWarehouseTables = objectFieldDataWarehouseService.BuildWarehouseObjectFieldOnTables(dataWarehouseTables, connectionString);
             dataWarehouseTables = objectFieldDataWarehouseService.BuildDWObjectFieldDB(dataWarehouseTables, connectionString);
@@ -125,12 +126,10 @@ namespace WarehouseData.Helper
         #endregion
 
 
-        public void FinishBuildingDataWarehouse(string connectionString,List<TableClass> tableLists)
+        public void FinishBuildingDataWarehouse(string connectionString ,string destinationConnectionString, List<TableClass> tableLists)
         {
         
-            finalDataWarehouseService.FinishBuildingDataWarehouse(connectionString, tableLists);
-
-
+            finalDataWarehouseService.FinishBuildingDataWarehouse(connectionString, destinationConnectionString, tableLists);
         }
 
         public void RunAdditionalScripte(string connectionString, List<TableClass> tableLists, bool isIncrement = false)
@@ -194,7 +193,7 @@ namespace WarehouseData.Helper
             }
 
 
-            FinishBuildingDataWarehouse(destinationConnectionString,tableNameLists);
+            FinishBuildingDataWarehouse(sourceConnectionString, destinationConnectionString, tableNameLists);
         }
 
         public void UpdateDataWarehouse(string sourceConnectionString, string destinationConnectionString, int? privateTenant = null, string relatedTenants = null)

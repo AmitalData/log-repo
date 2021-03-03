@@ -236,6 +236,15 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "MAP,Multipile AP Shipment", 
                 Description = "Multipile AP Shipment", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CPH", 
+                Name = "Consequent Pickup/Delivery", 
+                SearchFields = "CPH,Consequent Pickup/Delivery", 
+                Description = "Consequent Pickup/Delivery", 
+			});
+
 			
             return all;
        }

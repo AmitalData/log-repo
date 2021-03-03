@@ -59,7 +59,7 @@
                 <div class="MediaFill">
                     <ScrollViewer>
                         <ul>
-                            <li class="BoxItem" *ngFor="let item of ItemsSource">
+                            <li class="BoxItem" *ngFor="let item of ItemsSource"  attr.data-cy="{{'Routing_' + item.LegName | IdGeneratorPipe}}">
                                 <table [style.height.px]="item.LegHeight">
                                     <tr style="height: 5px;">
                                         <td colspan="3">
@@ -92,8 +92,8 @@
                                                                 </td>
 
                                                                 <td style="width:18px; vertical-align:middle;" *ngIf="item.IsEditButtonVisible && IsChildFeatureExists">
-                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Title]="'Add Child Pick Up'" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.IsAddChildPickUpVisible" (click)="AddChildLeg('Pick Up', item)"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Title]="'Add Child Delivery'" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.IsAddChildDeliveryVisible" (click)="AddChildLeg('Delivery', item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Title]="'Add Consequent Pickup'" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.IsAddChildPickUpVisible" (click)="AddChildLeg('Pick Up', item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Title]="'Add Consequent Delivery'" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.IsAddChildDeliveryVisible" (click)="AddChildLeg('Delivery', item)"></IconButton>
                                                                 </td>
 
                                                                 <td style="width: 3px;" *ngIf="item.IsEditButtonVisible && IsChildFeatureExists">

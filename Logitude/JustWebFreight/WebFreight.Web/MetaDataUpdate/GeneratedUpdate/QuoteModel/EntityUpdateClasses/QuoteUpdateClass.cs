@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteUpdateClass
    {  		
-		public const string HashString = "7843088327fcf7f94c1c744458ab5c69";
+		public const string HashString = "c654ce6fafc4d91ddf501361313a8177";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1680,7 +1680,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -1949,7 +1949,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -2015,7 +2015,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -2276,7 +2276,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInAutomationAsEnitity =  true,
+					  						RecordType =  "Quote",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -3258,7 +3259,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -3323,7 +3324,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  true,
-					  						CanAutomateSetValue =  false,
+					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -15827,7 +15828,48 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
             }, EventTypeRepository, tenantEventTypes);
 
 
-            AddEventTypes.AddEventType(new EventTypeDetails()
+			AddEventTypes.AddEventType(new EventTypeDetails()
+			{
+				Code = "DOCI",
+				EnglishName = "Document Received",
+				LocalName = "Document Received",
+				IsManualEntry = false,
+				ShortView = false,
+				EventTypeCategoryCode = "DOC",
+				IsAgentView = false,
+				IsCustomerView = false,
+				IsSharedLogisticsEnabled = false,
+				AllowedInAutomation = false,
+				ManualActivatedFollowUp = false,
+				IsFollowUp = true,
+				FollowUpEnglishName = "Waiting for Documentation",
+				FollowUpLocalName = "Waiting for Documentation",
+				ObjectTableId = QuoteObjectTable.Id,
+
+			}, EventTypeRepository, tenantEventTypes);
+
+
+			AddEventTypes.AddEventType(new EventTypeDetails()
+			{
+				Code = "DOCO",
+				EnglishName = "Document Printed",
+				LocalName = "Document Printed",
+				IsManualEntry = false,
+				ShortView = false,
+				EventTypeCategoryCode = "DOC",
+				IsAgentView = false,
+				IsCustomerView = false,
+				IsSharedLogisticsEnabled = false,
+				AllowedInAutomation = false,
+				ManualActivatedFollowUp = false,
+				IsFollowUp = true,
+				FollowUpEnglishName = "Print Documents",
+				FollowUpLocalName = "Print Documents",
+				ObjectTableId = QuoteObjectTable.Id,
+
+			}, EventTypeRepository, tenantEventTypes);
+
+			AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "QFCR",
                 EnglishName =  "Follow up Created",
