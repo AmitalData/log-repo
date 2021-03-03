@@ -343,6 +343,7 @@ export class AddEditReportTaskSchedulerComponent {
                         this.EntityPM.IsDirty = false;
                         if (this.DataContext.fatherComponent) {
                             this.DataContext.fatherComponent.RefreshButtonClicked();
+                            this.DataContext.fatherComponent.RefreshButtonClicked();
                         }
 
                         this.CurrentSession.CloseCurrentWindow();
