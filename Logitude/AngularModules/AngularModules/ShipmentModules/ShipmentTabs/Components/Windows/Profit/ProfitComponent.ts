@@ -544,12 +544,11 @@ export class ProfitComponent {
         }
     }
 
-    private includingVAT: boolean = true;
+    private includingVAT: boolean = false;
     get IncludingVAT() { return this.includingVAT; }
     set IncludingVAT(value: boolean) {
         if (this.includingVAT != value) {
             this.includingVAT = value;
-            this.BuildProfitData();
         }
     }
     
