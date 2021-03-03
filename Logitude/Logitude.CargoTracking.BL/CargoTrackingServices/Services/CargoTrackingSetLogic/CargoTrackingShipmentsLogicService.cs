@@ -44,6 +44,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             SetDeliveredMilestones(tableRow);
 
             SetTruckerMilestoneFields(tableRow);
+            SetCustomAgentFields(tableRow);
+
+        }
+        private static void SetCustomAgentFields(DataRow tableRow)
+        {
+            tableRow.SetField("AssignedCustomsAgentDate", tableRow["AssginedToCustomsAgentDate"]);
+            tableRow.SetField("AssignedCustomsAgentDone", !IsFieldNullOrEmpty(tableRow, "AssignedCustomsAgentDate"));
         }
         private static void SetDeliveredMilestones(DataRow tableRow)
         {
@@ -148,7 +155,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
 
             //CustomsProcess
             //AssignedToCustomsAgent
+            else if (!IsFieldNullOrEmpty(tableRow, "AssignedCustomsAgentDone") && !tableRow["AssignedCustomsAgentDone"].Equals("False"))
+            {
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.AssignedToCustomsAgent);
+                tableRow.SetField("CurrentMilestoneDate", tableRow["AssignedCustomsAgentDate"]);
 
+            }
             else if (!IsFieldNullOrEmpty(tableRow, "ToWarehouseDone") && !tableRow["ToWarehouseDone"].Equals("False"))
             {
                 tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.ToWarehouse);
