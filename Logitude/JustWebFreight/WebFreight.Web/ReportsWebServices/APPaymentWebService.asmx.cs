@@ -81,11 +81,10 @@ namespace WebFreight.Web.ReportsWebServices
  
                 if (bankAccount != null)
                 {
+                    apPaymentDataProvider.BankAccountEnglishName = bankAccount.EnglishName;
                     if (loggedContact.DontShowLocalLabels)
                     {
                         apPaymentDataProvider.BankAccountName = bankAccount.EnglishName;
-                        apPaymentDataProvider.BankAccountEnglishName = bankAccount.EnglishName;
-
                     }
                     else
                     {
