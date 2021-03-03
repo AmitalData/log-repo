@@ -56,7 +56,7 @@ Cypress.Commands.add("RedirectToLogin", () => {
 
 function CompleteLoginProcess(Email:string, Password:string, URL: string, Tenant?:number){
     cy.visit(URL)
-    cy.get("#Email").clear().type(Email).should("have.value", Email)
+    cy.get("#Email1").clear().type(Email).should("have.value", Email)
     cy.get("#Password").clear().type(Password).should("have.value", Password)
     cy.get("#cmdLogin").click()
 
