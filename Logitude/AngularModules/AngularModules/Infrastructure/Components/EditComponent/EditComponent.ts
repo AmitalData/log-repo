@@ -8,6 +8,7 @@ import { ObjectFieldPM } from '../../EntityPMs/ObjectFieldPM';
 import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
 import { LocationDirective } from '../../Utilities/LocationDirective';
 import { EntityArgs } from '../../DataContracts/EntityArgs';
+import { ConfirmationMessageArgs } from '../../DataContracts/ConfirmationMessageArgs';
 import { AppTool } from '../../Tools';
 import { SessionLocator } from '../../Utilities/SessionLocator';
 import { FeatureLocator } from '../../Utilities/FeatureLocator';
@@ -1188,53 +1189,58 @@ export class EditComponent implements OnDestroy {
 
     // Commands
     BackButtonClicked() {
-        var isFullAccountingNeedingConfirmation = this.FullAccountingNeedCloseConfirmation();
+        var isFullAccountingNeedingConfirmation = this.CheckIfFullAccountingARInvoiceNeedsConfirmation();
         var isNeedingConfirmation = this.NeedCloseConfirmation();
         if (isFullAccountingNeedingConfirmation) {
-            this.ShowConfirmMessageForCloseARInvoiceInFullAccounting();
+            var yesAction = (): void => {
+                this.Close();
+            }
+
+            this.ShowConfirmationMessage(new ConfirmationMessageArgs()
+                .Builder
+                .YesText(TextCodeTranslator.Translate('Accounting.General.B.OK'))
+                .NoText(TextCodeTranslator.Translate('Accounting.General.B.Cancel'))
+                .ShowCancelButton(false)
+                .MessageText(TextCodeTranslator.Translate("ARInvoice.M.ConfirmNotAutoCreditedIfNotApproveInvoice"))
+                .YesAction(yesAction)
+                .build())
         }
 
         else if (isNeedingConfirmation) {
-            var confirmWindow = new ConfirmWindow();
-            confirmWindow.Width = 450;
-            confirmWindow.Height = 190;
-            confirmWindow.ShowCancelButton = true;
-            confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.DontSave");
-            confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Save");
-            confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
-            confirmWindow.Show(TextCodeTranslator.Translate("General.M.ThisEntityhasunsavedchanges").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName)));
-            confirmWindow.WindowClosed.subscribe((event: any) => {
-                if (confirmWindow.Yes) {
-                    this.SaveEntityChanges(true);
-                }
+            var yesAction = (): void => {
+                this.SaveEntityChanges(true);
+            }
 
-                else if (confirmWindow.No) {
-                    this.Close();
-                }
-            });
+            var noAction = (): void => {
+                this.Close();
+            }
+
+            this.ShowConfirmationMessage(new ConfirmationMessageArgs()
+                .Builder
+                .YesText(TextCodeTranslator.Translate('General.B.Save'))
+                .NoText(TextCodeTranslator.Translate('General.B.DontSave'))
+                .MessageText(TextCodeTranslator.Translate("General.M.ThisEntityhasunsavedchanges").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName)))
+                .ShowCancelButton(true)
+                .YesAction(yesAction)
+                .NoAction(noAction)
+                .build())
         }
         else {
             this.Close();
         }
-
-     
     }
 
-    private ShowConfirmMessageForCloseARInvoiceInFullAccounting() {
-        var confirmWindow = new ConfirmWindow();
-        confirmWindow.Width = 450;
-        confirmWindow.Height = 190;
-        confirmWindow.YesButtonText = TextCodeTranslator.Translate('Accounting.General.B.OK');
-        confirmWindow.NoButtonText = TextCodeTranslator.Translate('Accounting.General.B.Cancel');
-        confirmWindow.Show(TextCodeTranslator.Translate("ARInvoice.M.ConfirmNotAutoCreditedIfNotApproveInvoice"));
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                this.Close();
+    CheckIfFullAccountingARInvoiceNeedsConfirmation() {
+        const StatusCode_AutoCreditARInvoice = "AC";
+        if (this.ObjectTableName == "ARInvoice" && SessionLocator.TenantPM.AccountingActivated) {
+            if (!this.EntityPM.IsDirty) {
+                return false;
             }
-            else if (confirmWindow.No) {
-                confirmWindow.Close();
+
+            if (this.EntityPM.StatusCode == StatusCode_AutoCreditARInvoice) {
+                return true;
             }
-        });
+        }
     }
 
     public NeedCloseConfirmation() {
@@ -1251,6 +1257,8 @@ export class EditComponent implements OnDestroy {
         }
         return myResult;
     }
+
+
     Close() {
         if (this.IsInsideWindow) {
             this.CurrentSession.CloseCurrentWindow();
@@ -1264,18 +1272,26 @@ export class EditComponent implements OnDestroy {
         this.BackCompleted.emit(true);
     }
 
-    FullAccountingNeedCloseConfirmation() {
-        const StatusCode_AutoCreditARInvoice = "AC";  
-        if (this.ObjectTableName == "ARInvoice" && SessionLocator.TenantPM.AccountingActivated) {
-            if (!this.EntityPM.IsDirty) {
-                return false;
-            }
+    private ShowConfirmationMessage(ConfirmationMessageArgs: ConfirmationMessageArgs) {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 450;
+        confirmWindow.Height = 190;
+        confirmWindow.ShowCancelButton = ConfirmationMessageArgs.ShowCancelButton;
+        confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
+        confirmWindow.YesButtonText = ConfirmationMessageArgs.YesText;
+        confirmWindow.NoButtonText = ConfirmationMessageArgs.NoText;
+        confirmWindow.Show(ConfirmationMessageArgs.MessageText);
 
-            if (this.EntityPM.StatusCode == StatusCode_AutoCreditARInvoice) {
-                return true;
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                ConfirmationMessageArgs.YesAction();
             }
-        }
+            else if (confirmWindow.No) {
+                ConfirmationMessageArgs.NoAction();
+            }
+        });
     }
+
 
     SaveChanges(busyIndicatorText: string = null) {
 
