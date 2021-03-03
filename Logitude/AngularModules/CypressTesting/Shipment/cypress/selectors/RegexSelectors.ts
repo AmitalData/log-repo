@@ -80,7 +80,7 @@ export class RegexSelectors {
     }
 
     public static ContainersView(containerView: string): string{
-        return "p[data-cy^=Containers" + containerView + "View]";
+        return "[data-cy^=Containers" + containerView + "View]";
     }
 
     public static AddContainerDelivery(ContainerNumber: string): string{
