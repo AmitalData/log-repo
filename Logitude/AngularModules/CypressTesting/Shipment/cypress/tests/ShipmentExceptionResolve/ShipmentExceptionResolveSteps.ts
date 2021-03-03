@@ -74,7 +74,7 @@ Then("the exception should resolve successfully", () => {
 Then("has exception status should back to {string} successfully", (hasException) => {
     ShipmentActions.RefreshEventTab()
     ShipmentActions.CheckHasException(hasException)
-    ShipmentActions.ValidateShipmentEventActions(ShipmentSelectors.ShipmentEventTab, EventNote)
+    ShipmentActions.ValidateShipmentEventActions(ShipmentSelectors.EventsTab, EventNote)
 
 });
 //#endregion
