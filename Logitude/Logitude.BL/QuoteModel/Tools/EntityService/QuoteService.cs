@@ -50,10 +50,12 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         private bool isNewEntity;
         private QuotePM entityPM;
         public Quote entityPoco { get; set; }
+        public QuoteComputedField quoteComputedFieldEntityPOCO { get; set; }
         private Tenant loggedTenant;
         //private ContactPM loggedContact;
         //private IQuotesContext objectContext;
         private QuoteRepository entityRepository;
+        private QuoteComputedFieldRepository quoteComputedFieldRepository;
         private FollowUpRepository followUpRepository;
         private QuoteChargeRepository quoteChargeRepository;
         private QuotePriceStepsRepository quotePriceStepsRepository;
@@ -77,6 +79,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             //this.objectContext = objectContext;
             this.myCommonContext = initializer.CommonContext; //CommonDataContext.GetContext(tenant);
             this.entityRepository = initializer.Repository; //new QuoteRepository(objectContext);
+            this.quoteComputedFieldRepository = new QuoteComputedFieldRepository(tenant);
             this.quoteChargeRepository = new QuoteChargeRepository(objectContext);
             this.quotePriceStepsRepository = new QuotePriceStepsRepository(objectContext);
             this.followUpRepository = new FollowUpRepository(tenant);
@@ -96,6 +99,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             this.myCommonContext = initializer.CommonContext; //CommonDataContext.GetContext(tenant);
             this.entityRepository = initializer.Repository; //new QuoteRepository(objectContext);
             this.quoteChargeRepository = new QuoteChargeRepository(objectContext);
+            this.quoteComputedFieldRepository = new QuoteComputedFieldRepository(tenant);
             this.quotePriceStepsRepository = new QuotePriceStepsRepository(objectContext);
             this.followUpRepository = new FollowUpRepository(tenant);
             this.quotePackageRepository = new QuotePackageRepository(objectContext);
@@ -138,13 +142,14 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             initializer.InitializeEntity(entityPM);
             this.entityPM = initializer.EntityPM;
             this.entityPoco = initializer.EntityPOCO;
+            this.quoteComputedFieldEntityPOCO = initializer.quoteComputedFieldPOCO;
             this.isNewEntity = initializer.IsNewEntity;
-
-            initializer.HandleBehaviours();
 
             this.GetQuoteSettings();
 
             this.InitializeComponent();
+
+            initializer.HandleBehaviours();
 
             QuotetValidating.Validate(entityPM, entityPoco, isNewEntity, myCommonContext);
 
@@ -169,6 +174,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
             entityRepository.Add(entityPoco);
             entityRepository.SubmitChanges();
+            quoteComputedFieldRepository.Add(quoteComputedFieldEntityPOCO);
+            quoteComputedFieldRepository.SubmitChanges();
             followUpRepository.SubmitChanges();
 
             this.GetForeignFields(entityPM, entityPoco);
@@ -204,9 +211,10 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             initializer.InitializeEntity(entityPM);
             this.entityPM = initializer.EntityPM;
             this.entityPoco = initializer.EntityPOCO;
+            this.quoteComputedFieldEntityPOCO = initializer.quoteComputedFieldPOCO;
             this.isNewEntity = initializer.IsNewEntity;
 
-            initializer.HandleBehaviours();
+            //initializer.HandleBehaviours();
 
             //if(entityPM.TotalPerContainer && entityPM.IsSaleCurrencySameAsCost)
             //{
@@ -229,6 +237,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 }
 
                 this.InitializeComponent();
+                
+                initializer.HandleBehaviours();
 
                 QuotetValidating.Validate(entityPM, entityPoco, isNewEntity, myCommonContext);
 
@@ -258,6 +268,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                 entityRepository.Update(entityPoco);
                 entityRepository.SubmitChanges();
+                quoteComputedFieldRepository.Update(quoteComputedFieldEntityPOCO);
+                quoteComputedFieldRepository.SubmitChanges();
                 followUpRepository.SubmitChanges();
 
                 this.GetForeignFields(entityPM, entityPoco);

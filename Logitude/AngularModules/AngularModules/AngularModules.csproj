@@ -290,14 +290,11 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\CasualSupplierDetailsComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\DeclarationAmendment\DeclarationAmendmentComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.html" />
-
     <Content Include="InfrastructureModules\InfrastructureGettingStarted\Components\SystemCurrencies\ChangeCurrencyComponent.html" />
     <Content Include="Infrastructure\Components\LoginComponent\CustomLoginComponents\HybridLabels\Components\HybridLoginProcessComponent.css" />
     <Content Include="Infrastructure\Components\LoginComponent\CustomLoginComponents\HybridLabels\Components\HybridLoginProcessComponent.html" />
-
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityPackageComponent.html" />
-
     <Content Include="_Resources\js\UnifreightJSBridge.js" />
     <TypeScriptCompile Include="Abstractions\Services\BaseService.ts" />
     <TypeScriptCompile Include="Accounting\Components\Maintenance\Tester\AccountingMainTesterComponent.ts" />
@@ -4461,7 +4458,9 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\SharedDocument\SharedDocumentsPermissionsComponent.ts" />
     <TypeScriptCompile Include="Quote\Components\Shared\QuoteSaleCurrencyTypeComponent.ts" />
     <TypeScriptCompile Include="Quote\DataContracts\QuoteDashboardArguments.ts" />
+    <TypeScriptCompile Include="Quote\EntityLists\QuoteComputedFieldList.ts" />
     <TypeScriptCompile Include="Quote\EntityPMs\QuoteClosingReasonPM.ts" />
+    <TypeScriptCompile Include="Quote\EntityPMs\QuoteComputedFieldPM.ts" />
     <TypeScriptCompile Include="Quote\Services\ExtendedPMs\QuoteDocumentVersionExtendedPMService.ts" />
     <TypeScriptCompile Include="Quote\Services\ExtendedPMs\QuoteTemplateDetailsFieldExtendedPMService.ts" />
     <TypeScriptCompile Include="Quote\Services\ExtendedPMs\QuoteTemplateHeaderFieldExtendedPMService.ts" />

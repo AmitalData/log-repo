@@ -30,6 +30,7 @@ namespace Simplog.Data.QuoteModel
         IDbSet<QuoteTemplateExcludedSection> QuoteTemplateExcludedSections { get; }  
         IDbSet<QuoteStage> QuoteStages { get; }
         IDbSet<QuoteRating> QuoteRatings { get; }
+        IDbSet<QuoteComputedField> QuoteComputedField { get; }
         IDbSet<QuoteTemplateSectionModification> QuoteTemplateSectionModifications { get; }
         IDbSet<QuoteTotalVAT> QuoteTotalVATs { get; }
         IDbSet<QuoteSetting> QuoteSettings { get; }

@@ -27,14 +27,14 @@
   <Column
     Name="ToLocation"
     Type="varchar"
-    Size="100">
+    Size="500">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="FromLocation"
     Type="varchar"
-    Size="100">
+    Size="500">
     <Constraints
       Nullable="true" />
   </Column>
@@ -51,6 +51,13 @@
     Size="500">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="Tenant"
+    OldNames="Tanent"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="Id"

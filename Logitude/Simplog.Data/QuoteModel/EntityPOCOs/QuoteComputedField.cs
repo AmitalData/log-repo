@@ -1,0 +1,20 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Simplog.Data.QuoteModel.EntityPOCOs
+{
+    public class QuoteComputedField
+    {
+        [Key]
+        public string Id { get; set; }
+        public int Tenant { get; set; }
+        public bool ConnectedToShipment { get; set; }
+        public bool ConnectedToTicket { get; set; }
+        public string ToLocation { get; set; }
+        public string FromLocation { get; set; }
+        public string DeliveryFrom { get; set; }
+        public string PickupFrom { get; set; }
+
+
+
+    }
+}

@@ -28,6 +28,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         {
             this.InitializeFlags();
             this.UpdateQuoteUsage();
+            this.UpdateQuoteComputedFields();
         }
 
         string quoteId = null;
@@ -96,5 +97,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 }
             }
         }
+
+        private void UpdateQuoteComputedFields()
+        {
+            QuoteComputedFieldRepository quoteComputedFieldRepository = new QuoteComputedFieldRepository(initializer.Tenant);
+            QuoteComputedField quoteComputedField = quoteComputedFieldRepository.GetSingleQuoteComputedField(quoteId, initializer.Tenant);
+            if (isUpdatingUsage || isUpdatingUsage)
+            {
+                quoteComputedField.ConnectedToShipment = true;
+            }
+            else if (isDisconnectingQoute)
+            {
+                quoteComputedField.ConnectedToShipment = false;
+            }
+
+            quoteComputedFieldRepository.Update(quoteComputedField);
+            quoteComputedFieldRepository.SubmitChanges();
+        }
+
     }
 }
