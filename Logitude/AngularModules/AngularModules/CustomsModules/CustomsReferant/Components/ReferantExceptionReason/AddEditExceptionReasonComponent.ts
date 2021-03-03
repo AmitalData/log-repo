@@ -41,19 +41,19 @@ export class AddEditExceptionReasonComponent extends BaseComponent {
     errors: string[] = [];
     existCodeList: string[] = [];
     IsChanged: boolean = false;
-
+    rowIndex: any;
 
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.entityResourceService.getEntityResourceByTableName("Customs.DeclarationReferantData").subscribe(response => {
             this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                this._IsReady = true; 
+                this._IsReady = true;
             });
         });
         this.ReferantExceptionItemsSource = new ObservableCollection([]);
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         this.isActiveFilterItems = new ApiQueryFilters();
-        this.isActiveFilterItems.addAdditionalFilter("IsActive", true, null, null, "Equals", false, false, false, "boolean");  
+        this.isActiveFilterItems.addAdditionalFilter("IsActive", true, null, null, "Equals", false, false, false, "boolean");
     }
 
     SetWindowArgs(args: any) {
@@ -61,7 +61,7 @@ export class AddEditExceptionReasonComponent extends BaseComponent {
             this.EntityPM = args.EntityPM;
             this.LoadReferantException();
             this.exceptionReasonSharedDataService.IsDirty = false;
-
+            this.rowIndex = args.rowIndex;
         }
     }
 
@@ -71,7 +71,7 @@ export class AddEditExceptionReasonComponent extends BaseComponent {
     private LoadReferantException() {
         this.SplitExceptionList(this.EntityPM.ExceptionReasonsList);
         this.getData(this.ExceptionsList);
-        this.DeletedCodeList = [];  
+        this.DeletedCodeList = [];
         this._IsReady = true;
     }
 
@@ -148,7 +148,7 @@ export class AddEditExceptionReasonComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        if (!this.IsDisplayOnly && this.IsChanged) {
+        if (this.exceptionReasonSharedDataService.IsDirty) {
             var confirm = new ConfirmWindow();
             confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
             confirm.ShowNoButton = true;
@@ -211,15 +211,22 @@ export class AddEditExceptionReasonComponent extends BaseComponent {
                                 SessionLocator.SelectedSession.CloseCurrentWindow();
                             });
                         } else if (item.EntityPM.IsDirty == true) {
-                            this._referantExceptionPMService.update(item.EntityPM).subscribe();
+                            this._referantExceptionPMService.update(item.EntityPM).subscribe((response: any) => {
+                                SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.EntityPM.DeclarationId, { rowIndex: this.rowIndex });
+                                SessionLocator.SelectedSession.CloseCurrentWindow();
+                            });
+                        } else {
                             SessionLocator.SelectedSession.CloseCurrentWindow();
                         }
                     });
+                    if (this.ReferantExceptionItemsSource.Collection.length == 0) {
+                        SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.EntityPM.DeclarationId, { rowIndex: this.rowIndex });
+                        SessionLocator.SelectedSession.CloseCurrentWindow();
+                    }
                 });
             }
             this.exceptionReasonSharedDataService.IsDirty = false;
         } else {
-            SessionLocator.SelectedSession.CloseCurrentWindow();
         }
     }
 
