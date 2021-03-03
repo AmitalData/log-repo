@@ -73,7 +73,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             transactionsDataProvider.FromDate = GetFromDate();
             transactionsDataProvider.ToDate = GetToDate();
 
-            FillGLAccountFields(GetFilterValue<string>("GLAccountId"));
+            FillGLAccountFields(cardIndexReportService);
             FillTenantFields();
             FillPrintingInformation();
             FillLedgerTransactions(cardIndexReportService);
@@ -325,6 +325,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                 CumulativeForeignAmount = transaction.CumulativeForeignAmount,
                 CumulativeLocalAmount = transaction.CumulativeLocalAmount,
+                CalculatedForeignAmount = transaction.CalculatedForeignAmount,
+                CumulativeOpenAmount = transaction.CumulativeOpenAmount,
 
             };
         }
@@ -360,8 +362,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             return tenantPM;
         }
 
-        private void FillGLAccountFields(string glAccountId)
+        private void FillGLAccountFields(CardIndexReportService cardIndexReportService)
         {
+            string glAccountId = GetFilterValue<string>("GLAccountId");
             if (glAccountId != null)
             {
                 GLAccountPM glaccountPM = GetGLAccountById(glAccountId);
@@ -373,7 +376,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 transactionsDataProvider.AccountCurrencySign = glaccountPM.CurrencySign;
                 transactionsDataProvider.AccountCurrencyCode = glaccountPM.CurrencyCode;
                 transactionsDataProvider.AccountReconcileMethod = glaccountPM.ReconcileMethodCode;
+
+                SetGLAccountStartTotalOpenAmountField(cardIndexReportService);
             }
+        }
+
+        private void SetGLAccountStartTotalOpenAmountField(CardIndexReportService cardIndexReportService)
+        {
+            var cardIndex = cardIndexReportService.CardIndexs.FirstOrDefault();
+            if (cardIndex != null)
+                transactionsDataProvider.StartTotalOpenAmount = cardIndex.StartTotalOpenAmount;
         }
 
         private Logitude.Accounting.Def.EntityPMs.GLAccountPM GetGLAccountById(string glAccountId)
