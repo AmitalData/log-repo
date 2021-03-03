@@ -293,7 +293,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             {
                 if (!entityPM.IsCopy)
                 {
-                    this.entityPM.IsSaleCurrencySameAsCost = iQuoteSetting.IsSaleAsCostCurrency;                    
+                    this.entityPM.IsSaleCurrencySameAsCost = iQuoteSetting.IsSaleAsCostCurrency;
+                    this.entityPM.IsMultiCurrency = iQuoteSetting.IsMultiCurrency;
                 }
             }
         }

@@ -179,6 +179,7 @@
             this.lblUInvoice = new System.Windows.Forms.Label();
             this.lblUQuote = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.updateBluesnapTransactionsLabel = new System.Windows.Forms.Label();
             this.bluesnapBtn = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
@@ -206,9 +207,9 @@
             this.AirlineLogoTenantTextBox = new System.Windows.Forms.TextBox();
             this.button46 = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.button51 = new System.Windows.Forms.Button();
-            this.updateBluesnapTransactionsLabel = new System.Windows.Forms.Label();
             this.fixJournalsButton = new System.Windows.Forms.Button();
+            this.button51 = new System.Windows.Forms.Button();
+            this.accountingTesterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -382,29 +383,30 @@
             this.loadTextCodesToolStripMenuItem,
             this.textCodesToolStripMenuItem,
             this.internationalSiteToolStripMenuItem,
-            this.createDecToolStripMenuItem});
+            this.createDecToolStripMenuItem,
+            this.accountingTesterToolStripMenuItem});
             this.sandBoxToolStripMenuItem.Name = "sandBoxToolStripMenuItem";
-            this.sandBoxToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.sandBoxToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
             this.sandBoxToolStripMenuItem.Text = "SandBox";
             // 
             // fillCustomsTableToolStripMenuItem
             // 
             this.fillCustomsTableToolStripMenuItem.Name = "fillCustomsTableToolStripMenuItem";
-            this.fillCustomsTableToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.fillCustomsTableToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.fillCustomsTableToolStripMenuItem.Text = "FillCustomsTable";
             this.fillCustomsTableToolStripMenuItem.Click += new System.EventHandler(this.FillCustomsTableToolStripMenuItem_Click);
             // 
             // updateDocTypeToolStripMenuItem
             // 
             this.updateDocTypeToolStripMenuItem.Name = "updateDocTypeToolStripMenuItem";
-            this.updateDocTypeToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.updateDocTypeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.updateDocTypeToolStripMenuItem.Text = "UpdateDocType";
             this.updateDocTypeToolStripMenuItem.Click += new System.EventHandler(this.updateDocTypeToolStripMenuItem_Click);
             // 
             // loadTextCodesToolStripMenuItem
             // 
             this.loadTextCodesToolStripMenuItem.Name = "loadTextCodesToolStripMenuItem";
-            this.loadTextCodesToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.loadTextCodesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.loadTextCodesToolStripMenuItem.Text = "LoadTextCodes";
             this.loadTextCodesToolStripMenuItem.Click += new System.EventHandler(this.loadTextCodesToolStripMenuItem_Click);
             // 
@@ -415,7 +417,7 @@
             this.toolStripMenuItemExportTofil,
             this.loadTextCodeFromDiskToolStripMenuItem});
             this.textCodesToolStripMenuItem.Name = "textCodesToolStripMenuItem";
-            this.textCodesToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.textCodesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.textCodesToolStripMenuItem.Text = "TextCodes";
             // 
             // toolStripTextBoxFilePath
@@ -441,14 +443,14 @@
             // internationalSiteToolStripMenuItem
             // 
             this.internationalSiteToolStripMenuItem.Name = "internationalSiteToolStripMenuItem";
-            this.internationalSiteToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.internationalSiteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.internationalSiteToolStripMenuItem.Text = "InternationalSite";
             this.internationalSiteToolStripMenuItem.Click += new System.EventHandler(this.internationalSiteToolStripMenuItem_Click);
             // 
             // createDecToolStripMenuItem
             // 
             this.createDecToolStripMenuItem.Name = "createDecToolStripMenuItem";
-            this.createDecToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.createDecToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.createDecToolStripMenuItem.Text = "CreateDec";
             this.createDecToolStripMenuItem.Click += new System.EventHandler(this.createDecToolStripMenuItem_Click);
             // 
@@ -487,7 +489,7 @@
             this.exportToolStripMenuItem,
             this.importToolStripMenuItem1});
             this.expImpToolStripMenuItem.Name = "expImpToolStripMenuItem";
-            this.expImpToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
+            this.expImpToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
             this.expImpToolStripMenuItem.Text = "Exp/Imp";
             // 
             // exportToolStripMenuItem
@@ -502,14 +504,14 @@
             // expPackagesToolStripMenuItem
             // 
             this.expPackagesToolStripMenuItem.Name = "expPackagesToolStripMenuItem";
-            this.expPackagesToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.expPackagesToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.expPackagesToolStripMenuItem.Text = "Exp.Packages";
             this.expPackagesToolStripMenuItem.Click += new System.EventHandler(this.expPackagesToolStripMenuItem_Click);
             // 
             // expRolesToolStripMenuItem
             // 
             this.expRolesToolStripMenuItem.Name = "expRolesToolStripMenuItem";
-            this.expRolesToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.expRolesToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.expRolesToolStripMenuItem.Text = "Exp.Roles";
             this.expRolesToolStripMenuItem.Click += new System.EventHandler(this.expRolesToolStripMenuItem_Click);
             // 
@@ -543,7 +545,7 @@
             this.rTLToolStripMenuItem,
             this.lTRToolStripMenuItem});
             this.tenantRTLToolStripMenuItem.Name = "tenantRTLToolStripMenuItem";
-            this.tenantRTLToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
+            this.tenantRTLToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
             this.tenantRTLToolStripMenuItem.Text = "Tenant RTL";
             // 
             // tenantTxtBox
@@ -577,7 +579,7 @@
             // executeToolStripMenuItem
             // 
             this.executeToolStripMenuItem.Name = "executeToolStripMenuItem";
-            this.executeToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.executeToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.executeToolStripMenuItem.Text = "Execute";
             this.executeToolStripMenuItem.Click += new System.EventHandler(this.executeToolStripMenuItem_Click);
             // 
@@ -1772,6 +1774,15 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
             // 
+            // updateBluesnapTransactionsLabel
+            // 
+            this.updateBluesnapTransactionsLabel.AutoSize = true;
+            this.updateBluesnapTransactionsLabel.Location = new System.Drawing.Point(212, 573);
+            this.updateBluesnapTransactionsLabel.Name = "updateBluesnapTransactionsLabel";
+            this.updateBluesnapTransactionsLabel.Size = new System.Drawing.Size(16, 13);
+            this.updateBluesnapTransactionsLabel.TabIndex = 101;
+            this.updateBluesnapTransactionsLabel.Text = "...";
+            // 
             // bluesnapBtn
             // 
             this.bluesnapBtn.Location = new System.Drawing.Point(10, 563);
@@ -2039,6 +2050,16 @@
             this.tabPage4.Text = "Misc";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // fixJournalsButton
+            // 
+            this.fixJournalsButton.Location = new System.Drawing.Point(18, 63);
+            this.fixJournalsButton.Name = "fixJournalsButton";
+            this.fixJournalsButton.Size = new System.Drawing.Size(180, 36);
+            this.fixJournalsButton.TabIndex = 1;
+            this.fixJournalsButton.Text = "Fix Duplicated Journals";
+            this.fixJournalsButton.UseVisualStyleBackColor = true;
+            this.fixJournalsButton.Click += new System.EventHandler(this.fixJournalsButton_Click);
+            // 
             // button51
             // 
             this.button51.Location = new System.Drawing.Point(18, 21);
@@ -2049,24 +2070,12 @@
             this.button51.UseVisualStyleBackColor = true;
             this.button51.Click += new System.EventHandler(this.button51_Click_1);
             // 
-            // updateBluesnapTransactionsLabel
+            // accountingTesterToolStripMenuItem
             // 
-            this.updateBluesnapTransactionsLabel.AutoSize = true;
-            this.updateBluesnapTransactionsLabel.Location = new System.Drawing.Point(212, 573);
-            this.updateBluesnapTransactionsLabel.Name = "updateBluesnapTransactionsLabel";
-            this.updateBluesnapTransactionsLabel.Size = new System.Drawing.Size(16, 13);
-            this.updateBluesnapTransactionsLabel.TabIndex = 101;
-            this.updateBluesnapTransactionsLabel.Text = "...";
-            // 
-            // fixJournalsButton
-            // 
-            this.fixJournalsButton.Location = new System.Drawing.Point(18, 63);
-            this.fixJournalsButton.Name = "fixJournalsButton";
-            this.fixJournalsButton.Size = new System.Drawing.Size(180, 36);
-            this.fixJournalsButton.TabIndex = 1;
-            this.fixJournalsButton.Text = "Fix Duplicated Journals";
-            this.fixJournalsButton.UseVisualStyleBackColor = true;
-            this.fixJournalsButton.Click += new System.EventHandler(this.fixJournalsButton_Click);
+            this.accountingTesterToolStripMenuItem.Name = "accountingTesterToolStripMenuItem";
+            this.accountingTesterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.accountingTesterToolStripMenuItem.Text = "AccountingTester";
+            this.accountingTesterToolStripMenuItem.Click += new System.EventHandler(this.accountingTesterToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -2301,6 +2310,7 @@
         private System.Windows.Forms.Button bluesnapBtn;
         private System.Windows.Forms.Label updateBluesnapTransactionsLabel;
         private System.Windows.Forms.Button fixJournalsButton;
+        private System.Windows.Forms.ToolStripMenuItem accountingTesterToolStripMenuItem;
     }
 }
 

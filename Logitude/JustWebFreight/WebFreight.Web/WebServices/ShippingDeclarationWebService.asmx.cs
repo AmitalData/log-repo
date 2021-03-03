@@ -1587,6 +1587,8 @@ namespace WebFreight.Web.WebServices
                             }
                         }
                     }
+                        myDataProvider.PickupTruckerNumber = myFirstPickup.CarrierNumber;        
+                    
                 }
 
                 else
