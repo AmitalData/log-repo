@@ -70,7 +70,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.Messages
         {
             foreach (var item in ratesUpdate.RateUpdateList.ToList())
             {
-                if (string.IsNullOrEmpty(item.Currency.Code))
+                if (string.IsNullOrEmpty(item.Currency.Code) && string.IsNullOrEmpty(item.Currency.PartnerCode))
                 {
                     errorMsg = errorMsg + "Currency code is required. ";
                 }
