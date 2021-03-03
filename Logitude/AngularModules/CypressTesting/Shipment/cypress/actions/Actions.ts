@@ -15,7 +15,58 @@ import { BaseURLs } from '../../../Base/cypress/constants/URLs';
 import { QuickSearchDetails } from '../../../Base/cypress/models/QuickSearchDetails';
 import { verify } from 'cypress/types/sinon';
 import * as BaseActions from '../../../Base/cypress/actions/Actions';
+import { EventDetails } from 'cypress/models/EventDetails';
 
+export function NavigatesToEventsTab() {
+    cy.DefineRequestWait(RestAPI.GET, URLs.TraceEventsDomain, RequestAliases.GetTraceEvent);
+    cy.Click(ShipmentSelectors.EventsTab, null)
+    BaseAssertion.AssertStatusCode(RequestAliases.GetTraceEvent,200)
+}
+export function ClickOnAddEventButton() {
+    NavigatesToEventsTab();
+    cy.Click(BaseSelectors.Button, ShipmentSelectors.ContainAddEvent, null)
+}
+export function FillEventDetails(eventDetails: EventDetails) {
+    ClickOnAddEventButton()
+    cy.FillLogLov(ShipmentSelectors.EventType, eventDetails.EventType, true)
+    cy.FillDate(ShipmentSelectors.EventDate, eventDetails.EventDate)
+    cy.FillLogTextBox(ShipmentSelectors.EventTime, eventDetails.EventTime)
+    cy.FillLogTextBox(ShipmentSelectors.TraceEventNotes, eventDetails.EventNotes)
+}
+export function AddEvent(){
+    cy.DefineRequestWait(RestAPI.GET, URLs.TraceEventsDomain, RequestAliases.GetTraceEvent);
+    cy.DefineRequestWait(RestAPI.GET, URLs.ShipmentGetSingle, RequestAliases.ShipmentGetSingle);
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK)
+}
+export function AssertAddEvent(EventNote:string) {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetTraceEvent, 200).then((interception) => {
+        expect(interception.response.body.Notes,)
+    })
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentGetSingle, 200);
+}
+export function AssertExceptionResolved (EventNote:string){
+    BaseAssertion.AssertStatusCode( RequestAliases.ShipmentRequest,200).then((interception) => {
+        expect(interception.response.body.ExceptionResolvedDescription,EventNote)
+    })  
+}
+export function AssertEventAppearInEventTab(EventType:string) {
+cy.Click(ShipmentSelectors.EventItemBox,EventType)
+}
+export function CheckHasException(HasExceptionValue:string){
+  cy.get(BaseSelectors.HeaderScreen).find(BaseSelectors.HeaderScreenLable)
+  .contains(ShipmentSelectors.ContainHasException).next(BaseSelectors.td).should('contain.text',HasExceptionValue)  
+}
+export function ClickOnExceptionResolved(ExceptionResolvedNote:string){
+    cy.Click(ShipmentSelectors.ShipmentMoreList,null)
+    cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
+    cy.Click(ShipmentSelectors.ShipmentExceptionResolved,null)
+    cy.FillLogTextBox(ShipmentSelectors.EventNotes,ExceptionResolvedNote)
+    cy.Click(ShipmentSelectors.ConfirmActionButton,null)
+    
+}
+export function RefreshEventTab(){
+    cy.get(BaseSelectors.CurvedEditArea).find(BaseSelectors.Refresh).click()
+}
 //#region ShipmentsWorkspace
 export function NavigatesToShipmentsWorkspace() {
     cy.Click(BaseSelectors.OperationsMenu, null)
@@ -45,7 +96,7 @@ export function CreateShipment(shipmentLevel: string) {
 //#region Open And UpdateShipment
 export function UpdateShipment(saveButtonSelector: string, saveButtonSelectorContains?: string) {
     cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
-    cy.Click(saveButtonSelector, saveButtonSelectorContains,false)
+    cy.Click(saveButtonSelector, saveButtonSelectorContains, false)
 }
 
 export function OpenShipment(shipmentNumber: string) {
@@ -63,24 +114,24 @@ export function OpenShipment(shipmentNumber: string) {
 
     BaseAssertion.AssertStatusCode(RequestAliases.WaitLoadShipmentMenuButtons, 200);
 }
-export function SplitShipment(packageNumber:string){
+export function SplitShipment(packageNumber: string) {
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
     cy.Click(ShipmentSelectors.SplitShipmentButton, null);
-    cy.Click(ShipmentSelectors.SplitButton(packageNumber),null);
+    cy.Click(ShipmentSelectors.SplitButton(packageNumber), null);
     cy.DefineRequestWait(RestAPI.PUT, URLs.SplitShipment, RequestAliases.SplitShipmentRequest)
-    cy.Click(BaseSelectors.RedButton,ShipmentSelectors.ContainsSplit);
+    cy.Click(BaseSelectors.RedButton, ShipmentSelectors.ContainsSplit);
 }
 
-export function PartialSplitShipment(packagesDetails: PackagesDetails){
+export function PartialSplitShipment(packagesDetails: PackagesDetails) {
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
     cy.Click(ShipmentSelectors.SplitShipmentButton, null);
-    cy.Click(ShipmentSelectors.PackagePartialSplit,null);
+    cy.Click(ShipmentSelectors.PackagePartialSplit, null);
     cy.DefineRequestWait(RestAPI.PUT, URLs.SplitShipment, RequestAliases.SplitShipmentRequest)
     FillPartialSplitWizard(packagesDetails);
-    cy.Click(BaseSelectors.RedButton,ShipmentSelectors.ContainsSplit);
+    cy.Click(BaseSelectors.RedButton, ShipmentSelectors.ContainsSplit);
 }
 
-export function CancelShipment(note :string) {
+export function CancelShipment(note: string) {
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
     cy.Click(ShipmentSelectors.CancelShipmentButton, null);
     cy.FillLogTextBox(ShipmentSelectors.ShipmentEventNote, note)
@@ -102,14 +153,14 @@ export function ValidateCancelIconExist(IsCancelled: boolean) {
     }
 }
 
-export function ValidateShipmentEventActions(eventSelector : string , excpectedMSG : string){
-    cy.DefineRequestWait(RestAPI.GET,URLs.TraceEventsDomain,RequestAliases.GetTraceEvent);
-    cy.Click(eventSelector,null);
+export function ValidateShipmentEventActions(eventSelector: string, excpectedMSG: string) {
+    cy.DefineRequestWait(RestAPI.GET, URLs.TraceEventsDomain, RequestAliases.GetTraceEvent);
+    cy.Click(eventSelector, null);
     BaseAssertion.AssertStatusCode(RequestAliases.GetTraceEvent, 200).then((interception) => {
         // let actualMSG = interception.response.body[0].Notes;
         // assert.equal(actualMSG, excpectedMSG);
         let IndexOfEvent = interception.response.body.map(function (t: { Notes: string; }) { return t.Notes; }).indexOf(excpectedMSG);
-        assert.notEqual(IndexOfEvent,"-1")
+        assert.notEqual(IndexOfEvent, "-1")
     });
 }
 
@@ -134,31 +185,31 @@ export function ValidateShipmentFields(IsCanceled: boolean) {
     CheckIfDisable(ShipmentSelectors.ReceivablesTab, BaseSelectors.AddButton, IsCanceled);
 }
 
-export function ValidatePackageDetails(tabSelector :string,partialSplitDetails:PackagesDetails,grossWeightSelector:string,isPackage:boolean){
+export function ValidatePackageDetails(tabSelector: string, partialSplitDetails: PackagesDetails, grossWeightSelector: string, isPackage: boolean) {
     cy.Navigate(tabSelector)
-    if(isPackage){
+    if (isPackage) {
         GetCellAssertion("1", partialSplitDetails.Quantity.toString());
         GetCellAssertion("3", partialSplitDetails.Volume.toString());
         GetCellAssertion("5", partialSplitDetails.GrossWeight.toString());
     }
-    BaseAssertion.AssertElementHaveValue(grossWeightSelector,partialSplitDetails.GrossWeight.toString())
+    BaseAssertion.AssertElementHaveValue(grossWeightSelector, partialSplitDetails.GrossWeight.toString())
 }
 
-export function ValidateShipmentNumber(OldShipmentNumber:string){
+export function ValidateShipmentNumber(OldShipmentNumber: string) {
     BaseAssertion.AssertStatusCode(RequestAliases.GetAll, 200)
-    cy.get(ShipmentSelectors.ShipmentNumberInTitle+ BaseSelectors.LastElement).invoke('text').then((text) => {
+    cy.get(ShipmentSelectors.ShipmentNumberInTitle + BaseSelectors.LastElement).invoke('text').then((text) => {
         assert.notEqual(OldShipmentNumber + ":", text.trim())
     });
 }
 
-function GetCellAssertion(cellNumber:string , ValueToCompare:string){
+function GetCellAssertion(cellNumber: string, ValueToCompare: string) {
     cy.get(ShipmentSelectors.PackageGrid(cellNumber) + BaseSelectors.LastElement).children('div').children('div').invoke('text').then((text) => {
         assert.equal(ValueToCompare, text.trim())
     })
 }
 
-function EditGeneralField(){
-    cy.FillLogTextBox(ShipmentSelectors.ShipmentValueOfGoods,"123");
+function EditGeneralField() {
+    cy.FillLogTextBox(ShipmentSelectors.ShipmentValueOfGoods, "123");
     UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 }
@@ -173,11 +224,11 @@ function CheckIfHaveClass(tabSelector: string, fieldSelector: string, classValue
     BaseAssertion.AssertElementHaveClasss(fieldSelector, IsHaveCLass ? BaseSelectors.HaveClass : BaseSelectors.NotHaveClass, classValue)
 }
 
-function FillPartialSplitWizard(packagesDetails: PackagesDetails){
+function FillPartialSplitWizard(packagesDetails: PackagesDetails) {
     cy.FillLogTextBox(ShipmentSelectors.PackageQuantity, packagesDetails.Quantity.toString())
     cy.get(ShipmentSelectors.PackageVolume).type(packagesDetails.Volume.toString());
     cy.get(ShipmentSelectors.PackageWeight).type(packagesDetails.GrossWeight.toString());
-    cy.Click(BaseSelectors.RedButton+BaseSelectors.LastElement,null);
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
 }
 
 export function ConnectOrDisconnectShipment() {
@@ -246,7 +297,7 @@ export function FillPackageTab(transportMode: string, packagesDetails: PackagesD
         cy.Click(ShipmentSelectors.AddPackage, null)
         if (Conditions.HasPacakageType(shipmentType)) {
             cy.FillLogLov(ShipmentSelectors.PackageType, packagesDetails[i].PackageType, true)
-            if(packagesDetails[i].ContainerNumber){
+            if (packagesDetails[i].ContainerNumber) {
                 packagesDetails[i].ContainerNumber = packagesDetails[i].ContainerNumber == 'Random' ? GetGeneratedRandomContainerNumber() : packagesDetails[i].ContainerNumber;
                 cy.FillLogTextBox(ShipmentSelectors.ContainerNumber, packagesDetails[i].ContainerNumber)
             }
@@ -513,7 +564,7 @@ export function Retransfer() {
     cy.Click(ShipmentSelectors.CloseCustomsTransmissions, null)
 }
 
-export function FormatDate(date: string): string{
+export function FormatDate(date: string): string {
     var dateString = date == 'Today' ? new Date().toDateString() : date;
     var currentDateArray = dateString.split(" ");
     return currentDateArray[2] + " " + currentDateArray[1] + " " + currentDateArray[3];
@@ -712,7 +763,7 @@ function FillMasterAgent(shipmentDetails: ShipmentDetails) {
     cy.FillLogLov(ShipmentSelectors.MasterAgent, shipmentDetails.Agent, false)
 }
 
-function NavigateToEditMAinCarriage(){
+function NavigateToEditMAinCarriage() {
     cy.Click(ShipmentSelectors.RoutingsTab, null);
     cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
 }
