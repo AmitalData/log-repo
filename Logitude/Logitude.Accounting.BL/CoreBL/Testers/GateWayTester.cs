@@ -504,7 +504,7 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
 
                 var param = LogitudeXmlSerializer.JsonConvertDeserializeTObject<ParamBasic>(textBoxParam);
                 var s = new ReverseEngineerTotalByMonth_ControlAccountService(param.MyDate, param.MyTenant, param.MyGLAccId);
-                s.FixDbIntegrityFromLedgeToTotal();
+                s.FixDbIntegrityFromLedgeToTotal(param.TheWholePeriod);
 
                 gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<GLAccountTotalByMonthsDTO>>(s.CompareReport.GLAccountTotalByMonthsList);
 
@@ -669,5 +669,8 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
         public DateTime MyDate { get; set; }
 
         public string MyGLAccId { get; set; }
+
+        public bool TheWholePeriod { get; set; }
+
     }
 }
