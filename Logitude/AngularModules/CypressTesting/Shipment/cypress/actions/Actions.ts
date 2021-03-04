@@ -50,7 +50,7 @@ export function AssertExceptionResolved (EventNote:string){
     })  
 }
 export function AssertEventAppearInEventTab(EventType:string) {
-cy.Click(ShipmentSelectors.EventItemBox,EventType)
+cy.get(ShipmentSelectors.EventItemBox).contains(EventType)
 }
 export function CheckHasException(HasExceptionValue:string){
   cy.get(BaseSelectors.HeaderScreen).find(BaseSelectors.HeaderScreenLable)

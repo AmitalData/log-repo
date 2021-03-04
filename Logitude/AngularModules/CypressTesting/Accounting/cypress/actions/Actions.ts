@@ -391,18 +391,15 @@ export function ARInvoiceSearch(ARInvoiceNumber: string) {
     BaseAssertion.AssertStatusCode(RequestAliases.performancelogs, 200);
 }
 export function ARInvoiceSearchInTransferScreen(ARInvoiceNumber: string) {
-    let ARInvoiceNumberWithoutLastNumber = BaseActions.GetstringWithoutLastCharacter(ARInvoiceNumber)
-    let LastNumberOFARInvoice = BaseActions.GetLastCharacter(ARInvoiceNumber)
-    cy.FillLogTextBox(BaseSelectors.NullSearch, ARInvoiceNumberWithoutLastNumber)
-    cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViewsGetByFilters, RequestAliases.ARInvoiceViewsGetByFilters)
-    cy.get(BaseSelectors.NullSearch).type(LastNumberOFARInvoice)
-    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceViewsGetByFilters, 200)
+    cy.DefineRequestWait(RestAPI.POST, AccountingURLs.PerformancelogsPostLogsList, RequestAliases.performancelogs);
+    cy.FillLogTextBox(BaseSelectors.NullSearch,ARInvoiceNumber)
+    BaseAssertion.AssertStatusCode(RequestAliases.performancelogs, 200);
 }
 export function ClickOnRowDependingOnARInvoiceNumber(ARInvoiceNumber: string) {
     BaseActions.ClickOnRowDependingOnValue(ARInvoiceNumber)
 }
 export function ExportARInvoice(ARInvoiceNumber: string) {
-    cy.get(AccountingSelectors.TransferCheckBox(ARInvoiceNumber)).check({});
+    cy.get(AccountingSelectors.TransferCheckBox(ARInvoiceNumber)).find(BaseSelectors.label).click({force:true});
     cy.Click(BaseSelectors.RedButton, AccountingSelectors.ContainExport)
 }
 export function CloseExportingInvoiceTransferWindow() {
