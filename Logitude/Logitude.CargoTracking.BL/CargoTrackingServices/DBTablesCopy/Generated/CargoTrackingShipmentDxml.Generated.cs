@@ -8,7 +8,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
    {    
       
         public string  GetCargoTrackingShipmentDxml (){
-		    string dxmlFile = "<Table Name='CargoTrackingShipments' Schema='dbo' DBType='CargoTracking'>"+
+		    string dxmlFile = "<Table Name='CargoTrackingShipments' Schema='dbo' DBType='CargoTracking' Module='CargoTracking'>"+
 "  <Column Name='Tenant' Type='int'>"+
 "    <Constraints Nullable='false' />"+
 "  </Column>"+
@@ -199,6 +199,21 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='GrossWeightUnitCode' Type='varchar' Size='3'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='AssignedCustomsAgentDone' Type='bit'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='AssignedCustomsAgentDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='AssignedCustomsAgentEstDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='AssignedCustomsAgentNotes' Type='nvarchar' Size='32'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='AssignedCustomsAgentExcReason' Type='nvarchar' Size='32'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Relation ForeignKeyColumn='EntityType' ReferencedTable='CargoTrackingHeaderEntityTypes' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+

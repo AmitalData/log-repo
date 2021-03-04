@@ -382,6 +382,31 @@ export class CargoTrackingShipmentPM {
     public set GrossWeightUnitCode(newValue: string) { if (this.grossWeightUnitCode != newValue) { this.grossWeightUnitCode = newValue; this.MarkAsDirty("GrossWeightUnitCode"); } }
        
 	 
+    private assignedCustomsAgentDone: boolean;
+    public get AssignedCustomsAgentDone() { return this.assignedCustomsAgentDone; }
+    public set AssignedCustomsAgentDone(newValue: boolean) { if (this.assignedCustomsAgentDone != newValue) { this.assignedCustomsAgentDone = newValue; this.MarkAsDirty("AssignedCustomsAgentDone"); } }
+       
+	 
+    private assignedCustomsAgentDate: Date;
+    public get AssignedCustomsAgentDate() { return this.assignedCustomsAgentDate; }
+    public set AssignedCustomsAgentDate(newValue: Date) { if (this.assignedCustomsAgentDate != newValue) { this.assignedCustomsAgentDate = newValue; this.MarkAsDirty("AssignedCustomsAgentDate"); } }
+       
+	 
+    private assignedCustomsAgentEstDate: Date;
+    public get AssignedCustomsAgentEstDate() { return this.assignedCustomsAgentEstDate; }
+    public set AssignedCustomsAgentEstDate(newValue: Date) { if (this.assignedCustomsAgentEstDate != newValue) { this.assignedCustomsAgentEstDate = newValue; this.MarkAsDirty("AssignedCustomsAgentEstDate"); } }
+       
+	 
+    private assignedCustomsAgentNotes: string;
+    public get AssignedCustomsAgentNotes() { return this.assignedCustomsAgentNotes; }
+    public set AssignedCustomsAgentNotes(newValue: string) { if (this.assignedCustomsAgentNotes != newValue) { this.assignedCustomsAgentNotes = newValue; this.MarkAsDirty("AssignedCustomsAgentNotes"); } }
+       
+	 
+    private assignedCustomsAgentExcReason: string;
+    public get AssignedCustomsAgentExcReason() { return this.assignedCustomsAgentExcReason; }
+    public set AssignedCustomsAgentExcReason(newValue: string) { if (this.assignedCustomsAgentExcReason != newValue) { this.assignedCustomsAgentExcReason = newValue; this.MarkAsDirty("AssignedCustomsAgentExcReason"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		
@@ -410,4 +435,4 @@ export class CargoTrackingShipmentPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

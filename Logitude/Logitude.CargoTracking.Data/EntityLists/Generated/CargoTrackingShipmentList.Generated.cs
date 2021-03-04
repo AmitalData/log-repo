@@ -162,6 +162,16 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public string AssignedTruckerNotes  { get; set; }
        [DataMember]
        public string GrossWeightUnitCode  { get; set; }
+       [DataMember]
+       public bool? AssignedCustomsAgentDone  { get; set; }
+       [DataMember]
+       public DateTime? AssignedCustomsAgentDate  { get; set; }
+       [DataMember]
+       public DateTime? AssignedCustomsAgentEstDate  { get; set; }
+       [DataMember]
+       public string AssignedCustomsAgentNotes  { get; set; }
+       [DataMember]
+       public string AssignedCustomsAgentExcReason  { get; set; }
    }
 
 }
