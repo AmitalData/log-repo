@@ -560,7 +560,7 @@ function FillShippingLineCode() {
     let code: string = gr.GenerateRandomNumberAndString(4);
     cy.get(TariffSelectors.ShippingLineCode).clear().type(code);
     cy.FillLogTextBox(TariffSelectors.ShippingLineSCACCode, code)
-    cy.get(BaseSelectors.Label).contains(TariffSelectors.ContainsCode).click();
+    cy.get(BaseSelectors.LabelClass).contains(TariffSelectors.ContainsCode).click();
     cy.get(BaseSelectors.RedButton).then($btn => {
         if ($btn.is(TariffSelectors.Disabled)) {
             FillShippingLineCode();
