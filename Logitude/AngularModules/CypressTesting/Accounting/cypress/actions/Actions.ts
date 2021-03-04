@@ -392,11 +392,8 @@ export function ARInvoiceSearch(ARInvoiceNumber: string) {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceViewsGetByFilters, 200);
 }
 export function ARInvoiceSearchInTransferScreen(ARInvoiceNumber: string) {
-    let ARInvoiceNumberWithoutLastCharcter=BaseActions.GetstringWithoutLastCharacter(ARInvoiceNumber)
-    let LastChartOfARInvoiceNumber=BaseActions.GetLastCharacter(ARInvoiceNumber)
-    cy.FillLogTextBox(BaseSelectors.NullSearch,ARInvoiceNumberWithoutLastCharcter)
     cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViewsGetByFilters+ARInvoiceNumber+"**", RequestAliases.ARInvoiceViewsGetByFilters);
-    cy.FillLogTextBox(BaseSelectors.NullSearch,LastChartOfARInvoiceNumber)
+    cy.FillLogTextBox(BaseSelectors.NullSearch,ARInvoiceNumber)
    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceViewsGetByFilters, 200);
 }
 
