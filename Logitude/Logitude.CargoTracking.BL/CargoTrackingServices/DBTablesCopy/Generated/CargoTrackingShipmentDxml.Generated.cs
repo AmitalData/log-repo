@@ -198,9 +198,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='AssignedTruckerNotes' Type='nvarchar' Size='32'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='GrossWeightUnitCode' Type='varchar' Size='3'>"+
-"    <Constraints Nullable='true' />"+
-"  </Column>"+
 "  <Column Name='AssignedCustomsAgentDone' Type='bit'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
@@ -214,6 +211,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='AssignedCustomsAgentExcReason' Type='nvarchar' Size='32'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='GrossWeightUnitCode' Type='varchar' Size='3'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Relation ForeignKeyColumn='EntityType' ReferencedTable='CargoTrackingHeaderEntityTypes' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+
