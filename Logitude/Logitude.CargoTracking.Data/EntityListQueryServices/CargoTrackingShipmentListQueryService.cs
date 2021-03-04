@@ -97,12 +97,12 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                AssignedCustomsAgentEstDate = a.AssignedCustomsAgentEstDate,
                                                                AssignedCustomsAgentExcReason = a.AssignedCustomsAgentExcReason,
                                                                AssignedCustomsAgentNotes= a.AssignedCustomsAgentNotes,
+            
                                                                ShipmentLevelCode = a.ShipmentLevelCode,
                                                                AssignedTruckerDate = a.AssignedTruckerDate,
                                                                AssignedTruckerDone = a.AssignedTruckerDone,
                                                                GrossWeightUnitCode = a.GrossWeightUnitCode
                                                            });
-            
             return query;
         }
 
@@ -232,17 +232,25 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                    AssignedTruckerEstimationDate = poco.AssignedTruckerEstimationDate,
                    AssignedTruckerNotes = poco.AssignedTruckerNotes,
 
-                   GrossWeightUnitCode = poco.GrossWeightUnitCode,
-                   
-                   
-                   
-
                     AssignedCustomsAgentDate = poco.AssignedCustomsAgentDate,
                     AssignedCustomsAgentDone = poco.AssignedCustomsAgentDone,
                     AssignedCustomsAgentEstDate = poco.AssignedCustomsAgentEstDate,
                     AssignedCustomsAgentExcReason = poco.AssignedCustomsAgentExcReason,
                     AssignedCustomsAgentNotes = poco.AssignedCustomsAgentNotes,
 
+
+                   DeliveryDone = poco.DeliveryDone,
+
+                   DeliveryDate = poco.DeliveryDate,
+
+                   DeliveryEstimationDate= poco.DeliveryEstimationDate,
+
+                   DeliveryNotes= poco.DeliveryNotes,
+
+                   DeliveryExceptionReason = poco.DeliveryExceptionReason,
+
+                   GrossWeightUnitCode = poco.GrossWeightUnitCode
+                   
                 };
             if(list != null)
             {

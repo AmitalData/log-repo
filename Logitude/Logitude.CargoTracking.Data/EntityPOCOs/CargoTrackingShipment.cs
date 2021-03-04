@@ -151,8 +151,6 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public DateTime? AssignedTruckerEstimationDate { get; set; }
         [Column("AssignedTruckerNotes")]
 	    public string AssignedTruckerNotes { get; set; }
-        [Column("GrossWeightUnitCode")]
-	    public string GrossWeightUnitCode { get; set; }
         [Column("AssignedCustomsAgentDone")]
 	    public bool? AssignedCustomsAgentDone { get; set; }
         [Column("AssignedCustomsAgentDate")]
@@ -163,6 +161,18 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public string AssignedCustomsAgentNotes { get; set; }
         [Column("AssignedCustomsAgentExcReason")]
 	    public string AssignedCustomsAgentExcReason { get; set; }
+        [Column("DeliveryDone")]
+	    public bool DeliveryDone { get; set; }
+        [Column("DeliveryDate")]
+	    public DateTime? DeliveryDate { get; set; }
+        [Column("DeliveryEstimationDate")]
+	    public DateTime? DeliveryEstimationDate { get; set; }
+        [Column("DeliveryNotes")]
+	    public string DeliveryNotes { get; set; }
+        [Column("DeliveryExceptionReason")]
+	    public string DeliveryExceptionReason { get; set; }
+        [Column("GrossWeightUnitCode")]
+	    public string GrossWeightUnitCode { get; set; }
     }
 }
 	 
