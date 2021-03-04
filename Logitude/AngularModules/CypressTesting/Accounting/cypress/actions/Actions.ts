@@ -398,7 +398,7 @@ export function ClickOnRowDependingOnARInvoiceNumber(ARInvoiceNumber: string) {
     BaseActions.ClickOnRowDependingOnValue(ARInvoiceNumber)
 }
 export function ExportARInvoice(ARInvoiceNumber: string) {
-    cy.get(AccountingSelectors.TransferCheckBox(ARInvoiceNumber)).check({force:true});
+    cy.get(AccountingSelectors.TransferCheckBox(ARInvoiceNumber)).click({force:true});
     cy.Click(BaseSelectors.RedButton, AccountingSelectors.ContainExport)
 }
 export function CloseExportingInvoiceTransferWindow() {
