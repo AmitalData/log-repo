@@ -295,6 +295,9 @@ export function FillPartnersTab(direction: string, transportMode: string, partne
 export function FillPackageTab(transportMode: string, packagesDetails: PackagesDetails[], shipmentType?: string) {
     cy.Click(ShipmentSelectors.PackagesTab, null)
     for (let i = 0; i < packagesDetails.length; i++) {
+        packagesDetails[i].ContainerNumber = packagesDetails[i].ContainerNumber == 'Random' ? GetGeneratedRandomContainerNumber() : packagesDetails[i].ContainerNumber;
+    }
+    for (let i = 0; i < packagesDetails.length; i++) {
         cy.Click(ShipmentSelectors.AddPackage, null)
         if (Conditions.HasPacakageType(shipmentType)) {
             cy.FillLogLov(ShipmentSelectors.PackageType, packagesDetails[i].PackageType, true)
@@ -526,14 +529,14 @@ export function AMANACView(TransportMode: string, AMANACView: string) {
 
 export function AMANACMarkeShipmentAs(MarkAs: string, ShipmentNumber: string) {
     MarkAs = MarkAs.replace(/\s/g, "");
-    SearchAShipmentInNullSearch(ShipmentNumber);
+    //SearchAShipmentInNullSearch(ShipmentNumber);
     cy.Click(ShipmentSelectors.AMANACMarkeShipmentAs(MarkAs, ShipmentNumber), null)
     cy.Click(BaseSelectors.Button, BaseSelectors.ContainsClose)
 }
 
 export function AMANACExportAShipment(ShipmentNumber: string) {
     cy.Click(ShipmentSelectors.CheckAll, null);
-    SearchAShipmentInNullSearch(ShipmentNumber);
+    //SearchAShipmentInNullSearch(ShipmentNumber);
     cy.Click(ShipmentSelectors.CheckShipment(ShipmentNumber), null);
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsExport);
 }
