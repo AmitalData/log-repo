@@ -53,6 +53,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             columnsForCopy.Add("AssignedToTruckerDate");
             columnsForCopy.Add("GrossWeightUnitCode");
 
+            columnsForCopy.Add("AssginedToCustomsAgentDate");
 
             return string.Join(",", columnsForCopy.ToArray());
         }

@@ -2,7 +2,8 @@
 <Table
   Name="CargoTrackingShipments"
   Schema="dbo"
-  DBType="CargoTracking">
+  DBType="CargoTracking"
+  Module="CargoTracking">
   <Column
     Name="Tenant"
     Type="int">
@@ -403,6 +404,70 @@
   </Column>
   <Column
     Name="AssignedTruckerNotes"
+    Type="nvarchar"
+    Size="32">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AssignedCustomsAgentDone"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AssignedCustomsAgentDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AssignedCustomsAgentEstDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AssignedCustomsAgentNotes"
+    Type="nvarchar"
+    Size="32">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AssignedCustomsAgentExcReason"
+    Type="nvarchar"
+    Size="32">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DeliveryDone"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DeliveryDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DeliveryEstimationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DeliveryNotes"
+    Type="nvarchar"
+    Size="32">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DeliveryExceptionReason"
     Type="nvarchar"
     Size="32">
     <Constraints
