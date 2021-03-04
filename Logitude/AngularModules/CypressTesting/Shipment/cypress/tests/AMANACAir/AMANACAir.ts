@@ -62,14 +62,14 @@ When("the user marke the shipment {string} for transfer in {string} view", (Mark
 
 Then("the shipment should appear in the {string} view in the AMANAC workspace", (AMANACView) => {
     Actions.AMANACView(shipmentDetails.TransportMode, AMANACView);
-    Actions.SearchAShipmentInNullSearch(shipmentDetails.ShipmentNumber);
+    //Actions.SearchAShipmentInNullSearch(shipmentDetails.ShipmentNumber);
     BaseAssertion.AssertElementContain(ShipmentSelectors.AMANACShipmentNumber(shipmentDetails.ShipmentNumber), shipmentDetails.ShipmentNumber);
     cy.Click(ShipmentSelectors.CloseAMANACView, null);
 });
 
 Then("should not appear in the {string} view in the AMANAC workspace", (AMANACView) => {
     Actions.AMANACView(shipmentDetails.TransportMode, AMANACView);
-    Actions.SearchAShipmentInNullSearch(shipmentDetails.ShipmentNumber);
+    //Actions.SearchAShipmentInNullSearch(shipmentDetails.ShipmentNumber);
     BaseAssertion.AssertElementNotExist(ShipmentSelectors.AMANACShipmentNumber(shipmentDetails.ShipmentNumber));
     cy.Click(ShipmentSelectors.CloseAMANACView, null);
 });
