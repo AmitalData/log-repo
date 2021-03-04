@@ -3,12 +3,13 @@ import { AddExceptionReasonToUnifreightStatusComponent } from './Components/Refe
  
 import { ReferantWorkspaceComponent } from './Components/ReferantWorkspaces/ReferantWorkspaceComponent';
 import { DeclarationReferantDataFiltersMenuComponent } from './Components/FiltersMenu/DeclarationReferantDataFiltersMenuComponent';
+import { AddEditExceptionReasonComponent } from './Components/ReferantExceptionReason/AddEditExceptionReasonComponent';
  
 export const Components =
     [
         AddEditReferantExceptionReasonComponent,
         AddExceptionReasonToUnifreightStatusComponent,
- 
+        AddEditExceptionReasonComponent,
         ReferantWorkspaceComponent,
         DeclarationReferantDataFiltersMenuComponent,
     ];
@@ -21,7 +22,7 @@ export class ModuleDeclarations {
         switch (name) {
             case "AddEditReferantExceptionReasonComponent": { myResult = AddEditReferantExceptionReasonComponent; break; }
             case "AddExceptionReasonToUnifreightStatusComponent": { myResult = AddExceptionReasonToUnifreightStatusComponent; break; }
- 
+            case "AddEditExceptionReasonComponent": { myResult = AddEditExceptionReasonComponent; break; }
             case "ReferantWorkspaceComponent": { myResult = ReferantWorkspaceComponent; break; }
             case "DeclarationReferantDataFiltersMenuComponent": { myResult = DeclarationReferantDataFiltersMenuComponent; break; }
  
