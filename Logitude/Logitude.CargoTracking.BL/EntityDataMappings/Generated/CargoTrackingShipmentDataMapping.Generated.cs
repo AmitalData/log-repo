@@ -80,24 +80,22 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         ContainersNumbers, 
 	         PackagesQuantity, 
 	         DirectionId, 
-	         ShipmentLevelCode,
+	         ShipmentLevelCode, 
 	         AssignedTruckerDone, 
 	         AssignedTruckerDate, 
 	         AssignedTruckerEstimationDate, 
-	         
-	         GrossWeightUnitCode,
 	         AssignedTruckerNotes, 
 	         AssignedCustomsAgentDone, 
 	         AssignedCustomsAgentDate, 
 	         AssignedCustomsAgentEstDate, 
 	         AssignedCustomsAgentNotes, 
-	         AssignedCustomsAgentExcReason,
+	         AssignedCustomsAgentExcReason, 
 	         DeliveryDone, 
 	         DeliveryDate, 
 	         DeliveryEstimationDate, 
 	         DeliveryNotes, 
-	         DeliveryExceptionReason,
-	         
+	         DeliveryExceptionReason, 
+	         GrossWeightUnitCode,
 	      }
 
 
@@ -170,25 +168,22 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         ContainersNumbers, 
 	         PackagesQuantity, 
 	         DirectionId, 
-	         ShipmentLevelCode,
+	         ShipmentLevelCode, 
 	         AssignedTruckerDone, 
 	         AssignedTruckerDate, 
 	         AssignedTruckerEstimationDate, 
-	          
-	         GrossWeightUnitCode,
 	         AssignedTruckerNotes, 
 	         AssignedCustomsAgentDone, 
 	         AssignedCustomsAgentDate, 
 	         AssignedCustomsAgentEstDate, 
 	         AssignedCustomsAgentNotes, 
-	         AssignedCustomsAgentExcReason,
-	         
+	         AssignedCustomsAgentExcReason, 
 	         DeliveryDone, 
 	         DeliveryDate, 
 	         DeliveryEstimationDate, 
 	         DeliveryNotes, 
-	         DeliveryExceptionReason,
-	         
+	         DeliveryExceptionReason, 
+	         GrossWeightUnitCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -482,6 +477,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 				entityPOCO.DirectionId = entityPM.DirectionId;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentLevelCode))
+            {
+				entityPOCO.ShipmentLevelCode = entityPM.ShipmentLevelCode;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedTruckerDone))
             {
 				entityPOCO.AssignedTruckerDone = entityPM.AssignedTruckerDone;
@@ -497,18 +497,9 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 				entityPOCO.AssignedTruckerEstimationDate = entityPM.AssignedTruckerEstimationDate;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentLevelCode))
-            {
-				entityPOCO.ShipmentLevelCode = entityPM.ShipmentLevelCode;
-			}
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedTruckerNotes))
             {
 				entityPOCO.AssignedTruckerNotes = entityPM.AssignedTruckerNotes;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GrossWeightUnitCode))
-            {
-				entityPOCO.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentDone))
@@ -520,10 +511,20 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
 				entityPOCO.AssignedCustomsAgentDate = entityPM.AssignedCustomsAgentDate;
 			}
-
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentEstDate))
-			{
-				entityPOCO.AssignedCustomsAgentEstDate = entityPM.AssignedCustomsAgentEstDate; 
+            {
+				entityPOCO.AssignedCustomsAgentEstDate = entityPM.AssignedCustomsAgentEstDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentNotes))
+            {
+				entityPOCO.AssignedCustomsAgentNotes = entityPM.AssignedCustomsAgentNotes;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentExcReason))
+            {
+				entityPOCO.AssignedCustomsAgentExcReason = entityPM.AssignedCustomsAgentExcReason;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeliveryDone))
@@ -541,16 +542,6 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 				entityPOCO.DeliveryEstimationDate = entityPM.DeliveryEstimationDate;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentNotes))
-            {
-				entityPOCO.AssignedCustomsAgentNotes = entityPM.AssignedCustomsAgentNotes;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentExcReason))
-            {
-				entityPOCO.AssignedCustomsAgentExcReason = entityPM.AssignedCustomsAgentExcReason;
-			}
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeliveryNotes))
             {
 				entityPOCO.DeliveryNotes = entityPM.DeliveryNotes;
@@ -559,6 +550,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeliveryExceptionReason))
             {
 				entityPOCO.DeliveryExceptionReason = entityPM.DeliveryExceptionReason;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GrossWeightUnitCode))
+            {
+				entityPOCO.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
 			}
 			}
 
@@ -855,6 +851,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.DirectionId = entityPOCO.DirectionId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShipmentLevelCode))
+            {
+					entityPM.ShipmentLevelCode = entityPOCO.ShipmentLevelCode;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AssignedTruckerDone))
             {
 					entityPM.AssignedTruckerDone = entityPOCO.AssignedTruckerDone;
@@ -866,32 +867,18 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AssignedTruckerEstimationDate))
-			{
-				entityPM.AssignedTruckerEstimationDate = entityPOCO.AssignedTruckerEstimationDate;
-			}
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShipmentLevelCode))
             {
-					entityPM.ShipmentLevelCode = entityPOCO.ShipmentLevelCode;
+					entityPM.AssignedTruckerEstimationDate = entityPOCO.AssignedTruckerEstimationDate;
             }
-
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AssignedTruckerNotes))
             {
 					entityPM.AssignedTruckerNotes = entityPOCO.AssignedTruckerNotes;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GrossWeightUnitCode))
-            {
-					entityPM.GrossWeightUnitCode = entityPOCO.GrossWeightUnitCode;
-            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AssignedCustomsAgentDone))
             {
 					entityPM.AssignedCustomsAgentDone = entityPOCO.AssignedCustomsAgentDone;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeliveryDone))
-            {
-					entityPM.DeliveryDone = entityPOCO.DeliveryDone;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AssignedCustomsAgentDate))
@@ -914,7 +901,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.AssignedCustomsAgentExcReason = entityPOCO.AssignedCustomsAgentExcReason;
             }
 
-		
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeliveryDone))
+            {
+					entityPM.DeliveryDone = entityPOCO.DeliveryDone;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeliveryDate))
             {
 					entityPM.DeliveryDate = entityPOCO.DeliveryDate;
@@ -929,14 +920,15 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
 					entityPM.DeliveryNotes = entityPOCO.DeliveryNotes;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GrossWeightUnitCode))
-            {
-					entityPM.GrossWeightUnitCode = entityPOCO.GrossWeightUnitCode;
-            }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeliveryExceptionReason))
             {
 					entityPM.DeliveryExceptionReason = entityPOCO.DeliveryExceptionReason;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GrossWeightUnitCode))
+            {
+					entityPM.GrossWeightUnitCode = entityPOCO.GrossWeightUnitCode;
             }
 
 		}
@@ -1230,6 +1222,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
                 oldEntityPM.DirectionId = entityPM.DirectionId;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentLevelCode))
+            {
+                oldEntityPM.ShipmentLevelCode = entityPM.ShipmentLevelCode;
+            }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedTruckerDone))
             {
                 oldEntityPM.AssignedTruckerDone = entityPM.AssignedTruckerDone;
@@ -1245,19 +1242,9 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
                 oldEntityPM.AssignedTruckerEstimationDate = entityPM.AssignedTruckerEstimationDate;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentLevelCode))
-            {
-                oldEntityPM.ShipmentLevelCode = entityPM.ShipmentLevelCode;
-            }
-
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedTruckerNotes))
             {
                 oldEntityPM.AssignedTruckerNotes = entityPM.AssignedTruckerNotes;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GrossWeightUnitCode))
-            {
-                oldEntityPM.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentDone))
@@ -1284,6 +1271,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
                 oldEntityPM.AssignedCustomsAgentExcReason = entityPM.AssignedCustomsAgentExcReason;
             }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeliveryDone))
             {
                 oldEntityPM.DeliveryDone = entityPM.DeliveryDone;

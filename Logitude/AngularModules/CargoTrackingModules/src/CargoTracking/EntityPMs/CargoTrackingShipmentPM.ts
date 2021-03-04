@@ -357,6 +357,8 @@ export class CargoTrackingShipmentPM {
     private shipmentLevelCode: string;
     public get ShipmentLevelCode() { return this.shipmentLevelCode; }
     public set ShipmentLevelCode(newValue: string) { if (this.shipmentLevelCode != newValue) { this.shipmentLevelCode = newValue; this.MarkAsDirty("ShipmentLevelCode"); } }
+       
+	 
     private assignedTruckerDone: boolean;
     public get AssignedTruckerDone() { return this.assignedTruckerDone; }
     public set AssignedTruckerDone(newValue: boolean) { if (this.assignedTruckerDone != newValue) { this.assignedTruckerDone = newValue; this.MarkAsDirty("AssignedTruckerDone"); } }
@@ -375,11 +377,6 @@ export class CargoTrackingShipmentPM {
     private assignedTruckerNotes: string;
     public get AssignedTruckerNotes() { return this.assignedTruckerNotes; }
     public set AssignedTruckerNotes(newValue: string) { if (this.assignedTruckerNotes != newValue) { this.assignedTruckerNotes = newValue; this.MarkAsDirty("AssignedTruckerNotes"); } }
-       
-	 
-    private grossWeightUnitCode: string;
-    public get GrossWeightUnitCode() { return this.grossWeightUnitCode; }
-    public set GrossWeightUnitCode(newValue: string) { if (this.grossWeightUnitCode != newValue) { this.grossWeightUnitCode = newValue; this.MarkAsDirty("GrossWeightUnitCode"); } }
        
 	 
     private assignedCustomsAgentDone: boolean;
