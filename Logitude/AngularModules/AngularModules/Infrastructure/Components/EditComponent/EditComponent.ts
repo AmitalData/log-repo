@@ -1191,40 +1191,15 @@ export class EditComponent implements OnDestroy {
     BackButtonClicked() {
         var IsARInvoiceNeedsConfirmation = this.CheckIfFullAccountingARInvoiceNeedsConfirmation();
         var isNeedingConfirmation = this.NeedCloseConfirmation();
-        if (IsARInvoiceNeedsConfirmation) {
-            var yesAction = (): void => {
-                this.Close();
-            }
 
-            this.ShowConfirmationMessage(new ConfirmationMessageArgs()
-                .Builder
-                .YesText(TextCodeTranslator.Translate('Accounting.General.B.OK'))
-                .NoText(TextCodeTranslator.Translate('Accounting.General.B.Cancel'))
-                .ShowCancelButton(false)
-                .MessageText(TextCodeTranslator.Translate("ARInvoice.M.ConfirmNotAutoCreditedIfNotApproveInvoice"))
-                .YesAction(yesAction)
-                .build())
+        if (IsARInvoiceNeedsConfirmation) {
+            this.ShowConfirmationMessageForARInvoice();
         }
 
         else if (isNeedingConfirmation) {
-            var yesAction = (): void => {
-                this.SaveEntityChanges(true);
-            }
-
-            var noAction = (): void => {
-                this.Close();
-            }
-
-            this.ShowConfirmationMessage(new ConfirmationMessageArgs()
-                .Builder
-                .YesText(TextCodeTranslator.Translate('General.B.Save'))
-                .NoText(TextCodeTranslator.Translate('General.B.DontSave'))
-                .MessageText(TextCodeTranslator.Translate("General.M.ThisEntityhasunsavedchanges").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName)))
-                .ShowCancelButton(true)
-                .YesAction(yesAction)
-                .NoAction(noAction)
-                .build())
+            this.ShowConfirmationMessageForEntity();
         }
+
         else {
             this.Close();
         }
@@ -1258,6 +1233,40 @@ export class EditComponent implements OnDestroy {
         return myResult;
     }
 
+    private ShowConfirmationMessageForARInvoice() {
+        var yesAction = (): void => {
+            this.Close();
+        };
+
+        this.ShowConfirmationMessage(new ConfirmationMessageArgs()
+            .Builder
+            .YesText(TextCodeTranslator.Translate('Accounting.General.B.OK'))
+            .NoText(TextCodeTranslator.Translate('Accounting.General.B.Cancel'))
+            .ShowCancelButton(false)
+            .MessageText(TextCodeTranslator.Translate("ARInvoice.M.ConfirmNotAutoCreditedIfNotApproveInvoice"))
+            .YesAction(yesAction)
+            .build());
+    }
+
+    private ShowConfirmationMessageForEntity() {
+        var yesAction = (): void => {
+            this.SaveEntityChanges(true);
+        };
+
+        var noAction = (): void => {
+            this.Close();
+        };
+
+        this.ShowConfirmationMessage(new ConfirmationMessageArgs()
+            .Builder
+            .YesText(TextCodeTranslator.Translate('General.B.Save'))
+            .NoText(TextCodeTranslator.Translate('General.B.DontSave'))
+            .MessageText(TextCodeTranslator.Translate("General.M.ThisEntityhasunsavedchanges").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName)))
+            .ShowCancelButton(true)
+            .YesAction(yesAction)
+            .NoAction(noAction)
+            .build());
+    }
 
     Close() {
         if (this.IsInsideWindow) {
