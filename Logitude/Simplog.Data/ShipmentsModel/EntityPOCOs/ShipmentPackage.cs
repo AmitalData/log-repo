@@ -142,5 +142,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public string HorseId { get; set; }
         public virtual Horse Horse { get; set; }
+
+        public string LCLContainerTypeId { get; set; }
+        [ForeignKey("LCLContainerTypeId")]
+        public virtual PackageType LCLPackageType { get; set; }
     }
 }

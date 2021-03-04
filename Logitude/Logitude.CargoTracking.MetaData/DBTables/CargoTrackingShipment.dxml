@@ -2,7 +2,8 @@
 <Table
   Name="CargoTrackingShipments"
   Schema="dbo"
-  DBType="CargoTracking">
+  DBType="CargoTracking"
+  Module="CargoTracking">
   <Column
     Name="Tenant"
     Type="int">
@@ -375,6 +376,63 @@
     Size="1">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="AssignedTruckerDone"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AssignedTruckerDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AssignedTruckerEstimationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AssignedTruckerNotes"
+    Type="nvarchar"
+    Size="32">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AssignedCustomsAgentDone"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AssignedCustomsAgentDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AssignedCustomsAgentEstDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AssignedCustomsAgentNotes"
+    Type="nvarchar"
+    Size="32">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AssignedCustomsAgentExcReason"
+    Type="nvarchar"
+    Size="32">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="EntityType"

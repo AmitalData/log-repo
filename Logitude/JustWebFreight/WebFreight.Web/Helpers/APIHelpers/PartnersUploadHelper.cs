@@ -1072,7 +1072,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
             if (systemUsers.Count > 0)
             {
                 int count = 0;
-                this.errorMsg = "";
                 foreach (PartnerExcel item in items)
                 {
                     try

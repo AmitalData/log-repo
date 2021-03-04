@@ -62,7 +62,12 @@ export class ShipmentPayablePM {
     public get ChargesGroupCode() { return this.chargesGroupCode; }
     public set ChargesGroupCode(newValue: string) { if (this.chargesGroupCode != newValue) { this.chargesGroupCode = newValue; this.MarkAsDirty("ChargesGroupCode"); } }
        
-
+	 
+    private isExpenseCharge: boolean;
+    public get IsExpenseCharge() { return this.isExpenseCharge; }
+    public set IsExpenseCharge(newValue: boolean) { if (this.isExpenseCharge != newValue) { this.isExpenseCharge = newValue; this.MarkAsDirty("IsExpenseCharge"); } }
+       
+	 
     private shipmentPayableLineStatusCode: string;
     public get ShipmentPayableLineStatusCode() { return this.shipmentPayableLineStatusCode; }
     public set ShipmentPayableLineStatusCode(newValue: string) { if (this.shipmentPayableLineStatusCode != newValue) { this.shipmentPayableLineStatusCode = newValue; this.MarkAsDirty("ShipmentPayableLineStatusCode"); } }

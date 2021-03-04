@@ -817,7 +817,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         windowArgs.CurrentEntityPM = this.DocumentTypeSelected;
         windowArgs.DocumentTypeTemplateLists = this.DocumentTypeTemplateLists;
         windowArgs.TypeTab = "Document";
-        windowArgs.RequestAreaName = "Automtaion";
+        windowArgs.RequestAreaName = "Automation";
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 800;
         logitudeWindow.Height = 550;
@@ -1703,7 +1703,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         if (this.AutomationCondationAndList.length > 0) {
             this.AutomationCondationAndList.forEach((item) => {
                 if (((item.CurrentEntityPM.Value == "" || item.CurrentEntityPM.Value == null ) && (item.CurrentEntityPM.ObjectFieldType != "Boolean" &&
-                    item.CurrentEntityPM.OperatorCode != "ISNOTEMPTY" && item.CurrentEntityPM.OperatorCode != "ISEMPTY")) ||
+                    item.CurrentEntityPM.OperatorCode != "ISNOTEMPTY" && item.CurrentEntityPM.OperatorCode != "ISEMPTY" && item.CurrentEntityPM.OperatorCode != "CHANGED")) ||
                     (item.CurrentEntityPM.Value == null && (item.CurrentEntityPM.ObjectFieldType == "nText" || item.CurrentEntityPM.ObjectFieldType == "Text"))) {
                     this.ValidationErrorsList.push("Field value is required");
                 }
@@ -1715,7 +1715,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         if (this.AutomationCondationOrList.length > 0) {
             this.AutomationCondationOrList.forEach((item) => {
                 if (((item.CurrentEntityPM.Value == "" || item.CurrentEntityPM.Value == null) && (item.CurrentEntityPM.ObjectFieldType != "Boolean" &&
-                    item.CurrentEntityPM.OperatorCode != "ISNOTEMPTY" && item.CurrentEntityPM.OperatorCode != "ISEMPTY")) ||
+                    item.CurrentEntityPM.OperatorCode != "ISNOTEMPTY" && item.CurrentEntityPM.OperatorCode != "ISEMPTY" && item.CurrentEntityPM.OperatorCode != "CHANGED")) ||
                     (item.CurrentEntityPM.Value == null && (item.CurrentEntityPM.ObjectFieldType == "nText" || item.CurrentEntityPM.ObjectFieldType == "Text"))) {
                     this.ValidationErrorsList.push("Field value is required");
                 }

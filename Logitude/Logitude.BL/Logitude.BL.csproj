@@ -420,6 +420,9 @@
     <Compile Include="DataContracts\ExportDocumentArgs.cs" />
     <Compile Include="DataContracts\QuoteDashboardArguments.cs" />
     <Compile Include="ExternalService\IEntityAutomationMappingPMFields.cs" />
+    <Compile Include="Helpers\ObjectFieldPropertyGetter.cs" />
+    <Compile Include="InfrastructureModel\APIDataContract\EntityStatus.Generated.cs" />
+    <Compile Include="InfrastructureModel\APIDataContract\QueryService\EntityStatusQueryService.Generated.cs" />
     <Compile Include="InfrastructureModel\FieldShortNameGetters\ObjectFieldsShortNamesGetter.cs" />
     <Compile Include="GlobalModel\EntityLists\BluesnapTransactionList.cs" />
     <Compile Include="GlobalModel\EntityLists\HelpResourceList.cs" />
@@ -2568,6 +2571,7 @@
     <Compile Include="ShipmentsModel\EntityLists\ShipmentTypeList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\SpecialServicesTypeList.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\APILogsDataPM.cs" />
+    <Compile Include="ShipmentsModel\EntityOtherServices\ExternalTasksQueueService.cs" />
     <Compile Include="ShipmentsModel\EntityOtherServices\CustomsTransferService.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\AWBAdditionalHandlingInfoPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\AWBChargesCodePM.cs" />
@@ -2698,6 +2702,7 @@
     <Compile Include="ShipmentsModel\EntityQueries\SpecialServicesTypeQuery.cs" />
     <Compile Include="ShipmentsModel\Testing\General.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\IShipmentBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Behaviours\MasterHousesBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviourFacade.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\CompositionBehaviours\OrderPackagesBehaviour.cs" />
     <Compile Include="ShipmentsModel\Tools\Behaviours\ShipmentBehaviours\MapCompositionBehaviour.cs" />

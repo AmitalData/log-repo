@@ -82,6 +82,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     EmptyDeliveryContainerPartnerId = entityPOCO.EmptyDeliveryContainerPartnerId,
                     EmptyDeliveryDepotReference = entityPOCO.EmptyDeliveryDepotReference,
                     TransportModeCode = entityPOCO.TransportModeCode,
+                    ParentPickUpDeliveryId = entityPOCO.ParentPickUpDeliveryId,
+                    ChildPickUpIndex = entityPOCO.ChildPickUpIndex,
                 };
 
                 ShipmentPickUpDeliveryPackageQuery packagesQuery = new ShipmentPickUpDeliveryPackageQuery(tenant);
@@ -339,6 +341,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    EmptyDeliveryDepotReference = entityPOCO.EmptyDeliveryDepotReference,
                                                    TransportModeCode = entityPOCO.TransportModeCode,
                                                    TransportModeName = entityPOCO.TransportMode == null ? null : entityPOCO.TransportMode.Name,
+                                                   ParentPickUpDeliveryId = entityPOCO.ParentPickUpDeliveryId,
+                                                   ChildPickUpIndex = entityPOCO.ChildPickUpIndex,
                                                }).ToList();
 
             if (dataList.Count > 0)
@@ -604,6 +608,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                              EmptyDeliveryDepotReference = entityPOCO.EmptyDeliveryDepotReference,
                                              TransportModeCode = entityPOCO.TransportModeCode,
                                              TransportModeName = entityPOCO.TransportMode == null ? null : entityPOCO.TransportMode.Name,
+                                             ParentPickUpDeliveryId = entityPOCO.ParentPickUpDeliveryId,
+                                             ChildPickUpIndex = entityPOCO.ChildPickUpIndex,
                                          }).OrderBy(d=>d.PickUpDeliveryNumber).FirstOrDefault();
 
             if (shipmentPickUpPM!=null)
@@ -614,7 +620,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 AddressRepository addressRepository = new AddressRepository(tenant);
                 CountryRepository countryRepository = new CountryRepository(tenant);
                 CardRepository cardRepository = new CardRepository(tenant);
-
 
                 shipmentPickUpPM.ShipmentPickUpDeliveryPackages = packagesQuery.GetShipmentPickUpDeliveryPackages(shipmentPickUpPM.Id, tenant);
 
@@ -807,12 +812,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPickUpPM.ToAddressCity_Dummy = shipmentPickUpPM.ToAddressCity;
                 }
                 #endregion
-
             }
 
             return shipmentPickUpPM;
         }
-
-
     }
 }

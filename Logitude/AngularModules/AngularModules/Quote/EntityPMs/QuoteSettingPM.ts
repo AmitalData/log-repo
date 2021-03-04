@@ -105,6 +105,11 @@ export class QuoteSettingPM {
     public set AutomaticallyCloseDays(newValue: number) { if (this.automaticallyCloseDays != newValue) { this.automaticallyCloseDays = newValue; this.MarkAsDirty("AutomaticallyCloseDays"); } }
        
 	 
+    private isMultiCurrency: boolean;
+    public get IsMultiCurrency() { return this.isMultiCurrency; }
+    public set IsMultiCurrency(newValue: boolean) { if (this.isMultiCurrency != newValue) { this.isMultiCurrency = newValue; this.MarkAsDirty("IsMultiCurrency"); } }
+       
+	 
 
     public OldEntityPM: QuoteSettingPM;
 		

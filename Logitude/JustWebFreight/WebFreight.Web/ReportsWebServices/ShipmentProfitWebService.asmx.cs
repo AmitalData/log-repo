@@ -182,12 +182,15 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 #region Shipment Fields
 
-
                 if (shipmentPM.ShipmentLevelCode == "H")
                 {
                     Shipment tempMaterShipment = shipmentRepository.GetSingleShipment(shipmentPM.MasterShipmentDataId, tenant);
-                    provider.MasterShipmentNumber = tempMaterShipment.ShipmentNumber;
+                    if (tempMaterShipment != null)
+                    {
+                        provider.MasterShipmentNumber = tempMaterShipment.ShipmentNumber;
+                    }
                 }
+
                 else if (shipmentPM.ShipmentLevelCode == "C")
                 {
                     provider.MasterShipmentNumber = shipmentPM.ShipmentNumber;

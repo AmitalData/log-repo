@@ -234,6 +234,14 @@ namespace Logitude.Infrastructure.BL
                 Description = "Documents Send Result in AP Invoices Automation", 
                 SearchFields = "DSR,Documents Send Result in AP Invoices Automation", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CPH", 
+                Name = "Consequent Pickup/Delivery", 
+                SearchFields = "CPH,Consequent Pickup/Delivery", 
+                Description = "Consequent Pickup/Delivery", 
+			});
 			
             return all;
        }

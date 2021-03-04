@@ -400,6 +400,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         IsSaleAsCostCurrency = myPOCO.IsSaleAsCostCurrency,
                         CopyExchangeRates = myPOCO.CopyExchangeRates,
                         AutomaticallyCloseDays = myPOCO.AutomaticallyCloseDays,
+                        IsMultiCurrency = myPOCO.IsMultiCurrency,
                     };
                 }
 

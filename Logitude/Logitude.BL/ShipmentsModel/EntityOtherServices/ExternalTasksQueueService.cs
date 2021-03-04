@@ -1,73 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
-using Logitude.BL.ShipmentsModel.EntityQueries;
-using Simplog.Data.ShipmentsModel.Repositories;
-using Simplog.Data.ShipmentsModel;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityAMs;
-using System.Web;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.CommonDataModel.EntityLists;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.Repositories;
-using Logitude.Server.Tools.Counters;
-using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.ShipmentsModel.EntityPMs;
-using Simplog.Server.Infrastructure.DataContracts;
-using WebFreight.Web.Security;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.Server.Tools;
-using Simplog.Server.Infrastructure;
-using Logitude.BL.CommonDataModel.CodePropertiesMapping;
-using Simplog.Data.InfrastructureModel;
-using Logitude.BL.InfrastructureModel.Tools.EntityService;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Logitude.BL.InfrastructureModel.EntityPMs;
-using Newtonsoft.Json;
+using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
-using WebFreight.Web.Helpers;
-using Logitude.BL.GlobalModel.EntityQueries;
-using Logitude.BL.GlobalModel.EntityPMs;
-using System.Transactions;
-using Simplog.Data.Helpers;
-using Simplog.Server.Infrastructure.Azure;
-using Microsoft.Practices.Unity;
 using Logitude.Server.Tools.StorageService;
-using Microsoft.ServiceBus.Messaging;
 using Logitude.SystemLogs;
+using Microsoft.Practices.Unity;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.Repositories;
+using Syncfusion.XlsIO;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
-namespace WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers
+namespace Logitude.BL.ShipmentsModel.EntityOtherServices
 {
-    public class ExternalTasksQueueHelper
+    public class ExternalTasksQueueService
     {
         private int tenant;
+        private string subject;
         private ICommonDataContext commonContext;
-        public ExternalTasksQueueHelper(int tenant)
+        public ExternalTasksQueueService(int tenant, string subject)
         {
             this.tenant = tenant;
+            this.subject = subject;
             commonContext = CommonDataContext.GetContext(tenant);
         }
-        public StatusUpdateExternalTasksQueueResult PostStatusUpdateExternalTaskQueue(ShipmentAdditionalCloudDataAM Data)
+        public StatusUpdateExternalTasksQueueResult AddStatusUpdateExternalTaskQueue(ShipmentAdditionalCloudDataAM Data)
         {
-            StatusUpdateExternalTasksQueueResult externalTasksQueueResult = new StatusUpdateExternalTasksQueueResult();
-            HybridPartnerPM CurrentHybridPartner = GetHybridPartner();
-            if (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner)
-            {
-                byte[] queueTasks = GetSerializeQueueTasks(Data);
-                Document document = AddDocumentToRepo(queueTasks);
-                ObjectTable objectTable = GetShipmentObjectTable();
-                CommunicationLog commLog = AddCommunicationLogToRepo(document, objectTable, Data.ShipmentNumber);
-                WriteDocumentToStorage(document, queueTasks);
-                externalTasksQueueResult = TryAddingMessageToQueue(Data, commLog);
-            }
+            byte[] queueTasks = GetSerializeQueueTasks(Data);
+            Document document = AddDocumentToRepo(queueTasks);
+            ObjectTable objectTable = GetShipmentObjectTable();
+            CommunicationLog commLog = AddCommunicationLogToRepo(document, objectTable, Data.ShipmentNumber);
+            WriteDocumentToStorage(document, queueTasks);
+            StatusUpdateExternalTasksQueueResult externalTasksQueueResult = TryAddingMessageToQueue(Data, commLog);
 
             return externalTasksQueueResult;
         }
@@ -91,13 +70,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers
                 }
             }
             return externalTasksQueueResult;
-        }
-
-        private HybridPartnerPM GetHybridPartner()
-        {
-            HybridPartnerQuery HybridPartnerQuery = new HybridPartnerQuery(tenant);
-            HybridPartnerPM CurrentHybridPartner = HybridPartnerQuery.GetSinglePMByPartnerTenant(tenant);
-            return CurrentHybridPartner;
         }
 
         private byte[] GetSerializeQueueTasks(ShipmentAdditionalCloudDataAM Data)
@@ -156,7 +128,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers
                 LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 InOut = "O",
                 ObjectTableId = (objectTable != null && !string.IsNullOrEmpty(objectTable.Id)) ? objectTable.Id : null,
-                Subject = "Status Update",
+                Subject = subject,
                 Tenant = tenant,
                 CommunicationLogTypeCode = "Q",
                 CommunicationStatusTypeCode = "W",
@@ -220,30 +192,28 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers
             return errorMessage;
         }
 
-        public StatusUpdateExternalTasksQueueResult PostVIRExternalTaskQueue(ShipmentAM Shipment, string myAction)
+        public StatusUpdateExternalTasksQueueResult AddVIRExternalTaskQueue(ShipmentPM shipmentPM)
         {
             StatusUpdateExternalTasksQueueResult tasksQueueResult = new StatusUpdateExternalTasksQueueResult();
-            ShipmentAdditionalCloudDataRepository Repository = new ShipmentAdditionalCloudDataRepository(Shipment.Tenant);
-            ShipmentAdditionalCloudData shipmentAdditionalColudData = Repository.GetSingleShipmentAdditionalCloudData(Shipment.Id, Shipment.Tenant);
-            if (IsMatchVIRStatusConditions(myAction, shipmentAdditionalColudData))
+            if (IsMatchVIRStatusConditions(shipmentPM))
             {
                 ShipmentAdditionalCloudDataAM shipmentAdditionalCloudDataAM = new ShipmentAdditionalCloudDataAM()
                 {
-                    ShipmentNumber = Shipment.CustomerShipmentNumber,
-                    Tenant = Shipment.Tenant,
+                    ShipmentNumber = shipmentPM.ShipmentNumber,
+                    Tenant = shipmentPM.Tenant,
                     Code = "VIR",
                     Remarks = "",
-                    Direction = Shipment.DirectionId
+                    Direction = shipmentPM.DirectionId
                 };
-                tasksQueueResult = PostStatusUpdateExternalTaskQueue(shipmentAdditionalCloudDataAM);
+                tasksQueueResult = AddStatusUpdateExternalTaskQueue(shipmentAdditionalCloudDataAM);
             }
 
             return tasksQueueResult;
         }
 
-        private bool IsMatchVIRStatusConditions(string myAction, ShipmentAdditionalCloudData shipmentAdditionalColudData)
+        private bool IsMatchVIRStatusConditions(ShipmentPM shipmentPM)
         {
-            bool isMatch = shipmentAdditionalColudData != null && shipmentAdditionalColudData.IsUserIDNumberRequired && myAction == "NewImporterShipment";
+            bool isMatch = shipmentPM != null && shipmentPM.IsUserIDNumberRequired;
             return isMatch;
         }
     }

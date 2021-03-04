@@ -141,6 +141,24 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public int? PackagesQuantity { get; set; }
         [Column("DirectionId")]
 	    public string DirectionId { get; set; }
+        [Column("AssignedTruckerDone")]
+	    public bool AssignedTruckerDone { get; set; }
+        [Column("AssignedTruckerDate")]
+	    public DateTime? AssignedTruckerDate { get; set; }
+        [Column("AssignedTruckerEstimationDate")]
+	    public DateTime? AssignedTruckerEstimationDate { get; set; }
+        [Column("AssignedTruckerNotes")]
+	    public string AssignedTruckerNotes { get; set; }
+        [Column("AssignedCustomsAgentDone")]
+	    public bool? AssignedCustomsAgentDone { get; set; }
+        [Column("AssignedCustomsAgentDate")]
+	    public DateTime? AssignedCustomsAgentDate { get; set; }
+        [Column("AssignedCustomsAgentEstDate")]
+	    public DateTime? AssignedCustomsAgentEstDate { get; set; }
+        [Column("AssignedCustomsAgentNotes")]
+	    public string AssignedCustomsAgentNotes { get; set; }
+        [Column("AssignedCustomsAgentExcReason")]
+	    public string AssignedCustomsAgentExcReason { get; set; }
     }
 }
 	 

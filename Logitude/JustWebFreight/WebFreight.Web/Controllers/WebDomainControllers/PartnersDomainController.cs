@@ -1831,7 +1831,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 if (args.IsContactDirty)
                 {
                     ContactService service = new ContactService(objectContext, args.Tenant);
-
+                    
                     if (args.IsConnectingInactiveContact)
                     {
                         args.Contact.OldSimilarInactiveContactId = args.InactiveContactId;
@@ -1854,6 +1854,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         SecurityUtility.CheckContactFeature("Contact", "UPDATE", args.Tenant);
                         service.Update(args.Contact);
+                        UpdateCustomerContactFields(args);
                     }
                 }
             }
@@ -2568,6 +2569,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
 
 
+        }
+
+        private void UpdateCustomerContactFields(PartnerServicePM args)
+        {
+            args.Customer.PrimaryContactPhone = args.Contact.BusinessPhone;
+            args.Customer.PrimaryContactName = args.Contact.EnglishName;
+            args.IsPartnerDirty = true;
         }
     }
 }

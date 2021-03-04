@@ -86,7 +86,22 @@ using Simplog.Data.ShipmentsModel;
 					   					   temp.ToPartnerCard = CardService3.GetCardById(item.ToPartnerCardId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
-				   					
+				    
+
+			  
+				   if(item.CarrierId != null)
+				   {
+					   CardQueryService CardService4 = new CardQueryService(Tenant);
+					   					   temp.Carrier = CardService4.GetCardById(item.CarrierId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   
+				   temp.TruckNumber = item.TruckNumber;
+				   temp.Driver = item.Driver;
+				   temp.TrailerNumber = item.TrailerNumber;
+				   temp.TransportModeCode = item.TransportModeCode;
+				   temp.Notes = item.Notes;
+				   temp.TruckerNumber = item.CarrierNumber;					
 					MyList.Add(temp);
 				}
 					
@@ -247,6 +262,75 @@ using Simplog.Data.ShipmentsModel;
 
 					}
 			
+					
+					CardQueryService CarrierCardService = new CardQueryService(Tenant);
+					if(item.Carrier != null)
+					{
+						var myCarrierPM = CarrierCardService.CardDataMappingAndValidatin(item.Carrier,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myCarrierPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								//throw new ApplicationException("Carrier Can't be update"); 
+								temp.CarrierId = myCarrierPM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(item.TruckNumber))
+					{							//throw new ApplicationException("TruckNumber Can't be update"); 
+							temp.TruckNumber = item.TruckNumber;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Driver))
+					{							//throw new ApplicationException("Driver Can't be update"); 
+							temp.Driver = item.Driver;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(item.TrailerNumber))
+					{							//throw new ApplicationException("TrailerNumber Can't be update"); 
+							temp.TrailerNumber = item.TrailerNumber;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(item.TransportModeCode))
+					{							//throw new ApplicationException("TransportModeCode Can't be update"); 
+							temp.TransportModeCode = item.TransportModeCode;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Notes))
+					{							//throw new ApplicationException("Notes Can't be update"); 
+							temp.Notes = item.Notes;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(item.TruckerNumber))
+					{							//throw new ApplicationException("TruckerNumber Can't be update"); 
+							temp.CarrierNumber = item.TruckerNumber;
+
+										}  
+
 										   
 						MyList.Add(temp);
 					}
