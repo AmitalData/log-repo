@@ -52,6 +52,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public string Notes { get; set; }
     
     public string TruckerNumber { get; set; }
+    
+    public string PickUpReference { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 
