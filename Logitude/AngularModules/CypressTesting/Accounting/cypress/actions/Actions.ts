@@ -401,6 +401,7 @@ export function ClickOnRowDependingOnARInvoiceNumber(ARInvoiceNumber: string) {
     BaseActions.ClickOnRowDependingOnValue(ARInvoiceNumber)
 }
 export function ExportARInvoice(ARInvoiceNumber: string) {
+    cy.get(BaseSelectors.Label).contains("Selected:").next(".Value").should('contain.text','0')
     cy.get(AccountingSelectors.TransferCheckBox(ARInvoiceNumber)).find(BaseSelectors.label).click({force:true});
     cy.Click(BaseSelectors.RedButton, AccountingSelectors.ContainExport)
 }
