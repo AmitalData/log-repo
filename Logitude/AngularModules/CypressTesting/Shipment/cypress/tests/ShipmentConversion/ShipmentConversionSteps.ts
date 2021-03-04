@@ -69,17 +69,17 @@ Then("the shipment should create successfully", () => {
 });
 
 Then("direction should be {string}", (expectedDirection: string) => {
-    Actions.ValidateShipmentDirection(expectedDirection);
+    Actions.ValidateShipmentDirectionInShortTitle(expectedDirection);
 });
 
 Then("type should be {string}", (expectedShipmentType: string) => {
-    Actions.ValidateShipmentType(expectedShipmentType);
+    Actions.ValidateShipmentTypeInHeaderScreen(expectedShipmentType);
 });
 
 Then("following events should appear in events tab", (dataTable) => {
     let eventDetailsList = dataTable.hashes() as EventDetails[];
     eventDetailsList = ShipmentConversionEventsMapping(eventDetailsList);
-    Actions.ValidateEventTypes(eventDetailsList);
+    Actions.ValidateEventsTab(eventDetailsList);
 });
 
 Then("the direction should convert successfully", () => {
@@ -92,13 +92,14 @@ Then("the type should convert successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.PutShipment, 200);
 });
 
+Then("the shipment should have a new number", () => {
+    Actions.ValidateShipmentNumberInShortTitle(ShipmentConversionContext.NewShipmentNumber);
+});
+
 
 function ShipmentConversionEventsMapping(eventDetailsList: EventDetails[]): EventDetails[]{
-    let oldShipmentNumberRegex = "\"OldShipmentNumber\"";
     for (let i = 0; i < eventDetailsList.length; i++) {
-        if(eventDetailsList[i].Notes.indexOf(oldShipmentNumberRegex) !== -1){
-            eventDetailsList[i].Notes = eventDetailsList[i].Notes.replace(oldShipmentNumberRegex, ShipmentConversionContext.ShipmentNumber);
-        }
+        eventDetailsList[i].Notes = eventDetailsList[i].Notes.replace(/\"OldShipmentNumber\"/gi, ShipmentConversionContext.ShipmentNumber);
     }
     return eventDetailsList;
 }

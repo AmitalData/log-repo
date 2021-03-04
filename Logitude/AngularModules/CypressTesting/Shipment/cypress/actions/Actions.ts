@@ -730,29 +730,32 @@ export function ConvertShipmentType() {
     cy.Click(BaseSelectors.RedButton + ":last", null);
 }
 
-export function ValidateShipmentType(expectedShipmentType: string) {
+export function ValidateShipmentTypeInHeaderScreen(expectedShipmentType: string) {
     if (expectedShipmentType) {
         cy.get("[data-cy]='ShipmentTypeValue'").should("have.text", expectedShipmentType);
-        if (expectedShipmentType.toLowerCase().indexOf("house") !== -1) {
-            cy.get("[data-cy='ShipmentNotConnectedIcon']").should("exist");
-        }
     }
 }
 
-export function ValidateShipmentDirection(expectedDirection: string) {
+export function ValidateShipmentDirectionInShortTitle(expectedDirection: string) {
     if (expectedDirection) {
         let directionIconSelector = ShipmentSelectors.ShortTitleDirectionIcon(expectedDirection);
         cy.get(directionIconSelector).should("exist");
     }
 }
 
-export function ValidateEventTypes(expectedEventDetailsList: EventDetails[]) {
+export function ValidateShipmentNumberInShortTitle(expectedShipmentNumber: string){
+    cy.get(ShipmentSelectors.ShipmentNumberInTitle).then((shipmentNumberDiv) => {
+        assert.equal(shipmentNumberDiv.text().replace(":", "").trim(), expectedShipmentNumber);
+    });
+}
+
+export function ValidateEventsTab(expectedEventDetailsList: EventDetails[]) {
     cy.get("#ShipmentTHEvents").then(($eventTab) => {
 
         cy.DefineRequestWait(RestAPI.GET, "**/TraceEventsDomain/GetTraceEventsForEntity?**", "GetTraceEventsForEntity");
 
         if ($eventTab.hasClass(".SelectedMenuItem")) {
-            cy.Click("button[id^='Refresh']:last", null);
+            cy.Click("[data-cy='EventsRefresh_Shipment'] button", null);
         } else {
             cy.Click("#ShipmentTHEvents", null);
         }

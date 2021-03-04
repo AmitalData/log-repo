@@ -141,5 +141,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly buttonspan= "button span"
     public static readonly FillParentClass=".FillParent"
     public static readonly ConfirmWindow="[class=ConfirmWindow]"
+
+    public static readonly ShortTitleDiv = ".ShortTitleDiv";
    
 }

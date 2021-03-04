@@ -20,6 +20,7 @@ Feature: Convert Shipment from House to Direct, Direct to House, FCL to LCL, LCL
         When convert shipment direction
         Then the direction should convert successfully
         And direction should be "Import"
+        And the shipment should have a new number
         And following events should appear in events tab
             | Event                        | Notes                               |
             | Shipment Direction Converted | Converted from [Export] to [Import] |
