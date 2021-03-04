@@ -97,7 +97,6 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                AssignedCustomsAgentEstDate = a.AssignedCustomsAgentEstDate,
                                                                AssignedCustomsAgentExcReason = a.AssignedCustomsAgentExcReason,
                                                                AssignedCustomsAgentNotes= a.AssignedCustomsAgentNotes,
-                                                           });
                                                                AssignedTruckerDate = a.AssignedTruckerDate,
                                                                AssignedTruckerDone = a.AssignedTruckerDone,
                                                                GrossWeightUnitCode = a.GrossWeightUnitCode
