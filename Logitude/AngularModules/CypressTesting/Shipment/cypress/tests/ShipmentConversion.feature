@@ -21,6 +21,7 @@ Feature: Convert Shipment from House to Direct, Direct to House, FCL to LCL, LCL
         Then the direction should convert successfully
         And direction should be "Import"
         And the shipment should have a new number
+        And the consignee "TestConsigneeImport" should appear in partners tab
         And following events should appear in events tab
             | Event                        | Notes                               |
             | Shipment Direction Converted | Converted from [Export] to [Import] |
@@ -52,6 +53,7 @@ Feature: Convert Shipment from House to Direct, Direct to House, FCL to LCL, LCL
         When convert shipment type
         Then the type should convert successfully
         And type should be "LCL Direct"
+        And the button "Add Package" should appear in packages tab
         And following events should appear in events tab
             | Event                     | Notes                   |
             | Converted From FCL to LCL | Convert FCL to LCL test |
@@ -62,6 +64,7 @@ Feature: Convert Shipment from House to Direct, Direct to House, FCL to LCL, LCL
         When convert shipment type
         Then the type should convert successfully
         And type should be "FCL Direct"
+        And the button "Add Container" should appear in packages tab
         And following events should appear in events tab
             | Event                     | Notes                   |
             | Converted From LCL to FCL | Convert LCL to FCL test |

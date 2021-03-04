@@ -777,6 +777,18 @@ export function ValidateEventsTab(expectedEventDetailsList: EventDetails[]) {
     });
 }
 
+export function ValidateAddButtonInPackagesTab(expectedButtonContains: string){
+    cy.Click(ShipmentSelectors.PackagesTab, null);
+    cy.get(ShipmentSelectors.AddPackage).should("have.text", expectedButtonContains);
+}
+
+export function ValidatePartnerInPartnersTab(partnerType: string, partnerName: string){
+    let partnerBoxItemSelector = "[data-cy='BoxItem_" + partnerType + "']";
+
+    cy.get(partnerBoxItemSelector).should("exist");
+    cy.get(partnerBoxItemSelector).find("[data-cy='PartnerName']").should("have.text", partnerName);
+}
+
 function OpenConversionWizard(convertButtonSelector: string) {
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
     cy.Click(convertButtonSelector, null);

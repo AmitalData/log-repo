@@ -96,6 +96,14 @@ Then("the shipment should have a new number", () => {
     Actions.ValidateShipmentNumberInShortTitle(ShipmentConversionContext.NewShipmentNumber);
 });
 
+Then("the consignee {string} should appear in partners tab", (consignee: string) => {
+    Actions.ValidatePartnerInPartnersTab("Consignee", consignee);
+});
+
+Then("the button {string} should appear in packages tab", (buttonContains: string) => {
+    Actions.ValidateAddButtonInPackagesTab(buttonContains);
+});
+
 
 function ShipmentConversionEventsMapping(eventDetailsList: EventDetails[]): EventDetails[]{
     for (let i = 0; i < eventDetailsList.length; i++) {
