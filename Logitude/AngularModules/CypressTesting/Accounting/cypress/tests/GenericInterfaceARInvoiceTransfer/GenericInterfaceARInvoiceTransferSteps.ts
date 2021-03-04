@@ -95,7 +95,6 @@ Given("an ARInvoice with the following details", (dataTable) => {
 Given("clear external ID for partner", () => {
   BaseActions.ClearExternalIDFromShipmentLevel("Partner");
 });
-
 When("create invoice", () => {
   AccountingActions.CreateARInvoice()
 });
@@ -172,8 +171,6 @@ When("export the ARInvoice", () => {
 });
 Then("the ARInvoice should export successfully", () => {
   AccountingActions.AssertTransferredInvoice()
-  AccountingActions.CloseExportingInvoiceTransferWindow()
-  BaseActions.CloseWindow()
 });
 Then("the transfer status should be transferred", () => {
   ShipmentActions.NavigatesToShipmentsWorkspace()

@@ -388,7 +388,7 @@ export function FillExternalID(NotReadyValue: string, ExternalID: string) {
 export function ARInvoiceSearch(ARInvoiceNumber: string) {
     cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViewsGetByFilters+ARInvoiceNumber+"**", RequestAliases.ARInvoiceViewsGetByFilters);
     cy.FillLogTextBox(BaseSelectors.SearchField,ARInvoiceNumber)
-    cy.get('div[id=ListDataLoaded]')
+    cy.get(BaseSelectors.ListDataLoaded)
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceViewsGetByFilters, 200);
 }
 export function ARInvoiceSearchInTransferScreen(ARInvoiceNumber: string) {
@@ -400,8 +400,11 @@ export function ARInvoiceSearchInTransferScreen(ARInvoiceNumber: string) {
 export function ClickOnRowDependingOnARInvoiceNumber(ARInvoiceNumber: string) {
     BaseActions.ClickOnRowDependingOnValue(ARInvoiceNumber)
 }
+function AssertSelectedInvoicNumber(SelectedInvoicNumber:string){
+    cy.get(BaseSelectors.LabelClass).contains(BaseSelectors.ContainSelected).next(BaseSelectors.Value).should('contain.text',SelectedInvoicNumber)
+}
 export function ExportARInvoice(ARInvoiceNumber: string) {
-    cy.get(BaseSelectors.Label).contains("Selected:").next(".Value").should('contain.text','0')
+    AssertSelectedInvoicNumber('0')
     cy.get(AccountingSelectors.TransferCheckBox(ARInvoiceNumber)).find(BaseSelectors.label).click({force:true});
     cy.Click(BaseSelectors.RedButton, AccountingSelectors.ContainExport)
 }
@@ -412,6 +415,8 @@ export function CloseExportingInvoiceTransferWindow() {
 }
 export function AssertTransferredInvoice() {
     cy.get(BaseSelectors.ColorGreenClass).should('contain.text', AccountingSelectors.ContainTransferredSuccessfully)
+      CloseExportingInvoiceTransferWindow()
+    BaseActions.CloseWindow()
 }
 function ClickOnSaveOnConfirmWindow() {
     cy.get(BaseSelectors.ConfirmWindow).find(BaseSelectors.RedButton).contains(BaseSelectors.ContainSave).click()
