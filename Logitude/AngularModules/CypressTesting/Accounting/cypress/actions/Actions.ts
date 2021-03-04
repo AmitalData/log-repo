@@ -387,8 +387,8 @@ export function FillExternalID(NotReadyValue: string, ExternalID: string) {
 }
 export function ARInvoiceSearch(ARInvoiceNumber: string) {
     cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViewsGetByFilters+ARInvoiceNumber+"**", RequestAliases.ARInvoiceViewsGetByFilters);
-    cy.get('div[id=ListDataLoaded]')
     cy.FillLogTextBox(BaseSelectors.SearchField,ARInvoiceNumber)
+    cy.get('div[id=ListDataLoaded]')
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceViewsGetByFilters, 200);
 }
 export function ARInvoiceSearchInTransferScreen(ARInvoiceNumber: string) {
