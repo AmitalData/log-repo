@@ -78,6 +78,18 @@
                                                                             <td></td>
                                                                         </tr>
 
+                                                                        <tr class="FormFieldRow">
+                                                                            <td style="width:90px;vertical-align:central">
+                                                                                <LogLabel [ObjectFieldName]="'SendIfEmpty'" [Text]="'Send If Empty'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                            </td>
+
+
+                                                                            <td style="width:250px;">
+                                                                                <CheckBox [IsChecked]="SendIfEmpty" (Checked)="SendIfEmpty = $event"></CheckBox>
+                                                                            </td>
+                                                                            <td></td>
+                                                                        </tr>
+
                                                                         <tr class="FormFieldRow" *ngIf="IsFTP">
                                                                             <td style="width:90px;vertical-align:central">
                                                                                 <LogLabel [ObjectFieldName]="'Format'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
