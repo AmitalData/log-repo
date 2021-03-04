@@ -391,10 +391,11 @@ export function ARInvoiceSearch(ARInvoiceNumber: string) {
     BaseAssertion.AssertStatusCode(RequestAliases.performancelogs, 200);
 }
 export function ARInvoiceSearchInTransferScreen(ARInvoiceNumber: string) {
-    cy.DefineRequestWait(RestAPI.POST, AccountingURLs.PerformancelogsPostLogsList, RequestAliases.performancelogs);
+    cy.DefineRequestWait(RestAPI.POST, AccountingURLs.ARInvoiceViewsGetByFilters+ARInvoiceNumber+"**", RequestAliases.ARInvoiceViewsGetByFilters);
     cy.FillLogTextBox(BaseSelectors.NullSearch,ARInvoiceNumber)
-    BaseAssertion.AssertStatusCode(RequestAliases.performancelogs, 200);
+   BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceViewsGetByFilters, 200);
 }
+
 export function ClickOnRowDependingOnARInvoiceNumber(ARInvoiceNumber: string) {
     BaseActions.ClickOnRowDependingOnValue(ARInvoiceNumber)
 }
