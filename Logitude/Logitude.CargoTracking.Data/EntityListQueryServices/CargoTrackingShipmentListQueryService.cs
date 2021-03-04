@@ -232,7 +232,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                    AssignedTruckerEstimationDate = poco.AssignedTruckerEstimationDate,
                    AssignedTruckerNotes = poco.AssignedTruckerNotes,
 
-                   GrossWeightUnitCode = poco.GrossWeightUnitCode
+                   GrossWeightUnitCode = poco.GrossWeightUnitCode,
                    
                    
                    
