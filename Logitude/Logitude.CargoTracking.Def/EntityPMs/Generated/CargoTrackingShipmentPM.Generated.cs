@@ -1653,29 +1653,6 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
-	  private string grossWeightUnitCode ;
-	  	  
-       
-	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string GrossWeightUnitCode  
-	   {
-	    
-	     get
-		{
-		   return grossWeightUnitCode;
-		 }
-		 set
-		 {
-		   if(grossWeightUnitCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GrossWeightUnitCode",OldValue=grossWeightUnitCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   grossWeightUnitCode=value;
-		   }
-			
-		 }
-	   }
 	  private bool? assignedCustomsAgentDone ;
 	  	  
        
@@ -1787,6 +1764,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AssignedCustomsAgentExcReason",OldValue=assignedCustomsAgentExcReason,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   assignedCustomsAgentExcReason=value;
+		   }
+			
+		 }
+	   }
+	  private string grossWeightUnitCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string GrossWeightUnitCode  
+	   {
+	    
+	     get
+		{
+		   return grossWeightUnitCode;
+		 }
+		 set
+		 {
+		   if(grossWeightUnitCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GrossWeightUnitCode",OldValue=grossWeightUnitCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   grossWeightUnitCode=value;
 		   }
 			
 		 }

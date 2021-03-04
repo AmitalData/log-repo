@@ -410,13 +410,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="GrossWeightUnitCode"
-    Type="varchar"
-    Size="3">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="AssignedCustomsAgentDone"
     Type="bit">
     <Constraints
@@ -445,6 +438,13 @@
     Name="AssignedCustomsAgentExcReason"
     Type="nvarchar"
     Size="32">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="GrossWeightUnitCode"
+    Type="varchar"
+    Size="3">
     <Constraints
       Nullable="true" />
   </Column>
