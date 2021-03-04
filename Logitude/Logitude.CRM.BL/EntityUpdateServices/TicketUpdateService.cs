@@ -18,6 +18,7 @@ using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.QuoteModel;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -186,7 +187,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 SLAHeaderQueryService sLAHeaderQuery = new SLAHeaderQueryService(context);
                 EmployeeGroupQueryService employeeGroupQuery = new EmployeeGroupQueryService(context);
                 TicketClassificationRepository repClassification = new TicketClassificationRepository(entityPM.Tenant);
-
+                this.quoteContext =  QuotesContext.GetContext(entityPM.Tenant); 
                 if (!string.IsNullOrEmpty(entityPM.SecondaryClassificationId))
                 {
                     classification = classificationQuery.GetSingle(entityPM.SecondaryClassificationId, true, false);
@@ -284,6 +285,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
 
                 this.UpdateDates(entityPM);
                 this.CheckQuoteRequestDateUpdate(entityPM, entityPOCO);
+                this.CheckQuoteConnectedToTicket(entityPM, entityPOCO);
                 this.UpdateLastCorrespondence(entityPM);
             }
         }
@@ -318,11 +320,51 @@ namespace Logitude.CRM.BL.EntityUpdateServices
 
         private void UpdateQuotesRequestDate(string quoteId, DateTime? requestDate, int tenant)
         {
-            QuoteRepository quoteRepository = new QuoteRepository(tenant);
+            QuoteRepository quoteRepository = new QuoteRepository(this.quoteContext);
             Quote quote = quoteRepository.GetSingleQuote(quoteId, tenant);
             quote.RequestDate = requestDate == null ? quote.OpenDate : requestDate;
             quoteRepository.Update(quote);
             quoteRepository.SubmitChanges();
+        }
+
+        private void CheckQuoteConnectedToTicket(TicketPM entityPM ,Ticket entityPOCO)
+        {
+            string quoteId = null;
+            bool connectedToTicket = false;
+            if (!string.IsNullOrEmpty(entityPM.QuoteNumber) && !string.IsNullOrEmpty(entityPOCO.QuoteNumber) && entityPOCO.QuoteNumber != entityPM.QuoteNumber )
+            {
+                quoteId = entityPM.QuoteId;
+                connectedToTicket = true;
+            }
+            if (string.IsNullOrEmpty(entityPM.QuoteNumber) && !string.IsNullOrEmpty(entityPOCO.QuoteNumber))
+            {
+                quoteId = entityPOCO.QuoteId;
+            }
+            if (!string.IsNullOrEmpty(entityPM.QuoteNumber) && string.IsNullOrEmpty(entityPOCO.QuoteNumber))
+            {
+                quoteId = entityPM.QuoteId;
+                connectedToTicket = true;
+            }
+            if (!string.IsNullOrEmpty(entityPM.QuoteNumber) && !string.IsNullOrEmpty(entityPOCO.QuoteNumber)&&( entityPM.EntityType != entityPOCO.EntityType))
+            {
+                quoteId = entityPOCO.QuoteId;
+            }
+            UpdateQuoteComputedFields(quoteId, Tenant, connectedToTicket);
+        }
+
+        private void UpdateQuoteComputedFields(string quoteId, int tenant,bool connectedToTicket)
+        {
+            if (!string.IsNullOrEmpty(quoteId))
+            {
+                QuoteComputedFieldRepository quoteComputedFieldRepository = new QuoteComputedFieldRepository(this.quoteContext);
+                QuoteComputedField quoteComputedField = quoteComputedFieldRepository.GetSingleQuoteComputedField(quoteId, tenant);
+                if (quoteComputedField != null)
+                {
+                    quoteComputedField.ConnectedToTicket = connectedToTicket;
+                    quoteComputedFieldRepository.Update(quoteComputedField);
+                    quoteComputedFieldRepository.SubmitChanges();
+                }
+            }
         }
 
         protected override void UpdateComposition(TicketPM entityPM)
@@ -648,6 +690,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
         }
            
         BusinessHour businessHour { get; set; }
+        private IQuotesContext quoteContext;
 
         public void SetTimeIssues(TicketPM entityPM, Ticket entityPOCO, bool isChangeSLAViaAutomation = false)
         {

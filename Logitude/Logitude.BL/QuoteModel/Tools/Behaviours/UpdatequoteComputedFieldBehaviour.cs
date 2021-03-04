@@ -66,16 +66,16 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
         {
             if (!string.IsNullOrEmpty(addressId))
             {
-                Address toAddress = initializer.addressRepository.GetSingleAddress(addressId, initializer.Tenant);
-                if (toAddress != null)
+                Address address = initializer.addressRepository.GetSingleAddress(addressId, initializer.Tenant);
+                if (address != null)
                 {
-                    string toLocation = (!string.IsNullOrEmpty(toAddress.City)) ? toAddress.City : "";
+                    string locationAddress = (!string.IsNullOrEmpty(address.City)) ? address.City : "";
 
-                    if (toAddress.Country != null)
+                    if (address.Country != null)
                     {
-                        toLocation = string.IsNullOrEmpty(toLocation) ? toAddress.Country.Code : toLocation + " " + toAddress.Country.Code;
+                        locationAddress = string.IsNullOrEmpty(locationAddress) ? address.Country.Code : locationAddress + " " + address.Country.Code;
                     }
-                  return toLocation;
+                  return locationAddress;
                 }
             }
             return "";

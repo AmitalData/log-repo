@@ -214,7 +214,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             this.quoteComputedFieldEntityPOCO = initializer.quoteComputedFieldPOCO;
             this.isNewEntity = initializer.IsNewEntity;
 
-            //initializer.HandleBehaviours();
 
             //if(entityPM.TotalPerContainer && entityPM.IsSaleCurrencySameAsCost)
             //{
