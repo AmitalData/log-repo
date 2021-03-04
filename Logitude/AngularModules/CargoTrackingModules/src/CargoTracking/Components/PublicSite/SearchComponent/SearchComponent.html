@@ -56,7 +56,7 @@
 
             </div>
 
-         <!-- 
+         <!--
             <div class="path-image hide-mobile " *ngIf="Shipments.length==0  && !noResult  && !hasError">
 
                 <svg class="path "  viewBox="0 0 469 236" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -322,7 +322,9 @@
                         <div class="column col-md-1 status" style="width: 25%;">
                             <div>
                                 <div class="subtitle">Status</div>
-                                <div class="value">{{ shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneName : shipment.FutureMilstoneName }} <span *ngIf="shipment.CurrentMilestoneName == null && shipment.FutureMilstoneName!=null"> on {{  shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneDate : shipment.FutureMilstoneDate | date: "d-MMM-y, HH:MM" }}</span></div>
+                                <div class="value">
+                                    {{GetStatusName(shipment)}}
+                                </div>
 
                                 <div class="subtitle">Last Updated</div>
                                 <div class="value">{{  (shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneDate : shipment.FutureMilstoneDate) | date: 'dd/MM/yyyy, HH:MM' }}</div>
