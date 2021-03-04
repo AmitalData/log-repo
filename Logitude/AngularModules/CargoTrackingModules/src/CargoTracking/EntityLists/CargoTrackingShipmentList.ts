@@ -81,6 +81,7 @@ export class CargoTrackingShipmentList {
 	AssignedTruckerDate: Date;
 	AssignedTruckerEstimationDate: Date;
 	AssignedTruckerNotes: string;
+	GrossWeightUnitCode: string;
 	
 }
  
