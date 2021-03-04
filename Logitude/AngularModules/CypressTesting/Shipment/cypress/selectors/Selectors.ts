@@ -15,6 +15,8 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentSaveButton = '#Shipment-Save';
   public static readonly ShipmentShipper = '#Shipment_ShipperId';
   public static readonly ShipmentConsignee = '#Shipment_ConsigneeId';
+  public static readonly ShipmentCustomerType = '#Shipment_ShipmentCustomerTypeCode';
+  
   //#endregion
   //#region Create shipment
   public static readonly NewShipmentToggleButton = '#NEWSHIP .LogitudeToggleButtonContainer';

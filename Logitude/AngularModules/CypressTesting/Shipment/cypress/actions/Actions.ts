@@ -712,12 +712,14 @@ function AddPartner(partnerTypeId: string, partnerFieldId: string, partner?: str
 
 function FillDirectAndHouseFields(shipmentDetails: ShipmentDetails) {
     FillMainFields(shipmentDetails);
+    FillCustomerType(shipmentDetails);
     FillShipperAndConsignee(shipmentDetails);
     FillMainCarriagePorts(shipmentDetails);
 }
 
 function FillMasterFields(shipmentDetails: ShipmentDetails) {
     FillMainFields(shipmentDetails);
+    FillCustomerType(shipmentDetails);
     FillMasterAgent(shipmentDetails);
     FillMainCarriagePorts(shipmentDetails);
 }
@@ -764,6 +766,11 @@ function FillShipperAndConsignee(shipmentDetails: ShipmentDetails) {
         }
     }
 }
+
+function FillCustomerType(shipmentDetails: ShipmentDetails) { 
+            cy.FillLogLov(ShipmentSelectors.ShipmentCustomerType, shipmentDetails.CustomerTypeCode??"SHI" , true)
+}
+
 
 function FillMainCarriagePorts(shipmentDetails: ShipmentDetails) {
     if (!Conditions.IsInlandDomestic(shipmentDetails.Direction, shipmentDetails.TransportMode)) {

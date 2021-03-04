@@ -9,4 +9,5 @@ export interface ShipmentDetails {
     MainCarriageToPort: string,
     MainCarriageFromPort: string,
     ShipmentNumber:string,
+    CustomerTypeCode:string
 }
