@@ -249,9 +249,9 @@ namespace Logitude.Accounting.BL.CoreBL
         public void FixDbIntegrityFromLedgeToTotal()
         {
             
-            if (string.IsNullOrWhiteSpace(this._GLAccountId))
+            if (!string.IsNullOrWhiteSpace(this._GLAccountId))
             {
-                //throw new Exception("BETA- this._GLAccountId s must !!!!");
+                throw new Exception("remove this._GLAccountId ");
 
             }
             CheckDbIntegrity();
