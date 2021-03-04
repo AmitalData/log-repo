@@ -165,7 +165,7 @@ Given("the user in transfer screen", () => {
   cy.BackButton(BaseSelectors.ContainsShipment + shipmentNumber);
   cy.BackButton(BaseSelectors.ContainsOperations);
   AccountingActions.NavigatesToNewTransferARInvoices()
-  AccountingActions.ARInvoiceSearchInTransferScreen(ARInvoiceNumber)
+  AccountingActions.ARInvoiceSearch(ARInvoiceNumber)
 });
 When("export the ARInvoice", () => {
   AccountingActions.ExportARInvoice(ARInvoiceNumber)
