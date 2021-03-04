@@ -20,7 +20,11 @@ Given("a shipment with the following details", (dataTable) => {
     Actions.FillShipmentWizardsFields(shipmentDetails);
 });
 
-Given("the user open direction conversion wizard", () => {
+Given("the user open the shipment", () => {
+    Actions.OpenShipment(ShipmentConversionContext.ShipmentNumber);
+});
+
+Given("open direction conversion wizard", () => {
     Actions.OpenDirectionConversionWizard();
 });
 

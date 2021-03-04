@@ -13,7 +13,8 @@ Feature: Convert Shipment from House to Direct, Direct to House, FCL to LCL, LCL
         Then the shipment should create successfully
 
     Scenario: Change shipment direction to import
-        Given the user open direction conversion wizard
+        Given the user open the shipment
+        And open direction conversion wizard
         And fill the following details for direction conversion
             | Direction | Consignee           |
             | Import    | TestConsigneeImport |

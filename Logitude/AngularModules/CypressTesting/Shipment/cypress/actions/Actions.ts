@@ -754,7 +754,7 @@ export function ValidateEventsTab(expectedEventDetailsList: EventDetails[]) {
 
         cy.DefineRequestWait(RestAPI.GET, "**/TraceEventsDomain/GetTraceEventsForEntity?**", "GetTraceEventsForEntity");
 
-        if ($eventTab.hasClass(".SelectedMenuItem")) {
+        if ($eventTab.hasClass("SelectedMenuItem")) {
             cy.Click("[data-cy='EventsRefresh_Shipment'] button", null);
         } else {
             cy.Click("#ShipmentTHEvents", null);
@@ -767,11 +767,13 @@ export function ValidateEventsTab(expectedEventDetailsList: EventDetails[]) {
             let expectedNotes = expectedEventDetailsList[i].Notes;
     
             if (expectedEvent) {
-                cy.get("td").contains(expectedEvent).eq(0).should("exist");
+                cy.contains(expectedEvent).eq(0).should("exist");
             }
     
             if (expectedEvent && expectedNotes) {
-                cy.get("td").contains(expectedEvent).eq(0).parents(".EventItemBox").find("textarea").should("have.value", expectedNotes);
+                cy.contains(expectedEvent).eq(0).parents(".EventItemBox").within(() => {
+                    cy.get("textarea").should("have.value", expectedNotes);
+                });
             }
         }
     });
@@ -783,10 +785,14 @@ export function ValidateAddButtonInPackagesTab(expectedButtonContains: string){
 }
 
 export function ValidatePartnerInPartnersTab(partnerType: string, partnerName: string){
+    cy.Click(ShipmentSelectors.PartnersTab, null);
     let partnerBoxItemSelector = "[data-cy='BoxItem_" + partnerType + "']";
-
     cy.get(partnerBoxItemSelector).should("exist");
-    cy.get(partnerBoxItemSelector).find("[data-cy='PartnerName']").should("have.text", partnerName);
+    cy.get(partnerBoxItemSelector).within(() => {
+        cy.get("[data-cy='PartnerName']").then((partnerNameDiv) => {
+            assert.equal(partnerNameDiv.text().trim(), partnerName);
+        });
+    });
 }
 
 function OpenConversionWizard(convertButtonSelector: string) {
