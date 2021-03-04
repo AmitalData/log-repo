@@ -98,6 +98,10 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                AssignedCustomsAgentExcReason = a.AssignedCustomsAgentExcReason,
                                                                AssignedCustomsAgentNotes= a.AssignedCustomsAgentNotes,
                                                            });
+                                                               AssignedTruckerDate = a.AssignedTruckerDate,
+                                                               AssignedTruckerDone = a.AssignedTruckerDone,
+                                                               GrossWeightUnitCode = a.GrossWeightUnitCode
+                                                           });
             
             return query;
         }
@@ -233,6 +237,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                     AssignedCustomsAgentExcReason = poco.AssignedCustomsAgentExcReason,
                     AssignedCustomsAgentNotes = poco.AssignedCustomsAgentNotes,
 
+                   GrossWeightUnitCode = poco.GrossWeightUnitCode
+                   
                 };
             if(list != null)
             {

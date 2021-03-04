@@ -24,6 +24,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                 SetFieldsForCustomShipment(tableRow);
             SetFieldsForForwardingShipment(tableRow);
             SetFieldsForCustomShipment(tableRow);
+            SetGrossWeightUnit(tableRow);
             SetCurrentMilestone(tableRow);
         }
 
@@ -124,8 +125,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                 tableRow.SetField("CustomerReference", tableRow["CustomerReference2"]);
             }
         }
- 
 
+        private static void SetGrossWeightUnit(DataRow tableRow)
+        {
+
+            tableRow.SetField("GrossWeightUnitCode", tableRow["GrossWeightUnitCode"]);
+        }
         private static void SetCurrentMilestone(DataRow tableRow)
         {
             if (!IsFieldNullOrEmpty(tableRow, "DeliveredDone") && !tableRow["DeliveredDone"].Equals("False"))
