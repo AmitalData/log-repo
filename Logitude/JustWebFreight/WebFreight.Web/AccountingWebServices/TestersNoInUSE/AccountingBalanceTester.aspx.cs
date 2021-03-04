@@ -588,6 +588,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 MyTenant = 989,
                 MyDate = DateTime.Now.AddMonths(-1),
                 MyGLAccId = "1-131321",
+                TheWholePeriod = false,
 
             };
             try
@@ -604,7 +605,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
                 param = LogitudeXmlSerializer.DeserializeObject<ParamBasic>(_TextBoxParam.Text);
                 var s = new ReverseEngineerTotalByMonth_ControlAccountService(param.MyDate, param.MyTenant, param.MyGLAccId);
-                s.FixDbIntegrityFromLedgeToTotal();
+                s.FixDbIntegrityFromLedgeToTotal(param.TheWholePeriod);
 
                 var SerializeObjectByte = LogitudeXmlSerializer.SerializeObject<List<GLAccountTotalByMonthsDTO>>(s.CompareReport.GLAccountTotalByMonthsList);
                 ReloadGrid(SerializeObjectByte);
@@ -2781,6 +2782,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
         public DateTime MyDate { get; set; }
 
         public string MyGLAccId { get; set; }
+        public bool TheWholePeriod { get;  set; }
     }
 
     class JournalTesterClass
