@@ -20,7 +20,7 @@ Feature: Shipment Exception Resolve
         When add exception
         Then the exception should add successfully
         
-    Scenario: resolve the exception
+    Scenario: Resolve the exception
         When resolve the exception due to "ExceptionResolvedNote"
         Then the exception should resolve successfully
       
