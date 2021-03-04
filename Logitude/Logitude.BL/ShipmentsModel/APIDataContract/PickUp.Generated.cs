@@ -55,6 +55,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     
     public List<ShipmentPickUpDeliveryPackage> ShipmentPickUpDeliveryPackages { get; set; }
 
+    public string PickUpReference { get; set; }
+
     public  string  ComputingPartnerCode { get; set; }
 
     }
