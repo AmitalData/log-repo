@@ -36,7 +36,9 @@
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
 
-  Code="&quot;aa9f&quot;"
+
+  Code="&quot;3029&quot;"
+
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -7063,6 +7065,7 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+
     <Feature
       Code="&quot;ChangeLocalProfitCurrency&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
@@ -7072,5 +7075,16 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+
+    <Feature
+      Code="&quot;DailyCurrenciesRates&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.DailyCurrenciesRates&quot;"
+      FeatureDefaultText="&quot;Daily Currencies Rates&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+
   </AdditionalFeatures>
 </entity>

@@ -80,7 +80,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
    public class GeneralUpdateClass
    {  		
 
-		public const string HashString = "53e56031ddf5f17731bfa5714b1e7f48";
+
+		public const string HashString = "48a60cf345839b97b13d5928a05313f2";
+
 
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
@@ -121,7 +123,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
 
-			      				    Code =  "aa9f",
+
+			      				    Code =  "3029",
+
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -622,7 +626,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 		   Feature GeneralFeature_AGENTDOCUMENTSPERMISSION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AGENTDOCUMENTSPERMISSION", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AGENTDOCUMENTSPERMISSION", NameTextCodeDefaultText = @"Documents Permission Agent View" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
+
 		   Feature GeneralFeature_ChangeLocalProfitCurrency = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ChangeLocalProfitCurrency", FeatureTypeCode = "OTH", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.ChangeLocalProfitCurrency", NameTextCodeDefaultText = @"Change Local/Profit Currency" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
+		   Feature GeneralFeature_DailyCurrenciesRates = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DailyCurrenciesRates", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.DailyCurrenciesRates", NameTextCodeDefaultText = @"Daily Currencies Rates" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
 
    
 	    
