@@ -12,9 +12,11 @@ import {PasswordChangeService} from './PasswordChangeService';
 import { HybridLabelsBrandingDataService } from './HybridLabels/Services/HybridLabelsBrandingDataService';
 import { BrandingDataService } from './HybridLabels/Services/BrandingDataService';
 import { CommonModule } from '@angular/common';
+import { SessionInfo } from './SessionInfo';
 
 export function getBaseUrl() {
-    return document.getElementsByTagName('base')[0].href;
+    const logitudeURL = SessionInfo.GetLogitudeURL();
+    return logitudeURL;
 }
 
 @NgModule({
