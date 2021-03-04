@@ -386,12 +386,12 @@ export function FillExternalID(NotReadyValue: string, ExternalID: string) {
     BaseAssertion.AssertElementNotExist(SaveCloseButton)
 }
 export function ARInvoiceSearch(ARInvoiceNumber: string) {
-    cy.DefineRequestWait(RestAPI.POST, AccountingURLs.PerformancelogsPostLogsList, RequestAliases.performancelogs);
+    cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViewsGetByFilters+ARInvoiceNumber+"**", RequestAliases.ARInvoiceViewsGetByFilters);
     cy.FillLogTextBox(BaseSelectors.SearchField,ARInvoiceNumber)
-    BaseAssertion.AssertStatusCode(RequestAliases.performancelogs, 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceViewsGetByFilters, 200);
 }
 export function ARInvoiceSearchInTransferScreen(ARInvoiceNumber: string) {
-    cy.DefineRequestWait(RestAPI.POST, AccountingURLs.ARInvoiceViewsGetByFilters+ARInvoiceNumber+"**", RequestAliases.ARInvoiceViewsGetByFilters);
+    cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViewsGetByFilters+ARInvoiceNumber+"**", RequestAliases.ARInvoiceViewsGetByFilters);
     cy.FillLogTextBox(BaseSelectors.NullSearch,ARInvoiceNumber)
    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceViewsGetByFilters, 200);
 }
