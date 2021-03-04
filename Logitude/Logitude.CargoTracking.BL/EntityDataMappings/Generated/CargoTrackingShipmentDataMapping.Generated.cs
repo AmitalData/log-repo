@@ -84,6 +84,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         AssignedTruckerDone, 
 	         AssignedTruckerDate, 
 	         AssignedTruckerEstimationDate, 
+	         
+	         GrossWeightUnitCode,
 	         AssignedTruckerNotes, 
 	         AssignedCustomsAgentDone, 
 	         AssignedCustomsAgentDate, 
@@ -95,7 +97,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         DeliveryEstimationDate, 
 	         DeliveryNotes, 
 	         DeliveryExceptionReason,
-	         GrossWeightUnitCode,
+	         
 	      }
 
 
@@ -172,6 +174,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         AssignedTruckerDone, 
 	         AssignedTruckerDate, 
 	         AssignedTruckerEstimationDate, 
+	          
+	         GrossWeightUnitCode,
 	         AssignedTruckerNotes, 
 	         AssignedCustomsAgentDone, 
 	         AssignedCustomsAgentDate, 
@@ -184,7 +188,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         DeliveryEstimationDate, 
 	         DeliveryNotes, 
 	         DeliveryExceptionReason,
-	         GrossWeightUnitCode,
+	         
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -877,6 +881,10 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.AssignedTruckerNotes = entityPOCO.AssignedTruckerNotes;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GrossWeightUnitCode))
+            {
+					entityPM.GrossWeightUnitCode = entityPOCO.GrossWeightUnitCode;
+            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AssignedCustomsAgentDone))
             {
 					entityPM.AssignedCustomsAgentDone = entityPOCO.AssignedCustomsAgentDone;
@@ -1245,6 +1253,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedTruckerNotes))
             {
                 oldEntityPM.AssignedTruckerNotes = entityPM.AssignedTruckerNotes;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GrossWeightUnitCode))
+            {
+                oldEntityPM.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentDone))

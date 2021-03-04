@@ -377,6 +377,11 @@ export class CargoTrackingShipmentPM {
     public set AssignedTruckerNotes(newValue: string) { if (this.assignedTruckerNotes != newValue) { this.assignedTruckerNotes = newValue; this.MarkAsDirty("AssignedTruckerNotes"); } }
        
 	 
+    private grossWeightUnitCode: string;
+    public get GrossWeightUnitCode() { return this.grossWeightUnitCode; }
+    public set GrossWeightUnitCode(newValue: string) { if (this.grossWeightUnitCode != newValue) { this.grossWeightUnitCode = newValue; this.MarkAsDirty("GrossWeightUnitCode"); } }
+       
+	 
     private assignedCustomsAgentDone: boolean;
     public get AssignedCustomsAgentDone() { return this.assignedCustomsAgentDone; }
     public set AssignedCustomsAgentDone(newValue: boolean) { if (this.assignedCustomsAgentDone != newValue) { this.assignedCustomsAgentDone = newValue; this.MarkAsDirty("AssignedCustomsAgentDone"); } }

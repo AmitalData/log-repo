@@ -36,6 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CargoTrackingShipment&quot;"
+  Code="&quot;2bff&quot;"
   Code="&quot;6283&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
