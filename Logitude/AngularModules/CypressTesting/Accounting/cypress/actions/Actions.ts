@@ -386,11 +386,9 @@ export function FillExternalID(NotReadyValue: string, ExternalID: string) {
     BaseAssertion.AssertElementNotExist(SaveCloseButton)
 }
 export function ARInvoiceSearch(ARInvoiceNumber: string) {
-    let ARInvoiceNumberWithoutLastCharcter=BaseActions.GetstringWithoutLastCharacter(ARInvoiceNumber)
-    let LastChartOfARInvoiceNumber=BaseActions.GetLastCharacter(ARInvoiceNumber)
-    cy.FillLogTextBox(BaseSelectors.SearchField,ARInvoiceNumberWithoutLastCharcter)
     cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViewsGetByFilters+ARInvoiceNumber+"**", RequestAliases.ARInvoiceViewsGetByFilters);
-    cy.FillLogTextBox(BaseSelectors.SearchField,LastChartOfARInvoiceNumber)
+    cy.get('div[id=ListDataLoaded]')
+    cy.FillLogTextBox(BaseSelectors.SearchField,ARInvoiceNumber)
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceViewsGetByFilters, 200);
 }
 export function ARInvoiceSearchInTransferScreen(ARInvoiceNumber: string) {
