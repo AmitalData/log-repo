@@ -60,6 +60,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ContainsExport = 'Export'
     public static readonly ContainsSendtoCustoms = "Send to Customs"
     public static readonly  ContainSave="Save"
+    public static readonly ContainSelected= "Selected:"
 
     public static readonly ContainsAddFollowup = "Add Follow up"
 
@@ -76,7 +77,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly button = "button"
     public static readonly typeCheckbox = '[type="checkbox"]'
     public static readonly LogitudeWindow = ".LogitudeWindow";
-    public static readonly Label = ".Label"
+    public static readonly LabelClass = ".Label"
     public static readonly ListItem='[class="Row ag-row tooltip"]'
     public static readonly DivListItem='div[class="Row ag-row tooltip"]'
     public static readonly MaintenanceButton=".MaintenanceButton"
@@ -150,6 +151,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly FillParentClass=".FillParent"
     public static readonly ConfirmWindow="[class=ConfirmWindow]"
     public static readonly CurvedEditArea=".CurvedEditArea"
+    public static readonly ListDataLoaded='div[id=ListDataLoaded]'
     
    
 }
