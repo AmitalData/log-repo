@@ -21,9 +21,9 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import { ShipmentReceivablePM } from '../../../../Shipment/EntityPMs/ShipmentReceivablePM';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
 
-@Component({
-    
+@Component({    
     templateUrl: './RoutingsTabComponent.html',
 })
 
@@ -40,6 +40,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
     public ItemsSource: RoutingItem[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     public IsChildFeatureExists: boolean = false;
+    public IsAddingPreOnCarriageVisible: boolean = false
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -52,6 +53,11 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         if (FeatureLocator.HasFeaturePermession("Shipment", "CHILDPICKUPDELIVERY")) {
             this.IsChildFeatureExists = true;
         }
+
+        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "PRE" && d.TenantNumber == SessionLocator.Tenant)[0];   
+        //if (this.EntityPM.ShipmentLevelCode == "D" || (this.EntityPM.ShipmentLevelCode == "C" && featureToggle)) {
+            this.IsAddingPreOnCarriageVisible = true;
+        //}
     }
 
     private SessionEvent: any = null;
@@ -139,13 +145,34 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
 
     public IsAddPreCarriageDisabled: boolean = false;
     public IsAddOnCarriageDisabled: boolean = false;
+    public IsAddPreForwardingDisabled: boolean = false;
+    public IsAddOnForwardingDisabled: boolean = false;
     SetAddButtonsIsDisabled() {
-        if (this.EntityPM.ShipmentLevelCode == "C") {
+        if (this.EntityPM.ShipmentLevelCode == "H") {
             this.IsAddPreCarriageDisabled = true;
             this.IsAddOnCarriageDisabled = true;
+
+            if (this.EntityPM.PreForwardingFromPortId == null && this.EntityPM.PreForwardingToPortId == null) {
+                this.IsAddPreForwardingDisabled = false;
+            }
+
+            else {
+                this.IsAddPreForwardingDisabled = true;
+            }
+
+            if (this.EntityPM.OnForwardingFromPortId == null && this.EntityPM.OnForwardingToPortId == null) {
+                this.IsAddOnForwardingDisabled = false;
+            }
+
+            else {
+                this.IsAddOnForwardingDisabled = true;
+            }
         }
 
         else {
+            this.IsAddPreForwardingDisabled = true;
+            this.IsAddOnForwardingDisabled = true;
+
             if (this.EntityPM.PreCarriageFromPortId == null && this.EntityPM.PreCarriageToPortId == null) {
                 this.IsAddPreCarriageDisabled = false;
             }
@@ -195,7 +222,11 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             }
         }
 
-        if (this.EntityPM.PreCarriageFromPortId != null && this.EntityPM.PreCarriageToPortId != null) {
+        if (this.EntityPM.ShipmentLevelCode == "H" && this.EntityPM.PreForwardingFromPortId != null && this.EntityPM.PreForwardingToPortId != null) {
+            this.ItemsSource.push(new RoutingItem(this.EntityPM, "Pre Forwarding", this));
+        }
+
+        else if (this.EntityPM.PreCarriageFromPortId != null && this.EntityPM.PreCarriageToPortId != null) {
             this.ItemsSource.push(new RoutingItem(this.EntityPM, "Pre Carriage", this));
         }
 
@@ -213,7 +244,11 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             this.ItemsSource.push(new RoutingItem(this.EntityPM, "Transshipment3", this));
         }
 
-        if (this.EntityPM.OnCarriageFromPortId != null && this.EntityPM.OnCarriageToPortId != null) {
+        if (this.EntityPM.ShipmentLevelCode == "H" && this.EntityPM.OnForwardingFromPortId != null && this.EntityPM.OnForwardingToPortId != null) {
+            this.ItemsSource.push(new RoutingItem(this.EntityPM, "On Forwarding", this));
+        }
+
+        else if (this.EntityPM.OnCarriageFromPortId != null && this.EntityPM.OnCarriageToPortId != null) {
             this.ItemsSource.push(new RoutingItem(this.EntityPM, "On Carriage", this));
         }
 
@@ -325,6 +360,25 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddOnCarriage");
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this }
+                    logitudeWindow.Height = 580;
+                    logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditOnCarriageComponent');
+                    break;
+                }
+
+            case "Pre Forwarding":
+                {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddPreForwarding");
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this }
+                    logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditPreCarriageComponent');
+                    break;
+                }
+
+            case "On Forwarding":
+                {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddOnForwarding");
                     logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this }
                     logitudeWindow.Height = 580;
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditOnCarriageComponent');
@@ -461,6 +515,25 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     break;
                 }
 
+            case "Pre Forwarding":
+                {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.EditPreForwarding");
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this }
+                    logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditPreCarriageComponent');
+                    break;
+                }
+
+            case "On Forwarding":
+                {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.EditOnForwarding");
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this }
+                    logitudeWindow.Height = 580;
+                    logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditOnCarriageComponent');
+                    break;
+                }
+
             case "WarehouseLeg":
             case "WarehouseLeg_Pickups":
                 {
@@ -542,6 +615,16 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 break;
             }
 
+            case "Pre Forwarding": {
+                message = TextCodeTranslator.Translate("Shipment.M.DeleteThisPreForwarding");
+                break;
+            }
+
+            case "On Forwarding": {
+                message = TextCodeTranslator.Translate("Shipment.M.DeleteThisOnForwarding");
+                break;
+            }
+
             case "Delivery": {
                 message = TextCodeTranslator.Translate("Shipment.M.DeleteThisDelivery");
                 break;
@@ -582,8 +665,20 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                         break;
                     }
 
+                    case "Pre Forwarding": {
+                        RoutingHelper.RemovePreForwardingLeg(this.EntityPM);
+                        this.SetAddButtonsIsDisabled();
+                        break;
+                    }
+
                     case "On Carriage": {
                         RoutingHelper.RemoveOnCarriageLeg(this.EntityPM);
+                        this.SetAddButtonsIsDisabled();
+                        break;
+                    }
+
+                    case "On Forwarding": {
+                        RoutingHelper.RemoveOnForwardingLeg(this.EntityPM);
                         this.SetAddButtonsIsDisabled();
                         break;
                     }
@@ -1212,6 +1307,8 @@ export class RoutingItem extends BaseComponent {
                 case "Pick Up":
                 case "On Carriage":
                 case "Pre Carriage":
+                case "On Forwarding":
+                case "Pre Forwarding":
                 case "WarehouseLeg":
                 case "WarehouseLeg_Pickups":
                     {
@@ -1254,6 +1351,12 @@ export class RoutingItem extends BaseComponent {
                 break;
             }
 
+            case "Pre Forwarding": {
+                myTextCode = "Shipment.O.Routings.PreForwarding";
+                myLegTransportModeId = this.EntityPM.PreForwardingTransportModeId;
+                break;
+            }
+
             case "Main Carriage": {
                 myTextCode = "Shipment.O.Routings.MainCarriageLeg1";
                 myLegTransportModeId = this.EntityPM.TransportModeId;
@@ -1281,6 +1384,12 @@ export class RoutingItem extends BaseComponent {
             case "On Carriage": {
                 myTextCode = "Shipment.O.Routings.OnCarriage";
                 myLegTransportModeId = this.EntityPM.OnCarriageTransportModeId;
+                break;
+            }
+
+            case "On Forwarding": {
+                myTextCode = "Shipment.O.Routings.OnForwarding";
+                myLegTransportModeId = this.EntityPM.OnForwardingTransportModeId;
                 break;
             }
 
@@ -1414,6 +1523,14 @@ export class RoutingItem extends BaseComponent {
                 break;
             }
 
+            case "Pre Forwarding": {
+                myCountryCode = this.EntityPM.PreForwardingFromPortCountryCode;
+                myCountryName = this.EntityPM.PreForwardingFromPortCountryName;
+                myTextPart1 = this.EntityPM.PreForwardingFromPortCode;
+                myTextPart2 = this.EntityPM.PreForwardingFromPortName;
+                break;
+            }
+
             case "Main Carriage": {
                 myCountryCode = this.EntityPM.MainCarriageFromPortCountryCode;
                 myCountryName = this.EntityPM.MainCarriageFromPortCountryName;
@@ -1451,6 +1568,14 @@ export class RoutingItem extends BaseComponent {
                 myCountryName = this.EntityPM.OnCarriageFromPortCountryName;
                 myTextPart1 = this.EntityPM.OnCarriageFromPortCode;
                 myTextPart2 = this.EntityPM.OnCarriageFromPortName;
+                break;
+            }
+
+            case "On Forwarding": {
+                myCountryCode = this.EntityPM.OnForwardingFromPortCountryCode;
+                myCountryName = this.EntityPM.OnForwardingFromPortCountryName;
+                myTextPart1 = this.EntityPM.OnForwardingFromPortCode;
+                myTextPart2 = this.EntityPM.OnForwardingFromPortName;
                 break;
             }
 
@@ -1597,6 +1722,14 @@ export class RoutingItem extends BaseComponent {
                 break;
             }
 
+            case "Pre Forwarding": {
+                myCountryCode = this.EntityPM.PreForwardingToPortCountryCode;
+                myCountryName = this.EntityPM.PreForwardingToPortCountryName;
+                myTextPart1 = this.EntityPM.PreForwardingToPortCode;
+                myTextPart2 = this.EntityPM.PreForwardingToPortName;
+                break;
+            }
+
             case "Main Carriage": {
                 myCountryCode = this.EntityPM.MainCarriageToPortCountryCode;
                 myCountryName = this.EntityPM.MainCarriageToPortCountryName;
@@ -1634,6 +1767,14 @@ export class RoutingItem extends BaseComponent {
                 myCountryName = this.EntityPM.OnCarriageToPortCountryName;
                 myTextPart1 = this.EntityPM.OnCarriageToPortCode;
                 myTextPart2 = this.EntityPM.OnCarriageToPortName;
+                break;
+            }
+
+            case "On Forwarding": {
+                myCountryCode = this.EntityPM.OnForwardingToPortCountryCode;
+                myCountryName = this.EntityPM.OnForwardingToPortCountryName;
+                myTextPart1 = this.EntityPM.OnForwardingToPortCode;
+                myTextPart2 = this.EntityPM.OnForwardingToPortName;
                 break;
             }
 
@@ -1748,6 +1889,20 @@ export class RoutingItem extends BaseComponent {
                 break;
             }
 
+            case "Pre Forwarding": {
+                myCarrierCode = this.EntityPM.PreForwardingCarrierCode;
+                myCarrierName = this.EntityPM.PreForwardingCarrierName;
+                myCarrierSite = this.EntityPM.PreForwardingCarrierWebSite;
+                myCarrierNumber = this.EntityPM.PreForwardingCarrierNumber;
+                myVesselName = this.EntityPM.PreForwardingVesselName;
+
+                if (this.EntityPM.PreForwardingTransportModeId == "O") {
+                    isVesselVisible = true;
+                }
+
+                break;
+            }
+
             case "Main Carriage": {
                 myCarrierCode = this.EntityPM.MainCarriageCarrierCode;
                 myCarrierName = this.EntityPM.MainCarriageCarrierName;
@@ -1816,6 +1971,20 @@ export class RoutingItem extends BaseComponent {
                 myVesselName = this.EntityPM.OnCarriageVesselName;
 
                 if (this.EntityPM.OnCarriageTransportModeId == "O") {
+                    isVesselVisible = true;
+                }
+
+                break;
+            }
+
+            case "On Forwarding": {
+                myCarrierCode = this.EntityPM.OnForwardingCarrierCode;
+                myCarrierName = this.EntityPM.OnForwardingCarrierName;
+                myCarrierSite = this.EntityPM.OnForwardingCarrierWebSite;
+                myCarrierNumber = this.EntityPM.OnForwardingCarrierNumber;
+                myVesselName = this.EntityPM.OnForwardingVesselName;
+
+                if (this.EntityPM.OnForwardingTransportModeId == "O") {
                     isVesselVisible = true;
                 }
 
@@ -1922,6 +2091,14 @@ export class RoutingItem extends BaseComponent {
                 break;
             }
 
+            case "Pre Forwarding": {
+                myETD = this.EntityPM.PreForwardingETD;
+                myATD = this.EntityPM.PreForwardingATD;
+                myETA = this.EntityPM.PreForwardingETA;
+                myATA = this.EntityPM.PreForwardingATA;
+                break;
+            }
+
             case "Main Carriage": {
                 myETD = this.EntityPM.MainCarriageETD;
                 myATD = this.EntityPM.MainCarriageATD;
@@ -1959,6 +2136,14 @@ export class RoutingItem extends BaseComponent {
                 myATD = this.EntityPM.OnCarriageATD;
                 myETA = this.EntityPM.OnCarriageETA;
                 myATA = this.EntityPM.OnCarriageATA;
+                break;
+            }
+
+            case "On Forwarding": {
+                myETD = this.EntityPM.OnForwardingETD;
+                myATD = this.EntityPM.OnForwardingATD;
+                myETA = this.EntityPM.OnForwardingETA;
+                myATA = this.EntityPM.OnForwardingATA;
                 break;
             }
 
@@ -2069,6 +2254,11 @@ export class RoutingItem extends BaseComponent {
                 break;
             }
 
+            case "Pre Forwarding": {
+                this.EntityPM.PreForwardingATD = this.EntityPM.PreForwardingETD;
+                break;
+            }
+
             case "Main Carriage": {
                 this.EntityPM.MainCarriageATD = this.EntityPM.MainCarriageETD;
                 break;
@@ -2091,6 +2281,11 @@ export class RoutingItem extends BaseComponent {
 
             case "On Carriage": {
                 this.EntityPM.OnCarriageATD = this.EntityPM.OnCarriageETD;
+                break;
+            }
+
+            case "On Forwarding": {
+                this.EntityPM.OnForwardingATD = this.EntityPM.OnForwardingETD;
                 break;
             }
 
@@ -2122,6 +2317,11 @@ export class RoutingItem extends BaseComponent {
                 break;
             }
 
+            case "Pre Forwarding": {
+                this.EntityPM.PreForwardingATA = this.EntityPM.PreForwardingETA;
+                break;
+            }
+
             case "Main Carriage": {
                 this.EntityPM.MainCarriageATA = this.EntityPM.MainCarriageETA;
                 break;
@@ -2144,6 +2344,11 @@ export class RoutingItem extends BaseComponent {
 
             case "On Carriage": {
                 this.EntityPM.OnCarriageATA = this.EntityPM.OnCarriageETA;
+                break;
+            }
+
+            case "On Forwarding": {
+                this.EntityPM.OnForwardingATA = this.EntityPM.OnForwardingETA;
                 break;
             }
 
