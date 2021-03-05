@@ -10,6 +10,7 @@ import { PayableDetails } from '../../../Shipment/cypress/models/PayableDetails'
 import { ARInvoiceDetails } from 'cypress/models/ARInvoiceDetails';
 import { APPaymentDetails } from 'cypress/models/APPaymentDetails';
 import { ARPaymentDetails } from 'cypress/models/ARPaymentDetails';
+import { FTPDetails } from 'cypress/models/FTPDetails';
 import { BaseURLs } from '../../../Base/cypress/constants/URLs';
 import { QuickSearchDetails } from '../../../Base/cypress/models/QuickSearchDetails';
 import { RestAPI } from '../../../Base/cypress/constants/RestAPI'
@@ -36,7 +37,7 @@ export function NavigatesToNewTransferARInvoices() {
     NavigatesToAccountingTransfer()
     cy.Click("#ARInvoicesTransfersection", AccountingSelectors.ContainNewTransfer)
 }
-export function changeAccountingsSystem(AccountingsSystem: string, ExternalTransmissionType?: string) {
+export function changeAccountingsSystem(AccountingsSystem: string, ExternalTransmissionType?: string, FTPdetails?: FTPDetails) {
     NavigatesToAccountingSettings()
     cy.Click(BaseSelectors.buttonspan, AccountingSelectors.ContainAccountingSystem, true)
     cy.SelectDropDownListItem(AccountingSelectors.LogLovAccountingSettingAccountingSystemCode, AccountingsSystem)
@@ -46,13 +47,31 @@ export function changeAccountingsSystem(AccountingsSystem: string, ExternalTrans
         cy.SelectCheckBox(AccountingSelectors.IsAPInvoicesTransferEnabled)
         cy.SelectCheckBox(AccountingSelectors.IsARPaymentsTransferEnabled)
         cy.SelectCheckBox(AccountingSelectors.IsAPPaymentsTransferEnabled)
-        ExternalTransmission(ExternalTransmissionType);
+        ExternalTransmission(ExternalTransmissionType, FTPdetails);
     }
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
 }
-export function ExternalTransmission(ExternalTransmissionType: string) {
+
+export function ExternalTransmission(ExternalTransmissionType: string, FTPdetails: FTPDetails) {
     cy.Click(BaseSelectors.ComboBoxLast, null)
-    cy.get(BaseSelectors.FillParentClass).find(BaseSelectors.TextTrimming).contains(ExternalTransmissionType).click()
+    cy.get(BaseSelectors.DropdownListItem).contains(ExternalTransmissionType).click()
+    if (ExternalTransmissionType === 'FTP') {
+        FillFTPDetails(FTPdetails);
+    }
+}
+
+function FillFTPDetails(FTPdetails: FTPDetails) {
+    cy.Click(BaseSelectors.Hyperlink, BaseSelectors.ContainSettings);
+    cy.Click(AccountingSelectors.EditFTPSettings, null, true)
+
+    cy.FillLogTextBox(AccountingSelectors.FTPDetailUserName, FTPdetails.UserName)
+    cy.FillLogTextBox(AccountingSelectors.FTPDetailPassword, FTPdetails.Password)
+    cy.FillLogTextBox(AccountingSelectors.FTPDetailHost, FTPdetails.Host)
+    cy.FillLogTextBox(AccountingSelectors.FTPDetailFolder, FTPdetails.Folder)
+    cy.get(AccountingSelectors.FTPDetailUseSFTP).uncheck({force: true})
+
+    cy.Click(AccountingSelectors.OKFTPDetails, null)
+    cy.Click(AccountingSelectors.OkFTP, null)
 }
 //#region CustomInvoices
 export function NewCustomsCreditNoteARInvoice() {

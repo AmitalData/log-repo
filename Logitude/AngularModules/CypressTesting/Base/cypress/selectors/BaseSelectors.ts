@@ -69,6 +69,7 @@ export class BaseSelectors extends RegexSelectors {
 
     public static readonly ContainYes="Yes"
     public static readonly ContainNo="No"
+    public static readonly ContainSettings="Settings"
 
     //#endregion
     //#region general

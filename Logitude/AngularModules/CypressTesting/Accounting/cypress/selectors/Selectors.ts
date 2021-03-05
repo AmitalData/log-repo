@@ -125,6 +125,16 @@ export class AccountingSelectors {
     public static readonly EditInvoiceCurrency = '[data-cy="EditInvoiceCurrency"]'
     public static readonly EditChargeType = '[data-cy="EditChargeType"]'
     //#endregion
+    //#region FTP
+    public static readonly EditFTPSettings = "iconbutton[data-cy^=EditFTPSettings]"
+    public static readonly FTPDetailUserName = "#FTPDetail_UserName"
+    public static readonly FTPDetailPassword = "#FTPDetail_Password"
+    public static readonly FTPDetailHost = "#FTPDetail_Host"
+    public static readonly FTPDetailFolder = "#FTPDetail_Folder"
+    public static readonly FTPDetailUseSFTP = "#FTPDetail_UseSFTP"
+    public static readonly OKFTPDetails = "button[data-cy^=OKFTPDetails]"
+    public static readonly OkFTP = "button[data-cy^=Ok_FTP]"
+    //#endregion
 
     public static EditShipmentLineIcon(ShipmentNumber: string): string {
         return "iconbutton[data-cy^=EditShipmentLine_" + ShipmentNumber + "]";
