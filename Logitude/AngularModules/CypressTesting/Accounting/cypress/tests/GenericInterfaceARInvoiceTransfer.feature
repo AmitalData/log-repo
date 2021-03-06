@@ -5,7 +5,7 @@ Feature: Generic Interface AR Invoice Transfer
    checks the created invoice in the Not Ready Entities in Accounting Interfaces, 
    fixes the accounting external IDs validations preventing the invoice from being transferred and exports/transfers the invoice.
 
-    Scenario: Update Accounting System
+    Scenario: Disable accounting system
         Given the user logged in
         Given accounting System as "None"
         When change the accounting system
