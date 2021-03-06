@@ -48,12 +48,13 @@ export function changeAccountingsSystem(AccountingsSystem: string, ExternalTrans
         cy.SelectCheckBox(AccountingSelectors.IsARPaymentsTransferEnabled)
         cy.SelectCheckBox(AccountingSelectors.IsAPPaymentsTransferEnabled)
     }
+    if(ExternalTransmissionType){
     if (ExternalTransmissionType != AccountingSelectors.ContainNone) {
         ExternalTransmission(ExternalTransmissionType, FTPdetails);
     }
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
 }
-
+}
 export function ExternalTransmission(ExternalTransmissionType: string, FTPdetails: FTPDetails) {
     cy.Click(BaseSelectors.ComboBoxLast, null)
     cy.get(BaseSelectors.DropdownListItem).contains(ExternalTransmissionType).click()
