@@ -41,7 +41,7 @@ Feature: Generic Interface AR Invoice Transfer
         And clear external ID for partner
         When create invoice
         Then the invoice should create successfully
-        And the transfer status should be "Not Ready"
+        And the transfer status should be Not Ready
 
     Scenario: Approve ARInvoice
         When approve invoice
@@ -59,10 +59,10 @@ Feature: Generic Interface AR Invoice Transfer
             | AFT         | EUR      | TestCompany |
         When add the external IDs
         Then the external IDs should add successfully
-        And the transfer status should be "Ready"
+        And the transfer status should be Ready
 
     Scenario: Transfer ARInvoice from transfer screen
         Given the user in transfer screen
         When export the ARInvoice
         Then the ARInvoice should export successfully
-        And the transfer status should be "Transferred"
+        And the transfer status should be Transferred
