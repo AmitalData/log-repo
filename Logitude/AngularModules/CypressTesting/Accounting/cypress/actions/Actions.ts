@@ -52,8 +52,8 @@ export function changeAccountingsSystem(AccountingsSystem: string, ExternalTrans
     if (ExternalTransmissionType != AccountingSelectors.ContainNone) {
         ExternalTransmission(ExternalTransmissionType, FTPdetails);
     }
-    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
 }
+cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
 }
 export function ExternalTransmission(ExternalTransmissionType: string, FTPdetails: FTPDetails) {
     cy.Click(BaseSelectors.ComboBoxLast, null)
