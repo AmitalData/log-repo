@@ -42,7 +42,7 @@ export class ProfitComponent {
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
         this.ProfitCurrencyCode = this.EntityPM.ProfitCurrencyCode;
         this.SelectedCurrencyCode = this.IsByLocalCurrency ? this.LocalCurrencyCode : this.ProfitCurrencyCode;
-        this.accrualsApprovementToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ACP" && d.TenantNumber == SessionLocator.Tenant)[0];
+        this.accrualsApprovementToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ACP")[0];
         if (FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Action.AccrualsApprovement") && this.accrualsApprovementToggle ) {
             this.IsAccrualsApprovingVisible = true;
         }

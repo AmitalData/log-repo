@@ -89,6 +89,21 @@ export class FeatureTogglePM {
     public set ToggleDescription(newValue: string) { if (this.toggleDescription != newValue) { this.toggleDescription = newValue; this.MarkAsDirty("ToggleDescription"); } }
        
 	 
+    private isMultiTenant: boolean;
+    public get IsMultiTenant() { return this.isMultiTenant; }
+    public set IsMultiTenant(newValue: boolean) { if (this.isMultiTenant != newValue) { this.isMultiTenant = newValue; this.MarkAsDirty("IsMultiTenant"); } }
+       
+	 
+    private fromTenantNumber: number;
+    public get FromTenantNumber() { return this.fromTenantNumber; }
+    public set FromTenantNumber(newValue: number) { if (this.fromTenantNumber != newValue) { this.fromTenantNumber = newValue; this.MarkAsDirty("FromTenantNumber"); } }
+       
+	 
+    private toTenantNumber: number;
+    public get ToTenantNumber() { return this.toTenantNumber; }
+    public set ToTenantNumber(newValue: number) { if (this.toTenantNumber != newValue) { this.toTenantNumber = newValue; this.MarkAsDirty("ToTenantNumber"); } }
+       
+	 
 
     public OldEntityPM: FeatureTogglePM;
 		

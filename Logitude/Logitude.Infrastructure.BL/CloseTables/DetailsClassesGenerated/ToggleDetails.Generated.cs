@@ -244,7 +244,6 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "CPH,Consequent Pickup/Delivery", 
                 Description = "Consequent Pickup/Delivery", 
 			});
-
 			
             return all;
        }

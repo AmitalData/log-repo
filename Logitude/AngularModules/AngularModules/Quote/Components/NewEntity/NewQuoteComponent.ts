@@ -77,7 +77,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         var loadPr = listservice.getMock("Port");
         loadPr.then((res: any) => {
             res.subscribe((resp: any) => {
-                this.SubTypeFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SUB" && d.TenantNumber == SessionLocator.Tenant)[0]; 
+                this.SubTypeFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SUB")[0]; 
                 this.ScreenIsReady = true;
                 this.BuildFiltersLists();
                 this.OnFiltersChanged();
