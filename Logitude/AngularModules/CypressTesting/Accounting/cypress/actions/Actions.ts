@@ -47,6 +47,8 @@ export function changeAccountingsSystem(AccountingsSystem: string, ExternalTrans
         cy.SelectCheckBox(AccountingSelectors.IsAPInvoicesTransferEnabled)
         cy.SelectCheckBox(AccountingSelectors.IsARPaymentsTransferEnabled)
         cy.SelectCheckBox(AccountingSelectors.IsAPPaymentsTransferEnabled)
+    }
+    if (ExternalTransmissionType != AccountingSelectors.ContainNone) {
         ExternalTransmission(ExternalTransmissionType, FTPdetails);
     }
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
