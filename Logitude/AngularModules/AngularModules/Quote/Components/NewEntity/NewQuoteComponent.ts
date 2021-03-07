@@ -182,7 +182,8 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             if (myResponse.HasError == false) {
                 if (myResponse.Result) {
                     if (myResponse.Result.Id) {
-                        this.QuoteSetting = myResponse.Result;                        
+                        this.QuoteSetting = myResponse.Result;
+                        this.ExpirationDays = this.QuoteSetting.QuoteExpirationDays;
                     }
 
                     if (this.IsCopyFromQuote) {
@@ -190,7 +191,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
                     }
                 }
 
-                this.IsAutomaticallyClosed = true;
+                this.IsAutomaticallyClosed = true;                
             }
         });
     }

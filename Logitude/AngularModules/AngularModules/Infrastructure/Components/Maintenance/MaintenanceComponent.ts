@@ -1385,6 +1385,7 @@ export class MaintenanceComponent {
                     }
                 case "QuoteSettings": {
                     var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Height = 600;
                     logitudeWindow.Title = "Quote Settings";
                     logitudeWindow.Show('./QuoteModules/QuoteOthers/Components/Maintenance/QuoteSettingsComponent');
                     break;
