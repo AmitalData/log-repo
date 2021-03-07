@@ -296,6 +296,7 @@
     <None Include="DBScripts\InvoiceModel\202010260915_UpdateSearchFieldsOfARInvoices.sxml" />
     <None Include="DBScripts\InvoiceModel\202010261215_UpdateSearchFieldsOfAPPayments.sxml" />
     <None Include="DBScripts\InvoiceModel\202010261230_UpdateSearchFieldsOfARPayments.sxml" />
+    <None Include="DBScripts\QuoteModel\202102281440_SetDefaultQuoteExpirationDays.sxml" />
     <None Include="DBScripts\QuoteModel\UpdateAutomaticLastUpdateDateOnQuote.sxml" />
     <None Include="DBScripts\QuoteModel\UpdateAutomaticLastUpdateDateOnQuoteClosingReason.sxml" />
     <None Include="DBScripts\QuoteModel\UpdateAutomaticLastUpdateDateOnQuoteStages.sxml" />
@@ -455,6 +456,7 @@
     <None Include="DBScripts\ShipmentModel\202101100944_FillQuoteNumberOnShipmentBackward.sxml" />
     <None Include="DBScripts\ShipmentModel\202103181700_AddShipmentNumberToSearchFieldInCustomsTransferHeaders.sxml" />
     <None Include="DBScripts\ShipmentModel\202101271225_AddNewSpecialHandlingCodes.sxml" />
+    <None Include="DBScripts\ShipmentModel\202102241906_UpdateCustomerContactAndAddress.sxml" />
     <None Include="DBScripts\ShipmentModel\UpdateshipmentsCalculateDocumentsKPIFields.sxml" />
     <None Include="DBScripts\ShipmentModel\UpdateShipmentsCalculateSendDocumentField.sxml" />
     <None Include="DBTables\CommonDataModel\CardSearch.dxml" />

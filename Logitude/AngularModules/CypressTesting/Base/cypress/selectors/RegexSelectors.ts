@@ -7,10 +7,27 @@ export class RegexSelectors {
     public static readonly SaveAsOpenButton= "Button[id^='SendButtom_']";
     public static readonly NullSearch='input[id^="null_Search"]'
     public static readonly ComboBoxLast="div[id^=ComboBox_]:last"
+    public static readonly DropdownListItem="div[id^=Dropdown_]:last > div > ul > li"
     public static readonly InputCheckBox="input[id^='CheckBox_']"
-
+    public static readonly Refresh='[id^="Refresh_"]'
     public static PackageGrid(cellNumber: string): string{
         return "div[id^='edit-log-grid_'][id$='_" + cellNumber +"_0"+ "']";
     }
     
+
+
+    public static SaveClose(entityType: string): string {
+        return "#"+RegexSelectors.SwitchToCustomer(entityType)+"-SaveClose"
+    }
+
+    public static AccountTab(entityType: string): string {
+        return "#"+RegexSelectors.SwitchToCustomer(entityType)+"THAccounting"
+    }
+
+    private static SwitchToCustomer(entityType:string): string{
+        if(entityType=="Partner"){
+            return "Customer" 
+        }
+        return entityType;
+    }
 }

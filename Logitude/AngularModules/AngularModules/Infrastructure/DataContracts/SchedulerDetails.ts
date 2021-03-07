@@ -9,6 +9,7 @@ export class SchedulerDetails {
 
     public FTPDetails: FTPSchedulerDetails;
     public ReportDetails: ReportSchedulerDetails;
+    public SendIfEmpty: boolean;
 
 }
 

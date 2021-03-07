@@ -108,6 +108,8 @@ using Simplog.Data.ShipmentsModel;
 					 temp.ShipmentPickUpDeliveryPackages = ShipmentPickUpDeliveryPackageService5.ShipmentPickUpDeliveryPackageDataMapping(item.ShipmentPickUpDeliveryPackages,Tenant,ComputingPartnerName);
 				}
 
+				   temp.DeliveryReference = item.PickUpDeliveryNumber;					
+
 							 					
 					MyList.Add(temp);
 				}
@@ -350,6 +352,14 @@ using Simplog.Data.ShipmentsModel;
 
 					 
 						}  
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(item.DeliveryReference))
+					{							//throw new ApplicationException("DeliveryReference Can't be update"); 
+							temp.PickUpDeliveryNumber = item.DeliveryReference;
 
 						
 					}

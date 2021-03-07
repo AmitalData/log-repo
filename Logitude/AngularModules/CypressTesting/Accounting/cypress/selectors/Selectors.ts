@@ -1,4 +1,6 @@
-export class AccountingSelectors {
+import { RegexSelectors } from './RegexSelectors';
+
+export class AccountingSelectors extends RegexSelectors {
     //#region Accounting settings
     public static readonly AccountingSettings = "#SETTINGSAccounting"
     //#endregion
@@ -125,7 +127,19 @@ export class AccountingSelectors {
     public static readonly EditInvoiceCurrency = '[data-cy="EditInvoiceCurrency"]'
     public static readonly EditChargeType = '[data-cy="EditChargeType"]'
     //#endregion
-
+    //#region FTP
+    public static readonly EditFTPSettings = "iconbutton[data-cy^=EditFTPSettings]"
+    public static readonly FTPDetailUserName = "#FTPDetail_UserName"
+    public static readonly FTPDetailPassword = "#FTPDetail_Password"
+    public static readonly FTPDetailHost = "#FTPDetail_Host"
+    public static readonly FTPDetailFolder = "#FTPDetail_Folder"
+    public static readonly FTPDetailUseSFTP = "#FTPDetail_UseSFTP"
+    public static readonly OKFTPDetails = "button[data-cy^=OKFTPDetails]"
+    public static readonly OkFTP = "button[data-cy^=Ok_FTP]"
+    //#endregion
+//#region check all in new transfer window
+public static readonly CheckAll='[data-cy="CheckALL"]'
+//#endregion
     public static EditShipmentLineIcon(ShipmentNumber: string): string {
         return "iconbutton[data-cy^=EditShipmentLine_" + ShipmentNumber + "]";
     }

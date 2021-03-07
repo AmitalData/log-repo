@@ -17,7 +17,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             columnsForCopy.Add("FinalDeliveryETA");
             columnsForCopy.Add("Tenant");
             columnsForCopy.Add("AutomaticLastUpdateDate");
-
+            columnsForCopy.Add("FinalDeliveryETD");
+            columnsForCopy.Add("FinalDeliveryATD");
 
             return string.Join(",", columnsForCopy.ToArray());
         }

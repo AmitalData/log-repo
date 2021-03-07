@@ -13,7 +13,7 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
         public static void Validate(UserPM entityPM, bool isNew)
         {
 
-            if (!entityPM.SignupRole)
+            if (!entityPM.SignupRole && !entityPM.IsHybrid)
             {
                 RoleQuery roleQuery = new RoleQuery(entityPM.Tenant);
                 List<RolePM> roles = new List<RolePM>();

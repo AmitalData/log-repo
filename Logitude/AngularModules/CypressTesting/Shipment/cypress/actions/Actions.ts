@@ -13,9 +13,60 @@ import { RequestAliases } from '../../../Base/cypress/constants/RequestAliases';
 import * as Conditions from "../actions/Conditions";
 import { BaseURLs } from '../../../Base/cypress/constants/URLs';
 import { QuickSearchDetails } from '../../../Base/cypress/models/QuickSearchDetails';
-import { verify } from 'cypress/types/sinon';
 import * as BaseActions from '../../../Base/cypress/actions/Actions';
+import { EventDetails } from '../models/EventDetails';
+import { EventTypeDetails } from '../models/EventTypeDetails';
 
+export function NavigatesToEventsTab() {
+    cy.DefineRequestWait(RestAPI.GET, URLs.TraceEventsDomain, RequestAliases.GetTraceEvent);
+    cy.Click(ShipmentSelectors.EventsTab, null)
+    BaseAssertion.AssertStatusCode(RequestAliases.GetTraceEvent,200)
+}
+export function ClickOnAddEventButton() {
+    NavigatesToEventsTab();
+    cy.Click(BaseSelectors.Button, ShipmentSelectors.ContainAddEvent, null)
+}
+export function FillEventDetails(eventDetails: EventDetails) {
+    ClickOnAddEventButton()
+    cy.FillLogLov(ShipmentSelectors.EventType, eventDetails.EventType, true)
+    cy.FillDate(ShipmentSelectors.EventDate, eventDetails.EventDate)
+    cy.FillLogTextBox(ShipmentSelectors.EventTime, eventDetails.EventTime)
+    cy.FillLogTextBox(ShipmentSelectors.TraceEventNotes, eventDetails.EventNotes)
+}
+export function AddEvent(){
+    cy.DefineRequestWait(RestAPI.GET, URLs.TraceEventsDomain, RequestAliases.GetTraceEvent);
+    cy.DefineRequestWait(RestAPI.GET, URLs.ShipmentGetSingle, RequestAliases.ShipmentGetSingle);
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK)
+}
+export function AssertAddEvent(EventNote:string) {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetTraceEvent, 200).then((interception) => {
+        expect(interception.response.body.Notes,)
+    })
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentGetSingle, 200);
+}
+export function AssertExceptionResolved (EventNote:string){
+    BaseAssertion.AssertStatusCode( RequestAliases.ShipmentRequest,200).then((interception) => {
+        expect(interception.response.body.ExceptionResolvedDescription,EventNote)
+    })  
+}
+export function AssertEventAppearInEventTab(EventType:string) {
+cy.get(ShipmentSelectors.EventItemBox).contains(EventType)
+}
+export function CheckHasException(HasExceptionValue:string){
+  cy.get(BaseSelectors.HeaderScreen).find(BaseSelectors.HeaderScreenLable)
+  .contains(ShipmentSelectors.ContainHasException).next(BaseSelectors.td).should('contain.text',HasExceptionValue)  
+}
+export function ClickOnExceptionResolved(ExceptionResolvedNote:string){
+    cy.Click(ShipmentSelectors.ShipmentMoreList,null)
+    cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
+    cy.Click(ShipmentSelectors.ShipmentExceptionResolved,null)
+    cy.FillLogTextBox(ShipmentSelectors.EventNotes,ExceptionResolvedNote)
+    cy.Click(ShipmentSelectors.ConfirmActionButton,null)
+    
+}
+export function RefreshEventTab(){
+    cy.get(BaseSelectors.CurvedEditArea).find(BaseSelectors.Refresh).click()
+}
 //#region ShipmentsWorkspace
 export function NavigatesToShipmentsWorkspace() {
     cy.Click(BaseSelectors.OperationsMenu, null)
@@ -45,7 +96,7 @@ export function CreateShipment(shipmentLevel: string) {
 //#region Open And UpdateShipment
 export function UpdateShipment(saveButtonSelector: string, saveButtonSelectorContains?: string) {
     cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
-    cy.Click(saveButtonSelector, saveButtonSelectorContains,false)
+    cy.Click(saveButtonSelector, saveButtonSelectorContains, false)
 }
 
 export function OpenShipment(shipmentNumber: string) {
@@ -55,32 +106,33 @@ export function OpenShipment(shipmentNumber: string) {
         Selector: ShipmentSelectors.ShipmentSearchBar,
         Parent: ShipmentSelectors.ShipmentSearchParent,
         ParentClass: ShipmentSelectors.ShipmentSearchParentClass,
-        WaitURL: BaseURLs.GetQuickSearch,
-        Value: shipmentNumber
+        WaitURL: BaseURLs.GetQuickSearch(shipmentNumber),
+        Value: shipmentNumber,
+        RequestAliase: RequestAliases.QuickSearchDataLoaded
     } as QuickSearchDetails;
 
     cy.SelectQuickSearchFirstElement(quickSearchDetails);
 
     BaseAssertion.AssertStatusCode(RequestAliases.WaitLoadShipmentMenuButtons, 200);
 }
-export function SplitShipment(packageNumber:string){
+export function SplitShipment(packageNumber: string) {
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
     cy.Click(ShipmentSelectors.SplitShipmentButton, null);
-    cy.Click(ShipmentSelectors.SplitButton(packageNumber),null);
+    cy.Click(ShipmentSelectors.SplitButton(packageNumber), null);
     cy.DefineRequestWait(RestAPI.PUT, URLs.SplitShipment, RequestAliases.SplitShipmentRequest)
-    cy.Click(BaseSelectors.RedButton,ShipmentSelectors.ContainsSplit);
+    cy.Click(BaseSelectors.RedButton, ShipmentSelectors.ContainsSplit);
 }
 
-export function PartialSplitShipment(packagesDetails: PackagesDetails){
+export function PartialSplitShipment(packagesDetails: PackagesDetails) {
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
     cy.Click(ShipmentSelectors.SplitShipmentButton, null);
-    cy.Click(ShipmentSelectors.PackagePartialSplit,null);
+    cy.Click(ShipmentSelectors.PackagePartialSplit, null);
     cy.DefineRequestWait(RestAPI.PUT, URLs.SplitShipment, RequestAliases.SplitShipmentRequest)
     FillPartialSplitWizard(packagesDetails);
-    cy.Click(BaseSelectors.RedButton,ShipmentSelectors.ContainsSplit);
+    cy.Click(BaseSelectors.RedButton, ShipmentSelectors.ContainsSplit);
 }
 
-export function CancelShipment(note :string) {
+export function CancelShipment(note: string) {
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
     cy.Click(ShipmentSelectors.CancelShipmentButton, null);
     cy.FillLogTextBox(ShipmentSelectors.ShipmentEventNote, note)
@@ -102,14 +154,14 @@ export function ValidateCancelIconExist(IsCancelled: boolean) {
     }
 }
 
-export function ValidateShipmentEventActions(eventSelector : string , excpectedMSG : string){
-    cy.DefineRequestWait(RestAPI.GET,URLs.TraceEventsDomain,RequestAliases.GetTraceEvent);
-    cy.Click(eventSelector,null);
+export function ValidateShipmentEventActions(eventSelector: string, excpectedMSG: string) {
+    cy.DefineRequestWait(RestAPI.GET, URLs.TraceEventsDomain, RequestAliases.GetTraceEvent);
+    cy.Click(eventSelector, null);
     BaseAssertion.AssertStatusCode(RequestAliases.GetTraceEvent, 200).then((interception) => {
         // let actualMSG = interception.response.body[0].Notes;
         // assert.equal(actualMSG, excpectedMSG);
         let IndexOfEvent = interception.response.body.map(function (t: { Notes: string; }) { return t.Notes; }).indexOf(excpectedMSG);
-        assert.notEqual(IndexOfEvent,"-1")
+        assert.notEqual(IndexOfEvent, "-1")
     });
 }
 
@@ -134,31 +186,31 @@ export function ValidateShipmentFields(IsCanceled: boolean) {
     CheckIfDisable(ShipmentSelectors.ReceivablesTab, BaseSelectors.AddButton, IsCanceled);
 }
 
-export function ValidatePackageDetails(tabSelector :string,partialSplitDetails:PackagesDetails,grossWeightSelector:string,isPackage:boolean){
+export function ValidatePackageDetails(tabSelector: string, partialSplitDetails: PackagesDetails, grossWeightSelector: string, isPackage: boolean) {
     cy.Navigate(tabSelector)
-    if(isPackage){
+    if (isPackage) {
         GetCellAssertion("1", partialSplitDetails.Quantity.toString());
         GetCellAssertion("3", partialSplitDetails.Volume.toString());
         GetCellAssertion("5", partialSplitDetails.GrossWeight.toString());
     }
-    BaseAssertion.AssertElementHaveValue(grossWeightSelector,partialSplitDetails.GrossWeight.toString())
+    BaseAssertion.AssertElementHaveValue(grossWeightSelector, partialSplitDetails.GrossWeight.toString())
 }
 
-export function ValidateShipmentNumber(OldShipmentNumber:string){
+export function ValidateShipmentNumber(OldShipmentNumber: string) {
     BaseAssertion.AssertStatusCode(RequestAliases.GetAll, 200)
-    cy.get(ShipmentSelectors.ShipmentNumberInTitle+ BaseSelectors.LastElement).invoke('text').then((text) => {
+    cy.get(ShipmentSelectors.ShipmentNumberInTitle + BaseSelectors.LastElement).invoke('text').then((text) => {
         assert.notEqual(OldShipmentNumber + ":", text.trim())
     });
 }
 
-function GetCellAssertion(cellNumber:string , ValueToCompare:string){
+function GetCellAssertion(cellNumber: string, ValueToCompare: string) {
     cy.get(ShipmentSelectors.PackageGrid(cellNumber) + BaseSelectors.LastElement).children('div').children('div').invoke('text').then((text) => {
         assert.equal(ValueToCompare, text.trim())
     })
 }
 
-function EditGeneralField(){
-    cy.FillLogTextBox(ShipmentSelectors.ShipmentValueOfGoods,"123");
+function EditGeneralField() {
+    cy.FillLogTextBox(ShipmentSelectors.ShipmentValueOfGoods, "123");
     UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 }
@@ -173,11 +225,11 @@ function CheckIfHaveClass(tabSelector: string, fieldSelector: string, classValue
     BaseAssertion.AssertElementHaveClasss(fieldSelector, IsHaveCLass ? BaseSelectors.HaveClass : BaseSelectors.NotHaveClass, classValue)
 }
 
-function FillPartialSplitWizard(packagesDetails: PackagesDetails){
+function FillPartialSplitWizard(packagesDetails: PackagesDetails) {
     cy.FillLogTextBox(ShipmentSelectors.PackageQuantity, packagesDetails.Quantity.toString())
     cy.get(ShipmentSelectors.PackageVolume).type(packagesDetails.Volume.toString());
     cy.get(ShipmentSelectors.PackageWeight).type(packagesDetails.GrossWeight.toString());
-    cy.Click(BaseSelectors.RedButton+BaseSelectors.LastElement,null);
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
 }
 
 export function ConnectOrDisconnectShipment() {
@@ -243,11 +295,13 @@ export function FillPartnersTab(direction: string, transportMode: string, partne
 export function FillPackageTab(transportMode: string, packagesDetails: PackagesDetails[], shipmentType?: string) {
     cy.Click(ShipmentSelectors.PackagesTab, null)
     for (let i = 0; i < packagesDetails.length; i++) {
+        packagesDetails[i].ContainerNumber = packagesDetails[i].ContainerNumber == 'Random' ? GetGeneratedRandomContainerNumber() : packagesDetails[i].ContainerNumber;
+    }
+    for (let i = 0; i < packagesDetails.length; i++) {
         cy.Click(ShipmentSelectors.AddPackage, null)
         if (Conditions.HasPacakageType(shipmentType)) {
             cy.FillLogLov(ShipmentSelectors.PackageType, packagesDetails[i].PackageType, true)
             if(packagesDetails[i].ContainerNumber){
-                packagesDetails[i].ContainerNumber = packagesDetails[i].ContainerNumber == 'Random' ? GetGeneratedRandomContainerNumber() : packagesDetails[i].ContainerNumber;
                 cy.FillLogTextBox(ShipmentSelectors.ContainerNumber, packagesDetails[i].ContainerNumber)
             }
         }
@@ -266,12 +320,26 @@ export function FillPackageTab(transportMode: string, packagesDetails: PackagesD
         }
     }
 }
+
+export function AddInsidePackage(packagesDetails: PackagesDetails[]) {
+    cy.Click(ShipmentSelectors.PackagesTab, null)
+    for (let i = 0; i < packagesDetails.length; i++) {
+        cy.Click(ShipmentSelectors.AddInsidePackage, null)
+        cy.FillLogLov(ShipmentSelectors.InsidePackageType, packagesDetails[i].PackageType, true)
+        cy.FillLogTextBox(ShipmentSelectors.InsidePackageQuantity, packagesDetails[i].Quantity.toString())
+        cy.get(ShipmentSelectors.InsidePackageWeight).type(packagesDetails[i].GrossWeight.toString());
+        cy.get(ShipmentSelectors.InsidePackageDescription).type(packagesDetails[i].Description.toString());
+    }
+    cy.Click("#OKInsidePackage", null)
+}
 //#endregion
+
 //#region House Shipment Tab
 export function FillHouseInShipmentsTab(Shipper: string) {
     cy.FillLogLov(ShipmentSelectors.ShipmentCustomer, Shipper, true)
 }
 //#endregion
+
 //#region Receivables Tab
 export function FillReceivablesTab(receivableDetails: ReceivableDetails[], HaveAccountingSystem?: boolean) {
     cy.Click(ShipmentSelectors.ReceivablesTab, null)
@@ -290,6 +358,7 @@ export function FillReceivablesTab(receivableDetails: ReceivableDetails[], HaveA
         cy.Click(ShipmentSelectors.AddReceivableOkButton, null)
     }
 }
+
 export function GenerateReceivablesFromPayables() {
     cy.Click(ShipmentSelectors.ReceivablesTab, null)
     cy.Click(ShipmentSelectors.ReceivableFromPayables, null)
@@ -463,14 +532,14 @@ export function AMANACView(TransportMode: string, AMANACView: string) {
 
 export function AMANACMarkeShipmentAs(MarkAs: string, ShipmentNumber: string) {
     MarkAs = MarkAs.replace(/\s/g, "");
-    SearchAShipmentInNullSearch(ShipmentNumber);
+    //SearchAShipmentInNullSearch(ShipmentNumber);
     cy.Click(ShipmentSelectors.AMANACMarkeShipmentAs(MarkAs, ShipmentNumber), null)
     cy.Click(BaseSelectors.Button, BaseSelectors.ContainsClose)
 }
 
 export function AMANACExportAShipment(ShipmentNumber: string) {
     cy.Click(ShipmentSelectors.CheckAll, null);
-    SearchAShipmentInNullSearch(ShipmentNumber);
+    //SearchAShipmentInNullSearch(ShipmentNumber);
     cy.Click(ShipmentSelectors.CheckShipment(ShipmentNumber), null);
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsExport);
 }
@@ -513,7 +582,7 @@ export function Retransfer() {
     cy.Click(ShipmentSelectors.CloseCustomsTransmissions, null)
 }
 
-export function FormatDate(date: string): string{
+export function FormatDate(date: string): string {
     var dateString = date == 'Today' ? new Date().toDateString() : date;
     var currentDateArray = dateString.split(" ");
     return currentDateArray[2] + " " + currentDateArray[1] + " " + currentDateArray[3];
@@ -531,7 +600,7 @@ export function ContainersView(containerView: string) {
     cy.get(ShipmentSelectors.ContainersView(containerView)).first().click();
 }
 
-function GetGeneratedRandomContainerNumber(): string {
+export function GetGeneratedRandomContainerNumber(): string {
     return GenerateRandoms.GetValidContainerNumber(GenerateRandoms.GenerateRandomString(4, true) + GenerateRandoms.GenerateRandomNumber(1000000, 9999999));
 }
 
@@ -646,12 +715,14 @@ function AddPartner(partnerTypeId: string, partnerFieldId: string, partner?: str
 
 function FillDirectAndHouseFields(shipmentDetails: ShipmentDetails) {
     FillMainFields(shipmentDetails);
+    FillCustomerType(shipmentDetails);
     FillShipperAndConsignee(shipmentDetails);
     FillMainCarriagePorts(shipmentDetails);
 }
 
 function FillMasterFields(shipmentDetails: ShipmentDetails) {
     FillMainFields(shipmentDetails);
+    //FillCustomerType(shipmentDetails);
     FillMasterAgent(shipmentDetails);
     FillMainCarriagePorts(shipmentDetails);
 }
@@ -699,6 +770,15 @@ function FillShipperAndConsignee(shipmentDetails: ShipmentDetails) {
     }
 }
 
+function FillCustomerType(shipmentDetails: ShipmentDetails) { 
+    if (Conditions.IsImport(shipmentDetails.Direction)) {
+        cy.FillLogLov(ShipmentSelectors.ShipmentCustomerType, "Consignee", true)
+    } else {
+        cy.FillLogLov(ShipmentSelectors.ShipmentCustomerType, "Shipper", true)
+    }
+}
+
+
 function FillMainCarriagePorts(shipmentDetails: ShipmentDetails) {
     if (!Conditions.IsInlandDomestic(shipmentDetails.Direction, shipmentDetails.TransportMode)) {
         let fromPortSelector = Conditions.IsMaster(shipmentDetails.ShipmentLevel) ? ShipmentSelectors.MasterMainCarriageFromPort : ShipmentSelectors.ShipmentMainCarriageFromPort;
@@ -712,7 +792,126 @@ function FillMasterAgent(shipmentDetails: ShipmentDetails) {
     cy.FillLogLov(ShipmentSelectors.MasterAgent, shipmentDetails.Agent, false)
 }
 
-function NavigateToEditMAinCarriage(){
+function NavigateToEditMAinCarriage() {
     cy.Click(ShipmentSelectors.RoutingsTab, null);
     cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
 }
+
+
+
+//#region Shipment Conversions
+
+export function OpenFclAndLclConversionWizard(intoShipmentType: string) {
+    let convertShipmentSelector = intoShipmentType === "LCL" ? ShipmentSelectors.ConvertToLCL : ShipmentSelectors.ConvertToFCL;
+    OpenConversionWizard(convertShipmentSelector);
+}
+
+export function OpenDirectAndHouseConversionWizard(intoShipmentLevel: string) {
+    let convertShipmentSelector = intoShipmentLevel === "House" ? ShipmentSelectors.ConvertToHouse : ShipmentSelectors.ConvertToDirect;
+    OpenConversionWizard(convertShipmentSelector);
+}
+
+export function OpenDirectionConversionWizard() {
+    OpenConversionWizard(ShipmentSelectors.ConvertShipmentDirection);
+}
+
+export function FillDirectionConversionWizard(shipmentDetails: ShipmentDetails) {
+    FillDirection(shipmentDetails.Direction);
+    FillShipperAndConsignee(shipmentDetails);
+}
+
+export function FillEventNotesWizard(notes: string) {
+    if (notes) {
+        cy.FillLogTextBox(BaseSelectors.EventNotes, notes);
+    }
+}
+
+export function ConvertShipmentDirection() {
+    ConvertShipment(true);
+}
+
+export function ConvertShipmentType() {
+    ConvertShipment(false);
+}
+
+export function ValidateShipmentTypeInHeaderScreen(expectedShipmentType: string) {
+    if (expectedShipmentType) {
+        cy.get(ShipmentSelectors.ShipmentTypeValue).should("have.text", expectedShipmentType);
+    }
+}
+
+export function ValidateShipmentDirectionInShortTitle(expectedDirection: string) {
+    if (expectedDirection) {
+        let directionIconSelector = ShipmentSelectors.ShortTitleDirectionIcon(expectedDirection);
+        cy.get(directionIconSelector).should("exist");
+    }
+}
+
+export function ValidateShipmentNumberInShortTitle(expectedShipmentNumber: string){
+    if(expectedShipmentNumber){
+        cy.get(ShipmentSelectors.ShipmentNumberInTitle).then((shipmentNumberDiv) => {
+            assert.equal(shipmentNumberDiv.text().replace(":", "").trim(), expectedShipmentNumber);
+        });
+    }
+}
+
+export function ValidateEventsTab(expectedEventDetailsList: EventTypeDetails[]) {
+    cy.get(ShipmentSelectors.EventsTab).then(($eventTab) => {
+        cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetTraceEventsForEntity, RequestAliases.GetTraceEventsForEntity);
+        if ($eventTab.hasClass("SelectedMenuItem")) {
+            cy.Click(ShipmentSelectors.ShipmentEventsRefreshButton, null);
+        } else {
+            cy.Click(ShipmentSelectors.EventsTab, null);
+        }
+        BaseAssertion.AssertStatusCode(RequestAliases.GetTraceEventsForEntity, 200);
+        for (let i = 0; i < expectedEventDetailsList.length; i++) {
+            let expectedEvent = expectedEventDetailsList[i].Event;
+            let expectedNotes = expectedEventDetailsList[i].Notes;
+    
+            if (expectedEvent) {
+                cy.contains(expectedEvent).eq(0).should("exist");
+            }
+    
+            if (expectedEvent && expectedNotes) {
+                cy.contains(expectedEvent).eq(0).parents(BaseSelectors.EventItemBox).within(() => {
+                    cy.get(BaseSelectors.textarea).should("have.value", expectedNotes);
+                });
+            }
+        }
+    });
+}
+
+export function ValidateAddButtonInPackagesTab(expectedButtonContains: string){
+    if(expectedButtonContains){
+        cy.Click(ShipmentSelectors.PackagesTab, null);
+        cy.get(ShipmentSelectors.AddPackage).should("have.text", expectedButtonContains);
+    }
+}
+
+export function ValidatePartnerInPartnersTab(partnerType: string, partnerName: string){
+    if(partnerType && partnerName){
+        cy.Click(ShipmentSelectors.PartnersTab, null);
+        let partnerBoxItemSelector = ShipmentSelectors.PartnerBoxItem(partnerType);
+        cy.get(partnerBoxItemSelector).should("exist");
+        cy.get(partnerBoxItemSelector).within(() => {
+            cy.get(ShipmentSelectors.PartnerName).then((partnerNameDiv) => {
+                assert.equal(partnerNameDiv.text().trim(), partnerName);
+            });
+        });
+    }
+}
+
+function OpenConversionWizard(convertButtonSelector: string) {
+    cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
+    cy.Click(convertButtonSelector, null);
+}
+
+function ConvertShipment(isDirectionConversion: boolean){
+    cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.PutShipment);
+    cy.Click(BaseSelectors.RedButton + ":last", null);
+    if(isDirectionConversion){
+        cy.Click(BaseSelectors.ConfirmWindowButton + ":last", null);
+    }
+}
+
+//#endregion

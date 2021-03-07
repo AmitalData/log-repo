@@ -6,72 +6,76 @@ import { RestAPI } from '../constants/RestAPI';
 import { AccountingURLs } from '../../../Accounting/cypress/constants/URLs';
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 
-export function NavigatesToMaintenanceMenu(){
-    cy.Click(BaseSelectors.MaintenanceMenu,null)
+export function NavigatesToMaintenanceMenu() {
+    cy.Click(BaseSelectors.MaintenanceMenu, null)
 }
-export function NavigatesToCustomsSettings(){
+
+export function NavigatesToCustomsSettings() {
     NavigatesToMaintenanceMenu();
-    cy.Click(BaseSelectors.SystemSettings,null)
-    cy.Click(BaseSelectors.CustomsSettings,null)
+    cy.Click(BaseSelectors.SystemSettings, null)
+    cy.Click(BaseSelectors.CustomsSettings, null)
 }
-export function ActivateCustomsManagementInShipments(){
+
+export function ActivateCustomsManagementInShipments() {
     NavigatesToCustomsSettings()
-    cy.get(BaseSelectors.typeCheckbox).check({force: true})
+    cy.get(BaseSelectors.typeCheckbox).check({ force: true })
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK)
 
 }
-export function ClickOnMaintenanceButton(LogLovSelector:string){
-    cy.ClickingAfterHovering(LogLovSelector,BaseSelectors.MaintenanceButton)
-}
-export function ClickOnEditInMaintenanceButton(){
-    cy.get(BaseSelectors.MTCPopup).contains(BaseSelectors.ContainsEdit).click({ force: true })
 
-}
-export function ClearExternalIDFromShipmentLevel(ExternalIDName:string){
-    let EntitySelector:string;
-    let ExternalIdSelectorTextBox:string
-    let SaveCloseButton:string;
-    let AccountingSelector:string
-    if(ExternalIDName==BaseSelectors.ChargesType){
-        EntitySelector=ShipmentSelectors.LogLovShipmentReceivableChargesTypeId;
-        ExternalIdSelectorTextBox=BaseSelectors.ChargesTypeReceivableCreditAccount
-        SaveCloseButton=BaseSelectors.ChargesTypeSaveClose
-        AccountingSelector=BaseSelectors.ChargesTypeAccounting
+export function ClearExternalIDFromShipmentLevel(ExternalIDName: string) {
+    let ExternalIdSelectorTextBox: string;
+    let EntitySelector = AccountingSelectors.LogLovId(ExternalIDName)
+    let SaveCloseButton = BaseSelectors.SaveClose(ExternalIDName)
+    let AccountingSelector = BaseSelectors.AccountTab(ExternalIDName)
+
+    if (ExternalIDName == BaseSelectors.ChargesType) {
+        ExternalIdSelectorTextBox = BaseSelectors.ChargesTypeReceivableCreditAccount
     }
-    else if(ExternalIDName==BaseSelectors.Currency){
-        EntitySelector=ShipmentSelectors.LogLovShipmentReceivableCurrencyId;
-        ExternalIdSelectorTextBox=BaseSelectors.CurrencyAccountingExternalCode
-        SaveCloseButton=BaseSelectors.CurrencySaveClose
-        AccountingSelector=BaseSelectors.CurrencyAccounting
+    else if (ExternalIDName == BaseSelectors.Currency) {
+        ExternalIdSelectorTextBox = BaseSelectors.CurrencyAccountingExternalCode
     }
-    else if(ExternalIDName==BaseSelectors.Partner){
-        EntitySelector=AccountingSelectors.LogLovARInvoicePartnerId;
-        ExternalIdSelectorTextBox=BaseSelectors.CustomerReceivablesAccountingCard;
-        SaveCloseButton=BaseSelectors.CustomerSaveClose
-        AccountingSelector=BaseSelectors.CustomerAccounting
+    else if (ExternalIDName == BaseSelectors.Partner) {
+        ExternalIdSelectorTextBox = BaseSelectors.CustomerReceivablesAccountingCard;
     }
+
     ClickOnMaintenanceButton(EntitySelector)
     ClickOnEditInMaintenanceButton();
-    cy.Click(AccountingSelector, null);
-    if(ExternalIDName==BaseSelectors.ChargesType){
-        cy.DefineRequestWait(RestAPI.GET,AccountingURLs.EntityResourceAccountingPeriod,RequestAliases.EntityResourceAccountingPeriod)
-        BaseAssertion.AssertStatusCode(RequestAliases.EntityResourceAccountingPeriod,200)
-    }
+    NavigateToAccountTab(ExternalIDName,AccountingSelector)
     cy.get(ExternalIdSelectorTextBox).clear();
     cy.Click(SaveCloseButton, null);
     BaseAssertion.AssertElementNotExist(SaveCloseButton)
 }
-export function GetstringWithoutLastCharacter(text:string){
-    let textWithoutLastCharacter = text.substring(0, (text.length - 1)).toString();
-return textWithoutLastCharacter;
+
+function ClickOnMaintenanceButton(LogLovSelector: string) {
+    cy.ClickingAfterHovering(LogLovSelector, BaseSelectors.MaintenanceButton)
 }
-export function GetLastCharacter(text:string){
+
+ function ClickOnEditInMaintenanceButton() {
+    cy.Click(BaseSelectors.MTCPopup,BaseSelectors.ContainsEdit,true)
+}
+
+function NavigateToAccountTab(ExternalIDName: string, AccountingSelector: string) {
+    cy.Navigate(AccountingSelector);
+    if (ExternalIDName == BaseSelectors.ChargesType) {
+        cy.DefineRequestWait(RestAPI.GET, AccountingURLs.EntityResourceAccountingPeriod, RequestAliases.EntityResourceAccountingPeriod)
+        BaseAssertion.AssertStatusCode(RequestAliases.EntityResourceAccountingPeriod, 200)
+    }
+}
+
+export function GetstringWithoutLastCharacter(text: string) {
+    let textWithoutLastCharacter = text.substring(0, (text.length - 1)).toString();
+    return textWithoutLastCharacter;
+}
+
+export function GetLastCharacter(text: string) {
     let lastCharacterOfText = text.slice(text.length - 1).toString();
     return lastCharacterOfText
-} 
-export function ClickOnRowDependingOnValue(value:string){
+}
+
+export function ClickOnRowDependingOnValue(value: string) {
     cy.get(BaseSelectors.RowCellClass).find(BaseSelectors.TextTrimming).contains(value)
-  .parents(BaseSelectors.ListItem).click({force:true})
+        .parents(BaseSelectors.ListItem).click({ force: true })
 }
 export function CloseWindow(){
     cy.Click(BaseSelectors.button,BaseSelectors.ContainClose)

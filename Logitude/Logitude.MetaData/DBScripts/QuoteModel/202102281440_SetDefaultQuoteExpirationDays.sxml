@@ -1,0 +1,10 @@
+﻿<Script DBType="Main" Module="Quote">
+  <Sql Version="1">
+    <![CDATA[
+    
+    update QuoteSettings set QuoteExpirationDays = 30
+      
+    ]]>
+  </Sql>
+</Script>
+

@@ -108,6 +108,8 @@ using Simplog.Data.ShipmentsModel;
 					 temp.ShipmentPickUpDeliveryPackages = ShipmentPickUpDeliveryPackageService5.ShipmentPickUpDeliveryPackageDataMapping(item.ShipmentPickUpDeliveryPackages,Tenant,ComputingPartnerName);
 				}
 
+				   temp.PickUpReference = item.PickUpDeliveryNumber;					
+
 							 					
 					MyList.Add(temp);
 				}
@@ -351,6 +353,14 @@ using Simplog.Data.ShipmentsModel;
 					 
 						}  
 
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(item.PickUpReference))
+					{							//throw new ApplicationException("PickUpReference Can't be update"); 
+							temp.PickUpDeliveryNumber = item.PickUpReference;
+
 						
 					}
 
@@ -368,4 +378,4 @@ using Simplog.Data.ShipmentsModel;
         }
 		 
    }
-}
+}

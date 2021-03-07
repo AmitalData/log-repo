@@ -51,7 +51,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 seedDate = seedDate.AddMonths(1);
             }
         }
-        public void CheckDbIntegrity()
+        public void CheckDbIntegrity(bool thewholePeriod = false)
         {
 
             var sw = Stopwatch.StartNew();
@@ -68,7 +68,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 var startDayOfMonth = new DateTime(_SeedDate.Date.Year, _SeedDate.Date.Month, 1);
                 var endDayOfMonth = //start.AddMonths(1).AddMinutes(-1);
                     new DateTime(_SeedDate.Date.Year, _SeedDate.Date.Month, DateTime.DaysInMonth(_SeedDate.Date.Year, _SeedDate.Date.Month));
+                if (thewholePeriod)
+                {
+                    startDayOfMonth = DateTime.MinValue;
+                    endDayOfMonth = DateTime.MaxValue;
 
+                }
                 var listOfDateTypeValues = new List<string>() {
                     GLAccountTotalDateTypeValues.Accountingdate,
                     GLAccountTotalDateTypeValues.DueDate,
@@ -83,7 +88,9 @@ namespace Logitude.Accounting.BL.CoreBL
                         var myGLAccountRepo = new GLAccountRepository(_AccountingContext);
                         var quaryAllControlAccount = myGLAccountRepo.GetQuaryAllControlAccount(_Tenant);
                         var myGLAccountTotalByMonthRepo = new GLAccountTotalByMonthRepository(_AccountingContext);
-                        var quaryablMonthTotals1 = myGLAccountTotalByMonthRepo.GetQuaryableMonthTotals(_SeedDate.Date.Year, _SeedDate.Date.Month, _Tenant,
+                        var quaryablMonthTotals1 = thewholePeriod ?
+                            myGLAccountTotalByMonthRepo.GetAll(_Tenant).Where(tot => tot.DateTypeCode == dateTypeValue) :
+                            myGLAccountTotalByMonthRepo.GetQuaryableMonthTotals(_SeedDate.Date.Year, _SeedDate.Date.Month, _Tenant,
                             dateTypeValue/*GLAccountTotalDateTypeValues.Accountingdate*/);
 
 
@@ -119,7 +126,8 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
 
                         var ledgerTransactionRepository = new LedgerTransactionRepository(_AccountingContext);
-                        var qLedgerAsGLAccountTotalByMonthByAccountingDate = ledgerTransactionRepository.GetQueryableGLAccountTotalByMonthByDateTypeCodeFromControlAccount(
+                        var qLedgerAsGLAccountTotalByMonthByAccountingDate =
+                            ledgerTransactionRepository.GetQueryableGLAccountTotalByMonthByDateTypeCodeFromControlAccount(
                             dateTypeValue, startDayOfMonth, endDayOfMonth, _Tenant/*, listOfAccId*/);
 
                         bool test = false;
@@ -246,15 +254,15 @@ namespace Logitude.Accounting.BL.CoreBL
         private readonly string Const_qNotinTotalByMonth = "qNotinTotalByMonth";
         private readonly string Const_qDiff = "qDiff";
 
-        public void FixDbIntegrityFromLedgeToTotal()
+        public void FixDbIntegrityFromLedgeToTotal(bool thewholePeriod)
         {
             
-            if (string.IsNullOrWhiteSpace(this._GLAccountId))
+            if (!string.IsNullOrWhiteSpace(this._GLAccountId))
             {
-                //throw new Exception("BETA- this._GLAccountId s must !!!!");
+                throw new Exception("remove this._GLAccountId ");
 
             }
-            CheckDbIntegrity();
+            CheckDbIntegrity(thewholePeriod);
             if (this.CompareReport.GLAccountTotalByMonthsList == null || this.CompareReport.GLAccountTotalByMonthsList.Count == 0)
             {
                 throw new Exception("is ok - nothing done  !!!!");
@@ -272,21 +280,37 @@ namespace Logitude.Accounting.BL.CoreBL
                 var tDeltaUpdate = this.CompareReport.GLAccountTotalByMonthsList.Where(r => r.CHANGE_TYPE == Const_qDiff).ToList();
                 tInsert.ForEach(r =>
                 {
-                    myGLAccountTotalByMonthRepository.Add(new GLAccountTotalByMonth()
+
+                    var poco = myGLAccountTotalByMonthRepository.GetSingle(r.AccountId, r.DateTypeValue, r.Year, r.Month, r.CurrencyId, _Tenant);
+                    if (poco != null)
                     {
-                        Tenant = this._Tenant,
-                        AccountId = r.AccountId,
-                        CurrencyId = r.CurrencyId,
-                        DateTypeCode = r.DateTypeValue,// "1",// BETA-TO DO ...
-                        Year = r.Year,
-                        Month = r.Month,
-                        ForeignAmountDebit = r.ForeignAmountDebit,
-                        LocalAmountCredit = r.LocalAmountCredit,
-                        ForeignAmountCredit = r.ForeignAmountCredit,
-                        LocalAmountDebit = r.LocalAmountDebit
+                        poco.ForeignAmountCredit = r.ForeignAmountCredit;
+
+                        poco.ForeignAmountDebit = r.ForeignAmountDebit;
+                        poco.LocalAmountCredit = r.LocalAmountCredit;
+
+                        poco.LocalAmountDebit = r.LocalAmountDebit;
+                        myGLAccountTotalByMonthRepository.Update(poco);
+
+                    }
+                    else
+                    {
+                        myGLAccountTotalByMonthRepository.Add(new GLAccountTotalByMonth()
+                        {
+                            Tenant = this._Tenant,
+                            AccountId = r.AccountId,
+                            CurrencyId = r.CurrencyId,
+                            DateTypeCode = r.DateTypeValue,// "1",// BETA-TO DO ...
+                            Year = r.Year,
+                            Month = r.Month,
+                            ForeignAmountDebit = r.ForeignAmountDebit,
+                            LocalAmountCredit = r.LocalAmountCredit,
+                            ForeignAmountCredit = r.ForeignAmountCredit,
+                            LocalAmountDebit = r.LocalAmountDebit
 
 
-                    });
+                        });
+                    }
                 });
                 tDeltaUpdate.ForEach(r =>
                 {

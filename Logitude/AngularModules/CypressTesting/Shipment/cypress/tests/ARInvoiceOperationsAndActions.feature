@@ -1,4 +1,4 @@
-@smoke @release @all@tests
+@smoke @release @all 
 Feature: ARInvoice operations and actions
     After the user logging in the system and Update Accounting System to be None,navigates to shipments workspace
     will create a direct shipment,update routing tab,packages.

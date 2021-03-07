@@ -63,7 +63,7 @@
             <td>
                 <table>
                     <tr>
-                        <td style="width: 1px;">
+                        <td style="width: 1px;" [attr.data-cy]="'EventsRefresh_' + ObjectTableName">
                             <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
                         </td>
 

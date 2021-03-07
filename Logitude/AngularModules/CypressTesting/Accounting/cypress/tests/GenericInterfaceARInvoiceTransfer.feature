@@ -1,4 +1,4 @@
-@release@all @open
+@release @all @open
 Feature: Generic Interface AR Invoice Transfer
    The user disables the Accounting Transfer in settings, 
    creates AR invoice, changes the settings for Accounting Transfer to Generic Interface, 
@@ -6,7 +6,7 @@ Feature: Generic Interface AR Invoice Transfer
    fixes the accounting external IDs validations preventing the invoice from being transferred and exports/transfers the invoice.
 
     Scenario: Update Accounting System
-        Given the user logged in
+        Given the user logged in and navigate to accounting settings
         Given accounting System as "None"
         When change the accounting system
         Then the accounting system should update successfully
@@ -27,21 +27,21 @@ Feature: Generic Interface AR Invoice Transfer
         When create shipment
         Then the direct should create successfully
 
-    Scenario: Add receivable and clear ChargesType Currency External IDs
+    Scenario:  Add receivable and clear external IDs (ChargesType,Currency)
         Given a receivable with the following details
             | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
             | AFT         | GRWT | 5        | 20        | EUR      | 4            |
         When add receivable
         Then the receivable should add successfully
 
-    Scenario: Create ARInvoice,clear customer External Id and assert transfer status
+    Scenario: Create ARInvoice and clear External ID (customer)
         Given an ARInvoice with the following details
             | PartnerType | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATNo | Branch      | VATType |
             | Customer    | EUR             | 4                   | Today       | Cash         | Today   | Zero  | Main Office | Zero    |
         And clear external ID for partner
         When create invoice
         Then the invoice should create successfully
-        And the transfer status should be not ready
+        And the transfer status should be Not Ready
 
     Scenario: Approve ARInvoice
         When approve invoice
@@ -59,10 +59,10 @@ Feature: Generic Interface AR Invoice Transfer
             | AFT         | EUR      | TestCompany |
         When add the external IDs
         Then the external IDs should add successfully
-        And the transfer status should be ready
+        And the transfer status should be Ready
 
     Scenario: Transfer ARInvoice from transfer screen
         Given the user in transfer screen
         When export the ARInvoice
         Then the ARInvoice should export successfully
-        And the transfer status should be transferred
+        And the transfer status should be Transferred

@@ -60,10 +60,17 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ContainsExport = 'Export'
     public static readonly ContainsSendtoCustoms = "Send to Customs"
     public static readonly  ContainSave="Save"
+    public static readonly ContainSelected= "Selected:"
 
     public static readonly ContainsAddFollowup = "Add Follow up"
+
     public static readonly ContainsAddContainerDelivery = "Add Container Delivery"
     public static readonly ContainsAddEmptyContainerReturn = "Add Empty Container Return"
+
+    public static readonly ContainYes="Yes"
+    public static readonly ContainNo="No"
+    public static readonly ContainSettings="Settings"
+
     //#endregion
     //#region general
     public static readonly ToggleButtonClass = '.ToggleButton';
@@ -71,7 +78,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly button = "button"
     public static readonly typeCheckbox = '[type="checkbox"]'
     public static readonly LogitudeWindow = ".LogitudeWindow";
-    public static readonly Label = ".Label"
+    public static readonly LabelClass = ".Label"
     public static readonly ListItem='[class="Row ag-row tooltip"]'
     public static readonly DivListItem='div[class="Row ag-row tooltip"]'
     public static readonly MaintenanceButton=".MaintenanceButton"
@@ -144,5 +151,16 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly buttonspan= "button span"
     public static readonly FillParentClass=".FillParent"
     public static readonly ConfirmWindow="[class=ConfirmWindow]"
+    public static readonly CurvedEditArea=".CurvedEditArea"
+    public static readonly ListDataLoaded='div[id=ListDataLoaded]'
+    
+   
+
+    public static readonly ShortTitleDiv = ".ShortTitleDiv";
+
+    public static readonly EventNotes = "#EventNotes";
+    public static readonly ConfirmWindowButton = "button[id^='ConfirmWindow_Yes']";
+    public static readonly EventItemBox = ".EventItemBox";
+    public static readonly textarea = "textarea";
    
 }

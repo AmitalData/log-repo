@@ -3,7 +3,7 @@ import { Component, ViewChild, ElementRef, AfterViewInit, OnDestroy, OnInit } fr
 import { Router, ActivatedRoute, Event, RoutesRecognized } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
-import { Location } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 import { CargoTrackingShipmentList } from '../../../EntityLists/CargoTrackingShipmentList';
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 
@@ -26,29 +26,30 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     searchForm;
     ServiceError;
     Shipments: CargoTrackingShipmentList[] = [];
-  
+
 
     constructor(private router: Router,
         private route: ActivatedRoute,
         private formBuilder: FormBuilder,
         private location: Location,
-        private searchService: CargoTrackingSearchService)
+        private searchService: CargoTrackingSearchService,
+        public dateline: DatePipe)
     {
         this.GetSearchTextFromURI();
         this.listenToRouterEvents();
 
 
-        
+
 
         this.InitForm();
     }
 
    get  tenant(){
     return CargoTrackingBrandingData.Tenant;
-   } 
+   }
     ngOnInit()
-    {      
-        
+    {
+
         if(this.SearchText){
                if(SearchComponent.Last_Search_Shipments){
                 this.Shipments = SearchComponent.Last_Search_Shipments;
@@ -79,7 +80,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         }
     }
 
-    private static Last_Search_Shipments:CargoTrackingShipmentList[]; 
+    private static Last_Search_Shipments:CargoTrackingShipmentList[];
 
     private GetSearchTextFromURI()
     {
@@ -94,7 +95,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     }
 
 
-   
+
     private InitForm()
     {
         this.searchForm = this.formBuilder.group({
@@ -201,7 +202,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         }
 
     }
-    
+
     ItemClicked(item)
     {
         var selection = window.getSelection();
@@ -233,13 +234,13 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
                 this.noResult = this.Shipments.length == 0 && !!this.SearchText;
             },
             errorObject=>
-            { 
+            {
                 RootContext.StopBusyIndicator();
                 this.isLoading = false;
                 this.hasError = true;
                 this.ServiceError = errorObject.error;
                 console.log("[ERROR FOUND]", errorObject);
-                
+
             });
         } else {
             this.Shipments = [];
@@ -271,7 +272,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
             }
         });
         return sortedShipments;
-       
+
     }
 
     references: string[];
@@ -296,9 +297,42 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
                 iconPath = "M29.6731686,46.9283885 C31.3325599,46.9283885 32.677691,48.2875099 32.677691,49.9642285 C32.677691,51.6408786 31.3325599,53 29.6731686,53 C28.0137095,53 26.6685784,51.6408786 26.6685784,49.9642285 C26.6685784,48.2875099 28.0137095,46.9283885 29.6731686,46.9283885 Z M52.7712947,46.9283885 C54.4306859,46.9283885 55.775885,48.2875099 55.775885,49.9642285 C55.775885,51.6408786 54.4306859,53 52.7712947,53 C51.1118356,53 49.7667045,51.6408786 49.7667045,49.9642285 C49.7667045,48.2875099 51.1118356,46.9283885 52.7712947,46.9283885 Z M59.5103151,29.000045 C60.3331132,28.9936856 61,29.6623235 61,30.4935267 L61,30.4935267 L61,48.094433 C61,48.9256362 60.3362073,49.664958 59.5173334,49.7455545 L59.5173334,49.7455545 L56.7117602,50.0216564 C56.7120621,50.0025176 56.7125149,49.9833788 56.7125149,49.96424 C56.7125149,47.7649559 54.9479854,45.9819979 52.7712645,45.9819979 C50.5946191,45.9819979 48.8300897,47.7649559 48.8300897,49.96424 C48.8300897,50.093179 48.8364287,50.2208219 48.8482013,50.3467109 L48.8482013,50.3467109 L33.596213,50.3467109 C33.608061,50.2208219 33.6144001,50.093179 33.6144001,49.96424 C33.6144001,47.7649559 31.8498707,45.9819979 29.6731498,45.9819979 C27.4965043,45.9819979 25.7319749,47.7649559 25.7319749,49.96424 C25.7319749,50.0006876 25.7325031,50.0371352 25.7334842,50.0734302 L25.7334842,50.0734302 L23.395494,49.6050254 C22.5884681,49.443375 21.9644456,48.639088 22.0015746,47.8087235 L22.001651,47.7970977 C22.0037397,47.5436283 22.0604663,43.2216537 23.5033339,42.3380778 C24.3290751,41.8324629 25.2657503,41.5066458 25.9354293,41.3168591 C26.3464133,41.2004251 26.7834328,40.7948503 26.9041773,40.3811168 L26.9041773,40.3811168 L28.6373886,34.4390163 C28.9325334,33.4271763 29.5955715,32.453919 30.5043245,31.6986609 C31.4130775,30.9434028 32.486194,30.4737017 33.5258793,30.3764064 L33.5258793,30.3764064 L35.9259775,30.1515447 C36.1341862,29.5682307 36.6859884,29.1476347 37.3324996,29.1426022 L37.3324996,29.1426022 Z M35.4019465,31.7518073 L33.6669994,31.9144489 C32.140563,32.057418 30.5370764,33.3899662 30.1036038,34.8758536 L30.1036038,34.8758536 L28.4251048,40.6306075 C28.3768824,40.7960704 28.4752137,40.9146394 28.6448597,40.8954243 L28.6448597,40.8954243 L34.2584964,40.2599553 C34.4990043,40.232734 34.7174763,40.013896 34.7465304,39.7711154 L34.7465304,39.7711154 L35.672565,32.0330942 C35.6931671,31.8618363 35.5718943,31.7359472 35.4019465,31.7518073 L35.4019465,31.7518073 Z";
                 this.transform = "translate(41.500000, 41.000000) scale(-1, 1) translate(-41.500000, -41.000000)";
                 break;
-          
+
         }
 
         return iconPath;
+    }
+
+    GetShipmentStatus(shipment: CargoTrackingShipmentList)
+    {
+        if(shipment.CurrentMilestoneCode)
+            var status = this.GetShipmentStatusFromCurrentMilestone(shipment);
+        else if(shipment.FutureMilstoneCode)
+            var status = this.GetShipmentStatusFromFutureMilestone(shipment);
+
+        return status;
+    }
+
+    private GetShipmentStatusFromFutureMilestone(shipment: CargoTrackingShipmentList)
+    {
+        let name = shipment.FutureMilstoneName;
+        let status = name;
+        if (shipment.FutureMilstoneDate){
+            let date = shipment.FutureMilstoneDate;
+            status += ' on ' + this.dateline.transform(date, 'd-MMM-y, HH:MM');
+        }
+        return status;
+    }
+
+    private GetShipmentStatusFromCurrentMilestone(shipment: CargoTrackingShipmentList)
+    {
+        let name = shipment.CurrentMilestoneName;
+        var status = name;
+
+        if (shipment.CurrentMilestoneDate){
+            var date = shipment.CurrentMilestoneDate;
+            status += ' on ' + this.dateline.transform(date, 'd-MMM-y, HH:MM')
+        }
+        return status;
     }
 }
