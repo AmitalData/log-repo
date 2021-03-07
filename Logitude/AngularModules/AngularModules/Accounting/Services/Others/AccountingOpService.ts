@@ -38,6 +38,24 @@ export class AccountingOpService {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+
+    PostTestOperation(operationId: string, myparams): any {
+        var url = this._apiUrl + '/PostTestOperation';///?operationId=' + operationId;//+ '&myparams=' + myparams;
+        return defer(() => {
+            return this._http
+                .post(url, JSON.stringify(myparams), ServiceHelper.GetHttpHeaders())
+                .pipe(map(response => {
+
+                var result = response;
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+                return serviceResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
     Generate1000(email: string): any {
  
         var url = this._apiUrl + '/GetGenerate1000?email=' + email;
