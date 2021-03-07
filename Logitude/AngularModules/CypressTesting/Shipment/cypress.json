@@ -14,7 +14,7 @@
     "defaultCommandTimeout": 20000,
     "responseTimeout": 180000,
     "requestTimeout": 180000,
-    "video": true,
+    "video": false,
     "screenshotOnRunFailure": true,
     "screenshots": true,
     "trashAssetsBeforeRuns": false,

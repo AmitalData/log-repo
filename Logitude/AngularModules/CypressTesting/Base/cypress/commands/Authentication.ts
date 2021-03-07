@@ -23,7 +23,7 @@ Cypress.Commands.add("Login", (customerCareUser = false) => {
         let email = customerCareUser ? Cypress.env("CustomerCareEmail") : Cypress.env("Email");
         let password = customerCareUser ? Cypress.env("CustomerCarePassword") : Cypress.env("Password");
         let url = Cypress.env("Url");
-        let tenant = Cypress.env("Tenant");
+        let tenant = customerCareUser ? Cypress.env("Tenant") : null;
         CompleteLoginProcess(email, password, url, tenant);
     }
 })
