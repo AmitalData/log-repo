@@ -7,11 +7,11 @@ import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTransla
 export class JournalValidator
 {
     private static CurrentSession = SessionLocator.SelectedSession;
+    private static FutureDateErrorsMessage: string;
+    private static IsFutureDateErrorsExist: boolean = true;
 
     public static ValidateJournal(entityPM: any)
     {
-
-
         return [];
     }
 
@@ -21,8 +21,8 @@ export class JournalValidator
         return [];
     }
 
-    public static ValidateJournalLines(line: any) {
 
+    public static ValidateJournalLines(line: any) {
         var errors = [];
         if (line) {
             if (line.ActionCode == null || line.ActionCode == undefined) {
@@ -70,12 +70,17 @@ export class JournalValidator
                     }
                 }
 
+                
                 // Ref. + Due Dates
                 if (!line.DocumentDate) {
                     errors.push(TextCodeTranslator.Translate("Accounting.General.O.chooseRefDate") + " " + line.Line  ); //You should choose Ref. Date for line
                 }
                 if (!line.DueDate) {
                     errors.push(TextCodeTranslator.Translate("Accounting.General.O.chooseDueDate") + " " + line.Line  ); //You should choose Due Date for line
+                }
+
+                if (this.CheckIfFutureDate(line)) {
+                    this.SetFutureDateErrorsMessage(line);
                 }
 
                 if (line.isValid != undefined) { // when this function called from editcomponent save button, the line does not have isvalid property
@@ -89,6 +94,18 @@ export class JournalValidator
         //this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
         SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList=errors;
         return errors;
+    }
+
+
+    public static CheckIfFutureDate(line: any) {
+        var currentDate: Date = new Date();
+        return line.DocumentDate > currentDate || line.AccountingDate > currentDate.getDay();
+    }
+
+     private static SetFutureDateErrorsMessage(line: any) {
+        this.FutureDateErrorsMessage += this.IsFutureDateErrorsExist ? TextCodeTranslator.Translate("Journal.O.FutureDateIsNotAllowedInLine") + " " : ", ";
+        this.FutureDateErrorsMessage += line.Line;
+        this.IsFutureDateErrorsExist = false;
     }
 
     public static ValidateTotals(entityPM: JournalPM) {
@@ -153,18 +170,21 @@ export class JournalValidator
 
         this.errorList = [];
         var result = [];
+        JournalValidator.FutureDateErrorsMessage = "";
+        JournalValidator.IsFutureDateErrorsExist = true;
         // Validate last row of journal lines
         //if (!AppTool.IsNullOrEmpty(entityPM.JournalLines)) {
         //    var lastRow = entityPM.JournalLines[entityPM.JournalLines.length - 1];
         //}
-    
+       
         for (var line in entityPM.JournalLines) {
             var journalLine = entityPM.JournalLines[line];
             result = JournalValidator.ValidateJournalLines(journalLine);
             this.FillErrorList(result); 
-       
         }
-     
+
+        this.SetFutureDateErrorsIfExist();
+
         // Validate Totals
         result = JournalValidator.ValidateTotals(entityPM)
         if (result.length > 0) {
@@ -173,6 +193,11 @@ export class JournalValidator
         }
 
         return this.errorList ;
+    }
+
+    SetFutureDateErrorsIfExist() {
+        if (!JournalValidator.IsFutureDateErrorsExist)
+            this.errorList.push(JournalValidator.FutureDateErrorsMessage);
     }
 
     public static Abs(number: number) {
