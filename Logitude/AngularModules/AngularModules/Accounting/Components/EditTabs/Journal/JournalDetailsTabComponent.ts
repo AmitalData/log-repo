@@ -636,7 +636,9 @@ getHeaderCurrency(CurrencyId:string){
         this.lineDate.setFullYear(this.line_year);
         this.lineDate.setMonth(this.line_month - 1);
         this.lineDate.setDate(this.line_day);
-        line.accDay = this.line_day;
+        
+        if (!line.ActionCode) line.accDay = this.line_day;
+        line.AccountingDate = new Date(this.line_year, this.line_month-1, line.accDay);
     }
     lineDate: Date;
     headerDate: Date;
@@ -645,7 +647,7 @@ getHeaderCurrency(CurrencyId:string){
         if (lines) {
             lines.forEach((line: JournalLineModel) => {
                 this.headerDate = this.AccountingDate;
-                if (this.headerDate && !line.ActionCode) {
+                if (this.headerDate) {
                     this.GetHeaderDateParts();
                     this.lineDate = this.AccountingDate;
                     if (line.AccountingDate) {
@@ -776,6 +778,8 @@ class JournalLineModel extends BaseComponent {
     set AccountingDate(value: Date) {
         if (this.JournalLinePM.AccountingDate != value) {
             this.JournalLinePM.AccountingDate = value;
+            if (this.CurrencyId)  this.GetExchangeRate(this.CurrencyId);
+
         }
     }
 
@@ -902,6 +906,7 @@ class JournalLineModel extends BaseComponent {
     set CurrencyId(value: string) {
         if (this.JournalLinePM.CurrencyId != value) {
             this.JournalLinePM.CurrencyId = value;
+            this.ClearAmounts();
             if (!AppTool.IsNullOrEmpty(value) && !AppTool.IsNullOrEmpty(this.parent.currency)) {
                 if (value != SessionLocator.TenantPM.CurrencyId) {
                     this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, true);
@@ -930,6 +935,11 @@ class JournalLineModel extends BaseComponent {
             }
 
         }
+    }
+    ClearAmounts() {
+        this.LocalAmount = null;
+        this.ForeignAmount = null;
+
     }
 
     GetExchangeRate(value: string) {
@@ -994,6 +1004,7 @@ class JournalLineModel extends BaseComponent {
             if(this.Currency){
                 if(this.Currency.Id ==SessionLocator.TenantPM.CurrencyId)  this.ForeignAmount= this.LocalAmount;
             }
+            if (!this.ForeignAmount) this.GetExchangeRate(this.CurrencyId);
             // convert amount
             // if (!AppTool.IsNullOrEmpty(value) && this.CurrencyId && this.currencyRate) {
             //     this.isForeignEntered = true;
@@ -1034,7 +1045,7 @@ class JournalLineModel extends BaseComponent {
             // set value
             this.JournalLinePM.ForeignAmount = value;
             this.parent.CalculateTotals();
-
+            if (!this.LocalAmount) this.GetExchangeRate(this.CurrencyId);
             // convert amount
             // if (value != null && this.CurrencyId && this.currencyRate) {
             //     if (1 || !this.isRateCoverted)
@@ -1370,8 +1381,12 @@ class JournalLineModel extends BaseComponent {
                     }
                  else this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, true);
 
-                } else {
+            }
+            else {
                 this.CurrencyCode = null;
+                this.CurrencyId = null;
+                this.enableForeighAmountField = true;
+                 this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, true);
             }
 
             this.SplittedCheck();
