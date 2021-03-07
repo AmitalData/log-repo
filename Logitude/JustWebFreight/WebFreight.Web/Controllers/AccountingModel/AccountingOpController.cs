@@ -247,5 +247,30 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage PostTestOperation(FlatFileClass myparams)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+
+                myparams.FlatFile=myparams.FlatFile.Replace("\r\n", "\n").Replace("\n", Environment.NewLine);
+                var gateWayTester = new GateWayTester();
+                var res = gateWayTester.TestIt(myparams.OperationId, authToken.Tenant, myparams.FlatFile);
+
+                return Request.CreateResponse(HttpStatusCode.OK, res);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        
+    }
+    public class FlatFileClass
+    {
+        
+        public string OperationId { get; set; }
+        public string FlatFile { get; set; }
     }
 }

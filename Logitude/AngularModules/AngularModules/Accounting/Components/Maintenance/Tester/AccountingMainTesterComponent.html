@@ -20,7 +20,7 @@
             <tr>
                 <td style="width:200px"><button class="Button" (click)="_ButtonReverseTotal_Click()">Reverse from Total to Ledger</button></td>
                 <td style="width:200px"><button class="Button" (click)="_ButtonReverseTrans_Click()">Reverse from Ledger to journal line</button></td>
-                <td style="width:200px"></td>
+                <td style="width:200px"><button class="Button" (click)="_ButtonReverseDueDate_Click()">ReverseDueDate</button></td>
                 <td style="width:200px"></td>
             </tr>
         </table>
@@ -31,7 +31,8 @@
                 <td style="width:200px"><button class="Button" (click)="_ButtonReverseTotalFIX_Click()">FIX TOTAL from  Ledger</button></td>
                 <td style="width:200px"><button class="Button" (click)="_ButtonReverseGLBalanceFIX_Click()">FIX ReverseGLBalance</button></td>
                 <td style="width:200px"><button class="Button" (click)="_ButtonReverseTotalFIXControl_Click()">FIX TOTAL from  Ledger ***control**"</button></td>
-                <td style="width:200px"></td>
+                <td style="width:200px"><button class="Button" (click)="_ButtonFixDueLocalBalance_Click()">FixDueLocalBalance</button></td>
+                
             </tr>
         </table>
     </div>
@@ -132,7 +133,9 @@
                 <td style="width:200px">
                     <button class="Button" (click)="CreateJournalTask_Click()">Create journal -Task  </button>
                 </td>
-                <td style="width:200px"></td>
+                <td style="width:200px">
+                    <button class="Button" (click)="ButtonLoadSystem1000_Click()">LoadSystem1000</button>
+                </td>
                 <td style="width:200px"></td>
             </tr>
         </table>
