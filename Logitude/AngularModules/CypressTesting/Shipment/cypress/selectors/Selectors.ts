@@ -28,6 +28,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly MasterAgent = '#Master_AgentId';
   public static readonly CreateShipmentButton = '#ShipmentCreatebtn';
   public static readonly CreateMasterShipmentButton = '#MasterCreatebtn';
+  public static readonly LogLovShipmentCustomer="#LogLov_Shipment_ShipmentCustomerTypeCode"
   //#endregion
   //#region Shipment tabs
   public static readonly GeneralTab = '#ShipmentTHGeneral';
