@@ -208,6 +208,7 @@ export class AddEditExceptionReasonComponent extends BaseComponent {
                             this._referantExceptionPMService.insert(item.EntityPM).subscribe((response: any) => {
                                 item.IsNew = false;
                                 item.ShowCode = true;
+                                SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.EntityPM.DeclarationId, { rowIndex: this.rowIndex });
                                 SessionLocator.SelectedSession.CloseCurrentWindow();
                             });
                         } else if (item.EntityPM.IsDirty == true) {
@@ -219,14 +220,13 @@ export class AddEditExceptionReasonComponent extends BaseComponent {
                             SessionLocator.SelectedSession.CloseCurrentWindow();
                         }
                     });
-                    if (this.ReferantExceptionItemsSource.Collection.length == 0) {
-                        SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.EntityPM.DeclarationId, { rowIndex: this.rowIndex });
-                        SessionLocator.SelectedSession.CloseCurrentWindow();
-                    }
+ 
                 });
             }
             this.exceptionReasonSharedDataService.IsDirty = false;
         } else {
+            SessionLocator.SelectedSession.CloseCurrentWindow();
+
         }
     }
 
