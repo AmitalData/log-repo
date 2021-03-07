@@ -204,8 +204,6 @@ When("export the ARInvoice", () => {
 
 Then("the ARInvoice should export successfully", () => {
     AccountingActions.AssertTransferredInvoice()
-    AccountingActions.CloseExportingInvoiceTransferWindow()
-    BaseActions.CloseWindow()
 });
 
 Then("the transfer status should be transferred", () => {
