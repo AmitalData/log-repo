@@ -13,9 +13,9 @@ import { RequestAliases } from '../../../Base/cypress/constants/RequestAliases';
 import * as Conditions from "../actions/Conditions";
 import { BaseURLs } from '../../../Base/cypress/constants/URLs';
 import { QuickSearchDetails } from '../../../Base/cypress/models/QuickSearchDetails';
-import { verify } from 'cypress/types/sinon';
 import * as BaseActions from '../../../Base/cypress/actions/Actions';
-import { EventDetails } from 'cypress/models/EventDetails';
+import { EventDetails } from '../models/EventDetails';
+import { EventTypeDetails } from '../models/EventTypeDetails';
 
 export function NavigatesToEventsTab() {
     cy.DefineRequestWait(RestAPI.GET, URLs.TraceEventsDomain, RequestAliases.GetTraceEvent);
@@ -333,11 +333,13 @@ export function AddInsidePackage(packagesDetails: PackagesDetails[]) {
     cy.Click("#OKInsidePackage", null)
 }
 //#endregion
+
 //#region House Shipment Tab
 export function FillHouseInShipmentsTab(Shipper: string) {
     cy.FillLogLov(ShipmentSelectors.ShipmentCustomer, Shipper, true)
 }
 //#endregion
+
 //#region Receivables Tab
 export function FillReceivablesTab(receivableDetails: ReceivableDetails[], HaveAccountingSystem?: boolean) {
     cy.Click(ShipmentSelectors.ReceivablesTab, null)
@@ -356,6 +358,7 @@ export function FillReceivablesTab(receivableDetails: ReceivableDetails[], HaveA
         cy.Click(ShipmentSelectors.AddReceivableOkButton, null)
     }
 }
+
 export function GenerateReceivablesFromPayables() {
     cy.Click(ShipmentSelectors.ReceivablesTab, null)
     cy.Click(ShipmentSelectors.ReceivableFromPayables, null)
@@ -793,3 +796,122 @@ function NavigateToEditMAinCarriage() {
     cy.Click(ShipmentSelectors.RoutingsTab, null);
     cy.Click(ShipmentSelectors.EditRoutingMainCarriage, null)
 }
+
+
+
+//#region Shipment Conversions
+
+export function OpenFclAndLclConversionWizard(intoShipmentType: string) {
+    let convertShipmentSelector = intoShipmentType === "LCL" ? ShipmentSelectors.ConvertToLCL : ShipmentSelectors.ConvertToFCL;
+    OpenConversionWizard(convertShipmentSelector);
+}
+
+export function OpenDirectAndHouseConversionWizard(intoShipmentLevel: string) {
+    let convertShipmentSelector = intoShipmentLevel === "House" ? ShipmentSelectors.ConvertToHouse : ShipmentSelectors.ConvertToDirect;
+    OpenConversionWizard(convertShipmentSelector);
+}
+
+export function OpenDirectionConversionWizard() {
+    OpenConversionWizard(ShipmentSelectors.ConvertShipmentDirection);
+}
+
+export function FillDirectionConversionWizard(shipmentDetails: ShipmentDetails) {
+    FillDirection(shipmentDetails.Direction);
+    FillShipperAndConsignee(shipmentDetails);
+}
+
+export function FillEventNotesWizard(notes: string) {
+    if (notes) {
+        cy.FillLogTextBox(BaseSelectors.EventNotes, notes);
+    }
+}
+
+export function ConvertShipmentDirection() {
+    ConvertShipment(true);
+}
+
+export function ConvertShipmentType() {
+    ConvertShipment(false);
+}
+
+export function ValidateShipmentTypeInHeaderScreen(expectedShipmentType: string) {
+    if (expectedShipmentType) {
+        cy.get(ShipmentSelectors.ShipmentTypeValue).should("have.text", expectedShipmentType);
+    }
+}
+
+export function ValidateShipmentDirectionInShortTitle(expectedDirection: string) {
+    if (expectedDirection) {
+        let directionIconSelector = ShipmentSelectors.ShortTitleDirectionIcon(expectedDirection);
+        cy.get(directionIconSelector).should("exist");
+    }
+}
+
+export function ValidateShipmentNumberInShortTitle(expectedShipmentNumber: string){
+    if(expectedShipmentNumber){
+        cy.get(ShipmentSelectors.ShipmentNumberInTitle).then((shipmentNumberDiv) => {
+            assert.equal(shipmentNumberDiv.text().replace(":", "").trim(), expectedShipmentNumber);
+        });
+    }
+}
+
+export function ValidateEventsTab(expectedEventDetailsList: EventTypeDetails[]) {
+    cy.get(ShipmentSelectors.EventsTab).then(($eventTab) => {
+        cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetTraceEventsForEntity, RequestAliases.GetTraceEventsForEntity);
+        if ($eventTab.hasClass("SelectedMenuItem")) {
+            cy.Click(ShipmentSelectors.ShipmentEventsRefreshButton, null);
+        } else {
+            cy.Click(ShipmentSelectors.EventsTab, null);
+        }
+        BaseAssertion.AssertStatusCode(RequestAliases.GetTraceEventsForEntity, 200);
+        for (let i = 0; i < expectedEventDetailsList.length; i++) {
+            let expectedEvent = expectedEventDetailsList[i].Event;
+            let expectedNotes = expectedEventDetailsList[i].Notes;
+    
+            if (expectedEvent) {
+                cy.contains(expectedEvent).eq(0).should("exist");
+            }
+    
+            if (expectedEvent && expectedNotes) {
+                cy.contains(expectedEvent).eq(0).parents(BaseSelectors.EventItemBox).within(() => {
+                    cy.get(BaseSelectors.textarea).should("have.value", expectedNotes);
+                });
+            }
+        }
+    });
+}
+
+export function ValidateAddButtonInPackagesTab(expectedButtonContains: string){
+    if(expectedButtonContains){
+        cy.Click(ShipmentSelectors.PackagesTab, null);
+        cy.get(ShipmentSelectors.AddPackage).should("have.text", expectedButtonContains);
+    }
+}
+
+export function ValidatePartnerInPartnersTab(partnerType: string, partnerName: string){
+    if(partnerType && partnerName){
+        cy.Click(ShipmentSelectors.PartnersTab, null);
+        let partnerBoxItemSelector = ShipmentSelectors.PartnerBoxItem(partnerType);
+        cy.get(partnerBoxItemSelector).should("exist");
+        cy.get(partnerBoxItemSelector).within(() => {
+            cy.get(ShipmentSelectors.PartnerName).then((partnerNameDiv) => {
+                assert.equal(partnerNameDiv.text().trim(), partnerName);
+            });
+        });
+    }
+}
+
+function OpenConversionWizard(convertButtonSelector: string) {
+    cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
+    cy.Click(convertButtonSelector, null);
+}
+
+function ConvertShipment(isDirectionConversion: boolean){
+    cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.PutShipment);
+    cy.Click(BaseSelectors.RedButton + ":last", null);
+    if(isDirectionConversion){
+        cy.Click(BaseSelectors.ConfirmWindowButton + ":last", null);
+    }
+}
+
+//#endregion

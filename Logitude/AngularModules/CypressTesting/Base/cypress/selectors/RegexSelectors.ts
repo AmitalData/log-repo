@@ -14,4 +14,20 @@ export class RegexSelectors {
         return "div[id^='edit-log-grid_'][id$='_" + cellNumber +"_0"+ "']";
     }
     
+
+
+    public static SaveClose(entityType: string): string {
+        return "#"+RegexSelectors.SwitchToCustomer(entityType)+"-SaveClose"
+    }
+
+    public static AccountTab(entityType: string): string {
+        return "#"+RegexSelectors.SwitchToCustomer(entityType)+"THAccounting"
+    }
+
+    private static SwitchToCustomer(entityType:string): string{
+        if(entityType=="Partner"){
+            return "Customer" 
+        }
+        return entityType;
+    }
 }

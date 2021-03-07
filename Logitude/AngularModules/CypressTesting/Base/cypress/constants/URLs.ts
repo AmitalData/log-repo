@@ -8,4 +8,5 @@ export class BaseURLs
     public static GetQuickSearch(ShipmentNumber: string): string{
         return "**/GetQuickSearch?**" + ShipmentNumber;
     }
+    public static readonly GetTraceEventsForEntity = "**/TraceEventsDomain/GetTraceEventsForEntity?**";
 }

@@ -62,4 +62,8 @@ export class RequestAliases {
     public static readonly PostContact = "PostContact";
     public static readonly INTTRAWebServiceSendEBooking = "INTTRAWebServiceSendEBooking";
     public static readonly INTTRAWebServiceSendShippingInstructions = "INTTRAWebServiceSendShippingInstructions";
+    //
+    public static readonly PutShipment = "PutShipment";
+
+    public static readonly GetTraceEventsForEntity = "GetTraceEventsForEntity"
 }

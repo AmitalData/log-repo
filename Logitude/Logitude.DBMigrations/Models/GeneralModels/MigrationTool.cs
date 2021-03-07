@@ -2626,8 +2626,8 @@ namespace Logitude.DBMigrations.Models
         
         protected List<ScriptDefinition> FilterScriptsByEnvironmentConfiguration(List<ScriptDefinition> scriptDefinitions)
         {
-            string dbEnvConfig = DBConfigurationsManager.GetDBConfigurationValue("Env");
-            List<ScriptDefinition> filteredScriptDefinitions = scriptDefinitions.Where(script => script.Env == null || (script.Env != null && script.Env.Split(',').Contains(dbEnvConfig))).ToList();
+            string dbEnvConfig = DBConfigurationsManager.GetDBConfigurationValue("Env")?.ToLower();
+            List<ScriptDefinition> filteredScriptDefinitions = scriptDefinitions.Where(script => script.Env == null || (script.Env != null && script.Env.ToLower().Split(',').Contains(dbEnvConfig))).ToList();
            return filteredScriptDefinitions;
         }
 

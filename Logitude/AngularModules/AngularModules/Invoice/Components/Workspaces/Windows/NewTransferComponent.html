@@ -52,7 +52,7 @@
                                 <td style="width: 25px; min-width: 25px; max-width: 25px; padding:0 !important;">
                                     <div class="MediaFill">
                                         <div class="CenterCenter" style="width: 16px; height: 16px;">
-                                            <CheckBox [IsChecked]="IsAllChecked" (Checked)="IsAllChecked = $event"></CheckBox>
+                                            <CheckBox [IsChecked]="IsAllChecked" attr.data-cy="{{'CheckALL'  | IdGeneratorPipe}}"(Checked)="IsAllChecked = $event"></CheckBox>
                                         </div>                                        
                                     </div>
                                 </td>
