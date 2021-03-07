@@ -1245,7 +1245,7 @@ namespace WebFreight.Web.Helpers
             ReportStimulDataProviderDetails stimulReportDataProviderDetails  = new ReportStimulDataProviderDetails();
             MemoryStream memorystream = new MemoryStream(dataProvider);
             stimulReportDataProviderDetails.Tenant = reportFliter.tenant;
-
+            ReportBaseDataService reportBaseDataService = new ReportBaseDataService();
             switch (reportFliter.ReportCode)
             {
                 case "RALS":
@@ -1589,6 +1589,7 @@ namespace WebFreight.Web.Helpers
                         XmlSerializer serializer = new XmlSerializer(typeof(ARInvoiceDepositDataProvider));
                         ARInvoiceDepositDataProvider reportDataProvider = (ARInvoiceDepositDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        reportDataProvider.CompanyName = reportBaseDataService.GetCompanyName(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Bank Deposit", Name = "ARInvoiceDepositDataProvider", BusinessObjectValue = reportDataProvider };
                         
                         break;
@@ -1688,6 +1689,7 @@ namespace WebFreight.Web.Helpers
                         XmlSerializer serializer = new XmlSerializer(typeof(AccountingAgingDataProvider));
                         AccountingAgingDataProvider reportDataProvider = (AccountingAgingDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        reportDataProvider.CompanyName = reportBaseDataService.GetCompanyName(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "AGER", Name = "AccountingAgingDataProvider", BusinessObjectValue = reportDataProvider };
                         
                         break;
@@ -1698,6 +1700,7 @@ namespace WebFreight.Web.Helpers
                         XmlSerializer serializer = new XmlSerializer(typeof(LedgerTransactionsDataProvider));
                         LedgerTransactionsDataProvider reportDataProvider = (LedgerTransactionsDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        reportDataProvider.CompanyName = reportBaseDataService.GetCompanyName(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "LTRP", Name = "LedgerTransactionsDataProvider", BusinessObjectValue = reportDataProvider };
                         
                         break;
@@ -1735,6 +1738,7 @@ namespace WebFreight.Web.Helpers
                         XmlSerializer serializer = new XmlSerializer(typeof(RevenueExpenseDataProvider));
                         RevenueExpenseDataProvider reportDataProvider = (RevenueExpenseDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        reportDataProvider.CompanyName = reportBaseDataService.GetCompanyName(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Accounting", Name = "RevenueExpenseDataProvider", BusinessObjectValue = reportDataProvider };
                         
                         break;
@@ -1745,6 +1749,7 @@ namespace WebFreight.Web.Helpers
                         XmlSerializer serializer = new XmlSerializer(typeof(RevenueExpenseDataProvider));
                         RevenueExpenseDataProvider reportDataProvider = (RevenueExpenseDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        reportDataProvider.CompanyName = reportBaseDataService.GetCompanyName(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Accounting", Name = "RevenueExpenseDataProvider", BusinessObjectValue = reportDataProvider };
                         
                         break;
@@ -1858,6 +1863,7 @@ namespace WebFreight.Web.Helpers
                         XmlSerializer serializer = new XmlSerializer(typeof(ExternalReconciliationLinesReportDataProvider));
                         ExternalReconciliationLinesReportDataProvider reportDataProvider = (ExternalReconciliationLinesReportDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        reportDataProvider.CompanyName = reportBaseDataService.GetCompanyName(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "ERLR", Name = "ExternalReconciliationLinesReportDataProvider", BusinessObjectValue = reportDataProvider };
                         break;
                     }
@@ -1866,6 +1872,7 @@ namespace WebFreight.Web.Helpers
                         XmlSerializer serializer = new XmlSerializer(typeof(UserDefinedReportDataProvider));
                         UserDefinedReportDataProvider reportDataProvider = (UserDefinedReportDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        reportDataProvider.CompanyName = reportBaseDataService.GetCompanyName(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "URDR", Name = "UserDefinedReportDataProvider", BusinessObjectValue = reportDataProvider };
                         break;
                     }
@@ -2342,6 +2349,8 @@ namespace WebFreight.Web.Helpers
 
         }
 
+
+       
 
     }
 
