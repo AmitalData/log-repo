@@ -277,8 +277,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ContainHasException="Has Exception:"
   public static readonly EventNotes="#EventNotes"
   public static readonly ExceptionResolved="Exception Resolved"
-  
-    //#endregion
+  //#endregion
 
 
   //#region Shipment Conversions
@@ -289,7 +288,6 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ConvertShipmentDirection = "#ShipmentBConvertShipmentDirection";
   public static readonly ShipmentTypeValue = "[data-cy='ShipmentTypeValue']";
   public static readonly ShipmentEventsRefreshButton = "[data-cy='EventsRefresh_Shipment'] button";
-
   public static readonly PartnerName = "[data-cy='PartnerName']";
   //#endregion
 }

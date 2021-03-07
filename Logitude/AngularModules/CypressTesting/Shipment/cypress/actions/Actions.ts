@@ -15,6 +15,7 @@ import { BaseURLs } from '../../../Base/cypress/constants/URLs';
 import { QuickSearchDetails } from '../../../Base/cypress/models/QuickSearchDetails';
 import * as BaseActions from '../../../Base/cypress/actions/Actions';
 import { EventDetails } from '../models/EventDetails';
+import { EventTypeDetails } from '../models/EventTypeDetails';
 
 export function NavigatesToEventsTab() {
     cy.DefineRequestWait(RestAPI.GET, URLs.TraceEventsDomain, RequestAliases.GetTraceEvent);
@@ -847,7 +848,7 @@ export function ValidateShipmentNumberInShortTitle(expectedShipmentNumber: strin
     }
 }
 
-export function ValidateEventsTab(expectedEventDetailsList: EventDetails[]) {
+export function ValidateEventsTab(expectedEventDetailsList: EventTypeDetails[]) {
     cy.get(ShipmentSelectors.EventsTab).then(($eventTab) => {
         cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetTraceEventsForEntity, RequestAliases.GetTraceEventsForEntity);
         if ($eventTab.hasClass("SelectedMenuItem")) {

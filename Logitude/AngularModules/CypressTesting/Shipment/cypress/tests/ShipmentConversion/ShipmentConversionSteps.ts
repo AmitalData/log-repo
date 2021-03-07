@@ -1,7 +1,7 @@
 import * as Actions from "../../actions/Actions";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
-import { EventDetails } from "../../models/EventDetails";
+import { EventTypeDetails } from "../../models/EventTypeDetails";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion";
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 import { ShipmentConversionContext } from "../../models/ShipmentConversionContext";
@@ -81,7 +81,7 @@ Then("type should be {string}", (expectedShipmentType: string) => {
 });
 
 Then("following events should appear in events tab", (dataTable) => {
-    let eventDetailsList = dataTable.hashes() as EventDetails[];
+    let eventDetailsList = dataTable.hashes() as EventTypeDetails[];
     eventDetailsList = ShipmentConversionEventsMapping(eventDetailsList);
     Actions.ValidateEventsTab(eventDetailsList);
 });
@@ -109,7 +109,7 @@ Then("the button {string} should appear in packages tab", (buttonContains: strin
 });
 
 
-function ShipmentConversionEventsMapping(eventDetailsList: EventDetails[]): EventDetails[]{
+function ShipmentConversionEventsMapping(eventDetailsList: EventTypeDetails[]): EventTypeDetails[]{
     for (let i = 0; i < eventDetailsList.length; i++) {
         eventDetailsList[i].Notes = eventDetailsList[i].Notes.replace(/\"OldShipmentNumber\"/gi, ShipmentConversionContext.ShipmentNumber);
     }
