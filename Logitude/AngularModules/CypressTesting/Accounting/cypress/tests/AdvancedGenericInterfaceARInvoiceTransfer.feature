@@ -1,10 +1,10 @@
-@release @all @open
-Feature: Generic Interface AR Invoice Transfer
-   The user disables the Accounting Transfer in settings, 
-   creates AR invoice, changes the settings for Accounting Transfer to Generic Interface, 
-   checks the created invoice in the Not Ready Entities in Accounting Interfaces, 
-   fixes the accounting external IDs validations preventing the invoice from being transferred and exports/transfers the invoice.
-
+@release@all @open
+Feature: Advanced Generic Interface AR Invoice Transfer
+    The user disables the Accounting Transfer in settings, creates AR invoice,
+    changes the settings for Accounting Transfer to Advanced Generic Interface,
+    checks the created invoice in the Not Ready Entities in Accounting Interfaces,
+    fixes the accounting external IDs validations preventing the invoice from being transferred and exports/transfers the invoice.
+    
     Scenario: Update Accounting System
         Given the user logged in and navigate to accounting settings
         Given accounting System as "None"
@@ -27,28 +27,28 @@ Feature: Generic Interface AR Invoice Transfer
         When create shipment
         Then the direct should create successfully
 
-    Scenario:  Add receivable and clear external IDs (ChargesType,Currency)
+    Scenario: Add receivable and clear ChargesType Currency External IDs
         Given a receivable with the following details
             | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
             | AFT         | GRWT | 5        | 20        | EUR      | 4            |
         When add receivable
         Then the receivable should add successfully
 
-    Scenario: Create ARInvoice and clear External ID (customer)
+    Scenario: Create ARInvoice,clear customer External Id and assert transfer status
         Given an ARInvoice with the following details
             | PartnerType | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATNo | Branch      | VATType |
             | Customer    | EUR             | 4                   | Today       | Cash         | Today   | Zero  | Main Office | Zero    |
         And clear external ID for partner
         When create invoice
         Then the invoice should create successfully
-        And the transfer status should be Not Ready
+        And the transfer status should be not ready
 
     Scenario: Approve ARInvoice
         When approve invoice
         Then the invoice should approve successfully
 
     Scenario: Update Accounting System
-        Given accounting System as "Logitude Generic Interface" and external transmission as "None"
+        Given accounting System as "Logitude Advanced Generic Interface" and external transmission as "None"
         When update the accounting system
         Then the accounting system should update successfully
         And the ARInvoice should appear in AR Not Ready Invoices
@@ -59,10 +59,10 @@ Feature: Generic Interface AR Invoice Transfer
             | AFT         | EUR      | TestCompany |
         When add the external IDs
         Then the external IDs should add successfully
-        And the transfer status should be Ready
+        And the transfer status should be ready
 
     Scenario: Transfer ARInvoice from transfer screen
         Given the user in transfer screen
         When export the ARInvoice
         Then the ARInvoice should export successfully
-        And the transfer status should be Transferred
+        And the transfer status should be transferred

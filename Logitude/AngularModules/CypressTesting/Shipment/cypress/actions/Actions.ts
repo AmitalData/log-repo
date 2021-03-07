@@ -333,11 +333,13 @@ export function AddInsidePackage(packagesDetails: PackagesDetails[]) {
     cy.Click("#OKInsidePackage", null)
 }
 //#endregion
+
 //#region House Shipment Tab
 export function FillHouseInShipmentsTab(Shipper: string) {
     cy.FillLogLov(ShipmentSelectors.ShipmentCustomer, Shipper, true)
 }
 //#endregion
+
 //#region Receivables Tab
 export function FillReceivablesTab(receivableDetails: ReceivableDetails[], HaveAccountingSystem?: boolean) {
     cy.Click(ShipmentSelectors.ReceivablesTab, null)
@@ -356,6 +358,7 @@ export function FillReceivablesTab(receivableDetails: ReceivableDetails[], HaveA
         cy.Click(ShipmentSelectors.AddReceivableOkButton, null)
     }
 }
+
 export function GenerateReceivablesFromPayables() {
     cy.Click(ShipmentSelectors.ReceivablesTab, null)
     cy.Click(ShipmentSelectors.ReceivableFromPayables, null)
