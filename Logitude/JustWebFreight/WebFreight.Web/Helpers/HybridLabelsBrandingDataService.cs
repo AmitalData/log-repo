@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using WebFreight.Web.DataContracts;
+using WebFreight.Web.Security;
 using WebFreight.Web.WebServices;
 
 namespace WebFreight.Web.Helpers
@@ -20,9 +21,9 @@ namespace WebFreight.Web.Helpers
         string[] imagesFields = { "BackgroundImage", "MainImage", "LoginProgressImage", "ForgetPasswordImage" };
         public HybridLabelsBrandingData GeHybridLabelsBrandingDataByUrl(HybridLabelsBrandingDataRequest BrandingDataRequest)
         {
-
             TenantManagmentPrivateLabelsQuery tenantManagementQuery = new TenantManagmentPrivateLabelsQuery();
-            TenantManagmentPrivateLabelsPM tenantManagementPM = tenantManagementQuery.GetSingleActivePMByUrl(BrandingDataRequest.PrivateLabelUrl);
+            string loggedDomainURL = SecurityUtility.getLoggedDomain();
+            TenantManagmentPrivateLabelsPM tenantManagementPM = tenantManagementQuery.GetSingleActivePMByUrl(loggedDomainURL);
             HybridLabelsBrandingData BrandingData = MapBrandingData(tenantManagementPM, BrandingDataRequest);
 
             return BrandingData;

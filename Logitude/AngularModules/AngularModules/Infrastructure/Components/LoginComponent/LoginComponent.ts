@@ -84,6 +84,7 @@ export class LoginComponent implements OnInit {
     private sATInterfaceSettingPMService: SATInterfaceSettingPMService;
     private UserExtendedPMService: UserExtendedPMService;
     private generalDomainService: GeneralDomainService;
+    private isLocalPrivateLable: boolean = false;
     constructor(private logitudeApplicationService: LogitudeApplicationService, private loginService: LoginService, public IndexedDbService: IndexedDbService, private entityResourceService: EntityResourceService, private _applicationTimersManager: ApplicationTimersManager, public entityListService: EntityListService,
         private _userLastLoginPMService: UserLastLoginPMService
     ) {
@@ -174,7 +175,12 @@ export class LoginComponent implements OnInit {
     StartLoginProcess() {
 
         var url = window.location.href;
-        if (url && url.indexOf('localhost') > -1) {
+        if (url.indexOf('localhost') > -1 && !AppTool.IsNullOrEmpty(url.split('?')[1])) {
+            this.isLocalPrivateLable = true;
+            window.sessionStorage.setItem('userdata', url.split('?')[1]);
+            SessionLocator.IsExternalParams = false;
+        }
+        if (url && url.indexOf('localhost') > -1 && !this.isLocalPrivateLable) {
             this.Email = "angular@fnarsoft.com";
             this.Password = "1";
             this.IsShowLoginForm = true;
@@ -220,6 +226,7 @@ export class LoginComponent implements OnInit {
                 this.HideTenantForm = true;
                 this.HidePendingLoading = true;
                 this.ShowLoginBusyIndicator = true;
+                data = this.isLocalPrivateLable ? decodeURIComponent(data) : data;
                 var userData = JSON.parse(data);
                 this.StartLoading(userData);
             }

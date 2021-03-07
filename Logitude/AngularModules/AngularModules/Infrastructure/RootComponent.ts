@@ -25,9 +25,9 @@ declare var IsMobileDetected;
 
 export class RootComponent implements AfterViewInit {
 
-  @ViewChild(ChildDirective) Child: ChildDirective;
+    @ViewChild(ChildDirective) Child: ChildDirective;
 
-  constructor() {
+    constructor() {
     var data = window.sessionStorage.getItem('userdata');
 
     if (data != "SignOut") {
@@ -49,45 +49,54 @@ export class RootComponent implements AfterViewInit {
     this.RunComponent();
   }
 
-  isDSV: boolean = false;
+    isDSV: boolean = false;
+    isPrivateLable: boolean = false;
   RunComponent() {
-      var url = window.location.href;
+      const url = window.location.href;
       //if (url.indexOf("staging") > -1)
       //    SessionLocator.WorkerRoleName = "staging";
 
       if (url.indexOf("localhost") > -1)
           SessionLocator.WorkerRoleName = "development";
-
-
-    this.isDSV = url.toLowerCase().indexOf(".dsv.") > -1 ? true : false;
-
-    var data = window.sessionStorage.getItem('userdata');
-    if ((data && data == "SignOut") || (!data && !SessionLocator.IsExternalParams && url.indexOf('localhost') == -1)) {
-      document.location.href = ServiceHelper.GetLogitudeURL() + "Login.aspx";
-    }
-
-    else {
-      this.LoadLoginPage();
-      var IsPREQ = SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && (SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "preq" || SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "uid");
-      if (url && IsPREQ == false && url.indexOf('localhost') == -1) {
-        window.onbeforeunload = function (e) {
-          var message = "";
-          if (SessionLocator.ExternalParams && SessionLocator.ExternalParams.OneTimePasswordId) {
-            message = "when you leave this site can't not be used the key agin";
-          }
-          else if (!SessionLocator.IsSiguOut) {
-            message = "Are you sure you want to leave this page ?";
-          }
-
-          if (!AppTool.IsNullOrEmpty(message)) {
-            e.returnValue = message;
-            return message;
-          }
-        };
-      }
-
-    }
+      this.isPrivateLable = window.sessionStorage.getItem("IsPrivateLable") == "true";
+      this.isDSV = window.sessionStorage.getItem("IsDSV") == "true";
+      this.LoginToSystem();
   }
+
+    LoginToSystem() {
+        const url = window.location.href;
+        var data = window.sessionStorage.getItem('userdata');
+        if (url.indexOf('localhost:4200/?{%22$id') > -1) {
+            this.isPrivateLable = true;
+            this.isDSV = true;
+            data = url.split('?')[1];
+        }
+        if ((data && data == "SignOut") || (!data && !SessionLocator.IsExternalParams && (url.indexOf('localhost') == -1 && !this.isPrivateLable))) {
+            document.location.href = ServiceHelper.GetLogitudeURL() + "Login.aspx";
+        }
+
+        else {
+            this.LoadLoginPage();
+            var IsPREQ = SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && (SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "preq" || SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "uid");
+            if (url && IsPREQ == false && url.indexOf('localhost') == -1) {
+                window.onbeforeunload = function (e) {
+                    var message = "";
+                    if (SessionLocator.ExternalParams && SessionLocator.ExternalParams.OneTimePasswordId) {
+                        message = "when you leave this site can't not be used the key agin";
+                    }
+                    else if (!SessionLocator.IsSiguOut) {
+                        message = "Are you sure you want to leave this page ?";
+                    }
+
+                    if (!AppTool.IsNullOrEmpty(message)) {
+                        e.returnValue = message;
+                        return message;
+                    }
+                };
+            }
+
+        }
+    }
 
   private ClearLocation() {
     if (this.Child.Location) {
@@ -126,40 +135,10 @@ export class RootComponent implements AfterViewInit {
   }
   _FinishLogin: boolean = false;
   LoadLoginPage() {
-
     this.ClearLocation();
 
-    //this.isDSV = true;
-
-    if (this.isDSV == true) {
-      if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "dapp" && IsMobileDetected() == true) {
-        SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/CustomLoginComponents/DSVMobileLoginProcessComponent", this.Child.Location)
-          .then(cmpRef => {
-
-            cmpRef.instance.Blocking.subscribe(s => {
-              SessionLocator.BlockType = s;
-              this.LoadBlockingScreen();
-            });
-
-            cmpRef.instance.LoginCompleted.subscribe(s => {
-              this.OnLoginCompleted();
-            });
-          });
-      }
-      else {
-        SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/CustomLoginComponents/DSVLoginProcessComponent", this.Child.Location)
-          .then(cmpRef => {
-
-            cmpRef.instance.Blocking.subscribe(s => {
-              SessionLocator.BlockType = s;
-              this.LoadBlockingScreen();
-            });
-
-            cmpRef.instance.LoginCompleted.subscribe(s => {
-              this.OnLoginCompleted();
-            });
-          });
-      }
+      if (this.isPrivateLable == true) {
+      this.LoadPrivateLablePages();
     }
     else {
       SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/LoginComponent", this.Child.Location)
@@ -176,6 +155,48 @@ export class RootComponent implements AfterViewInit {
         });
     }
   }
+    LoadPrivateLablePages() {
+        if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "dapp" && IsMobileDetected() == true) {
+            this.LoadPrivateLableMobileLoginProcess();
+        }
+        else {
+            this.LoadPrivateLableLoginProcess();
+        }
+    }
+
+    private LoadPrivateLableLoginProcess() {
+        let privateLableLoginProcessPage = "./Infrastructure/Components/LoginComponent/CustomLoginComponents/";
+        privateLableLoginProcessPage += this.isDSV ? "DSVLoginProcessComponent" : "HybridLoginProcessComponent";
+
+        SessionLocator.DynamicLoader.Load(privateLableLoginProcessPage, this.Child.Location)
+            .then(cmpRef => {
+
+                cmpRef.instance.Blocking.subscribe(s => {
+                    SessionLocator.BlockType = s;
+                    this.LoadBlockingScreen();
+                });
+
+                cmpRef.instance.LoginCompleted.subscribe(s => {
+                    this.OnLoginCompleted();
+                });
+            });
+    }
+
+    LoadPrivateLableMobileLoginProcess() {
+        SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/CustomLoginComponents/DSVMobileLoginProcessComponent", this.Child.Location)
+            .then(cmpRef => {
+
+                cmpRef.instance.Blocking.subscribe(s => {
+                    SessionLocator.BlockType = s;
+                    this.LoadBlockingScreen();
+                });
+
+                cmpRef.instance.LoginCompleted.subscribe(s => {
+                    this.OnLoginCompleted();
+                });
+            });
+    }
+
   LoadBlockingScreen() {
     this.ClearLocation();
 
@@ -276,24 +297,26 @@ export class RootComponent implements AfterViewInit {
         var myResult: TermsofUseArgs = pmResponse.Result;
         if (myResult) {
           if (myResult.IsTermOfUse) {
-            this.ClearLocation();
-            if (this.isDSV == true) {
-              SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/CustomTermsOfUse/DSVTermsOfUseStartupComponent", this.Child.Location)
-                .then(cmpRef => {
-                  cmpRef.instance.ComponentRef = cmpRef;
-                  cmpRef.instance.Load(myResult.Version);
-                  cmpRef.instance.TermsOfUseCompleted.subscribe(($event: any) => {
+              this.ClearLocation();
+              if (this.isPrivateLable == true) {
+                  let privateLableTermOfUsePage = "./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/CustomTermsOfUse/";
+                  privateLableTermOfUsePage = +this.isDSV ? "DSVTermsOfUseStartupComponent" : "HybridTermsOfUseStartupComponent";
+                  SessionLocator.DynamicLoader.Load(privateLableTermOfUsePage, this.Child.Location)
+                      .then(cmpRef => {
+                          cmpRef.instance.ComponentRef = cmpRef;
+                          cmpRef.instance.Load(myResult.Version);
+                          cmpRef.instance.TermsOfUseCompleted.subscribe(($event: any) => {
 
-                    if ($event == "Accept") {
-                      this.ViewHomeComponent();
-                    }
+                              if ($event == "Accept") {
+                                  this.ViewHomeComponent();
+                              }
 
-                    else if ($event == "Decline") {
-                      this.SignOutCompleted();
-                    }
-                  });
-                });
-            }
+                              else if ($event == "Decline") {
+                                  this.SignOutCompleted();
+                              }
+                          });
+                      });
+              }
             else {
               SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/TermsOfUseStartupComponent", this.Child.Location)
                 .then(cmpRef => {
