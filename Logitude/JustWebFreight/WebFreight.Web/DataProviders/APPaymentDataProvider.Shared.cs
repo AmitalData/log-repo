@@ -86,6 +86,7 @@ namespace WebFreight.Web.DataProviders
         public string BranchName { get; set; }        
         public DateTime? TodayLocal { get; set; }
         public string TotalPaymentInWordFR { get; set; }
+        public string BankAccountEnglishName { get; set; }
 
         public List<ReportAPInvoicePayments> PaidAPInvoicesList { get; set; }
 
