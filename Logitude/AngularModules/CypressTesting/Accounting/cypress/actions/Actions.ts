@@ -373,8 +373,11 @@ export function AddSecondInvoiceToConsolidation(ARInvoiceNumber: string) {
     cy.get("[data-cy='CheckBox" + ARInvoiceNumber + "']").click();
 }
 export function AssertTransferStatus(TransferStatus: string) {
-    cy.get(BaseSelectors.HeaderScreen).eq(1)
-        .should("contain", TransferStatus)
+    // cy.get(BaseSelectors.HeaderScreen).eq(1)
+    // .should("contain", TransferStatus)
+    cy.get(BaseSelectors.HeaderScreen).eq(1).find(BaseSelectors.HeaderScreenLable).contains(AccountingSelectors.ContainTransferStatus)
+    .next(BaseSelectors.HeaderScreenValue)
+        .should("contain.text", TransferStatus)
 }
 export function AssertTransferError(ARInvoiceNumber: string, ErrorMessage: string) {
     cy.get(BaseSelectors.DivListItem).find(BaseSelectors.TextTrimming).contains(ARInvoiceNumber)
