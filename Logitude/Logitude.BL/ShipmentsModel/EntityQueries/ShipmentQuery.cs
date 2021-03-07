@@ -864,143 +864,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.MainCarriageFinalDestinationPortName = toPort.EnglishName;
                         shipmentPM.MainCarriageFinalDestinationPortCountryCode = toPort.CountryCode;
                         shipmentPM.MainCarriageFinalDestinationPortCountryName = toPort.CountryName;
-                    }
-
-                    #region Pre Forwarding
-                    if (!string.IsNullOrEmpty(shipment.PreForwardingFromPortId) || !string.IsNullOrEmpty(shipment.PreForwardingToPortId))
-                    {
-                        shipmentPM.HasPreForwarding = true;
-                    }
-
-                    PortPM preForwardingFromPort = null;
-                    PortPM preForwardingToPort = null;
-
-                    if (!string.IsNullOrEmpty(shipment.PreForwardingFromPortId))
-                    {
-                        preForwardingFromPort = portQuery.GetSinglePM(shipment.PreForwardingFromPortId, shipment.Tenant);
-                    }
-
-                    if (!string.IsNullOrEmpty(shipment.PreForwardingToPortId))
-                    {
-                        preForwardingToPort = portQuery.GetSinglePM(shipment.PreForwardingToPortId, shipment.Tenant);
-                    }
-
-                    shipmentPM.PreForwardingFromPortId = shipment.PreForwardingFromPortId;
-                    shipmentPM.PreForwardingToPortId = shipment.PreForwardingToPortId;
-                    shipmentPM.PreForwardingCarrierId = shipment.PreForwardingCarrierId;
-                    shipmentPM.PreForwardingCarrierNumber = shipment.PreForwardingCarrierNumber;
-                    shipmentPM.PreForwardingATA = shipment.PreForwardingATA;
-                    shipmentPM.PreForwardingATD = shipment.PreForwardingATD;
-                    shipmentPM.PreForwardingETA = shipment.PreForwardingETA;
-                    shipmentPM.PreForwardingETD = shipment.PreForwardingETD;
-                    shipmentPM.PreForwardingTransportModeId = shipment.PreForwardingTransportModeId;
-                    shipmentPM.PreForwardingVesselId = shipment.PreForwardingVesselId;
-
-                    if (preForwardingFromPort != null)
-                    {
-                        shipmentPM.PreForwardingFromPortCode = preForwardingFromPort.Code;
-                        shipmentPM.PreForwardingFromPortName = preForwardingFromPort.EnglishName;
-                        shipmentPM.PreForwardingFromPortCountryCode = preForwardingFromPort.CountryCode;
-                        shipmentPM.PreForwardingFromPortCountryName = preForwardingFromPort.CountryName;
-                    }
-
-                    if (preForwardingToPort != null)
-                    {                        
-                        shipmentPM.PreForwardingToPortCode = preForwardingToPort.Code;
-                        shipmentPM.PreForwardingToPortName = preForwardingToPort.EnglishName;
-                        shipmentPM.PreForwardingToPortCountryCode = preForwardingToPort.CountryCode;
-                        shipmentPM.PreForwardingToPortCountryName = preForwardingToPort.CountryName;
-                    }
-
-                    if (!string.IsNullOrEmpty(shipment.PreForwardingCarrierId))
-                    {
-                        Card cardObject = CardRepository.GetSingleCard(shipment.PreForwardingCarrierId, shipment.Tenant, true);
-                        if (cardObject != null)
-                        {
-                            shipmentPM.PreForwardingCarrierCode = cardObject.Code;
-                            shipmentPM.PreForwardingCarrierName = cardObject.EnglishName;
-                            shipmentPM.PreForwardingCarrierWebSite = cardObject.Website;
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(shipment.PreForwardingVesselId))
-                    {
-                        Vessel vesselEntity = vesselRep.GetSingleVessel(shipment.PreForwardingVesselId, shipment.Tenant);
-                        if (vesselEntity != null)
-                        {
-                            shipmentPM.PreForwardingVesselName = vesselEntity.EnglishName;
-                        }
-                    }
-                    #endregion
-
-                    #region On Forwarding
-                    if (!string.IsNullOrEmpty(shipment.OnForwardingFromPortId) || !string.IsNullOrEmpty(shipment.OnForwardingToPortId))
-                    {
-                        shipmentPM.HasOnForwarding = true;
-                    }
-
-                    PortPM onForwardingFromPort = null;
-                    PortPM onForwardingToPort = null;
-
-                    if (!string.IsNullOrEmpty(shipment.OnForwardingFromPortId))
-                    {
-                        onForwardingFromPort = portQuery.GetSinglePM(shipment.OnForwardingFromPortId, shipment.Tenant);
-                    }
-
-                    if (!string.IsNullOrEmpty(shipment.OnForwardingToPortId))
-                    {
-                        onForwardingToPort = portQuery.GetSinglePM(shipment.OnForwardingToPortId, shipment.Tenant);
-                    }
-
-                    shipmentPM.OnForwardingAdditionalTransportModeCode = shipment.OnForwardingAdditionalTransportModeCode;
-                    shipmentPM.SplitOnForwarding = shipment.SplitOnForwarding;
-                    shipmentPM.OnForwardingFromPortId = shipment.OnForwardingFromPortId;
-                    shipmentPM.OnForwardingToPortId = shipment.OnForwardingToPortId;
-                    shipmentPM.OnForwardingCarrierId = shipment.OnForwardingCarrierId;
-                    shipmentPM.OnForwardingCarrierNumber = shipment.OnForwardingCarrierNumber;
-                    shipmentPM.OnForwardingATA = shipment.OnForwardingATA;
-                    shipmentPM.OnForwardingATD = shipment.OnForwardingATD;
-                    shipmentPM.OnForwardingETA = shipment.OnForwardingETA;
-                    shipmentPM.OnForwardingETD = shipment.OnForwardingETD;
-                    shipmentPM.OnForwardingTransportModeId = shipment.OnForwardingTransportModeId;
-                    shipmentPM.OnForwardingVesselId = shipment.OnForwardingVesselId;
-
-                    if (onForwardingFromPort != null)
-                    {
-                        shipmentPM.OnForwardingFromPortCode = onForwardingFromPort.Code;
-                        shipmentPM.OnForwardingFromPortName = onForwardingFromPort.EnglishName;
-                        shipmentPM.OnForwardingFromPortCountryCode = onForwardingFromPort.CountryCode;
-                        shipmentPM.OnForwardingFromPortCountryName = onForwardingFromPort.CountryName;
-                    }
-
-                    if (onForwardingToPort != null)
-                    {                        
-                        shipmentPM.OnForwardingToPortCode = onForwardingToPort.Code;
-                        shipmentPM.OnForwardingToPortName = onForwardingToPort.EnglishName;
-                        shipmentPM.OnForwardingToPortCountryCode = onForwardingToPort.CountryCode;
-                        shipmentPM.OnForwardingToPortCountryName = onForwardingToPort.CountryName;
-                    }
-                    
-                    if (!string.IsNullOrEmpty(shipment.OnForwardingCarrierId))
-                    {
-                        Card cardObject = CardRepository.GetSingleCard(shipment.OnForwardingCarrierId, shipment.Tenant, true);
-                        if (cardObject != null)
-                        {
-                            shipmentPM.OnForwardingCarrierCode = cardObject.Code;
-                            shipmentPM.OnForwardingCarrierName = cardObject.EnglishName;
-                            shipmentPM.OnForwardingCarrierWebSite = cardObject.Website;
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(shipment.OnForwardingVesselId))
-                    {
-                        Vessel vesselEntity = vesselRep.GetSingleVessel(shipment.OnForwardingVesselId, shipment.Tenant);
-                        if (vesselEntity != null)
-                        {
-                            shipmentPM.OnForwardingVesselName = vesselEntity.EnglishName;
-                        }
-                    }
-                    #endregion
+                    }                   
                 }
             }
             shipmentPM.Routing = shipment.Routing;
@@ -1754,6 +1618,142 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ForwarderPartnerId = shipment.ForwarderPartnerId;
             shipmentPM.ForwardingPartnerId = shipment.ForwardingPartnerId;
             shipmentPM.NumberOfFollowUps = shipment.NumberOfFollowUps;
+            #endregion
+
+            #region Pre Forwarding
+            if (!string.IsNullOrEmpty(shipment.PreForwardingFromPortId) || !string.IsNullOrEmpty(shipment.PreForwardingToPortId))
+            {
+                shipmentPM.HasPreForwarding = true;
+            }
+
+            PortPM preForwardingFromPort = null;
+            PortPM preForwardingToPort = null;
+
+            if (!string.IsNullOrEmpty(shipment.PreForwardingFromPortId))
+            {
+                preForwardingFromPort = portQuery.GetSinglePM(shipment.PreForwardingFromPortId, shipment.Tenant);
+            }
+
+            if (!string.IsNullOrEmpty(shipment.PreForwardingToPortId))
+            {
+                preForwardingToPort = portQuery.GetSinglePM(shipment.PreForwardingToPortId, shipment.Tenant);
+            }
+
+            shipmentPM.PreForwardingFromPortId = shipment.PreForwardingFromPortId;
+            shipmentPM.PreForwardingToPortId = shipment.PreForwardingToPortId;
+            shipmentPM.PreForwardingCarrierId = shipment.PreForwardingCarrierId;
+            shipmentPM.PreForwardingCarrierNumber = shipment.PreForwardingCarrierNumber;
+            shipmentPM.PreForwardingATA = shipment.PreForwardingATA;
+            shipmentPM.PreForwardingATD = shipment.PreForwardingATD;
+            shipmentPM.PreForwardingETA = shipment.PreForwardingETA;
+            shipmentPM.PreForwardingETD = shipment.PreForwardingETD;
+            shipmentPM.PreForwardingTransportModeId = shipment.PreForwardingTransportModeId;
+            shipmentPM.PreForwardingVesselId = shipment.PreForwardingVesselId;
+
+            if (preForwardingFromPort != null)
+            {
+                shipmentPM.PreForwardingFromPortCode = preForwardingFromPort.Code;
+                shipmentPM.PreForwardingFromPortName = preForwardingFromPort.EnglishName;
+                shipmentPM.PreForwardingFromPortCountryCode = preForwardingFromPort.CountryCode;
+                shipmentPM.PreForwardingFromPortCountryName = preForwardingFromPort.CountryName;
+            }
+
+            if (preForwardingToPort != null)
+            {
+                shipmentPM.PreForwardingToPortCode = preForwardingToPort.Code;
+                shipmentPM.PreForwardingToPortName = preForwardingToPort.EnglishName;
+                shipmentPM.PreForwardingToPortCountryCode = preForwardingToPort.CountryCode;
+                shipmentPM.PreForwardingToPortCountryName = preForwardingToPort.CountryName;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.PreForwardingCarrierId))
+            {
+                Card cardObject = CardRepository.GetSingleCard(shipment.PreForwardingCarrierId, shipment.Tenant, true);
+                if (cardObject != null)
+                {
+                    shipmentPM.PreForwardingCarrierCode = cardObject.Code;
+                    shipmentPM.PreForwardingCarrierName = cardObject.EnglishName;
+                    shipmentPM.PreForwardingCarrierWebSite = cardObject.Website;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(shipment.PreForwardingVesselId))
+            {
+                Vessel vesselEntity = vesselRep.GetSingleVessel(shipment.PreForwardingVesselId, shipment.Tenant);
+                if (vesselEntity != null)
+                {
+                    shipmentPM.PreForwardingVesselName = vesselEntity.EnglishName;
+                }
+            }
+            #endregion
+
+            #region On Forwarding
+            if (!string.IsNullOrEmpty(shipment.OnForwardingFromPortId) || !string.IsNullOrEmpty(shipment.OnForwardingToPortId))
+            {
+                shipmentPM.HasOnForwarding = true;
+            }
+
+            PortPM onForwardingFromPort = null;
+            PortPM onForwardingToPort = null;
+
+            if (!string.IsNullOrEmpty(shipment.OnForwardingFromPortId))
+            {
+                onForwardingFromPort = portQuery.GetSinglePM(shipment.OnForwardingFromPortId, shipment.Tenant);
+            }
+
+            if (!string.IsNullOrEmpty(shipment.OnForwardingToPortId))
+            {
+                onForwardingToPort = portQuery.GetSinglePM(shipment.OnForwardingToPortId, shipment.Tenant);
+            }
+
+            shipmentPM.OnForwardingAdditionalTransportModeCode = shipment.OnForwardingAdditionalTransportModeCode;
+            shipmentPM.SplitOnForwarding = shipment.SplitOnForwarding;
+            shipmentPM.OnForwardingFromPortId = shipment.OnForwardingFromPortId;
+            shipmentPM.OnForwardingToPortId = shipment.OnForwardingToPortId;
+            shipmentPM.OnForwardingCarrierId = shipment.OnForwardingCarrierId;
+            shipmentPM.OnForwardingCarrierNumber = shipment.OnForwardingCarrierNumber;
+            shipmentPM.OnForwardingATA = shipment.OnForwardingATA;
+            shipmentPM.OnForwardingATD = shipment.OnForwardingATD;
+            shipmentPM.OnForwardingETA = shipment.OnForwardingETA;
+            shipmentPM.OnForwardingETD = shipment.OnForwardingETD;
+            shipmentPM.OnForwardingTransportModeId = shipment.OnForwardingTransportModeId;
+            shipmentPM.OnForwardingVesselId = shipment.OnForwardingVesselId;
+
+            if (onForwardingFromPort != null)
+            {
+                shipmentPM.OnForwardingFromPortCode = onForwardingFromPort.Code;
+                shipmentPM.OnForwardingFromPortName = onForwardingFromPort.EnglishName;
+                shipmentPM.OnForwardingFromPortCountryCode = onForwardingFromPort.CountryCode;
+                shipmentPM.OnForwardingFromPortCountryName = onForwardingFromPort.CountryName;
+            }
+
+            if (onForwardingToPort != null)
+            {
+                shipmentPM.OnForwardingToPortCode = onForwardingToPort.Code;
+                shipmentPM.OnForwardingToPortName = onForwardingToPort.EnglishName;
+                shipmentPM.OnForwardingToPortCountryCode = onForwardingToPort.CountryCode;
+                shipmentPM.OnForwardingToPortCountryName = onForwardingToPort.CountryName;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.OnForwardingCarrierId))
+            {
+                Card cardObject = CardRepository.GetSingleCard(shipment.OnForwardingCarrierId, shipment.Tenant, true);
+                if (cardObject != null)
+                {
+                    shipmentPM.OnForwardingCarrierCode = cardObject.Code;
+                    shipmentPM.OnForwardingCarrierName = cardObject.EnglishName;
+                    shipmentPM.OnForwardingCarrierWebSite = cardObject.Website;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(shipment.OnForwardingVesselId))
+            {
+                Vessel vesselEntity = vesselRep.GetSingleVessel(shipment.OnForwardingVesselId, shipment.Tenant);
+                if (vesselEntity != null)
+                {
+                    shipmentPM.OnForwardingVesselName = vesselEntity.EnglishName;
+                }
+            }
             #endregion
 
             // Warehouse Leg 

@@ -7,7 +7,7 @@
         </td>
     </tr>
 
-    <tr *ngIf="EntityPM.ShipmentLevelCode !='H'">
+    <tr *ngIf="LegType =='On Carriage'">
         <td>
             <div class="MediaFill">
                 <table>
@@ -405,7 +405,7 @@
         </td>
     </tr>
 
-    <tr *ngIf="EntityPM.ShipmentLevelCode =='H'">
+    <tr *ngIf="LegType =='On Forwarding'">
         <td>
             <div class="MediaFill">
                 <table>

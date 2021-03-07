@@ -38,6 +38,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
     public DepartureHeader: string = "Departure";
     public ArrivalHeader: string = "Arrival";
     private CurrentSession = SessionLocator.SelectedSession;
+    public LegType: string;
     constructor() {
         super();
         this.InitServices();
@@ -56,6 +57,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         this.EntityPM = args['EntityPM'];
         this.ObjectTableName = args['ObjectTableName'];
         this.FatherComponent = args['FatherComponent'];
+        this.LegType = args['LegType'];
         this.Clone();
 
         this.SetDefaultValues();
@@ -121,6 +123,10 @@ export class AddEditOnCarriageComponent extends BaseComponent {
 
         if (this.EntityPM.ShipmentLevelCode == "H") {
             this.SetUIProperties_Forwarding();
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId) && this.LegType == "On Carriage") {
+                this.SetUIProperties_Carriage_ConnectedMaster();
+            }
         }
 
         else {
@@ -218,6 +224,19 @@ export class AddEditOnCarriageComponent extends BaseComponent {
             var errorMessage = DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.ATA"));
             this.UIProperties.SetValidity("OnForwardingATA", this.ObjectTableName, false, errorMessage);
         }
+    }
+    SetUIProperties_Carriage_ConnectedMaster() {
+        this.UIProperties.SetEnabled("OnCarriageTransportModeId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("OnCarriageFromPortId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("OnCarriageToPortId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("OnCarriageCarrierId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("OnCarriageCarrierNumber", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("OnCarriageVesselId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("OnCarriageETD", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("OnCarriageETA", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("OnCarriageATD", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("OnCarriageATA", this.ObjectTableName, false);
+        this.UIProperties.SetVisibility("OnCarriageVesselId", this.ObjectTableName, this.OnCarriageTransportModeId == "O" ? true : false);
     }
 
     public CarrierDependencyProperty1: string = null;

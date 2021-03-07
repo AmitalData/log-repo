@@ -55,9 +55,9 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         }
 
         var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "PRE" && d.TenantNumber == SessionLocator.Tenant)[0];   
-        //if (this.EntityPM.ShipmentLevelCode == "D" || (this.EntityPM.ShipmentLevelCode == "C" && featureToggle)) {
+        if (this.EntityPM.ShipmentLevelCode == "D" || (this.EntityPM.ShipmentLevelCode == "C" && featureToggle)) {
             this.IsAddingPreOnCarriageVisible = true;
-        //}
+        }
     }
 
     private SessionEvent: any = null;
@@ -226,7 +226,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             this.ItemsSource.push(new RoutingItem(this.EntityPM, "Pre Forwarding", this));
         }
 
-        else if (this.EntityPM.PreCarriageFromPortId != null && this.EntityPM.PreCarriageToPortId != null) {
+        if (this.EntityPM.PreCarriageFromPortId != null && this.EntityPM.PreCarriageToPortId != null) {
             this.ItemsSource.push(new RoutingItem(this.EntityPM, "Pre Carriage", this));
         }
 
@@ -248,7 +248,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             this.ItemsSource.push(new RoutingItem(this.EntityPM, "On Forwarding", this));
         }
 
-        else if (this.EntityPM.OnCarriageFromPortId != null && this.EntityPM.OnCarriageToPortId != null) {
+        if (this.EntityPM.OnCarriageFromPortId != null && this.EntityPM.OnCarriageToPortId != null) {
             this.ItemsSource.push(new RoutingItem(this.EntityPM, "On Carriage", this));
         }
 
@@ -351,7 +351,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddPreCarriage");
-                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this }
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditPreCarriageComponent');
                     break;
                 }
@@ -360,7 +360,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddOnCarriage");
-                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this }
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
                     logitudeWindow.Height = 580;
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditOnCarriageComponent');
                     break;
@@ -370,7 +370,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddPreForwarding");
-                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this }
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditPreCarriageComponent');
                     break;
                 }
@@ -379,7 +379,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddOnForwarding");
-                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this }
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
                     logitudeWindow.Height = 580;
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditOnCarriageComponent');
                     break;
@@ -500,7 +500,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.EditPreCarriage");
-                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this }
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditPreCarriageComponent');
                     break;
                 }
@@ -509,7 +509,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.EditOnCarriage");
-                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this }
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
                     logitudeWindow.Height = 580;
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditOnCarriageComponent');
                     break;
@@ -519,7 +519,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.EditPreForwarding");
-                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this }
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditPreCarriageComponent');
                     break;
                 }
@@ -528,7 +528,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.EditOnForwarding");
-                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this }
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
                     logitudeWindow.Height = 580;
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditOnCarriageComponent');
                     break;

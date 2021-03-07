@@ -7,7 +7,7 @@
         </td>
     </tr>
 
-    <tr *ngIf="EntityPM.ShipmentLevelCode !='H'">
+    <tr *ngIf="LegType =='Pre Carriage'">
         <td>
             <table>
                 <tr>
@@ -248,7 +248,7 @@
         </td>
     </tr>
 
-    <tr *ngIf="EntityPM.ShipmentLevelCode =='H'">
+    <tr *ngIf="LegType =='Pre Forwarding'">
         <td>
             <table>
                 <tr>

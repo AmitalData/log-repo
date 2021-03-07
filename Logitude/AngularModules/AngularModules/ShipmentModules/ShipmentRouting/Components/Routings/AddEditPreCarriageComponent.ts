@@ -16,8 +16,7 @@ import {VesselListService} from '../../../../Common/Services/StandardLists/Vesse
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 
-@Component({
-    
+@Component({    
     templateUrl: './AddEditPreCarriageComponent.html',
 })
 
@@ -29,6 +28,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
     public FatherComponent: RoutingsTabComponent;
     public IsConnectedHouse: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public LegType: string;
     constructor() {
         super();
         this.InitServices();
@@ -47,6 +47,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
         this.EntityPM = args['EntityPM'];
         this.ObjectTableName = args['ObjectTableName'];
         this.FatherComponent = args['FatherComponent'];
+        this.LegType = args['LegType'];
         this.Clone();
 
         this.SetDefaultValues();
@@ -68,6 +69,10 @@ export class AddEditPreCarriageComponent extends BaseComponent {
 
         if (this.EntityPM.ShipmentLevelCode == "H") {
             this.SetUIProperties_Forwarding();
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId) && this.LegType == "Pre Carriage") {
+                this.SetUIProperties_Carriage_ConnectedMaster();
+            }
         }
 
         else {
@@ -167,6 +172,19 @@ export class AddEditPreCarriageComponent extends BaseComponent {
             var errorMessage = DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.ATA"));
             this.UIProperties.SetValidity("PreForwardingATA", this.ObjectTableName, false, errorMessage);
         }
+    }
+    SetUIProperties_Carriage_ConnectedMaster() {
+        this.UIProperties.SetEnabled("PreCarriageTransportModeId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("PreCarriageFromPortId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("PreCarriageToPortId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("PreCarriageCarrierId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("PreCarriageCarrierNumber", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("PreCarriageVesselId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("PreCarriageETD", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("PreCarriageETA", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("PreCarriageATD", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("PreCarriageATA", this.ObjectTableName, false);
+        this.UIProperties.SetVisibility("PreCarriageVesselId", this.ObjectTableName, this.PreCarriageTransportModeId == "O" ? true : false);
     }
 
     public CarrierDependencyProperty1: string = null;
