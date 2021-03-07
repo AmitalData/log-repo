@@ -83,6 +83,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                     if (myResponse.Result != undefined && myResponse.Result != null) {
                         var rate = myResponse.Result;
                         this.HeadercurrencyRate = rate.Rate;
+                        this.UpdateLinesExchangeRate();
                         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
 
                     } else {
@@ -90,7 +91,10 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                         this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Journal.O.ExchangeRateValidation"));
                     }
                 }
+             
             }
+         
+         
         });
     }
     public isRTL: boolean = false;
@@ -368,10 +372,11 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                 this.ValidateDates(value,"AccountingDate");
 
             }
-
+        
             this.EntityPM.AccountingDate = value;
-          this.UpdateLinesAccountingDates();
-          this.UpdateLinesDates();
+            this.UpdateLinesDates();
+            this.UpdateLinesAccountingDates();
+            if (this.CurrencyId) this.getHeadercurrencyRate(this.CurrencyId);
         }
 
 
@@ -684,7 +689,19 @@ getHeaderCurrency(CurrencyId:string){
                 if (!line.ActionCode) {
                     if (line.AccountingDate != this.AccountingDate ) line.AccountingDate = this.AccountingDate;
                     if (line.DueDate != this.DueDate) line.DueDate = this.DueDate;
-                    if (line.DocumentDate != this.DocumentDate) line.DocumentDate = this.DocumentDate;
+                    if (line.DocumentDate != this.DocumentDate) line.DocumentDate = this.DocumentDate;                 
+                }
+            });
+
+
+        }
+    }
+    UpdateLinesExchangeRate() {
+        var lines = this.JournalLines.Collection;
+        if (lines) {
+            lines.forEach((line: JournalLineModel) => {
+                if (!line.ActionCode) {
+                    if (line.CurrencyId == this.CurrencyId) line.currencyRate = this.headercurrencyRate;
                 }
             });
 
@@ -910,7 +927,7 @@ class JournalLineModel extends BaseComponent {
             if (!AppTool.IsNullOrEmpty(value) && !AppTool.IsNullOrEmpty(this.parent.currency)) {
                 if (value != SessionLocator.TenantPM.CurrencyId) {
                     this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, true);
-                    if (this.parent.currency.Id != value) {
+                    if (this.parent.defaultCurrencyId != value) {
                         this.GetExchangeRate(value);
                     }
                     else this.currencyRate = 1;
@@ -1078,7 +1095,7 @@ class JournalLineModel extends BaseComponent {
 
     AmountChanged(type,localAmount,foreignAmount){
         console.log("[AmountChanged] local: ", localAmount, ", foreign: ", foreignAmount);
-
+        if (!this.currencyRate) this.currencyRate = this.parent.HeadercurrencyRate;
         if (type == 'local')
             this.isLocalEntered = !AppTool.IsNullOrEmpty(localAmount);
 
@@ -1190,7 +1207,7 @@ class JournalLineModel extends BaseComponent {
             else {
                 //this.CurrencyId = null;
                 //this.CurrencyCode = null;
-                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+                //this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
             }
 
             if (!AppTool.IsNullOrEmpty(this.Currency)) {
@@ -1225,7 +1242,7 @@ class JournalLineModel extends BaseComponent {
             else {
                 //this.CurrencyId = null;
                 //this.CurrencyCode = null;
-                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+              //  this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
             }
             if (!AppTool.IsNullOrEmpty(this.Currency)) {
                 this.SplittedCheck();
