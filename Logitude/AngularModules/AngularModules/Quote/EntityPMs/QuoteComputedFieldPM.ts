@@ -65,6 +65,31 @@ export class QuoteComputedFieldPM {
     public set PickupFrom(newValue: string) { if (this.pickupFrom != newValue) { this.pickupFrom = newValue; this.MarkAsDirty("PickupFrom"); } }
        
 	 
+    private estimatedPayablesInSales: number;
+    public get EstimatedPayablesInSales() { return this.estimatedPayablesInSales; }
+    public set EstimatedPayablesInSales(newValue: number) { if (this.estimatedPayablesInSales != newValue) { this.estimatedPayablesInSales = newValue; this.MarkAsDirty("EstimatedPayablesInSales"); } }
+       
+	 
+    private estimatedPayablesInLocal: number;
+    public get EstimatedPayablesInLocal() { return this.estimatedPayablesInLocal; }
+    public set EstimatedPayablesInLocal(newValue: number) { if (this.estimatedPayablesInLocal != newValue) { this.estimatedPayablesInLocal = newValue; this.MarkAsDirty("EstimatedPayablesInLocal"); } }
+       
+	 
+    private estimatedReceivablesInLocal: number;
+    public get EstimatedReceivablesInLocal() { return this.estimatedReceivablesInLocal; }
+    public set EstimatedReceivablesInLocal(newValue: number) { if (this.estimatedReceivablesInLocal != newValue) { this.estimatedReceivablesInLocal = newValue; this.MarkAsDirty("EstimatedReceivablesInLocal"); } }
+       
+	 
+    private estimatedReceivablesInSales: number;
+    public get EstimatedReceivablesInSales() { return this.estimatedReceivablesInSales; }
+    public set EstimatedReceivablesInSales(newValue: number) { if (this.estimatedReceivablesInSales != newValue) { this.estimatedReceivablesInSales = newValue; this.MarkAsDirty("EstimatedReceivablesInSales"); } }
+       
+	 
+    private estimateProfitInSaleCurrency: number;
+    public get EstimateProfitInSaleCurrency() { return this.estimateProfitInSaleCurrency; }
+    public set EstimateProfitInSaleCurrency(newValue: number) { if (this.estimateProfitInSaleCurrency != newValue) { this.estimateProfitInSaleCurrency = newValue; this.MarkAsDirty("EstimateProfitInSaleCurrency"); } }
+       
+	 
 
     public OldEntityPM: QuoteComputedFieldPM;
 		

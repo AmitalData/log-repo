@@ -15,5 +15,10 @@ export class QuoteComputedFieldList {
 		FromLocation: string;
 		DeliveryFrom: string;
 		PickupFrom: string;
+		EstimatedPayablesInSales: number;
+		EstimatedPayablesInLocal: number;
+		EstimatedReceivablesInLocal: number;
+		EstimatedReceivablesInSales: number;
+		EstimateProfitInSaleCurrency: number;
 	
 }

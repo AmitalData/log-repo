@@ -285,7 +285,8 @@ namespace Logitude.CRM.BL.EntityUpdateServices
 
                 this.UpdateDates(entityPM);
                 this.CheckQuoteRequestDateUpdate(entityPM, entityPOCO);
-                this.CheckQuoteConnectedToTicket(entityPM, entityPOCO);
+                this.SetQuoteConnectedToTicketFlags(entityPM, entityPOCO);
+                this.UpdateQuoteConnectedToTicketComputedField(entityPM.Tenant);
                 this.UpdateLastCorrespondence(entityPM);
             }
         }
@@ -324,47 +325,57 @@ namespace Logitude.CRM.BL.EntityUpdateServices
             Quote quote = quoteRepository.GetSingleQuote(quoteId, tenant);
             quote.RequestDate = requestDate == null ? quote.OpenDate : requestDate;
             quoteRepository.Update(quote);
-            quoteRepository.SubmitChanges();
+            SubmitQuoteChanges();
         }
 
-        private void CheckQuoteConnectedToTicket(TicketPM entityPM ,Ticket entityPOCO)
+        private void SetQuoteConnectedToTicketFlags(TicketPM entityPM ,Ticket entityPOCO)
         {
-            string quoteId = null;
-            bool connectedToTicket = false;
             if (!string.IsNullOrEmpty(entityPM.QuoteNumber) && !string.IsNullOrEmpty(entityPOCO.QuoteNumber) && entityPOCO.QuoteNumber != entityPM.QuoteNumber )
             {
                 quoteId = entityPM.QuoteId;
-                connectedToTicket = true;
+                isConnectingQuote = true;
             }
-            if (string.IsNullOrEmpty(entityPM.QuoteNumber) && !string.IsNullOrEmpty(entityPOCO.QuoteNumber))
+            else if (string.IsNullOrEmpty(entityPM.QuoteNumber) && !string.IsNullOrEmpty(entityPOCO.QuoteNumber))
             {
                 quoteId = entityPOCO.QuoteId;
+                isDisconnectingQuote = true;
             }
-            if (!string.IsNullOrEmpty(entityPM.QuoteNumber) && string.IsNullOrEmpty(entityPOCO.QuoteNumber))
+            else if (!string.IsNullOrEmpty(entityPM.QuoteNumber) && string.IsNullOrEmpty(entityPOCO.QuoteNumber))
             {
                 quoteId = entityPM.QuoteId;
-                connectedToTicket = true;
+                isConnectingQuote = true;
             }
-            if (!string.IsNullOrEmpty(entityPM.QuoteNumber) && !string.IsNullOrEmpty(entityPOCO.QuoteNumber)&&( entityPM.EntityType != entityPOCO.EntityType))
+            else if (!string.IsNullOrEmpty(entityPM.QuoteNumber) && !string.IsNullOrEmpty(entityPOCO.QuoteNumber)&&( entityPM.EntityType != entityPOCO.EntityType))
             {
                 quoteId = entityPOCO.QuoteId;
-            }
-            UpdateQuoteComputedFields(quoteId, Tenant, connectedToTicket);
+                isDisconnectingQuote = true;
+            }   
         }
 
-        private void UpdateQuoteComputedFields(string quoteId, int tenant,bool connectedToTicket)
+        private void UpdateQuoteConnectedToTicketComputedField(int tenant)
         {
-            if (!string.IsNullOrEmpty(quoteId))
-            {
+            if((isConnectingQuote || isDisconnectingQuote) && !string.IsNullOrEmpty(quoteId)) { 
+       
                 QuoteComputedFieldRepository quoteComputedFieldRepository = new QuoteComputedFieldRepository(this.quoteContext);
                 QuoteComputedField quoteComputedField = quoteComputedFieldRepository.GetSingleQuoteComputedField(quoteId, tenant);
                 if (quoteComputedField != null)
                 {
-                    quoteComputedField.ConnectedToTicket = connectedToTicket;
+                    if (isConnectingQuote) {
+                        quoteComputedField.ConnectedToTicket = true;
+                    }
+                    if (isDisconnectingQuote)
+                    {
+                        quoteComputedField.ConnectedToTicket = false;
+                    }
                     quoteComputedFieldRepository.Update(quoteComputedField);
-                    quoteComputedFieldRepository.SubmitChanges();
+                    SubmitQuoteChanges();
                 }
             }
+        }
+
+        private void SubmitQuoteChanges()
+        {
+            this.quoteContext.SaveChanges();
         }
 
         protected override void UpdateComposition(TicketPM entityPM)
@@ -691,7 +702,9 @@ namespace Logitude.CRM.BL.EntityUpdateServices
            
         BusinessHour businessHour { get; set; }
         private IQuotesContext quoteContext;
-
+        private string quoteId = null;
+        private bool isConnectingQuote = false;
+        private bool isDisconnectingQuote = false;
         public void SetTimeIssues(TicketPM entityPM, Ticket entityPOCO, bool isChangeSLAViaAutomation = false)
         {
             bool isExecuting = false;

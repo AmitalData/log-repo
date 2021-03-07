@@ -13,8 +13,11 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string FromLocation { get; set; }
         public string DeliveryFrom { get; set; }
         public string PickupFrom { get; set; }
-
-
+        public double? EstimatedPayablesInSales { get; set; }
+        public double? EstimatedPayablesInLocal { get; set; }
+        public double? EstimatedReceivablesInLocal { get; set; }
+        public double? EstimatedReceivablesInSales { get; set; }
+        public double? EstimateProfitInSaleCurrency { get; set; }
 
     }
 }

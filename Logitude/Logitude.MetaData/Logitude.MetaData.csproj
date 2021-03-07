@@ -292,6 +292,9 @@
     <None Include="DBScripts\InvoiceModel\202128011350_AddNotesToAPInvoiceSearchField.sxml" />
     <None Include="DBScripts\InvoiceModel\202128011350_AddNotesToAPPaymentSearchField.sxml" />
     <None Include="DBScripts\InvoiceModel\202128011350_AddNotesToARInvoiceSearchField.sxml" />
+    <None Include="DBScripts\QuoteModel\202103071234_CalculateCostAmountInSaleCurrencyInQouteCharges.sxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="DBScripts\QuoteModel\202010270950_AddIsRegionalTAXToQuoteTemplateTextCode.sxml" />
     <None Include="DBScripts\InvoiceModel\202010260915_UpdateSearchFieldsOfARInvoices.sxml" />
     <None Include="DBScripts\InvoiceModel\202010261215_UpdateSearchFieldsOfAPPayments.sxml" />

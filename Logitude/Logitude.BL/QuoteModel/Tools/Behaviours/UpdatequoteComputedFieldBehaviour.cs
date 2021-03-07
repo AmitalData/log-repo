@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.QuoteModel.Tools.Initializers;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Interfaces;
@@ -8,7 +9,7 @@ using System.Linq;
 
 namespace Logitude.BL.QuoteModel.Tools.Behaviours
 {
-    public class UpdatequoteComputedFieldBehaviour : IServiceBehaviour
+    public class UpdateQuoteComputedFieldBehaviour : IServiceBehaviour
     {
         private QuoteServiceInitializer initializer;
         private QuoteComputedField quoteComputedField;
@@ -16,9 +17,9 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
         public void Handle(IServiceInitializer initializer)
         {
             this.initializer = (QuoteServiceInitializer)initializer;
-            if (this.initializer.quoteComputedFieldPOCO != null)
+            if (this.initializer.QuoteComputedFieldPOCO != null)
             {
-                this.quoteComputedField = this.initializer.quoteComputedFieldPOCO;
+                this.quoteComputedField = this.initializer.QuoteComputedFieldPOCO;
             }
             if (this.initializer.EntityPM != null)
             {
@@ -34,6 +35,12 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
             MapToLocationField();
             MapPickupFromField();
             MapDeliveryFromField();
+            MapEstimatedPayablesInLocalCurrencyField();
+            MapEstimatedPayablesInSalesCurrencyField();
+            MapEstimatedReceivablesInLocalCurrencyField();
+            MapEstimatedReceivablesInSalesCurrencyField();
+            MapEstimateProfitInSaleCurrencyField();
+
         }
 
         private void MapConnectedToShipmentField()
@@ -66,7 +73,7 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
         {
             if (!string.IsNullOrEmpty(addressId))
             {
-                Address address = initializer.addressRepository.GetSingleAddress(addressId, initializer.Tenant);
+                Address address = initializer.AddressRepository.GetSingleAddress(addressId, initializer.Tenant);
                 if (address != null)
                 {
                     string locationAddress = (!string.IsNullOrEmpty(address.City)) ? address.City : "";
@@ -118,7 +125,7 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 
         private string CalculatePickupAndDeliveryFromByAddressId(string id)
         {
-            Address address = initializer.addressRepository.GetSingleAddress(id, initializer.Tenant);
+            Address address = initializer.AddressRepository.GetSingleAddress(id, initializer.Tenant);
             if (address != null)
             {
                 string location = (!string.IsNullOrEmpty(address.City)) ? address.City : "";
@@ -143,7 +150,7 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 
             if (!string.IsNullOrEmpty(quoteEntityPM.FromAddressCountryId))
             {
-                Country country = initializer.countryRepository.GetSingleCountry(quoteEntityPM.FromAddressCountryId, initializer.Tenant);
+                Country country = initializer.CountryRepository.GetSingleCountry(quoteEntityPM.FromAddressCountryId, initializer.Tenant);
                 if (country != null)
                 {
                      location = (string.IsNullOrEmpty(location))? country.Code : location + " " + country.Code;
@@ -162,7 +169,7 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 
             if (!string.IsNullOrEmpty(quoteEntityPM.ToAddressCountryId))
             {
-                Country country = initializer.countryRepository.GetSingleCountry(quoteEntityPM.ToAddressCountryId, initializer.Tenant);
+                Country country = initializer.CountryRepository.GetSingleCountry(quoteEntityPM.ToAddressCountryId, initializer.Tenant);
                 if (country != null)
                 {
                      location = (string.IsNullOrEmpty(location))? country.Code : location + " " + country.Code; ;
@@ -174,5 +181,48 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
             }
             return location;
         }
+
+        private void MapEstimatedPayablesInLocalCurrencyField()
+        {
+            if (quoteEntityPM.QuoteCharges != null)
+            {
+                quoteComputedField.EstimatedPayablesInLocal = quoteEntityPM.QuoteCharges.Sum(d => d.CostTotalAmountLocal);
+            }
+        }
+
+
+        private void MapEstimatedPayablesInSalesCurrencyField()
+        {
+            if (quoteEntityPM.QuoteCharges != null)
+            {
+                quoteComputedField.EstimatedPayablesInSales = quoteEntityPM.QuoteCharges.Sum(d => d.CostAmountInSaleCurrency);
+            }
+        }
+
+        private void MapEstimatedReceivablesInLocalCurrencyField()
+        {
+            if (quoteEntityPM.QuoteCharges != null)
+            {
+                quoteComputedField.EstimatedReceivablesInLocal = quoteEntityPM.QuoteCharges.Where(d => d.IsAllIN == false).Sum(d => d.SaleTotalAmountLocal);
+            }
+        }
+
+        private void MapEstimatedReceivablesInSalesCurrencyField()
+        {
+            if (quoteEntityPM.QuoteCharges != null)
+            {
+                quoteComputedField.EstimatedReceivablesInSales = quoteEntityPM.QuoteCharges.Where(d => d.IsAllIN == false).Sum(d => d.SaleAmountInSaleCurrency);
+            } 
+        }
+
+        private void MapEstimateProfitInSaleCurrencyField()
+        {
+            if (quoteEntityPM.QuoteCharges != null)
+            {
+                quoteComputedField.EstimateProfitInSaleCurrency = quoteEntityPM.EstimateProfit;
+            } 
+        }
+
+
     }
 }

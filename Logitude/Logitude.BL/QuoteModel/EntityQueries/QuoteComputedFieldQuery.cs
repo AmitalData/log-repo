@@ -32,7 +32,13 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         DeliveryFrom = quoteComputedField.DeliveryFrom,
                         PickupFrom = quoteComputedField.PickupFrom,
                         FromLocation = quoteComputedField.FromLocation ,
-                        ToLocation = quoteComputedField.ToLocation
+                        ToLocation = quoteComputedField.ToLocation,
+                        EstimatedPayablesInSales = quoteComputedField.EstimatedPayablesInSales,
+                        EstimatedPayablesInLocal = quoteComputedField.EstimatedPayablesInLocal,
+                        EstimatedReceivablesInLocal = quoteComputedField.EstimatedReceivablesInLocal,
+                        EstimatedReceivablesInSales = quoteComputedField.EstimatedReceivablesInSales,
+                        EstimateProfitInSaleCurrency = quoteComputedField.EstimateProfitInSaleCurrency
+
                     }).FirstOrDefault();
         }
         public IQueryable<QuoteComputedFieldList> GetIQueryableEntityList(IQueryable<QuoteComputedField> iQueryable)
@@ -47,7 +53,12 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                                  DeliveryFrom = quoteComputedField.DeliveryFrom,
                                                                  PickupFrom = quoteComputedField.PickupFrom,
                                                                  FromLocation = quoteComputedField.FromLocation,
-                                                                 ToLocation = quoteComputedField.ToLocation
+                                                                 ToLocation = quoteComputedField.ToLocation,
+                                                                 EstimatedPayablesInSales = quoteComputedField.EstimatedPayablesInSales,
+                                                                 EstimatedPayablesInLocal = quoteComputedField.EstimatedPayablesInLocal,
+                                                                 EstimatedReceivablesInLocal = quoteComputedField.EstimatedReceivablesInLocal,
+                                                                 EstimatedReceivablesInSales = quoteComputedField.EstimatedReceivablesInSales,
+                                                                 EstimateProfitInSaleCurrency = quoteComputedField.EstimateProfitInSaleCurrency
                                                              });
             return result;
         }

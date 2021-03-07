@@ -36,11 +36,11 @@ namespace Logitude.BL.QuoteModel.Tools.Initializers
         public DateTime? TodayDate { get; private set; }
         public DateTime? TodayDateTime { get; private set; }
         public Tenant LoggedTenant { get; private set; }
-        public QuoteComputedFieldRepository quoteComputedFieldRepository { get; private set; }
-        public QuoteComputedField quoteComputedFieldPOCO { get; private set; }
-        public QuoteComputedFieldPM quoteComputedFieldPM { get; private set; }
-        public AddressRepository addressRepository { get; private set; }
-        public CountryRepository countryRepository { get; private set; }
+        public QuoteComputedFieldRepository QuoteComputedFieldRepository { get; private set; }
+        public QuoteComputedField QuoteComputedFieldPOCO { get; private set; }
+        public QuoteComputedFieldPM QuoteComputedFieldPM { get; private set; }
+        public AddressRepository AddressRepository { get; private set; }
+        public CountryRepository CountryRepository { get; private set; }
         public string LoggedContactId { get; private set; }
         private string loggedEmail;
 
@@ -51,13 +51,13 @@ namespace Logitude.BL.QuoteModel.Tools.Initializers
             this.CommonContext = CommonDataContext.GetContext(Tenant);
             this.ShipmentContext = ShipmentsContext.GetContext(Tenant);
             this.CRMcontext = CRMContext.GetContext(Tenant);
-            this.countryRepository = new CountryRepository(Tenant);
+            this.CountryRepository = new CountryRepository(Tenant);
             this.Repository = new QuoteRepository(Context);
-            this.quoteComputedFieldRepository = new QuoteComputedFieldRepository(Tenant);
+            this.QuoteComputedFieldRepository = new QuoteComputedFieldRepository(Tenant);
             this.TodayDateTime = TenantServerConfigration.GetCurrentDateTime(Tenant);
             this.TodayDate = this.TodayDateTime.Value.Date;
             this.loggedEmail = loggedContactEmail;
-            this.addressRepository = new AddressRepository(Tenant);
+            this.AddressRepository = new AddressRepository(Tenant);
         }
 
         public void Initialize()
@@ -93,7 +93,7 @@ namespace Logitude.BL.QuoteModel.Tools.Initializers
             if (this.IsNewEntity)
             {
 
-                this.quoteComputedFieldPOCO = new QuoteComputedField()
+                this.QuoteComputedFieldPOCO = new QuoteComputedField()
                 {
                     Id = EntityPM.Id,
                     Tenant = EntityPM.Tenant
@@ -102,7 +102,7 @@ namespace Logitude.BL.QuoteModel.Tools.Initializers
             }
             else  
             {
-                this.quoteComputedFieldPOCO = quoteComputedFieldRepository.GetSingleQuoteComputedField(EntityPM.Id);
+                this.QuoteComputedFieldPOCO = QuoteComputedFieldRepository.GetSingleQuoteComputedField(EntityPM.Id);
             }
         }
 
@@ -137,7 +137,7 @@ namespace Logitude.BL.QuoteModel.Tools.Initializers
 
             serviceBehaviours.Add(new QuoteFieldsBehaviour());
             serviceBehaviours.Add(new QuoteSalesmanBehavior());
-            serviceBehaviours.Add(new UpdatequoteComputedFieldBehaviour());
+            serviceBehaviours.Add(new UpdateQuoteComputedFieldBehaviour());
 
             foreach (IServiceBehaviour behaviour in serviceBehaviours)
             {

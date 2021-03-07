@@ -142,7 +142,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             initializer.InitializeEntity(entityPM);
             this.entityPM = initializer.EntityPM;
             this.entityPoco = initializer.EntityPOCO;
-            this.quoteComputedFieldEntityPOCO = initializer.quoteComputedFieldPOCO;
+            this.quoteComputedFieldEntityPOCO = initializer.QuoteComputedFieldPOCO;
             this.isNewEntity = initializer.IsNewEntity;
 
             this.GetQuoteSettings();
@@ -211,7 +211,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             initializer.InitializeEntity(entityPM);
             this.entityPM = initializer.EntityPM;
             this.entityPoco = initializer.EntityPOCO;
-            this.quoteComputedFieldEntityPOCO = initializer.quoteComputedFieldPOCO;
+            this.quoteComputedFieldEntityPOCO = initializer.QuoteComputedFieldPOCO;
             this.isNewEntity = initializer.IsNewEntity;
 
 

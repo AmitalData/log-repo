@@ -626,7 +626,7 @@
     <Compile Include="QuoteModel\Tools\Behaviours\EntityAutomationQuoteMappingPMFields.cs" />
     <Compile Include="QuoteModel\Tools\Behaviours\QuoteBehaviours\QuoteFieldsBehaviour.cs" />
     <Compile Include="QuoteModel\Tools\Behaviours\QuoteBehaviours\QuoteSalesmanBehavior.cs" />
-    <Compile Include="QuoteModel\Tools\Behaviours\UpdatequoteComputedFieldBehaviour.cs" />
+    <Compile Include="QuoteModel\Tools\Behaviours\UpdateQuoteComputedFieldBehaviour.cs" />
     <Compile Include="QuoteModel\Tools\DataMapping\QuoteMapping.QuoteClosingReasonService.cs" />
     <Compile Include="QuoteModel\Tools\EntityService\QuoteClosingReasonService.cs" />
     <Compile Include="QuoteModel\Tools\EntityService\QuoteSubjectService.cs" />

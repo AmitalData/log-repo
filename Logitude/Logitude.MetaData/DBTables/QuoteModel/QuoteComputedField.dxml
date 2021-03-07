@@ -59,6 +59,38 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="EstimatedPayablesInSales"
+    OldNames="EstimatedPayablesInSalesCurncy,EstimatedPayablesinSalesCurrncy"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EstimatedPayablesInLocal"
+    OldNames="EstimatedPayablesInLocalCurncy"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EstimatedReceivablesInLocal"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EstimatedReceivablesInSales"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EstimateProfitInSaleCurrency"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Quotes"
