@@ -78,10 +78,6 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.Messages
                 {
                     errorMsg = errorMsg + "RateDate is required. ";
                 }
-                if (string.IsNullOrEmpty(item.Currency.Code))
-                {
-                    errorMsg = errorMsg + "Currency code is required. ";
-                }
                 if (item.Rate == null)
                 {
                     errorMsg = errorMsg + "Rate is required. ";
@@ -123,7 +119,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.Messages
             var allCurrencies = (from d in objectContext.Currencies
                                  where (d.Tenant == tenant || d.Tenant == 0)
                                  select d.Code).Distinct().ToList();
-            foreach (var item in ratesUpdate.RateUpdateList.ToList())
+            foreach (var item in ratesUpdate.RateUpdateList.Where(a=>!string.IsNullOrEmpty(a.Currency.Code)).ToList())
             {
                 var isCurrencyExist = allCurrencies.Where(a => a == item.Currency.Code).FirstOrDefault();
                 if (string.IsNullOrEmpty(isCurrencyExist))
