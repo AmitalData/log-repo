@@ -20,8 +20,16 @@ namespace Logitude.Customs.Data.Repsitories
             
 			throw new NotImplementedException();
         }
+        public ExportDeclarationClosingData getByDecId(string id,int tenant)
+        {
+            {
+                return (from a in context.ExportDeclarationClosingDatas
+                        where a.DeclarationId == id && a.Tenant == tenant
+                        select a).FirstOrDefault();
+            }
+        }
 
-   }
+    }
 
 }
    
