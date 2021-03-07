@@ -39,7 +39,7 @@ Cypress.on('test:after:run', (test, runnable) => {
   
       const imageUrl = `screenshots/${
         Cypress.spec.name
-      }/${fullTestName} (failed) (attempt 3).png`
+      }/${fullTestName} (failed).png`
   
       addContext({ test }, imageUrl)
     }
