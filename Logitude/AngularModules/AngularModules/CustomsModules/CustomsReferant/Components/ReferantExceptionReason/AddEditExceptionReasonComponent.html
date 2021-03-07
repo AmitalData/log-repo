@@ -26,15 +26,19 @@
                         <td><div></div></td>
                         <td><div></div></td>
                         <td><div></div></td>
-                        <td style="width: 25px;height: 20px;padding: 5px;padding-bottom: 0px;">
-                            <div><IconButton [IsEnabled]="!IsDisplayOnly" [IsSmall]="true" [Name]="'Add'" (click)="Add()" style="float:left;"></IconButton></div>
-                        </td>
+                        <td></td>
                     </tr>
                 </table>
             </fieldset>
         </td>
     </tr>
-    <tr style="height:15px"></tr>
+    <tr style="height:15px">
+        <td colspan="6"></td>
+        <td style="width: 25px;height: 20px;padding: 5px;padding-bottom: 0px;">
+            <div><IconButton [IsEnabled]="!IsDisplayOnly" [IsSmall]="true" [Name]="'Add'" (click)="Add()" style="float:left;"></IconButton></div>
+        </td>
+    </tr>
+    <tr style="height:15px">
     <tr style="height:100%;bottom:5px">
         <td colspan="7">
             <table>
@@ -73,7 +77,7 @@
                                         </log-cell-template>
                                     </ng-template>
                                 </log-column>
-                                <log-column [header]="'Customs.DeclarationReferantData.O.ExceptionRemarks ' | TextCodeTranslationPipe" [binding]="'ExceptionRemarks'"  [width]="'150'" [Editable]="true" [Alignment]="'right'">
+                                <log-column [header]="'Customs.DeclarationReferantData.O.ExceptionRemarks ' | TextCodeTranslationPipe" [binding]="'ExceptionRemarks'" [width]="'150'" [Editable]="true" [Alignment]="'right'">
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate>
                                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
@@ -104,7 +108,7 @@
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                             <div style="
-        float: right;
+
         height: 20px;
         padding-top: 3px">
                                                 <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteButtonClicked(item)" [IsEnabled]="!IsDisplayOnly"></IconButton>
@@ -118,31 +122,31 @@
                     </td>
                 </tr>
 
-    <tr style="height: 32px;">
-        <td colspan="7" style="vertical-align: bottom">
-            <table style="height: 22px;">
-                <tr>
-                    <td>
-                        <div></div>
-                    </td>
+                <tr style="height: 32px;">
+                    <td colspan="7" style="vertical-align: bottom">
+                        <table style="height: 22px;">
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
 
-                    <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
-                    </td>
+                                <td style="width: 57px;">
+                                    <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                                </td>
 
-                    <td style="width: 5px;">
-                        <div></div>
-                    </td>
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
 
-                    <td style="width: 57px;">
-                        <button class="RedButton" *ngIf="this.exceptionReasonSharedDataService.IsDirty" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
-                        <button class="Button" *ngIf="!this.exceptionReasonSharedDataService.IsDirty" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                                <td style="width: 57px;">
+                                    <button class="RedButton" *ngIf="this.exceptionReasonSharedDataService.IsDirty" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                                    <button class="Button" *ngIf="!this.exceptionReasonSharedDataService.IsDirty" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                                </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
             </table>
-        </td>
-    </tr>
-</table>
 
 
 </table>

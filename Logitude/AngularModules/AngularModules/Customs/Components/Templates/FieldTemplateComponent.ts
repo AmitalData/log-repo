@@ -661,7 +661,6 @@ export class FieldTemplateComponent {
                 logitudeWindow.WindowArgs = windowArgs;
                 logitudeWindow.Show('./CustomsModules/CustomsReferant/Components/ReferantExceptionReason/AddEditExceptionReasonComponent');
                 logitudeWindow.WindowClosed.subscribe(($event: any) => {
-                    debugger;
                     SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
                     this.CD.detectChanges();
                 });
