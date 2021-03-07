@@ -374,7 +374,10 @@ export function AddSecondInvoiceToConsolidation(ARInvoiceNumber: string) {
 }
 export function AssertTransferStatus(TransferStatus: string) {
     cy.get(BaseSelectors.HeaderScreen).eq(1)
-        .should("contain", TransferStatus)
+    .should("contain", TransferStatus)
+    // cy.get(BaseSelectors.HeaderScreen).eq(1).find(BaseSelectors.HeaderScreenLable).contains(AccountingSelectors.ContainTransferStatus)
+    // .next(BaseSelectors.HeaderScreenValue)
+    //     .should("contain.text", TransferStatus)
 }
 export function AssertTransferError(ARInvoiceNumber: string, ErrorMessage: string) {
     cy.get(BaseSelectors.DivListItem).find(BaseSelectors.TextTrimming).contains(ARInvoiceNumber)
@@ -424,9 +427,9 @@ function AssertSelectedInvoicNumber(SelectedInvoicNumber: string) {
 }
 
 export function ExportARInvoice(ARInvoiceNumber: string) {
+    cy.get(AccountingSelectors.CheckAll).click({force:true})
     AssertSelectedInvoicNumber('0')
-    cy.get(AccountingSelectors.CheckAll).uncheck()
-    cy.SelectCheckBox(AccountingSelectors.CheckAll)
+    cy.get(AccountingSelectors.TransferCheckBox(ARInvoiceNumber)).find(BaseSelectors.label).click({force:true});
     cy.Click(BaseSelectors.RedButton, AccountingSelectors.ContainExport)
 }
 

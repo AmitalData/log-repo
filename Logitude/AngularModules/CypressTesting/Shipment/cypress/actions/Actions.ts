@@ -772,9 +772,12 @@ function FillShipperAndConsignee(shipmentDetails: ShipmentDetails) {
 
 function FillCustomerType(shipmentDetails: ShipmentDetails) { 
     if (Conditions.IsImport(shipmentDetails.Direction)) {
-        cy.FillLogLov(ShipmentSelectors.ShipmentCustomerType, "Consignee", true)
+      //  cy.FillLogLov(ShipmentSelectors.ShipmentCustomerType, "Consignee", true)
+      cy.SelectDropDownListItem(ShipmentSelectors.LogLovShipmentCustomer,"Consignee")
     } else {
-        cy.FillLogLov(ShipmentSelectors.ShipmentCustomerType, "Shipper", true)
+        //cy.FillLogLov(ShipmentSelectors.ShipmentCustomerType, "Shipper", true)
+        cy.SelectDropDownListItem(ShipmentSelectors.LogLovShipmentCustomer,"Shipper")
+
     }
 }
 
