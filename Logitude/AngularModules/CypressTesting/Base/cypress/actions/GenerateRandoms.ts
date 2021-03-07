@@ -1,4 +1,4 @@
-export function GenerateRandomString(length: number, upperCase: boolean){
+export function GenerateRandomString(length: number, upperCase: boolean) {
     let randomString = ""
     let possible = "abcdefghijklmnopqrstuvwxyz"
 
@@ -12,14 +12,14 @@ export function GenerateRandomString(length: number, upperCase: boolean){
     return randomString
 }
 
-export function GenerateRandomNumber(minimum:number, maximum: number) {
+export function GenerateRandomNumber(minimum: number, maximum: number) {
     minimum = Math.ceil(minimum)
     maximum = Math.floor(maximum)
 
     return (Math.floor(Math.random() * (maximum - minimum + 1) + minimum))
 }
 
-export function GenerateRandomNumberAndString(length: number){
+export function GenerateRandomNumberAndString(length: number) {
     let randomString = ""
     let possible = "abcdefghijklmnopqrstuvwxyz0123456789"
 
@@ -29,39 +29,39 @@ export function GenerateRandomNumberAndString(length: number){
     return randomString
 }
 
-export function GetValidContainerNumber(input: any){
+export function GetValidContainerNumber(input: any) {
     var myResult: string = "";
 
-           var sum = 0;
+    var sum = 0;
 
-           for (var i = 0; i < input.length - 1; i++) {
-               if (IsAlpha(input[i])) {
-                   sum = sum + (GetCharCode(input[i]) * Math.pow(2, i));
-               }
+    for (var i = 0; i < input.length - 1; i++) {
+        if (IsAlpha(input[i])) {
+            sum = sum + (GetCharCode(input[i]) * Math.pow(2, i));
+        }
 
-               else {
-                   sum = sum + (GetIntegerDigit(input[i]) * Math.pow(2, i));
-               }
-           }
+        else {
+            sum = sum + (GetIntegerDigit(input[i]) * Math.pow(2, i));
+        }
+    }
 
-           var integrSum = GetIntegerValue(sum);
-           var checkDigit = GetIntegerDigit(input[input.length - 1]);
+    var integrSum = GetIntegerValue(sum);
+    var checkDigit = GetIntegerDigit(input[input.length - 1]);
 
-           var divisionby11: number = integrSum / 11;
-           var erasedecimaldigits: number = GetIntegerValue(divisionby11);
-           var multiplyby11 = erasedecimaldigits * 11;
-           var validCheckDigit = (integrSum - multiplyby11);
+    var divisionby11: number = integrSum / 11;
+    var erasedecimaldigits: number = GetIntegerValue(divisionby11);
+    var multiplyby11 = erasedecimaldigits * 11;
+    var validCheckDigit = (integrSum - multiplyby11);
 
-           if (validCheckDigit == 10) {
-               validCheckDigit = 0;
-           }
+    if (validCheckDigit == 10) {
+        validCheckDigit = 0;
+    }
 
-           if (validCheckDigit != checkDigit) { 
-               myResult = input.replace(/.$/,validCheckDigit.toString());
-           }
-   
+    if (validCheckDigit != checkDigit) {
+        myResult = input.replace(/.$/, validCheckDigit.toString());
+    }
 
-   return myResult;
+
+    return myResult;
 }
 
 function IsAlpha(input: string): boolean {

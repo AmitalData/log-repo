@@ -95,14 +95,13 @@ Given("an ARInvoice with the following details", (dataTable) => {
 Given("clear external ID for partner", () => {
   BaseActions.ClearExternalIDFromShipmentLevel("Partner");
 });
-
 When("create invoice", () => {
   AccountingActions.CreateARInvoice()
 });
 Then("the invoice should create successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });
-Then("the transfer status should be not ready", () => {
+Then("the transfer status should be Not Ready", () => {
   AccountingActions.AssertTransferStatus(AccountingSelectors.ContainNotReady)
 });
 //#endregion
@@ -152,7 +151,7 @@ When("add the external IDs", () => {
 Then("the external IDs should add successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200)
 });
-Then("the transfer status should be ready", () => {
+Then("the transfer status should be Ready", () => {
   ShipmentActions.NavigatesToShipmentsWorkspace()
   ShipmentActions.OpenShipment(shipmentNumber);
   cy.Click(ShipmentSelectors.ReceivablesTab, null)
@@ -172,10 +171,8 @@ When("export the ARInvoice", () => {
 });
 Then("the ARInvoice should export successfully", () => {
   AccountingActions.AssertTransferredInvoice()
-  AccountingActions.CloseExportingInvoiceTransferWindow()
-  BaseActions.CloseWindow()
 });
-Then("the transfer status should be transferred", () => {
+Then("the transfer status should be Transferred", () => {
   ShipmentActions.NavigatesToShipmentsWorkspace()
   ShipmentActions.OpenShipment(shipmentNumber);
   cy.Click(ShipmentSelectors.ReceivablesTab, null)

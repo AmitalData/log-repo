@@ -46,7 +46,7 @@ Feature: INTTRA Sending E-Booking and Shipping Instructions
     Scenario: Fill required information to send INTTRA e-booking
         Given the user fill the following information to send e-booking
             | BranchName  | ShippingLine | ContractNumber | DescriptionOfGoods | ETDDate | ETDTime | Vessel | ShipperContact     |
-            | Main Office | MSCU         | 53454          | Send booking test  | Today   | 14:00   | PT     | TestShipperContact |
+            | Main Office | YMLU         | 53454          | Send booking test  | Today   | 14:00   | PT     | TestShipperContact |
         And add the following package
             | PackageType | GrossWeight |
             | 40GP        | 200         |
@@ -58,3 +58,24 @@ Feature: INTTRA Sending E-Booking and Shipping Instructions
         When send booking request
         Then the request should send successfully
         And booking request status should be "Sent"
+
+    Scenario: Ensure shipping instructions validation messages
+        Given the user open the master shipment
+        When open INTTRA shipping instructions wizard
+        Then validation messages for sending shipping instructions should appear
+
+    Scenario: Fill shipping instructions required information
+        Given the user fill the following information to send shipping instructions
+            | MoveType     | BookingConfirmationNumber | ContainerNumber |
+            | Port to Port | 123456                    | AACC1234569     |
+        And add an inside package with the following details
+            | PackageType | Quantity | GrossWeight | Description       |
+            | Carton      | 5        | 100         | TestInsidePackage |
+        When save the shipment
+        Then the shipment should save successfully
+
+    Scenario: Send shipping instructions request
+        Given the user in INTTRA shipping instructions wizard
+        When send shipping instructions request
+        Then the instructions should send successfully
+        And booking request status should be "Shipping Instructions"

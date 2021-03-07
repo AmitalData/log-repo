@@ -11,6 +11,7 @@ import { ajax } from 'rxjs/ajax';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { JournalExtendedPMService } from '../../../Services/ExtendedPMs/JournalExtendedPMService';
 declare var attachmentUploader, ResultAsArray: any;
 
 @Component({
@@ -29,13 +30,8 @@ export class AccountingMainTesterComponent extends BaseComponent {
     JsonOut: string;
     SelectedItem: string;
 
-    JournalId2Void: string = "1-401";
-    overrideStorno =
-        {
-            AccountingEntityCode: "7",//	הפקדת מזומן	Cash Deposit
-            AccountingEntityReference: "Cash Deposit 7",
-            AccountingEntityId: "Deposit1212",
-        };
+    JournalId2Void: string = "1-5599183";
+    OverrideStornoString: string = '{"AccountingEntityCode":"7","AccountingEntityReference":"Cash Deposit 7","AccountingEntityId":"1-22222"}';
 
     _MenuList: string[] = [];
     public ValidationErrorsList: string[];
@@ -52,9 +48,14 @@ export class AccountingMainTesterComponent extends BaseComponent {
         this._MenuList.push("JournalSend");
         this._MenuList.push("JournalApproveService");
         this._MenuList.push("Reports");
-        
+
+       
+
+
         this._MenuList.push("MSIC");
         this._MenuList.push("Alex");
+        this._MenuList.push("FIX");
+        
 
 
         this.UIProperties.SetRequired("Email", this.ObjectTableName, true);
@@ -64,7 +65,24 @@ export class AccountingMainTesterComponent extends BaseComponent {
     selected() {
 
     }
+    JournalId2Void_click() {
+        
+        let overrideStorno1 = JSON.parse(this.OverrideStornoString);
+        let myJournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
+        this.CurrentSession.StartBusyIndicatorCreating();
+        myJournalExtendedPMService
+            .VoidJournal(SessionLocator.Tenant, this.JournalId2Void,
+                overrideStorno1.AccountingEntityCode,// "7",//	הפקדת מזומן	Cash Deposit
+                overrideStorno1.AccountingEntityId,// "Deposit1212",
+                overrideStorno1.AccountingEntityReference//"Cash Deposit 7",
+            ).subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
 
+            );
+
+    }
     JournalSend_Click() {
         if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
             this.SetJournalExample();
@@ -235,9 +253,28 @@ export class AccountingMainTesterComponent extends BaseComponent {
         this.StrandartOp(opr, obj, () => { });
       
     }
+   
     _ButtonReverseTotal_Click() {
         let opr = "_ButtonReverseTotal_Click";
         let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        this.StrandartOp(opr, obj, () => { });
+    }
+
+    _ButtonReverseTotalFIX_Click() {
+        let opr = "_ButtonReverseTotalFIX_Click";
+        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        this.StrandartOp(opr, obj, () => { });
+
+    }
+    _ButtonReverseGLBalanceFIX_Click() {
+        let opr = "_ButtonReverseGLBalanceFIX_Click";
+        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        this.StrandartOp(opr, obj, () => { });
+
+    }
+    _ButtonReverseTotalFIXControl_Click() {
+        let opr = "_ButtonReverseTotalFIXControl_Click";
+        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
         this.StrandartOp(opr, obj, () => { });
     }
     //type myCallback = () => any;

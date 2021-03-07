@@ -8,6 +8,7 @@ import { ObjectFieldPM } from '../../EntityPMs/ObjectFieldPM';
 import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
 import { LocationDirective } from '../../Utilities/LocationDirective';
 import { EntityArgs } from '../../DataContracts/EntityArgs';
+import { ConfirmationMessageArgs } from '../../DataContracts/ConfirmationMessageArgs';
 import { AppTool } from '../../Tools';
 import { SessionLocator } from '../../Utilities/SessionLocator';
 import { FeatureLocator } from '../../Utilities/FeatureLocator';
@@ -1188,28 +1189,32 @@ export class EditComponent implements OnDestroy {
 
     // Commands
     BackButtonClicked() {
+        var IsARInvoiceNeedsConfirmation = this.CheckIfFullAccountingARInvoiceNeedsConfirmation();
         var isNeedingConfirmation = this.NeedCloseConfirmation();
-        if (isNeedingConfirmation) {
-            var confirmWindow = new ConfirmWindow();
-            confirmWindow.Width = 450;
-            confirmWindow.Height = 190;
-            confirmWindow.ShowCancelButton = true;
-            confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.DontSave");
-            confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Save");
-            confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
-            confirmWindow.Show(TextCodeTranslator.Translate("General.M.ThisEntityhasunsavedchanges").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName)));
-            confirmWindow.WindowClosed.subscribe((event: any) => {
-                if (confirmWindow.Yes) {
-                    this.SaveEntityChanges(true);
-                }
 
-                else if (confirmWindow.No) {
-                    this.Close();
-                }
-            });
+        if (IsARInvoiceNeedsConfirmation) {
+            this.ShowConfirmationMessageForARInvoice();
         }
+
+        else if (isNeedingConfirmation) {
+            this.ShowConfirmationMessageForEntity();
+        }
+
         else {
             this.Close();
+        }
+    }
+
+    CheckIfFullAccountingARInvoiceNeedsConfirmation() {
+        const StatusCode_AutoCreditARInvoice = "AC";
+        if (this.ObjectTableName == "ARInvoice" && SessionLocator.TenantPM.AccountingActivated) {
+            if (!this.EntityPM.IsDirty) {
+                return false;
+            }
+
+            if (this.EntityPM.StatusCode == StatusCode_AutoCreditARInvoice) {
+                return true;
+            }
         }
     }
 
@@ -1227,6 +1232,42 @@ export class EditComponent implements OnDestroy {
         }
         return myResult;
     }
+
+    private ShowConfirmationMessageForARInvoice() {
+        var yesAction = (): void => {
+            this.Close();
+        };
+
+        this.ShowConfirmationMessage(new ConfirmationMessageArgs()
+            .Builder
+            .YesText(TextCodeTranslator.Translate('Accounting.General.B.OK'))
+            .NoText(TextCodeTranslator.Translate('Accounting.General.B.Cancel'))
+            .ShowCancelButton(false)
+            .MessageText(TextCodeTranslator.Translate("ARInvoice.M.ConfirmNotAutoCreditedIfNotApproveInvoice"))
+            .YesAction(yesAction)
+            .build());
+    }
+
+    private ShowConfirmationMessageForEntity() {
+        var yesAction = (): void => {
+            this.SaveEntityChanges(true);
+        };
+
+        var noAction = (): void => {
+            this.Close();
+        };
+
+        this.ShowConfirmationMessage(new ConfirmationMessageArgs()
+            .Builder
+            .YesText(TextCodeTranslator.Translate('General.B.Save'))
+            .NoText(TextCodeTranslator.Translate('General.B.DontSave'))
+            .MessageText(TextCodeTranslator.Translate("General.M.ThisEntityhasunsavedchanges").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName)))
+            .ShowCancelButton(true)
+            .YesAction(yesAction)
+            .NoAction(noAction)
+            .build());
+    }
+
     Close() {
         if (this.IsInsideWindow) {
             this.CurrentSession.CloseCurrentWindow();
@@ -1239,6 +1280,27 @@ export class EditComponent implements OnDestroy {
         this.DestroyEditControl();
         this.BackCompleted.emit(true);
     }
+
+    private ShowConfirmationMessage(ConfirmationMessageArgs: ConfirmationMessageArgs) {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 450;
+        confirmWindow.Height = 190;
+        confirmWindow.ShowCancelButton = ConfirmationMessageArgs.ShowCancelButton;
+        confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
+        confirmWindow.YesButtonText = ConfirmationMessageArgs.YesText;
+        confirmWindow.NoButtonText = ConfirmationMessageArgs.NoText;
+        confirmWindow.Show(ConfirmationMessageArgs.MessageText);
+
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                ConfirmationMessageArgs.YesAction();
+            }
+            else if (confirmWindow.No) {
+                ConfirmationMessageArgs.NoAction();
+            }
+        });
+    }
+
 
     SaveChanges(busyIndicatorText: string = null) {
 

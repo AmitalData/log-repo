@@ -37,6 +37,21 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                         return _ButtonReverseTrans_Click(tenant, _TextBoxParam);
                     }
                     break;
+                case "_ButtonReverseTotalFIX_Click":
+                    {
+                        return _ButtonReverseTotalFIX_Click(tenant, _TextBoxParam);
+                    }
+                    break;
+                case "_ButtonReverseGLBalanceFIX_Click":
+                    {
+                        return _ButtonReverseGLBalanceFIX_Click(tenant, _TextBoxParam);
+                    }
+                    break;
+                case "_ButtonReverseTotalFIXControl_Click":
+                    {
+                        return _ButtonReverseTotalFIXControl_Click(tenant, _TextBoxParam);
+                    }
+                    break;
                 case "WorkWithoutQueue_Click":
                     {
                         return WorkWithoutQueue_Click(tenant, _TextBoxParam);
@@ -477,7 +492,105 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             }
             return gateWayTesterResult;
         }
+        private GateWayTesterResult _ButtonReverseTotalFIXControl_Click(int tenant, string textBoxParam)
+        {
 
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+
+
+                var param = LogitudeXmlSerializer.JsonConvertDeserializeTObject<ParamBasic>(textBoxParam);
+                var s = new ReverseEngineerTotalByMonth_ControlAccountService(param.MyDate, param.MyTenant, param.MyGLAccId);
+                s.FixDbIntegrityFromLedgeToTotal(param.TheWholePeriod);
+
+                gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<GLAccountTotalByMonthsDTO>>(s.CompareReport.GLAccountTotalByMonthsList);
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+
+                gateWayTesterResult.Log = LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+        private GateWayTesterResult _ButtonReverseTotalFIX_Click(int tenant, string textBoxParam)
+        {
+
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+
+
+                var param = LogitudeXmlSerializer.JsonConvertDeserializeTObject<ParamBasic>(textBoxParam);
+                var s = new ReverseEngineerTotalByMonthService(param.MyDate, param.MyTenant, param.MyGLAccId);
+                s.FixDbIntegrityFromLedgeToTotal();
+
+                gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<GLAccountTotalByMonthsDTO>>(s.CompareReport.GLAccountTotalByMonthsList);
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+
+                gateWayTesterResult.Log = LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+        private GateWayTesterResult _ButtonReverseGLBalanceFIX_Click(int tenant, string textBoxParam)
+        {
+
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+
+
+                var param = LogitudeXmlSerializer.JsonConvertDeserializeTObject<ParamBasic>(textBoxParam);
+                var MyTenant = (int)param.MyTenant;
+                var MyDate = (DateTime)param.MyDate;
+
+                var s = new ReverseEngineerGLAccountBalance(/*MyDate,*/ MyTenant);
+                s.FIXCheckDbIntegrity();
+
+                gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<GLAccountBalanceDTO>>(s.CompareReport.GLAccountBalanceList);
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+
+                gateWayTesterResult.Log = LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
         private GateWayTesterResult _ButtonReverseTrans_Click(int tenant, string textBoxParam)
         {
          
@@ -556,5 +669,8 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
         public DateTime MyDate { get; set; }
 
         public string MyGLAccId { get; set; }
+
+        public bool TheWholePeriod { get; set; }
+
     }
 }

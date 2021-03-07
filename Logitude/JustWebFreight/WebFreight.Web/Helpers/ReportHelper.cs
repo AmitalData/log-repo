@@ -19,12 +19,14 @@ using Stimulsoft.Report;
 using Stimulsoft.Report.Dictionary;
 using Stimulsoft.Report.Export;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Web;
 using System.Xml;
@@ -783,6 +785,7 @@ namespace WebFreight.Web.Helpers
             {
                 byte[] filters = GetReportFilters(reportFliter.QueryFilterItemLists);
                 byte[] reportDataProvider = BuildReportDataProvider(reportFliter, filters);
+                if (reportDataProvider == null && reportFliter.IsSchedulerReport) return report;
                 ReportsTemplatesWebService reportsTemplatesWebService = new ReportsTemplatesWebService();
                 ReportsTemplatesVersionRepository reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(reportFliter.tenant);
                 string reportDocumentId = reportsTemplatesVersionRepository.GetReportDocumentIdByReportTemplateId(reportFliter.DefaultTemplateId, reportFliter.tenant);
@@ -1174,7 +1177,7 @@ namespace WebFreight.Web.Helpers
 
                 case "SHID":
                     {
-                        dataProvider = logitudeReportsWebService.LoadShipmentDetailsDataProvider(filters, reportFliter.tenant);
+                        dataProvider = logitudeReportsWebService.LoadShipmentDetailsDataProvider(filters, reportFliter, reportFliter.tenant);
                         break;
                     }
 
@@ -1199,7 +1202,7 @@ namespace WebFreight.Web.Helpers
 
                 case "LTRP":
                     {
-                        dataProvider = logitudeReportsWebService.LoadLedgerTransactionDataProvider(filters, reportFliter.tenant);
+                        dataProvider = logitudeReportsWebService.LoadLedgerTransactionDataProvider(filters, reportFliter, reportFliter.tenant);
                         break;
                     }
 

@@ -152,7 +152,19 @@ namespace CommunicationWorkerRole.Services
             schedulerDetails.ReportDetails.Recepients = GetReportPermittedContacts(reportTask, schedulerDetails);
             if (schedulerDetails.ReportDetails.Recepients != null)
             {
-                StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
+                TryToSendReportAfterMeetACertainConditions(reportTask, schedulerDetails, reportFilter);
+            }
+        }
+
+        private void TryToSendReportAfterMeetACertainConditions(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
+        {
+            StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
+            if (stiReport == null)
+            {
+                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Report Is Empty"));
+            }
+            else
+            {
                 this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Exporting report to pdf file"));
                 string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant);
                 SendPdfReportIfIsValid(reportTask, schedulerDetails, documentId);
@@ -375,7 +387,9 @@ namespace CommunicationWorkerRole.Services
                 QueryFilterItemLists = schedulerDetails.ReportDetails.ReportFilterItems,
                 DefaultTemplateId = schedulerDetails.ReportDetails.ReportTemplateId,
                 tenant = schedulerDetails.Tenant,
-                ReportCode = reportCode
+                ReportCode = reportCode,
+                IsSchedulerReport = true,
+                SendIfEmpty = schedulerDetails.SendIfEmpty,
             };
 
             this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();

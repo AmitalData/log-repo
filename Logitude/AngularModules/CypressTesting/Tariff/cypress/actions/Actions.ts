@@ -44,7 +44,7 @@ export function FillAllInCharges(chargeTypeDetailsList: ChargeTypeDetails[]) {
             cy.FillLogLov(TariffSelectors.TariffVersionAllInChargeType, chargeTypeDetailsList[i].Name, true);
         }
     }
-    cy.Click(BaseSelectors.RedButton+TariffSelectors.Last, null);
+    cy.Click(BaseSelectors.RedButton + TariffSelectors.Last, null);
 }
 
 export function FillSurcharges(surchargeDetailsList: SurchargeDetails[]) {
@@ -68,11 +68,11 @@ export function OpenGeneralTab() {
 }
 
 export function OpenVersionHistoryTab() {
-    cy.Click(BaseSelectors.DivElement,TariffSelectors.ContainsVersionHistory);
+    cy.Click(BaseSelectors.DivElement, TariffSelectors.ContainsVersionHistory);
 }
 
 export function OpenUpdateTab() {
-    cy.Click(BaseSelectors.Button,TariffSelectors.ContainsUpdateSurcharges)
+    cy.Click(BaseSelectors.Button, TariffSelectors.ContainsUpdateSurcharges)
 }
 
 export function AddFreightCostTariffLines(freightCostType: string, freightCostTariffLineDetailsList: FreightCostTariffLineDetails[]) {
@@ -113,12 +113,12 @@ export function UpdateTariff() {
 
 export function CreateUpdateTariff() {
     DefineRequestPostUpdateRequest();
-    cy.Click(BaseSelectors.GreenButton,TariffSelectors.ContainsUpdate);
+    cy.Click(BaseSelectors.GreenButton, TariffSelectors.ContainsUpdate);
 }
 
 export function ApproveTariffVersion() {
     DefineRequestsForApproveOrCopyTariffVersion();
-    cy.Click(BaseSelectors.GreenButton,TariffSelectors.ContainsApproveVersion);
+    cy.Click(BaseSelectors.GreenButton, TariffSelectors.ContainsApproveVersion);
 }
 
 export function CopyTariffVersion(newVersionStartDate: string) {
@@ -147,7 +147,7 @@ export function ValidateCreateSurchargeCost() {
     intercept.then((interception) => {
         if (interception.response.statusCode === 400) {
             if (interception.response.body.ErrorMessage.indexOf(TariffSelectors.ContainsUniqueSellerError) !== -1) {
-                cy.Click(BaseSelectors.Button,TariffSelectors.ContainsCancel);
+                cy.Click(BaseSelectors.Button, TariffSelectors.ContainsCancel);
             } else {
                 throw new Error(TariffSelectors.ContainsTariffFailedError);
             }
@@ -183,8 +183,20 @@ export function ValidateUploadExcelFile() {
     BaseAssertion.AssertStatusCode(RequestAliases.PostUploadExcelFile, 200)
 }
 
+export function ValidateTariffLineRow(freightCostTariffLineDetailsList : FreightCostTariffLineDetails) {
+    GetCellAssertion("2", freightCostTariffLineDetailsList.FromPort.toString());
+    GetCellAssertion("3", freightCostTariffLineDetailsList.ToPort.toString());
+    GetCellAssertion("4", freightCostTariffLineDetailsList.MinPrice.toString());
+    GetCellAssertion("5", freightCostTariffLineDetailsList.Step1Price.toString());
+    GetCellAssertion("6", freightCostTariffLineDetailsList.Step2Price.toString());
+    GetCellAssertion("7", freightCostTariffLineDetailsList.Step3Price.toString());
+    GetCellAssertion("8", freightCostTariffLineDetailsList.Step4Price.toString());
+    GetCellAssertion("9", freightCostTariffLineDetailsList.Step5Price.toString());
+    GetCellAssertion("10", freightCostTariffLineDetailsList.Step6Price.toString());
+}
+
 export function BackToTariffWorkspace() {
-    cy.Click(BaseSelectors.BackBottonBodyClass,TariffSelectors.ContainsTariffs);
+    cy.Click(BaseSelectors.BackBottonBodyClass, TariffSelectors.ContainsTariffs);
 }
 
 export function OpenPriceCheckWizard(priceCheckType: string) {
@@ -207,7 +219,7 @@ export function FillPriceCheckWizard(priceCheckType: string, priceCheck: PriceCh
 
 export function PriceCheckSearch() {
     DefineRequestPostAvailableTariffs();
-    cy.Click(TariffSelectors.PriceCheckSearch,TariffSelectors.ContainsSearch);
+    cy.Click(TariffSelectors.PriceCheckSearch, TariffSelectors.ContainsSearch);
 }
 
 export function FillUpdateSurcharges(tariffDetails: SurchargeCostTariffLineDetails) {
@@ -218,10 +230,10 @@ export function FillUpdateSurcharges(tariffDetails: SurchargeCostTariffLineDetai
 }
 
 export function UploadExcelFile() {
-    cy.Click(TariffSelectors.TariffActionsMenu,TariffSelectors.ContainsActions);
+    cy.Click(TariffSelectors.TariffActionsMenu, TariffSelectors.ContainsActions);
     const fileName = 'Tariff-1168-17-02-2021.xls'
     DefineRequestPostUploadExcelFile()
-    cy.fixture(fileName,TariffSelectors.Binary)
+    cy.fixture(fileName, TariffSelectors.Binary)
         .then(Cypress.Blob.binaryStringToBlob)
         .then(fileContent => {
             cy.get(TariffSelectors.InputUpload).attachFile({ fileContent, fileName, mimeType: TariffSelectors.ExcelType, encoding: 'utf8' })
@@ -240,6 +252,12 @@ function AssertApproveOrCopyTariffVersion() {
     AssertGetAllVersionsForTariff();
     AssertGetTariffVersionLines();
     AssertGetSingleTariff();
+}
+
+function GetCellAssertion(cellNumber: string, ValueToCompare: string) {
+    cy.get(BaseSelectors.PackageGrid(cellNumber) + BaseSelectors.LastElement).find('span').invoke('text').then((text) => {
+        assert.equal(ValueToCompare, text.trim())
+    })
 }
 
 function FillFreightCostTariffLines(freightCostType: string, freightCostTariffLineDetailsList: FreightCostTariffLineDetails[], isNew: boolean) {
@@ -526,14 +544,14 @@ function OpenNewShippingLineWizard() {
     AssertEntityResource();
     cy.get(BaseSelectors.LogLOVFooterHyperLink).eq(0).click();
     AssertGetCarrierViews();
-    cy.Click(BaseSelectors.Button,TariffSelectors.ContainsNewShippingLine);
+    cy.Click(BaseSelectors.Button, TariffSelectors.ContainsNewShippingLine);
 }
 
 function CreateNewShippingLine() {
     var Code = FillShippingLineCode();
     FillSellerName("SellerTest");
     DefineRequestPostShippinglines();
-    cy.Click(BaseSelectors.RedButton +TariffSelectors.Last, null);
+    cy.Click(BaseSelectors.RedButton + TariffSelectors.Last, null);
     ValidateShippingLine();
     return Code;
 }
@@ -542,7 +560,7 @@ function FillShippingLineCode() {
     let code: string = gr.GenerateRandomNumberAndString(4);
     cy.get(TariffSelectors.ShippingLineCode).clear().type(code);
     cy.FillLogTextBox(TariffSelectors.ShippingLineSCACCode, code)
-    cy.get(BaseSelectors.Label).contains(TariffSelectors.ContainsCode).click();
+    cy.get(BaseSelectors.LabelClass).contains(TariffSelectors.ContainsCode).click();
     cy.get(BaseSelectors.RedButton).then($btn => {
         if ($btn.is(TariffSelectors.Disabled)) {
             FillShippingLineCode();

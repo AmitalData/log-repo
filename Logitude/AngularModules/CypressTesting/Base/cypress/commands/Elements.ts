@@ -95,6 +95,7 @@ Cypress.Commands.add("FillLogLov", (selector, value, fromCache, getByFilters = f
     }
 
     //cy.get(selector).clear().type(value)
+    cy.get(selector).clear()
     cy.get(selector).clear().type("{selectall}" + value,{delay:5})
 
     if (!fromCache) {
@@ -147,11 +148,11 @@ Cypress.Commands.add("ValidateElementColor", (selector, expectedcolor) => {
 })
 
 Cypress.Commands.add("SelectQuickSearchFirstElement", (quickSearchDetails: QuickSearchDetails) => {
-    cy.DefineRequestWait(RestAPI.GET, quickSearchDetails.WaitURL, RequestAliases.QuickSearchDataLoaded);
+    cy.DefineRequestWait(RestAPI.GET, quickSearchDetails.WaitURL, quickSearchDetails.RequestAliase);
     cy.get(quickSearchDetails.Selector).parents(quickSearchDetails.Parent).eq(0).find(quickSearchDetails.ParentClass)
         .within(() => {
             cy.get(quickSearchDetails.Selector).focus().clear().type(quickSearchDetails.Value).then(() => {
-                BaseAssertion.AssertStatusCode(RequestAliases.QuickSearchDataLoaded, 200);
+                BaseAssertion.AssertStatusCode(quickSearchDetails.RequestAliase, 200);
                 cy.get(BaseSelectors.FirstElementInList).eq(0).click({ force: true });
             })
         })

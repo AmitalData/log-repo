@@ -18251,6 +18251,12 @@
       LocalDefaultText="&quot;ביטול של חשבונית זיכוי %InvoiceNumber&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.M.ConfirmNotAutoCreditedIfNotApproveInvoice&quot;"
+      DefaultText="&quot;You have unsaved changes in this Auto Credit Invoice. The original invoice will not be auto-credited if you do not approve this invoice. Please confirm.&quot;"
+      LocalDefaultText="&quot;חשבונית הזיכוי לא נשמרה לפיכך ,החשבונית המקורית לא תבוטל אם לא תאשר חשבונית זיכוי זו. אנא אשר המשך תהליך ללא ביטול החשבונית המקורית.&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

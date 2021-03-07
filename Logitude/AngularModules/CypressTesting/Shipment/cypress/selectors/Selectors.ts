@@ -15,6 +15,8 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentSaveButton = '#Shipment-Save';
   public static readonly ShipmentShipper = '#Shipment_ShipperId';
   public static readonly ShipmentConsignee = '#Shipment_ConsigneeId';
+  public static readonly ShipmentCustomerType = '#Shipment_ShipmentCustomerTypeCode';
+  
   //#endregion
   //#region Create shipment
   public static readonly NewShipmentToggleButton = '#NEWSHIP .LogitudeToggleButtonContainer';
@@ -38,7 +40,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PayablesTab = '#ShipmentTHPayables';
   public static readonly DocsOutTab = '#ShipmentTHDocsOut';
   public static readonly DocsInTabb = '#ShipmentTHDocsIn';
-  public static readonly Events = '#ShipmentTHEvents';
+  public static readonly EventsTab = '#ShipmentTHEvents';
   public static readonly CustomsTab = '#ShipmentTHCustoms';
   //#endregion
   //#region General tab
@@ -94,14 +96,19 @@ export class ShipmentSelectors extends RegexSelectors {
   //#endregion 
   //#region Package tab fields
   public static readonly AddPackage = '#AddPackage';
+  public static readonly AddInsidePackage = '#AddInsidePackage';
   public static readonly PackageQuantity = '#ShipmentPackage_Quantity';
+  public static readonly InsidePackageQuantity = '#InsideShipmentPackage_Quantity';
   public static readonly PackageLength = '#ShipmentPackage_Length';
   public static readonly PackageWidth = '#ShipmentPackage_Width';
   public static readonly PackageHeight = '#ShipmentPackage_Height';
   public static readonly PackageVolume = '#ShipmentPackage_Volume';
   public static readonly PackageType = '#ShipmentPackage_PackageTypeId';
+  public static readonly InsidePackageType = '#InsideShipmentPackage_PackageTypeId';
   public static readonly ContainerNumber = '#ShipmentPackage_ContainerNumber';
   public static readonly PackageWeight = '#ShipmentPackage_Weight';
+  public static readonly InsidePackageWeight = '#InsideShipmentPackage_Weight';
+  public static readonly InsidePackageDescription = '#InsideShipmentPackage_Description';
   public static readonly PackageContainerNumber = '#ShipmentPackage_ContainerNumber';
   public static readonly AirPackageOKButton = '#OkAirPackage';
   public static readonly OceanPackageOKButton = '#OkOceanPackage';
@@ -117,6 +124,8 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly EmptyContainerReturnATDDate = '#date_ShipmentPackage_EmptyContainerReturnATD';
   public static readonly EmptyContainerReturnATATime = '#time_ShipmentPackage_EmptyContainerReturnATA';
   public static readonly EmptyContainerReturnATADate = '#date_ShipmentPackage_EmptyContainerReturnATA';
+  public static readonly PickUpDeliveryATDTime = '#time_ShipmentPickUpDelivery_ATD';
+  public static readonly PickUpDeliveryATDDate = '#date_ShipmentPickUpDelivery_ATD';
   //#endregion
   //#region Routing tab fields
   public static readonly RoutingToggle = '#RoutingToggle';
@@ -184,6 +193,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly OperationalReopenButton = '#ShipmentBOperationalReopen';
   public static readonly AccountllyReopenButton = '#ShipmentBAccountedReopen';
   public static readonly ConfirmActionButton = '#ConfirmAction';
+  public static readonly ShipmentExceptionResolved="#ShipmentBExceptionResolved"
   //#endregion
   //#region Send docs tab
   public static readonly SendMessageButton = '#SendMessagebtn';
@@ -214,11 +224,13 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly FTPDetailFolder = "#FTPDetail_Folder";
   public static readonly SaveFTPDetailButton = ".RedButton:last";
   public static readonly ContainsSendEBooking = "Send e-booking";
+  public static readonly ContainsSendShippingInstructions = "Send Shipping Instructions";
   public static readonly ShipmentINTTRAContractNumber = "#Shipment_INTTRAContractNumber";
   public static readonly ShipmentMainCarriageVessel = "input[id^='Shipment_MainCarriageVesselId']:last";
   public static readonly ShipmentMainCarriageETDDate = "#date_Shipment_MainCarriageETD";
   public static readonly ShipmentMainCarriageETDTime = "#time_Shipment_MainCarriageETD";
   public static readonly ShipmentDescriptionOfGoods = "#Shipment_DescriptionOfGoods";
+  public static readonly ShipmentBookingConfirmationNumber = "#Shipment_BookingConfirmationNumber";
   public static readonly EditShipper = "#Edit-Shipper";
   public static readonly ShipmentShipperContact = "#Shipment_ShipperContactId";
   public static readonly ContactEnglishName = "#Contact_EnglishName";
@@ -229,10 +241,16 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ContainsETDOrVesselAndVoyageMustProvided = "ETD or Main-Carriage Vessel and Voyage must be provided";
   public static readonly ContainsShipmentDescriptionOfGoodsRequired = "Shipment Description of Goods is required";
   public static readonly ContainsShipmentPackagesRequired = "Shipment Order Packages or Shipment Packages are required";
+  public static readonly ContainsMoveTypeIsRequired = "Move type is required";
+  public static readonly ContainsBookingConfirmationNumberRequired = "Booking Confirmation Number is required";
+  public static readonly ContainsAllContainersShouldHaveContainerNumber = "All Containers should have Container Number";
+  public static readonly ContainsMessageHasBeenSentSuccessfully = "Message has been sent Successfully";
   public static readonly ContainsRequestBooking = "Request Booking";
   public static readonly SaveShipperContactButton = ".RedButton:last";
+  public static readonly ContainsSend = "Send";
   public static readonly INTTRABookingStatus = "[data-cy='INTTRABookingStatus']";
   public static readonly AddShipperContactButton = "[data-cy='AddContact'] button";
+  public static readonly ShippingInstructionsResultMessage = "td[data-cy='ResultMessage']";
   //#endregion
   //#region AMANAC
   public static readonly AMANACTab = '#AMANAC';
@@ -249,6 +267,19 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly CustomsTransmissionsRetransfer = 'button[data-cy^=CustomsTransmissionsRetransfer]';
   public static readonly CheckAll = "CheckBox[data-cy^=CheckAll]";
   //#endregion
+  //#region Event
+  public static readonly ContainAddEvent= "Add Event"
+  public static readonly EventType="#TraceEvent_EventTypeId"
+  public static readonly EventDate="#date_TraceEvent_EventDateTime"
+  public static readonly EventTime="#time_TraceEvent_EventDateTime"
+  public static readonly TraceEventNotes= "#TraceEvent_Notes"
+  public static readonly EventItemBox=".EventItemBox"
+  public static readonly ContainHasException="Has Exception:"
+  public static readonly EventNotes="#EventNotes"
+  public static readonly ExceptionResolved="Exception Resolved"
+  
+    //#endregion
+
 
   //#region Shipment Conversions
   public static readonly ConvertToLCL = "#ShipmentBConverttoLCL";
@@ -258,7 +289,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ConvertShipmentDirection = "#ShipmentBConvertShipmentDirection";
   public static readonly ShipmentTypeValue = "[data-cy='ShipmentTypeValue']";
   public static readonly ShipmentEventsRefreshButton = "[data-cy='EventsRefresh_Shipment'] button";
-  public static readonly EventsTab = "#ShipmentTHEvents";
+
   public static readonly PartnerName = "[data-cy='PartnerName']";
   //#endregion
 }

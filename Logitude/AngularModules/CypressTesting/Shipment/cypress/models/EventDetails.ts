@@ -1,4 +1,6 @@
 export interface EventDetails {
-    Event: string,
-    Notes: string
+    EventType: string,
+    EventDate: string,
+    EventTime: string,
+    EventNotes: string,
 }

@@ -228,7 +228,7 @@
 
                 <div class="field">
                     <div class="label">Gross Weight</div>
-                    <div class="value">{{ Shipment.GrossWeight }}</div>
+                    <div class="value">{{ Shipment.GrossWeight | number }} {{Shipment.GrossWeightUnitCode||''}}</div>
                 </div>
 
                 <div class="field">

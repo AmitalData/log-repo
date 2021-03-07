@@ -103,6 +103,10 @@ export class RegexSelectors {
         return "div[id^='LogGrid_'][id$='row0']";
     }
 
+    public static legBoxItem(legName: string): string{
+        return "[data-cy^=Routing_" + legName + "]";
+    }
+
     public static ShortTitleDirectionIcon(direction: string): string{
         return ".ShortTitleDiv img[src='./Images/Directions/" + ShipmentMapping.GetDirectionCode(direction) + ".png']";
     }

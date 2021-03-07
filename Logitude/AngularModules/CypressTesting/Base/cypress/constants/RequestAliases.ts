@@ -1,4 +1,5 @@
 export class RequestAliases {
+    public static readonly ShipmentGetSingle="ShipmentGetSingle"
     public static readonly performancelogs="performancelogs"
     public static readonly PartnersDomainRequest = 'PartnersDomainRequest';
     public static readonly ShipmentRequest = 'ShipmentRequest';
@@ -56,9 +57,11 @@ export class RequestAliases {
     public static readonly GetINTTRASettings = "GetINTTRASettings";
     public static readonly PutINTTRASettings = "PutINTTRASettings";
     public static readonly GetBookingMessageResultValidate = "GetBookingMessageResultValidate";
+    public static readonly GetShippingInstructionMessageResultValidate = "GetShippingInstructionMessageResultValidate";
     public static readonly ContactLogLovLoad = "ContactLogLovLoad";
     public static readonly PostContact = "PostContact";
     public static readonly INTTRAWebServiceSendEBooking = "INTTRAWebServiceSendEBooking";
+    public static readonly INTTRAWebServiceSendShippingInstructions = "INTTRAWebServiceSendShippingInstructions";
     //
     public static readonly PutShipment = "PutShipment";
 

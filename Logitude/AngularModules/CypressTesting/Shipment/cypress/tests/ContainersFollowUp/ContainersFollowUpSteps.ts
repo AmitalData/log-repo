@@ -68,7 +68,7 @@ Given("the user add a delivery follow up with {string} at {string} as actual dep
 Given("the user edit a delivery follow up with {string} at {string} as actual arrival", (date, time) => {
     Actions.NavigatesToShipmentsWorkspace();
     Actions.OpenShipment(shipmentDetails.ShipmentNumber);
-    Actions.AddDeliveryFollowUpActualArrivalDateAndTime(date, time, packagesDetails[0].ContainerNumber);
+    Actions.AddDeliveryActualArrivalDateAndTime(date, time, packagesDetails[0].ContainerNumber);
 });
 
 Given("the user add an empty container return follow up with {string} at {string} as actual departure", (date, time) => {
@@ -80,7 +80,7 @@ Given("the user add an empty container return follow up with {string} at {string
 Given("the user edit an empty container return follow up with {string} at {string} as actual arrival", (date, time) => {
     Actions.NavigatesToShipmentsWorkspace();
     Actions.OpenShipment(shipmentDetails.ShipmentNumber);
-    Actions.AddContainerReturnFollowUpActualArrivalDateAndTime(date, time, packagesDetails[0].ContainerNumber);
+    Actions.AddContainerReturnActualArrivalDateAndTime(date, time, packagesDetails[0].ContainerNumber);
 });
 //#endregion
 

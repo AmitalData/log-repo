@@ -18,4 +18,6 @@ Feature: Upload Excel Tariff test
     Scenario: Upload Excel File
         Given the user open the created air freight cost
         When upload excel file
-        Then the file should load successfully
+        Then the file should load successfully with the following details
+            | FromPort | ToPort | MinPrice | Step1Price | Step2Price | Step3Price | Step4Price | Step5Price | Step6Price |
+            | MIA      | JFK    | 100.000  | 100.000    | 450.000    | 490.000    | 560.000    | 1,023.000   | 3,309.000   |

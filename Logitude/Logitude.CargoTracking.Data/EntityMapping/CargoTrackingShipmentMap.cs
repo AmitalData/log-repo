@@ -140,6 +140,7 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.DirectionId).HasColumnName("DirectionId").IsRequired().HasMaxLength(1).IsUnicode(false);
 
             this.Property(t => t.ShipmentLevelCode).HasColumnName("ShipmentLevelCode").HasMaxLength(1).IsUnicode(false);
+
             this.Property(t => t.AssignedTruckerDone).HasColumnName("AssignedTruckerDone");
 
             this.Property(t => t.AssignedTruckerDate).HasColumnName("AssignedTruckerDate");
@@ -147,6 +148,28 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.AssignedTruckerEstimationDate).HasColumnName("AssignedTruckerEstimationDate");
 
             this.Property(t => t.AssignedTruckerNotes).HasColumnName("AssignedTruckerNotes").HasMaxLength(32).IsUnicode(true);
+
+            this.Property(t => t.AssignedCustomsAgentDone).HasColumnName("AssignedCustomsAgentDone");
+
+            this.Property(t => t.AssignedCustomsAgentDate).HasColumnName("AssignedCustomsAgentDate");
+
+            this.Property(t => t.AssignedCustomsAgentEstDate).HasColumnName("AssignedCustomsAgentEstDate");
+
+            this.Property(t => t.AssignedCustomsAgentNotes).HasColumnName("AssignedCustomsAgentNotes").HasMaxLength(32).IsUnicode(true);
+
+            this.Property(t => t.AssignedCustomsAgentExcReason).HasColumnName("AssignedCustomsAgentExcReason").HasMaxLength(32).IsUnicode(true);
+
+            this.Property(t => t.DeliveryDone).HasColumnName("DeliveryDone");
+
+            this.Property(t => t.DeliveryDate).HasColumnName("DeliveryDate");
+
+            this.Property(t => t.DeliveryEstimationDate).HasColumnName("DeliveryEstimationDate");
+
+            this.Property(t => t.DeliveryNotes).HasColumnName("DeliveryNotes").HasMaxLength(32).IsUnicode(true);
+
+            this.Property(t => t.DeliveryExceptionReason).HasColumnName("DeliveryExceptionReason").HasMaxLength(32).IsUnicode(true);
+
+            this.Property(t => t.GrossWeightUnitCode).HasColumnName("GrossWeightUnitCode").HasMaxLength(3).IsUnicode(false);
         }
     }
 }
