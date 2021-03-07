@@ -1,6 +1,7 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -159,8 +160,18 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
 
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                GLAccountCurrency GLAccountCurrency = GetGLAccountCurrencyByIdAndTenant(glAccountId, tenant);
                 CardQuery cardQuery = new CardQuery(tenant);
-                List<ShortPartnersDetails> connectedPartners = cardQuery.GetConnectedPartnerIdsByGLAccountId(glAccountId, tenant);
+                List<ShortPartnersDetails> connectedPartners;
+
+                if (GLAccountCurrency != null)
+                {
+                    connectedPartners = cardQuery.GetConnectedPartnerIdsByGLAccountId(GLAccountCurrency.MainGLAccountId, tenant);
+                }
+                else
+                {
+                    connectedPartners = cardQuery.GetConnectedPartnerIdsByGLAccountId(glAccountId, tenant);
+                }
 
                 return Request.CreateResponse(HttpStatusCode.OK, connectedPartners);
             }
@@ -171,5 +182,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             }
         }
 
+        private  GLAccountCurrency GetGLAccountCurrencyByIdAndTenant(string glAccountId, int tenant)
+        {
+            GLAccountCurrencyQueryService gLAccountCurrencyQueryService = new GLAccountCurrencyQueryService(tenant);
+            GLAccountCurrency GLAccountCurrency = gLAccountCurrencyQueryService.GetGLAccountCurrencyByGLAccountId(glAccountId, tenant);
+            return GLAccountCurrency;
+        }
     }
 }
