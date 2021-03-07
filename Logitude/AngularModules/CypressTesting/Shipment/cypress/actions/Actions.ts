@@ -719,7 +719,7 @@ function FillDirectAndHouseFields(shipmentDetails: ShipmentDetails) {
 
 function FillMasterFields(shipmentDetails: ShipmentDetails) {
     FillMainFields(shipmentDetails);
-    FillCustomerType(shipmentDetails);
+    //FillCustomerType(shipmentDetails);
     FillMasterAgent(shipmentDetails);
     FillMainCarriagePorts(shipmentDetails);
 }
@@ -768,7 +768,11 @@ function FillShipperAndConsignee(shipmentDetails: ShipmentDetails) {
 }
 
 function FillCustomerType(shipmentDetails: ShipmentDetails) { 
-            cy.FillLogLov(ShipmentSelectors.ShipmentCustomerType, shipmentDetails.CustomerTypeCode??"SHI" , true)
+    if (Conditions.IsImport(shipmentDetails.Direction)) {
+        cy.FillLogLov(ShipmentSelectors.ShipmentCustomerType, "Consignee", true)
+    } else {
+        cy.FillLogLov(ShipmentSelectors.ShipmentCustomerType, "Shipper", true)
+    }
 }
 
 
