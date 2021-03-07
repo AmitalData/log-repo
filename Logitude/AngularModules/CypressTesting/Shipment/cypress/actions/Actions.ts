@@ -719,7 +719,7 @@ function FillDirectAndHouseFields(shipmentDetails: ShipmentDetails) {
 
 function FillMasterFields(shipmentDetails: ShipmentDetails) {
     FillMainFields(shipmentDetails);
-    FillCustomerType(shipmentDetails);
+    //FillCustomerType(shipmentDetails);
     FillMasterAgent(shipmentDetails);
     FillMainCarriagePorts(shipmentDetails);
 }
