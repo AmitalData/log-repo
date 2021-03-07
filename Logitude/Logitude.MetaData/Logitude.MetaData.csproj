@@ -563,6 +563,7 @@
     <None Include="DBTables\CommonDataModel\DocumentTypeTemplate.dxml" />
     <None Include="DBTables\CommonDataModel\DueType.dxml" />
     <None Include="DBTables\CommonDataModel\DWHBuildStatus.dxml" />
+    <None Include="DBTables\CommonDataModel\DWHEnvironmentSetting.dxml" />
     <None Include="DBTables\CommonDataModel\DWHSetting.dxml" />
     <None Include="DBTables\CommonDataModel\EmailProvider.dxml" />
     <None Include="DBTables\CommonDataModel\EntityCasualData.dxml" />

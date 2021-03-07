@@ -31,35 +31,39 @@ namespace WarehouseDataViews.Service
 
         public void BuildDataWarehouseViewLists()
         {
+            List<string> environmentFactTableCodes = GetEnvironmentFactTables(connectionString);
             var factTables = GetDataTableFromSql(connectionString, "select Code,DataViewName,RecordType ,HasCustomFields ,MaxNumberOfCustomFields ,ObjectTableName from DWObjectTables where TypeCode = 'Fact' and ParentFactCode is null");
             foreach (DataRow row in factTables.AsEnumerable())
             {
                 string factCode = CheckIfDataRowHaveColumnValue(row, "Code") ? row["Code"].ToString() : "";
-                string viewName = CheckIfDataRowHaveColumnValue(row, "DataViewName") ? row["DataViewName"].ToString() : "";
-                string recordType = CheckIfDataRowHaveColumnValue(row, "RecordType") ? row["RecordType"].ToString() : "";
-                string objectTableName = CheckIfDataRowHaveColumnValue(row, "ObjectTableName") ? row["ObjectTableName"].ToString() : "";
-                bool hasCustomFields = CheckIfDataRowHaveColumnValue(row , "HasCustomFields") ? bool.Parse( row["HasCustomFields"].ToString() ): false;
-                int maxNumberOfCustomFields = CheckIfDataRowHaveColumnValue(row, "MaxNumberOfCustomFields") ? int.Parse(row["MaxNumberOfCustomFields"].ToString()) : 0;
-
-                if (!string.IsNullOrEmpty(viewName))
+                if (environmentFactTableCodes.Contains(factCode))
                 {
-                    foreach (DWObjectFieldItem field in DwObjectFieldLists.Where(d => d.DWObjectTableCode == factCode && d.DataTypeCode == "Dimension" && d.DimensionTableCode != "DIM_Dates").ToList())
+                    string viewName = CheckIfDataRowHaveColumnValue(row, "DataViewName") ? row["DataViewName"].ToString() : "";
+                    string recordType = CheckIfDataRowHaveColumnValue(row, "RecordType") ? row["RecordType"].ToString() : "";
+                    string objectTableName = CheckIfDataRowHaveColumnValue(row, "ObjectTableName") ? row["ObjectTableName"].ToString() : "";
+                    bool hasCustomFields = CheckIfDataRowHaveColumnValue(row, "HasCustomFields") ? bool.Parse(row["HasCustomFields"].ToString()) : false;
+                    int maxNumberOfCustomFields = CheckIfDataRowHaveColumnValue(row, "MaxNumberOfCustomFields") ? int.Parse(row["MaxNumberOfCustomFields"].ToString()) : 0;
+
+                    if (!string.IsNullOrEmpty(viewName))
                     {
-                        CreateDimensionDataView(field , factCode);
+                        foreach (DWObjectFieldItem field in DwObjectFieldLists.Where(d => d.DWObjectTableCode == factCode && d.DataTypeCode == "Dimension" && d.DimensionTableCode != "DIM_Dates").ToList())
+                        {
+                            CreateDimensionDataView(field, factCode);
+                        }
+
+                        CreateDataWarehouseFactViewArgs createDataWarehouseFactViewArgs = new CreateDataWarehouseFactViewArgs()
+                        {
+                            FactCode = factCode,
+                            RecordType = recordType,
+                            ViewName = viewName,
+                            ObjectTableName = objectTableName,
+                            MaxNumberOfCustomFields = maxNumberOfCustomFields,
+                            HasCustomFields = hasCustomFields,
+
+                        };
+
+                        CreateFactDataView(createDataWarehouseFactViewArgs);
                     }
-
-                    CreateDataWarehouseFactViewArgs createDataWarehouseFactViewArgs = new CreateDataWarehouseFactViewArgs()
-                    {
-                        FactCode = factCode ,
-                        RecordType = recordType,
-                        ViewName = viewName,
-                        ObjectTableName = objectTableName,
-                        MaxNumberOfCustomFields = maxNumberOfCustomFields,
-                        HasCustomFields = hasCustomFields,
-
-                    };
-
-                    CreateFactDataView(createDataWarehouseFactViewArgs);
                 }
             }
         }
