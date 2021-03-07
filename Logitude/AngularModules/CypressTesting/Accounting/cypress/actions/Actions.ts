@@ -423,7 +423,8 @@ function AssertSelectedInvoicNumber(SelectedInvoicNumber:string){
 
 export function ExportARInvoice(ARInvoiceNumber: string) {
     AssertSelectedInvoicNumber('0')
-    cy.get(AccountingSelectors.TransferCheckBox(ARInvoiceNumber)).find(BaseSelectors.label).click({force:true});
+    cy.get(AccountingSelectors.CheckAll).uncheck()
+    cy.SelectCheckBox(AccountingSelectors.CheckAll)
     cy.Click(BaseSelectors.RedButton, AccountingSelectors.ContainExport)
 }
 

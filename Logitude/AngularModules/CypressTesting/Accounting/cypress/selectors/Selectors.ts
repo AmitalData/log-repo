@@ -137,7 +137,9 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly OKFTPDetails = "button[data-cy^=OKFTPDetails]"
     public static readonly OkFTP = "button[data-cy^=Ok_FTP]"
     //#endregion
-
+//#region check all in new transfer window
+public static readonly CheckAll='[data-cy="CheckALL"]'
+//#endregion
     public static EditShipmentLineIcon(ShipmentNumber: string): string {
         return "iconbutton[data-cy^=EditShipmentLine_" + ShipmentNumber + "]";
     }
