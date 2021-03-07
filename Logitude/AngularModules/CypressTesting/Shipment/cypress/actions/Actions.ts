@@ -732,7 +732,7 @@ export function ConvertShipmentType() {
 
 export function ValidateShipmentTypeInHeaderScreen(expectedShipmentType: string) {
     if (expectedShipmentType) {
-        cy.get("[data-cy]='ShipmentTypeValue'").should("have.text", expectedShipmentType);
+        cy.get("[data-cy='ShipmentTypeValue']").should("have.text", expectedShipmentType);
     }
 }
 
