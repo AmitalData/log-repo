@@ -106,4 +106,8 @@ export class RegexSelectors {
     public static ShortTitleDirectionIcon(direction: string): string{
         return ".ShortTitleDiv img[src='./Images/Directions/" + ShipmentMapping.GetDirectionCode(direction) + ".png']";
     }
+
+    public static PartnerBoxItem(partnerType: string): string{
+        return "[data-cy='BoxItem_" + partnerType + "']";
+    }
 }

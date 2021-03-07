@@ -687,25 +687,20 @@ function NavigateToEditMAinCarriage() {
 
 
 
-
-
-
-
-
 //#region Shipment Conversions
 
 export function OpenFclAndLclConversionWizard(intoShipmentType: string) {
-    let convertShipmentSelector = intoShipmentType === "LCL" ? "#ShipmentBConverttoLCL" : "#ShipmentBConverttoFCL";
+    let convertShipmentSelector = intoShipmentType === "LCL" ? ShipmentSelectors.ConvertToLCL : ShipmentSelectors.ConvertToFCL;
     OpenConversionWizard(convertShipmentSelector);
 }
 
 export function OpenDirectAndHouseConversionWizard(intoShipmentLevel: string) {
-    let convertShipmentSelector = intoShipmentLevel === "House" ? "#ShipmentBConvertShipmentFromDirectToHouse" : "#ShipmentBConvertShipmentFromHouseToDirect";
+    let convertShipmentSelector = intoShipmentLevel === "House" ? ShipmentSelectors.ConvertToHouse : ShipmentSelectors.ConvertToDirect;
     OpenConversionWizard(convertShipmentSelector);
 }
 
 export function OpenDirectionConversionWizard() {
-    OpenConversionWizard("#ShipmentBConvertShipmentDirection");
+    OpenConversionWizard(ShipmentSelectors.ConvertShipmentDirection);
 }
 
 export function FillDirectionConversionWizard(shipmentDetails: ShipmentDetails) {
@@ -715,24 +710,21 @@ export function FillDirectionConversionWizard(shipmentDetails: ShipmentDetails) 
 
 export function FillEventNotesWizard(notes: string) {
     if (notes) {
-        cy.FillLogTextBox("#EventNotes", notes);
+        cy.FillLogTextBox(BaseSelectors.EventNotes, notes);
     }
 }
 
 export function ConvertShipmentDirection() {
-    cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.PutShipment);
-    cy.Click(BaseSelectors.RedButton + ":last", null);
-    cy.Click("button[id^='ConfirmWindow_Yes']:last", null);
+    ConvertShipment(true);
 }
 
 export function ConvertShipmentType() {
-    cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.PutShipment);
-    cy.Click(BaseSelectors.RedButton + ":last", null);
+    ConvertShipment(false);
 }
 
 export function ValidateShipmentTypeInHeaderScreen(expectedShipmentType: string) {
     if (expectedShipmentType) {
-        cy.get("[data-cy='ShipmentTypeValue']").should("have.text", expectedShipmentType);
+        cy.get(ShipmentSelectors.ShipmentTypeValue).should("have.text", expectedShipmentType);
     }
 }
 
@@ -744,24 +736,22 @@ export function ValidateShipmentDirectionInShortTitle(expectedDirection: string)
 }
 
 export function ValidateShipmentNumberInShortTitle(expectedShipmentNumber: string){
-    cy.get(ShipmentSelectors.ShipmentNumberInTitle).then((shipmentNumberDiv) => {
-        assert.equal(shipmentNumberDiv.text().replace(":", "").trim(), expectedShipmentNumber);
-    });
+    if(expectedShipmentNumber){
+        cy.get(ShipmentSelectors.ShipmentNumberInTitle).then((shipmentNumberDiv) => {
+            assert.equal(shipmentNumberDiv.text().replace(":", "").trim(), expectedShipmentNumber);
+        });
+    }
 }
 
 export function ValidateEventsTab(expectedEventDetailsList: EventDetails[]) {
-    cy.get("#ShipmentTHEvents").then(($eventTab) => {
-
-        cy.DefineRequestWait(RestAPI.GET, "**/TraceEventsDomain/GetTraceEventsForEntity?**", "GetTraceEventsForEntity");
-
+    cy.get(ShipmentSelectors.EventsTab).then(($eventTab) => {
+        cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetTraceEventsForEntity, RequestAliases.GetTraceEventsForEntity);
         if ($eventTab.hasClass("SelectedMenuItem")) {
-            cy.Click("[data-cy='EventsRefresh_Shipment'] button", null);
+            cy.Click(ShipmentSelectors.ShipmentEventsRefreshButton, null);
         } else {
-            cy.Click("#ShipmentTHEvents", null);
+            cy.Click(ShipmentSelectors.EventsTab, null);
         }
-
-        BaseAssertion.AssertStatusCode("GetTraceEventsForEntity", 200);
-
+        BaseAssertion.AssertStatusCode(RequestAliases.GetTraceEventsForEntity, 200);
         for (let i = 0; i < expectedEventDetailsList.length; i++) {
             let expectedEvent = expectedEventDetailsList[i].Event;
             let expectedNotes = expectedEventDetailsList[i].Notes;
@@ -771,8 +761,8 @@ export function ValidateEventsTab(expectedEventDetailsList: EventDetails[]) {
             }
     
             if (expectedEvent && expectedNotes) {
-                cy.contains(expectedEvent).eq(0).parents(".EventItemBox").within(() => {
-                    cy.get("textarea").should("have.value", expectedNotes);
+                cy.contains(expectedEvent).eq(0).parents(BaseSelectors.EventItemBox).within(() => {
+                    cy.get(BaseSelectors.textarea).should("have.value", expectedNotes);
                 });
             }
         }
@@ -780,24 +770,36 @@ export function ValidateEventsTab(expectedEventDetailsList: EventDetails[]) {
 }
 
 export function ValidateAddButtonInPackagesTab(expectedButtonContains: string){
-    cy.Click(ShipmentSelectors.PackagesTab, null);
-    cy.get(ShipmentSelectors.AddPackage).should("have.text", expectedButtonContains);
+    if(expectedButtonContains){
+        cy.Click(ShipmentSelectors.PackagesTab, null);
+        cy.get(ShipmentSelectors.AddPackage).should("have.text", expectedButtonContains);
+    }
 }
 
 export function ValidatePartnerInPartnersTab(partnerType: string, partnerName: string){
-    cy.Click(ShipmentSelectors.PartnersTab, null);
-    let partnerBoxItemSelector = "[data-cy='BoxItem_" + partnerType + "']";
-    cy.get(partnerBoxItemSelector).should("exist");
-    cy.get(partnerBoxItemSelector).within(() => {
-        cy.get("[data-cy='PartnerName']").then((partnerNameDiv) => {
-            assert.equal(partnerNameDiv.text().trim(), partnerName);
+    if(partnerType && partnerName){
+        cy.Click(ShipmentSelectors.PartnersTab, null);
+        let partnerBoxItemSelector = ShipmentSelectors.PartnerBoxItem(partnerType);
+        cy.get(partnerBoxItemSelector).should("exist");
+        cy.get(partnerBoxItemSelector).within(() => {
+            cy.get(ShipmentSelectors.PartnerName).then((partnerNameDiv) => {
+                assert.equal(partnerNameDiv.text().trim(), partnerName);
+            });
         });
-    });
+    }
 }
 
 function OpenConversionWizard(convertButtonSelector: string) {
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
     cy.Click(convertButtonSelector, null);
+}
+
+function ConvertShipment(isDirectionConversion: boolean){
+    cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.PutShipment);
+    cy.Click(BaseSelectors.RedButton + ":last", null);
+    if(isDirectionConversion){
+        cy.Click(BaseSelectors.ConfirmWindowButton + ":last", null);
+    }
 }
 
 //#endregion

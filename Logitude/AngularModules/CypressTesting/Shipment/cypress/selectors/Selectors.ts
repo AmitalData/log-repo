@@ -249,4 +249,16 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly CustomsTransmissionsRetransfer = 'button[data-cy^=CustomsTransmissionsRetransfer]';
   public static readonly CheckAll = "CheckBox[data-cy^=CheckAll]";
   //#endregion
+
+  //#region Shipment Conversions
+  public static readonly ConvertToLCL = "#ShipmentBConverttoLCL";
+  public static readonly ConvertToFCL = "#ShipmentBConverttoFCL";
+  public static readonly ConvertToHouse = "#ShipmentBConvertShipmentFromDirectToHouse";
+  public static readonly ConvertToDirect = "#ShipmentBConvertShipmentFromHouseToDirect";
+  public static readonly ConvertShipmentDirection = "#ShipmentBConvertShipmentDirection";
+  public static readonly ShipmentTypeValue = "[data-cy='ShipmentTypeValue']";
+  public static readonly ShipmentEventsRefreshButton = "[data-cy='EventsRefresh_Shipment'] button";
+  public static readonly EventsTab = "#ShipmentTHEvents";
+  public static readonly PartnerName = "[data-cy='PartnerName']";
+  //#endregion
 }

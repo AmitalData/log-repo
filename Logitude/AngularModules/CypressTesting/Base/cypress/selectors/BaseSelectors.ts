@@ -143,5 +143,10 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ConfirmWindow="[class=ConfirmWindow]"
 
     public static readonly ShortTitleDiv = ".ShortTitleDiv";
+
+    public static readonly EventNotes = "#EventNotes";
+    public static readonly ConfirmWindowButton = "button[id^='ConfirmWindow_Yes']";
+    public static readonly EventItemBox = ".EventItemBox";
+    public static readonly textarea = "textarea";
    
 }
