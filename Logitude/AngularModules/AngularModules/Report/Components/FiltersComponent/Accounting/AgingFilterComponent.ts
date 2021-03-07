@@ -374,7 +374,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
             myFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance || 0, "decimal"));
 
             myFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCode", this.ChartOfAccountsTypeCode ? this.ChartOfAccountsTypeCode : null));
-            myFilterItems.push(new QueryFilterItem("ChartOfAccountsId", this.ChartOfAccount ? this.ChartOfAccount.Id : null));
+            myFilterItems.push(new QueryFilterItem("ChartOfAccountsId", this.ChartOfAccountsId_Dummy));
 
 
 
