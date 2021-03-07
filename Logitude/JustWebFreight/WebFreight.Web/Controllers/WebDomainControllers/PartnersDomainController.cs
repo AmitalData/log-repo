@@ -2641,9 +2641,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
         private void UpdateCustomerContactFields(PartnerServicePM args)
         {
-            args.Customer.PrimaryContactPhone = args.Contact.BusinessPhone;
-            args.Customer.PrimaryContactName = args.Contact.EnglishName;
-            args.IsPartnerDirty = true;
+            if (args.Customer != null && args.Contact != null)
+            {
+                args.Customer.PrimaryContactPhone = args.Contact.BusinessPhone;
+                args.Customer.PrimaryContactName = args.Contact.EnglishName;
+                args.IsPartnerDirty = true;
+            }
         }
     }
 }

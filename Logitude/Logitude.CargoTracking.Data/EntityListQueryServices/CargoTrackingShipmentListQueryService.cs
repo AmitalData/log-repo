@@ -455,7 +455,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             }
         }
 
-        private Milestone SetCurrentMilestone(List<Milestone> milestones)
+        private void SetCurrentMilestone(List<Milestone> milestones)
         {
             Milestone currentMilstone = GetMostRecentNotEstimatedMilestone(milestones);
             if (currentMilstone != null)
