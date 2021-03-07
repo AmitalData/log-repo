@@ -423,6 +423,8 @@
     <Compile Include="Helpers\ObjectFieldPropertyGetter.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\EntityStatus.Generated.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\QueryService\EntityStatusQueryService.Generated.cs" />
+    <Compile Include="InfrastructureModel\APIDataContract\Messages\RatesUpdateService.cs" />
+    <Compile Include="InfrastructureModel\APIDataContract\RatesUpdate.cs" />
     <Compile Include="InfrastructureModel\FieldShortNameGetters\ObjectFieldsShortNamesGetter.cs" />
     <Compile Include="GlobalModel\EntityLists\BluesnapTransactionList.cs" />
     <Compile Include="GlobalModel\EntityLists\HelpResourceList.cs" />
