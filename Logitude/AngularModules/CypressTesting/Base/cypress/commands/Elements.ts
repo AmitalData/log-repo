@@ -86,35 +86,47 @@ Cypress.Commands.add("FillLogTextBox", (selector, value,ValidateInputDone = fals
   
 
 Cypress.Commands.add("FillLogLov", (selector, value, fromCache, getByFilters = false) => {
-    const itemSelector = value == "{downarrow}" ? "li.DropDownListItem" : "li.DropDownListItem.liItemSelected";
     if (!fromCache) {
         cy.intercept({
             method: RestAPI.GET,
             url: getByFilters ? BaseURLs.GetByFilters : BaseURLs.GetByCompactFilters
         }).as("LOVDataLoaded")
     }
-    // cy.get('body').find('SessionComponent').eq(0)as('Container')
-    // cy.get('@Container')
-    //     .find(selector)
-    //     .eq(0)
-    //     .parents('loglov')
-    //     .eq(0)
-    //     .within(() => {
-    //         cy.get('input').clear().type(value).then(() => {
-    //             cy.get('ul.DropDownList').find(itemSelector).eq(0).click({ force: true });
-    //         });
-    //     });
+    cy.get('body').find('SessionComponent').eq(0).as('Container')
+   
+    FillLogLovProcess(selector,value);
+ 
     //cy.get(selector).clear().type(value)
     //cy.wrap(selector).clear({ force: true })
-    cy.get(selector).type("{selectall}" + value)
+    //cy.get(selector).type("{selectall}" + value)
 
     if (!fromCache) {
         cy.wait("@LOVDataLoaded")
     }
-    cy.get(".DropDownListItem").children().eq(0).click()
+    //cy.get(".DropDownListItem").children().eq(0).click()
 
 })
 
+function FillLogLovProcess(selector:any, value:any){
+    const itemSelector = value == "{downarrow}" ? "li.DropDownListItem" : "li.DropDownListItem.liItemSelected";
+    cy.get(selector).clear();
+   
+    cy.get('@Container')
+        .find(selector)
+        .eq(0)
+        .parents('loglov')
+        .eq(0)
+        .within(() => {
+            cy.get('input').clear().type(value).then($a => {
+                if($a[0].value == value){
+                    cy.get('ul.DropDownList').find(itemSelector).eq(0).click({ force: true });
+                } 
+                else{
+                    FillLogLovProcess(selector,value)
+                }
+            });
+        });
+}
 Cypress.Commands.add("FillRandomString", (selector, length, upperCase) => {
     let randomString = gr.GenerateRandomString(length, upperCase)
     cy.get(selector).focus().clear().type(randomString)
