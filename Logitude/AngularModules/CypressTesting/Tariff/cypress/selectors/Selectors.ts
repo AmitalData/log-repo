@@ -12,10 +12,16 @@ export class TariffSelectors
     public static readonly TariffUpdateSurchargeCheckBox = "checkbox[id^='IsSurchargeChecked']"
     public static readonly PriceCheckResultTableRow = ".LogitudeScrollViewer.LogitudeSmallScrollViewer > table > tr";
     public static readonly TariffNumberShortTitleDiv = ".LogitudeWindow:last .ShortTitleDiv:first";
+    public static readonly TariffNumberShortTitle = ".ShortTitleMainControl:last .ShortTitleDiv:first";
     public static readonly PriceCheckFreightResult = "[data-cy='FreightPriceValue']";
+    public static readonly PriceCheckSurchargeResult = "[data-cy='SurchargePriceValue']";
+    public static readonly FreightTariffLink = "[data-cy='FreightTariffLink']";
+    public static readonly SurchargeTariffLink = "[data-cy='SurchargeTariffLink']";
+    public static readonly PriceCheckWholePrice = "[data-cy='WholePrice']";
 
     public static readonly PriceCheckSearch = ".SearchButton";
     public static readonly TariffActionsMenu = ".ToggleButton"
+    public static readonly ToggleButtonMenu = ".ToggleButtonMenu"
     public static readonly PriceCheckQuery = ".QueryLink"
     public static readonly SearchButton = ".SearchButton"
     public static readonly InputUpload = "input.upload"
@@ -47,6 +53,7 @@ export class TariffSelectors
     //#region Date
     public static readonly TariffStartDate = "#date_Tariff_StartDate";
     public static readonly TariffLineStartDate = "#date_TariffLine_StartDate"
+    public static readonly TarifflLineStartDate = "#date_TarifflLine_StartDate"
     public static readonly TariffUpdateStartDate = "#StartDate"
     public static readonly PriceCheckDate = "#Date";
     //#endregion
@@ -63,6 +70,7 @@ export class TariffSelectors
     public static readonly ContainsAir = "Air"
     public static readonly ContainsOceanFCL ="Ocean FCL"
     public static readonly ContainsOceanLCL="Ocean LCL"
+    public static readonly ContainsTariff="Tariff"
     public static readonly ContainsCopyIntoNewVersion = "Copy into new Version";
     public static readonly ContainsVersionHistory = "Version History"
     public static readonly ContainsApproveVersion ="Approve Version"
@@ -79,6 +87,7 @@ export class TariffSelectors
     public static readonly ContainsTariffFailedError = "Create Tariff Failed"
     public static readonly ContainsUniqueSellerError = "Tariff surcharge seller should be unique"
     public static readonly ContainsCode = "Code:"
+    public static readonly Span = 'span'
     public static readonly Last = ":last"
     public static readonly Binary = "binary"
     public static readonly Disabled = ":disabled"
@@ -115,5 +124,17 @@ export class TariffSelectors
 
     public static PriceCheckQuantity(quantityNumber: number): string{
         return "#Quantity" + quantityNumber.toString();
+    }
+
+    public static QueriesSurcharge(SurchargeName: string): string{
+        return "hyperlinkquery[data-cy^=Surcharge_" + SurchargeName + "]";
+    }
+
+    public static GridFitstRow(): string{
+        return "div[id^='LogGrid_'][id$='row0']";
+    }
+
+    public static ContainsBackButton(mode:string): string{
+        return mode + " Surcharges Cost"
     }
 }

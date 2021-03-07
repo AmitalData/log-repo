@@ -76,3 +76,13 @@ export function ClickOnRowDependingOnValue(value:string){
 export function CloseWindow(){
     cy.Click(BaseSelectors.button,BaseSelectors.ContainClose)
 }
+
+export function GetTodayDate(){
+    var today = new Date
+    var dd = today.getUTCDate();
+    var mm = today.getUTCMonth()+1
+    var yyyy = today.getFullYear();
+
+    let TodayDateFormat = "0"+dd + '/' + "0"+ mm + '/' + yyyy;
+    return TodayDateFormat
+}

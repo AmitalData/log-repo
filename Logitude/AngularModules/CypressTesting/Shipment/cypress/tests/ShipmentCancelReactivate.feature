@@ -1,4 +1,6 @@
-@smoke @not-stable @all
+@smoke @release @not-stable @all
+#cancel it's smoke and relese
+#reactive is release
 Feature: Cancel and Reactivate Shipment
   The user creates a shipment, cancels the shipment,
   makes sure that the system does not allow the user to edit the shipment,
@@ -17,6 +19,6 @@ Feature: Cancel and Reactivate Shipment
     When cancel the shipment with "Cancel The Shipment" Note
     Then the shipment should cancel successfully
 
-  Scenario: Reactive direct shipment
-    When reactive the shipment with "Reactive The Shipment" Note
-    Then the shipment should reactive successfully
+  Scenario: Reactivate direct shipment
+    When reactivate the shipment with "Reactivate The Shipment" Note
+    Then the shipment should reactivate successfully

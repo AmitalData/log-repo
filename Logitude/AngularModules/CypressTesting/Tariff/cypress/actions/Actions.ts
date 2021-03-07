@@ -12,10 +12,16 @@ import * as gr from '../../../Base/cypress/actions/GenerateRandoms'
 import { SurchargeCostTariffLineDetails } from "cypress/models/SurchargeCostTariffLineDetails";
 import { Tariff } from "../models/Tariff";
 import { PriceCheckDetails } from "cypress/models/PriceCheckDetails";
+import { priceCheck } from "../models/priceCheck";
+import { Surcharge } from "../models/Surcharge";
 
 export function LoginAndNavigateToTariffWorkspace() {
     cy.Login();
     cy.Click(BaseSelectors.TariffMenu, null);
+}
+
+export function OpenSurchargeQueries(SurchargeType:string){
+    cy.Click(TariffSelectors.QueriesSurcharge(SurchargeType), null)
 }
 
 export function FillNewFreightCost(freightCostType: string, tariffDetails: TariffDetails) {
@@ -175,8 +181,8 @@ export function ValidateApprovedVersionsAppear() {
     BaseAssertion.AssertElementExist(TariffSelectors.TariffVersionHistoryComboBoxItem(2));
 }
 
-export function ValidateTariffPriceCheck(expectedPrice: string) {
-    AssertTariffPriceCheck(expectedPrice);
+export function ValidateTariffPriceCheck(PriceCheckDetails: priceCheck) {
+    AssertTariffPriceCheck(PriceCheckDetails);
 }
 
 export function ValidateUploadExcelFile() {
@@ -217,6 +223,16 @@ export function FillPriceCheckWizard(priceCheckType: string, priceCheck: PriceCh
     }
 }
 
+export function SearchASurcharge(sellerName: string) {
+    cy.FillLogTextBox(BaseSelectors.SearchField, sellerName);
+}
+
+export function OpenTheFirstResult(){
+    DefineRequestGetTariff()
+    cy.Click(TariffSelectors.GridFitstRow(),null,true)
+    BaseAssertion.AssertStatusCode(RequestAliases.GetTariff, 200);
+}
+
 export function PriceCheckSearch() {
     DefineRequestPostAvailableTariffs();
     cy.Click(TariffSelectors.PriceCheckSearch, TariffSelectors.ContainsSearch);
@@ -240,18 +256,36 @@ export function UploadExcelFile() {
         })
 }
 
+export function CopyIntoNewVersion(date:string) {
+    DefineRequestsForApproveOrCopyTariffVersion()
+    cy.Click(TariffSelectors.TariffActionsMenu, TariffSelectors.ContainsActions);
+    cy.Click(TariffSelectors.ToggleButtonMenu, TariffSelectors.ContainsCopyIntoNewVersion);
+    AssertApproveOrCopyTariffVersion()
+
+    cy.get(BaseSelectors.PackageGrid("5")).click({force:true})
+    cy.FillDate(TariffSelectors.TarifflLineStartDate , date)
+
+    ApproveTariffVersion()
+}
+
+export function SetTariffNumberFromTitle(titleSelector:string) {
+    cy.get(titleSelector).then((tariffNumberDiv) => {
+        Surcharge.Number = tariffNumberDiv.text().replace(":", "").trim();
+    });
+}
+
 function DefineRequestsForApproveOrCopyTariffVersion() {
     DefineRequestPutTariff();
     DefineRequestGetAllVersionsForTariff();
     DefineRequestGetTariffVersionLines();
-    DefineRequestGetSingleTariff();
+    // DefineRequestGetSingleTariff();
 }
 
 function AssertApproveOrCopyTariffVersion() {
     AssertPutTariff();
     AssertGetAllVersionsForTariff();
     AssertGetTariffVersionLines();
-    AssertGetSingleTariff();
+    // AssertGetSingleTariff();
 }
 
 function GetCellAssertion(cellNumber: string, ValueToCompare: string) {
@@ -465,6 +499,10 @@ function DefineRequestPutTariff() {
     cy.DefineRequestWait(RestAPI.PUT, Urls.Tariffs, RequestAliases.PutTariff);
 }
 
+export function DefineRequestGetTariff() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.Tariffs+"/**", RequestAliases.GetTariff);
+}
+
 function DefineRequestPostUpdateRequest() {
     cy.DefineRequestWait(RestAPI.POST, Urls.PostUpdateSurcharge, RequestAliases.PostUpdateRequest);
 }
@@ -519,21 +557,33 @@ function AssertGetSingleTariff() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetSingleTariff, 200);
 }
 
-function AssertTariffPriceCheck(expectedPrice: string) {
+function AssertTariffPriceCheck(PriceCheckDetails: priceCheck) {
     BaseAssertion.AssertStatusCode(RequestAliases.PostAvailableTariffs, 200).then((interception) => {
-        let actualPrice = interception.response.body.filter((t: { TariffNumber: string; }) => t.TariffNumber === Tariff.Number)[0].Price;
-        assert.equal(actualPrice, expectedPrice);
         let indexOfTariff = interception.response.body.map(function (t: { TariffNumber: string; }) { return t.TariffNumber; }).indexOf(Tariff.Number);
         cy.get(TariffSelectors.PriceCheckResultTableRow).eq(indexOfTariff).find(BaseSelectors.DownArrowImage).click();
-        cy.get(TariffSelectors.PriceCheckResultTableRow).eq(indexOfTariff).find(TariffSelectors.PriceCheckFreightResult).then((priceCell) => {
-            assert.equal(priceCell.text().trim(), expectedPrice);
-        });
-        DefineRequestGetSingleTariff();
-        cy.get(TariffSelectors.PriceCheckResultTableRow).eq(indexOfTariff).find(BaseSelectors.Hyperlink).contains(TariffSelectors.ContainsViewTariff).click();
-        AssertGetSingleTariff();
-        cy.get(TariffSelectors.TariffNumberShortTitleDiv).then((tariffNumberDiv) => {
-            assert.equal(tariffNumberDiv.text().replace(":", "").trim(), Tariff.Number);
-        });
+
+        assertPriceCheckResults(indexOfTariff,TariffSelectors.PriceCheckFreightResult,PriceCheckDetails.AirFreight.toString());
+        assertPriceCheckResults(indexOfTariff,TariffSelectors.PriceCheckSurchargeResult,PriceCheckDetails.Surcharges.toString());
+        assertPriceCheckResults(indexOfTariff,TariffSelectors.PriceCheckWholePrice,PriceCheckDetails.Total.toString());
+
+        assertPriceCheckTariffNumber(TariffSelectors.FreightTariffLink,Tariff.Number)
+        cy.BackButton("Back")
+        assertPriceCheckTariffNumber(TariffSelectors.SurchargeTariffLink,Surcharge.Number)   
+    });
+}
+
+function assertPriceCheckResults(indexOfTariff: number,priceCheckResultSelector:string,expectedResult:string){
+    cy.get(TariffSelectors.PriceCheckResultTableRow).eq(indexOfTariff).find(priceCheckResultSelector).then((priceCell) => {
+        assert.equal(priceCell.text().trim(),expectedResult);
+    });
+}
+
+function assertPriceCheckTariffNumber( linkSelector: string, tariffNumber: string) {
+    DefineRequestGetSingleTariff();
+    cy.get(linkSelector).click()
+    AssertGetSingleTariff();
+    cy.get(TariffSelectors.TariffNumberShortTitleDiv).then((tariffNumberDiv) => {
+        assert.equal(tariffNumberDiv.text().replace(":", "").trim(), tariffNumber);
     });
 }
 
