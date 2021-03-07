@@ -26,6 +26,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entityPM.LineNumber = entityParentPM.ConsignmentPackagLastLineNumber;
             entityPM.GrossMassMeasureTypeCode = "KGM";
             entityPM.PackageQuantityTypeCode = "EA";
+            entityPM.Tenant = EntityParentPM.Tenant;
         }
 
         protected override void AfterUpdating(ConsignmentPackagePM entityPM,ConsignmentPM entityParentPM)
