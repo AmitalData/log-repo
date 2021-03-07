@@ -128,19 +128,22 @@ namespace WebFreight.Web.Helpers.BIReport
         private string GetEvoPdfHtmlFooter()
         {
             StringBuilder stringBuilder = new StringBuilder();
-
-            bool isLogitude = PrintedByLogitude();
-
-            if (isLogitude)
+              
+            if (IsLogitudeEnvironment())
             {
-                stringBuilder.Append("<div style='width:100%;vertical-align: center;text-align:center;height:86px;font-size:40px'>Printed by Logitude</div>");
+                stringBuilder.Append(RenderPrintedByText("Logitude"));
             }
 
             return stringBuilder.ToString();
 
         }
 
-        private static bool PrintedByLogitude()
+        private static string RenderPrintedByText(string printedByText)
+        {
+            return "<div style='width:100%;vertical-align: center;text-align:center;height:86px;font-size:40px'>Printed by "+ printedByText + "</div>";
+        }
+
+        private static bool IsLogitudeEnvironment()
         {
             bool isLogitude = true; ;
             if (LogitudeSettings.WorkEnvironment == "logbox" || LogitudeSettings.WorkEnvironment == "cloud")
