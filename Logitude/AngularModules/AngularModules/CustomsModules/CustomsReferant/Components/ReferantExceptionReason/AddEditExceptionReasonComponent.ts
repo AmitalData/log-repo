@@ -173,7 +173,7 @@ export class AddEditExceptionReasonComponent extends BaseComponent {
     CheckForDuplicate() {
         this.ReferantExceptionItemsSource.Collection.forEach((item: ExceptionReason) => {
             if (AppTool.IsNullOrEmpty(item.ExceptionReasonsCode)) {
-                this.errors.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Customs.DeclarationReferantData.O.ExceptionReasonsCode")));
+                this.errors.push(this.FIELD_IS_REQUIERD.replace("%FieldName", " קוד חריג הוא"));
             } else {
                 if (this.existCodeList.indexOf(item.ExceptionReasonsCode) >= 0) {
                     this.errors.push("כבר קיימת רשומה עם קוד חריג  " + item.ExceptionReasonsCode);
@@ -208,6 +208,7 @@ export class AddEditExceptionReasonComponent extends BaseComponent {
                             this._referantExceptionPMService.insert(item.EntityPM).subscribe((response: any) => {
                                 item.IsNew = false;
                                 item.ShowCode = true;
+                                SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.EntityPM.DeclarationId, { rowIndex: this.rowIndex });
                                 SessionLocator.SelectedSession.CloseCurrentWindow();
                             });
                         } else if (item.EntityPM.IsDirty == true) {
@@ -227,6 +228,8 @@ export class AddEditExceptionReasonComponent extends BaseComponent {
             }
             this.exceptionReasonSharedDataService.IsDirty = false;
         } else {
+            SessionLocator.SelectedSession.CloseCurrentWindow();
+
         }
     }
 
