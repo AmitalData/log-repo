@@ -14,16 +14,24 @@ Feature: Ocean FCL Price Check
 
     Scenario: Add tariff lines in draft version tab
         Given the user open the freight cost
-        Given add the following tariff line
+        And add the following tariff line
             | FromPort | ToPort | Step1Price | Step2Price | Step3Price |
             | LHR      | MIA    | 10         | 20         | 30         |
         When approve version
         Then the version should approve successfully
 
+    Scenario: Edit Ocean FCL surcharge cost if need
+        Given the user in "OceanFCL" surchage workspace
+        And open surchage with "Maersk lines; INC." as seller
+        When copy into new version if start date is not "Today"
+        Then new version should approve successfully
+
     Scenario: Open price check wizard to show price offers
         Given the user back into tariff workspace and open price check wizard
         And fill the following price check details
             | FromPort | ToPort | Date  | Quantity1 | Quantity2 | Quantity3 |
-            | LHR      | MIA    | Today | 2         | 3         | 4         |
+            | LHR      | MIA    | Today | 10        | 10        | 10        |
         When search about prices
-        Then ocean FCL price should equal "200.00"
+        Then ocean FCL price should equal the following
+            | AirFreight | Surcharges | Total    |
+            | 600.00     | 1,200.00   | 1,800.00 |

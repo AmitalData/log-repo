@@ -29,6 +29,7 @@ export class RequestAliases {
     // Tariff
     public static readonly PostTariff = 'PostTariff';
     public static readonly PutTariff = 'PutTariff';
+    public static readonly GetTariff = 'GetTariff';
     public static readonly GetRecentTariffs = 'GetRecentTariffs';
     public static readonly GetAllTariffVersionsForTariff = 'GetAllTariffVersionsForTariff';
     public static readonly GetTariffVersionLines = "GetTariffVersionLines";
