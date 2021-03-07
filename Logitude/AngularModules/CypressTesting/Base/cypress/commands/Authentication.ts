@@ -56,6 +56,8 @@ Cypress.Commands.add("RedirectToLogin", () => {
 
 function CompleteLoginProcess(Email:string, Password:string, URL: string, Tenant?:number){
     cy.visit(URL)
+    cy.intercept("**/ObjectTableLastUpdate/**").as("LoadDataCompleted")
+    cy.window().then(win => { win.sessionStorage.setItem("ControlledByCypress", "true") }) 
     cy.get("#Email").clear().type(Email).should("have.value", Email)
     cy.get("#Password").clear().type(Password).should("have.value", Password)
     cy.get("#cmdLogin").click()
@@ -64,10 +66,7 @@ function CompleteLoginProcess(Email:string, Password:string, URL: string, Tenant
         cy.get("input[name='cmbTenants_input']").clear().type('(' + Tenant + ')')
         cy.get("#cmbTenants_listbox").children().contains('(' + Tenant + ')').eq(0).click({force:true})
         cy.get("#cmdContinue").click()
-    }
-
-    cy.window().then(win => { win.sessionStorage.setItem("ControlledByCypress", "true") })
-    cy.intercept("**/ObjectTableLastUpdate/**").as("LoadDataCompleted")
+    } 
     cy.wait("@LoadDataCompleted")
 }
 
