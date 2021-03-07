@@ -32,6 +32,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.CopyExchangeRates).HasColumnName("CopyExchangeRates");
             this.Property(t => t.AutomaticallyCloseDays).HasColumnName("AutomaticallyCloseDays");
             this.Property(t => t.IsMultiCurrency).HasColumnName("IsMultiCurrency");
+            this.Property(t => t.QuoteExpirationDays).HasColumnName("QuoteExpirationDays");
         }
     }
 }

@@ -1053,6 +1053,7 @@
     <Compile Include="DataContracts\HybridLabelsBrandingData.cs" />
     <Compile Include="DataContracts\HybridLabelsBrandingDataRequest.cs" />
     <Compile Include="DataProviders\UserDefinedReportDataProvider.cs" />
+    <Compile Include="ExternalAPIs\RatesUpdateController.cs" />
     <Compile Include="ExternalAPIs\ShipmentNumbersController.cs" />
     <Compile Include="FileNotFound.aspx.cs">
       <DependentUpon>FileNotFound.aspx</DependentUpon>
@@ -2609,6 +2610,7 @@
     <Compile Include="Helpers\AutomationDocumentHelper.cs" />
     <Compile Include="Helpers\DocumentTypeTemplateDefultAttachmentService.cs" />
     <Compile Include="Helpers\HybridLabelsBrandingDataService.cs" />
+    <Compile Include="Helpers\ReportBaseDataService.cs" />
     <Compile Include="Helpers\UserViewLinkLimitationService.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
     <Compile Include="Helpers\AgentSharedManifestHelper.cs" />

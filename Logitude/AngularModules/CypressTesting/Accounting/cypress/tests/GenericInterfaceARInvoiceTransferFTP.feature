@@ -1,9 +1,9 @@
 @release @all
 Feature: Generic Interface AR Invoice Transfer to FTP
 
-    The user disables the Accounting Transfer in settings, creates AR invoice
-    changes the settings for Accounting Transfer to Generic Interface and sets up FTP External Transmission
-    checks the created invoice in the Not Ready Entities in Accounting Interfaces
+    The user disables the Accounting Transfer in settings, creates AR invoice, 
+    changes the settings for Accounting Transfer to Generic Interface and sets up FTP External Transmission, 
+    checks the created invoice in the Not Ready Entities in Accounting Interfaces, 
     fixes the accounting external IDs validations preventing the invoice from being transferred and exports/transfers the invoice.
 
     Scenario: Disable accounting system
@@ -40,7 +40,7 @@ Feature: Generic Interface AR Invoice Transfer to FTP
             | Customer    | EUR             | 4                   | Today       | Cash         | Today   | Zero  | Main Office | Zero    |
         When clear external ID for partner and create invoice
         Then the invoice should create successfully
-        And the transfer status should be "Not Ready"
+        And the transfer status should be Not Ready
 
     Scenario: Approve ARInvoice
         When approve invoice
@@ -61,10 +61,10 @@ Feature: Generic Interface AR Invoice Transfer to FTP
             | AFT         | EUR      | TestCompany |
         When add the external IDs
         Then the external IDs should add successfully
-        And the transfer status should be "Ready"
+        And the transfer status should be Ready
 
     Scenario: Transfer ARInvoice
         Given the user in transfer screen
         When export the ARInvoice
         Then the ARInvoice should export successfully
-        And the transfer status should be "Transferred"
+        And the transfer status should be Transferred

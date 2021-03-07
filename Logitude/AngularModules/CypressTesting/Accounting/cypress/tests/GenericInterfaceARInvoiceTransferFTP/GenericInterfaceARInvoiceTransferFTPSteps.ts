@@ -117,8 +117,8 @@ Then("the invoice should create successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });
 
-Then("the transfer status should be {string}", (transferStatus) => {
-  AccountingActions.AssertTransferStatus(transferStatus)
+Then("the transfer status should be Not Ready", () => {
+  AccountingActions.AssertTransferStatus(AccountingSelectors.ContainNotReady)
 });
 //#endregion
 
@@ -181,12 +181,12 @@ Then("the external IDs should add successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200)
 });
 
-Then("the transfer status should be {string}", (transferStatus) => {
+Then("the transfer status should be Ready", () => {
   ShipmentActions.NavigatesToShipmentsWorkspace()
   ShipmentActions.OpenShipment(shipmentNumber);
   cy.Click(ShipmentSelectors.ReceivablesTab, null)
   cy.Click(BaseSelectors.HyperlinkButtonControl, ARInvoiceNumber, true)
-  AccountingActions.AssertTransferStatus(transferStatus)
+  AccountingActions.AssertTransferStatus(AccountingSelectors.ContainReady)
 });
 //#endregion
 
@@ -206,11 +206,11 @@ Then("the ARInvoice should export successfully", () => {
   AccountingActions.AssertTransferredInvoice()
 });
 
-Then("the transfer status should be {string}", (transferStatus) => {
+Then("the transfer status should be Transferred", () => {
   ShipmentActions.NavigatesToShipmentsWorkspace()
   ShipmentActions.OpenShipment(shipmentNumber);
   cy.Click(ShipmentSelectors.ReceivablesTab, null)
   cy.Click(BaseSelectors.HyperlinkButtonControl, ARInvoiceNumber, true)
-  AccountingActions.AssertTransferStatus(transferStatus)
+  AccountingActions.AssertTransferStatus(AccountingSelectors.ContainTransferred)
 });
 //#endregion

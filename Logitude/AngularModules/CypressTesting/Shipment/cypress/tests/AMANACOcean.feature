@@ -1,7 +1,9 @@
 @release @all
 Feature: AMANAC Ocean Shipment Validations, Marked as Blocked, Marked as Not Blocked, Transfers and Retransfer
-    Feature File Description: The user configures AMANAC customs for the tenant, creates Direct Export Ocean FCL shipment,
-    adds a container, marks the shipment as blocked for transfer, marks the shipment as not blocked for transfer,
+
+    The user configures AMANAC customs for the tenant, 
+    creates Direct Export Ocean FCL shipment, adds a container, 
+    marks the shipment as blocked for transfer, marks the shipment as not blocked for transfer, 
     transfers shipment, checks and fixes validation, transfers shipment again, edit shipment and retransfers.
 
     Scenario: AMANAC setup

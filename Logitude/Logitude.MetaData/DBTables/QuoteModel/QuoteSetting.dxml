@@ -105,7 +105,8 @@
   </Column>
   <Column
     Name="IsMultiCurrency"
-    Type="bit">
+    Type="bit"
+    DefaultValue="0">
     <Constraints
       Nullable="false" />
   </Column>
