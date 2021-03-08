@@ -206,6 +206,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
 
                 if (!tableRow["CustomFileId"].Equals(null) && !tableRow["CustomFileId"].Equals("") && tableRow["CustomFileId"].GetType().Name != "DBNull")
                 {
+                    tableRow.SetField("CustomsShipmentHeaderId", tableRow["CustomFileId"]);
                     tableRow.SetField("IsMainRecord", false);
                 }
                 else
