@@ -1910,6 +1910,7 @@
             var url = window.location.href;
             var isDSV = url.toLowerCase().indexOf("dsv.co.il") > -1 ? true : false;
             var myDomain = url.split('/')[2];
+            var isCargoTracking = IsaCargoTrackingDomain(window.location.href);
 
 
             var url = "api/LogitudeApplication"
@@ -1933,7 +1934,11 @@
                         IsShowUpgradeScreen = false;
                         if (isDSV) {
                             DSVLogin(myDomain);
-                        } else {
+                        }
+                        else if (isCargoTracking) {
+                            RedirectToCargotrackingSite(window.location.href);
+                        }
+                        else {
 
                             ComplateLoadProess();
                             BrandingFunction();
@@ -2081,7 +2086,22 @@
 
         }
 
-</script>
+        function IsaCargoTrackingDomain(domain) {
+            const cargoTrackingDomainKeywords = ["tracking.", "ecommerce."];
+            for (var i = 0; i < cargoTrackingDomainKeywords.length; i++) {
+                if (domain.indexOf(cargoTrackingDomainKeywords[i])>-1) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function RedirectToCargotrackingSite(domain) {
+            //var d = window.location.href + "/CargoTracking";
+            window.location.href = window.location.href + "CargoTracking";
+        }
+
+    </script>
 
     <script type="text/javascript"> 
 <!-- 
