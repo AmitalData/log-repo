@@ -41,6 +41,7 @@ namespace WarehouseData
         public List<IndexItem> Indexes { get; set; }
         public List<TableClass> RelatedEntities { get; set; }
         public List<string> FieldsDBNameLists { get; set; }
+        public List<string> RelatedFactTables { get; set; }
 
 
     }

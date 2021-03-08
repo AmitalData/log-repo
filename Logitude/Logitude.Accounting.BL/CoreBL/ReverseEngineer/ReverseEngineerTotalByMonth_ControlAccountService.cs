@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logitude.Accounting.BL.CloseTables;
+using System.Data.Entity.Infrastructure;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -68,7 +69,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 var startDayOfMonth = new DateTime(_SeedDate.Date.Year, _SeedDate.Date.Month, 1);
                 var endDayOfMonth = //start.AddMonths(1).AddMinutes(-1);
                     new DateTime(_SeedDate.Date.Year, _SeedDate.Date.Month, DateTime.DaysInMonth(_SeedDate.Date.Year, _SeedDate.Date.Month));
+                if (false/*thewholePeriod*/)
+                {
+                    startDayOfMonth = DateTime.MinValue;
+                    endDayOfMonth = DateTime.MaxValue;
 
+                }
                 var listOfDateTypeValues = new List<string>() {
                     GLAccountTotalDateTypeValues.Accountingdate,
                     GLAccountTotalDateTypeValues.DueDate,
@@ -80,10 +86,18 @@ namespace Logitude.Accounting.BL.CoreBL
                     using (var scope = TransactionFactory.GetNewTransaction())
                     {
                         _AccountingContext = AccountingContext.GetContext(_Tenant);
+                        if (false/*thewholePeriod*/)
+                        {
+                            var objectContext = (_AccountingContext as IObjectContextAdapter).ObjectContext;
+                            objectContext.CommandTimeout = 600;
+                            
+                        }
                         var myGLAccountRepo = new GLAccountRepository(_AccountingContext);
                         var quaryAllControlAccount = myGLAccountRepo.GetQuaryAllControlAccount(_Tenant);
                         var myGLAccountTotalByMonthRepo = new GLAccountTotalByMonthRepository(_AccountingContext);
-                        var quaryablMonthTotals1 = myGLAccountTotalByMonthRepo.GetQuaryableMonthTotals(_SeedDate.Date.Year, _SeedDate.Date.Month, _Tenant,
+                        var quaryablMonthTotals1 = false /*thewholePeriod */?
+                            myGLAccountTotalByMonthRepo.GetAll(_Tenant).Where(tot => tot.DateTypeCode == dateTypeValue) :
+                            myGLAccountTotalByMonthRepo.GetQuaryableMonthTotals(_SeedDate.Date.Year, _SeedDate.Date.Month, _Tenant,
                             dateTypeValue/*GLAccountTotalDateTypeValues.Accountingdate*/);
 
 
@@ -119,7 +133,8 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
 
                         var ledgerTransactionRepository = new LedgerTransactionRepository(_AccountingContext);
-                        var qLedgerAsGLAccountTotalByMonthByAccountingDate = ledgerTransactionRepository.GetQueryableGLAccountTotalByMonthByDateTypeCodeFromControlAccount(
+                        var qLedgerAsGLAccountTotalByMonthByAccountingDate =
+                            ledgerTransactionRepository.GetQueryableGLAccountTotalByMonthByDateTypeCodeFromControlAccount(
                             dateTypeValue, startDayOfMonth, endDayOfMonth, _Tenant/*, listOfAccId*/);
 
                         bool test = false;
@@ -254,39 +269,72 @@ namespace Logitude.Accounting.BL.CoreBL
                 throw new Exception("remove this._GLAccountId ");
 
             }
-            CheckDbIntegrity();
+            CheckDbIntegrity(/*thewholePeriod*/);
             if (this.CompareReport.GLAccountTotalByMonthsList == null || this.CompareReport.GLAccountTotalByMonthsList.Count == 0)
             {
+                if (DoDotCrashOnNothing2DO)
+                {
+                    return;
+                }
                 throw new Exception("is ok - nothing done  !!!!");
             }
-            if (this.CompareReport.GLAccountTotalByMonthsList.Any(r => r.CHANGE_TYPE == const_qNotinLedgerTransaction))
-            {
-                throw new Exception("contains qNotinLedgerTransaction FIX - the problem there is Total but any LedgerTransaction" +
-                    "Deleting GLAccountTotalByMonths Requires A deeper examination - U do That not me!!!!");
-            }
+            
             using (var scope = TransactionFactory.GetNewSerializableTransaction())
             {
                 _AccountingContext = AccountingContext.GetContext(_Tenant);
                 var myGLAccountTotalByMonthRepository = new GLAccountTotalByMonthRepository(_AccountingContext);
                 var tInsert = this.CompareReport.GLAccountTotalByMonthsList.Where(r => r.CHANGE_TYPE == Const_qNotinTotalByMonth).ToList();
                 var tDeltaUpdate = this.CompareReport.GLAccountTotalByMonthsList.Where(r => r.CHANGE_TYPE == Const_qDiff).ToList();
+
+                var toClear = this.CompareReport.GLAccountTotalByMonthsList.Where(r => r.CHANGE_TYPE == const_qNotinLedgerTransaction).ToList();
+                toClear.ForEach(r =>
+                {
+                    var poco = myGLAccountTotalByMonthRepository.GetSingle(r.AccountId, r.DateTypeValue, r.Year, r.Month, r.CurrencyId, _Tenant);
+                    if (poco != null)
+                    {
+                        poco.ForeignAmountCredit = 0;
+
+                        poco.ForeignAmountDebit = 0;
+                        poco.LocalAmountCredit = 0;
+
+                        poco.LocalAmountDebit = 0;
+                        myGLAccountTotalByMonthRepository.Update(poco);
+
+                    }
+                });
                 tInsert.ForEach(r =>
                 {
-                    myGLAccountTotalByMonthRepository.Add(new GLAccountTotalByMonth()
+
+                    var poco = myGLAccountTotalByMonthRepository.GetSingle(r.AccountId, r.DateTypeValue, r.Year, r.Month, r.CurrencyId, _Tenant);
+                    if (poco != null)
                     {
-                        Tenant = this._Tenant,
-                        AccountId = r.AccountId,
-                        CurrencyId = r.CurrencyId,
-                        DateTypeCode = r.DateTypeValue,// "1",// BETA-TO DO ...
-                        Year = r.Year,
-                        Month = r.Month,
-                        ForeignAmountDebit = r.ForeignAmountDebit,
-                        LocalAmountCredit = r.LocalAmountCredit,
-                        ForeignAmountCredit = r.ForeignAmountCredit,
-                        LocalAmountDebit = r.LocalAmountDebit
+                        poco.ForeignAmountCredit = r.ForeignAmountCredit;
+
+                        poco.ForeignAmountDebit = r.ForeignAmountDebit;
+                        poco.LocalAmountCredit = r.LocalAmountCredit;
+
+                        poco.LocalAmountDebit = r.LocalAmountDebit;
+                        myGLAccountTotalByMonthRepository.Update(poco);
+
+                    }
+                    else
+                    {
+                        myGLAccountTotalByMonthRepository.Add(new GLAccountTotalByMonth()
+                        {
+                            Tenant = this._Tenant,
+                            AccountId = r.AccountId,
+                            CurrencyId = r.CurrencyId,
+                            DateTypeCode = r.DateTypeValue,// "1",// BETA-TO DO ...
+                            Year = r.Year,
+                            Month = r.Month,
+                            ForeignAmountDebit = r.ForeignAmountDebit,
+                            LocalAmountCredit = r.LocalAmountCredit,
+                            ForeignAmountCredit = r.ForeignAmountCredit,
+                            LocalAmountDebit = r.LocalAmountDebit
 
 
-                    });
+                        });
+                    }
                 });
                 tDeltaUpdate.ForEach(r =>
                 {
@@ -318,5 +366,30 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
         public CompareReportM CompareReport { get; set; }
+        public bool DoDotCrashOnNothing2DO { get; internal set; }
+    }
+
+
+
+    public class TheWholePeriodReverseEngineerTotalByMonth_ControlAccountService
+    {
+        
+
+        public void ChangeSupplier2Customer(DateTime myDate, int myTenant)
+        {
+
+            for (int year = 2013; year < (DateTime.Now.Year +10); year++)
+            {
+                for (int month = 1; month < 13; month++)
+                {
+                    Debug.WriteLine($"{year},{month}");
+                    var s = new ReverseEngineerTotalByMonth_ControlAccountService(new DateTime(year,month,1), myTenant, "");
+                    s.DoDotCrashOnNothing2DO = true;
+                    s.FixDbIntegrityFromLedgeToTotal(/*false*/);
+
+                }
+            }
+
+        }
     }
 }

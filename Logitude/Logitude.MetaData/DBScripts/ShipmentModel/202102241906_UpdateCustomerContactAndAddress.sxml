@@ -1,0 +1,113 @@
+﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Shipments" Env="Logitude,local">
+  <Sql Version="2">
+    <![CDATA[
+    
+       -- This script for Unicargos 570 tenant on production version 
+	    If(OBJECT_ID('tempdb..#temp') Is Not Null)
+      Begin
+       Drop Table #temp
+      End
+
+      If(OBJECT_ID('tempdb..#temp_Shipments') Is Not Null)
+      Begin
+        Drop Table #temp_Shipments
+      End
+	    declare @Tenant as int
+	    set @Tenant = 570
+      CREATE TABLE #temp_Shipments(ShipmentId varchar(15) not null, PrimaryContactId varchar(15) null, MainAddressId varchar(15) null)
+      select 
+      Shipments.Id as Id,
+      Shipments.CustomerId as CustomerId,
+      ShipmentCards.PrimaryContactId as PrimaryContactId,
+      ShipmentAddresses.Id as MainAddressId, 
+	    Shipments.CustomerAddressId as CustomerAddressId,
+	    Shipments.CustomerContactId as CustomerContactId
+      into #temp
+      from Shipments as Shipments
+	    left outer join cards as ShipmentCards on ShipmentCards.Id = Shipments.CustomerId
+	    left outer join Addresses as ShipmentAddresses 
+		  on ShipmentAddresses.Id = 
+		  (
+			  select top 1 Id from Addresses
+			  where Addresses.CardId = Shipments.CustomerId 
+			  and Addresses.AddressTypeId = 'M'
+		  )
+
+	  where
+    Shipments.IsOperationalClosed = 0
+    and Shipments.CustomerId is not null 
+	  and Shipments.Tenant  = @Tenant and $LastCounterWhere$
+
+    declare @ShipmentId as varchar(15)
+    declare @CustomerId as varchar(15)
+	  declare @CustomerAddressId as varchar(15)
+	  declare @CustomerContactId as varchar(15)
+	  declare @MainAddressId as varchar(15)
+	  declare @PrimaryContactId as varchar(15)
+	  declare @Count as int
+	  declare @IsPrimaryContact as bit
+	  declare @IsMainAddress as bit
+    set @Count = 0;
+    BEGIN
+        DECLARE DataCursor CURSOR READ_ONLY
+        FOR
+        SELECT Id, CustomerId,PrimaryContactId, MainAddressId, CustomerAddressId, CustomerContactId
+        FROM #temp
+        OPEN DataCursor FETCH NEXT FROM DataCursor INTO @ShipmentId, @CustomerId, @PrimaryContactId, @MainAddressId,  @CustomerAddressId, @CustomerContactId
+        WHILE @@FETCH_STATUS = 0
+        BEGIN
+            set @IsPrimaryContact = '0';
+            set @IsMainAddress = '0';
+						
+						IF ((@CustomerContactId  is not null) and  NOT EXISTS (select 1 from CardContacts where CardId =  @CustomerId and ContactId = @CustomerContactId and Tenant = @Tenant))
+						begin
+					     	set @IsPrimaryContact = '1';
+						end
+
+						IF ((@CustomerAddressId is not null) and NOT EXISTS (select 1 from Addresses where Addresses.Id = @CustomerAddressId and Addresses.CardId = @CustomerId and Addresses.Tenant = @Tenant))
+						begin
+					     	set @IsMainAddress = '1';
+						end
+
+						if (@IsPrimaryContact = '1' and @IsMainAddress = '1')
+							insert into #temp_Shipments(ShipmentId, PrimaryContactId, MainAddressId) values (@ShipmentId, @PrimaryContactId, @MainAddressId)
+
+						else if (@IsPrimaryContact = '1' and @IsMainAddress = '0') 
+							insert into #temp_Shipments(ShipmentId, PrimaryContactId, MainAddressId) values (@ShipmentId, @PrimaryContactId, @CustomerAddressId)
+
+						else if (@IsMainAddress = '1' and @IsPrimaryContact = '0' )
+							insert into #temp_Shipments(ShipmentId, PrimaryContactId, MainAddressId) values (@ShipmentId, @CustomerContactId, @MainAddressId)
+
+					  set @Count = @Count + 1;
+            if(@Count = 1000)
+            begin
+                update Shipments
+                set CustomerContactId = #temp_Shipments.PrimaryContactId ,  CustomerAddressId = #temp_Shipments.MainAddressId
+                FROM Shipments
+                INNER JOIN #temp_Shipments
+                on Shipments.Id = #temp_Shipments.ShipmentId
+                truncate table #temp_Shipments
+                set @Count = 0
+            end
+
+        FETCH NEXT FROM DataCursor INTO  @ShipmentId, @CustomerId, @PrimaryContactId, @MainAddressId,@CustomerAddressId, @CustomerContactId
+        END
+        CLOSE DataCursor
+        DEALLOCATE DataCursor
+        END
+             
+          if (@Count > 0)
+          begin
+              update Shipments
+              set CustomerContactId = #temp_Shipments.PrimaryContactId , CustomerAddressId = #temp_Shipments.MainAddressId
+              FROM Shipments
+              INNER JOIN #temp_Shipments
+              on Shipments.Id = #temp_Shipments.ShipmentId
+          end
+
+      drop table #temp
+      drop table #temp_Shipments
+
+    ]]>
+  </Sql>
+</Script>

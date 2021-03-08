@@ -138,8 +138,8 @@ namespace WarehouseData
                                 string replaceMessage = "Updated Private Tenant (" + tenant + ")" + "    Children Tenants" + tenants.Replace(", " + tenant.ToString(), "").Replace(tenant.ToString() + ",", "") + "   Done in ( " + tsPrivateDB.ToString(@"hh\:mm\:ss") + " )";
                                 if (type == "Build")
                                 {
-                                    string count = mainDataWarehouseService.GetRecordDataCountByTableName("Fact_Shipments", destinationConnectionString).ToString();
-                                    replaceMessage = "Private Tenant (" + tenant + ")" + "    Children Tenants" + tenants.Replace(", " + tenant.ToString(), "").Replace(tenant.ToString() + ",", "") + "    Fact Count (" + count + ")  Done in ( " + tsPrivateDB.ToString(@"hh\:mm\:ss") + " )";
+                                    //string count = mainDataWarehouseService.GetRecordDataCountByTableName("Fact_Shipments", destinationConnectionString).ToString();
+                                    replaceMessage = "Private Tenant (" + tenant + ")" + "    Children Tenants" + tenants.Replace(", " + tenant.ToString(), "").Replace(tenant.ToString() + ",", "") + "  Done in ( " + tsPrivateDB.ToString(@"hh\:mm\:ss") + " )";
                                 }
 
                                 allMessage = allMessage.Replace(message, replaceMessage);

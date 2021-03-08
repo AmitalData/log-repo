@@ -537,12 +537,13 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
                     break;
                 case "IsReconciled":
                     this.IsReconciled = queryFilterItem.FieldValue;
+                    this.AttachedGLAccountCheckBox = queryFilterItem.FieldValue;
                     break;
                 case "SalesmanUserId":
                     this.Salesman = queryFilterItem.FieldValue;
                     break;
                 case "CategoryIndex":
-                    this.SelectedItemChanged(queryFilterItem.FieldValue);
+                    this.SelectedItemChanged(this.GetLookUpFieldValue(queryFilterItem.FieldValue));
                     break;
                 case "CategoryValue":
                     //CategoryValue

@@ -2766,6 +2766,7 @@ namespace Simplog.Data.CommonDataModel.Mocks
         public IDbSet<Horse> Horses { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 
+        public IDbSet<DWHEnvironmentSetting> DWHEnvironmentSettings { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 
 
