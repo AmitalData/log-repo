@@ -21,6 +21,7 @@ using System.Web.Http;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 
+
 namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 {
     public class CardExtendedController : ApiController
@@ -160,18 +161,9 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
 
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
-                GLAccountCurrency GLAccountCurrency = GetGLAccountCurrencyByIdAndTenant(glAccountId, tenant);
-                CardQuery cardQuery = new CardQuery(tenant);
-                List<ShortPartnersDetails> connectedPartners;
+                GLAccountConnectedPartnerService gLAccountConnectedPartnerService = new GLAccountConnectedPartnerService(tenant);
+                List<ShortPartnersDetails> connectedPartners= gLAccountConnectedPartnerService.GetAllConnectedPartnersByGLAccountId(glAccountId);
 
-                if (GLAccountCurrency != null)
-                {
-                    connectedPartners = cardQuery.GetConnectedPartnerIdsByGLAccountId(GLAccountCurrency.MainGLAccountId, tenant);
-                }
-                else
-                {
-                    connectedPartners = cardQuery.GetConnectedPartnerIdsByGLAccountId(glAccountId, tenant);
-                }
 
                 return Request.CreateResponse(HttpStatusCode.OK, connectedPartners);
             }
@@ -180,13 +172,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-        }
-
-        private  GLAccountCurrency GetGLAccountCurrencyByIdAndTenant(string glAccountId, int tenant)
-        {
-            GLAccountCurrencyQueryService gLAccountCurrencyQueryService = new GLAccountCurrencyQueryService(tenant);
-            GLAccountCurrency GLAccountCurrency = gLAccountCurrencyQueryService.GetGLAccountCurrencyByGLAccountId(glAccountId, tenant);
-            return GLAccountCurrency;
         }
     }
 }
