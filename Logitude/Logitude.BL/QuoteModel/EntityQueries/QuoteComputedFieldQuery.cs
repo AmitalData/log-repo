@@ -36,9 +36,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         EstimatedPayablesInSales = quoteComputedField.EstimatedPayablesInSales,
                         EstimatedPayablesInLocal = quoteComputedField.EstimatedPayablesInLocal,
                         EstimatedReceivablesInLocal = quoteComputedField.EstimatedReceivablesInLocal,
-                        EstimatedReceivablesInSales = quoteComputedField.EstimatedReceivablesInSales,
-                        EstimateProfitInSaleCurrency = quoteComputedField.EstimateProfitInSaleCurrency
-
+                        EstimatedReceivablesInSales = quoteComputedField.EstimatedReceivablesInSales
                     }).FirstOrDefault();
         }
         public IQueryable<QuoteComputedFieldList> GetIQueryableEntityList(IQueryable<QuoteComputedField> iQueryable)
@@ -57,8 +55,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                                  EstimatedPayablesInSales = quoteComputedField.EstimatedPayablesInSales,
                                                                  EstimatedPayablesInLocal = quoteComputedField.EstimatedPayablesInLocal,
                                                                  EstimatedReceivablesInLocal = quoteComputedField.EstimatedReceivablesInLocal,
-                                                                 EstimatedReceivablesInSales = quoteComputedField.EstimatedReceivablesInSales,
-                                                                 EstimateProfitInSaleCurrency = quoteComputedField.EstimateProfitInSaleCurrency
+                                                                 EstimatedReceivablesInSales = quoteComputedField.EstimatedReceivablesInSales
                                                              });
             return result;
         }

@@ -85,12 +85,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="EstimateProfitInSaleCurrency"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Quotes"

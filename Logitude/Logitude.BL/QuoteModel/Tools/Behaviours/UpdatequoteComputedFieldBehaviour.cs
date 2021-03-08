@@ -39,8 +39,6 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
             MapEstimatedPayablesInSalesCurrencyField();
             MapEstimatedReceivablesInLocalCurrencyField();
             MapEstimatedReceivablesInSalesCurrencyField();
-            MapEstimateProfitInSaleCurrencyField();
-
         }
 
         private void MapConnectedToShipmentField()
@@ -214,15 +212,6 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
                 quoteComputedField.EstimatedReceivablesInSales = quoteEntityPM.QuoteCharges.Where(d => d.IsAllIN == false).Sum(d => d.SaleAmountInSaleCurrency);
             } 
         }
-
-        private void MapEstimateProfitInSaleCurrencyField()
-        {
-            if (quoteEntityPM.QuoteCharges != null)
-            {
-                quoteComputedField.EstimateProfitInSaleCurrency = quoteEntityPM.EstimateProfit;
-            } 
-        }
-
 
     }
 }

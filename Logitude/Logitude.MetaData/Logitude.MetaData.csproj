@@ -292,6 +292,12 @@
     <None Include="DBScripts\InvoiceModel\202128011350_AddNotesToAPInvoiceSearchField.sxml" />
     <None Include="DBScripts\InvoiceModel\202128011350_AddNotesToAPPaymentSearchField.sxml" />
     <None Include="DBScripts\InvoiceModel\202128011350_AddNotesToARInvoiceSearchField.sxml" />
+    <None Include="DBScripts\QuoteModel\202103081133_CalculateReceivablesPayablesQuoteComputedFileds.sxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DBScripts\QuoteModel\202103071547_FillQuoteComputedFileds.sxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="DBScripts\QuoteModel\202103071234_CalculateCostAmountInSaleCurrencyInQouteCharges.sxml">
       <SubType>Designer</SubType>
     </None>

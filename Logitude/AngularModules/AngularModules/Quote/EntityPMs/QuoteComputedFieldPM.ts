@@ -85,11 +85,6 @@ export class QuoteComputedFieldPM {
     public set EstimatedReceivablesInSales(newValue: number) { if (this.estimatedReceivablesInSales != newValue) { this.estimatedReceivablesInSales = newValue; this.MarkAsDirty("EstimatedReceivablesInSales"); } }
        
 	 
-    private estimateProfitInSaleCurrency: number;
-    public get EstimateProfitInSaleCurrency() { return this.estimateProfitInSaleCurrency; }
-    public set EstimateProfitInSaleCurrency(newValue: number) { if (this.estimateProfitInSaleCurrency != newValue) { this.estimateProfitInSaleCurrency = newValue; this.MarkAsDirty("EstimateProfitInSaleCurrency"); } }
-       
-	 
 
     public OldEntityPM: QuoteComputedFieldPM;
 		
