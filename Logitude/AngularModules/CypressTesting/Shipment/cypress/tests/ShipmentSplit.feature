@@ -1,4 +1,4 @@
-@smoke @not-stable @all
+@release @not-stable @all
 Feature: Split shipment
     The user creates a shipment, adds two containers,
     splits the shipment by moving one of the containers to a new shipment,
