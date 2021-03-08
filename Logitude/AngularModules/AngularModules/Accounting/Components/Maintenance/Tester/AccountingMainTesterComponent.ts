@@ -296,7 +296,7 @@ Line3
 
     _ButtonReverseTotalFIXControl_Click() {
         let opr = "_ButtonReverseTotalFIXControl_Click";
-        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31), TheWholePeriod : false, };
+        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31), ChangeSupplier2Customer : false, };
         this.StrandartOp(opr, obj, () => { });
     }
     //type myCallback = () => any;
