@@ -60,6 +60,8 @@ export class JournalValidator
 
                 }
 
+                this.ValidateJournalLineForFutureDate(line);
+
                 // Credit and Debit account (same currency)
                 if (line.ActionCode == '3') {
                     if (line.CreditAccount == undefined || line.DebitAccount == undefined) return errors;
@@ -79,10 +81,6 @@ export class JournalValidator
                     errors.push(TextCodeTranslator.Translate("Accounting.General.O.chooseDueDate") + " " + line.Line  ); //You should choose Due Date for line
                 }
 
-                if (this.CheckIfFutureDate(line)) {
-                    this.SetFutureDateErrorsMessage(line);
-                }
-
                 if (line.isValid != undefined) { // when this function called from editcomponent save button, the line does not have isvalid property
                     if (!line.isValid) {
                         errors.push(TextCodeTranslator.Translate("Journal.O.TheAccountingDayMustBeInRange"));
@@ -97,9 +95,18 @@ export class JournalValidator
     }
 
 
-    public static CheckIfFutureDate(line: any) {
+    private static ValidateJournalLineForFutureDate(line: any) {
+        var journalLineHasFutureDate = this.CheckJournalLineForFutureDate(line)
+       
+        if (journalLineHasFutureDate) {
+            this.SetFutureDateErrorsMessage(line);
+        }
+    }
+
+    private static CheckJournalLineForFutureDate(line: any) {
         var currentDate: Date = new Date();
-        return line.DocumentDate > currentDate || line.AccountingDate > currentDate.getDay();
+        return line.DocumentDate > currentDate.getTime() || line.AccountingDate > currentDate.getTime();
+ 
     }
 
      private static SetFutureDateErrorsMessage(line: any) {
@@ -183,7 +190,7 @@ export class JournalValidator
             this.FillErrorList(result); 
         }
 
-        this.SetFutureDateErrorsIfExist();
+        this.SetFutureDateErrorsIfExist(entityPM);
 
         // Validate Totals
         result = JournalValidator.ValidateTotals(entityPM)
@@ -195,8 +202,10 @@ export class JournalValidator
         return this.errorList ;
     }
 
-    SetFutureDateErrorsIfExist() {
-        if (!JournalValidator.IsFutureDateErrorsExist)
+    SetFutureDateErrorsIfExist(entityPM: JournalPM) {
+        const statusCode_JournalApproved : string = "2";
+        var isIsFutureDateErrorsExistAndJournalApproved = !JournalValidator.IsFutureDateErrorsExist && entityPM.StatusCode == statusCode_JournalApproved;
+        if (isIsFutureDateErrorsExistAndJournalApproved)
             this.errorList.push(JournalValidator.FutureDateErrorsMessage);
     }
 
