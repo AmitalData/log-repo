@@ -23,6 +23,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 ((new DF_MSG10000_ImportDeclarationMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                DF_NG_2755_MSG12001_SubmitExportDeclarationMessagingService>
+                ((new DF_NG_2755_MSG12001_SubmitExportDeclarationMessagingService()).MainInterfaceCode);
+
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 DF_NG_2755_MSG12001_SubmitDeclarationMessagingService>
                 ((new DF_NG_2755_MSG12001_SubmitDeclarationMessagingService()).MainInterfaceCode);
 
