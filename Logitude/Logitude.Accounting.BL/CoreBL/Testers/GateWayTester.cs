@@ -598,13 +598,22 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
 
             try
             {
-
-
                 var param = LogitudeXmlSerializer.JsonConvertDeserializeTObject<ParamBasic>(textBoxParam);
-                var s = new ReverseEngineerTotalByMonth_ControlAccountService(param.MyDate, param.MyTenant, param.MyGLAccId);
-                s.FixDbIntegrityFromLedgeToTotal(param.TheWholePeriod);
 
-                gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<GLAccountTotalByMonthsDTO>>(s.CompareReport.GLAccountTotalByMonthsList);
+                if (param.ChangeSupplier2Customer)
+                {
+                    var theWholePeriodReverseEngineerTotalByMonth_ControlAccountService = new TheWholePeriodReverseEngineerTotalByMonth_ControlAccountService();
+                    theWholePeriodReverseEngineerTotalByMonth_ControlAccountService.ChangeSupplier2Customer(param.MyDate, param.MyTenant);
+
+                }
+                else
+                {
+                    
+                    var s = new ReverseEngineerTotalByMonth_ControlAccountService(param.MyDate, param.MyTenant, param.MyGLAccId);
+                    s.FixDbIntegrityFromLedgeToTotal(/*param.ChangeSupplier2Customer*/);
+                    gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<GLAccountTotalByMonthsDTO>>(s.CompareReport.GLAccountTotalByMonthsList);
+                }
+                
 
 
             }
@@ -768,7 +777,7 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
 
         public string MyGLAccId { get; set; }
 
-        public bool TheWholePeriod { get; set; }
+        public bool ChangeSupplier2Customer { get; set; }
 
     }
 }
