@@ -190,7 +190,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
     get IsCloseHouseInfoVisible() {
         var myResult = false;
 
-        if (this.EntityPM.ShipmentLevelCode == "H" && this.EntityPM.MasterShipmentDataId != null) {
+        if (this.EntityPM.ShipmentLevelCode == "H" && this.EntityPM.MasterShipmentDataId != null && this.LegType == "Pre Carriage") {
             myResult = true;
         }
 
