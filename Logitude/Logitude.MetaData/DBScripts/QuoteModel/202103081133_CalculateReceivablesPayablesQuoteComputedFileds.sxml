@@ -1,0 +1,53 @@
+﻿
+<Script DBType="Main" Module="Quote" AOT="true" TargetTableName="QuoteComputedFields">
+  <Sql Version="1">
+    <![CDATA[
+declare @QuoteId as varchar(15)
+declare @Tenant as int
+declare @EstimatedPayablesInLocal as float 
+declare @EstimatedPayablesInSales as float
+declare @EstimatedReceivablesInLocal as float
+declare @EstimatedReceivablesInSales as float
+
+BEGIN
+
+    DECLARE QuoteComputedFieldsCursor CURSOR READ_ONLY
+    FOR
+
+    SELECT Id,Tenant
+    FROM QuoteComputedFields where $LastCounterWhere$
+    OPEN QuoteComputedFieldsCursor FETCH NEXT FROM QuoteComputedFieldsCursor INTO @QuoteId, @Tenant       
+    WHILE @@FETCH_STATUS = 0
+
+        BEGIN
+
+        set @EstimatedPayablesInLocal =  (select Sum(QuoteCharges.CostTotalAmountLocal) from QuoteCharges where QuoteCharges.QuoteId = @QuoteId And CostTotalAmountLocal is not null)
+
+        set @EstimatedPayablesInSales =  (select Sum(QuoteCharges.CostAmountInSaleCurrency)  from QuoteCharges where QuoteCharges.QuoteId = @QuoteId And CostAmountInSaleCurrency is not null);
+
+        set @EstimatedReceivablesInLocal = (select Sum(QuoteCharges.SaleTotalAmountLocal)  from QuoteCharges where QuoteCharges.QuoteId = @QuoteId AND QuoteCharges.IsAllIN ='0' And SaleTotalAmountLocal is not null )
+		        
+		    set @EstimatedReceivablesInSales = (select Sum(QuoteCharges.SaleAmountInSaleCurrency)  from QuoteCharges where QuoteCharges.QuoteId = @QuoteId AND QuoteCharges.IsAllIN ='0'  And SaleAmountInSaleCurrency is not null)
+        
+
+        update QuoteComputedFields  set  QuoteComputedFields.EstimatedPayablesInLocal  = @EstimatedPayablesInLocal ,
+			                                   QuoteComputedFields.EstimatedPayablesInSales = @EstimatedPayablesInSales,
+										                   	 QuoteComputedFields.EstimatedReceivablesInLocal = @EstimatedReceivablesInLocal,
+										                  	 QuoteComputedFields.EstimatedReceivablesInSales = @EstimatedReceivablesInSales
+			
+		    where  Id = @QuoteId and Tenant = @Tenant
+
+        FETCH NEXT FROM QuoteComputedFieldsCursor INTO @QuoteId, @Tenant           
+        END
+    CLOSE QuoteComputedFieldsCursor
+    DEALLOCATE QuoteComputedFieldsCursor
+
+END
+
+    ]]>
+  </Sql>
+</Script>
+
+
+
+

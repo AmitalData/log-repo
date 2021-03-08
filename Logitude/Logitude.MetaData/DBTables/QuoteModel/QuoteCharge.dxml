@@ -340,6 +340,12 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="CostAmountInSaleCurrency"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="VatTypeId"
     Type="varchar"
     Size="15">

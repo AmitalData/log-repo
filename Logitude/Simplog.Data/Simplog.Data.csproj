@@ -649,9 +649,11 @@
     <Compile Include="InvoiceModel\Repositories\SATPaymentMethodRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\SATInvoiceStatusRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\SATTransferStatusRepository.cs" />
+    <Compile Include="QuoteModel\EntityPOCOs\QuoteComputedField.cs" />
     <Compile Include="QuoteModel\EntityPOCOs\QuoteSetting.cs" />
     <Compile Include="QuoteModel\Mapping\QuoteSettingMap.cs" />
     <Compile Include="QuoteModel\Repositories\QuoteSettingRepository.cs" />
+    <Compile Include="QuoteModel\Repositories\QuoteComputedFieldRepository.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferHeader.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferLine.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferType.cs" />

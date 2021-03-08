@@ -4458,7 +4458,9 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\SharedDocument\SharedDocumentsPermissionsComponent.ts" />
     <TypeScriptCompile Include="Quote\Components\Shared\QuoteSaleCurrencyTypeComponent.ts" />
     <TypeScriptCompile Include="Quote\DataContracts\QuoteDashboardArguments.ts" />
+    <TypeScriptCompile Include="Quote\EntityLists\QuoteComputedFieldList.ts" />
     <TypeScriptCompile Include="Quote\EntityPMs\QuoteClosingReasonPM.ts" />
+    <TypeScriptCompile Include="Quote\EntityPMs\QuoteComputedFieldPM.ts" />
     <TypeScriptCompile Include="Quote\Services\ExtendedPMs\QuoteDocumentVersionExtendedPMService.ts" />
     <TypeScriptCompile Include="Quote\Services\ExtendedPMs\QuoteTemplateDetailsFieldExtendedPMService.ts" />
     <TypeScriptCompile Include="Quote\Services\ExtendedPMs\QuoteTemplateHeaderFieldExtendedPMService.ts" />
