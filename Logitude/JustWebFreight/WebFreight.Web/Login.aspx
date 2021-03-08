@@ -1908,6 +1908,7 @@
         function OnLoad() {
             const myDomain = GetLoggedDomain();
             //var isDSV = (url.toLowerCase().indexOf("dsv.co.il") > -1 || IsDSVLocalRun()) ? true : false;
+            
 
             var plUrl = "api/PrivateLable/getisprivatelableurl/?url=" + myDomain;
             $.ajax({
@@ -1938,6 +1939,7 @@
             return myDomain;
         }
         function SystemLogin(privateLable) {
+            var isCargoTracking = IsaCargoTrackingDomain(window.location.href);
             var url = "api/LogitudeApplication"
             $.ajax({
                 url: url,
@@ -1957,7 +1959,10 @@
                         IsShowUpgradeScreen = false;
                         if (privateLable) {
                             PrivateLableLogin(privateLable);
-                        } else {
+                        } 
+                        else if (isCargoTracking) {
+                            RedirectToCargotrackingSite(window.location.href);
+                        }else {
                             ComplateLoadProess();
                             BrandingFunction();
                             var Containerelem = document.getElementById("Container");
@@ -2082,6 +2087,21 @@
                 $("#DirectlyLoginScreen").css("display", "none");
             }
 
+        }
+
+        function IsaCargoTrackingDomain(domain) {
+            const cargoTrackingDomainKeywords = ["tracking.", "ecommerce."];
+            for (var i = 0; i < cargoTrackingDomainKeywords.length; i++) {
+                if (domain.indexOf(cargoTrackingDomainKeywords[i])>-1) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function RedirectToCargotrackingSite(domain) {
+            //var d = window.location.href + "/CargoTracking";
+            window.location.href = window.location.href + "CargoTracking";
         }
 
     </script>
