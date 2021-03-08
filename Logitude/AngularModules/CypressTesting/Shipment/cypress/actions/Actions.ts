@@ -294,9 +294,9 @@ export function FillPartnersTab(direction: string, transportMode: string, partne
 //#region Package Tab
 export function FillPackageTab(transportMode: string, packagesDetails: PackagesDetails[], shipmentType?: string) {
     cy.Click(ShipmentSelectors.PackagesTab, null)
-    for (let i = 0; i < packagesDetails.length; i++) {
-        packagesDetails[i].ContainerNumber = packagesDetails[i].ContainerNumber == 'Random' ? GetGeneratedRandomContainerNumber() : packagesDetails[i].ContainerNumber;
-    }
+    // for (let i = 0; i < packagesDetails.length; i++) {
+    //     packagesDetails[i].ContainerNumber = packagesDetails[i].ContainerNumber == 'Random' ? GetGeneratedRandomContainerNumber() : packagesDetails[i].ContainerNumber;
+    // }
     for (let i = 0; i < packagesDetails.length; i++) {
         cy.Click(ShipmentSelectors.AddPackage, null)
         if (Conditions.HasPacakageType(shipmentType)) {
