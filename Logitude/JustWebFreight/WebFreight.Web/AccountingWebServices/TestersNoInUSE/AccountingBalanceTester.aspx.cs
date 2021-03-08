@@ -588,7 +588,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 MyTenant = 989,
                 MyDate = DateTime.Now.AddMonths(-1),
                 MyGLAccId = "1-131321",
-                TheWholePeriod = false,
+                ChangeSupplier2Customer = false,
 
             };
             try
@@ -604,11 +604,20 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 }
 
                 param = LogitudeXmlSerializer.DeserializeObject<ParamBasic>(_TextBoxParam.Text);
-                var s = new ReverseEngineerTotalByMonth_ControlAccountService(param.MyDate, param.MyTenant, param.MyGLAccId);
-                s.FixDbIntegrityFromLedgeToTotal(param.TheWholePeriod);
+                if (param.ChangeSupplier2Customer)
+                {
+                    var theWholePeriodReverseEngineerTotalByMonth_ControlAccountService = new TheWholePeriodReverseEngineerTotalByMonth_ControlAccountService();
+                    theWholePeriodReverseEngineerTotalByMonth_ControlAccountService.ChangeSupplier2Customer(param.MyDate, param.MyTenant);
 
-                var SerializeObjectByte = LogitudeXmlSerializer.SerializeObject<List<GLAccountTotalByMonthsDTO>>(s.CompareReport.GLAccountTotalByMonthsList);
-                ReloadGrid(SerializeObjectByte);
+                }
+                else
+                {
+                    var s = new ReverseEngineerTotalByMonth_ControlAccountService(param.MyDate, param.MyTenant, param.MyGLAccId);
+                    s.FixDbIntegrityFromLedgeToTotal();
+                    var SerializeObjectByte = LogitudeXmlSerializer.SerializeObject<List<GLAccountTotalByMonthsDTO>>(s.CompareReport.GLAccountTotalByMonthsList);
+                    ReloadGrid(SerializeObjectByte);
+                }
+                
 
             }
             catch (Exception)
@@ -2782,7 +2791,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
         public DateTime MyDate { get; set; }
 
         public string MyGLAccId { get; set; }
-        public bool TheWholePeriod { get;  set; }
+        public bool ChangeSupplier2Customer { get;  set; }
     }
 
     class JournalTesterClass
