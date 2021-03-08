@@ -2012,6 +2012,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         myReceivable.Rate = item.ForiegnExchangeRate;
                         myReceivable.ProfitCurrencyExchangeRate = entityPM.ProfitCurrencyExchangeRate;
 
+
                         // Amount
                         double? TotalAmount = 0;
                         if (item.MeasurementCode == "STFE")
@@ -2096,6 +2097,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             myReceivable.AmountInProfitCurrency = MethodHelper.Round(myReceivable.TotalAmountLocal / myReceivable.ProfitCurrencyExchangeRate, 2);
                         }
 
+                        myReceivable.VatAmountLocal = MethodHelper.Round(item.LocalCurrencyAmount + item.LocalCurrencyAmount * item.VatPercentage /100, 2);
+                        myReceivable.VatAmountProfit= MethodHelper.Round( item.ProfitCurrencyAmount + item.ProfitCurrencyAmount * item.VatPercentage / 100, 2);
                         shipmentReceivableRepository.Update(myReceivable);
                     }
                 }
@@ -2181,6 +2184,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 myReceivable.ARInvoiceLineId = null;
                 myReceivable.ARInvoiceId = null;
                 myReceivable.ShipmentReceivableLineStatusCode = "OAMT";
+                this.CalculateReceivableVatAmount(myReceivable);
                 shipmentReceivableRepository.Update(myReceivable);
 
                 List<ShipmentReceivable> ChildReceivables = shipmentReceivableRepository.GetShipmentReceivablesByParentId(receivableId, tenant);
@@ -2193,6 +2197,37 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
 
                 shipmentReceivableRepository.SubmitChanges();
+            }
+        }
+
+        private void CalculateReceivableVatAmount(ShipmentReceivable itemPM)
+        {
+            string receivableVatTypeId = null;
+            Shipment shipment = shipmentRepository.GetSingleShipment(itemPM.ShipmentId, itemPM.Tenant);
+            if (!string.IsNullOrEmpty(shipment.CustomerId))
+            {
+                Card myCard = CardRepository.GetSingleCard(shipment.CustomerId, tenant, false);
+                if (myCard != null)
+                {
+                    receivableVatTypeId = myCard.VatTypeId;
+                }
+            }
+
+            if (string.IsNullOrEmpty(receivableVatTypeId))
+            {
+                receivableVatTypeId = itemPM.VatTypeId;
+            }
+
+            if (!string.IsNullOrEmpty(receivableVatTypeId))
+            {
+                this.InitializeVATs();
+                var vatTypePercentagePM =  this.allVatPercentages.Where(d => d.VatTypeId == receivableVatTypeId).FirstOrDefault();
+                if (vatTypePercentagePM != null)
+                {
+                    var percentage = vatTypePercentagePM.Percentage;
+                    itemPM.VatAmountLocal = MethodHelper.Round(itemPM.TotalAmountLocal + (itemPM.TotalAmountLocal * percentage / 100), 2);
+                    itemPM.VatAmountProfit = MethodHelper.Round(itemPM.AmountInProfitCurrency + (itemPM.AmountInProfitCurrency * percentage / 100), 2);
+                }
             }
         }
         #endregion

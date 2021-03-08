@@ -32,6 +32,8 @@ import {ObservableCollection} from '../../../../Infrastructure/Utilities/Observa
 import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
 import {QuotePMService} from '../../../../Quote/Services/StandardPMs/QuotePMService';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
+import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
 
 @Component({
     
@@ -59,6 +61,9 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
     public IsEditExchangeRateVisible: boolean = false;
     private myDomainService: ShipmentDomainService;
     private CurrentSession = SessionLocator.SelectedSession;
+    public CommonDomainService: CommonDomainService;
+    public CardListService: CardListService;
+
     constructor(private entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -71,6 +76,8 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
         this.ItemsSource = new ObservableCollection([]);
         this.myDomainService = new ShipmentDomainService();
+        this.CommonDomainService = new CommonDomainService();
+        this.CardListService = new CardListService();
         this.Listen();
         this.Initialize();
         this.SetEditEnabled();
@@ -1653,7 +1660,6 @@ export class ShipmentReceivableItem extends BaseComponent {
             this.EntityPM.IATACodeId = list.IATACodeId;
             //this.EntityPM.IsBackToBack = list.IsBackToBack;
             this.EntityPM.IsExpense = list.IsExpense;
-
             this.SetPrepaidCollectId();
 
             if (!AppTool.IsNullOrEmpty(list.ReceivablesDefaultCurrencyId)) {
@@ -1692,6 +1698,37 @@ export class ShipmentReceivableItem extends BaseComponent {
             //this.EntityPM.IsBackToBack = false;
         }
     }
+
+    //CalculateReceivableVatAmount() {
+    //    var receivableVatTypeId = null;
+    //    this.fatherComponent.CardListService.getSingle(this.fatherComponent.EntityPM.CustomerId).subscribe((myResponse: ServiceResponse) => {
+    //        if (!myResponse.HasError) {
+    //            receivableVatTypeId = myResponse.Result.VatTypeId;
+    //        }
+    //    });
+
+    //    if (AppTool.IsNullOrEmpty(receivableVatTypeId)) {
+    //        receivableVatTypeId = this.VatTypeId;
+    //    }
+
+    //    if (!AppTool.IsNullOrEmpty(receivableVatTypeId)) {
+    //        var loadingDate = this.EntityPM.CreateDate;
+    //        if (loadingDate == null) {
+    //            loadingDate = DateTool.GetCurrentDateAsUtc();
+    //        }
+    //        this.fatherComponent.CommonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse: ServiceResponse) => {
+    //            if (!myResponse.HasError) {
+    //                var vatTypePercentagesList = myResponse.Result;
+    //                var vatTypePercentagePM = vatTypePercentagesList.filter(d => d.VatTypeId == receivableVatTypeId)[0];
+    //                if (vatTypePercentagePM != null) {
+    //                    var percentage = vatTypePercentagePM.Percentage;
+    //                    this.EntityPM.VatAmountLocal = this.TotalAmountLocal + AppTool.Round((this.TotalAmountLocal * percentage / 100), 2);
+    //                    this.EntityPM.VatAmountProfit = this.AmountInProfitCurrency + AppTool.Round((this.AmountInProfitCurrency * percentage / 100), 2);
+    //                }
+    //            }
+    //        });
+    //    }
+    //}
 
     get VatTypeId() { return this.EntityPM.VatTypeId; }
     set VatTypeId(value: string) {
@@ -2057,6 +2094,8 @@ export class ShipmentReceivableItem extends BaseComponent {
             });
 
             this.ComputeInsideReceivablesData();
+            var Generator = new ShipmentGenerator(this.fatherComponent.EntityPM, this.fatherComponent.AllRates);
+            Generator.CalculateReceivableVatAmount(this.EntityPM);
         }
     }
 
@@ -2064,6 +2103,8 @@ export class ShipmentReceivableItem extends BaseComponent {
     set AmountInProfitCurrency(newVaule: number) {
         if (this.EntityPM.AmountInProfitCurrency != newVaule) {
             this.EntityPM.AmountInProfitCurrency = AppTool.Round(newVaule, 2);
+            var Generator = new ShipmentGenerator(this.fatherComponent.EntityPM, this.fatherComponent.AllRates);
+            Generator.CalculateReceivableVatAmount(this.EntityPM);
         }
     }
 

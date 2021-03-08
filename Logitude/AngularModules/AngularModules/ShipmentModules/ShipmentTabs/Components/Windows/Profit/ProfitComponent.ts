@@ -193,12 +193,14 @@ export class ProfitComponent {
                     itemGrouped.ChargeTypeName = itemReceivable.ChargesTypeName;
                     itemGrouped.ReceivableOpenedAmount = itemReceivableOpenedAmount;
                     itemGrouped.ReceivableAcountedAmount = itemReceivableAcountedAmount;
+                    itemGrouped.ReceivableAmountWithVat = itemReceivable.VatAmountLocal;
                     myReceivables.push(itemGrouped);
                 }
 
                 else {
                     itemGrouped.ReceivableOpenedAmount += itemReceivableOpenedAmount;
                     itemGrouped.ReceivableAcountedAmount += itemReceivableAcountedAmount;
+                    itemGrouped.ReceivableAmountWithVat += itemReceivable.VatAmountLocal;
                 }
             }
         });
@@ -224,12 +226,14 @@ export class ProfitComponent {
                     itemGrouped.ChargeTypeName = itemPayable.ChargesTypeName;
                     itemGrouped.PayableOpenedAmount = itemPayableOpenedAmount;
                     itemGrouped.PayableAcountedAmount = itemPayableAcountedAmount;
+                    itemGrouped.PayableAmountWithVat = itemPayable.VatAmountLocal;
                     myPayables.push(itemGrouped);
                 }
 
                 else {
                     itemGrouped.PayableOpenedAmount += itemPayableOpenedAmount;
                     itemGrouped.PayableAcountedAmount += itemPayableAcountedAmount;
+                    itemGrouped.PayableAmountWithVat += itemPayable.VatAmountLocal;
                 }
             }
         });
@@ -242,6 +246,7 @@ export class ProfitComponent {
             record.PayableOpenedAmount = this.Fixed(item.PayableOpenedAmount);
             record.PayableAcountedAmount = this.Fixed(item.PayableAcountedAmount);
             record.PayableAmount = this.Fixed(item.PayableOpenedAmount + item.PayableAcountedAmount);
+            record.PayableAmountWithVat = this.Fixed(item.PayableAmountWithVat);
 
             var rec: ProfitClass = myReceivables.filter(f => f.ChargeTypeId == item.ChargeTypeId)[0];
             if (rec != null) {
@@ -249,6 +254,7 @@ export class ProfitComponent {
                 record.ReceivableOpenedAmount = this.Fixed(rec.ReceivableOpenedAmount);
                 record.ReceivableAcountedAmount = this.Fixed(rec.ReceivableAcountedAmount);
                 record.ReceivableAmount = this.Fixed(rec.ReceivableOpenedAmount + rec.ReceivableAcountedAmount);
+                record.ReceivableAmountWithVat = this.Fixed(rec.ReceivableAmountWithVat);
                 record.Profit = (rec.ReceivableOpenedAmount + rec.ReceivableAcountedAmount) - (item.PayableOpenedAmount + item.PayableAcountedAmount);
             }
 
@@ -268,7 +274,7 @@ export class ProfitComponent {
             record.ReceivableAcountedAmount = this.Fixed(item.ReceivableAcountedAmount);
             record.ReceivableAmount = this.Fixed(item.ReceivableOpenedAmount + item.ReceivableAcountedAmount);
             record.Profit = item.ReceivableOpenedAmount + item.ReceivableAcountedAmount;
-
+            record.ReceivableAmountWithVat = this.Fixed(item.ReceivableAmountWithVat);
             this.ProfitsCollection.push(record);
         });
     }
@@ -299,12 +305,14 @@ export class ProfitComponent {
                     itemGrouped.ChargeTypeName = itemReceivable.ChargesTypeName;
                     itemGrouped.ReceivableOpenedAmount = itemReceivableOpenedAmount;
                     itemGrouped.ReceivableAcountedAmount = itemReceivableAcountedAmount;
+                    itemGrouped.ReceivableAmountWithVat = itemReceivable.VatAmountProfit;
                     myReceivables.push(itemGrouped);
                 }
 
                 else {
                     itemGrouped.ReceivableOpenedAmount += itemReceivableOpenedAmount;
                     itemGrouped.ReceivableAcountedAmount += itemReceivableAcountedAmount;
+                    itemGrouped.ReceivableAmountWithVat += itemReceivable.VatAmountProfit;
                 }
             }
         });
@@ -330,12 +338,14 @@ export class ProfitComponent {
                     itemGrouped.ChargeTypeName = itemPayable.ChargesTypeName;
                     itemGrouped.PayableOpenedAmount = itemPayableOpenedAmount;
                     itemGrouped.PayableAcountedAmount = itemPayableAcountedAmount;
+                    itemGrouped.PayableAmountWithVat = itemPayable.VatAmountProfit;
                     myPayables.push(itemGrouped);
                 }
 
                 else {
                     itemGrouped.PayableOpenedAmount += itemPayableOpenedAmount;
                     itemGrouped.PayableAcountedAmount += itemPayableAcountedAmount;
+                    itemGrouped.PayableAmountWithVat += itemPayable.VatAmountProfit;
                 }
             }
         });
@@ -348,6 +358,7 @@ export class ProfitComponent {
             record.PayableOpenedAmount = this.Fixed(item.PayableOpenedAmount);
             record.PayableAcountedAmount = this.Fixed(item.PayableAcountedAmount);
             record.PayableAmount = this.Fixed(item.PayableOpenedAmount + item.PayableAcountedAmount);
+            record.PayableAmountWithVat = this.Fixed(item.PayableAmountWithVat); 
 
             var rec: ProfitClass = myReceivables.filter(f => f.ChargeTypeId == item.ChargeTypeId)[0];
             if (rec != null) {
@@ -355,6 +366,7 @@ export class ProfitComponent {
                 record.ReceivableOpenedAmount = this.Fixed(rec.ReceivableOpenedAmount);
                 record.ReceivableAcountedAmount = this.Fixed(rec.ReceivableAcountedAmount);
                 record.ReceivableAmount = this.Fixed(rec.ReceivableOpenedAmount + rec.ReceivableAcountedAmount);
+                record.ReceivableAmountWithVat = this.Fixed(rec.ReceivableAmountWithVat);
                 record.Profit = (rec.ReceivableOpenedAmount + rec.ReceivableAcountedAmount) - (item.PayableOpenedAmount + item.PayableAcountedAmount);
             }
 
@@ -374,7 +386,7 @@ export class ProfitComponent {
             record.ReceivableAcountedAmount = this.Fixed(item.ReceivableAcountedAmount);
             record.ReceivableAmount = this.Fixed(item.ReceivableOpenedAmount + item.ReceivableAcountedAmount);
             record.Profit = item.ReceivableOpenedAmount + item.ReceivableAcountedAmount;
-
+            record.ReceivableAmountWithVat = this.Fixed(item.ReceivableAmountWithVat);
             this.ProfitsCollection.push(record);
         });
     }
@@ -565,4 +577,6 @@ class ProfitClass {
     public ReceivableAmount: number = null;
     public PayableAmount: number = null;
     public Profit: number = null;
+    public ReceivableAmountWithVat: number = null;
+    public PayableAmountWithVat: number = null;
 }

@@ -84,12 +84,20 @@
                                     {{item.ChargeTypeName}}
                                 </td>
 
-                                <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 3px;">
+                                <td *ngIf="IncludingVAT" class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 3px;">
+                                    {{item.ReceivableAmountWithVat | NumbersPipe:'N2'}}
+                                </td>
+
+                                <td *ngIf="!IncludingVAT" class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 3px;">
                                     {{item.ReceivableAmount | NumbersPipe:'N2'}}
                                 </td>
 
-                                <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 3px;">
+                                <td *ngIf="!IncludingVAT" class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 3px;">
                                     {{item.PayableAmount | NumbersPipe:'N2'}}
+                                </td>
+
+                                <td *ngIf="IncludingVAT" class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 3px;">
+                                    {{item.PayableAmountWithVat | NumbersPipe:'N2'}}
                                 </td>
 
                                 <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px; text-align: right; padding-right: 3px;" [ngStyle]="{color: item.Profit | StringToColorPipe:'number'}">
