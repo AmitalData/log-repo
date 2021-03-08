@@ -1004,7 +1004,7 @@ class JournalLineModel extends BaseComponent {
             if(this.Currency){
                 if(this.Currency.Id ==SessionLocator.TenantPM.CurrencyId)  this.ForeignAmount= this.LocalAmount;
             }
-            if (!this.ForeignAmount) this.GetExchangeRate(this.CurrencyId);
+            if (!this.ForeignAmount && this.CurrencyId) this.GetExchangeRate(this.CurrencyId);
             // convert amount
             // if (!AppTool.IsNullOrEmpty(value) && this.CurrencyId && this.currencyRate) {
             //     this.isForeignEntered = true;
@@ -1045,7 +1045,7 @@ class JournalLineModel extends BaseComponent {
             // set value
             this.JournalLinePM.ForeignAmount = value;
             this.parent.CalculateTotals();
-            if (!this.LocalAmount) this.GetExchangeRate(this.CurrencyId);
+            if (!this.LocalAmount && this.CurrencyId) this.GetExchangeRate(this.CurrencyId);
             // convert amount
             // if (value != null && this.CurrencyId && this.currencyRate) {
             //     if (1 || !this.isRateCoverted)
@@ -1168,7 +1168,10 @@ class JournalLineModel extends BaseComponent {
         }
     }
 
-
+    SetCurrencyForSingleAccount() {     
+            this.CurrencyId = this.creditAccount.CurrencyId;
+            this.CurrencyCode = this.creditAccount.CurrencyCode;     
+    }
     creditAccount: GLAccountPM;
     get CreditAccount() { return this.creditAccount; }
     set CreditAccount(value: GLAccountPM) {
@@ -1178,15 +1181,9 @@ class JournalLineModel extends BaseComponent {
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.CreditAccountName = value.LocalName;
-
-            if (this.ActionCode == "1" && !this.creditAccount.IsMultiCurrency) {
-                this.CurrencyId = this.creditAccount.CurrencyId;
-                this.CurrencyCode = this.creditAccount.CurrencyCode;
-            }
-            else if (this.ActionCode == "3" && !this.creditAccount.IsMultiCurrency) {
-                this.CurrencyId = this.creditAccount.CurrencyId;
-                this.CurrencyCode = this.creditAccount.CurrencyCode;
-            }
+            if (!this.creditAccount.IsMultiCurrency) {
+                this.SetCurrencyForSingleAccount();
+            }           
             else {
                 //this.CurrencyId = null;
                 //this.CurrencyCode = null;
