@@ -685,7 +685,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
 
             reportParameters.ChartOfAccountsTypeCode = GetFilterValue<string>("ChartOfAccountsTypeCode");
-            reportParameters.ChartOfAccountsId = GetFilterValue<string>("ChartOfAccountId");
+            reportParameters.ChartOfAccountsId = GetFilterValue<string>("ChartOfAccountsId");
 
 
             SetReportCategoryParameters(reportParameters);
