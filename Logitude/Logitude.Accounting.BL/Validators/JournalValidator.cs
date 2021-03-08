@@ -542,8 +542,9 @@ namespace Logitude.Accounting.BL.Validators
 
         private List<string> ValidateExchangeRate(JournalLinePM journalLine, List<string> errors)
         {
-          
-            RatesTable entityPoco = ratesTableRepository.GetExchageRateByValueAndDate(TenantCurrency, journalLine.CurrencyId, journalLine.AccountingDate, journalLine.Tenant);
+            if (journalLine.CurrencyId == TenantCurrency) return errors;
+            RatesTable entityPoco = ratesTableRepository.GetExchageRateByValueAndDate(TenantCurrency, 
+                journalLine.CurrencyId, journalLine.AccountingDate, journalLine.Tenant);
             if (entityPoco == null)
             {
                 errors.Add(TranslateTextsClass.Translate("Journal.O.ExchangeRateValidation", journalLine.Tenant) + " " + journalLine.Line);
