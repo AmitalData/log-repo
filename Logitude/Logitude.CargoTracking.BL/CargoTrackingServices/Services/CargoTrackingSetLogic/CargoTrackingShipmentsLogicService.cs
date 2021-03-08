@@ -146,6 +146,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                 tableRow.SetField("CurrentMilestoneDate", tableRow["DeliveredDate"]);
 
             }
+            if (!IsFieldNullOrEmpty(tableRow, "DeliveryDone") && !tableRow["DeliveryDone"].Equals("False"))
+            {
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.DeliveryOut);
+                tableRow.SetField("CurrentMilestoneDate", tableRow["DeliveryDate"]);
+
+            }
             else if (!IsFieldNullOrEmpty(tableRow, "AssignedTruckerDone") && !tableRow["AssignedTruckerDone"].Equals("False"))
             {
                 tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.AssignedToTrucker);
