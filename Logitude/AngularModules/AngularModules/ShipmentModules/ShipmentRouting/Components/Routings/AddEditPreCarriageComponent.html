@@ -7,6 +7,14 @@
         </td>
     </tr>
 
+    <tr style="height: 1px;" *ngIf="IsCloseHouseInfoVisible">
+        <td>
+            <div class="OrangeInfo" style="margin: 5px;">
+                In house shipments, Pre Carriage should be edited from the master
+            </div>
+        </td>
+    </tr>
+
     <tr *ngIf="LegType =='Pre Carriage'">
         <td>
             <table>

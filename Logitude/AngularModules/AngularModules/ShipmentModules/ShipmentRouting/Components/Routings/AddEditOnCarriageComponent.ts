@@ -98,6 +98,16 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         }
     }
 
+    get IsCloseHouseInfoVisible() {
+        var myResult = false;
+
+        if (this.EntityPM.ShipmentLevelCode == "H" && this.EntityPM.MasterShipmentDataId != null) {
+            myResult = true;
+        }
+
+        return myResult;
+    }
+
     BuildData() {
         this.ItemsSource = [];
         var myItems: ShipmentPackagePM[];

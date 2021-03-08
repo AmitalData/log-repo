@@ -187,6 +187,16 @@ export class AddEditPreCarriageComponent extends BaseComponent {
         this.UIProperties.SetVisibility("PreCarriageVesselId", this.ObjectTableName, this.PreCarriageTransportModeId == "O" ? true : false);
     }
 
+    get IsCloseHouseInfoVisible() {
+        var myResult = false;
+
+        if (this.EntityPM.ShipmentLevelCode == "H" && this.EntityPM.MasterShipmentDataId != null) {
+            myResult = true;
+        }
+
+        return myResult;
+    }
+
     public CarrierDependencyProperty1: string = null;
     SetDependencies() {
         var myResult: string = null;
