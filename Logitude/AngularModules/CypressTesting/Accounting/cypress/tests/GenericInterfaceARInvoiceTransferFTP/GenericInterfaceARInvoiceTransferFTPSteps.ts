@@ -167,9 +167,9 @@ Then("the ARInvoice should appear in AR Not Ready Invoices", () => {
 Given("an external IDs with the following details", (dataTable) => {
   const ExternalIDs = dataTable.hashes()[0];
   AccountingActions.ClickOnRowDependingOnARInvoiceNumber(ARInvoiceNumber)
-  AccountingActions.FillExternalID(BaseSelectors.TestCompany, ExternalIDs.BillTo)
-  AccountingActions.FillExternalID(BaseSelectors.EUR, ExternalIDs.Currency)
-  AccountingActions.FillExternalID(BaseSelectors.AirFreight, ExternalIDs.ChargesType)
+  AccountingActions.FillExternalID(BaseSelectors.Partner, "BillTo", ExternalIDs.BillTo)
+  AccountingActions.FillExternalID(BaseSelectors.Currency ,"InvoiceCurrency", ExternalIDs.Currency)
+  AccountingActions.FillExternalID(BaseSelectors.ChargesType ,"ChargeType", ExternalIDs.ChargesType)
 });
 
 When("add the external IDs", () => {

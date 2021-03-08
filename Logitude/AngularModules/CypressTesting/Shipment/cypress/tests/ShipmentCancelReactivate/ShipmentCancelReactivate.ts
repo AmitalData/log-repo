@@ -49,12 +49,12 @@ Then("the shipment should cancel successfully", () => {
   Actions.ValidateShipmentFields(true);
 }); 
 
-When("reactive the shipment with {string} Note",(note)=>{
+When("reactivate the shipment with {string} Note",(note)=>{
   EventNote = note
   Actions.ReactiveShipment(note);
 })
 
-Then("the shipment should reactive successfully",()=>{
+Then("the shipment should reactivate successfully",()=>{
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
   Actions.ValidateCancelIconExist(false);
   Actions.ValidateShipmentEventActions(ShipmentSelectors.EventsTab,EventNote);
