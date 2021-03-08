@@ -208,20 +208,17 @@ export class AddEditExceptionReasonComponent extends BaseComponent {
                             this._referantExceptionPMService.insert(item.EntityPM).subscribe((response: any) => {
                                 item.IsNew = false;
                                 item.ShowCode = true;
-                                SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.EntityPM.DeclarationId, { rowIndex: this.rowIndex });
-                                SessionLocator.SelectedSession.CloseCurrentWindow();
+                                this.IsLastItemInCollection(item);
                             });
                         } else if (item.EntityPM.IsDirty == true) {
                             this._referantExceptionPMService.update(item.EntityPM).subscribe((response: any) => {
-                                SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.EntityPM.DeclarationId, { rowIndex: this.rowIndex });
-                                SessionLocator.SelectedSession.CloseCurrentWindow();
+                                this.IsLastItemInCollection(item);
                             });
                         } else {
-                            SessionLocator.SelectedSession.CloseCurrentWindow();
+                            this.IsLastItemInCollection(item);
                         }
                     });
                     if (this.ReferantExceptionItemsSource.Collection.length == 0) {
-                        SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.EntityPM.DeclarationId, { rowIndex: this.rowIndex });
                         SessionLocator.SelectedSession.CloseCurrentWindow();
                     }
                 });
@@ -237,6 +234,13 @@ export class AddEditExceptionReasonComponent extends BaseComponent {
     OnRowSelected(itemComponent: any) {
         this.SelectedRow = itemComponent;
         this.IsChanged = true;
+    }
+
+    IsLastItemInCollection(item: any) {
+        var lastItem = this.ReferantExceptionItemsSource.Collection[this.ReferantExceptionItemsSource.Collection.length-1]
+        if (item == lastItem) {
+            SessionLocator.SelectedSession.CloseCurrentWindow();
+        }
     }
 
     OnRowEnded($event) {
