@@ -1169,13 +1169,8 @@ class JournalLineModel extends BaseComponent {
     }
 
     SetCurrencyForSingleAccount() {
-        if (this.ActionCode == "1") {
-            this.CurrencyId = this.creditAccount.CurrencyId;
-            this.CurrencyCode = this.creditAccount.CurrencyCode;
-        }
-        else if (this.ActionCode == "3") {
-            this.CurrencyId = this.creditAccount.CurrencyId;
-            this.CurrencyCode = this.creditAccount.CurrencyCode;
+        if (!this.CreditAccount.IsMultiCurrency) {
+
         }
     }
     creditAccount: GLAccountPM;
@@ -1187,9 +1182,16 @@ class JournalLineModel extends BaseComponent {
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.CreditAccountName = value.LocalName;
-            if (!this.creditAccount.IsMultiCurrency) {
-                this.SetCurrencyForSingleAccount();
-            }           
+           
+          
+            if (this.ActionCode == "1" && !this.creditAccount.IsMultiCurrency) {
+                this.CurrencyId = this.creditAccount.CurrencyId;
+                this.CurrencyCode = this.creditAccount.CurrencyCode;
+            }
+            else if (this.ActionCode == "3" && !this.creditAccount.IsMultiCurrency) {
+                this.CurrencyId = this.creditAccount.CurrencyId;
+                this.CurrencyCode = this.creditAccount.CurrencyCode;
+            }
             else {
                 //this.CurrencyId = null;
                 //this.CurrencyCode = null;
