@@ -1730,6 +1730,50 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
         }
 
+        public HttpResponseMessage PostSendExportPaymentOnly(CustomFileCreditRequestParams requestParamsCredit)
+        {
+            try
+            {
+
+
+
+                CustomFileCreditResponseData responseData = new CustomFileCreditResponseData();
+                GenericRequestParams submitRequestParams = new GenericRequestParams();
+                submitRequestParams.AppicationId = requestParamsCredit.AppicationId;
+                submitRequestParams.InterfaceTypeCode = requestParamsCredit.InterfaceTypeCode;
+                submitRequestParams.PBId = requestParamsCredit.PBId;
+                submitRequestParams.CustomsRequestsSheetId = requestParamsCredit.CustomsRequestsSheetId;
+                submitRequestParams.Tenant = requestParamsCredit.Tenant;
+                submitRequestParams.RequestVIA = requestParamsCredit.RequestVIA;
+                submitRequestParams.LoggingUserId = requestParamsCredit.LoggingUserId;
+                submitRequestParams.ForcePersonalSign = requestParamsCredit.ForcePersonalSign;
+
+                submitRequestParams.LoggingEntityId = requestParamsCredit.LoggingEntityId;
+                submitRequestParams.LoggingEntityId2 = requestParamsCredit.LoggingEntityId2;
+                submitRequestParams.LoggingObjectTableId = requestParamsCredit.LoggingObjectTableId;
+                submitRequestParams.LoggingObjectTableId2 = requestParamsCredit.LoggingObjectTableId2;
+
+                submitRequestParams.TestCase = requestParamsCredit.TestCase;
+
+                var messagingService = new
+                    DF_NG_2755_MSG12001_SubmitExportDeclarationMessagingService();
+                INF_MSG_GenericResponseData submitResponseData = messagingService.Send(submitRequestParams);
+                responseData.Succeeded = submitResponseData.Succeeded;
+                responseData.HasException = submitResponseData.HasException;
+                responseData.UserMessage = submitResponseData.UserMessage;
+                responseData.ContinueProcessInBackground = submitResponseData.ContinueProcessInBackground;
+
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
         public HttpResponseMessage GetDeclarationCollateralsList(string declarationId, int tenant)
         {
             try

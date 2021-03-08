@@ -99,7 +99,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     SelectedInvoiceItems: ObservableCollection;
     SelectedInvoices: ObservableCollection;
     IsDisplayOnlyAutomaticPayment: boolean;
-    BetweenMinAndMax: boolean=false;
+    BetweenMinAndMax: boolean = false;
     sumBtl: any = 0.0;
     _ErrorLogPMFileLoggerService: ErrorLogPMFileLoggerService;
     _2LogBankList: boolean = false;
@@ -900,7 +900,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         //        });
     }
 
-   
+
     JustAutoFillPaymentScreen() {
 
         if (this.sumBtl != null && this.sumBtl > 0) {
@@ -916,7 +916,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
 
             //     this.PaymentMethodsList.Collection.push(method);
-         
+
         }
         else {
             for (let method of this.PaymentMethodsList.Collection) {
@@ -927,7 +927,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 });
             }
 
-            if (!AppTool.IsNullOrEmpty( this.paymentMethodModelMax)) {
+            if (!AppTool.IsNullOrEmpty(this.paymentMethodModelMax)) {
                 this.paymentMethodModelMax.Amount = this.DeclarationPM.TotalTax;
                 this.paymentMethodModelMax.MethodTypeCode = "1";
                 this.paymentMethodTypeListService.getSingleFromCache("1").subscribe((response: ServiceResponse) => {
@@ -1038,8 +1038,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     NewProtestMethod() {
         this.NewProtestClicked();
     }
-    NewMethodMethod(isBtl = false ) {
-        this.AddPaymentMethodClicked(isBtl,true);
+    NewMethodMethod(isBtl = false) {
+        this.AddPaymentMethodClicked(isBtl, true);
     }
     CancelButtonClicked() {
         SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
@@ -1384,7 +1384,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         //                                            }
         //                                        }
         //                                    }
-                                          
+
         //                                });
 
         //                    }
@@ -2362,12 +2362,18 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     SessionLocator.SelectedSession.CloseCurrentWindow();
                 });
             });
-        if (this.AutomaticPayment != 1)
-            this.declarationMessagesService.PostSendPaymentOnly(params)
+        if (this.DeclarationPM.DeclarationTypeCode== "2") {
+            this.declarationMessagesService.PostSendExportPaymentOnly(params)
                 .subscribe(res1 => {
                 });
-        else
-            SessionLocator.SelectedSession.CloseCurrentWindow();
+        } else {
+            if (this.AutomaticPayment != 1)
+                this.declarationMessagesService.PostSendPaymentOnly(params)
+                    .subscribe(res1 => {
+                    });
+        }
+
+        SessionLocator.SelectedSession.CloseCurrentWindow();
 
     }
 
@@ -2701,7 +2707,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             }
         }
     }
-     
+
 
 }
 
@@ -2771,189 +2777,189 @@ export class PaymentMethodModel extends BaseComponent {
         if (parent.PaymentMethodsList.Length == 1) {
             this.IsAmountButtonVisibile = true;
         }
-    
+
     }
 
     LoadBanks() {
-             this.parent.declarationWebService.GetCustomBanksForCard(this.parent.DeclarationPM.CustomerId).subscribe((response: ServiceResponse) => {
-                    let BlockAgentBankForMasabDefaultValue = "";
-                    var result = response.Result.filter(d => !d.InActive);
-                    console.log("[Response] GetCustomBanksForCard: ", result);
-                    if (!AppTool.IsNullOrEmpty(result)) {
-                        //this.BanksList = result;
-                        this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_BLOCK_BANK", "NON", "NON", SessionLocator.Tenant)
-                            .subscribe(
-                                (responseDefault: ServiceResponse) => {
-                                    let obj = responseDefault.Result;
-                                    if (obj) {
-                                        BlockAgentBankForMasabDefaultValue = obj['DefaultValue'];
+        this.parent.declarationWebService.GetCustomBanksForCard(this.parent.DeclarationPM.CustomerId).subscribe((response: ServiceResponse) => {
+            let BlockAgentBankForMasabDefaultValue = "";
+            var result = response.Result.filter(d => !d.InActive);
+            console.log("[Response] GetCustomBanksForCard: ", result);
+            if (!AppTool.IsNullOrEmpty(result)) {
+                //this.BanksList = result;
+                this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_BLOCK_BANK", "NON", "NON", SessionLocator.Tenant)
+                    .subscribe(
+                        (responseDefault: ServiceResponse) => {
+                            let obj = responseDefault.Result;
+                            if (obj) {
+                                BlockAgentBankForMasabDefaultValue = obj['DefaultValue'];
 
+                            }
+
+                            this.customsSettingExtendedListService.GetSettingByTenant().subscribe((response: ServiceResponse) => {
+                                var list = response.Result;
+
+                                if (!AppTool.IsNullOrEmpty(list)) {
+                                    var customsSetting = list;
+                                    this.BanksList = result;
+                                    if (result.length == 0) {
+                                        this.customBankListService.getAllFromCache().subscribe((response: ServiceResponse) => {  // window.CustomBanks.filter(d => d.PayerTypeCode == "3" && !d.InActive)[0].Id; //CustomBankDataProvider.GetCachedList<CustomBankList>().Where(d => d.PayerTypeCode == "3" && !d.InActive).ToList();
+                                            if (response) {
+                                                if (!response.HasError) {
+
+                                                    this.agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
+                                                    if (this.agentBanks.length == 1) {
+                                                        this.InternalBankId = this.agentBanks[0].Id;
+                                                        if (!this.BankIsNull || this.MethodTypeCode != "2") {
+                                                            this.SelectedBank = this.agentBanks[0];
+                                                            this.BanksList = this.agentBanks;
+                                                        }
+                                                    }
+                                                    else {
+                                                        if (customsSetting != null && customsSetting.IsConnectedToUniFreight) {
+                                                            if (!AppTool.IsNullOrEmpty(this.parent.GetCreditInternalBankId)) {
+                                                                this.InternalBankId = this.parent.GetCreditInternalBankId;
+                                                            }
+                                                            this.SendCreditToGetBank();
+                                                        }
+                                                        this.BanksList = this.agentBanks;
+                                                        if (customsSetting != null && customsSetting.IsConnectedToUniFreight) {
+                                                            //   GetCustomBankDefaultForCard();
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        });
                                     }
+                                    else {
+                                        if (customsSetting != null) {
+                                            //this.InternalBankId = null;
+                                            if (!AppTool.IsNullOrEmpty(this.parent.GetCreditInternalBankId)) {
+                                                this.InternalBankId = this.parent.GetCreditInternalBankId;
+                                            }
+                                            //Check GDFDATA - “CGG_BLOCK_BANK” , in case “Y” -   don't allow user to choose a bank that is not connected to the Customer -
+                                            //if (customsSetting.BlockAgentBankForMasab) {
 
-                                    this.customsSettingExtendedListService.GetSettingByTenant().subscribe((response: ServiceResponse) => {
-                                        var list = response.Result;
+                                            //case: block Agent banks
+                                            if (BlockAgentBankForMasabDefaultValue == "Y") {
+                                                //if (result.length == 1)
+                                                //{
+                                                //    if (this.InternalBankId == null) {
+                                                //        this.InternalBankId = this.BanksList[0].Id;
+                                                //    }
+                                                //    var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
+                                                //    this.SelectedBank = bank;
 
-                                        if (!AppTool.IsNullOrEmpty(list)) {
-                                            var customsSetting = list;
-                                            this.BanksList = result;
-                                            if (result.length == 0) {
-                                                this.customBankListService.getAllFromCache().subscribe((response: ServiceResponse) => {  // window.CustomBanks.filter(d => d.PayerTypeCode == "3" && !d.InActive)[0].Id; //CustomBankDataProvider.GetCachedList<CustomBankList>().Where(d => d.PayerTypeCode == "3" && !d.InActive).ToList();
+                                                //}
+                                                //else if (result.length > 1)
+                                                //{
+                                                //    if (this.InternalBankId != null) {
+                                                //        var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
+                                                //        this.SelectedBank = bank;
+                                                //    }
+
+                                                //}
+
+                                                this.customBankListService.getAll().subscribe((response: ServiceResponse) => {
                                                     if (response) {
                                                         if (!response.HasError) {
+                                                            var agentBanks = [];
+                                                            agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
+                                                            agentBanks = agentBanks.concat(this.BanksList);
 
-                                                            this.agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
-                                                            if (this.agentBanks.length == 1) {
-                                                                this.InternalBankId = this.agentBanks[0].Id;
-                                                                if (!this.BankIsNull || this.MethodTypeCode!="2" ) {
-                                                                    this.SelectedBank = this.agentBanks[0];
-                                                                    this.BanksList = this.agentBanks;
+                                                            if (result.length == 1) {
+                                                                if (AppTool.IsNullOrEmpty(this.parent.GetCreditInternalBankId)) {
+                                                                    this.InternalBankId = this.BanksList[0].Id;
                                                                 }
-                                                            }
-                                                            else {
-                                                                if (customsSetting != null && customsSetting.IsConnectedToUniFreight) {
-                                                                    if (!AppTool.IsNullOrEmpty(this.parent.GetCreditInternalBankId)) {
-                                                                        this.InternalBankId = this.parent.GetCreditInternalBankId;
-                                                                    }
-                                                                    this.SendCreditToGetBank();
-                                                                }
-                                                                this.BanksList = this.agentBanks;
-                                                                if (customsSetting != null && customsSetting.IsConnectedToUniFreight) {
-                                                                    //   GetCustomBankDefaultForCard();
-                                                                }
+                                                                var bank: CustomBankList = agentBanks.filter(d => d.Id == this.InternalBankId)[0];
+                                                                this.SelectedBank = bank;
                                                             }
                                                         }
                                                     }
                                                 });
                                             }
+                                            //
+                                            //case: do not block Agent banks
                                             else {
-                                                if (customsSetting != null) {
-                                                    //this.InternalBankId = null;
-                                                    if (!AppTool.IsNullOrEmpty(this.parent.GetCreditInternalBankId)) {
-                                                        this.InternalBankId = this.parent.GetCreditInternalBankId;
-                                                    }
-                                                    //Check GDFDATA - “CGG_BLOCK_BANK” , in case “Y” -   don't allow user to choose a bank that is not connected to the Customer -
-                                                    //if (customsSetting.BlockAgentBankForMasab) {
-
-                                                    //case: block Agent banks
-                                                    if (BlockAgentBankForMasabDefaultValue == "Y") {
-                                                        //if (result.length == 1)
-                                                        //{
-                                                        //    if (this.InternalBankId == null) {
-                                                        //        this.InternalBankId = this.BanksList[0].Id;
-                                                        //    }
-                                                        //    var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
-                                                        //    this.SelectedBank = bank;
-
-                                                        //}
-                                                        //else if (result.length > 1)
-                                                        //{
-                                                        //    if (this.InternalBankId != null) {
-                                                        //        var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
-                                                        //        this.SelectedBank = bank;
-                                                        //    }
-
-                                                        //}
-
-                                                        this.customBankListService.getAll().subscribe((response: ServiceResponse) => {
-                                                            if (response) {
-                                                                if (!response.HasError) {
-                                                                    var agentBanks = [];
-                                                                    agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
-                                                                    agentBanks = agentBanks.concat(this.BanksList);
-
-                                                                    if (result.length == 1) {
-                                                                        if (AppTool.IsNullOrEmpty(this.parent.GetCreditInternalBankId)) {
+                                                //if no banks
+                                                if (result.length == 0) {
+                                                    this.customBankListService.getAll().subscribe((response: ServiceResponse) => {
+                                                        if (response) {
+                                                            if (!response.HasError) {
+                                                                this.agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
+                                                                if (this.agentBanks.length > 0) {
+                                                                    this.BanksList = this.agentBanks;
+                                                                    if (this.agentBanks.length == 1) {
+                                                                        if (this.InternalBankId == null) {
                                                                             this.InternalBankId = this.BanksList[0].Id;
                                                                         }
-                                                                        var bank: CustomBankList = agentBanks.filter(d => d.Id == this.InternalBankId)[0];
-                                                                        this.SelectedBank = bank;
                                                                     }
-                                                                }
-                                                            }
-                                                        });
-                                                    }
-                                                    //
-                                                    //case: do not block Agent banks
-                                                    else {
-                                                        //if no banks
-                                                        if (result.length == 0) {
-                                                            this.customBankListService.getAll().subscribe((response: ServiceResponse) => {
-                                                                if (response) {
-                                                                    if (!response.HasError) {
-                                                                        this.agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
-                                                                        if (this.agentBanks.length > 0) {
-                                                                            this.BanksList = this.agentBanks;
-                                                                            if (this.agentBanks.length == 1) {
-                                                                                if (this.InternalBankId == null) {
-                                                                                    this.InternalBankId = this.BanksList[0].Id;
-                                                                                }
-                                                                            }
-                                                                            else {
-                                                                                if (this.InternalBankId != null) {
-                                                                                    var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
-                                                                                    this.SelectedBank = bank;
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            });
-                                                        }
-                                                        //one bank
-                                                        else if (result.length == 1) {
-                                                            if (this.InternalBankId == null) {
-                                                                this.InternalBankId = this.BanksList[0].Id;
-                                                            }
-                                                            this.customBankListService.getAll().subscribe((response: ServiceResponse) => {
-                                                                if (response) {
-                                                                    if (!response.HasError) {
-                                                                        var agentBanks = [];
-                                                                        agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
-                                                                        this.BanksList = this.BanksList.concat(agentBanks);
+                                                                    else {
                                                                         if (this.InternalBankId != null) {
                                                                             var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
                                                                             this.SelectedBank = bank;
                                                                         }
                                                                     }
                                                                 }
-                                                            });
+                                                            }
                                                         }
-
-                                                        //two or more & dont block agent
-                                                        else if (result.length > 1) {
-                                                            var agentBanks = [];
-                                                            //fill connected banks
-                                                            var connectedBanks = result.filter(d => !d.InActive);
-
-                                                            //fill agent
-                                                            this.customBankListService.getAll().subscribe((response: ServiceResponse) => {
-                                                                if (response) {
-                                                                    if (!response.HasError) {
-                                                                        agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
-                                                                        //fill the LOV
-                                                                        this.BanksList = connectedBanks.concat(agentBanks);
-
-                                                                        //select bank
-                                                                        if (this.InternalBankId != null) {
-                                                                            var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
-                                                                            this.SelectedBank = bank;
-                                                                        }
-                                                                    }
-                                                                }
-                                                            });
-
-                                                        }
-
-                                                    }
+                                                    });
                                                 }
+                                                //one bank
+                                                else if (result.length == 1) {
+                                                    if (this.InternalBankId == null) {
+                                                        this.InternalBankId = this.BanksList[0].Id;
+                                                    }
+                                                    this.customBankListService.getAll().subscribe((response: ServiceResponse) => {
+                                                        if (response) {
+                                                            if (!response.HasError) {
+                                                                var agentBanks = [];
+                                                                agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
+                                                                this.BanksList = this.BanksList.concat(agentBanks);
+                                                                if (this.InternalBankId != null) {
+                                                                    var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
+                                                                    this.SelectedBank = bank;
+                                                                }
+                                                            }
+                                                        }
+                                                    });
+                                                }
+
+                                                //two or more & dont block agent
+                                                else if (result.length > 1) {
+                                                    var agentBanks = [];
+                                                    //fill connected banks
+                                                    var connectedBanks = result.filter(d => !d.InActive);
+
+                                                    //fill agent
+                                                    this.customBankListService.getAll().subscribe((response: ServiceResponse) => {
+                                                        if (response) {
+                                                            if (!response.HasError) {
+                                                                agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
+                                                                //fill the LOV
+                                                                this.BanksList = connectedBanks.concat(agentBanks);
+
+                                                                //select bank
+                                                                if (this.InternalBankId != null) {
+                                                                    var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
+                                                                    this.SelectedBank = bank;
+                                                                }
+                                                            }
+                                                        }
+                                                    });
+
+                                                }
+
                                             }
                                         }
-                                    });
-                                });
-                    }
-                
-            });
-        
+                                    }
+                                }
+                            });
+                        });
+            }
+
+        });
+
     }
 
 
@@ -3169,115 +3175,115 @@ export class PaymentMethodModel extends BaseComponent {
         if (this.methodPM.InternalBankId != value) {
             this.methodPM.InternalBankId = value;
 
-                this.customBankListService.getAllFromCache().subscribe((response: ServiceResponse) => {
-                    if (response) {
-                        if (!response.HasError) {
-                            if (!this.BankIsNull) {
-                                var customBank: CustomBankList = response.Result.filter(d => d.Id == value)[0];
+            this.customBankListService.getAllFromCache().subscribe((response: ServiceResponse) => {
+                if (response) {
+                    if (!response.HasError) {
+                        if (!this.BankIsNull) {
+                            var customBank: CustomBankList = response.Result.filter(d => d.Id == value)[0];
 
-                                if (customBank == null && this.BanksList != null) {
-                                    customBank = this.BanksList.filter(d => d.Id == value)[0];
-                                }
-                                if (customBank != null) {
-                                    this.InternalBankName = customBank.LocalName != null ? customBank.LocalName : customBank.EnglishName;
-                                    if (customBank.PayerTypeCode == "0") {
+                            if (customBank == null && this.BanksList != null) {
+                                customBank = this.BanksList.filter(d => d.Id == value)[0];
+                            }
+                            if (customBank != null) {
+                                this.InternalBankName = customBank.LocalName != null ? customBank.LocalName : customBank.EnglishName;
+                                if (customBank.PayerTypeCode == "0") {
 
-                                        this.customBankCardExtendedPMService.GetSingleCustomBanksCard(value, this.parent.DeclarationPM.CustomerId).subscribe((response: ServiceResponse) => {
+                                    this.customBankCardExtendedPMService.GetSingleCustomBanksCard(value, this.parent.DeclarationPM.CustomerId).subscribe((response: ServiceResponse) => {
 
-                                            if (response) {
-                                                if (!response.HasError) {
-                                                    var bankCard: CustomBanksCardPM = response.Result;
-                                                    if (bankCard != null) {
-                                                        this.methodPM.BankCode = customBank.BankCode;
+                                        if (response) {
+                                            if (!response.HasError) {
+                                                var bankCard: CustomBanksCardPM = response.Result;
+                                                if (bankCard != null) {
+                                                    this.methodPM.BankCode = customBank.BankCode;
 
-                                                        this.methodPM.BranchCode = customBank.BranchCode;
-                                                        this.methodPM.CustomsBranchId = customBank.CustomsBranchId;
-                                                        this.methodPM.AccountNumber = customBank.AccountNumber;
-                                                        this.methodPM.PayerActivityTypeCode = customBank.PayerTypeCode;
-                                                        this.PayerActivityTypeName = customBank.PayerTypeName;
-
-
-                                                    }
-                                                    else {
-
-                                                        var messageWindow = new MessageWindow();
-
-                                                        messageWindow.Show(TextCodeTranslator.Translate("Customs.CustomBank.O.BankNotConnectedToCustomer"));
+                                                    this.methodPM.BranchCode = customBank.BranchCode;
+                                                    this.methodPM.CustomsBranchId = customBank.CustomsBranchId;
+                                                    this.methodPM.AccountNumber = customBank.AccountNumber;
+                                                    this.methodPM.PayerActivityTypeCode = customBank.PayerTypeCode;
+                                                    this.PayerActivityTypeName = customBank.PayerTypeName;
 
 
+                                                }
+                                                else {
 
-                                                        this.InternalBankId = null;
-                                                        this.methodPM.InternalBankId = null;
-                                                        this.InternalBankName = null;
-                                                        this.SelectedBank = null;
-                                                        this.PayerActivityTypeCode = null;
-                                                        this.PayerActivityTypeName = null;
-                                                    }
+                                                    var messageWindow = new MessageWindow();
+
+                                                    messageWindow.Show(TextCodeTranslator.Translate("Customs.CustomBank.O.BankNotConnectedToCustomer"));
+
+
+
+                                                    this.InternalBankId = null;
+                                                    this.methodPM.InternalBankId = null;
+                                                    this.InternalBankName = null;
+                                                    this.SelectedBank = null;
+                                                    this.PayerActivityTypeCode = null;
+                                                    this.PayerActivityTypeName = null;
                                                 }
                                             }
-
-                                        });
-
-                                    }
-                                    else {
-                                        this.methodPM.BankCode = customBank.BankCode;
-                                        this.methodPM.BranchCode = customBank.BranchCode;
-                                        this.methodPM.CustomsBranchId = customBank.CustomsBranchId;
-                                        this.methodPM.AccountNumber = customBank.AccountNumber;
-                                        this.methodPM.PayerActivityTypeCode = customBank.PayerTypeCode;
-                                        this.PayerActivityTypeName = customBank.PayerTypeName;
-
-
-                                    }
-
-
-                                }
-
-                                if (customBank == null) {
-                                    this.methodPM.BankCode = null;
-                                    this.methodPM.BranchCode = null;
-                                    this.methodPM.CustomsBranchId = null;
-                                    this.methodPM.AccountNumber = null;
-                                    this.methodPM.PayerActivityTypeCode = null;
-
-
-
-                                }
-
-                                if (this.parent.BetweenMinAndMax && this.methodPM.PayerActivityTypeCode == "3" && this.parent.PaymentMethodsList.Length==0) {
-                                    this.BankIsNull = true;
-                                    this.methodPM.MethodTypeCode = "2";
-                                    this.methodPM.PayerActivityTypeCode = "3";
-                                    this.methodPM.Amount = this.parent.DeclarationPM.TotalTax;
-                                    this.InternalBankName = null;
-                                    this.InternalBankId = null;
-                                    this.parent.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
-                                        this.methodPM.MethodTypeName = response.Result.LocalName;
-                                    });
-                                    this.parent.customerActivityTypeListService.getSingleFromCache("3").subscribe((response: ServiceResponse) => {
-                                        this.methodPM.PayerActivityTypeName = response.Result.LocalName;
-                                    });
-
-                                    this.parent.PaymentMethodsList.Insert(this.parent.paymentMethodModelMax);
-                                }
-
-                                else if (this.parent.PaymentMethodsList.Length == 0) {
-                                    if (!AppTool.IsNullOrEmpty(this.parent.paymentPM)) {
-                                        for (let item of this.parent.paymentPM.DeclarationPaymentMethods) {
-                                            this.parent.PaymentMethodsList.Insert(new PaymentMethodModel(item, this.parent));
                                         }
-                                    }
-                                   // this.parent.PaymentMethodsList.Insert(this.methodPM);
+
+                                    });
+
                                 }
+                                else {
+                                    this.methodPM.BankCode = customBank.BankCode;
+                                    this.methodPM.BranchCode = customBank.BranchCode;
+                                    this.methodPM.CustomsBranchId = customBank.CustomsBranchId;
+                                    this.methodPM.AccountNumber = customBank.AccountNumber;
+                                    this.methodPM.PayerActivityTypeCode = customBank.PayerTypeCode;
+                                    this.PayerActivityTypeName = customBank.PayerTypeName;
+
+
+                                }
+
+
+                            }
+
+                            if (customBank == null) {
+                                this.methodPM.BankCode = null;
+                                this.methodPM.BranchCode = null;
+                                this.methodPM.CustomsBranchId = null;
+                                this.methodPM.AccountNumber = null;
+                                this.methodPM.PayerActivityTypeCode = null;
+
+
+
+                            }
+
+                            if (this.parent.BetweenMinAndMax && this.methodPM.PayerActivityTypeCode == "3" && this.parent.PaymentMethodsList.Length == 0) {
+                                this.BankIsNull = true;
+                                this.methodPM.MethodTypeCode = "2";
+                                this.methodPM.PayerActivityTypeCode = "3";
+                                this.methodPM.Amount = this.parent.DeclarationPM.TotalTax;
+                                this.InternalBankName = null;
+                                this.InternalBankId = null;
+                                this.parent.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
+                                    this.methodPM.MethodTypeName = response.Result.LocalName;
+                                });
+                                this.parent.customerActivityTypeListService.getSingleFromCache("3").subscribe((response: ServiceResponse) => {
+                                    this.methodPM.PayerActivityTypeName = response.Result.LocalName;
+                                });
+
+                                this.parent.PaymentMethodsList.Insert(this.parent.paymentMethodModelMax);
+                            }
+
+                            else if (this.parent.PaymentMethodsList.Length == 0) {
+                                if (!AppTool.IsNullOrEmpty(this.parent.paymentPM)) {
+                                    for (let item of this.parent.paymentPM.DeclarationPaymentMethods) {
+                                        this.parent.PaymentMethodsList.Insert(new PaymentMethodModel(item, this.parent));
+                                    }
+                                }
+                                // this.parent.PaymentMethodsList.Insert(this.methodPM);
                             }
                         }
                     }
+                }
 
 
 
-                });
-            }
-        
+            });
+        }
+
 
     }
 

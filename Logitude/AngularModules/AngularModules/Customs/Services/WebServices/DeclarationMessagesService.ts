@@ -339,6 +339,34 @@ export class DeclarationMessagesService {
         );
     }
 
+    PostSendExportPaymentOnly(params: CustomFileCreditRequestParams) {
+
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DeclarationWebService';
+
+            return this._http.post(
+                this._apiUrl + '/PostSendExportPaymentOnly/',
+                JSON.stringify(params),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+
+                    serviceResponse.Result = res;
+
+                    return serviceResponse;
+
+                }), catchError(ServiceHelper.HandleServiceError));
+        }
+
+        );
+    }
+
     PostExportDeclarationDataRequest(entity: ExportDeclarationDataRequestParams) {
 
         return defer(() => {
