@@ -90,6 +90,7 @@ export class CargoTrackingShipmentList {
 	DeliveryEstimationDate: Date;
 	DeliveryNotes: string;
 	DeliveryExceptionReason: string;
+	GrossWeightUnitCode: string;
 	
 }
  

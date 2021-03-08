@@ -94,6 +94,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         DeliveryEstimationDate, 
 	         DeliveryNotes, 
 	         DeliveryExceptionReason,
+	         GrossWeightUnitCode,
 	      }
 
 
@@ -181,6 +182,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         DeliveryEstimationDate, 
 	         DeliveryNotes, 
 	         DeliveryExceptionReason,
+	         GrossWeightUnitCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -502,6 +504,10 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentDate))
             {
 				entityPOCO.AssignedCustomsAgentDate = entityPM.AssignedCustomsAgentDate;
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GrossWeightUnitCode))
+            {
+				entityPOCO.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
+			}
 			}
 
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentEstDate))
@@ -892,6 +898,12 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
 					entityPM.DeliveryDate = entityPOCO.DeliveryDate;
             }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GrossWeightUnitCode))
+            {
+					entityPM.GrossWeightUnitCode = entityPOCO.GrossWeightUnitCode;
+            }
+
+		
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeliveryEstimationDate))
             {
@@ -1228,6 +1240,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
                 oldEntityPM.AssignedCustomsAgentDate = entityPM.AssignedCustomsAgentDate;
             }
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GrossWeightUnitCode))
+            {
+                oldEntityPM.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
+            }
+			
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentEstDate))
             {

@@ -169,6 +169,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public string DeliveryNotes { get; set; }
         [Column("DeliveryExceptionReason")]
 	    public string DeliveryExceptionReason { get; set; }
+        [Column("GrossWeightUnitCode")]
+	    public string GrossWeightUnitCode { get; set; }
     }
 }
 	 

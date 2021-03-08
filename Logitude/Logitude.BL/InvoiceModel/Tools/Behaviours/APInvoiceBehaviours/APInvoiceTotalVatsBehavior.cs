@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.Initializers;
@@ -374,9 +375,10 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours
             entityPM.AmountInLocalCurrency = Amount_Local;
             entityPM.AmountInProfitCurrency = Amount_Profit;
         }
+        APInvoiceTotalVATRepository invoiceTotalVatRepository;
         private void GenerateTotalVATs()
         {
-            APInvoiceTotalVATRepository invoiceTotalVatRepository = new APInvoiceTotalVATRepository(initializer.Context);
+             invoiceTotalVatRepository = new APInvoiceTotalVATRepository(initializer.Context);
 
             List<APInvoiceTotalVAT> dbTotalVats = invoiceTotalVatRepository.GetInvoiceTotalVatsByInvoiceId(entityPM.Id, entityPM.Tenant).ToList();
 
@@ -405,6 +407,21 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours
                 };
 
                 invoiceTotalVatRepository.Add(itemPOCO);
+            }
+            SubmitChangesForFullAccountingInvoices();
+
+        }
+        private bool GetAccountingActivated()
+        {
+            TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
+            TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
+            return tenantPM.AccountingActivated;
+        }
+        private void SubmitChangesForFullAccountingInvoices()
+        {
+            if (GetAccountingActivated())
+            {
+                if (!initializer.IsNewEntity) invoiceTotalVatRepository.SubmitChanges();
             }
         }
         private void InitializeAmountDueFields()

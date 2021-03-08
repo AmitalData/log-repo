@@ -42,12 +42,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         }
 
-        public int GetCommunicationLogCountForTenantInLasthour(int tenant)
+        public int GetEmailCommunicationLogCountForTenantInLasthour(int tenant)
         {
 
             DateTime datetime = TenantServerConfigration.GetCurrentDateTime(tenant).AddHours(-1);
             return (from a in context.CommunicationLogs
-                    where a.Tenant == tenant && a.CreateDate > datetime 
+                    where a.Tenant == tenant && a.CreateDate > datetime && a.CommunicationLogTypeCode == "E"
                     select a).Count();
         }
 

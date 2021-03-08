@@ -101,7 +101,8 @@ using Simplog.Data.ShipmentsModel;
 				   temp.TrailerNumber = item.TrailerNumber;
 				   temp.TransportModeCode = item.TransportModeCode;
 				   temp.Notes = item.Notes;
-				   temp.TruckerNumber = item.CarrierNumber;					
+				   temp.TruckerNumber = item.CarrierNumber;
+				   temp.DeliveryReference = item.PickUpDeliveryNumber;					
 					MyList.Add(temp);
 				}
 					
@@ -328,6 +329,14 @@ using Simplog.Data.ShipmentsModel;
 					if(!IsUpdate)// && !string.IsNullOrEmpty(item.TruckerNumber))
 					{							//throw new ApplicationException("TruckerNumber Can't be update"); 
 							temp.CarrierNumber = item.TruckerNumber;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(item.DeliveryReference))
+					{							//throw new ApplicationException("DeliveryReference Can't be update"); 
+							temp.PickUpDeliveryNumber = item.DeliveryReference;
 
 										}  
 

@@ -4980,7 +4980,7 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 Code = "BIRE",
                 Tenant = 0,
-                ShortTextCodeDefaultText = "You can create a new BI report or add from the reports we added for you by clicking on Upload a Standard Report button.",
+                ShortTextCodeDefaultText = "You can create a new BI report or add from the reports we added for you by clicking on Upload a Standard BI Report button.",
                 ObjectTableId = BIReportObject.Id,
                 VisibilityDefaultValue = true,
                 ShortTextCode = "BIReport.Tip.BITip",
