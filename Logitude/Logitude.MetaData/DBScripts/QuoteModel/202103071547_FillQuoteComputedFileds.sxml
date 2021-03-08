@@ -1,5 +1,5 @@
 ﻿
-<Script DBType="Main" Module="Quote" AOT="true" TargetTableName="Quotes">
+<Script DBType="Main" Module="Quote" AOT="true" TargetTableName="Quotes"  Pre="true">
   <Sql Version="1">
     <![CDATA[
 
