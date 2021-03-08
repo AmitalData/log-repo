@@ -15828,48 +15828,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
             }, EventTypeRepository, tenantEventTypes);
 
 
-			AddEventTypes.AddEventType(new EventTypeDetails()
-			{
-				Code = "DOCI",
-				EnglishName = "Document Received",
-				LocalName = "Document Received",
-				IsManualEntry = false,
-				ShortView = false,
-				EventTypeCategoryCode = "DOC",
-				IsAgentView = false,
-				IsCustomerView = false,
-				IsSharedLogisticsEnabled = false,
-				AllowedInAutomation = false,
-				ManualActivatedFollowUp = false,
-				IsFollowUp = true,
-				FollowUpEnglishName = "Waiting for Documentation",
-				FollowUpLocalName = "Waiting for Documentation",
-				ObjectTableId = QuoteObjectTable.Id,
-
-			}, EventTypeRepository, tenantEventTypes);
-
-
-			AddEventTypes.AddEventType(new EventTypeDetails()
-			{
-				Code = "DOCO",
-				EnglishName = "Document Printed",
-				LocalName = "Document Printed",
-				IsManualEntry = false,
-				ShortView = false,
-				EventTypeCategoryCode = "DOC",
-				IsAgentView = false,
-				IsCustomerView = false,
-				IsSharedLogisticsEnabled = false,
-				AllowedInAutomation = false,
-				ManualActivatedFollowUp = false,
-				IsFollowUp = true,
-				FollowUpEnglishName = "Print Documents",
-				FollowUpLocalName = "Print Documents",
-				ObjectTableId = QuoteObjectTable.Id,
-
-			}, EventTypeRepository, tenantEventTypes);
-
-			AddEventTypes.AddEventType(new EventTypeDetails()
+            AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "QFCR",
                 EnglishName =  "Follow up Created",
