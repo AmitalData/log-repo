@@ -591,12 +591,12 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 Id = 12,
                 Code = "DeliveryOut",
                 Name = "Delivery Out",
-                //Date = Shipment.de,
-                //EstimationDate = Shipment.DeliveredEstimationDate,
-                //Done = Shipment.DeliveredDone,
-                Notes = null,
+                Date = shipment.DeliveryDate,
+                EstimationDate = shipment.DeliveryEstimationDate,
+                Done = shipment.DeliveryDone,
+                Notes = shipment.DeliveryNotes,
                 IsCurrent = false,
-                //IsEstimation = !Shipment.DeliveredDone
+                IsEstimation = !shipment.DeliveryDone
             });
             milestones.Add(new Milestone()
             {
