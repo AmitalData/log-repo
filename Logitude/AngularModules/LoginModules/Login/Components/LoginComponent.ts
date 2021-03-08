@@ -535,7 +535,10 @@ export class LoginComponent {
                     AngularURL = SessionInfo.GetLogitudeURL() + "Angular" + version + "/index.html";
                 }
                 else {
-                    AngularURL = SessionInfo.GetLogitudeURL() + "Angular/index.html";
+                    if (SessionInfo.GetLogitudeURL().indexOf('localhost:9996') > -1)
+                        AngularURL = "http://localhost:4200/?" + data;
+                    else
+                        AngularURL = SessionInfo.GetLogitudeURL() + "Angular/index.html";
                 }
 
 

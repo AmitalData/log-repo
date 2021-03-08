@@ -414,7 +414,10 @@ export var LoginComponent = (function () {
                     AngularURL = SessionInfo.GetLogitudeURL() + "Angular" + version + "/index.html";
                 }
                 else {
-                    AngularURL = SessionInfo.GetLogitudeURL() + "Angular/index.html";
+                    if (SessionInfo.GetLogitudeURL().indexOf('localhost:9996') > -1)
+                        AngularURL = "http://localhost:4200/?" + data;
+                    else
+                        AngularURL = SessionInfo.GetLogitudeURL() + "Angular/index.html";
                 }
                 if (mypageUrl && mypageUrl.indexOf("Menu=") > -1) {
                     urlMenu = mypageUrl.split("Menu=")[1];

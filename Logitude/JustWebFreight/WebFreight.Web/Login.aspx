@@ -1906,13 +1906,38 @@
 
 
         function OnLoad() {
+            const myDomain = GetLoggedDomain();
+            //var isDSV = (url.toLowerCase().indexOf("dsv.co.il") > -1 || IsDSVLocalRun()) ? true : false;
 
-            var url = window.location.href;
-           
-            var isDSV = (url.toLowerCase().indexOf("dsv.co.il") > -1 || IsDSVLocalRun()) ? true : false;
+            var plUrl = "api/PrivateLable/getisprivatelableurl/?url=" + myDomain;
+            $.ajax({
+                url: plUrl,
+                type: 'GET',
+                contentType: 'application/json',
+
+                success: function (result) {
+                    if (result && result.EnablePrivateLable) {
+                        SystemLogin(result)
+                    }
+                    else {
+                        SystemLogin(null);
+                    }
+                },
+
+                error: function (jqXHR, textStatus, errorThrown) {
+
+                }
+            });
+        }
+
+        function GetLoggedDomain() {
+            const url = window.location.href;
             var myDomain = url.split('/')[2];
+            myDomain = myDomain.split(':')[0];
 
-
+            return myDomain;
+        }
+        function SystemLogin(privateLable) {
             var url = "api/LogitudeApplication"
             $.ajax({
                 url: url,
@@ -1922,34 +1947,24 @@
                 success: function (result) {
                     if (result == true) {
                         IsShowUpgradeScreen = true;
-                        if (isDSV == true) {
-
+                        if (privateLable) {
                             window.sessionStorage.setItem("Environment", "LogBox");
                             document.location.href = "WebPages/UpgradeScreen.aspx";
                         }
                         else BrandingFunction();
-
                     }
                     else {
                         IsShowUpgradeScreen = false;
-                        if (isDSV) {
-                            DSVLogin(myDomain);
+                        if (privateLable) {
+                            PrivateLableLogin(privateLable);
                         } else {
-
                             ComplateLoadProess();
                             BrandingFunction();
-
                             var Containerelem = document.getElementById("Container");
                             if (Containerelem) {
                                 Containerelem.style.display = 'block';
                             }
-
-
-
-
                         }
-
-
                     }
                 },
 
@@ -1957,56 +1972,37 @@
 
                 }
             });
-
-
         }
 
-        function IsDSVLocalRun() {
-            const queryString = window.location.search;
-            if (queryString)
-                return queryString.toLowerCase().indexOf("dsvlocal") > -1;
+        function IsLocalRun() {
+            const url = window.location.href;
+            if (url)
+                return url.toLowerCase().indexOf("localhost") > -1;
             else
                 return false;
         }
 
-        function DSVLogin(myDomain) {
+        function PrivateLableLogin(privateLable) {
+            if (privateLable) {
+                window.sessionStorage.setItem("ContactEmail", privateLable.ContactUsEmail);
+                window.sessionStorage.setItem("IsPrivateLabel", true);
+                window.sessionStorage.setItem("SmallLogoURL", privateLable.SmallLogoURL);
+                window.sessionStorage.setItem("LogoURL", privateLable.LogoURL);
+                window.sessionStorage.setItem("PrivateLabelUrl", privateLable.PrivateLabelUrl);
+                window.sessionStorage.setItem("PrivateLabelShortName", privateLable.PrivateLabelShortName);
+                window.sessionStorage.setItem("IsDSV", true);
+            }
 
-
-            var myLogoMethodUrl = "api/PrivateLable/getisprivatelableurl/?url=" + myDomain;
-            $.ajax({
-                url: myLogoMethodUrl,
-                type: 'GET',
-                contentType: 'application/json',
-
-                success: function (result) {
-                    if (result) IsPrivateLabel = result.EnablePrivateLable;
-                    if (IsPrivateLabel == true) {
-                        window.sessionStorage.setItem("ContactEmail", result.ContactUsEmail);
-                        window.sessionStorage.setItem("IsPrivateLabel", IsPrivateLabel);
-                        window.sessionStorage.setItem("SmallLogoURL", result.SmallLogoURL);
-                        window.sessionStorage.setItem("LogoURL", result.LogoURL);
-                        window.sessionStorage.setItem("PrivateLabelUrl", result.PrivateLabelUrl);
-                        window.sessionStorage.setItem("PrivateLabelShortName", result.PrivateLabelShortName);
-
-                        //$("#BackToLogin").attr("href", "Login.aspx?tenant=" + BrandingTenant);
-
-                    }
-                    var urlMenu = "";
-                    var mypageUrl = document.URL;
-                    if (mypageUrl && mypageUrl.indexOf("Menu=") > -1) {
-                        urlMenu = mypageUrl.split("Menu=")[1];
-                        document.location.href = "AngularLogin" + "/index.html" + ("?Menu=" + urlMenu);
-                    }
-                    else {
-                        const dsvLocal = IsDSVLocalRun() ? "?dsvlocal" : "";
-                        document.location.href = "AngularLogin" + "/index.html" + dsvLocal;
-                    }
-                    //document.location.href = "AngularLogin" + "/index.html";
-                },
-            });
-
-
-
+            var urlMenu = "";
+            var mypageUrl = document.URL;
+            if (mypageUrl && mypageUrl.indexOf("Menu=") > -1) {
+                urlMenu = mypageUrl.split("Menu=")[1];
+                document.location.href = "AngularLogin" + "/index.html" + ("?Menu=" + urlMenu);
+            }
+            else {
+                const dsvLocal = IsLocalRun() ? "?dsvlocal" : "";
+                document.location.href = "AngularLogin" + "/index.html" + dsvLocal;
+            }
         }
 
         function ComplateLoadProess() {
