@@ -56,7 +56,7 @@
   <Column
     Name="CertificateExemptionTypeCode"
     Type="varchar"
-    Size="3">
+    Size="7">
     <Constraints
       Nullable="true" />
   </Column>

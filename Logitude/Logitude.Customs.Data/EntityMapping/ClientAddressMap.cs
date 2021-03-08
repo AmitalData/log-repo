@@ -55,7 +55,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.AuthorizedSignerPermit3).HasColumnName("AuthorizedSignerPermit3").HasMaxLength(2).IsUnicode(false);
 
-            this.Property(t => t.LocalCityCode).HasColumnName("LocalCityCode").HasMaxLength(4).IsUnicode(false);
+            this.Property(t => t.LocalCityCode).HasColumnName("LocalCityCode").HasMaxLength(5).IsUnicode(false);
 
             this.Property(t => t.LocalSecondLine).HasColumnName("LocalSecondLine").HasMaxLength(25).IsUnicode(true);
 
