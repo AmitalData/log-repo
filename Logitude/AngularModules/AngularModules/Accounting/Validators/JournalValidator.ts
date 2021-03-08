@@ -1,6 +1,6 @@
 import { JournalPM } from '../EntityPMs/JournalPM';
 import { JournalLinePM } from '../EntityPMs/JournalLinePM';
-import {AppTool} from '../../Infrastructure/Tools';
+import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
 
@@ -60,7 +60,7 @@ export class JournalValidator
 
                 }
 
-                this.ValidateJournalLineForFutureDate(line);
+               // this.ValidateJournalLineForFutureDate(line);
 
                 // Credit and Debit account (same currency)
                 if (line.ActionCode == '3') {
@@ -105,7 +105,7 @@ export class JournalValidator
 
     private static CheckJournalLineForFutureDate(line: any) {
         var currentDate: Date = new Date();
-        return line.DocumentDate > currentDate.getTime() || line.AccountingDate > currentDate.getTime();
+        return line.DocumentDate > DateTool.GetCurrentDateTimeAsUtc() || line.AccountingDate > DateTool.GetCurrentDateTimeAsUtc();
  
     }
 
