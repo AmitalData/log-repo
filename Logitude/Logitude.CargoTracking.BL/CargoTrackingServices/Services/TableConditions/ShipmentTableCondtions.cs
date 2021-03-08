@@ -29,7 +29,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 + ", P.ShipmentNumber as ForwardingShipmentNumber"
                 
                 + " FROM dbo." + table.DBTableName + " P JOIN dbo." + table.DBTableName + // P: forwarding shipment
-                " C ON P.CustomFileId = C.Id  Left Outer JOIN dbo.ShipmentComputedFields com on com.Id = C.Id  " + // C: custome fckn shipment
+                " C ON P.CustomFileId = C.Id  Left Outer JOIN dbo.ShipmentComputedFields com on com.Id = C.Id  " + // C: custom shipment
                 "Left outer JOIN dbo.ShipmentMasterDatas Mas on Mas.Id = C.MasterShipmentDataId ";
 
             if (cargoTrackingDataBaseArgs.CargoTrackingArguments == null)
