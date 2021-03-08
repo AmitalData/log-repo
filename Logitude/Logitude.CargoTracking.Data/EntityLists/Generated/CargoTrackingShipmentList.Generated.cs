@@ -170,6 +170,8 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public string AssignedCustomsAgentExcReason  { get; set; }
        [DataMember]
        public string GrossWeightUnitCode  { get; set; }
+       [DataMember]
+       public string ForwardingShipmentNumber  { get; set; }
    }
 
 }

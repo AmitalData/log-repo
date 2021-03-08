@@ -86,6 +86,7 @@ export class CargoTrackingShipmentList {
 	AssignedCustomsAgentNotes: string;
 	AssignedCustomsAgentExcReason: string;
 	GrossWeightUnitCode: string;
+	ForwardingShipmentNumber: string;
 	
 }
  

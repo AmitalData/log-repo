@@ -223,6 +223,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
 
                 if (!tableRow["CustomFileId"].Equals(null) && !tableRow["CustomFileId"].Equals("") && tableRow["CustomFileId"].GetType().Name != "DBNull")
                 {
+                    tableRow.SetField("CustomsShipmentHeaderId", tableRow["CustomFileId"]);
                     tableRow.SetField("IsMainRecord", false);
                 }
                 else
@@ -230,8 +231,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                     tableRow.SetField("IsMainRecord", true);
 
                 }
+                tableRow.SetField("ForwardingShipmentNumber", DBNull.Value);
             }
-           
+
+
         }
 
 

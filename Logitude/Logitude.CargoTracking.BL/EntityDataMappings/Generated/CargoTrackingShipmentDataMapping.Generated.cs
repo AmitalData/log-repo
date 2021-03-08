@@ -90,6 +90,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         AssignedCustomsAgentNotes, 
 	         AssignedCustomsAgentExcReason,
 	         GrossWeightUnitCode,
+	         ForwardingShipmentNumber,
 	      }
 
 
@@ -172,316 +173,317 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         AssignedCustomsAgentNotes, 
 	         AssignedCustomsAgentExcReason,
 	         GrossWeightUnitCode,
+	         ForwardingShipmentNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
-    
-	    public void PMToPOCO(CargoTrackingShipmentPM entityPM, CargoTrackingShipment entityPOCO)
-        {
-			 
+
+		public void PMToPOCO(CargoTrackingShipmentPM entityPM, CargoTrackingShipment entityPOCO)
+		{
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
-            {
+			{
 				entityPOCO.Tenant = entityPM.Tenant;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityId))
-            {
+			{
 				entityPOCO.EntityId = entityPM.EntityId;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwardingShipmentHeaderId))
-            {
+			{
 				entityPOCO.ForwardingShipmentHeaderId = entityPM.ForwardingShipmentHeaderId;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsShipmentHeaderId))
-            {
+			{
 				entityPOCO.CustomsShipmentHeaderId = entityPM.CustomsShipmentHeaderId;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityType))
-            {
+			{
 				entityPOCO.EntityType = entityPM.EntityType;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrentMilestoneCode))
-            {
+			{
 				entityPOCO.CurrentMilestoneCode = entityPM.CurrentMilestoneCode;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrentMilestoneDate))
-            {
+			{
 				entityPOCO.CurrentMilestoneDate = entityPM.CurrentMilestoneDate;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerId))
-            {
+			{
 				entityPOCO.CustomerId = entityPM.CustomerId;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransportModeId))
-            {
+			{
 				entityPOCO.TransportModeId = entityPM.TransportModeId;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Master))
-            {
+			{
 				entityPOCO.Master = entityPM.Master;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.House))
-            {
+			{
 				entityPOCO.House = entityPM.House;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentNumber))
-            {
+			{
 				entityPOCO.ShipmentNumber = entityPM.ShipmentNumber;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromPortId))
-            {
+			{
 				entityPOCO.FromPortId = entityPM.FromPortId;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToPortId))
-            {
+			{
 				entityPOCO.ToPortId = entityPM.ToPortId;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipperId))
-            {
+			{
 				entityPOCO.ShipperId = entityPM.ShipperId;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConsigneeId))
-            {
+			{
 				entityPOCO.ConsigneeId = entityPM.ConsigneeId;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GrossWeight))
-            {
+			{
 				entityPOCO.GrossWeight = entityPM.GrossWeight;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Volume))
-            {
+			{
 				entityPOCO.Volume = entityPM.Volume;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PickupDone))
-            {
+			{
 				entityPOCO.PickupDone = entityPM.PickupDone;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PickupDate))
-            {
+			{
 				entityPOCO.PickupDate = entityPM.PickupDate;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
-            {
+			{
 				entityPOCO.CreateDate = entityPM.CreateDate;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SecurityKey))
-            {
+			{
 				entityPOCO.SecurityKey = entityPM.SecurityKey;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConsigneeName))
-            {
+			{
 				entityPOCO.ConsigneeName = entityPM.ConsigneeName;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipperName))
-            {
+			{
 				entityPOCO.ShipperName = entityPM.ShipperName;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerReference))
-            {
+			{
 				entityPOCO.CustomerReference = entityPM.CustomerReference;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMainRecord))
-            {
+			{
 				entityPOCO.IsMainRecord = entityPM.IsMainRecord;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PickupEstimationDate))
-            {
+			{
 				entityPOCO.PickupEstimationDate = entityPM.PickupEstimationDate;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromWarehouseDate))
-            {
+			{
 				entityPOCO.FromWarehouseDate = entityPM.FromWarehouseDate;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromWarehouseEstimationDate))
-            {
+			{
 				entityPOCO.FromWarehouseEstimationDate = entityPM.FromWarehouseEstimationDate;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromWarehouseNotes))
-            {
+			{
 				entityPOCO.FromWarehouseNotes = entityPM.FromWarehouseNotes;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepartureDone))
-            {
+			{
 				entityPOCO.DepartureDone = entityPM.DepartureDone;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepartureDate))
-            {
+			{
 				entityPOCO.DepartureDate = entityPM.DepartureDate;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepartureEstimationDate))
-            {
+			{
 				entityPOCO.DepartureEstimationDate = entityPM.DepartureEstimationDate;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ArrivalDone))
-            {
+			{
 				entityPOCO.ArrivalDone = entityPM.ArrivalDone;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ArrivalDate))
-            {
+			{
 				entityPOCO.ArrivalDate = entityPM.ArrivalDate;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ArrivalEstimationDate))
-            {
+			{
 				entityPOCO.ArrivalEstimationDate = entityPM.ArrivalEstimationDate;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToWarehouseDone))
-            {
+			{
 				entityPOCO.ToWarehouseDone = entityPM.ToWarehouseDone;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToWarehouseDate))
-            {
+			{
 				entityPOCO.ToWarehouseDate = entityPM.ToWarehouseDate;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToWarehouseEstimationDate))
-            {
+			{
 				entityPOCO.ToWarehouseEstimationDate = entityPM.ToWarehouseEstimationDate;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToWarehouseNotes))
-            {
+			{
 				entityPOCO.ToWarehouseNotes = entityPM.ToWarehouseNotes;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsPaymentDone))
-            {
+			{
 				entityPOCO.CustomsPaymentDone = entityPM.CustomsPaymentDone;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsPaymentDate))
-            {
+			{
 				entityPOCO.CustomsPaymentDate = entityPM.CustomsPaymentDate;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClearanceDone))
-            {
+			{
 				entityPOCO.ClearanceDone = entityPM.ClearanceDone;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClearanceDate))
-            {
+			{
 				entityPOCO.ClearanceDate = entityPM.ClearanceDate;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeliveredDone))
-            {
+			{
 				entityPOCO.DeliveredDone = entityPM.DeliveredDone;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeliveredDate))
-            {
+			{
 				entityPOCO.DeliveredDate = entityPM.DeliveredDate;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeliveredEstimationDate))
-            {
+			{
 				entityPOCO.DeliveredEstimationDate = entityPM.DeliveredEstimationDate;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromWarehouseDone))
-            {
+			{
 				entityPOCO.FromWarehouseDone = entityPM.FromWarehouseDone;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FirstPickupETD))
-            {
+			{
 				entityPOCO.FirstPickupETD = entityPM.FirstPickupETD;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WarehouseLegActualEntryDate))
-            {
+			{
 				entityPOCO.WarehouseLegActualEntryDate = entityPM.WarehouseLegActualEntryDate;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WarehouseLegExpectedEntryDate))
-            {
+			{
 				entityPOCO.WarehouseLegExpectedEntryDate = entityPM.WarehouseLegExpectedEntryDate;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WarehouseLegRemarks))
-            {
+			{
 				entityPOCO.WarehouseLegRemarks = entityPM.WarehouseLegRemarks;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationDate))
-            {
+			{
 				entityPOCO.DeclarationDate = entityPM.DeclarationDate;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsClearanceDate))
-            {
+			{
 				entityPOCO.CustomsClearanceDate = entityPM.CustomsClearanceDate;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainersNumbers))
-            {
+			{
 				entityPOCO.ContainersNumbers = entityPM.ContainersNumbers;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PackagesQuantity))
-            {
+			{
 				entityPOCO.PackagesQuantity = entityPM.PackagesQuantity;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DirectionId))
-            {
+			{
 				entityPOCO.DirectionId = entityPM.DirectionId;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedTruckerDone))
-            {
+			{
 				entityPOCO.AssignedTruckerDone = entityPM.AssignedTruckerDone;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedTruckerDate))
-            {
+			{
 				entityPOCO.AssignedTruckerDate = entityPM.AssignedTruckerDate;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedTruckerEstimationDate))
-            {
+			{
 				entityPOCO.AssignedTruckerEstimationDate = entityPM.AssignedTruckerEstimationDate;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedTruckerNotes))
-            {
+			{
 				entityPOCO.AssignedTruckerNotes = entityPM.AssignedTruckerNotes;
 			}
 			
@@ -497,6 +499,10 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
 				entityPOCO.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
 			}
+
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwardingShipmentNumber))
+			{
+				entityPOCO.ForwardingShipmentNumber = entityPM.ForwardingShipmentNumber;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentEstDate))
@@ -852,6 +858,13 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
 					entityPM.AssignedCustomsAgentExcReason = entityPOCO.AssignedCustomsAgentExcReason;
             }
+		
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForwardingShipmentNumber))
+            {
+					entityPM.ForwardingShipmentNumber = entityPOCO.ForwardingShipmentNumber;
+            }
+
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GrossWeightUnitCode))
             {
@@ -1193,6 +1206,16 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
                 oldEntityPM.AssignedCustomsAgentNotes = entityPM.AssignedCustomsAgentNotes;
             }
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GrossWeightUnitCode))
+            {
+                oldEntityPM.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwardingShipmentNumber))
+            {
+                oldEntityPM.ForwardingShipmentNumber = entityPM.ForwardingShipmentNumber;
+            }
+			
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentExcReason))
             {
