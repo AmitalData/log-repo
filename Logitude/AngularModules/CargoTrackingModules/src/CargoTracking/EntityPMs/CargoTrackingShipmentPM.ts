@@ -397,7 +397,8 @@ export class CargoTrackingShipmentPM {
     private assignedCustomsAgentExcReason: string;
     public get AssignedCustomsAgentExcReason() { return this.assignedCustomsAgentExcReason; }
     public set AssignedCustomsAgentExcReason(newValue: string) { if (this.assignedCustomsAgentExcReason != newValue) { this.assignedCustomsAgentExcReason = newValue; this.MarkAsDirty("AssignedCustomsAgentExcReason"); } }
-    
+       
+	 
     private grossWeightUnitCode: string;
     public get GrossWeightUnitCode() { return this.grossWeightUnitCode; }
     public set GrossWeightUnitCode(newValue: string) { if (this.grossWeightUnitCode != newValue) { this.grossWeightUnitCode = newValue; this.MarkAsDirty("GrossWeightUnitCode"); } }
@@ -436,4 +437,4 @@ export class CargoTrackingShipmentPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
