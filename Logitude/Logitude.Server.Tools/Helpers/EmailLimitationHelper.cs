@@ -21,7 +21,7 @@ namespace Logitude.Server.Tools.Helpers
             if (tenantEmailSendingQuota > 0)
             {
                 CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(tenant);
-                int communicationLogCount = communicationLogRep.GetCommunicationLogCountForTenantInLasthour(tenant);
+                int communicationLogCount = communicationLogRep.GetEmailCommunicationLogCountForTenantInLasthour(tenant);
                 if (communicationLogCount > tenantEmailSendingQuota)
                 {
                     result.IsQuotaExceeded = true;

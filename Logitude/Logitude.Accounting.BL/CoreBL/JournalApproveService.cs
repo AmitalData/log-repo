@@ -923,9 +923,10 @@ namespace Logitude.Accounting.BL.CoreBL
                               AmountToReconcile = r.AmountToReconcile,
 
                               Mark = r.Mark,
-                              IsReconciled = 
-                              (this._SelectedQueue == K_AccountingJournalApproveWR && r.OpenAmount == 0) 
-                              ? true : r.IsReconciled,
+                              //IsReconciled = 
+                              //(this._SelectedQueue == K_AccountingJournalApproveWR && r.OpenAmount == 0) 
+                              //? true : r.IsReconciled,
+                              IsReconciled = r.IsReconciled,
                               IsExternalReconcile = r.IsExternalReconcile
                           }
                     ).ToList();

@@ -52,6 +52,23 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                         return _ButtonReverseTotalFIXControl_Click(tenant, _TextBoxParam);
                     }
                     break;
+                    
+                    case "_ButtonFixDueLocalBalance_Click":
+                    {
+                        return _ButtonFixDueLocalBalance_Click(tenant, _TextBoxParam);
+                    }
+                    break;
+                case "_ButtonReverseDueDate_Click":
+                    {
+                        return _ButtonReverseDueDate_Click(tenant, _TextBoxParam);
+                    }
+                    break;
+                case "ButtonLoadSystem1000_Click":
+                    {
+                        return ButtonLoadSystem1000_Click(tenant, _TextBoxParam);
+                    }
+                    break;
+
                 case "WorkWithoutQueue_Click":
                     {
                         return WorkWithoutQueue_Click(tenant, _TextBoxParam);
@@ -488,6 +505,87 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             {
 
 
+                gateWayTesterResult.Log = LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+
+
+        
+               
+        private GateWayTesterResult ButtonLoadSystem1000_Click(int tenant, string textBoxParam)
+        {
+            var gateWayTesterResult = new GateWayTesterResult();
+            try
+            {
+                //dynamic param = LogitudeXmlSerializer.JsonConvertDeserializeObject(textBoxParam);
+                // var tenant = (int)param.MyTenant;
+                string fileSystem1000 = textBoxParam;
+                ///Response.Clear();
+                var mySystem1000FlatFileAnalyser = new System1000FlatFileAnalyser();
+                mySystem1000FlatFileAnalyser.Analyse(null, fileSystem1000, null);
+
+                
+                gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax(mySystem1000FlatFileAnalyser.MyResultLoadFlatFile); ;
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+                gateWayTesterResult.Log = LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+        private GateWayTesterResult _ButtonReverseDueDate_Click(int tenant, string textBoxParam)
+        {
+            var gateWayTesterResult = new GateWayTesterResult();
+            try
+            {
+                var param = LogitudeXmlSerializer.JsonConvertDeserializeTObject<ParamBasic>(textBoxParam);
+                // var tenant = (int)param.MyTenant;
+                string AccountId = param.MyGLAccId;
+                ///Response.Clear();
+                var myDueLocalBalanceService = new DueLocalBalanceService();
+                var listDiff = myDueLocalBalanceService.ReverseEngineer(tenant, AccountId);
+                gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<DueLocalBalanceDiffM>>(listDiff);
+
+                
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+                gateWayTesterResult.Log = LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+        private GateWayTesterResult _ButtonFixDueLocalBalance_Click(int tenant, string textBoxParam)
+        {
+            var gateWayTesterResult = new GateWayTesterResult();
+            try
+            {
+                var param = LogitudeXmlSerializer.JsonConvertDeserializeTObject<ParamBasic>(textBoxParam);
+                var myDueLocalBalanceService = new DueLocalBalanceService();
+                myDueLocalBalanceService.ReBuild(tenant, "");
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
                 gateWayTesterResult.Log = LogMessagingUtil.Instance.ToString();
             }
             return gateWayTesterResult;

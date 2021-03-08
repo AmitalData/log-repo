@@ -89,6 +89,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         AssignedCustomsAgentEstDate, 
 	         AssignedCustomsAgentNotes, 
 	         AssignedCustomsAgentExcReason,
+	         GrossWeightUnitCode,
 	      }
 
 
@@ -170,6 +171,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         AssignedCustomsAgentEstDate, 
 	         AssignedCustomsAgentNotes, 
 	         AssignedCustomsAgentExcReason,
+	         GrossWeightUnitCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -491,6 +493,10 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentDate))
             {
 				entityPOCO.AssignedCustomsAgentDate = entityPM.AssignedCustomsAgentDate;
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GrossWeightUnitCode))
+            {
+				entityPOCO.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
+			}
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentEstDate))
@@ -847,6 +853,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.AssignedCustomsAgentExcReason = entityPOCO.AssignedCustomsAgentExcReason;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GrossWeightUnitCode))
+            {
+					entityPM.GrossWeightUnitCode = entityPOCO.GrossWeightUnitCode;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipmentPM oldEntityPM)
@@ -1167,6 +1178,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
                 oldEntityPM.AssignedCustomsAgentDate = entityPM.AssignedCustomsAgentDate;
             }
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GrossWeightUnitCode))
+            {
+                oldEntityPM.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
+            }
+			
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedCustomsAgentEstDate))
             {

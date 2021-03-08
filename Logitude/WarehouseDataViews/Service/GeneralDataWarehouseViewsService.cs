@@ -110,5 +110,17 @@ namespace WarehouseDataViews.Service
             return result;
         }
 
+        public List<string> GetEnvironmentFactTables(string sourceConnection)
+        {
+            List<string> factTables = new List<string>();
+            DataTable dataTable = GetDataTableFromSql(sourceConnection, "select FactCodes from DWHEnvironmentSettings");
+            if (dataTable != null && dataTable.Rows != null)
+            {
+                factTables = dataTable.Rows[0]["FactCodes"].ToString().Split(',').ToList();
+            }
+            return factTables;
+        }
+
+
     }
 }
