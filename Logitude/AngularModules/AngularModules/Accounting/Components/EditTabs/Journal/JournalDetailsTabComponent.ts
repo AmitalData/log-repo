@@ -1021,7 +1021,7 @@ class JournalLineModel extends BaseComponent {
             if(this.Currency){
                 if(this.Currency.Id ==SessionLocator.TenantPM.CurrencyId)  this.ForeignAmount= this.LocalAmount;
             }
-            if (!this.ForeignAmount) this.GetExchangeRate(this.CurrencyId);
+            if (!this.ForeignAmount && this.CurrencyId) this.GetExchangeRate(this.CurrencyId);
             // convert amount
             // if (!AppTool.IsNullOrEmpty(value) && this.CurrencyId && this.currencyRate) {
             //     this.isForeignEntered = true;
@@ -1062,7 +1062,7 @@ class JournalLineModel extends BaseComponent {
             // set value
             this.JournalLinePM.ForeignAmount = value;
             this.parent.CalculateTotals();
-            if (!this.LocalAmount) this.GetExchangeRate(this.CurrencyId);
+            if (!this.LocalAmount && this.CurrencyId) this.GetExchangeRate(this.CurrencyId);
             // convert amount
             // if (value != null && this.CurrencyId && this.currencyRate) {
             //     if (1 || !this.isRateCoverted)
@@ -1185,7 +1185,11 @@ class JournalLineModel extends BaseComponent {
         }
     }
 
+    SetCurrencyForSingleAccount() {
+        if (!this.CreditAccount.IsMultiCurrency) {
 
+        }
+    }
     creditAccount: GLAccountPM;
     get CreditAccount() { return this.creditAccount; }
     set CreditAccount(value: GLAccountPM) {
@@ -1195,7 +1199,8 @@ class JournalLineModel extends BaseComponent {
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.CreditAccountName = value.LocalName;
-
+           
+          
             if (this.ActionCode == "1" && !this.creditAccount.IsMultiCurrency) {
                 this.CurrencyId = this.creditAccount.CurrencyId;
                 this.CurrencyCode = this.creditAccount.CurrencyCode;
@@ -1400,16 +1405,18 @@ class JournalLineModel extends BaseComponent {
 
             }
             else {
-                this.CurrencyCode = null;
-                this.CurrencyId = null;
-                this.enableForeighAmountField = true;
-                 this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, true);
+                this.SetCurrencyNull();
             }
 
             this.SplittedCheck();
         }
     }
-
+    SetCurrencyNull() {
+        this.CurrencyCode = null;
+        this.CurrencyId = null;
+        this.enableForeighAmountField = true;
+        this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, true);
+    }
     GetGLAccountCurency(isCredit: boolean, isDebit: boolean, currencyId) {
 
         // credit and debit
