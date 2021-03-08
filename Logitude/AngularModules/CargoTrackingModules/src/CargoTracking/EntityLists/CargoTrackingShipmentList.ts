@@ -92,6 +92,7 @@ export class CargoTrackingShipmentList {
 	DeliveryNotes: string;
 	DeliveryExceptionReason: string;
 	GrossWeightUnitCode: string;
+	ForwardingShipmentNumber: string;
 	
 }
  
