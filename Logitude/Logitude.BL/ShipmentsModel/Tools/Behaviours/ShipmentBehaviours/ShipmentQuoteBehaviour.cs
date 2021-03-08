@@ -28,9 +28,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private void HandleBehaviour()
         {
-            this.InitializeFlags();
-            this.UpdateQuoteUsage();
-            this.UpdateQuoteConnectedToShipmentComputedField();
+            InitializeFlags();
+            UpdateQuoteUsage();
+            UpdateQuoteConnectedToShipmentComputedField();
+            SubmitQuoteChanges();            
         }
 
         string quoteId = null;
@@ -94,8 +95,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                         } 
                     }
                     quoteUsageCount = quote.UsageCount;
-                    quoteRepository.Update(quote);
-                    SubmitQuoteChanges();
+                    quoteRepository.Update(quote);                    
                 }
             }
         }
@@ -116,15 +116,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                     {
                         quoteComputedField.ConnectedToShipment = false;
                     }
-                    quoteComputedFieldRepository.Update(quoteComputedField);
-                    SubmitQuoteChanges();
+                    quoteComputedFieldRepository.Update(quoteComputedField);                    
                 }
             } 
         }
 
         private void SubmitQuoteChanges()
         {
+            if (isUpdatingUsage || isDisconnectingQoute)
+            {
             quoteContext.SaveChanges();
+            }
         }
     }
 }
