@@ -1383,16 +1383,18 @@ class JournalLineModel extends BaseComponent {
 
             }
             else {
-                this.CurrencyCode = null;
-                this.CurrencyId = null;
-                this.enableForeighAmountField = true;
-                 this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, true);
+                this.SetCurrencyNull();
             }
 
             this.SplittedCheck();
         }
     }
-
+    SetCurrencyNull() {
+        this.CurrencyCode = null;
+        this.CurrencyId = null;
+        this.enableForeighAmountField = true;
+        this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, true);
+    }
     GetGLAccountCurency(isCredit: boolean, isDebit: boolean, currencyId) {
 
         // credit and debit
