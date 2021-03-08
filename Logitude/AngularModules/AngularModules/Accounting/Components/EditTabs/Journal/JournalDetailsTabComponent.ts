@@ -1168,9 +1168,15 @@ class JournalLineModel extends BaseComponent {
         }
     }
 
-    SetCurrencyForSingleAccount() {     
+    SetCurrencyForSingleAccount() {
+        if (this.ActionCode == "1") {
             this.CurrencyId = this.creditAccount.CurrencyId;
-            this.CurrencyCode = this.creditAccount.CurrencyCode;     
+            this.CurrencyCode = this.creditAccount.CurrencyCode;
+        }
+        else if (this.ActionCode == "3") {
+            this.CurrencyId = this.creditAccount.CurrencyId;
+            this.CurrencyCode = this.creditAccount.CurrencyCode;
+        }
     }
     creditAccount: GLAccountPM;
     get CreditAccount() { return this.creditAccount; }
