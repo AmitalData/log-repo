@@ -122,11 +122,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             throw new NotImplementedException();
         }
 
-        private void Upsert(bool suppressNewTrans=false)
+        private void Upsert(bool suppressNewTrans = false)
         {
             //CheckExist();
             using (TransactionScope scope =
-                suppressNewTrans? TransactionFactory.GetTransaction():TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(10)))
+                suppressNewTrans ? TransactionFactory.GetTransaction() : TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(10)))
             {
                 AppendLogLine("Upsert..");
 
@@ -405,7 +405,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     }
                     if (this._MyDeclarationPM.Consignments[0].CargoTypeCode == "17")
                     {
-                        
+
                         if (mode != "UpdateNotEmpty")
                         {
                             this._MyDeclarationPM.Consignments[0].ManifestNumber = _AmitalCustomsFile.HAWB;
@@ -471,7 +471,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     else if (this._MyDeclarationPM.Consignments[0].CargoTypeCode == "1")
                     {
                         this._MyDeclarationPM.Consignments[0].ManifestNumber = _AmitalCustomsFile.ManifestNumber;
-                        
+
                         if (mode != "UpdateNotEmpty")
                         {
                             this._MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.MAWB;
@@ -482,7 +482,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                             if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.MAWB)) this._MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.MAWB;
                             if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.HAWB)) this._MyDeclarationPM.Consignments[0].ThirdCargoID = _AmitalCustomsFile.HAWB;
                         }
-                        
+
                     }
                     else
                     {
@@ -626,7 +626,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                         this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].PackageQuantity = packageQuantity;
                     }
                     decimal GrossMassMeasure = 0;
-                    if(String.IsNullOrWhiteSpace(this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode))
+                    if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode))
                     {
                         this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode = "KGM";
                     }
@@ -638,7 +638,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                             GrossMassMeasure = (decimal)this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasure;
                         }
                         decimal weight = Math.Truncate(GrossMassMeasure);
-                        if(weight > 99999999)
+                        if (weight > 99999999)
                         {
                             GrossMassMeasure = GrossMassMeasure / 1000;
                             this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode = "TNE";
@@ -678,7 +678,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 _MyDeclarationPM.Tenant = ResolvedTenant();
                 _MyDeclarationPM.IsConnectedToUnifreight = true; //Yuval Chalup 19.10.2016 TASK-22516
                 //_MyDeclarationPM.ProcedureCurrentCode = ResolveProcedureCurrentCode();//remarked by eitan h 24/9/15 16527
-                if(!string.IsNullOrWhiteSpace(_AmitalCustomsFile.ProcedureCurrentCode))_MyDeclarationPM.ProcedureCurrentCode = _AmitalCustomsFile.ProcedureCurrentCode;
+                if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.ProcedureCurrentCode)) _MyDeclarationPM.ProcedureCurrentCode = _AmitalCustomsFile.ProcedureCurrentCode;
                 MyGenericResponseObj.Stage = "Updating ";
                 _MyDeclarationPM.CurrentContextTag = UpsertActionConst;
 
@@ -825,7 +825,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             MyGenericResponseObj.Stage = "GetSingle DeclarationReferantData";
             this._DeclarationReferantDataPM = myDeclarationReferantDataQueryService.GetSingle(this._MyDeclarationPM.Id, true, false);
             /// Exist
-            bool isNew = false; 
+            bool isNew = false;
             if (_DeclarationReferantDataPM == null)
             {
                 this._DeclarationReferantDataPM = new Def.EntityPMs.DeclarationReferantDataPM();
@@ -872,7 +872,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
             this._DeclarationReferantDataPM.Tenant = ResolvedTenant();
             myDeclarationReferantDataUpdateService.Update(this._DeclarationReferantDataPM, true);
-            
+
         }
 
         private string TranslateVendor(string amitalvendorId)
@@ -919,7 +919,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             AppendLogLine("amitalTeamId = " + amitalTeamId + " Translated to " + referantTeamCode);
             return referantTeamCode;
 
-            
+
         }
 
         private string TranslateAirline(string airlineId)
@@ -1011,9 +1011,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             return portId;
         }
 
-        
 
-       private string TranslateloadPort(string loadportId)
+
+        private string TranslateloadPort(string loadportId)
         {
             if (String.IsNullOrWhiteSpace(loadportId))
             {
@@ -1321,7 +1321,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 this._AmitalCustomsFile = _LOGICUSTFILE.LogitudeCustomsFile[0];
                 MyCommunicationsParams.Tenant = ResolvedTenant();
 
-                if(MoreParams == "CommDecService")
+                if (MoreParams == "CommDecService")
                 {
                     mode = "UpdateNotEmpty";
                 }
@@ -1418,7 +1418,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             var amitalObjExample = new LOGICUSTFILE();
             var myAmitalCustom = new LogitudeCustomsFile();
             myAmitalCustom.CustomFileNo = CustomFileNo.ToString();//"41350144";
-            
+
             myAmitalCustom.DeclarationOfficeCode = "4";
             myAmitalCustom.AgentId = "550221105";
 
@@ -1426,77 +1426,29 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             myAmitalCustom.CustomerId = "10010650";
             myAmitalCustom.TransportModeId = "O";
             myAmitalCustom.Tenant = "1";
-           myAmitalCustom.ImporterId="00000000";
+            myAmitalCustom.ImporterId = "00000000";
 
             amitalObjExample.LogitudeCustomsFile = new LogitudeCustomsFile[] { myAmitalCustom };
 
             var xml = XmlGenericUtil<LOGICUSTFILE>.SerializeObject(amitalObjExample);
 
-            var dus= new DeclarationUpsertService();
-            string MoreParams="";string MessageOut="";
+            var dus = new DeclarationUpsertService();
+            string MoreParams = ""; string MessageOut = "";
             //dus.CopyFromDeclarationId = CopyFromDeclarationId; //1-3033 616200697;
             dus.ProccessGenericRequest(xml, ref MoreParams,
                 out MessageOut);
-            
-            
-                var _context = CustomContext.GetContext(dus._MyDeclarationPM.Tenant);
-                var myCopyDeclarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), dus._MyDeclarationPM.Tenant);
-                myCopyDeclarationUpdateService.CopyDeclaration(CopyFromDeclarationId, dus._MyDeclarationPM.Id, dus._MyDeclarationPM.Tenant);
-                
-            
+
+
+            var _context = CustomContext.GetContext(dus._MyDeclarationPM.Tenant);
+            var myCopyDeclarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), dus._MyDeclarationPM.Tenant);
+            myCopyDeclarationUpdateService.CopyDeclaration(CopyFromDeclarationId, dus._MyDeclarationPM.Id, dus._MyDeclarationPM.Tenant);
+
+
             //dus._MyDeclarationPM.Id;
         }
 
 
 
-            if (currentDeclarationCourierStatusPM != null)
-            {
-                string truckerId = null;
-                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.TruckerId))
-                {
-                    CardRepository cardRep = new CardRepository(this._MyDeclarationPM.Tenant);
-                    Card card = cardRep.GetSingleCard(_AmitalCustomsFile.TruckerId, this._MyDeclarationPM.Tenant);
-                    if (card != null)
-                    {
-                        truckerId = _AmitalCustomsFile.TruckerId;
-                    }
-                    else
-                    {
-                        card = cardRep.GetSingleCardByCode(_AmitalCustomsFile.TruckerId, this._MyDeclarationPM.Tenant, true);
-                        if (card != null)
-                        {
-                            truckerId = card.Id;
-                        }
-                    }
-                }
-
-                if (truckerId != currentDeclarationCourierStatusPM.TruckerId || _AmitalCustomsFile.DistributionArea != currentDeclarationCourierStatusPM.DistributionArea)
-                {
-                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                    currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                    currentDeclarationCourierStatusPM.TruckerId = truckerId;
-                    currentDeclarationCourierStatusPM.DistributionArea = _AmitalCustomsFile.DistributionArea;
-                    AppendLogLine("try to update trucker " + truckerId + " to declarationCourierStatus for DeclarationPM.Id: " + _MyDeclarationPM.Id);
-                    try
-                    {
-                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
-                    }
-                    catch (DbEntityValidationException ex)
-                    {
-                        var FormatedException = ExceptionFormatUtil.GetFormated(ex);
-                        AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
-                        return;
-                    }
-                    catch (Exception e)
-                    {
-                        AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
-                        return;
-                    }
-                }
-                
-            }
-
-        }
 
     }
 
