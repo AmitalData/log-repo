@@ -17,32 +17,32 @@ namespace Logitude.Customs.BL.EntityQueryServices
     {
 
 
-        public List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTable(string ObjectTableId, int Tenant,string type="A")
+        public List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTable(string ObjectTableId, int Tenant, string type = "A")
+
+        {
+            string entityKeyString = $"GetCustomRequiredFieldsByObjectTableFromCache({ObjectTableId},{Tenant},{type})";
+            var res = CacheManager.GetOrInsertNewObject<List<CustomsRequiredFieldPM>>(entityKeyString, () =>
+            {
+
+                return this.GetCustomRequiredFieldsByObjectTableNoCache(ObjectTableId, Tenant, type);
+
+            });
+            return res;
+        }
+        /*
+        private List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTableCore(string ObjectTableId, int Tenant,string type="A")
+
  
         {
-           // string entityKeyString = $"GetCustomRequiredFieldsByObjectTableFromCache({ObjectTableId},{Tenant},{type})";
-            //var res = CacheManager.GetOrInsertNewObject<List<CustomsRequiredFieldPM>>(entityKeyString, () =>
-            //{
-
-                return this.GetCustomRequiredFieldsByObjectTableCore(ObjectTableId, Tenant,type);
-
-           // });
-            //return res;
+            string entityKeyString = $"GetCustomRequiredFieldsByObjectTableFromCache({ObjectTableId},{Tenant})";
+            var res = CacheManager.GetOrInsertNewObject<List<CustomsRequiredFieldPM>>(entityKeyString, () =>
+            {
+                return this.GetCustomRequiredFieldsByObjectTableCore(ObjectTableId, Tenant);
+            });
+            return res;
         }
-
-        //private List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTableCore(string ObjectTableId, int Tenant, string type = "A")
-
-
-        //{
-        //    string entityKeyString = $"GetCustomRequiredFieldsByObjectTableFromCache({ObjectTableId},{Tenant})";
-        //    var res = CacheManager.GetOrInsertNewObject<List<CustomsRequiredFieldPM>>(entityKeyString, () =>
-        //    {
-        //        return this.GetCustomRequiredFieldsByObjectTableCore(ObjectTableId, Tenant);
-        //    });
-        //    return res;
-        //}
-
-        private List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTableCore(string ObjectTableId, int Tenant, string type = "A")
+        */
+        public List<CustomsRequiredFieldPM> GetCustomRequiredFieldsByObjectTableNoCache(string ObjectTableId, int Tenant, string type = "A")
 
         {
             CustomsRequiredFieldRepository rep = new CustomsRequiredFieldRepository(context);
@@ -64,15 +64,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
             CustomsRequiredFieldRepository rep = new CustomsRequiredFieldRepository(context);
             CustomsRequiredField requiredFields = rep.GetCustomRequiredFieldsByObjectFieldCode(ObjectFieldCode, Tenant);
             CustomsRequiredFieldPM requiredFieldsPms = new CustomsRequiredFieldPM();
-           
+
             CustomsRequiredFieldPM requiredFieldpm = new CustomsRequiredFieldPM();
             mapping.CustomPOCOToPM(requiredFieldpm, requiredFields);
             mapping.POCOToPM(requiredFieldpm, requiredFields);
             requiredFieldsPms = requiredFieldpm;
-            
+
 
             return requiredFieldsPms;
         }
-        
+
     }
 }
