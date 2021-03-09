@@ -480,13 +480,7 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="GrossWeightUnitCode"
-    Type="varchar"
-    Size="3">
-    <Constraints
-      Nullable="true" />
-  </Column>
+  
   <Column
     Name="ForwardingShipmentNumber"
     Type="varchar"

@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CargoTrackingShipment&quot;"
-  Code="&quot;38c1&quot;"
+  Code="&quot;6283&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;CargoTracking&quot;"
@@ -5820,7 +5820,7 @@
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
-    SystemMaxLength="3"
+    SystemMaxLength="32"
     DisplayInList="false"
     IsCustomFilter="false"
     MultiLine="false"
@@ -5897,7 +5897,6 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;GrossWeightUnitCode&quot;"
     ListPropertyPath="&quot;GrossWeightUnitCode&quot;"
-    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -5939,6 +5938,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+
 
   <field
     Id="&quot;38dbdfdc-4dcf-488b-b750-78d62a1e7ebc&quot;"
