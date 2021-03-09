@@ -1466,7 +1466,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     private timerToken: any;
     public IncotermLogic(IncotermCode: string) {
 
-
+       var  _CustomsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
+         _CustomsSettingExtendedListService.GetDefault("ISRAEL", "NGG_INS_IMPORT", "NON", this.declarationPM.CustomerCode, SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+            let obj = response.Result;
         var firstInvoice: SupplierInvoicePM = this.Parent.Get1SupplierInvoice();
 
         if (this.EntityPM != null && this.EntityPM.IncotermCode != null) {
@@ -1636,7 +1638,20 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                 }
             }
         }
+                
 
+            if (obj) {
+                let DefaultValue = obj['DefaultValue'];
+                if (!AppTool.IsNullOrEmpty(DefaultValue) && DefaultValue == "Y" && this.IncotermCode == 'CIF' && this.IsFirstInvoice()) {
+                    this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
+                    this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
+                    this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
+
+                 
+                }
+            }
+
+         });
     }
 
     //public IncotermLogic(IncotermCode: string) {
