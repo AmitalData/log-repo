@@ -2,12 +2,12 @@
 Feature: House connection and disconnection inside master
   After the user logging in the system and navigate to shipments workspace
   will create a master shipment, after that create house inside master and disconnect it.
-  
+
   Scenario: Create master export air shipment
     Given the user logged in and navigates to shipments workspace
     And a master Shipment with following details
-      | ShipmentLevel | Direction | TransportMode | Agent            | MainCarriageFromPort | MainCarriageToPort |
-      | Master        | Export    | Air           | IntegrationAgent | LHR                  | MIA                |
+      | ShipmentLevel | Direction | TransportMode | Agent     | MainCarriageFromPort | MainCarriageToPort |
+      | Master        | Export    | Air           | TestAgent | LHR                  | MIA                |
     When create shipment
     Then the master should create successfully
 

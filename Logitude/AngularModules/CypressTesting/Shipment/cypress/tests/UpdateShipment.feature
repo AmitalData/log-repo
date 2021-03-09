@@ -48,7 +48,7 @@ Feature: Update direct export air shipment
 
   Scenario: Update routing tab
     Given the user add new pickup
-    And add delivery with "IntegrationAgent" as a partner routing
+    And add delivery with "TestAgent" as a partner routing
     And add pre carriage and on carriage from port "JFK" to port "MIA"
     When update shipment
     Then the direct should update successfully

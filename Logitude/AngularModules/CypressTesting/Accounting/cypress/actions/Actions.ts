@@ -310,6 +310,7 @@ export function FillARPaymentDetails(aRPaymentDetails: ARPaymentDetails) {
     if (aRPaymentDetails.Partner) {
         cy.FillLogLov(AccountingSelectors.ARPaymentPartner, aRPaymentDetails.Partner, false)
     }
+    cy.FillLogLov(AccountingSelectors.ARPaymentCurrency, aRPaymentDetails.PaymentCurrency, true) 
     cy.FillLogLov(AccountingSelectors.ARPaymentPaymentMethod, aRPaymentDetails.PaymentMethod, true)
     cy.FillLogTextBox(AccountingSelectors.ARPaymentAmount, aRPaymentDetails.PaymentAmount)
     cy.Click(AccountingSelectors.OkAddARPayment, null)

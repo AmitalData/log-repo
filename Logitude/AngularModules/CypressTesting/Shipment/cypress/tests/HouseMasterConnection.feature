@@ -7,8 +7,8 @@ Feature: Connect and disconnect separate house and master
   Scenario: Create master export air shipment
     Given the user logged in and navigates to shipments workspace
     And a master Shipment with the following details
-      | ShipmentLevel | Direction | TransportMode | Agent            | MainCarriageFromPort | MainCarriageToPort |
-      | Master        | Export    | Air           | IntegrationAgent | LHR                  | MIA                |
+      | ShipmentLevel | Direction | TransportMode | Agent     | MainCarriageFromPort | MainCarriageToPort |
+      | Master        | Export    | Air           | TestAgent | LHR                  | MIA                |
     When create shipment
     Then the master should create successfully
 
