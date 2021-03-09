@@ -85,6 +85,11 @@ export class CargoTrackingShipmentList {
 	AssignedCustomsAgentEstDate: Date;
 	AssignedCustomsAgentNotes: string;
 	AssignedCustomsAgentExcReason: string;
+	DeliveryDone: boolean;
+	DeliveryDate: Date;
+	DeliveryEstimationDate: Date;
+	DeliveryNotes: string;
+	DeliveryExceptionReason: string;
 	GrossWeightUnitCode: string;
 	ForwardingShipmentNumber: string;
 	

@@ -404,6 +404,31 @@ export class CargoTrackingShipmentPM {
     public set GrossWeightUnitCode(newValue: string) { if (this.grossWeightUnitCode != newValue) { this.grossWeightUnitCode = newValue; this.MarkAsDirty("GrossWeightUnitCode"); } }
        
 	 
+    private deliveryDone: boolean;
+    public get DeliveryDone() { return this.deliveryDone; }
+    public set DeliveryDone(newValue: boolean) { if (this.deliveryDone != newValue) { this.deliveryDone = newValue; this.MarkAsDirty("DeliveryDone"); } }
+       
+	 
+    private deliveryDate: Date;
+    public get DeliveryDate() { return this.deliveryDate; }
+    public set DeliveryDate(newValue: Date) { if (this.deliveryDate != newValue) { this.deliveryDate = newValue; this.MarkAsDirty("DeliveryDate"); } }
+       
+	 
+    private deliveryEstimationDate: Date;
+    public get DeliveryEstimationDate() { return this.deliveryEstimationDate; }
+    public set DeliveryEstimationDate(newValue: Date) { if (this.deliveryEstimationDate != newValue) { this.deliveryEstimationDate = newValue; this.MarkAsDirty("DeliveryEstimationDate"); } }
+       
+	 
+    private deliveryNotes: string;
+    public get DeliveryNotes() { return this.deliveryNotes; }
+    public set DeliveryNotes(newValue: string) { if (this.deliveryNotes != newValue) { this.deliveryNotes = newValue; this.MarkAsDirty("DeliveryNotes"); } }
+       
+	 
+    private deliveryExceptionReason: string;
+    public get DeliveryExceptionReason() { return this.deliveryExceptionReason; }
+    public set DeliveryExceptionReason(newValue: string) { if (this.deliveryExceptionReason != newValue) { this.deliveryExceptionReason = newValue; this.MarkAsDirty("DeliveryExceptionReason"); } }
+       
+	 
     private forwardingShipmentNumber: string;
     public get ForwardingShipmentNumber() { return this.forwardingShipmentNumber; }
     public set ForwardingShipmentNumber(newValue: string) { if (this.forwardingShipmentNumber != newValue) { this.forwardingShipmentNumber = newValue; this.MarkAsDirty("ForwardingShipmentNumber"); } }
@@ -437,4 +462,4 @@ export class CargoTrackingShipmentPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
