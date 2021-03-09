@@ -90,6 +90,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                         sheet1.Range["A1:AX1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
                         sheet1.Range["K1"].EntireColumn.IsStringsPreserved = true;
                         sheet1.Range["O1"].EntireColumn.IsStringsPreserved = true;
+                        sheet1.Range["AQ2"].EntireColumn.IsStringsPreserved = true;
                         break;
                     }
 
