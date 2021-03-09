@@ -1932,12 +1932,13 @@
                     }
                     else {
                         IsShowUpgradeScreen = false;
-                        if (isDSV) {
-                            DSVLogin(myDomain);
-                        }
-                        else if (isCargoTracking) {
+                        if (isCargoTracking) {
                             RedirectToCargotrackingSite(window.location.href);
                         }
+                        else if (isDSV) {
+                            DSVLogin(myDomain);
+                        }
+
                         else {
 
                             ComplateLoadProess();
