@@ -1,4 +1,4 @@
-@release @all
+@release @all @stable
 
 Feature: Create customs ARInvoice
     After the user logging in the system and Update Accounting System to be None,Activate Customs Management in Shipments,
@@ -19,8 +19,8 @@ Feature: Create customs ARInvoice
     Scenario: Create customer
         Given the user navigates to customers workspace
         And a customer with the following details
-            | CompanyName | City | Country | State |
-            | TestCompany | LAS  | US      | AK    |
+            | CompanyName | City      | Country | State |
+            | TestCompany | Anchorage | US      | AK    |
         When create customer
         Then the customer should create successfully
 

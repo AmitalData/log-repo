@@ -1,4 +1,4 @@
-@release  @all
+@release @all @stable
 Feature: Create Consolidation Invoice
     After the user logging in the system,Update Accounting System to be None and navigate to customers workspace
     will create a customer as shipper in the new shipment, after update packages and payables tabs,
@@ -15,8 +15,8 @@ Feature: Create Consolidation Invoice
     Scenario: Create customer
         Given the user navigates to customers workspace
         And a customer with the following details
-            | CompanyName | City | Country | State |
-            | TestCompany | LAS  | US      | AK    |
+            | CompanyName | City      | Country | State |
+            | TestCompany | Anchorage | US      | AK    |
         When create customer
         Then the customer should create successfully
 

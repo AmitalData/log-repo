@@ -1,4 +1,4 @@
-@release @all
+@release @all @stable
 Feature: AMANAC Ocean Shipment Validations, Marked as Blocked, Marked as Not Blocked, Transfers and Retransfer
 
     The user configures AMANAC customs for the tenant, 

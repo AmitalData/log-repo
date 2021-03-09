@@ -1,5 +1,5 @@
-@smoke @release @all 
-Feature: ARInvoice operations and actions
+@smoke @release @all @stable
+Feature: ARInvoice Approve, set as sent and void
     After the user logging in the system and Update Accounting System to be None,navigates to shipments workspace
     will create a direct shipment,update routing tab,packages.
     add payables, generate receivables from payables, create and approve an ARInvoice,
@@ -14,8 +14,8 @@ Feature: ARInvoice operations and actions
     Scenario: Create customer
         Given the user navigates to customers workspace
         And a customer with the following details
-            | CompanyName | City | Country | State |
-            | TestCompany | LAS  | US      | AK    |
+            | CompanyName | City      | Country | State |
+            | TestCompany | Anchorage | US      | AK    |
         When create customer
         Then the customer should create successfully
 
