@@ -10,7 +10,7 @@ import { PackagesDetails } from '../../models/PackagesDetails';
 //#region variables
 let shipmentDetails: ShipmentDetails;
 let packagesDetails: PackagesDetails[];
-let ContainerNumber =  Actions.GetGeneratedRandomContainerNumber();
+let ContainerNumber = '';
 //#endregion
 
 //#region Create import ocean FCL shipment
@@ -33,6 +33,7 @@ Then("the shipment should create successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
         shipmentDetails.ShipmentNumber = interception.response.body.ShipmentNumber;
     })
+    ContainerNumber = Actions.GetGeneratedRandomContainerNumber();
 });
 //#endregion
 
