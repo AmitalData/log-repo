@@ -1883,6 +1883,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private string forwardingShipmentNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ForwardingShipmentNumber  
+	   {
+	    
+	     get
+		{
+		   return forwardingShipmentNumber;
+		 }
+		 set
+		 {
+		   if(forwardingShipmentNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForwardingShipmentNumber",OldValue=forwardingShipmentNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   forwardingShipmentNumber=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

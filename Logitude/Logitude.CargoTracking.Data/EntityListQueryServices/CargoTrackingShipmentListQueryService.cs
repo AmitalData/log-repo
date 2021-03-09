@@ -638,12 +638,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
         private void SetFutureMilstoneForShipment(CargoTrackingShipmentList Shipment, List<Milestone> milestones)
         {
-            bool hasCurrentMilstone = milestones.Any(d => d.IsCurrent == true);
-            if (hasCurrentMilstone)
-            {
-                Shipment.FutureMilstoneName = milestones.Where(s => s.IsEstimation == true && s.EstimationDate != null).OrderByDescending(s => s.Date).ThenByDescending(s => s.Id).Select(s => s.Name).FirstOrDefault();
-                Shipment.FutureMilstoneDate = milestones.Where(s => s.IsEstimation == true && s.Name == Shipment.FutureMilstoneName).OrderByDescending(s => s.Date).ThenByDescending(s => s.Id).Select(s => s.EstimationDate).FirstOrDefault();
-            }
+            Shipment.FutureMilstoneName = milestones.Where(s => s.IsEstimation == true && s.EstimationDate != null).OrderByDescending(s => s.Date).ThenByDescending(s => s.Id).Select(s => s.Name).FirstOrDefault();
+            Shipment.FutureMilstoneDate = milestones.Where(s => s.IsEstimation == true && s.Name == Shipment.FutureMilstoneName).OrderByDescending(s => s.Date).ThenByDescending(s => s.Id).Select(s => s.EstimationDate).FirstOrDefault();
         }
 
         public CargoTrackingShipmentList GetShipment(string SecurityKey, int tenant)

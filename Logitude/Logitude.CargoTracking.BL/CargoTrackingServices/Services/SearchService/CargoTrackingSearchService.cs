@@ -18,7 +18,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
         public static List<string> PrivateRefrencesList = new List<string>() { "ConsigneeName", "ShipperName" };
 
 
-        public static void SearchService(DataRow tableRow, BulkDataPreperation bulkDataPreperation, string tableName)
+        public static void CreateSearchReferencesForShipment(DataRow tableRow, BulkDataPreperation bulkDataPreperation, string tableName)
         {
             if (tableName == "CargoTrackingShipmentSearches" || tableName == "CargoTrackingShipments")
             {
@@ -67,14 +67,17 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                     .CoulmnName("House")
                     .Delimiter('-')
                     .Build());
+                AddForwardingShipmentNumberReference(tableRow, bulkDataPreperation.InnerDataTable);
 
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "Master");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwarderShipmentNumber");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "House");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "CustomFileNumber");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "CustomsDeclarationNumber");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ShipperName");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ConsigneeName");
-
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwarderShipmentNumber");
+                //AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwardingShipmentNumber");
                 SaveTheWholeHouseReferenceinSearchTable(tableRow, bulkDataPreperation);
             }
 
@@ -85,6 +88,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             if (tableRow["House"].ToString().Contains('-'))
             {
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "House");
+            }
+
+        }
+
+        private static void AddForwardingShipmentNumberReference(DataRow tableRow, DataTable innerDataTable)
+        {
+            if (tableRow["ShipmentLevelCode"].Equals("A"))
+            {
+                AddNewRecord(tableRow, innerDataTable, "ForwardingShipmentNumber");
             }
         }
 
