@@ -68,6 +68,21 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ManifestStatusCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.OBLTypeCode).HasMaxLength(4).IsUnicode(false);
 
+            this.Property(t => t.PreCarriageTransportModeId).IsFixedLength().HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.PreCarriageFromPortId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.PreCarriageToPortId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.PreCarriageCarrierNumber).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.PreCarriageVesselId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.PreCarriageCarrierId).HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.OnCarriageTransportModeId).IsFixedLength().HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.OnCarriageFromPortId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.OnCarriageToPortId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.OnCarriageCarrierNumber).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.OnCarriageVesselId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.OnCarriageCarrierId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.OnCarriageAdditionalTransportModeCode).HasMaxLength(4).IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("ShipmentMasterDatas");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -163,7 +178,32 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.DocumentsClosingDate).HasColumnName("DocumentsClosingDate");
             this.Property(t => t.OBLTypeCode).HasColumnName("OBLTypeCode");
             this.Property(t => t.CutoffDate).HasColumnName("CutoffDate");
-            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate"); 
+            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
+
+            this.Property(t => t.PreCarriageTransportModeId).HasColumnName("PreCarriageTransportModeId");
+            this.Property(t => t.PreCarriageFromPortId).HasColumnName("PreCarriageFromPortId");
+            this.Property(t => t.PreCarriageToPortId).HasColumnName("PreCarriageToPortId");
+            this.Property(t => t.PreCarriageATD).HasColumnName("PreCarriageATD");
+            this.Property(t => t.PreCarriageATA).HasColumnName("PreCarriageATA");
+            this.Property(t => t.PreCarriageCarrierNumber).HasColumnName("PreCarriageCarrierNumber");
+            this.Property(t => t.PreCarriageETA).HasColumnName("PreCarriageETA");
+            this.Property(t => t.PreCarriageETD).HasColumnName("PreCarriageETD");
+            this.Property(t => t.PreCarriageVesselId).HasColumnName("PreCarriageVesselId");
+            this.Property(t => t.PreCarriageCarrierId).HasColumnName("PreCarriageCarrierId");
+
+            this.Property(t => t.OnCarriageTransportModeId).HasColumnName("OnCarriageTransportModeId");
+            this.Property(t => t.OnCarriageFromPortId).HasColumnName("OnCarriageFromPortId");
+            this.Property(t => t.OnCarriageToPortId).HasColumnName("OnCarriageToPortId");
+            this.Property(t => t.OnCarriageATD).HasColumnName("OnCarriageATD");
+            this.Property(t => t.OnCarriageATA).HasColumnName("OnCarriageATA");
+            this.Property(t => t.OnCarriageCarrierNumber).HasColumnName("OnCarriageCarrierNumber");
+            this.Property(t => t.OnCarriageETD).HasColumnName("OnCarriageETD");
+            this.Property(t => t.OnCarriageETA).HasColumnName("OnCarriageETA");
+            this.Property(t => t.OnCarriageVesselId).HasColumnName("OnCarriageVesselId");
+            this.Property(t => t.OnCarriageCarrierId).HasColumnName("OnCarriageCarrierId");
+            this.Property(t => t.SplitOnCarriage).HasColumnName("SplitOnCarriage");
+            this.Property(t => t.OnCarriageAdditionalTransportModeCode).HasColumnName("OnCarriageAdditionalTransportModeCode");
+
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
@@ -219,6 +259,17 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.InterlineCard).WithMany().HasForeignKey(d => d.InterlineId);
             this.HasOptional(t => t.ManifestStatus).WithMany().HasForeignKey(d => d.ManifestStatusCode);
             this.HasOptional(t => t.OBLType).WithMany().HasForeignKey(d => d.OBLTypeCode);
+
+            this.HasOptional(t => t.PreCarriageCarrierCard).WithMany().HasForeignKey(d => d.PreCarriageCarrierId);
+            this.HasOptional(t => t.PreCarriageFromPort).WithMany().HasForeignKey(d => d.PreCarriageFromPortId);
+            this.HasOptional(t => t.PreCarriageToPort).WithMany().HasForeignKey(d => d.PreCarriageToPortId);
+            this.HasOptional(t => t.PreCarriageVessel).WithMany().HasForeignKey(d => d.PreCarriageVesselId);
+
+            this.HasOptional(t => t.OnCarriageCarrierCard).WithMany().HasForeignKey(d => d.OnCarriageCarrierId);
+            this.HasOptional(t => t.OnCarriageFromPort).WithMany().HasForeignKey(d => d.OnCarriageFromPortId);
+            this.HasOptional(t => t.OnCarriageToPort).WithMany().HasForeignKey(d => d.OnCarriageToPortId);
+            this.HasOptional(t => t.OnCarriageVessel).WithMany().HasForeignKey(d => d.OnCarriageVesselId);
+            this.HasOptional(t => t.OnCarriageAdditionalTransportMode).WithMany().HasForeignKey(d => d.OnCarriageAdditionalTransportModeCode);
         }
     }
 }

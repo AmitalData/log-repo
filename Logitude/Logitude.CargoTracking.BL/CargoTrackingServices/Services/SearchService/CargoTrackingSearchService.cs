@@ -70,6 +70,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 AddForwardingShipmentNumberReference(tableRow, bulkDataPreperation.InnerDataTable);
 
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "Master");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwarderShipmentNumber");
+                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "House");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "CustomFileNumber");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "CustomsDeclarationNumber");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ShipperName");

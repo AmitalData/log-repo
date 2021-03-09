@@ -1,9 +1,9 @@
-@release @all @open
+@release @all @open @stable
 Feature: Generic Interface AR Invoice Transfer
-   The user disables the Accounting Transfer in settings, 
-   creates AR invoice, changes the settings for Accounting Transfer to Generic Interface, 
-   checks the created invoice in the Not Ready Entities in Accounting Interfaces, 
-   fixes the accounting external IDs validations preventing the invoice from being transferred and exports/transfers the invoice.
+    The user disables the Accounting Transfer in settings,
+    creates AR invoice, changes the settings for Accounting Transfer to Generic Interface,
+    checks the created invoice in the Not Ready Entities in Accounting Interfaces,
+    fixes the accounting external IDs validations preventing the invoice from being transferred and exports/transfers the invoice.
 
     Scenario: Disable accounting system
         Given the user logged in and navigate to accounting settings
@@ -14,8 +14,8 @@ Feature: Generic Interface AR Invoice Transfer
     Scenario: Create customer
         Given the user navigates to customers workspace
         And a customer with the following details
-            | CompanyName | City | Country | State |
-            | TestCompany | LAS  | US      | AK    |
+            | CompanyName | City      | Country | State |
+            | TestCompany | Anchorage | US      | AK    |
         When create customer
         Then the customer should create successfully
 

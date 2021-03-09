@@ -13,8 +13,8 @@ Feature: Create multiple shipment AP Invoice
   Scenario: Create customer
     Given the user navigates to customers workspace
     And a customer with the following details
-      | CompanyName | City | Country | State |
-      | TestCompany | LAS  | US      | AK    |
+      | CompanyName | City      | Country | State |
+      | TestCompany | Anchorage | US      | AK    |
     When create customer
     Then the customer should create successfully
 

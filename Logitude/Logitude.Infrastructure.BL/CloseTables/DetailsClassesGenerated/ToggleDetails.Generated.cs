@@ -245,6 +245,13 @@ namespace Logitude.Infrastructure.BL
                 Description = "Consequent Pickup/Delivery", 
 			});
 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "PRE", 
+                Name = "Master Pre/On Carriage", 
+                SearchFields = "PRE,Master Pre/On Carriage", 
+                Description = "Master Pre/On Carriage", 
+			});
 			
             return all;
        }
