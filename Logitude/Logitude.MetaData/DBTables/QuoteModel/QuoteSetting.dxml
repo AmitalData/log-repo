@@ -112,8 +112,7 @@
   </Column>
   <Column
     Name="QuoteExpirationDays"
-    Type="int"
-    DefaultValue="0">
+    Type="int">
     <Constraints
       Nullable="true" />
   </Column>
