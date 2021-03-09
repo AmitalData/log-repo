@@ -11,6 +11,8 @@
 		SELECT Id,  dw_Countries.EnglishName, Code, dw_DWHSettings.Tenant, dw_DWHSettings.ParentTenant, dw_Countries.AutomaticLastUpdateDate
 	From dw_Countries
 	inner JOIN dw_DWHSettings ON dw_Countries.Tenant = dw_DWHSettings.Tenant
+	where dw_Countries.Id !='-1'
+
 	OPEN CountriesCursor FETCH NEXT FROM CountriesCursor INTO  @Id, @Name, @Code, @SourceTenant, @ParentTenant, @AutomaticLastUpdateDate
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
