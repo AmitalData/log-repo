@@ -274,7 +274,6 @@
     <None Include="DBScripts\GlobalModel\202010151325_InsertDocumentApprovalQueue.sxml" />
     <None Include="DBScripts\GlobalModel\202012291502_AddWarmCargoTrackingForBatchServicesDefinitions.sxml" />
     <None Include="DBScripts\GlobalModel\202012311128_UpdateWarmCargoTrackingForBatchServicesDefinitionsToInActive.sxml" />
-    <None Include="DBScripts\InfrastructureModel\202102281230_UpdateUnicargoETAAndETDEvents.sxml" />
     <None Include="DBScripts\InsertDBMigrationSettingsData.sxml" />
     <None Include="DBScripts\InvoiceModel\202012060902_FillPaidDateOfAPInvoices.sxml" />
     <None Include="DBScripts\InvoiceModel\202012201448_SAT voided invoices and payments.sxml" />
