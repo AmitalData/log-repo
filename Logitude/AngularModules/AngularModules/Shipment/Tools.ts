@@ -4356,6 +4356,7 @@ export class RoutingHelper {
             }
         }
     }
+
     public static PreCarriageToPortChanged(entityPM: ShipmentPM, list: PortList) {
         if (entityPM != null) {
             var myPortId: string = null;
@@ -4418,6 +4419,111 @@ export class RoutingHelper {
             entityPM.OnCarriageFromPortName = myPortName
             entityPM.OnCarriageFromPortCountryCode = myPortCountryCode;
             entityPM.OnCarriageFromPortCountryName = myPortCountryName;
+
+            // Previous.To == this.From
+            if (entityPM.Transshipment3FromPortId != null && entityPM.Transshipment3ToPortId != null) {
+                entityPM.Transshipment3ToPortId = myPortId;
+                entityPM.Transshipment3ToPortCode = myPortCode;
+                entityPM.Transshipment3ToPortName = myPortName;
+                entityPM.Transshipment3ToPortCountryCode = myPortCountryCode;
+                entityPM.Transshipment3ToPortCountryName = myPortCountryName;
+            }
+
+            else if (entityPM.Transshipment2FromPortId != null && entityPM.Transshipment2ToPortId != null) {
+                entityPM.Transshipment2ToPortId = myPortId;
+                entityPM.Transshipment2ToPortCode = myPortCode;
+                entityPM.Transshipment2ToPortName = myPortName;
+                entityPM.Transshipment2ToPortCountryCode = myPortCountryCode;
+                entityPM.Transshipment2ToPortCountryName = myPortCountryName;
+            }
+
+            else if (entityPM.Transshipment1FromPortId != null && entityPM.Transshipment1ToPortId != null) {
+                entityPM.Transshipment1ToPortId = myPortId;
+                entityPM.Transshipment1ToPortCode = myPortCode;
+                entityPM.Transshipment1ToPortName = myPortName;
+                entityPM.Transshipment1ToPortCountryCode = myPortCountryCode;
+                entityPM.Transshipment1ToPortCountryName = myPortCountryName;
+            }
+
+            else {
+                entityPM.MainCarriageToPortId = myPortId;
+                entityPM.MainCarriageToPortCode = myPortCode;
+                entityPM.MainCarriageToPortName = myPortName;
+                entityPM.MainCarriageToPortCountryCode = myPortCountryCode;
+                entityPM.MainCarriageToPortCountryName = myPortCountryName;
+            }
+
+            entityPM.ToCountryId = myPortCountryId;
+            entityPM.FinalDistenationPortId = myPortId;
+            entityPM.MainCarriageFinalDestinationPortId = myPortId;
+            entityPM.MainCarriageFinalDestinationPortCode = myPortCode;
+            entityPM.MainCarriageFinalDestinationPortName = myPortName;
+            entityPM.MainCarriageFinalDestinationPortCountryCode = myPortCountryCode;
+            entityPM.MainCarriageFinalDestinationPortCountryName = myPortCountryName;
+        }
+    }
+    public static PreForwardingToPortChanged(entityPM: ShipmentPM, list: PortList) {
+        if (entityPM != null) {
+            var myPortId: string = null;
+            var myPortCode: string = null;
+            var myPortName: string = null;
+            var myPortCountryId: string = null;
+            var myPortCountryCode: string = null;
+            var myPortCountryName: string = null;
+            var myPortCountryEC: boolean = false;
+            if (list != null) {
+                myPortId = list.Id;
+                myPortCode = list.Code;
+                myPortName = list.EnglishName;
+                myPortCountryId = list.CountryId;
+                myPortCountryCode = list.CountryCode;
+                myPortCountryName = list.CountryName;
+                myPortCountryEC = list.CountryEC;
+            }
+
+            // this
+            entityPM.PreForwardingToPortId = myPortId;
+            entityPM.PreForwardingToPortCode = myPortCode;
+            entityPM.PreForwardingToPortName = myPortName
+            entityPM.PreForwardingToPortCountryCode = myPortCountryCode;
+            entityPM.PreForwardingToPortCountryName = myPortCountryName;
+
+            // next.From == this.To
+            entityPM.FromCountryId = myPortCountryId;
+            entityPM.FromCountryIsEC = myPortCountryEC;
+            entityPM.MainCarriageFromPortId = myPortId;
+            entityPM.MainCarriageFromPortCode = myPortCode;
+            entityPM.MainCarriageFromPortName = myPortName;
+            entityPM.MainCarriageFromPortCountryCode = myPortCountryCode;
+            entityPM.MainCarriageFromPortCountryName = myPortCountryName;
+
+            ShipmentTool.ComputeSCI(entityPM);
+            ShipmentTool.BuildAWBPlaceField(entityPM);
+        }
+    }
+    public static OnForwardingFromPortChanged(entityPM: ShipmentPM, list: PortList) {
+        if (entityPM != null) {
+            var myPortId: string = null;
+            var myPortCode: string = null;
+            var myPortName: string = null;
+            var myPortCountryId: string = null;
+            var myPortCountryCode: string = null;
+            var myPortCountryName: string = null;
+            if (list != null) {
+                myPortId = list.Id;
+                myPortCode = list.Code;
+                myPortName = list.EnglishName;
+                myPortCountryId = list.CountryId;
+                myPortCountryCode = list.CountryCode;
+                myPortCountryName = list.CountryName;
+            }
+
+            // this
+            entityPM.OnForwardingFromPortId = myPortId;
+            entityPM.OnForwardingFromPortCode = myPortCode;
+            entityPM.OnForwardingFromPortName = myPortName
+            entityPM.OnForwardingFromPortCountryCode = myPortCountryCode;
+            entityPM.OnForwardingFromPortCountryName = myPortCountryName;
 
             // Previous.To == this.From
             if (entityPM.Transshipment3FromPortId != null && entityPM.Transshipment3ToPortId != null) {
@@ -5023,6 +5129,171 @@ export class RoutingHelper {
             this.CurrentSession.FireEvent("FollowupsChanged");
         }
     }
+    public static RemovePreForwardingLeg(entityPM: ShipmentPM) {
+        if (entityPM.HasPreForwarding == true) {
+            entityPM.HasPreForwarding = false;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingTransportModeId)) {
+            entityPM.PreForwardingTransportModeId = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingCarrierId)) {
+            entityPM.PreForwardingCarrierId = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingCarrierCode)) {
+            entityPM.PreForwardingCarrierCode = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingCarrierName)) {
+            entityPM.PreForwardingCarrierName = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingCarrierWebSite)) {
+            entityPM.PreForwardingCarrierWebSite = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingCarrierNumber)) {
+            entityPM.PreForwardingCarrierNumber = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingVesselId)) {
+            entityPM.PreForwardingVesselId = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingVesselName)) {
+            entityPM.PreForwardingVesselName = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingFromPortId)) {
+            entityPM.PreForwardingFromPortId = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingFromPortCode)) {
+            entityPM.PreForwardingFromPortCode = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingFromPortName)) {
+            entityPM.PreForwardingFromPortName = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingFromPortCountryCode)) {
+            entityPM.PreForwardingFromPortCountryCode = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingFromPortCountryName)) {
+            entityPM.PreForwardingFromPortCountryName = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingToPortId)) {
+            entityPM.PreForwardingToPortId = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingToPortCode)) {
+            entityPM.PreForwardingToPortCode = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingToPortName)) {
+            entityPM.PreForwardingToPortName = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingToPortCountryCode)) {
+            entityPM.PreForwardingToPortCountryCode = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingToPortCountryName)) {
+            entityPM.PreForwardingToPortCountryName = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingETD)) {
+            entityPM.PreForwardingETD = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingETA)) {
+            entityPM.PreForwardingETA = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingATD)) {
+            entityPM.PreForwardingATD = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingATA)) {
+            entityPM.PreForwardingATA = null;
+        }
+
+        var followups = entityPM.FollowUps.filter(f => f.LegType != null);
+        followups = followups.filter(f => f.LegType.indexOf("PreForwarding") > -1);
+
+        if (followups.length > 0) {
+            followups.forEach(item => {
+                entityPM.RemoveShipmentFollowUp(item);
+            });
+
+            this.CurrentSession.FireEvent("FollowupsChanged");
+        }
+    }
+    public static RemoveOnForwardingLeg(entityPM: ShipmentPM) {
+        if (entityPM.HasOnForwarding == true) {
+            entityPM.HasOnForwarding = false;
+        }
+
+        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingTransportModeId)) {
+            entityPM.OnForwardingTransportModeId = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingCarrierId)) {
+            entityPM.OnForwardingCarrierId = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingCarrierCode)) {
+            entityPM.OnForwardingCarrierCode = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingCarrierName)) {
+            entityPM.OnForwardingCarrierName = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingCarrierWebSite)) {
+            entityPM.OnForwardingCarrierWebSite = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingCarrierNumber)) {
+            entityPM.OnForwardingCarrierNumber = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingVesselId)) {
+            entityPM.OnForwardingVesselId = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingVesselName)) {
+            entityPM.OnForwardingVesselName = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingFromPortId)) {
+            entityPM.OnForwardingFromPortId = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingFromPortCode)) {
+            entityPM.OnForwardingFromPortCode = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingFromPortName)) {
+            entityPM.OnForwardingFromPortName = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingFromPortCountryCode)) {
+            entityPM.OnForwardingFromPortCountryCode = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingFromPortCountryName)) {
+            entityPM.OnForwardingFromPortCountryName = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingToPortId)) {
+            entityPM.OnForwardingToPortId = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingToPortCode)) {
+            entityPM.OnForwardingToPortCode = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingToPortName)) {
+            entityPM.OnForwardingToPortName = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingToPortCountryCode)) {
+            entityPM.OnForwardingToPortCountryCode = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingToPortCountryName)) {
+            entityPM.OnForwardingToPortCountryName = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingETD)) {
+            entityPM.OnForwardingETD = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingETA)) {
+            entityPM.OnForwardingETA = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingATD)) {
+            entityPM.OnForwardingATD = null;
+        }
+        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingATA)) {
+            entityPM.OnForwardingATA = null;
+        }
+
+        var followups = entityPM.FollowUps.filter(f => f.LegType != null);
+        followups = followups.filter(f => f.LegType.indexOf("OnForwarding") > -1);
+
+        if (followups.length > 0) {
+            followups.forEach(item => {
+                entityPM.RemoveShipmentFollowUp(item);
+            });
+
+            this.CurrentSession.FireEvent("FollowupsChanged");
+        }
+    }
 
     public static ValidateRoutingsActualDates(entityPM: ShipmentPM, errors: string[]) {
         if (entityPM != null) {
@@ -5142,6 +5413,13 @@ export class RoutingHelper {
             var PreCarriageATD: number = isPreCarriageExists ? DateTool.GetDateParts(entityPM.PreCarriageATD).DateTicks : 0;
             var PreCarriageATA: number = isPreCarriageExists ? DateTool.GetDateParts(entityPM.PreCarriageATA).DateTicks : 0;
 
+            var PreForwardingErrors: string[] = [];
+            var isPreForwardingExists: boolean = (entityPM.PreForwardingFromPortId != null && entityPM.PreForwardingToPortId != null) ? true : false;
+            var PreForwardingETD: number = isPreForwardingExists ? DateTool.GetDateParts(entityPM.PreForwardingETD).DateTicks : 0;
+            var PreForwardingETA: number = isPreForwardingExists ? DateTool.GetDateParts(entityPM.PreForwardingETA).DateTicks : 0;
+            var PreForwardingATD: number = isPreForwardingExists ? DateTool.GetDateParts(entityPM.PreForwardingATD).DateTicks : 0;
+            var PreForwardingATA: number = isPreForwardingExists ? DateTool.GetDateParts(entityPM.PreForwardingATA).DateTicks : 0;
+
             var MainCarriageErrors: string[] = [];
             var isMainCarriageExists: boolean = true;
             var MainCarriageETD: number = DateTool.GetDateParts(entityPM.MainCarriageETD).DateTicks;
@@ -5174,6 +5452,13 @@ export class RoutingHelper {
             var OnCarriageATD: number = isOnCarriageExists ? DateTool.GetDateParts(entityPM.OnCarriageATD).DateTicks : 0;
             var OnCarriageATA: number = isOnCarriageExists ? DateTool.GetDateParts(entityPM.OnCarriageATA).DateTicks : 0;
 
+            var OnForwardingErrors: string[] = [];
+            var isOnForwardingExists: boolean = (entityPM.OnForwardingFromPortId != null && entityPM.OnForwardingToPortId != null) ? true : false;
+            var OnForwardingETD: number = isOnForwardingExists ? DateTool.GetDateParts(entityPM.OnForwardingETD).DateTicks : 0;
+            var OnForwardingETA: number = isOnForwardingExists ? DateTool.GetDateParts(entityPM.OnForwardingETA).DateTicks : 0;
+            var OnForwardingATD: number = isOnForwardingExists ? DateTool.GetDateParts(entityPM.OnForwardingATD).DateTicks : 0;
+            var OnForwardingATA: number = isOnForwardingExists ? DateTool.GetDateParts(entityPM.OnForwardingATA).DateTicks : 0;
+
             var WarehouseLegErrors: string[] = [];
             var isWarehouseLegExists: boolean = (entityPM.WarehouseLegWarehouseId != null) ? true : false;
             var isWarehousePickupsLegExists = isWarehouseLegExists == true && entityPM.DirectionId != "I" ? true : false;
@@ -5189,7 +5474,6 @@ export class RoutingHelper {
             var allPickupsErrors: string[] = [];
             var isPickupsExists: boolean = entityPM.ShipmentPickUps.length > 0 ? true : false;
             if (isPickupsExists) {
-
                 if (isWarehousePickupsLegExists) {
 
                     var firsPickup = this.GetFirstPickup(entityPM.ShipmentPickUps);
@@ -5231,22 +5515,26 @@ export class RoutingHelper {
                         allPickupsErrors.push("Pick up actual departure must be less than pick up actual arrival");
                     }
 
-                    //if (this.CompairDateSeries(ETD, ETA, ">")) {
-                    //    allPickupsErrors.push("Pick up expected departure must be less than pick up expected arrival");
-                    //}
-
-                    //if (this.CompairDateSeries(ATD, ATA, ">")) {
-                    //    allPickupsErrors.push("Pick up actual departure must be less than pick up actual arrival");
-                    //}
-
                     // Next
-                    if (isPreCarriageExists) {
-                        if (this.IsDateSeriesBigger(ETA, PreCarriageETD)) {
-                            allPickupsErrors.push("Pick up expected arrival must be less than pre carriage expected departure");
+                    if (isPreCarriageExists || isPreForwardingExists) {
+                        if (isPreCarriageExists) {
+                            if (this.IsDateSeriesBigger(ETA, PreCarriageETD)) {
+                                allPickupsErrors.push("Pick up expected arrival must be less than pre carriage expected departure");
+                            }
+
+                            if (this.IsDateSeriesBigger(ATA, PreCarriageATD)) {
+                                allPickupsErrors.push("Pick up actual arrival must be less than pre carriage actual departure");
+                            }
                         }
 
-                        if (this.IsDateSeriesBigger(ATA, PreCarriageATD)) {
-                            allPickupsErrors.push("Pick up actual arrival must be less than pre carriage actual departure");
+                        else if (isPreForwardingExists) {
+                            if (this.IsDateSeriesBigger(ETA, PreForwardingETD)) {
+                                allPickupsErrors.push("Pick up expected arrival must be less than pre Forwarding expected departure");
+                            }
+
+                            if (this.IsDateSeriesBigger(ATA, PreForwardingATD)) {
+                                allPickupsErrors.push("Pick up actual arrival must be less than pre Forwarding actual departure");
+                            }
                         }
                     }
 
@@ -5303,32 +5591,30 @@ export class RoutingHelper {
                         allDeliveriesErrors.push("Delivery actual departure must be less than Delivery actual arrival");
                     }
 
-                    //if (this.CompairDateSeries(ETD, ETA, ">")) {
-                    //    allDeliveriesErrors.push("Delivery expected departure must be less than Delivery expected arrival");
-                    //}
-
-                    //if (this.CompairDateSeries(ATD, ATA, ">")) {
-                    //    allDeliveriesErrors.push("Delivery actual departure must be less than Delivery actual arrival");
-                    //}
-
                     // Previous
                     if (isWarehouseDeliveriesLegExists) {
-                        //if (this.IsDateSeriesSmallerNotEqual(ETD, WarehouseLegERD)) {
-                        //    allDeliveriesErrors.push("Delivery expected departure must be bigger than or equal Warehouse expected release");
-                        //}
-
-                        //if (this.IsDateSeriesSmallerNotEqual(ATD, WarehouseLegARD)) {
-                        //    allDeliveriesErrors.push("Delivery actual departure must be bigger than or equal Warehouse actual release");
-                        //}
+                        
                     }
 
-                    else if (isOnCarriageExists) {
-                        if (this.IsDateSeriesSmaller(ETD, OnCarriageETA)) {
-                            allDeliveriesErrors.push("Delivery expected departure must be bigger than On-Carriage expected arrival");
+                    else if (isOnCarriageExists || isOnForwardingExists) {
+                        if (isOnCarriageExists) {
+                            if (this.IsDateSeriesSmaller(ETD, OnCarriageETA)) {
+                                allDeliveriesErrors.push("Delivery expected departure must be bigger than On-Carriage expected arrival");
+                            }
+
+                            if (this.IsDateSeriesSmaller(ATD, OnCarriageATA)) {
+                                allDeliveriesErrors.push("Delivery actual departure must be bigger than On-Carriage actual arrival");
+                            }
                         }
 
-                        if (this.IsDateSeriesSmaller(ATD, OnCarriageATA)) {
-                            allDeliveriesErrors.push("Delivery actual departure must be bigger than On-Carriage actual arrival");
+                        else if (isOnForwardingExists) {
+                            if (this.IsDateSeriesSmaller(ETD, OnForwardingETA)) {
+                                allDeliveriesErrors.push("Delivery expected departure must be bigger than On-Forwarding expected arrival");
+                            }
+
+                            if (this.IsDateSeriesSmaller(ATD, OnForwardingATA)) {
+                                allDeliveriesErrors.push("Delivery actual departure must be bigger than On-Forwarding actual arrival");
+                            }
                         }
                     }
 
@@ -5386,14 +5672,6 @@ export class RoutingHelper {
                     PreCarriageErrors.push("Pre-Carriage actual departure must be less than Pre-Carriage actual arrival");
                 }
 
-                //if (this.CompairDateSeries(PreCarriageETD, PreCarriageETA, ">")) {
-                //    PreCarriageErrors.push("Pre-Carriage expected departure must be less than Pre-Carriage expected arrival");
-                //}
-
-                //if (this.CompairDateSeries(PreCarriageATD, PreCarriageATA, ">")) {
-                //    PreCarriageErrors.push("Pre-Carriage actual departure must be less than Pre-Carriage actual arrival");
-                //}
-
                 // Next
                 if (isMainCarriageExists) {
                     if (this.IsDateSeriesBigger(PreCarriageETA, MainCarriageETD)) {
@@ -5427,6 +5705,51 @@ export class RoutingHelper {
                 }
             }
 
+            //Pre Forwarding
+            if (isPreForwardingExists) {
+
+                // Self
+                if (!this.IsRoutingLegDatesValid(PreForwardingETD, PreForwardingETA)) {
+                    PreForwardingErrors.push("Pre-Forwarding expected departure must be less than Pre-Forwarding expected arrival");
+                }
+
+                if (!this.IsRoutingLegDatesValid(PreForwardingATD, PreForwardingATA)) {
+                    PreForwardingErrors.push("Pre-Forwarding actual departure must be less than Pre-Forwarding actual arrival");
+                }
+
+                // Next
+                if (isMainCarriageExists) {
+                    if (this.IsDateSeriesBigger(PreForwardingETA, MainCarriageETD)) {
+                        PreForwardingErrors.push("Pre-Forwarding expected arrival must be less than Main-Forwarding expected departure");
+                    }
+
+                    if (this.IsDateSeriesBigger(PreForwardingATA, MainCarriageATD)) {
+                        PreForwardingErrors.push("Pre-Forwarding actual arrival must be less than Main-Forwarding actual departure");
+                    }
+                }
+
+                // Previous
+                if (isWarehousePickupsLegExists) {
+                    if (this.IsDateSeriesSmaller(PreForwardingETD, WarehouseLegERD)) {
+                        PreForwardingErrors.push("Pre-Forwarding expected departure must be bigger than Warehouse expected release");
+                    }
+
+                    if (this.IsDateSeriesSmaller(PreForwardingATD, WarehouseLegARD)) {
+                        PreForwardingErrors.push("Pre-Forwarding actual departure must be bigger than Warehouse actual release");
+                    }
+                }
+
+                else if (isPickupsExists) {
+                    if (this.IsDateSeriesSmaller(PreForwardingETD, allPickupsETA)) {
+                        PreForwardingErrors.push("Pre-Forwarding expected departure must be bigger than all pick ups expected arrival");
+                    }
+
+                    if (this.IsDateSeriesSmaller(PreForwardingATD, allPickupsATA)) {
+                        PreForwardingErrors.push("Pre-Forwarding actual departure must be bigger than all pick ups actual arrival");
+                    }
+                }
+            }
+
             // On Carriage
             if (isOnCarriageExists) {
 
@@ -5438,14 +5761,6 @@ export class RoutingHelper {
                 if (!this.IsRoutingLegDatesValid(OnCarriageATD, OnCarriageATA)) {
                     OnCarriageErrors.push("On-Carriage actual departure must be less than On-Carriage actual arrival");
                 }
-
-                //if (this.CompairDateSeries(OnCarriageETD, OnCarriageETA, ">")) {
-                //    OnCarriageErrors.push("On-Carriage expected departure must be less than On-Carriage expected arrival");
-                //}
-
-                //if (this.CompairDateSeries(OnCarriageATD, OnCarriageATA, ">")) {
-                //    OnCarriageErrors.push("On-Carriage actual departure must be less than On-Carriage actual arrival");
-                //}
 
                 // Previous
                 if (isTransshipment3Exists) {
@@ -5510,6 +5825,81 @@ export class RoutingHelper {
                 }
             }
 
+            // On Forwarding
+            if (isOnForwardingExists) {
+
+                // Self
+                if (!this.IsRoutingLegDatesValid(OnForwardingETD, OnForwardingETA)) {
+                    OnForwardingErrors.push("On-Forwarding expected departure must be less than On-Forwarding expected arrival");
+                }
+
+                if (!this.IsRoutingLegDatesValid(OnForwardingATD, OnForwardingATA)) {
+                    OnForwardingErrors.push("On-Forwarding actual departure must be less than On-Forwarding actual arrival");
+                }
+
+                // Previous
+                if (isTransshipment3Exists) {
+                    if (this.IsDateSeriesSmaller(OnForwardingETD, Transshipment3ETA)) {
+                        OnForwardingErrors.push("On-Forwarding expected departure must be bigger than Transshipment3 expected arrival");
+                    }
+
+                    if (this.IsDateSeriesSmaller(OnForwardingATD, Transshipment3ATA)) {
+                        OnForwardingErrors.push("On-Forwarding actual departure must be bigger than Transshipment3 actual arrival");
+                    }
+                }
+
+                else if (isTransshipment2Exists) {
+                    if (this.IsDateSeriesSmaller(OnForwardingETD, Transshipment2ETA)) {
+                        OnForwardingErrors.push("On-Forwarding expected departure must be bigger than Transshipment2 expected arrival");
+                    }
+
+                    if (this.IsDateSeriesSmaller(OnForwardingATD, Transshipment2ATA)) {
+                        OnForwardingErrors.push("On-Forwarding actual departure must be bigger than Transshipment2 actual arrival");
+                    }
+                }
+
+                else if (isTransshipment1Exists) {
+                    if (this.IsDateSeriesSmaller(OnForwardingETD, Transshipment1ETA)) {
+                        OnForwardingErrors.push("On-Forwarding expected departure must be bigger than Transshipment1 expected arrival");
+                    }
+
+                    if (this.IsDateSeriesSmaller(OnForwardingATD, Transshipment1ATA)) {
+                        OnForwardingErrors.push("On-Forwarding actual departure must be bigger than Transshipment1 actual arrival");
+                    }
+                }
+
+                else {
+                    if (this.IsDateSeriesSmaller(OnForwardingETD, MainCarriageETA)) {
+                        OnForwardingErrors.push("On-Forwarding expected departure must be bigger than Main-Carriage expected arrival");
+                    }
+
+                    if (this.IsDateSeriesSmaller(OnForwardingATD, MainCarriageATA)) {
+                        OnForwardingErrors.push("On-Forwarding actual departure must be bigger than Main-Carriage actual arrival");
+                    }
+                }
+
+                // Next
+                if (isWarehouseDeliveriesLegExists) {
+                    if (this.IsDateSeriesBigger(OnForwardingETA, WarehouseLegEED)) {
+                        OnForwardingErrors.push("On-Forwarding expected arrival must be less than Warehouse expected entry");
+                    }
+
+                    if (this.IsDateSeriesBigger(OnForwardingATA, WarehouseLegAED)) {
+                        OnForwardingErrors.push("On-Forwarding actual arrival must be less than Warehouse actual entry");
+                    }
+                }
+
+                else if (isDeliveriesExists) {
+                    if (this.IsDateSeriesBigger(OnForwardingETA, allDeliveriesETD)) {
+                        OnForwardingErrors.push("On-Forwarding expected arrival must be less than all deliveries expected departure");
+                    }
+
+                    if (this.IsDateSeriesBigger(OnForwardingATA, allDeliveriesATD)) {
+                        OnForwardingErrors.push("On-Forwarding actual arrival must be less than all deliveries actual departure");
+                    }
+                }
+            }
+
             // Main Carriage
             if (isMainCarriageExists) {
 
@@ -5522,22 +5912,26 @@ export class RoutingHelper {
                     MainCarriageErrors.push("Main-Carriage actual departure must be less than Main-Carriage actual arrival");
                 }
 
-                //if (this.CompairDateSeries(MainCarriageETD, MainCarriageETA, ">")) {
-                //    MainCarriageErrors.push("Main-Carriage expected departure must be less than Main-Carriage expected arrival");
-                //}
-
-                //if (this.CompairDateSeries(MainCarriageATD, MainCarriageATA, ">")) {
-                //    MainCarriageErrors.push("Main-Carriage actual departure must be less than Main-Carriage actual arrival");
-                //}
-
                 // Previous
-                if (isPreCarriageExists) {
-                    if (this.IsDateSeriesSmaller(MainCarriageETD, PreCarriageETA)) {
-                        MainCarriageErrors.push("Main-Carriage expected departure must be bigger than Pre-Carriage expected arrival");
+                if (isPreCarriageExists || isPreForwardingExists) {
+                    if (isPreCarriageExists) {
+                        if (this.IsDateSeriesSmaller(MainCarriageETD, PreCarriageETA)) {
+                            MainCarriageErrors.push("Main-Carriage expected departure must be bigger than Pre-Carriage expected arrival");
+                        }
+
+                        if (this.IsDateSeriesSmaller(MainCarriageATD, PreCarriageATA)) {
+                            MainCarriageErrors.push("Main-Carriage actual departure must be bigger than Pre-Carriage actual arrival");
+                        }
                     }
 
-                    if (this.IsDateSeriesSmaller(MainCarriageATD, PreCarriageATA)) {
-                        MainCarriageErrors.push("Main-Carriage actual departure must be bigger than Pre-Carriage actual arrival");
+                    else if (isPreForwardingExists) {
+                        if (this.IsDateSeriesSmaller(MainCarriageETD, PreForwardingETA)) {
+                            MainCarriageErrors.push("Main-Carriage expected departure must be bigger than Pre-Forwarding expected arrival");
+                        }
+
+                        if (this.IsDateSeriesSmaller(MainCarriageATD, PreForwardingATA)) {
+                            MainCarriageErrors.push("Main-Carriage actual departure must be bigger than Pre-Forwarding actual arrival");
+                        }
                     }
                 }
 
@@ -5592,13 +5986,25 @@ export class RoutingHelper {
                     }
                 }
 
-                else if (isOnCarriageExists) {
-                    if (this.IsDateSeriesBigger(MainCarriageETA, OnCarriageETD)) {
-                        MainCarriageErrors.push("Main-Carriage expected arrival must be less than On-Carriage expected departure");
+                else if (isOnCarriageExists || isOnForwardingExists) {
+                    if (isOnCarriageExists) {
+                        if (this.IsDateSeriesBigger(MainCarriageETA, OnCarriageETD)) {
+                            MainCarriageErrors.push("Main-Carriage expected arrival must be less than On-Carriage expected departure");
+                        }
+
+                        if (this.IsDateSeriesBigger(MainCarriageATA, OnCarriageATD)) {
+                            MainCarriageErrors.push("Main-Carriage actual arrival must be less than On-Carriage actual departure");
+                        }
                     }
 
-                    if (this.IsDateSeriesBigger(MainCarriageATA, OnCarriageATD)) {
-                        MainCarriageErrors.push("Main-Carriage actual arrival must be less than On-Carriage actual departure");
+                    else if (isOnForwardingExists) {
+                        if (this.IsDateSeriesBigger(MainCarriageETA, OnForwardingETD)) {
+                            MainCarriageErrors.push("Main-Carriage expected arrival must be less than On-Carriage expected departure");
+                        }
+
+                        if (this.IsDateSeriesBigger(MainCarriageATA, OnForwardingATD)) {
+                            MainCarriageErrors.push("Main-Carriage actual arrival must be less than On-Carriage actual departure");
+                        }
                     }
                 }
 
@@ -5635,14 +6041,6 @@ export class RoutingHelper {
                     MainCarriageErrors.push("Via1 actual departure must be less than Via1 actual arrival");
                 }
 
-                //if (this.CompairDateSeries(Transshipment1ETD, Transshipment1ETA, ">")) {
-                //    MainCarriageErrors.push("Via1 expected departure must be less than Via1 expected arrival");
-                //}
-
-                //if (this.CompairDateSeries(Transshipment1ATD, Transshipment1ATA, ">")) {
-                //    MainCarriageErrors.push("Via1 actual departure must be less than Via1 actual arrival");
-                //}
-
                 // Next
                 if (isTransshipment2Exists) {
                     if (this.IsDateSeriesBigger(Transshipment1ETA, Transshipment2ETD)) {
@@ -5664,13 +6062,25 @@ export class RoutingHelper {
                     }
                 }
 
-                else if (isOnCarriageExists) {
-                    if (this.IsDateSeriesBigger(Transshipment1ETA, OnCarriageETD)) {
-                        MainCarriageErrors.push("Via1 expected arrival must be less than On-Carriage expected departure");
+                else if (isOnCarriageExists || isOnForwardingExists) {
+                    if (isOnCarriageExists) {
+                        if (this.IsDateSeriesBigger(Transshipment1ETA, OnCarriageETD)) {
+                            MainCarriageErrors.push("Via1 expected arrival must be less than On-Carriage expected departure");
+                        }
+
+                        if (this.IsDateSeriesBigger(Transshipment1ATA, OnCarriageATD)) {
+                            MainCarriageErrors.push("Via1 actual arrival must be less than On-Carriage actual departure");
+                        }
                     }
 
-                    if (this.IsDateSeriesBigger(Transshipment1ATA, OnCarriageATD)) {
-                        MainCarriageErrors.push("Via1 actual arrival must be less than On-Carriage actual departure");
+                    else if (isOnForwardingExists) {
+                        if (this.IsDateSeriesBigger(Transshipment1ETA, OnForwardingETD)) {
+                            MainCarriageErrors.push("Via1 expected arrival must be less than On-Forwarding expected departure");
+                        }
+
+                        if (this.IsDateSeriesBigger(Transshipment1ATA, OnForwardingATD)) {
+                            MainCarriageErrors.push("Via1 actual arrival must be less than On-Forwarding actual departure");
+                        }
                     }
                 }
 
@@ -5707,14 +6117,6 @@ export class RoutingHelper {
                     MainCarriageErrors.push("Via2 actual departure must be less than Via2 actual arrival");
                 }
 
-                //if (this.CompairDateSeries(Transshipment2ETD, Transshipment2ETA, ">")) {
-                //    MainCarriageErrors.push("Via2 expected departure must be less than Via2 expected arrival");
-                //}
-
-                //if (this.CompairDateSeries(Transshipment2ATD, Transshipment2ATA, ">")) {
-                //    MainCarriageErrors.push("Via2 actual departure must be less than Via2 actual arrival");
-                //}
-
                 // Next
                 if (isTransshipment3Exists) {
                     if (this.IsDateSeriesBigger(Transshipment2ETA, Transshipment3ETD)) {
@@ -5726,13 +6128,25 @@ export class RoutingHelper {
                     }
                 }
 
-                else if (isOnCarriageExists) {
-                    if (this.IsDateSeriesBigger(Transshipment2ETA, OnCarriageETD)) {
-                        MainCarriageErrors.push("Via2 expected arrival must be less than On-Carriage expected departure");
+                else if (isOnCarriageExists || isOnForwardingExists) {
+                    if (isOnCarriageExists) {
+                        if (this.IsDateSeriesBigger(Transshipment2ETA, OnCarriageETD)) {
+                            MainCarriageErrors.push("Via2 expected arrival must be less than On-Carriage expected departure");
+                        }
+
+                        if (this.IsDateSeriesBigger(Transshipment2ATA, OnCarriageATD)) {
+                            MainCarriageErrors.push("Via2 actual arrival must be less than On-Carriage actual departure");
+                        }
                     }
 
-                    if (this.IsDateSeriesBigger(Transshipment2ATA, OnCarriageATD)) {
-                        MainCarriageErrors.push("Via2 actual arrival must be less than On-Carriage actual departure");
+                    else if (isOnForwardingExists) {
+                        if (this.IsDateSeriesBigger(Transshipment2ETA, OnForwardingETD)) {
+                            MainCarriageErrors.push("Via2 expected arrival must be less than On-Forwarding expected departure");
+                        }
+
+                        if (this.IsDateSeriesBigger(Transshipment2ATA, OnForwardingATD)) {
+                            MainCarriageErrors.push("Via2 actual arrival must be less than On-Forwarding actual departure");
+                        }
                     }
                 }
 
@@ -5769,22 +6183,26 @@ export class RoutingHelper {
                     MainCarriageErrors.push("Via3 actual departure must be less than Via3 actual arrival");
                 }
 
-                //if (this.CompairDateSeries(Transshipment3ETD, Transshipment3ETA, ">")) {
-                //    MainCarriageErrors.push("Via3 expected departure must be less than Via3 expected arrival");
-                //}
-
-                //if (this.CompairDateSeries(Transshipment3ATD, Transshipment3ATA, ">")) {
-                //    MainCarriageErrors.push("Via3 actual departure must be less than Via3 actual arrival");
-                //}
-
                 // Next
-                if (isOnCarriageExists) {
-                    if (this.IsDateSeriesBigger(Transshipment3ETA, OnCarriageETD)) {
-                        MainCarriageErrors.push("Via3 expected arrival must be less than On-Carriage expected departure");
+                if (isOnCarriageExists || isOnForwardingExists) {
+                    if (isOnCarriageExists) {
+                        if (this.IsDateSeriesBigger(Transshipment3ETA, OnCarriageETD)) {
+                            MainCarriageErrors.push("Via3 expected arrival must be less than On-Carriage expected departure");
+                        }
+
+                        if (this.IsDateSeriesBigger(Transshipment3ATA, OnCarriageATD)) {
+                            MainCarriageErrors.push("Via3 actual arrival must be less than On-Carriage actual departure");
+                        }
                     }
 
-                    if (this.IsDateSeriesBigger(Transshipment3ATA, OnCarriageATD)) {
-                        MainCarriageErrors.push("Via3 actual arrival must be less than On-Carriage actual departure");
+                    else if (isOnForwardingExists) {
+                        if (this.IsDateSeriesBigger(Transshipment3ETA, OnForwardingETD)) {
+                            MainCarriageErrors.push("Via3 expected arrival must be less than On-Forwarding expected departure");
+                        }
+
+                        if (this.IsDateSeriesBigger(Transshipment3ATA, OnForwardingATD)) {
+                            MainCarriageErrors.push("Via3 actual arrival must be less than On-Forwarding actual departure");
+                        }
                     }
                 }
 
@@ -5821,24 +6239,28 @@ export class RoutingHelper {
                     WarehouseLegErrors.push("Warehouse actual entry must be less than Warehouse actual release");
                 }
 
-                //if (this.CompairDateSeries(WarehouseLegEED, WarehouseLegERD, ">")) {
-                //    WarehouseLegErrors.push("Warehouse expected entry must be less than Warehouse expected release");
-                //}
-
-                //if (this.CompairDateSeries(WarehouseLegAED, WarehouseLegARD, ">")) {
-                //    WarehouseLegErrors.push("Warehouse actual entry must be less than Warehouse actual release");
-                //}
-
                 if (entityPM.DirectionId == "I") {
 
                     // Previous
-                    if (isOnCarriageExists) {
-                        if (this.IsDateSeriesSmaller(WarehouseLegEED, OnCarriageETA)) {
-                            WarehouseLegErrors.push("Warehouse expected entry must be bigger than On-Carriage expected arrival");
+                    if (isOnCarriageExists || isOnForwardingExists) {
+                        if (isOnCarriageExists) {
+                            if (this.IsDateSeriesSmaller(WarehouseLegEED, OnCarriageETA)) {
+                                WarehouseLegErrors.push("Warehouse expected entry must be bigger than On-Carriage expected arrival");
+                            }
+
+                            if (this.IsDateSeriesSmaller(WarehouseLegAED, OnCarriageATA)) {
+                                WarehouseLegErrors.push("Warehouse actual entry must be bigger than On-Carriage actual arrival");
+                            }
                         }
 
-                        if (this.IsDateSeriesSmaller(WarehouseLegAED, OnCarriageATA)) {
-                            WarehouseLegErrors.push("Warehouse actual entry must be bigger than On-Carriage actual arrival");
+                        else if (isOnForwardingExists) {
+                            if (this.IsDateSeriesSmaller(WarehouseLegEED, OnForwardingETA)) {
+                                WarehouseLegErrors.push("Warehouse expected entry must be bigger than On-Forwarding expected arrival");
+                            }
+
+                            if (this.IsDateSeriesSmaller(WarehouseLegAED, OnForwardingATA)) {
+                                WarehouseLegErrors.push("Warehouse actual entry must be bigger than On-Forwarding actual arrival");
+                            }
                         }
                     }
 
@@ -5884,13 +6306,7 @@ export class RoutingHelper {
 
                     // Next
                     if (isDeliveriesExists) {
-                        //if (this.IsDateSeriesBiggerNotEqual(WarehouseLegERD, allDeliveriesETD)) {
-                        //    WarehouseLegErrors.push("Warehouse expected release must be less than or equal all deliveries expected departure");
-                        //}
-
-                        //if (this.IsDateSeriesBiggerNotEqual(WarehouseLegARD, allDeliveriesATD)) {
-                        //    WarehouseLegErrors.push("Warehouse actual release must be less than or equal all deliveries actual departure");
-                        //}
+                        
                     }
                 }
 
@@ -5916,13 +6332,25 @@ export class RoutingHelper {
                     }
 
                     // Next
-                    if (isPreCarriageExists) {
-                        if (this.IsDateSeriesBigger(WarehouseLegERD, PreCarriageETD)) {
-                            WarehouseLegErrors.push("Warehouse expected release must be less than pre carriage expected departure");
+                    if (isPreCarriageExists || isPreForwardingExists) {
+                        if (isPreCarriageExists) {
+                            if (this.IsDateSeriesBigger(WarehouseLegERD, PreCarriageETD)) {
+                                WarehouseLegErrors.push("Warehouse expected release must be less than pre carriage expected departure");
+                            }
+
+                            if (this.IsDateSeriesBigger(WarehouseLegARD, PreCarriageATD)) {
+                                WarehouseLegErrors.push("Warehouse actual release must be less than pre carriage actual departure");
+                            }
                         }
 
-                        if (this.IsDateSeriesBigger(WarehouseLegARD, PreCarriageATD)) {
-                            WarehouseLegErrors.push("Warehouse actual release must be less than pre carriage actual departure");
+                        else if (isPreForwardingExists) {
+                            if (this.IsDateSeriesBigger(WarehouseLegERD, PreForwardingETD)) {
+                                WarehouseLegErrors.push("Warehouse expected release must be less than pre Forwarding expected departure");
+                            }
+
+                            if (this.IsDateSeriesBigger(WarehouseLegARD, PreForwardingATD)) {
+                                WarehouseLegErrors.push("Warehouse actual release must be less than pre Forwarding actual departure");
+                            }
                         }
                     }
 
@@ -5946,6 +6374,13 @@ export class RoutingHelper {
                     break;
                 }
 
+                case "PreForwarding": {
+                    PreForwardingErrors.forEach(item => {
+                        errors.push(item);
+                    });
+                    break;
+                }
+
                 case "MainCarriage": {
                     MainCarriageErrors.forEach(item => {
                         errors.push(item);
@@ -5955,6 +6390,13 @@ export class RoutingHelper {
 
                 case "OnCarriage": {
                     OnCarriageErrors.forEach(item => {
+                        errors.push(item);
+                    });
+                    break;
+                }
+
+                case "OnForwarding": {
+                    OnForwardingErrors.forEach(item => {
                         errors.push(item);
                     });
                     break;
@@ -5979,11 +6421,19 @@ export class RoutingHelper {
                         errors.push(item);
                     });
 
+                    PreForwardingErrors.forEach(item => {
+                        errors.push(item);
+                    });
+
                     MainCarriageErrors.forEach(item => {
                         errors.push(item);
                     });
 
                     OnCarriageErrors.forEach(item => {
+                        errors.push(item);
+                    });
+
+                    OnForwardingErrors.forEach(item => {
                         errors.push(item);
                     });
 

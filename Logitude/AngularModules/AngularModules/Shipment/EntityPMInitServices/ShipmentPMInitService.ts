@@ -32,6 +32,7 @@ export class ShipmentPMInitService {
             entityPM.NewConcurrencyGUID = AppTool.GetNewGuid();
             entityPM.ValueOfGoodsCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
             entityPM.OnCarriageAdditionalTransportModeCode = "BYTR";
+            entityPM.OnForwardingAdditionalTransportModeCode = "BYTR";
         }
     }
 }
