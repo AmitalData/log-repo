@@ -223,10 +223,6 @@ export class QuoteSettingsComponent extends BaseComponent {
             errors.push("Automatically Close Days field is required");
         }
 
-        if (this.QuoteExpirationDays == null) {
-            errors.push("Quote Expiration Days field is required");
-        }
-
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {

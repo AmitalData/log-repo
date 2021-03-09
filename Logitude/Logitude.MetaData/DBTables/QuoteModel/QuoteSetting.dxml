@@ -115,6 +115,6 @@
     Type="int"
     DefaultValue="0">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
 </Table>
