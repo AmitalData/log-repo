@@ -110,7 +110,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         [DataMember]
         public string CustomField { get; set; }
 
-        
+        [DataMember]
+        public bool IsNotModified { get; set; }
 
     }
 }

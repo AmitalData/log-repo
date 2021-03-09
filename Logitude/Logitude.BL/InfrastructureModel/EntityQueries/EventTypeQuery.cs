@@ -68,7 +68,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   IsCustomerView = a.IsCustomerView,
                                                   IsSharedLogisticsEnabled = a.IsSharedLogisticsEnabled,
                                                   AllowedInAutomation = a.AllowedInAutomation,
-                                                  CustomField = a.CustomField,                                                  
+                                                  CustomField = a.CustomField, 
+                                                  IsNotModified = a.IsNotModified,
                                               });
 
                         foreach (var s in entitystatuses)
@@ -121,7 +122,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   IsSharedLogisticsEnabled = a.IsSharedLogisticsEnabled,
                                   AllowedInAutomation = a.AllowedInAutomation,
                                   CustomField = a.CustomField,
-
+                                  IsNotModified = a.IsNotModified,
                               }).FirstOrDefault();
                 }
 
@@ -162,6 +163,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      IsSharedLogisticsEnabled = a.IsSharedLogisticsEnabled,
                                                      AllowedInAutomation = a.AllowedInAutomation,
                                                      CustomField = a.CustomField,
+                                                     IsNotModified = a.IsNotModified,
 
                                                  };
             return eventTypes;
@@ -209,6 +211,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   IsSharedLogisticsEnabled = a.IsSharedLogisticsEnabled,
                                                   AllowedInAutomation = a.AllowedInAutomation,
                                                   CustomField = a.CustomField,
+                                                  IsNotModified = a.IsNotModified,
 
                                               });
 
@@ -260,6 +263,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   IsSharedLogisticsEnabled = a.IsSharedLogisticsEnabled,
                                   AllowedInAutomation = a.AllowedInAutomation,
                                   CustomField = a.CustomField,
+                                  IsNotModified = a.IsNotModified,
 
                               }).FirstOrDefault();
                 }
@@ -310,6 +314,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   IsSharedLogisticsEnabled = a.IsSharedLogisticsEnabled,
                                                   AllowedInAutomation = a.AllowedInAutomation,
                                                   CustomField = a.CustomField,
+                                                  IsNotModified = a.IsNotModified,
 
                                               });
 
@@ -361,6 +366,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   IsSharedLogisticsEnabled = a.IsSharedLogisticsEnabled,
                                   AllowedInAutomation = a.AllowedInAutomation,
                                   CustomField = a.CustomField,
+                                  IsNotModified = a.IsNotModified,
 
                               }).FirstOrDefault();
                 }
@@ -447,6 +453,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                                      AllowedInAutomation = a.AllowedInAutomation,
                                                      CustomField = a.CustomField,
+                                                     IsNotModified = a.IsNotModified,
 
                                                  };
             return eventTypes;
