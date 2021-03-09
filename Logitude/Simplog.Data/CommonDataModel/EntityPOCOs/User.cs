@@ -74,5 +74,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string LayoutDirection { get; set; }
 
 
+        public string SignatureId { get; set; }
+
     }
 }
