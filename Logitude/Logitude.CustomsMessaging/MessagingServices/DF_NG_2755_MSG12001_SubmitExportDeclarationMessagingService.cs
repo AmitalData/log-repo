@@ -29,7 +29,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         DF_NG_2754_MSG10004_SubmitExportDeclarationResponseService, RequestHeader>
     {
 
-        public override string MainInterfaceCode { get { return "2755"; } }
+        public override string MainInterfaceCode { get { return "2755E"; } }
 
 
 

@@ -44,7 +44,22 @@ namespace Logitude.Customs.Def.ClosedTable
                 //   NeedSignature = false,
                 SignatureTypeCode = "C"
             });
-
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "2755E",
+                InOut = InOutEnum.O.ToString(),
+                Description = "מסר הגשה ליצוא",
+                DcaPrefixName = "",
+                DefaultSendOptionsCode = Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
+                DefaultPriority = 5,
+                AllowRestore = true,
+                //NotificationId = "",//NotificationDefinitionDetails.GetAll().FirstOrDefault(rec=> rec.Code="").Code
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "2754E",
+                //   NeedSignature = false,
+                SignatureTypeCode = "C"
+            });
             all.Add(new InterfaceManagementDetails()
             {
                 Code = "2754",
@@ -65,7 +80,26 @@ namespace Logitude.Customs.Def.ClosedTable
                 ResponseInterfaceCode = null,
                 //  NeedSignature = false
             });
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "2754E",
+                InOut = InOutEnum.I.ToString(),
+                Description = "מסר תשובה להגשה / הצהרה יצוא",
+                //itzik+yaronc DcaPrefixName = ///"GetDF_MSG2755_2754_SubmitImportDeclarationRequest_Out.",//SaveDF_MSG2750_2754_ImportDeclarationRequest_Out.IL941079089.2014-07-20_20-15-27-909.1-68.TST
+                DcaPrefixName = "SaveDF_MSG2750_2754_ImportDeclarationRequest_Out.",
+                DcaPrefixName2 = "GetDF_MSG2755_2754_SubmitImportDeclarationRequest",
+                DcaPrefixName3 = "SendDF_MSG2754_ImportDeclarationResponse",
+                ///MOVE TO  ...DcaPrefixName4 = "GetDF_Web8373_2754_RetrieveImportDeclaration",
 
+                DefaultSendOptionsCode = null,// Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.D.ToString(),
+                DefaultPriority = 5,
+                AllowRestore = true,
+                //  NotificationId = "",//NotificationDefinitionDetails.GetAll().FirstOrDefault(rec=> rec.Code="").Code
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+                //  NeedSignature = false
+            });
             //D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityMessagingService
             all.Add(new InterfaceManagementDetails()
             {

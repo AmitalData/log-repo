@@ -1740,7 +1740,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 CustomFileCreditResponseData responseData = new CustomFileCreditResponseData();
                 GenericRequestParams submitRequestParams = new GenericRequestParams();
                 submitRequestParams.AppicationId = requestParamsCredit.AppicationId;
-                submitRequestParams.InterfaceTypeCode = requestParamsCredit.InterfaceTypeCode;
+                submitRequestParams.InterfaceTypeCode = "2755E";
                 submitRequestParams.PBId = requestParamsCredit.PBId;
                 submitRequestParams.CustomsRequestsSheetId = requestParamsCredit.CustomsRequestsSheetId;
                 submitRequestParams.Tenant = requestParamsCredit.Tenant;

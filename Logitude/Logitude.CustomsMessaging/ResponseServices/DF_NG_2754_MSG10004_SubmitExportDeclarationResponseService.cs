@@ -25,7 +25,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         ResponseServiceBase<INF_MSG_GenericResponseData, DF_NG_2757_MSG10004_ExportDeclarationResponse, GenericRequestParams>
     {
         DeclarationPM _MyDeclarationPM;
-        private DF_NG_2754_MSG10004_ImportDeclarationResponseService _DF_NG_2754_MSG10004_ImportDeclarationResponseService;
+        private DF_NG_2757_MSG10004_ExportDeclarationResponseService _DF_NG_2757_MSG10004_ExportDeclarationResponseService;
         private INF_MSG_GenericResponseData _MyDefaultResponseData;
         //ITZIK+MIRT public UnifreightIIG.Common.CommonIIGInterface.IResponseHeaderOrFault _ResponseHeaderExeption { get; set; }
 
@@ -128,9 +128,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this._MyDeclarationPM.CurrentContextTag = myInsertEventContextTagModel;
 
                     //Update ErrosXml field
-                    var declarationException = new UnifreightIIG.Common.ImportDeclarationServiceReference.Exception();
+                    var declarationException = new UnifreightIIG.Common.ExportDeclarationServiceReference.Exception();
                     declarationException.ExeptionDescription = customResponse.ResponseContentHeader.Remark;
-                    this._MyDeclarationPM.ErrosXml = mydDclarationErrorPointerService.AddDeclarationException(this._MyDeclarationPM.ErrosXml, "Warning", declarationException);
+                    this._MyDeclarationPM.ErrosXml = mydDclarationErrorPointerService.AddDeclarationExceptionExport(this._MyDeclarationPM.ErrosXml, "Warning", declarationException);
                     
                     //Update Status- Future Payment(In case of sending DeclarationStatus message will fail)
                     this._MyDeclarationPM.DeclarationStatusTypeCode = "10";
@@ -215,14 +215,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             //[XmlType(AnonymousType = true, Namespace = "http://malam.com/customs/DealFile/Declaration/DF_MSG10000_ImportDeclaration")]
             //[XmlType(AnonymousType = true, Namespace = "http://malam.com/customs/DealFile/Declaration/DF_MSG10000_ImportDeclaration")]
-            UnifreightIIG.Common.ImportDeclarationServiceReference.DF_NG_2754_MSG10004_ImportDeclarationResponse ser = null;
+            //UnifreightIIG.Common.ImportDeclarationServiceReference.DF_NG_2754_MSG10004_ImportDeclarationResponse ser = null;
+            //var xml = XmlGenericUtil<DF_NG_2757_MSG10004_ExportDeclarationResponse>.SerializeObject(customResponse);
+            //ser = XmlGenericUtil<UnifreightIIG.Common.ImportDeclarationServiceReference.DF_NG_2754_MSG10004_ImportDeclarationResponse>.DeSerializeObject(xml);
+            //_DF_NG_2754_MSG10004_ImportDeclarationResponseService = new DF_NG_2754_MSG10004_ImportDeclarationResponseService();
+            //_DF_NG_2754_MSG10004_ImportDeclarationResponseService._IsSubmitDeclarationResponse = true;
+            ////ITZIK+MIRT _DF_NG_2754_MSG10004_ImportDeclarationResponseService._ResponseHeaderExeption = _ResponseHeaderExeption;
+
+            //_DF_NG_2754_MSG10004_ImportDeclarationResponseService.Update(ser, requestParams);
+
+            UnifreightIIG.Common.ExportDeclarationServiceReference.DF_NG_2757_MSG10004_ExportDeclarationResponse ser = null;
             var xml = XmlGenericUtil<DF_NG_2757_MSG10004_ExportDeclarationResponse>.SerializeObject(customResponse);
-            ser = XmlGenericUtil<UnifreightIIG.Common.ImportDeclarationServiceReference.DF_NG_2754_MSG10004_ImportDeclarationResponse>.DeSerializeObject(xml);
-            _DF_NG_2754_MSG10004_ImportDeclarationResponseService = new DF_NG_2754_MSG10004_ImportDeclarationResponseService();
-            _DF_NG_2754_MSG10004_ImportDeclarationResponseService._IsSubmitDeclarationResponse = true;
+            ser = XmlGenericUtil<UnifreightIIG.Common.ExportDeclarationServiceReference.DF_NG_2757_MSG10004_ExportDeclarationResponse>.DeSerializeObject(xml);
+            _DF_NG_2757_MSG10004_ExportDeclarationResponseService = new DF_NG_2757_MSG10004_ExportDeclarationResponseService();
+            _DF_NG_2757_MSG10004_ExportDeclarationResponseService._IsSubmitDeclarationResponse = true;
             //ITZIK+MIRT _DF_NG_2754_MSG10004_ImportDeclarationResponseService._ResponseHeaderExeption = _ResponseHeaderExeption;
 
-            _DF_NG_2754_MSG10004_ImportDeclarationResponseService.Update(ser, requestParams);
+            _DF_NG_2757_MSG10004_ExportDeclarationResponseService.Update(ser, requestParams);
         }
 
         public override INF_MSG_GenericResponseData GetResponse(DF_NG_2757_MSG10004_ExportDeclarationResponse customResponse, GenericRequestParams requestParams)
@@ -230,9 +239,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //var respose = _DF_NG_2754_MSG10004_ImportDeclarationResponseService.MyResponseData ?? _MyDefaultResponseData;
             //return respose;
 
-            if (_MyDefaultResponseData == null && _DF_NG_2754_MSG10004_ImportDeclarationResponseService.MyResponseData != null)
+            if (_MyDefaultResponseData == null && _DF_NG_2757_MSG10004_ExportDeclarationResponseService.MyResponseData != null)
             {
-                this._MyDefaultResponseData = _DF_NG_2754_MSG10004_ImportDeclarationResponseService.MyResponseData;
+                this._MyDefaultResponseData = _DF_NG_2757_MSG10004_ExportDeclarationResponseService.MyResponseData;
             }
             else
             {
