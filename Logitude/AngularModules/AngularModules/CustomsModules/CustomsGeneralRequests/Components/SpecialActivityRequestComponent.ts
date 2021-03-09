@@ -957,7 +957,7 @@ export class SpecialActivityRequestComponent
             this.ValidationErrorsList.push(msg);
         }
 
-        if (!(AppTool.IsNullOrEmpty(this.OtherActivityComment)) && this.OtherActivityComment.length > 256) {
+        if ((!(AppTool.IsNullOrEmpty(this.OtherActivityComment))) && this.OtherActivityComment.length > 256) {
              this.ValidationErrorsList.push("שדה הערות - אורך מקסימלי 256 תוים");
 
          }
