@@ -436,6 +436,7 @@ namespace WebFreight.Web.DataProviders
         public string ValueOfGoodsCurrency { get; set; }
         public class InvoicesReport
         {
+            public string BillToVatNumber { get; set; }
             public string InvoiceType { get; set; }
             public string InvoiceNumber { get; set; }
             public string InternalNumber { get; set; }
