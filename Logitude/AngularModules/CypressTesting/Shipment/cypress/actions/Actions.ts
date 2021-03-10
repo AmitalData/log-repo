@@ -42,7 +42,6 @@ export function AssertAddEvent(EventNote:string) {
     BaseAssertion.AssertStatusCode(RequestAliases.GetTraceEvent, 200).then((interception) => {
         expect(interception.response.body.Notes,)
     })
-    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentGetSingle, 200);
 }
 export function AssertExceptionResolved (EventNote:string){
     BaseAssertion.AssertStatusCode( RequestAliases.ShipmentRequest,200).then((interception) => {
