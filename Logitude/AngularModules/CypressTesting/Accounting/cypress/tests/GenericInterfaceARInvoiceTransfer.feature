@@ -1,4 +1,4 @@
-@release @all @stable @open
+@release @all @open
 Feature: Generic Interface AR Invoice Transfer
     The user disables the Accounting Transfer in settings,
     creates AR invoice, changes the settings for Accounting Transfer to Generic Interface,
