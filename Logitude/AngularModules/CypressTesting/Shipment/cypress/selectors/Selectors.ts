@@ -237,14 +237,6 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ContactEnglishName = "#Contact_EnglishName";
   public static readonly ContactEmail = "#Contact_Email";
   public static readonly ShipmentBranch = "#Shipment_BranchId";
-  public static readonly ContainsMainCarriageCarrierRequired = "Main Carriage Carrier is required";
-  public static readonly ContainsContractNumberRequired = "Contract Number is required";
-  public static readonly ContainsETDOrVesselAndVoyageMustProvided = "ETD or Main-Carriage Vessel and Voyage must be provided";
-  public static readonly ContainsShipmentDescriptionOfGoodsRequired = "Shipment Description of Goods is required";
-  public static readonly ContainsShipmentPackagesRequired = "Shipment Order Packages or Shipment Packages are required";
-  public static readonly ContainsMoveTypeIsRequired = "Move type is required";
-  public static readonly ContainsBookingConfirmationNumberRequired = "Booking Confirmation Number is required";
-  public static readonly ContainsAllContainersShouldHaveContainerNumber = "All Containers should have Container Number";
   public static readonly ContainsMessageHasBeenSentSuccessfully = "Message has been sent Successfully";
   public static readonly ContainsRequestBooking = "Request Booking";
   public static readonly SaveShipperContactButton = ".RedButton:last";

@@ -51,7 +51,13 @@ Feature: INTTRA Sending E-Booking and Shipping Instructions
     Scenario: Open INTTRA e-booking wizard to ensure validation messages are appear
         Given the user open the master shipment
         When open INTTRA e-booking wizard
-        Then validation messages for sending e-booking should appear
+        Then the following validation messages for sending e-booking should appear
+            | Message                                                   |
+            | Main Carriage Carrier is required                         |
+            | Contract Number is required                               |
+            | ETD or Main-Carriage Vessel and Voyage must be provided   |
+            | Shipment Description of Goods is required                 |
+            | Shipment Order Packages or Shipment Packages are required |
 
     Scenario: Fill required information to send INTTRA e-booking
         Given the user fill the following information to send e-booking
@@ -78,7 +84,11 @@ Feature: INTTRA Sending E-Booking and Shipping Instructions
     Scenario: Ensure shipping instructions validation messages
         Given the user open the master shipment
         When open INTTRA shipping instructions wizard
-        Then validation messages for sending shipping instructions should appear
+        Then the following validation messages for sending shipping instructions should appear
+            | Message                                     |
+            | Move type is required                       |
+            | Booking Confirmation Number is required     |
+            | All Containers should have Container Number |
 
     Scenario: Fill shipping instructions required information
         Given the user fill the following information to send shipping instructions
