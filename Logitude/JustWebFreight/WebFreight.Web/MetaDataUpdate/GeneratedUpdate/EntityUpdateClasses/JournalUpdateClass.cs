@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "106f5ab7777869203e8879d7e6bddcd0";
+		public const string HashString = "b530408341fc55fe9f8723c1a89669f1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3777,7 +3777,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode JournalTextCode_JournalOExchangeRateValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.ExchangeRateValidation", DefaultText = "There is no exchange rate for the selected currency on the accounting date for line",LocalDefaultText = @"לא הוגדר שער חליפין של המטבע שנבחר בתאריך החשבונאי שצויין בשורה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode JournalTextCode_JournalOFutureDateIsNotAllowedInLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.FutureDateIsNotAllowedInLine", DefaultText = "Future date is not allowed. Line",LocalDefaultText = @" לא ניתן להקליד תאריך עתידי.שורת פקודה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode JournalTextCode_JournalOhaveFutureAccountingorReferenceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.haveFutureAccountingorReferenceDate", DefaultText = "Can't approve The Journal . Some Lines have Future Accounting or Reference Date.",LocalDefaultText = @"לא ניתן לאשר את פקודת היומן , ישנם שורות עם תאריך חשבונאי/אסמכתא עתידי.", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

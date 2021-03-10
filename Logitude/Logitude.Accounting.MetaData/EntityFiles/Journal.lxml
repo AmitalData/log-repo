@@ -4998,9 +4998,9 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Journal.O.FutureDateIsNotAllowedInLine&quot;"
-      DefaultText="&quot;Future date is not allowed. Line&quot;"
-      LocalDefaultText="&quot; לא ניתן להקליד תאריך עתידי.שורת פקודה&quot;"
+      Code="&quot;Journal.O.haveFutureAccountingorReferenceDate&quot;"
+      DefaultText="&quot;Can't approve The Journal . Some Lines have Future Accounting or Reference Date.&quot;"
+      LocalDefaultText="&quot;לא ניתן לאשר את פקודת היומן , ישנם שורות עם תאריך חשבונאי/אסמכתא עתידי.&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

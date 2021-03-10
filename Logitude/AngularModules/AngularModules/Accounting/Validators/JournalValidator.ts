@@ -7,8 +7,7 @@ import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTransla
 export class JournalValidator
 {
     private static CurrentSession = SessionLocator.SelectedSession;
-    private static FutureDateErrorsMessage: string;
-    private static IsFutureDateErrorsExist: boolean = true;
+  
 
     public static ValidateJournal(entityPM: any)
     {
@@ -60,7 +59,6 @@ export class JournalValidator
 
                 }
 
-               // this.ValidateJournalLineForFutureDate(line);
 
                 // Credit and Debit account (same currency)
                 if (line.ActionCode == '3') {
@@ -94,26 +92,6 @@ export class JournalValidator
         return errors;
     }
 
-
-    private static ValidateJournalLineForFutureDate(line: any) {
-        var journalLineHasFutureDate = this.CheckJournalLineForFutureDate(line)
-       
-        if (journalLineHasFutureDate) {
-            this.SetFutureDateErrorsMessage(line);
-        }
-    }
-
-    private static CheckJournalLineForFutureDate(line: any) {
-        var currentDate: Date = new Date();
-        return line.DocumentDate > DateTool.GetCurrentDateTimeAsUtc() || line.AccountingDate > DateTool.GetCurrentDateTimeAsUtc();
- 
-    }
-
-     private static SetFutureDateErrorsMessage(line: any) {
-        this.FutureDateErrorsMessage += this.IsFutureDateErrorsExist ? TextCodeTranslator.Translate("Journal.O.FutureDateIsNotAllowedInLine") + " " : ", ";
-        this.FutureDateErrorsMessage += line.Line;
-        this.IsFutureDateErrorsExist = false;
-    }
 
     public static ValidateTotals(entityPM: JournalPM) {
 
@@ -177,8 +155,7 @@ export class JournalValidator
 
         this.errorList = [];
         var result = [];
-        JournalValidator.FutureDateErrorsMessage = "";
-        JournalValidator.IsFutureDateErrorsExist = true;
+      
         // Validate last row of journal lines
         //if (!AppTool.IsNullOrEmpty(entityPM.JournalLines)) {
         //    var lastRow = entityPM.JournalLines[entityPM.JournalLines.length - 1];
@@ -190,7 +167,6 @@ export class JournalValidator
             this.FillErrorList(result); 
         }
 
-        this.SetFutureDateErrorsIfExist(entityPM);
 
         // Validate Totals
         result = JournalValidator.ValidateTotals(entityPM)
@@ -202,12 +178,6 @@ export class JournalValidator
         return this.errorList ;
     }
 
-    SetFutureDateErrorsIfExist(entityPM: JournalPM) {
-        const statusCode_JournalApproved : string = "2";
-        var isIsFutureDateErrorsExistAndJournalApproved = !JournalValidator.IsFutureDateErrorsExist && entityPM.StatusCode == statusCode_JournalApproved;
-        if (isIsFutureDateErrorsExistAndJournalApproved)
-            this.errorList.push(JournalValidator.FutureDateErrorsMessage);
-    }
 
     public static Abs(number: number) {
         return number < 0 ? number * -1 : number;
