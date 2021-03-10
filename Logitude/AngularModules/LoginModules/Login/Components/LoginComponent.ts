@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {LoginService, LoginParameters, LoginTokenParameter} from '../LoginService';
 import {Headers} from '@angular/http';
 import {SessionInfo} from '../SessionInfo';
-import {Tools} from '../Utilities/Tools';
+import {Tools} from '../Utilities/Tools'; 
 declare var showTenantsCombo, getselectedcompany, IsBrowserSupported, IsMobileDetected;
 
 @Component({
@@ -502,6 +502,8 @@ export class LoginComponent {
             this.HidePendingLoading = false;
         }
     }
+     
+     
     PostLoginData() {
         this.loginService.PostLoginData(this.LoginParams).subscribe(userData => {
 
@@ -529,10 +531,14 @@ export class LoginComponent {
                     }
                 }
 
-
+                 
                 if (userData.HtmlVersion) {
-                    var version = userData.HtmlVersion;
-                    AngularURL = SessionInfo.GetLogitudeURL() + "Angular" + version + "/index.html";
+                    if (SessionInfo.GetLogitudeURL().indexOf('localhost:9996') > -1)  
+                        AngularURL = "http://localhost:4200/?" + data; 
+                    else {
+                        var version = userData.HtmlVersion;
+                        AngularURL = SessionInfo.GetLogitudeURL() + "Angular" + version + "/index.html";
+                    }
                 }
                 else {
                     if (SessionInfo.GetLogitudeURL().indexOf('localhost:9996') > -1)
@@ -550,8 +556,7 @@ export class LoginComponent {
                         AngularURL = AngularURL.replace("&Tenant=" + externalTenant, "");
                     }
 
-                }
-
+                } 
                 document.location.href = AngularURL;
             }
 
