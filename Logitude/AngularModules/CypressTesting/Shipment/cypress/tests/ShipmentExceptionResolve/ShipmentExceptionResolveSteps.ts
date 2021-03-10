@@ -68,10 +68,9 @@ When("resolve the exception due to {string}", (ExceptionResolvedNote) => {
     ShipmentActions.ClickOnExceptionResolved(ExceptionResolvedNote)
 });
 Then("the exception should resolve successfully", () => {
-    BaseAssertion.AssertStatusCode( RequestAliases.ShipmentRequest,200);
+    ShipmentActions.AssertExceptionResolved(EventNote)
 });
 Then("resolve the exception should appear in events tab", () => {
-    ShipmentActions.AssertExceptionResolved(EventNote)
     ShipmentActions.AssertEventAppearInEventTab(ShipmentSelectors.ExceptionResolved)
 });
 Then("has exception should change to no", () => {

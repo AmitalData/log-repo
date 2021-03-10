@@ -61,7 +61,6 @@ export function ClickOnExceptionResolved(ExceptionResolvedNote:string){
     cy.Click(ShipmentSelectors.ShipmentExceptionResolved,null)
     cy.FillLogTextBox(ShipmentSelectors.EventNotes,ExceptionResolvedNote)
     cy.Click(ShipmentSelectors.ConfirmActionButton,null)
-    
 }
 export function RefreshEventTab(){
     cy.get(BaseSelectors.CurvedEditArea).find(BaseSelectors.Refresh).click()
