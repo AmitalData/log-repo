@@ -58,7 +58,7 @@ export class RootComponent implements AfterViewInit {
 
       if (url.indexOf("localhost") > -1)
           SessionLocator.WorkerRoleName = "development";
-      this.isPrivateLable = window.sessionStorage.getItem("IsPrivateLable") == "true";
+      this.isPrivateLable = window.sessionStorage.getItem("IsPrivateLabel") == "true";
       this.isDSV = window.sessionStorage.getItem("IsDSV") == "true";
       this.LoginToSystem();
   }
