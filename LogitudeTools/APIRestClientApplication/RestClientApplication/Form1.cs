@@ -57,7 +57,7 @@ namespace RestClientApplication
             if(apiCombo.SelectedIndex == ratesUpdateIndex)
             {
                 this.operationCombo.Items.Clear();
-                this.operationCombo.Items.Add("Update (PUT)");
+                this.operationCombo.Items.Add("Create (POST)");
             }
             else
             {
@@ -1106,12 +1106,7 @@ namespace RestClientApplication
 
                     if (operationCombo.SelectedIndex == 0)
                     {
-                        if (apiCombo.SelectedIndex == ratesUpdateIndex)
-                        {
-                            response = await client.PutAsync(txtServerUrl.Text + "/" + api, content);
-                        }
-                        else 
-                            response = await client.PostAsync(txtServerUrl.Text + "/" + api, content);
+                        response = await client.PostAsync(txtServerUrl.Text + "/" + api, content);
                     }
                     else if (operationCombo.SelectedIndex == 1)
                     {
