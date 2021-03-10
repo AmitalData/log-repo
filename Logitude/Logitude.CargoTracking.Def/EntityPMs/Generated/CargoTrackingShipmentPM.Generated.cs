@@ -1745,6 +1745,121 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool deliveryDone ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool DeliveryDone  
+	   {
+	    
+	     get
+		{
+		   return deliveryDone;
+		 }
+		 set
+		 {
+		   if(deliveryDone != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeliveryDone",OldValue=deliveryDone,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   deliveryDone=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? deliveryDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? DeliveryDate  
+	   {
+	    
+	     get
+		{
+		   return deliveryDate;
+		 }
+		 set
+		 {
+		   if(deliveryDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeliveryDate",OldValue=deliveryDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   deliveryDate=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? deliveryEstimationDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? DeliveryEstimationDate  
+	   {
+	    
+	     get
+		{
+		   return deliveryEstimationDate;
+		 }
+		 set
+		 {
+		   if(deliveryEstimationDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeliveryEstimationDate",OldValue=deliveryEstimationDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   deliveryEstimationDate=value;
+		   }
+			
+		 }
+	   }
+	  private string deliveryNotes ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeliveryNotes  
+	   {
+	    
+	     get
+		{
+		   return deliveryNotes;
+		 }
+		 set
+		 {
+		   if(deliveryNotes != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeliveryNotes",OldValue=deliveryNotes,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   deliveryNotes=value;
+		   }
+			
+		 }
+	   }
+	  private string deliveryExceptionReason ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeliveryExceptionReason  
+	   {
+	    
+	     get
+		{
+		   return deliveryExceptionReason;
+		 }
+		 set
+		 {
+		   if(deliveryExceptionReason != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeliveryExceptionReason",OldValue=deliveryExceptionReason,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   deliveryExceptionReason=value;
+		   }
+			
+		 }
+	   }
 	  private string grossWeightUnitCode ;
 	  	  
        
@@ -1764,6 +1879,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GrossWeightUnitCode",OldValue=grossWeightUnitCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   grossWeightUnitCode=value;
+		   }
+			
+		 }
+	   }
+	  private string forwardingShipmentNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ForwardingShipmentNumber  
+	   {
+	    
+	     get
+		{
+		   return forwardingShipmentNumber;
+		 }
+		 set
+		 {
+		   if(forwardingShipmentNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForwardingShipmentNumber",OldValue=forwardingShipmentNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   forwardingShipmentNumber=value;
 		   }
 			
 		 }

@@ -612,6 +612,7 @@
     <Compile Include="EntityQueryServices\Generated\UserDefinedReportQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\VatReportStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\WithholdingTaxDeductionTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\GLAccountConnectedPartnerService.cs" />
     <Compile Include="EntityQueryServices\GLAccountCounterQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountInterestPeriodQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountMoreDataQueryService.cs" />

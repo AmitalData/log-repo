@@ -272,23 +272,55 @@ export class AccountingMainTesterComponent extends BaseComponent {
         this.StrandartOp(opr, obj, () => { });
 
     }
+    _ButtonReverseDueDate_Click() {
+        let opr = "_ButtonReverseDueDate_Click";
+        let obj = { MyTenant: SessionLocator.Tenant, MyGLAccId: "1-131321" };
+        this.StrandartOp(opr, obj, () => { });
+
+    }
+    ButtonLoadSystem1000_Click() {
+        let opr = "ButtonLoadSystem1000_Click";
+        let str: string =
+            `Please insert page, you can add a header  //Tenant=1071
+Line2
+Line3
+`;
+        this.PostOp(opr, str, () => { });
+    }
+    _ButtonFixDueLocalBalance_Click() {
+        let opr = "_ButtonFixDueLocalBalance_Click";
+        let obj = { MyTenant: SessionLocator.Tenant, /*MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321"*/ };
+        this.StrandartOp(opr, obj, () => { });
+
+    }
+
     _ButtonReverseTotalFIXControl_Click() {
         let opr = "_ButtonReverseTotalFIXControl_Click";
-        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31), ChangeSupplier2Customer : false, };
         this.StrandartOp(opr, obj, () => { });
     }
     //type myCallback = () => any;
 
-    StrandartOp(opr: string, defaultObj, onEndExec: () => any) {
+    StrandartOp(opr: string, defaultObj, onEndExec: () => any, isFlatFile: boolean = false) {
         try {
-            if (AppTool.IsNullOrEmpty(this._TextBoxParam) || this._LastState != opr) {
-                
+            if (!isFlatFile) {
+                if (AppTool.IsNullOrEmpty(this._TextBoxParam) || this._LastState != opr) {
 
-                this._TextBoxParam = JSON.stringify(defaultObj);
-                return;
+
+                    this._TextBoxParam = JSON.stringify(defaultObj);
+                    return;
+                }
+                let parseobj = JSON.parse(this._TextBoxParam);
+            } else {
+                if (AppTool.IsNullOrEmpty(this._TextBoxParam) || this._LastState != opr) {
+
+
+                    this._TextBoxParam = defaultObj.toString();
+                    return;
+                }
+                let parseobj = { FlatFile: this._TextBoxParam };
             }
             
-            let parseobj = JSON.parse(this._TextBoxParam);
             this.CurrentSession.StartBusyIndicatorCreating();
             this._AccountingOpService.GetTestOperation(opr, this._TextBoxParam)
                 .subscribe(
@@ -320,6 +352,50 @@ export class AccountingMainTesterComponent extends BaseComponent {
         
         
     }
+    PostOp(opr: string, defaultObj, onEndExec: () => any) {
+        try {
+
+            if (AppTool.IsNullOrEmpty(this._TextBoxParam) || this._LastState != opr) {
+
+
+                this._TextBoxParam = defaultObj.toString();
+                return;
+            }
+            let parseobj = { OperationId: opr,  FlatFile: this._TextBoxParam };
+
+
+            this.CurrentSession.StartBusyIndicatorCreating();
+            this._AccountingOpService.PostTestOperation(opr, parseobj)
+                .subscribe(
+                    (res: ServiceResponse) => {
+                        this._LabelLog = res.Result.Log;
+                        this.JsonOut = res.Result.JsonOut;
+
+                        this.ErrorMess = res.Result.ExceptionMess;
+
+                        this.CurrentSession.StopBusyIndicator();
+                        onEndExec();
+                    },
+                    (err) => {
+
+                        alert(err);
+                    },
+                    () => {
+                        this.CurrentSession.StopBusyIndicator();
+                    }
+
+                );
+        }
+        catch (err) {
+            this._LabelLog = err;
+        }
+        finally {
+            this._LastState = opr;
+        }
+
+
+    }
+
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
@@ -479,6 +555,16 @@ export class AccountingMainTesterComponent extends BaseComponent {
                 e => { this._LabelLog = JSON.stringify(e); },
                 () => { this.CurrentSession.StopBusyIndicator(); }
             );
+    }
+    ButtonLoadConsolTaxRep_Click() {
+        let opr = "ButtonLoadConsolTaxRep_Click";
+        let str: string =
+            `Please insert page, you can add a header  //Tenant=1071
+//ReportId=1-12345678
+Line3
+Line4
+`;
+        this.PostOp(opr, str, () => { });
     }
 
     SetJournalExample() {

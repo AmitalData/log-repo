@@ -16,6 +16,9 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
 using Microsoft.Practices.Unity;
 using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -103,10 +106,12 @@ namespace Logitude.Accounting.BL.Validators
         
 
         private string _JLineNumberTExt;
+        string TenantCurrency;
+        RatesTableRepository ratesTableRepository;
+        
         bool IsFutureDateErrorsExist = false;
         string FutureDateErrorsMessage = "";
-
-        public ValidationResult IsJournalValid(
+        public  ValidationResult IsJournalValid(
           JournalPM myJournalPM,
           System.ComponentModel.DataAnnotations.ValidationContext accountingValidationContextServiceProvider)
         {
@@ -142,6 +147,10 @@ namespace Logitude.Accounting.BL.Validators
             var myDataProvider = accountingValidationContextServiceProvider.GetService(typeof(IJournalValidatorContextDataProvider)) as IJournalValidatorContextDataProvider;
             var myIExternalReconcileDataProvider = accountingValidationContextServiceProvider.GetService(typeof(IExternalReconcileDataProvider)) as IExternalReconcileDataProvider;
             FullAccountingSettingPM tenantFullAccountingSettingPM = null;
+             TenantCurrency = GetTenantCurrency(myJournalPM);
+            IWebFreightContext webFreightContext = WebFreightContext.GetContext(myJournalPM.Tenant);
+             ratesTableRepository = new RatesTableRepository(webFreightContext);
+
             if (accountingValidationContextServiceProvider.Items.ContainsKey(JournalValidator.K_FullAccountingSettingPM))
             {
                 tenantFullAccountingSettingPM = accountingValidationContextServiceProvider.Items[JournalValidator.K_FullAccountingSettingPM] as FullAccountingSettingPM;
@@ -494,6 +503,7 @@ namespace Logitude.Accounting.BL.Validators
                         }
 
                     }
+                    ValidateExchangeRate(currJournalLinePM, errorsList);
 
                 }
                 finally
@@ -519,7 +529,7 @@ namespace Logitude.Accounting.BL.Validators
             ValidateJournalReconciles(myJournalPM, accountingValidationContextServiceProvider, errorsList, myIExternalReconcileDataProvider);
 
             ValidateJournalExternalReconciles(myJournalPM, errorsList, myIExternalReconcileDataProvider);
-
+          
             if (errorsList.Count == 0)
             {
                 return ValidationResult.Success;
@@ -536,7 +546,6 @@ namespace Logitude.Accounting.BL.Validators
                 errorString = errorString.Remove(errorString.Length - 1);
                 return new ValidationResult(TranslateMyTextCode("Accounting.General.O.JournalNotValid", 0) + ": " + errorString, errorsList);
             }
-
 
 
 
@@ -562,6 +571,24 @@ namespace Logitude.Accounting.BL.Validators
             currDateTimeUtcNow = TenantServerConfigration.GetCurrentDateTime(journalLinePM.Tenant);
             return currDateTimeUtcNow.GetValueOrDefault().Date < journalLinePM.AccountingDate.Date || currDateTimeUtcNow.GetValueOrDefault().Date < journalLinePM.DocumentDate.Date; ;
         }
+        private List<string> ValidateExchangeRate(JournalLinePM journalLine, List<string> errors)
+        {
+            if (journalLine.CurrencyId == TenantCurrency) return errors;
+            RatesTable entityPoco = ratesTableRepository.GetExchageRateByValueAndDate(TenantCurrency, 
+                journalLine.CurrencyId, journalLine.AccountingDate, journalLine.Tenant);
+            if (entityPoco == null)
+            {
+                errors.Add(TranslateTextsClass.Translate("Journal.O.ExchangeRateValidation", journalLine.Tenant) + " " + journalLine.Line);
+            }
+
+            return errors;
+        }
+        private string GetTenantCurrency(JournalPM journal)
+        {
+            TenantQuery tenantQuery = new TenantQuery(journal.Tenant);
+            TenantPM tenantPM = tenantQuery.GetSinglePM(journal.Tenant);
+            return tenantPM.CurrencyId;
+
 
         private bool CheckIfFutureDateErrorsExist(JournalPM myJournalPM)
         {

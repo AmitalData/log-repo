@@ -52,6 +52,28 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                         return _ButtonReverseTotalFIXControl_Click(tenant, _TextBoxParam);
                     }
                     break;
+                    
+                    case "_ButtonFixDueLocalBalance_Click":
+                    {
+                        return _ButtonFixDueLocalBalance_Click(tenant, _TextBoxParam);
+                    }
+                    break;
+                case "_ButtonReverseDueDate_Click":
+                    {
+                        return _ButtonReverseDueDate_Click(tenant, _TextBoxParam);
+                    }
+                    break;
+                case "ButtonLoadSystem1000_Click":
+                    {
+                        return ButtonLoadSystem1000_Click(tenant, _TextBoxParam);
+                    }
+                    break;
+                case "ButtonLoadConsolTaxRep_Click":
+                    {
+                        return ButtonLoadConsolTaxRep_Click(tenant, _TextBoxParam);
+                    }
+                    break;
+
                 case "WorkWithoutQueue_Click":
                     {
                         return WorkWithoutQueue_Click(tenant, _TextBoxParam);
@@ -98,7 +120,7 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                         return BuildTenant_Click(tenant, _TextBoxParam);
                     }
                     break;
-                    
+
                 default:
                     return new GateWayTesterResult()
                     {
@@ -492,6 +514,87 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             }
             return gateWayTesterResult;
         }
+
+
+        
+               
+        private GateWayTesterResult ButtonLoadSystem1000_Click(int tenant, string textBoxParam)
+        {
+            var gateWayTesterResult = new GateWayTesterResult();
+            try
+            {
+                //dynamic param = LogitudeXmlSerializer.JsonConvertDeserializeObject(textBoxParam);
+                // var tenant = (int)param.MyTenant;
+                string fileSystem1000 = textBoxParam;
+                ///Response.Clear();
+                var mySystem1000FlatFileAnalyser = new System1000FlatFileAnalyser();
+                mySystem1000FlatFileAnalyser.Analyse(null, fileSystem1000, null);
+
+                
+                gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax(mySystem1000FlatFileAnalyser.MyResultLoadFlatFile); ;
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+                gateWayTesterResult.Log = LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+        private GateWayTesterResult _ButtonReverseDueDate_Click(int tenant, string textBoxParam)
+        {
+            var gateWayTesterResult = new GateWayTesterResult();
+            try
+            {
+                var param = LogitudeXmlSerializer.JsonConvertDeserializeTObject<ParamBasic>(textBoxParam);
+                // var tenant = (int)param.MyTenant;
+                string AccountId = param.MyGLAccId;
+                ///Response.Clear();
+                var myDueLocalBalanceService = new DueLocalBalanceService();
+                var listDiff = myDueLocalBalanceService.ReverseEngineer(tenant, AccountId);
+                gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<DueLocalBalanceDiffM>>(listDiff);
+
+                
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+                gateWayTesterResult.Log = LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+        private GateWayTesterResult _ButtonFixDueLocalBalance_Click(int tenant, string textBoxParam)
+        {
+            var gateWayTesterResult = new GateWayTesterResult();
+            try
+            {
+                var param = LogitudeXmlSerializer.JsonConvertDeserializeTObject<ParamBasic>(textBoxParam);
+                var myDueLocalBalanceService = new DueLocalBalanceService();
+                myDueLocalBalanceService.ReBuild(tenant, "");
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+                gateWayTesterResult.Log = LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
         private GateWayTesterResult _ButtonReverseTotalFIXControl_Click(int tenant, string textBoxParam)
         {
 
@@ -500,13 +603,22 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
 
             try
             {
-
-
                 var param = LogitudeXmlSerializer.JsonConvertDeserializeTObject<ParamBasic>(textBoxParam);
-                var s = new ReverseEngineerTotalByMonth_ControlAccountService(param.MyDate, param.MyTenant, param.MyGLAccId);
-                s.FixDbIntegrityFromLedgeToTotal(param.TheWholePeriod);
 
-                gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<GLAccountTotalByMonthsDTO>>(s.CompareReport.GLAccountTotalByMonthsList);
+                if (param.ChangeSupplier2Customer)
+                {
+                    var theWholePeriodReverseEngineerTotalByMonth_ControlAccountService = new TheWholePeriodReverseEngineerTotalByMonth_ControlAccountService();
+                    theWholePeriodReverseEngineerTotalByMonth_ControlAccountService.ChangeSupplier2Customer(param.MyDate, param.MyTenant);
+
+                }
+                else
+                {
+                    
+                    var s = new ReverseEngineerTotalByMonth_ControlAccountService(param.MyDate, param.MyTenant, param.MyGLAccId);
+                    s.FixDbIntegrityFromLedgeToTotal(/*param.ChangeSupplier2Customer*/);
+                    gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<GLAccountTotalByMonthsDTO>>(s.CompareReport.GLAccountTotalByMonthsList);
+                }
+                
 
 
             }
@@ -624,6 +736,47 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             return gateWayTesterResult;
         }
 
+
+
+        private GateWayTesterResult ButtonLoadConsolTaxRep_Click(int tenant, string textBoxParam)
+        {
+
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+
+
+                    string fileConsolidatedTaxReport = textBoxParam;
+
+
+                    var myConsolidatedTaxReportFlatFileAnalyser = new ConsolidatedTaxReportFlatFileAnalyser();
+                    myConsolidatedTaxReportFlatFileAnalyser.Analyse(null, null, fileConsolidatedTaxReport);
+
+                        gateWayTesterResult.JsonOut = "TaxRep Ok";
+
+
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+                gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
+                gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+
+
+
         GateWayTesterResult _ButtonReverseTotal_Click(int tenant ,string _TextBoxParam)
         {
             var gateWayTesterResult = new GateWayTesterResult();
@@ -656,6 +809,9 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             return gateWayTesterResult;
         }
     }
+
+
+
     public class GateWayTesterResult
     {
         public string JsonOut { get; set; }
@@ -670,7 +826,7 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
 
         public string MyGLAccId { get; set; }
 
-        public bool TheWholePeriod { get; set; }
+        public bool ChangeSupplier2Customer { get; set; }
 
     }
 }
