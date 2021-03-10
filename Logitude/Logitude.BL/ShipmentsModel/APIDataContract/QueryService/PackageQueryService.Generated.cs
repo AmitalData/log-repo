@@ -24,28 +24,28 @@ using Simplog.Data.ShipmentsModel;
 
  namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 { 
-   public partial class ShipmentPickUpDeliveryPackageQueryService
+   public partial class PackageQueryService
    {
    
 		ShipmentPickUpDeliveryPackageQuery query; 
 
-        public ShipmentPickUpDeliveryPackageQueryService(int tenant)
+        public PackageQueryService(int tenant)
         {
 		
 			query = new ShipmentPickUpDeliveryPackageQuery(tenant);
         }
 
 		
-		public List<ShipmentPickUpDeliveryPackage> ShipmentPickUpDeliveryPackageDataMapping(List<ShipmentPickUpDeliveryPackagePM> MyEntityPM,int Tenant,string ComputingPartnerName = "")
+		public List<Package> PackageDataMapping(List<ShipmentPickUpDeliveryPackagePM> MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
 				   
-				var MyList = new List<ShipmentPickUpDeliveryPackage>();
+				var MyList = new List<Package>();
 				foreach (var item in MyEntityPM)
 				{
 				   
-				   var temp = new ShipmentPickUpDeliveryPackage(); 
+				   var temp = new Package(); 
 				   temp.Id = item.Id; 
 
 			  
@@ -73,7 +73,7 @@ using Simplog.Data.ShipmentsModel;
             }
         } 
 
-		public List<ShipmentPickUpDeliveryPackagePM> ShipmentPickUpDeliveryPackageDataMappingAndValidatin(List<ShipmentPickUpDeliveryPackage> MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public List<ShipmentPickUpDeliveryPackagePM> PackageDataMappingAndValidatin(List<Package> MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
