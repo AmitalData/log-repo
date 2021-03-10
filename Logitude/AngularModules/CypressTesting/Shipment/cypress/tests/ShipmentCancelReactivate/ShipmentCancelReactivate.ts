@@ -4,6 +4,7 @@ import { ShipmentDetails } from "../../models/ShipmentDetails";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 import { ShipmentSelectors } from "../../selectors/Selectors";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
@@ -17,7 +18,7 @@ Given("the user logged in and navigates to shipments workspace", () => {
 
 Given("a direct shipment with the following details",
   (dataTable) => {
-    shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+    shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
     Actions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
     Actions.FillShipmentWizardsFields(shipmentDetails);
   });

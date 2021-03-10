@@ -5,6 +5,7 @@ import { ShipmentSelectors } from "../../selectors/Selectors";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { MainCarriageLeg } from "cypress/models/MainCarriageLeg";
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 let ShipmentData: ShipmentDetails;
 let shipmentNumber: string;
@@ -16,7 +17,7 @@ Given("the user logged in and navigates to shipments workspace", () => {
 
 Given("a direct shipment with the following details",
     (dataTable) => {
-        let shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+        let shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
         ShipmentData = shipmentDetails;
         Actions.OpenNewShipmentWizard(ShipmentData.ShipmentLevel);
         Actions.FillShipmentWizardsFields(ShipmentData);
@@ -38,7 +39,7 @@ Given("the user in the direct's shipment rounting tab", () => {
 });
 
 Given("edit main carriage leg with the following details", (dataTable) => {
-    let mainCarriageLeg = dataTable.hashes()[0] as MainCarriageLeg;
+    let mainCarriageLeg = Assists.CreateInstance<MainCarriageLeg>(dataTable, true);
     Actions.EditMainCarriageLegs(mainCarriageLeg.Airline);
     cy.Click(ShipmentSelectors.ShipmentSaveButton, null);
 });

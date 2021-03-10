@@ -8,6 +8,7 @@ import { RequestAliases } from '../../../../Base/cypress/constants/RequestAliase
 import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors';
 import { QuoteDetails } from '../../models/QuoteDetails';
 import { QuoteSelectors } from '../../selectors/Selectors';
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 //#region variables
 let quoteDetails: QuoteDetails;
@@ -22,7 +23,7 @@ Given("the user logged in and navigates to customers workspace", () => {
 });
 
 Given("a customer with the following details", (dataTable) => {
-  let customerDetails = dataTable.hashes()[0] as CustomerDetails;
+  let customerDetails = Assists.CreateInstance<CustomerDetails>(dataTable, true);
   CommonActions.AddNewCustomer(customerDetails);
 });
 
@@ -43,7 +44,7 @@ Given("the user in quotes workspace", () => {
 });
 
 Given("a quote with the following details", (dataTable) => {
-  quoteDetails = dataTable.hashes()[0] as QuoteDetails;
+  quoteDetails = Assists.CreateInstance<QuoteDetails>(dataTable, true);
   quoteDetails.Shipper = customerCode;
   QuotesActions.FillQuoteFields(quoteDetails);
 });
@@ -62,7 +63,7 @@ Then("the quote should create successfully", () => {
 //#region Add/Delete package
 Given("the user add a package with the following details", (dataTable) => {
   QuotesActions.OpenQuote(quoteDetails.QuoteNumber);
-  packagesDetails = dataTable.hashes() as PackagesDetails[];
+  packagesDetails = Assists.CreateSet<PackagesDetails>(dataTable);
   QuotesActions.FillPackageTab(packagesDetails, quoteDetails.ShipmentType);
 });
 

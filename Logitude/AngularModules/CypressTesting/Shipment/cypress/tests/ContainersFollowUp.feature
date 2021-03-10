@@ -1,15 +1,20 @@
 @release @all
 Feature: Containers Follow-Up
 
-    The user creates a Direct Import Ocean FCL shipment, 
-    adds a container, modifies the dates of the shipment, adds follow-ups for the 
+    The user creates a Direct Import Ocean FCL shipment,
+    adds a container, modifies the dates of the shipment, adds follow-ups for the
     container to reflect the different stages of In Transit, Arrived Not Delivered and Delivered Not Returned.
 
     Scenario: Create import ocean FCL shipment
         Given the user logged in and navigates to shipments workspace
         And a shipment with the following details
-            | ShipmentLevel | Direction | TransportMode | ShipmentType | Consignee           | MainCarriageFromPort | MainCarriageToPort |
-            | Direct        | Import    | Ocean         | FCL          | TestConsigneeImport | LHR                  | MIA                |
+            | ShipmentLevel        | Direct              |
+            | Direction            | Import              |
+            | TransportMode        | Ocean               |
+            | ShipmentType         | FCL                 |
+            | Consignee            | TestConsigneeImport |
+            | MainCarriageFromPort | LHR                 |
+            | MainCarriageToPort   | MIA                 |
         When create shipment
         Then the shipment should create successfully
 

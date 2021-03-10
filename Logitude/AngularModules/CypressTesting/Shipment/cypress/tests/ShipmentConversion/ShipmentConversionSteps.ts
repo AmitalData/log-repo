@@ -5,6 +5,7 @@ import { EventTypeDetails } from "../../models/EventTypeDetails";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion";
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 import { ShipmentConversionContext } from "../../models/ShipmentConversionContext";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 
 Given("the user logged in and navigate to shipments workspace", () => {
@@ -13,7 +14,7 @@ Given("the user logged in and navigate to shipments workspace", () => {
 });
 
 Given("a shipment with the following details", (dataTable) => {
-    let shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+    let shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
     ShipmentConversionContext.ShipmentLevel = shipmentDetails.ShipmentLevel;
     ShipmentConversionContext.ShipmentTransportMode = shipmentDetails.TransportMode;
     Actions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
@@ -45,7 +46,7 @@ Given("the user open LCL to FCL conversion wizard", () => {
 });
 
 Given("fill the following details for direction conversion", (dataTable) => {
-    let shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+    let shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
     shipmentDetails.TransportMode = ShipmentConversionContext.ShipmentTransportMode;
     Actions.FillDirectionConversionWizard(shipmentDetails);
 });
@@ -81,7 +82,7 @@ Then("type should be {string}", (expectedShipmentType: string) => {
 });
 
 Then("following events should appear in events tab", (dataTable) => {
-    let eventDetailsList = dataTable.hashes() as EventTypeDetails[];
+    let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
     eventDetailsList = ShipmentConversionEventsMapping(eventDetailsList);
     Actions.ValidateEventsTab(eventDetailsList);
 });

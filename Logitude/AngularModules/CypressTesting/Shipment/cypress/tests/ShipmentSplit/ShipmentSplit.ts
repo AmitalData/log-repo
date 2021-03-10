@@ -7,6 +7,7 @@ import { ShipmentSelectors } from "../../selectors/Selectors";
 import { PackagesDetails } from "cypress/models/PackagesDetails";
 import { RestAPI } from "../../../../Base/cypress/constants/RestAPI";
 import { URLs } from "../../constants/URLs";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
@@ -20,7 +21,7 @@ Given("the user logged in and navigates to shipments workspace", () => {
 });
 
 Given("a direct shipment with the following details", (dataTable) => {
-    shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+    shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
     Actions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
     Actions.FillShipmentWizardsFields(shipmentDetails);
 });
@@ -44,7 +45,7 @@ Given("the user open the shipment and navigate to packages workspace", () => {
 });
 
 Given("a container with the following details", (dataTable) => {
-    containerDetailsList = dataTable.hashes() as PackagesDetails[];
+    containerDetailsList = Assists.CreateSet<PackagesDetails>(dataTable);
     Actions.FillPackageTab(shipmentDetails.TransportMode, containerDetailsList, shipmentDetails.ShipmentType);
 });
 

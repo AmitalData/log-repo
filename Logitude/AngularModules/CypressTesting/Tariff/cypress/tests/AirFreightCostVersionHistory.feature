@@ -8,8 +8,10 @@ Feature: Air Freight Cost Tariff Version History
     Scenario: Login and create new air freight cost
         Given the user logged in and navigate to tariff workspace
         And an air freight cost with the following details
-            | Name               | Seller | StartDate | Product |
-            | TestAirFreightCost | AA     | Today     | General |
+            | Name      | TestAirFreightCost |
+            | Seller    | AA                 |
+            | StartDate | Today              |
+            | Product   | General            |
         When create freight cost
         Then the freight cost should create successfully
 

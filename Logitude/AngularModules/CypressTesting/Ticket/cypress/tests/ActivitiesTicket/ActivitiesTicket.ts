@@ -7,6 +7,7 @@ import { TicketSelectors } from "../../selectors/TicketSelectors";
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 import { RestAPI } from "../../../../Base/cypress/constants/RestAPI";
 import { URLs } from "../../constants/URLs";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 let TicketData: TicketDetails;
 let TicketActivitySubject : string ;
@@ -18,7 +19,7 @@ Given("the user logged in and navigated to ticket workspace", () => {
 });
 
 Given("a ticket with the following details", (dataTable) => {
-    TicketData = dataTable.hashes()[0] as TicketDetails;
+    TicketData = Assists.CreateInstance<TicketDetails>(dataTable, true);
     cy.Click(BaseSelectors.Button, TicketSelectors.ContainsNew);
     Actions.FillTicketFields(TicketData);
 });

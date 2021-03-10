@@ -6,8 +6,12 @@ Feature:  Full Shipment Scenario
     Scenario: Create Direct Export Air Shipment
         Given the user logged in and navigates to shipments workspace
         And a direct shipment with the following details
-            | ShipmentLevel | Direction | TransportMode | Shipper           | MainCarriageFromPort | MainCarriageToPort |
-            | Direct        | Export    | Air           | TestShipperExport | LHR                  | MIA                |
+            | ShipmentLevel        | Direct            |
+            | Direction            | Export            |
+            | TransportMode        | Air               |
+            | Shipper              | TestShipperExport |
+            | MainCarriageFromPort | LHR               |
+            | MainCarriageToPort   | MIA               |
         When create shipment
         Then the shipment should create successfully
 
@@ -48,15 +52,27 @@ Feature:  Full Shipment Scenario
 
     Scenario: Add Payable
         Given a payable with the following details
-            | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
-            | AFT         | GRWT | 5        | 10        | EUR      | 4            |
+            | ChargesType  | AFT  |
+            | UOM          | GRWT |
+            | Quantity     | 5    |
+            | UnitPrice    | 10   |
+            | Currency     | EUR  |
+            | ExchangeRate | 4    |
         When save shipment
         Then the direct shipment should save successfully
 
     Scenario: Create APInvoice
         And an APInvoice with the following details and a random invoice number
-            | Vendor     | InvoiceAmount | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VatNo | VATType | Branch      |
-            | TestVendor | 50            | EUR             | 4                   | Today       | Cash         | Today   | 55    | Zero    | Main Office |
+            | Vendor              | TestVendor  |
+            | InvoiceAmount       | 50          |
+            | InvoiceCurrency     | EUR         |
+            | InvoiceExchangeRate | 4           |
+            | InvoiceDate         | Today       |
+            | PaymentTerms        | Cash        |
+            | DueDate             | Today       |
+            | VatNo               | 55          |
+            | VATType             | Zero        |
+            | Branch              | Main Office |
         When receive APInvoice
         Then the APInvoice should create successfully
 
@@ -66,8 +82,13 @@ Feature:  Full Shipment Scenario
 
     Scenario: Pay APInvoice
         Given an APPayment with the following details
-            | Vendor     | PaymentMethod | PaymentAmount | PaymentCurrency | Rate | RegisterDate | Branch      |
-            | TestVendor | Cash          | 50.00         | EUR             | 4    | Today        | Main Office |
+            | Vendor          | TestVendor  |
+            | PaymentMethod   | Cash        |
+            | PaymentAmount   | 50.00       |
+            | PaymentCurrency | EUR         |
+            | Rate            | 4           |
+            | RegisterDate    | Today       |
+            | Branch          | Main Office |
         When pay the APInvoice
         Then the APInvoice should pay successfully
 
@@ -81,8 +102,15 @@ Feature:  Full Shipment Scenario
 
     Scenario: Create ARInvoice
         Given an ARInvoice with the following details
-            | PartnerType | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATNo | Branch      | VATType |
-            | Customer    | EUR             | 4                   | Today       | Cash         | Today   | Zero  | Main Office | Zero    |
+            | PartnerType         | Customer    |
+            | InvoiceCurrency     | EUR         |
+            | InvoiceExchangeRate | 4           |
+            | InvoiceDate         | Today       |
+            | PaymentTerms        | Cash        |
+            | DueDate             | Today       |
+            | VATNo               | Zero        |
+            | Branch              | Main Office |
+            | VATType             | Zero        |
         When create ARInvoice
         Then the ARInvoice should create successfully
 
@@ -96,15 +124,26 @@ Feature:  Full Shipment Scenario
 
     Scenario: Pay ARInvoice
         Given an ARPayment with the following details
-            | PartnerType | BillToAddress | PaymentCurrency | RegisterDate | PaymentMethod | PaymentAmount |
-            | Customer    | Main Address  | EUR             | Today        | Cash          | 50            |
+            | PartnerType     | Customer     |
+            | BillToAddress   | Main Address |
+            | PaymentCurrency | EUR          |
+            | RegisterDate    | Today        |
+            | PaymentMethod   | Cash         |
+            | PaymentAmount   | 50           |
         When pay the ARInvoice
         Then the ARInvoice should pay successfully
 
     Scenario: Create credit note ARInvoice
         Given a credit ARInvoice with the following details
-            | PartnerType | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATNo | Branch      | VATType |
-            | Customer    | EUR             | 4                   | Today       | Cash         | Today   | Zero  | Main Office | Zero    |
+            | PartnerType         | Customer    |
+            | InvoiceCurrency     | EUR         |
+            | InvoiceExchangeRate | 4           |
+            | InvoiceDate         | Today       |
+            | PaymentTerms        | Cash        |
+            | DueDate             | Today       |
+            | VATNo               | Zero        |
+            | Branch              | Main Office |
+            | VATType             | Zero        |
         When create credit ARInvoice
         Then the credit ARInvoice should create successfully
 
@@ -118,8 +157,13 @@ Feature:  Full Shipment Scenario
 
     Scenario: Pay credit note ARInvoice
         Given a credit ARPayment with the following details
-            | PartnerType | Partner           | BillToAddress | PaymentCurrency | RegisterDate | PaymentMethod | PaymentAmount |
-            | Customer    | TestShipperExport | Main Address  | EUR             | Today        | Offsetting    | -50           |
+            | PartnerType     | Customer          |
+            | Partner         | TestShipperExport |
+            | BillToAddress   | Main Address      |
+            | PaymentCurrency | EUR               |
+            | RegisterDate    | Today             |
+            | PaymentMethod   | Offsetting        |
+            | PaymentAmount   | -50               |
         When pay the ARInvoice
         Then the ARInvoice should pay successfully
 
@@ -138,8 +182,10 @@ Feature:  Full Shipment Scenario
     Scenario: Close Direct Shipment operationally
         Given the user in the direct's shipment rounting tab
         And  edit Main Carriage Leg with the following details
-            | Airline | FlightNumber | MAWB   | ATD   |
-            | AA      | Random       | Random | Today |
+            | Airline      | AA     |
+            | FlightNumber | Random |
+            | MAWB         | Random |
+            | ATD          | Today  |
         When close shipment operationally
         Then the shipment should close successfully
 

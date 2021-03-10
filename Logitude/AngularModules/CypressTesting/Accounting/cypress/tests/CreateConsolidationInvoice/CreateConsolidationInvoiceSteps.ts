@@ -17,6 +17,8 @@ import { ARPaymentDetails } from '../../models/ARPaymentDetails';
 import { ReceivableDetails } from "../../../../Shipment/cypress/models/ReceivableDetails"
 import { AccountingURLs } from '../../constants/URLs';
 import { RestAPI } from '../../../../Base/cypress/constants/RestAPI';
+import * as Assists from "../../../../Base/cypress/assists/Assists";
+
 //#region variables
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
@@ -49,7 +51,7 @@ Given("the user navigates to customers workspace", () => {
 });
 
 Given("a customer with the following details", (dataTable) => {
-  let customerDetails = dataTable.hashes()[0] as CustomerDetails;
+  let customerDetails = Assists.CreateInstance<CustomerDetails>(dataTable, true);
   CommonActions.AddNewCustomer(customerDetails);
 });
 
@@ -86,7 +88,7 @@ Given("the user navigates to shipments workspace", () => {
 });
 
 Given("a direct shipment with the following details", (dataTable) => {
-  shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+  shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
   ShipmentActions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
   shipmentDetails.Shipper = customerCode;
   ShipmentActions.FillShipmentWizardsFields(shipmentDetails);
@@ -106,7 +108,7 @@ Then("the direct should create successfully", () => {
 //#region Update packages tab
 Given("the user add package with the following details", (dataTable) => {
   ShipmentActions.OpenShipment(shipmentNumber);
-  let packagesDetails = dataTable.hashes() as PackagesDetails[];
+  let packagesDetails = Assists.CreateSet<PackagesDetails>(dataTable);
   ShipmentActions.FillPackageTab(shipmentDetails.TransportMode, packagesDetails)
 });
 //#endregion
@@ -125,7 +127,7 @@ Then("the direct should update successfully", () => {
 
 //#region Add Payables
 Given("a payable with the following details", (dataTable) => {
-  PayableData = dataTable.hashes()[0] as PayableDetails;
+  PayableData = Assists.CreateInstance<PayableDetails>(dataTable, true);
   ShipmentActions.FillPayablesTab(PayableData)
 });
 
@@ -151,7 +153,7 @@ Then("the receivables should generate successfully", () => {
 
 //#region Create ARInvoice
 Given("an ARInvoice with a random invoice number and the following details", (dataTable) => {
-  const ARInvoiceData = dataTable.hashes()[0] as ARInvoiceDetails
+  const ARInvoiceData = Assists.CreateInstance<ARInvoiceDetails>(dataTable, true)
   cy.Click(AccountingSelectors.CreateARInvoiceButton, null);
   AccountingActions.FillARInvoiceDetails(ARInvoiceData)
 });
@@ -171,7 +173,7 @@ Then("the invoice should create successfully", () => {
 Given("a consolidation invoice with the following details", (dataTable) => {
   cy.BackButton(BaseSelectors.ContainsShipment + shipmentNumber)
   cy.BackButton(BaseSelectors.ContainsOperations)
-  const ARInvoiceData = dataTable.hashes()[0] as ARInvoiceDetails
+  const ARInvoiceData = Assists.CreateInstance<ARInvoiceDetails>(dataTable, true)
   ARInvoiceData.Partner = customerCode
   AccountingActions.FillconsolidationInvoiceDetails(ARInvoiceData)
 
@@ -196,7 +198,7 @@ Given("the user back to Accounting workspace", () => {
 //#region add receivable
 Given("a receivable with the following details", (dataTable) => {
   ShipmentActions.OpenShipment(shipmentNumber);
-  const ReceivableData = dataTable.hashes() as ReceivableDetails[];
+  const ReceivableData = Assists.CreateSet<ReceivableDetails>(dataTable);
   ShipmentActions.FillReceivablesTab(ReceivableData)
 });
 When("add receivable", () => {
@@ -238,7 +240,7 @@ Then("the consolidation invoice should approve successfully", () => {
 
 //#region Connect to Payment
 Given("a payment with the following details", (dataTable) => {
-  const arPaymentDetails = dataTable.hashes()[0] as ARPaymentDetails;
+  const arPaymentDetails = Assists.CreateInstance<ARPaymentDetails>(dataTable, true);
   arPaymentDetails.Partner = customerCode;
   AccountingActions.NewARPaymentFromAccounting(arPaymentDetails, consolidationInvoiceNumber);
 });

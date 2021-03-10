@@ -8,8 +8,13 @@ Feature: Containers Delivery
     Scenario: Create import ocean FCL shipment
         Given the user logged in and navigates to shipments workspace
         And a shipment with the following details
-            | ShipmentLevel | Direction | TransportMode | ShipmentType | Consignee           | MainCarriageFromPort | MainCarriageToPort |
-            | Direct        | Import    | Ocean         | FCL          | TestConsigneeImport | LHR                  | MIA                |
+            | ShipmentLevel        | Direct              |
+            | Direction            | Import              |
+            | TransportMode        | Ocean               |
+            | ShipmentType         | FCL                 |
+            | Consignee            | TestConsigneeImport |
+            | MainCarriageFromPort | LHR                 |
+            | MainCarriageToPort   | MIA                 |
         When create shipment
         Then the shipment should create successfully
 

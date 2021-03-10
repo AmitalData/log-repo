@@ -6,6 +6,8 @@ import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliase
 import { EventDetails } from 'cypress/models/EventDetails';
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
 import { ShipmentSelectors } from "../../selectors/Selectors";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
+
 //#region variables
 let shipmentDetails: ShipmentDetails;
 let eventDetails: EventDetails
@@ -20,7 +22,7 @@ Given("the user logged in and navigates to shipments workspace", () => {
 });
 Given("a direct shipment with the following details",
     (dataTable) => {
-        shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+        shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
         ShipmentActions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
         ShipmentActions.FillShipmentWizardsFields(shipmentDetails);
     });
@@ -42,7 +44,7 @@ Given("the initial has exception status is {string}",
     });
 Given("exception event with the following details",
     (dataTable) => {
-        eventDetails = dataTable.hashes()[0] as EventDetails;
+        eventDetails = Assists.CreateInstance<EventDetails>(dataTable, true);
         EventType = eventDetails.EventType
         EventNote = eventDetails.EventNotes
         ShipmentActions.FillEventDetails(eventDetails)

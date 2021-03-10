@@ -13,6 +13,7 @@ import { ReceivableDetails } from 'cypress/models/ReceivableDetails';
 import { ARInvoiceDetails } from '../../../../Accounting/cypress/models/ARInvoiceDetails';
 import { RequestAliases } from '../../../../Base/cypress/constants/RequestAliases';
 import * as AccountingActions from '../../../../Accounting/cypress/actions/Actions';
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 //#region variables
 let shipmentDetails: ShipmentDetails;
@@ -49,7 +50,7 @@ Given("the user navigates to customers workspace", () => {
 });
 
 Given("a customer with the following details", (dataTable) => {
-    let customerDetails = dataTable.hashes()[0] as CustomerDetails;
+    let customerDetails = Assists.CreateInstance<CustomerDetails>(dataTable, true);
     CommonActions.AddNewCustomer(customerDetails);
 });
 
@@ -70,7 +71,7 @@ Given("the user navigates to shipments workspace", () => {
 });
 
 Given("a direct shipment with the following details", (dataTable) => {
-    shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+    shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
     ShipmentActions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
     shipmentDetails.Shipper = customerCode;
     ShipmentActions.FillShipmentWizardsFields(shipmentDetails);
@@ -94,14 +95,14 @@ Given("the user in the shipment's rounting tab", () => {
 });
 
 Given("edit main carriage leg with the following details", (dataTable) => {
-    let mainCarriageLeg = dataTable.hashes()[0] as MainCarriageLeg;
+    let mainCarriageLeg = Assists.CreateInstance<MainCarriageLeg>(dataTable, true);
     ShipmentActions.EditMainCarriageLegs(mainCarriageLeg.Airline);
 });
 //#endregion
 
 //#region Update packages tab
 Given("the user add package with the following details", (dataTable) => {
-    let packagesDetails = dataTable.hashes() as PackagesDetails[];
+    let packagesDetails = Assists.CreateSet<PackagesDetails>(dataTable);
     ShipmentActions.FillPackageTab(shipmentDetails.TransportMode, packagesDetails)
 });
 //#endregion
@@ -120,14 +121,14 @@ Then("the direct should update successfully", () => {
 
 //#region Create customs credit note ARInvoice
 Given("a receivable with the following details", (dataTable) => {
-    let receivableDetails = dataTable.hashes() as ReceivableDetails[];
+    let receivableDetails = Assists.CreateSet<ReceivableDetails>(dataTable);
     ShipmentActions.FillReceivablesTab(receivableDetails);
     ShipmentActions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton);
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });
 
 Given("a customs credit note ARInvoice with a random invoice number and the following details", (dataTable) => {
-    let ARInvoiceDetails = dataTable.hashes()[0] as ARInvoiceDetails;
+    let ARInvoiceDetails = Assists.CreateInstance<ARInvoiceDetails>(dataTable, true);
     AccountingActions.NewCustomsCreditNoteARInvoice()
     AccountingActions.FillARInvoiceDetails(ARInvoiceDetails);
 });

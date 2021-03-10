@@ -15,8 +15,10 @@ Feature: Create Consolidation Invoice
     Scenario: Create customer
         Given the user navigates to customers workspace
         And a customer with the following details
-            | CompanyName | City      | Country | State |
-            | TestCompany | Anchorage | US      | AK    |
+            | CompanyName | TestCompany |
+            | City        | Anchorage   |
+            | Country     | US          |
+            | State       | AK          |
         When create customer
         Then the customer should create successfully
 
@@ -28,8 +30,12 @@ Feature: Create Consolidation Invoice
     Scenario: Create direct export air shipment
         Given the user navigates to shipments workspace
         And a direct shipment with the following details
-            | ShipmentLevel | Direction | TransportMode | Shipper     | MainCarriageFromPort | MainCarriageToPort |
-            | Direct        | Export    | Air           | TestCompany | LHR                  | MIA                |
+            | ShipmentLevel        | Direct      |
+            | Direction            | Export      |
+            | TransportMode        | Air         |
+            | Shipper              | TestCompany |
+            | MainCarriageFromPort | LHR         |
+            | MainCarriageToPort   | MIA         |
         When create shipment
         Then the direct should create successfully
 
@@ -42,8 +48,13 @@ Feature: Create Consolidation Invoice
 
     Scenario: Add Payables
         Given a payable with the following details
-            | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate | Vendor     |
-            | AFT         | GRWT | 5        | 10        | EUR      | 4            | TestVendor |
+            | ChargesType  | AFT        |
+            | UOM          | GRWT       |
+            | Quantity     | 5          |
+            | UnitPrice    | 10         |
+            | Currency     | EUR        |
+            | ExchangeRate | 4          |
+            | Vendor       | TestVendor |
         When add payables
         Then the payables should add successfully
 
@@ -53,15 +64,30 @@ Feature: Create Consolidation Invoice
 
     Scenario: Create ARInvoice
         Given an ARInvoice with a random invoice number and the following details
-            | PartnerType | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATNo | Branch      | VATType | IsConstituent |
-            | Customer    | EUR             | 4                   | Today       | Cash         | Today   | Zero  | Main Office | Zero    | Yes           |
+            | PartnerType         | Customer    |
+            | InvoiceCurrency     | EUR         |
+            | InvoiceExchangeRate | 4           |
+            | InvoiceDate         | Today       |
+            | PaymentTerms        | Cash        |
+            | DueDate             | Today       |
+            | VATNo               | Zero        |
+            | Branch              | Main Office |
+            | VATType             | Zero        |
+            | IsConstituent       | Yes         |
         When create invoice
         Then the invoice should create successfully
 
     Scenario: Create a new consolidation invoice
         Given a consolidation invoice with the following details
-            | PartnerType | Partner     | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATNo | Branch      |
-            | Customer    | TestCompany | EUR             | 4                   | Today       | Cash         | Today   | Zero  | Main Office |
+            | PartnerType         | Customer    |
+            | Partner             | TestCompany |
+            | InvoiceCurrency     | EUR         |
+            | InvoiceExchangeRate | 4           |
+            | InvoiceDate         | Today       |
+            | PaymentTerms        | Cash        |
+            | DueDate             | Today       |
+            | VATNo               | Zero        |
+            | Branch              | Main Office |
         When create consolidation invoice
         Then the consolidation invoice should create successfully
 
@@ -69,8 +95,12 @@ Feature: Create Consolidation Invoice
         Given the user back to Accounting workspace
         And the user navigates to shipments workspace
         And a direct shipment with the following details
-            | ShipmentLevel | Direction | TransportMode | Shipper     | MainCarriageFromPort | MainCarriageToPort |
-            | Direct        | Export    | Air           | TestCompany | LHR                  | MIA                |
+            | ShipmentLevel        | Direct      |
+            | Direction            | Export      |
+            | TransportMode        | Air         |
+            | Shipper              | TestCompany |
+            | MainCarriageFromPort | LHR         |
+            | MainCarriageToPort   | MIA         |
         When create shipment
         Then the direct should create successfully
 
@@ -83,8 +113,16 @@ Feature: Create Consolidation Invoice
 
     Scenario: Create ARInvoice
         Given an ARInvoice with a random invoice number and the following details
-            | PartnerType | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATNo | Branch      | VATType | IsConstituent |
-            | Customer    | EUR             | 4                   | Today       | Cash         | Today   | Zero  | Main Office | Zero    | Yes           |
+            | PartnerType         | Customer    |
+            | InvoiceCurrency     | EUR         |
+            | InvoiceExchangeRate | 4           |
+            | InvoiceDate         | Today       |
+            | PaymentTerms        | Cash        |
+            | DueDate             | Today       |
+            | VATNo               | Zero        |
+            | Branch              | Main Office |
+            | VATType             | Zero        |
+            | IsConstituent       | Yes         |
         When create invoice
         Then the invoice should create successfully
 
@@ -99,8 +137,13 @@ Feature: Create Consolidation Invoice
 
     Scenario: Pay consolidation invoice
         Given a payment with the following details
-            | PartnerType | Partner           | BillToAddress | PaymentCurrency | RegisterDate | PaymentMethod | PaymentAmount |
-            | Customer    | TestShipperExport | Main Address  | EUR             | Today        | Cash          | 50            |
+            | PartnerType     | Customer          |
+            | Partner         | TestShipperExport |
+            | BillToAddress   | Main Address      |
+            | PaymentCurrency | EUR               |
+            | RegisterDate    | Today             |
+            | PaymentMethod   | Cash              |
+            | PaymentAmount   | 50                |
         When pay the consolidation invoice
         Then the consolidation invoice should pay successfully
 
