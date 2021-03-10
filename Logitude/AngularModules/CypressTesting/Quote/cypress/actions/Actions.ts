@@ -7,14 +7,33 @@ import { QuoteDetails } from "../models/QuoteDetails";
 import { ShipmentSelectors } from "../../../Shipment/cypress/selectors/Selectors";
 import * as Conditions from "../../../Shipment/cypress/actions/Conditions";
 import { PackagesDetails } from "../../../Shipment/cypress/models/PackagesDetails";
+import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
+import * as BaseAssertion from '../../../Base/cypress/actions/Assertion';
 
+//#region Navigate and open
 export function NavigatesToSQuotesWorkspace() {
     cy.Click(QuoteSelectors.QuotesTab, null);
 }
 
+export function OpenQuote(QuoteNumber: string) {
+    var quickSearchDetails = {
+        Selector: QuoteSelectors.QuoteSearch,
+        Parent: QuoteSelectors.QuoteSearchParent,
+        ParentClass: QuoteSelectors.QuoteSearchParentClass,
+        WaitURL: QuoteURLs.QuoteViews,
+        Value: QuoteNumber,
+        RequestAliase: RequestAliases.QuickSearchDataLoaded
+    } as QuickSearchDetails;
+
+    cy.SelectQuickSearchFirstElement(quickSearchDetails);
+}
+//#endregion
+
+//#region Create Quote
 export function FillQuoteFields(quoteDetails: QuoteDetails) {
     cy.Click(QuoteSelectors.NewQuote, null);
     FillMainFields(quoteDetails);
+    FillCustomerType(quoteDetails.Direction)
     FillShipperAndConsignee(quoteDetails);
     FillMainCarriagePorts(quoteDetails);
 }
@@ -48,6 +67,14 @@ function FillShipmentType(ShipmentType: string, TransportMode: string) {
     }
 }
 
+function FillCustomerType(direction: string) { 
+    if (Conditions.IsImport(direction)) {
+        cy.FillLogLov(QuoteSelectors.QuoteCustomerType, "Consignee", true)
+    } else {
+        cy.FillLogLov(QuoteSelectors.QuoteCustomerType, "Shipper", true)
+    }
+}
+
 function FillShipperAndConsignee(quoteDetails: QuoteDetails) {
     if (Conditions.IsInlandDomestic(quoteDetails.Direction, quoteDetails.TransportMode)) {
         cy.FillLogLov(QuoteSelectors.QuoteShipper, quoteDetails.Shipper, false)
@@ -72,20 +99,9 @@ export function CreateQuote() {
     cy.DefineRequestWait(RestAPI.POST, QuoteURLs.Quotes, RequestAliases.Quotes)
     cy.Click(QuoteSelectors.CreateQuote, null)
 }
+//#endregion
 
-export function OpenQuote(QuoteNumber: string) {
-    var quickSearchDetails = {
-        Selector: QuoteSelectors.QuoteSearch,
-        Parent: QuoteSelectors.QuoteSearchParent,
-        ParentClass: QuoteSelectors.QuoteSearchParentClass,
-        WaitURL: QuoteURLs.QuoteViews,
-        Value: QuoteNumber,
-        RequestAliase: RequestAliases.QuickSearchDataLoaded
-    } as QuickSearchDetails;
-
-    cy.SelectQuickSearchFirstElement(quickSearchDetails);
-}
-
+//#region Update Quote
 export function FillPackageTab(packagesDetails: PackagesDetails[], shipmentType?: string) {
     cy.Click(QuoteSelectors.PackagesTab, null)
     for (let i = 0; i < packagesDetails.length; i++) {
@@ -107,7 +123,70 @@ export function FillPackageTab(packagesDetails: PackagesDetails[], shipmentType?
     }
 }
 
+export function FillExpectedOrderDetailsDimensions(packagesDetails: PackagesDetails[]) {
+    cy.Click(BaseSelectors.HyperlinkButtonControl, BaseSelectors.ContainsFillDimensions, true)
+    for (let i = 0; i < packagesDetails.length; i++) {
+        cy.FillLogTextBox(QuoteSelectors.PackageLineSelector(QuoteSelectors.PackageQuantity,i), packagesDetails[i].Quantity.toString())
+
+        if (packagesDetails[i].Volume) {
+            cy.FillLogTextBox(QuoteSelectors.PackageLineSelector(QuoteSelectors.PackageVolume,i), packagesDetails[i].Volume.toString())
+        } else {
+            cy.FillLogTextBox(QuoteSelectors.PackageLineSelector(QuoteSelectors.PackageLength,i), packagesDetails[i].Length.toString())
+            cy.FillLogTextBox(QuoteSelectors.PackageLineSelector(QuoteSelectors.PackageWidth,i), packagesDetails[i].Width.toString())
+            cy.FillLogTextBox(QuoteSelectors.PackageLineSelector(QuoteSelectors.PackageHeight,i), packagesDetails[i].Height.toString())
+        }
+        cy.get(QuoteSelectors.PackageLineSelector(QuoteSelectors.PackageWeight,i)).type(packagesDetails[i].GrossWeight.toString());
+    }
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
+}
+
 export function UpdateQuote() {
     cy.DefineRequestWait(RestAPI.PUT, QuoteURLs.Quotes, RequestAliases.Quotes);
     cy.Click(QuoteSelectors.QuoteSave, null);
 }
+//#endregion
+
+//#region Quotation open, update, print and send
+export function OpenQuotation() {
+    cy.Click(QuoteSelectors.Quotation, null);
+    WaitQuotationLoading();
+}
+
+export function WaitQuotationLoading() {
+    cy.DefineRequestWait(RestAPI.GET, QuoteURLs.QuoteGetsingle, RequestAliases.QuoteGetsingle)
+    BaseAssertion.AssertStatusCode(RequestAliases.QuoteGetsingle, 200)
+}
+
+export function PrintQuotation() {
+    cy.DefineWindowOpen(RequestAliases.PrintQuotationWindowOpen);
+    cy.Click(BaseSelectors.Button, BaseSelectors.ContainPrint);
+}
+
+export function AddDataFieldToQuotationIntroduction(dataField: string) {
+    cy.Click(QuoteSelectors.EditQuotationIntroduction, null)
+    cy.Click(QuoteSelectors.AddDataField, null)
+    cy.Click(QuoteSelectors.QuotationDataFields(dataField.replace(/\s/g, "")), null, true)
+    cy.Click(QuoteSelectors.QuotationEditOkButton, null)
+}
+
+export function UpdateQuotation() {
+    cy.DefineRequestWait(RestAPI.PUT, QuoteURLs.QuoteTemplateSections, RequestAliases.UpdateQuotation)
+    cy.Click(QuoteSelectors.SaveQuotation, null)
+}
+
+export function SendQuotationToCustomer(email: string) {
+    FillCustomerEmail(email);
+    SentToCustomer();
+}
+
+function FillCustomerEmail(email: string) {
+    cy.Click(QuoteSelectors.SendOption, null)
+    cy.Click(QuoteSelectors.SendToCustomer, null, true)
+    cy.get(QuoteSelectors.EmailSearchTextBox).type(email + '{downarrow}{enter}')
+}
+
+function SentToCustomer() {
+    cy.DefineRequestWait(RestAPI.POST, QuoteURLs.PostSendhtmlDocument, RequestAliases.SentToCustomer)
+    cy.Click(QuoteSelectors.SendMessageButton, null)
+}
+//#endregion
