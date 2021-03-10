@@ -71,10 +71,10 @@ Then("the exception should resolve successfully", () => {
     ShipmentActions.AssertExceptionResolved(EventNote)
 });
 Then("resolve the exception should appear in events tab", () => {
+    ShipmentActions.RefreshEventTab()
     ShipmentActions.AssertEventAppearInEventTab(ShipmentSelectors.ExceptionResolved)
 });
 Then("has exception should change to no", () => {
-    ShipmentActions.RefreshEventTab()
     ShipmentActions.CheckHasException(BaseSelectors.ContainNo)
 });
 //#endregion

@@ -88,7 +88,7 @@ Then("the direct should create successfully", () => {
 //#endregion
 
 //#region add receivable
-Given("a receivable with the following details including clearing external IDs for(ChargesType,Currency)", (dataTable) => {
+Given("a receivable with the following details", (dataTable) => {
     const ReceivableData = dataTable.hashes() as ReceivableDetails[];
     ShipmentActions.OpenShipment(shipmentNumber);
     ShipmentActions.FillReceivablesTab(ReceivableData, true)
