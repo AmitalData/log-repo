@@ -52,6 +52,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         [ForeignKey("EventTypeCategoryCode")]
         public virtual EventTypeCategory EventTypeCategory { get; set; }
 
-        public bool IsNotModified { get; set; }
+        public bool IsStatusNotModified { get; set; }
     }
 }
