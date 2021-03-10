@@ -235,9 +235,9 @@ export function ConnectOrDisconnectShipment() {
 }
 //#endregion
 //#region General Tab
-export function FillGeneralTab(GrossWeight: string, MoveType: string) {
+export function FillGeneralTab(ValueOfGoods: string, MoveType: string) {
     cy.Click(ShipmentSelectors.GeneralTab, null)
-    cy.FillLogTextBox(ShipmentSelectors.ShipmentGrossWeight, GrossWeight)
+    cy.FillLogTextBox(ShipmentSelectors.ShipmentValueOfGoods, ValueOfGoods)
     cy.FillLogLov(ShipmentSelectors.ShipmentMoveType, MoveType, true)
 }
 //#endregion
