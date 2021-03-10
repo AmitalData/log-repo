@@ -30,4 +30,8 @@ export class RegexSelectors {
         }
         return entityType;
     }
+
+    public static SpanTitle(title: string): string {
+        return "span[title='" + title + "']";
+    }
 }
