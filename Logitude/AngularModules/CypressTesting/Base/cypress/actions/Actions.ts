@@ -87,6 +87,6 @@ export function GetTodayDate(){
     var mm = today.getUTCMonth()+1
     var yyyy = today.getFullYear();
 
-    let TodayDateFormat = "0"+dd + '/' + "0"+ mm + '/' + yyyy;
+    let TodayDateFormat = dd<9?"0":""+dd + '/' + "0"+ mm + '/' + yyyy;
     return TodayDateFormat
 }
