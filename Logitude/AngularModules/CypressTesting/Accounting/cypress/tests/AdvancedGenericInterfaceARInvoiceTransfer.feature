@@ -28,7 +28,7 @@ Feature: Advanced Generic Interface AR Invoice Transfer
         Then the direct should create successfully
 
   Scenario:  Add receivable and clear external IDs (ChargesType,Currency)
-        Given a receivable with the following details 
+        Given a receivable with the following details including clearing external IDs for chargesType and currency
             | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
             | AFT         | GRWT | 5        | 20        | EUR      | 4            |
         When add receivable
