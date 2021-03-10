@@ -354,19 +354,9 @@ export function NavigatesToDraftInvoice(draftConsolidationInvoiceNumber: string)
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200);
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200);
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200);
-    cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViewsGetByFilters, RequestAliases.ARInvoiceviews);
-    cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViewsGetByFilters, RequestAliases.ARInvoiceviews);
-    cy.FillLogTextBox(BaseSelectors.SearchField, draftConsolidationInvoiceNumber);
-    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200);
-    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200);
-    cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoicesGetSingle, RequestAliases.ARInvoicesRequest);
-    cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViewsGetByFilters, RequestAliases.ARInvoiceviews);
-    cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViewsGetByFilters, RequestAliases.ARInvoiceviews);
-    cy.Click(BaseSelectors.ListItem, null);
-
-    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
-    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200);
-    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200);
+    cy.FillLogTextBox(BaseSelectors.SearchField, draftConsolidationInvoiceNumber)
+    cy.get(BaseSelectors.ListDataLoaded)
+        ClickOnRowDependingOnARInvoiceNumber(draftConsolidationInvoiceNumber)
 }
 //#endregion
 export function AddSecondInvoiceToConsolidation(ARInvoiceNumber: string) {

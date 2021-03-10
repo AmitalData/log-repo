@@ -1,11 +1,11 @@
-@release @all @open @stable
+@release @all @stable
 Feature: Advanced Generic Interface AR Invoice Transfer
     The user disables the Accounting Transfer in settings, creates AR invoice,
     changes the settings for Accounting Transfer to Advanced Generic Interface,
     checks the created invoice in the Not Ready Entities in Accounting Interfaces,
     fixes the accounting external IDs validations preventing the invoice from being transferred and exports/transfers the invoice.
 
-    Scenario: Update Accounting System
+    Scenario: Disable accounting system
         Given the user logged in and navigate to accounting settings
         Given accounting System as "None"
         When change the accounting system
@@ -27,8 +27,8 @@ Feature: Advanced Generic Interface AR Invoice Transfer
         When create shipment
         Then the direct should create successfully
 
-    Scenario: Add receivable and clear ChargesType Currency External IDs
-        Given a receivable with the following details
+    Scenario: Add receivable and clear external IDs (ChargesType,Currency)
+        Given a receivable with the following details including clearing external IDs for(ChargesType,Currency)
             | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
             | AFT         | GRWT | 5        | 20        | EUR      | 4            |
         When add receivable
