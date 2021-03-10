@@ -239,7 +239,7 @@ export function AddTwoShipmentLinesAndEditAmount(shipmentNumbers: string[], VATT
         cy.FillLogTextBox(AccountingSelectors.APInvoiceLineForiegnCurrencyAmount, amount.toString());
         cy.FillLogLov(AccountingSelectors.APInvoiceVatType, VATType, true);
         cy.Click(BaseSelectors.Button, BaseSelectors.ContainsApplytoall);
-        cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.InvoiceDomain, RequestAliases.APInvoicesRequest);
+        cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.APInvoicesGetSingle, RequestAliases.APInvoicesRequest);
         cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
         BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
     }
