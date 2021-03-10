@@ -67,4 +67,7 @@ export class RequestAliases {
     public static readonly PutShipment = "PutShipment";
 
     public static readonly GetTraceEventsForEntity = "GetTraceEventsForEntity"
+    public static readonly GetByFilter = "GetByFilter"
+    public static readonly PutWarehouses = "PutWarehouses"
+    public static readonly GetLastUpdatedTables = "GetLastUpdatedTables"
 }

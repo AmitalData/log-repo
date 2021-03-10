@@ -5,4 +5,5 @@ export interface ReceivableDetails {
     UnitPrice: number,
     Quantity: number;
     ExchangeRate:number
+    Amount:string
 }

@@ -4,6 +4,7 @@ export class BaseURLs
     public static readonly GetByFilters = '**/getbyfilters?**';
     public static readonly GetMenuButtonGroups = "**/ngMetaData/getmenubuttongrouppms?**";
     public static readonly Contacts = "**/contacts";
+    public static readonly Warehouses = "**/warehouses";
 
     public static GetQuickSearch(ShipmentNumber: string): string{
         return "**/GetQuickSearch?**" + ShipmentNumber;

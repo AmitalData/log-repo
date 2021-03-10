@@ -229,7 +229,7 @@ export function SearchASurcharge(sellerName: string) {
 
 export function OpenTheFirstResult(){
     DefineRequestGetTariff()
-    cy.Click(TariffSelectors.GridFitstRow(),null,true)
+    cy.Click(BaseSelectors.GridFitstRow(),null,true)
     BaseAssertion.AssertStatusCode(RequestAliases.GetTariff, 200);
 }
 

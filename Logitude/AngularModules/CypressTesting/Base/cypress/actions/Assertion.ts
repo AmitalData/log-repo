@@ -40,3 +40,16 @@ export function AssertElementHaveClasss(selector: string, condition: string , cl
 export function AssertElementContain(selector: string, Value: string){
     cy.get(selector).should('contain', Value)
 }
+
+export function AssertElementTextEqual(elementSelector :string ,expectedValue:string ,find? :string){
+    if(find){
+        cy.get(elementSelector).find(find).invoke('text').then((text) => {
+            assert.equal(text.trim(), expectedValue)
+        })
+    }else{
+        cy.get(elementSelector).invoke('text').then((text) => {
+            assert.equal(text.trim(), expectedValue)
+        })
+    }
+    
+}
