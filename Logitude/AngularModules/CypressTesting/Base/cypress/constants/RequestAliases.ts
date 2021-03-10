@@ -66,5 +66,12 @@ export class RequestAliases {
     //
     public static readonly PutShipment = "PutShipment";
 
-    public static readonly GetTraceEventsForEntity = "GetTraceEventsForEntity"
+    public static readonly GetTraceEventsForEntity = "GetTraceEventsForEntity";
+
+    //Maintenance
+    public static readonly ContactsGetSingle = "ContactsGetSingle";
+    public static readonly GetContactMenuButtonGroups = "GetContactMenuButtonGroups";
+    public static readonly PutContact = "PutContact";
+    public static readonly ContactViewsGetByFilters = "ContactViewsGetByFilters";
+    //
 }
