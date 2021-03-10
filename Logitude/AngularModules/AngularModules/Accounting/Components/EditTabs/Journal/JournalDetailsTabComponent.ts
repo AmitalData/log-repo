@@ -961,7 +961,11 @@ class JournalLineModel extends BaseComponent {
         this.ForeignAmount = null;
 
     }
-
+    SetAmountsWhenChangingAccDay() {
+        this.IsAccDayChanged = false;
+        this.LocalAmount = null;
+        this.ForeignAmount = null;
+    }
     GetExchangeRate(value: string) {
         if (this.parent.defaultCurrencyId != value) {
             this.ratesTableExtendedListService.getExchageRateByValueAndDate(this.parent.defaultCurrencyId, value, this.AccountingDate).subscribe((myResponse: ServiceResponse) => {
@@ -972,20 +976,25 @@ class JournalLineModel extends BaseComponent {
 
                             var rate = myResponse.Result;
                             this.currencyRate = rate.Rate;
-
-                            // Recalculate local amount
-                            this.isRateCoverted = true;
-                            if (this.LocalAmount) {
-                                this.CalculateForeignAmount();
+                          
+                            if (this.IsAccDayChanged && (this.currencyRate != rate)) {
+                                this.SetAmountsWhenChangingAccDay();
                             }
-                            else if (this.ForeignAmount) {
-                                this.CalculateLocalAmount();
+                            else {
+                                // Recalculate local amount
+                                this.isRateCoverted = true;
+                                if (this.LocalAmount) {
+                                    this.CalculateForeignAmount();
+                                }
+                                else if (this.ForeignAmount) {
+                                    this.CalculateLocalAmount();
+                                }
                             }
-
                             console.log(">Ex. Rate: ", this.currencyRate);
                             this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
 
-                        } else {
+                        }
+                        else {
                             this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
                             this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Journal.O.ExchangeRateValidation") + " " + this.Line);
 
@@ -1306,13 +1315,14 @@ class JournalLineModel extends BaseComponent {
 
             //3- set the accounting date with new day
             this.AccountingDate.setUTCDate(date.getDate());
+            this.IsAccDayChanged = true;
             if (this.CurrencyId)
                 this.GetExchangeRate(this.CurrencyId);
 
 
         }
     }
-
+    IsAccDayChanged: boolean;
     IsAccDayValid(date: Date, day: number) {
         if (day > 0 && day < 32) {
             var lastDayOfMonth = this.lastDay(date.getFullYear(), date.getMonth());
