@@ -7,14 +7,12 @@ import { Component } from '@angular/core';
 import { LoginService } from '../LoginService';
 import { SessionInfo } from '../SessionInfo';
 import { ResetPasswordComponent } from './ResetPasswordComponent';
-import { Router } from '@angular/router';
 import { HybridLabelsBrandingDataService } from '../HybridLabels/Services/HybridLabelsBrandingDataService';
 import { BrandingDataService } from '../HybridLabels/Services/BrandingDataService';
 export var DSVResetPasswordComponent = (function (_super) {
     __extends(DSVResetPasswordComponent, _super);
-    function DSVResetPasswordComponent(router, ss, hybridLabelsBrandingDataService) {
+    function DSVResetPasswordComponent(ss, hybridLabelsBrandingDataService) {
         _super.call(this, ss);
-        this.router = router;
         this.ss = ss;
         this.hybridLabelsBrandingDataService = hybridLabelsBrandingDataService;
         this.MainColor = null;
@@ -39,16 +37,9 @@ export var DSVResetPasswordComponent = (function (_super) {
                 _this.BackgroundImage = BrandingDataService.GetBackgroundImage();
                 _this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage();
                 _this.Id = response.Result.Id;
-                _this.MainLogo = response.Result.MainLogo;
                 _this.MainLogo = BrandingDataService.GetMainLogo();
             }
-            else {
-                _this.GoToError401();
-            }
         });
-    };
-    DSVResetPasswordComponent.prototype.GoToError401 = function () {
-        this.router.navigate(['Error401']);
     };
     DSVResetPasswordComponent.decorators = [
         { type: Component, args: [{
@@ -60,7 +51,6 @@ export var DSVResetPasswordComponent = (function (_super) {
     ];
     /** @nocollapse */
     DSVResetPasswordComponent.ctorParameters = [
-        { type: Router, },
         { type: LoginService, },
         { type: HybridLabelsBrandingDataService, },
     ];

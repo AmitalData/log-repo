@@ -24,6 +24,7 @@ export class DSVLoginComponent extends LoginComponent implements OnInit {
     public BackgroundImage: string = "";
     public MainImage: string = "";
     public MainLogo: string = "";
+    public LoginProcessImage: string = ""; 
     public showSpinner = true; 
 
     constructor(
@@ -46,6 +47,7 @@ export class DSVLoginComponent extends LoginComponent implements OnInit {
                 this.BackgroundImage = BrandingDataService.GetBackgroundImage();
                 this.MainImage = BrandingDataService.GetMainImage();
                 this.MainLogo = BrandingDataService.GetMainLogo();
+                this.LoginProcessImage = BrandingDataService.GetLoginProgressImage();  
                 this.showSpinner = false; 
             } 
         }); 

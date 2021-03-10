@@ -35,6 +35,7 @@ export var HybridResetPasswordComponent = (function (_super) {
                 _this.ContactUsEmail = response.Result.ContactUsEmail;
                 _this.MainColor = response.Result.MainColor;
                 _this.BackgroundImage = BrandingDataService.GetBackgroundImage();
+                _this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage();
                 _this.MainLogo = BrandingDataService.GetMainLogo();
             }
         });

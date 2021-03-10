@@ -20,6 +20,7 @@ export var DSVLoginComponent = (function (_super) {
         this.BackgroundImage = "";
         this.MainImage = "";
         this.MainLogo = "";
+        this.LoginProcessImage = "";
         this.showSpinner = true;
     }
     DSVLoginComponent.prototype.ngOnInit = function () {
@@ -37,6 +38,7 @@ export var DSVLoginComponent = (function (_super) {
                 _this.BackgroundImage = BrandingDataService.GetBackgroundImage();
                 _this.MainImage = BrandingDataService.GetMainImage();
                 _this.MainLogo = BrandingDataService.GetMainLogo();
+                _this.LoginProcessImage = BrandingDataService.GetLoginProgressImage();
                 _this.showSpinner = false;
             }
         });

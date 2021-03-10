@@ -16,6 +16,7 @@ declare var changeTitle: any;
 @Component({
 
     templateUrl: './HybridLoginProcessComponent.html',
+    styleUrls: ['HybridLoginProcessComponent.css'],
     providers: [ApplicationTimersManager, LogitudeApplicationService, UserLastLoginPMService]
 })
 
@@ -31,9 +32,12 @@ export class HybridLoginProcessComponent extends LoginComponent implements OnIni
         super(mylogitudeApplicationService, myloginService, myIndexedDbService, myentityResourceService, _myapplicationTimersManager, myentityListService, _myuserLastLoginPMService);
     }
 
+
     ngOnInit() {
-        this.GetHybridLabelsData();
         this.StartLoginProcess();
+        //HybridLabelsBrandingDataService.SetLoginProcessImage();
+        this.GetHybridLabelsData();
+
     }
 
     GetHybridLabelsData() {
@@ -43,5 +47,4 @@ export class HybridLoginProcessComponent extends LoginComponent implements OnIni
     }
 }
 
-
-
+ 
