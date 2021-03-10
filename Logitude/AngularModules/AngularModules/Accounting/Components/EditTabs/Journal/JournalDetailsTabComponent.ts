@@ -1075,13 +1075,8 @@ class JournalLineModel extends BaseComponent {
 
             }
             else {
-                if (type == "local" && this.ForeignAmount) {
-                    this.currencyRate = this.LocalAmount / this.ForeignAmount;
-                    this.isRateManualy = true;
-                }
-                if (type == "foreign" && this.LocalAmount) {
-                    this.currencyRate = this.LocalAmount / this.ForeignAmount;
-                    this.isRateManualy = true;
+                if (this.ForeignAmount && this.LocalAmount) {
+                    this.SetExchangeRateMnualy();
                 }
             }
             //// foreign amount entered and local is null
@@ -1100,7 +1095,10 @@ class JournalLineModel extends BaseComponent {
         this.isLocalEntered = false;
     //    this.isRateManualy = false;
     }
-
+    SetExchangeRateMnualy() {
+        this.currencyRate = this.LocalAmount / this.ForeignAmount;
+        this.isRateManualy = true;
+    }
     // [!]
     // [!]
 
