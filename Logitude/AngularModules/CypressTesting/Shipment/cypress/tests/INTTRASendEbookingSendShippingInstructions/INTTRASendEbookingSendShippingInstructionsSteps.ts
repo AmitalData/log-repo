@@ -11,6 +11,7 @@ import { PackagesDetails } from "../../models/PackagesDetails";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion";
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 import { ShipmentSelectors } from "../../selectors/Selectors";
+import { ValidationMessageDetails } from "../../../../Base/cypress/models/ValidationMessageDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 let ShipmentNumber: string;
@@ -86,16 +87,16 @@ When("open INTTRA e-booking wizard", () => {
     INTTRAActions.OpenSendBookingWizard();
 });
 
-Then("validation messages for sending e-booking should appear", () => {
-    INTTRAActions.ValidateMessagesForSendingEBooking();
+Then("the following validation messages for sending e-booking should appear", (dataTable) => {
+    ValidateMessagesForSendingEBookingOrShippingInstructions(dataTable);
 });
 
 When("open INTTRA shipping instructions wizard", () => {
     INTTRAActions.OpenSendShippingInstructionsWizard();
 });
 
-Then("validation messages for sending shipping instructions should appear", () => {
-    INTTRAActions.ValidateMessagesForSendingShippingInstructions();
+Then("the following validation messages for sending shipping instructions should appear", (dataTable) => {
+    ValidateMessagesForSendingEBookingOrShippingInstructions(dataTable);
 });
 
 Given("the user fill the following information to send e-booking", (dataTable) => {
@@ -153,3 +154,8 @@ Then("the instructions should send successfully", () => {
 Then("booking request status should be {string}", (status) => {
     INTTRAActions.ValidateBookingRequestStatus(status);
 });
+
+function ValidateMessagesForSendingEBookingOrShippingInstructions(dataTable: any){
+    let validationMessageDetailsList = Assists.CreateSet<ValidationMessageDetails>(dataTable);
+    INTTRAActions.ValidateMessagesForSendingEBookingOrShippingInstructions(validationMessageDetailsList);
+}

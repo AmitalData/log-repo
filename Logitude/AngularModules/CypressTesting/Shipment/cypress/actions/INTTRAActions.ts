@@ -10,6 +10,7 @@ import { URLs } from '../constants/URLs';
 import { RestAPI } from '../../../Base/cypress/constants/RestAPI';
 import { RequestAliases } from '../../../Base/cypress/constants/RequestAliases';
 import { BaseURLs } from '../../../Base/cypress/constants/URLs';
+import { ValidationMessageDetails } from '../../../Base/cypress/models/ValidationMessageDetails';
 
 
 export function NavigateToMaintenanceMenu() {
@@ -66,25 +67,12 @@ export function ValidateSaveINTTRASettings() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutINTTRASettings, 200);
 }
 
-export function ValidateMessagesForSendingEBooking() {
+export function ValidateMessagesForSendingEBookingOrShippingInstructions(validationMessageDetailsList: ValidationMessageDetails[]) {
     cy.get(BaseSelectors.ValidationSummaryBlock).eq(1).find(BaseSelectors.ul)
         .within(() => {
-            cy.get(BaseSelectors.li).contains(ShipmentSelectors.ContainsMainCarriageCarrierRequired).should("exist");
-            cy.get(BaseSelectors.li).contains(ShipmentSelectors.ContainsContractNumberRequired).should("exist");
-            cy.get(BaseSelectors.li).contains(ShipmentSelectors.ContainsETDOrVesselAndVoyageMustProvided).should("exist");
-            cy.get(BaseSelectors.li).contains(ShipmentSelectors.ContainsShipmentDescriptionOfGoodsRequired).should("exist");
-            cy.get(BaseSelectors.li).contains(ShipmentSelectors.ContainsShipmentPackagesRequired).should("exist");
-        });
-
-    cy.Click(BaseSelectors.Button, BaseSelectors.ContainsClose);
-}
-
-export function ValidateMessagesForSendingShippingInstructions() {
-    cy.get(BaseSelectors.ValidationSummaryBlock).eq(1).find(BaseSelectors.ul)
-        .within(() => {
-            cy.get(BaseSelectors.li).contains(ShipmentSelectors.ContainsMoveTypeIsRequired).should("exist");
-            cy.get(BaseSelectors.li).contains(ShipmentSelectors.ContainsBookingConfirmationNumberRequired).should("exist");
-            cy.get(BaseSelectors.li).contains(ShipmentSelectors.ContainsAllContainersShouldHaveContainerNumber).should("exist");
+            for (let i = 0; i < validationMessageDetailsList.length; i++) {
+                cy.get(BaseSelectors.li).contains(validationMessageDetailsList[i].Message.trim()).should("exist");
+            }
         });
 
     cy.Click(BaseSelectors.Button, BaseSelectors.ContainsClose);
