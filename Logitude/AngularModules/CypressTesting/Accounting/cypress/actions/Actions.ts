@@ -66,7 +66,7 @@ export function ExternalTransmission(ExternalTransmissionType: string, FTPdetail
 
 function FillFTPDetails(FTPdetails: FTPDetails) {
     cy.Click(BaseSelectors.Hyperlink, BaseSelectors.ContainSettings);
-    cy.Click(AccountingSelectors.EditFTPSettings, null, true)
+    cy.Click(AccountingSelectors.AddFTPSettings, null, true)
 
     cy.FillLogTextBox(AccountingSelectors.FTPDetailUserName, FTPdetails.UserName)
     cy.FillLogTextBox(AccountingSelectors.FTPDetailPassword, FTPdetails.Password)

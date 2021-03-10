@@ -28,9 +28,9 @@ Given("a direct shipment with the following details", (dataTable) => {
 //#endregion
 
 //#region Update general tab given step
-Given("the user fill {string} as GrossWeight and {string} as a MoveType", (GrossWeight, MoveType) => {
+Given("the user fill {string} as ValueOfGoods and {string} as a MoveType", (ValueOfGoods, MoveType) => {
     Actions.OpenShipment(shipmentDetails.ShipmentNumber);
-    Actions.FillGeneralTab(GrossWeight, MoveType)
+    Actions.FillGeneralTab(ValueOfGoods, MoveType)
 });
 //#endregion
 

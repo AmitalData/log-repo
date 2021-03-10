@@ -131,6 +131,7 @@ export class AccountingSelectors extends RegexSelectors {
     //#endregion
     //#region FTP
     public static readonly EditFTPSettings = "iconbutton[data-cy^=EditFTPSettings]"
+    public static readonly AddFTPSettings = "#Add"
     public static readonly FTPDetailUserName = "#FTPDetail_UserName"
     public static readonly FTPDetailPassword = "#FTPDetail_Password"
     public static readonly FTPDetailHost = "#FTPDetail_Host"

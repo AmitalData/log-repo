@@ -46,9 +46,9 @@ Then("the shipment should create successfully", () => {
         ShipmentData.ShipmentNumber = interception.response.body.ShipmentNumber;
     });
 });
-Given("the user fills {string} as GrossWeight and {string} as a MoveType", (GrossWeight, MoveType) => {
+Given("the user fills {string} as ValueOfGoods and {string} as a MoveType", (ValueOfGoods, MoveType) => {
     Actions.OpenShipment(ShipmentData.ShipmentNumber);
-    Actions.FillGeneralTab(GrossWeight, MoveType)
+    Actions.FillGeneralTab(ValueOfGoods, MoveType)
 });
 
 Given("the user add order package with the following details", (dataTable) => {

@@ -13,7 +13,7 @@ Feature: Update direct export air shipment
     Then the direct should create successfully
 
   Scenario: Update general tab
-    Given the user fill "100" as GrossWeight and "MTA" as a MoveType
+    Given the user fill "100" as ValueOfGoods and "MTA" as a MoveType
     When update shipment
     Then the direct should update successfully
 

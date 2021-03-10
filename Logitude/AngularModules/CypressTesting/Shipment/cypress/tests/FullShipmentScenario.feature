@@ -12,7 +12,7 @@ Feature:  Full Shipment Scenario
         Then the shipment should create successfully
 
     Scenario: Update general tab
-        Given the user fills "100" as GrossWeight and "MTA" as a MoveType
+        Given the user fills "100" as ValueOfGoods and "MTA" as a MoveType
         When save shipment
         Then the direct shipment should save successfully
 

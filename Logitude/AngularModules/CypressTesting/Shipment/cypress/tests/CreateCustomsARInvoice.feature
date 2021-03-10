@@ -49,8 +49,8 @@ Feature: Create customs ARInvoice
 
     Scenario: Create customs ARInvoice
         Given a receivable with the following details
-            | ChargesType       | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
-            | Customs Commision | GRWT | 5        | 20        | EUR      | 4            |
+            | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
+            | AFT         | GRWT | 5        | 20        | EUR      | 4            |
         And an ARInvoice with the following details
             | PartnerType | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATNo | Branch      | VATType |
             | Customer    | EUR             | 4                   | Today       | Cash         | Today   | Zero  | Main Office | Zero    |
