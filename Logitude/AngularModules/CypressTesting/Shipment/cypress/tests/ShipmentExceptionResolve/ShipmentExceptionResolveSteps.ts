@@ -51,8 +51,13 @@ When("add exception", () => {
     ShipmentActions.AddEvent()
 });
 Then("the exception should add successfully", () => {
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentGetSingle, 200);
+});
+Then("the exception should appear in events tab", () => {
     ShipmentActions.AssertAddEvent(EventNote)
     ShipmentActions.AssertEventAppearInEventTab(EventType)
+});
+Then("has exception should change to yes", () => {
     ShipmentActions.RefreshEventTab()
     ShipmentActions.CheckHasException(BaseSelectors.ContainYes)
 });
@@ -64,8 +69,12 @@ When("resolve the exception due to {string}", (ExceptionResolvedNote) => {
 });
 Then("the exception should resolve successfully", () => {
     ShipmentActions.AssertExceptionResolved(EventNote)
+});
+Then("resolve the exception should appear in events tab", () => {
     ShipmentActions.RefreshEventTab()
-    ShipmentActions.CheckHasException(BaseSelectors.ContainNo)
     ShipmentActions.AssertEventAppearInEventTab(ShipmentSelectors.ExceptionResolved)
+});
+Then("has exception should change to no", () => {
+    ShipmentActions.CheckHasException(BaseSelectors.ContainNo)
 });
 //#endregion

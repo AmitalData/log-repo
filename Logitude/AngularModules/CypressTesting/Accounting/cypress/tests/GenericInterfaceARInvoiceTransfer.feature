@@ -1,4 +1,4 @@
-@release @all @open @stable
+@release @all @open
 Feature: Generic Interface AR Invoice Transfer
     The user disables the Accounting Transfer in settings,
     creates AR invoice, changes the settings for Accounting Transfer to Generic Interface,
@@ -28,7 +28,7 @@ Feature: Generic Interface AR Invoice Transfer
         Then the direct should create successfully
 
     Scenario:  Add receivable and clear external IDs (ChargesType,Currency)
-        Given a receivable with the following details
+        Given a receivable with the following details including clearing external IDs for chargesType and currency
             | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
             | AFT         | GRWT | 5        | 20        | EUR      | 4            |
         When add receivable

@@ -42,7 +42,6 @@ export function AssertAddEvent(EventNote:string) {
     BaseAssertion.AssertStatusCode(RequestAliases.GetTraceEvent, 200).then((interception) => {
         expect(interception.response.body.Notes,)
     })
-    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentGetSingle, 200);
 }
 export function AssertExceptionResolved (EventNote:string){
     BaseAssertion.AssertStatusCode( RequestAliases.ShipmentRequest,200).then((interception) => {
@@ -62,7 +61,6 @@ export function ClickOnExceptionResolved(ExceptionResolvedNote:string){
     cy.Click(ShipmentSelectors.ShipmentExceptionResolved,null)
     cy.FillLogTextBox(ShipmentSelectors.EventNotes,ExceptionResolvedNote)
     cy.Click(ShipmentSelectors.ConfirmActionButton,null)
-    
 }
 export function RefreshEventTab(){
     cy.get(BaseSelectors.CurvedEditArea).find(BaseSelectors.Refresh).click()

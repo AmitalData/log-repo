@@ -1,4 +1,4 @@
-@release @all 
+@release @all @open
 
 Feature: Shipment Exception Resolve
     The user creates a shipment, adds an exception in the Events tab,
@@ -19,8 +19,11 @@ Feature: Shipment Exception Resolve
             | Exception | Today     | 12:00     | Adding Exception |
         When add exception
         Then the exception should add successfully
-        
+        And the exception should appear in events tab
+        And has exception should change to yes
     Scenario: Resolve the exception
         When resolve the exception due to "ExceptionResolvedNote"
         Then the exception should resolve successfully
+        And resolve the exception should appear in events tab
+        And has exception should change to no
       
