@@ -556,6 +556,16 @@ Line3
                 () => { this.CurrentSession.StopBusyIndicator(); }
             );
     }
+    ButtonLoadConsolTaxRep_Click() {
+        let opr = "ButtonLoadConsolTaxRep_Click";
+        let str: string =
+            `Please insert page, you can add a header  //Tenant=1071
+//ReportId=1-12345678
+Line3
+Line4
+`;
+        this.PostOp(opr, str, () => { });
+    }
 
     SetJournalExample() {
         let journal = {
