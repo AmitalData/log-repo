@@ -551,30 +551,10 @@ namespace Logitude.Accounting.BL.Validators
 
         }
 
-        private void ValidateJournalLinesForFutureDate(JournalPM myJournalPM)
-        {
-            foreach (JournalLinePM journalLinePM in myJournalPM.JournalLines)
-            {
-                bool journalLineHasFutureDate = CheckJournalLineForFutureDate(journalLinePM);
-                if (journalLineHasFutureDate)
-                {
-                    FutureDateErrorsMessage += TranslateMyTextCode(JournalValidator.M_FutureDateIsNotAllowedInLine, journalLinePM.Tenant);
-                    IsFutureDateErrorsExist = true;
-                    return;
-                }
-            }
-        }
-
-        private bool CheckJournalLineForFutureDate(JournalLinePM journalLinePM)
-        {
-            DateTime? currDateTimeUtcNow = null;
-            currDateTimeUtcNow = TenantServerConfigration.GetCurrentDateTime(journalLinePM.Tenant);
-            return currDateTimeUtcNow.GetValueOrDefault().Date < journalLinePM.AccountingDate.Date || currDateTimeUtcNow.GetValueOrDefault().Date < journalLinePM.DocumentDate.Date; ;
-        }
         private List<string> ValidateExchangeRate(JournalLinePM journalLine, List<string> errors)
         {
             if (journalLine.CurrencyId == TenantCurrency) return errors;
-            RatesTable entityPoco = ratesTableRepository.GetExchageRateByValueAndDate(TenantCurrency, 
+            RatesTable entityPoco = ratesTableRepository.GetExchageRateByValueAndDate(TenantCurrency,
                 journalLine.CurrencyId, journalLine.AccountingDate, journalLine.Tenant);
             if (entityPoco == null)
             {
@@ -589,7 +569,29 @@ namespace Logitude.Accounting.BL.Validators
             TenantPM tenantPM = tenantQuery.GetSinglePM(journal.Tenant);
             return tenantPM.CurrencyId;
 
+        }
 
+        private void ValidateJournalLinesForFutureDate(JournalPM myJournalPM)
+        {
+            foreach (JournalLinePM journalLinePM in myJournalPM.JournalLines)
+            {
+                bool journalLineHasFutureDate = CheckJournalLineForFutureDate(journalLinePM);
+                if (journalLineHasFutureDate)
+                {
+                    FutureDateErrorsMessage += TranslateMyTextCode(JournalValidator.M_FutureDateIsNotAllowedInLine, journalLinePM.Tenant);
+                    IsFutureDateErrorsExist = true;
+                    return;
+                }
+            }
+        }
+   
+        private bool CheckJournalLineForFutureDate(JournalLinePM journalLinePM)
+        {
+            DateTime? currDateTimeUtcNow = null;
+            currDateTimeUtcNow = TenantServerConfigration.GetCurrentDateTime(journalLinePM.Tenant);
+            return currDateTimeUtcNow.GetValueOrDefault().Date < journalLinePM.AccountingDate.Date || currDateTimeUtcNow.GetValueOrDefault().Date < journalLinePM.DocumentDate.Date; ;
+        }
+   
         private bool CheckIfFutureDateErrorsExist(JournalPM myJournalPM)
         {
             const string statusCode_JournalApproved = "2";
