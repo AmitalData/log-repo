@@ -6,6 +6,7 @@ import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
 import { ShipmentSelectors } from "../../selectors/Selectors";
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 let ShipmentData: ShipmentDetails;
 let ShipmentNumber: string;
@@ -16,7 +17,7 @@ Given("the user logged in and navigate to shipments workspace", () => {
 });
 
 Given("a direct shipment with the following details", (dataTable) => {
-    let shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+    let shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
     ShipmentData = shipmentDetails;
     Actions.OpenNewShipmentWizard(ShipmentData.ShipmentLevel);
     Actions.FillShipmentWizardsFields(ShipmentData);
@@ -54,7 +55,7 @@ Given("the user in the AWB wizard packages tab", () => {
 });
 
 Given("add the following packages", (dataTable) => {
-    let packagesDetailsList = dataTable.hashes() as PackagesDetails[];
+    let packagesDetailsList = Assists.CreateSet<PackagesDetails>(dataTable);
     Actions.FillAWBWizardPackagesTab(packagesDetailsList);
 });
 

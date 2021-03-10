@@ -8,8 +8,13 @@ Feature: Split shipment
     Scenario: Create direct export air shipment
         Given the user logged in and navigates to shipments workspace
         And a direct shipment with the following details
-            | ShipmentLevel | Direction | TransportMode | ShipmentType | Shipper           | MainCarriageFromPort | MainCarriageToPort |
-            | Direct        | Export    | Ocean         | FCL          | TestShipperExport | LHR                  | MIA                |
+            | ShipmentLevel        | Direct            |
+            | Direction            | Export            |
+            | TransportMode        | Ocean             |
+            | ShipmentType         | FCL               |
+            | Shipper              | TestShipperExport |
+            | MainCarriageFromPort | LHR               |
+            | MainCarriageToPort   | MIA               |
         When create shipment
         Then the direct should create successfully
 

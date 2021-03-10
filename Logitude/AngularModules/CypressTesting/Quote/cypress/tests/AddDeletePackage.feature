@@ -7,16 +7,22 @@ Feature: Add and delete package from a quote
   Scenario: Create customer
     Given the user logged in and navigates to customers workspace
     And a customer with the following details
-      | CompanyName | City      | Country | State |
-      | TestCompany | Anchorage | US      | AK    |
+      | CompanyName | TestCompany |
+      | City        | Anchorage   |
+      | Country     | US          |
+      | State       | AK          |
     When create customer
     Then the customer should create successfully
 
   Scenario: Create export ocean LCL quote
     Given the user in quotes workspace
     And a quote with the following details
-      | Direction | TransportMode | ShipmentType | Shipper     | MainCarriageFromPort | MainCarriageToPort |
-      | Export    | Ocean         | LCL          | TestCompany | LHR                  | MIA                |
+      | Direction            | Export      |
+      | TransportMode        | Ocean       |
+      | ShipmentType         | LCL         |
+      | Shipper              | TestCompany |
+      | MainCarriageFromPort | LHR         |
+      | MainCarriageToPort   | MIA         |
     When create quote
     Then the quote should create successfully
 

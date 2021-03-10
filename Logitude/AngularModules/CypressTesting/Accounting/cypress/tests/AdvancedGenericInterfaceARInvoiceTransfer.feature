@@ -14,20 +14,26 @@ Feature: Advanced Generic Interface AR Invoice Transfer
     Scenario: Create customer
         Given the user navigates to customers workspace
         And a customer with the following details
-            | CompanyName | City      | Country | State |
-            | TestCompany | Anchorage | US      | AK    |
+            | CompanyName | TestCompany |
+            | City        | Anchorage   |
+            | Country     | US          |
+            | State       | AK          |
         When create customer
         Then the customer should create successfully
 
     Scenario: Create direct export air shipment
         Given the user navigates to shipments workspace
         And a direct shipment with the following details
-            | ShipmentLevel | Direction | TransportMode | Shipper     | MainCarriageFromPort | MainCarriageToPort |
-            | Direct        | Export    | Air           | TestCompany | LHR                  | MIA                |
+            | ShipmentLevel        | Direct      |
+            | Direction            | Export      |
+            | TransportMode        | Air         |
+            | Shipper              | TestCompany |
+            | MainCarriageFromPort | LHR         |
+            | MainCarriageToPort   | MIA         |
         When create shipment
         Then the direct should create successfully
 
-  Scenario:  Add receivable and clear external IDs (ChargesType,Currency)
+    Scenario:  Add receivable and clear external IDs (ChargesType,Currency)
         Given a receivable with the following details including clearing external IDs for chargesType and currency
             | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
             | AFT         | GRWT | 5        | 20        | EUR      | 4            |
@@ -36,8 +42,15 @@ Feature: Advanced Generic Interface AR Invoice Transfer
 
     Scenario: Create ARInvoice,clear customer External Id and assert transfer status
         Given an ARInvoice with the following details
-            | PartnerType | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATNo | Branch      | VATType |
-            | Customer    | EUR             | 4                   | Today       | Cash         | Today   | Zero  | Main Office | Zero    |
+            | PartnerType         | Customer    |
+            | InvoiceCurrency     | EUR         |
+            | InvoiceExchangeRate | 4           |
+            | InvoiceDate         | Today       |
+            | PaymentTerms        | Cash        |
+            | DueDate             | Today       |
+            | VATNo               | Zero        |
+            | Branch              | Main Office |
+            | VATType             | Zero        |
         And clear external ID for partner
         When create invoice
         Then the invoice should create successfully

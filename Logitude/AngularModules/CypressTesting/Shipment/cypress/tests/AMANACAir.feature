@@ -13,8 +13,12 @@ Feature: AMANAC Air Shipment Validations, Marked as Blocked, Marked as Not Block
     Scenario: Create export air shipment
         Given the user in shipment workspace
         And a shipment with the following details
-            | ShipmentLevel | Direction | TransportMode | Shipper           | MainCarriageFromPort | MainCarriageToPort |
-            | Direct        | Export    | Air           | TestShipperExport | LHR                  | MIA                |
+            | ShipmentLevel        | Direct            |
+            | Direction            | Export            |
+            | TransportMode        | Air               |
+            | Shipper              | TestShipperExport |
+            | MainCarriageFromPort | LHR               |
+            | MainCarriageToPort   | MIA               |
         When create shipment
         Then the shipment should create successfully
 
@@ -47,8 +51,9 @@ Feature: AMANAC Air Shipment Validations, Marked as Blocked, Marked as Not Block
         Then a validation message "Transferred Successfully" should appear
         And should not appear in the "New Transfer" view in the AMANAC workspace
         And AMANAC and customs transmissions statuses should be as following
-            | Status | LastSent | SentBy       |
-            | Sent   | Today    | SpecflowTest |
+            | Status   | Sent         |
+            | LastSent | Today        |
+            | SentBy   | SpecflowTest |
 
     Scenario: Retransfer
         When the user retransfer the shipment
@@ -64,5 +69,6 @@ Feature: AMANAC Air Shipment Validations, Marked as Blocked, Marked as Not Block
         Then a validation message "Transferred Successfully" should appear
         And should not appear in the "New Transfer" view in the AMANAC workspace
         And AMANAC and customs transmissions statuses should be as following
-            | Status | LastSent | SentBy       |
-            | Sent   | Today    | SpecflowTest |
+            | Status   | Sent         |
+            | LastSent | Today        |
+            | SentBy   | SpecflowTest |

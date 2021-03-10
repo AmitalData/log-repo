@@ -14,24 +14,31 @@ Feature: ARInvoice Approve, set as sent and void
     Scenario: Create customer
         Given the user navigates to customers workspace
         And a customer with the following details
-            | CompanyName | City      | Country | State |
-            | TestCompany | Anchorage | US      | AK    |
+            | CompanyName | TestCompany |
+            | City        | Anchorage   |
+            | Country     | US          |
+            | State       | AK          |
         When create customer
         Then the customer should create successfully
 
     Scenario: Create direct export air shipment
         Given the user navigates to shipments workspace
         And a direct shipment with the following details
-            | ShipmentLevel | Direction | TransportMode | Shipper     | MainCarriageFromPort | MainCarriageToPort |
-            | Direct        | Export    | Air           | TestCompany | LHR                  | MIA                |
+            | ShipmentLevel        | Direct      |
+            | Direction            | Export      |
+            | TransportMode        | Air         |
+            | Shipper              | TestCompany |
+            | MainCarriageFromPort | LHR         |
+            | MainCarriageToPort   | MIA         |
         When create shipment
         Then the direct should create successfully
 
     Scenario: Update routing tab
         Given the user in the shipment's rounting tab
         And edit main carriage leg with the following details
-            | Airline | FlightNumber | MAWB   |
-            | AA      | Random       | Random |
+            | Airline      | AA     |
+            | FlightNumber | Random |
+            | MAWB         | Random |
         When update shipment
         Then the direct should update successfully
 
@@ -44,8 +51,12 @@ Feature: ARInvoice Approve, set as sent and void
 
     Scenario: Add Payables
         Given a payable with the following details
-            | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
-            | AFT         | GRWT | 5        | 10        | EUR      | 4            |
+            | ChargesType  | AFT  |
+            | UOM          | GRWT |
+            | Quantity     | 5    |
+            | UnitPrice    | 10   |
+            | Currency     | EUR  |
+            | ExchangeRate | 4    |
         When add payables
         Then the payables should add successfully
 
@@ -55,8 +66,15 @@ Feature: ARInvoice Approve, set as sent and void
 
     Scenario: Create ARInvoice
         Given an ARInvoice with a random invoice number and the following details
-            | PartnerType | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATNo | Branch      | VATType |
-            | Customer    | EUR             | 4                   | Today       | Cash         | Today   | Zero  | Main Office | Zero    |
+            | PartnerType         | Customer    |
+            | InvoiceCurrency     | EUR         |
+            | InvoiceExchangeRate | 4           |
+            | InvoiceDate         | Today       |
+            | PaymentTerms        | Cash        |
+            | DueDate             | Today       |
+            | VATNo               | Zero        |
+            | Branch              | Main Office |
+            | VATType             | Zero        |
         When create invoice
         Then the invoice should create successfully
 

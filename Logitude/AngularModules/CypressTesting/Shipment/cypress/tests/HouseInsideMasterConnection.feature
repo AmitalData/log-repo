@@ -6,8 +6,12 @@ Feature: House connection and disconnection inside master
   Scenario: Create master export air shipment
     Given the user logged in and navigates to shipments workspace
     And a master Shipment with following details
-      | ShipmentLevel | Direction | TransportMode | Agent     | MainCarriageFromPort | MainCarriageToPort |
-      | Master        | Export    | Air           | TestAgent | LHR                  | MIA                |
+      | ShipmentLevel        | Master    |
+      | Direction            | Export    |
+      | TransportMode        | Air       |
+      | Agent                | TestAgent |
+      | MainCarriageFromPort | LHR       |
+      | MainCarriageToPort   | MIA       |
     When create shipment
     Then the master should create successfully
 
