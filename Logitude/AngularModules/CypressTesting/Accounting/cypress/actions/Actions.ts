@@ -199,6 +199,11 @@ export function ARApproveInvoice() {
     cy.Click(AccountingSelectors.ARInvoiceApproveButton, null)
 }
 
+export function PostARApproveInvoice() {
+    cy.DefineRequestWait(RestAPI.POST, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
+    cy.Click(AccountingSelectors.ARInvoiceApproveButton, null)
+}
+
 export function SetAsSentARInvoice() {
     cy.Click(BaseSelectors.MoreList, null, true)
     cy.Click(AccountingSelectors.ARInvoiceSetAsSentButton, null)
@@ -436,5 +441,20 @@ export function AssertTransferredInvoice() {
 }
 function ClickOnSaveOnConfirmWindow() {
     cy.get(BaseSelectors.ConfirmWindow).find(BaseSelectors.RedButton).contains(BaseSelectors.ContainSave).click()
+
+}
+
+export function CreateARInvoiceGeneratedFromRoutingLeg(vat:string){
+    ClickAndWaitToLoad(AccountingSelectors.CreateARInvoiceButton);
+    cy.FillLogTextBox(AccountingSelectors.ARInvoiceVatNumber, vat)
+    ClickAndWaitToLoad(AccountingSelectors.OkCreateARInvoiceButton);
+    cy.FillLogLov(AccountingSelectors.ARInvoiceVatType , vat ,true)
+    ClickAndWaitToLoad(AccountingSelectors.VatTypeApplyToAll);
+}
+
+function ClickAndWaitToLoad(ButtonSelector:string){
+    cy.DefineRequestWait(RestAPI.GET, AccountingURLs.VatTypePercentageCall, RequestAliases.GetVatTypePercentage)
+    cy.Click(ButtonSelector, null);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetVatTypePercentage, 200);
 
 }
