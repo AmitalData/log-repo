@@ -497,9 +497,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             declarationUpdateService.Update(this._MyDeclarationPM, true);
 
 
-            string defValue = GetDefault("ISRAEL", "CGG_OPN_DEC_MET", "NON", "NON", tenant);
+            string defValueB = GetDefault("ISRAEL", "CGG_OPN_DEC_MET", "NON", "NON", _MyDeclarationPM.Tenant);
 
-            if (!string.IsNullOrEmpty(defValue) && defValue == "B")
+            if (!string.IsNullOrEmpty(defValueB) && defValueB == "B")
             {
                 AppendLogLine("update UpdateLOGITUDE_FILE");
 
