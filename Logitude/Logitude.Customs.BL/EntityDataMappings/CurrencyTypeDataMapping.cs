@@ -36,17 +36,20 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             //CardRepository rep = new CardRepository(entityPM.Tenant);
             int Tenant = 0;
-            try
+            if (HttpContext.Current != null)
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                Tenant = authToken.Tenant;
+                try
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    Tenant = authToken.Tenant;
 
-            }
-            catch (Exception)
-            {
+                }
+                catch (Exception)
+                {
 
 
+                }
             }
  
             
