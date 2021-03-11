@@ -1,9 +1,9 @@
-@release @all
+@release @all @stable
 Feature: Generic Interface AR Invoice Transfer to FTP
 
-    The user disables the Accounting Transfer in settings, creates AR invoice, 
-    changes the settings for Accounting Transfer to Generic Interface and sets up FTP External Transmission, 
-    checks the created invoice in the Not Ready Entities in Accounting Interfaces, 
+    The user disables the Accounting Transfer in settings, creates AR invoice,
+    changes the settings for Accounting Transfer to Generic Interface and sets up FTP External Transmission,
+    checks the created invoice in the Not Ready Entities in Accounting Interfaces,
     fixes the accounting external IDs validations preventing the invoice from being transferred and exports/transfers the invoice.
 
     Scenario: Disable accounting system
@@ -14,16 +14,22 @@ Feature: Generic Interface AR Invoice Transfer to FTP
     Scenario: Create customer
         Given the user navigates to customers workspace
         And a customer with the following details
-            | CompanyName | City | Country | State |
-            | TestCompany | LAS  | US      | AK    |
+            | CompanyName | TestCompany |
+            | City        | Anchorage   |
+            | Country     | US          |
+            | State       | AK          |
         When create customer
         Then the customer should create successfully
 
     Scenario: Create direct export air shipment
         Given the user navigates to shipments workspace
         And a direct shipment with the following details
-            | ShipmentLevel | Direction | TransportMode | Shipper     | MainCarriageFromPort | MainCarriageToPort |
-            | Direct        | Export    | Air           | TestCompany | LHR                  | MIA                |
+            | ShipmentLevel        | Direct      |
+            | Direction            | Export      |
+            | TransportMode        | Air         |
+            | Shipper              | TestCompany |
+            | MainCarriageFromPort | LHR         |
+            | MainCarriageToPort   | MIA         |
         When create shipment
         Then the direct should create successfully
 
@@ -36,8 +42,15 @@ Feature: Generic Interface AR Invoice Transfer to FTP
 
     Scenario: Create ARInvoice and clear External ID (customer)
         Given an ARInvoice with the following details
-            | PartnerType | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATNo | Branch      | VATType |
-            | Customer    | EUR             | 4                   | Today       | Cash         | Today   | Zero  | Main Office | Zero    |
+            | PartnerType         | Customer    |
+            | InvoiceCurrency     | EUR         |
+            | InvoiceExchangeRate | 4           |
+            | InvoiceDate         | Today       |
+            | PaymentTerms        | Cash        |
+            | DueDate             | Today       |
+            | VATNo               | Zero        |
+            | Branch              | Main Office |
+            | VATType             | Zero        |
         When clear external ID for partner and create invoice
         Then the invoice should create successfully
         And the transfer status should be Not Ready
@@ -49,8 +62,11 @@ Feature: Generic Interface AR Invoice Transfer to FTP
     Scenario: Update Accounting System
         Given accounting System as "Logitude Generic Interface" and external transmission as "FTP"
         And the following FTP details
-            | UserName | Password | Host                       | Folder              | SFTP  |
-            | zaki     | !Z123456 | logitudeworld.exavault.com | Tenants\CypressTest | False |
+            | UserName | zaki                       |
+            | Password | !Z123456                   |
+            | Host     | logitudeworld.exavault.com |
+            | Folder   | Tenants\CypressTest        |
+            | SFTP     | False                      |
         When update the accounting system
         Then the accounting system should update successfully
         And the ARInvoice should appear in AR Not Ready Invoices

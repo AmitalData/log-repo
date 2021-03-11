@@ -1,4 +1,4 @@
-@release @all
+@release @all @stable
 
 Feature: Create customs ARInvoice
     After the user logging in the system and Update Accounting System to be None,Activate Customs Management in Shipments,
@@ -19,24 +19,31 @@ Feature: Create customs ARInvoice
     Scenario: Create customer
         Given the user navigates to customers workspace
         And a customer with the following details
-            | CompanyName | City | Country | State |
-            | TestCompany | LAS  | US      | AK    |
+            | CompanyName | TestCompany |
+            | City        | Anchorage   |
+            | Country     | US          |
+            | State       | AK          |
         When create customer
         Then the customer should create successfully
 
     Scenario: Create direct export air shipment
         Given the user navigates to shipments workspace
         And a direct shipment with the following details
-            | ShipmentLevel | Direction | TransportMode | Shipper     | MainCarriageFromPort | MainCarriageToPort |
-            | Direct        | Export    | Air           | TestCompany | LHR                  | MIA                |
+            | ShipmentLevel        | Direct      |
+            | Direction            | Export      |
+            | TransportMode        | Air         |
+            | Shipper              | TestCompany |
+            | MainCarriageFromPort | LHR         |
+            | MainCarriageToPort   | MIA         |
         When create shipment
         Then the direct should create successfully
 
     Scenario: Update routing tab
         Given the user in the shipment's rounting tab
         And edit main carriage leg with the following details
-            | Airline | FlightNumber | MAWB   |
-            | AA      | Random       | Random |
+            | Airline      | AA     |
+            | FlightNumber | Random |
+            | MAWB         | Random |
         When update shipment
         Then the direct should update successfully
 
@@ -49,11 +56,18 @@ Feature: Create customs ARInvoice
 
     Scenario: Create customs ARInvoice
         Given a receivable with the following details
-            | ChargesType       | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
-            | Customs Commision | GRWT | 5        | 20        | EUR      | 4            |
+            | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
+            | AFT         | GRWT | 5        | 20        | EUR      | 4            |
         And an ARInvoice with the following details
-            | PartnerType | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATNo | Branch      | VATType |
-            | Customer    | EUR             | 4                   | Today       | Cash         | Today   | Zero  | Main Office | Zero    |
+            | PartnerType         | Customer    |
+            | InvoiceCurrency     | EUR         |
+            | InvoiceExchangeRate | 4           |
+            | InvoiceDate         | Today       |
+            | PaymentTerms        | Cash        |
+            | DueDate             | Today       |
+            | VATNo               | Zero        |
+            | Branch              | Main Office |
+            | VATType             | Zero        |
         When create invoice
         Then the invoice should create successfully
 

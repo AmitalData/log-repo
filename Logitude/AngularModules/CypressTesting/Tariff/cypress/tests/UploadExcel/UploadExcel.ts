@@ -3,7 +3,7 @@ import * as Actions from "../../actions/Actions";
 import { TariffDetails } from "../../models/TariffDetails";
 import { ChargeTypeDetails } from "../../models/ChargeTypeDetails";
 import { FreightCostTariffLineDetails } from "cypress/models/FreightCostTariffLineDetails";
-import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 //#region Create Air freight cost
 Given("the user logged in and navigate to tariff workspace", () => {
@@ -11,12 +11,12 @@ Given("the user logged in and navigate to tariff workspace", () => {
 });
 
 Given("an air freight cost with the following details", (dataTable) => {
-  let tariffDetails = dataTable.hashes()[0] as TariffDetails;
+  let tariffDetails = Assists.CreateInstance<TariffDetails>(dataTable, true);
   Actions.FillNewFreightCost("Air", tariffDetails);
 });
 
 Given("the follwing All-In charges", (dataTable) => {
-  let chargeTypeDetailsList = dataTable.hashes() as ChargeTypeDetails[];
+  let chargeTypeDetailsList = Assists.CreateSet<ChargeTypeDetails>(dataTable);
   Actions.FillAllInCharges(chargeTypeDetailsList);
 });
 
@@ -39,7 +39,7 @@ When("upload excel file", () => {
 });
 
 Then("the file should load successfully with the following details", (dataTable) => {
-  let freightCostTariffLineDetailsList = dataTable.hashes()[0] as FreightCostTariffLineDetails;
+  let freightCostTariffLineDetailsList = Assists.CreateInstance<FreightCostTariffLineDetails>(dataTable, true);
   Actions.ValidateUploadExcelFile();
   Actions.ValidateTariffLineRow(freightCostTariffLineDetailsList)
 

@@ -1,4 +1,4 @@
-@release @all
+@release @all @stable
 Feature: INTTRA Sending E-Booking and Shipping Instructions
     The Customer Care user configures INTTRA for the tenant,
     a second regular user creates an Ocean Export FCL shipment,
@@ -13,14 +13,19 @@ Feature: INTTRA Sending E-Booking and Shipping Instructions
         Given the customer care user logged in and navigate to maintenance menu
         And open INTTRA settings wizard
         And fill the following general settings
-            | Mode | INTTRAID  | Alias    |
-            | Test | INTTRA123 | ALIAS123 |
+            | Mode     | Test      |
+            | INTTRAID | INTTRA123 |
+            | Alias    | ALIAS123  |
         And fill the following out settings
-            | UserName | Password | Host               | Folder  |
-            | c0464340 | 9Y5V9ila | ftp.cvt.inttra.com | inbound |
+            | UserName | c0464340           |
+            | Password | 9Y5V9ila           |
+            | Host     | ftp.cvt.inttra.com |
+            | Folder   | inbound            |
         And fill the following in settings
-            | UserName | Password | Host               | Folder   |
-            | c0464340 | 9Y5V9ila | ftp.cvt.inttra.com | outbound |
+            | UserName | c0464340           |
+            | Password | 9Y5V9ila           |
+            | Host     | ftp.cvt.inttra.com |
+            | Folder   | outbound           |
         And fill the following branches settings
             | BranchName  | INTTRAID | PartyAlias | Contact      |
             | Main Office | 1234     | 5678       | SpecflowTest |
@@ -33,20 +38,37 @@ Feature: INTTRA Sending E-Booking and Shipping Instructions
     Scenario: Login and create master export ocean FCL shipment
         Given the user logged in and navigate to shipments workspace
         And a master shipment with the following details
-            | ShipmentLevel | Direction | TransportMode | ShipmentType | Agent     | MainCarriageFromPort | MainCarriageToPort |
-            | Master        | Export    | Ocean         | FCL          | TestAgent | LHR                  | MIA                |
+            | ShipmentLevel        | Master    |
+            | Direction            | Export    |
+            | TransportMode        | Ocean     |
+            | ShipmentType         | FCL       |
+            | Agent                | TestAgent |
+            | MainCarriageFromPort | LHR       |
+            | MainCarriageToPort   | MIA       |
         When create shipment
         Then the shipment should create successfully
 
     Scenario: Open INTTRA e-booking wizard to ensure validation messages are appear
         Given the user open the master shipment
         When open INTTRA e-booking wizard
-        Then validation messages for sending e-booking should appear
+        Then the following validation messages for sending e-booking should appear
+            | Message                                                   |
+            | Main Carriage Carrier is required                         |
+            | Contract Number is required                               |
+            | ETD or Main-Carriage Vessel and Voyage must be provided   |
+            | Shipment Description of Goods is required                 |
+            | Shipment Order Packages or Shipment Packages are required |
 
     Scenario: Fill required information to send INTTRA e-booking
         Given the user fill the following information to send e-booking
-            | BranchName  | ShippingLine | ContractNumber | DescriptionOfGoods | ETDDate | ETDTime | Vessel | ShipperContact     |
-            | Main Office | YMLU         | 53454          | Send booking test  | Today   | 14:00   | PT     | TestShipperContact |
+            | BranchName         | Main Office        |
+            | ShippingLine       | YMLU               |
+            | ContractNumber     | 53454              |
+            | DescriptionOfGoods | Send booking test  |
+            | ETDDate            | Today              |
+            | ETDTime            | 14:00              |
+            | Vessel             | PT                 |
+            | ShipperContact     | TestShipperContact |
         And add the following package
             | PackageType | GrossWeight |
             | 40GP        | 200         |
@@ -62,12 +84,17 @@ Feature: INTTRA Sending E-Booking and Shipping Instructions
     Scenario: Ensure shipping instructions validation messages
         Given the user open the master shipment
         When open INTTRA shipping instructions wizard
-        Then validation messages for sending shipping instructions should appear
+        Then the following validation messages for sending shipping instructions should appear
+            | Message                                     |
+            | Move type is required                       |
+            | Booking Confirmation Number is required     |
+            | All Containers should have Container Number |
 
     Scenario: Fill shipping instructions required information
         Given the user fill the following information to send shipping instructions
-            | MoveType     | BookingConfirmationNumber | ContainerNumber |
-            | Port to Port | 123456                    | AACC1234569     |
+            | MoveType                  | Port to Port |
+            | BookingConfirmationNumber | 123456       |
+            | ContainerNumber           | AACC1234569  |
         And add an inside package with the following details
             | PackageType | Quantity | GrossWeight | Description       |
             | Carton      | 5        | 100         | TestInsidePackage |

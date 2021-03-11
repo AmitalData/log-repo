@@ -1,10 +1,10 @@
 ﻿using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.QuoteModel.Tools.Initializers;
-using Logitude.BL.ShipmentsModel.EntityQueries;
-using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Logitude.BL.QuoteModel.Tools.Behaviours
@@ -14,6 +14,7 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
         private QuoteServiceInitializer initializer;
         private QuoteComputedField quoteComputedField;
         private QuotePM quoteEntityPM;
+        private List<QuoteChargePM> quoteCharges;
         public void Handle(IServiceInitializer initializer)
         {
             this.initializer = (QuoteServiceInitializer)initializer;
@@ -35,6 +36,7 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
             MapToLocationField();
             MapPickupFromField();
             MapDeliveryFromField();
+            FilterDeletedQuoteCharges();
             MapEstimatedPayablesInLocalCurrencyField();
             MapEstimatedPayablesInSalesCurrencyField();
             MapEstimatedReceivablesInLocalCurrencyField();
@@ -180,20 +182,25 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
             return location;
         }
 
+        private void FilterDeletedQuoteCharges()
+        {
+            this.quoteCharges =  new List<QuoteChargePM>();
+            this.quoteCharges = quoteEntityPM.QuoteCharges.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+        }
+
         private void MapEstimatedPayablesInLocalCurrencyField()
         {
             if (quoteEntityPM.QuoteCharges != null)
             {
-                quoteComputedField.EstimatedPayablesInLocal = quoteEntityPM.QuoteCharges.Sum(d => d.CostTotalAmountLocal);
+                quoteComputedField.EstimatedPayablesInLocal = quoteCharges.Sum(d => d.CostTotalAmountLocal);
             }
         }
-
 
         private void MapEstimatedPayablesInSalesCurrencyField()
         {
             if (quoteEntityPM.QuoteCharges != null)
             {
-                quoteComputedField.EstimatedPayablesInSales = quoteEntityPM.QuoteCharges.Sum(d => d.CostAmountInSaleCurrency);
+                quoteComputedField.EstimatedPayablesInSales = quoteCharges.Sum(d => d.CostAmountInSaleCurrency);
             }
         }
 
@@ -201,7 +208,7 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
         {
             if (quoteEntityPM.QuoteCharges != null)
             {
-                quoteComputedField.EstimatedReceivablesInLocal = quoteEntityPM.QuoteCharges.Where(d => d.IsAllIN == false).Sum(d => d.SaleTotalAmountLocal);
+                quoteComputedField.EstimatedReceivablesInLocal = quoteCharges.Where(d => d.IsAllIN == false).Sum(d => d.SaleTotalAmountLocal);
             }
         }
 
@@ -209,7 +216,7 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
         {
             if (quoteEntityPM.QuoteCharges != null)
             {
-                quoteComputedField.EstimatedReceivablesInSales = quoteEntityPM.QuoteCharges.Where(d => d.IsAllIN == false).Sum(d => d.SaleAmountInSaleCurrency);
+                quoteComputedField.EstimatedReceivablesInSales = quoteCharges.Where(d => d.IsAllIN == false).Sum(d => d.SaleAmountInSaleCurrency);
             } 
         }
 

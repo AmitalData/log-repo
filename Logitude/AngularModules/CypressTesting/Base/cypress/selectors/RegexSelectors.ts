@@ -30,6 +30,10 @@ export class RegexSelectors {
         return entityType;
     }
 
+    public static SpanTitle(title: string): string {
+        return "span[title='" + title + "']";
+    }
+
     public static CellWithRowAndCol(col: string, row: string): string {
         return "div[id^='edit-log-grid_'][id$='_" + col + "_" + row + "']";
     }

@@ -1957,12 +1957,13 @@
                     }
                     else {
                         IsShowUpgradeScreen = false;
-                        if (privateLable) {
-                            PrivateLableLogin(privateLable);
-                        } 
-                        else if (isCargoTracking) {
+                        if (isCargoTracking) {
                             RedirectToCargotrackingSite(window.location.href);
-                        }else {
+                        }
+                        else if (privateLable) {
+                            PrivateLableLogin(privateLable);
+                        }
+                        else {
                             ComplateLoadProess();
                             BrandingFunction();
                             var Containerelem = document.getElementById("Container");

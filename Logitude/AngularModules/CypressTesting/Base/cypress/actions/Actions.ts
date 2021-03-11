@@ -149,7 +149,7 @@ function FormateTheDate(date: Date) {
     var mm = date.getUTCMonth() + 1
     var yyyy = date.getFullYear();
 
-    let DateFormat = "0" + dd + '/' + "0" + mm + '/' + yyyy;
+    let DateFormat = dd < 10 ? "0" : "" + dd + '/' + "0" + mm + '/' + yyyy;
     return DateFormat
 }
 

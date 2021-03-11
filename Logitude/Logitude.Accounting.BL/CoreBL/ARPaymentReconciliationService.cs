@@ -34,6 +34,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             if(paymentTransaction != null)
             {
+
                 ARPaymentPM paymentPM = GetARPaymentPMById(paymentTransaction.SourceId, paymentTransaction.Tenant);
 
                 paymentPM.PaymentInvoices = new List<ARPaymentInvoicePM>(); // [!] payment invoices removed in order to avoid validation (CheckLinesAmountToReconcileTotal) in ARPayment service, in this block we only need to update open amount and status , WI 58101
@@ -47,6 +48,30 @@ namespace Logitude.Accounting.BL.CoreBL
 
             }
 
+        }
+
+        public void UpdatePaymentOpenAmountForReconciliation(ReconciliationPM reconciliationPM, 
+            LedgerTransactionPM paymentTransaction,ARPaymentPM paymentPM)
+        {
+            if (paymentTransaction != null)
+            {
+                CalculatePaymentOpenAmount(paymentPM);
+            }
+        }
+
+        public void UpdatePaymentStatusForReconciliation(ReconciliationPM reconciliationPM,
+            LedgerTransactionPM paymentTransaction, ARPaymentPM paymentPM)
+        {
+            if (paymentTransaction != null)
+            {
+                CalculatePaymentStatus(paymentPM);
+            }
+        }
+
+        public void SubmitChangesToPayment(ARPaymentPM paymentPM)
+        {
+            ARPaymentService paymentService = new ARPaymentService(_invoiceContext, paymentPM.Tenant);
+            paymentService.Update(paymentPM);
         }
 
         public void UpdateConnectedInvoices(ReconciliationPM entityPM)

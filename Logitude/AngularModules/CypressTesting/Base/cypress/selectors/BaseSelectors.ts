@@ -166,6 +166,13 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly EventItemBox = ".EventItemBox";
     public static readonly textarea = "textarea";
    
+    public static readonly QueryListToggleButton = "querylist .ToggleButton";
+    public static readonly QueryListToggleButtonItem = "querylist .ToggleButton .ToggleButtonMenu li";
+    public static readonly SearchTextboxInput = "searchtextbox input";
+    public static readonly MenuButtons = "#MenuButtons";
+    public static readonly ComboBox = ".ComboBox";
+    public static readonly ToggleIconImage = "img[src='Images/ToggleIcon.png']";
+    public static readonly SelectedComboboxItem = ".ComboBoxDropdown li[class='SelectedComboboxItem']";
 
     //#region Warehouse
     public static readonly WarehouseStoragePricingStepFrom ="#WarehouseStoragePricing_StepFrom"

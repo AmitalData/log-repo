@@ -11,6 +11,7 @@ import * as BaseAssertion from '../../../../Base/cypress/actions/Assertion';
 import { CustomerDetails } from '../../../../Common/cypress/models/CustomerDetails';
 import { RequestAliases } from '../../../../Base/cypress/constants/RequestAliases';
 import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors';
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 //#region variables
 let shipmentDetails: ShipmentDetails;
@@ -43,7 +44,7 @@ Given("the user navigates to customers workspace", () => {
 });
 
 Given("a customer with the following details", (dataTable) => {
-  let customerDetails = dataTable.hashes()[0] as CustomerDetails;
+  let customerDetails = Assists.CreateInstance<CustomerDetails>(dataTable, true);
   CommonActions.AddNewCustomer(customerDetails);
 });
 
@@ -64,7 +65,7 @@ Given("the user in shipments workspace", () => {
 });
 
 Given("a direct shipment with the following details", (dataTable) => {
-  shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+  shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
   ShipmentActions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
   shipmentDetails.Shipper = customerCode;
   ShipmentActions.FillShipmentWizardsFields(shipmentDetails);
@@ -92,13 +93,13 @@ Then("the second direct should create successfully", () => {
 //#region Update packages/payable tabs
 Given("the user add package with the following details", (dataTable) => {
   ShipmentActions.OpenShipment(shipmentDetails.ShipmentNumber);
-  let packagesDetails = dataTable.hashes() as PackagesDetails[];
+  let packagesDetails = Assists.CreateSet<PackagesDetails>(dataTable);
   ShipmentActions.FillPackageTab(shipmentDetails.TransportMode, packagesDetails)
 });
 
 Given("the user add payable with the following details", (dataTable) => {
   ShipmentActions.OpenShipment(shipmentDetails.ShipmentNumber);
-  payableDetails = dataTable.hashes()[0] as PayableDetails;
+  payableDetails = Assists.CreateInstance<PayableDetails>(dataTable, true);
   ShipmentActions.FillPayablesTab(payableDetails);
 });
 
@@ -119,7 +120,7 @@ Given("the user in Accounts Payable workspace", () => {
 });
 
 Given("a multiple AP invoice  with a random invoice number and the following details", (dataTable) => {
-  apInvoiceDetails = dataTable.hashes()[0] as APInvoiceDetails
+  apInvoiceDetails = Assists.CreateInstance<APInvoiceDetails>(dataTable, true)
   AccountingActions.FillAPInvoiceDetails(apInvoiceDetails, true);
 });
 

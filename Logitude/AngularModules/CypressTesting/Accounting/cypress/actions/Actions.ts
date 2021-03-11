@@ -66,7 +66,7 @@ export function ExternalTransmission(ExternalTransmissionType: string, FTPdetail
 
 function FillFTPDetails(FTPdetails: FTPDetails) {
     cy.Click(BaseSelectors.Hyperlink, BaseSelectors.ContainSettings);
-    cy.Click(AccountingSelectors.EditFTPSettings, null, true)
+    cy.Click(AccountingSelectors.AddFTPSettings, null, true)
 
     cy.FillLogTextBox(AccountingSelectors.FTPDetailUserName, FTPdetails.UserName)
     cy.FillLogTextBox(AccountingSelectors.FTPDetailPassword, FTPdetails.Password)
@@ -315,6 +315,7 @@ export function FillARPaymentDetails(aRPaymentDetails: ARPaymentDetails) {
     if (aRPaymentDetails.Partner) {
         cy.FillLogLov(AccountingSelectors.ARPaymentPartner, aRPaymentDetails.Partner, false)
     }
+    cy.FillLogLov(AccountingSelectors.ARPaymentCurrency, aRPaymentDetails.PaymentCurrency, true) 
     cy.FillLogLov(AccountingSelectors.ARPaymentPaymentMethod, aRPaymentDetails.PaymentMethod, true)
     cy.FillLogTextBox(AccountingSelectors.ARPaymentAmount, aRPaymentDetails.PaymentAmount)
     cy.Click(AccountingSelectors.OkAddARPayment, null)
@@ -358,19 +359,9 @@ export function NavigatesToDraftInvoice(draftConsolidationInvoiceNumber: string)
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200);
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200);
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200);
-    cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViewsGetByFilters, RequestAliases.ARInvoiceviews);
-    cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViewsGetByFilters, RequestAliases.ARInvoiceviews);
-    cy.FillLogTextBox(BaseSelectors.SearchField, draftConsolidationInvoiceNumber);
-    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200);
-    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200);
-    cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoicesGetSingle, RequestAliases.ARInvoicesRequest);
-    cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViewsGetByFilters, RequestAliases.ARInvoiceviews);
-    cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViewsGetByFilters, RequestAliases.ARInvoiceviews);
-    cy.Click(BaseSelectors.ListItem, null);
-
-    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
-    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200);
-    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200);
+    cy.FillLogTextBox(BaseSelectors.SearchField, draftConsolidationInvoiceNumber)
+    cy.get(BaseSelectors.ListDataLoaded)
+        ClickOnRowDependingOnARInvoiceNumber(draftConsolidationInvoiceNumber)
 }
 //#endregion
 export function AddSecondInvoiceToConsolidation(ARInvoiceNumber: string) {

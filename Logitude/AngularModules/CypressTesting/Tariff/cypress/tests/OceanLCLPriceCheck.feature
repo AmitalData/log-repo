@@ -7,8 +7,9 @@ Feature: Ocean LCL Price Check
     Scenario: Login and create new ocean LCL freight cost
         Given the user logged in and navigate to tariff workspace
         And an ocean LCL freight cost with the following details
-            | Name                    | Seller | StartDate |
-            | TestOceanLCLFreightCost | MAEU   | Today     |
+            | Name      | TestOceanLCLFreightCost |
+            | Seller    | MAEU                    |
+            | StartDate | Today                   |
         When create freight cost
         Then the freight cost should create successfully
 
@@ -29,9 +30,11 @@ Feature: Ocean LCL Price Check
     Scenario: Open price check wizard to show price offers
         Given the user back into tariff workspace and open price check wizard
         And fill the following price check details
-            | FromPort | ToPort | ChargeableWeight |
-            | LHR      | MIA    | 10               |
+            | FromPort         | LHR |
+            | ToPort           | MIA |
+            | ChargeableWeight | 10  |
         When search about prices
         Then ocean LCL price should equal the following
-            | AirFreight | Surcharges | Total  |
-            | 200.00     | 150.00     | 350.00 |
+            | AirFreight | 200.00 |
+            | Surcharges | 150.00 |
+            | Total      | 350.00 |

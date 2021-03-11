@@ -7,8 +7,10 @@ Feature: Air Price Check
     Scenario: Login and create new air freight cost
         Given the user logged in and navigate to tariff workspace
         And an air freight cost with the following details
-            | Name               | Seller | StartDate | Product |
-            | TestAirFreightCost | AA     | Today     | General |
+            | Name      | TestAirFreightCost |
+            | Seller    | AA                 |
+            | StartDate | Today              |
+            | Product   | General            |
         When create freight cost
         Then the freight cost should create successfully
 
@@ -29,9 +31,11 @@ Feature: Air Price Check
     Scenario: Open price check wizard to show price offers
         Given the user back into tariff workspace and open price check wizard
         And fill the following price check details
-            | FromPort | ToPort | ChargeableWeight |
-            | LHR      | MIA    | 10               |
+            | FromPort         | LHR |
+            | ToPort           | MIA |
+            | ChargeableWeight | 10  |
         When search about prices
         Then air price should equal the following
-            | AirFreight | Surcharges | Total  |
-            | 200.00     | 300.00     | 500.00 |
+            | AirFreight | 200.00 |
+            | Surcharges | 300.00 |
+            | Total      | 500.00 |

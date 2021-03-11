@@ -28,8 +28,7 @@ export class DSVResetPasswordComponent extends ResetPasswordComponent {
     public ContactUsEmail: string = ""; 
 
     public show = true;
-    constructor(
-        private router: Router,
+    constructor( 
         private ss: LoginService,
         private hybridLabelsBrandingDataService: HybridLabelsBrandingDataService) {
         super(ss);
@@ -49,19 +48,11 @@ export class DSVResetPasswordComponent extends ResetPasswordComponent {
                 this.MainColor = response.Result.MainColor;
                 this.BackgroundImage = BrandingDataService.GetBackgroundImage(); 
                 this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage();
-                this.Id = response.Result.Id;
-                this.MainLogo = response.Result.MainLogo;
+                this.Id = response.Result.Id; 
                 this.MainLogo = BrandingDataService.GetMainLogo(); 
-            }
-            else {
-                this.GoToError401();
-            }
+            } 
         });
 
-    }
-
-    private GoToError401() {
-        this.router.navigate(['Error401']);
-    }
+    } 
 
 }

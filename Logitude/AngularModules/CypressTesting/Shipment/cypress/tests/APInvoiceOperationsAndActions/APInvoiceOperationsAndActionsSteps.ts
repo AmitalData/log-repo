@@ -13,6 +13,7 @@ import * as CommonActions from '../../../../Common/cypress/actions/Actions';
 import * as AccountingActions from '../../../../Accounting/cypress/actions/Actions';
 import { AccountingSelectors } from "../../../../Accounting/cypress/selectors/Selectors";
 import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors';
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 //#region variables
 let shipmentDetails: ShipmentDetails;
@@ -40,7 +41,7 @@ Given("the user navigates to customers workspace", () => {
   CommonActions.NavigatesToCustomersWorkspace();
 });
 Given("a customer with the following details", (dataTable) => {
-  let customerDetails = dataTable.hashes()[0] as CustomerDetails;
+  let customerDetails = Assists.CreateInstance<CustomerDetails>(dataTable, true);
   CommonActions.AddNewCustomer(customerDetails);
 });
 When("create customer", () => {
@@ -59,7 +60,7 @@ Given("the user navigates to shipments workspace", () => {
 });
 
 Given("a direct shipment with the following details", (dataTable) => {
-  shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+  shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
   Actions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
   shipmentDetails.Shipper = customerCode;
   Actions.FillShipmentWizardsFields(shipmentDetails);
@@ -82,21 +83,21 @@ Given("the user in the shipment's rounting tab", () => {
   cy.Click(ShipmentSelectors.RoutingsTab, null);
 });
 Given("edit main carriage leg with the following details", (dataTable) => {
-  let mainCarriageLeg = dataTable.hashes()[0] as MainCarriageLeg;
+  let mainCarriageLeg = Assists.CreateInstance<MainCarriageLeg>(dataTable, true);
   Actions.EditMainCarriageLegs(mainCarriageLeg.Airline);
 });
 //#endregion
 
 //#region Update packages tab
 Given("the user add package with the following details", (dataTable) => {
-  let packagesDetails = dataTable.hashes() as PackagesDetails[];
+  let packagesDetails = Assists.CreateSet<PackagesDetails>(dataTable);
   Actions.FillPackageTab(shipmentDetails.TransportMode, packagesDetails)
 });
 //#endregion
 //#region Add Payables
 Given("a payable with the following details",
   (dataTable) => {
-    const PayableData = dataTable.hashes()[0] as PayableDetails;
+    const PayableData = Assists.CreateInstance<PayableDetails>(dataTable, true);
     Actions.FillPayablesTab(PayableData)
   });
 When("add payables",
@@ -112,7 +113,7 @@ Then("the payables should add successfully",
 //#region Create APInvoice
 Given("an APInvoice with a random invoice number and the following details",
   (dataTable) => {
-    const APInvoiceData = dataTable.hashes()[0] as APInvoiceDetails
+    const APInvoiceData = Assists.CreateInstance<APInvoiceDetails>(dataTable, true);
     cy.Click(AccountingSelectors.ReceiveInvoiceButton, null);
     AccountingActions.FillAPInvoiceDetails(APInvoiceData)
   });

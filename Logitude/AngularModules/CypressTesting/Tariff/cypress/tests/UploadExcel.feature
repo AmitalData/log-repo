@@ -6,8 +6,10 @@ Feature: Upload Excel Tariff test
     Scenario: Login and create new air freight cost
         Given the user logged in and navigate to tariff workspace
         And an air freight cost with the following details
-            | Name               | Seller | StartDate | Product |
-            | TestAirFreightCost | AA     | Today     | General |
+            | Name      | TestAirFreightCost |
+            | Seller    | AA                 |
+            | StartDate | Today              |
+            | Product   | General            |
         And the follwing All-In charges
             | Name             |
             | Agent Commission |
@@ -19,5 +21,12 @@ Feature: Upload Excel Tariff test
         Given the user open the created air freight cost
         When upload excel file
         Then the file should load successfully with the following details
-            | FromPort | ToPort | MinPrice | Step1Price | Step2Price | Step3Price | Step4Price | Step5Price | Step6Price |
-            | MIA      | JFK    | 100.000  | 100.000    | 450.000    | 490.000    | 560.000    | 1,023.000   | 3,309.000   |
+            | FromPort   | MIA       |
+            | ToPort     | JFK       |
+            | MinPrice   | 100.000   |
+            | Step1Price | 100.000   |
+            | Step2Price | 450.000   |
+            | Step3Price | 490.000   |
+            | Step4Price | 560.000   |
+            | Step5Price | 1,023.000 |
+            | Step6Price | 3,309.000 |

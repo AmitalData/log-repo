@@ -3,6 +3,7 @@ import * as Actions from "../../actions/Actions";
 import { TariffDetails } from "../../models/TariffDetails";
 import { SurchargeDetails } from "../../models/SurchargeDetails";
 import { SurchargeCostTariffLineDetails} from "cypress/models/SurchargeCostTariffLineDetails";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 //#region  Create ocean FCL surcharge cost
 Given("the user logged in and navigate to tariff workspace", () => {
@@ -10,12 +11,12 @@ Given("the user logged in and navigate to tariff workspace", () => {
 });
 
 Given("an ocean FCL surcharge cost with the following details", (dataTable) => {
-    let tariffDetails = dataTable.hashes()[0] as TariffDetails;
+    let tariffDetails = Assists.CreateInstance<TariffDetails>(dataTable, true);
     Actions.FillNewSurchargeCostForUpdate("Ocean FCL", tariffDetails);
 });
 
 Given("the follwing surcharges details", (dataTable) => {
-    let surchargeDetailsList = dataTable.hashes() as SurchargeDetails[];
+    let surchargeDetailsList = Assists.CreateSet<SurchargeDetails>(dataTable);
     Actions.FillSurcharges(surchargeDetailsList);
 });
 
@@ -34,7 +35,7 @@ Given("the user open the created surcharge cost", () => {
 });
 
 Given("add the follwing tariff lines", (dataTable) => {
-    let tariffDetails = dataTable.hashes() as SurchargeCostTariffLineDetails[];
+    let tariffDetails = Assists.CreateSet<SurchargeCostTariffLineDetails>(dataTable);
     Actions.AddSurchargeCostTariffLines(tariffDetails)
 });
 
@@ -53,7 +54,7 @@ Given("the user in update tab", () => {
 });
 
 Given("the follwing surcharge cost update details", (dataTable) => {
-    let tariffDetails = dataTable.hashes()[0] as SurchargeCostTariffLineDetails;
+    let tariffDetails = Assists.CreateInstance<SurchargeCostTariffLineDetails>(dataTable, true);
     Actions.FillUpdateSurcharges(tariffDetails);
 });
 

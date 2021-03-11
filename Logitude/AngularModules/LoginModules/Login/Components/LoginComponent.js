@@ -410,8 +410,12 @@ export var LoginComponent = (function () {
                     }
                 }
                 if (userData.HtmlVersion) {
-                    var version = userData.HtmlVersion;
-                    AngularURL = SessionInfo.GetLogitudeURL() + "Angular" + version + "/index.html";
+                    if (SessionInfo.GetLogitudeURL().indexOf('localhost:9996') > -1)
+                        AngularURL = "http://localhost:4200/?" + data;
+                    else {
+                        var version = userData.HtmlVersion;
+                        AngularURL = SessionInfo.GetLogitudeURL() + "Angular" + version + "/index.html";
+                    }
                 }
                 else {
                     if (SessionInfo.GetLogitudeURL().indexOf('localhost:9996') > -1)

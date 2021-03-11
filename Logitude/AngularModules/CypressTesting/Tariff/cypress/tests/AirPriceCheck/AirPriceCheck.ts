@@ -1,14 +1,13 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import * as Actions from "../../actions/Actions";
-import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
 import { TariffDetails } from "../../models/TariffDetails";
 import { FreightCostTariffLineDetails } from "cypress/models/FreightCostTariffLineDetails";
 import { PriceCheckDetails } from "cypress/models/PriceCheckDetails";
 import { priceCheck } from "cypress/models/priceCheck";
 import { TariffSelectors } from "../../selectors/Selectors";
-import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 var isSameDate : Boolean
 
@@ -18,7 +17,7 @@ Given("the user logged in and navigate to tariff workspace", () => {
 });
 
 Given("an air freight cost with the following details", (dataTable) => {
-    let tariffDetails = dataTable.hashes()[0] as TariffDetails;
+    let tariffDetails = Assists.CreateInstance<TariffDetails>(dataTable, true);
     Actions.FillNewFreightCost("Air", tariffDetails);
 });
 
@@ -37,7 +36,7 @@ Given("the user open the freight cost", () => {
 });
 
 Given("add the follwing tariff line", (dataTable) => {
-    let freightCostTariffLineDetailsList = dataTable.hashes() as FreightCostTariffLineDetails[];
+    let freightCostTariffLineDetailsList = Assists.CreateSet<FreightCostTariffLineDetails>(dataTable);
     Actions.AddFreightCostTariffLines("Air", freightCostTariffLineDetailsList);
 });
 When("approve version", () => {
@@ -92,7 +91,7 @@ Given("the user back into tariff workspace and open price check wizard", () => {
 });
 
 Given("fill the following price check details", (dataTable) => {
-    let airPriceCheckDetails = dataTable.hashes()[0] as PriceCheckDetails;
+    let airPriceCheckDetails = Assists.CreateInstance<PriceCheckDetails>(dataTable, true);
     Actions.FillPriceCheckWizard("Air", airPriceCheckDetails)
 
 });
@@ -102,7 +101,7 @@ When("search about prices", () => {
 });
 
 Then("air price should equal the following", (dataTable) => {
-    let PriceCheckDetails = dataTable.hashes()[0] as priceCheck;
+    let PriceCheckDetails = Assists.CreateInstance<priceCheck>(dataTable, true);
     Actions.ValidateTariffPriceCheck(PriceCheckDetails);
 });
 //#endregion

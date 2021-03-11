@@ -14,7 +14,8 @@ import { FTPDetails } from '../../models/FTPDetails';
 import { AccountingSelectors } from "../../selectors/Selectors";
 import * as BaseActions from '../../../../Base/cypress/actions/Actions';
 import { AccountingURLs } from '../../constants/URLs';
-import { RestAPI } from '../../../../Base/cypress/constants/RestAPI'
+import { RestAPI } from '../../../../Base/cypress/constants/RestAPI';
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 //#region variables
 let shipmentDetails: ShipmentDetails;
@@ -47,7 +48,7 @@ Given("the user navigates to customers workspace", () => {
 });
 
 Given("a customer with the following details", (dataTable) => {
-  let customerDetails = dataTable.hashes()[0] as CustomerDetails;
+  let customerDetails = Assists.CreateInstance<CustomerDetails>(dataTable, true);
   CommonActions.AddNewCustomer(customerDetails);
 });
 
@@ -68,7 +69,7 @@ Given("the user navigates to shipments workspace", () => {
 });
 
 Given("a direct shipment with the following details", (dataTable) => {
-  shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+  shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
   ShipmentActions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
   shipmentDetails.Shipper = customerCode;
   ShipmentActions.FillShipmentWizardsFields(shipmentDetails);
@@ -88,7 +89,7 @@ Then("the direct should create successfully", () => {
 //#region Add receivable and clear external IDs (ChargesType,Currency)
 Given("a receivable with the following details", (dataTable) => {
   ShipmentActions.OpenShipment(shipmentNumber);
-  const ReceivableData = dataTable.hashes() as ReceivableDetails[];
+  const ReceivableData = Assists.CreateSet<ReceivableDetails>(dataTable);
   ShipmentActions.FillReceivablesTab(ReceivableData, true)
 });
 
@@ -103,7 +104,7 @@ Then("the receivable should add successfully", () => {
 
 //#region Create ARInvoice and clear External ID (customer)
 Given("an ARInvoice with the following details", (dataTable) => {
-  const ARInvoiceData = dataTable.hashes()[0] as ARInvoiceDetails
+  const ARInvoiceData = Assists.CreateInstance<ARInvoiceDetails>(dataTable, true);
   cy.Click(AccountingSelectors.CreateARInvoiceButton, null);
   AccountingActions.FillARInvoiceDetails(ARInvoiceData)
 });
@@ -143,7 +144,7 @@ Given("accounting System as {string} and external transmission as {string}", (ac
 });
 
 Given("the following FTP details", (dataTable) => {
-  FTPdetails = dataTable.hashes()[0] as FTPDetails;
+  FTPdetails = Assists.CreateInstance<FTPDetails>(dataTable, true);
 });
 
 When("update the accounting system", () => {
