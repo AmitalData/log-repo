@@ -380,7 +380,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                             var declarationQueryService = new DeclarationQueryService(_Tenant);
                             var declaration = declarationQueryService.GetSingle(RequestParams.LoggingEntityId, false, false);
 
-                            if (declaration.IsCourierDeclaration)
+                            if (declaration!=null && declaration.IsCourierDeclaration)
                             {
                                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_Tenant);
                                 DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declaration.Id, true, false);
