@@ -108,7 +108,7 @@ namespace WebFreight.Web.CustomWebServices
 
             curr = "Logitude.Customs.BL.Messaging.U2L.CommDec.CommDecService";
             _AllIUnifreightGenericService.Add(curr);
-            _UnityContainer.RegisterType<UnifreightGenericService, Logitude.Customs.BL.Messaging.U2L.CommDec.CommDecService>(curr);
+            _UnityContainer.RegisterType<UnifreightGenericService, Logitude.CustomsMessaging.U2L.CommDec.CommDecService>(curr);
 
             curr = "Logitude.Customs.BL.Messaging.U2L.Reshimon.ReshimonService"; 
             _AllIUnifreightGenericService.Add(curr);

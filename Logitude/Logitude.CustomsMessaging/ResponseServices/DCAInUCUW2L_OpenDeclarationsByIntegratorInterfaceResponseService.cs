@@ -23,7 +23,7 @@ using Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments;
 using Logitude.AmitalMessaging.Utils;
 using Logitude.Server.Tools.Utils;
 using System.Configuration;
-using Logitude.Customs.BL.Messaging.U2L.CommDec;
+using Logitude.CustomsMessaging.U2L.CommDec;
 using Unifreight.Data.AmitalModel.Repsitories;
 
 namespace Logitude.CustomsMessaging.ResponseServices

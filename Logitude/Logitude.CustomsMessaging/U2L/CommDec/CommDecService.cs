@@ -33,7 +33,7 @@ using Logitude.CustomsMessaging;
 using Logitude.CustomsMessaging.MessagingServices;
 using Unifreight.Data.AmitalModel.Repsitories;
 
-namespace Logitude.Customs.BL.Messaging.U2L.CommDec
+namespace Logitude.CustomsMessaging.U2L.CommDec
 {
     public class CommDecService : UnifreightGenericService
     {
@@ -668,7 +668,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             CustomsAutonomyKeywordQueryService customsAutonomyKeywordQueryService = new CustomsAutonomyKeywordQueryService(_context);
             var casualImportelTel = _AmitalCustomsFile.CasualImportelTel;
             if (!String.IsNullOrWhiteSpace(casualImportelTel)) casualImportelTel = _AmitalCustomsFile.CasualImportelTel.TrimStart(new Char[] { '0' });
-            if (customsAutonomyKeywordQueryService.CheckIfsAutonomy(_AmitalCustomsFile.CasualImporterCity, casualImportelTel, ResolvedTenant()))
+            if (customsAutonomyKeywordQueryService.CheckIfsAutonomy(_AmitalCustomsFile.CasualImporterCity, casualImportelTel,"", ResolvedTenant()))
             {
                 this.IsAutonomy = true;
                 return;
