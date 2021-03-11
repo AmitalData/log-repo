@@ -273,8 +273,9 @@ namespace AmitalCustomsWindowsService.Tester
 
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            clsTester.GetListByCourierHAWB();
-            
+            clsTester.TestUpdateLOGITUDE_FILE();
+            //clsTester.GetListByCourierHAWB();
+
             return;
             clsTester.MultiProccessTestLockTab();
             string customsResponseXml = File.ReadAllText(@"C:\Users\itzik\Desktop\zevel\1-43468729.xml");

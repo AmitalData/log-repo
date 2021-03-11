@@ -278,7 +278,16 @@ User/Pass",
                     }
                     return input;
                 };
-                Logitude.Customs.BL.Utils.GrantCCUTableUtil.GrantCCUTo(1, GetConnetionStringFunc);
+                var allTenant= repo.GetRealAll()
+                .ToList()
+                .Where(r => !string.IsNullOrWhiteSpace(r.UnfConnectionString))
+                .Select(t=>t.Tenant)
+                ;
+                foreach (var currTenant in allTenant)
+                {
+                    Logitude.Customs.BL.Utils.GrantCCUTableUtil.GrantCCUTo(currTenant, GetConnetionStringFunc);
+                }
+                
             }
             );
             thread.IsBackground = true;
