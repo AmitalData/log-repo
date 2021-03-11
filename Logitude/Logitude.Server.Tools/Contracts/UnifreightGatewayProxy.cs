@@ -191,9 +191,7 @@ namespace Logitude.Server.Tools.Contracts
             return objectTable.Id;
         }
         protected virtual int ResolvedTenant()
-        {
-            if (this._iTenanat == 0)
-                return 1;
+        { 
             return this._iTenanat;
         }
 

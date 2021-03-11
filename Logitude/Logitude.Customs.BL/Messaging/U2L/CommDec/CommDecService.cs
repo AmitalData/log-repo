@@ -29,6 +29,7 @@ using System.Linq;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
+using Logitude.CustomsMessaging;
 
 namespace Logitude.Customs.BL.Messaging.U2L.CommDec
 {
@@ -68,8 +69,36 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
         {
 
         }
-
         public override void ProccessGenericRequest(
+              string xmlLOGICOMMDEC,
+              ref string MoreParams,
+              out string MessageOut)
+
+        {
+            MessageOut = "";
+            int tenant = 0;
+            tenant = ResolvedTenant();
+
+            string defValue = GDFDATAQueryService.GetDefault(tenant, "ISRAEL", "CGG_OPN_DEC_MET", "NON", "NON");
+
+            if(!string.IsNullOrEmpty(defValue) && defValue=="B")
+            {
+                 var messagingService = new DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceMessagingService();
+
+                messagingService.CreateCRS(tenant, null, null);
+ 
+             
+            }
+            else
+            {
+                ProccessGenericRequestReal(xmlLOGICOMMDEC,ref MoreParams,out MessageOut);
+            }
+
+
+        }
+
+
+        public void ProccessGenericRequestReal(
               string xmlLOGICOMMDEC,
               ref string MoreParams,
               out string MessageOut)
