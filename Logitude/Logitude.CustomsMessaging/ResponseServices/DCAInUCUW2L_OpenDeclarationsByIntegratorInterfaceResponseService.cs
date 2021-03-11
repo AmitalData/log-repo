@@ -27,28 +27,28 @@ using Logitude.Customs.BL.Messaging.U2L.CommDec;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
-    public class DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceResponseService : ResponseServiceBase<INF_MSG_GenericResponseData, DCAInUCUW2LResponseContentHeader, GenericRequestParams>
+    public class DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceResponseService : ResponseServiceBase<INF_MSG_GenericResponseData, DCAInUCUW2LResponseContentHeader, DCAInUCUW2LRequestParams>
     {
-        public override INF_MSG_GenericResponseData GetResponse(DCAInUCUW2LResponseContentHeader customResponse, GenericRequestParams requestParams)
+        public override INF_MSG_GenericResponseData GetResponse(DCAInUCUW2LResponseContentHeader customResponse, DCAInUCUW2LRequestParams requestParams)
         {
             return this.MyResponseData;
         }
 
-        public override void Update(DCAInUCUW2LResponseContentHeader customResponse, GenericRequestParams requestParams)
+        public override void Update(DCAInUCUW2LResponseContentHeader customResponse, DCAInUCUW2LRequestParams requestParams)
         {
             this.MyResponseData = new INF_MSG_GenericResponseData();
 
 
             bool lockit = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("Singleton.CRS:UCUW2L"));
-           string key = ProcessLockTableUtil.Instance.GetKey4DocumentsFilingId(customResponse.CustomFileNo, requestParams.Tenant);
+          // string key = ProcessLockTableUtil.Instance.GetKey4DocumentsFilingId(customResponse.CustomFileNo, requestParams.Tenant);
 
-            using (var processLockTableDisposable = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, lockit, key, "CRS:UCUW2L"))
-            {
+           // using (var processLockTableDisposable = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, lockit, key, "CRS:UCUW2L"))
+           // {
                 CommDecService CommDecService = new CommDecService();
                 try {
                     string error = "";
                     string moreParams = customResponse.MoreParams;
-                    CommDecService.ProccessGenericRequest(customResponse.LOGICOMMDEC, ref moreParams, out error);
+                    CommDecService.ProccessGenericRequestReal(customResponse.LOGICOMMDEC, ref moreParams, out error);
 
 
                     this.MyResponseData.ApplicationID = requestParams.AppicationId;
@@ -62,7 +62,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this.MyResponseData.Succeeded = true;
                     this.MyResponseData.UserMessage = ex.Message;
                 }
-            }
+           // }
         }
 
 
