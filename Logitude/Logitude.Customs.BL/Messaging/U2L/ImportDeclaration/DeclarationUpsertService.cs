@@ -851,39 +851,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
             }
         }
-        public void SendClientSearch()
-        {
-            int.TryParse(_AmitalCustomsFile.Tenant, out int Tenant);
-            var loggedUserId = AuthenticationUtil.ResolveUserId(Tenant);
-            var newClientSearchRequestParams = new ClientSearchRequestParams()
-            {
-                LoggingEnabled = true,
-                IsFakeResponse = true,
-                InterfaceTypeCode = "3610",
-                Tenant = Tenant,
-                RequestName = "Client Search",
-                ResponseName = "Client Search",
-                LoggingUserId = loggedUserId,
-                RequestVIA = SendRequestVIA.WebServiceBatch,
-                SuppressSplitWR = true,
-                ExternalId = _AmitalCustomsFile.ImporterId.Substring(0, 9),
-            };
-
-            try
-            {
-                SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.ClientSearchRequestParams>(newClientSearchRequestParams
-                    , false, DateTime.Now
-                    );
-            }
-            catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
-            {
-                if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
-                {
-                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("3610 RequestInProgress stop create a new one !! ");
-                }
-                throw;
-            }
-        }
+ 
         public void SendClientSearch()
         {
             int.TryParse(_AmitalCustomsFile.Tenant, out int Tenant);

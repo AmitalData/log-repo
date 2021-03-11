@@ -581,60 +581,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             }
         }
 
-        private void UpdateTrucker()
-        {
-            if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.TruckerId))
-            {
-                if (currentDeclarationCourierStatusPM == null)
-                {
-                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
-                    currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
-                }
-
-                if (currentDeclarationCourierStatusPM != null)
-                {
-                    string truckerId = null;
-                    CardRepository cardRep = new CardRepository(this._MyDeclarationPM.Tenant);
-                    Card card = cardRep.GetSingleCard(_AmitalCustomsFile.TruckerId, this._MyDeclarationPM.Tenant);
-                    if (card != null)
-                    {
-                        truckerId = _AmitalCustomsFile.TruckerId;
-                    }
-                    else
-                    {
-                        card = cardRep.GetSingleCardByCode(_AmitalCustomsFile.TruckerId, this._MyDeclarationPM.Tenant, true);
-                        if (card != null)
-                        {
-                            truckerId = card.Id;
-                        }
-                    }
-
-                    if (!String.IsNullOrWhiteSpace(truckerId) && truckerId != currentDeclarationCourierStatusPM.TruckerId)
-                    {
-                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                        currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                        currentDeclarationCourierStatusPM.TruckerId = truckerId;
-                        AppendLogLine("try to update trucker " + truckerId + " to declarationCourierStatus for DeclarationPM.Id: " + _MyDeclarationPM.Id);
-                        try
-                        {
-                            declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
-                        }
-                        catch (DbEntityValidationException ex)
-                        {
-                            var FormatedException = ExceptionFormatUtil.GetFormated(ex);
-                            AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
-                            return;
-                        }
-                        catch (Exception e)
-                        {
-                            AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
-                            return;
-                        }
-                    }
-                }
-            }
-        }
-
+ 
         private void UpdateDeclarationPending(string declarationPendingCode)
         {
             if (currentDeclarationCourierStatusPM != null)
