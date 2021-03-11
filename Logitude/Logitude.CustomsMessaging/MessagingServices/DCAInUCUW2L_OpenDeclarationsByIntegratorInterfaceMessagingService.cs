@@ -24,26 +24,26 @@ using UnifreightIIG.Common.MessageLib.Ransom;
 namespace Logitude.CustomsMessaging.MessagingServices
 {
     public class DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceMessagingService : MessagingServiceBase<
-        GenericRequestParams,
+        DCAInUCUW2LRequestParams,
         INF_MSG_GenericResponseData,
         SYSTBL_NG_9000_MSG_SystemTableRequest,
         DCAInUCUW2LResponseContentHeader,
-        DCAInCustomReturnNullRequestService,
+        DCAInUCUW2LRequestService,
         DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceResponseService, RequestHeader>
     {
 
-        protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DCAInUCUW2LResponseContentHeader customsResponse)
+        protected override DCAInUCUW2LRequestParams CreateDefaultRequestParamsFromCustomsResponse(DCAInUCUW2LResponseContentHeader customsResponse)
         {
-            var myGenericRequestParams = new GenericRequestParams()
+            var myGenericRequestParams = new DCAInUCUW2LRequestParams()
             {
-                LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CustomsDocument"),
+                LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
                   LoggingEntityId = customsResponse.CustomFileNo
             };
             return myGenericRequestParams;
 
         }
 
-        protected override DCAInUCUW2LResponseContentHeader CallWS(SYSTBL_NG_9000_MSG_SystemTableRequest customRequest, GenericRequestParams requestParams, out string exceptionMessage)
+        protected override DCAInUCUW2LResponseContentHeader CallWS(SYSTBL_NG_9000_MSG_SystemTableRequest customRequest, DCAInUCUW2LRequestParams requestParams, out string exceptionMessage)
         {
             throw new NotImplementedException();
         }
@@ -54,7 +54,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         }
 
 
-        public string CreateCRS(int tenant, string LoggingUserId, GenericRequestParams mySendALLStorageSiteRequestParams)
+        public string CreateCRS(int tenant, string LoggingUserId, DCAInUCUW2LRequestParams _DCAInUCUW2LRequestParams)
         {
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
@@ -73,200 +73,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             var myDCAInUCBCMSSWithResponseContentHeader = new DCAInUCUW2LResponseContentHeader()
             {
-                LoggingUserId = "1-9",
-                CustomFileNo = "122198",
-                LOGICOMMDEC = @"<LOGICOMMDEC>
-
-<LogitudeCommDecFile>
-
-  <ImporterCode>200400820</ImporterCode>
-
-  <LoadingPortCode>USBOS</LoadingPortCode>
-
-  <MAWB>1111223</MAWB>
-
-  <CarrierPrefix>114</CarrierPrefix>
-
-  <IsAutonomy/>
-
-  <INVOICE>
-
-   <CURRENCYCODE>USD</CURRENCYCODE>
-
-   <INVOICEAMOUNT>300.00</INVOICEAMOUNT>
-
-   <ISSUECOUNTRYCODE>CN</ISSUECOUNTRYCODE>
-
-   <ORIGIN_COUNTRY/>
-
-   <Amount/>
-
-   <CurrencyTypeCode/>
-
-   <INVOICEITEMS>
-
-    <ITEMPRICE>300.0000</ITEMPRICE>
-
-    <QUANTITY_STS>1</QUANTITY_STS>
-
-    <ITEMORIGINCOUNTRY>CN</ITEMORIGINCOUNTRY>
-
-   </INVOICEITEMS>
-
-   <INCOTERM_ID>CIF</INCOTERM_ID>
-
-   <ACCOUNTTYPE>380</ACCOUNTTYPE>
-
-   <TRANSP_VALUE_LIST>
-
-    <TRANSP_VALUE_L>103.25</TRANSP_VALUE_L>
-
-    <TRANSP_VALUE_CURR_L>USD</TRANSP_VALUE_CURR_L>
-
-   </TRANSP_VALUE_LIST>
-
-  </INVOICE>
-
-  <OriginCountryCode>US</OriginCountryCode>
-
-  <CustomFileNo>206207</CustomFileNo>
-
-  <Id/>
-
-  <DeclarationOfficeCode>4</DeclarationOfficeCode>
-
-  <FileState>P</FileState>
-
-  <AgentId>514193408</AgentId>
-
-  <CustomerId>10015236</CustomerId>
-
-  <TransportModeId>A</TransportModeId>
-
-  <CreatedByUserId>AMITAL.COURIER</CreatedByUserId>
-
-  <ReferentUserId/>
-
-  <DepartmentId>MSC</DepartmentId>
-
-  <MAWB>1111223</MAWB>
-
-  <DealId/>
-
-  <HAWB/>
-
-  <ManifestNumber>680680</ManifestNumber>
-
-  <LoadingPortCode/>
-
-  <OriginCountryCode>US</OriginCountryCode>
-
-  <CargoDescription>Electric Screwdriver125mm long angle grinder</CargoDescription>
-
-  <PackageTypeCode>PP</PackageTypeCode>
-
-  <PackageMeasureQualifierCode>2</PackageMeasureQualifierCode>
-
-  <PackageQuantity>1</PackageQuantity>
-
-  <GrossMassMeasure>4.13</GrossMassMeasure>
-
-  <VendorId/>
-
-  <ImporterId>200400820</ImporterId>
-
-  <Tenant>1</Tenant>
-
-  <GrantDate/>
-
-  <ManifestDate/>
-
-  <ArrivalDateTime/>
-
-  <Mode>NEW</Mode>
-
-  <EnglishName>sraya zeevi 1</EnglishName>
-
-  <HebrewName/>
-
-  <WarehouseId>ILOVL</WarehouseId>
-
-  <UnloadportId/>
-
-  <ProcedureCurrentCode>4000507</ProcedureCurrentCode>
-
-  <ImporterAddress>Sokolov 77,Apt 26 Herzliya ISRAEL</ImporterAddress>
-
-  <CargoTypeCode>17</CargoTypeCode>
-
-  <SecondCargoID>514193408</SecondCargoID>
-
-  <ThirdCargoID>21.02.21</ThirdCargoID>
-
-  <UnloadDate/>
-
-  <IsCourierDeclaration>true</IsCourierDeclaration>
-
-  <CasualSupplierName>Ningbo GI Power Imp.&amp;Exp.Co.,LTD</CasualSupplierName>
-
-  <CasualSupplierAddress>Jishigang Fengtai Road no. 99 Shenz China</CasualSupplierAddress>
-
-  <CourierHawb>680680</CourierHawb>
-
-  <HAWBDATE/>
-
-  <COUWTVAL/>
-
-  <CasualImporterAddress1>Sokolov 77,Apt 26</CasualImporterAddress1>
-
-  <CasualImporterAddress2/>
-
-  <CasualImporterCity>Herzliya</CasualImporterCity>
-
-  <CasualImporterZipCode>4600916</CasualImporterZipCode>
-
-  <CasualImporterFax/>
-
-  <CasualImporterEmail/>
-
-  <CasualImportelTel>03 9243399</CasualImportelTel>
-
-  <CasualImporterContact/>
-
-  <CasualImporterCountry>IL</CasualImporterCountry>
-
-  <IsDiamondsDeclaration/>
-
-  <EstimatedTimeOfArrival/>
-
-  <OrderNumber/>
-
-  <WithPaper/>
-
-  <FileStatus/>
-
-  <NewFile>true</NewFile>
-
-  <ImporterFile/>
-
-  <Team/>
-
-  <FileOpenDate>21.02.21</FileOpenDate>
-
-  <TruckerId/>
-
-  <DistributionArea/>
-
-  <FclLcl/>
-
-  <ForwarderId/>
-
-</LogitudeCommDecFile>
-
-</LOGICOMMDEC>",
-                MoreParams="",
-                tenant=1,
-
+                 //CustomFileNo="",
+                MoreParams= _DCAInUCUW2LRequestParams.MoreParams,
+                tenant= _DCAInUCUW2LRequestParams.Tenant,
+                LOGICOMMDEC= _DCAInUCUW2LRequestParams.LOGICOMMDEC,
+                LoggingUserId= _DCAInUCUW2LRequestParams.LoggingUserId,
                 ResponseContentHeader = new DefaultResponseContentHeader()
                 {
                     TransmitionDateTime = transmitionDateTime
@@ -327,6 +138,15 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
     }
 
+
+    public class DCAInUCUW2LRequestParams : GenericRequestParams
+    {
+
+        public string LOGICOMMDEC { get; set; }
+        public string MoreParams { get; set; }
+
+    }
+
     [XmlRoot(Namespace = "http://amital.com/customs/Prod/DCAInUCUW2LResponseContentHeader", IsNullable = false)]
     [XmlType(AnonymousType = true, Namespace = "http://amital.com/customs/Prod/DCAInUCUW2LResponseContentHeader")]
     public class DCAInUCUW2LResponseContentHeader : IINF_MSG_Generic
@@ -359,4 +179,17 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }
 
+
+    public class DCAInUCUW2LRequestService : RequestServiceBase<SYSTBL_NG_9000_MSG_SystemTableRequest, DCAInUCUW2LRequestParams>
+    {
+        public override SYSTBL_NG_9000_MSG_SystemTableRequest GetRequest(DCAInUCUW2LRequestParams requestParams)
+        {
+
+            this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam()
+            {
+                RequestDescription = requestParams.RequestName
+            };
+            return new SYSTBL_NG_9000_MSG_SystemTableRequest() { };
+        }
+    }
 }
