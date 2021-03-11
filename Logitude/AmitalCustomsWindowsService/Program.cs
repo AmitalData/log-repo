@@ -1,5 +1,6 @@
 ﻿using AmitalCustomsWindowsService.Utils;
 using Logitude.BL.Helpers;
+using Logitude.BL.Resolvers;
 using Logitude.Customs.BL.EntityQueryServiceExt;
 using Logitude.Customs.BL.Validators;
 using Logitude.Customs.Def.EntityQueryServicesExt;
@@ -161,7 +162,7 @@ namespace AmitalCustomsWindowsService
 
                 CustomsRegistrations.Register();
                 InfraRegistrationHelper.Register();
-
+                LoggedContactResolver.RegisterLoggedContactUtil();
                 _ThreadStartStaticLoaded = true;
                 
             }

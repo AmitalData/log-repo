@@ -7,7 +7,7 @@
   <Column
     Name="Code"
     Type="varchar"
-    Size="4">
+    Size="5">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />

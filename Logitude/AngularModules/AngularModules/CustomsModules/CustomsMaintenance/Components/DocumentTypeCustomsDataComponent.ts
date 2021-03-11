@@ -68,7 +68,7 @@ export class DocumentTypeCustomsDataComponent
     ngOnInit() {
         this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response: any) => {
-            if (!AppTool.IsNullOrEmpty(this.entityArgs)) {
+            if (!AppTool.IsNullOrEmpty(this.entityArgs.EntityPM)) {
 
                 var docType: DocumentTypePM = this.entityArgs.EntityPM;
 
@@ -86,7 +86,7 @@ export class DocumentTypeCustomsDataComponent
 
 
                         }
-                       // this.fromLog = true;
+                        this.fromLog = true;
 
                         if (this.entityPM) {
                             //  this.DocumentTypeId = this.entityPM.;
@@ -118,7 +118,6 @@ export class DocumentTypeCustomsDataComponent
     SetWindowArgs(arg) {
         this.DocumentTypeId = arg.UnifaceDOC_ID;
         this.UnifaceNAME_HEB = arg.UnifaceNAME_HEB;
-        
         this._DocumentTypeCustomsDataPMService
             .get(this.DocumentTypeId)
             .subscribe((res:any) => {

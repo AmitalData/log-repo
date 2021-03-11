@@ -37,7 +37,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.ReqConfirmationTypeCode).HasColumnName("ReqConfirmationTypeCode").HasMaxLength(4).IsUnicode(false);
 
-            this.Property(t => t.CertificateExemptionTypeCode).HasColumnName("CertificateExemptionTypeCode").HasMaxLength(3).IsUnicode(false);
+            this.Property(t => t.CertificateExemptionTypeCode).HasColumnName("CertificateExemptionTypeCode").HasMaxLength(7).IsUnicode(false);
 
             this.Property(t => t.AttachmentTypeCode).HasColumnName("AttachmentTypeCode").HasMaxLength(3).IsUnicode(false);
 

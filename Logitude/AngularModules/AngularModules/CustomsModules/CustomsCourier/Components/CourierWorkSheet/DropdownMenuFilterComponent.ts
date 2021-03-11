@@ -20,7 +20,9 @@ export class DropdownMenuFilterComponent implements OnInit {
     @Output()
     public DropdownMenuButtonClicked: EventEmitter<any> = new EventEmitter<any>();
     @Input()
-    public DivLeft: number=-9999;
+    public DivLeft: number = -9999;
+    @Input()
+    public DivTop: number = -9999;
     private _CustomSendOptionsArgs: CustomSendOptionsArgs;
     public _DropdownDisplay: string = 'none';
     private _ElementRef: any;
@@ -119,10 +121,15 @@ export class DropdownMenuFilterComponent implements OnInit {
             //    (myTop/*itemRect.top*/ /*+ 27*/ /*-5*/) + 'px';
 
             let DDLHeight = 65+70;//    height: 22px; * 3 +30 
-            let Extra = 22 + 1 + 1; //    height: 22px; +1 UP +1 DOWN 
-            if (itemRect.bottom + DDLHeight + Extra > this.getScreenHeight()) {//this.PaintTop = true                
+            let Extra = 22 + 1 + 1; //    height: 22px; +1 UP +1 DOWN
+            let ExtraTop = 150;
+            if (itemRect.bottom + DDLHeight + Extra >this.getScreenHeight()) {
                 document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
-                    (itemRect.top - DDLHeight - Extra) + 'px'; 
+                    (itemRect.top - DDLHeight - Extra) + 'px';
+            }
+            if (itemRect.bottom + this.DivTop> this.getScreenHeight() && this.DivTop != -9999) {//this.PaintTop = true                
+                document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
+                    (itemRect.top - this.DivTop - ExtraTop) + 'px'; 
             }
             if (this.DivLeft != -9999) {
                 document.getElementById(this._DropdownMenuFilterComponentMenuId).style.left =

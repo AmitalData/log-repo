@@ -118,7 +118,7 @@
   <Column
     Name="LocalCityCode"
     Type="varchar"
-    Size="4">
+    Size="5">
     <Constraints
       Nullable="true" />
   </Column>

@@ -79,6 +79,12 @@ export class SpecialActivityRequestComponent
         this.subscribeWrapperComponent()
     }
 
+    MaxLength(event) {
+        debugger;
+        if (this.OtherActivityComment.length == 3) {
+            return;
+        }
+    }
     ViewDocumentsComponent() {
         var windowArgs: any = {};
         this.EntityPM = {};
@@ -593,12 +599,19 @@ export class SpecialActivityRequestComponent
             }
         }
     }
-
-    get OtherActivityComment() { return this.RequestParams.OtherActivityDetailsData.OtherActivityComment; }
+     get OtherActivityComment() { return this.RequestParams.OtherActivityDetailsData.OtherActivityComment; }
     set OtherActivityComment(value: string) {
-        if (this.RequestParams.OtherActivityDetailsData.OtherActivityComment != value) {
+         if (this.RequestParams.OtherActivityDetailsData.OtherActivityComment != value) {
+             if (value.length > 256) {
+                 this.ValidationErrorsList.push("שדה הערות - אורך מקסימלי 256 תוים");
+
+             }
+            else {
+                 this.ValidationErrorsList = [];
+            }
+
             this.RequestParams.OtherActivityDetailsData.OtherActivityComment = value;
-        }
+         }
     }
     //#endregion OtherActivity Properties
 
@@ -943,6 +956,12 @@ export class SpecialActivityRequestComponent
             var msg = TextCodeTranslator.Translate("Customs.SpecialActivityRequest.F.CargoIdentifierKey1Mandatory");
             this.ValidationErrorsList.push(msg);
         }
+
+        if ((!(AppTool.IsNullOrEmpty(this.OtherActivityComment))) && this.OtherActivityComment.length > 256) {
+             this.ValidationErrorsList.push("שדה הערות - אורך מקסימלי 256 תוים");
+
+         }
+
 
         switch (this.SpecialActivityType) {
             case "5": //RePackingApproval
