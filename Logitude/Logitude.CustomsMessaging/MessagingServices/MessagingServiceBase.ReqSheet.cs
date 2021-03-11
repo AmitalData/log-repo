@@ -1925,20 +1925,23 @@ Exception:" + ee.Message
                 bool tryConcurrentKiller = true;//ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
                 if (tryConcurrentKiller)
                 {
-                    var requestParams = _CustomsRequestsSheetService.GetRequestParams<TRequestParams>()?? defaultRequestParamsFromCustomsResponse;
-                    if (requestParams != null)
+                    if (_CustomsRequestsSheetService != null)
                     {
-                        //throw new Exception("tryConcurrentKiller()--(requestParams==null)");
-
-                        var intrefaceTypeListDisplayOnly = CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList();
-                        if (intrefaceTypeListDisplayOnly == null)
+                        var requestParams = _CustomsRequestsSheetService.GetRequestParams<TRequestParams>() ?? defaultRequestParamsFromCustomsResponse;
+                        if (requestParams != null)
                         {
-                            throw new Exception("tryConcurrentKiller()--(intrefaceTypeListDisplayOnly==null)");
-                        }
-                        if (intrefaceTypeListDisplayOnly/*CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList()*/.Contains(requestParams.InterfaceTypeCode))
-                        {
+                            //throw new Exception("tryConcurrentKiller()--(requestParams==null)");
 
-                            CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(requestParams, false);
+                            var intrefaceTypeListDisplayOnly = CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList();
+                            if (intrefaceTypeListDisplayOnly == null)
+                            {
+                                throw new Exception("tryConcurrentKiller()--(intrefaceTypeListDisplayOnly==null)");
+                            }
+                            if (intrefaceTypeListDisplayOnly/*CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList()*/.Contains(requestParams.InterfaceTypeCode))
+                            {
+
+                                CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(requestParams, false);
+                            }
                         }
                     }
                 }
