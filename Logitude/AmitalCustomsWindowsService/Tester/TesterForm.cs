@@ -24,9 +24,9 @@ using System.Threading;
 using Logitude.Customs.BL.Messaging;
 using System.Net;
 using CommunicationWorkerRole;
-using Logitude.Customs.BL.Messaging.U2L.CommDec;
-using Logitude.Server.Tools.Helpers;
+ using Logitude.Server.Tools.Helpers;
 using WebFreight.Web.CustomWebServices;
+using Logitude.CustomsMessaging.U2L.CommDec;
 //using System.Windows.Interactivity;
 
 namespace AmitalCustomsWindowsService.Tester
