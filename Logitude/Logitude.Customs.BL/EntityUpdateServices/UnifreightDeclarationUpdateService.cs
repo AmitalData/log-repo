@@ -2566,6 +2566,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             Decimal? ExchangeRateTo = 1;
             Decimal? amountTo = 1;
             CustomsExchangeRatePM rate = new CustomsExchangeRatePM();
+
+            if (currenceyFrom == currenceyTo) return (amountFrom.ToNullableDouble("amountFrom")); ;
+
             // moran 17.3.16 -->
             if (_CustomsExchangeRates == null || _CustomsExchangeRates.FirstOrDefault(obj => obj.CurrencyTypeCode == currenceyFrom) == null || _CustomsExchangeRates.FirstOrDefault(obj => obj.CurrencyTypeCode == currenceyTo) == null)
             {
