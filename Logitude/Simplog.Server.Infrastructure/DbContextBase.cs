@@ -302,10 +302,10 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
         {
             InitLog();
         }
-
+        static string _UserSlashPass = null;
         public void ExecuteInSys(string mainConnectionString, List<string> unifreightTables, Func<string> GetConnetionStringFunc)
         {
-            var UserSlashPass = GetConnetionStringFunc();
+            var UserSlashPass = _UserSlashPass??GetConnetionStringFunc();
             var UserSlashPassList = new List<string>(UserSlashPass.Split(new char[] { '/' }));
 
             var main_ocsb = new OracleConnectionStringBuilder(mainConnectionString);
