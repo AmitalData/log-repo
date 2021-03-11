@@ -31,6 +31,7 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.CustomsMessaging;
 using Logitude.CustomsMessaging.MessagingServices;
+using Unifreight.Data.AmitalModel.Repsitories;
 
 namespace Logitude.Customs.BL.Messaging.U2L.CommDec
 {
@@ -494,6 +495,20 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), ResolvedTenant());
 
             declarationUpdateService.Update(this._MyDeclarationPM, true);
+
+
+            string defValue = GetDefault("ISRAEL", "CGG_OPN_DEC_MET", "NON", "NON", tenant);
+
+            if (!string.IsNullOrEmpty(defValue) && defValue == "B")
+            {
+                AppendLogLine("update UpdateLOGITUDE_FILE");
+
+                var repo = new CFIFILEMRepository(_MyDeclarationPM.Tenant);
+            var res = repo.UpdateLOGITUDE_FILE(_MyDeclarationPM.Tenant, Convert.ToInt64( _MyDeclarationPM.CustomFileNo), _MyDeclarationPM.Id);
+            repo.SubmitChanges();
+            }
+
+
             AppendLogLine("declarationUpdat:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
             string val = "";
             if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["AvoidCreateCustomsRequestSheet"]))
