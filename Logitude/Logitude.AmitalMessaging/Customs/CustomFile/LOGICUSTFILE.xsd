@@ -76,6 +76,7 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="DistributionArea" />
         <xs:element minOccurs="0" maxOccurs="1" ref="FclLcl" />
         <xs:element minOccurs="0" maxOccurs="1" ref="ForwarderId" />
+
       </xs:sequence>
     </xs:complexType>
   </xs:element>
