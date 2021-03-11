@@ -456,7 +456,7 @@ export function AssertRoutingLegAppeared(legName:string , ContainerNumber:string
     BaseAssertion.AssertElementContain(ShipmentSelectors.legBoxItem(legName),ContainerNumber )
 }
 
-export function StorageCalculationsButton() {
+export function CalculateStorage() {
     cy.DefineRequestWait(RestAPI.GET, URLs.GetAllByFilter, RequestAliases.GetAll)
     cy.Click(BaseSelectors.Button, ShipmentSelectors.ContainsCalculateStorage, true);
     BaseAssertion.AssertStatusCode(RequestAliases.GetAll, 200)

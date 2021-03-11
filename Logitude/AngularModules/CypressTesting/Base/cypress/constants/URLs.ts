@@ -9,5 +9,10 @@ export class BaseURLs
     public static GetQuickSearch(ShipmentNumber: string): string{
         return "**/GetQuickSearch?**" + ShipmentNumber;
     }
+
+    public static GetFilterSearch(filterBy:string){
+        return '**/warehouseviews/getbyfilters?**'+filterBy+'**'
+    }
+    
     public static readonly GetTraceEventsForEntity = "**/TraceEventsDomain/GetTraceEventsForEntity?**";
 }

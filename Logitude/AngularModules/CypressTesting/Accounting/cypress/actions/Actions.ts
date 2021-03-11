@@ -199,6 +199,11 @@ export function ARApproveInvoice() {
     cy.Click(AccountingSelectors.ARInvoiceApproveButton, null)
 }
 
+export function PostARApproveInvoice() {
+    cy.DefineRequestWait(RestAPI.POST, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
+    cy.Click(AccountingSelectors.ARInvoiceApproveButton, null)
+}
+
 export function SetAsSentARInvoice() {
     cy.Click(BaseSelectors.MoreList, null, true)
     cy.Click(AccountingSelectors.ARInvoiceSetAsSentButton, null)
@@ -459,5 +464,6 @@ export function CreateARInvoiceGeneratedFromRoutingLeg(vat:string){
 function ClickAndWaitToLoad(ButtonSelector:string){
     cy.DefineRequestWait(RestAPI.GET, AccountingURLs.VatTypePercentageCall, RequestAliases.GetVatTypePercentage)
     cy.Click(ButtonSelector, null);
-    cy.wait('@' + RequestAliases.GetVatTypePercentage)
+    BaseAssertion.AssertStatusCode(RequestAliases.GetVatTypePercentage, 200);
+
 }

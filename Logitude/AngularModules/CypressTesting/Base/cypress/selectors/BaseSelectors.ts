@@ -86,6 +86,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly RowHover=".RowHover"
     public static readonly MouseoverTrigger='mouseover'
     public static readonly LogitudeScrollViewer='.LogitudeScrollViewer'
+    public static readonly DeleteButton='button[id^=Delete]'
     //#endregion
 
     public static readonly FirstElementInList = 'ul > li';
@@ -177,7 +178,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly SalePriceColumn ="3"
     public static readonly WarehouseTypeCode ="#Warehouse_TypeCode"
     public static readonly WarehouseChargeStorage ="#Warehouse_ChargeStorage"
-    public static readonly WarehouseCurrencyId ="#Warehouse_CurrencyId"
+    public static readonly WarehouseCurrency ="#Warehouse_CurrencyId"
     public static readonly WarehouseStorageFreeDays ="#Warehouse_StorageFreeDays"
     public static readonly WarehouseStorageDefaults ="Storage Defaults"
     public static readonly WarehouseSaveCloseBtn ="#Warehouse-SaveClose"

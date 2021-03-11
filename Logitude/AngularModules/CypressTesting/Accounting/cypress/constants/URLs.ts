@@ -12,5 +12,4 @@ export class AccountingURLs {
     public static readonly EntityResourceAccountingPeriod="**/EntityResource?objectTableName=AccountingPeriod&**"
     public static readonly PerformancelogsPostLogsList="**/performancelogs/PostLogsList"
 
-
 }

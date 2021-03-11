@@ -144,7 +144,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly MainCarriageATDDate = '#date_Shipment_MainCarriageATD';
   public static readonly MainCarriageATATime = '#time_Shipment_MainCarriageATA';
   public static readonly MainCarriageATADate = '#date_Shipment_MainCarriageATA';
-  public static readonly WarehouseLegId = "#Shipment_WarehouseLegWarehouseId";
+  public static readonly WarehouseLeg = "#Shipment_WarehouseLegWarehouseId";
   public static readonly WarehouseLegActualReleaseDate = '#date_Shipment_WarehouseLegActualReleaseDate';
   public static readonly WarehouseLegActualEntryDate = '#date_Shipment_WarehouseLegActualEntryDate';
   public static readonly ContainsCalculateStorage = 'Calculate Storage';

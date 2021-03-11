@@ -5,16 +5,12 @@ import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 import { ShipmentSelectors } from "../../selectors/Selectors";
 import { PackagesDetails } from "cypress/models/PackagesDetails";
-import { RestAPI } from "../../../../Base/cypress/constants/RestAPI";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
 import * as AccountingActions from "../../../../Accounting/cypress/actions/Actions"
 import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors';
 import { WarehouseStorage } from "cypress/models/WarehouseStorage";
-import { BaseURLs } from "../../../../Base/cypress/constants/URLs";
 import { ReceivableDetails } from "cypress/models/ReceivableDetails";
-import { AccountingSelectors } from "../../../../Accounting/cypress/selectors/Selectors";
-import { AccountingURLs } from "../../../../Accounting/cypress/constants/URLs";
-import { URLs } from "../../../../Shipment/cypress/constants/URLs";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 let shipmentDetails: ShipmentDetails;
 
@@ -24,11 +20,11 @@ Given("the user logged in and navigate to warehouse workspace", () => {
     BaseActions.NavigatesToWarehouse();
 });
 
-Given("open warehouse with {string} as name", (warehouseName) => {
-    BaseActions.OpenWarehouseWithName(warehouseName);
+Given("open warehouse with {string} warehouse", (warehouseName) => {
+    BaseActions.OpenWarehouse(warehouseName);
 });
 
-Given("fill with the following details for {string} Type", (type, dataTable) => {
+Given("fill with the following storage details for {string} Type", (type, dataTable) => {
     let warehouseDetails = dataTable.hashes()[0] as WarehouseStorage;
     cy.FillLogLov(BaseSelectors.WarehouseTypeCode, type, true);
     BaseActions.FillWarehouseStorageDetails(warehouseDetails);
@@ -39,16 +35,14 @@ Given("{string} weight details as following", (transportMode, dataTable) => {
     BaseActions.FillWarehouseStorageWeightDetails(warehouseDetails, transportMode)
 });
 
-Given("pricing defaults line as following", (dataTable) => {
+Given("pricing defaults lines as following", (dataTable) => {
     let warehousePricingList = dataTable.hashes() as WarehouseStorage[];
     BaseActions.FillWarehouseStoragePricing(warehousePricingList)
 
 });
 
 When("update warehouse", () => {
-    cy.Click(BaseSelectors.RedButton, "Ok")
-    cy.DefineRequestWait(RestAPI.PUT, BaseURLs.Warehouses, RequestAliases.PutWarehouses)
-    cy.Click(BaseSelectors.WarehouseSaveCloseBtn, null)
+    BaseActions.UpdateWarehouse()
 });
 
 Then("the warehouse should update successfully", () => {
@@ -58,12 +52,11 @@ Then("the warehouse should update successfully", () => {
 
 //#region Create direct import air shipment
 Given("the user in shipment workspace", () => {
-    cy.Login();
     Actions.NavigatesToShipmentsWorkspace()
 });
 
 Given("a shipment with the following details", (dataTable) => {
-    shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+    shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
     Actions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
     Actions.FillShipmentWizardsFields(shipmentDetails);
 });
@@ -90,11 +83,11 @@ Given("a package with the following details", (dataTable) => {
     Actions.FillPackageTab(shipmentDetails.TransportMode, packageDetailsList, shipmentDetails.ShipmentType);
 });
 
-When("save shipment", () => {
+When("update shipment", () => {
     Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
 });
 
-Then("the direct shipment should save successfully", () => {
+Then("the direct shipment should update successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });
 //#endregion
@@ -106,7 +99,7 @@ Given("the user in the shipment's rounting tab", () => {
 
 Given("add new warehouse leg with {string} as Termina", (warehouseName) => {
     cy.Click(ShipmentSelectors.AddWarehouse, null);
-    cy.FillLogLov(ShipmentSelectors.WarehouseLegId, warehouseName, true);
+    cy.FillLogLov(ShipmentSelectors.WarehouseLeg, warehouseName, true);
 });
 
 Given("fill {string} as actual release and {string} days ago date as actual entry", (actualRelease, daysToSub) => {
@@ -115,7 +108,7 @@ Given("fill {string} as actual release and {string} days ago date as actual entr
 });
 
 When("calculate storage", () => {
-    Actions.StorageCalculationsButton();
+    Actions.CalculateStorage();
 });
 
 Then("the Storage Fee should be {string}", (expectedStorageFeeValue) => {
@@ -133,9 +126,6 @@ Then("Storage pricing should have weight {string} and Amount as following", (exp
 
 //#region  add 
 Given("the user in the shipment's receivables tab", () => {
-    cy.Login()
-    Actions.NavigatesToShipmentsWorkspace()
-    Actions.OpenShipment("IA1009")
     cy.Navigate(ShipmentSelectors.ReceivablesTab);
 });
 
@@ -147,8 +137,7 @@ Given("receivables containts line with the following details", (dataTable) => {
 
 When("add new invoice with {string} vat type and number", (vat) => {
     AccountingActions.CreateARInvoiceGeneratedFromRoutingLeg(vat);
-    cy.DefineRequestWait(RestAPI.POST, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
-    cy.Click(AccountingSelectors.ARInvoiceApproveButton, null)
+    AccountingActions.PostARApproveInvoice()
 });
 
 Then("the invoice should add successfully", () => {

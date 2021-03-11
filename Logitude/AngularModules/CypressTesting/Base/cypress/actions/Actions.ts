@@ -1,13 +1,11 @@
 import { BaseSelectors } from '../selectors/BaseSelectors';
 import * as BaseAssertion from '../../cypress/actions/Assertion';
 import { AccountingSelectors } from '../../../Accounting/cypress/selectors/Selectors';
-import { ShipmentSelectors } from '../../../Shipment/cypress/selectors/Selectors';
 import { RestAPI } from '../constants/RestAPI';
 import { AccountingURLs } from '../../../Accounting/cypress/constants/URLs';
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import {BaseURLs}from "../constants/URLs"
 import { WarehouseStorage } from "../../../Shipment/cypress/models/WarehouseStorage";
-import { multiply } from 'cypress/types/lodash';
 
 export function NavigatesToMaintenanceMenu() {
     cy.Click(BaseSelectors.MaintenanceMenu, null)
@@ -28,7 +26,7 @@ export function NavigatesToWarehouse(){
 export function FillWarehouseStorageDetails(warehouseDetails : WarehouseStorage){
     cy.get(BaseSelectors.Hyperlink).contains(BaseSelectors.WarehouseStorageDefaults).click();
     cy.SelectCheckBox(BaseSelectors.WarehouseChargeStorage)
-    cy.FillLogLov(BaseSelectors.WarehouseCurrencyId, warehouseDetails.Currency, true)
+    cy.FillLogLov(BaseSelectors.WarehouseCurrency, warehouseDetails.Currency, true)
     cy.FillLogTextBox(BaseSelectors.WarehouseStorageFreeDays, warehouseDetails.StorageFreeDays.toString());
 }
 
@@ -39,26 +37,33 @@ export function FillWarehouseStorageWeightDetails(warehouseDetails : WarehouseSt
 
 export function FillWarehouseStoragePricing(warehousePricingList: WarehouseStorage[]) {
 
-    cy.get("button[id^=Delete]").its('length').then(deleteButtons => {
+    cy.get(BaseSelectors.DeleteButton).its('length').then(deleteButtons => {
         for(let i = 0; i < deleteButtons; i++){
-            cy.get("button[id^=Delete]").first().click();
+            cy.get(BaseSelectors.DeleteButton).first().click();
             cy.Click(BaseSelectors.RedButton+BaseSelectors.LastElement,BaseSelectors.ContainYes)
         }
     });
 
     for (let i = 0; i < warehousePricingList.length; i++) {
         cy.Click(BaseSelectors.AddButton, null)
-        getCellAndFill(BaseSelectors.StepFromColumn, i, BaseSelectors.WarehouseStoragePricingStepFrom, warehousePricingList[i].StepFrom)
-        getCellAndFill(BaseSelectors.DaysColumn, i, BaseSelectors.WarehouseStoragePricingDays, warehousePricingList[i].NumberOfDays)
-        getCellAndFill(BaseSelectors.StepToColumn, i, BaseSelectors.WarehouseStoragePricingStepTo, warehousePricingList[i].StepTo)
-        getCellAndFill(BaseSelectors.SalePriceColumn, i, BaseSelectors.WarehouseStoragePricingSalePrice, warehousePricingList[i].SalePrice)
+        FillCell(BaseSelectors.StepFromColumn, i, BaseSelectors.WarehouseStoragePricingStepFrom, warehousePricingList[i].StepFrom)
+        FillCell(BaseSelectors.DaysColumn, i, BaseSelectors.WarehouseStoragePricingDays, warehousePricingList[i].NumberOfDays)
+        FillCell(BaseSelectors.StepToColumn, i, BaseSelectors.WarehouseStoragePricingStepTo, warehousePricingList[i].StepTo)
+        FillCell(BaseSelectors.SalePriceColumn, i, BaseSelectors.WarehouseStoragePricingSalePrice, warehousePricingList[i].SalePrice)
     }
 }
 
-export function OpenWarehouseWithName(warehouseName:string){
+export function OpenWarehouse(warehouseName:string){
+    cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetFilterSearch(warehouseName), RequestAliases.GetByFilter)
     cy.FillLogTextBox(BaseSelectors.SearchField, warehouseName);
-    cy.wait(3000)
+    BaseAssertion.AssertStatusCode(RequestAliases.GetByFilter, 200)
     cy.Click(BaseSelectors.GridFitstRow(),null,true)
+}
+
+export function UpdateWarehouse(){
+    cy.Click(BaseSelectors.RedButton, "Ok")
+    cy.DefineRequestWait(RestAPI.PUT, BaseURLs.Warehouses, RequestAliases.PutWarehouses)
+    cy.Click(BaseSelectors.WarehouseSaveCloseBtn, null)
 }
 
 export function ActivateCustomsManagementInShipments() {
@@ -148,7 +153,7 @@ function FormateTheDate(date: Date) {
     return DateFormat
 }
 
-function getCellAndFill(columnNumber: string, rowNumber: number, pricingCellselector: string, value: number) {
+function FillCell(columnNumber: string, rowNumber: number, pricingCellselector: string, value: number) {
     cy.get(BaseSelectors.CellWithRowAndCol(columnNumber, rowNumber.toString())).last().click({ force: true })
     cy.FillLogTextBox(pricingCellselector, value.toString())
 }
