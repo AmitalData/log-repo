@@ -108,6 +108,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly InsidePackageType = '#InsideShipmentPackage_PackageTypeId';
   public static readonly ContainerNumber = '#ShipmentPackage_ContainerNumber';
   public static readonly PackageWeight = '#ShipmentPackage_Weight';
+  public static readonly PackageChargeableWeight = '#Shipment_ChargeableWeight';
   public static readonly InsidePackageWeight = '#InsideShipmentPackage_Weight';
   public static readonly InsidePackageDescription = '#InsideShipmentPackage_Description';
   public static readonly PackageContainerNumber = '#ShipmentPackage_ContainerNumber';
@@ -134,6 +135,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly Delivery = '#Delivery';
   public static readonly PreCarriage = '#PreCarriage';
   public static readonly AddWarehouse = '#Add-WarehouseLeg';
+  public static readonly EditWarehouseLeg = '#Edit-WarehouseLeg';
   public static readonly EditRoutingMainCarriage = '#Edit-MainCarriage';
   public static readonly ShipmentMainCarriageCarrierId = '#Shipment_MainCarriageCarrierId';
   public static readonly ShipmentBookingNumberOfPackages = '#Shipment_BookingNumberOfPackages';
@@ -147,6 +149,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly WarehouseLeg = "#Shipment_WarehouseLegWarehouseId";
   public static readonly WarehouseLegActualReleaseDate = '#date_Shipment_WarehouseLegActualReleaseDate';
   public static readonly WarehouseLegActualEntryDate = '#date_Shipment_WarehouseLegActualEntryDate';
+  public static readonly WarehouseLegExpectedReleaseDate = '#date_Shipment_WarehouseLegExpectedReleaseDate';
   public static readonly ContainsCalculateStorage = 'Calculate Storage';
   public static readonly ContainsStoragePricing = 'Storage Pricing';
   public static readonly ContainsWeight = "Weight = ";

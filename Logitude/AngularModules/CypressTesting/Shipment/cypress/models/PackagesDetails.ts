@@ -7,5 +7,6 @@ export interface PackagesDetails {
     GrossWeight: number,
     PackageType: string
     ContainerNumber: string,
-    Description: string
+    Description: string,
+    ChargeableWeight: number
 }
