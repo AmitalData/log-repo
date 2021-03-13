@@ -46,14 +46,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
             if (Deliveries.Count > 0)
             {
                 HasDeliveries = true;
-
                 this.HandleDeliveries();
             }
 
             else if (entityPM.ShipmentLevelCode == "H" && (entityPM.OnForwardingFromPortId != null && entityPM.OnForwardingToPortId != null))
             {
-                HasOnCarriage = true;
-                this.HandleOnCarriage();
+                //HasOnCarriage = true;
+                this.HandleOnForwarding();
             }
 
             else if (entityPM.OnCarriageFromPortId != null && entityPM.OnCarriageToPortId != null)
@@ -163,20 +162,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
 
         private void HandleOnCarriage()
         {
-            DateTime? ATA = null;
-            DateTime? ETA = null;
-
-            if(entityPM.ShipmentLevelCode == "H")
-            {
-                ATA = entityPM.OnForwardingATA;
-                ETA = entityPM.OnForwardingETA;
-            }
-
-            else
-            {
-                ATA = entityPM.OnCarriageATA;
-                ETA = entityPM.OnCarriageETA;
-            }
+            DateTime? ATA = entityPM.OnCarriageATA;
+            DateTime? ETA = entityPM.OnCarriageETA;
 
             if (ATA != null)
             {
@@ -189,6 +176,28 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
                 if(this.FinalArrivalDate == null)
                 {
                     this.FinalArrivalDate= ETA;
+                }
+
+                this.EstimatedFinalArrivalDate = ETA;
+            }
+        }
+
+        private void HandleOnForwarding()
+        {
+            DateTime? ATA = entityPM.OnForwardingATA;
+            DateTime? ETA = entityPM.OnForwardingETA;
+
+            if (ATA != null)
+            {
+                this.FinalArrivalDate = ATA;
+                this.ActualFinalArrivalDate = ATA;
+            }
+
+            if (ETA != null)
+            {
+                if (this.FinalArrivalDate == null)
+                {
+                    this.FinalArrivalDate = ETA;
                 }
 
                 this.EstimatedFinalArrivalDate = ETA;

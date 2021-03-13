@@ -94326,6 +94326,58 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;PRFD&quot;"
+      ObjectTableName="&quot;Shipment&quot;"
+      EnglishName="&quot;Pre Forwarding Departed&quot;"
+      LocalName="&quot;Pre Forwarding Departed&quot;"
+      IsManualEntry="false"
+      ShortView="true"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;PRFA&quot;"
+      ObjectTableName="&quot;Shipment&quot;"
+      EnglishName="&quot;Pre Forwarding Arrived&quot;"
+      LocalName="&quot;Pre Forwarding Arrived&quot;"
+      IsManualEntry="false"
+      ShortView="true"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;ONFD&quot;"
+      ObjectTableName="&quot;Shipment&quot;"
+      EnglishName="&quot;On Forwarding Departed&quot;"
+      LocalName="&quot;On Forwarding Departed&quot;"
+      IsManualEntry="false"
+      ShortView="true"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;ONFA&quot;"
+      ObjectTableName="&quot;Shipment&quot;"
+      EnglishName="&quot;On Forwarding Arrived&quot;"
+      LocalName="&quot;On Forwarding Arrived&quot;"
+      IsManualEntry="false"
+      ShortView="true"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons

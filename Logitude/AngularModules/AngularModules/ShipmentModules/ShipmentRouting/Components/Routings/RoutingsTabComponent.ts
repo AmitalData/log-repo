@@ -244,12 +244,12 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             this.ItemsSource.push(new RoutingItem(this.EntityPM, "Transshipment3", this));
         }
 
-        if (this.EntityPM.ShipmentLevelCode == "H" && this.EntityPM.OnForwardingFromPortId != null && this.EntityPM.OnForwardingToPortId != null) {
-            this.ItemsSource.push(new RoutingItem(this.EntityPM, "On Forwarding", this));
-        }
-
         if (this.EntityPM.OnCarriageFromPortId != null && this.EntityPM.OnCarriageToPortId != null) {
             this.ItemsSource.push(new RoutingItem(this.EntityPM, "On Carriage", this));
+        }
+
+       if (this.EntityPM.ShipmentLevelCode == "H" && this.EntityPM.OnForwardingFromPortId != null && this.EntityPM.OnForwardingToPortId != null) {
+            this.ItemsSource.push(new RoutingItem(this.EntityPM, "On Forwarding", this));
         }
 
         // WarehouseLeg_Deliveries
