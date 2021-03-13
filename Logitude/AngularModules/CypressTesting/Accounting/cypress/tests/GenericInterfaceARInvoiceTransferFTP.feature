@@ -1,4 +1,4 @@
-@release @all @stable
+@release @stable
 Feature: Generic Interface AR Invoice Transfer to FTP
 
     The user disables the Accounting Transfer in settings, creates AR invoice,

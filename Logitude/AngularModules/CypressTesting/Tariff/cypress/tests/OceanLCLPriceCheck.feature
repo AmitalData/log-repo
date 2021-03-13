@@ -1,4 +1,4 @@
-@release @all
+@release @dev
 Feature: Ocean LCL Price Check
     The authenticated user will create new ocean LCL freight cost tariff,
     add tariff line in draft version tab, then approve it,
