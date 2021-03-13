@@ -1,4 +1,4 @@
-@release @stable
+@release @all
 Feature: Generic Interface AR Invoice Transfer to FTP
 
     The user disables the Accounting Transfer in settings, creates AR invoice,
@@ -73,8 +73,9 @@ Feature: Generic Interface AR Invoice Transfer to FTP
 
     Scenario: Add missing external IDs
         Given an external IDs with the following details
-            | ChargesType | Currency | BillTo      |
-            | AFT         | EUR      | TestCompany |
+            | ChargesType | AFT         |
+            | Currency    | EUR         |
+            | BillTo      | TestCompany |
         When add the external IDs
         Then the external IDs should add successfully
         And the transfer status should be Ready

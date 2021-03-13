@@ -15,7 +15,7 @@ import * as BaseActions from '../../../../Base/cypress/actions/Actions';
 import { AccountingURLs } from '../../constants/URLs';
 import { RestAPI } from '../../../../Base/cypress/constants/RestAPI';
 import * as Assists from "../../../../Base/cypress/assists/Assists";
-
+import { ExternalIDs } from '../../models/ExternalIDs';
 //#region variables
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
@@ -23,6 +23,7 @@ let customerCode: string;
 let AccountingSystem: string;
 let ExternalTransmissionType: string
 let ARInvoiceNumber: string;
+let externalIDs:ExternalIDs
 //#endregion
 
 //#region Update Accounting System
@@ -165,11 +166,11 @@ Then("the ARInvoice should appear in AR Not Ready Invoices", () => {
 
 //#region Add missing external IDs
 Given("an external IDs with the following details", (dataTable) => {
-  const ExternalIDs = dataTable.hashes()[0];
+  externalIDs = Assists.CreateInstance<ExternalIDs>(dataTable, true);
   AccountingActions.ClickOnRowDependingOnARInvoiceNumber(ARInvoiceNumber)
-  AccountingActions.FillExternalID(BaseSelectors.Partner, "BillTo", ExternalIDs.BillTo)
-  AccountingActions.FillExternalID(BaseSelectors.Currency ,"InvoiceCurrency", ExternalIDs.Currency)
-  AccountingActions.FillExternalID(BaseSelectors.ChargesType ,"ChargeType", ExternalIDs.ChargesType)
+  AccountingActions.FillExternalID(BaseSelectors.Partner, "BillTo", externalIDs.BillTo)
+  AccountingActions.FillExternalID(BaseSelectors.Currency ,"InvoiceCurrency", externalIDs.Currency)
+  AccountingActions.FillExternalID(BaseSelectors.ChargesType ,"ChargeType", externalIDs.ChargesType)
 });
 
 When("add the external IDs", () => {
