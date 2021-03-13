@@ -1,4 +1,4 @@
-@release @dev 
+@release  
 Feature: Advanced Generic Interface AR Invoice Transfer
     The user disables the Accounting Transfer in settings, creates AR invoice,
     changes the settings for Accounting Transfer to Advanced Generic Interface,
@@ -68,8 +68,9 @@ Feature: Advanced Generic Interface AR Invoice Transfer
 
     Scenario: Add missing external IDs
         Given an external IDs with the following details
-            | ChargesType | Currency | BillTo      |
-            | AFT         | EUR      | TestCompany |
+            | ChargesType | AFT         |
+            | Currency    | EUR         |
+            | BillTo      | TestCompany |
         When add the external IDs
         Then the external IDs should add successfully
         And the transfer status should be ready
