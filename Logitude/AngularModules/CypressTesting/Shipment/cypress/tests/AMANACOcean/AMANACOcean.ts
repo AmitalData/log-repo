@@ -8,6 +8,7 @@ import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliase
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
 import { ShipmentSelectors } from "../../selectors/Selectors";
 import { PackagesDetails } from "../../models/PackagesDetails";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 //#region Variables
 let shipmentDetails: ShipmentDetails;
@@ -37,7 +38,7 @@ Given("the user in shipment workspace", () => {
 });
 
 Given("a shipment with the following details", (dataTable) => {
-    shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+    shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
     Actions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
     Actions.FillShipmentWizardsFields(shipmentDetails);
 });
@@ -104,7 +105,7 @@ Given("the user add {string} as shipping line", (ShippingLine) => {
 });
 
 Given("add package with the following details", (dataTable) => {
-    packagesDetails = dataTable.hashes() as PackagesDetails[];
+    packagesDetails = Assists.CreateSet<PackagesDetails>(dataTable);
     Actions.FillPackageTab(shipmentDetails.TransportMode, packagesDetails, shipmentDetails.ShipmentType)
 });
 
@@ -129,7 +130,7 @@ Then("the shipment should update successfully", () => {
 
 //#region New Transfer After fill/update mandatory fields
 Then("AMANAC and customs transmissions statuses should be as following", (dataTable) => {
-    amanacStatusDetails = dataTable.hashes()[0] as AMANACStatusDetails;
+    amanacStatusDetails = Assists.CreateInstance<AMANACStatusDetails>(dataTable, true);
     Actions.NavigatesToShipmentsWorkspace()
     Actions.OpenShipment(shipmentDetails.ShipmentNumber);
     Assertion.AssertAMANAandCustomsTransmissionsStatusDetails(amanacStatusDetails);

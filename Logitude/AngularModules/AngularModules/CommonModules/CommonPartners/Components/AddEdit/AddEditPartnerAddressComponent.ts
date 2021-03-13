@@ -15,6 +15,8 @@ import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeCom
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { PartnersDomainService } from '../../../../Common/Services/PartnersDomainService';
+import { PotentialAddressService } from '../../../../Common/Services/PotentialAddressService';
+
 
 @Component({
     templateUrl: './AddEditPartnerAddressComponent.html',
@@ -34,12 +36,14 @@ export class AddEditPartnerAddressComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     private entityPMService: AddressPMService;
     public PartnersDomainService: PartnersDomainService;
+    public PotentialAddressService: PotentialAddressService;
 
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = new AddressPM();
         this.entityPMService = new AddressPMService();
         this.PartnersDomainService = new PartnersDomainService();
+        this.PotentialAddressService = new PotentialAddressService();
     }
 
     SetWindowArgs(args: any) {
@@ -523,7 +527,7 @@ export class AddEditPartnerAddressComponent extends BaseComponent {
 
             if (this.IsNewEntity) {
 
-                this.PartnersDomainService.AddAddress(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+                this.PotentialAddressService.AddAddress(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
                     if (myResponse.HasError) {
                         this.ValidationErrorsList = myResponse.ErrorsArray;
                     }
@@ -534,23 +538,11 @@ export class AddEditPartnerAddressComponent extends BaseComponent {
 
                     this.CurrentSession.StopBusyIndicator();
                 });
-
-                //this.entityPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-                //    if (myResponse.HasError) {
-                //        this.ValidationErrorsList = myResponse.ErrorsArray;
-                //    }
-
-                //    else {
-                //        this.CurrentSession.CloseCurrentWindowEmit("OK");
-                //    }
-
-                //    this.CurrentSession.StopBusyIndicator();
-                //});
             }
 
             else {
 
-                this.PartnersDomainService.PutAddress(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+                this.PotentialAddressService.PutAddress(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
                     if (myResponse.HasError) {
                         this.ValidationErrorsList = myResponse.ErrorsArray;
                     }
@@ -561,18 +553,6 @@ export class AddEditPartnerAddressComponent extends BaseComponent {
 
                     this.CurrentSession.StopBusyIndicator();
                 });
-
-                //this.entityPMService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-                //    if (myResponse.HasError) {
-                //        this.ValidationErrorsList = myResponse.ErrorsArray;
-                //    }
-
-                //    else {
-                //        this.CurrentSession.CloseCurrentWindowEmit("OK");
-                //    }
-
-                //    this.CurrentSession.StopBusyIndicator();
-                //});
             }
         }
     }

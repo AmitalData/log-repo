@@ -13,6 +13,7 @@ export class BaseSelectors extends RegexSelectors {
     //#region Maintenance
     public static readonly SystemSettings = "#CMS"
     public static readonly CustomsSettings = "#MaintenanceItemCISE"
+    public static readonly Warehouse = "#MaintenanceItemMTWH"
     //#endregion
     //#region charge Types
     public static readonly ChargesTypeAccounting="#ChargesTypeTHAccounting"
@@ -84,6 +85,8 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly MaintenanceButton=".MaintenanceButton"
     public static readonly RowHover=".RowHover"
     public static readonly MouseoverTrigger='mouseover'
+    public static readonly LogitudeScrollViewer='.LogitudeScrollViewer'
+    public static readonly DeleteButton='button[id^=Delete]'
     //#endregion
 
     public static readonly FirstElementInList = 'ul > li';
@@ -163,4 +166,28 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly EventItemBox = ".EventItemBox";
     public static readonly textarea = "textarea";
    
+    public static readonly QueryListToggleButton = "querylist .ToggleButton";
+    public static readonly QueryListToggleButtonItem = "querylist .ToggleButton .ToggleButtonMenu li";
+    public static readonly SearchTextboxInput = "searchtextbox input";
+    public static readonly MenuButtons = "#MenuButtons";
+    public static readonly ComboBox = ".ComboBox";
+    public static readonly ToggleIconImage = "img[src='Images/ToggleIcon.png']";
+    public static readonly SelectedComboboxItem = ".ComboBoxDropdown li[class='SelectedComboboxItem']";
+
+    //#region Warehouse
+    public static readonly WarehouseStoragePricingStepFrom ="#WarehouseStoragePricing_StepFrom"
+    public static readonly WarehouseStoragePricingDays ="#WarehouseStoragePricing_Days"
+    public static readonly WarehouseStoragePricingStepTo ="#WarehouseStoragePricing_StepTo"
+    public static readonly WarehouseStoragePricingSalePrice ="#WarehouseStoragePricing_SalePrice"
+    public static readonly DaysColumn ="1"
+    public static readonly StepToColumn ="2"
+    public static readonly StepFromColumn ="0"
+    public static readonly SalePriceColumn ="3"
+    public static readonly WarehouseTypeCode ="#Warehouse_TypeCode"
+    public static readonly WarehouseChargeStorage ="#Warehouse_ChargeStorage"
+    public static readonly WarehouseCurrency ="#Warehouse_CurrencyId"
+    public static readonly WarehouseStorageFreeDays ="#Warehouse_StorageFreeDays"
+    public static readonly WarehouseStorageDefaults ="Storage Defaults"
+    public static readonly WarehouseSaveCloseBtn ="#Warehouse-SaveClose"
+    
 }

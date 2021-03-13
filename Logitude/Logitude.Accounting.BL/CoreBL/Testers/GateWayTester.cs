@@ -68,6 +68,11 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                         return ButtonLoadSystem1000_Click(tenant, _TextBoxParam);
                     }
                     break;
+                case "ButtonLoadConsolTaxRep_Click":
+                    {
+                        return ButtonLoadConsolTaxRep_Click(tenant, _TextBoxParam);
+                    }
+                    break;
 
                 case "WorkWithoutQueue_Click":
                     {
@@ -115,7 +120,7 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                         return BuildTenant_Click(tenant, _TextBoxParam);
                     }
                     break;
-                    
+
                 default:
                     return new GateWayTesterResult()
                     {
@@ -731,6 +736,47 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             return gateWayTesterResult;
         }
 
+
+
+        private GateWayTesterResult ButtonLoadConsolTaxRep_Click(int tenant, string textBoxParam)
+        {
+
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+
+
+                    string fileConsolidatedTaxReport = textBoxParam;
+
+
+                    var myConsolidatedTaxReportFlatFileAnalyser = new ConsolidatedTaxReportFlatFileAnalyser();
+                    myConsolidatedTaxReportFlatFileAnalyser.Analyse(null, null, fileConsolidatedTaxReport);
+
+                        gateWayTesterResult.JsonOut = "TaxRep Ok";
+
+
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+                gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
+                gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+
+
+
         GateWayTesterResult _ButtonReverseTotal_Click(int tenant ,string _TextBoxParam)
         {
             var gateWayTesterResult = new GateWayTesterResult();
@@ -763,6 +809,9 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             return gateWayTesterResult;
         }
     }
+
+
+
     public class GateWayTesterResult
     {
         public string JsonOut { get; set; }

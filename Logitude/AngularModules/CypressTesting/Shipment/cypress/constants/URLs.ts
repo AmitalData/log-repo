@@ -5,6 +5,8 @@ export class URLs
     public static readonly CardViews = '**/cardviews/**';
     public static readonly AddressViews = '**/addressviews/**';
     public static readonly HtmlEditor = '**/HtmlEditor/**';
+    public static readonly GetAllByFilter = '**/getall?**';
+    public static readonly GetLastUpdatedTables = '**/GetLastUpdatedTables/**';
     public static readonly DocumentsFilingExtended = '**/DocumentsFilingExtended/**';
     public static readonly TraceEventsDomain = "**/TraceEventsDomain/GetTraceEventsForEntity?**"
     public static readonly ContainerFollowUpViewsGetbyfilters = "**/ContainerFollowUpViews/getbyfilters?**"

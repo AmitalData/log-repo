@@ -8,7 +8,8 @@ import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 import * as AccountingActions from '../../../../Accounting/cypress/actions/Actions';
 import { AccountingSelectors } from '../../../../Accounting/cypress/selectors/Selectors'
-import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
+import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 let ShipmentData: ShipmentDetails;
 let shipmentNumber: string;
@@ -33,7 +34,7 @@ Given("the user navigates to shipments workspace", () => {
     Actions.NavigatesToShipmentsWorkspace()
 });
 Given("a direct shipment with the following details", (dataTable) => {
-    const shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+    const shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
     ShipmentData = shipmentDetails;
     Actions.OpenNewShipmentWizard(ShipmentData.ShipmentLevel);
     Actions.FillShipmentWizardsFields(ShipmentData);
@@ -48,14 +49,14 @@ Then("the shipment should create successfully", () => {
     });
 
     Given("a receivable with the following details", (dataTable) => {
-        const ReceivableData = dataTable.hashes() as ReceivableDetails[];
+        const ReceivableData = Assists.CreateSet<ReceivableDetails>(dataTable);
         Actions.OpenShipment(shipmentNumber)
         Actions.FillReceivablesTab(ReceivableData)
         Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
     });
     Given("a credit ARInvoice with a random invoice number and the following details",
         (dataTable) => {
-            const ARInvoiceData = dataTable.hashes()[0] as ARInvoiceDetails
+            const ARInvoiceData = Assists.CreateInstance<ARInvoiceDetails>(dataTable, true);
             cy.Click(AccountingSelectors.CreateCreditNoteARInvoiceButton, null);
             AccountingActions.FillARInvoiceDetails(ARInvoiceData)
         });

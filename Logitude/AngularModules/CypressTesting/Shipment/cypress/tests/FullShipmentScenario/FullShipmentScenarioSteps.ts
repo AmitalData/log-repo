@@ -18,7 +18,8 @@ import { RequestAliases } from '../../../../Base/cypress/constants/RequestAliase
 import * as AccountingActions from '../../../../Accounting/cypress/actions/Actions';
 import { MainCarriageLeg } from "cypress/models/MainCarriageLeg";
 import { RestAPI } from "../../../../Base/cypress/constants/RestAPI";
-import {AccountingSelectors} from '../../../../Accounting/cypress/selectors/Selectors'
+import {AccountingSelectors} from '../../../../Accounting/cypress/selectors/Selectors';
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 let ShipmentData: ShipmentDetails;
 let packagesDetails: PackagesDetails[]
@@ -33,7 +34,7 @@ Given("the user logged in and navigates to shipments workspace", () => {
     cy.Click(ShipmentSelectors.ShipmentTab, null)
 });
 Given("a direct shipment with the following details", (dataTable) => {
-    const shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+    const shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
     ShipmentData = shipmentDetails;
     Actions.OpenNewShipmentWizard(ShipmentData.ShipmentLevel);
     Actions.FillShipmentWizardsFields(ShipmentData);
@@ -46,25 +47,25 @@ Then("the shipment should create successfully", () => {
         ShipmentData.ShipmentNumber = interception.response.body.ShipmentNumber;
     });
 });
-Given("the user fills {string} as GrossWeight and {string} as a MoveType", (GrossWeight, MoveType) => {
+Given("the user fills {string} as ValueOfGoods and {string} as a MoveType", (ValueOfGoods, MoveType) => {
     Actions.OpenShipment(ShipmentData.ShipmentNumber);
-    Actions.FillGeneralTab(GrossWeight, MoveType)
+    Actions.FillGeneralTab(ValueOfGoods, MoveType)
 });
 
 Given("the user add order package with the following details", (dataTable) => {
     //Actions.OpenShipment(ShipmentData.ShipmentNumber);
-    packagesDetails = dataTable.hashes() as PackagesDetails[];
+    packagesDetails = Assists.CreateSet<PackagesDetails>(dataTable);
     Actions.FillOrdersTab(packagesDetails)
 });
 
 
 Given("partners with following details", (dataTable) => {
-    const partnersDetails = dataTable.hashes()[0] as PartnersDetails;
+    const partnersDetails = Assists.CreateInstance<PartnersDetails>(dataTable, true);
     Actions.FillPartnersTab(ShipmentData.Direction, ShipmentData.TransportMode, partnersDetails)
 });
 
 Given("a Package with the following details", (dataTable) => {
-    packagesDetails = dataTable.hashes() as PackagesDetails[];
+    packagesDetails = Assists.CreateSet<PackagesDetails>(dataTable);
     Actions.FillPackageTab(ShipmentData.TransportMode, packagesDetails)
 });
 
@@ -91,12 +92,12 @@ Then("the direct shipment should save successfully", () => {
 
 });
 Given("a payable with the following details", (dataTable) => {
-    const PayableData = dataTable.hashes()[0] as PayableDetails;
+    const PayableData = Assists.CreateInstance<PayableDetails>(dataTable, true);
     Actions.FillPayablesTab(PayableData)
 });
 
 Given("an APInvoice with the following details and a random invoice number", (dataTable) => {
-    APInvoiceData = dataTable.hashes()[0] as APInvoiceDetails
+    APInvoiceData = Assists.CreateInstance<APInvoiceDetails>(dataTable, true);
     cy.Click(AccountingSelectors.ReceiveInvoiceButton, null);
     AccountingActions.FillAPInvoiceDetails(APInvoiceData)
 });
@@ -118,7 +119,7 @@ Then("the APInvoice should approve successfully", () => {
 
 });
 Given("an APPayment with the following details", (dataTable) => {
-    APPaymentData = dataTable.hashes()[0] as APPaymentDetails
+    APPaymentData = Assists.CreateInstance<APPaymentDetails>(dataTable, true);
     cy.BackButton(BaseSelectors.ContainsShipment + ShipmentData.ShipmentNumber)
     cy.BackButton(BaseSelectors.ContainsOperations)
     AccountingActions.FillAPPayment(APPaymentData, APInvoiceNumber)
@@ -133,7 +134,7 @@ Then("the APInvoice should pay successfully", () => {
 });
 Given("a receivable with the following details",
     (dataTable) => {
-        const ReceivableData = dataTable.hashes() as ReceivableDetails[];
+        const ReceivableData = Assists.CreateSet<ReceivableDetails>(dataTable);
         cy.BackButton(BaseSelectors.ContainsAccounting)
         cy.Click(BaseSelectors.OperationsMenu, null)
         cy.Click(ShipmentSelectors.ShipmentTab, null)
@@ -142,7 +143,7 @@ Given("a receivable with the following details",
     });
 Given("an ARInvoice with the following details",
     (dataTable) => {
-        const ARInvoiceData = dataTable.hashes()[0] as ARInvoiceDetails
+        const ARInvoiceData = Assists.CreateInstance<ARInvoiceDetails>(dataTable, true);
         cy.Click(AccountingSelectors.CreateARInvoiceButton, null);
         AccountingActions.FillARInvoiceDetails(ARInvoiceData)
     });
@@ -169,7 +170,7 @@ Then("the ARInvoice should set as sent successfully", () => {
 Given("an ARPayment with the following details", (dataTable) => {
     cy.Click(AccountingSelectors.ARPaymentTabInsideShipment,null)
     cy.Click(AccountingSelectors.NewARPayment, null)
-    const ARPaymentDat = dataTable.hashes()[0] as ARPaymentDetails
+    const ARPaymentDat = Assists.CreateInstance<ARPaymentDetails>(dataTable, true);
     AccountingActions.FillARPaymentDetails(ARPaymentDat)
 });
 When("pay the ARInvoice", () => {
@@ -182,7 +183,7 @@ Then("the ARInvoice should pay successfully", () => {
 Given("a credit ARInvoice with the following details", (dataTable) => {
     cy.BackButton(BaseSelectors.ContainsBack)
     cy.BackButton(BaseSelectors.ContainsShipment + ShipmentData.ShipmentNumber)
-    const ARInvoiceData = dataTable.hashes()[0] as ARInvoiceDetails
+    const ARInvoiceData = Assists.CreateInstance<ARInvoiceDetails>(dataTable, true);
     cy.Click(AccountingSelectors.CreateCreditNoteARInvoiceButton, null);
     AccountingActions.FillARInvoiceDetails(ARInvoiceData)
 });
@@ -214,7 +215,7 @@ Then("the credit ARInvoice should set successfully", () => {
 });
 
 Given("a credit ARPayment with the following details", (dataTable) => {
-    const ARPaymentDat = dataTable.hashes()[0] as ARPaymentDetails
+    const ARPaymentDat = Assists.CreateInstance<ARPaymentDetails>(dataTable, true);
     cy.BackButton(BaseSelectors.ContainsShipment+ ShipmentData.ShipmentNumber)
     cy.BackButton(BaseSelectors.ContainsOperations)
     AccountingActions.NewARPaymentFromAccounting(ARPaymentDat, ARInvoiceNumber)
@@ -263,7 +264,7 @@ Given("the user in the direct's shipment rounting tab", () => {
 });
 
 Given("edit Main Carriage Leg with the following details", (dataTable) => {
-    let mainCarriageLeg = dataTable.hashes()[0] as MainCarriageLeg;
+    let mainCarriageLeg = Assists.CreateInstance<MainCarriageLeg>(dataTable, true);
     Actions.EditMainCarriageLegs(mainCarriageLeg.Airline);
     cy.Click(ShipmentSelectors.ShipmentSaveButton, null);
 });

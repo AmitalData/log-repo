@@ -7,8 +7,9 @@ Feature: Ocean FCL Price Check
     Scenario: Login and create new ocean FCL freight cost
         Given the user logged in and navigate to tariff workspace
         And an ocean FCL freight cost with the following details
-            | Name                    | Seller | StartDate |
-            | TestOceanFCLFreightCost | MAEU   | Today     |
+            | Name      | TestOceanFCLFreightCost |
+            | Seller    | MAEU                    |
+            | StartDate | Today                   |
         When create freight cost
         Then the freight cost should create successfully
 
@@ -29,9 +30,14 @@ Feature: Ocean FCL Price Check
     Scenario: Open price check wizard to show price offers
         Given the user back into tariff workspace and open price check wizard
         And fill the following price check details
-            | FromPort | ToPort | Date  | Quantity1 | Quantity2 | Quantity3 |
-            | LHR      | MIA    | Today | 10        | 10        | 10        |
+            | FromPort  | LHR   |
+            | ToPort    | MIA   |
+            | Date      | Today |
+            | Quantity1 | 10    |
+            | Quantity2 | 10    |
+            | Quantity3 | 10    |
         When search about prices
         Then ocean FCL price should equal the following
-            | AirFreight | Surcharges | Total    |
-            | 600.00     | 1,200.00   | 1,800.00 |
+            | AirFreight | 600.00   |
+            | Surcharges | 1,200.00 |
+            | Total      | 1,800.00 |

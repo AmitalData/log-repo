@@ -4,6 +4,7 @@ import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
 import * as BaseAssertion from '../../../../Base/cypress/actions/Assertion';
 import { ShipmentDetails } from '../../models/ShipmentDetails';
 import { RequestAliases } from '../../../../Base/cypress/constants/RequestAliases';
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 //#region variables
 let MasterShipmentDetails: ShipmentDetails;
@@ -17,7 +18,7 @@ Given("the user logged in and navigates to shipments workspace", () => {
 });
 
 Given("a master Shipment with following details",(dataTable)=>{
-    const shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+    const shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
     MasterShipmentDetails = shipmentDetails;
     Actions.OpenNewShipmentWizard(MasterShipmentDetails.ShipmentLevel);
     Actions.FillShipmentWizardsFields(MasterShipmentDetails);
