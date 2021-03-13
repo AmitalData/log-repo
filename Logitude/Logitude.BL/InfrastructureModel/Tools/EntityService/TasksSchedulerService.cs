@@ -17,6 +17,7 @@ using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Global.Data.GlobalModel.Repositories;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -39,6 +40,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
         private ContactRepository contactRepository;
         private Contact loggedContact;
+        private TenantManagementRepository tenantManagementRepository;
         public TasksSchedulerService(IWebFreightContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -47,6 +49,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
 
             this.contactRepository = new ContactRepository(tenant);
+            this.tenantManagementRepository = new TenantManagementRepository();
             this.GetLoggedContact();
 
         }
@@ -68,10 +71,21 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             }
         }
 
+        public bool isExceedsScheduledTasksLimitPerReport(int tenant, string createdBy, string entityId)
+        {
+           int exceedsScheduledTasksLimitPerReport = tenantManagementRepository.GetScheduledTasksLimitPerReport(tenant);
+           int userDefinedTaskPerCurrentReprt = entityRepository.GetUserTasksSchedulerPerReport(tenant, createdBy, entityId);
 
+            if(userDefinedTaskPerCurrentReprt >= exceedsScheduledTasksLimitPerReport)
+            {
+                return true;
+            }
+            return false;
+        }
 
         public void Create(TasksSchedulerPM theEntityPm)
         {
+
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
             this.entityPM.Id = IdCounter.GetNumber("TasksScheduler", tenant).ToString();

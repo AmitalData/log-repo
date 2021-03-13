@@ -225,8 +225,12 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             return this.context.TenantManagements.Include("GlobalTenant").Where(d => Ids.Contains(d.Id));
         }
 
-
-
+        // Get ScheduledTasksLimitPerReport based on Tenant Number
+        public int GetScheduledTasksLimitPerReport(int id)
+        {
+            return (from a in context.TenantManagements where a.Id == id select a.ScheduledTasksLimitPerReport).FirstOrDefault();
+        }
+          
 
     }
 }

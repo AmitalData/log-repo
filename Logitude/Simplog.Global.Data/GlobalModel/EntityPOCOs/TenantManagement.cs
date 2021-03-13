@@ -208,6 +208,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public DateTime? LastTariffUsageDate { get; set; }
         public int LastWeekCreatedTariffs { get; set; }
         public int LastMonthCreatedTariffs { get; set; }
+        public int ScheduledTasksLimitPerReport { get; set; }
 
     }
 }
