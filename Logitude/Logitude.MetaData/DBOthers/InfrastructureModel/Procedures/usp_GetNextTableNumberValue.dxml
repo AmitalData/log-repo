@@ -68,6 +68,7 @@ BEGIN;
 		 Set @Current = @Current + 1
 
 		 Update CounterStats
+     WITH (UPDLOCK, ROWLOCK)
 		 set LastValue = @Current
 		 Where   CounterId = @pCounterId and Prefix = @pPrefix and Tenant =  @pTenant
 	
@@ -121,6 +122,7 @@ BEGIN;
 		 Set @Current = @Current + 1
 
 		 Update CounterStats
+     WITH (UPDLOCK, ROWLOCK)
 		 set LastValue = @Current
 		 Where   CounterId = @pCounterId  and Tenant =  @pTenant
 	
