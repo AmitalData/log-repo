@@ -1085,7 +1085,9 @@ export class ARInvoiceMenuButtonsHandler {
         AutoCreditInvoice.IsInvoiceNumberFromStock = this.EntityPM.IsInvoiceNumberFromStock;
         AutoCreditInvoice.IsInvoiceNumberManuallySet = this.EntityPM.IsInvoiceNumberManuallySet;
         AutoCreditInvoice.AutoCreditedByInvoiceTypeCode=this.EntityPM.ARInvoiceTypeCode ;
-        AutoCreditInvoice.HasInterestFeature= this.EntityPM.ARInvoiceTypeCode == 'IT'?true:false;
+        AutoCreditInvoice.HasInterestFeature = this.EntityPM.ARInvoiceTypeCode == 'IT' ? true : false;
+        AutoCreditInvoice.RegionalTaxId = this.EntityPM.RegionalTaxId;
+        AutoCreditInvoice.RegionalTaxPercentage = this.EntityPM.RegionalTaxPercentage;
         this.CreateAutoCreditInvoiceLines(AutoCreditInvoice);        
         return AutoCreditInvoice;
     }
@@ -1124,7 +1126,8 @@ export class ARInvoiceMenuButtonsHandler {
             newInvoiceLine.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount * -1;
             newInvoiceLine.IsExpense = item.IsExpense;
             newInvoiceLine.GLAccountId = item.GLAccountId;
-            newInvoiceLine.LineActionCode= "1";
+            newInvoiceLine.LineActionCode = "1";
+            newInvoiceLine.IsRegionalTax = item.IsRegionalTax;
             AutoCreditInvoice.AddARInvoiceLinePM(newInvoiceLine);
             index++;
         });
