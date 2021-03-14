@@ -24,20 +24,51 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
     public ObjectTableName: string = "User";
     public DataContext = this;
     public TechnologyList: CodeNameClass[] = [];
-    private CurrentSession = SessionLocator.SelectedSession;    
+    private CurrentSession = SessionLocator.SelectedSession;
+    public SignatureId: string;
+    public EntityId: string; 
+
     constructor(public entityArgs: EntityArgs, public TenantLoginPolicyListService: TenantLoginPolicyListService) {
         super();
         this.EntityPM = entityArgs.EntityPM;
+        this.EntityId = this.EntityPM.Id;
         this.BuildTechnologyList();
-        this.SetUIProperties();
+        this.SetUIProperties(); 
         this.Listen();
         this.CheckSecurityPolicySettingToShowPhone();
 
         this.BuildLayoutDirectionList();
         this.SetSelectedDirection();
+
+        this.InitializeImageIds();
        // this.SelectedDirection = this.EntityPM.LayoutDirection == 'ltr' ? this.LayoutDirections[0] : this.LayoutDirections[1];
     }
-       
+
+    private InitializeImageIds() {
+        this.SignatureId = this.EntityPM.SignatureId;
+    }
+
+    SignatureUploadedCompleted(imageId) {
+        this.SignatureId = imageId;
+        this.EntityPM.SignatureId = imageId;
+
+    }
+
+    RemoveImage(name) {
+
+        switch (name) {
+            case "SignatureId": {
+                this.EntityPM.SignatureId = null;
+                this.SignatureId = null;
+                break;
+            }
+            default: {
+                //statements; 
+                break;
+            }
+        }
+    } 
+
     private SetSelectedDirection() {
         if (this.EntityPM.LayoutDirection == 'ltr') {
             this.SelectedDirection = this.LayoutDirections[0];

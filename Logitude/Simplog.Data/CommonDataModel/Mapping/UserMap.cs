@@ -130,8 +130,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasRequired(t => t.Department).WithMany().HasForeignKey(d => d.DepartmentId);
             this.HasOptional(t => t.Freelancer).WithMany().HasForeignKey(d => d.FreelancerId);
             this.HasRequired(t => t.BusinessUnit).WithMany().HasForeignKey(d => d.BusinessUnitId);
-            this.HasOptional(t => t.ProductType).WithMany().HasForeignKey(d => d.ProductTypeCode);
-            this.Property(t => t.SignatureId).HasColumnName("SignatureId");
+            this.HasOptional(t => t.ProductType).WithMany().HasForeignKey(d => d.ProductTypeCode); 
         }
     }
 }
