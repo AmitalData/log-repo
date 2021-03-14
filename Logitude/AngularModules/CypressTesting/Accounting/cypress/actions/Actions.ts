@@ -165,7 +165,9 @@ export function FillARInvoiceDetails(aRInvoiceDetails: ARInvoiceDetails) {
         cy.FillLogLov(AccountingSelectors.ARInvoicePartner, aRInvoiceDetails.Partner, false)
     }
     cy.FillLogLov(AccountingSelectors.ARInvoiceInvoiceCurrency, aRInvoiceDetails.InvoiceCurrency, true)
-    cy.FillLogTextBox(AccountingSelectors.ARInvoiceExchangeRate, aRInvoiceDetails.InvoiceExchangeRate.toString());
+    if(aRInvoiceDetails.InvoiceExchangeRate) {
+        cy.FillLogTextBox(AccountingSelectors.ARInvoiceExchangeRate, aRInvoiceDetails.InvoiceExchangeRate.toString());
+    }
     cy.FillDate(AccountingSelectors.ARInvoiceInvoiceDate, aRInvoiceDetails.InvoiceDate)
     cy.FillLogLov(AccountingSelectors.ARInvoicePaymentTerm, aRInvoiceDetails.PaymentTerms, true)
     cy.FillDate(AccountingSelectors.ARInvoiceDueDate, aRInvoiceDetails.DueDate)
@@ -223,6 +225,16 @@ export function CancelDraftARInvoice() {
     cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
     cy.Click(AccountingSelectors.ARInvoiceCancelDraftButton, null)
     cy.Click(ShipmentSelectors.ConfirmWindowYes, null)
+}
+
+export function AutoCreditARInvoice() {
+    cy.Click(BaseSelectors.MoreList, null, true);
+    cy.Click(AccountingSelectors.ARInvoiceAutoCreditButton, null);
+}
+
+export function ApproveAutoCreditARInvoice() {
+    PostARApproveInvoice();
+    cy.Click(ShipmentSelectors.ConfirmWindowYes, null);
 }
 //#endregion
 
@@ -457,4 +469,14 @@ function ClickAndWaitToLoad(ButtonSelector:string){
     cy.Click(ButtonSelector, null);
     BaseAssertion.AssertStatusCode(RequestAliases.GetVatTypePercentage, 200);
 
+}
+
+export function AssertARInvoiceStatus(status: string) {
+    cy.get(AccountingSelectors.ARInvoiceHeaderStatusName).should("have.text", status);
+}
+
+export function AssertAutoCreditByInvoiceNumber(invoiceNumber: string) {
+    cy.get(BaseSelectors.RightBorderRadius).invoke("text").then((text) => {
+        expect(text.replace(/\s/g, "")).to.contain("ByInvoice" + invoiceNumber);
+    });
 }

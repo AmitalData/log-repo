@@ -14,7 +14,7 @@ namespace WebFreight.Web.ExternalAPIs
 {
     public class RatesUpdateController : ApiController
     {
-        public HttpResponseMessage Put(RatesUpdate ratesUpdateEntity)
+        public HttpResponseMessage Post(RatesUpdate ratesUpdateEntity)
         {
             if (ModelState.IsValid)
             {

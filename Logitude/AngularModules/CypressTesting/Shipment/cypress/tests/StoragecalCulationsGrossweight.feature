@@ -5,7 +5,7 @@ Feature: Storage Calculations Gross Weight without Rounding
     adds a package with gross weight, adds a warehouse for storage calculation, adds dates,
     calculates fees/charges, checks receivables automatically added based on calculations of warehouse and creates an invoice.
 
-    Scenario: Update warehouse
+    Scenario: Set up a warehouse with storage charges
         Given the user logged in and navigate to warehouse workspace
         And open warehouse with "Testwarehouse" warehouse
         And fill with the following storage details for "CFS" Type
@@ -52,12 +52,12 @@ Feature: Storage Calculations Gross Weight without Rounding
             | Amount   |
             | 2,000.00 |
             | 4,000.00 |
-
-    Scenario: Add invoice
-        Given the user in the shipment's receivables tab
-        And receivables containts line with the following details
+        And a receivables line with the following details should appear
             | ChargesType    | Amount    |
             | Import Storage | 6,000.000 |
+
+
+    Scenario: Add invoice
         When add new invoice with "Zero" vat type and number
         Then the invoice should add successfully
 

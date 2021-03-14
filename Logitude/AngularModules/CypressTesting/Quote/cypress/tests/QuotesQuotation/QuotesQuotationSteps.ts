@@ -66,8 +66,8 @@ Then("the quotation should update successfully", () => {
 //#endregion
 
 //#region Send quotation to customer
-When("the user send quotation to {string}", (email) => {
-  QuotesActions.SendQuotationToCustomer(email);
+When("the user send quotation to the logged in user", () => {
+  QuotesActions.SendQuotationToLoggedInUser();
 });
 
 Then("the quotation should send successfully", () => {

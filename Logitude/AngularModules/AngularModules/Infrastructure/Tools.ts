@@ -1563,8 +1563,8 @@ export class DateTool {
 
             else {
                 myDateParts.Year = input.getUTCFullYear();
-                myDateParts.Month = input.getUTCMonth() + 1;
-                myDateParts.Day = input.getUTCDate();
+                myDateParts.Month = input.getMonth() + 1;
+                myDateParts.Day = input.getDate();
                 myDateParts.Hours = input.getUTCHours();
                 myDateParts.Minutes = input.getUTCMinutes();
                 myDateParts.Seconds = input.getUTCSeconds();

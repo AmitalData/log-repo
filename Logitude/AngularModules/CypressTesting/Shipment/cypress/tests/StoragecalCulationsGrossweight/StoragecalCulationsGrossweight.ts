@@ -119,22 +119,20 @@ Then("Storage pricing should have weight {string} and Amount as following", (exp
     let AmountList = dataTable.hashes() as WarehouseStorage[];
     Actions.ValidateStoragePricing(AmountList, expectedWeight);
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, BaseSelectors.ContainsOK);
+});
+
+Then("a receivables line with the following details should appear", (dataTable) => {
+    cy.Click(ShipmentSelectors.ReceivablesTab, null);
     Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton);
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+
+    let receivableDetails = Assists.CreateInstance<ReceivableDetails>(dataTable, false);
+    BaseAssertion.AssertElementTextEqual(BaseSelectors.CellWithRowAndCol(BaseSelectors.ColNo1, BaseSelectors.RowNo0) + BaseSelectors.LastElement, receivableDetails.ChargesType, BaseSelectors.DivElement)
+    BaseAssertion.AssertElementTextEqual(BaseSelectors.CellWithRowAndCol(BaseSelectors.ColNo8, BaseSelectors.RowNo0) + BaseSelectors.LastElement, receivableDetails.Amount, BaseSelectors.DivElement)
 });
 //#endregion 
 
 //#region  add 
-Given("the user in the shipment's receivables tab", () => {
-    cy.Navigate(ShipmentSelectors.ReceivablesTab);
-});
-
-Given("receivables containts line with the following details", (dataTable) => {
-    let receivableDetails = dataTable.hashes()[0] as ReceivableDetails;
-    BaseAssertion.AssertElementTextEqual(BaseSelectors.CellWithRowAndCol("1", "0"), receivableDetails.ChargesType, BaseSelectors.DivElement)
-    BaseAssertion.AssertElementTextEqual(BaseSelectors.CellWithRowAndCol("8", "0"), receivableDetails.Amount, BaseSelectors.DivElement)
-});
-
 When("add new invoice with {string} vat type and number", (vat) => {
     AccountingActions.CreateARInvoiceGeneratedFromRoutingLeg(vat);
     AccountingActions.PostARApproveInvoice()

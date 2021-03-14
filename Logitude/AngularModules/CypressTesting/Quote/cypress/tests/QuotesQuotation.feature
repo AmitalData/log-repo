@@ -29,6 +29,6 @@ Feature: Edit, Print and Send Quotation
         And quote stage status should be "Draft"
 
     Scenario: Send quotation to customer
-        When the user send quotation to "specflowtest@logitudeworld.com"
+        When the user send quotation to the logged in user
         Then the quotation should send successfully
         And quote stage status should be "Sent"

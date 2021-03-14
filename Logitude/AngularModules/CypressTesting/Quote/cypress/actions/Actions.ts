@@ -68,7 +68,7 @@ function FillShipmentType(ShipmentType: string, TransportMode: string) {
     }
 }
 
-function FillCustomerType(direction: string) { 
+function FillCustomerType(direction: string) {
     if (Conditions.IsImport(direction)) {
         cy.FillLogLov(QuoteSelectors.QuoteCustomerType, "Consignee", true)
     } else {
@@ -127,16 +127,16 @@ export function FillPackageTab(packagesDetails: PackagesDetails[], shipmentType?
 export function FillExpectedOrderDetailsDimensions(packagesDetails: PackagesDetails[]) {
     cy.Click(BaseSelectors.HyperlinkButtonControl, BaseSelectors.ContainsFillDimensions, true)
     for (let i = 0; i < packagesDetails.length; i++) {
-        cy.FillLogTextBox(QuoteSelectors.PackageLineSelector(QuoteSelectors.PackageQuantity,i), packagesDetails[i].Quantity.toString())
+        cy.FillLogTextBox(QuoteSelectors.PackageLineSelector(QuoteSelectors.PackageQuantity, i), packagesDetails[i].Quantity.toString())
 
         if (packagesDetails[i].Volume) {
-            cy.FillLogTextBox(QuoteSelectors.PackageLineSelector(QuoteSelectors.PackageVolume,i), packagesDetails[i].Volume.toString())
+            cy.FillLogTextBox(QuoteSelectors.PackageLineSelector(QuoteSelectors.PackageVolume, i), packagesDetails[i].Volume.toString())
         } else {
-            cy.FillLogTextBox(QuoteSelectors.PackageLineSelector(QuoteSelectors.PackageLength,i), packagesDetails[i].Length.toString())
-            cy.FillLogTextBox(QuoteSelectors.PackageLineSelector(QuoteSelectors.PackageWidth,i), packagesDetails[i].Width.toString())
-            cy.FillLogTextBox(QuoteSelectors.PackageLineSelector(QuoteSelectors.PackageHeight,i), packagesDetails[i].Height.toString())
+            cy.FillLogTextBox(QuoteSelectors.PackageLineSelector(QuoteSelectors.PackageLength, i), packagesDetails[i].Length.toString())
+            cy.FillLogTextBox(QuoteSelectors.PackageLineSelector(QuoteSelectors.PackageWidth, i), packagesDetails[i].Width.toString())
+            cy.FillLogTextBox(QuoteSelectors.PackageLineSelector(QuoteSelectors.PackageHeight, i), packagesDetails[i].Height.toString())
         }
-        cy.get(QuoteSelectors.PackageLineSelector(QuoteSelectors.PackageWeight,i)).type(packagesDetails[i].GrossWeight.toString());
+        cy.get(QuoteSelectors.PackageLineSelector(QuoteSelectors.PackageWeight, i)).type(packagesDetails[i].GrossWeight.toString());
     }
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
 }
@@ -173,7 +173,7 @@ export function PrintQuotation() {
 export function AddDataFieldToQuotationIntroduction(dataField: string) {
     cy.Click(QuoteSelectors.EditQuotationIntroduction, null)
     cy.Click(QuoteSelectors.AddDataField, null)
-    cy.Click(QuoteSelectors.QuotationDataFields(dataField.replace(/\s/g, "")), null, true)
+    cy.Click(QuoteSelectors.QuotationDataFields(dataField), null, true)
     cy.Click(QuoteSelectors.QuotationEditOkButton, null)
 }
 
@@ -182,9 +182,12 @@ export function UpdateQuotation() {
     cy.Click(QuoteSelectors.SaveQuotation, null)
 }
 
-export function SendQuotationToCustomer(email: string) {
-    FillCustomerEmail(email);
-    SentToCustomer();
+export function SendQuotationToLoggedInUser() {
+
+    cy.GetLoggedInUser().then(email => {
+        FillCustomerEmail(email);
+        SentToCustomer();
+    });
 }
 
 function FillCustomerEmail(email: string) {
