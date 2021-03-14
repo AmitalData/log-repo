@@ -7,6 +7,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.WebServices;
 using System.Linq;
 using Microsoft.Practices.Unity;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace WebFreight.Web.DataProviders
 {
@@ -275,5 +276,14 @@ namespace WebFreight.Web.DataProviders
                 return null;
             }
         }
+
+        public static string GetCompanyName(int tenant)
+        {
+            TenantQuery tenantQuery = new TenantQuery(tenant);
+            return tenantQuery.GetCompanyNameById(tenant);
+        }
+
+
+
     }
 }
