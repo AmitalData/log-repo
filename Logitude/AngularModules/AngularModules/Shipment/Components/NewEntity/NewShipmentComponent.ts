@@ -3331,6 +3331,126 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         }
     }
 
+    private isCopyPreForwarding: boolean = false;
+    get IsCopyPreForwarding() { return this.isCopyPreForwarding; }
+    set IsCopyPreForwarding(value) {
+        if (this.isCopyPreForwarding != value) {
+            this.isCopyPreForwarding = value;
+
+            if (value == true) {
+                this.EntityPM.PreForwardingFromPortId = this.SourceEntityPM.PreForwardingFromPortId;
+                this.EntityPM.PreForwardingFromPortCode = this.SourceEntityPM.PreForwardingFromPortCode;
+                this.EntityPM.PreForwardingFromPortName = this.SourceEntityPM.PreForwardingFromPortName;
+                this.EntityPM.PreForwardingFromPortCountryCode = this.SourceEntityPM.PreForwardingFromPortCountryCode;
+                this.EntityPM.PreForwardingFromPortCountryName = this.SourceEntityPM.PreForwardingFromPortCountryName;
+                this.EntityPM.PreForwardingToPortId = this.SourceEntityPM.PreForwardingToPortId;
+                this.EntityPM.PreForwardingToPortCode = this.SourceEntityPM.PreForwardingToPortCode;
+                this.EntityPM.PreForwardingToPortName = this.SourceEntityPM.PreForwardingToPortName;
+                this.EntityPM.PreForwardingToPortCountryCode = this.SourceEntityPM.PreForwardingToPortCountryCode;
+                this.EntityPM.PreForwardingToPortCountryName = this.SourceEntityPM.PreForwardingToPortCountryName;
+                this.EntityPM.PreForwardingCarrierId = this.SourceEntityPM.PreForwardingCarrierId;
+                this.EntityPM.PreForwardingCarrierCode = this.SourceEntityPM.PreForwardingCarrierCode;
+                this.EntityPM.PreForwardingCarrierName = this.SourceEntityPM.PreForwardingCarrierName;
+                this.EntityPM.PreForwardingCarrierNumber = this.SourceEntityPM.PreForwardingCarrierNumber;
+                this.EntityPM.PreForwardingCarrierWebSite = this.SourceEntityPM.PreForwardingCarrierWebSite;
+                this.EntityPM.PreForwardingTransportModeId = this.SourceEntityPM.PreForwardingTransportModeId;
+                this.EntityPM.PreForwardingVesselId = this.SourceEntityPM.PreForwardingVesselId;
+                this.EntityPM.PreForwardingVesselName = this.SourceEntityPM.PreForwardingVesselName;
+                this.EntityPM.PreForwardingETD = this.SourceEntityPM.PreForwardingETD;
+                this.EntityPM.PreForwardingATD = this.SourceEntityPM.PreForwardingATD;
+                this.EntityPM.PreForwardingETA = this.SourceEntityPM.PreForwardingETA;
+                this.EntityPM.PreForwardingATA = this.SourceEntityPM.PreForwardingATA;
+            }
+
+            else {
+                this.EntityPM.PreForwardingFromPortId = null;
+                this.EntityPM.PreForwardingFromPortCode = null;
+                this.EntityPM.PreForwardingFromPortName = null;
+                this.EntityPM.PreForwardingFromPortCountryCode = null;
+                this.EntityPM.PreForwardingFromPortCountryName = null;
+                this.EntityPM.PreForwardingToPortId = null;
+                this.EntityPM.PreForwardingToPortCode = null;
+                this.EntityPM.PreForwardingToPortName = null;
+                this.EntityPM.PreForwardingToPortCountryCode = null;
+                this.EntityPM.PreForwardingToPortCountryName = null;
+                this.EntityPM.PreForwardingCarrierId = null;
+                this.EntityPM.PreForwardingCarrierCode = null;
+                this.EntityPM.PreForwardingCarrierName = null;
+                this.EntityPM.PreForwardingCarrierNumber = null;
+                this.EntityPM.PreForwardingCarrierWebSite = null;
+                this.EntityPM.PreForwardingTransportModeId = null;
+                this.EntityPM.PreForwardingVesselId = null;
+                this.EntityPM.PreForwardingVesselName = null;
+                this.EntityPM.PreForwardingETD = null;
+                this.EntityPM.PreForwardingATD = null;
+                this.EntityPM.PreForwardingETA = null;
+                this.EntityPM.PreForwardingATA = null;
+            }
+        }
+    }
+
+    private isCopyOnForwarding: boolean = false;
+    get IsCopyOnForwarding() { return this.isCopyOnForwarding; }
+    set IsCopyOnForwarding(value) {
+        if (this.isCopyOnForwarding != value) {
+            this.isCopyOnForwarding = value;
+
+            if (value == true) {
+                this.EntityPM.OnForwardingFromPortId = this.SourceEntityPM.OnForwardingFromPortId;
+                this.EntityPM.OnForwardingFromPortCode = this.SourceEntityPM.OnForwardingFromPortCode;
+                this.EntityPM.OnForwardingFromPortName = this.SourceEntityPM.OnForwardingFromPortName;
+                this.EntityPM.OnForwardingFromPortCountryCode = this.SourceEntityPM.OnForwardingFromPortCountryCode;
+                this.EntityPM.OnForwardingFromPortCountryName = this.SourceEntityPM.OnForwardingFromPortCountryName;
+                this.EntityPM.OnForwardingToPortId = this.SourceEntityPM.OnForwardingToPortId;
+                this.EntityPM.OnForwardingToPortCode = this.SourceEntityPM.OnForwardingToPortCode;
+                this.EntityPM.OnForwardingToPortName = this.SourceEntityPM.OnForwardingToPortName;
+                this.EntityPM.OnForwardingToPortCountryCode = this.SourceEntityPM.OnForwardingToPortCountryCode;
+                this.EntityPM.OnForwardingToPortCountryName = this.SourceEntityPM.OnForwardingToPortCountryName;
+                this.EntityPM.OnForwardingCarrierId = this.SourceEntityPM.OnForwardingCarrierId;
+                this.EntityPM.OnForwardingCarrierCode = this.SourceEntityPM.OnForwardingCarrierCode;
+                this.EntityPM.OnForwardingCarrierName = this.SourceEntityPM.OnForwardingCarrierName;
+                this.EntityPM.OnForwardingCarrierNumber = this.SourceEntityPM.OnForwardingCarrierNumber;
+                this.EntityPM.OnForwardingCarrierWebSite = this.SourceEntityPM.OnForwardingCarrierWebSite;
+                this.EntityPM.OnForwardingTransportModeId = this.SourceEntityPM.OnForwardingTransportModeId;
+                this.EntityPM.OnForwardingVesselId = this.SourceEntityPM.OnForwardingVesselId;
+                this.EntityPM.OnForwardingVesselName = this.SourceEntityPM.OnForwardingVesselName;
+                this.EntityPM.OnForwardingETD = this.SourceEntityPM.OnForwardingETD;
+                this.EntityPM.OnForwardingATD = this.SourceEntityPM.OnForwardingATD;
+                this.EntityPM.OnForwardingETA = this.SourceEntityPM.OnForwardingETA;
+                this.EntityPM.OnForwardingATA = this.SourceEntityPM.OnForwardingATA;
+                this.EntityPM.SplitOnForwarding = this.SourceEntityPM.SplitOnForwarding;
+                this.EntityPM.OnForwardingAdditionalTransportModeCode = this.SourceEntityPM.OnForwardingAdditionalTransportModeCode;
+            }
+
+            else {
+                this.EntityPM.OnForwardingFromPortId = null;
+                this.EntityPM.OnForwardingFromPortCode = null;
+                this.EntityPM.OnForwardingFromPortName = null;
+                this.EntityPM.OnForwardingFromPortCountryCode = null;
+                this.EntityPM.OnForwardingFromPortCountryName = null;
+                this.EntityPM.OnForwardingToPortId = null;
+                this.EntityPM.OnForwardingToPortCode = null;
+                this.EntityPM.OnForwardingToPortName = null;
+                this.EntityPM.OnForwardingToPortCountryCode = null;
+                this.EntityPM.OnForwardingToPortCountryName = null;
+                this.EntityPM.OnForwardingCarrierId = null;
+                this.EntityPM.OnForwardingCarrierCode = null;
+                this.EntityPM.OnForwardingCarrierName = null;
+                this.EntityPM.OnForwardingCarrierNumber = null;
+                this.EntityPM.OnForwardingCarrierWebSite = null;
+                this.EntityPM.OnForwardingTransportModeId = null;
+                this.EntityPM.OnForwardingVesselId = null;
+                this.EntityPM.OnForwardingVesselName = null;
+                this.EntityPM.OnForwardingETD = null;
+                this.EntityPM.OnForwardingATD = null;
+                this.EntityPM.OnForwardingETA = null;
+                this.EntityPM.OnForwardingATA = null;
+                this.EntityPM.SplitOnForwarding = false;
+                this.EntityPM.OnForwardingAdditionalTransportModeCode = null;
+            }
+        }
+    }
+
     private isCopyFlights: boolean = false;
     get IsCopyFlights() { return this.isCopyFlights; }
     set IsCopyFlights(value) {

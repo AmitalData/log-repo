@@ -5698,7 +5698,7 @@ export class RoutingHelper {
                 // Previous
                 if (isPreForwardingExists) {
                     if (this.IsDateSeriesSmaller(PreCarriageETD, PreForwardingETA)) {
-                        OnCarriageErrors.push("Pre-Carriage expected departure must be bigger than Pre-ForwardingE expected arrival");
+                        OnCarriageErrors.push("Pre-Carriage expected departure must be bigger than Pre-Forwarding expected arrival");
                     }
 
                     if (this.IsDateSeriesSmaller(PreCarriageATD, PreForwardingATA)) {
