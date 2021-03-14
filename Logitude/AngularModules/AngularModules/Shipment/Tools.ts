@@ -5323,6 +5323,14 @@ export class RoutingHelper {
                     errors.push(message.replace("Field", "Pre Carriage ATA"));
                 }
 
+                // PreForwarding
+                if (!DateTool.IsActualDateValid(entityPM.PreForwardingATD)) {
+                    errors.push(message.replace("Field", "Pre Forwarding ATD"));
+                }
+                if (!DateTool.IsActualDateValid(entityPM.PreForwardingATA)) {
+                    errors.push(message.replace("Field", "Pre Forwarding ATA"));
+                }
+
                 // Main
                 if (!DateTool.IsActualDateValid(entityPM.MainCarriageATD)) {
                     var textCode: string = entityPM.TransportModeId == "O" ? "Shipment.O.Routings.MainCarriage" : "Shipment.O.Routings.MainCarriageLeg1";
@@ -5377,6 +5385,14 @@ export class RoutingHelper {
                 }
                 if (!DateTool.IsActualDateValid(entityPM.OnCarriageATA)) {
                     errors.push(message.replace("Field", "On Carriage ATA"));
+                }
+
+                // OnForwarding
+                if (!DateTool.IsActualDateValid(entityPM.OnForwardingATD)) {
+                    errors.push(message.replace("Field", "On Forwarding ATD"));
+                }
+                if (!DateTool.IsActualDateValid(entityPM.OnForwardingATA)) {
+                    errors.push(message.replace("Field", "On Forwarding ATA"));
                 }
 
                 // Warehouse

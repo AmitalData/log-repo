@@ -94338,7 +94338,8 @@
       IsSharedLogisticsEnabled="false"
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
-      IsFollowUp="false" />
+      IsFollowUp="false"
+      EntityStatusCode="&quot;PRFD&quot;" />
     <EventType
       Code="&quot;PRFA&quot;"
       ObjectTableName="&quot;Shipment&quot;"
@@ -94351,7 +94352,8 @@
       IsSharedLogisticsEnabled="false"
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
-      IsFollowUp="false" />
+      IsFollowUp="false"
+      EntityStatusCode="&quot;PRFA&quot;" />
     <EventType
       Code="&quot;ONFD&quot;"
       ObjectTableName="&quot;Shipment&quot;"
@@ -94364,7 +94366,8 @@
       IsSharedLogisticsEnabled="false"
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
-      IsFollowUp="false" />
+      IsFollowUp="false"
+      EntityStatusCode="&quot;ORFD&quot;" />
     <EventType
       Code="&quot;ONFA&quot;"
       ObjectTableName="&quot;Shipment&quot;"
@@ -94377,7 +94380,8 @@
       IsSharedLogisticsEnabled="false"
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
-      IsFollowUp="false" />
+      IsFollowUp="false"
+      EntityStatusCode="&quot;ORFA&quot;" />
   </EventTypes>
   <Records />
   <MenuButtons
