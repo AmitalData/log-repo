@@ -54,11 +54,11 @@ export class DSVLoginProcessComponent extends LoginComponent implements OnInit {
     }
     
     ngOnInit() {
-        this.StartLoginProcess();
+        this.StartLoginProcess(); 
         this.GetHybridLabelsData();
     }
 
-    GetHybridLabelsData() {
+    GetHybridLabelsData() { 
         this.BackgroundImage = HybridLabelsBrandingDataService.GetBackgroundImageFromStorage();
         this.MainLogo = HybridLabelsBrandingDataService.GetMainLogoFromStorage();
         this.LoginProgressImage = HybridLabelsBrandingDataService.GetLoginProgressFromStorage();

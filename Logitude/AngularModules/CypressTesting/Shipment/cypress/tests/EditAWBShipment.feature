@@ -1,4 +1,4 @@
-@release @all @shipments2
+@release @stable
 Feature: Edit AWB Shipment
     The authenticated user will create a direct export air shipment,
     and open AWB wizard screen to show overview tab and add packages from AWB wizard.
@@ -6,8 +6,12 @@ Feature: Edit AWB Shipment
     Scenario: Login and create direct export air shipment
         Given the user logged in and navigate to shipments workspace
         And a direct shipment with the following details
-            | ShipmentLevel | Direction | TransportMode | Shipper           | MainCarriageFromPort | MainCarriageToPort |
-            | Direct        | Export    | Air           | TestShipperExport | LHR                  | MIA                |
+            | ShipmentLevel        | Direct            |
+            | Direction            | Export            |
+            | TransportMode        | Air               |
+            | Shipper              | TestShipperExport |
+            | MainCarriageFromPort | LHR               |
+            | MainCarriageToPort   | MIA               |
         And main carriage airline is "AA" with random flight number and MAWB
         When create shipment
         Then the shipment should create successfully

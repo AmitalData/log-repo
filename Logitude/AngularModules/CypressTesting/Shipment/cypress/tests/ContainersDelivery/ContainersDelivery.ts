@@ -6,6 +6,7 @@ import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
 import { ShipmentDetails } from '../../models/ShipmentDetails';
 import { RequestAliases } from '../../../../Base/cypress/constants/RequestAliases';
 import { PackagesDetails } from '../../models/PackagesDetails';
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 //#region variables
 let shipmentDetails: ShipmentDetails;
@@ -20,7 +21,7 @@ Given("the user logged in and navigates to shipments workspace", () => {
 });
 
 Given("a shipment with the following details", (dataTable) => {
-    shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+    shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
     Actions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
     Actions.FillShipmentWizardsFields(shipmentDetails);
 });
@@ -40,7 +41,7 @@ Then("the shipment should create successfully", () => {
 //#region Add a container
 Given("the user add a container with the following details", (dataTable) => {
     Actions.OpenShipment(shipmentDetails.ShipmentNumber);
-    packagesDetails = dataTable.hashes() as PackagesDetails[];
+    packagesDetails = Assists.CreateSet<PackagesDetails>(dataTable);
     packagesDetails[0].ContainerNumber = ContainerNumber;
     Actions.FillPackageTab(shipmentDetails.TransportMode, packagesDetails, shipmentDetails.ShipmentType);
 });

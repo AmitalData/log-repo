@@ -16,6 +16,7 @@ import { QuickSearchDetails } from '../../../Base/cypress/models/QuickSearchDeta
 import * as BaseActions from '../../../Base/cypress/actions/Actions';
 import { EventDetails } from '../models/EventDetails';
 import { EventTypeDetails } from '../models/EventTypeDetails';
+import { WarehouseStorage } from 'cypress/models/WarehouseStorage';
 
 export function NavigatesToEventsTab() {
     cy.DefineRequestWait(RestAPI.GET, URLs.TraceEventsDomain, RequestAliases.GetTraceEvent);
@@ -42,7 +43,6 @@ export function AssertAddEvent(EventNote:string) {
     BaseAssertion.AssertStatusCode(RequestAliases.GetTraceEvent, 200).then((interception) => {
         expect(interception.response.body.Notes,)
     })
-    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentGetSingle, 200);
 }
 export function AssertExceptionResolved (EventNote:string){
     BaseAssertion.AssertStatusCode( RequestAliases.ShipmentRequest,200).then((interception) => {
@@ -62,7 +62,6 @@ export function ClickOnExceptionResolved(ExceptionResolvedNote:string){
     cy.Click(ShipmentSelectors.ShipmentExceptionResolved,null)
     cy.FillLogTextBox(ShipmentSelectors.EventNotes,ExceptionResolvedNote)
     cy.Click(ShipmentSelectors.ConfirmActionButton,null)
-    
 }
 export function RefreshEventTab(){
     cy.get(BaseSelectors.CurvedEditArea).find(BaseSelectors.Refresh).click()
@@ -237,9 +236,9 @@ export function ConnectOrDisconnectShipment() {
 }
 //#endregion
 //#region General Tab
-export function FillGeneralTab(GrossWeight: string, MoveType: string) {
+export function FillGeneralTab(ValueOfGoods: string, MoveType: string) {
     cy.Click(ShipmentSelectors.GeneralTab, null)
-    cy.FillLogTextBox(ShipmentSelectors.ShipmentGrossWeight, GrossWeight)
+    cy.FillLogTextBox(ShipmentSelectors.ShipmentValueOfGoods, ValueOfGoods)
     cy.FillLogLov(ShipmentSelectors.ShipmentMoveType, MoveType, true)
 }
 //#endregion
@@ -454,6 +453,22 @@ export function AssertRoutingLegAppeared(legName:string , ContainerNumber:string
     legName=legName.replace(/\s/g, "");
     BaseAssertion.AssertElementContain(ShipmentSelectors.legBoxItem(legName),ContainerNumber )
 }
+
+export function CalculateStorage() {
+    cy.DefineRequestWait(RestAPI.GET, URLs.GetAllByFilter, RequestAliases.GetAll)
+    cy.Click(BaseSelectors.Button, ShipmentSelectors.ContainsCalculateStorage, true);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetAll, 200)
+}
+
+export function ValidateStoragePricing(AmountList:WarehouseStorage[],expectedWeight:string){
+    cy.get(BaseSelectors.Hyperlink).contains(ShipmentSelectors.ContainsStoragePricing).click();
+    for (let i = 0; i < AmountList.length; i++) {
+        BaseAssertion.AssertElementTextEqual(BaseSelectors.CellWithRowAndCol("5", (i + 1).toString()),AmountList[i].Amount,BaseSelectors.td)
+    }
+    BaseAssertion.AssertElementContain(BaseSelectors.LogitudeScrollViewer,ShipmentSelectors.ContainsWeight+expectedWeight)
+    cy.Click(BaseSelectors.RedButton+BaseSelectors.LastElement,BaseSelectors.ContainsOK);
+}
+
 //#endregion
 //#region Payables Tab
 export function FillPayablesTab(payableDetails: PayableDetails) {

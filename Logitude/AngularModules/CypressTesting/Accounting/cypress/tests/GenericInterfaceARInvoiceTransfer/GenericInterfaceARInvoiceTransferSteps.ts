@@ -13,8 +13,9 @@ import { ARInvoiceDetails } from '../../models/ARInvoiceDetails';
 import { AccountingSelectors } from "../../selectors/Selectors";
 import * as BaseActions from '../../../../Base/cypress/actions/Actions';
 import { AccountingURLs } from '../../constants/URLs';
-import { RestAPI } from '../../../../Base/cypress/constants/RestAPI'
-
+import { RestAPI } from '../../../../Base/cypress/constants/RestAPI';
+import * as Assists from "../../../../Base/cypress/assists/Assists";
+import { ExternalIDs } from '../../models/ExternalIDs';
 //#region variables
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
@@ -22,6 +23,7 @@ let customerCode: string;
 let AccountingSystem: string;
 let ExternalTransmissionType: string
 let ARInvoiceNumber: string;
+let externalIDs:ExternalIDs
 //#endregion
 
 //#region Update Accounting System
@@ -49,7 +51,7 @@ Given("the user navigates to customers workspace", () => {
 });
 
 Given("a customer with the following details", (dataTable) => {
-  let customerDetails = dataTable.hashes()[0] as CustomerDetails;
+  let customerDetails = Assists.CreateInstance<CustomerDetails>(dataTable, true);
   CommonActions.AddNewCustomer(customerDetails);
 });
 
@@ -70,7 +72,7 @@ Given("the user navigates to shipments workspace", () => {
 });
 
 Given("a direct shipment with the following details", (dataTable) => {
-  shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+  shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
   ShipmentActions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
   shipmentDetails.Shipper = customerCode;
   ShipmentActions.FillShipmentWizardsFields(shipmentDetails);
@@ -88,8 +90,8 @@ Then("the direct should create successfully", () => {
 //#endregion
 
 //#region add receivable
-Given("a receivable with the following details", (dataTable) => {
-  const ReceivableData = dataTable.hashes() as ReceivableDetails[];
+Given("a receivable with the following details including clearing external IDs for chargesType and currency", (dataTable) => {
+  const ReceivableData = Assists.CreateSet<ReceivableDetails>(dataTable);
   ShipmentActions.OpenShipment(shipmentNumber);
   ShipmentActions.FillReceivablesTab(ReceivableData, true)
 });
@@ -105,7 +107,7 @@ Then("the receivable should add successfully", () => {
 
 //#region Create ARInvoice
 Given("an ARInvoice with the following details", (dataTable) => {
-  const ARInvoiceData = dataTable.hashes()[0] as ARInvoiceDetails
+  const ARInvoiceData = Assists.CreateInstance<ARInvoiceDetails>(dataTable, true);
   cy.Click(AccountingSelectors.CreateARInvoiceButton, null);
   AccountingActions.FillARInvoiceDetails(ARInvoiceData)
 });
@@ -164,11 +166,11 @@ Then("the ARInvoice should appear in AR Not Ready Invoices", () => {
 
 //#region Add missing external IDs
 Given("an external IDs with the following details", (dataTable) => {
-  const ExternalIDs = dataTable.hashes()[0];
+  externalIDs = Assists.CreateInstance<ExternalIDs>(dataTable, true);
   AccountingActions.ClickOnRowDependingOnARInvoiceNumber(ARInvoiceNumber)
-  AccountingActions.FillExternalID(BaseSelectors.Partner, "BillTo", ExternalIDs.BillTo)
-  AccountingActions.FillExternalID(BaseSelectors.Currency ,"InvoiceCurrency", ExternalIDs.Currency)
-  AccountingActions.FillExternalID(BaseSelectors.ChargesType ,"ChargeType", ExternalIDs.ChargesType)
+  AccountingActions.FillExternalID(BaseSelectors.Partner, "BillTo", externalIDs.BillTo)
+  AccountingActions.FillExternalID(BaseSelectors.Currency ,"InvoiceCurrency", externalIDs.Currency)
+  AccountingActions.FillExternalID(BaseSelectors.ChargesType ,"ChargeType", externalIDs.ChargesType)
 });
 
 When("add the external IDs", () => {

@@ -1,4 +1,4 @@
-@release @all
+@release @dev
 Feature: Edit Air Freight Cost Tariff
     The authenticated user will create new air freight cost tariff,
     add new tariff lines in draft version tab,
@@ -7,8 +7,10 @@ Feature: Edit Air Freight Cost Tariff
     Scenario: Login and create new air freight cost
         Given the user logged in and navigate to tariff workspace
         And an air freight cost with the following details
-            | Name               | Seller | StartDate | Product |
-            | TestAirFreightCost | AA     | Today     | General |
+            | Name      | TestAirFreightCost |
+            | Seller    | AA                 |
+            | StartDate | Today              |
+            | Product   | General            |
         When create freight cost
         Then the freight cost should create successfully
 
@@ -24,7 +26,9 @@ Feature: Edit Air Freight Cost Tariff
     Scenario: Edit general tab details
         Given the user in general tab
         And the freight cost with new following details
-            | Name                | Seller | Product         | Notes                     |
-            | TestAirFreightCost2 | BA     | Dangerous Goods | Update TestAirFreightCost |
+            | Name    | TestAirFreightCost2     |
+            | Seller  | BA                      |
+            | Product | Dangerous Goods         |
+            | Notes   | Edit TestAirFreightCost |
         When update freight cost
         Then the freight cost should update successfully

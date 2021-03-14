@@ -1,12 +1,14 @@
-@release @all
+@release @dev
 Feature: Create New Freight Cost Tariff
     The authenticated user will create new air, ocean LCL, and ocean FCL freight cost tariff.
 
     Scenario: Login and create new air freight cost
         Given the user logged in and navigate to tariff workspace
         And an air freight cost with the following details
-            | Name               | Seller | StartDate | Product |
-            | TestAirFreightCost | AA     | Today     | General |
+            | Name      | TestAirFreightCost |
+            | Seller    | AA                 |
+            | StartDate | Today              |
+            | Product   | General            |
         And the following All-In charges
             | Name             |
             | Agent Commission |
@@ -16,8 +18,9 @@ Feature: Create New Freight Cost Tariff
 
     Scenario: Create new ocean LCL freight cost
         Given an ocean LCL freight cost with the following details
-            | Name                    | Seller | StartDate |
-            | TestOceanLCLFreightCost | MAEU   | Today     |
+            | Name      | TestOceanLCLFreightCost |
+            | Seller    | MAEU                    |
+            | StartDate | Today                   |
         And the following All-In charges
             | Name                     |
             | Bunker Adjustment Factor |
@@ -27,8 +30,9 @@ Feature: Create New Freight Cost Tariff
 
     Scenario: Create new ocean FCL freight cost
         Given an ocean FCL freight cost with the following details
-            | Name                    | Seller | StartDate |
-            | TestOceanFCLFreightCost | MAEU   | Today     |
+            | Name      | TestOceanFCLFreightCost |
+            | Seller    | MAEU                    |
+            | StartDate | Today                   |
         And the following All-In charges
             | Name                     |
             | Bunker Adjustment Factor |

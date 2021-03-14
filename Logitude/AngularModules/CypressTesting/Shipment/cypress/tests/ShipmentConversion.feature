@@ -1,4 +1,4 @@
-@release @all
+@release @dev
 Feature: Convert Shipment from House to Direct, Direct to House, FCL to LCL, LCL to FCL and Shipment Direction
     The user creates a Direct Export Ocean FCL shipment,
     changes direction to Import, changes type to House,
@@ -7,8 +7,13 @@ Feature: Convert Shipment from House to Direct, Direct to House, FCL to LCL, LCL
     Scenario: Create direct export ocean FCL shipment
         Given the user logged in and navigate to shipments workspace
         And a shipment with the following details
-            | ShipmentLevel | Direction | TransportMode | ShipmentType | Shipper           | MainCarriageFromPort | MainCarriageToPort |
-            | Direct        | Export    | Ocean         | FCL          | TestShipperExport | LHR                  | MIA                |
+            | ShipmentLevel        | Direct            |
+            | Direction            | Export            |
+            | TransportMode        | Ocean             |
+            | ShipmentType         | FCL               |
+            | Shipper              | TestShipperExport |
+            | MainCarriageFromPort | LHR               |
+            | MainCarriageToPort   | MIA               |
         When create shipment
         Then the shipment should create successfully
 
@@ -16,8 +21,8 @@ Feature: Convert Shipment from House to Direct, Direct to House, FCL to LCL, LCL
         Given the user open the shipment
         And open direction conversion wizard
         And fill the following details for direction conversion
-            | Direction | Consignee           |
-            | Import    | TestConsigneeImport |
+            | Direction | Import              |
+            | Consignee | TestConsigneeImport |
         When convert shipment direction
         Then the direction should convert successfully
         And direction should be "Import"

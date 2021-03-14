@@ -73,6 +73,8 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly OkAddARPayment = '#ok-AddARPayment';
     public static readonly ARPaymentSave = '#ARPayment-Save';
     public static readonly ARPaymentBApprove = '#ARPaymentBApprove';
+    public static readonly ARPaymentCurrency = '#ARPayment_PaymentCurrencyId';
+    
     //#endregion
     //#region ARInvoice
     public static readonly ARInvoiceBranch = '#ARInvoice_BranchId';
@@ -129,6 +131,7 @@ export class AccountingSelectors extends RegexSelectors {
     //#endregion
     //#region FTP
     public static readonly EditFTPSettings = "iconbutton[data-cy^=EditFTPSettings]"
+    public static readonly AddFTPSettings = "#Add"
     public static readonly FTPDetailUserName = "#FTPDetail_UserName"
     public static readonly FTPDetailPassword = "#FTPDetail_Password"
     public static readonly FTPDetailHost = "#FTPDetail_Host"

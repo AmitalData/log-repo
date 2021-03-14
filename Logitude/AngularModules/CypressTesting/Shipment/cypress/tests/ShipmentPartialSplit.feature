@@ -1,4 +1,4 @@
-@release @not-stable @all
+@release @stable
 Feature: Partial Split shipment
     The user creates a shipment, adds packages,
     splits the shipment by moving part of the packages to a new shipment,
@@ -8,8 +8,12 @@ Feature: Partial Split shipment
     Scenario: Create direct export air shipment
         Given the user logged in and navigates to shipments workspace
         And a direct shipment with the following details
-            | ShipmentLevel | Direction | TransportMode | Shipper           | MainCarriageFromPort | MainCarriageToPort |
-            | Direct        | Export    | Air           | TestShipperExport | LHR                  | MIA                |
+            | ShipmentLevel        | Direct            |
+            | Direction            | Export            |
+            | TransportMode        | Air               |
+            | Shipper              | TestShipperExport |
+            | MainCarriageFromPort | LHR               |
+            | MainCarriageToPort   | MIA               |
         When create shipment
         Then the direct should create successfully
 
@@ -23,8 +27,9 @@ Feature: Partial Split shipment
 
     Scenario: Partial Split Shipment
         When partial split the shipment with the following details
-            | Quantity | Volume | GrossWeight |
-            | 9        | 5.000  | 900.000     |
+            | Quantity    | 9       |
+            | Volume      | 5.000   |
+            | GrossWeight | 900.000 |
         Then the direct shipment should split into two shipment with packages with the following details
             | Quantity | Volume | GrossWeight |
             | 9        | 5.000  | 900.000     |

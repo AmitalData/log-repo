@@ -1,4 +1,4 @@
-@smoke @release @not-stable @all
+@smoke @release @dev
 #cancel it's smoke and relese
 #reactivate is release
 Feature: Cancel and Reactivate Shipment
@@ -9,8 +9,12 @@ Feature: Cancel and Reactivate Shipment
   Scenario: Create direct export air shipment
     Given the user logged in and navigates to shipments workspace
     And a direct shipment with the following details
-      | ShipmentLevel | Direction | TransportMode | Shipper           | MainCarriageFromPort | MainCarriageToPort |
-      | Direct        | Export    | Air           | TestShipperExport | LHR                  | MIA                |
+      | ShipmentLevel        | Direct            |
+      | Direction            | Export            |
+      | TransportMode        | Air               |
+      | Shipper              | TestShipperExport |
+      | MainCarriageFromPort | LHR               |
+      | MainCarriageToPort   | MIA               |
     When create shipment
     Then the direct should create successfully
 

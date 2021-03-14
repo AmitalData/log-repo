@@ -133,6 +133,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PickUp = '#PickUp';
   public static readonly Delivery = '#Delivery';
   public static readonly PreCarriage = '#PreCarriage';
+  public static readonly AddWarehouse = '#Add-WarehouseLeg';
   public static readonly EditRoutingMainCarriage = '#Edit-MainCarriage';
   public static readonly ShipmentMainCarriageCarrierId = '#Shipment_MainCarriageCarrierId';
   public static readonly ShipmentBookingNumberOfPackages = '#Shipment_BookingNumberOfPackages';
@@ -143,6 +144,13 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly MainCarriageATDDate = '#date_Shipment_MainCarriageATD';
   public static readonly MainCarriageATATime = '#time_Shipment_MainCarriageATA';
   public static readonly MainCarriageATADate = '#date_Shipment_MainCarriageATA';
+  public static readonly WarehouseLeg = "#Shipment_WarehouseLegWarehouseId";
+  public static readonly WarehouseLegActualReleaseDate = '#date_Shipment_WarehouseLegActualReleaseDate';
+  public static readonly WarehouseLegActualEntryDate = '#date_Shipment_WarehouseLegActualEntryDate';
+  public static readonly ContainsCalculateStorage = 'Calculate Storage';
+  public static readonly ContainsStoragePricing = 'Storage Pricing';
+  public static readonly ContainsWeight = "Weight = ";
+  public static readonly StorageFeeResult = "div[data-cy='StorageFee']";
   public static readonly MainCarriageOKBtn = '#MainCarriageOKBtn';
   public static readonly ShipmentPickUpDeliveryToPartnerCard = '#ShipmentPickUpDelivery_ToPartnerCardId';
   public static readonly ShipmentPreCarriageTransportMode = '#Shipment_PreCarriageTransportModeId';
@@ -171,6 +179,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ReceivableFromPayables="#PAYB-Receivable"
   public static readonly LogLovShipmentReceivableChargesTypeId="#LogLov_ShipmentReceivable_ChargesTypeId"
   public static readonly LogLovShipmentReceivableCurrencyId="#LogLov_ShipmentReceivable_CurrencyId"
+
   //#endregion 
   //#region Payable tab fields
   public static readonly AddNewPayableLine = '#AddPayable button';
@@ -237,14 +246,6 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ContactEnglishName = "#Contact_EnglishName";
   public static readonly ContactEmail = "#Contact_Email";
   public static readonly ShipmentBranch = "#Shipment_BranchId";
-  public static readonly ContainsMainCarriageCarrierRequired = "Main Carriage Carrier is required";
-  public static readonly ContainsContractNumberRequired = "Contract Number is required";
-  public static readonly ContainsETDOrVesselAndVoyageMustProvided = "ETD or Main-Carriage Vessel and Voyage must be provided";
-  public static readonly ContainsShipmentDescriptionOfGoodsRequired = "Shipment Description of Goods is required";
-  public static readonly ContainsShipmentPackagesRequired = "Shipment Order Packages or Shipment Packages are required";
-  public static readonly ContainsMoveTypeIsRequired = "Move type is required";
-  public static readonly ContainsBookingConfirmationNumberRequired = "Booking Confirmation Number is required";
-  public static readonly ContainsAllContainersShouldHaveContainerNumber = "All Containers should have Container Number";
   public static readonly ContainsMessageHasBeenSentSuccessfully = "Message has been sent Successfully";
   public static readonly ContainsRequestBooking = "Request Booking";
   public static readonly SaveShipperContactButton = ".RedButton:last";

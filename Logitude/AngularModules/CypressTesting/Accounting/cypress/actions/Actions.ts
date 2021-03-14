@@ -66,7 +66,7 @@ export function ExternalTransmission(ExternalTransmissionType: string, FTPdetail
 
 function FillFTPDetails(FTPdetails: FTPDetails) {
     cy.Click(BaseSelectors.Hyperlink, BaseSelectors.ContainSettings);
-    cy.Click(AccountingSelectors.EditFTPSettings, null, true)
+    cy.Click(AccountingSelectors.AddFTPSettings, null, true)
 
     cy.FillLogTextBox(AccountingSelectors.FTPDetailUserName, FTPdetails.UserName)
     cy.FillLogTextBox(AccountingSelectors.FTPDetailPassword, FTPdetails.Password)
@@ -199,6 +199,11 @@ export function ARApproveInvoice() {
     cy.Click(AccountingSelectors.ARInvoiceApproveButton, null)
 }
 
+export function PostARApproveInvoice() {
+    cy.DefineRequestWait(RestAPI.POST, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
+    cy.Click(AccountingSelectors.ARInvoiceApproveButton, null)
+}
+
 export function SetAsSentARInvoice() {
     cy.Click(BaseSelectors.MoreList, null, true)
     cy.Click(AccountingSelectors.ARInvoiceSetAsSentButton, null)
@@ -239,7 +244,7 @@ export function AddTwoShipmentLinesAndEditAmount(shipmentNumbers: string[], VATT
         cy.FillLogTextBox(AccountingSelectors.APInvoiceLineForiegnCurrencyAmount, amount.toString());
         cy.FillLogLov(AccountingSelectors.APInvoiceVatType, VATType, true);
         cy.Click(BaseSelectors.Button, BaseSelectors.ContainsApplytoall);
-        cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.InvoiceDomain, RequestAliases.APInvoicesRequest);
+        cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.APInvoicesGetSingle, RequestAliases.APInvoicesRequest);
         cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
         BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
     }
@@ -310,6 +315,7 @@ export function FillARPaymentDetails(aRPaymentDetails: ARPaymentDetails) {
     if (aRPaymentDetails.Partner) {
         cy.FillLogLov(AccountingSelectors.ARPaymentPartner, aRPaymentDetails.Partner, false)
     }
+    cy.FillLogLov(AccountingSelectors.ARPaymentCurrency, aRPaymentDetails.PaymentCurrency, true) 
     cy.FillLogLov(AccountingSelectors.ARPaymentPaymentMethod, aRPaymentDetails.PaymentMethod, true)
     cy.FillLogTextBox(AccountingSelectors.ARPaymentAmount, aRPaymentDetails.PaymentAmount)
     cy.Click(AccountingSelectors.OkAddARPayment, null)
@@ -353,19 +359,9 @@ export function NavigatesToDraftInvoice(draftConsolidationInvoiceNumber: string)
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200);
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200);
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200);
-    cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViewsGetByFilters, RequestAliases.ARInvoiceviews);
-    cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViewsGetByFilters, RequestAliases.ARInvoiceviews);
-    cy.FillLogTextBox(BaseSelectors.SearchField, draftConsolidationInvoiceNumber);
-    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200);
-    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200);
-    cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoicesGetSingle, RequestAliases.ARInvoicesRequest);
-    cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViewsGetByFilters, RequestAliases.ARInvoiceviews);
-    cy.DefineRequestWait(RestAPI.GET, AccountingURLs.ARInvoiceViewsGetByFilters, RequestAliases.ARInvoiceviews);
-    cy.Click(BaseSelectors.ListItem, null);
-
-    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
-    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200);
-    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoiceviews, 200);
+    cy.FillLogTextBox(BaseSelectors.SearchField, draftConsolidationInvoiceNumber)
+    cy.get(BaseSelectors.ListDataLoaded)
+        ClickOnRowDependingOnARInvoiceNumber(draftConsolidationInvoiceNumber)
 }
 //#endregion
 export function AddSecondInvoiceToConsolidation(ARInvoiceNumber: string) {
@@ -445,5 +441,20 @@ export function AssertTransferredInvoice() {
 }
 function ClickOnSaveOnConfirmWindow() {
     cy.get(BaseSelectors.ConfirmWindow).find(BaseSelectors.RedButton).contains(BaseSelectors.ContainSave).click()
+
+}
+
+export function CreateARInvoiceGeneratedFromRoutingLeg(vat:string){
+    ClickAndWaitToLoad(AccountingSelectors.CreateARInvoiceButton);
+    cy.FillLogTextBox(AccountingSelectors.ARInvoiceVatNumber, vat)
+    ClickAndWaitToLoad(AccountingSelectors.OkCreateARInvoiceButton);
+    cy.FillLogLov(AccountingSelectors.ARInvoiceVatType , vat ,true)
+    ClickAndWaitToLoad(AccountingSelectors.VatTypeApplyToAll);
+}
+
+function ClickAndWaitToLoad(ButtonSelector:string){
+    cy.DefineRequestWait(RestAPI.GET, AccountingURLs.VatTypePercentageCall, RequestAliases.GetVatTypePercentage)
+    cy.Click(ButtonSelector, null);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetVatTypePercentage, 200);
 
 }

@@ -168,6 +168,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsNotModified"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerRoleId"
     ReferencedTable="Roles"

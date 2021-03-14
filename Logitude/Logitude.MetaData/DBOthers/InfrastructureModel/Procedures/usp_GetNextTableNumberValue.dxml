@@ -61,14 +61,16 @@ BEGIN;
    
  BEGIN;
 
- 
- Set @Current	= (SELECT  LastValue
-         FROM CounterStats with (UPDLOCK ROWLOCK) WHERE  CounterId = @pCounterId and Prefix = @pPrefix and Tenant =  @pTenant)
+ -- Update made by Rabaia for the Counter Stats issue
+ --Set @Current	= (SELECT  LastValue
+ --        FROM CounterStats with (UPDLOCK ROWLOCK) WHERE  CounterId = @pCounterId and Prefix = @pPrefix and Tenant =  @pTenant)
 
-		 Set @Current = @Current + 1
+ --		 Set @Current = @Current + 1
 
 		 Update CounterStats
-		 set LastValue = @Current
+     WITH (UPDLOCK, ROWLOCK)
+		 set @Current = LastValue = (SELECT  LastValue
+         FROM CounterStats with (UPDLOCK ROWLOCK) WHERE  CounterId = @pCounterId and Prefix = @pPrefix and Tenant =  @pTenant) + 1 
 		 Where   CounterId = @pCounterId and Prefix = @pPrefix and Tenant =  @pTenant
 	
  End;
@@ -114,14 +116,16 @@ BEGIN;
    
  BEGIN;
 
- 
- Set @Current	= (SELECT  LastValue
-         FROM CounterStats with (UPDLOCK ROWLOCK) WHERE  CounterId = @pCounterId  and Tenant =  @pTenant)
+      -- Also this Update made by me Rabaia for the Same Counter Stats Issue
+     --Set @Current	= (SELECT  LastValue
+     --   FROM CounterStats with (UPDLOCK ROWLOCK) WHERE  CounterId = @pCounterId  and Tenant =  @pTenant)
 
-		 Set @Current = @Current + 1
+		 --Set @Current = @Current + 1
 
 		 Update CounterStats
-		 set LastValue = @Current
+     WITH (UPDLOCK, ROWLOCK)
+		 set @Current = LastValue = (SELECT  LastValue
+         FROM CounterStats with (UPDLOCK ROWLOCK) WHERE  CounterId = @pCounterId and Prefix = @pPrefix and Tenant =  @pTenant) + 1 
 		 Where   CounterId = @pCounterId  and Tenant =  @pTenant
 	
  End;

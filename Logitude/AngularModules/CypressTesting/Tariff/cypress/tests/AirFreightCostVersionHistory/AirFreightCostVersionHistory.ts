@@ -2,13 +2,14 @@ import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import * as Actions from "../../actions/Actions";
 import { TariffDetails } from "../../models/TariffDetails";
 import { FreightCostTariffLineDetails } from "../../models/FreightCostTariffLineDetails";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 Given("the user logged in and navigate to tariff workspace", () => {
     Actions.LoginAndNavigateToTariffWorkspace();
 });
 
 Given("an air freight cost with the following details", (dataTable) => {
-    let tariffDetails = dataTable.hashes()[0] as TariffDetails;
+    let tariffDetails = Assists.CreateInstance<TariffDetails>(dataTable, true);
     Actions.FillNewFreightCost("Air", tariffDetails);
 });
 
@@ -17,12 +18,12 @@ Given("the user open the freight cost", () => {
 });
 
 Given("add the following tariff lines", (dataTable) => {
-    let freightCostTariffLineDetailsList = dataTable.hashes() as FreightCostTariffLineDetails[];
+    let freightCostTariffLineDetailsList = Assists.CreateSet<FreightCostTariffLineDetails>(dataTable);
     Actions.AddFreightCostTariffLines("Air", freightCostTariffLineDetailsList);
 });
 
 Given("the following new values for the tariff lines", (dataTable) => {
-    let freightCostTariffLineDetailsList = dataTable.hashes() as FreightCostTariffLineDetails[];
+    let freightCostTariffLineDetailsList = Assists.CreateSet<FreightCostTariffLineDetails>(dataTable);
     Actions.EditFreightCostTariffLines("Air", freightCostTariffLineDetailsList);
 });
 

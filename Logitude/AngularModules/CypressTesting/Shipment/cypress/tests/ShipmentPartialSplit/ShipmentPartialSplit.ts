@@ -7,6 +7,7 @@ import { ShipmentSelectors } from "../../selectors/Selectors";
 import { PackagesDetails } from "cypress/models/PackagesDetails";
 import { RestAPI } from "../../../../Base/cypress/constants/RestAPI";
 import { URLs } from "../../constants/URLs";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
@@ -20,7 +21,7 @@ Given("the user logged in and navigates to shipments workspace", () => {
 });
 
 Given("a direct shipment with the following details", (dataTable) => {
-    shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+    shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
     Actions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
     Actions.FillShipmentWizardsFields(shipmentDetails);
 });
@@ -44,7 +45,7 @@ Given("the user open the shipment and navigate to packages workspace", () => {
 });
 
 Given("a package with the following details", (dataTable) => {
-    packageDetailsList = dataTable.hashes() as PackagesDetails[];
+    packageDetailsList = Assists.CreateSet<PackagesDetails>(dataTable);
     Actions.FillPackageTab(shipmentDetails.TransportMode, packageDetailsList, shipmentDetails.ShipmentType);
 });
 
@@ -59,12 +60,12 @@ Then("the direct shipment should save successfully", () => {
 
 //#region Partial Split Shipment
 When("partial split the shipment with the following details", (dataTable) => {
-    partialSplitDetails = dataTable.hashes()[0] as PackagesDetails;
+    partialSplitDetails = Assists.CreateInstance<PackagesDetails>(dataTable, true);
     Actions.PartialSplitShipment(partialSplitDetails);
 });
 
 Then("the direct shipment should split into two shipment with packages with the following details", (dataTable) => {
-    let expectedPackagesDetailList = dataTable.hashes() as PackagesDetails[];
+    let expectedPackagesDetailList = Assists.CreateSet<PackagesDetails>(dataTable);
     cy.DefineRequestWait(RestAPI.GET, URLs.GetAll, RequestAliases.GetAll)
     BaseAssertion.AssertStatusCode(RequestAliases.SplitShipmentRequest, 200);
 

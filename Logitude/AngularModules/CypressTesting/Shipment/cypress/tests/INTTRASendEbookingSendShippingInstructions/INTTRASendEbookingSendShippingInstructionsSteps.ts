@@ -11,7 +11,8 @@ import { PackagesDetails } from "../../models/PackagesDetails";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion";
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 import { ShipmentSelectors } from "../../selectors/Selectors";
-import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
+import { ValidationMessageDetails } from "../../../../Base/cypress/models/ValidationMessageDetails";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 let ShipmentNumber: string;
 
@@ -25,27 +26,27 @@ Given("open INTTRA settings wizard", () => {
 });
 
 Given("fill the following general settings", (dataTable) => {
-    let generalSettingsDetails = dataTable.hashes()[0] as GeneralSettingsDetails;
+    let generalSettingsDetails = Assists.CreateInstance<GeneralSettingsDetails>(dataTable, true);
     INTTRAActions.FillINTTRAGeneralSettings(generalSettingsDetails);
 });
 
 Given("fill the following out settings", (dataTable) => {
-    let inOutSettingsDetails = dataTable.hashes()[0] as InOutSettingsDetails;
+    let inOutSettingsDetails = Assists.CreateInstance<InOutSettingsDetails>(dataTable, true);
     INTTRAActions.FillINTTRAInOutSettings(inOutSettingsDetails, "Out");
 });
 
 Given("fill the following in settings", (dataTable) => {
-    let inOutSettingsDetails = dataTable.hashes()[0] as InOutSettingsDetails;
+    let inOutSettingsDetails = Assists.CreateInstance<InOutSettingsDetails>(dataTable, true);
     INTTRAActions.FillINTTRAInOutSettings(inOutSettingsDetails, "In");
 });
 
 Given("fill the following branches settings", (dataTable) => {
-    let branchSettingsDetailsList = dataTable.hashes() as BranchSettingsDetails[];
+    let branchSettingsDetailsList = Assists.CreateSet<BranchSettingsDetails>(dataTable);
     INTTRAActions.FillINTTRABranchesSettings(branchSettingsDetailsList);
 });
 
 Given("fill the following registration settings", (dataTable) => {
-    let registrationSettingsDetailsList = dataTable.hashes() as RegistrationSettingsDetails[];
+    let registrationSettingsDetailsList = Assists.CreateSet<RegistrationSettingsDetails>(dataTable);
     INTTRAActions.FillINTTRARegistrationSettings(registrationSettingsDetailsList);
 });
 
@@ -63,7 +64,7 @@ Given("the user logged in and navigate to shipments workspace", () => {
 });
 
 Given("a master shipment with the following details", (dataTable) => {
-    let shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+    let shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
     ShipmentActions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
     ShipmentActions.FillShipmentWizardsFields(shipmentDetails);
 });
@@ -86,35 +87,35 @@ When("open INTTRA e-booking wizard", () => {
     INTTRAActions.OpenSendBookingWizard();
 });
 
-Then("validation messages for sending e-booking should appear", () => {
-    INTTRAActions.ValidateMessagesForSendingEBooking();
+Then("the following validation messages for sending e-booking should appear", (dataTable) => {
+    ValidateMessagesForSendingEBookingOrShippingInstructions(dataTable);
 });
 
 When("open INTTRA shipping instructions wizard", () => {
     INTTRAActions.OpenSendShippingInstructionsWizard();
 });
 
-Then("validation messages for sending shipping instructions should appear", () => {
-    INTTRAActions.ValidateMessagesForSendingShippingInstructions();
+Then("the following validation messages for sending shipping instructions should appear", (dataTable) => {
+    ValidateMessagesForSendingEBookingOrShippingInstructions(dataTable);
 });
 
 Given("the user fill the following information to send e-booking", (dataTable) => {
-    let requiredToSendBookingDetails = dataTable.hashes()[0] as RequiredToSendBookingShippingInstructions;
+    let requiredToSendBookingDetails = Assists.CreateInstance<RequiredToSendBookingShippingInstructions>(dataTable, true);
     INTTRAActions.FillRequiredToSendBooking(requiredToSendBookingDetails);
 });
 
 Given("add the following package", (dataTable) => {
-    let packagesDetailsList = dataTable.hashes() as PackagesDetails[];
+    let packagesDetailsList = Assists.CreateSet<PackagesDetails>(dataTable);
     ShipmentActions.FillPackageTab("Ocean", packagesDetailsList, "FCL");
 });
 
 Given("the user fill the following information to send shipping instructions", (dataTable) => {
-    let requiredToSendShippingInstructions = dataTable.hashes()[0] as RequiredToSendBookingShippingInstructions;
+    let requiredToSendShippingInstructions = Assists.CreateInstance<RequiredToSendBookingShippingInstructions>(dataTable, true);
     INTTRAActions.FillRequiredToSendShippingInstructions(requiredToSendShippingInstructions);
 });
 
 Given("add an inside package with the following details", (dataTable) => {
-    let insidePackagesDetailsList = dataTable.hashes() as PackagesDetails[];
+    let insidePackagesDetailsList = Assists.CreateSet<PackagesDetails>(dataTable);
     ShipmentActions.AddInsidePackage(insidePackagesDetailsList);
 });
 
@@ -153,3 +154,8 @@ Then("the instructions should send successfully", () => {
 Then("booking request status should be {string}", (status) => {
     INTTRAActions.ValidateBookingRequestStatus(status);
 });
+
+function ValidateMessagesForSendingEBookingOrShippingInstructions(dataTable: any){
+    let validationMessageDetailsList = Assists.CreateSet<ValidationMessageDetails>(dataTable);
+    INTTRAActions.ValidateMessagesForSendingEBookingOrShippingInstructions(validationMessageDetailsList);
+}

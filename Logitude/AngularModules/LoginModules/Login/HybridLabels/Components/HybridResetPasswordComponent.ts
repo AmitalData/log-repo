@@ -14,6 +14,7 @@ import { HybridLabelsBrandingDataService } from '../Services/HybridLabelsBrandin
 })
 export class HybridResetPasswordComponent extends ResetPasswordComponent {
      
+
     public authHeader;
     private privateUrl;
     public MainColor: string = null;
@@ -21,30 +22,33 @@ export class HybridResetPasswordComponent extends ResetPasswordComponent {
     public ForgetPasswordImage: string = "";
     public Id = "";
     public MainLogo: string = "";
-    public ContactUsEmail: string = ""; 
+    public ContactUsEmail: string = "";
 
     public show = true;
-    constructor( 
+    constructor(
         private ss: LoginService,
         private hybridLabelsBrandingDataService: HybridLabelsBrandingDataService) {
-        super(ss); 
+        super(ss);
     }
 
-    ngOnInit() { 
+    ngOnInit() {
         this.privateUrl = SessionInfo.GetLogitudeURL();
-        this.GetHybridLabelsData(this.privateUrl); 
+        this.GetHybridLabelsData(this.privateUrl);
     }
 
 
     GetHybridLabelsData(privateUrl: string) {
         this.hybridLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetHybridLabelsDataRequest(privateUrl)).subscribe((response: ServiceResponse) => {
-            if (response.Result) { 
+            if (response.Result) {
                 //BrandingDataService.SetHybridLabelsDataRequest(response.Result, privateUrl);
                 this.ContactUsEmail = response.Result.ContactUsEmail;
                 this.MainColor = response.Result.MainColor;
-                this.BackgroundImage = BrandingDataService.GetBackgroundImage(); 
-                this.MainLogo = BrandingDataService.GetMainLogo();  
-            } 
-        }); 
-    }  
+                this.BackgroundImage = BrandingDataService.GetBackgroundImage();
+                this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage(); 
+                this.MainLogo = BrandingDataService.GetMainLogo();
+            }
+        });
+
+    }
+
 }

@@ -1,9 +1,9 @@
-@release @all
+@release @stable
 Feature: AMANAC Ocean Shipment Validations, Marked as Blocked, Marked as Not Blocked, Transfers and Retransfer
 
-    The user configures AMANAC customs for the tenant, 
-    creates Direct Export Ocean FCL shipment, adds a container, 
-    marks the shipment as blocked for transfer, marks the shipment as not blocked for transfer, 
+    The user configures AMANAC customs for the tenant,
+    creates Direct Export Ocean FCL shipment, adds a container,
+    marks the shipment as blocked for transfer, marks the shipment as not blocked for transfer,
     transfers shipment, checks and fixes validation, transfers shipment again, edit shipment and retransfers.
 
     Scenario: AMANAC setup
@@ -14,8 +14,13 @@ Feature: AMANAC Ocean Shipment Validations, Marked as Blocked, Marked as Not Blo
     Scenario: Create export ocean FCL shipment
         Given the user in shipment workspace
         And a shipment with the following details
-            | ShipmentLevel | Direction | TransportMode | ShipmentType | Shipper           | MainCarriageFromPort | MainCarriageToPort |
-            | Direct        | Export    | Ocean         | FCL          | TestShipperExport | LHR                  | MIA                |
+            | ShipmentLevel        | Direct            |
+            | Direction            | Export            |
+            | TransportMode        | Ocean             |
+            | ShipmentType         | FCL               |
+            | Shipper              | TestShipperExport |
+            | MainCarriageFromPort | LHR               |
+            | MainCarriageToPort   | MIA               |
         When create shipment
         Then the shipment should create successfully
 
@@ -48,8 +53,9 @@ Feature: AMANAC Ocean Shipment Validations, Marked as Blocked, Marked as Not Blo
         Then a validation message "Transferred Successfully" should appear
         And should not appear in the "New Transfer" view in the AMANAC workspace
         And AMANAC and customs transmissions statuses should be as following
-            | Status | LastSent | SentBy       |
-            | Sent   | Today    | SpecflowTest |
+            | Status   | Sent         |
+            | LastSent | Today        |
+            | SentBy   | SpecflowTest |
 
     Scenario: Retransfer
         When the user retransfer the shipment
@@ -65,5 +71,6 @@ Feature: AMANAC Ocean Shipment Validations, Marked as Blocked, Marked as Not Blo
         Then a validation message "Transferred Successfully" should appear
         And should not appear in the "New Transfer" view in the AMANAC workspace
         And AMANAC and customs transmissions statuses should be as following
-            | Status | LastSent | SentBy       |
-            | Sent   | Today    | SpecflowTest |
+            | Status   | Sent         |
+            | LastSent | Today        |
+            | SentBy   | SpecflowTest |
