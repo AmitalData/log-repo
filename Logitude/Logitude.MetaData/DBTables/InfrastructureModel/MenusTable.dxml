@@ -94,6 +94,14 @@
     <Constraints
       Nullable="true" />
   </Column>
+   <Column
+    Name="QuerySection"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  
   <Relation
     ForeignKeyColumn="MenuTypeCode"
     ReferencedTable="MenuTypes"

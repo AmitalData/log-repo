@@ -139,6 +139,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                              RecordType =a.RecordType,
                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
+                                             EntityType = a.EntityType,
                                             
                                          }).FirstOrDefault();
 
@@ -237,6 +238,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      FullNameTextCodeCode = a.FullNameTextCodeCode,
                                                      ShortNameTextCodeCode = a.ShortNameTextCodeCode,
                                                      HelpTextCodeCode = a.HelpTextCodeCode,
+                                                     EntityType = a.EntityType,
+
                                                  };
             return result;
         }
@@ -342,6 +345,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ShortNameTextCodeCode = a.ShortNameTextCodeCode,
                                                     HelpTextCodeCode = a.HelpTextCodeCode,
                                                     ListTextCodeCode = a.ListTextCodeCode,
+                                                    EntityType = a.EntityType,
+
                                                 }).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
@@ -455,6 +460,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              RecordType = a.RecordType,
                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                              FieldCode = a.FieldCode,
+                                             EntityType = a.EntityType,
+
                                          }).FirstOrDefault();
 
             ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
@@ -569,6 +576,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
+                                                    EntityType = a.EntityType,
+
                                                 }).OrderBy(o => o.FieldName).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
@@ -685,6 +694,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              RecordType = a.RecordType,
                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                              FieldCode = a.FieldCode,
+                                             EntityType = a.EntityType,
+
                                          }).FirstOrDefault();
             if (mod != null)
             {
@@ -805,6 +816,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
+                                                    EntityType = a.EntityType,
+
                                                 }).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
@@ -917,6 +930,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
+                                                    EntityType = a.EntityType,
+
                                                 }).ToList();
             return objectfields;
         }
@@ -1027,6 +1042,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         RecordType = a.RecordType,
                         DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                         FieldCode = a.FieldCode,
+                        EntityType = a.EntityType,
+
                     }).ToList();
         }
 
@@ -1137,6 +1154,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
+                                                    EntityType = a.EntityType,
+
                                                 }).ToList();
             return objectfields;
         }
@@ -1244,6 +1263,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     RecordType = a.ObjectField.RecordType,
                                                     DisplayInAutomationAsEnitity = a.ObjectField.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.ObjectField.FieldCode,
+                                                    EntityType = a.ObjectField.EntityType,
+
                                                 }).ToList();
 
 
@@ -1356,6 +1377,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                               RecordType = a.RecordType,
                               DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                               FieldCode = a.FieldCode,
+                              EntityType = a.EntityType,
+
                           });
             return result;
         }
@@ -1466,6 +1489,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
+                                                    EntityType = a.EntityType,
+
                                                 });
 
             
@@ -1577,6 +1602,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
+                                                    EntityType = a.EntityType,
+
                                                 }).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);//.Take(800).ToList();
@@ -1802,6 +1829,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
+                                                    EntityType = a.EntityType,
+
                                                 }).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
@@ -1935,6 +1964,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                              ShortNameTextCodeCode = a.ShortNameTextCodeCode,
                                                              HelpTextCodeCode = a.HelpTextCodeCode,
                                                              ListTextCodeCode = a.ListTextCodeCode,
+                                                             EntityType = a.EntityType,
+
                                                          }).ToList();
 
                             currentTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(currentTenantObjectFields, tenant);
@@ -2049,6 +2080,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                          ShortNameTextCodeCode = a.ShortNameTextCodeCode,
                                                          HelpTextCodeCode = a.HelpTextCodeCode,
                                                          ListTextCodeCode = a.ListTextCodeCode,
+                                                         EntityType = a.EntityType,
+
                                                      }).ToList();
 
                         currentTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(currentTenantObjectFields, tenant);
@@ -2162,6 +2195,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                       ShortNameTextCodeCode = a.ShortNameTextCodeCode,
                                                       HelpTextCodeCode = a.HelpTextCodeCode,
                                                       ListTextCodeCode = a.ListTextCodeCode,
+                                                      EntityType = a.EntityType,
+
                                                   }).ToList();
 
                         zeroTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(zeroTenantObjectFields, 0);
@@ -2277,6 +2312,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   ShortNameTextCodeCode = a.ShortNameTextCodeCode,
                                                   HelpTextCodeCode = a.HelpTextCodeCode,
                                                   ListTextCodeCode = a.ListTextCodeCode,
+                                                  EntityType = a.EntityType,
+
                                               }).ToList();
 
                     zeroTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(zeroTenantObjectFields, 0);
@@ -2374,6 +2411,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              RecordType = a.RecordType,
                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                              FieldCode = a.FieldCode,
+                                             EntityType = a.EntityType,
+
                                          }).FirstOrDefault();
 
             return objectField;
@@ -2414,6 +2453,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     Code = a.Code,
                                                     FieldCode = a.FieldCode,
                                                     CustomPickListCode =a.CustomPickListCode,
+                                                    EntityType = a.EntityType,
+
                                                 }).ToList();
 
             return objectFields;
@@ -2527,6 +2568,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     FieldCode = a.FieldCode,
+                                                    EntityType = a.EntityType,
+
                                                 }).ToList();
             return objectfields;
         }
@@ -2639,6 +2682,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                              RecordType = a.RecordType,
                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
+                                             EntityType = a.EntityType,
+
 
                                          }).FirstOrDefault();
 

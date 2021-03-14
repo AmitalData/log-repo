@@ -1089,8 +1089,20 @@ namespace MeatadataGeneratorTool
         }
 
 
-
-
+        private string entityType;
+        public string EntityType
+        {
+            get
+            {
+                return entityType;
+            }
+            set
+            {
+                entityType = value;
+                FirePropertyChanged("EntityType");
+            }
+        }
+        
 
 
 

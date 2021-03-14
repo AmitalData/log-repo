@@ -298,6 +298,7 @@ namespace MeatadataGeneratorTool.Helpers
             field.CanAutomateSetValue = GetAttributeBoolValue(fieldNode.Attributes["CanAutomateSetValue"]);
             field.DisplayInAutomationAsEnitity = GetAttributeBoolValue(fieldNode.Attributes["DisplayInAutomationAsEnitity"]);
             field.RecordType = GetAttributeStringValue(fieldNode.Attributes["RecordType"]);
+            field.EntityType = GetAttributeStringValue(fieldNode.Attributes["EntityType"]);
 
 
 

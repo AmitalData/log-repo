@@ -79,5 +79,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string FullNameTextCodeCode { get; set; }
         public string ShortNameTextCodeCode { get; set; }
         public string HelpTextCodeCode { get; set; }
+        public string EntityType { get; set; }
+
     }
 }
