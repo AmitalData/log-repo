@@ -41,24 +41,27 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
             bool lockit = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("Singleton.CRS:UCUW2L"));
-          // string key = ProcessLockTableUtil.Instance.GetKey4DocumentsFilingId(customResponse.CustomFileNo, requestParams.Tenant);
+            // string key = ProcessLockTableUtil.Instance.GetKey4DocumentsFilingId(customResponse.CustomFileNo, requestParams.Tenant);
 
-           // using (var processLockTableDisposable = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, lockit, key, "CRS:UCUW2L"))
-           // {
-                CommDecService CommDecService = new CommDecService();
+            // using (var processLockTableDisposable = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, lockit, key, "CRS:UCUW2L"))
+            // {
+            string customFileNo = "";
+
+            CommDecService CommDecService = new CommDecService();
                 try {
                     string error = "";
-                    string moreParams = customResponse.MoreParams;
-                    CommDecService.ProccessGenericRequestReal(customResponse.LOGICOMMDEC, requestParams.Tenant, requestParams.LoggingUserId , ref moreParams, out error);
+
+                string moreParams = customResponse.MoreParams;
+                    CommDecService.ProccessGenericRequestReal(customResponse.LOGICOMMDEC, requestParams.Tenant, requestParams.LoggingUserId , ref moreParams, out error, out customFileNo);
 
 
-                    this.MyResponseData.ApplicationID = requestParams.AppicationId;
+                    this.MyResponseData.ApplicationID = customFileNo;
                     this.MyResponseData.HasException = false;
                     this.MyResponseData.Succeeded = true;
                     }
                 catch (Exception ex)
                 {
-                    this.MyResponseData.ApplicationID = requestParams.AppicationId;
+                    this.MyResponseData.ApplicationID = customFileNo;
                     this.MyResponseData.HasException = true;
                     this.MyResponseData.Succeeded = false;
                     this.MyResponseData.UserMessage = ex.Message;

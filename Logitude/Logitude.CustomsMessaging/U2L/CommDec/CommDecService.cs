@@ -80,6 +80,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
               out string MessageOut)
 
         {
+            string customFileNo = "";
             MessageOut = "";
             _tenant = ResolvedTenant();
             var user = AuthenticationUtil.ResolveUserId(_tenant);
@@ -106,7 +107,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             {
                 AppendLogLine("Default= WS'");
 
-                ProccessGenericRequestReal(xmlLOGICOMMDEC, _tenant, user, ref MoreParams,out MessageOut);
+                ProccessGenericRequestReal(xmlLOGICOMMDEC, _tenant, user, ref MoreParams,out MessageOut, out customFileNo);
             }
 
 
@@ -120,10 +121,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
         public void ProccessGenericRequestReal(
               string xmlLOGICOMMDEC , int tenant, string Curruser,
               ref string MoreParams,
-              out string MessageOut)
+              out string MessageOut, out string customFileNo)
         {
             _tenant = tenant;
-
+            customFileNo = "";
             MessageOut = "";
             _Stopwatch = Stopwatch.StartNew();
             MyCommunicationsParams.Subject = "CommDecService ";
@@ -516,6 +517,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             repo.SubmitChanges();
             }
 
+            customFileNo = _MyDeclarationPM.CustomFileNo;
 
             AppendLogLine("declarationUpdat:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
             string val = "";
