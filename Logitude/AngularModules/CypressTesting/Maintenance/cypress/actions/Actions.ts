@@ -5,11 +5,12 @@ import { Terms } from "../constants/Terms";
 import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
+import * as BaseActions from "../../../Base/cypress/actions/Actions";
 import * as gr from '../../../Base/cypress/actions/GenerateRandoms'
 import { ContactDetails } from "../models/ContactDetails";
 import { ContactContext } from "../models/ContactContext";
 import { BaseURLs } from "../../../Base/cypress/constants/URLs";
-import { Datepicker } from "../models/Datepicker";
+import { Datepicker } from "../../../Base/cypress/models/Datepicker";
 
 export function OpenMaintenanceMenu() {
     cy.Click(BaseSelectors.MaintenanceMenu, null)
@@ -21,7 +22,6 @@ export function OpenContactsList() {
     DefineContactViewsGetByFiltersRequest();
     cy.Click(MaintenanceSelectors.ContactsMaintenanceItem, null);
     AssertContactViewsGetByFilters();
-
     DefineContactViewsGetByFiltersRequest();
     cy.Click(BaseSelectors.QueryListToggleButton, null);
     cy.get(BaseSelectors.QueryListToggleButtonItem).contains(MaintenanceSelectors.ContainsContactsRegex).click();
@@ -171,7 +171,7 @@ function FillContactNotes(notes: string){
 
 function FillContactDatepicker(contactDate: string, dateType:string) {
     if (contactDate && dateType) {
-        let contactDatepicker: Datepicker = GetContactDatepicker(contactDate);
+        let contactDatepicker: Datepicker = BaseActions.GetDatepicker(contactDate);
         let indexOfDatepicker: number;
         if(dateType.toLowerCase() == Terms.Birthday){
             indexOfDatepicker = 0;
@@ -221,56 +221,6 @@ function GetContactDateReminderSelector(dateType:string){
     return reminderCheckboxSelector;
 }
 
-function GetContactDatepicker(contactDate: string): Datepicker{
-    let today = new Date();
-    let contactDateDay: number;
-    let contactDateMonth: number;
-    let contactDateYear: number;
-
-    if (contactDate.toLowerCase() == "today") {
-        contactDateDay = today.getDate();
-        contactDateMonth = today.getMonth() + 1;
-        contactDateYear = today.getFullYear();
-    }
-    else if (contactDate.toLowerCase() == "random") {
-        contactDateMonth = gr.GenerateRandomNumber(1, 12);
-        contactDateYear = gr.GenerateRandomNumber(1950, today.getFullYear());
-        contactDateDay = GetRandomDay(contactDateMonth, contactDateYear);
-    }
-    else{
-        let date = new Date(contactDate);
-        contactDateDay = date.getDate();
-        contactDateMonth = date.getMonth() + 1;
-        contactDateYear = date.getFullYear();
-    }
-
-    let datepicker = new Datepicker();
-    datepicker.Day = contactDateDay;
-    datepicker.Month = contactDateMonth;
-    datepicker.Year = contactDateYear;
-    return datepicker;
-}
-
-function GetRandomDay(month: number, year: number){
-    let maxDay = 0;
-    if(month == 2){
-        if(year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)){
-            maxDay = 29;
-        }
-        else{
-            maxDay = 28;
-        }
-    }
-    else if([1, 3, 5, 7, 8, 10, 12].indexOf(month) != -1){
-        maxDay = 31;
-    }
-    else if([4, 6, 9, 11].indexOf(month) != -1){
-        maxDay = 30;
-    }
-
-    return gr.GenerateRandomNumber(1, maxDay);
-}
-
 function DefineContactViewsGetByFiltersRequest(contactEmail: string = null) {
     cy.DefineRequestWait(RestAPI.GET, Urls.ContactViewsGetByFilters + (contactEmail == null ? "" : encodeURIComponent(contactEmail) + "**"), RequestAliases.ContactViewsGetByFilters);
 }
@@ -316,7 +266,7 @@ function AssertGetMenuButtonGroups() {
 }
 
 function AssertContactInputHaveValue(inputSelector: string, value: string){
-    cy.get(inputSelector).should("have.value", value);
+    BaseAssertion.AssertElementHaveValue(inputSelector, value);
 }
 
 function AssertContactDatepickerNotSelected(dateType:string){
@@ -329,13 +279,13 @@ function AssertContactDatepickerNotSelected(dateType:string){
     }
     cy.get(MaintenanceSelectors.ContactDatepicker).eq(indexOfDatepicker).within(() => {
         cy.get(BaseSelectors.ComboBox).eq(0).within(() => {
-            cy.get(BaseSelectors.SelectedComboboxItem).should("not.exist");
+            BaseAssertion.AssertElementNotExist(BaseSelectors.SelectedComboboxItem);
         });
         cy.get(BaseSelectors.ComboBox).eq(1).within(() => {
-            cy.get(BaseSelectors.SelectedComboboxItem).should("not.exist");
+            BaseAssertion.AssertElementNotExist(BaseSelectors.SelectedComboboxItem);
         });
         cy.get(BaseSelectors.ComboBox).eq(2).within(() => {
-            cy.get(BaseSelectors.SelectedComboboxItem).should("not.exist");
+            BaseAssertion.AssertElementNotExist(BaseSelectors.SelectedComboboxItem);
         });
     });
 }

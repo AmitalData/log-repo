@@ -226,6 +226,16 @@ export function CancelDraftARInvoice() {
     cy.Click(AccountingSelectors.ARInvoiceCancelDraftButton, null)
     cy.Click(ShipmentSelectors.ConfirmWindowYes, null)
 }
+
+export function AutoCreditARInvoice() {
+    cy.Click(BaseSelectors.MoreList, null, true);
+    cy.Click(AccountingSelectors.ARInvoiceAutoCreditButton, null);
+}
+
+export function ApproveAutoCreditARInvoice() {
+    PostARApproveInvoice();
+    cy.Click(ShipmentSelectors.ConfirmWindowYes, null);
+}
 //#endregion
 
 //#region Add Two Shipment Lines And Edit Amount
@@ -459,4 +469,14 @@ function ClickAndWaitToLoad(ButtonSelector:string){
     cy.Click(ButtonSelector, null);
     BaseAssertion.AssertStatusCode(RequestAliases.GetVatTypePercentage, 200);
 
+}
+
+export function AssertARInvoiceStatus(status: string) {
+    cy.get(AccountingSelectors.ARInvoiceHeaderStatusName).should("have.text", status);
+}
+
+export function AssertAutoCreditByInvoiceNumber(invoiceNumber: string) {
+    cy.get(BaseSelectors.RightBorderRadius).invoke("text").then((text) => {
+        expect(text.replace(/\s/g, "")).to.contain("ByInvoice" + invoiceNumber);
+    });
 }
