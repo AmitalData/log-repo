@@ -3,10 +3,8 @@ Feature: Contact Create, Search, Open, Edit, Save and Anonymize in Maintenance M
     The user creates a contact, search for, edits, saves and anonymizes it from the Maintenance Module.
 
     Scenario: Create new contact
-        Given the user logged in and navigate to maintenance menu
-        And open contacts list
-        And open new contact wizard
-        And fill the following contact details
+        Given the user logged in and open maintenance menu
+        And a contact with the following details
             | Email               | Random              |
             | EnglishName         | TestContact         |
             | LocalName           | TestContact         |

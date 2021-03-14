@@ -3,19 +3,14 @@ import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { ContactDetails } from "../../models/ContactDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 
-Given("the user logged in and navigate to maintenance menu", () => {
-    Actions.LoginAndNavigateMaintenanceMenu();
+Given("the user logged in and open maintenance menu", () => {
+    cy.Login();
+    Actions.OpenMaintenanceMenu();
 });
 
-Given("open contacts list", () => {
+Given("a contact with the following details", (dataTable) => {
     Actions.OpenContactsList();
-});
-
-Given("open new contact wizard", () => {
     Actions.OpenNewContactWizard();
-});
-
-Given("fill the following contact details", (dataTable) => {
     FillContactDetails(dataTable);
 });
 
