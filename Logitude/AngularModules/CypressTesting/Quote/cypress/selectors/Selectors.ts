@@ -32,6 +32,7 @@ export class QuoteSelectors {
      //#endregion
      //#region Quotation
      public static readonly Quotation = '#QuoteBQuotation';
+     public static readonly QuoteEventsTab = '#QuoteTHEvents';
      public static readonly EditQuotationIntroduction = '#EditSection1';
      public static readonly AddDataField = '#AddDataField';
      public static readonly QuotationEditOkButton = '#OkButton';
@@ -40,6 +41,15 @@ export class QuoteSelectors {
      public static readonly SendToCustomer = '#SendToCustomer';
      public static readonly EmailSearchTextBox = 'input[id^=EmailSearchTextBox_TextArea]';
      public static readonly SendMessageButton = '#SendMessagebtn';
+     public static readonly QuoteEventNote = '#Quote_EventNote';
+     //#endregion
+
+     //#region Copied page
+     public static readonly CopiedQuoteEventsTab = "li[id^='QuoteTHEvents_']";
+     public static readonly CopiedQuotePartnersTab = "li[id^='QuoteTHPartners_']";
+     public static readonly CopiedQuotePackagesTab = "li[id^='QuoteTHPackages_']";
+     public static readonly CopiedQuoteRoutingTab = "li[id^='QuoteTHRoutings_']";
+
      //#endregion
      //#region Regex selectors
      public static PackageLineSelector(Selector: string, lineNumber: number): string {
@@ -48,6 +58,11 @@ export class QuoteSelectors {
 
      public static QuotationDataFields(dataField: string): string {
           return "td[data-cy^=Quote_" + dataField + "]";
+     }
+
+     public static QuotationActionsButton(action: string): string {
+          action = action.replace(/\s/g, "");
+          return "#QuoteB" + action;
      }
      //#endregion
 }
