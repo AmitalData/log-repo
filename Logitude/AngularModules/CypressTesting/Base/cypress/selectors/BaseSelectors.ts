@@ -198,5 +198,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly WarehouseStorageFreeDays ="#Warehouse_StorageFreeDays"
     public static readonly WarehouseStorageDefaults ="Storage Defaults"
     public static readonly WarehouseSaveCloseBtn ="#Warehouse-SaveClose"
+
+    public static readonly RightBorderRadius = ".RightBorderRadius:last";
     
 }
