@@ -176,13 +176,14 @@ public partial class LogitudeCustomsFile
 
     private string fileOpenDateField;
 
-    private string truckerIdField;
+     private string truckerIdField;
 
     private string distributionAreaField;
 
     private string fclLclField;
 
     private string forwarderIdField;
+ 
 
     /// <remarks/>
     public string CustomFileNo
@@ -989,6 +990,7 @@ public partial class LogitudeCustomsFile
             this.fileOpenDateField = value;
         }
     }
+ 
 
     /// <remarks/>
     public string TruckerId
@@ -1041,4 +1043,5 @@ public partial class LogitudeCustomsFile
             this.forwarderIdField = value;
         }
     }
+  
 }

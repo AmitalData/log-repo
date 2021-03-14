@@ -1134,7 +1134,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
 
                                         var msg = new MessageWindow();
                                         //msg.ZIndex = 5;
-                                        msg.Show("לם נמצםה ישות להצגה");
+                                        msg.Show("לא נמצאה ישות להצגה");
                                         break;
                                     }
 
