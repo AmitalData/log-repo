@@ -252,7 +252,7 @@ namespace Logitude.XSD.CW_API.ABM
             }
             else
             {
-                this.FromPortCode = Shipment.MainCarriageFromPortCode;
+                this.FromPortCode = Shipment.MainCarriageFromPortCountryCode + Shipment.MainCarriageFromPortCode;
             }
 
             if (!string.IsNullOrEmpty(finalDestinationPortTranslatedCode))
@@ -261,7 +261,7 @@ namespace Logitude.XSD.CW_API.ABM
             }
             else
             {
-                this.FinalDestinationPortCode = Shipment.MainCarriageFinalDestinationPortCode;
+                this.FinalDestinationPortCode = Shipment.MainCarriageFinalDestinationPortCountryCode + Shipment.MainCarriageFinalDestinationPortCode;
             }
         }
 
