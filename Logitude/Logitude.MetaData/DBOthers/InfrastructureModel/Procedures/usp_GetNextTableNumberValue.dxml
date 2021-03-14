@@ -23,8 +23,7 @@ AS
 DECLARE @COUNTER AS INT
    SET @COUNTER = @pStartNumber
 
- Declare @Current As Int   
- BEGIN TRAN
+ Declare @Current As Int  
  IF @pPrefix IS NOT NULL 
  BEGIN
 
@@ -134,7 +133,6 @@ BEGIN;
  END
  
   Set @pLastValue = @Current
-  COMMIT TRAN
 ]]></SqlScript>
   <OracleScript>
 </OracleScript>
