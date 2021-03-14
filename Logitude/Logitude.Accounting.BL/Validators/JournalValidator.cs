@@ -265,11 +265,9 @@ namespace Logitude.Accounting.BL.Validators
                 errorsList.Add(TranslateMyTextCode(JournalValidator.M_AccountingFutureDateForbidden, myJournalPM.Tenant));
                 valid = false;
             }
-            const string statusCode_JournalApproved = "2";
-            var isIsFutureDateErrorsExistAndJournalApproved = myJournalPM.JournalLines.Any(l => currDateTimeUtcNow.GetValueOrDefault().Date < l.AccountingDate.Date) && myJournalPM.StatusCode == statusCode_JournalApproved;
-            if (isIsFutureDateErrorsExistAndJournalApproved)
+
+            if (myJournalPM.JournalLines.Any(l => currDateTimeUtcNow.GetValueOrDefault().Date < l.AccountingDate.Date))
             {
-                errorsList.Add(TranslateMyTextCode(JournalValidator.M_AccountingFutureDateForbidden, myJournalPM.Tenant));
                 valid = false;
             }
             if (myJournalPM.JournalLines.Any(l =>
