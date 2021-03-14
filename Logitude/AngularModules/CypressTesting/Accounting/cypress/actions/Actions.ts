@@ -165,7 +165,9 @@ export function FillARInvoiceDetails(aRInvoiceDetails: ARInvoiceDetails) {
         cy.FillLogLov(AccountingSelectors.ARInvoicePartner, aRInvoiceDetails.Partner, false)
     }
     cy.FillLogLov(AccountingSelectors.ARInvoiceInvoiceCurrency, aRInvoiceDetails.InvoiceCurrency, true)
-    cy.FillLogTextBox(AccountingSelectors.ARInvoiceExchangeRate, aRInvoiceDetails.InvoiceExchangeRate.toString());
+    if(aRInvoiceDetails.InvoiceExchangeRate) {
+        cy.FillLogTextBox(AccountingSelectors.ARInvoiceExchangeRate, aRInvoiceDetails.InvoiceExchangeRate.toString());
+    }
     cy.FillDate(AccountingSelectors.ARInvoiceInvoiceDate, aRInvoiceDetails.InvoiceDate)
     cy.FillLogLov(AccountingSelectors.ARInvoicePaymentTerm, aRInvoiceDetails.PaymentTerms, true)
     cy.FillDate(AccountingSelectors.ARInvoiceDueDate, aRInvoiceDetails.DueDate)

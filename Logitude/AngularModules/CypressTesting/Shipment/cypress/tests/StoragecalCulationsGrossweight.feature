@@ -52,12 +52,12 @@ Feature: Storage Calculations Gross Weight without Rounding
             | Amount   |
             | 2,000.00 |
             | 4,000.00 |
-
-    Scenario: Add invoice
-        Given the user in the shipment's receivables tab
-        And receivables containts line with the following details
+        And a receivables line with the following details should appear
             | ChargesType    | Amount    |
             | Import Storage | 6,000.000 |
+
+
+    Scenario: Add invoice
         When add new invoice with "Zero" vat type and number
         Then the invoice should add successfully
 

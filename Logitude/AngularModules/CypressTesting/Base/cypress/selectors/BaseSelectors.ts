@@ -73,6 +73,8 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ContainYes="Yes"
     public static readonly ContainNo="No"
     public static readonly ContainSettings="Settings"
+    public static readonly ContainWarehouse="Warehouse"
+
 
     //#endregion
     //#region general
@@ -185,6 +187,11 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly StepToColumn ="2"
     public static readonly StepFromColumn ="0"
     public static readonly SalePriceColumn ="3"
+    public static readonly RowNo0 ="0"
+    public static readonly RowNo1 ="1"
+    public static readonly ColNo1 ="1"
+    public static readonly ColNo8 ="8"
+    public static readonly ColNo5 ="5"
     public static readonly WarehouseTypeCode ="#Warehouse_TypeCode"
     public static readonly WarehouseChargeStorage ="#Warehouse_ChargeStorage"
     public static readonly WarehouseCurrency ="#Warehouse_CurrencyId"

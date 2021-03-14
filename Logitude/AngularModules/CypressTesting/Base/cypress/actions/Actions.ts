@@ -19,14 +19,14 @@ export function NavigatesToCustomsSettings() {
 
 export function NavigatesToWarehouse(){
     cy.Click(BaseSelectors.MaintenanceMenu, null);
-    cy.FillLogTextBox(BaseSelectors.NullSearch, "Warehouse");
+    cy.FillLogTextBox(BaseSelectors.NullSearch, BaseSelectors.ContainWarehouse);
     cy.Click(BaseSelectors.Warehouse, null);
 }
 
 export function FillWarehouseStorageDetails(warehouseDetails : WarehouseStorage){
-    cy.get(BaseSelectors.Hyperlink).contains(BaseSelectors.WarehouseStorageDefaults).click();
-    cy.SelectCheckBox(BaseSelectors.WarehouseChargeStorage)
-    cy.FillLogLov(BaseSelectors.WarehouseCurrency, warehouseDetails.Currency, true)
+    cy.Click(BaseSelectors.Hyperlink, BaseSelectors.WarehouseStorageDefaults);
+    cy.SelectCheckBox(BaseSelectors.WarehouseChargeStorage);
+    cy.FillLogLov(BaseSelectors.WarehouseCurrency, warehouseDetails.Currency, true);
     cy.FillLogTextBox(BaseSelectors.WarehouseStorageFreeDays, warehouseDetails.StorageFreeDays.toString());
 }
 
@@ -61,7 +61,7 @@ export function OpenWarehouse(warehouseName:string){
 }
 
 export function UpdateWarehouse(){
-    cy.Click(BaseSelectors.RedButton, "Ok")
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK)
     cy.DefineRequestWait(RestAPI.PUT, BaseURLs.Warehouses, RequestAliases.PutWarehouses)
     cy.Click(BaseSelectors.WarehouseSaveCloseBtn, null)
 }
@@ -142,6 +142,14 @@ export function SubstractDaysFromDate(Days: number) {
 
     pastDate.setDate(todayDate.getDate() - 8);
     return FormateTheDate(pastDate)
+}
+
+export function AddDaysToTodayDate(days: number) {
+    var todayDate = new Date();
+    var futureDate = new Date();
+
+    futureDate.setDate(todayDate.getDate() + days);
+    return FormateTheDate(futureDate)
 }
 
 function FormateTheDate(date: Date) {
