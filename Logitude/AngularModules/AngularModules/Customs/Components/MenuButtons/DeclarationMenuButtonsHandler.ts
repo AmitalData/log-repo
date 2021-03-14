@@ -1026,7 +1026,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                                     messageWindow.Width = 400;
                                     messageWindow.Height = 150;
                                     messageWindow.Title = "שיחזור מספר הצהרה";
-                                    messageWindow.Show("לם ניתן לשחזר מספר הצהרה ,קיימת בקשה מסוג הגשת תשלום ");
+                                    messageWindow.Show("לא ניתן לשחזר מספר הצהרה ,קיימת בקשה מסוג הגשת תשלום ");
                                     return;
                                 }
 
@@ -1104,7 +1104,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         messageWindow.Width = 400;
                         messageWindow.Height = 150;
                         messageWindow.Title = "טופס הצהרה";
-                        messageWindow.Show("לם ניתן להציג טופס הצהרה ,קיימת בקשה דומה בתהליך ");
+                        messageWindow.Show("לא ניתן להציג טופס הצהרה ,קיימת בקשה דומה בתהליך ");
                         return;
                     }
 
@@ -1350,7 +1350,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 confirm.Title = "מחיקת Pending";
                 confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
                 confirm.ShowNoButton = true;
-                confirm.Show("הםם למחוק Pending?");
+                confirm.Show("האם למחוק Pending?");
                 confirm.WindowClosed.subscribe((event: any) => {
                     if (confirm.Yes) {
                         this.CurrentSession.StartBusyIndicatorSaving();
@@ -1365,7 +1365,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             }
             else {
                 let window = new MessageWindow();
-                window.Show(" Pending לם ניתן לבצע מחיקה, לתיק לם מוגדר ");
+                window.Show(" Pending לא ניתן לבצע מחיקה, לתיק לא מוגדר ");
             }
         });
     }
