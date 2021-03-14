@@ -47,7 +47,7 @@ export class QuoteSelectors {
      }
 
      public static QuotationDataFields(dataField: string): string {
-          return "td[data-cy^=Quote_" + dataField + "]";
+          return "td[data-cy^='Quote_" + dataField + "']";
      }
      //#endregion
 }
