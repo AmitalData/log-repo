@@ -109,10 +109,21 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                                              }).Where(s => s.ExternalReconciliationPeriods.Count > 0).ToList();
 
+                SetTotalsOpenedAndClosedVariablesForAllTypes(AllExternalReconciliationPeriod);
+
             }
 
         }
 
+        private void SetTotalsOpenedAndClosedVariablesForAllTypes(List<ExternalReconciliationPeriod> AllExternalReconciliationPeriod)
+        {
+            iDataProvider.GlaccountTotalOpened = AllExternalReconciliationPeriod == null ? 0 : AllExternalReconciliationPeriod.Where(s => s.EnglishType == "GLAccount" && s.IsRecomncile == false).Sum(b => b.Amount);
+            iDataProvider.GlaccountTotalClosed = AllExternalReconciliationPeriod == null ? 0 : AllExternalReconciliationPeriod.Where(s => s.EnglishType == "GLAccount" && s.IsRecomncile == true).Sum(b => b.Amount);
+            iDataProvider.TransferTotalOpened = AllExternalReconciliationPeriod == null ? 0 : AllExternalReconciliationPeriod.Where(s => s.EnglishType == "Transfer" && s.IsRecomncile == false).Sum(b => b.Amount);
+            iDataProvider.TransferTotalClosed = AllExternalReconciliationPeriod == null ? 0 : AllExternalReconciliationPeriod.Where(s => s.EnglishType == "Transfer" && s.IsRecomncile == true).Sum(b => b.Amount);
+            iDataProvider.BankTotalOpened = AllExternalReconciliationPeriod == null ? 0 : AllExternalReconciliationPeriod.Where(s => s.EnglishType == "Bank" && s.IsRecomncile == false).Sum(b => b.Amount);
+            iDataProvider.BankTotalClosed = AllExternalReconciliationPeriod == null ? 0 : AllExternalReconciliationPeriod.Where(s => s.EnglishType == "Bank" && s.IsRecomncile == true).Sum(b => b.Amount);
+        }
 
         private List<BankAccountPM> GetAllBankAccountsByFilters()
         {
