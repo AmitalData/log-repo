@@ -61,9 +61,11 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ContainsExport = 'Export'
     public static readonly ContainsSendtoCustoms = "Send to Customs"
     public static readonly  ContainSave="Save"
+    public static readonly  ContainPrint="Print"
     public static readonly ContainSelected= "Selected:"
 
     public static readonly ContainsAddFollowup = "Add Follow up"
+    public static readonly ContainsFillDimensions = "Fill Dimensions"
 
     public static readonly ContainsAddContainerDelivery = "Add Container Delivery"
     public static readonly ContainsAddEmptyContainerReturn = "Add Empty Container Return"

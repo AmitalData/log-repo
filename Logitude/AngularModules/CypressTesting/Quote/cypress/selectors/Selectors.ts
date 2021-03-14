@@ -1,13 +1,21 @@
 export class QuoteSelectors {
-     public static readonly QuotesTab = '#GeneralMHQuotes';
-     public static readonly QuoteSave = '#Quote-Save';
-     //#region  Create
+     //#region Create
      public static readonly CreateQuote = '#CreateQuote';
      public static readonly NewQuote = '#NewQuote';
      public static readonly QuoteShipper = '#Quote_ShipperId';
      public static readonly QuoteConsignee = '#Quote_ConsigneeId';
      public static readonly QuoteFromPort = '#Quote_FromPortId';
      public static readonly QuoteToPort = '#Quote_ToPortId';
+     public static readonly QuoteCustomerType = '#Quote_QuoteCustomerTypeCode';
+     //#endregion
+     //#region Quick Search
+     public static readonly QuoteSearch = '#Quote_Search';
+     public static readonly QuoteSearchParent = 'quicksearchtextbox';
+     public static readonly QuoteSearchParentClass = '.LogitudeQuickSearchTextBox';
+     //#endregion
+     //#region Update
+     public static readonly QuotesTab = '#GeneralMHQuotes';
+     public static readonly QuoteSave = '#Quote-Save';
      //#endregion
      //#region Package
      public static readonly PackagesTab = '#QuoteTHPackages';
@@ -22,9 +30,24 @@ export class QuoteSelectors {
      public static readonly OkAddPackage = '#OkAddPackage';
      public static readonly DeletePackage = "Button[id^='Delete']";
      //#endregion
-     //#region Quick Search
-     public static readonly QuoteSearch = '#Quote_Search';
-     public static readonly QuoteSearchParent = 'quicksearchtextbox';
-     public static readonly QuoteSearchParentClass = '.LogitudeQuickSearchTextBox';
+     //#region Quotation
+     public static readonly Quotation = '#QuoteBQuotation';
+     public static readonly EditQuotationIntroduction = '#EditSection1';
+     public static readonly AddDataField = '#AddDataField';
+     public static readonly QuotationEditOkButton = '#OkButton';
+     public static readonly SaveQuotation = '#Savee';
+     public static readonly SendOption = '#SendOption';
+     public static readonly SendToCustomer = '#SendToCustomer';
+     public static readonly EmailSearchTextBox = 'input[id^=EmailSearchTextBox_TextArea]';
+     public static readonly SendMessageButton = '#SendMessagebtn';
+     //#endregion
+     //#region Regex selectors
+     public static PackageLineSelector(Selector: string, lineNumber: number): string {
+          return lineNumber > 0 ? Selector + '_' + lineNumber : Selector;
+     }
+
+     public static QuotationDataFields(dataField: string): string {
+          return "td[data-cy^=Quote_" + dataField + "]";
+     }
      //#endregion
 }
