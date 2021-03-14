@@ -119,6 +119,7 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         manifestDataProvider.ConsigneeVATNumber =  consignee.VatNumber;
                         manifestDataProvider.ConsigneeName = consignee.EnglishName;
+                        manifestDataProvider.ConsigneeAddress = GetConsigneAddress(master.ConsigneeAddressId,consignee.Tenant,addressRepository);
                         if (!string.IsNullOrEmpty(consignee.PrimaryContactId))
                         {
                             Contact contact = ContactRepository.GetSingleContact(consignee.PrimaryContactId, tenant, true);
@@ -1748,6 +1749,22 @@ namespace WebFreight.Web.ReportsWebServices
                 return counter;
             }
             else return 0;
+        }
+        private string GetConsigneAddress(string id, int tenat, AddressRepository addressRepository)
+        {
+            Address consigneeAdderss = addressRepository.GetSingleAddress(id, tenat);
+            string address = "";
+            if (consigneeAdderss != null)
+            {
+                address = DataProviders.General.GetAddress(consigneeAdderss);
+                if (!string.IsNullOrEmpty(consigneeAdderss.PhoneNumber) || !string.IsNullOrEmpty(consigneeAdderss.FaxNumber))
+                {
+                    address += System.Environment.NewLine;
+                    address = (!string.IsNullOrEmpty(consigneeAdderss.PhoneNumber)) ? address + "Tel: " + consigneeAdderss.PhoneNumber + " " : address;
+                    address = (!string.IsNullOrEmpty(consigneeAdderss.FaxNumber)) ? address + "Fax: " + consigneeAdderss.FaxNumber : address;
+                }
+            }
+            return address;
         }
     }
 
