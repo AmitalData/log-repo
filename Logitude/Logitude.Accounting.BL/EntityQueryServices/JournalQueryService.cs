@@ -557,6 +557,20 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return journalPMs;
         }
 
+        public List<JournalPM> GetFullJournalPMsByIds(List<string> ids, int tenant)
+        {
+            List<JournalPM> journalPMs = new List<JournalPM>();
+            IQueryable<Journal> journals = repository.GetByJournalsAccountingIds(ids, tenant);
+
+            foreach (Journal journal in journals)
+            {
+                JournalPM journalPM = GetEntityPM(journal);
+                journalPM.JournalLines = GetJournalLines(journalPM, tenant);
+
+                journalPMs.Add(journalPM);
+            }
+            return journalPMs;
+        }
 
         public List<JournalLinePM> GetJournalLines(JournalPM journal, int tenant)
         {

@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
+using System.Windows.Forms;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -65,15 +66,24 @@ namespace Logitude.Accounting.BL.CoreBL
 
             using (var transaction = new TransactionScope())
             {
-                foreach (var journal in journals)
+                try
                 {
-                    UpdateJournal(journal);
+                    foreach (var journal in journals)
+                    {
+                        UpdateJournal(journal);
 
-                    var currentProgress = Convert.ToInt32(++completedCount * progressRatio);
-                    worker.ReportProgress(currentProgress);
+                        var currentProgress = Convert.ToInt32(++completedCount * progressRatio);
+                        worker.ReportProgress(currentProgress);
+                    }
+
+                    transaction.Complete();
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message +Environment.NewLine +ex.ToString());
+                    throw ex;
+                }               
 
-                transaction.Complete();
             }
 
         }
@@ -100,7 +110,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             JournalQueryService journalQueryService = new JournalQueryService(journalsFilter.Tenant);
             List<string> journalsIds = journals.Select(j => j.Id).ToList();
-            var journalsPM = journalQueryService.GetJournalPMsByIds(journalsIds, journalsFilter.Tenant);
+            var journalsPM = journalQueryService.GetFullJournalPMsByIds(journalsIds, journalsFilter.Tenant);
             return journalsPM;
         }
 

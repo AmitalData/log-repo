@@ -36,6 +36,8 @@ namespace Logitude.Update
             List<Journal> journals = reapproveService.GetUnapprovedJournals(filters);
             
             SetGridViewSource(journals);
+
+            ResetProgressStatus();
         }
 
         private void SetGridViewSource(List<Journal> journals)
@@ -66,14 +68,24 @@ namespace Logitude.Update
 
         private void approveButton_Click(object sender, EventArgs e)
         {
-            SetStartingProgressStatus();
+            try
+            {
+                SetStartingProgressStatus();
 
-            JournalsReapproveService reapproveService = new JournalsReapproveService();
-            JournalsFilter filters = BuildJournalsFilter();
+                JournalsReapproveService reapproveService = new JournalsReapproveService();
+                JournalsFilter filters = BuildJournalsFilter();
 
-            reapproveService.ReapprovedJournals(filters);
+                reapproveService.ReapprovedJournals(filters);
 
-            reapproveService.progressChanged += ReapproveService_ProgressChanged;
+                reapproveService.progressChanged += ReapproveService_ProgressChanged;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
+
+            
         }
 
         private void SetStartingProgressStatus()
@@ -81,7 +93,11 @@ namespace Logitude.Update
             progressLabel.Text = "Starting ...";
             approveBtn.Enabled = false;
         }
-
+        private void ResetProgressStatus()
+        {
+            progressLabel.Text = "...";
+            approveBtn.Enabled = true;
+        }
         public void ReapproveService_ProgressChanged(object sender, EventArgs eventArgs)
         {
             var journalsReapproveService = sender as JournalsReapproveService;
