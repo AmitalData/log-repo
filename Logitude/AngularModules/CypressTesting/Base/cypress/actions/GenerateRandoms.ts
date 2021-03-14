@@ -56,10 +56,7 @@ export function GetValidContainerNumber(input: any) {
         validCheckDigit = 0;
     }
 
-    if (validCheckDigit != checkDigit) {
-        myResult = input.replace(/.$/, validCheckDigit.toString());
-    }
-
+    myResult = input.replace(/.$/, validCheckDigit.toString());
 
     return myResult;
 }
