@@ -18,13 +18,16 @@ namespace Logitude.Accounting.BL.CoreBL
 {
     public class JournalsReapproveService
     {
-        public EventHandler progressChanged;
-        const string journalApprovedStatus = "2";
+        public EventHandler ProgressChanged;
+        public int progress = 0;
+        private const string journalApprovedStatus = "2";
+        private JournalsFilter journalsFilter;
+
         public JournalsReapproveService()
         {
         }
 
-        public List<Journal> GetUnapprovedJournals(JournalsFilter journalsFilter)
+        public List<Journal> GetJournalsWithNoLedger(JournalsFilter journalsFilter)
         {
             IQueryable<Journal> journals = GetTenantJournalsWhereLedgerNotCreated(journalsFilter.Tenant);
 
@@ -33,9 +36,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
             return journals.ToList();
         }
-
-        JournalsFilter journalsFilter;
-        public int progress = 0;
         public void ReapprovedJournals(JournalsFilter journalsFilter)
         {
             this.journalsFilter = journalsFilter;
@@ -47,15 +47,15 @@ namespace Logitude.Accounting.BL.CoreBL
         private BackgroundWorker BuildBackgroundWorker()
         {
             BackgroundWorker worker = new BackgroundWorker();
-            worker.DoWork += background_DoWork;
-            worker.RunWorkerCompleted += background_Completed;
-            worker.ProgressChanged += background_ProgressChanged;
+            worker.DoWork += Worker_DoWork;
+            worker.RunWorkerCompleted += Worker_Completed;
+            worker.ProgressChanged += Worker_ProgressChanged;
             worker.WorkerReportsProgress = true;
             worker.WorkerSupportsCancellation = true;
             return worker;
         }
 
-        private void background_DoWork(object sender, EventArgs eventArgs)
+        private void Worker_DoWork(object sender, EventArgs eventArgs)
         {
             var worker = sender as BackgroundWorker;
 
@@ -100,28 +100,32 @@ namespace Logitude.Accounting.BL.CoreBL
         private List<JournalPM> GetJournals()
         {
             IQueryable<Journal> journals = GetTenantJournalsWhereLedgerNotCreated(journalsFilter.Tenant);
+
             journals = FilterJournals(journalsFilter, journals);
 
             List<JournalPM> journalsPM = GetJournalsPMs(journals);
+
             return journalsPM;
         }
 
-        private List<Def.EntityPMs.JournalPM> GetJournalsPMs(IQueryable<Journal> journals)
+        private List<JournalPM> GetJournalsPMs(IQueryable<Journal> journals)
         {
             JournalQueryService journalQueryService = new JournalQueryService(journalsFilter.Tenant);
+
             List<string> journalsIds = journals.Select(j => j.Id).ToList();
-            var journalsPM = journalQueryService.GetFullJournalPMsByIds(journalsIds, journalsFilter.Tenant);
+            var journalsPM = journalQueryService.GetJournalPMs(journalsIds, journalsFilter.Tenant);
+
             return journalsPM;
         }
 
-        private void background_Completed(object sender, EventArgs eventArgs)
+        private void Worker_Completed(object sender, EventArgs eventArgs)
         {
 
         }
-        private void background_ProgressChanged(object sender, ProgressChangedEventArgs eventArgs)
+        private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs eventArgs)
         {
             progress = eventArgs.ProgressPercentage;
-            progressChanged.Invoke(this, eventArgs);
+            ProgressChanged.Invoke(this, eventArgs);
         }
         private static IQueryable<Journal> OrderJournals(IQueryable<Journal> journals)
         {

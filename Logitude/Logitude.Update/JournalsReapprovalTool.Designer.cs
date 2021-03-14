@@ -84,7 +84,7 @@ namespace Logitude.Update
             // 
             this.StatusTextBox.Location = new System.Drawing.Point(128, 155);
             this.StatusTextBox.Name = "StatusTextBox";
-            this.StatusTextBox.Size = new System.Drawing.Size(164, 22);
+            this.StatusTextBox.Size = new System.Drawing.Size(164, 20);
             this.StatusTextBox.TabIndex = 13;
             this.StatusTextBox.Text = "4";
             // 
@@ -93,7 +93,7 @@ namespace Logitude.Update
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(14, 158);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(81, 16);
+            this.label2.Size = new System.Drawing.Size(65, 13);
             this.label2.TabIndex = 12;
             this.label2.Text = "Status Code";
             // 
@@ -101,7 +101,7 @@ namespace Logitude.Update
             // 
             this.tenantTextBox.Location = new System.Drawing.Point(128, 26);
             this.tenantTextBox.Name = "tenantTextBox";
-            this.tenantTextBox.Size = new System.Drawing.Size(164, 22);
+            this.tenantTextBox.Size = new System.Drawing.Size(164, 20);
             this.tenantTextBox.TabIndex = 11;
             // 
             // tenantLbl
@@ -109,7 +109,7 @@ namespace Logitude.Update
             this.tenantLbl.AutoSize = true;
             this.tenantLbl.Location = new System.Drawing.Point(15, 29);
             this.tenantLbl.Name = "tenantLbl";
-            this.tenantLbl.Size = new System.Drawing.Size(50, 16);
+            this.tenantLbl.Size = new System.Drawing.Size(41, 13);
             this.tenantLbl.TabIndex = 10;
             this.tenantLbl.Text = "Tenant";
             // 
@@ -119,7 +119,7 @@ namespace Logitude.Update
             this.GetJournalsBtn.Name = "GetJournalsBtn";
             this.GetJournalsBtn.Size = new System.Drawing.Size(164, 34);
             this.GetJournalsBtn.TabIndex = 2;
-            this.GetJournalsBtn.Text = "Get Unapproved Journals";
+            this.GetJournalsBtn.Text = "Get Journals with no ledger";
             this.GetJournalsBtn.UseVisualStyleBackColor = true;
             this.GetJournalsBtn.Click += new System.EventHandler(this.GetJournalsBtn_Click);
             // 
@@ -139,7 +139,7 @@ namespace Logitude.Update
             this.extSystemLbl.AutoSize = true;
             this.extSystemLbl.Location = new System.Drawing.Point(14, 183);
             this.extSystemLbl.Name = "extSystemLbl";
-            this.extSystemLbl.Size = new System.Drawing.Size(104, 16);
+            this.extSystemLbl.Size = new System.Drawing.Size(82, 13);
             this.extSystemLbl.TabIndex = 8;
             this.extSystemLbl.Text = "External System";
             // 
@@ -147,7 +147,7 @@ namespace Logitude.Update
             // 
             this.JournalNumberTextBox.Location = new System.Drawing.Point(128, 130);
             this.JournalNumberTextBox.Name = "JournalNumberTextBox";
-            this.JournalNumberTextBox.Size = new System.Drawing.Size(164, 22);
+            this.JournalNumberTextBox.Size = new System.Drawing.Size(164, 20);
             this.JournalNumberTextBox.TabIndex = 7;
             // 
             // JournalNumberLbl
@@ -155,7 +155,7 @@ namespace Logitude.Update
             this.JournalNumberLbl.AutoSize = true;
             this.JournalNumberLbl.Location = new System.Drawing.Point(15, 133);
             this.JournalNumberLbl.Name = "JournalNumberLbl";
-            this.JournalNumberLbl.Size = new System.Drawing.Size(103, 16);
+            this.JournalNumberLbl.Size = new System.Drawing.Size(81, 13);
             this.JournalNumberLbl.TabIndex = 6;
             this.JournalNumberLbl.Text = "Journal Number";
             // 
@@ -163,7 +163,7 @@ namespace Logitude.Update
             // 
             this.journalIdTextBox.Location = new System.Drawing.Point(128, 104);
             this.journalIdTextBox.Name = "journalIdTextBox";
-            this.journalIdTextBox.Size = new System.Drawing.Size(164, 22);
+            this.journalIdTextBox.Size = new System.Drawing.Size(164, 20);
             this.journalIdTextBox.TabIndex = 5;
             // 
             // JournalIdLbl
@@ -171,7 +171,7 @@ namespace Logitude.Update
             this.JournalIdLbl.AutoSize = true;
             this.JournalIdLbl.Location = new System.Drawing.Point(15, 107);
             this.JournalIdLbl.Name = "JournalIdLbl";
-            this.JournalIdLbl.Size = new System.Drawing.Size(66, 16);
+            this.JournalIdLbl.Size = new System.Drawing.Size(53, 13);
             this.JournalIdLbl.TabIndex = 4;
             this.JournalIdLbl.Text = "Journal Id";
             // 
@@ -183,7 +183,7 @@ namespace Logitude.Update
             this.toDatePicker.Location = new System.Drawing.Point(128, 78);
             this.toDatePicker.Name = "toDatePicker";
             this.toDatePicker.ShowCheckBox = true;
-            this.toDatePicker.Size = new System.Drawing.Size(164, 22);
+            this.toDatePicker.Size = new System.Drawing.Size(164, 20);
             this.toDatePicker.TabIndex = 3;
             // 
             // toDateLbl
@@ -191,7 +191,7 @@ namespace Logitude.Update
             this.toDateLbl.AutoSize = true;
             this.toDateLbl.Location = new System.Drawing.Point(15, 84);
             this.toDateLbl.Name = "toDateLbl";
-            this.toDateLbl.Size = new System.Drawing.Size(57, 16);
+            this.toDateLbl.Size = new System.Drawing.Size(46, 13);
             this.toDateLbl.TabIndex = 2;
             this.toDateLbl.Text = "To Date";
             // 
@@ -203,7 +203,7 @@ namespace Logitude.Update
             this.fromDatePicker.Location = new System.Drawing.Point(128, 52);
             this.fromDatePicker.Name = "fromDatePicker";
             this.fromDatePicker.ShowCheckBox = true;
-            this.fromDatePicker.Size = new System.Drawing.Size(164, 22);
+            this.fromDatePicker.Size = new System.Drawing.Size(164, 20);
             this.fromDatePicker.TabIndex = 1;
             // 
             // fromDateLbl
@@ -211,7 +211,7 @@ namespace Logitude.Update
             this.fromDateLbl.AutoSize = true;
             this.fromDateLbl.Location = new System.Drawing.Point(15, 58);
             this.fromDateLbl.Name = "fromDateLbl";
-            this.fromDateLbl.Size = new System.Drawing.Size(71, 16);
+            this.fromDateLbl.Size = new System.Drawing.Size(56, 13);
             this.fromDateLbl.TabIndex = 0;
             this.fromDateLbl.Text = "From Date";
             // 
@@ -225,13 +225,13 @@ namespace Logitude.Update
             this.resultGridView.Location = new System.Drawing.Point(0, 290);
             this.resultGridView.Name = "resultGridView";
             this.resultGridView.ReadOnly = true;
-            this.resultGridView.Size = new System.Drawing.Size(923, 270);
+            this.resultGridView.Size = new System.Drawing.Size(923, 304);
             this.resultGridView.TabIndex = 1;
             // 
             // countLbl
             // 
             this.countLbl.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.countLbl.Location = new System.Drawing.Point(829, 274);
+            this.countLbl.Location = new System.Drawing.Point(343, 255);
             this.countLbl.Name = "countLbl";
             this.countLbl.Size = new System.Drawing.Size(82, 13);
             this.countLbl.TabIndex = 9;
@@ -245,7 +245,7 @@ namespace Logitude.Update
             this.approveBtn.Name = "approveBtn";
             this.approveBtn.Size = new System.Drawing.Size(181, 34);
             this.approveBtn.TabIndex = 10;
-            this.approveBtn.Text = "Get And Reapprove Journals";
+            this.approveBtn.Text = "Get and Approve Journals";
             this.approveBtn.UseVisualStyleBackColor = true;
             this.approveBtn.Click += new System.EventHandler(this.approveButton_Click);
             // 
@@ -272,7 +272,7 @@ namespace Logitude.Update
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ClientSize = new System.Drawing.Size(923, 560);
+            this.ClientSize = new System.Drawing.Size(923, 594);
             this.Controls.Add(this.progressLabel);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.approveBtn);
@@ -284,7 +284,7 @@ namespace Logitude.Update
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Journals Reapproval Tool";
+            this.Text = "Journals Approval Tool";
             this.Load += new System.EventHandler(this.JournalsReapprovalTool_Load);
             this.filtersGroup.ResumeLayout(false);
             this.filtersGroup.PerformLayout();

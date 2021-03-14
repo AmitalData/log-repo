@@ -29,15 +29,28 @@ namespace Logitude.Update
 
         private void GetJournalsBtn_Click(object sender, EventArgs e)
         {
-            JournalsReapproveService reapproveService = new JournalsReapproveService();
+            bool valid = CheckParameters();
+            if (!valid)
+            {
+                JournalsReapproveService reapproveService = new JournalsReapproveService();
 
-            JournalsFilter filters = BuildJournalsFilter();
+                List<Journal> journals = reapproveService.GetJournalsWithNoLedger(BuildJournalsFilter());
 
-            List<Journal> journals = reapproveService.GetUnapprovedJournals(filters);
-            
-            SetGridViewSource(journals);
+                SetGridViewSource(journals);
+                ResetProgressStatus();
+            }
+        }
 
-            ResetProgressStatus();
+        private bool CheckParameters()
+        {
+            var valid = true;
+            if (string.IsNullOrWhiteSpace(tenantTextBox.Text))
+            {
+                valid = false;
+                MessageBox.Show("Please fill tenant number");
+            }
+
+            return valid;
         }
 
         private void SetGridViewSource(List<Journal> journals)
@@ -70,22 +83,21 @@ namespace Logitude.Update
         {
             try
             {
-                SetStartingProgressStatus();
+                bool valid = CheckParameters();
+                if (!valid)
+                {
+                    SetStartingProgressStatus();
 
-                JournalsReapproveService reapproveService = new JournalsReapproveService();
-                JournalsFilter filters = BuildJournalsFilter();
+                    JournalsReapproveService reapproveService = new JournalsReapproveService();
+                    reapproveService.ReapprovedJournals(BuildJournalsFilter());
 
-                reapproveService.ReapprovedJournals(filters);
-
-                reapproveService.progressChanged += ReapproveService_ProgressChanged;
+                    reapproveService.ProgressChanged += ReapproveService_ProgressChanged;
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-
-            }
-
-            
+            }           
         }
 
         private void SetStartingProgressStatus()

@@ -503,7 +503,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public List<JournalPM> GetJournalsByIds(List<string> ids, int tenant)
         {
             List<JournalPM> journalPMs = new List<JournalPM>();
-            IQueryable<Journal> journalQuery = repository.GetByJournalsAccountingIds(ids, tenant);
+            IQueryable<Journal> journalQuery = repository.GetJournalsByIds(ids, tenant);
 
             IQueryable<JournalPM> journals = from a in journalQuery
                                              join jl in context.JournalLines
@@ -537,7 +537,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public List<JournalPM> GetJournalPMsByIds(List<string> ids, int tenant)
         {
             List<JournalPM> journalPMs = new List<JournalPM>();
-            IQueryable<Journal> journalQuery = repository.GetByJournalsAccountingIds(ids, tenant);
+            IQueryable<Journal> journalQuery = repository.GetJournalsByIds(ids, tenant);
 
             IQueryable<JournalPM> journals = from a in journalQuery
                                              select new JournalPM()
@@ -557,18 +557,25 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return journalPMs;
         }
 
-        public List<JournalPM> GetFullJournalPMsByIds(List<string> ids, int tenant)
+        public List<JournalPM> GetJournalPMs(List<string> ids, int tenant)
+        {
+            IQueryable<Journal> journals = repository.GetJournalsByIds(ids, tenant);
+
+            List<JournalPM> journalPMs = GetJournalsPMsByPocos(tenant, journals);
+
+            return journalPMs;
+        }
+
+        private List<JournalPM> GetJournalsPMsByPocos(int tenant, IQueryable<Journal> journals)
         {
             List<JournalPM> journalPMs = new List<JournalPM>();
-            IQueryable<Journal> journals = repository.GetByJournalsAccountingIds(ids, tenant);
-
             foreach (Journal journal in journals)
             {
                 JournalPM journalPM = GetEntityPM(journal);
                 journalPM.JournalLines = GetJournalLines(journalPM, tenant);
-
                 journalPMs.Add(journalPM);
             }
+
             return journalPMs;
         }
 
