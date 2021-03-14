@@ -33,6 +33,7 @@
     "CloudStagingEmail": "protractor@test.com",
     "CloudStagingPassword": "!P123t456",
     "LocalURL": "http://localhost:4200/",
+    "TestStagingCargoTrackingURL" : "https://test.logitudeworld.com/staging/CargoTracking/",
     "LocalEmail": "angular@fnarsoft.com",
     "LocalPassword": "1",
     "_TestCustomsURL": "https://test.logitudeworld.com/customs/",

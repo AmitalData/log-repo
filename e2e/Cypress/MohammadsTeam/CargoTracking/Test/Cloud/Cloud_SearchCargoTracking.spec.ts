@@ -16,7 +16,7 @@ describe('Search Cargo Tracking ', () => {
 	  var URL = Cypress.env("CloudStagingCargoTrackingURL");
 	  cy.visit(URL)
 	  cy.get('#CargoTracking_Search').clear();
-      cy.get('#CargoTracking_Search').type("Cargo Tracking Warme", { delay: 50 });
+      cy.get('#CargoTracking_Search').type("1056", { delay: 50 });
       cy.get('#Button_Search').click();
       cy.get('#CargoTracking_BusyIndicator').should('not.be.visible');
       cy.get('#SearchResults_0').click();
