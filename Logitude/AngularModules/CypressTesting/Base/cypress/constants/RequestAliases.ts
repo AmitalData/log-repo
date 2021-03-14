@@ -20,6 +20,9 @@ export class RequestAliases {
     public static readonly InvoiceDomain = 'InvoiceDomain';
     public static readonly ConsilidationInvoiceDomain = "ConsilidationInvoiceDomain"
     public static readonly Quotes = 'Quotes';
+    public static readonly PutQuotes = 'PutQuotes';
+    public static readonly PostQuotes = 'PostQuotes';
+    public static readonly GetQuoteSettings = 'GetQuoteSettings';
     public static readonly QuoteGetsingle = 'QuoteGetsingle';
     public static readonly UpdateQuotation = 'UpdateQuotation';
     public static readonly SentToCustomer = 'SentToCustomer';

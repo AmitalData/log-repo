@@ -40,6 +40,8 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly SaveWizard = "#SaveWizard";
     public static readonly Backbutton = '#EditBackbutton';
     public static readonly SaveButton = '#SaveBtn';
+    public static readonly ConfrimApproved = '#ConfrimApproved';
+
     //#endregion
     //#region Contains
     public static readonly ContainsApplytoall = 'Apply to all';
@@ -95,6 +97,7 @@ export class BaseSelectors extends RegexSelectors {
 
     public static readonly FirstElementInList = 'ul > li';
     public static readonly LastElement = ":last";
+    public static readonly FirstElement = ":first";
     public static readonly AddButton = "#Add";
     public static readonly SpanElement = "span";
     public static readonly DivElement = 'div';
@@ -106,7 +109,9 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly MTCPopup='#MTCPopup';
     public static readonly LogLOVFooterHyperLink = ".LogLOVFooter a";
     public static readonly DownArrowImage = "img[src='./Images/Buttons/downarrow.png']";
+    public static readonly RefreshImg = "img[src='./Images/Buttons/Refresh.png']";
     public static readonly Hyperlink = ".hyperlink";
+    public static readonly Title = ".Title";
 
     //#region Should Condition 
     public static readonly BeEmpty = 'be.empty'

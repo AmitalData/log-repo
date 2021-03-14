@@ -8,6 +8,7 @@ import {BaseURLs}from "../constants/URLs"
 import { WarehouseStorage } from "../../../Shipment/cypress/models/WarehouseStorage";
 import * as gr from "../../../Base/cypress/actions/GenerateRandoms";
 import { Datepicker } from "../models/Datepicker";
+import { EventTypeDetails } from 'cypress/models/EventTypeDetails';
 
 export function NavigatesToMaintenanceMenu() {
     cy.Click(BaseSelectors.MaintenanceMenu, null)
@@ -221,4 +222,35 @@ function FormateTheDate(date: Date) {
     }
     DateFormat = "" + dd + '/' + "0" + mm + '/' + yyyy;
     return DateFormat
+}
+
+function FillCell(columnNumber: string, rowNumber: number, pricingCellselector: string, value: number) {
+    cy.get(BaseSelectors.CellWithRowAndCol(columnNumber, rowNumber.toString())).last().click({ force: true })
+    cy.FillLogTextBox(pricingCellselector, value.toString())
+}
+
+export function ValidateEventsTab(expectedEventDetailsList: EventTypeDetails[] , eventTabSelector:string) {
+    cy.get(eventTabSelector).then(($eventTab) => {
+        cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetTraceEventsForEntity, RequestAliases.GetTraceEventsForEntity);
+        if ($eventTab.hasClass("SelectedMenuItem")) {
+            cy.Click(BaseSelectors.RefreshImg+BaseSelectors.LastElement, null,true);
+        } else {
+            cy.Click(eventTabSelector, null,true);
+        }
+        BaseAssertion.AssertStatusCode(RequestAliases.GetTraceEventsForEntity, 200);
+        for (let i = 0; i < expectedEventDetailsList.length; i++) {
+            let expectedEvent = expectedEventDetailsList[i].Event;
+            let expectedNotes = expectedEventDetailsList[i].Notes;
+    
+            if (expectedEvent) {
+                cy.contains(expectedEvent).eq(0).should("exist");
+            }
+    
+            if (expectedEvent && expectedNotes) {
+                cy.get(BaseSelectors.EventItemBox).contains(expectedEvent).eq(0).parents(BaseSelectors.EventItemBox).within(() => {
+                    cy.get(BaseSelectors.textarea).should("have.value", expectedNotes);
+                });
+            }
+        }
+    });
 }
