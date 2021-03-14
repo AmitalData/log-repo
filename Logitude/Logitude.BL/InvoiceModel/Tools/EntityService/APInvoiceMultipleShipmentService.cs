@@ -30,6 +30,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.ExternalService;
 using Logitude.BL.InvoiceModel.Tools.Behaviours;
 using Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours;
+using Logitude.BL.InvoiceModel.EntityOtherServices;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -51,7 +52,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private APPaymentRepository paymentRepository;
         private ShipmentPayableRepository shipmentPayableRepository;
         private string QBOAPPaymentId;
-
+        private bool IsTransferEnabled;
+        private bool CanTransferToFTP;
+        private bool TransferToFTPActivated;
+        private bool setApproved;
         public APInvoiceMultipleShipmentService(IInvoiceContext objectContext, APInvoicePM entityPM)
         {
             this.tenant = entityPM.Tenant;
@@ -123,7 +127,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.CreateInvoiceEntities();
             this.BuildSearchFields();
-            var setApproved = entityPM.SetApproved;
+            setApproved = entityPM.SetApproved;
             APInvoiceMultipleShipmentsHelper helper = new APInvoiceMultipleShipmentsHelper();
             helper.APInvoiceMultipleShipmentsQuickbooksValidating(entityPM, setApproved, isNewEntity, this.objectContext, this.myCommonContext);
 
@@ -138,7 +142,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.GetForeignFields();
             this.RunStoredProcedures();
 
-
+            this.CreateAPInvoiceMessage();
         }
 
         public void Update(bool mapComposition = false)
@@ -161,8 +165,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             
             this.UpdateInvoiceEntities();
             this.BuildSearchFields();
-            var IsSetApproved = entityPM.SetApproved;
-
+            setApproved = entityPM.SetApproved;
 
             APInvoiceMultipleShipmentsHelper helper = new APInvoiceMultipleShipmentsHelper();
             if (entityPM.SetReSendQBO)
@@ -172,16 +175,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
             else
             {
-                helper.APInvoiceMultipleShipmentsQuickbooksValidating(entityPM, IsSetApproved, isNewEntity, this.objectContext, this.myCommonContext);
+                helper.APInvoiceMultipleShipmentsQuickbooksValidating(entityPM, setApproved, isNewEntity, this.objectContext, this.myCommonContext);
             }
-
-
-
+            
             EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new APInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "APInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityAutomationMappingPMFields = new EntityAutomationAPInvoiceMappingPMFields() });
             entityAutomationService.RunAutomation();
 
-
             APInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity);
+            this.CreateAPInvoiceMessage();
+
             invoiceRepository.Update(invoice);
             invoiceRepository.SubmitChanges();
 
@@ -221,13 +223,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     APPayment payment = repository.GetSingleAPPayment(paymentPM.Id, tenant);
                     service.APPaymentQuickbooksValidating(paymentPM, true, false, payment, this.objectContext, this.myCommonContext, false, false);
                 }
-
             }
 
             this.GetForeignFields();
             this.RunStoredProcedures();
-
-
         }
 
         #region Initialize
@@ -417,6 +416,17 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.isJournalMode = accountingSystem.IsJournalMode;
             this.isExternalCodesFromTable = accountingSystem.IsExternalCodesFromTable;
+
+            if (accountingSetting != null && accountingSystem != null)
+            {
+                this.CanTransferToFTP = accountingSystem.CanTransferToFTP;
+                this.TransferToFTPActivated = accountingSetting.TransferToFTPActivated;
+
+                if (accountingSetting.IsAPInvoicesTransferEnabled && accountingSystem.AllowAPInvoicesTransfer)
+                {
+                    this.IsTransferEnabled = true;
+                }
+            }
 
             this.InitializeExternalFields();
             this.InitializeTransferFields();
@@ -619,8 +629,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     if (allActiveInvoiceLines.Count == 0)
                     {
-                        isReady = false;
-                        myError = string.IsNullOrEmpty(myError) ? linesError : myError + "," + linesError;
+                        //isReady = false;
+                        //myError = string.IsNullOrEmpty(myError) ? linesError : myError + "," + linesError;
                     }
 
                     else
@@ -1335,6 +1345,31 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         }
 
                         throw new ApplicationException(msg);
+                    }
+                }
+            }
+        }
+
+        private void CreateAPInvoiceMessage()
+        {
+            if (setApproved && IsTransferEnabled)
+            {
+                if (CanTransferToFTP && TransferToFTPActivated)
+                {
+                    if (!string.IsNullOrEmpty(entityPM.TransferError))
+                    {
+                        throw new ApplicationException(entityPM.TransferError);
+                    }
+                    else
+                    {
+                        bool isFTP = CanTransferToFTP && TransferToFTPActivated;
+
+                        this.invoice = invoiceRepository.GetSingleAPInvoice(this.entityPM.Id, this.entityPM.Tenant);
+                        List<APInvoice> entities = new List<APInvoice>();
+                        entities.Add(this.invoice);
+
+                        APInvoiceMessageHelper myHelper = new APInvoiceMessageHelper(entities, this.invoice.InvoiceNumber + ".xml", tenant, false, isFTP);
+                        myHelper.Transfer();
                     }
                 }
             }
