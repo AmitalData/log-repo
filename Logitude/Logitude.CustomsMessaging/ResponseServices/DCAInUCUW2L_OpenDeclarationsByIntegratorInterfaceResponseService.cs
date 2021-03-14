@@ -49,7 +49,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 try {
                     string error = "";
                     string moreParams = customResponse.MoreParams;
-                    CommDecService.ProccessGenericRequestReal(customResponse.LOGICOMMDEC, ref moreParams, out error);
+                    CommDecService.ProccessGenericRequestReal(customResponse.LOGICOMMDEC, requestParams.Tenant, requestParams.LoggingUserId , ref moreParams, out error);
 
 
                     this.MyResponseData.ApplicationID = requestParams.AppicationId;
@@ -60,7 +60,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     this.MyResponseData.ApplicationID = requestParams.AppicationId;
                     this.MyResponseData.HasException = true;
-                    this.MyResponseData.Succeeded = true;
+                    this.MyResponseData.Succeeded = false;
                     this.MyResponseData.UserMessage = ex.Message;
                 }
            // }

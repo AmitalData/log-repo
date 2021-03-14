@@ -71,6 +71,9 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
         {
 
         }
+
+        int _tenant = 0;
+
         public override void ProccessGenericRequest(
               string xmlLOGICOMMDEC,
               ref string MoreParams,
@@ -78,10 +81,9 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
         {
             MessageOut = "";
-            int tenant = 0;
-            tenant = ResolvedTenant();
-            var user = AuthenticationUtil.ResolveUserId(tenant);
-            string defValue =  GetDefault( "ISRAEL", "CGG_OPN_DEC_MET", "NON", "NON",tenant);
+            _tenant = ResolvedTenant();
+            var user = AuthenticationUtil.ResolveUserId(_tenant);
+            string defValue =  GetDefault( "ISRAEL", "CGG_OPN_DEC_MET", "NON", "NON", _tenant);
 
             if(!string.IsNullOrEmpty(defValue) && defValue=="B")
             {
@@ -93,10 +95,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     LOGICOMMDEC = xmlLOGICOMMDEC,
                     MoreParams = MoreParams,
                     LoggingUserId=user,
-                    Tenant=tenant
+                    Tenant= _tenant
                 };
 
-                messagingService.CreateCRS(tenant, user, requestParams);
+                messagingService.CreateCRS(_tenant, user, requestParams);
  
              
             }
@@ -104,18 +106,24 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             {
                 AppendLogLine("Default= WS'");
 
-                ProccessGenericRequestReal(xmlLOGICOMMDEC,ref MoreParams,out MessageOut);
+                ProccessGenericRequestReal(xmlLOGICOMMDEC, _tenant, user, ref MoreParams,out MessageOut);
             }
 
 
         }
+        protected override int ResolvedTenant()
+        {
+            return _tenant;
+        }
 
 
         public void ProccessGenericRequestReal(
-              string xmlLOGICOMMDEC,
+              string xmlLOGICOMMDEC , int tenant, string Curruser,
               ref string MoreParams,
               out string MessageOut)
         {
+            _tenant = tenant;
+
             MessageOut = "";
             _Stopwatch = Stopwatch.StartNew();
             MyCommunicationsParams.Subject = "CommDecService ";
@@ -668,7 +676,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             CustomsAutonomyKeywordQueryService customsAutonomyKeywordQueryService = new CustomsAutonomyKeywordQueryService(_context);
             var casualImportelTel = _AmitalCustomsFile.CasualImportelTel;
             if (!String.IsNullOrWhiteSpace(casualImportelTel)) casualImportelTel = _AmitalCustomsFile.CasualImportelTel.TrimStart(new Char[] { '0' });
-            if (customsAutonomyKeywordQueryService.CheckIfsAutonomy(_AmitalCustomsFile.CasualImporterCity, casualImportelTel,"", ResolvedTenant()))
+            if (customsAutonomyKeywordQueryService.CheckIfsAutonomy(_AmitalCustomsFile.CasualImporterCity, casualImportelTel, ResolvedTenant()))
             {
                 this.IsAutonomy = true;
                 return;
