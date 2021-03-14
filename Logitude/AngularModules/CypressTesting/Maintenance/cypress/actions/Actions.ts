@@ -1,6 +1,7 @@
 import { MaintenanceSelectors } from "../selectors/Selectors";
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import { Urls } from "../constants/Urls";
+import { Terms } from "../constants/Terms";
 import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
@@ -10,8 +11,7 @@ import { ContactContext } from "../models/ContactContext";
 import { BaseURLs } from "../../../Base/cypress/constants/URLs";
 import { Datepicker } from "../models/Datepicker";
 
-export function LoginAndNavigateMaintenanceMenu() {
-    cy.Login();
+export function OpenMaintenanceMenu() {
     cy.Click(BaseSelectors.MaintenanceMenu, null)
 }
 
@@ -40,10 +40,10 @@ export function FillContactDetails(contactDetails: ContactDetails) {
     FillContactBusinessPhone(contactDetails.BusinessPhone);
     FillContactMobile(contactDetails.Mobile);
     FillContactFax(contactDetails.Fax);
-    FillContactDatepicker(contactDetails.BirthdayDate, "birthday");
-    FillContactDateReminder(contactDetails.BirthdayReminder, "birthday");
-    FillContactDatepicker(contactDetails.AnniversaryDate, "anniversary");
-    FillContactDateReminder(contactDetails.AnniversaryReminder, "anniversary");
+    FillContactDatepicker(contactDetails.BirthdayDate, Terms.Birthday);
+    FillContactDateReminder(contactDetails.BirthdayReminder, Terms.Birthday);
+    FillContactDatepicker(contactDetails.AnniversaryDate, Terms.Anniversary);
+    FillContactDateReminder(contactDetails.AnniversaryReminder, Terms.Anniversary);
     FillContactNotes(contactDetails.Notes);
 }
 
@@ -116,13 +116,13 @@ export function AssertContactDetailsValues() {
     AssertContactInputHaveValue(MaintenanceSelectors.ContactMobile, "");
     AssertContactInputHaveValue(MaintenanceSelectors.ContactFax, "");
     AssertContactInputHaveValue(MaintenanceSelectors.ContactNotes, "");
-    AssertContactDatepickerNotSelected("birthday");
-    AssertContactDatepickerNotSelected("anniversary");
+    AssertContactDatepickerNotSelected(Terms.Birthday);
+    AssertContactDatepickerNotSelected(Terms.Anniversary);
 }
 
 function FillContactEmail(contactEmail: string) {
     if (contactEmail) {
-        let emailToFill = contactEmail.toLowerCase() == "random" ? (gr.GenerateRandomNumberAndString(16).toLowerCase() + "@test.com") : contactEmail;
+        let emailToFill = contactEmail.toLowerCase() == "random" ? (gr.GenerateCurrentDatetimeString("_") + "@test.com") : contactEmail;
         cy.FillLogTextBox(MaintenanceSelectors.ContactEmail, emailToFill);
     }
 }
@@ -173,10 +173,10 @@ function FillContactDatepicker(contactDate: string, dateType:string) {
     if (contactDate && dateType) {
         let contactDatepicker: Datepicker = GetContactDatepicker(contactDate);
         let indexOfDatepicker: number;
-        if(dateType.toLocaleLowerCase() == "birthday"){
+        if(dateType.toLowerCase() == Terms.Birthday){
             indexOfDatepicker = 0;
         }
-        else if(dateType.toLocaleLowerCase() == "anniversary"){
+        else if(dateType.toLowerCase() == Terms.Anniversary){
             indexOfDatepicker = 1;
         }
         cy.get(MaintenanceSelectors.ContactDatepicker).eq(indexOfDatepicker).within(() => {
@@ -212,10 +212,10 @@ function FillContactDateReminder(reminder: string, dateType:string){
 
 function GetContactDateReminderSelector(dateType:string){
     let reminderCheckboxSelector: string;
-    if(dateType.toLocaleLowerCase() == "birthday"){
+    if(dateType.toLowerCase() == Terms.Birthday){
         reminderCheckboxSelector = MaintenanceSelectors.ContactBirthdayReminder;
     }
-    else if(dateType.toLocaleLowerCase() == "anniversary"){
+    else if(dateType.toLowerCase() == Terms.Anniversary){
         reminderCheckboxSelector = MaintenanceSelectors.ContactAnniversaryReminder;
     }
     return reminderCheckboxSelector;
@@ -233,9 +233,9 @@ function GetContactDatepicker(contactDate: string): Datepicker{
         contactDateYear = today.getFullYear();
     }
     else if (contactDate.toLowerCase() == "random") {
-        contactDateDay = gr.GenerateRandomNumber(1, 28);
         contactDateMonth = gr.GenerateRandomNumber(1, 12);
         contactDateYear = gr.GenerateRandomNumber(1950, today.getFullYear());
+        contactDateDay = GetRandomDay(contactDateMonth, contactDateYear);
     }
     else{
         let date = new Date(contactDate);
@@ -249,6 +249,26 @@ function GetContactDatepicker(contactDate: string): Datepicker{
     datepicker.Month = contactDateMonth;
     datepicker.Year = contactDateYear;
     return datepicker;
+}
+
+function GetRandomDay(month: number, year: number){
+    let maxDay = 0;
+    if(month == 2){
+        if(year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)){
+            maxDay = 29;
+        }
+        else{
+            maxDay = 28;
+        }
+    }
+    else if([1, 3, 5, 7, 8, 10, 12].indexOf(month) != -1){
+        maxDay = 31;
+    }
+    else if([4, 6, 9, 11].indexOf(month) != -1){
+        maxDay = 30;
+    }
+
+    return gr.GenerateRandomNumber(1, maxDay);
 }
 
 function DefineContactViewsGetByFiltersRequest(contactEmail: string = null) {
@@ -301,10 +321,10 @@ function AssertContactInputHaveValue(inputSelector: string, value: string){
 
 function AssertContactDatepickerNotSelected(dateType:string){
     let indexOfDatepicker: number;
-    if(dateType.toLocaleLowerCase() == "birthday"){
+    if(dateType.toLowerCase() == Terms.Birthday){
         indexOfDatepicker = 0;
     }
-    else if(dateType.toLocaleLowerCase() == "anniversary"){
+    else if(dateType.toLowerCase() == Terms.Anniversary){
         indexOfDatepicker = 1;
     }
     cy.get(MaintenanceSelectors.ContactDatepicker).eq(indexOfDatepicker).within(() => {
