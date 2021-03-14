@@ -578,7 +578,7 @@ namespace Logitude.Accounting.BL.Validators
                 bool journalLineHasFutureDate = CheckJournalLineForFutureDate(journalLinePM);
                 if (journalLineHasFutureDate)
                 {
-                    FutureDateErrorsMessage += TranslateMyTextCode(JournalValidator.M_FutureDateIsNotAllowedInLine, journalLinePM.Tenant);
+                    FutureDateErrorsMessage += TranslateMyTextCode("Journal.O.haveFutureAccountingorReferenceDate", journalLinePM.Tenant);
                     IsFutureDateErrorsExist = true;
                     return;
                 }
