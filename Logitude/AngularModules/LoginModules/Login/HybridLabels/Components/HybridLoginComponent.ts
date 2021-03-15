@@ -44,12 +44,17 @@ export class HybridLoginComponent extends LoginComponent implements OnInit {
                 this.BackgroundImage = BrandingDataService.GetBackgroundImage();
                 this.MainImage = BrandingDataService.GetMainImage(); 
                 this.MainLogo = BrandingDataService.GetMainLogo();
-                this.SmallLogo = BrandingDataService.GetSmallLogo();
-                this.showSpinner = false;
-            } 
-        });
-
-    }
+                this.SmallLogo = BrandingDataService.GetSmallLogo(); 
+            }
+        },
+            (error) => {
+                this.BackgroundImage = BrandingDataService.DefaultBackground;
+                this.MainImage = BrandingDataService.DefaultMainImage;
+                this.MainLogo = BrandingDataService.DefaultMainLogo;
+            },
+        )
+        this.showSpinner = false;
+    } 
 
     private ClearLocation() {
         if (SessionInfo.MainLocation) {

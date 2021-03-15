@@ -9,8 +9,8 @@ export class BrandingDataService {
     public static DefaultMainImage: string = "url('./Images/LoginScreen/screen_trucks.jpg')";
     public static DefaultLoginProgress: string = "url('./Images/LoginScreen/screen_kids.jpg')";
     public static DefaultForgetPassword: string = "url('./Images/LoginScreen/screen_kids.jpg')";
-    public static DefaultMainLogo: string = "'./Images/LoginScreen/header.jpg'";
-    public static DefaultSmallLogo: string = "'./Images/LoginScreen/sheader.jpg'"; 
+    public static DefaultMainLogo: string = "./Images/LoginScreen/header.jpg";
+    public static DefaultSmallLogo: string = "./Images/LoginScreen/sheader.jpg"; 
 
     constructor() {
 

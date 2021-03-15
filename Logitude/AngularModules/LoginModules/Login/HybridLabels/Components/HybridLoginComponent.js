@@ -39,8 +39,8 @@ export var HybridLoginComponent = (function (_super) {
                 _this.MainImage = BrandingDataService.GetMainImage();
                 _this.MainLogo = BrandingDataService.GetMainLogo();
                 _this.SmallLogo = BrandingDataService.GetSmallLogo();
-                _this.showSpinner = false;
             }
+            _this.showSpinner = false;
         });
     };
     HybridLoginComponent.prototype.ClearLocation = function () {

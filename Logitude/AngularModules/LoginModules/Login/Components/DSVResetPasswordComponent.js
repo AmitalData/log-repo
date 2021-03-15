@@ -39,9 +39,13 @@ export var DSVResetPasswordComponent = (function (_super) {
                 _this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage();
                 _this.Id = response.Result.Id;
                 _this.MainLogo = BrandingDataService.GetMainLogo();
-                _this.showSpinner = false;
             }
+        }, function (error) {
+            _this.BackgroundImage = BrandingDataService.DefaultBackground;
+            _this.ForgetPasswordImage = BrandingDataService.DefaultForgetPassword;
+            _this.MainLogo = BrandingDataService.DefaultMainLogo;
         });
+        this.showSpinner = false;
     };
     DSVResetPasswordComponent.decorators = [
         { type: Component, args: [{
