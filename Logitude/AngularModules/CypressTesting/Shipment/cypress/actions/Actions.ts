@@ -319,7 +319,7 @@ export function FillPackageTab(transportMode: string, packagesDetails: PackagesD
         }
 
         if(packagesDetails[i].ChargeableWeight) {
-            cy.FillLogTextBox(ShipmentSelectors.PackageChargeableWeight, packagesDetails[i].ChargeableWeight.toString())
+            cy.FillLogTextBox(ShipmentSelectors.PackageChargeableWeight, packagesDetails[i].ChargeableWeight.toString(), true)
         }
     }
 }
