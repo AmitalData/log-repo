@@ -1025,34 +1025,7 @@ class JournalLineModel extends BaseComponent {
                 if(this.Currency.Id ==SessionLocator.TenantPM.CurrencyId)  this.ForeignAmount= this.LocalAmount;
             }
             if (!this.ForeignAmount && this.CurrencyId) this.GetExchangeRate(this.CurrencyId);
-            // convert amount
-            // if (!AppTool.IsNullOrEmpty(value) && this.CurrencyId && this.currencyRate) {
-            //     this.isForeignEntered = true;
-
-            //     if (1 || !this.isRateCoverted) {
-            //         if (this.isForeignEntered) this.isRateManualy = true;
-            //         this.isLocalEntered = true;
-            //     }
-
-            //     if (!this.isForeignEntered) {
-            //         this.isRateCoverted = true;
-            //         this.ForeignAmount = (value / this.currencyRate);
-            //     } else {
-            //         this.isRateCoverted = false;
-            //     }
-
-            // } else {
-            //     this.isLocalEntered = false;
-            //     this.isForeignEntered = false;
-            //     this.ForeignAmount = null;
-            //     this.isRateManualy = false;
-            // }
-
-            // if(!this.isForeignEntered && !AppTool.IsNullOrEmpty(value) && this.CurrencyId && this.currencyRate)
-            // {
-            //     this.isRateCoverted = true;
-            //     this.ForeignAmount = (value / this.currencyRate);
-            // }
+           
 
         }
     }
@@ -1066,31 +1039,7 @@ class JournalLineModel extends BaseComponent {
             this.JournalLinePM.ForeignAmount = value;
             this.parent.CalculateTotals();
             if (!this.LocalAmount && this.CurrencyId) this.GetExchangeRate(this.CurrencyId);
-            // convert amount
-            // if (value != null && this.CurrencyId && this.currencyRate) {
-            //     if (1 || !this.isRateCoverted)
-            //     {
-            //         if (this.isLocalEntered) this.isRateManualy = true;
-            //         this.isForeignEntered = true;
-            //     }
-            //     if (!this.isLocalEntered) {
-            //         this.isRateCoverted = true;
-            //         this.LocalAmount = (value * this.currencyRate);
-            //     } else {
-            //         this.isRateCoverted = false;
-            //     }
-            // } else {
-            //     this.isLocalEntered = false;
-            //     this.isForeignEntered = false;
-            //     this.LocalAmount = null;
-            //     this.isRateManualy = false;
-            // }
-
-            // if(!this.isForeignEntered && !AppTool.IsNullOrEmpty(value) && this.CurrencyId && this.currencyRate)
-            // {
-            //     this.isRateCoverted = true;
-            //     this.ForeignAmount = (value / this.currencyRate);
-            // }
+         
         }
 
     }
@@ -1119,28 +1068,37 @@ class JournalLineModel extends BaseComponent {
             }
 
             // local amount entered and foreign is null
-            if (type == 'local' && !this.isForeignEntered && this.currencyRate) {
+            if (type == 'local' && !this.ForeignAmount && this.currencyRate) {
                 this.LocalAmount = localAmount;
                 this.ForeignAmount = localAmount / this.currencyRate;
-            }
+                this.isRateManualy = false;
 
-            // foreign amount entered and local is null
-            if (type == 'foreign' && !this.isLocalEntered && this.currencyRate) {
-                this.ForeignAmount = foreignAmount;
-                this.LocalAmount = foreignAmount * this.currencyRate;
             }
+            else {
+                if (this.ForeignAmount && this.LocalAmount) {
+                    this.SetExchangeRateMnualy();
+                }
+            }
+            //// foreign amount entered and local is null
+            //if (type == 'foreign' && !this.isLocalEntered && this.currencyRate) {
+            //    this.ForeignAmount = foreignAmount;
+            //    this.LocalAmount = foreignAmount * this.currencyRate;
+            //}
 
             // if two amounts are entered, recalculate rate
-            if (!AppTool.IsNullOrEmpty(this.ForeignAmount) && !AppTool.IsNullOrEmpty(this.LocalAmount)) {
-                this.currencyRate = this.LocalAmount / this.ForeignAmount;
-                this.isRateManualy = true;
-            }
+            //if (!AppTool.IsNullOrEmpty(this.ForeignAmount) && !AppTool.IsNullOrEmpty(this.LocalAmount)) {
+            //    this.currencyRate = this.LocalAmount / this.ForeignAmount;
+            //    this.isRateManualy = true;
+            //}
         }
         this.isForeignEntered = false;
         this.isLocalEntered = false;
-        this.isRateManualy = false;
+    //    this.isRateManualy = false;
     }
-
+    SetExchangeRateMnualy() {
+        this.currencyRate = this.LocalAmount / this.ForeignAmount;
+        this.isRateManualy = true;
+    }
     // [!]
     // [!]
 
