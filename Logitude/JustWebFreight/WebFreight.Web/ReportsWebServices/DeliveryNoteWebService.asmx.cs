@@ -200,6 +200,7 @@ namespace WebFreight.Web.ReportsWebServices
             dataProvider.DeclarationNumber = shipment.DeclarationNumber;
             dataProvider.CustomsClearancePointName = shipment.CustomClearancePointName;
             dataProvider.ValueOfGoods = shipment.ValueOfGoods;
+            dataProvider.MainCarriageCarrierNumber = shipment.MainCarriageCarrierNumber;
 
             MapBranchData();
 
