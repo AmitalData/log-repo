@@ -73,6 +73,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             crossDockReleaseDataProvider.ConnectedShipmentTransportMode = shipmentDataView.TransportModeName;
             crossDockReleaseDataProvider.Trailer = shipmentDataView.TrailerNumber;
             crossDockReleaseDataProvider.StorageFreeDays = shipmentDataView.WarehouseStorageFreeDays;
+            crossDockReleaseDataProvider.MainCarriageTruckerName = shipmentDataView.MainCarriageCarrierNumber;
         }
 
 
