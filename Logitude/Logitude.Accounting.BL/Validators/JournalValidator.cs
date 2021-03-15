@@ -544,6 +544,7 @@ namespace Logitude.Accounting.BL.Validators
 
         private MyList<string> ValidateExchangeRate(ValidationContext accountingValidationContextServiceProvider, JournalLinePM journalLine, MyList<string> errors)
         {
+            if (journalLine.CurrencyId == TenantCurrency) return errors;
             var myIJournalValidatorRateDataProvider = accountingValidationContextServiceProvider.GetService(typeof(IJournalValidatorRateDataProvider)) as IJournalValidatorRateDataProvider;
             if (myIJournalValidatorRateDataProvider==null)
             {
