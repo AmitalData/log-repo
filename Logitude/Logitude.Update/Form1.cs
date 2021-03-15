@@ -4624,6 +4624,12 @@ User/Pass",
             var formAccountingTester = new FormAccountingTester();
             formAccountingTester.ShowDialog();
         }
+
+        private void journalsReapproveBtn_Click(object sender, EventArgs e)
+        {
+            JournalsReapprovalTool form = new JournalsReapprovalTool();
+            form.ShowDialog(this);
+        }
     }
 
     public class TenantMailBox
