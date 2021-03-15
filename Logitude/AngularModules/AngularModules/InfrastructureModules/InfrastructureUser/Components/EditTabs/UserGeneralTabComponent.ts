@@ -25,7 +25,7 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
     public DataContext = this;
     public TechnologyList: CodeNameClass[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
-    public SignatureId: string;
+    public SignatureImageId: string;
     public EntityId: string; 
 
     constructor(public entityArgs: EntityArgs, public TenantLoginPolicyListService: TenantLoginPolicyListService) {
@@ -45,21 +45,21 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
     }
 
     private InitializeImageIds() {
-        this.SignatureId = this.EntityPM.SignatureId;
+        this.SignatureImageId = this.EntityPM.SignatureImageId;
     }
 
     SignatureUploadedCompleted(imageId) {
-        this.SignatureId = imageId;
-        this.EntityPM.SignatureId = imageId;
+        this.SignatureImageId = imageId;
+        this.EntityPM.SignatureImageId = imageId;
 
     }
 
     RemoveImage(name) {
 
         switch (name) {
-            case "SignatureId": {
-                this.EntityPM.SignatureId = null;
-                this.SignatureId = null;
+            case "SignatureImageId": {
+                this.EntityPM.SignatureImageId = null;
+                this.SignatureImageId = null;
                 break;
             }
             default: {

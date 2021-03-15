@@ -258,7 +258,7 @@
 
                                     <td style="width:190px;height:22px; vertical-align:top">
                                         <span class="ImageName">
-                                            <LogLabel [Text]="'Signature Image'" [ObjectFieldName]="'SignatureId'" [ObjectTableName]="'ObjectTableName'"
+                                            <LogLabel [Text]="'Signature Image'" [ObjectFieldName]="'SignatureImageId'" [ObjectTableName]="'ObjectTableName'"
                                                       [DataContext]="DataContext"></LogLabel>
                                         </span>
                                     </td> 
@@ -266,13 +266,13 @@
                                     <td style="vertical-align:top">
                                         <div style="width:160px;height:100px">
                                             <ImageComponent [KeepOriginalSize]="true" [ImageResizeHeight]="83"
-                                                            [HeightImage]="'95px'" [ImageId]="SignatureId"
+                                                            [HeightImage]="'95px'" [ImageId]="SignatureImageId"
                                                             [EntityId]="EntityId" [EntityName]="'ObjectTableName'" [Extension]="'png'"
                                                             (UploadCompleted)="SignatureUploadedCompleted($event)"
                                                             style="height:72px;width:72px">
                                             </ImageComponent>
                                         </div>
-                                        <a class="removeLink" (click)="RemoveImage('SignatureId')">remove</a>
+                                        <a class="removeLink" (click)="RemoveImage('SignatureImageId')">remove</a>
 
                                     </td>
 

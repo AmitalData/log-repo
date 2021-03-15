@@ -66,7 +66,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
             }
             set { groupId = value; }
         }
-        public string SignatureId { get; set; }
+        public string SignatureImageId { get; set; }
     }
      
 }

@@ -50,6 +50,6 @@ export class UserList {
 		UserRoles: string;
 		AdditionalPackagesOnly: boolean;
 		GroupId: Array<string>;
-		SignatureId: string;
+		SignatureImageId: string;
 	
 }

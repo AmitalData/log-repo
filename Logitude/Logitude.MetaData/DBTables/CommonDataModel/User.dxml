@@ -216,7 +216,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="SignatureId"
+    Name="SignatureImageId"
+    OldNames="SignatureId"
     Type="varchar"
     Size="15">
     <Constraints

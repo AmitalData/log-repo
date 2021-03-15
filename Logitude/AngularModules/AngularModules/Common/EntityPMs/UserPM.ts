@@ -486,9 +486,9 @@ export class UserPM {
     public set LayoutDirection(newValue: string) { if (this.layoutDirection != newValue) { this.layoutDirection = newValue; this.MarkAsDirty("LayoutDirection"); } }
        
 	 
-    private signatureId: string;
-    public get SignatureId() { return this.signatureId; }
-    public set SignatureId(newValue: string) { if (this.signatureId != newValue) { this.signatureId = newValue; this.MarkAsDirty("SignatureId"); } }
+    private signatureImageId: string;
+    public get SignatureImageId() { return this.signatureImageId; }
+    public set SignatureImageId(newValue: string) { if (this.signatureImageId != newValue) { this.signatureImageId = newValue; this.MarkAsDirty("SignatureImageId"); } }
        
 	 
 
