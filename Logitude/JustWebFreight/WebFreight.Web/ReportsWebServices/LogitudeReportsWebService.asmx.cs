@@ -8806,7 +8806,8 @@ namespace WebFreight.Web.ReportsWebServices
                         record.Routing = shipment.Routing;
                         record.ProfitInLocalCurrency = shipment.ProfitInLocalCurrency;
                         record.ProfitInProfitCurrency = shipment.ProfitInProfitCurrency;
-
+                        record.Consignee = shipment.ConsigneeName;
+                        record.Shipper = shipment.ShipperName;
                         if (!string.IsNullOrEmpty(shipment.CustomerReference1))
                         {
                             record.CustomerReference = shipment.CustomerReference1;
