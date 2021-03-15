@@ -20,7 +20,7 @@ Feature: Contact Create, Search, Open, Edit, Save and Anonymize in Maintenance M
         When create contact
         Then the contact should create successfully
 
-    Scenario: Search about the contact
+    Scenario: Search for the contact by email
         When search contact
         Then the contact should appear successfully
 
