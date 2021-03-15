@@ -58,7 +58,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
                 ICustomContext customContext = CustomContext.GetContext(tenant);
                 CustomsRequiredFieldQueryService customsRequiredFieldQuery = new CustomsRequiredFieldQueryService(customContext);
-                List<CustomsRequiredFieldPM> result = customsRequiredFieldQuery.GetCustomRequiredFieldsByObjectTable(objectTableId, tenant);
+                List<CustomsRequiredFieldPM> result = customsRequiredFieldQuery.GetCustomRequiredFieldsByObjectTableNoCache(objectTableId, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }

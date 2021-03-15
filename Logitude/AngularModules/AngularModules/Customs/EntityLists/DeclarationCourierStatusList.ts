@@ -79,6 +79,7 @@ export class DeclarationCourierStatusList {
 	SortedCourierDeclarationStatus: string;
 	Delivered: boolean;
 	TruckerId: string;
+	DistributionArea: string;
 	
 }
  
