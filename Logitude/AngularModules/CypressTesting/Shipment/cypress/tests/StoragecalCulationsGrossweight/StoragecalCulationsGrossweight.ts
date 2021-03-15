@@ -97,7 +97,7 @@ Given("the user in the shipment's rounting tab", () => {
     cy.Navigate(ShipmentSelectors.RoutingsTab);
 });
 
-Given("add new warehouse leg with {string} as Termina", (warehouseName) => {
+Given("a warehouse leg with {string} as terminal", (warehouseName) => {
     cy.Click(ShipmentSelectors.AddWarehouse, null);
     cy.FillLogLov(ShipmentSelectors.WarehouseLeg, warehouseName, true);
 });
