@@ -15,6 +15,7 @@ import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { KeyValuePair } from '../../../CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent';
 import { ExceptionReasonExtendedListService } from '../../../../Customs/Services/ExtendedLists/ExceptionReasonExtendedListService';
 import { ExceptionReasonPM } from '../../../../Customs/EntityPMs/ExceptionReasonPM';
+import { ExceptionReasonPMService } from '../../../../Customs/Services/StandardPMs/ExceptionReasonPMService';
 
 
 @Component({
@@ -265,7 +266,7 @@ export class ExceptionReason extends BaseComponent {
     public parent: AddEditExceptionReasonComponent;
     public ShowCode: boolean = true;
     _StatusItems: KeyValuePair[] = [];
-    exceptionReasonExtendedListService: ExceptionReasonExtendedListService = new ExceptionReasonExtendedListService();
+    exceptionReasonPMService: ExceptionReasonPMService = new ExceptionReasonPMService();
     constructor(entity: ReferantExceptionPM, Parent: AddEditExceptionReasonComponent, public spotlightSharedDataService: SpotlightSharedDataService) {
         super();
         this.parent = Parent;
@@ -276,7 +277,7 @@ export class ExceptionReason extends BaseComponent {
             this.ShowCode = false;
         }
         if (this.EntityPM.ExceptionReasonsCode != null) {
-            this.exceptionReasonExtendedListService.get(this.EntityPM.ExceptionReasonsCode).subscribe(response => {
+            this.exceptionReasonPMService.get(this.EntityPM.ExceptionReasonsCode).subscribe(response => {
                 this.ExceptionReason = response.Result;
             });
         }
@@ -291,7 +292,7 @@ export class ExceptionReason extends BaseComponent {
 
         }
         return this._SelectedItemStatus;
-    }
+    } 
     set SelectedItemStatus(value) {
         if (this._SelectedItemStatus != value) {
             this._SelectedItemStatus = value;

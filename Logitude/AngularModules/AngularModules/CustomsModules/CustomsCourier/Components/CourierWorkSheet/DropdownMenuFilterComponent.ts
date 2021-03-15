@@ -132,8 +132,8 @@ export class DropdownMenuFilterComponent implements OnInit {
                     (itemRect.top - this.DivTop - ExtraTop) + 'px'; 
             }
             if (this.DivLeft != -9999) {
-                document.getElementById(this._DropdownMenuFilterComponentMenuId).style.left =
-                    (myleft + this.DivLeft)+ 'px';
+               // document.getElementById(this._DropdownMenuFilterComponentMenuId).style.left =
+//(myleft + this.DivLeft)+ 'px';
             } else {
                 document.getElementById(this._DropdownMenuFilterComponentMenuId).style.left =
                     (myleft/*itemRect.left*/ /*- 50*/ - 100 /*+5*/) + 'px';//min-width: 80px
