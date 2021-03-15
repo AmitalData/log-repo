@@ -47,6 +47,8 @@ export class DSVLoginProcessComponent extends LoginComponent implements OnInit {
     public LoginProgressImage: string = "";
     public MainLogo: string = "";
 
+    public showSpinner: boolean = true;
+
     constructor(private mylogitudeApplicationService: LogitudeApplicationService, private myloginService: LoginService, public myIndexedDbService: IndexedDbService, private myentityResourceService: EntityResourceService, private _myapplicationTimersManager: ApplicationTimersManager, public myentityListService: EntityListService,
         private _myuserLastLoginPMService: UserLastLoginPMService
     ) {
@@ -62,6 +64,7 @@ export class DSVLoginProcessComponent extends LoginComponent implements OnInit {
         this.BackgroundImage = HybridLabelsBrandingDataService.GetBackgroundImageFromStorage();
         this.MainLogo = HybridLabelsBrandingDataService.GetMainLogoFromStorage();
         this.LoginProgressImage = HybridLabelsBrandingDataService.GetLoginProgressFromStorage();
+        this.showSpinner = false;
     } 
 }
 

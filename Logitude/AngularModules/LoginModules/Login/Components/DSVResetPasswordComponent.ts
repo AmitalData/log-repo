@@ -25,18 +25,19 @@ export class DSVResetPasswordComponent extends ResetPasswordComponent {
     public ForgetPasswordImage: string = "";
     public Id = "";
     public MainLogo: string = "";
-    public ContactUsEmail: string = ""; 
+    public ContactUsEmail: string = "";  
+    public showSpinner = true; 
 
     public show = true;
     constructor( 
         private ss: LoginService,
         private hybridLabelsBrandingDataService: HybridLabelsBrandingDataService) {
-        super(ss);
+        super(ss); 
     }
 
     ngOnInit() { 
-        this.privateUrl = SessionInfo.GetLogitudeURL(); 
-        this.GetHybridLabelsData(this.privateUrl);
+        this.privateUrl = SessionInfo.GetLogitudeURL();  
+        this.GetHybridLabelsData(this.privateUrl); 
     }
 
 
@@ -49,7 +50,8 @@ export class DSVResetPasswordComponent extends ResetPasswordComponent {
                 this.BackgroundImage = BrandingDataService.GetBackgroundImage(); 
                 this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage();
                 this.Id = response.Result.Id; 
-                this.MainLogo = BrandingDataService.GetMainLogo(); 
+                this.MainLogo = BrandingDataService.GetMainLogo();  
+                this.showSpinner = false; 
             } 
         });
 

@@ -21,6 +21,7 @@ export var HybridResetPasswordComponent = (function (_super) {
         this.Id = "";
         this.MainLogo = "";
         this.ContactUsEmail = "";
+        this.showSpinner = true;
         this.show = true;
     }
     HybridResetPasswordComponent.prototype.ngOnInit = function () {
@@ -37,6 +38,7 @@ export var HybridResetPasswordComponent = (function (_super) {
                 _this.BackgroundImage = BrandingDataService.GetBackgroundImage();
                 _this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage();
                 _this.MainLogo = BrandingDataService.GetMainLogo();
+                _this.showSpinner = false;
             }
         });
     };
