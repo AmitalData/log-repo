@@ -231,7 +231,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             IQueryable<JournalPM> journalPMs = journalQuery.GetJournalsByAccountingEntityId(bankDeposit.Id, tenant);
             if (journalPMs != null)
             {
-                journalPM = journalPMs.FirstOrDefault();
+                journalPM = journalPMs.FirstOrDefault();///BAD BAD BAD !!!
+                //why itzik need to fix that ????  
+                var list = journalPMs.Where(r => r.AccountingEntityCode == "6").ToList();//why itzik need to fix that ????  6   הפקדת המחאות    Cheque Deposit
+                if (list.Count > 1)
+                {
+                    throw new ApplicationException("Find more then 1 Journal for this deposit");
+                }
+                journalPM = list.FirstOrDefault();
+
             }
             else
             {

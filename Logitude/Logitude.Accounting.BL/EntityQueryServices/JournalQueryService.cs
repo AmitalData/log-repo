@@ -342,6 +342,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                  JournalNumber = a.JournalNumber,
                                                  AccountingDate = a.AccountingDate,
                                                  StatusName = a.JournalStatusType != null? a.JournalStatusType.LocalName :null,
+                                                 AccountingEntityCode= a.AccountingEntityCode,
                                                  Id = a.Id
                                              };
           
