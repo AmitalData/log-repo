@@ -1436,6 +1436,7 @@ namespace WebFreight.Web.ReportsWebServices
                 quotesRecored.OpenDate = a.OpenDate;
                 quotesRecored.DirectionTransportMode = a.DirectionName + " / " + a.TransportModeName;
                 quotesRecored.DeclineReason = a.QuoteClosingReasonName;
+                quotesRecored.EstimateProfit = a.EstimateProfit;
 
                 if (a.QuoteTypeCode == "A")
                 {
