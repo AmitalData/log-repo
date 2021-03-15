@@ -9,11 +9,11 @@ Feature: Storage Calculations Gross Weight without Rounding
         Given the user logged in and navigate to warehouse workspace
         And open warehouse with "Testwarehouse" warehouse
         And fill with the following storage details for "CFS" Type
-            | Currency | StorageFreeDays |
-            | USD      | 2               |
+            | Currency        | USD |
+            | StorageFreeDays | 2   |
         And "Air" weight details as following
-            | Measurement  | Rounding |
-            | Gross Weight | None     |
+            | Measurement | Gross Weight |
+            | Rounding    | None         |
         And pricing defaults lines as following
             | StepFrom | NumberOfDays | StepTo | SalePrice |
             | 1        | 2            | 2      | 100       |

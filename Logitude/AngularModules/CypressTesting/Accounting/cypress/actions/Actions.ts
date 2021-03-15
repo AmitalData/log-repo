@@ -457,14 +457,14 @@ function ClickOnSaveOnConfirmWindow() {
 }
 
 export function CreateARInvoiceGeneratedFromRoutingLeg(vat:string){
-    ClickAndWaitToLoad(AccountingSelectors.CreateARInvoiceButton);
+    WaitToLoad(AccountingSelectors.CreateARInvoiceButton);
     cy.FillLogTextBox(AccountingSelectors.ARInvoiceVatNumber, vat)
-    ClickAndWaitToLoad(AccountingSelectors.OkCreateARInvoiceButton);
+    WaitToLoad(AccountingSelectors.OkCreateARInvoiceButton);
     cy.FillLogLov(AccountingSelectors.ARInvoiceVatType , vat ,true)
-    ClickAndWaitToLoad(AccountingSelectors.VatTypeApplyToAll);
+    WaitToLoad(AccountingSelectors.VatTypeApplyToAll);
 }
 
-function ClickAndWaitToLoad(ButtonSelector:string){
+function WaitToLoad(ButtonSelector:string){
     cy.DefineRequestWait(RestAPI.GET, AccountingURLs.VatTypePercentageCall, RequestAliases.GetVatTypePercentage)
     cy.Click(ButtonSelector, null);
     BaseAssertion.AssertStatusCode(RequestAliases.GetVatTypePercentage, 200);

@@ -29,13 +29,13 @@ Given("open {string} warehouse", (warehouseName) => {
 });
 
 Given("the following storage details for {string} type", (type, dataTable) => {
-    let warehouseDetails = Assists.CreateInstance<WarehouseStorage>(dataTable, false);
+    let warehouseDetails = Assists.CreateInstance<WarehouseStorage>(dataTable, true);
     cy.FillLogLov(BaseSelectors.WarehouseTypeCode, type, true);
     BaseActions.FillWarehouseStorageDetails(warehouseDetails);
 });
 
 Given("the following {string} weight details", (transportMode, dataTable) => {
-    let warehouseDetails = Assists.CreateInstance<WarehouseStorage>(dataTable, false);
+    let warehouseDetails = Assists.CreateInstance<WarehouseStorage>(dataTable, true);
     BaseActions.FillWarehouseStorageWeightDetails(warehouseDetails, transportMode);
 });
 
@@ -120,7 +120,8 @@ When("calculate storage", () => {
 });
 
 Then("storage fee should be {string}", (expectedStorageFeeValue) => {
-    BaseAssertion.AssertElementTextEqual(ShipmentSelectors.StorageFeeResult, expectedStorageFeeValue)
+    // BaseAssertion.AssertElementTextEqual(ShipmentSelectors.StorageFeeResult, expectedStorageFeeValue)
+    Actions.AssertStorageFee(expectedStorageFeeValue);
 });
 
 Then("storage pricing should have weight {string} with the following amounts", (expectedWeight, dataTable) => {

@@ -464,6 +464,10 @@ export function CalculateStorage() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetAll, 200)
 }
 
+export function AssertStorageFee(expectedStorageFeeValue:string){
+    BaseAssertion.AssertElementContain(ShipmentSelectors.StorageCalculationScreen,expectedStorageFeeValue)
+}
+
 export function ValidateStoragePricing(AmountList:WarehouseStorage[],expectedWeight:string){
     cy.get(BaseSelectors.Hyperlink).contains(ShipmentSelectors.ContainsStoragePricing).click();
     for (let i = 0; i < AmountList.length; i++) {
