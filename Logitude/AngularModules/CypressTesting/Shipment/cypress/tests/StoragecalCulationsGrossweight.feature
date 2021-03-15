@@ -21,7 +21,7 @@ Feature: Storage Calculations Gross Weight without Rounding
         When update warehouse
         Then the warehouse should update successfully
 
-    Scenario: Create direct export air shipment
+    Scenario: Create direct import air shipment
         Given the user in shipment workspace
         And a shipment with the following details
             | ShipmentLevel        | Direct              |
@@ -37,7 +37,7 @@ Feature: Storage Calculations Gross Weight without Rounding
         Given the user open the shipment and navigate to packages workspace
         And a package with the following details
             | Quantity | Length | Width | Height | GrossWeight |
-            | 1        | 1      | 1     | 1      | 10          |
+            | 1        | 1      | 1     | 1      | 9.5         |
         When update shipment
         Then the direct shipment should update successfully
 
@@ -47,17 +47,25 @@ Feature: Storage Calculations Gross Weight without Rounding
         And a warehouse leg with "Testwarehouse" as terminal
         And fill "Today" as actual release and "8" days ago date as actual entry
         When calculate storage
-        Then the Storage Fee should be "6,000.00"
-        And Storage pricing should have weight "10" and Amount as following
+        Then the Storage Fee should be "5,700.00"
+        And Storage pricing should have weight "9.5" and Amount as following
             | Amount   |
-            | 2,000.00 |
-            | 4,000.00 |
+            | 1,900.00 |
+            | 3,800.00 |
         And a receivables line with the following details should appear
             | ChargesType    | Amount    |
-            | Import Storage | 6,000.000 |
+            | Import Storage | 5,700.000 |
 
-
-    Scenario: Add invoice
-        When add new invoice with "Zero" vat type and number
-        Then the invoice should add successfully
+    Scenario: Create an ARInvoice
+        Given an ARInvoice with the following details
+            | PartnerType     | Customer    |
+            | InvoiceCurrency | USD         |
+            | InvoiceDate     | Today       |
+            | PaymentTerms    | Cash        |
+            | DueDate         | Today       |
+            | VATNo           | Zero        |
+            | Branch          | Main Office |
+            | VATType         | Zero        |
+        When create invoice
+        Then the invoice should create successfully
 

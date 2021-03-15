@@ -1,16 +1,19 @@
 import * as Actions from "../../actions/Actions";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
+import * as AccountingActions from "../../../../Accounting/cypress/actions/Actions"
+import * as BaseActions from "../../../../Base/cypress/actions/Actions"
+import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
-import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
-import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
-import { ShipmentSelectors } from "../../selectors/Selectors";
 import { PackagesDetails } from "cypress/models/PackagesDetails";
-import * as BaseActions from "../../../../Base/cypress/actions/Actions"
-import * as AccountingActions from "../../../../Accounting/cypress/actions/Actions"
-import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors';
 import { WarehouseStorage } from "cypress/models/WarehouseStorage";
 import { ReceivableDetails } from "cypress/models/ReceivableDetails";
-import * as Assists from "../../../../Base/cypress/assists/Assists";
+import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
+import { ShipmentSelectors } from "../../selectors/Selectors";
+import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors';
+import { AccountingSelectors } from "../../../../Accounting/cypress/selectors/Selectors";
+import { ARInvoiceDetails } from "../../../../Accounting/cypress/models/ARInvoiceDetails";
+
 
 let shipmentDetails: ShipmentDetails;
 
@@ -133,13 +136,19 @@ Then("a receivables line with the following details should appear", (dataTable) 
 });
 //#endregion 
 
-//#region  add 
-When("add new invoice with {string} vat type and number", (vat) => {
-    AccountingActions.CreateARInvoiceGeneratedFromRoutingLeg(vat);
-    AccountingActions.PostARApproveInvoice()
+//#region Create an ARInvoice
+Given("an ARInvoice with the following details", (dataTable) => {
+    const ARInvoiceData = Assists.CreateInstance<ARInvoiceDetails>(dataTable, true);
+    cy.Click(AccountingSelectors.CreateARInvoiceButton, null);
+    AccountingActions.FillARInvoiceDetails(ARInvoiceData)
 });
 
-Then("the invoice should add successfully", () => {
-    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200)
+When("create invoice", () => {
+    AccountingActions.CreateARInvoice()
+});
+
+Then("the invoice should create successfully", () => {
+    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
+    cy.BackButton(BaseSelectors.ContainsShipment + shipmentDetails.ShipmentNumber);
 });
 //#endregion
