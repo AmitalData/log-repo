@@ -1,4 +1,4 @@
-@release @dev
+@release @dev 
 Feature: Storage Calculations Gross Weight without Rounding
 
     The user sets up a warehouse with storage charges, creates a Direct Import Air shipment,
@@ -44,7 +44,7 @@ Feature: Storage Calculations Gross Weight without Rounding
 
     Scenario: Add warehouse leg and check the calculation
         Given the user in the shipment's rounting tab
-        And add new warehouse leg with "Testwarehouse" as Termina
+        And a warehouse leg with "Testwarehouse" as terminal
         And fill "Today" as actual release and "8" days ago date as actual entry
         When calculate storage
         Then the Storage Fee should be "6,000.00"
