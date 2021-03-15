@@ -50,7 +50,7 @@ Given("the user open the quote", () => {
 
 //#region Set as Sent , Return to Draft , Cancel and Reactivate
 When("{string} action with {string} note", (action, note) => {
-    QuotesActions.ClickActionAndFillNote(action,note);
+    QuotesActions.OpenQuoteAction(action,note);
 });
 
 Then("quote stage status should be {string}", (stageStatus) => {

@@ -131,6 +131,7 @@ export class ShipmentSelectors extends RegexSelectors {
   //#endregion
   //#region Routing tab fields
   public static readonly RoutingToggle = '#RoutingToggle';
+  public static readonly StorageCalculationScreen = '.LogitudeSectionBody';
   public static readonly PickUp = '#PickUp';
   public static readonly Delivery = '#Delivery';
   public static readonly PreCarriage = '#PreCarriage';

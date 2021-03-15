@@ -141,9 +141,13 @@ export function FillExpectedOrderDetailsDimensions(packagesDetails: PackagesDeta
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
 }
 
-export function ClickActionAndFillNote(action:string, note:string){
+export function OpenQuoteAction(action:string, note:string){
     cy.Click(BaseSelectors.MenuButtons, null, true);
     cy.Click(QuoteSelectors.QuotationActionsButton(action), null);
+    FillActionNote(note)
+}
+
+function FillActionNote(note:string){
     cy.FillLogTextBox(QuoteSelectors.QuoteEventNote, note)
     UpdateQuote(BaseSelectors.ConfrimApproved)
 }

@@ -25,18 +25,18 @@ Given("open warehouse with {string} warehouse", (warehouseName) => {
 });
 
 Given("fill with the following storage details for {string} Type", (type, dataTable) => {
-    let warehouseDetails = dataTable.hashes()[0] as WarehouseStorage;
+    let warehouseDetails = Assists.CreateInstance<WarehouseStorage>(dataTable, true);
     cy.FillLogLov(BaseSelectors.WarehouseTypeCode, type, true);
     BaseActions.FillWarehouseStorageDetails(warehouseDetails);
 });
 
 Given("{string} weight details as following", (transportMode, dataTable) => {
-    let warehouseDetails = dataTable.hashes()[0] as WarehouseStorage;
+    let warehouseDetails = Assists.CreateInstance<WarehouseStorage>(dataTable, true);
     BaseActions.FillWarehouseStorageWeightDetails(warehouseDetails, transportMode)
 });
 
 Given("pricing defaults lines as following", (dataTable) => {
-    let warehousePricingList = dataTable.hashes() as WarehouseStorage[];
+    let warehousePricingList = Assists.CreateSet<WarehouseStorage>(dataTable);
     BaseActions.FillWarehouseStoragePricing(warehousePricingList)
 
 });
@@ -79,7 +79,7 @@ Given("the user open the shipment and navigate to packages workspace", () => {
 });
 
 Given("a package with the following details", (dataTable) => {
-    let packageDetailsList = dataTable.hashes() as PackagesDetails[];
+    let packageDetailsList = Assists.CreateSet<PackagesDetails>(dataTable);
     Actions.FillPackageTab(shipmentDetails.TransportMode, packageDetailsList, shipmentDetails.ShipmentType);
 });
 
@@ -112,11 +112,12 @@ When("calculate storage", () => {
 });
 
 Then("the Storage Fee should be {string}", (expectedStorageFeeValue) => {
-    BaseAssertion.AssertElementTextEqual(ShipmentSelectors.StorageFeeResult, expectedStorageFeeValue)
+    // BaseAssertion.AssertElementTextEqual(ShipmentSelectors.StorageFeeResult, expectedStorageFeeValue)
+    Actions.AssertStorageFee(expectedStorageFeeValue);
 });
 
 Then("Storage pricing should have weight {string} and Amount as following", (expectedWeight, dataTable) => {
-    let AmountList = dataTable.hashes() as WarehouseStorage[];
+    let AmountList = Assists.CreateSet<WarehouseStorage>(dataTable);
     Actions.ValidateStoragePricing(AmountList, expectedWeight);
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, BaseSelectors.ContainsOK);
 });
