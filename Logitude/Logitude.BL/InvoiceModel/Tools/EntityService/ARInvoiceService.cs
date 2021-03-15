@@ -2208,15 +2208,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 Card myCard = CardRepository.GetSingleCard(shipment.CustomerId, tenant, false);
                 if (myCard != null)
-                {
                     receivableVatTypeId = myCard.VatTypeId;
-                }
             }
 
             if (string.IsNullOrEmpty(receivableVatTypeId))
-            {
                 receivableVatTypeId = itemPM.VatTypeId;
-            }
 
             if (!string.IsNullOrEmpty(receivableVatTypeId))
             {
