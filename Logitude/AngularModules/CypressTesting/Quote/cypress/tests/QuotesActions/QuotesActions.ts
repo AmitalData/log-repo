@@ -58,7 +58,7 @@ Then("quote stage status should be {string}", (stageStatus) => {
     BaseAssertion.AssertElementContain(BaseSelectors.HeaderScreen, stageStatus);
 });
 
-Then("following events should appear in events tab", (dataTable) => {
+Then("following event should appear in events tab", (dataTable) => {
     let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
     BaseActions.ValidateEventsTab(eventDetailsList,QuoteSelectors.QuoteEventsTab);
 });
@@ -69,7 +69,7 @@ When("Copy the quote", () => {
   QuotesActions.CopyQuote("Copy Quote")
 });
 
-Then("following events should appear in copied events tab", (dataTable) => {
+Then("following event should appear in copied events tab", (dataTable) => {
     let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
     eventDetailsList=QuotesActions.QuoteConversionEventsMapping(eventDetailsList,quoteDetails.QuoteNumber)
     BaseActions.ValidateEventsTab(eventDetailsList,QuoteSelectors.CopiedQuoteEventsTab);
