@@ -475,8 +475,12 @@ export function AssertARInvoiceStatus(status: string) {
     cy.get(AccountingSelectors.ARInvoiceHeaderStatusName).should("have.text", status);
 }
 
+export function AssertARInvoiceAmount(expectedInvoiceAmount: number) {
+    cy.get(BaseSelectors.TabSummaryValue).eq(4).should("have.text", expectedInvoiceAmount.toFixed(2));
+}
+
 export function AssertAutoCreditByInvoiceNumber(invoiceNumber: string) {
     cy.get(BaseSelectors.RightBorderRadius).invoke("text").then((text) => {
-        expect(text.replace(/\s/g, "")).to.contain("ByInvoice" + invoiceNumber);
+        expect(text.replace(/\s/g, "")).to.equals("ByInvoice" + invoiceNumber);
     });
 }
