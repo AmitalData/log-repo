@@ -44,12 +44,12 @@ Given("the user logged in and navigates to quotes workspace", () => {
   });
 //#endregion 
 
-Given("the user in quote quotation", () => {
+Given("the user open the quote", () => {
     QuotesActions.OpenQuote(quoteDetails.QuoteNumber);
 });
 
 //#region Set as Sent , Return to Draft , Cancel and Reactivate
-When("{string} with {string}", (action, note) => {
+When("{string} action with {string} note", (action, note) => {
     QuotesActions.ClickActionAndFillNote(action,note);
 });
 

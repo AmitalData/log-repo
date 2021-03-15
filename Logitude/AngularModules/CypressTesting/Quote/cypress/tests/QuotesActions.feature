@@ -20,28 +20,28 @@ Feature: Quote Set as Sent to Customer, Return to Draft, Reactivate & Copy
         Then the quote should create successfully
 
     Scenario: Set as Sent to Customer
-        Given the user in quote quotation
-        When "Set As Sent" with "Testing The set as sent to customer"
+        Given the user open the quote
+        When "Set As Sent" action with "Testing The set as sent to customer" note
         Then quote stage status should be "Sent"
         And following events should appear in events tab
             | Event      | Notes                               |
             | Quote Sent | Testing The set as sent to customer |
 
     Scenario: Return quote to draft
-        When "Return To Draft" with "Testing The return quote to draft"
+        When "Return To Draft" action with "Testing The return quote to draft" note
         Then quote stage status should be "Draft"
         And following events should appear in events tab
             | Event           | Notes                             |
             | Return To Draft | Testing The return quote to draft |
 
     Scenario: Cancel quote
-        When "Cancel Quote" with "Cancelling the quote to test the reactivate quote"
+        When "Cancel Quote" action with "Cancelling the quote to test the reactivate quote" note
         Then following events should appear in events tab
             | Event        | Notes                                             |
             | Cancel Quote | Cancelling the quote to test the reactivate quote |
 
     Scenario: Reactivate quote
-        When "Reactivate Quote" with "Reactivate the quote"
+        When "Reactivate Quote" action with "Reactivate the quote" note
         Then quote stage status should be "Draft"
         And following events should appear in events tab
             | Event            | Notes                |
