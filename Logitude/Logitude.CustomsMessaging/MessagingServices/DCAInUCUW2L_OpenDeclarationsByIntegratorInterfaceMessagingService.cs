@@ -101,10 +101,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
             //var responseData = messService.SendSheet(genericRequestParams);
 
             var ourRef = "";
-            using (var trans = TransactionFactory.GetNewTransaction())
-            {
-                try
-                {
+            //using (var trans = TransactionFactory.GetNewTransaction())
+            //{
+            //    try
+            //    {
                     var InterfaceManagementQS = new InterfaceManagementQueryService(tenant);
                     var InterfaceManagementPM = InterfaceManagementQS.GetSingleInterfaceManagementwithDefinition(
                         this.MainInterfaceCode, tenant);
@@ -116,22 +116,22 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                     }, xmlESBResponseXmlClass);
 
-                    trans.Complete();
+                  //  trans.Complete();
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";
-                }
-                catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
-                {
-                    if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
-                    {
-                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine(" UCBCMSS SameRequestInProgress!! " + myCustomsRequestsSheetServiceException.Message);
-                    }
-                    else if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.NoAvailableSignServer)
-                    {
-                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("UCBCTML SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
-                    }
-                    return "קיים מסר זהה בתהליך";
-                }
-            }
+              //  }
+              //  catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
+              //  {
+                    //if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
+                    //{
+                    //    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine(" UCBCMSS SameRequestInProgress!! " + myCustomsRequestsSheetServiceException.Message);
+                    //}
+                    //else if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.NoAvailableSignServer)
+                    //{
+                    //    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("UCBCTML SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
+                    //}
+                    //return "קיים מסר זהה בתהליך";
+               // }
+           // }
         }
 
 
