@@ -203,26 +203,26 @@ export class AddEditExceptionReasonComponent extends BaseComponent {
                         this.DeletedCodeList.splice(this.DeletedCodeList.indexOf(item), 1);
                     });
                 });
-                this._declarationReferantDataPMService.update(this.EntityPM).subscribe((response: any) => {
-                    this.ReferantExceptionItemsSource.Collection.forEach((item: ExceptionReason) => {
-                        if (item.IsNew == true) {
-                            this._referantExceptionPMService.insert(item.EntityPM).subscribe((response: any) => {
-                                item.IsNew = false;
-                                item.ShowCode = true;
-                                this.IsLastItemInCollection(item);
-                            });
-                        } else if (item.EntityPM.IsDirty == true) {
-                            this._referantExceptionPMService.update(item.EntityPM).subscribe((response: any) => {
-                                this.IsLastItemInCollection(item);
-                            });
-                        } else {
+                this.ReferantExceptionItemsSource.Collection.forEach((item: ExceptionReason) => {
+                    if (item.IsNew == true) {
+                        this._referantExceptionPMService.insert(item.EntityPM).subscribe((response: any) => {
+                            item.IsNew = false;
+                            item.ShowCode = true;
                             this.IsLastItemInCollection(item);
-                        }
-                    });
-                    if (this.ReferantExceptionItemsSource.Collection.length == 0) {
-                        SessionLocator.SelectedSession.CloseCurrentWindow();
+                        });
+                    } else if (item.EntityPM.IsDirty == true) {
+                        this._referantExceptionPMService.update(item.EntityPM).subscribe((response: any) => {
+                            this.IsLastItemInCollection(item);
+                        });
+                    } else {
+                        this.IsLastItemInCollection(item);
                     }
                 });
+                if (this.ReferantExceptionItemsSource.Collection.length == 0) {
+                    this._declarationReferantDataPMService.update(this.EntityPM).subscribe((response: any) => {
+                        SessionLocator.SelectedSession.CloseCurrentWindow();
+                    });
+                }
             }
             this.exceptionReasonSharedDataService.IsDirty = false;
         } else {
@@ -238,10 +238,13 @@ export class AddEditExceptionReasonComponent extends BaseComponent {
     }
 
     IsLastItemInCollection(item: any) {
-        var lastItem = this.ReferantExceptionItemsSource.Collection[this.ReferantExceptionItemsSource.Collection.length-1]
+        var lastItem = this.ReferantExceptionItemsSource.Collection[this.ReferantExceptionItemsSource.Collection.length - 1]
         if (item == lastItem) {
-            SessionLocator.SelectedSession.CloseCurrentWindow();
+            this._declarationReferantDataPMService.update(this.EntityPM).subscribe((response: any) => {
+                SessionLocator.SelectedSession.CloseCurrentWindow();
+            });
         }
+
     }
 
     OnRowEnded($event) {
@@ -292,7 +295,7 @@ export class ExceptionReason extends BaseComponent {
 
         }
         return this._SelectedItemStatus;
-    } 
+    }
     set SelectedItemStatus(value) {
         if (this._SelectedItemStatus != value) {
             this._SelectedItemStatus = value;
