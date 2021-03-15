@@ -446,7 +446,7 @@
                         </div>
                         <div *ngIf="logcelltemplate.IsEditMode">
                           <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'AccDay'" [InputType]="'integer'" [DataContext]="item"
-                                      [Text]="item.AccDay" [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
+                                    (LostFocus)="item.AccDay_LostFocus($event)"  [Text]="item.AccDay" [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
                         </div>
                       </log-cell-template>
                     </ng-template>

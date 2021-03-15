@@ -975,12 +975,14 @@ class JournalLineModel extends BaseComponent {
                             this.isRateManualy = false;
 
                             var rate = myResponse.Result;
-                            this.currencyRate = rate.Rate;
+                           
                           
-                            if (this.IsAccDayChanged && (this.currencyRate != rate)) {
+                            if (this.IsAccDayChanged && (this.currencyRate != rate.Rate)) {
                                 this.SetAmountsWhenChangingAccDay();
+                                this.currencyRate = rate.Rate;
                             }
                             else {
+                                this.currencyRate = rate.Rate;
                                 // Recalculate local amount
                                 this.isRateCoverted = true;
                                 if (this.LocalAmount) {
@@ -1287,40 +1289,46 @@ class JournalLineModel extends BaseComponent {
 
             //1- check parent accounting date if changed?
             if (this.parent.AccountingDate != this.AccountingDate) {
-                this.AccountingDate = this.parent.AccountingDate;
+              //  this.AccountingDate = this.parent.AccountingDate;
             }
 
-            //2- check day range
-            var date = new Date(this.AccountingDate.toString()); // somtimes this.AccountingDate contains string date o.O
-
-            var newDate: Date = new Date();
-            newDate.setUTCFullYear(date.getFullYear());
-            newDate.setUTCMonth(date.getMonth());
-            newDate.setUTCDate(date.getDate());
-            newDate.setUTCHours(0);
-            newDate.setUTCMinutes(0);
-            newDate.setUTCSeconds(0);
-            newDate.setUTCMilliseconds(0);
-            date = newDate;
-
-            this.IsAccDayValid(date, value);
-            var valid = JournalValidator.IsAccDayValid(date, value);
-
-            this.isValid = valid;
-            if (valid) {
-                this.UIProperties.SetValidity("AccDay", this.ObjectTableName, true, "valid");
-            } else {
-                this.UIProperties.SetValidity("AccDay", this.ObjectTableName, false, this.accountingDayMustBeInRange);
-            }
-
-            //3- set the accounting date with new day
-            this.AccountingDate.setUTCDate(date.getDate());
-            this.IsAccDayChanged = true;
-            if (this.CurrencyId)
-                this.GetExchangeRate(this.CurrencyId);
-
-
+        
         }
+    }
+    ValidateAccDay() {
+        this.IsAccDayValid(this.date, this.AccDay);
+        var valid = JournalValidator.IsAccDayValid(this.date, this.AccDay);
+
+        this.isValid = valid;
+        if (valid) {
+            this.UIProperties.SetValidity("AccDay", this.ObjectTableName, true, "valid");
+        } else {
+            this.UIProperties.SetValidity("AccDay", this.ObjectTableName, false, this.accountingDayMustBeInRange);
+        }
+    }
+    date: Date;
+    SetAccountingDate() {
+        this.date = new Date(this.AccountingDate.toString()); // somtimes this.AccountingDate contains string date o.O
+
+        var newDate: Date = new Date();
+        newDate.setUTCFullYear(this.date.getFullYear());
+        newDate.setUTCMonth(this.date.getMonth());
+        newDate.setUTCDate(this.date.getDate());
+        newDate.setUTCHours(0);
+        newDate.setUTCMinutes(0);
+        newDate.setUTCSeconds(0);
+        newDate.setUTCMilliseconds(0);
+        this.date = newDate;
+        this.ValidateAccDay();
+        this.AccountingDate.setUTCDate(this.date.getDate());
+    }
+    AccDay_LostFocus(date: Date) {
+
+        this.IsAccDayChanged = true;
+        if (this.CurrencyId)
+            this.GetExchangeRate(this.CurrencyId);
+        this.SetAccountingDate();
+        
     }
     IsAccDayChanged: boolean;
     IsAccDayValid(date: Date, day: number) {
