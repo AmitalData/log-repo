@@ -68,7 +68,7 @@ export class RootComponent implements AfterViewInit {
         var data = window.sessionStorage.getItem('userdata');
         if (url.indexOf('localhost:4200/?{%22$id') > -1) {
             this.isPrivateLable = true;
-            this.isDSV = false;
+            this.isDSV = true;
             data = url.split('?')[1];
         }
         if ((data && data == "SignOut") || (!data && !SessionLocator.IsExternalParams && (url.indexOf('localhost') == -1 && !this.isPrivateLable))) {
