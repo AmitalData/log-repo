@@ -208,7 +208,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     _AccountingContext = AccountingContext.GetContext(_Tenant);
                     logger = (_AccountingContext as DbContextBase).CreateLogger();
 
-                    
+                    bool supperssSaveOnUpdateMultiDueIsFaster = true;
                     //if (_ExecAsSP)
                     //{
                     this.Exec_usp_AccountingStreaming(myLedgerTransactionsWithCounters, allGLAccountTotalByMonths.ToList());
@@ -224,7 +224,12 @@ namespace Logitude.Accounting.BL.CoreBL
                         var myReconciliationUpdateService = new ReconciliationUpdateService(_AccountingContext, new Dictionary<string, IContext>(), _JournalPM.Tenant);
                         myReconciliationUpdateService.SuppressResetDraftOpenReconciliation = true;
 
-                        myReconciliationUpdateService.UpdateMulti(myCreateAutoReconcileWhileStreamingService.ReconciliationList, new List<ReconciliationPM>(), _JournalPM, true);
+                        myReconciliationUpdateService.UpdateMulti(myCreateAutoReconcileWhileStreamingService.ReconciliationList, new List<ReconciliationPM>(), _JournalPM, !supperssSaveOnUpdateMultiDueIsFaster);
+                        if (supperssSaveOnUpdateMultiDueIsFaster)
+                        {
+                            _AccountingContext.SaveChanges();
+                        }
+
                         var toUpdateInReconcileProgressToFalse = true;// i think its not happened - have to test b4 
                         if (toUpdateInReconcileProgressToFalse)
                         {
@@ -248,8 +253,11 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             var myExternalReconciliationUpdateService = new ExternalReconciliationUpdateService(_AccountingContext, new Dictionary<string, IContext>(), _JournalPM.Tenant);
 
-                            myExternalReconciliationUpdateService.UpdateMulti(myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList, new List<ExternalReconciliationPM>(), _JournalPM, true);
-
+                            myExternalReconciliationUpdateService.UpdateMulti(myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList, new List<ExternalReconciliationPM>(), _JournalPM, !supperssSaveOnUpdateMultiDueIsFaster);
+                            if (supperssSaveOnUpdateMultiDueIsFaster)
+                            {
+                                _AccountingContext.SaveChanges();
+                            }
                             var toUpdateInReconcileProgressToFalse = true;// next sprint
                             if (toUpdateInReconcileProgressToFalse)
                             {
