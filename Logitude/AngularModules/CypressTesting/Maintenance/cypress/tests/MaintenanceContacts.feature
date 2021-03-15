@@ -12,7 +12,7 @@ Feature: Contact Create, Search, Open, Edit, Save and Anonymize in Maintenance M
             | BusinessPhone       | 9999999999          |
             | Mobile              | 9999999999          |
             | Fax                 | 999999              |
-            | BirthdayDate        | Random              |
+            | BirthdayDate        | 1/1/2000            |
             | AnniversaryDate     | Today               |
             | BirthdayReminder    | Yes                 |
             | AnniversaryReminder | Yes                 |
