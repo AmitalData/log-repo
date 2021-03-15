@@ -3222,53 +3222,11 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.isCopyPreCarriage = value;
 
             if (value == true) {
-                this.EntityPM.PreCarriageFromPortId = this.SourceEntityPM.PreCarriageFromPortId;
-                this.EntityPM.PreCarriageFromPortCode = this.SourceEntityPM.PreCarriageFromPortCode;
-                this.EntityPM.PreCarriageFromPortName = this.SourceEntityPM.PreCarriageFromPortName;
-                this.EntityPM.PreCarriageFromPortCountryCode = this.SourceEntityPM.PreCarriageFromPortCountryCode;
-                this.EntityPM.PreCarriageFromPortCountryName = this.SourceEntityPM.PreCarriageFromPortCountryName;
-                this.EntityPM.PreCarriageToPortId = this.SourceEntityPM.PreCarriageToPortId;
-                this.EntityPM.PreCarriageToPortCode = this.SourceEntityPM.PreCarriageToPortCode;
-                this.EntityPM.PreCarriageToPortName = this.SourceEntityPM.PreCarriageToPortName;
-                this.EntityPM.PreCarriageToPortCountryCode = this.SourceEntityPM.PreCarriageToPortCountryCode;
-                this.EntityPM.PreCarriageToPortCountryName = this.SourceEntityPM.PreCarriageToPortCountryName;
-                this.EntityPM.PreCarriageCarrierId = this.SourceEntityPM.PreCarriageCarrierId;
-                this.EntityPM.PreCarriageCarrierCode = this.SourceEntityPM.PreCarriageCarrierCode;
-                this.EntityPM.PreCarriageCarrierName = this.SourceEntityPM.PreCarriageCarrierName;
-                this.EntityPM.PreCarriageCarrierNumber = this.SourceEntityPM.PreCarriageCarrierNumber;
-                this.EntityPM.PreCarriageCarrierWebSite = this.SourceEntityPM.PreCarriageCarrierWebSite;
-                this.EntityPM.PreCarriageTransportModeId = this.SourceEntityPM.PreCarriageTransportModeId;
-                this.EntityPM.PreCarriageVesselId = this.SourceEntityPM.PreCarriageVesselId;
-                this.EntityPM.PreCarriageVesselName = this.SourceEntityPM.PreCarriageVesselName;
-                this.EntityPM.PreCarriageETD = this.SourceEntityPM.PreCarriageETD;
-                this.EntityPM.PreCarriageATD = this.SourceEntityPM.PreCarriageATD;
-                this.EntityPM.PreCarriageETA = this.SourceEntityPM.PreCarriageETA;
-                this.EntityPM.PreCarriageATA = this.SourceEntityPM.PreCarriageATA;
+                this.CopyPreCarriageValues();                
             }
 
             else {
-                this.EntityPM.PreCarriageFromPortId = null;
-                this.EntityPM.PreCarriageFromPortCode = null;
-                this.EntityPM.PreCarriageFromPortName = null;
-                this.EntityPM.PreCarriageFromPortCountryCode = null;
-                this.EntityPM.PreCarriageFromPortCountryName = null;
-                this.EntityPM.PreCarriageToPortId = null;
-                this.EntityPM.PreCarriageToPortCode = null;
-                this.EntityPM.PreCarriageToPortName = null;
-                this.EntityPM.PreCarriageToPortCountryCode = null;
-                this.EntityPM.PreCarriageToPortCountryName = null;
-                this.EntityPM.PreCarriageCarrierId = null;
-                this.EntityPM.PreCarriageCarrierCode = null;
-                this.EntityPM.PreCarriageCarrierName = null;
-                this.EntityPM.PreCarriageCarrierNumber = null;
-                this.EntityPM.PreCarriageCarrierWebSite = null;
-                this.EntityPM.PreCarriageTransportModeId = null;
-                this.EntityPM.PreCarriageVesselId = null;
-                this.EntityPM.PreCarriageVesselName = null;
-                this.EntityPM.PreCarriageETD = null;
-                this.EntityPM.PreCarriageATD = null;
-                this.EntityPM.PreCarriageETA = null;
-                this.EntityPM.PreCarriageATA = null;
+                this.SetPreCarriageValuesToNull();                
             }
         }
     }
@@ -3280,53 +3238,11 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.isCopyOnCarriage = value;
 
             if (value == true) {
-                this.EntityPM.OnCarriageFromPortId = this.SourceEntityPM.OnCarriageFromPortId;
-                this.EntityPM.OnCarriageFromPortCode = this.SourceEntityPM.OnCarriageFromPortCode;
-                this.EntityPM.OnCarriageFromPortName = this.SourceEntityPM.OnCarriageFromPortName;
-                this.EntityPM.OnCarriageFromPortCountryCode = this.SourceEntityPM.OnCarriageFromPortCountryCode;
-                this.EntityPM.OnCarriageFromPortCountryName = this.SourceEntityPM.OnCarriageFromPortCountryName;
-                this.EntityPM.OnCarriageToPortId = this.SourceEntityPM.OnCarriageToPortId;
-                this.EntityPM.OnCarriageToPortCode = this.SourceEntityPM.OnCarriageToPortCode;
-                this.EntityPM.OnCarriageToPortName = this.SourceEntityPM.OnCarriageToPortName;
-                this.EntityPM.OnCarriageToPortCountryCode = this.SourceEntityPM.OnCarriageToPortCountryCode;
-                this.EntityPM.OnCarriageToPortCountryName = this.SourceEntityPM.OnCarriageToPortCountryName;
-                this.EntityPM.OnCarriageCarrierId = this.SourceEntityPM.OnCarriageCarrierId;
-                this.EntityPM.OnCarriageCarrierCode = this.SourceEntityPM.OnCarriageCarrierCode;
-                this.EntityPM.OnCarriageCarrierName = this.SourceEntityPM.OnCarriageCarrierName;
-                this.EntityPM.OnCarriageCarrierNumber = this.SourceEntityPM.OnCarriageCarrierNumber;
-                this.EntityPM.OnCarriageCarrierWebSite = this.SourceEntityPM.OnCarriageCarrierWebSite;
-                this.EntityPM.OnCarriageTransportModeId = this.SourceEntityPM.OnCarriageTransportModeId;
-                this.EntityPM.OnCarriageVesselId = this.SourceEntityPM.OnCarriageVesselId;
-                this.EntityPM.OnCarriageVesselName = this.SourceEntityPM.OnCarriageVesselName;
-                this.EntityPM.OnCarriageETD = this.SourceEntityPM.OnCarriageETD;
-                this.EntityPM.OnCarriageATD = this.SourceEntityPM.OnCarriageATD;
-                this.EntityPM.OnCarriageETA = this.SourceEntityPM.OnCarriageETA;
-                this.EntityPM.OnCarriageATA = this.SourceEntityPM.OnCarriageATA;
+                this.CopyOnCarriageValues();
             }
 
             else {
-                this.EntityPM.OnCarriageFromPortId = null;
-                this.EntityPM.OnCarriageFromPortCode = null;
-                this.EntityPM.OnCarriageFromPortName = null;
-                this.EntityPM.OnCarriageFromPortCountryCode = null;
-                this.EntityPM.OnCarriageFromPortCountryName = null;
-                this.EntityPM.OnCarriageToPortId = null;
-                this.EntityPM.OnCarriageToPortCode = null;
-                this.EntityPM.OnCarriageToPortName = null;
-                this.EntityPM.OnCarriageToPortCountryCode = null;
-                this.EntityPM.OnCarriageToPortCountryName = null;
-                this.EntityPM.OnCarriageCarrierId = null;
-                this.EntityPM.OnCarriageCarrierCode = null;
-                this.EntityPM.OnCarriageCarrierName = null;
-                this.EntityPM.OnCarriageCarrierNumber = null;
-                this.EntityPM.OnCarriageCarrierWebSite = null;
-                this.EntityPM.OnCarriageTransportModeId = null;
-                this.EntityPM.OnCarriageVesselId = null;
-                this.EntityPM.OnCarriageVesselName = null;
-                this.EntityPM.OnCarriageETD = null;
-                this.EntityPM.OnCarriageATD = null;
-                this.EntityPM.OnCarriageETA = null;
-                this.EntityPM.OnCarriageATA = null;
+                this.SetOnCarriageValuesToNull();
             }
         }
     }
@@ -3338,53 +3254,11 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.isCopyPreForwarding = value;
 
             if (value == true) {
-                this.EntityPM.PreForwardingFromPortId = this.SourceEntityPM.PreForwardingFromPortId;
-                this.EntityPM.PreForwardingFromPortCode = this.SourceEntityPM.PreForwardingFromPortCode;
-                this.EntityPM.PreForwardingFromPortName = this.SourceEntityPM.PreForwardingFromPortName;
-                this.EntityPM.PreForwardingFromPortCountryCode = this.SourceEntityPM.PreForwardingFromPortCountryCode;
-                this.EntityPM.PreForwardingFromPortCountryName = this.SourceEntityPM.PreForwardingFromPortCountryName;
-                this.EntityPM.PreForwardingToPortId = this.SourceEntityPM.PreForwardingToPortId;
-                this.EntityPM.PreForwardingToPortCode = this.SourceEntityPM.PreForwardingToPortCode;
-                this.EntityPM.PreForwardingToPortName = this.SourceEntityPM.PreForwardingToPortName;
-                this.EntityPM.PreForwardingToPortCountryCode = this.SourceEntityPM.PreForwardingToPortCountryCode;
-                this.EntityPM.PreForwardingToPortCountryName = this.SourceEntityPM.PreForwardingToPortCountryName;
-                this.EntityPM.PreForwardingCarrierId = this.SourceEntityPM.PreForwardingCarrierId;
-                this.EntityPM.PreForwardingCarrierCode = this.SourceEntityPM.PreForwardingCarrierCode;
-                this.EntityPM.PreForwardingCarrierName = this.SourceEntityPM.PreForwardingCarrierName;
-                this.EntityPM.PreForwardingCarrierNumber = this.SourceEntityPM.PreForwardingCarrierNumber;
-                this.EntityPM.PreForwardingCarrierWebSite = this.SourceEntityPM.PreForwardingCarrierWebSite;
-                this.EntityPM.PreForwardingTransportModeId = this.SourceEntityPM.PreForwardingTransportModeId;
-                this.EntityPM.PreForwardingVesselId = this.SourceEntityPM.PreForwardingVesselId;
-                this.EntityPM.PreForwardingVesselName = this.SourceEntityPM.PreForwardingVesselName;
-                this.EntityPM.PreForwardingETD = this.SourceEntityPM.PreForwardingETD;
-                this.EntityPM.PreForwardingATD = this.SourceEntityPM.PreForwardingATD;
-                this.EntityPM.PreForwardingETA = this.SourceEntityPM.PreForwardingETA;
-                this.EntityPM.PreForwardingATA = this.SourceEntityPM.PreForwardingATA;
+                this.CopyPreForwardingValues();
             }
 
             else {
-                this.EntityPM.PreForwardingFromPortId = null;
-                this.EntityPM.PreForwardingFromPortCode = null;
-                this.EntityPM.PreForwardingFromPortName = null;
-                this.EntityPM.PreForwardingFromPortCountryCode = null;
-                this.EntityPM.PreForwardingFromPortCountryName = null;
-                this.EntityPM.PreForwardingToPortId = null;
-                this.EntityPM.PreForwardingToPortCode = null;
-                this.EntityPM.PreForwardingToPortName = null;
-                this.EntityPM.PreForwardingToPortCountryCode = null;
-                this.EntityPM.PreForwardingToPortCountryName = null;
-                this.EntityPM.PreForwardingCarrierId = null;
-                this.EntityPM.PreForwardingCarrierCode = null;
-                this.EntityPM.PreForwardingCarrierName = null;
-                this.EntityPM.PreForwardingCarrierNumber = null;
-                this.EntityPM.PreForwardingCarrierWebSite = null;
-                this.EntityPM.PreForwardingTransportModeId = null;
-                this.EntityPM.PreForwardingVesselId = null;
-                this.EntityPM.PreForwardingVesselName = null;
-                this.EntityPM.PreForwardingETD = null;
-                this.EntityPM.PreForwardingATD = null;
-                this.EntityPM.PreForwardingETA = null;
-                this.EntityPM.PreForwardingATA = null;
+                this.SetPreForwardingValuesToNull();
             }
         }
     }
@@ -3396,59 +3270,213 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.isCopyOnForwarding = value;
 
             if (value == true) {
-                this.EntityPM.OnForwardingFromPortId = this.SourceEntityPM.OnForwardingFromPortId;
-                this.EntityPM.OnForwardingFromPortCode = this.SourceEntityPM.OnForwardingFromPortCode;
-                this.EntityPM.OnForwardingFromPortName = this.SourceEntityPM.OnForwardingFromPortName;
-                this.EntityPM.OnForwardingFromPortCountryCode = this.SourceEntityPM.OnForwardingFromPortCountryCode;
-                this.EntityPM.OnForwardingFromPortCountryName = this.SourceEntityPM.OnForwardingFromPortCountryName;
-                this.EntityPM.OnForwardingToPortId = this.SourceEntityPM.OnForwardingToPortId;
-                this.EntityPM.OnForwardingToPortCode = this.SourceEntityPM.OnForwardingToPortCode;
-                this.EntityPM.OnForwardingToPortName = this.SourceEntityPM.OnForwardingToPortName;
-                this.EntityPM.OnForwardingToPortCountryCode = this.SourceEntityPM.OnForwardingToPortCountryCode;
-                this.EntityPM.OnForwardingToPortCountryName = this.SourceEntityPM.OnForwardingToPortCountryName;
-                this.EntityPM.OnForwardingCarrierId = this.SourceEntityPM.OnForwardingCarrierId;
-                this.EntityPM.OnForwardingCarrierCode = this.SourceEntityPM.OnForwardingCarrierCode;
-                this.EntityPM.OnForwardingCarrierName = this.SourceEntityPM.OnForwardingCarrierName;
-                this.EntityPM.OnForwardingCarrierNumber = this.SourceEntityPM.OnForwardingCarrierNumber;
-                this.EntityPM.OnForwardingCarrierWebSite = this.SourceEntityPM.OnForwardingCarrierWebSite;
-                this.EntityPM.OnForwardingTransportModeId = this.SourceEntityPM.OnForwardingTransportModeId;
-                this.EntityPM.OnForwardingVesselId = this.SourceEntityPM.OnForwardingVesselId;
-                this.EntityPM.OnForwardingVesselName = this.SourceEntityPM.OnForwardingVesselName;
-                this.EntityPM.OnForwardingETD = this.SourceEntityPM.OnForwardingETD;
-                this.EntityPM.OnForwardingATD = this.SourceEntityPM.OnForwardingATD;
-                this.EntityPM.OnForwardingETA = this.SourceEntityPM.OnForwardingETA;
-                this.EntityPM.OnForwardingATA = this.SourceEntityPM.OnForwardingATA;
-                this.EntityPM.SplitOnForwarding = this.SourceEntityPM.SplitOnForwarding;
-                this.EntityPM.OnForwardingAdditionalTransportModeCode = this.SourceEntityPM.OnForwardingAdditionalTransportModeCode;
+                this.CopyOnForwardingValues();
             }
 
             else {
-                this.EntityPM.OnForwardingFromPortId = null;
-                this.EntityPM.OnForwardingFromPortCode = null;
-                this.EntityPM.OnForwardingFromPortName = null;
-                this.EntityPM.OnForwardingFromPortCountryCode = null;
-                this.EntityPM.OnForwardingFromPortCountryName = null;
-                this.EntityPM.OnForwardingToPortId = null;
-                this.EntityPM.OnForwardingToPortCode = null;
-                this.EntityPM.OnForwardingToPortName = null;
-                this.EntityPM.OnForwardingToPortCountryCode = null;
-                this.EntityPM.OnForwardingToPortCountryName = null;
-                this.EntityPM.OnForwardingCarrierId = null;
-                this.EntityPM.OnForwardingCarrierCode = null;
-                this.EntityPM.OnForwardingCarrierName = null;
-                this.EntityPM.OnForwardingCarrierNumber = null;
-                this.EntityPM.OnForwardingCarrierWebSite = null;
-                this.EntityPM.OnForwardingTransportModeId = null;
-                this.EntityPM.OnForwardingVesselId = null;
-                this.EntityPM.OnForwardingVesselName = null;
-                this.EntityPM.OnForwardingETD = null;
-                this.EntityPM.OnForwardingATD = null;
-                this.EntityPM.OnForwardingETA = null;
-                this.EntityPM.OnForwardingATA = null;
-                this.EntityPM.SplitOnForwarding = false;
-                this.EntityPM.OnForwardingAdditionalTransportModeCode = null;
+                this.SetOnForwardingValuesToNull();
             }
         }
+    }
+
+    private CopyPreCarriageValues() {
+        this.EntityPM.PreCarriageFromPortId = this.SourceEntityPM.PreCarriageFromPortId;
+        this.EntityPM.PreCarriageFromPortCode = this.SourceEntityPM.PreCarriageFromPortCode;
+        this.EntityPM.PreCarriageFromPortName = this.SourceEntityPM.PreCarriageFromPortName;
+        this.EntityPM.PreCarriageFromPortCountryCode = this.SourceEntityPM.PreCarriageFromPortCountryCode;
+        this.EntityPM.PreCarriageFromPortCountryName = this.SourceEntityPM.PreCarriageFromPortCountryName;
+        this.EntityPM.PreCarriageToPortId = this.SourceEntityPM.PreCarriageToPortId;
+        this.EntityPM.PreCarriageToPortCode = this.SourceEntityPM.PreCarriageToPortCode;
+        this.EntityPM.PreCarriageToPortName = this.SourceEntityPM.PreCarriageToPortName;
+        this.EntityPM.PreCarriageToPortCountryCode = this.SourceEntityPM.PreCarriageToPortCountryCode;
+        this.EntityPM.PreCarriageToPortCountryName = this.SourceEntityPM.PreCarriageToPortCountryName;
+        this.EntityPM.PreCarriageCarrierId = this.SourceEntityPM.PreCarriageCarrierId;
+        this.EntityPM.PreCarriageCarrierCode = this.SourceEntityPM.PreCarriageCarrierCode;
+        this.EntityPM.PreCarriageCarrierName = this.SourceEntityPM.PreCarriageCarrierName;
+        this.EntityPM.PreCarriageCarrierNumber = this.SourceEntityPM.PreCarriageCarrierNumber;
+        this.EntityPM.PreCarriageCarrierWebSite = this.SourceEntityPM.PreCarriageCarrierWebSite;
+        this.EntityPM.PreCarriageTransportModeId = this.SourceEntityPM.PreCarriageTransportModeId;
+        this.EntityPM.PreCarriageVesselId = this.SourceEntityPM.PreCarriageVesselId;
+        this.EntityPM.PreCarriageVesselName = this.SourceEntityPM.PreCarriageVesselName;
+        this.EntityPM.PreCarriageETD = this.SourceEntityPM.PreCarriageETD;
+        this.EntityPM.PreCarriageATD = this.SourceEntityPM.PreCarriageATD;
+        this.EntityPM.PreCarriageETA = this.SourceEntityPM.PreCarriageETA;
+        this.EntityPM.PreCarriageATA = this.SourceEntityPM.PreCarriageATA;
+    }
+    private CopyOnCarriageValues() {
+        this.EntityPM.OnCarriageFromPortId = this.SourceEntityPM.OnCarriageFromPortId;
+        this.EntityPM.OnCarriageFromPortCode = this.SourceEntityPM.OnCarriageFromPortCode;
+        this.EntityPM.OnCarriageFromPortName = this.SourceEntityPM.OnCarriageFromPortName;
+        this.EntityPM.OnCarriageFromPortCountryCode = this.SourceEntityPM.OnCarriageFromPortCountryCode;
+        this.EntityPM.OnCarriageFromPortCountryName = this.SourceEntityPM.OnCarriageFromPortCountryName;
+        this.EntityPM.OnCarriageToPortId = this.SourceEntityPM.OnCarriageToPortId;
+        this.EntityPM.OnCarriageToPortCode = this.SourceEntityPM.OnCarriageToPortCode;
+        this.EntityPM.OnCarriageToPortName = this.SourceEntityPM.OnCarriageToPortName;
+        this.EntityPM.OnCarriageToPortCountryCode = this.SourceEntityPM.OnCarriageToPortCountryCode;
+        this.EntityPM.OnCarriageToPortCountryName = this.SourceEntityPM.OnCarriageToPortCountryName;
+        this.EntityPM.OnCarriageCarrierId = this.SourceEntityPM.OnCarriageCarrierId;
+        this.EntityPM.OnCarriageCarrierCode = this.SourceEntityPM.OnCarriageCarrierCode;
+        this.EntityPM.OnCarriageCarrierName = this.SourceEntityPM.OnCarriageCarrierName;
+        this.EntityPM.OnCarriageCarrierNumber = this.SourceEntityPM.OnCarriageCarrierNumber;
+        this.EntityPM.OnCarriageCarrierWebSite = this.SourceEntityPM.OnCarriageCarrierWebSite;
+        this.EntityPM.OnCarriageTransportModeId = this.SourceEntityPM.OnCarriageTransportModeId;
+        this.EntityPM.OnCarriageVesselId = this.SourceEntityPM.OnCarriageVesselId;
+        this.EntityPM.OnCarriageVesselName = this.SourceEntityPM.OnCarriageVesselName;
+        this.EntityPM.OnCarriageETD = this.SourceEntityPM.OnCarriageETD;
+        this.EntityPM.OnCarriageATD = this.SourceEntityPM.OnCarriageATD;
+        this.EntityPM.OnCarriageETA = this.SourceEntityPM.OnCarriageETA;
+        this.EntityPM.OnCarriageATA = this.SourceEntityPM.OnCarriageATA;
+    }
+
+    private SetPreCarriageValuesToNull() {
+        this.EntityPM.PreCarriageFromPortId = null;
+        this.EntityPM.PreCarriageFromPortCode = null;
+        this.EntityPM.PreCarriageFromPortName = null;
+        this.EntityPM.PreCarriageFromPortCountryCode = null;
+        this.EntityPM.PreCarriageFromPortCountryName = null;
+        this.EntityPM.PreCarriageToPortId = null;
+        this.EntityPM.PreCarriageToPortCode = null;
+        this.EntityPM.PreCarriageToPortName = null;
+        this.EntityPM.PreCarriageToPortCountryCode = null;
+        this.EntityPM.PreCarriageToPortCountryName = null;
+        this.EntityPM.PreCarriageCarrierId = null;
+        this.EntityPM.PreCarriageCarrierCode = null;
+        this.EntityPM.PreCarriageCarrierName = null;
+        this.EntityPM.PreCarriageCarrierNumber = null;
+        this.EntityPM.PreCarriageCarrierWebSite = null;
+        this.EntityPM.PreCarriageTransportModeId = null;
+        this.EntityPM.PreCarriageVesselId = null;
+        this.EntityPM.PreCarriageVesselName = null;
+        this.EntityPM.PreCarriageETD = null;
+        this.EntityPM.PreCarriageATD = null;
+        this.EntityPM.PreCarriageETA = null;
+        this.EntityPM.PreCarriageATA = null;
+    }
+    private SetOnCarriageValuesToNull() {
+        this.EntityPM.OnCarriageFromPortId = null;
+        this.EntityPM.OnCarriageFromPortCode = null;
+        this.EntityPM.OnCarriageFromPortName = null;
+        this.EntityPM.OnCarriageFromPortCountryCode = null;
+        this.EntityPM.OnCarriageFromPortCountryName = null;
+        this.EntityPM.OnCarriageToPortId = null;
+        this.EntityPM.OnCarriageToPortCode = null;
+        this.EntityPM.OnCarriageToPortName = null;
+        this.EntityPM.OnCarriageToPortCountryCode = null;
+        this.EntityPM.OnCarriageToPortCountryName = null;
+        this.EntityPM.OnCarriageCarrierId = null;
+        this.EntityPM.OnCarriageCarrierCode = null;
+        this.EntityPM.OnCarriageCarrierName = null;
+        this.EntityPM.OnCarriageCarrierNumber = null;
+        this.EntityPM.OnCarriageCarrierWebSite = null;
+        this.EntityPM.OnCarriageTransportModeId = null;
+        this.EntityPM.OnCarriageVesselId = null;
+        this.EntityPM.OnCarriageVesselName = null;
+        this.EntityPM.OnCarriageETD = null;
+        this.EntityPM.OnCarriageATD = null;
+        this.EntityPM.OnCarriageETA = null;
+        this.EntityPM.OnCarriageATA = null;
+    }
+
+    private CopyPreForwardingValues() {
+        this.EntityPM.PreForwardingFromPortId = this.SourceEntityPM.PreForwardingFromPortId;
+        this.EntityPM.PreForwardingFromPortCode = this.SourceEntityPM.PreForwardingFromPortCode;
+        this.EntityPM.PreForwardingFromPortName = this.SourceEntityPM.PreForwardingFromPortName;
+        this.EntityPM.PreForwardingFromPortCountryCode = this.SourceEntityPM.PreForwardingFromPortCountryCode;
+        this.EntityPM.PreForwardingFromPortCountryName = this.SourceEntityPM.PreForwardingFromPortCountryName;
+        this.EntityPM.PreForwardingToPortId = this.SourceEntityPM.PreForwardingToPortId;
+        this.EntityPM.PreForwardingToPortCode = this.SourceEntityPM.PreForwardingToPortCode;
+        this.EntityPM.PreForwardingToPortName = this.SourceEntityPM.PreForwardingToPortName;
+        this.EntityPM.PreForwardingToPortCountryCode = this.SourceEntityPM.PreForwardingToPortCountryCode;
+        this.EntityPM.PreForwardingToPortCountryName = this.SourceEntityPM.PreForwardingToPortCountryName;
+        this.EntityPM.PreForwardingCarrierId = this.SourceEntityPM.PreForwardingCarrierId;
+        this.EntityPM.PreForwardingCarrierCode = this.SourceEntityPM.PreForwardingCarrierCode;
+        this.EntityPM.PreForwardingCarrierName = this.SourceEntityPM.PreForwardingCarrierName;
+        this.EntityPM.PreForwardingCarrierNumber = this.SourceEntityPM.PreForwardingCarrierNumber;
+        this.EntityPM.PreForwardingCarrierWebSite = this.SourceEntityPM.PreForwardingCarrierWebSite;
+        this.EntityPM.PreForwardingTransportModeId = this.SourceEntityPM.PreForwardingTransportModeId;
+        this.EntityPM.PreForwardingVesselId = this.SourceEntityPM.PreForwardingVesselId;
+        this.EntityPM.PreForwardingVesselName = this.SourceEntityPM.PreForwardingVesselName;
+        this.EntityPM.PreForwardingETD = this.SourceEntityPM.PreForwardingETD;
+        this.EntityPM.PreForwardingATD = this.SourceEntityPM.PreForwardingATD;
+        this.EntityPM.PreForwardingETA = this.SourceEntityPM.PreForwardingETA;
+        this.EntityPM.PreForwardingATA = this.SourceEntityPM.PreForwardingATA;
+    }
+    private CopyOnForwardingValues() {
+        this.EntityPM.OnForwardingFromPortId = this.SourceEntityPM.OnForwardingFromPortId;
+        this.EntityPM.OnForwardingFromPortCode = this.SourceEntityPM.OnForwardingFromPortCode;
+        this.EntityPM.OnForwardingFromPortName = this.SourceEntityPM.OnForwardingFromPortName;
+        this.EntityPM.OnForwardingFromPortCountryCode = this.SourceEntityPM.OnForwardingFromPortCountryCode;
+        this.EntityPM.OnForwardingFromPortCountryName = this.SourceEntityPM.OnForwardingFromPortCountryName;
+        this.EntityPM.OnForwardingToPortId = this.SourceEntityPM.OnForwardingToPortId;
+        this.EntityPM.OnForwardingToPortCode = this.SourceEntityPM.OnForwardingToPortCode;
+        this.EntityPM.OnForwardingToPortName = this.SourceEntityPM.OnForwardingToPortName;
+        this.EntityPM.OnForwardingToPortCountryCode = this.SourceEntityPM.OnForwardingToPortCountryCode;
+        this.EntityPM.OnForwardingToPortCountryName = this.SourceEntityPM.OnForwardingToPortCountryName;
+        this.EntityPM.OnForwardingCarrierId = this.SourceEntityPM.OnForwardingCarrierId;
+        this.EntityPM.OnForwardingCarrierCode = this.SourceEntityPM.OnForwardingCarrierCode;
+        this.EntityPM.OnForwardingCarrierName = this.SourceEntityPM.OnForwardingCarrierName;
+        this.EntityPM.OnForwardingCarrierNumber = this.SourceEntityPM.OnForwardingCarrierNumber;
+        this.EntityPM.OnForwardingCarrierWebSite = this.SourceEntityPM.OnForwardingCarrierWebSite;
+        this.EntityPM.OnForwardingTransportModeId = this.SourceEntityPM.OnForwardingTransportModeId;
+        this.EntityPM.OnForwardingVesselId = this.SourceEntityPM.OnForwardingVesselId;
+        this.EntityPM.OnForwardingVesselName = this.SourceEntityPM.OnForwardingVesselName;
+        this.EntityPM.OnForwardingETD = this.SourceEntityPM.OnForwardingETD;
+        this.EntityPM.OnForwardingATD = this.SourceEntityPM.OnForwardingATD;
+        this.EntityPM.OnForwardingETA = this.SourceEntityPM.OnForwardingETA;
+        this.EntityPM.OnForwardingATA = this.SourceEntityPM.OnForwardingATA;
+        this.EntityPM.OnForwardingAdditionalTransportModeCode = this.SourceEntityPM.OnForwardingAdditionalTransportModeCode;
+        this.EntityPM.SplitOnForwarding = this.SourceEntityPM.SplitOnForwarding;
+    }
+
+    private SetPreForwardingValuesToNull() {
+        this.EntityPM.PreForwardingFromPortId = null;
+        this.EntityPM.PreForwardingFromPortCode = null;
+        this.EntityPM.PreForwardingFromPortName = null;
+        this.EntityPM.PreForwardingFromPortCountryCode = null;
+        this.EntityPM.PreForwardingFromPortCountryName = null;
+        this.EntityPM.PreForwardingToPortId = null;
+        this.EntityPM.PreForwardingToPortCode = null;
+        this.EntityPM.PreForwardingToPortName = null;
+        this.EntityPM.PreForwardingToPortCountryCode = null;
+        this.EntityPM.PreForwardingToPortCountryName = null;
+        this.EntityPM.PreForwardingCarrierId = null;
+        this.EntityPM.PreForwardingCarrierCode = null;
+        this.EntityPM.PreForwardingCarrierName = null;
+        this.EntityPM.PreForwardingCarrierNumber = null;
+        this.EntityPM.PreForwardingCarrierWebSite = null;
+        this.EntityPM.PreForwardingTransportModeId = null;
+        this.EntityPM.PreForwardingVesselId = null;
+        this.EntityPM.PreForwardingVesselName = null;
+        this.EntityPM.PreForwardingETD = null;
+        this.EntityPM.PreForwardingATD = null;
+        this.EntityPM.PreForwardingETA = null;
+        this.EntityPM.PreForwardingATA = null;
+    }
+    private SetOnForwardingValuesToNull() {
+        this.EntityPM.OnForwardingFromPortId = null;
+        this.EntityPM.OnForwardingFromPortCode = null;
+        this.EntityPM.OnForwardingFromPortName = null;
+        this.EntityPM.OnForwardingFromPortCountryCode = null;
+        this.EntityPM.OnForwardingFromPortCountryName = null;
+        this.EntityPM.OnForwardingToPortId = null;
+        this.EntityPM.OnForwardingToPortCode = null;
+        this.EntityPM.OnForwardingToPortName = null;
+        this.EntityPM.OnForwardingToPortCountryCode = null;
+        this.EntityPM.OnForwardingToPortCountryName = null;
+        this.EntityPM.OnForwardingCarrierId = null;
+        this.EntityPM.OnForwardingCarrierCode = null;
+        this.EntityPM.OnForwardingCarrierName = null;
+        this.EntityPM.OnForwardingCarrierNumber = null;
+        this.EntityPM.OnForwardingCarrierWebSite = null;
+        this.EntityPM.OnForwardingTransportModeId = null;
+        this.EntityPM.OnForwardingVesselId = null;
+        this.EntityPM.OnForwardingVesselName = null;
+        this.EntityPM.OnForwardingETD = null;
+        this.EntityPM.OnForwardingATD = null;
+        this.EntityPM.OnForwardingETA = null;
+        this.EntityPM.OnForwardingATA = null;
+        this.EntityPM.OnForwardingAdditionalTransportModeCode = null;
+        this.EntityPM.SplitOnForwarding = false;
     }
 
     private isCopyFlights: boolean = false;
