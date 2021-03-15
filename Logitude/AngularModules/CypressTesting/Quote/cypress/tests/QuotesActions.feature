@@ -2,7 +2,7 @@
 Feature: Quote Set as Sent to Customer, Return to Draft, Reactivate & Copy
 
     The user creates a quote, sets it as Sent to Customer, returns it to draft,
-    cancels the quotes and then reactivates it , copies the quote.
+    cancels the quotes, reactivates it and then copies the quote.
 
     Scenario: Create export air quote
         Given the user logged in and navigates to quotes workspace
@@ -23,34 +23,34 @@ Feature: Quote Set as Sent to Customer, Return to Draft, Reactivate & Copy
         Given the user open the quote
         When "Set As Sent" action with "Testing The set as sent to customer" note
         Then quote stage status should be "Sent"
-        And following events should appear in events tab
+        And following event should appear in events tab
             | Event      | Notes                               |
             | Quote Sent | Testing The set as sent to customer |
 
     Scenario: Return quote to draft
         When "Return To Draft" action with "Testing The return quote to draft" note
         Then quote stage status should be "Draft"
-        And following events should appear in events tab
+        And following event should appear in events tab
             | Event           | Notes                             |
             | Return To Draft | Testing The return quote to draft |
 
     Scenario: Cancel quote
         When "Cancel Quote" action with "Cancelling the quote to test the reactivate quote" note
-        Then following events should appear in events tab
+        Then following event should appear in events tab
             | Event        | Notes                                             |
             | Cancel Quote | Cancelling the quote to test the reactivate quote |
 
     Scenario: Reactivate quote
         When "Reactivate Quote" action with "Reactivate the quote" note
         Then quote stage status should be "Draft"
-        And following events should appear in events tab
+        And following event should appear in events tab
             | Event            | Notes                |
             | Reactivate Quote | Reactivate the quote |
 
     Scenario: Copy quote
         When Copy the quote
         Then quote stage status should be "Created"
-        And following events should appear in copied events tab
+        And following event should appear in copied events tab
             | Event                     | Notes                                      |
             | Copied from another Quote | Copied from Quote number: "OldQuoteNumber" |
         And partners tab contains "TestShipperExport" as shipper
