@@ -42,6 +42,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
         {
             bool HasDeliveries = false;
             bool HasOnCarriage = false;
+            bool HasOnForwarding = false;
 
             if (Deliveries.Count > 0)
             {
@@ -51,7 +52,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
 
             else if (entityPM.ShipmentLevelCode == "H" && (entityPM.OnForwardingFromPortId != null && entityPM.OnForwardingToPortId != null))
             {
-                //HasOnCarriage = true;
+                HasOnForwarding = true;
                 this.HandleOnForwarding();
             }
 
@@ -65,7 +66,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
             {
                 bool IsTakingMasterDates = false;
 
-                if (!HasOnCarriage)
+                if (!HasOnForwarding)
                 {
                     IsTakingMasterDates = true;
                 }
