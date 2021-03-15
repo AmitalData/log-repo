@@ -507,6 +507,61 @@ export class TariffLinePM {
     public set LineEdited(newValue: boolean) { if (this.lineEdited != newValue) { this.lineEdited = newValue; this.MarkAsDirty("LineEdited"); } }
        
 	 
+    private isDifferentCurrenciesPerCharge: boolean;
+    public get IsDifferentCurrenciesPerCharge() { return this.isDifferentCurrenciesPerCharge; }
+    public set IsDifferentCurrenciesPerCharge(newValue: boolean) { if (this.isDifferentCurrenciesPerCharge != newValue) { this.isDifferentCurrenciesPerCharge = newValue; this.MarkAsDirty("IsDifferentCurrenciesPerCharge"); } }
+       
+	 
+    private surcharge1CurrencyId: string;
+    public get Surcharge1CurrencyId() { return this.surcharge1CurrencyId; }
+    public set Surcharge1CurrencyId(newValue: string) { if (this.surcharge1CurrencyId != newValue) { this.surcharge1CurrencyId = newValue; this.MarkAsDirty("Surcharge1CurrencyId"); } }
+       
+	 
+    private surcharge2CurrencyId: string;
+    public get Surcharge2CurrencyId() { return this.surcharge2CurrencyId; }
+    public set Surcharge2CurrencyId(newValue: string) { if (this.surcharge2CurrencyId != newValue) { this.surcharge2CurrencyId = newValue; this.MarkAsDirty("Surcharge2CurrencyId"); } }
+       
+	 
+    private surcharge3CurrencyId: string;
+    public get Surcharge3CurrencyId() { return this.surcharge3CurrencyId; }
+    public set Surcharge3CurrencyId(newValue: string) { if (this.surcharge3CurrencyId != newValue) { this.surcharge3CurrencyId = newValue; this.MarkAsDirty("Surcharge3CurrencyId"); } }
+       
+	 
+    private surcharge4CurrencyId: string;
+    public get Surcharge4CurrencyId() { return this.surcharge4CurrencyId; }
+    public set Surcharge4CurrencyId(newValue: string) { if (this.surcharge4CurrencyId != newValue) { this.surcharge4CurrencyId = newValue; this.MarkAsDirty("Surcharge4CurrencyId"); } }
+       
+	 
+    private surcharge5CurrencyId: string;
+    public get Surcharge5CurrencyId() { return this.surcharge5CurrencyId; }
+    public set Surcharge5CurrencyId(newValue: string) { if (this.surcharge5CurrencyId != newValue) { this.surcharge5CurrencyId = newValue; this.MarkAsDirty("Surcharge5CurrencyId"); } }
+       
+	 
+    private surcharge6CurrencyId: string;
+    public get Surcharge6CurrencyId() { return this.surcharge6CurrencyId; }
+    public set Surcharge6CurrencyId(newValue: string) { if (this.surcharge6CurrencyId != newValue) { this.surcharge6CurrencyId = newValue; this.MarkAsDirty("Surcharge6CurrencyId"); } }
+       
+	 
+    private surcharge7CurrencyId: string;
+    public get Surcharge7CurrencyId() { return this.surcharge7CurrencyId; }
+    public set Surcharge7CurrencyId(newValue: string) { if (this.surcharge7CurrencyId != newValue) { this.surcharge7CurrencyId = newValue; this.MarkAsDirty("Surcharge7CurrencyId"); } }
+       
+	 
+    private surcharge8CurrencyId: string;
+    public get Surcharge8CurrencyId() { return this.surcharge8CurrencyId; }
+    public set Surcharge8CurrencyId(newValue: string) { if (this.surcharge8CurrencyId != newValue) { this.surcharge8CurrencyId = newValue; this.MarkAsDirty("Surcharge8CurrencyId"); } }
+       
+	 
+    private surcharge9CurrencyId: string;
+    public get Surcharge9CurrencyId() { return this.surcharge9CurrencyId; }
+    public set Surcharge9CurrencyId(newValue: string) { if (this.surcharge9CurrencyId != newValue) { this.surcharge9CurrencyId = newValue; this.MarkAsDirty("Surcharge9CurrencyId"); } }
+       
+	 
+    private surcharge10CurrencyId: string;
+    public get Surcharge10CurrencyId() { return this.surcharge10CurrencyId; }
+    public set Surcharge10CurrencyId(newValue: string) { if (this.surcharge10CurrencyId != newValue) { this.surcharge10CurrencyId = newValue; this.MarkAsDirty("Surcharge10CurrencyId"); } }
+       
+	 
 
     public OldEntityPM: TariffLinePM;
 	

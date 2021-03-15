@@ -114,8 +114,27 @@ export class AddEditTariffLineComponent  {
                     errors.push("From port or From All Other Ports is Required");
                 }
 
-                if (AppTool.IsNullOrEmpty(this.DataContext.CurrencyId)) {
-                    errors.push("Currency Field is Required");
+                if (this.DataContext.IsDifferentCurrenciesPerCharge) {
+                    if (this.TariffType == "OFS") {
+                        if (this.DataContext.ContainerPricesItemsSource.filter(d => AppTool.IsNullOrEmpty(d.CurrencyId)).length > 0) {
+                            errors.push("Some Containers Prices missing Currency");
+                        }
+                    }
+
+                    else {
+                        for (var i = 1; i <= 10; i++) {
+                            if (this.DataContext.FatherComponent["Surcharge" + i + "PriceVisibility"]) {
+                                if (AppTool.IsNullOrEmpty(this.DataContext["Surcharge" + i + "CurrencyId"])) {
+                                    errors.push("Surcharge " + i + " Currency Field is Required");
+                                }
+                            }
+                        }
+                    }
+                }
+                else {
+                    if (AppTool.IsNullOrEmpty(this.DataContext.CurrencyId)) {
+                        errors.push("Currency Field is Required");
+                    }
                 }
             }
         }

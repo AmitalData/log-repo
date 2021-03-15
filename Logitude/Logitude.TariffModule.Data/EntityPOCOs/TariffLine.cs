@@ -163,6 +163,58 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public string CurrencyId { get; set; }
         [Column("TransitTime")]
 	    public string TransitTime { get; set; }
+        [Column("IsDifferentCurrenciesPerCharge")]
+	    public bool IsDifferentCurrenciesPerCharge { get; set; }
+        [ForeignKey("Surcharge1Currency")]
+        [Column("Surcharge1CurrencyId")]
+	    public string Surcharge1CurrencyId { get; set; }
+	      
+        public virtual Currency Surcharge1Currency { get; set; }
+        [ForeignKey("Surcharge2Currency")]
+        [Column("Surcharge2CurrencyId")]
+	    public string Surcharge2CurrencyId { get; set; }
+	      
+        public virtual Currency Surcharge2Currency { get; set; }
+        [ForeignKey("Surcharge3Currency")]
+        [Column("Surcharge3CurrencyId")]
+	    public string Surcharge3CurrencyId { get; set; }
+	      
+        public virtual Currency Surcharge3Currency { get; set; }
+        [ForeignKey("Surcharge4Currency")]
+        [Column("Surcharge4CurrencyId")]
+	    public string Surcharge4CurrencyId { get; set; }
+	      
+        public virtual Currency Surcharge4Currency { get; set; }
+        [ForeignKey("Surcharge5Currency")]
+        [Column("Surcharge5CurrencyId")]
+	    public string Surcharge5CurrencyId { get; set; }
+	      
+        public virtual Currency Surcharge5Currency { get; set; }
+        [ForeignKey("Surcharge6Currency")]
+        [Column("Surcharge6CurrencyId")]
+	    public string Surcharge6CurrencyId { get; set; }
+	      
+        public virtual Currency Surcharge6Currency { get; set; }
+        [ForeignKey("Surcharge7Currency")]
+        [Column("Surcharge7CurrencyId")]
+	    public string Surcharge7CurrencyId { get; set; }
+	      
+        public virtual Currency Surcharge7Currency { get; set; }
+        [ForeignKey("Surcharge8Currency")]
+        [Column("Surcharge8CurrencyId")]
+	    public string Surcharge8CurrencyId { get; set; }
+	      
+        public virtual Currency Surcharge8Currency { get; set; }
+        [ForeignKey("Surcharge9Currency")]
+        [Column("Surcharge9CurrencyId")]
+	    public string Surcharge9CurrencyId { get; set; }
+	      
+        public virtual Currency Surcharge9Currency { get; set; }
+        [ForeignKey("Surcharge10Currency")]
+        [Column("Surcharge10CurrencyId")]
+	    public string Surcharge10CurrencyId { get; set; }
+	      
+        public virtual Currency Surcharge10Currency { get; set; }
     }
 }
 	 
