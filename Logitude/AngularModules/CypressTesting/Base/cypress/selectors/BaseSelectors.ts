@@ -205,5 +205,6 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly WarehouseSaveCloseBtn ="#Warehouse-SaveClose"
 
     public static readonly RightBorderRadius = ".RightBorderRadius:last";
+    public static readonly TabSummaryValue = ".LogitudeTabSummary:last .TabSummaryValue";
     
 }

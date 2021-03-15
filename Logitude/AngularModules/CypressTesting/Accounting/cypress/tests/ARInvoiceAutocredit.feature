@@ -12,7 +12,7 @@ Feature: AR Invoice Auto Credit
             | MainCarriageFromPort | LHR               |
             | MainCarriageToPort   | MIA               |
         When create shipment
-        Then the direct should create successfully
+        Then the shipment should create successfully
 
     Scenario: Add receivable
         Given a receivable with the following details
@@ -41,7 +41,9 @@ Feature: AR Invoice Auto Credit
 
     Scenario: Auto credit AR invoice
         When auto credit invoice
-        Then new AR invoice with status Auto Credit should appear
+        Then new invoice with status Auto Credit should appear
+        And the AR invoice number should appear next to the auto credit invoice title
+        And the auto credit invoice should have negative amount of the AR invoice
 
     Scenario: Approve auto credit AR invoice
         When approve auto credit invoice
@@ -50,3 +52,4 @@ Feature: AR Invoice Auto Credit
     Scenario: Ensure the AR invoice status is Auto Credited
         When back to the AR invoice
         Then the status should be Auto Credited
+        And the auto credit invoice number should appear next to the AR invoice title
