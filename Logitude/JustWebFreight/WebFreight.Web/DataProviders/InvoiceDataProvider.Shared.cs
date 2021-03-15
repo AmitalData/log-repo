@@ -75,6 +75,7 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentType { get; set; }
         public string HouseNumber { get; set; }
         public string ClientNumber { get; set; }
+        public string SpecialServiceType { get; set; }
         public string Shipper { get; set; }
         public string Shipper_LocalName { get; set; }
         public string ShipperAddress { get; set; }
