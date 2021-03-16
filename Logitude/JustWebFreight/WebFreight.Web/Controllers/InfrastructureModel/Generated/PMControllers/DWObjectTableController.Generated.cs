@@ -56,8 +56,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                SecurityUtility.CheckContactFeature("DWObjectTable", "READ", authToken.Tenant);
                 DWObjectTableQuery dWObjectTableQuery = new DWObjectTableQuery(authToken.Tenant);
                 DWObjectTablePM dWObjectTablePM = dWObjectTableQuery.GetSinglePM(code, authToken.Tenant);
                 
@@ -88,8 +86,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("DWObjectTable", "NEW", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("DWObjectTable", entityPM.Tenant, authToken.Tenant);
                 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
                         DWObjectTableService service = new DWObjectTableService(MyContext, entityPM.Tenant);
@@ -136,8 +132,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("DWObjectTable", "UPDATE", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("DWObjectTable", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "DWObjectTable" + entityPM.Code + entityPM.Tenant;
                         string entityPmName = "DWObjectTablePM" + entityPM.Code + entityPM.Tenant;
