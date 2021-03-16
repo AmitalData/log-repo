@@ -231,6 +231,7 @@
     <Compile Include="CoreBL\BuildTenant\FullAccountingProvider.cs" />
     <Compile Include="CoreBL\BuildTenant\IFullAccountingGenerator.cs" />
     <Compile Include="CoreBL\ConsolidatedTaxReportFlatFileAnalyser.cs" />
+    <Compile Include="CoreBL\ExternalPagesBalanceService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\AdjustDueBankFees\CreateJournal.cs" />
     <Compile Include="CoreBL\ExternalReconcile\CreateAutoExternalReconcileMoveBankCheckFromTransferService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\CreateAutoExternalReconcileWhileStreamingFeesService.cs" />

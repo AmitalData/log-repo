@@ -67,7 +67,14 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             var myList = pageLineListQuery.ToList();
             return myList;
         }
+        public List<ReconcileExternalPageLine> GetPageLines(string pageId, int tenant)
+        {
+            IQueryable<ReconcileExternalPageLine> pageLineQuery = (from a in context.ReconcileExternalPageLines
+                                                                   where a.Id == pageId && a.Tenant == tenant
+                                                                   select a);
 
+            return pageLineQuery.ToList();
+        }
         public IQueryable<ReconcileExternalPageLine> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<ReconcileExternalPageLine> iQueryable, int tenant)
         {
             QueryFilterItem amountFilter = queryOperations.QueryFilterItems.Where(d=>d.FieldName == "Amount2Filter").FirstOrDefault();
