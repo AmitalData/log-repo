@@ -109,6 +109,8 @@
             this.label37 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
             this.DWQuoteslabel = new System.Windows.Forms.Label();
+            this.label39 = new System.Windows.Forms.Label();
+            this.DWQuoteComputedFieldslabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // BuildWarehouseData
@@ -1097,11 +1099,38 @@
             this.DWQuoteslabel.Size = new System.Drawing.Size(0, 25);
             this.DWQuoteslabel.TabIndex = 178;
             // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.BackColor = System.Drawing.SystemColors.Control;
+            this.label39.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label39.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label39.Location = new System.Drawing.Point(766, 710);
+            this.label39.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(248, 25);
+            this.label39.TabIndex = 180;
+            this.label39.Text = "DW QuoteComputedFields";
+            // 
+            // DWQuoteComputedFieldslabel
+            // 
+            this.DWQuoteComputedFieldslabel.AutoSize = true;
+            this.DWQuoteComputedFieldslabel.BackColor = System.Drawing.SystemColors.Control;
+            this.DWQuoteComputedFieldslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DWQuoteComputedFieldslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.DWQuoteComputedFieldslabel.Location = new System.Drawing.Point(1045, 710);
+            this.DWQuoteComputedFieldslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWQuoteComputedFieldslabel.Name = "DWQuoteComputedFieldslabel";
+            this.DWQuoteComputedFieldslabel.Size = new System.Drawing.Size(0, 25);
+            this.DWQuoteComputedFieldslabel.TabIndex = 181;
+            // 
             // BuildWarehouseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1444, 859);
+            this.Controls.Add(this.DWQuoteComputedFieldslabel);
+            this.Controls.Add(this.label39);
             this.Controls.Add(this.label28);
             this.Controls.Add(this.DWQuoteslabel);
             this.Controls.Add(this.FactQuotesLabel);
@@ -1274,6 +1303,8 @@
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Label DWQuoteslabel;
+        private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.Label DWQuoteComputedFieldslabel;
     }
 }
 
