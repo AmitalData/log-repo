@@ -88,7 +88,8 @@ namespace Logitude.Accounting.BL.Validators
         public const string M_AccountingSameOppositeReference = "Journal.M.SameOppositeReference";
 
         public const string M_AllDateMustInit = "Journal.M.AllDateMustInit";
-        
+        public const string M_FutureDateIsNotAllowedInLine = "Journal.O.haveFutureAccountingorReferenceDate";
+
         public static ValidationResult IsJournalValid(
   JournalPM myJournalPM,
   System.ComponentModel.DataAnnotations.ValidationContext accountingValidationContextServiceProvider)
@@ -107,6 +108,9 @@ namespace Logitude.Accounting.BL.Validators
         private string _JLineNumberTExt;
         string TenantCurrency;
         RatesTableRepository ratesTableRepository;
+        
+        bool IsFutureDateErrorsExist = false;
+        string FutureDateErrorsMessage = "";
         public  ValidationResult IsJournalValid(
           JournalPM myJournalPM,
           System.ComponentModel.DataAnnotations.ValidationContext accountingValidationContextServiceProvider)
@@ -151,7 +155,7 @@ namespace Logitude.Accounting.BL.Validators
             {
                 tenantFullAccountingSettingPM = accountingValidationContextServiceProvider.Items[JournalValidator.K_FullAccountingSettingPM] as FullAccountingSettingPM;
             }
-            DateTime? currDateTimeUtcNow = null; ;
+            DateTime? currDateTimeUtcNow = null; 
 
             if (accountingValidationContextServiceProvider.Items.ContainsKey(JournalValidator.K_DateTimeUtcNow))
             {
@@ -261,9 +265,9 @@ namespace Logitude.Accounting.BL.Validators
                 errorsList.Add(TranslateMyTextCode(JournalValidator.M_AccountingFutureDateForbidden, myJournalPM.Tenant));
                 valid = false;
             }
+
             if (myJournalPM.JournalLines.Any(l => currDateTimeUtcNow.GetValueOrDefault().Date < l.AccountingDate.Date))
             {
-                errorsList.Add(TranslateMyTextCode(JournalValidator.M_AccountingFutureDateForbidden, myJournalPM.Tenant));
                 valid = false;
             }
             if (myJournalPM.JournalLines.Any(l =>
@@ -513,6 +517,12 @@ namespace Logitude.Accounting.BL.Validators
                    errorsList.Add(TranslateTextsClass.Translate(JournalValidator.M_JournalAmountNotMatched, myJournalPM.Tenant)+ " " + Math.Abs(debitTotal - creditTotal));
                 }
             }
+            ValidateJournalLinesForFutureDate(myJournalPM);
+            bool journalHasFutureDateErrors = CheckIfFutureDateErrorsExist(myJournalPM);
+            if(journalHasFutureDateErrors)
+            {
+                errorsList.Add(FutureDateErrorsMessage);
+            }
 
             ValidateJournalReconciles(myJournalPM, accountingValidationContextServiceProvider, errorsList, myIExternalReconcileDataProvider);
 
@@ -537,13 +547,12 @@ namespace Logitude.Accounting.BL.Validators
 
 
 
-
         }
 
         private List<string> ValidateExchangeRate(JournalLinePM journalLine, List<string> errors)
         {
             if (journalLine.CurrencyId == TenantCurrency) return errors;
-            RatesTable entityPoco = ratesTableRepository.GetExchageRateByValueAndDate(TenantCurrency, 
+            RatesTable entityPoco = ratesTableRepository.GetExchageRateByValueAndDate(TenantCurrency,
                 journalLine.CurrencyId, journalLine.AccountingDate, journalLine.Tenant);
             if (entityPoco == null)
             {
@@ -560,7 +569,38 @@ namespace Logitude.Accounting.BL.Validators
 
         }
 
-        private  void ValidateJournalReconciles(JournalPM myJournalPM, ValidationContext accountingValidationContextServiceProvider, List<string> errorsList, IExternalReconcileDataProvider myIExternalReconcileDataProvider)
+        private void ValidateJournalLinesForFutureDate(JournalPM myJournalPM)
+        {
+            foreach (JournalLinePM journalLinePM in myJournalPM.JournalLines)
+            {
+                bool journalLineHasFutureDate = CheckJournalLineForFutureDate(journalLinePM);
+                if (journalLineHasFutureDate)
+                {
+                    FutureDateErrorsMessage += TranslateMyTextCode("Journal.O.haveFutureAccountingorReferenceDate", journalLinePM.Tenant);
+                    IsFutureDateErrorsExist = true;
+                    return;
+                }
+            }
+        }
+   
+        private bool CheckJournalLineForFutureDate(JournalLinePM journalLinePM)
+        {
+            DateTime? currDateTimeUtcNow = null;
+            currDateTimeUtcNow = TenantServerConfigration.GetCurrentDateTime(journalLinePM.Tenant);
+            return currDateTimeUtcNow.GetValueOrDefault().Date < journalLinePM.AccountingDate.Date || currDateTimeUtcNow.GetValueOrDefault().Date < journalLinePM.DocumentDate.Date; ;
+        }
+   
+        private bool CheckIfFutureDateErrorsExist(JournalPM myJournalPM)
+        {
+            const string statusCode_JournalApproved = "2";
+            var isIsFutureDateErrorsExistAndJournalApproved = IsFutureDateErrorsExist && myJournalPM.StatusCode == statusCode_JournalApproved;
+            if (isIsFutureDateErrorsExistAndJournalApproved)
+                return true;
+            else
+                return false;
+        }
+
+        private void ValidateJournalReconciles(JournalPM myJournalPM, ValidationContext accountingValidationContextServiceProvider, List<string> errorsList, IExternalReconcileDataProvider myIExternalReconcileDataProvider)
         {
             if (myJournalPM.JournalReconciles.Count == 0)
             {
