@@ -1,0 +1,19 @@
+﻿<Script DBType="Main"  Module="Accounting" >
+  <Sql Version="2">
+    <![CDATA[
+---this script is POST!!!
+---if it crash >> please note itzik !!
+--CREATE TABLE [dbo].[GLAccountRecocileDatas]( [AccountId] VARCHAR(15) NOT NULL, [Tenant] INT NOT NULL, [LastReconciledByUserId] VARCHAR(15) NULL, [LastReconcileDateTime] DATETIME NOT NULL,CONSTRAINT [PK_GLAccountRecocileDatas] PRIMARY KEY([AccountId]))
+--ALTER TABLE [dbo].[GLAccountRecocileDatas] ALTER COLUMN [LastReconcileDateTime] DATETIME NULL
+truncate table GLAccountRecocileDatas
+
+INSERT INTO [GLAccountRecocileDatas] ([AccountId], [Tenant] , [LastReconcileDateTime] , [LastReconciledByUserId] ) 
+select r.AccountId,r.Tenant,r.CreateDate   [LastReconcileDateTime],r.CreatedByUserId [LastReconciledByUserId]   From  Reconciliations r
+JOIN
+( select AccountId,Tenant,MAX(CreateDate) as  LastCreateDate from Reconciliations where IsCancelled=0 group by AccountId,Tenant)
+AS subQuery ON  r.AccountId = subQuery.AccountId and r.CreateDate = subQuery.LastCreateDate and r.Tenant = subQuery.Tenant
+
+
+]]>      
+  </Sql>
+</Script>
