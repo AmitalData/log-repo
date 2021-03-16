@@ -498,11 +498,12 @@ SUCCESS={4}"
 
             finally
             {
+                MessageOutWS = unifreightGenericService.MyGenericResponseObj.Message;
+  
                 unifreightGenericService.MyGenericResponseObj.Log = unifreightGenericService.GetLog();
                 DataOut1 = XmlGenericUtil<GenericResponseObj>.SerializeObject(unifreightGenericService.MyGenericResponseObj);
 
                 DataOut1 = LogCommunication(unifreightGenericService, DataIn1, DataOut1);
-
             }
 
 
