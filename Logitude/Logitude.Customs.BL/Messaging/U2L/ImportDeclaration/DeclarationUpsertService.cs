@@ -483,8 +483,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     }
                     else if (this._MyDeclarationPM.Consignments[0].CargoTypeCode == "1")
                     {
-                        this._MyDeclarationPM.Consignments[0].ManifestNumber = _AmitalCustomsFile.ManifestNumber;
-
+                        if (this._MyDeclarationPM.TransportModeId != "A")
+                        {
+                            this._MyDeclarationPM.Consignments[0].ManifestNumber = _AmitalCustomsFile.ManifestNumber;
+                        }
                         if (mode != "UpdateNotEmpty")
                         {
                             this._MyDeclarationPM.Consignments[0].SecondCargoID = _AmitalCustomsFile.MAWB;
