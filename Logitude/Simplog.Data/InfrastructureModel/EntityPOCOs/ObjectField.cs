@@ -172,10 +172,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string HtmlListComponentName { get; set; }
         public bool EnableFullscreenTextBox { get; set; }
 
-        public string EntityType { get; set; }
-
-
-        
 
     }
 }

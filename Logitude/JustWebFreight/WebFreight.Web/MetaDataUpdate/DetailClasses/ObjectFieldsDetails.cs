@@ -131,7 +131,6 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public string ShortNameTextCodeCode { get; set; }
         public string HelpTextCodeCode { get; set; }
         public string ListTextCodeCode { get; set; }
-        public string EntityType { get; set; }
 
 
         

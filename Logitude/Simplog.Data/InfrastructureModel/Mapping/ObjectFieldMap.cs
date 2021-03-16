@@ -63,7 +63,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.ListTextCodeCode).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.ShortNameTextCodeCode).HasMaxLength(100).IsUnicode(false);
 
-            this.Property(t => t.EntityType).HasMaxLength(100).IsUnicode(false);
 
 
             // Table & Column Mappings
@@ -147,7 +146,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.HelpTextCodeCode).HasColumnName("HelpTextCodeCode");
             this.Property(t => t.ListTextCodeCode).HasColumnName("ListTextCodeCode");
             this.Property(t => t.ShortNameTextCodeCode).HasColumnName("ShortNameTextCodeCode");
-            this.Property(t => t.EntityType).HasColumnName("EntityType");
 
 
             //#if ORACLE_DB

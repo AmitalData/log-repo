@@ -53,27 +53,32 @@ export class MainMenuComponent {
 
         window.MenusTables.filter(f => f.MenuTypeCode.toUpperCase() == "MAIN").forEach((item) => {
          
-       
+            
             var isAddingItem = false;
 
             if (item.FeatureId == null) {
                 isAddingItem = true;
             }
-
-
-
             else {
                 if (FeatureLocator.IsFeatureGrantedByUniqeCode(item.FeatureUniqeCode)) {
                     isAddingItem = true;
                 } 
             }
-         
+
+            if (item.QuerySection == "ShipmentTest") {
+                isAddingItem = true;
+            }
+
             if (isAddingItem) {
                 var menuItem: MainMenuItem = new MainMenuItem(item.TextCode, AppTool.GetMainMenuIconCode(item.TextCode));
                 menuItem.IndexOfOrder = item.IndexOfOrder;
                 menuItem.ObjectTableId = item.ObjectTableId;
                 menuItem.HtmlView = item.HtmlView;
                 menuItem.ObjectTableName = item.ObjectTableName;
+                menuItem.QuerySection = item.QuerySection;
+                if (menuItem.QuerySection == "ShipmentTest") {
+                    console.log("sssssssssssssssssss yes");
+                }
                 myResult.push(menuItem);
             }
         });
@@ -386,7 +391,7 @@ export class MainMenuComponent {
                     }                    
                     case "General.MH.Customers": {
                         ServiceLocator.SendTotangoUserActivity("Customers", "List View");
-                        var listArgs = new ListComponentArgs();
+                        var listArgs = this.GetNewListComponentArgs();
                         listArgs.Perspective = "customers";
                         listArgs.QueryCode = "Customers";
                         listArgs.ObjectTableName = "Customer";
@@ -409,7 +414,7 @@ export class MainMenuComponent {
                     }
                     case "General.MH.Contacts": {
                         ServiceLocator.SendTotangoUserActivity("Contacts", "List View");
-                        var listArgs = new ListComponentArgs();
+                        var listArgs = this.GetNewListComponentArgs();
                         listArgs.QueryCode = "Contacts";
                         listArgs.ObjectTableName = "Contact";
                         listArgs.DisplayTitle = TextCodeTranslator.Translate(this.SelectedMenu.TextCode);
@@ -429,7 +434,7 @@ export class MainMenuComponent {
                     }
                     case "General.MH.CustomsCollateral": {
 
-                        var listArgs = new ListComponentArgs();
+                        var listArgs = this.GetNewListComponentArgs();
                         listArgs.QueryCode = "OpenCollaterals";
                         listArgs.ObjectTableName = "Customs.CustomsCollateral";
                       //  listArgs.DisplayTitle = TextCodeTranslator.Translate(this.SelectedMenu.TextCode);
@@ -467,7 +472,7 @@ export class MainMenuComponent {
 
                     case "General.MH.PaymentOrders": {
                         
-                        var listArgs = new ListComponentArgs();
+                        var listArgs = this.GetNewListComponentArgs();
                         listArgs.ObjectTableName = "Customs.PaymentOrder";
                         listArgs.NewButtonLabel = TextCodeTranslator.Translate("Customs.General.O.NewPaymentOrder");
                         listArgs.HideBackButton = true;
@@ -489,7 +494,7 @@ export class MainMenuComponent {
 
                     // case "General.MH.Declarations": {
                         
-                    //     var listArgs = new ListComponentArgs();
+                    //     var listArgs = = this.GetNewListComponentArgs();
                     //     listArgs.ObjectTableName = "Customs.Declaration";
                     //     listArgs.HideBackButton = true;
                     //     this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response:any) => {
@@ -513,7 +518,7 @@ export class MainMenuComponent {
 
                     case "General.MH.PhysicalChecks": {
                         
-                        var listArgs = new ListComponentArgs();
+                        var listArgs = this.GetNewListComponentArgs();
                         listArgs.ObjectTableName = "Customs.PhysicalCheck";
                         listArgs.HideBackButton = true;
                         
@@ -534,7 +539,7 @@ export class MainMenuComponent {
                     }
                     case "General.MH.Claims": {
                         
-                        var listArgs = new ListComponentArgs();
+                        var listArgs =  this.GetNewListComponentArgs();
                         listArgs.ObjectTableName = "Customs.Claim";
                         listArgs.HideBackButton = true;
                         
@@ -580,7 +585,7 @@ export class MainMenuComponent {
 
                     case "General.MH.DeclarationCargoSplits": {
 
-                        var listArgs = new ListComponentArgs();
+                        var listArgs = this.GetNewListComponentArgs();
                         listArgs.QueryCode = "OpenCargoSplits";
                         listArgs.ObjectTableName = "Customs.DeclarationCargoSplit";
                         //  listArgs.DisplayTitle = TextCodeTranslator.Translate(this.SelectedMenu.TextCode);
@@ -618,7 +623,7 @@ export class MainMenuComponent {
 
                     case "General.MH.Depositions": {
                         ServiceLocator.SendTotangoUserActivity("Customs Shipper", "List View");
-                        var listArgs = new ListComponentArgs();
+                        var listArgs = this.GetNewListComponentArgs();
                         listArgs.QueryCode = "AllDepositionsQuery";
                         listArgs.ObjectTableName = "CustomsShipper";
                         listArgs.DisplayTitle = TextCodeTranslator.Translate(this.SelectedMenu.TextCode);
@@ -640,7 +645,7 @@ export class MainMenuComponent {
 
                     case "General.MH.ReferantScreen": {
 
-                        var listArgs = new ListComponentArgs();
+                        var listArgs = this.GetNewListComponentArgs();
                         listArgs.ObjectTableName = "Customs.DeclarationReferantData";
                         listArgs.NewButtonLabel = TextCodeTranslator.Translate("Customs.General.O.NewCustomsFile");
                         if (AppTool.IsNullOrEmpty(listArgs.NewButtonLabel)) listArgs.NewButtonLabel = "פתיחת תיק חדש";
@@ -668,7 +673,8 @@ export class MainMenuComponent {
                             if (this.SelectedMenu.ObjectTableId != null && this.SelectedMenu.ObjectTableId != undefined) {
                                 isListComponent = true;
 
-                                var listArgs = new ListComponentArgs();
+                                var listArgs = this.GetNewListComponentArgs();
+                                listArgs.QuerySection = this.SelectedMenu.QuerySection;
                                 var objectTable: ObjectTablePM = window.ObjectTables.filter(x => x.Id === this.SelectedMenu.ObjectTableId)[0];
 
                                 if (objectTable != null && objectTable != undefined) {
@@ -753,6 +759,13 @@ export class MainMenuComponent {
         }
     }
 
+    
+    private GetNewListComponentArgs() {
+        var listArgs = new ListComponentArgs();
+        listArgs.QuerySection = this.SelectedMenu.QuerySection;
+        return listArgs;
+    }
+
 }
 
 export class MainMenuItem {
@@ -764,6 +777,8 @@ export class MainMenuItem {
     public IconCode: string;
     public IconSource: string;
     public IconSelectedSource: string;
+    public QuerySection: string;
+
     constructor(textCode: string, myIcon: string) {
         this.TextCode = textCode;
         this.IconCode = myIcon;

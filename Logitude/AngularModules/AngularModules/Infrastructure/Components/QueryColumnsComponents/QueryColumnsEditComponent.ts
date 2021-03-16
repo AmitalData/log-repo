@@ -69,11 +69,16 @@ export class QueryColumnsEditComponent {
         }
         //this.Run();
     }
+
+    private QuerySection: string;
     SetWindowArgs(args: any) {
         this.QueryId = args.queryId;
         this.QueryCode = /*this.ObjectTableName + '.' +*/args.queryCode;
         this.isNewQueryMode = args.isNewQueryMode;
         this.CurrentObjectTable = args.currentObjectTable;
+        this.QuerySection = args.QuerySection;
+
+        
         this.IsEnabled = false;
         this.ObjectTable = window.ObjectTables.filter(d => d.Name == args.currentObjectTable)[0];
         this.Run();
@@ -156,6 +161,10 @@ export class QueryColumnsEditComponent {
 
                 this.unselectedObjectFields = window.ObjectFields.filter(a => a.ObjectTableName == this.CurrentObjectTable).filter(d => d.DisplayInList == true && (d.Tenant == SessionInfo.LoggedUserTenant || d.Tenant == 0) && ((d.ValidForQuerySection1 == currentQuery.QuerySection || d.ValidForQuerySection2 == currentQuery.QuerySection) || d.IsCustom == true));
                 
+                //if (this.QuerySection) {
+                //    this.unselectedObjectFields = this.unselectedObjectFields.filter(d=> d.EntityType == this.QuerySection);
+                //}
+
 
                 this.unselected = [];
                 this.unselectedObjectFields.forEach((field, key) => {

@@ -607,7 +607,7 @@ export class ObjectFieldPM {
     public get EnableFullscreenTextBox() { return this.enableFullscreenTextBox; }
     public set EnableFullscreenTextBox(newValue: boolean) { if (this.enableFullscreenTextBox != newValue) { this.enableFullscreenTextBox = newValue; this.MarkAsDirty("EnableFullscreenTextBox"); } }
        
-	 
+
 
     public OldEntityPM: ObjectFieldPM;
 		

@@ -595,13 +595,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="EntityType"
-    Type="varchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="FullNameTextCodeId"
     ReferencedTable="TextCodes"

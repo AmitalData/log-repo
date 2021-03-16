@@ -1834,6 +1834,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\TogglePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\WebhookKeysPM.ts" />
     <TypeScriptCompile Include="Infrastructure\Helpers\DWQueryBuilderHelper.ts" />
+    <TypeScriptCompile Include="Infrastructure\Interface\ITabBuilder.ts" />
     <TypeScriptCompile Include="Infrastructure\material-module.ts" />
     <TypeScriptCompile Include="Infrastructure\Pipes\HighlightSearch.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\BIReportFolderExtendedListService.ts" />

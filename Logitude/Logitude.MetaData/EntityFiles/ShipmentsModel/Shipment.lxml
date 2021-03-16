@@ -91058,7 +91058,7 @@
     QueryGroupCode="&quot;SHIP&quot;"
     IndexOrder="8"
     ObjectTableName="&quot;Shipment&quot;"
-    QuerySection="&quot;Shipment&quot;"
+    QuerySection="&quot;ShipmentTest&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
     IsPackagable="true"
@@ -92329,6 +92329,28 @@
         Row="1"
         ObjectFieldName="&quot;ShipperContactId&quot;"
         ScreenName="Customer Add Edit Screen" />
+    </ScreenFields>
+  </Screen>
+  <Screen
+    Name="&quot;Header Screen2&quot;"
+    ObjectTableName="&quot;Shipment&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    Code="&quot;Shipment.HeaderScreen2&quot;"
+    QuerySection="&quot;ShipmentTest&quot;"
+    NumberOfColumns="1"
+    NumberOfRows="2">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;ShipmentNumber&quot;"
+        ScreenName="Header Screen2" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;UpdatedByUserId&quot;"
+        ScreenName="Header Screen2" />
     </ScreenFields>
   </Screen>
   <Tab

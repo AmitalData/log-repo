@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "ca5b43ac66af72262ece156ab312de55";
+		public const string HashString = "3494fedd18bc545de8889e4e38d6c9e9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3452,7 +3452,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						EntityType =  "ShipmentTest",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ShipmentNumber",
@@ -4535,7 +4534,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						EntityType =  "ShipmentTest",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "House",
@@ -7941,6 +7939,72 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "PreCarriageTransportModeId",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "TransportMode",
+					  						MinLength =  0,
+					  						MaxLength =  1,
+					  						IsRequired =  false,
+					  						CopyToDW =  true,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "PreCarriageTransportModeId",
+					  						ListPropertyPath =  "PreCarriageTransportModeId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Shipment",
+					  						ValidForQuerySection2 =  "ShipmentFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "PreCarriageTransportModeId",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "PreCarriageTransportModeId",
+					  						DefaultText =  "Pre-Carriage Transport Mode",
+					  						ShortFieldLable =  "PreCarriageTransportModeId",
+					  						ShortFieldLableDefaultText =  "Pre-Carriage Transport Mode",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  true,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						HelpTextCode =  "PreCarriageTransportModeId",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "PreCarriageFromPortId",
 					  						ObjectTableName =  "Shipment",
 					  						FieldsDataType =  "LookUp",
@@ -9183,7 +9247,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						EntityType =  "ShipmentTest",
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Master",
@@ -44673,6 +44736,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	          
              ScreenField ShipmentShipmentCustomerAddEditScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = ShipmentCustomerAddEditScreenScreen8.Id,ScreenCode = ShipmentCustomerAddEditScreenScreen8.Code, ObjectFieldCode = "Shipment.ShipperContactId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	            
+	      
+
+	         Screen ShipmentHeaderScreen2Screen9 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { QuerySection = "ShipmentTest" ,  Code = "Shipment.HeaderScreen2", Name = "Header Screen2", ObjectTableId = ShipmentObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
+      
+             ScreenField ShipmentShipmentHeaderScreen2ScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ShipmentHeaderScreen2Screen9.Id,ScreenCode = ShipmentHeaderScreen2Screen9.Code, ObjectFieldCode = "Shipment.ShipmentNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ShipmentShipmentHeaderScreen2ScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ShipmentHeaderScreen2Screen9.Id,ScreenCode = ShipmentHeaderScreen2Screen9.Code, ObjectFieldCode = "Shipment.UpdatedByUserId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
+		    ShipmentObjectTable.HeaderScreenId = ShipmentHeaderScreen2Screen9.Id;
+		    ShipmentObjectTable.HeaderScreenCode = ShipmentHeaderScreen2Screen9.Code;
+
+	   		  
 
 	    }
 

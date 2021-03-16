@@ -614,7 +614,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.EnableFullscreenTextBox = objectFieldDetails.EnableFullscreenTextBox;
                 newObjectField.DisplayInAutomationAsEnitity = objectFieldDetails.DisplayInAutomationAsEnitity;
                 newObjectField.RecordType = objectFieldDetails.RecordType;
-                newObjectField.EntityType = objectFieldDetails.EntityType;
 
 
 
@@ -710,7 +709,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectField.EnableFullscreenTextBox = objectFieldDetails.EnableFullscreenTextBox;
                 updatedObjectField.DisplayInAutomationAsEnitity = objectFieldDetails.DisplayInAutomationAsEnitity;
                 updatedObjectField.RecordType = objectFieldDetails.RecordType;
-                updatedObjectField.EntityType = objectFieldDetails.EntityType;
 
 
 
@@ -1256,7 +1254,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.EnableFullscreenTextBox = objectFieldDetails.EnableFullscreenTextBox;
                 newObjectField.DisplayInAutomationAsEnitity = objectFieldDetails.DisplayInAutomationAsEnitity;
                 newObjectField.RecordType = objectFieldDetails.RecordType;
-                newObjectField.EntityType = objectFieldDetails.EntityType;
 
 
 
@@ -1352,7 +1349,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectField.EnableFullscreenTextBox = objectFieldDetails.EnableFullscreenTextBox;
                 updatedObjectField.DisplayInAutomationAsEnitity = objectFieldDetails.DisplayInAutomationAsEnitity;
                 updatedObjectField.RecordType = objectFieldDetails.RecordType;
-                updatedObjectField.EntityType = objectFieldDetails.EntityType;
 
 
 
@@ -1849,7 +1845,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             newObjectField.EnableFullscreenTextBox = objectFieldDetails.EnableFullscreenTextBox;
             newObjectField.DisplayInAutomationAsEnitity = objectFieldDetails.DisplayInAutomationAsEnitity;
             newObjectField.RecordType = objectFieldDetails.RecordType;
-            newObjectField.EntityType = objectFieldDetails.EntityType;
 
 
             if (newObjectField.IsCustomFilter)

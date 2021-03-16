@@ -117,6 +117,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         windowArgs.queryCode = /*this.ObjectTableName + '.' +*/this.SelectedQueryCode;
         windowArgs.isNewQueryMode = false;
         windowArgs.currentObjectTable = this.ObjectTableName;
+        windowArgs.QuerySection = this.listArgs.QuerySection;
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 960;
         logitudeWindow.Height = 520;
@@ -173,12 +174,22 @@ export class ListComponent implements OnInit, AfterViewInit {
         //}
     }
 
+
+    GetMethodName() {
+
+        if (this.listArgs.QuerySection) return this.ObjectTableName;
+
+        let methodName = this.SelectedQuery.QuerySection;
+        if (methodName.indexOf("Customs.") > -1) {
+            methodName = methodName.split('.')[1];
+        }
+        return methodName;
+
+       
+    }
     ApplyPreDefinedFilters() {
         if (this.SelectedQuery != null) {
-            this.MethodName = this.SelectedQuery.QuerySection;
-            if (this.MethodName.indexOf("Customs.") > -1) {
-                this.MethodName = this.MethodName.split('.')[1];
-            }
+            this.MethodName =  this.GetMethodName();
             this.SelectedQueryCode = this.SelectedQuery.UniqueCode;
             this.SelectedQueryId = this.SelectedQuery.Id;
 
@@ -992,7 +1003,13 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     public UserId: string = SessionInfo.LoggedUserId;
     public Tenant: number = SessionInfo.LoggedUserTenant;
     GetQueries() {
+
         var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
+
+        if (this.listArgs.QuerySection) {
+            allQueries = allQueries.filter(d => d.QuerySection == this.listArgs.QuerySection);
+        }
+
         this.Queries = allQueries.filter(x => x.UserId == null && x.SystemLevel == true);
 
         if(!this.ObjectTable.IsClosed){
@@ -1180,10 +1197,12 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         }
         if (this.SelectedQuery != null) {
             this.QueryCode = this.SelectedQuery.UniqueCode;
-            this.MethodName = this.SelectedQuery.QuerySection;
-            if (this.MethodName.indexOf("Customs.") > -1) {
-                this.MethodName = this.MethodName.split('.')[1];
-            }
+          
+            this.MethodName = this.GetMethodName();
+
+
+
+
             this.SelectedQueryCode = this.SelectedQuery.UniqueCode;
             this.SelectedQueryId = this.SelectedQuery.Id;
 
@@ -2375,7 +2394,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 cmpRef.instance.Run({
                                     EntityId: selectedEntityId,///$event.rowData.Id
                                     ObjectTableName: myObjectTableName,
-                                    BackButtonLabel: label
+                                    BackButtonLabel: label,
+                                    QuerySection: this.listArgs.QuerySection
                                 });
                                 cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
                                     this.isEditControlOpened = false;
