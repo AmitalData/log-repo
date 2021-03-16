@@ -220,6 +220,17 @@ export class AddEditTariffLineComponent  {
             this.myCloner.AddField('Surcharge9MinPrice');
             this.myCloner.AddField('Surcharge10MinPrice');
 
+            this.myCloner.AddField('Surcharge1CurrencyId');
+            this.myCloner.AddField('Surcharge2CurrencyId');
+            this.myCloner.AddField('Surcharge3CurrencyId');
+            this.myCloner.AddField('Surcharge4CurrencyId');
+            this.myCloner.AddField('Surcharge5CurrencyId');
+            this.myCloner.AddField('Surcharge6CurrencyId');
+            this.myCloner.AddField('Surcharge7CurrencyId');
+            this.myCloner.AddField('Surcharge8CurrencyId');
+            this.myCloner.AddField('Surcharge9CurrencyId');
+            this.myCloner.AddField('Surcharge10CurrencyId');
+
             this.myCloner.AddField('IsFromAllOtherPorts');
             this.myCloner.AddField('IsToAllOtherPorts');
             this.myCloner.AddField('Index');
@@ -227,6 +238,7 @@ export class AddEditTariffLineComponent  {
             this.myCloner.AddField('DestinationPortText');
             this.myCloner.AddField('CurrencyId');
             this.myCloner.AddField('CurrencyCode');
+            this.myCloner.AddField('IsDifferentCurrenciesPerCharge');
         }
 
         this.myCloner.AddEntity(this.EntityPM);

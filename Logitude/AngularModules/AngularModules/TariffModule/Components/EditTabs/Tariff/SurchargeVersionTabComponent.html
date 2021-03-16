@@ -230,9 +230,10 @@
                         <!-- Currency -->
                         <log-column [header]="'TariffLine.F.CurrencyId' | TextCodeTranslationPipe" [width]="'70'">
                             <ng-template let-item>
-                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled && !item.IsDifferentCurrenciesPerCharge" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                        <span>{{item.CurrencyCode}}</span>
+                                        <span *ngIf="!item.IsDifferentCurrenciesPerCharge">{{item.CurrencyCode}}</span>
+                                        <span *ngIf="item.IsDifferentCurrenciesPerCharge">Multi</span>
                                     </div>
 
                                     <div *ngIf="logcelltemplate.IsEditMode">

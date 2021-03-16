@@ -120,7 +120,7 @@
                                                             <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;" *ngIf="Container4Visibility">{{Container4Label}}</td>
                                                             <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;" *ngIf="Container5Visibility">{{Container5Label}}</td>
                                                             <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;">{{'TariffLinesContainersPrice.F.CostPrice' | TextCodeTranslationPipe}}</td>
-
+                                                            <td style="width: 80px; min-width: 80px; max-width: 80px; color : #6E7172;">{{'TariffLinesContainersPrice.F.CurrencyId' | TextCodeTranslationPipe}}</td>
                                                             <td class="LastChild">
                                                                 <div></div>
                                                             </td>
@@ -249,13 +249,17 @@
                                                                 </table>
                                                             </td>
 
+                                                            <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px;">
+                                                                {{containerItem.CurrencyCode}}
+                                                            </td>
+
                                                             <td class="CellStretched">
                                                                 <div></div>
                                                             </td>
                                                         </tr>
 
                                                         <tr>
-                                                            <td colspan="8">
+                                                            <td colspan="9">
                                                                 <div></div>
                                                             </td>
                                                         </tr>
@@ -409,9 +413,10 @@
                         <log-column [header]="'TariffLine.F.CurrencyId' | TextCodeTranslationPipe" [width]="'70'">
 
                             <ng-template let-item>
-                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled && !item.IsDifferentCurrenciesPerCharge" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                        <span>{{item.CurrencyCode}}</span>
+                                        <span *ngIf="!item.IsDifferentCurrenciesPerCharge">{{item.CurrencyCode}}</span>
+                                        <span *ngIf="item.IsDifferentCurrenciesPerCharge">Multi</span>
                                     </div>
 
                                     <div *ngIf="logcelltemplate.IsEditMode">

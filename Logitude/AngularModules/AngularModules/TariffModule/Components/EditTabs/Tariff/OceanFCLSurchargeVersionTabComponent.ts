@@ -1125,7 +1125,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, isDefaultCurrencyEnabled);
 
         this.ContainersItemsSourceView.forEach(item => {
-            this.UIProperties.SetEnabled("CurrencyId", item.ObjectTableName, !isDefaultCurrencyEnabled);
+            item.SetUIProperties();
         });
     }
 
@@ -1636,7 +1636,6 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         if (this.EntityPM.IsDifferentCurrenciesPerCharge != value) {
             this.EntityPM.IsDifferentCurrenciesPerCharge = value;
 
-            this.SetUIProperties_Currency();
             this.SurchargesCurrencies(this.CurrencyId);
 
             if (value) {
@@ -1689,7 +1688,7 @@ export class ContainerPricesItem extends BaseComponent {
             isCurrencyEnabled = true;
         }
 
-        this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, isCurrencyEnabled);       
+        //this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, isCurrencyEnabled);        
     }
 
     public ChargeLabel: string;
@@ -1849,6 +1848,28 @@ export class ContainerPricesItem extends BaseComponent {
         if (this.EntityPM.CurrencyId != value) {
             this.EntityPM.CurrencyId = value;
             this.TariffLinePM.LineEdited = true;
+        }
+    }
+
+    get CurrencyCode() {
+        return this.EntityPM.CurrencyCode;
+    }
+    set CurrencyCode(value: string) {
+        if (this.EntityPM.CurrencyCode != value) {
+            this.EntityPM.CurrencyCode = value;
+        }
+    }
+
+    currency: CurrencyList;
+    get Currency() { return this.currency; }
+    set Currency(value: CurrencyList) {
+        if (this.currency != value) {
+            this.currency = value;
+        }
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.CurrencyCode = value.Code;
+        } else {
+            this.CurrencyCode = null;
         }
     }
 

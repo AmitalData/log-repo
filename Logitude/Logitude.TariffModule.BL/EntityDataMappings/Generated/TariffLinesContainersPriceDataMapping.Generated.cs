@@ -51,7 +51,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Price4, 
 	         Price5, 
 	         CostPrice, 
-	         CurrencyId,
+	         CurrencyId, 
+	         CurrencyCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

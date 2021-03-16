@@ -296,6 +296,29 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string currencyCode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CurrencyCode  
+	   {
+	    
+	     get
+		{
+		   return currencyCode;
+		 }
+		 set
+		 {
+		   if(currencyCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyCode",OldValue=currencyCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   currencyCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
