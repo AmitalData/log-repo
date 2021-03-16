@@ -549,7 +549,7 @@ SUCCESS={4}"
 
 
                 unifreightGenericService.MyCommunicationsParams.ByteData = Encoding.UTF8.GetBytes(DataIn1);
-                unifreightGenericService.MyCommunicationsParams.Logs = unifreightGenericService.GetLog();
+                unifreightGenericService.MyCommunicationsParams.Logs ="XYZ:ELISH " + unifreightGenericService.GetLog();
                 var comm = Communications.AddCommunicationLog(unifreightGenericService.MyCommunicationsParams);
                 unifreightGenericService.MyGenericResponseObj.CorrelationId = comm;
 
