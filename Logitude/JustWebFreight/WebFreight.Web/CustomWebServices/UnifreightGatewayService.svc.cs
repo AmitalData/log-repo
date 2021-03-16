@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 using Logitude.AmitalMessaging.Utils;
 using Logitude.Customs.BL.Messaging.Customs;
 using Simplog.Server.Infrastructure.Helpers;
-
+using System.Threading;
 
 namespace WebFreight.Web.CustomWebServices
 {
@@ -452,10 +452,22 @@ SUCCESS={4}"
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(10)))//new TransactionScope(TransactionScopeOption.RequiresNew, TimeSpan.FromMinutes(10)))
                 {
                     unifreightGenericService.ProccessGenericRequest(DataIn1, ref MoreParams, out MessageOutWS);
-
-                    if (unifreightGenericService.MyGenericResponseObj.StatusType == Logitude.AmitalMessaging.Infrastructure.GenericResponseObj.StatusEnum.Success)
+                    try
                     {
-                        scope.Complete();
+                        if (unifreightGenericService.MyGenericResponseObj.StatusType == Logitude.AmitalMessaging.Infrastructure.GenericResponseObj.StatusEnum.Success)
+                        {
+                            scope.Complete();
+                        }
+
+                    }
+                    catch
+                    {
+                        Thread.Sleep(100);
+                        if (unifreightGenericService.MyGenericResponseObj.StatusType == Logitude.AmitalMessaging.Infrastructure.GenericResponseObj.StatusEnum.Success)
+                        {
+                            scope.Complete();
+                        }
+
                     }
                 }
                 //DataOut1 = XmlGenericUtil<GenericResponseObj>.SerializeObject(unifreightGenericService.MyGenericResponseObj);
@@ -493,6 +505,7 @@ SUCCESS={4}"
                         unifreightGenericService.MyGenericResponseObj.InnerException += e.InnerException.InnerException.ToString();
                     }
                 }
+
 
             }
 
