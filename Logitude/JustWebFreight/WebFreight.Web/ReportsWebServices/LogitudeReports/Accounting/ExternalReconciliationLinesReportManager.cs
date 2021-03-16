@@ -1,5 +1,6 @@
 ﻿using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
@@ -18,6 +19,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Xml.Serialization;
+using WebFreight.Web.AccountingModel.LedgerTransactionService;
 using WebFreight.Web.DataProviders;
 using WebFreight.Web.Security;
 
@@ -47,8 +49,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             this.FilterByRefDates(iQueryOperations);
             this.FilterByTypeAndBank(iQueryOperations);
             this.FilterByReconciled(iQueryOperations);
-        }
+          
 
+        }
+        
+        LedgerTransactionBalanceFilter LTBFilter;
         public byte[] GetData()
         {
             this.LoadDataProvider();
@@ -82,12 +87,33 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             }
             iDataProvider.ExternalReconciliationNumber = this.ExternalReconciliationNumber;
             iDataProvider.SortBy = this.SortBy;
+        
+
+        }
+        private decimal? GetTotalInLocalCurrency()
+        {
+            //LedgerTransactionBalanceFilterCreateLTBFilter ledgerTransactionBalanceFilterCreateLTBFilter = new LedgerTransactionBalanceFilterCreateLTBFilter();
+            //LTBFilter = ledgerTransactionBalanceFilterCreateLTBFilter.CreateLTBFilter(null, tenant, iQueryOperations);
+          
+            LedgerTransactionBalanceFilter ledgerTransactionBalanceFilter = new LedgerTransactionBalanceFilter();
+            ledgerTransactionBalanceFilter.GLAccountId = AllBankAccounts.Count == 1 ? AllBankAccounts.FirstOrDefault().GLAccountId : null;
+            ledgerTransactionBalanceFilter.From = RefDateFrom.Value;
+            ledgerTransactionBalanceFilter.To = RefDateTo.Value;
+            ledgerTransactionBalanceFilter.DateTypeCode = "3";
+            ledgerTransactionBalanceFilter.Tenant = tenant;
+            ledgerTransactionBalanceFilter.CurrencyId = GetTenantCurrency();
+            ledgerTransactionBalanceFilter.PageSize = 30;
+            //TransactionsBalanceByFiltersResult transactionsBalanceByFiltersResult = transactionsBalanceByFiltersService.GetTransactionsBalanceByFilters(tenant, ledgerTransactionBalanceFilter);
+            TransactionsBalanceByFiltersService transactionsBalanceByFiltersService = new TransactionsBalanceByFiltersService();
+            TransactionsBalanceByFiltersResult transactionsBalanceByFiltersResult = transactionsBalanceByFiltersService.GetTransactionsBalanceByFilters(tenant, null, ledgerTransactionBalanceFilter);
+           return transactionsBalanceByFiltersResult.ledgerTransactionBalanceService.Response.EndBalanceLocal;
 
 
         }
+        List<BankAccountPM> AllBankAccounts;
         private void BuildSourceData()
         {
-            List<BankAccountPM> AllBankAccounts = GetAllBankAccountsByFilters();
+            AllBankAccounts = GetAllBankAccountsByFilters();
 
             List<ExternalReconciliationPeriod> AllExternalReconciliationPeriod = GetAllBankTransactionForTypeFilter(AllBankAccounts);
             if (AllBankAccounts==null)
@@ -110,7 +136,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                              }).Where(s => s.ExternalReconciliationPeriods.Count > 0).ToList();
 
             }
-
+            iDataProvider.TotalInLocalCurrency = GetTotalInLocalCurrency();
         }
 
 
@@ -362,7 +388,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             return ledgerTransactions;
 
         }
-
+       private string GetTenantCurrency()
+        {
+            TenantQuery tenantQuery = new TenantQuery(tenant);
+            TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
+            return tenantPM.CurrencyId;
+        }
         private IQueryable<LedgerTransaction> ApplyFiltersForLedgerTransactions(IQueryable<LedgerTransaction> ledgerTransactions, List<BankAccountPM> AllBankAccounts,bool IsTransfer)
         {
             if (ExternalReconciliationNumber == null)
