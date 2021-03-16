@@ -310,12 +310,17 @@ update  BATCHSERVICESDEFINITIONMODS  set  NUMBEROFTHREADS =3 where CODE='SendWEB
             analyzeQueueFrom = analyzeQueueFrom.Trim();
             if (string.IsNullOrEmpty(analyzeQueueFrom))
             {
-                throw new Exception("analyzeQueueFrom is must");
+                var e=/*throw*/ new Exception("analyzeQueueFrom is must");
+                ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole" + this.GetType().Name, " : Run() Method", null);
+                return; 
+
             }
             var parts = analyzeQueueFrom.Split(',').ToList();
             if (parts.Count != 2)
             {
-                throw new Exception("analyzeQueueFrom.Split('-').ToList() != 2");
+                var e =/*throw*/ new Exception("analyzeQueueFrom.Split('-').ToList() != 2");
+                ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole" + this.GetType().Name, " : Run() Method", null);
+                return;
             }
 
             AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
@@ -325,14 +330,20 @@ update  BATCHSERVICESDEFINITIONMODS  set  NUMBEROFTHREADS =3 where CODE='SendWEB
             .Where(r => r.Code == parts[1] && r.Partner == parts[0]).FirstOrDefault();
             if (@interface == null)
             {
-                throw new Exception($"analyzeQueueFrom {analyzeQueueFrom} is not in customsPartnerFtpDetails.GetAllInterfaceDetails()");
+                var e =/*throw*/ new Exception($"analyzeQueueFrom {analyzeQueueFrom} is not in customsPartnerFtpDetails.GetAllInterfaceDetails()");
+                ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole" + this.GetType().Name, " : Run() Method", null);
+                return;
+
             }
 
 
             AnalyzeQueue analyzeQueue = analyzeQueueRepository.GetSingleAnalyzeQueue(analyzeQueueID);
             if (analyzeQueue == null)
             {
-                throw new Exception($"analyzeQueueID {analyzeQueueID} not in DB");
+                var e =/*throw*/ new Exception($"analyzeQueueID {analyzeQueueID} not in DB");
+                ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole" + this.GetType().Name, " : Run() Method", null);
+                return;
+
             }
             Exec(customsPartnerFtpDetails, @interface, analyzeQueueRepository, analyzeQueue, tenant);
 

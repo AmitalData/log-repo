@@ -274,7 +274,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                         declarationConsignmentConsignmentItem = BuildConsignmentItem(consignmentPM, consignmentPackagePM);
                         if(consignmentPackagePM.SequenceNumeric != null && consignmentPackagePM.SequenceNumeric.HasValue)
                         {
-                            declarationConsignmentConsignmentItem.SequenceNumeric = consignmentPackagePM.SequenceNumeric.Value;
+                            declarationConsignmentConsignmentItem.SequenceNumeric = 1;//consignmentPackagePM.SequenceNumeric.Value;
                             declarationConsignmentConsignmentItem.SequenceNumericSpecified = true;
                         }
                         declarationConsignmentConsignmentItemList.Add(declarationConsignmentConsignmentItem);
