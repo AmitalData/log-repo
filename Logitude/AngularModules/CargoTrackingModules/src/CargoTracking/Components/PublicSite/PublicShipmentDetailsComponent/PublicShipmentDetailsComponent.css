@@ -172,13 +172,7 @@ ul.line-list li.tick {
     font-weight: 500;
 }
 
-.steps-list li:hover:not(.dimmed),
-.steps-list li.highlighted {
-    background:var(--MainColor); /*#002664;*/
-    color: white;
-    font-weight: 600;
 
-}
 
 .steps-list li.dimmed {
     color: #797979;
@@ -379,6 +373,15 @@ ul.line-list li.tick {
     font-size: 18px;
 }
 
+@media screen and (min-width: 479px) {
+    .steps-list li:hover:not(.dimmed),
+    .steps-list li.highlighted {
+        background: var(--MainColor); /*#002664;*/
+        color: white;
+        font-weight: 600;
+    }
+}
+
 @media screen and (max-width: 479px) {
     .box-header {
         min-height: 140px;
@@ -426,22 +429,34 @@ ul.line-list li.tick {
         /* color: white; */
         font-weight: normal;
         /* order: 3; */
-        float: right;
-        text-align: right;
+        text-align: left;
 
         padding-right: 5px;
     }
+    .steps-list .highlighted div.date{
+        margin-left: 28px;
+        margin-top: 4px;
+    }
+    .steps-list .highlighted div.caption {
+        margin-left: 16px;
+    }
+
+    .steps-list .dimmed div.date,
+    .steps-list .dimmed div.caption {
+        margin-left: 28px;
+    }
+
     .steps-list li>div.caption {
         font-weight: bold;
-        float: left;
         width: fit-content !important;
     }
+
     .steps-list li>div.desc {
         font-weight: normal;
         width: calc(100% - 30px) !important;
         white-space: pre-line;
-        padding-left: 30px;
         word-break: break-word;
+        margin-left: 28px;
     }
     .steps-list li {
         /* display: flex;
@@ -458,8 +473,9 @@ ul.line-list li.tick {
         background: var(--MainColor);
         border-radius: 15px;
         padding: 3px 3px;
+        text-align:center;
         color: white;
-        width: fit-content !important;
+        width: 210px !important;
     }
     .steps-list li:hover:not(.dimmed) {
         /* background: none; */
