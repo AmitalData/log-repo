@@ -180,6 +180,7 @@
             this.lblUInvoice = new System.Windows.Forms.Label();
             this.lblUQuote = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.uploadPackagesTypes = new System.Windows.Forms.Button();
             this.updateBluesnapTransactionsLabel = new System.Windows.Forms.Label();
             this.bluesnapBtn = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -211,6 +212,7 @@
             this.button52 = new System.Windows.Forms.Button();
             this.fixJournalsButton = new System.Windows.Forms.Button();
             this.button51 = new System.Windows.Forms.Button();
+            this.uploadPackagesLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -1720,6 +1722,8 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage2.Controls.Add(this.uploadPackagesLabel);
+            this.tabPage2.Controls.Add(this.uploadPackagesTypes);
             this.tabPage2.Controls.Add(this.updateBluesnapTransactionsLabel);
             this.tabPage2.Controls.Add(this.bluesnapBtn);
             this.tabPage2.Controls.Add(this.groupBox2);
@@ -1783,6 +1787,16 @@
             this.tabPage2.Size = new System.Drawing.Size(850, 622);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
+            // 
+            // uploadPackagesTypes
+            // 
+            this.uploadPackagesTypes.Location = new System.Drawing.Point(271, 550);
+            this.uploadPackagesTypes.Name = "uploadPackagesTypes";
+            this.uploadPackagesTypes.Size = new System.Drawing.Size(184, 23);
+            this.uploadPackagesTypes.TabIndex = 102;
+            this.uploadPackagesTypes.Text = "Upload packages types";
+            this.uploadPackagesTypes.UseVisualStyleBackColor = true;
+            this.uploadPackagesTypes.Click += new System.EventHandler(this.uploadPackagesTypes_Click);
             // 
             // updateBluesnapTransactionsLabel
             // 
@@ -2091,6 +2105,17 @@
             this.button51.UseVisualStyleBackColor = true;
             this.button51.Click += new System.EventHandler(this.button51_Click_1);
             // 
+            // uploadPackagesLabel
+            // 
+            this.uploadPackagesLabel.AutoSize = true;
+            this.uploadPackagesLabel.Location = new System.Drawing.Point(461, 560);
+            this.uploadPackagesLabel.MinimumSize = new System.Drawing.Size(100, 0);
+            this.uploadPackagesLabel.Name = "uploadPackagesLabel";
+            this.uploadPackagesLabel.Size = new System.Drawing.Size(100, 13);
+            this.uploadPackagesLabel.TabIndex = 103;
+            this.uploadPackagesLabel.Text = "...";
+            this.uploadPackagesLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2326,6 +2351,8 @@
         private System.Windows.Forms.Button fixJournalsButton;
         private System.Windows.Forms.ToolStripMenuItem accountingTesterToolStripMenuItem;
         private System.Windows.Forms.Button button52;
+        private System.Windows.Forms.Button uploadPackagesTypes;
+        private System.Windows.Forms.Label uploadPackagesLabel;
     }
 }
 

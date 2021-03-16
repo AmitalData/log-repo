@@ -4630,6 +4630,110 @@ User/Pass",
             JournalsReapprovalTool form = new JournalsReapprovalTool();
             form.ShowDialog(this);
         }
+        private void uploadPackagesTypes_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = false;
+            openFileDialog.Filter = "csv|*.csv";
+            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Stream stream = openFileDialog.OpenFile();
+                StreamReader streamReader = new StreamReader(stream);
+                this.ReadExcelOfPackagesTypes(streamReader);
+            }
+        }
+
+        private void ReadExcelOfPackagesTypes(StreamReader streamReader)
+        {
+            List<dynamic> allPackagesTypes = new List<dynamic>();
+
+            string line = "";
+            string[] lineParts = null;
+            while ((line = streamReader.ReadLine()) != null)
+            {
+                lineParts = line.Split(',');
+
+                if (lineParts.Count() == 3)
+                {
+                    string packageCode = this.GetText(lineParts, 0);
+                    string packageName = this.GetText(lineParts, 1);
+                    if (packageName != null && packageName.Length >= 40)
+                    {
+                        packageName = packageName.Substring(0, 40);
+                    }
+                    allPackagesTypes.Add(new { Code = packageCode, Name = packageName});
+                }
+            }
+            allPackagesTypes.Remove(allPackagesTypes[0]);
+            allPackagesTypes = allPackagesTypes.GroupBy(p => new { p.Code }).Select(g => g.First()).ToList();
+            Thread thread = new Thread(() => this.UploadPackagesTypes(allPackagesTypes));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private void UploadPackagesTypes(List<dynamic> allPackagesTypes)
+        {
+            missedCountriesState = "";
+            SetControlPropertyValue(uploadPackagesLabel, "Text", "Uploading...");
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            List<int> allTenants = this.GetActiveTenants();
+
+            foreach (int item in allTenants)
+                this.AddPackagesTypesByTenant(allPackagesTypes, item);
+
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            SetControlPropertyValue(uploadPackagesLabel, "Text", "Done in " + ts.ToString());
+        }
+
+        private List<int> GetActiveTenants()
+        {
+            GlobalTenantRepository globalTenantRepository = new GlobalTenantRepository();
+            List<int> tenants = new List<int>();
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                tenants = globalTenantRepository.GetActiveGlobalTenantsIds();
+            }
+            return tenants;
+        }
+
+        private int packagesTypesCount = 0;
+        private void AddPackagesTypesByTenant(List<dynamic> allPackagesTypes, int tenant)
+        {
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            foreach (dynamic item in allPackagesTypes)
+            {
+                InsertNewPackageType(item, tenant, commonContext);
+            }
+            commonContext.SaveChanges();
+        }
+
+        public void InsertNewPackageType(dynamic item, int tenant, ICommonDataContext commonContext)
+        {
+            string packageCode = (string)item.Code;
+            PackageType newPackage = commonContext.PackageTypes.Where(p => p.Code == packageCode && p.Tenant == tenant).FirstOrDefault();
+            if (newPackage == null)
+            {
+                newPackage = new PackageType();
+                newPackage.Id = IdCounter.GetNumber("PackageType", tenant).ToString();
+                newPackage.Tenant = tenant;
+                newPackage.Code = packageCode;
+                newPackage.EnglishName = item.Name;
+                newPackage.PrintAs = packageCode;
+                newPackage.IsAir = true;
+                newPackage.IsOcean = true;
+                newPackage.IsInland = true;
+                newPackage.SearchFields = packageCode + ',' + item.Name;
+                commonContext.PackageTypes.Add(newPackage);
+                packagesTypesCount++;
+                if (packagesTypesCount == 1000)
+                {
+                    commonContext.SaveChanges();
+                    packagesTypesCount = 0;
+                }
+            }
+        }
     }
 
     public class TenantMailBox
