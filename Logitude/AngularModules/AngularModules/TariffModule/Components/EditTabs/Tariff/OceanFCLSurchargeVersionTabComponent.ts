@@ -733,6 +733,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
             tariffLine.Surcharge8MinPrice = item.Surcharge8MinPrice;
             tariffLine.Surcharge9MinPrice = item.Surcharge9MinPrice;
             tariffLine.Surcharge10MinPrice = item.Surcharge10MinPrice;
+            tariffLine.IsDifferentCurrenciesPerCharge = item.IsDifferentCurrenciesPerCharge;
 
             item.ContainersPrices.forEach(containerItem => {
                 var containerPrice = new TariffLinesContainersPricePM(tariffLine);
@@ -743,6 +744,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
                 containerPrice.Price4 = containerItem.Price4;
                 containerPrice.Price5 = containerItem.Price5
                 containerPrice.CostPrice = containerItem.CostPrice;
+                containerPrice.CurrencyId = containerItem.CurrencyId;
                 tariffLine.AddTariffLinesContainersPrice(containerPrice);
             });
 
