@@ -92,7 +92,6 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
                 bankDepositDP.BankAccountNumber = bankDepositPM.BankAccountNumber == null ? "" : bankDepositPM.BankAccountNumber;
                 bankDepositDP.DepositDate = bankDepositPM.DepositDate;
                 bankDepositDP.DepositDate = bankDepositPM.DepositDate;
-                bankDepositDP.CreatedByUserName = bankDepositPM.CreatedByUserName;
                 bankDepositDP.LocalDepositAmount = bankDepositPM.LocalDepositAmount;
                 bankDepositDP.ForeignAmount = bankDepositPM.ForeignAmount;
                 bankDepositDP.CurrencyCode = bankDepositPM.DepositCurrencyCode;
@@ -128,6 +127,16 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
                 }).ToList();
 
                 bankDepositDP.BankDepositLines = lines;
+
+                //ContactPM loggedcontact = GetLoggedContact(tenant);
+                string email = HttpContext.Current.User.Identity.Name;
+                ContactRepository contactRepository = new ContactRepository(tenant);
+                Contact loggedContact = contactRepository.GetSingleContactByEmail(email,tenant);
+                    if (loggedContact != null)
+                {
+                    bool showLocals = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+                    bankDepositDP.CreatedByUserName = showLocals ? loggedContact.LocalName == null ? loggedContact.EnglishName : loggedContact.LocalName: loggedContact.EnglishName;
+                }
 
             }
 
