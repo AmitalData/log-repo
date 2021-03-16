@@ -64,74 +64,82 @@ namespace Logitude.CustomsMessaging.MessagingServices
             //{
             //    return "קיים מסר זהה בתהליך";
             //}
-            LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = UCUW2L  !!!");
-
-            string uniComm = null;
-            string fileName = null;
-            var transmitionDateTime = DateTime.Now;
-            string xmlESBResponseXmlClass = null;
-
-            var myDCAInUCBCMSSWithResponseContentHeader = new DCAInUCUW2LResponseContentHeader()
+            try
             {
-                 //CustomFileNo="",
-                MoreParams= _DCAInUCUW2LRequestParams.MoreParams,
-                tenant= _DCAInUCUW2LRequestParams.Tenant,
-                LOGICOMMDEC= _DCAInUCUW2LRequestParams.LOGICOMMDEC,
-                LoggingUserId= _DCAInUCUW2LRequestParams.LoggingUserId,
-                ResponseContentHeader = new DefaultResponseContentHeader()
+                LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = UCUW2L  !!!");
+
+                string uniComm = null;
+                string fileName = null;
+                var transmitionDateTime = DateTime.Now;
+                string xmlESBResponseXmlClass = null;
+
+                var myDCAInUCBCMSSWithResponseContentHeader = new DCAInUCUW2LResponseContentHeader()
                 {
-                    TransmitionDateTime = transmitionDateTime
-                },
-            };
-
-            var body = XmlGenericUtil<DCAInUCUW2LResponseContentHeader>.SerializeObject(myDCAInUCBCMSSWithResponseContentHeader);
-            body = body.Substring(body.IndexOf(Environment.NewLine));
-            var myESBResponseXmlClass = new ESBResponseXmlClass();
-            var extrenalId = "62833ff7-1cd3-4faa-85a6-a4312ae4797a";
-            extrenalId = uniComm ?? Guid.NewGuid().ToString();
-            xmlESBResponseXmlClass = myESBResponseXmlClass.Get(Guid.NewGuid().ToString(), extrenalId, body);
-            var transTime = "2016-04-19_13-35-13-481";
-
-            transTime = transmitionDateTime.ToString("s").Replace("T", "_").Replace(":", "-");
-            transTime += "-";
-            transTime += transmitionDateTime.Millisecond.ToString();
-
-            fileName = "DcaPrefixName.IL941079089." + transTime + "." + extrenalId + ".PLT.xml";
-            //var messService = new Logitude.CustomsMessaging.MessagingServices.DF_MSG10000_ImportDeclarationMessagingService();
-            //var responseData = messService.SendSheet(genericRequestParams);
-
-            var ourRef = "";
-            //using (var trans = TransactionFactory.GetNewTransaction())
-            //{
-            //    try
-            //    {
-                    var InterfaceManagementQS = new InterfaceManagementQueryService(tenant);
-                    var InterfaceManagementPM = InterfaceManagementQS.GetSingleInterfaceManagementwithDefinition(
-                        this.MainInterfaceCode, tenant);
-                    fileName = fileName.Replace("DcaPrefixName.", InterfaceManagementPM.DcaPrefixName);
-                    ourRef = this.DcaReceivedCustomResponseCorrelation(InterfaceManagementPM, tenant, new Customs.BL.Utils.DCAFileModel()
+                    //CustomFileNo="",
+                    MoreParams = _DCAInUCUW2LRequestParams.MoreParams,
+                    tenant = _DCAInUCUW2LRequestParams.Tenant,
+                    LOGICOMMDEC = _DCAInUCUW2LRequestParams.LOGICOMMDEC,
+                    LoggingUserId = _DCAInUCUW2LRequestParams.LoggingUserId,
+                    ResponseContentHeader = new DefaultResponseContentHeader()
                     {
-                        SelectedFileDownload = fileName,
-                        TimStamp = transmitionDateTime
+                        TransmitionDateTime = transmitionDateTime
+                    },
+                };
 
-                    }, xmlESBResponseXmlClass);
+                var body = XmlGenericUtil<DCAInUCUW2LResponseContentHeader>.SerializeObject(myDCAInUCBCMSSWithResponseContentHeader);
+                body = body.Substring(body.IndexOf(Environment.NewLine));
+                var myESBResponseXmlClass = new ESBResponseXmlClass();
+                var extrenalId = "62833ff7-1cd3-4faa-85a6-a4312ae4797a";
+                extrenalId = uniComm ?? Guid.NewGuid().ToString();
+                xmlESBResponseXmlClass = myESBResponseXmlClass.Get(Guid.NewGuid().ToString(), extrenalId, body);
+                var transTime = "2016-04-19_13-35-13-481";
 
-                  //  trans.Complete();
-                    return "המסר נבנה בהצלחה וישלח בתהליך רקע";
-              //  }
-              //  catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
-              //  {
-                    //if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
-                    //{
-                    //    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine(" UCBCMSS SameRequestInProgress!! " + myCustomsRequestsSheetServiceException.Message);
-                    //}
-                    //else if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.NoAvailableSignServer)
-                    //{
-                    //    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("UCBCTML SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
-                    //}
-                    //return "קיים מסר זהה בתהליך";
-               // }
-           // }
+                transTime = transmitionDateTime.ToString("s").Replace("T", "_").Replace(":", "-");
+                transTime += "-";
+                transTime += transmitionDateTime.Millisecond.ToString();
+
+                fileName = "DcaPrefixName.IL941079089." + transTime + "." + extrenalId + ".PLT.xml";
+                //var messService = new Logitude.CustomsMessaging.MessagingServices.DF_MSG10000_ImportDeclarationMessagingService();
+                //var responseData = messService.SendSheet(genericRequestParams);
+
+                var ourRef = "";
+                //using (var trans = TransactionFactory.GetNewTransaction())
+                //{
+                //    try
+                //    {
+                var InterfaceManagementQS = new InterfaceManagementQueryService(tenant);
+                var InterfaceManagementPM = InterfaceManagementQS.GetSingleInterfaceManagementwithDefinition(
+                    this.MainInterfaceCode, tenant);
+                fileName = fileName.Replace("DcaPrefixName.", InterfaceManagementPM.DcaPrefixName);
+                ourRef = this.DcaReceivedCustomResponseCorrelation(InterfaceManagementPM, tenant, new Customs.BL.Utils.DCAFileModel()
+                {
+                    SelectedFileDownload = fileName,
+                    TimStamp = transmitionDateTime
+
+                }, xmlESBResponseXmlClass);
+
+                //  trans.Complete();
+                return "המסר נבנה בהצלחה וישלח בתהליך רקע";
+                //  }
+                //  catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
+                //  {
+                //if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
+                //{
+                //    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine(" UCBCMSS SameRequestInProgress!! " + myCustomsRequestsSheetServiceException.Message);
+                //}
+                //else if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.NoAvailableSignServer)
+                //{
+                //    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("UCBCTML SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
+                //}
+                //return "קיים מסר זהה בתהליך";
+                // }
+                // }
+
+            }
+            catch(System.Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
 

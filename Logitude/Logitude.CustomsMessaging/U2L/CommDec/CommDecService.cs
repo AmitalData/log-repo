@@ -99,9 +99,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     Tenant= _tenant
                 };
 
-                messagingService.CreateCRS(_tenant, user, requestParams);
- 
-             
+             string message=   messagingService.CreateCRS(_tenant, user, requestParams);
+                AppendLogLine("message : " + message);
+
+
             }
             else
             {
