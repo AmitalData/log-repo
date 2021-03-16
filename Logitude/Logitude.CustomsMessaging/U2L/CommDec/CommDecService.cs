@@ -101,6 +101,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
              string message=   messagingService.CreateCRS(_tenant, user, requestParams);
                 AppendLogLine("message : " + message);
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
 
 
             }

@@ -56,7 +56,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
                     this.MyResponseData.ApplicationID = customFileNo;
-                    this.MyResponseData.HasException = false;
+                     this.MyResponseData.HasException = false;
                     this.MyResponseData.Succeeded = true;
                     }
                 catch (Exception ex)

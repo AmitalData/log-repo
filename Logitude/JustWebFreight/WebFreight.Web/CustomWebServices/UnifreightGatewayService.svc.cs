@@ -498,8 +498,7 @@ SUCCESS={4}"
 
             finally
             {
-                MessageOutWS = unifreightGenericService.MyGenericResponseObj.Message;
-  
+   
                 unifreightGenericService.MyGenericResponseObj.Log = unifreightGenericService.GetLog();
                 DataOut1 = XmlGenericUtil<GenericResponseObj>.SerializeObject(unifreightGenericService.MyGenericResponseObj);
 
@@ -549,7 +548,7 @@ SUCCESS={4}"
 
 
                 unifreightGenericService.MyCommunicationsParams.ByteData = Encoding.UTF8.GetBytes(DataIn1);
-                unifreightGenericService.MyCommunicationsParams.Logs ="XYZ:ELISH " + unifreightGenericService.GetLog();
+                unifreightGenericService.MyCommunicationsParams.Logs = unifreightGenericService.GetLog();
                 var comm = Communications.AddCommunicationLog(unifreightGenericService.MyCommunicationsParams);
                 unifreightGenericService.MyGenericResponseObj.CorrelationId = comm;
 
