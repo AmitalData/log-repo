@@ -2026,6 +2026,7 @@
     <Content Include="Usefull Scripts\Fill Data\[Ayman] Calculate Shipments NumberOfHouses.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Ayman] Calculate Shipments TEU.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Ayman] ShipmentPayablesReceivablesFields.sql" />
+    <Content Include="Usefull Scripts\Islam\delete duplicated vessels codes - Cloud.sql" />
     <Content Include="Usefull Scripts\Islam\logbox\logbox duplicated documents.sql" />
     <Content Include="Usefull Scripts\Islam\logbox\logbox duplicated shipments fix.sql" />
     <Content Include="Usefull Scripts\Islam\bulk update shipments_new.sql" />
