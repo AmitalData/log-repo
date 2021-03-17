@@ -613,7 +613,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     case "CWKG": { myResult = entityPM.ChargeableWeightInKG; break; }
                     case "GWKG": { myResult = entityPM.GrossWeightInKG; break; }
                     case "PDCW": { myResult = entityPM.PickupDeliveryChargeableWeight; break; }
-                    case "PFCL": { myResult = entityPM.PercentForeignChargesLocal; break; }
+                    case "PFCL": { myResult = entityPM.QuoteCharges.Where(d => d.CostCurrencyId != loggedTenant.CurrencyId).Sum(s => s.CostTotalAmountLocal); break; }
                     default:
                         {
                             if (this.isFCLQuote)
@@ -662,7 +662,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     case "CWKG": { myResult = entityPM.ChargeableWeightInKG; break; }
                     case "GWKG": { myResult = entityPM.GrossWeightInKG; break; }
                     case "PDCW": { myResult = entityPM.PickupDeliveryChargeableWeight; break; }
-                    case "PFCL": { myResult = entityPM.PercentForeignChargesLocal; break; }
+                    case "PFCL": { myResult = entityPM.QuoteCharges.Where(d => d.SaleCurrencyId != loggedTenant.CurrencyId).Sum(s => s.SaleTotalAmountLocal); break; }
                     default:
                         {
                             if (this.isFCLQuote)

@@ -2617,6 +2617,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? OnForwardingETD_Original { get; set; }
         public DateTime? OnForwardingATA_Original { get; set; }
         public DateTime? OnForwardingETA_Original { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public double? PercentForeignChargesLocal { get; set; }
     }
 

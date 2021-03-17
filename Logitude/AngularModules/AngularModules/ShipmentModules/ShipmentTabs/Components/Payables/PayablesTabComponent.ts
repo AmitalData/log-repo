@@ -1012,7 +1012,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                     if (itemComponent.ChargesGroupCode == "FRT") {
                         this.OnFreightAmountChanged();
                     }
-
+                    this.OnPercentForeignAmountChanged();
                     this.ComputeShipmentFields();
                 }
             });
@@ -1237,6 +1237,14 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         });
     }
 
+    OnPercentForeignAmountChanged() {
+        this.ItemsSource.Collection.filter(f => f.MeasurementCode == "PFCL").forEach(item => {
+            if (item.IsLineAttachted == false) {
+                item.SetQuantity();
+            }
+        });
+    }
+
     // Update Quantities
     public UpdateQuantitiesMessage: string;
     public UpdateQuantitiesMessageWidth: number = 0;
@@ -1261,7 +1269,8 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
             activeLines.forEach(item => {
                 switch (item.MeasurementCode) {
                     case "PFCL": {
-                        if (item.Quantity != this.EntityPM.PercentForeignChargesLocal) {
+                        var quantity = ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId), "ExpectedAmountLocal");
+                        if (item.Quantity != quantity) {
                             isDifferentOrders = true;
                         }
                         break;
@@ -2026,7 +2035,7 @@ export class ShipmentPayableItem extends BaseComponent {
                                 }
 
                                 case "PFCL": {
-                                    this.Quantity = this.ShipmentPM.PercentForeignChargesLocal;
+                                    this.Quantity = ArrayTool.Sum(this.ShipmentPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId), "ExpectedAmountLocal");
                                     break;
                                 }
 
@@ -2961,7 +2970,8 @@ export class ShipmentPayableItem extends BaseComponent {
             case "GWKG": { result = this.ShipmentPM.GrossWeightInKG; break; }
             case "VCBM": { result = this.ShipmentPM.VolumeInCBM; break; }
             case "SCGW": { result = this.ShipmentPM.GrossWeightPerStorageDays; break; }
-            case "SCGW": {result = this.ShipmentPM.GrossWeightPerStorageDays; break;}
+            case "SCGW": { result = this.ShipmentPM.GrossWeightPerStorageDays; break; }
+            case "PFCL": { result = ArrayTool.Sum(this.ShipmentPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId), "ExpectedAmountLocal"); break;}
             case "BCNT": {
                 break;
             }
@@ -2986,6 +2996,8 @@ export class ShipmentPayableItem extends BaseComponent {
         if (this.ChargesGroupCode == "FRT") {
             this.fatherComponent.OnFreightAmountChanged();
         }
+
+        this.fatherComponent.OnPercentForeignAmountChanged();
     }
 }
 export class InsidePayableViewModel {
@@ -3106,7 +3118,7 @@ export class InsidePayableViewModel {
         switch (this.MeasurementCode) {
             case "PFCL": {
                 if (this.ShipmentPM) {
-                    myQuantity = this.ShipmentPM.GrossWeightPerStorageDays;
+                    myQuantity = this.ShipmentPM.PercentForeignChargesLocal;
                 }
 
                 break;

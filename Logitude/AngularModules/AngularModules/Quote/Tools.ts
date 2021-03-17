@@ -3,6 +3,7 @@ import {AppTool, ArrayTool} from '../Infrastructure/Tools';
 import {QuoteStageList} from './EntityLists/QuoteStageList';
 import {QuoteStageListService} from './Services/StandardLists/QuoteStageListService';
 import { QuoteUtilities } from './Utilities/QuoteUtilities';
+import { SessionLocator } from '../Infrastructure/Utilities/SessionLocator';
 
 export class QuoteTool {
     public static IsQuoteEditEnabled(entityPM: QuotePM) {
@@ -110,7 +111,7 @@ export class QuoteTool {
                                 case "GWKG": { myCostQuantity = entityPM.GrossWeightInKG; break; }
                                 case "VCBM": { myCostQuantity = entityPM.VolumeInCBM; break; }
                                 case "PDCW": { myCostQuantity = entityPM.PickupDeliveryChargeableWeight; break; }
-                                case "PFCL": { myCostQuantity = entityPM.PercentForeignChargesLocal; break; }
+                                case "PFCL": { myCostQuantity = ArrayTool.Sum(entityPM.QuoteCharges.filter(d => d.CostCurrencyId != SessionLocator.LocalCurrencyId), "CostTotalAmountLocal"); break; }
                                 default: { break; }
                             }
 
@@ -129,7 +130,7 @@ export class QuoteTool {
                                 case "GWKG": { mySaleQuantity = entityPM.GrossWeightInKG; break; }
                                 case "VCBM": { mySaleQuantity = entityPM.VolumeInCBM; break; }
                                 case "PDCW": { mySaleQuantity = entityPM.PickupDeliveryChargeableWeight; break; }
-                                case "PFCL": { mySaleQuantity = entityPM.PercentForeignChargesLocal; break; }
+                                case "PFCL": { mySaleQuantity = ArrayTool.Sum(entityPM.QuoteCharges.filter(d => d.SaleCurrencyId != SessionLocator.LocalCurrencyId), "SaleTotalAmountLocal"); break; }
                                 default: { break; }
                             }
 

@@ -523,6 +523,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                 this.OnFreightAmountChanged();
             }
 
+            this.OnPercentForeignAmountChanged();
             this.SetGridColumns();
             this.BuildItemsSource();
             this.ComputeTotals();
@@ -892,7 +893,6 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             var entityQuantity: number = null;
             var isDifferentOrders: boolean = false;
 
-
             entityQuantity = this.EntityPM.TEU;
             if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "BTEU" && f.CostQuantity != entityQuantity).length > 0) {
                 isDifferentOrders = true;
@@ -900,7 +900,6 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "BTEU" && f.SaleQuantity != entityQuantity).length > 0) {
                 isDifferentOrders = true;
             }
-
 
             if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "QTY" && f.CostQuantity != this.EntityPM.NumberOfContainers).length > 0) {
                 isDifferentOrders = true;
@@ -918,6 +917,8 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                 else if (this.EntityPM.QuoteCharges.filter(d => d.SaleMeasurementCode == "PRVL" && d.SaleQuantity != this.EntityPM.ValueOfGoods).length > 0) {
                     updateMessage = "You have updated the Value of Goods, apply the new values?";
                 }
+
+                isDifferentOrders = this.CheckUpdateMessageforPFCL();
             }
 
 
@@ -930,6 +931,30 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             this.IsUpdateQuantitiesVisible = AppTool.IsNullOrEmpty(updateMessage) ? false : true;        
         }
     }
+
+    private CheckUpdateMessageforPFCL(): boolean {
+        var isDifferentOrders = false;
+        var PFCL_CostQuantity = ArrayTool.Sum(this.EntityPM.QuoteCharges.filter(d => d.CostCurrencyId != SessionLocator.LocalCurrencyId), "CostTotalAmountLocal");
+        var PFCL_SaleQuantity = ArrayTool.Sum(this.EntityPM.QuoteCharges.filter(d => d.SaleCurrencyId != SessionLocator.LocalCurrencyId), "SaleTotalAmountLocal");;
+
+        if (AppTool.IsNullOrZero(PFCL_CostQuantity)) {
+            PFCL_CostQuantity = 0;
+        }
+
+        if (AppTool.IsNullOrZero(PFCL_SaleQuantity)) {
+            PFCL_SaleQuantity = 0;
+        }
+
+        if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PFCL" && f.CostQuantity != null && f.CostQuantity != 0 && f.CostQuantity != PFCL_CostQuantity).length > 0) {
+            isDifferentOrders = true;
+        }
+
+        if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "PFCL" && f.SaleQuantity != null && f.SaleQuantity != 0 && f.SaleQuantity != PFCL_SaleQuantity).length > 0) {
+            isDifferentOrders = true;
+        }
+        return isDifferentOrders;
+    }
+
     UpdateQuantitiesClicked() {
         this.ItemsSource.Collection.forEach((item) => {
             item.SetCostQuantity();
@@ -1036,6 +1061,13 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             if (item.SaleMeasurementCode == "PRFR") {
                 item.SetSaleQuantity();
             }
+        });
+    }
+
+     OnPercentForeignAmountChanged() {
+        this.ItemsSource.Collection.filter(f => f.MeasurementCode == "PFCL").forEach(item => {
+            item.SetCostQuantity();
+            item.SetSaleQuantity();
         });
     }
 
@@ -2321,6 +2353,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
             if (this.ChargesGroupCode == "FRT") {
                 this.fatherComponent.OnFreightAmountChanged();
             }
+
+            this.fatherComponent.OnPercentForeignAmountChanged();
         }
     }
 
@@ -2419,7 +2453,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
                 case "VCBM": { myResult = this.QuotePM.VolumeInCBM; break; }
                 case "PDCW": { myResult = this.QuotePM.PickupDeliveryChargeableWeight; break; }
-                case "PFCL": { myResult = this.QuotePM.PercentForeignChargesLocal; break; }
+                case "PFCL": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.CostCurrencyId != SessionLocator.LocalCurrencyId), "CostTotalAmountLocal"); break; }
                 default:
                     {
                         if (!AppTool.IsNullOrEmpty(this.CostMeasurementId)) {
@@ -2706,6 +2740,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 this.fatherComponent.OnFreightAmountChanged();
             }
 
+            this.fatherComponent.OnPercentForeignAmountChanged();
+
             this.SetUIProperties_SaleMinMax();
         }
     }
@@ -2775,7 +2811,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
                 case "VCBM": { myResult = this.QuotePM.VolumeInCBM; break; }
                 case "PDCW": { myResult = this.QuotePM.PickupDeliveryChargeableWeight; break; }
-                case "PFCL": { myResult = this.QuotePM.PercentForeignChargesLocal; break; }
+                case "PFCL": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.SaleCurrencyId != SessionLocator.LocalCurrencyId), "SaleTotalAmountLocal"); break; }
                 default:
                     {
                         if (!AppTool.IsNullOrEmpty(this.SaleMeasurementId)) {
@@ -2874,6 +2910,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.ChargesGroupCode == "FRT") {
             this.fatherComponent.OnFreightAmountChanged();
         }
+        this.fatherComponent.OnPercentForeignAmountChanged();
 
         this.SetUIProperties_SaleMinMax();
         this.fatherComponent.ComputeTotals();

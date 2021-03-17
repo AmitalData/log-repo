@@ -1829,7 +1829,10 @@ export class ShipmentTool {
                                     case "QTY": { myQuantity = entityPM.NumberOfPackages; break; }
                                     case "VCBM": { myQuantity = entityPM.VolumeInCBM; break; }
                                     case "SCGW": { myQuantity = entityPM.GrossWeightPerStorageDays; break; }
-                                    case "PFCL": { myQuantity = entityPM.PercentForeignChargesLocal; break;}
+                                    case "PFCL": {
+                                        myQuantity = ArrayTool.Sum(entityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId), "ExpectedAmountLocal");
+                                        break;
+                                    }
                                     default: { break; }
                                 }
 
@@ -1865,7 +1868,10 @@ export class ShipmentTool {
                                     case "GWKG": { myQuantity = entityPM.GrossWeightInKG; break; }
                                     case "VCBM": { myQuantity = entityPM.VolumeInCBM; break; }
                                     case "SCGW": { myQuantity = entityPM.GrossWeightPerStorageDays; break; }
-                                    case "PFCL": { myQuantity = entityPM.PercentForeignChargesLocal; break; }
+                                    case "PFCL": {
+                                        myQuantity = ArrayTool.Sum(entityPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId), "TotalAmountLocal");
+                                        break;
+                                    }
                                     default: { break; }
                                 }
 
@@ -1911,7 +1917,10 @@ export class ShipmentTool {
                                 case "QTY": { myQuantity = entityPM.NumberOfPackages; break; }
                                 case "VCBM": { myQuantity = entityPM.VolumeInCBM; break; }
                                 case "SCGW": { myQuantity = entityPM.GrossWeightPerStorageDays; break; }
-                                case "PFCL": { myQuantity = entityPM.PercentForeignChargesLocal; break; }
+                                case "PFCL": {
+                                    myQuantity = ArrayTool.Sum(entityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId), "ExpectedAmountLocal");
+                                    break;
+                                }
                                 default: { break; }
                             }
 
@@ -1947,7 +1956,10 @@ export class ShipmentTool {
                                 case "GWKG": { myQuantity = entityPM.GrossWeightInKG; break; }
                                 case "VCBM": { myQuantity = entityPM.VolumeInCBM; break; }
                                 case "SCGW": { myQuantity = entityPM.GrossWeightPerStorageDays; break; }
-                                case "PFCL": { myQuantity = entityPM.PercentForeignChargesLocal; break; }
+                                case "PFCL": {
+                                    myQuantity = ArrayTool.Sum(entityPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId), "TotalAmountLocal");
+                                    break;
+                                }
                                 default: { break; }
                             }
 
@@ -2682,7 +2694,10 @@ export class ShipmentGenerator {
             case "QTY": { myQuantity = this.EntityPM.NumberOfPackages; break; }
             case "VCBM": { myQuantity = this.EntityPM.VolumeInCBM; break; }
             case "SCGW": { myQuantity = this.EntityPM.GrossWeightPerStorageDays; break; }
-            case "PFCL": { myQuantity = this.EntityPM.PercentForeignChargesLocal; break; }
+            case "PFCL": {
+                myQuantity = ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId), "ExpectedAmountLocal");
+                break;
+            }
             default: { break; }
         }
         myRecordPM.Quantity = AppTool.Round(myQuantity, 2);
@@ -3400,7 +3415,10 @@ export class ShipmentGenerator {
             case "QTY": { myQuantity = this.EntityPM.NumberOfPackages; break; }
             case "VCBM": { myQuantity = this.EntityPM.VolumeInCBM; break; }
             case "SCGW": { myQuantity = this.EntityPM.GrossWeightPerStorageDays; break; }
-            case "PFCL": { myQuantity = this.EntityPM.PercentForeignChargesLocal; break; }
+            case "PFCL": {
+                myQuantity = ArrayTool.Sum(this.EntityPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId), "TotalAmountLocal");
+                break;
+            }
             default: { break; }
         }
         myRecordPM.Quantity = AppTool.Round(myQuantity, 2);

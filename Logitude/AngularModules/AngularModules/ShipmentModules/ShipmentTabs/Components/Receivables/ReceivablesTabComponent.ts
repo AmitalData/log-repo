@@ -909,7 +909,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                     if (itemComponent.ChargesGroupCode == "FRT") {
                         this.OnFreightAmountChanged();
                     }
-
+                    this.OnPercentForeignAmountChanged();
                     this.ComputeShipmentFields();
                 }
             });
@@ -923,6 +923,15 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         this.BuildSummaryData();
         this.BuildProfitData();
     }
+
+    OnPercentForeignAmountChanged() {
+        this.ItemsSource.Collection.filter(f => f.MeasurementCode == "PFCL").forEach(item => {
+            if (item.IsLineAttachted == false) {
+                item.SetQuantity();
+            }
+        });
+    }
+
     OnFreightAmountChanged() {
         this.ItemsSource.Collection.filter(f => f.ChargesGroupCode != "FRT" && f.MeasurementCode == "PRFR").forEach(item => {
             if (item.IsLineAttachted == false) {
@@ -1258,7 +1267,8 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
             activeLines.forEach(item => {
                 switch (item.MeasurementCode) {
                     case "PFCL": {
-                        if (item.Quantity != this.EntityPM.PercentForeignChargesLocal) {
+                        var quantity = ArrayTool.Sum(this.EntityPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId), "TotalAmountLocal");
+                        if (item.Quantity != quantity) {
                             isDifferentOrders = true;
                         }
                         break;
@@ -1836,7 +1846,7 @@ export class ShipmentReceivableItem extends BaseComponent {
                                 }
 
                                 case "PFCL": {
-                                    this.Quantity = this.ShipmentPM.PercentForeignChargesLocal;
+                                    this.Quantity = ArrayTool.Sum(this.ShipmentPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId), "TotalAmountLocal");
                                     break;
                                 }
 
@@ -2588,7 +2598,7 @@ export class ShipmentReceivableItem extends BaseComponent {
             }
 
             case "PFCL": {
-                result = this.ShipmentPM.PercentForeignChargesLocal; break;
+                result = ArrayTool.Sum(this.ShipmentPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId), "TotalAmountLocal"); break;
             }
 
             default: {
@@ -2611,6 +2621,8 @@ export class ShipmentReceivableItem extends BaseComponent {
         if (this.ChargesGroupCode == "FRT") {
             this.fatherComponent.OnFreightAmountChanged();
         }
+
+        this.fatherComponent.OnPercentForeignAmountChanged();
     }
 
     StoragePricingClicked() {
