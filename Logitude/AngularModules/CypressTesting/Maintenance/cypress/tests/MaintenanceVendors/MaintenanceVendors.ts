@@ -75,7 +75,7 @@ When("edit vendor", () => {
     Actions.UpdateVendor()
 });
 
-Then("the vendor should edit successfully", () => {
+Then("the vendor should update successfully", () => {
     Actions.AssertUpdateVendor()
 });
 

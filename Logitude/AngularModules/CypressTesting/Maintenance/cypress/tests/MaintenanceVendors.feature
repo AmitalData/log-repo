@@ -39,7 +39,7 @@ Feature: Vendor Create, Search and Edit from Maintenance
             | VatNumber | Zero        |
             | BankName  | Vendor Bank |
         When edit vendor
-        Then the vendor should edit successfully
+        Then the vendor should update successfully
 
     Scenario: Save and close the vendor
         When save and close vendor
