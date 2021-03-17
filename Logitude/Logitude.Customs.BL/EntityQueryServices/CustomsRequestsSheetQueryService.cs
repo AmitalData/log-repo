@@ -151,7 +151,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8216",// - מסר תשובה של סוכן עם נימוקים לאישור האילוץ
 "8227",// - מסר מסמך נדרש
 "US2L01I",// - תהליך SIVUG BATCH 
-"UCUW2L",// - פתיחת הצהרה ממסר אינטגרטור
+//"UCUW2L",// - פתיחת הצהרה ממסר אינטגרטור
 "UCTZIP",// - תהליך BuildCustomTableZip
 "UCB2750",//,Batch Send 2750 per CourierMasterId
 "UCB2755",//,Batch Send 2755 per CourierMasterId
@@ -282,7 +282,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8216",// - מסר תשובה של סוכן עם נימוקים לאישור האילוץ
 "8227",// - מסר מסמך נדרש
 "US2L01I",// - תהליך SIVUG BATCH 
-"UCUW2L",// - פתיחת הצהרה ממסר אינטגרטור
+//"UCUW2L",// - פתיחת הצהרה ממסר אינטגרטור
 "UCTZIP",// - תהליך BuildCustomTableZip
 "UCB2750",//,Batch Send 2750 per CourierMasterId
 "UCB2755",//,Batch Send 2755 per CourierMasterId
@@ -387,7 +387,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8216",// - מסר תשובה של סוכן עם נימוקים לאישור האילוץ
 "8227",// - מסר מסמך נדרש
 "US2L01I",// - תהליך SIVUG BATCH 
-"UCUW2L",// - פתיחת הצהרה ממסר אינטגרטור
+//"UCUW2L",// - פתיחת הצהרה ממסר אינטגרטור
 "UCTZIP",// - תהליך BuildCustomTableZip
 "UCB2750",//,Batch Send 2750 per CourierMasterId
 "UCB2755",//,Batch Send 2755 per CourierMasterId
