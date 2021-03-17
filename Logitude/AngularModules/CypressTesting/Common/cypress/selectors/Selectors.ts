@@ -20,7 +20,7 @@ export class CommonSelectors {
     //#region Login 
     public static readonly Email="#Email"
     public static readonly LoginButton="#cmdLogin"
-    public static readonly ContainForgotYourPassword="Forgot your password?"
-    public static readonly Message="#message";
+    public static readonly ForgotYourPasswordLink="Forgot your password?"
+    public static readonly ValidationMessage="#message";
     //#endregion
 }

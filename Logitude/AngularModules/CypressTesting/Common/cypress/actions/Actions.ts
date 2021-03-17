@@ -9,7 +9,7 @@ import { LoginDetails } from 'cypress/models/LoginDetails';
 import { ValidationMessageDetails } from "../../../Base/cypress/models/ValidationMessageDetails";
 import * as Assists from "../../../Base/cypress/assists/Assists";
 import * as gr from "../../../Base/cypress/actions/GenerateRandoms";
-import { Terms } from "../constants/Terms";
+import { Constants } from "../constants/Constants";
 //#region Reset password
 export function FillChangePasswordPage(CurrentPassword: string, password: string, confirmPassword: string) {
     cy.FillLogTextBox(CommonSelectors.CurrentPassword, CurrentPassword)
@@ -64,7 +64,7 @@ export function FillEmail(Email: string) {
     cy.FillLogTextBox(CommonSelectors.Email, Email);
 }
 function FillPassword(Password: string) {
-    let PasswordToFill = Password.toLowerCase() == Terms.random ? GetRandomPassword() : Password;
+    let PasswordToFill = Password.toLowerCase() == Constants.random ? GetRandomPassword() : Password;
     cy.FillLogTextBox(CommonSelectors.Password, PasswordToFill);
 }
 function GetRandomPassword(){
@@ -82,7 +82,7 @@ export function VisitPasswordResetRequestPage() {
 }
 function ClickForgotYourPassword(){
     cy.DefineRequestWait(RestAPI.GET, URLs.PasswordResetRequestPage, RequestAliases.PasswordResetRequestPage)
-    cy.Click(BaseSelectors.Anchor, CommonSelectors.ContainForgotYourPassword)
+    cy.Click(BaseSelectors.Anchor, CommonSelectors.ForgotYourPasswordLink)
     BaseAssertion.AssertStatusCode(RequestAliases.PasswordResetRequestPage, 200)
 }
 export function SendPasswordResetRequest() {
@@ -92,7 +92,7 @@ export function SendPasswordResetRequest() {
 export function ValidateMessagesForSendingPasswordResetRequest(dataTable: any) {
     let validationMessageDetailsList = Assists.CreateSet<ValidationMessageDetails>(dataTable);
     for (let i = 0; i < validationMessageDetailsList.length; i++) {
-        cy.get(CommonSelectors.Message).should('contain.text', validationMessageDetailsList[i].Message)
+        cy.get(CommonSelectors.ValidationMessage).should('contain.text', validationMessageDetailsList[i].Message)
     }
 }
 //#endregion
