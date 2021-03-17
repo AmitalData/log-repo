@@ -176,7 +176,6 @@ namespace WebFreight.Web.MetaDataUpdate
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "SINV", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 29, CategoryTypeCode = null, TextCode = "General.MH.Invoices", Icon = "AccountingPath", ObjectTableId = tenantObjectTables.Where(o => o.Name == "ARInvoice").FirstOrDefault().Id, FeatureId = sharedInvoicesFeature.Id, FeatureUniqeCode = sharedInvoicesFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
 
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "DEPO", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 30, CategoryTypeCode = null, TextCode = "General.MH.Depositions", Icon = "DepositionsPath", FeatureId = depositionFeature.Id, FeatureUniqeCode = depositionFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "SSTT", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 31, CategoryTypeCode = null, TextCode = "General.MH.ShipmentsTest", Icon = "OperationsPath", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Shipment").FirstOrDefault().Id, FeatureId = sharedShipmentsFeature.Id, FeatureUniqeCode = sharedShipmentsFeature.FeatureUniqeCode, QuerySection = "ShipmentTest" }, MenusTablesRepository, tenantMenusTables );
 
 
 

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "3494fedd18bc545de8889e4e38d6c9e9";
+		public const string HashString = "f57abea739138916c118c00fba5a0f9d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -44256,7 +44256,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query AllShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_8.Id, NameTextCodeCode = ShipmentTextCode_8.Code, ObjectTableName = "Shipment", Code = "All Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 8, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "ShipmentTest", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_8.Id,FeatureUniqeCode= ShipmentFeature_8.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query AllShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_8.Id, NameTextCodeCode = ShipmentTextCode_8.Code, ObjectTableName = "Shipment", Code = "All Shipments",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 8, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_8.Id,FeatureUniqeCode= ShipmentFeature_8.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
 			 QueryColumn AllShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllShipmentsQuery.Id,QueryCode = AllShipmentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Shipment.TransportModeId" , ColumnWidth = 25 }, addedQueryColumns);
 
@@ -44736,18 +44736,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	          
              ScreenField ShipmentShipmentCustomerAddEditScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = ShipmentCustomerAddEditScreenScreen8.Id,ScreenCode = ShipmentCustomerAddEditScreenScreen8.Code, ObjectFieldCode = "Shipment.ShipperContactId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	            
-	      
-
-	         Screen ShipmentHeaderScreen2Screen9 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { QuerySection = "ShipmentTest" ,  Code = "Shipment.HeaderScreen2", Name = "Header Screen2", ObjectTableId = ShipmentObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
-      
-             ScreenField ShipmentShipmentHeaderScreen2ScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ShipmentHeaderScreen2Screen9.Id,ScreenCode = ShipmentHeaderScreen2Screen9.Code, ObjectFieldCode = "Shipment.ShipmentNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-	          
-             ScreenField ShipmentShipmentHeaderScreen2ScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ShipmentHeaderScreen2Screen9.Id,ScreenCode = ShipmentHeaderScreen2Screen9.Code, ObjectFieldCode = "Shipment.UpdatedByUserId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-	          	
-		    ShipmentObjectTable.HeaderScreenId = ShipmentHeaderScreen2Screen9.Id;
-		    ShipmentObjectTable.HeaderScreenCode = ShipmentHeaderScreen2Screen9.Code;
-
-	   		  
 
 	    }
 
