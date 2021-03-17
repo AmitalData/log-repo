@@ -4,7 +4,7 @@ import { TabItem } from '../Components/EditComponent/EditComponent';
 declare var window: any;
 export class ShipmentTestTabsBuilder implements IObjectTableTabsBuilder {
 
-    BuildTabs(args: any): any[] {
+    BuildTabs(args: any): TabItem[] {
         let tabsItemsSource: TabItem[] = [];
         let allTabs: [] = window.ObjectTableTabs.filter(d => d.ObjectTableId === args.ObjectTableId && d.Code == "SHAU");
 

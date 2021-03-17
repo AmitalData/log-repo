@@ -117,7 +117,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         windowArgs.queryCode = /*this.ObjectTableName + '.' +*/this.SelectedQueryCode;
         windowArgs.isNewQueryMode = false;
         windowArgs.currentObjectTable = this.ObjectTableName;
-        windowArgs.QuerySection = this.listArgs.QuerySection;
+        windowArgs.QuerySection = this.MenuTableQuerySection;
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 960;
         logitudeWindow.Height = 520;
@@ -176,9 +176,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
 
     GetMethodName() {
-
-        if (this.listArgs.QuerySection) return this.ObjectTableName;
-
+        if (this.MenuTableQuerySection) return this.ObjectTableName;
         let methodName = this.SelectedQuery.QuerySection;
         if (methodName.indexOf("Customs.") > -1) {
             methodName = methodName.split('.')[1];
@@ -920,11 +918,12 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     private listArgs: ListComponentArgs;
     ShowViews: boolean = true;
     ResourcesLoaded: boolean = false;
+
+  MenuTableQuerySection: string;
   Run(args: ListComponentArgs) {
     this.CurrentSession.AddMenuReference(this.ComponentRef);
     this.CurrentSession.AddListComponent(this);
-
-    this.listArgs = args;
+      this.listArgs = args;
     if (!this.IsDemoTenant) {
       if (!AppTool.IsNullOrEmpty(this.listArgs.DisplayTitle)) {
         this.Title = this.listArgs.DisplayTitle;
@@ -936,6 +935,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
       this.MethodName = args.MethodName;
       this.BackBtnTitle = args.BackButtonTitle;
       this.ShowViews = args.ShowViews;
+      this.MenuTableQuerySection = args.QuerySection;
+
       this.ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
       this.SeachBoxIsDisabled = this.ObjectTable.DisableSearchBox;
 
@@ -998,17 +999,20 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     //}
 
 
+    FilterQuerysByMenuTableQuerySection(allQueries: any) {
+
+        let menuTableQuerySection: string = !AppTool.IsNullOrEmpty(this.MenuTableQuerySection) ? this.MenuTableQuerySection : this.ObjectTableName;
+        return  allQueries.filter(d => d.QuerySection == menuTableQuerySection || d.QuerySection == (menuTableQuerySection + "FollowUp"));
+    }
+
 
 
     public UserId: string = SessionInfo.LoggedUserId;
     public Tenant: number = SessionInfo.LoggedUserTenant;
     GetQueries() {
 
-        var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
-
-        if (this.listArgs.QuerySection) {
-            allQueries = allQueries.filter(d => d.QuerySection == this.listArgs.QuerySection);
-        }
+        var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id ).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
+        allQueries = this.FilterQuerysByMenuTableQuerySection(allQueries);
 
         this.Queries = allQueries.filter(x => x.UserId == null && x.SystemLevel == true);
 
@@ -1199,8 +1203,6 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             this.QueryCode = this.SelectedQuery.UniqueCode;
           
             this.MethodName = this.GetMethodName();
-
-
 
 
             this.SelectedQueryCode = this.SelectedQuery.UniqueCode;
@@ -2395,7 +2397,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                     EntityId: selectedEntityId,///$event.rowData.Id
                                     ObjectTableName: myObjectTableName,
                                     BackButtonLabel: label,
-                                    QuerySection: this.listArgs.QuerySection
+                                    QuerySection: this.MenuTableQuerySection
                                 });
                                 cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
                                     this.isEditControlOpened = false;

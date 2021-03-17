@@ -13,6 +13,8 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {MenuButtonsEvents, MenuButtonsStateChangedEventArgs} from '../../../../Infrastructure/Utilities/events/MenuButtonsEvents';
 import {ObjectsLocator} from '../../../Locators/ObjectsLocator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { IObjectTableMenuButtonsBuilder } from '../../../Interface/IObjectTableMenuButtonsBuilder';
+import { ObjectTableMenuButtonsBuilderService } from '../../../Utilities/ObjectTableMenuButtonsBuilderService';
 
 @Component({
     
@@ -34,6 +36,7 @@ export class MenuButtonsComponent implements OnDestroy {
     @Output() LoadCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     LayoutDirection: string = 'ltr';
     MenuButtonsStateChangedEvent: any;
+    QuerySection: string;
     constructor(public entityArgs: EntityArgs, public cd: ChangeDetectorRef) {
         this.baseMetaUrlApi = ServiceHelper.GetLogitudeURL() + "api/ngMetaData";
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
@@ -88,6 +91,9 @@ export class MenuButtonsComponent implements OnDestroy {
     Run(args: any) {
         this.EntityPM = args['EntityPM'];
         this.ObjectTable = args['ObjectTable'];
+        this.QuerySection = args['QuerySection'];
+
+        
         if (this.ObjectTable && this.ObjectTable.Name == "Quote") {
             if (this.EntityPM != null) {
                 if (this.EntityPM.IsQuoteDataExternal && this.EntityPM.IsQuoteDocumentExternal) {
@@ -135,6 +141,19 @@ export class MenuButtonsComponent implements OnDestroy {
             }
         }
 
+
+        let objectTableMenuButtonsBuilder: IObjectTableMenuButtonsBuilder = ObjectTableMenuButtonsBuilderService.GetInstance(this.QuerySection);
+        if (objectTableMenuButtonsBuilder) {
+            buttons = objectTableMenuButtonsBuilder.BuildMenuButtons({
+                ObjectTableId: this.entityArgs.ObjectTableName,
+                ObjectTableName: this.entityArgs.EntityPM,
+                QuerySection: this.QuerySection,
+                EntityPM: this.EntityPM,
+                MenuButtons: buttons,
+            });
+        }
+
+
         var objectTableName = this.ObjectTable.Name;
         if (objectTableName.indexOf('Customs.') > -1) {
             objectTableName = objectTableName.split('.')[1];
@@ -148,6 +167,9 @@ export class MenuButtonsComponent implements OnDestroy {
                 instance.SetEntityPM(this.entityArgs);
                 instance.CheckButtonState(buttons);
 
+
+    
+       
                 for (var i = 0; i < buttons.length; i++){
 
                     buttons[i].Width == 0 ? buttons[i].Width = 110 : null;

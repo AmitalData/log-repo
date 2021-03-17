@@ -8,6 +8,7 @@ export class ObjectTableTabBuilderService {
 
         switch (name) {
             case "ShipmentTest": { myResult = new ShipmentTestTabsBuilder(); break; }
+                
         }
         return myResult;
 

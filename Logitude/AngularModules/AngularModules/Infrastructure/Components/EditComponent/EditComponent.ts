@@ -417,6 +417,7 @@ export class EditComponent implements OnDestroy {
         }
     }
     private BuildMenuButtons() {
+
         if (this.HasMenuButtons) {
             if (this.MenuButtonsViewContainerRef) {
                 this.MenuButtonsViewContainerRef.clear();
