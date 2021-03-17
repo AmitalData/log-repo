@@ -88,4 +88,9 @@ export class RequestAliases {
     public static readonly GetByFilter = "GetByFilter"
     public static readonly PutWarehouses = "PutWarehouses"
     public static readonly GetLastUpdatedTables = "GetLastUpdatedTables"
+    //Login 
+    public static readonly Authentication="Authentication"
+    public static readonly PasswordResetRequestPage="PasswordResetRequestPage"
+    //Reset Password
+    public static readonly ResetPassword="ResetPassword"
 }

@@ -4,6 +4,7 @@ declare namespace Cypress {
         GetLoggedInUser(customerCareUser?: boolean): Chainable<string>
         LogoutThenLogin(customerCareUser?: boolean): Chainable<Element>
         OpenChangePasswordPage(): Chainable<Element>
+        OpenLoginPage(): Chainable<Element>
         RedirectToLogin(): Chainable<Element>
     }
 }
@@ -53,7 +54,12 @@ Cypress.Commands.add("OpenChangePasswordPage", () => {
         cy.visit(resetURL);
     })
 })
-
+Cypress.Commands.add("OpenLoginPage", () => {
+    cy.fixture("Login.json").then((LoginData) => {
+        var resetURL = LoginData.url + "/Login.aspx";
+        cy.visit(resetURL);
+    })
+})
 Cypress.Commands.add("RedirectToLogin", () => {
     let mode = Cypress.env("Mode")
     if (mode.toLowerCase() === "development") {
