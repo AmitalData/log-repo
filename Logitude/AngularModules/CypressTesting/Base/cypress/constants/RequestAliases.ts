@@ -85,6 +85,7 @@ export class RequestAliases {
     public static readonly GetContactMenuButtonGroups = "GetContactMenuButtonGroups";
     public static readonly PutContact = "PutContact";
     public static readonly ContactViewsGetByFilters = "ContactViewsGetByFilters";
+    public static readonly PostChangePassword="PostChangePassword"
     //
     public static readonly GetTraceEventsForEntity = "GetTraceEventsForEntity"
     public static readonly GetByFilter = "GetByFilter"

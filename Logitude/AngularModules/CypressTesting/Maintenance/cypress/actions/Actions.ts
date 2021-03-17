@@ -13,11 +13,35 @@ import { BaseURLs } from "../../../Base/cypress/constants/URLs";
 import { Datepicker } from "../../../Base/cypress/models/Datepicker";
 import { VendorDetails } from "../models/VendorDetails";
 import { VendorContext } from "../models/VendorContext";
-
+//#region change password
+export function OpenChangeUserPasswordWindow(){
+    OpenPersonalSettingsTab();
+    cy.Click(MaintenanceSelectors.ChangePasswordMaintenanceItem,null)
+}
+function OpenPersonalSettingsTab(){
+    OpenMaintenanceMenu();
+    cy.Click(MaintenanceSelectors.PersonalSettingsMaintenanceTab,null)
+}
+//#endregion
 export function OpenMaintenanceMenu() {
     cy.Click(BaseSelectors.MaintenanceMenu, null)
 }
-
+export function FillChangePasswordWindow(CurrentPassword:string,NewPassword:string,RetypePassword:string){
+    cy.FillLogTextBox(MaintenanceSelectors.CurrentPassword, CurrentPassword)
+    cy.FillLogTextBox(MaintenanceSelectors.NewPassword, NewPassword)
+    if (RetypePassword != null) {
+        cy.FillLogTextBox(MaintenanceSelectors.RetypePassword, RetypePassword)
+    }  
+}
+export function ChangePasswordMockChange(){
+    cy.intercept(
+        {
+          method: RestAPI.POST,     
+          url: Urls.PostChangePassword,     
+        },[true] 
+      )
+      cy.Click(MaintenanceSelectors.RetypePassword, BaseSelectors.ContainsOK);   
+}
 export function OpenTabInMaintenanceMenu(tabNameToSearch:string , tabSelector:string){
     cy.Click(BaseSelectors.MaintenanceMenu, null);
     cy.FillLogTextBox(BaseSelectors.NullSearch, tabNameToSearch);

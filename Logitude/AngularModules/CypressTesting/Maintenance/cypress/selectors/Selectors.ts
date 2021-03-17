@@ -1,8 +1,9 @@
 export class MaintenanceSelectors
 {
     public static readonly OthersMaintenanceTab = "#OTH";
-
     public static readonly ContactsMaintenanceItem = "#MaintenanceItemMTCO";
+    public static readonly PersonalSettingsMaintenanceTab="#PRS"
+    public static readonly ChangePasswordMaintenanceItem="#MaintenanceItemCHPA"
     public static readonly ContactSaveButton = "#Contact-Save";
     public static readonly AnonymizeContactButton = "#ContactBAnonymize";
     public static readonly ContactEmail = "#Contact_Email";
@@ -47,7 +48,11 @@ export class MaintenanceSelectors
 
 
     //#endregion
-
+//#region change password window
+public static readonly CurrentPassword="#CurrentPassword";
+public static readonly NewPassword="#NewPassword";
+public static readonly RetypePassword="#RetypePassword"
+//#endregion
     public static NewWizardButton(name: string): string {
         return "#NewButton_" + name;
     }
