@@ -166,8 +166,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 ThrowIfNoAvailablePersonalSignServer();
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    try
-                    {
+ 
                         Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("CustomsRequestsSheetService CreateNew():interfaceTypeCode  " +
                         requestParams.InterfaceTypeCode);
 
@@ -190,12 +189,8 @@ namespace Logitude.Customs.BL.Messaging.Customs
                         this.StartCustomsRequestStepEnum = this.GetCurrentProcessState();
 
                         scope.Complete();
-                    }
-                    catch
-                    {
-                        scope.Dispose();
-                        throw;
-                    }
+                    
+                   
                 }
                 RequestSheetContext.Current.SetRSContext(requestParams);
 

@@ -119,7 +119,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }, xmlESBResponseXmlClass);
 
                 //  trans.Complete();
-                return "המסר נבנה בהצלחה וישלח בתהליך רקע";
+                return "SUCCESS";
                 //  }
                 //  catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
                 //  {
