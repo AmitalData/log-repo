@@ -14,6 +14,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly SystemSettings = "#CMS"
     public static readonly CustomsSettings = "#MaintenanceItemCISE"
     public static readonly Warehouse = "#MaintenanceItemMTWH"
+    public static readonly Vendor = "#MaintenanceItemMTVD"
     //#endregion
     //#region charge Types
     public static readonly ChargesTypeAccounting="#ChargesTypeTHAccounting"
@@ -76,6 +77,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ContainNo="No"
     public static readonly ContainSettings="Settings"
     public static readonly ContainWarehouse="Warehouse"
+    public static readonly ContainVendor="Vendor"
 
 
     //#endregion
