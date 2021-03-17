@@ -2314,7 +2314,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         var myComponentPath: string = null;
         var title = "";
 
-        if (this.CustomerDependencyProperty1 == "AG") {
+        if (this.QuoteCustomerTypeCode == "AGT") {
             myComponentPath = "./CommonModules/CommonAgent/Components/NewEntity/NewAgentComponent";
         }
 
