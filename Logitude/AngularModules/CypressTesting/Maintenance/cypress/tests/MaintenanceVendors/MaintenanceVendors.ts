@@ -1,19 +1,17 @@
 import * as Actions from "../../actions/Actions";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { ContactDetails } from "../../models/ContactDetails";
 import { VendorDetails } from "../../models/VendorDetails";
-import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
-import { VendorContext } from "cypress/models/VendorContext";
-import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { MaintenanceSelectors } from "../../selectors/Selectors";
 
 let vendorDetails :VendorDetails
 
 //#region Create new vendor
-Given("the user logged in and open {string} in maintenance menu", (tabName) => {
+Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login()
-    Actions.OpenTabInMaintenanceMenu(tabName, BaseSelectors.Vendor)
+    Actions.OpenTabInMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.VendorMaintenanceItem)
 });
 
 Given("a vendor with the following details", (dataTable) => {
