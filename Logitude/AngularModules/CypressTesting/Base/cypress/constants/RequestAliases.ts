@@ -100,5 +100,12 @@ export class RequestAliases {
     //#endregion
     public static readonly GetTraceEventsForEntity = "GetTraceEventsForEntity"
     public static readonly GetLastUpdatedTables = "GetLastUpdatedTables"
+    public static readonly GetFilterSearch = "GetFilterSearch"
+    public static readonly GetSignle = "GetSignle"
+    //Login 
+    public static readonly Authentication="Authentication"
+    public static readonly PasswordResetRequestPage="PasswordResetRequestPage"
+    //Reset Password
+    public static readonly ResetPassword="ResetPassword"
 
 }
