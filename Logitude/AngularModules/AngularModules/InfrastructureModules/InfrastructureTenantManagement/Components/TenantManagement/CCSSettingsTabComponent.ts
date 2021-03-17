@@ -73,8 +73,7 @@ export class CCSSettingsTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("PIMA", this.ObjectTableName, this.isTenantManagementEditable);
         this.UIProperties.SetEnabled("AWBMessagesCCSTypeCode", this.ObjectTableName, this.isTenantManagementEditable);
         this.UIProperties.SetEnabled("IsCargonautEnabled", this.ObjectTableName, this.isTenantManagementEditable);
-        this.UIProperties.SetEnabled("IsDEXXConnectionEnabled", this.ObjectTableName, this.isTenantManagementEditable);
-        this.UIProperties.SetEnabled("ScheduledTasksLimitPerReport", this.ObjectTableName, this.isTenantManagementEditable);
+        this.UIProperties.SetEnabled("IsDEXXConnectionEnabled", this.ObjectTableName, this.isTenantManagementEditable); 
 
         this.UIProperties.SetVisibility("IsEAWBOnlyDemo", this.ObjectTableName, (SessionLocator.Tenant == 0 || SessionLocator.Tenant == 341) ? true : false);
         this.UIProperties.SetVisibility("IsINTTRAOnlyDemo", this.ObjectTableName, (SessionLocator.Tenant == 0) ? true : false);
@@ -84,15 +83,7 @@ export class CCSSettingsTabComponent extends BaseComponent {
 
     private SetUIProperties_SetRequires() {
         //this.UIProperties.SetRequires("TTY", TargetEntityName, entityPM, false);
-        this.UIProperties.SetRequired("PIMA", this.ObjectTableName, false);
-
-        if (AppTool.IsNullOrEmpty(this.ScheduledTasksLimitPerReport)) {
-            this.UIProperties.SetRequired("ScheduledTasksLimitPerReport", this.ObjectTableName, true);
-            this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push("Scheduled Tasks Limit Per Report is required");;
-        } else {
-            this.UIProperties.SetRequired("ScheduledTasksLimitPerReport", this.ObjectTableName, false);
-            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = []
-        };
+        this.UIProperties.SetRequired("PIMA", this.ObjectTableName, false); 
          
 
 
@@ -147,15 +138,7 @@ export class CCSSettingsTabComponent extends BaseComponent {
             this.SetUIProperties_SetRequires();
         }
     }
-
-    get ScheduledTasksLimitPerReport() { return this.EntityPM.ScheduledTasksLimitPerReport; }
-    set ScheduledTasksLimitPerReport(newValue) {
-        if (this.EntityPM.ScheduledTasksLimitPerReport != newValue) {
-            this.EntityPM.ScheduledTasksLimitPerReport = newValue;
-
-            this.SetUIProperties_SetRequires();
-        }
-    }
+ 
 
     get IsEAWBOnlyDemo() { return this.EntityPM.IsEAWBOnlyDemo; }
     set IsEAWBOnlyDemo(newValue: boolean) {

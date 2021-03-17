@@ -188,7 +188,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
             }
         }
 
-        public HttpResponseMessage GetExceedsScheduledTasksLimitPerReport(int tenant, string createdBy, string entityId)
+        public HttpResponseMessage GetIsExceedsScheduledTasksLimitPerReport(int tenant, string createdBy, string entityId)
         {
             try
             {
@@ -202,7 +202,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 TasksSchedulerQuery tasksSchedulerQuery = new TasksSchedulerQuery(tenant);
 
                 bool isExceedsScheduledTasksLimitPerReport = service.isExceedsScheduledTasksLimitPerReport(tenant, createdBy, entityId);
-                if (!service.isExceedsScheduledTasksLimitPerReport(tenant, createdBy, entityId))
+                if (!isExceedsScheduledTasksLimitPerReport)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, isExceedsScheduledTasksLimitPerReport);
 

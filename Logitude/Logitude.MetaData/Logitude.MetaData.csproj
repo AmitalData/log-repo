@@ -189,6 +189,7 @@
     <None Include="DBOthers\QuoteModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateQuotes.dxml" />
     <None Include="DBOthers\QuoteModel\Triggers\Trigger_AutomaticLastUpdateDateQuotes.dxml" />
     <None Include="DBScripts\GlobalModel\202102161503_UpdateTenantManagmentPrivatLabelDomain.sxml" />
+    <None Include="DBScripts\GlobalModel\202103133804_UpdateTenantManagmentScheduledTasksLimit.sxml" />
     <None Include="DBScripts\InfrastructureModel\202101120950_ModifyDBMigrationLastScriptTrigger.sxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\dbo.usp_DoTheTableDeletionSet.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\usp_SearchForeignkeyTree.dxml" />

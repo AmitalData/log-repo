@@ -12715,7 +12715,7 @@
     FieldsDataType="&quot;Integer&quot;"
     MinLength="0"
     MaxLength="0"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
