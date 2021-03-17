@@ -2159,10 +2159,10 @@ export class ShipmentPayableItem extends BaseComponent {
                         }
                     }
                 });
-
-                var Generator = new ShipmentGenerator(this.fatherComponent.EntityPM, this.fatherComponent.AllRates);
-                Generator.CalculatePayableVatAmount(this.EntityPM);
             }
+
+            var Generator = new ShipmentGenerator(this.fatherComponent.EntityPM, this.fatherComponent.AllRates);
+            Generator.CalculatePayableVatAmount(this.EntityPM);
         }
     }
 

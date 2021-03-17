@@ -84,6 +84,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         AccountingSetting accountingSetting;
         private Tenant TenantObject;
         private string QBOARPaymentId;
+        List<VATTypesGroup> allVatGroups;
         public ARInvoiceService(IInvoiceContext objectContext, int tenant)
         {
             this.sATInterfaceHelper = new SATInterfaceHelper();
@@ -111,6 +112,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             shipmentReceivableRepository = new ShipmentReceivableRepository(myShipmentContext);
 
             this.TenantObject = (from d in myCommonContext.Tenants where d.Id == tenant select d).FirstOrDefault();
+            this.allVatGroups = (from d in myCommonContext.VATTypesGroups where d.Tenant == this.tenant select d).ToList();
             this.GetAccountingSystem();
         }
         string loggedUserEmail;
@@ -141,7 +143,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             shipmentReceivableRepository = new ShipmentReceivableRepository(myShipmentContext);
 
             this.TenantObject = (from d in myCommonContext.Tenants where d.Id == tenant select d).FirstOrDefault();
-
+            this.allVatGroups = (from d in myCommonContext.VATTypesGroups where d.Tenant == this.tenant select d).ToList();
             Contact loggedContact = contactRepository.GetSingleContactByEmail(loggedUserEmail, tenant);
             this.loggedContactId = loggedContact.Id;
 
@@ -172,7 +174,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             shipmentReceivableRepository = new ShipmentReceivableRepository(shipmentMockContext);
 
             this.TenantObject = (from d in commonMockContext.Tenants where d.Id == tenant select d).FirstOrDefault();
-
+            this.allVatGroups = (from d in myCommonContext.VATTypesGroups where d.Tenant == this.tenant select d).ToList();
             this.GetAccountingSystem();
         }
 
@@ -2097,8 +2099,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             myReceivable.AmountInProfitCurrency = MethodHelper.Round(myReceivable.TotalAmountLocal / myReceivable.ProfitCurrencyExchangeRate, 2);
                         }
 
-                        myReceivable.VatAmountLocal = MethodHelper.Round(item.LocalCurrencyAmount + item.LocalCurrencyAmount * item.VatPercentage /100, 2);
-                        myReceivable.VatAmountProfit= MethodHelper.Round( item.ProfitCurrencyAmount + item.ProfitCurrencyAmount * item.VatPercentage / 100, 2);
+                        CalculateReceivableVatAmountFromInvoice(myReceivable, item);
                         shipmentReceivableRepository.Update(myReceivable);
                     }
                 }
@@ -2175,7 +2176,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             return myResult;
         }
-
         private void DisconnectReceivable(string receivableId)
         {
             ShipmentReceivable myReceivable = (from a in allReceivables where a.Id == receivableId select a).FirstOrDefault();
@@ -2199,7 +2199,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 shipmentReceivableRepository.SubmitChanges();
             }
         }
-
         private void CalculateReceivableVatAmount(ShipmentReceivable itemPM)
         {
             string receivableVatTypeId = null;
@@ -2223,6 +2222,35 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     var percentage = vatTypePercentagePM.Percentage;
                     itemPM.VatAmountLocal = MethodHelper.Round(itemPM.TotalAmountLocal + (itemPM.TotalAmountLocal * percentage / 100), 2);
                     itemPM.VatAmountProfit = MethodHelper.Round(itemPM.AmountInProfitCurrency + (itemPM.AmountInProfitCurrency * percentage / 100), 2);
+                }
+            }
+        }
+        private void CalculateReceivableVatAmountFromInvoice(ShipmentReceivable myReceivable, ARInvoiceLinePM arinvoiceline)
+        {
+            VatType lineVatType = this.allVatTypes.Where(d => d.Id == arinvoiceline.VatTypeId).FirstOrDefault();
+            if (lineVatType != null)
+            {
+                if (!lineVatType.IsMultiPercentage)
+                {
+                    myReceivable.VatAmountLocal = MethodHelper.Round(arinvoiceline.LocalCurrencyAmount + arinvoiceline.LocalCurrencyAmount * arinvoiceline.VatPercentage / 100, 2);
+                    myReceivable.VatAmountProfit = MethodHelper.Round(arinvoiceline.ProfitCurrencyAmount + arinvoiceline.ProfitCurrencyAmount * arinvoiceline.VatPercentage / 100, 2);
+                }
+                else
+                {
+                    List<VATTypesGroup> vatTypesGroup = allVatGroups.Where(d => d.GroupVATTypeId == arinvoiceline.VatTypeId).ToList();
+                    myReceivable.VatAmountLocal = arinvoiceline.LocalCurrencyAmount;
+                    myReceivable.VatAmountProfit = arinvoiceline.ProfitCurrencyAmount;
+                    foreach (VATTypesGroup itemGroup in vatTypesGroup)
+                    {
+                        VatType vatType = this.allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
+                        VatTypePercentagePM myPercentagePM = this.allVatPercentages.Where(d => d.VatTypeId == itemGroup.SingleVATTypeId).FirstOrDefault();
+                        if (myPercentagePM != null)
+                        {
+                            var vatTypePercentage = MethodHelper.GetValue(myPercentagePM.Percentage);
+                            myReceivable.VatAmountLocal = myReceivable.VatAmountLocal + MethodHelper.Round(arinvoiceline.LocalCurrencyAmount * vatTypePercentage / 100, 2);
+                            myReceivable.VatAmountProfit = myReceivable.VatAmountProfit + MethodHelper.Round(arinvoiceline.ProfitCurrencyAmount * vatTypePercentage / 100, 2);
+                        }
+                    }
                 }
             }
         }

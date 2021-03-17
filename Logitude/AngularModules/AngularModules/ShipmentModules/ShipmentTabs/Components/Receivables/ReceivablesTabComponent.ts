@@ -1699,37 +1699,6 @@ export class ShipmentReceivableItem extends BaseComponent {
         }
     }
 
-    //CalculateReceivableVatAmount() {
-    //    var receivableVatTypeId = null;
-    //    this.fatherComponent.CardListService.getSingle(this.fatherComponent.EntityPM.CustomerId).subscribe((myResponse: ServiceResponse) => {
-    //        if (!myResponse.HasError) {
-    //            receivableVatTypeId = myResponse.Result.VatTypeId;
-    //        }
-    //    });
-
-    //    if (AppTool.IsNullOrEmpty(receivableVatTypeId)) {
-    //        receivableVatTypeId = this.VatTypeId;
-    //    }
-
-    //    if (!AppTool.IsNullOrEmpty(receivableVatTypeId)) {
-    //        var loadingDate = this.EntityPM.CreateDate;
-    //        if (loadingDate == null) {
-    //            loadingDate = DateTool.GetCurrentDateAsUtc();
-    //        }
-    //        this.fatherComponent.CommonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse: ServiceResponse) => {
-    //            if (!myResponse.HasError) {
-    //                var vatTypePercentagesList = myResponse.Result;
-    //                var vatTypePercentagePM = vatTypePercentagesList.filter(d => d.VatTypeId == receivableVatTypeId)[0];
-    //                if (vatTypePercentagePM != null) {
-    //                    var percentage = vatTypePercentagePM.Percentage;
-    //                    this.EntityPM.VatAmountLocal = this.TotalAmountLocal + AppTool.Round((this.TotalAmountLocal * percentage / 100), 2);
-    //                    this.EntityPM.VatAmountProfit = this.AmountInProfitCurrency + AppTool.Round((this.AmountInProfitCurrency * percentage / 100), 2);
-    //                }
-    //            }
-    //        });
-    //    }
-    //}
-
     get VatTypeId() { return this.EntityPM.VatTypeId; }
     set VatTypeId(value: string) {
         if (this.EntityPM.VatTypeId != value) {

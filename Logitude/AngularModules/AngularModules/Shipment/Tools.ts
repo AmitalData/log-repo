@@ -2902,7 +2902,8 @@ export class ShipmentGenerator {
                 myRecordPM.IsChargeBySteps = OriginItemPM.IsChargeBySteps;
                 myRecordPM.QuoteCostMinAmount = OriginItemPM.QuoteCostMinAmount;
                 myRecordPM.QuoteCostMaxAmount = OriginItemPM.QuoteCostMaxAmount;
-
+                myRecordPM.VatAmountLocal = OriginItemPM.VatAmountLocal;
+                myRecordPM.VatAmountProfit = OriginItemPM.VatAmountProfit;
                 //if (OriginItemPM.IsFromQuote) {
                 //    myRecordPM.VatTypeId = OriginItemPM.VatTypeId;
                 //}
@@ -3613,7 +3614,8 @@ export class ShipmentGenerator {
             myRecordPM.IsChargeBySteps = OriginItemPM.IsChargeBySteps;
             myRecordPM.QuoteSaleMinAmount = OriginItemPM.QuoteSaleMinAmount;
             myRecordPM.QuoteSaleMaxAmount = OriginItemPM.QuoteSaleMaxAmount;
-
+            myRecordPM.VatAmountProfit = OriginItemPM.VatAmountProfit;
+            myRecordPM.VatAmountLocal = OriginItemPM.VatAmountLocal;
             //if (OriginItemPM.IsFromQuote) {
             //    myRecordPM.VatTypeId = OriginItemPM.VatTypeId;
             //}

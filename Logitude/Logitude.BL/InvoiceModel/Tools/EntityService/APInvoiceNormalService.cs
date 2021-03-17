@@ -1443,33 +1443,70 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
         }
 
+        double? invoiceLinesVatAmountLocal = 0;
+        double? invoiceLinesVatAmountProfit = 0;
         private void UpdateAllPayablesVatAmount()
         {
             if (allPayables.Count > 0)
             {
-                this.GetVATsPercentage();
                 List<string> allPayablesIds = allPayables.Select(s => s.Id).ToList();
                 List<APInvoiceLine> allPayablesInvoicesLines = invoiceLineRepository.GetPayablesInvoicesLines(allPayablesIds, tenant);
-
                 foreach (ShipmentPayable myPayable in allPayables)
                 {
                     List<APInvoiceLine> myInvoiceslines = allPayablesInvoicesLines.Where(d => d.EntityPayableId == myPayable.Id).ToList();
-                    double? invoiceLinesVatAmountLocal = 0;
-                    double? invoiceLinesVatAmountProfit = 0;
+                    invoiceLinesVatAmountLocal = 0;
+                    invoiceLinesVatAmountProfit = 0;
                     foreach (APInvoiceLine invoiceline in myInvoiceslines)
                     {
-                        invoiceLinesVatAmountLocal = invoiceLinesVatAmountLocal + (invoiceline.LocalCurrencyAmount + invoiceline.LocalCurrencyAmount * invoiceline.VatPercentage / 100);
-                        invoiceLinesVatAmountProfit = invoiceLinesVatAmountProfit + (invoiceline.ProfitCurrencyAmount + invoiceline.ProfitCurrencyAmount * invoiceline.VatPercentage / 100);
+                        this.ManagePayableLinesVatAmount(invoiceline);
                     }
-
-                    double? openAmountInLocalCurrency = CalculatePayableVatOpenAmount (myPayable, myPayable.OpenAmountInLocalCurrency);
-                    double? openAmountInProfitCurrency = CalculatePayableVatOpenAmount(myPayable, myPayable.OpenAmountInProfitCurrency);
-                    myPayable.VatAmountLocal = MethodHelper.Round(invoiceLinesVatAmountLocal+ openAmountInLocalCurrency, 2);
-                    myPayable.VatAmountProfit = MethodHelper.Round(invoiceLinesVatAmountProfit+ openAmountInProfitCurrency, 2);
+                    this.UpdateOpenPayablesVatAmount(myPayable);
                     shipmentPayableRepository.Update(myPayable);
                 }
                 shipmentPayableRepository.SubmitChanges();
             }
+        }
+        private void ManagePayableLinesVatAmount(APInvoiceLine invoiceline)
+        {
+            VatType lineVatType = initializer.AllVatTypes.Where(d => d.Id == invoiceline.VatTypeId).FirstOrDefault();
+            if (lineVatType != null)
+            {
+                if (!lineVatType.IsMultiPercentage)
+                {
+                    invoiceLinesVatAmountLocal = invoiceLinesVatAmountLocal + (invoiceline.LocalCurrencyAmount + invoiceline.LocalCurrencyAmount * invoiceline.VatPercentage / 100);
+                    invoiceLinesVatAmountProfit = invoiceLinesVatAmountProfit + (invoiceline.ProfitCurrencyAmount + invoiceline.ProfitCurrencyAmount * invoiceline.VatPercentage / 100);
+                }
+
+                else
+                {
+                    this.CalculatePayablesVatAmountInMultiVat(invoiceline);
+                }
+            }
+        }
+        private void CalculatePayablesVatAmountInMultiVat(APInvoiceLine invoiceline)
+        {
+            List<VATTypesGroup> allVATTypesGroup = (from d in initializer.CommonContext.VATTypesGroups where d.Tenant == initializer.Tenant select d).ToList();
+            List<VATTypesGroup> vatTypesGroup = allVATTypesGroup.Where(d => d.GroupVATTypeId == invoiceline.VatTypeId).ToList();
+            invoiceLinesVatAmountLocal = invoiceline.LocalCurrencyAmount;
+            invoiceLinesVatAmountProfit = invoiceline.ProfitCurrencyAmount;
+            foreach (VATTypesGroup itemGroup in vatTypesGroup)
+            {
+                VatType vatType = initializer.AllVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
+                VatTypePercentagePM myPercentagePM = initializer.AllVatPercentages.Where(d => d.VatTypeId == itemGroup.SingleVATTypeId).FirstOrDefault();
+                if (myPercentagePM != null)
+                {
+                    var vatTypePercentage = MethodHelper.GetValue(myPercentagePM.Percentage);
+                    invoiceLinesVatAmountLocal = invoiceLinesVatAmountLocal + (invoiceline.LocalCurrencyAmount * vatTypePercentage / 100);
+                    invoiceLinesVatAmountProfit = invoiceLinesVatAmountProfit + (invoiceline.ProfitCurrencyAmount * vatTypePercentage / 100);
+                }
+            }
+        }
+        private void UpdateOpenPayablesVatAmount(ShipmentPayable myPayable)
+        {
+            double? openAmountInLocalCurrency = CalculatePayableVatOpenAmount(myPayable, myPayable.OpenAmountInLocalCurrency);
+            double? openAmountInProfitCurrency = CalculatePayableVatOpenAmount(myPayable, myPayable.OpenAmountInProfitCurrency);
+            myPayable.VatAmountLocal = MethodHelper.Round(invoiceLinesVatAmountLocal + openAmountInLocalCurrency, 2);
+            myPayable.VatAmountProfit = MethodHelper.Round(invoiceLinesVatAmountProfit + openAmountInProfitCurrency, 2);
         }
 
         private double? CalculatePayableVatOpenAmount(ShipmentPayable shipmentPayable, double? amount)
@@ -1488,7 +1525,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (!string.IsNullOrEmpty(payableVatTypeId))
             {
-                var vatTypePercentagePM = this.allVatPercentages.Where(d => d.VatTypeId == payableVatTypeId).FirstOrDefault();
+                var vatTypePercentagePM = initializer.AllVatPercentages.Where(d => d.VatTypeId == payableVatTypeId).FirstOrDefault();
                 if (vatTypePercentagePM != null)
                 {
                     var percentage = vatTypePercentagePM.Percentage;
@@ -1498,13 +1535,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             return vatAmount;
         }
 
-        private List<VatTypePercentagePM> allVatPercentages = new List<VatTypePercentagePM>();
-        private void GetVATsPercentage()
-        {
-            VatTypePercentageRepository vatTypePercentageRepository = new VatTypePercentageRepository(initializer.CommonContext);
-            VatTypePercentageQuery myVatTypePercentageQuery = new VatTypePercentageQuery(vatTypePercentageRepository);
-            allVatPercentages = myVatTypePercentageQuery.GetVatTypePercentagePMByDate(tenant, TenantServerConfigration.GetCurrentDateTime(tenant).Date);
-        }
         #endregion
 
         #region InvoiceEntities
