@@ -20,38 +20,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Server.Infrastructure.DataContracts;
-using Simplog.Server.Infrastructure.Helpers;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
-using WebFreight.Web.Security;
-using WebFreight.Web.Helpers;
-using Simplog.Server.Infrastructure;
-using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.Interfaces;
-using Logitude.Server.Tools;
-using Microsoft.Practices.Unity;
-using System.ServiceModel.DomainServices.Hosting;
-using System.ServiceModel.DomainServices.Server;
-using System.Web;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Def.EntityPMs;
-using Logitude.Accounting.Data;
-using Logitude.Accounting.BL;
-using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.BL.EntityUpdateServices;
-using Logitude.Accounting.Data.EntityListQueryServices;
-using Logitude.Accounting.BL.EntityQueryServices;
 
 namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
 {
@@ -128,6 +96,13 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
                 bankDepositDP.ForeignAmount = bankDepositPM.ForeignAmount;
                 bankDepositDP.CurrencyCode = bankDepositPM.DepositCurrencyCode;
 
+                UserQuery userQuery = new UserQuery(tenant);
+                UserPM userPM = userQuery.GetSinglePM(bankDepositPM.CreatedByUserId, tenant);
+                if(userPM != null) {
+                    bool showLocals = !userPM.DontShowLocalLabels;
+                    bankDepositDP.CreatedByUserName = showLocals ? userPM.LocalName == null ? userPM.EnglishName : userPM.LocalName : userPM.EnglishName;
+                }
+            
                 // BankAccount mapping
                 BankAccountPM bankAccount = bankAccountQuery.GetByAccountNumber(bankDepositPM.BankAccountNumber, tenant);
                 if (bankAccount != null)
@@ -159,22 +134,10 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
                 }).ToList();
 
                 bankDepositDP.BankDepositLines = lines;
-                SetCreatedByUserName(tenant, bankDepositDP);
 
             }
 
             return bankDepositDP;
-        }
-
-        private void SetCreatedByUserName(int tenant, BankDepositDataProvider bankDepositDP)
-        {
-            ContactPM loggedContact = GetLoggedContact(tenant);
-
-            if (loggedContact != null)
-            {
-                bool showLocals = !loggedContact.DontShowLocal;
-                bankDepositDP.CreatedByUserName = showLocals ? loggedContact.LocalName == null ? loggedContact.EnglishName : loggedContact.LocalName : loggedContact.EnglishName;
-            }
         }
 
         private ContactPM GetLoggedContact(int tenant)
