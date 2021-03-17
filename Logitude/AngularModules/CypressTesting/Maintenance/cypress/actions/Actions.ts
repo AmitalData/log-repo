@@ -203,25 +203,16 @@ export function AssertCreateVessel(){
     AssertGetByFilters()
 }
 
-export function AssertUpdateVessel(){
+export function AssertUpdateVessel() {
     let intercept = cy.wait("@" + RequestAliases.PutVessel);
     intercept.then((interception) => {
         if (interception.response.statusCode === 400) {
-            if (interception.response.body.ErrorMessage.indexOf("This vessel already exists") !== -1) {
-                FillNewRandomCode();
-                UpdateVessel();
-            } else {
-                throw new Error("Failed");
-            }
-        } 
-        else {
-            if (interception.response.statusCode === 200) {
-                // AssertPutVessel();
-            } else {
-                throw new Error("Failed");
-            }
+            CheckError(interception);
         }
-    })   
+        else if (interception.response.statusCode === 200) {
+            AssertPutVessel(interception.response.statusCode,200)
+        }
+    })
 }
 
 export function SearchVessel() {
@@ -244,7 +235,7 @@ export function AssertSearchVessel() {
 
 export function OpenVessel() {
     DefineVesselsGetSingleRequest();
-    cy.get(BaseSelectors.RowClass).last().click();
+    cy.get(MaintenanceSelectors.VesselFirstRow).click();
 }
 
 export function AssertOpenVessel() {
@@ -296,8 +287,21 @@ function AssertPostVessel() {
     BaseAssertion.AssertStatusCode(RequestAliases.PostVessel, 200);
 }
 
-function AssertPutVessel() {
-    BaseAssertion.AssertStatusCode(RequestAliases.PutVessel, 200);
+function AssertPutVessel(responseStatusCode : number ,expectedStatusCode:number ) {
+    assert.equal(responseStatusCode, expectedStatusCode)
+}
+
+function CheckError(interception){
+    if (interception.response.body.ErrorMessage.indexOf("This vessel already exists") !== -1) {
+        GenerateNewRandomCode();
+    } else {
+        throw new Error("Failed");
+    }
+}
+
+function GenerateNewRandomCode(){
+    FillNewRandomCode();
+    UpdateVessel();
 }
 
 function DefineVesselViewsGetByFiltersRequest(VesselCode:string){

@@ -63,6 +63,7 @@ export class MaintenanceSelectors {
     public static readonly VesselFlag = "#Vessel_CountryId"
     public static readonly VesselNotes = "#Vessel_Notes"
     public static readonly VesselCode = "#Vessel_Code"
+    public static readonly VesselFirstRow = "div[id$='row0']"
 
     //#endregion
 
