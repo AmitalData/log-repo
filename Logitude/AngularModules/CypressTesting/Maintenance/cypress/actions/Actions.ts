@@ -11,12 +11,166 @@ import { ContactDetails } from "../models/ContactDetails";
 import { ContactContext } from "../models/ContactContext";
 import { BaseURLs } from "../../../Base/cypress/constants/URLs";
 import { Datepicker } from "../../../Base/cypress/models/Datepicker";
+import { VendorDetails } from "../models/VendorDetails";
+import { VendorContext } from "../models/VendorContext";
 
 export function OpenMaintenanceMenu() {
     cy.Click(BaseSelectors.MaintenanceMenu, null)
 }
 
-//////////Contacts
+export function OpenTabInMaintenanceMenu(tabNameToSearch:string , tabSelector:string){
+    cy.Click(BaseSelectors.MaintenanceMenu, null);
+    cy.FillLogTextBox(BaseSelectors.NullSearch, tabNameToSearch);
+    cy.Click(tabSelector, null);
+}
+
+export function OpenNewWizard(tabName:string) {
+    cy.Click(MaintenanceSelectors.NewWizardButton(tabName),null);
+}
+
+//#region Vendor
+export function FillVendorDetails(vendorDetails:VendorDetails){
+    cy.FillLogTextBox(MaintenanceSelectors.VendorCompanyName,vendorDetails.CompanyName);
+    cy.FillLogTextBox(MaintenanceSelectors.VendorPhone,vendorDetails.Phone);
+    cy.FillLogTextBox(MaintenanceSelectors.VendorLocalName,vendorDetails.LocalName);
+    cy.FillLogTextBox(MaintenanceSelectors.VendorFax,vendorDetails.Fax);
+    cy.FillLogTextBox(MaintenanceSelectors.VendorAddress1,vendorDetails.Address1);
+    cy.FillLogTextBox(MaintenanceSelectors.VendorZipCode,vendorDetails.Zip);
+    cy.FillLogTextBox(MaintenanceSelectors.VendorCity,vendorDetails.City);
+    cy.FillLogLov(MaintenanceSelectors.VendorCountry,vendorDetails.Country,true);
+    cy.FillLogLov(MaintenanceSelectors.VendorState,vendorDetails.State,true);
+}
+
+export function FillVendorContactDetails(conatactDetails:ContactDetails){
+    cy.SelectCheckBox(MaintenanceSelectors.VendorContactCheckBox)
+    cy.FillLogTextBox(MaintenanceSelectors.VendorContactEnglishName,conatactDetails.EnglishName);
+    cy.FillLogTextBox(MaintenanceSelectors.VendorContactPosition,conatactDetails.Position);
+    cy.FillLogTextBox(MaintenanceSelectors.VendorContactBusinessPhone,conatactDetails.BusinessPhone);
+    cy.FillLogTextBox(MaintenanceSelectors.VendorContactMobile,conatactDetails.Mobile);
+    cy.FillLogTextBox(MaintenanceSelectors.VendorContactFax,conatactDetails.Fax);
+}
+
+export function FillVendorGeneralTab(vendorDetails:VendorDetails){
+    if(vendorDetails.Website){
+        cy.FillLogTextBox(MaintenanceSelectors.VendorWebsite,vendorDetails.Website)
+    }
+    if(vendorDetails.Notes){
+        cy.FillLogTextBox(MaintenanceSelectors.VendorNotes,vendorDetails.Notes)
+    }
+}
+
+export function FillVendorBillingTab(vendorDetails:VendorDetails){
+    if(vendorDetails.VatNumber){
+        cy.FillLogTextBox(MaintenanceSelectors.VendorVatNumber,vendorDetails.VatNumber)
+    }
+    if(vendorDetails.BankName){
+        cy.FillLogTextBox(MaintenanceSelectors.VendorBankName,vendorDetails.BankName)
+    }
+}
+
+export function CreateVendor(){
+    DefinePostVendorRequest() 
+    DefineGetByFilterRequest()
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+export function UpdateVendor(){
+    DefinePutVendorRequest() 
+    cy.Click(MaintenanceSelectors.VendorSaveButton,null)
+}
+
+export function AssertCreateVendor(){
+    AssertPostVendor()
+    AssertGetByFilters()
+}
+
+export function AssertUpdateVendor(){
+    AssertPutVendor()
+}
+
+export function SearchVendor() {
+    let VendorCode = VendorContext.Code;
+    DefineVendorViewsGetByFiltersRequest(VendorCode);
+    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, VendorCode);
+    AssertVendorViewsGetByFilters();
+}
+
+export function AssertSearchVendor(companyName: string) {
+    cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
+        expect(text).to.contain(companyName);
+    });
+}
+
+export function OpenVendor() {
+    DefineVendorsGetSingleRequest();
+    DefineGetMenuButtonGroupsRequest();
+    cy.get(BaseSelectors.RowClass).eq(0).click();
+}
+
+export function AssertOpenVendor() {
+    AssertVendorGetSingle();
+    AssertGetMenuButtonGroups();
+    BaseAssertion.AssertElementExist(MaintenanceSelectors.VendorEditScreen)
+}
+
+export function CloseSaveVendor(){
+    DefineVendorViewGetSingleRequest()
+    cy.Click(MaintenanceSelectors.VendorSaveCloseButton,null);
+}
+
+export function AssertCloseSaveVendor() {
+    AssertVendorGetSingle();
+}
+
+function DefinePostVendorRequest() {
+    cy.DefineRequestWait(RestAPI.POST, Urls.PartnersDomain, RequestAliases.PostVendor);
+}
+
+function DefinePutVendorRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.Vendor, RequestAliases.PutVendor);
+}
+
+function DefineGetByFilterRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetByFilter, RequestAliases.GetByFilter);
+}
+
+function AssertPostVendor() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PostVendor, 200).then((interception) => {
+        let responseBody = interception.response.body;
+        VendorContext.Code = responseBody.Vendor.Code;
+    });
+}
+function AssertPutVendor() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutVendor, 200);
+}
+
+function AssertGetByFilters() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetByFilter, 200);
+}
+
+function DefineVendorViewsGetByFiltersRequest(vendorCode:string){
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(vendorCode), RequestAliases.GetFilterSearch);
+}
+
+function AssertVendorViewsGetByFilters(){
+    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
+}
+
+function DefineVendorsGetSingleRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.VendorsGetSingle, RequestAliases.GetSignle);
+}
+
+function DefineVendorViewGetSingleRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.VendorsviewGetSingle, RequestAliases.GetSignle);
+}
+
+function AssertVendorGetSingle() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
+}
+
+//#endregion
+
+//#region Contacts
 export function OpenContactsList() {
     cy.Click(MaintenanceSelectors.OthersMaintenanceTab, null);
     DefineContactViewsGetByFiltersRequest();
@@ -289,4 +443,4 @@ function AssertContactDatepickerNotSelected(dateType:string){
         });
     });
 }
-//////////
+//#endregion

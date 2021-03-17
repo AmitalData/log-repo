@@ -72,6 +72,8 @@ export class RequestAliases {
     public static readonly GetShippingInstructionMessageResultValidate = "GetShippingInstructionMessageResultValidate";
     public static readonly ContactLogLovLoad = "ContactLogLovLoad";
     public static readonly PostContact = "PostContact";
+    public static readonly PostVendor = "PostVendor";
+    public static readonly PutVendor = "PutVendor";
     public static readonly INTTRAWebServiceSendEBooking = "INTTRAWebServiceSendEBooking";
     public static readonly INTTRAWebServiceSendShippingInstructions = "INTTRAWebServiceSendShippingInstructions";
     //
@@ -88,4 +90,6 @@ export class RequestAliases {
     public static readonly GetByFilter = "GetByFilter"
     public static readonly PutWarehouses = "PutWarehouses"
     public static readonly GetLastUpdatedTables = "GetLastUpdatedTables"
+    public static readonly GetFilterSearch = "GetFilterSearch"
+    public static readonly GetSignle = "GetSignle"
 }
