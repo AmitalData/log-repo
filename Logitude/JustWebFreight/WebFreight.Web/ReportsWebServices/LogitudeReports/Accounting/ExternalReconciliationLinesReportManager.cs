@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.BL.CoreBL.Reports;
+﻿using Logitude.Accounting.BL.CoreBL;
+using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
@@ -82,6 +83,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             }
             iDataProvider.ExternalReconciliationNumber = this.ExternalReconciliationNumber;
             iDataProvider.SortBy = this.SortBy;
+
+            ExternalPagesBalanceService externalPagesBalanceService = new ExternalPagesBalanceService(tenant);
+            iDataProvider.BankPagesClosingBalance = externalPagesBalanceService.GetClosingBalanceByDate("BankAccount",BankAccountId,RefDateTo.Value);
 
 
         }

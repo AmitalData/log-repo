@@ -27,7 +27,7 @@ namespace Logitude.Accounting.BL.CoreBL
         /// <param name="objectTableName">external entity object table name</param>
         /// <param name="EntityId">external entity id</param>
         /// <param name="date">date to get closed balance by</param>
-        public void GetClosingBalanceByDate(string objectTableName,string EntityId,DateTime date)
+        public decimal GetClosingBalanceByDate(string objectTableName,string EntityId,DateTime date)
         {
             List<ReconcileExternalPage> externalPages = GetApprovedExternalPages(objectTableName, EntityId);
 
@@ -35,13 +35,19 @@ namespace Logitude.Accounting.BL.CoreBL
             var pageContainsTheDate = externalPages.FirstOrDefault(page => page.FromDate <= date && date <= page.ToDate);
             var lastPage = externalPages.OrderByDescending(d => d.ToDate).FirstOrDefault();
             var firstPage = externalPages.OrderBy(d => d.ToDate).FirstOrDefault();
-            
+            var mostRecentPageBeforeTheDate = externalPages.OrderByDescending(d => d.ToDate).Where(d=>d.ToDate <= date).FirstOrDefault();
+
             if (pageContainsTheDate != null)
                 closedBalance =  CalculateClosedBalanceFromPage(pageContainsTheDate, date);
             else if(date > lastPage.ToDate)
                 closedBalance = lastPage.CloseBalance;
             else if (date < firstPage.FromDate)
                 closedBalance = firstPage.StartBalance;
+            else if (mostRecentPageBeforeTheDate != null)
+                closedBalance = mostRecentPageBeforeTheDate.CloseBalance;
+
+
+            return closedBalance;
         }
 
         private decimal CalculateClosedBalanceFromPage(ReconcileExternalPage page, DateTime date)

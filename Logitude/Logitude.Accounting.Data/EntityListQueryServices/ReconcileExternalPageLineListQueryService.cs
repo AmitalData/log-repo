@@ -70,7 +70,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public List<ReconcileExternalPageLine> GetPageLines(string pageId, int tenant)
         {
             IQueryable<ReconcileExternalPageLine> pageLineQuery = (from a in context.ReconcileExternalPageLines
-                                                                   where a.Id == pageId && a.Tenant == tenant
+                                                                   where a.ReconcileExternalPageId == pageId && a.Tenant == tenant
                                                                    select a);
 
             return pageLineQuery.ToList();
