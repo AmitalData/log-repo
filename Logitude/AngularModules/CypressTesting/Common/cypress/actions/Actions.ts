@@ -92,7 +92,7 @@ export function SendPasswordResetRequest() {
 export function ValidateMessagesForSendingPasswordResetRequest(dataTable: any) {
     let validationMessageDetailsList = Assists.CreateSet<ValidationMessageDetails>(dataTable);
     for (let i = 0; i < validationMessageDetailsList.length; i++) {
-        cy.get(CommonSelectors.ValidationMessage).should('contain.text', validationMessageDetailsList[i].Message)
+        cy.get(CommonSelectors. ResetPasswordLinkSentMessage).should('contain.text', validationMessageDetailsList[i].Message)
     }
 }
 //#endregion
