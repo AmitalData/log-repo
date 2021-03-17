@@ -74,23 +74,24 @@ export class TaskReportSchedulerComponent implements OnInit {
         newItem.Tenant = SessionLocator.Tenant;
         newItem.TriggerType = "O"; 
         newItem.Type = this.SchedulerType;
-        var y; 
-        
+        var y;
+
+        this.AddReportScheduler(newItem); 
+     
+    }
+
+    private AddReportScheduler(newItem: TasksSchedulerPM) {
         this.schedulerExtendedPMService.isExceedsScheduledTasksLimitPerReport(newItem.Tenant, newItem.CreatedBy, this.ReportList.Id).subscribe((serviceResponse: ServiceResponse) => {
             if (!serviceResponse.HasError) {
                 this.isExceedsScheduledTasksLimitPerReport = serviceResponse.Result.body;
                 if (!this.isExceedsScheduledTasksLimitPerReport) {
                     this.AddEditReportScheduler(newItem);
                 }
-            } 
+            }
         });
-         
-        
-     
     }
 
     AddEditReportScheduler(newItem: TasksSchedulerPM) {
-
          
             var windowArgs: any = {};
             windowArgs.ReportGroupList = this.ReportGroupList;
@@ -105,8 +106,7 @@ export class TaskReportSchedulerComponent implements OnInit {
             logWindow.Show('./Report/Components/Scheduler/AddEditReportSchedulerComponent');
             logWindow.WindowClosed.subscribe(closed => {
                 this.IsEditReportSchedulerEventAlreadyExist = false;
-            });
-         
+            }); 
     }
 
     EditTaskClicked(DataContext) {
