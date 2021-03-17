@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -14,7 +14,7 @@
                         <table>
 
                             <tr class="FormFieldRow">
-                                <td style="width: 110px;">
+                                <td style="width: 130px;">
                                     <LogLabel [ObjectFieldName]="'IsDangerous'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
@@ -62,6 +62,25 @@
 
                                 <td>
                                     <LogTextBox [ObjectFieldName]="'DangerousPackagingGroup'" [Text]="DangerousPackagingGroup" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'EmergencyContactId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov [ObjectFieldName]="'EmergencyContactId'"
+                                            [SelectedValue]="EmergencyContactId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Contact'">
+                                    </LogLov>
                                 </td>
 
                                 <td>
