@@ -38,7 +38,6 @@ BEGIN
 		declare @CWKG_Id as varchar(15)
 		declare @VCBM_Id as varchar(15)
 		declare @SCGW_Id as varchar(15)
-		declare @PFCL_Id as varchar(15)
 		set @GRWT_Id = (select Id from Measurements where Code = 'GRWT' AND Tenant = @Tenant)
 		set @CHWT_Id = (select Id from Measurements where Code = 'CHWT' AND Tenant = @Tenant)
 		set @FIXD_Id = (select Id from Measurements where Code = 'FIXD' AND Tenant = @Tenant)
@@ -52,7 +51,6 @@ BEGIN
 		set @CWKG_Id = (select Id from Measurements where Code = 'CWKG' AND Tenant = @Tenant)
 		set @VCBM_Id = (select Id from Measurements where Code = 'VCBM' AND Tenant = @Tenant)
 		set @SCGW_Id = (select Id from Measurements where Code = 'SCGW' AND Tenant = @Tenant)
-		set @PFCL_Id = (select Id from Measurements where Code = 'PFCL' AND Tenant = @Tenant)
 
 		-- 02
 		declare @AllHousesCount as float
@@ -68,7 +66,6 @@ BEGIN
 		declare @AllHousesTotalChargeableWeightInKG as float
 		declare @AllHousesTotalVolumeInCBM as float
 		declare @AllHousesGrossWeightPerStorageDays as float;
-		declare @AllHousePercentForeignChargesLocalAmounts as float
 
 		if exists (select * from Shipments where ShipmentLevelCode = 'H' AND MasterShipmentDataId = @MasterId)
 		begin
@@ -85,8 +82,7 @@ BEGIN
 			@AllHousesTotalGrossWeightInKG = sum(isnull(GrossWeightInKG,0)),
 			@AllHousesTotalChargeableWeightInKG = sum(isnull(ChargeableWeightInKG,0)),
 			@AllHousesTotalVolumeInCBM = sum(isnull(VolumeInCBM,0)),
-			@AllHousesGrossWeightPerStorageDays = sum(isnull(GrossWeightPerStorageDays,0)),
-			@AllHousePercentForeignChargesLocalAmounts = sum(isnull(PercentForeignChargesLocal,0))
+			@AllHousesGrossWeightPerStorageDays = sum(isnull(GrossWeightPerStorageDays,0))
 			from Shipments
 			where ShipmentLevelCode = 'H' AND MasterShipmentDataId = @MasterId
 		end
@@ -104,7 +100,6 @@ BEGIN
 			set @AllHousesTotalChargeableWeightInKG = 0
 			set @AllHousesTotalVolumeInCBM = 0
 			set @AllHousesGrossWeightPerStorageDays = 0
-			set @AllHousePercentForeignChargesLocalAmounts = 0
 		end
 
 		-- 03
@@ -169,6 +164,7 @@ BEGIN
 		declare @HouseNumberOfContainers as float
 		declare @HouseTypeId as varchar(5)
 		declare @HouseTransportModeId as varchar(1)
+
 		declare @Ratio as float
 		declare @Quantity as float
 		declare @UnitPrice as float
@@ -182,8 +178,6 @@ BEGIN
 		declare @OpenAmountInLocalCurrency as float
 		declare @OpenAmountInProfitCurrency as float
 		declare @ExpectedAmountRatio as float
-		declare @HousePercentForeignChargesLocalAmounts as float
-
 	END
 		
 	-- Loop Master Payables (1: Not PRFR)
@@ -201,10 +195,10 @@ BEGIN
 			BEGIN
 				DECLARE Houses1Cursor CURSOR READ_ONLY
 				FOR
-				SELECT Id, TEU, Volume, GrossWeight, ChargeableWeight, GrossWeightPerTon, ValueOfGoods, NumberOfPackages, NumberOfContainers, TransportModeId, ShipmentTypeId, GrossWeightInKG, ChargeableWeightInKG, VolumeInCBM, GrossWeightPerStorageDays, PercentForeignChargesLocal
+				SELECT Id, TEU, Volume, GrossWeight, ChargeableWeight, GrossWeightPerTon, ValueOfGoods, NumberOfPackages, NumberOfContainers, TransportModeId, ShipmentTypeId, GrossWeightInKG, ChargeableWeightInKG, VolumeInCBM, GrossWeightPerStorageDays
 				FROM Shipments
 				WHERE ShipmentLevelCode = 'H' AND MasterShipmentDataId = @MasterId and Tenant = @Tenant
-				OPEN Houses1Cursor FETCH NEXT FROM Houses1Cursor INTO @HouseId, @HouseTEU, @HouseVolume, @HouseGrossWeight, @HouseChargeableWeight, @HouseGrossWeightPerTon, @HouseValueOfGoods, @HouseNumberOfPackages, @HouseNumberOfContainers, @HouseTransportModeId,@HouseTypeId, @HouseGrossWeightInKG, @HouseChargeableWeightInKG, @HouseVolumeInCBM, @HouseGrossWeightPerStorageDays, @HousePercentForeignChargesLocalAmounts
+				OPEN Houses1Cursor FETCH NEXT FROM Houses1Cursor INTO @HouseId, @HouseTEU, @HouseVolume, @HouseGrossWeight, @HouseChargeableWeight, @HouseGrossWeightPerTon, @HouseValueOfGoods, @HouseNumberOfPackages, @HouseNumberOfContainers, @HouseTransportModeId,@HouseTypeId, @HouseGrossWeightInKG, @HouseChargeableWeightInKG, @HouseVolumeInCBM, @HouseGrossWeightPerStorageDays
 				WHILE @@FETCH_STATUS = 0
 				BEGIN
 
@@ -451,18 +445,6 @@ BEGIN
 									set @UnitPrice = @Ratio * @MasterPayableUnitPrice
 								END
 
-								-- Percent of foreign charges local amounts
-								else if (@MasterPayableMeasurementId = @PFCL_Id)
-								BEGIN
-									if (@AllHousePercentForeignChargesLocalAmounts <> 0)
-									begin
-										set @Ratio = @MasterPayableQuantity / @AllHousePercentForeignChargesLocalAmounts
-									end
-
-									set @Quantity = @HousePercentForeignChargesLocalAmounts
-									set @UnitPrice = @Ratio * @MasterPayableUnitPrice
-								END
-
 								-- GrossWeightPerStorageDays
 								else if (@MasterPayableMeasurementId = @SCGW_Id)
 								BEGIN
@@ -640,7 +622,7 @@ BEGIN
 					DEALLOCATE HousePayables1Cursor
 				END
 
-				FETCH NEXT FROM Houses1Cursor INTO @HouseId, @HouseTEU, @HouseVolume, @HouseGrossWeight, @HouseChargeableWeight, @HouseGrossWeightPerTon, @HouseValueOfGoods, @HouseNumberOfPackages, @HouseNumberOfContainers, @HouseTransportModeId, @HouseTypeId, @HouseGrossWeightInKG, @HouseChargeableWeightInKG, @HouseVolumeInCBM, @HouseGrossWeightPerStorageDays, @HousePercentForeignChargesLocalAmounts
+				FETCH NEXT FROM Houses1Cursor INTO @HouseId, @HouseTEU, @HouseVolume, @HouseGrossWeight, @HouseChargeableWeight, @HouseGrossWeightPerTon, @HouseValueOfGoods, @HouseNumberOfPackages, @HouseNumberOfContainers, @HouseTransportModeId, @HouseTypeId, @HouseGrossWeightInKG, @HouseChargeableWeightInKG, @HouseVolumeInCBM, @HouseGrossWeightPerStorageDays
 				END
 				CLOSE Houses1Cursor
 				DEALLOCATE Houses1Cursor
