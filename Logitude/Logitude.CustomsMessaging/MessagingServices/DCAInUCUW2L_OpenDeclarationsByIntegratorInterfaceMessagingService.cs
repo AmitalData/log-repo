@@ -138,7 +138,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
             catch(System.Exception ex)
             {
-                return ex.Message;
+                return ex.Message +" : " + ex.InnerException +" : " + ex.StackTrace;
             }
         }
 
