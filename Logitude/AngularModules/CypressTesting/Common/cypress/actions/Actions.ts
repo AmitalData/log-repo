@@ -82,7 +82,7 @@ export function VisitPasswordResetRequestPage() {
 }
 function ClickForgotYourPassword(){
     cy.DefineRequestWait(RestAPI.GET, URLs.PasswordResetRequestPage, RequestAliases.PasswordResetRequestPage)
-    cy.Click(BaseSelectors.a, CommonSelectors.ContainForgotYourPassword)
+    cy.Click(BaseSelectors.Anchor, CommonSelectors.ContainForgotYourPassword)
     BaseAssertion.AssertStatusCode(RequestAliases.PasswordResetRequestPage, 200)
 }
 export function SendPasswordResetRequest() {

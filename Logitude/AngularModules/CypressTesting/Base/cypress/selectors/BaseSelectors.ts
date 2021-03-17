@@ -93,7 +93,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly MouseoverTrigger='mouseover'
     public static readonly LogitudeScrollViewer='.LogitudeScrollViewer'
     public static readonly DeleteButton='button[id^=Delete]'
-    public static readonly a="a"
+    public static readonly Anchor="a"
     //#endregion
 
     public static readonly FirstElementInList = 'ul > li';
