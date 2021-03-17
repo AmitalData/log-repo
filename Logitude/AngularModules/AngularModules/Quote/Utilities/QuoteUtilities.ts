@@ -195,6 +195,7 @@ export class QuoteUtilities {
         }
     }
     public static CopyQuote(entityPM: QuotePM, copiedEntityPM: QuotePM) {
+        entityPM.PercentForeignChargesLocal = copiedEntityPM.PercentForeignChargesLocal;
         entityPM.DirectionId = copiedEntityPM.DirectionId;
         entityPM.TransportModeId = copiedEntityPM.TransportModeId;
         entityPM.ShipmentTypeId = copiedEntityPM.ShipmentTypeId;
@@ -592,6 +593,7 @@ export class QuoteUtilities {
         shipmentPM.DimensionsUnitCode = entityPM.DimensionsUnitCode;
         shipmentPM.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
         shipmentPM.ChargeableWeightInKG = entityPM.ChargeableWeightInKG;
+        shipmentPM.PercentForeignChargesLocal = entityPM.PercentForeignChargesLocal;
         shipmentPM.VolumeInCBM = entityPM.VolumeInCBM;
         shipmentPM.ChargeableWeightUnitCode = entityPM.ChargeableWeightUnitCode;
         shipmentPM.BookingVolume = entityPM.Volume;

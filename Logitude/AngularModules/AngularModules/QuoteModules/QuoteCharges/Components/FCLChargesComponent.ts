@@ -1289,6 +1289,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "GWTN":
                 case "QTY":
                 case "PDCW":
+                case "PFCL":
                     {
                         isEnabled_CostQuantity = false;
                         break;
@@ -1409,6 +1410,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "GWTN":
                 case "QTY":
                 case "PDCW":
+                case "PFCL":
                     {
                         isEnabled_SaleQuantity = false;
                         break;
@@ -2417,6 +2419,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
                 case "VCBM": { myResult = this.QuotePM.VolumeInCBM; break; }
                 case "PDCW": { myResult = this.QuotePM.PickupDeliveryChargeableWeight; break; }
+                case "PFCL": { myResult = this.QuotePM.PercentForeignChargesLocal; break; }
                 default:
                     {
                         if (!AppTool.IsNullOrEmpty(this.CostMeasurementId)) {
@@ -2772,6 +2775,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
                 case "VCBM": { myResult = this.QuotePM.VolumeInCBM; break; }
                 case "PDCW": { myResult = this.QuotePM.PickupDeliveryChargeableWeight; break; }
+                case "PFCL": { myResult = this.QuotePM.PercentForeignChargesLocal; break; }
                 default:
                     {
                         if (!AppTool.IsNullOrEmpty(this.SaleMeasurementId)) {

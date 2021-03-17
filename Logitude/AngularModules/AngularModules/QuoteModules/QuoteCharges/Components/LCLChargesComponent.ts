@@ -633,7 +633,16 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 var isDifferentOrders: boolean = false;
                 var isDifferentPRVL: boolean = false;
                 var isDifferentPRFR: boolean = false;
-                
+
+                //"PFCL"
+                entityQuantity = this.EntityPM.PercentForeignChargesLocal;
+                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PFCL" && f.CostQuantity != entityQuantity).length > 0) {
+                    isDifferentOrders = true;
+                }
+                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "PFCL" && f.SaleQuantity != entityQuantity).length > 0) {
+                    isDifferentOrders = true;
+                }
+
                 //"GRWT"
                 entityQuantity = this.EntityPM.GrossWeight;
                 if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "GRWT" && f.CostQuantity != entityQuantity).length > 0) {
@@ -1143,6 +1152,7 @@ export class QuoteChargeItem extends BaseComponent {
                 case "GWTN":
                 case "QTY":
                 case "PDCW":
+                case "PFCL":
                     {
                         isEnabled_CostQuantity = false;
                         break;
@@ -1249,6 +1259,7 @@ export class QuoteChargeItem extends BaseComponent {
                 case "GWTN":
                 case "QTY":
                 case "PDCW":
+                case "PFCL":
                     {
                         isEnabled_SaleQuantity = false;
                         break;
@@ -1958,6 +1969,7 @@ export class QuoteChargeItem extends BaseComponent {
                 case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
                 case "VCBM": { myResult = this.QuotePM.VolumeInCBM; break; }
                 case "PDCW": { myResult = this.QuotePM.PickupDeliveryChargeableWeight; break; }
+                case "PFCL": { myResult = this.QuotePM.PercentForeignChargesLocal; break; }
                 default: { break; }
             }
         }
@@ -2273,6 +2285,7 @@ export class QuoteChargeItem extends BaseComponent {
                 case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
                 case "VCBM": { myResult = this.QuotePM.VolumeInCBM; break; }
                 case "PDCW": { myResult = this.QuotePM.PickupDeliveryChargeableWeight; break; }
+                case "PFCL": { myResult = this.QuotePM.PercentForeignChargesLocal; break; }
                 default: { break; }
             }
         }

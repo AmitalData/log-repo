@@ -1260,6 +1260,13 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
 
             activeLines.forEach(item => {
                 switch (item.MeasurementCode) {
+                    case "PFCL": {
+                        if (item.Quantity != this.EntityPM.PercentForeignChargesLocal) {
+                            isDifferentOrders = true;
+                        }
+                        break;
+                    }
+
                     case "SCGW": {
                         if (item.Quantity != this.EntityPM.GrossWeightPerStorageDays) {
                             isDifferentOrders = true;
@@ -2015,6 +2022,11 @@ export class ShipmentPayableItem extends BaseComponent {
 
                                 case "SCGW": {
                                     this.Quantity = this.ShipmentPM.GrossWeightPerStorageDays;
+                                    break;
+                                }
+
+                                case "PFCL": {
+                                    this.Quantity = this.ShipmentPM.PercentForeignChargesLocal;
                                     break;
                                 }
 
@@ -2853,6 +2865,12 @@ export class ShipmentPayableItem extends BaseComponent {
                                 break;
                             }
 
+                            case "PFCL": {
+                                unitPrice = this.UnitPrice;
+                                quantity = item.PercentForeignChargesLocal;
+                                break;
+                            }
+
                             default: {
                                 if (this.fatherComponent.IsFCLEntity) {
                                     var list: PackageTypeList = AllPackageTypes.filter(f => f.MeasurementId == this.MeasurementId)[0];
@@ -2942,7 +2960,8 @@ export class ShipmentPayableItem extends BaseComponent {
             case "CWKG": { result = this.ShipmentPM.ChargeableWeightInKG; break; }
             case "GWKG": { result = this.ShipmentPM.GrossWeightInKG; break; }
             case "VCBM": { result = this.ShipmentPM.VolumeInCBM; break; }
-            case "SCGW": { result = this.ShipmentPM.GrossWeightPerStorageDays; break;}
+            case "SCGW": { result = this.ShipmentPM.GrossWeightPerStorageDays; break; }
+            case "SCGW": {result = this.ShipmentPM.GrossWeightPerStorageDays; break;}
             case "BCNT": {
                 break;
             }
@@ -3011,6 +3030,7 @@ export class InsidePayableViewModel {
     get GrossWeightInKG() { return this.ShipmentPM.GrossWeightInKG; }
     get VolumeInCBM() { return this.ShipmentPM.VolumeInCBM; }
     get GrossWeightPerStorageDays() { return this.ShipmentPM.GrossWeightPerStorageDays; }
+    get PercentForeignChargesLocal() { return this.ShipmentPM.PercentForeignChargesLocal; }
 
     // Payable Properties
     get ShipmentId() { return this.EntityPM.ShipmentId; }
@@ -3084,6 +3104,14 @@ export class InsidePayableViewModel {
         var myQuantity = null;
 
         switch (this.MeasurementCode) {
+            case "PFCL": {
+                if (this.ShipmentPM) {
+                    myQuantity = this.ShipmentPM.GrossWeightPerStorageDays;
+                }
+
+                break;
+            }
+
             case "SCGW": {
                 if (this.ShipmentPM) {
                     myQuantity = this.ShipmentPM.GrossWeightPerStorageDays;
