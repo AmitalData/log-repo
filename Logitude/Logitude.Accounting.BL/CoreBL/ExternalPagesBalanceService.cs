@@ -30,22 +30,31 @@ namespace Logitude.Accounting.BL.CoreBL
         public decimal GetClosingBalanceByDate(string objectTableName,string EntityId,DateTime date)
         {
             List<ReconcileExternalPage> externalPages = GetApprovedExternalPages(objectTableName, EntityId);
+            
+            decimal closedBalance = 0;
 
+            if (externalPages != null && externalPages.Count() > 0)
+                closedBalance = CalculateClosedBalanceFromExternalPages(date, externalPages);
+
+            return closedBalance;
+        }
+
+        private decimal CalculateClosedBalanceFromExternalPages(DateTime date, List<ReconcileExternalPage> externalPages)
+        {
             decimal closedBalance = 0;
             var pageContainsTheDate = externalPages.FirstOrDefault(page => page.FromDate <= date && date <= page.ToDate);
             var lastPage = externalPages.OrderByDescending(d => d.ToDate).FirstOrDefault();
             var firstPage = externalPages.OrderBy(d => d.ToDate).FirstOrDefault();
-            var mostRecentPageBeforeTheDate = externalPages.OrderByDescending(d => d.ToDate).Where(d=>d.ToDate <= date).FirstOrDefault();
+            var mostRecentPageBeforeTheDate = externalPages.OrderByDescending(d => d.ToDate).Where(d => d.ToDate <= date).FirstOrDefault();
 
             if (pageContainsTheDate != null)
-                closedBalance =  CalculateClosedBalanceFromPage(pageContainsTheDate, date);
-            else if(date > lastPage.ToDate)
+                closedBalance = CalculateClosedBalanceFromPage(pageContainsTheDate, date);
+            else if (date > lastPage.ToDate)
                 closedBalance = lastPage.CloseBalance;
             else if (date < firstPage.FromDate)
                 closedBalance = firstPage.StartBalance;
             else if (mostRecentPageBeforeTheDate != null)
                 closedBalance = mostRecentPageBeforeTheDate.CloseBalance;
-
 
             return closedBalance;
         }
@@ -79,9 +88,10 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             string objectTableId = GetObjectTableId(objectTableName);
             var accountingContext = AccountingContext.GetContext(tenant);
-
             ReconcileExternalPageListQueryService pageListQueryService = new ReconcileExternalPageListQueryService(accountingContext);
+
             var externalPages = pageListQueryService.GetApprovedExternalPages(objectTableId, EntityId, tenant);
+
             return externalPages;
         }
 
