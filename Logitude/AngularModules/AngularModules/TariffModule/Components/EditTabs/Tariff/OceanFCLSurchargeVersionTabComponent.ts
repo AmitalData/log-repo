@@ -1126,7 +1126,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, isDefaultCurrencyRequired);
         this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, isDefaultCurrencyEnabled);
 
-        this.ContainersItemsSourceView.forEach(item => {
+        this.ContainerPricesItemsSource.forEach(item => {
             item.SetUIProperties();
         });
     }
@@ -1638,6 +1638,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         if (this.EntityPM.IsDifferentCurrenciesPerCharge != value) {
             this.EntityPM.IsDifferentCurrenciesPerCharge = value;
 
+            this.SetUIProperties_Currency();
             this.SurchargesCurrencies(this.CurrencyId);
 
             if (value) {
@@ -1645,7 +1646,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
             }
 
             else {
-                this.ContainersItemsSourceView.forEach(item => {
+                this.ContainerPricesItemsSource.forEach(item => {
                     item.CurrencyId = null;
                 });
             }
@@ -1653,7 +1654,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
     }
 
     private SurchargesCurrencies(defaultCurrencyId: string) {
-        this.ContainersItemsSourceView.forEach(item => {
+        this.ContainerPricesItemsSource.forEach(item => {
             item.CurrencyId = defaultCurrencyId;
         });
     }
@@ -1673,24 +1674,7 @@ export class ContainerPricesItem extends BaseComponent {
         this.IsNewEntity = isNew;
         
         this.SetUIProperties();
-        if (this.IsNewEntity) {
-            
-        }
-
         this.FillChargeLabels();
-    }
-
-    public IsEditingEnabled: boolean = false;
-    public SetUIProperties() {        
-        this.IsEditingEnabled = this.FatherComponent.IsEditEnabled;
-
-        var isCurrencyEnabled: boolean = false;
-
-        if (this.FatherComponent.IsDifferentCurrenciesPerCharge) {
-            isCurrencyEnabled = true;
-        }
-
-        //this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, isCurrencyEnabled);        
     }
 
     public ChargeLabel: string;
@@ -1748,8 +1732,22 @@ export class ContainerPricesItem extends BaseComponent {
                 this.UIProperties.SetEnabled("CostPrice", this.ObjectTableName, false);
             }
         }
+
+        //this.SetUIProperties();
     }
 
+    public IsEditingEnabled: boolean = false;
+    public SetUIProperties() {
+        this.IsEditingEnabled = this.FatherComponent.IsEditEnabled;
+
+        var isCurrencyEnabled: boolean = false;
+
+        if (this.IsEditingEnabled && this.FatherComponent.IsDifferentCurrenciesPerCharge) {
+            isCurrencyEnabled = true;
+        }
+
+        this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, isCurrencyEnabled);
+    }
     SetUIProperties_TariffLinesContainersPrice(isEnabled) {
         this.SetUIProperties_Price(1, isEnabled);
         this.SetUIProperties_Price(2, isEnabled);

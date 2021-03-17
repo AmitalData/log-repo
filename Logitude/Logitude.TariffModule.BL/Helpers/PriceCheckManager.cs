@@ -1195,7 +1195,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                         string tariffLineCurrencyId = ChargesfilteredLines.CurrencyId != null ? ChargesfilteredLines.CurrencyId : CurrentSurcharge.CurrencyId;
                                         if (ChargesfilteredLines.IsDifferentCurrenciesPerCharge)
                                         {
-                                            tariffLineCurrencyId = (string)ChargesfilteredLines.GetType().GetProperty("Surcharge" + i + "CurrencyId").GetValue(ChargesfilteredLines);
+                                            tariffLineCurrencyId = currentTariffLinesContainersPrice.CurrencyId;
                                         }
 
                                         var LinePrice = CalculateLocalAmount(currentSurchargePriceCalculation, currencyId, tariffLineCurrencyId, tenant);
