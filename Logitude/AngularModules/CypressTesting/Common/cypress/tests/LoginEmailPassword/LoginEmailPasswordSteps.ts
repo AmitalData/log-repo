@@ -10,7 +10,7 @@ import { RestAPI } from '../../../../Base/cypress/constants/RestAPI'
 let loginDetails: LoginDetails
 //#region Login using wrong email/Login using wrong password
 Given("the user in the Login page", () => {
-cy.OpenLoginPage()
+cy.RedirectToLogin()
 });
 
 Given("login information with the following details", (dataTable) => {

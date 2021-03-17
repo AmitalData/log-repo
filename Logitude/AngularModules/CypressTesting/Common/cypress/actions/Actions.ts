@@ -77,7 +77,7 @@ export function ValidateErrorMessage(Message: string) {
 //#endregion
 //#region Password Reset Request
 export function VisitPasswordResetRequestPage() {
-    cy.OpenLoginPage();
+    cy.RedirectToLogin();
     ClickForgotYourPassword()
 }
 function ClickForgotYourPassword(){
