@@ -454,6 +454,5 @@ export class ShipmentList {
 		IsAccrualsApproved: boolean;
 		AccrualsApprovalDate: Date;
 		MainHarmonize: string;
-		PercentForeignChargesLocal: number;
 	
 }

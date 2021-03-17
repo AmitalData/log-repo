@@ -700,7 +700,5 @@ namespace Logitude.BL.QuoteModel.EntityPMs
 
         public bool DescriptionRightToLeft { get; set; }
 
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? PercentForeignChargesLocal { get; set; }
     }
 }

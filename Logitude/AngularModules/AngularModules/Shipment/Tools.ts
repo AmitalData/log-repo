@@ -468,7 +468,6 @@ export class ShipmentTool {
             shipmentPM.VolumeInCBM = oldShipment.VolumeInCBM;
             shipmentPM.ChargeableWeight = oldShipment.ChargeableWeight;
             shipmentPM.ChargeableWeightInKG = oldShipment.ChargeableWeightInKG;
-            shipmentPM.PercentForeignChargesLocal = oldShipment.PercentForeignChargesLocal;
             shipmentPM.VolumetricWeight = oldShipment.VolumetricWeight;
             shipmentPM.NumberOfContainers = oldShipment.NumberOfContainers;
             shipmentPM.NumberOfPackages = oldShipment.NumberOfPackages;
@@ -2967,7 +2966,6 @@ export class ShipmentGenerator {
             case "QTY": { newRecord.Quantity = this.EntityPM.NumberOfPackages; break; }
             case "VCBM": { newRecord.Quantity = this.EntityPM.VolumeInCBM; break; }
             case "SCGW": { newRecord.Quantity = this.EntityPM.GrossWeightPerStorageDays; break; }
-            case "PFCL": { newRecord.Quantity  = this.EntityPM.PercentForeignChargesLocal; break; }
             default: { break; }
         }
 
@@ -3711,7 +3709,6 @@ export class ShipmentGenerator {
             case "GWKG": { newRecord.Quantity = this.EntityPM.GrossWeightInKG; break; }
             case "VCBM": { newRecord.Quantity = this.EntityPM.VolumeInCBM; break; }
             case "SCGW": { newRecord.Quantity = this.EntityPM.GrossWeightPerStorageDays; break; }
-            case "PFCL": { newRecord.Quantity = this.EntityPM.PercentForeignChargesLocal; break; }
             default: { break; }
         }
 

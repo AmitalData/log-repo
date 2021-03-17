@@ -1683,11 +1683,6 @@ export class QuotePM {
     public set DescriptionRightToLeft(newValue: boolean) { if (this.descriptionRightToLeft != newValue) { this.descriptionRightToLeft = newValue; this.MarkAsDirty("DescriptionRightToLeft"); } }
        
 	 
-    private percentForeignChargesLocal: number;
-    public get PercentForeignChargesLocal() { return this.percentForeignChargesLocal; }
-    public set PercentForeignChargesLocal(newValue: number) { if (this.percentForeignChargesLocal != newValue) { this.percentForeignChargesLocal = newValue; this.MarkAsDirty("PercentForeignChargesLocal"); } }
-       
-	 
 
     public OldEntityPM: QuotePM;
 		

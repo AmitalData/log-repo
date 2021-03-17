@@ -4881,9 +4881,6 @@ export class ShipmentPM {
     public get OnForwardingATA_Original() { return this.onForwardingATA_Original; }
     public set OnForwardingATA_Original(newValue: Date) { if (this.onForwardingATA_Original != newValue) { this.onForwardingATA_Original = newValue; this.MarkAsDirty("OnForwardingATA_Original"); } }
 
-    private percentForeignChargesLocal: number;
-    public get PercentForeignChargesLocal() { return this.percentForeignChargesLocal; }
-    public set PercentForeignChargesLocal(newValue: number) { if (this.percentForeignChargesLocal != newValue) { this.percentForeignChargesLocal = newValue; this.MarkAsDirty("PercentForeignChargesLocal"); } }
 
     public OldEntityPM: ShipmentPM;
 

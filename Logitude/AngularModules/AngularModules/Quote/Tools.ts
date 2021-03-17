@@ -204,12 +204,8 @@ export class QuoteTool {
                 var entityQuantity: number = null;
 
                 //"PFCL"
-                entityQuantity = entityPM.PercentForeignChargesLocal;
-                if (entityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PFCL" && f.CostQuantity != entityQuantity).length > 0) {
-                    myResult = true;
-                }
-                else if (entityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "PFCL" && f.SaleQuantity != entityQuantity).length > 0) {
-                    myResult = true;
+                if (entityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PFCL" || f.SaleMeasurementCode == "PFCL").length > 0) {
+                    myResult = this.CheckUpdateMessageforPFCL(entityPM);
                 }
 
                 //"GRWT"
@@ -340,6 +336,29 @@ export class QuoteTool {
         }
 
         return myResult;
+    }
+
+    private static CheckUpdateMessageforPFCL(entityPM: QuotePM): boolean {
+        var isDifferentOrders = false;
+        var PFCL_CostQuantity = ArrayTool.Sum(entityPM.QuoteCharges.filter(d => d.CostCurrencyId != SessionLocator.LocalCurrencyId), "CostTotalAmountLocal");
+        var PFCL_SaleQuantity = ArrayTool.Sum(entityPM.QuoteCharges.filter(d => d.SaleCurrencyId != SessionLocator.LocalCurrencyId), "SaleTotalAmountLocal");;
+
+        if (AppTool.IsNullOrZero(PFCL_CostQuantity)) {
+            PFCL_CostQuantity = 0;
+        }
+
+        if (AppTool.IsNullOrZero(PFCL_SaleQuantity)) {
+            PFCL_SaleQuantity = 0;
+        }
+
+        if (entityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PFCL" && f.CostQuantity != null && f.CostQuantity != 0 && f.CostQuantity != PFCL_CostQuantity).length > 0) {
+            isDifferentOrders = true;
+        }
+
+        if (entityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "PFCL" && f.SaleQuantity != null && f.SaleQuantity != 0 && f.SaleQuantity != PFCL_SaleQuantity).length > 0) {
+            isDifferentOrders = true;
+        }
+        return isDifferentOrders;
     }
     private static CheckUpdateQuantities_FCL(entityPM: QuotePM) {
         var myResult: boolean = false;
