@@ -385,5 +385,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
         public bool DescriptionRightToLeft { get; set; }
 
+        public double? PercentForeignChargesLocal { get; set; }
+
     }
 }

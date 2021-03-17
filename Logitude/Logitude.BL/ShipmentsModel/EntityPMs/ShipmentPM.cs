@@ -2617,6 +2617,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? OnForwardingETD_Original { get; set; }
         public DateTime? OnForwardingATA_Original { get; set; }
         public DateTime? OnForwardingETA_Original { get; set; }
+        public double? PercentForeignChargesLocal { get; set; }
     }
 
     public class TransshipmentLeg

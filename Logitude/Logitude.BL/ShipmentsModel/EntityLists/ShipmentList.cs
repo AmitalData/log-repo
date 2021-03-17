@@ -546,5 +546,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? AccrualsApprovalDate { get; set; }
 
         public string MainHarmonize { get; set; }
+        public double? PercentForeignChargesLocal { get; set; }
     }
 }

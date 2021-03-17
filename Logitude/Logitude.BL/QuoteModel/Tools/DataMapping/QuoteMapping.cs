@@ -69,6 +69,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.GrossWeightPerTon = entityPM.GrossWeightPerTon = GetWeightInTon(entityPM.GrossWeightInKG);
             entityPoco.ChargeableWeight = entityPM.ChargeableWeight;
             entityPoco.ChargeableWeightInKG = entityPM.ChargeableWeightInKG = GetChargeableWeightInKG(entityPM.ChargeableWeightUnitCode, entityPM.ChargeableWeight);
+            entityPoco.PercentForeignChargesLocal = entityPM.PercentForeignChargesLocal;
             entityPoco.PickupDeliveryChargeableWeight = entityPM.PickupDeliveryChargeableWeight;
             entityPoco.Ratio = entityPM.Ratio;
             entityPoco.PickupDeliveryRatio = entityPM.PickupDeliveryRatio;

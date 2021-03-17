@@ -217,5 +217,6 @@ namespace Logitude.BL.QuoteModel.EntityLists
 
         public string RegionalTaxId { get; set; }
         public double? RegionalTaxPercentage { get; set; }
+        public double? PercentForeignChargesLocal { get; set; }
     }
 }

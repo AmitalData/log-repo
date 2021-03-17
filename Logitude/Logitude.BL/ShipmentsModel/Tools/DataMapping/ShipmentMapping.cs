@@ -135,6 +135,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 entityPoco.NextLegCode = entityPM.NextLegCode;
             }
 
+            entityPoco.PercentForeignChargesLocal = entityPM.PercentForeignChargesLocal;
             entityPoco.WarehouseStorageFreeDays = entityPM.WarehouseStorageFreeDays;
             entityPoco.FreelancerId = entityPM.FreelancerId;
             entityPoco.FreelancerAddressId = entityPM.FreelancerAddressId;
@@ -2550,6 +2551,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddFieldChangedProperties(changeTrackingPM, "EstimatedFinalArrivalDate", changeTrackingPM.EstimatedFinalArrivalDate, pm.EstimatedFinalArrivalDate, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "CreateDateTime", changeTrackingPM.CreateDateTime, pm.CreateDateTime, "CreateDateTime", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "WarehouseStorageFreeDays", changeTrackingPM.WarehouseStorageFreeDays, pm.WarehouseStorageFreeDays, "WarehouseStorageFreeDays", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "PercentForeignChargesLocal", changeTrackingPM.PercentForeignChargesLocal, pm.PercentForeignChargesLocal, "PercentForeignChargesLocal", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "OrderIsDangerouseGoods", changeTrackingPM.OrderIsDangerouseGoods, pm.OrderIsDangerouseGoods, "OrderIsDangerouseGoods", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "FirstPickupETA", changeTrackingPM.FirstPickupETA, pm.FirstPickupETA, "FirstPickupETA", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "FirstPickupETD", changeTrackingPM.FirstPickupETD, pm.FirstPickupETD, "FirstPickupETD", notifyPropertyChangeValuesList);            
@@ -2687,6 +2689,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             shipmentPM.EstimatedFinalArrivalDate = houseShipment.EstimatedFinalArrivalDate;
             shipmentPM.CreateDateTime = houseShipment.CreateDateTime;
             shipmentPM.WarehouseStorageFreeDays = houseShipment.WarehouseStorageFreeDays;
+            shipmentPM.PercentForeignChargesLocal = houseShipment.PercentForeignChargesLocal;
             shipmentPM.OrderIsDangerouseGoods = houseShipment.OrderIsDangerouseGoods;
             shipmentPM.FirstPickupETA = houseShipment.FirstPickupETA;
             shipmentPM.FirstPickupETD = houseShipment.FirstPickupETD;

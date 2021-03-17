@@ -1442,6 +1442,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.Field39 = new CustomFieldClass("Field39", "Shipment", shipment.Field39);
             shipmentPM.Field40 = new CustomFieldClass("Field40", "Shipment", shipment.Field40);
 
+            shipmentPM.PercentForeignChargesLocal = shipment.PercentForeignChargesLocal;
             shipmentPM.GrossWeightInKG = shipment.GrossWeightInKG;
             shipmentPM.GrossWeightPerStorageDays = shipment.GrossWeightPerStorageDays;
             shipmentPM.GrossWeight = shipment.GrossWeight;
@@ -3603,6 +3604,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.AccountManagerUserId = shipment.AccountManagerUserId;
             shipmentPM.GrossWeightInKG = shipment.GrossWeightInKG;
             shipmentPM.GrossWeightPerStorageDays = shipment.GrossWeightPerStorageDays;
+            shipmentPM.PercentForeignChargesLocal = shipment.PercentForeignChargesLocal;
 
             shipmentPM.GrossWeight = shipment.GrossWeight;
             shipmentPM.ChargeableWeight = shipment.ChargeableWeight;
@@ -4469,6 +4471,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         FromPortName = m.MainCarriageFromPort.EnglishName,
                                                         GrossWeightInKG = s.GrossWeightInKG,
                                                         GrossWeightPerStorageDays = s.GrossWeightPerStorageDays,
+                                                        PercentForeignChargesLocal = s.PercentForeignChargesLocal,
                                                         GrossWeightPerTon = s.GrossWeightPerTon,
                                                         GrossWeightEdited = s.GrossWeightEdited,
                                                         HAWBDate = s.HAWBDate,
@@ -5110,6 +5113,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         FromPortName = m.MainCarriageFromPort.EnglishName,
                                                         GrossWeightInKG = s.GrossWeightInKG,
                                                         GrossWeightPerStorageDays = s.GrossWeightPerStorageDays,
+                                                        PercentForeignChargesLocal = s.PercentForeignChargesLocal,
                                                         GrossWeightPerTon = s.GrossWeightPerTon,
                                                         GrossWeightEdited = s.GrossWeightEdited,
                                                         HAWBDate = s.HAWBDate,
@@ -5407,6 +5411,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                           TransportModeName = a.TransportModeName,
                                                           GrossWeightInKG = a.GrossWeightInKG,
                                                           GrossWeightPerStorageDays = a.GrossWeightPerStorageDays,
+                                                          PercentForeignChargesLocal = a.PercentForeignChargesLocal,
                                                           GrossWeightPerTon = a.GrossWeightPerTon,
                                                           ChargeableWeightInKG = a.ChargeableWeightInKG,
                                                           ProfitInProfitCurrency = a.ProfitInProfitCurrency,
@@ -11556,6 +11561,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          FromPortName = m.MainCarriageFromPort.EnglishName,
                                                          GrossWeightInKG = s.GrossWeightInKG,
                                                          GrossWeightPerStorageDays = s.GrossWeightPerStorageDays,
+                                                         PercentForeignChargesLocal = s.PercentForeignChargesLocal,
                                                          GrossWeightPerTon = s.GrossWeightPerTon,
                                                          House = s.House,
                                                          Id = s.Id,
@@ -12043,6 +12049,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                CustomerName = f.CustomerName,
                                GrossWeightInKG = f.GrossWeightInKG,
                                GrossWeightPerStorageDays = f.GrossWeightPerStorageDays,
+                               PercentForeignChargesLocal = f.PercentForeignChargesLocal,
                                GrossWeightPerTon = f.GrossWeightPerTon,
                                ShipmentLevelCode = f.ShipmentLevelCode,
                                ShipmentLevelName = f.ShipmentLevelName,
@@ -12409,6 +12416,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CustomerName = f.CustomerName,
                     GrossWeightInKG = f.GrossWeightInKG,
                     GrossWeightPerStorageDays = f.GrossWeightPerStorageDays,
+                    PercentForeignChargesLocal = f.PercentForeignChargesLocal,
                     GrossWeightPerTon = f.GrossWeightPerTon,
                     ShipmentLevelCode = f.ShipmentLevelCode,
                     ShipmentLevelName = f.ShipmentLevelName,
@@ -12761,6 +12769,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CustomerName = f.CustomerName,
                     GrossWeightInKG = f.GrossWeightInKG,
                     GrossWeightPerStorageDays = f.GrossWeightPerStorageDays,
+                    PercentForeignChargesLocal = f.PercentForeignChargesLocal,
                     GrossWeightPerTon = f.GrossWeightPerTon,
                     ShipmentLevelCode = f.ShipmentLevelCode,
                     ShipmentLevelName = f.ShipmentLevelName,
@@ -13268,6 +13277,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          FromPortName = m.MainCarriageFromPort.EnglishName,
                                                          GrossWeightInKG = s.GrossWeightInKG,
                                                          GrossWeightPerStorageDays = s.GrossWeightPerStorageDays,
+                                                         PercentForeignChargesLocal = s.PercentForeignChargesLocal,
                                                          GrossWeightPerTon = s.GrossWeightPerTon,
                                                          House = s.House,
                                                          Id = s.Id,

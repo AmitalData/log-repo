@@ -1255,6 +1255,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="PercentForeignChargesLocal"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="QuoteTemplateId"
     ReferencedTable="QuoteTemplates"

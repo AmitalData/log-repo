@@ -29,6 +29,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public double? ChargeableWeightInKG { get; set; }
         public double? GrossWeightInKG { get; set; }
         public double? GrossWeightPerStorageDays { get; set; }
+        public double? PercentForeignChargesLocal { get; set; }
         public double? ChargeableWeight { get; set; }
         public double? GrossWeight { get; set; }
         public string OperationalClosedByUserId { get; set; }
