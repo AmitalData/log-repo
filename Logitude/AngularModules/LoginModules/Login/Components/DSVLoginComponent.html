@@ -160,16 +160,14 @@
         justify-content: center;
         align-items: center;
     }
-
 </style>
-
 
 <!--Spinner-->
 
 <div *ngIf="showSpinner" class="image-container">
-    <img src="../../../Images/LoginScreen/indicator.gif" width="100">
+    <img src="images/LoginScreen/indicator.gif" width="100">
 </div>
-
+ 
 <table *ngIf="!showSpinner" class="PreventSelect backgroundImage" [style.background-image]="this.BackgroundImage">
     <tr>
         <td style="width:30%;">

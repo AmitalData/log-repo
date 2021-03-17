@@ -235,8 +235,8 @@ export var BrandingDataService = (function () {
     BrandingDataService.DefaultMainImage = "url('./Images/LoginScreen/screen_trucks.jpg')";
     BrandingDataService.DefaultLoginProgress = "url('./Images/LoginScreen/screen_kids.jpg')";
     BrandingDataService.DefaultForgetPassword = "url('./Images/LoginScreen/screen_kids.jpg')";
-    BrandingDataService.DefaultMainLogo = "'./Images/LoginScreen/header.jpg'";
-    BrandingDataService.DefaultSmallLogo = "'./Images/LoginScreen/sheader.jpg'";
+    BrandingDataService.DefaultMainLogo = "./Images/LoginScreen/header.jpg";
+    BrandingDataService.DefaultSmallLogo = "./Images/LoginScreen/sheader.jpg";
     return BrandingDataService;
 }());
 //# sourceMappingURL=BrandingDataService.js.map

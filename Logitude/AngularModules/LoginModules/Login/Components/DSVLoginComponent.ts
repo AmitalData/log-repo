@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { HybridLabelsBrandingDataService } from '../HybridLabels/Services/HybridLabelsBrandingDataService';
 import { ServiceResponse } from '../HybridLabels/DataContracts/ServiceResponse';
 import { BrandingDataService } from '../HybridLabels/Services/BrandingDataService';
+import { error } from 'core-js/fn/log';
 
 @Component({
     selector: 'DSVLoginComponent',
@@ -27,6 +28,7 @@ export class DSVLoginComponent extends LoginComponent implements OnInit {
     public LoginProcessImage: string = ""; 
     public showSpinner = true; 
 
+
     constructor(
         private ss: LoginService,
         private hybridLabelsBrandingDataService: HybridLabelsBrandingDataService) {
@@ -36,21 +38,29 @@ export class DSVLoginComponent extends LoginComponent implements OnInit {
         this.get_cookie_data(); 
         this.privateUrl = SessionInfo.GetLogitudeURL();
         this.GetHybridLabelsData(this.privateUrl);  
+        this.showSpinner = false;
     }
       
     GetHybridLabelsData(privateUrl: string) {
-        this.hybridLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetHybridLabelsDataRequest(privateUrl)).subscribe((response: ServiceResponse) => {
-            if (response.Result) {
-                this.Tenant = response.Result.Tenant;
-                BrandingDataService.SetHybridLabelsDataRequest(response.Result, privateUrl);
-                this.MainColor = response.Result.MainColor;
-                this.BackgroundImage = BrandingDataService.GetBackgroundImage();
-                this.MainImage = BrandingDataService.GetMainImage();
-                this.MainLogo = BrandingDataService.GetMainLogo();
-                this.LoginProcessImage = BrandingDataService.GetLoginProgressImage();  
-                this.showSpinner = false; 
-            } 
-        }); 
+        this.hybridLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetHybridLabelsDataRequest(privateUrl)).subscribe(
+            (response: ServiceResponse) => {
+                if (response.Result) {
+                    this.Tenant = response.Result.Tenant;
+                    BrandingDataService.SetHybridLabelsDataRequest(response.Result, privateUrl);
+                    this.MainColor = response.Result.MainColor;
+                    this.BackgroundImage = BrandingDataService.GetBackgroundImage();
+                    this.MainImage = BrandingDataService.GetMainImage();
+                    this.MainLogo = BrandingDataService.GetMainLogo();
+                    this.LoginProcessImage = BrandingDataService.GetLoginProgressImage();
+                }
+            },  
+            (error) => {
+                this.BackgroundImage = BrandingDataService.DefaultBackground;
+                this.MainImage = BrandingDataService.DefaultMainImage;
+                this.MainLogo = BrandingDataService.DefaultMainLogo;
+            },  
+        )
+        this.showSpinner = false;
     } 
 
     private ClearLocation() {

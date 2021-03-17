@@ -4,7 +4,7 @@ export class HybridLabelsBrandingDataService {
 
     public static DefaultBackground: string = "url('../../../Images/LoginScreen/map.png')"; 
     public static DefaultLoginProgress: string = "url('../../../Images/LoginScreen/screen_kids.jpg')"; 
-    public static DefaultMainLogo: string = "'../../../Images/LoginScreen/header.jpg'"; 
+    public static DefaultMainLogo: string = "../../../Images/LoginScreen/header.jpg"; 
 
     public static BackgroundImageURL: string = "";
     public static MainLogoURL: string = "";
