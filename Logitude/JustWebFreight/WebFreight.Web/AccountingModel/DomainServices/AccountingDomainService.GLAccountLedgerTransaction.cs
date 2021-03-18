@@ -3,6 +3,7 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Utilities;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
@@ -27,7 +28,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                 LedgerTransactionBalanceFilter LTBFilter = ledgerTransactionBalanceFilterCreateLTBFilter.CreateLTBFilter(null, tenant, queryOperations);
                 ledgerTransactionBalanceService = new LedgerTransactionBalanceService(accountingContext, LTBFilter);
                 ledgerTransactionBalanceService.Run(true);
-
+                
             }
            
             return ledgerTransactionBalanceService.Response.MyLedgerTransactionList;
@@ -45,10 +46,31 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                 LedgerTransactionBalanceFilter LTBFilter = ledgerTransactionBalanceFilterCreateLTBFilter.CreateLTBFilter(null, tenant, queryOperations);
                 ledgerTransactionBalanceService = new LedgerTransactionBalanceService(accountingContext, LTBFilter);
                 ledgerTransactionBalanceService.Run(true);
+                MapLedgerTransactionnList();
+                 
 
             }
             return (int)ledgerTransactionBalanceService.Response.TotalRowCount;
 
+        }
+       private void MapLedgerTransactionnList()
+        {
+            LedgerTransactionHelper ledgerTransactionHelper = new LedgerTransactionHelper();
+
+            ledgerTransactionBalanceService.Response.MyLedgerTransactionList.ForEach(rec =>
+            {
+                rec.Source = rec.IconCode + " " + rec.SourceNumber;
+                rec.IsCumulativeLocalAmountPos = rec.CumulativeLocalAmount < 0;
+                rec.IsForeignAmountCreditPos = rec.ForeignAmountCredit != 0;
+                rec.CalculatedForeignAmount = rec.ForeignAmountCredit != 0 ? rec.ForeignAmountCredit : rec.ForeignAmountDebit;
+                rec.IsCumulativeForeignAmountPos = rec.CumulativeForeignAmount < 0;
+                rec.IsOriginalAmountPos = rec.OpenAmount < 0;
+                rec.IsForeignAmountPos = rec.ForeignAmountCredit != 0;
+                rec.ForeignAmountCreditWithSign = rec.CalculatedForeignAmount + " " + rec.CurrencySign;
+                rec.CumulativeForeignAmountSign = rec.CumulativeForeignAmount + " " + rec.CurrencySign;
+                ledgerTransactionHelper.MapAmountWithNegativeValue(rec);
+
+            });
         }
     }
 }
