@@ -640,7 +640,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
         private void SetFutureMilstoneForShipment(CargoTrackingShipmentList Shipment, List<Milestone> milestones)
         {
-            Milestone futureMilstone = GetMostRecentEstimatedMilestone(milestones);
+            Milestone futureMilstone = GetFirstEstimatedMilestone(milestones);
 
             if (futureMilstone != null)
             {
@@ -650,10 +650,10 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             }
         }
 
-        private static Milestone GetMostRecentEstimatedMilestone(List<Milestone> milestones)
+        private static Milestone GetFirstEstimatedMilestone(List<Milestone> milestones)
         {
             return milestones.Where(s => s.IsEstimation == true && s.EstimationDate != null)
-                                                        .OrderBy(s => s.Date).ThenByDescending(s => s.Id)
+                                                        .OrderBy(s => s.Date).ThenBy(s => s.Id)
                                                         .FirstOrDefault();
         }
 
