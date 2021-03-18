@@ -40,7 +40,7 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
         [Column("TenantNumber")]
-	    public int TenantNumber { get; set; }
+	    public int? TenantNumber { get; set; }
         [Column("Inactive")]
 	    public bool Inactive { get; set; }
         [ForeignKey("Toggle")]
@@ -48,6 +48,12 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public string ToggleCode { get; set; }
 	      
         public virtual Toggle Toggle { get; set; }
+        [Column("IsMultiTenant")]
+	    public bool IsMultiTenant { get; set; }
+        [Column("FromTenantNumber")]
+	    public int? FromTenantNumber { get; set; }
+        [Column("ToTenantNumber")]
+	    public int? ToTenantNumber { get; set; }
     }
 }
 	 

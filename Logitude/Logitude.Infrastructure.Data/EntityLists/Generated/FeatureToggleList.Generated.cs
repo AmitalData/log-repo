@@ -29,7 +29,7 @@ namespace Logitude.Infrastructure.Data.EntityLists
        [DataMember]
        public string SearchFields  { get; set; }
        [DataMember]
-       public int TenantNumber  { get; set; }
+       public int? TenantNumber  { get; set; }
        [DataMember]
        public bool Inactive  { get; set; }
        [DataMember]
@@ -40,6 +40,12 @@ namespace Logitude.Infrastructure.Data.EntityLists
        public string CreatedByUser  { get; set; }
        [DataMember]
        public string ToggleDescription  { get; set; }
+       [DataMember]
+       public bool IsMultiTenant  { get; set; }
+       [DataMember]
+       public int? FromTenantNumber  { get; set; }
+       [DataMember]
+       public int? ToTenantNumber  { get; set; }
    }
 
 }

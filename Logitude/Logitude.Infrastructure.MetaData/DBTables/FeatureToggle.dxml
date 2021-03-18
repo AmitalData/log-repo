@@ -55,7 +55,7 @@
     Name="TenantNumber"
     Type="int">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="Inactive"
@@ -69,6 +69,24 @@
     Size="3">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="IsMultiTenant"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="FromTenantNumber"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ToTenantNumber"
+    Type="int">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"

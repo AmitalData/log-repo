@@ -41,7 +41,11 @@ namespace Logitude.Infrastructure.Data.Repsitories
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
 
-                        result = (from a in context.FeatureToggles where a.ToggleCode == toggleCode &&  a.TenantNumber == tenant && !a.Inactive select a).Any();
+                        result = (from a in context.FeatureToggles
+                                  where a.ToggleCode == toggleCode
+                                  && (a.TenantNumber == tenant ||  (tenant >= a.FromTenantNumber && tenant <= a.ToTenantNumber)) 
+                                  && !a.Inactive
+                                  select a).Any();
 
                         scope.Complete();
                     }
@@ -59,7 +63,9 @@ namespace Logitude.Infrastructure.Data.Repsitories
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
 
-                    result = (from a in context.FeatureToggles where a.ToggleCode == toggleCode && a.TenantNumber == tenant && !a.Inactive  select a).Any();
+                    result = (from a in context.FeatureToggles
+                              where a.ToggleCode == toggleCode && (a.TenantNumber == tenant || (tenant >= a.FromTenantNumber && tenant <= a.ToTenantNumber)) && !a.Inactive
+                              select a).Any();
 
                     scope.Complete();
                 }
