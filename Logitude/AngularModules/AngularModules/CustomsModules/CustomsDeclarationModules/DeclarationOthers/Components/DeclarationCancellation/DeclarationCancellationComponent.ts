@@ -5,7 +5,7 @@ import { EntityResourceService } from '../../../../../Infrastructure/Services/En
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
 import { CustomSendOptionsArgs, RequestParamsBase, SendRequestVIA, TestCase } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { DeclarationPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
-import { AppTool } from '../../../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { GenericRequestParams } from '../../../../../Customs/DataContract/RequestParams/GenericRequestParams';
@@ -85,13 +85,23 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
         }
     }
 
-    get CancelRequestApproveDate() { return this.EntityPM.CancelRequestApproveDate; }
-    set CancelRequestApproveDate(value: Date) {
+    get CancelRequestApproveDate() {
+        if (this.EntityPM != null) {
+            if (this.EntityPM.CancelRequestApproveDate != null) {
+                var myFormats = DateTool.GetDateFormats(this.EntityPM.CancelRequestApproveDate);
+                return myFormats.DateString + " " + myFormats.ShortTimeString;
+            }
+        }
+        return null;
+    }
+    set CancelRequestApproveDate(value: string) {
         if (this.EntityPM.CancelRequestApproveDate != value) {
             this.EntityPM.CancelRequestApproveDate = value;
         }
     }
 
+
+  
 
     get CancelRequestRejectionReason() { return this.EntityPM.CancelRequestRejectionReason; }
     set CancelRequestRejectionReason(value: string) {
