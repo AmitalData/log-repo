@@ -81,6 +81,8 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
         {
             string customFileNo = "";
+            string decId = "";
+
             MessageOut = "";
             _tenant = ResolvedTenant();
             var user = AuthenticationUtil.ResolveUserId(_tenant);
@@ -113,7 +115,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             {
                 AppendLogLine("Default= WS'");
 
-                ProccessGenericRequestReal(xmlLOGICOMMDEC, _tenant, user, ref MoreParams,out MessageOut, out customFileNo);
+                ProccessGenericRequestReal(xmlLOGICOMMDEC, _tenant, user, ref MoreParams,out MessageOut, out customFileNo,out decId);
             }
 
 
@@ -127,11 +129,12 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
         public void ProccessGenericRequestReal(
               string xmlLOGICOMMDEC , int tenant, string Curruser,
               ref string MoreParams,
-              out string MessageOut, out string customFileNo)
+              out string MessageOut, out string customFileNo,out string  decId)
         {
             _tenant = tenant;
             customFileNo = "";
             MessageOut = "";
+            decId = "";
             _Stopwatch = Stopwatch.StartNew();
             MyCommunicationsParams.Subject = "CommDecService ";
             Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.Clear();
@@ -199,6 +202,13 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             {
                 AppendLogLine("Declaration Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
                 return;
+            }
+
+            if(MessageOut!="")
+            {
+                AppendLogLine("Declaration Upsert Error :" + MessageOut + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
+                return;
+
             }
             //Delete Supplier Invoice
 
@@ -524,7 +534,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             }
 
             customFileNo = _MyDeclarationPM.CustomFileNo;
-
+            decId = _MyDeclarationPM.Id;
             AppendLogLine("declarationUpdat:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
             string val = "";
             if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["AvoidCreateCustomsRequestSheet"]))

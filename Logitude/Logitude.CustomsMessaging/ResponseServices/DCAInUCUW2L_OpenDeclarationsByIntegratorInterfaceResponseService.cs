@@ -25,6 +25,7 @@ using Logitude.Server.Tools.Utils;
 using System.Configuration;
 using Logitude.CustomsMessaging.U2L.CommDec;
 using Unifreight.Data.AmitalModel.Repsitories;
+using Logitude.Server.Tools.Models;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -50,21 +51,40 @@ namespace Logitude.CustomsMessaging.ResponseServices
             CommDecService CommDecService = new CommDecService();
                 try {
                     string error = "";
-
+                string decId = "";
                 string moreParams = customResponse.MoreParams;
-                    CommDecService.ProccessGenericRequestReal(customResponse.LOGICOMMDEC, requestParams.Tenant, requestParams.LoggingUserId , ref moreParams, out error, out customFileNo);
+                    CommDecService.ProccessGenericRequestReal(customResponse.LOGICOMMDEC, requestParams.Tenant, requestParams.LoggingUserId , ref moreParams, out error, out customFileNo, out decId);
 
-
+                if(error!="")
+                {
                     this.MyResponseData.ApplicationID = customFileNo;
+                    this.MyResponseData.HasException = true;
+                    this.MyResponseData.Succeeded = false;
+                    this.MyResponseData.UserMessage = error;
+                     throw new BusinessErrorException(error);
+
+                }
+
+                this.MyResponseData.ApplicationID = customFileNo;
                      this.MyResponseData.HasException = false;
                     this.MyResponseData.Succeeded = true;
-                    }
-                catch (Exception ex)
+
+
+                this.MyRequestSheetParam = new RequestSheetParam();
+                this.MyRequestSheetParam.CustomFileNo = customFileNo;
+                this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                 this.MyRequestSheetParam.EntityId1 = decId;
+             //   this.MyRequestSheetParam.RequestDescription = "הצהרה נפתחה בהצלחה :" + customFileNo + "_" + decId;
+
+
+            }
+            catch (Exception ex)
                 {
                     this.MyResponseData.ApplicationID = customFileNo;
                     this.MyResponseData.HasException = true;
                     this.MyResponseData.Succeeded = false;
                     this.MyResponseData.UserMessage = ex.Message;
+                throw new Exception(ex.Message);
                 }
            // }
         }
