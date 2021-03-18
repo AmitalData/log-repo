@@ -52,11 +52,12 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
     CashBookPM: CashBookPM;
     // BankDepositLines: BankDepositLinePM[];
+    OriginalCashbookLines: ObservableCollection = new ObservableCollection([]);
     CashbookLines: ObservableCollection = new ObservableCollection([]);
     SelectedCashbookLines: ObservableCollection = new ObservableCollection([]);
+    public IsFirstTimeToFillOriginalCashbookLines: boolean = true;
 
     BankDepositLines: ObservableCollection = new ObservableCollection([]);
-
     public isRTL: boolean = false;
     public IsReturnChequeEnabled: boolean = false;
     txt_NewDeposit: string = TextCodeTranslator.Translate("Accounting.General.O.NewDeposit");
@@ -193,6 +194,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
         this.CashbookLines = new ObservableCollection([]);
         this.SelectedCashbookLines = new ObservableCollection([]);
+        this.OriginalCashbookLines = new ObservableCollection([]);
+
         // this.BankDepositLines = new ObservableCollection(this.EntityPM.BankDepositLines);
 
         this.CalculateTotals();
@@ -502,6 +505,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                         else {  // Cheque
 
                             this.GetCashbookLines();
+                           
                             this.SetUIProperty();
                         }
 
@@ -545,8 +549,14 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                 this.NoCashBookRows = true;
             }
 
+            if (this.IsFirstTimeToFillOriginalCashbookLines) {
+                this.OriginalCashbookLines = this.CashbookLines;
+                this.IsFirstTimeToFillOriginalCashbookLines = false;
+            }
+
             this.SetSelectedCashbookLines();
             this.CalculateTotals();
+            this.CheckIfOneOfTheOriginalLineUnChecked();
 
         });
     }
@@ -558,6 +568,16 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                 this.CashbookLines.Collection.filter(a => a.CashBookId == line.CashBookId && a.ARPChequeId == line.ARPChequeId)[0].IsSelected = true;
                 this.PushBankDeposit(CashbookLine);
             }
+        }
+    }
+
+    private CheckIfOneOfTheOriginalLineUnChecked() {
+        for (let line of this.CashbookLines.Collection) {
+            var CashbookLine = this.OriginalCashbookLines.Collection.filter(a => a.CashBookId == line.CashBookId && a.ARPChequeId == line.ARPChequeId)[0];
+            if (CashbookLine.IsSelected == false)
+                this.isAllSelected = false;
+            if (CashbookLine.IsSelected != line.IsSelected)
+                line.IsSelected = CashbookLine.IsSelected;
         }
     }
 
@@ -764,6 +784,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         // this.BankDepositLines = [];
         if (event == true) {
             for (let line of this.CashbookLines.Collection) {
+                this.OriginalCashbookLines.Collection.filter(a => a.CashBookId == line.CashBookId && a.ARPChequeId == line.ARPChequeId)[0].IsSelected = true;
                 this.SelectedCashbookLines.Collection.push(line);
                 this.PushBankDeposit(line);
                 line.IsSelected = true;
@@ -771,6 +792,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         }
         else {
             for (let line of this.CashbookLines.Collection) {
+                this.OriginalCashbookLines.Collection.filter(a => a.CashBookId == line.CashBookId && a.ARPChequeId == line.ARPChequeId)[0].IsSelected = false;
                 line.IsSelected = false;
           }
         }
@@ -780,6 +802,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
     LineSelection(cashbookLine, event) {
         this.CashbookLines.Collection.filter(a => a.CashBookId == cashbookLine.CashBookId && a.ARPChequeId == cashbookLine.ARPChequeId)[0].IsSelected = event;
+        this.OriginalCashbookLines.Collection.filter(a => a.CashBookId == cashbookLine.CashBookId && a.ARPChequeId == cashbookLine.ARPChequeId)[0].IsSelected = event;
+
         if (event == true) {
             this.PushBankDeposit(cashbookLine);
             this.SelectedCashbookLines.Collection.push(cashbookLine);
