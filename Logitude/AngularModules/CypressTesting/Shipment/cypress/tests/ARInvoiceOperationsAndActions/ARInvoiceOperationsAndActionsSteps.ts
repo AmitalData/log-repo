@@ -14,8 +14,12 @@ import * as AccountingActions from '../../../../Accounting/cypress/actions/Actio
 import { AccountingSelectors } from '../../../../Accounting/cypress/selectors/Selectors'
 import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors';
 import * as Assists from "../../../../Base/cypress/assists/Assists";
+import * as MaintenanceActions from "../../../../Maintenance/cypress/actions/Actions";
+import { InvoiceSettingsDetails } from "../../../../Maintenance/cypress/models/InvoiceSettingsDetails";
+import { MaintenanceSelectors } from "../../../../Maintenance/cypress/selectors/Selectors";
 
 //#region variables
+let invoiceSettingsDetails: InvoiceSettingsDetails;
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
 let customerCode: string;
@@ -35,6 +39,24 @@ When("change the accounting system", () => {
 });
 Then("the accounting system should update successfully", () => {
     BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
+});
+//#endregion
+//#region enable void invoice settings
+Given("the user navigates to {string} in maintenance menu", (InvoiceSettings) => {
+    MaintenanceActions.OpenMaintenanceItemFromMaintenanceMenu(InvoiceSettings, MaintenanceSelectors.InvoiceSettingsMaintenanceItem)
+});
+
+Given("accounting settings with the following details", (dataTable) => {
+    invoiceSettingsDetails = Assists.CreateInstance<InvoiceSettingsDetails>(dataTable, true);
+    MaintenanceActions.ChangeInvoiceSettings(invoiceSettingsDetails)
+});
+
+When("update invoice settings", () => {
+    MaintenanceActions.UpdateInvoiceSettings();
+});
+
+Then("the invoice setting should update successfully", () => {
+    MaintenanceActions.AssertUpdateInvoiceSettings()
 });
 //#endregion
 //#region Create customer
