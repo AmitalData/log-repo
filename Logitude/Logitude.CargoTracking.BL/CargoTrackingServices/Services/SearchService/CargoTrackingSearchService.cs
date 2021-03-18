@@ -183,7 +183,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
         {
             if (!IsNullOrEmpty(tableRow, coulmnName))
             {
-                var Value = tableRow[coulmnName];
+                var Value = tableRow[coulmnName];         
                 string SearchField = (string)Value;
                 ReferencecArgs ReferencecArgs = new ReferencecArgs()
                 {
@@ -224,7 +224,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             bool IsPublic = true;
             if (PrivateRefrencesList.Contains(coulmnName))
                 IsPublic = false;
- 
+            if (coulmnName == "Master" && TableRow["ShipmentLevelCode"].Equals("H"))
+            {
+                IsPublic = false;
+            }
             TableRow.SetField("IsPublic", IsPublic);
 
         }
