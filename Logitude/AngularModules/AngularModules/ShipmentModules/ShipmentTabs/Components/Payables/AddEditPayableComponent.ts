@@ -162,7 +162,7 @@ export class AddEditPayableComponent implements OnDestroy {
     }
 
     ValidateAddingPFCLUOM() {
-        if (this.DataContext.ShipmentPM.ShipmentPayables.filter(d => d.MeasurementCode == "PFCL" && d != this.EntityPM).length > 1) {
+        if (this.DataContext.ShipmentPM.ShipmentPayables.filter(d => d.MeasurementCode == "PFCL").length == 1 && this.EntityPM.MeasurementCode == "PFCL") {
             this.errors.push("Charge with Percent of foreign charges local amounts UOM already added");
         }
     }

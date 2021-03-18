@@ -1267,7 +1267,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
             activeLines.forEach(item => {
                 switch (item.MeasurementCode) {
                     case "PFCL": {
-                        var quantity = ArrayTool.Sum(this.EntityPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId), "TotalAmountLocal");
+                        var quantity = ArrayTool.Sum(this.EntityPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "TotalAmountLocal");
                         if (item.Quantity != quantity) {
                             isDifferentOrders = true;
                         }
@@ -1846,7 +1846,7 @@ export class ShipmentReceivableItem extends BaseComponent {
                                 }
 
                                 case "PFCL": {
-                                    this.Quantity = ArrayTool.Sum(this.ShipmentPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId), "TotalAmountLocal");
+                                    this.Quantity = ArrayTool.Sum(this.ShipmentPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "TotalAmountLocal");
                                     break;
                                 }
 
@@ -2598,7 +2598,7 @@ export class ShipmentReceivableItem extends BaseComponent {
             }
 
             case "PFCL": {
-                result = ArrayTool.Sum(this.ShipmentPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId), "TotalAmountLocal"); break;
+                result = ArrayTool.Sum(this.ShipmentPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "TotalAmountLocal"); break;
             }
 
             default: {

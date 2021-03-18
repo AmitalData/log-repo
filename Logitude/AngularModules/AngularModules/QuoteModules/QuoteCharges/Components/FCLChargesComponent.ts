@@ -934,8 +934,8 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
 
     private CheckUpdateMessageforPFCL(): boolean {
         var isDifferentOrders = false;
-        var PFCL_CostQuantity = ArrayTool.Sum(this.EntityPM.QuoteCharges.filter(d => d.CostCurrencyId != SessionLocator.LocalCurrencyId), "CostTotalAmountLocal");
-        var PFCL_SaleQuantity = ArrayTool.Sum(this.EntityPM.QuoteCharges.filter(d => d.SaleCurrencyId != SessionLocator.LocalCurrencyId), "SaleTotalAmountLocal");;
+        var PFCL_CostQuantity = ArrayTool.Sum(this.EntityPM.QuoteCharges.filter(d => d.CostCurrencyId != SessionLocator.LocalCurrencyId && d.CostMeasurementCode != "PFCL") , "CostTotalAmountLocal");
+        var PFCL_SaleQuantity = ArrayTool.Sum(this.EntityPM.QuoteCharges.filter(d => d.SaleCurrencyId != SessionLocator.LocalCurrencyId && d.SaleMeasurementCode != "PFCL"), "SaleTotalAmountLocal");;
 
         if (AppTool.IsNullOrZero(PFCL_CostQuantity)) {
             PFCL_CostQuantity = 0;
@@ -2453,7 +2453,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
                 case "VCBM": { myResult = this.QuotePM.VolumeInCBM; break; }
                 case "PDCW": { myResult = this.QuotePM.PickupDeliveryChargeableWeight; break; }
-                case "PFCL": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.CostCurrencyId != SessionLocator.LocalCurrencyId), "CostTotalAmountLocal"); break; }
+                case "PFCL": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.CostCurrencyId != SessionLocator.LocalCurrencyId && d.CostMeasurementCode != "PFCL"), "CostTotalAmountLocal"); break; }
                 default:
                     {
                         if (!AppTool.IsNullOrEmpty(this.CostMeasurementId)) {
@@ -2811,7 +2811,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
                 case "VCBM": { myResult = this.QuotePM.VolumeInCBM; break; }
                 case "PDCW": { myResult = this.QuotePM.PickupDeliveryChargeableWeight; break; }
-                case "PFCL": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.SaleCurrencyId != SessionLocator.LocalCurrencyId), "SaleTotalAmountLocal"); break; }
+                case "PFCL": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.SaleCurrencyId != SessionLocator.LocalCurrencyId && d.SaleMeasurementCode != "PFCL"), "SaleTotalAmountLocal"); break; }
                 default:
                     {
                         if (!AppTool.IsNullOrEmpty(this.SaleMeasurementId)) {

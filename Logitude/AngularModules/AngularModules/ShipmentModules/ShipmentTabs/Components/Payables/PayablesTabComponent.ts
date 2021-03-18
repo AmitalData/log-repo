@@ -1269,7 +1269,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
             activeLines.forEach(item => {
                 switch (item.MeasurementCode) {
                     case "PFCL": {
-                        var quantity = ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId), "ExpectedAmountLocal");
+                        var quantity = ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL" ), "ExpectedAmountLocal");
                         if (item.Quantity != quantity) {
                             isDifferentOrders = true;
                         }
@@ -2035,7 +2035,7 @@ export class ShipmentPayableItem extends BaseComponent {
                                 }
 
                                 case "PFCL": {
-                                    this.Quantity = ArrayTool.Sum(this.ShipmentPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId), "ExpectedAmountLocal");
+                                    this.Quantity = ArrayTool.Sum(this.ShipmentPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal");
                                     break;
                                 }
 
@@ -2971,7 +2971,7 @@ export class ShipmentPayableItem extends BaseComponent {
             case "VCBM": { result = this.ShipmentPM.VolumeInCBM; break; }
             case "SCGW": { result = this.ShipmentPM.GrossWeightPerStorageDays; break; }
             case "SCGW": { result = this.ShipmentPM.GrossWeightPerStorageDays; break; }
-            case "PFCL": { result = ArrayTool.Sum(this.ShipmentPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId), "ExpectedAmountLocal"); break;}
+            case "PFCL": { result = ArrayTool.Sum(this.ShipmentPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal"); break;}
             case "BCNT": {
                 break;
             }

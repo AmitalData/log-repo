@@ -1829,7 +1829,7 @@ export class ShipmentTool {
                                     case "VCBM": { myQuantity = entityPM.VolumeInCBM; break; }
                                     case "SCGW": { myQuantity = entityPM.GrossWeightPerStorageDays; break; }
                                     case "PFCL": {
-                                        myQuantity = ArrayTool.Sum(entityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId), "ExpectedAmountLocal");
+                                        myQuantity = ArrayTool.Sum(entityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal");
                                         break;
                                     }
                                     default: { break; }
@@ -1868,7 +1868,7 @@ export class ShipmentTool {
                                     case "VCBM": { myQuantity = entityPM.VolumeInCBM; break; }
                                     case "SCGW": { myQuantity = entityPM.GrossWeightPerStorageDays; break; }
                                     case "PFCL": {
-                                        myQuantity = ArrayTool.Sum(entityPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId), "TotalAmountLocal");
+                                        myQuantity = ArrayTool.Sum(entityPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "TotalAmountLocal");
                                         break;
                                     }
                                     default: { break; }
@@ -1917,7 +1917,7 @@ export class ShipmentTool {
                                 case "VCBM": { myQuantity = entityPM.VolumeInCBM; break; }
                                 case "SCGW": { myQuantity = entityPM.GrossWeightPerStorageDays; break; }
                                 case "PFCL": {
-                                    myQuantity = ArrayTool.Sum(entityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId), "ExpectedAmountLocal");
+                                    myQuantity = ArrayTool.Sum(entityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal");
                                     break;
                                 }
                                 default: { break; }
@@ -1956,7 +1956,7 @@ export class ShipmentTool {
                                 case "VCBM": { myQuantity = entityPM.VolumeInCBM; break; }
                                 case "SCGW": { myQuantity = entityPM.GrossWeightPerStorageDays; break; }
                                 case "PFCL": {
-                                    myQuantity = ArrayTool.Sum(entityPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId), "TotalAmountLocal");
+                                    myQuantity = ArrayTool.Sum(entityPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "TotalAmountLocal");
                                     break;
                                 }
                                 default: { break; }
@@ -2694,7 +2694,7 @@ export class ShipmentGenerator {
             case "VCBM": { myQuantity = this.EntityPM.VolumeInCBM; break; }
             case "SCGW": { myQuantity = this.EntityPM.GrossWeightPerStorageDays; break; }
             case "PFCL": {
-                myQuantity = ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId), "ExpectedAmountLocal");
+                myQuantity = ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal");
                 break;
             }
             default: { break; }
@@ -3414,7 +3414,7 @@ export class ShipmentGenerator {
             case "VCBM": { myQuantity = this.EntityPM.VolumeInCBM; break; }
             case "SCGW": { myQuantity = this.EntityPM.GrossWeightPerStorageDays; break; }
             case "PFCL": {
-                myQuantity = ArrayTool.Sum(this.EntityPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId), "TotalAmountLocal");
+                myQuantity = ArrayTool.Sum(this.EntityPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "TotalAmountLocal");
                 break;
             }
             default: { break; }

@@ -234,7 +234,7 @@ export class AddEditFCLChargeComponent implements OnDestroy {
     }
 
     ValidateAddingPFCLUOM() {
-        if (this.QuotePM.QuoteCharges.filter(d => (d.CostMeasurementCode == "PFCL" || d.SaleMeasurementCode == "PFCL")&& d != this.EntityPM).length > 1) {
+        if (this.QuotePM.QuoteCharges.filter(d => (d.CostMeasurementCode == "PFCL" || d.SaleMeasurementCode == "PFCL")).length == 1 && (this.EntityPM.CostMeasurementCode == "PFCL" || this.EntityPM.SaleMeasurementCode == "PFCL")) {
             this.errors.push("Charge with Percent of foreign charges local amounts UOM already added");
         }
     }
