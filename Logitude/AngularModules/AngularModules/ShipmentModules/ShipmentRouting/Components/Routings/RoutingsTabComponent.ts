@@ -134,7 +134,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         }
     }
 
-    public IsEditingEnabled: boolean = true;
+    public IsEditingEnabled: boolean = true;    
     SetUIProperties() {
         this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
 
@@ -1164,6 +1164,7 @@ export class RoutingItem extends BaseComponent {
     public FollowupLegTypeDeparture: string;
     public FollowupLegTypeArrival: string;
     public IsWarehouseLeg: boolean = false;
+    public IsDeleteButtonEnabled: boolean = true;
     constructor(entity: any, type: string, private fatherComponent: RoutingsTabComponent) {
         super();
 
@@ -1188,7 +1189,13 @@ export class RoutingItem extends BaseComponent {
         else {
             this.EntityPM = entity;
             this.ObjectTableName = fatherComponent.ObjectTableName;
-           
+
+            if (this.fatherComponent.IsEditingEnabled) {
+                if (this.EntityPM.ShipmentLevelCode == "H" && !AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId) && (type == "On Carriage" || type == "Pre Carriage")) {
+                    this.IsDeleteButtonEnabled = false;
+                }
+            }
+
             if (type == "WarehouseLeg" || type == "WarehouseLeg_Pickups") {
                 this.IsWarehouseLeg = true;
                 this.FollowupLegTypeDeparture = 'WarehouseLegEntry'

@@ -39,6 +39,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
     public ArrivalHeader: string = "Arrival";
     private CurrentSession = SessionLocator.SelectedSession;
     public LegType: string;
+    public IsOkButtonEnabled: boolean = true;
     constructor() {
         super();
         this.InitServices();
@@ -136,6 +137,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
 
             if (!AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId) && this.LegType == "On Carriage") {
                 this.SetUIProperties_Carriage_ConnectedMaster();
+                this.IsOkButtonEnabled = false;
             }
         }
 
@@ -166,6 +168,8 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         this.UIProperties.SetEnabled("OnCarriageETA", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("OnCarriageATD", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("OnCarriageATA", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("SplitOnCarriage", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("OnCarriageAdditionalTransportModeCode", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetVisibility("OnCarriageVesselId", this.ObjectTableName, this.OnCarriageTransportModeId == "O" ? true : false);
         this.SetUIProperties_Carriage_RequiredFields();
         this.SetUIProperties_Carriage_ValidateActualDates();
@@ -193,6 +197,8 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         this.UIProperties.SetEnabled("OnForwardingETA", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("OnForwardingATD", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("OnForwardingATA", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("SplitOnForwarding", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("OnForwardingAdditionalTransportModeCode", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetVisibility("OnForwardingVesselId", this.ObjectTableName, this.OnForwardingTransportModeId == "O" ? true : false);
         this.SetUIProperties_Forwarding_RequiredFields();
         this.SetUIProperties_Forwarding_ValidateActualDates();
@@ -247,6 +253,8 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         this.UIProperties.SetEnabled("OnCarriageATD", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("OnCarriageATA", this.ObjectTableName, false);
         this.UIProperties.SetVisibility("OnCarriageVesselId", this.ObjectTableName, this.OnCarriageTransportModeId == "O" ? true : false);
+        this.UIProperties.SetEnabled("SplitOnCarriage", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("OnCarriageAdditionalTransportModeCode", this.ObjectTableName, false);
     }
 
     public CarrierDependencyProperty1: string = null;

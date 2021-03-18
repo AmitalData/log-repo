@@ -120,7 +120,7 @@
                                                                 </td>
 
                                                                 <td style="width: 1px; vertical-align: middle;" *ngIf="item.IsDeleteButtonVisible">
-                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Delete'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" (click)="DeleteLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Delete'" [IsSmall]="true" [IsEnabled]="item.IsDeleteButtonEnabled" (click)="DeleteLeg(item)"></IconButton>
                                                                 </td>
                                                             </tr>
                                                         </table>

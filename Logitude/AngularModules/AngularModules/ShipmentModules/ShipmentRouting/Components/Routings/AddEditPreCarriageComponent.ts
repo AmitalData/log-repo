@@ -29,6 +29,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
     public IsConnectedHouse: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public LegType: string;
+    public IsOkButtonEnabled: boolean = true;
     constructor() {
         super();
         this.InitServices();
@@ -72,6 +73,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
 
             if (!AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId) && this.LegType == "Pre Carriage") {
                 this.SetUIProperties_Carriage_ConnectedMaster();
+                this.IsOkButtonEnabled = false;
             }
         }
 

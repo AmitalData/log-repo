@@ -828,7 +828,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" id="{{ 'OnCarriageOKBtn' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled">Ok</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsOkButtonEnabled" id="{{ 'OnCarriageOKBtn' | IdGeneratorPipe}}">Ok</button>
                     </td>
                 </tr>
             </table>
