@@ -913,7 +913,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
                             errorview.EntityName = "Declaration";
                         }
                         if(declaration.Direction=="E" && errorview.EntityName== "Declaration")
+                        {
                             errorview.TableNameTextCode = "Customs.Declaration.O.Export";
+                          //  errorview.EntityName = "Customs.Declaration.O.Export";
+
+                        }
                         else
                         errorview.TableNameTextCode = "Customs." + errorview.EntityName;
                         declarationErrors.Add(errorview);
@@ -1008,7 +1012,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         }
 
                         if (declaration.Direction == "E" && errorview.EntityName == "Declaration")
+                        {
                             errorview.TableNameTextCode = "Customs.Declaration.O.Export";
+                            errorview.FieldNameTextCode ="Customs.Declaration.O.Export";
+
+                        }
                         else
                             errorview.TableNameTextCode = "Customs." + errorview.EntityName;
                         declarationErrors.Add(errorview);
