@@ -49,9 +49,10 @@ export class ObjectsLocator {
     }
     public static UpdateGlobalSetting(value: any) {
         this.GlobalSetting = value;
-
+    }
+    public static SetLayoutDirection(value: any) {
         if (value) {
-            Settings.LayoutDirection = value.LayoutDirection;
+            Settings.LayoutDirection = value;
         }
     }
     public static UpdatePrivateLableSettings(value: any) {
