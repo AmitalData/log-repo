@@ -1,8 +1,14 @@
-export class MaintenanceSelectors
-{
+export class MaintenanceSelectors {
+    //#region Tabs
     public static readonly OthersMaintenanceTab = "#OTH";
-
     public static readonly ContactsMaintenanceItem = "#MaintenanceItemMTCO";
+    public static readonly VendorMaintenanceItem = "#MaintenanceItemMTVD"
+    public static readonly VesselMaintenanceItem = "#MaintenanceItemMTVS"
+    //#endregion
+
+    public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";
+
+    //#region Customer
     public static readonly ContactSaveButton = "#Contact-Save";
     public static readonly AnonymizeContactButton = "#ContactBAnonymize";
     public static readonly ContactEmail = "#Contact_Email";
@@ -18,12 +24,13 @@ export class MaintenanceSelectors
     public static readonly ContactDatepicker = "contactdatepicker";
     public static readonly ContainsNewContact = "New Contact";
     public static readonly ContainsContactsRegex = /^Contacts$/;
+    //#endregion
 
     //#region Vendor
-    public static readonly VendorEditScreen = ".MediaFillAbsolute .CurvedEditArea";
     public static readonly VendorBillingTab = "#VendorTHBilling";
     public static readonly VendorSaveButton = "#Vendor-Save";
     public static readonly VendorSaveCloseButton = "#Vendor-SaveClose";
+
     public static readonly VendorCompanyName = "#Address_Name";
     public static readonly VendorLocalName = "#Address_LocalName";
     public static readonly VendorAddress1 = "#Address_Address1";
@@ -44,11 +51,31 @@ export class MaintenanceSelectors
     public static readonly VendorContactBusinessPhone = "#Address_ContactBusinessPhone";
     public static readonly VendorContactMobile = "#Address_ContactMobile";
     public static readonly VendorContactFax = "#Address_ContactFax";
+    //#endregion
 
+    //#region Vessel
+    public static readonly VesselSaveButton = "#Vessel-Save";
+    public static readonly VesselSaveCloseButton = "#Vessel-SaveClose";
+
+    public static readonly VesselName = "#Vessel_EnglishName"
+    public static readonly VesselLocalName = "#Vessel_LocalName"
+    public static readonly VesselIMOCode = "#Vessel_IMOCode"
+    public static readonly VesselFlag = "#Vessel_CountryId"
+    public static readonly VesselNotes = "#Vessel_Notes"
+    public static readonly VesselCode = "#Vessel_Code"
+    public static readonly VesselFirstRow = "div[id$='row0']"
 
     //#endregion
 
     public static NewWizardButton(name: string): string {
         return "#NewButton_" + name;
+    }
+
+    public static SaveButton(itemName: string): string {
+        return "#"+itemName+"-Save"
+    }
+
+    public static SaveCloseButton(itemName: string): string {
+        return "#"+itemName+"-SaveClose"
     }
 }

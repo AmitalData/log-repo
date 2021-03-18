@@ -71,9 +71,6 @@ export class RequestAliases {
     public static readonly GetBookingMessageResultValidate = "GetBookingMessageResultValidate";
     public static readonly GetShippingInstructionMessageResultValidate = "GetShippingInstructionMessageResultValidate";
     public static readonly ContactLogLovLoad = "ContactLogLovLoad";
-    public static readonly PostContact = "PostContact";
-    public static readonly PostVendor = "PostVendor";
-    public static readonly PutVendor = "PutVendor";
     public static readonly INTTRAWebServiceSendEBooking = "INTTRAWebServiceSendEBooking";
     public static readonly INTTRAWebServiceSendShippingInstructions = "INTTRAWebServiceSendShippingInstructions";
     //
@@ -81,14 +78,27 @@ export class RequestAliases {
 
 
     //Maintenance
+    public static readonly PostWarehouses = "PostWarehouses"
+    public static readonly PutWarehouses = "PutWarehouses"
+
+    public static readonly PostContact = "PostContact";
+    public static readonly PutContact = "PutContact";
+
+    public static readonly PostVendor = "PostVendor";
+    public static readonly PutVendor = "PutVendor";
+
+    public static readonly PostVessel = "PostVessel";
+    public static readonly PutVessel = "PutVessel";
+
+    public static readonly GetSignle = "GetSignle"
+    public static readonly GetByFilter = "GetByFilter"
+    public static readonly GetFilterSearch = "GetFilterSearch"
     public static readonly ContactsGetSingle = "ContactsGetSingle";
     public static readonly GetContactMenuButtonGroups = "GetContactMenuButtonGroups";
-    public static readonly PutContact = "PutContact";
     public static readonly ContactViewsGetByFilters = "ContactViewsGetByFilters";
-    //
+    
+    //#endregion
     public static readonly GetTraceEventsForEntity = "GetTraceEventsForEntity"
-    public static readonly GetByFilter = "GetByFilter"
-    public static readonly PutWarehouses = "PutWarehouses"
     public static readonly GetLastUpdatedTables = "GetLastUpdatedTables"
     public static readonly GetFilterSearch = "GetFilterSearch"
     public static readonly GetSignle = "GetSignle"
@@ -97,4 +107,5 @@ export class RequestAliases {
     public static readonly PasswordResetRequestPage="PasswordResetRequestPage"
     //Reset Password
     public static readonly ResetPassword="ResetPassword"
+
 }
