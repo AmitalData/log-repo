@@ -77,7 +77,11 @@ export class DeclarationCancellationCustomsDocumentsController implements ICusto
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         return defer(() => {
             var rresponse: ServiceResponse = new ServiceResponse();
-            rresponse.Result = { IsDisplayOnly: false, DisplayOnlyMessage: "" };
+            if (this.declarationPM.CancelRequestStatusCode == "2" || this.declarationPM.CancelRequestStatusCode == "5")
+                rresponse.Result = { IsDisplayOnly: true, DisplayOnlyMessage: "" };
+            else
+                rresponse.Result = { IsDisplayOnly: false, DisplayOnlyMessage: "" };
+
             return of(rresponse);
         });
     }
