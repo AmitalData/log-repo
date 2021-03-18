@@ -285,6 +285,7 @@ namespace WebFreight.Web.DataProviders
         public string InsidePackagesDetails { get; set; }
 
         public string PickupTruckerName { get; set; }
+        public string PickupTruckerNumber { get; set; }
         public string PickupTruckerInfo { get; set; }
         public string DeliveryTruckerName { get; set; }
         public string DeliveryTruckerInfo { get; set; }
@@ -320,7 +321,7 @@ namespace WebFreight.Web.DataProviders
         public string DeliveryFromAddress { get; set; }
 
         public DateTime? ETD_DateTime { get; set; }
-
+        public string ValueOfGoodsCurrencyCode { get; set; }
         public string ValueOfGoodsCurrency { get; set; }
         public double? ValueOfGoods { get; set; }
 

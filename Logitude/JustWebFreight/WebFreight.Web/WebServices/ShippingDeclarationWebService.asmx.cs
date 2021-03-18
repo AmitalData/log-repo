@@ -183,6 +183,7 @@ namespace WebFreight.Web.WebServices
                     if (currency != null)
                     {
                         myDataProvider.ValueOfGoodsCurrency = currency.EnglishName;
+                        myDataProvider.ValueOfGoodsCurrencyCode = currency.Code;
                     }
                 }
 
@@ -304,6 +305,7 @@ namespace WebFreight.Web.WebServices
                     if (currency != null)
                     {
                         myDataProvider.ValueOfGoodsCurrency = currency.EnglishName;
+                        myDataProvider.ValueOfGoodsCurrencyCode = currency.Code;
                     }
                 }
                 if (salesmanData != null)
@@ -1587,6 +1589,8 @@ namespace WebFreight.Web.WebServices
                             }
                         }
                     }
+                        myDataProvider.PickupTruckerNumber = myFirstPickup.CarrierNumber;        
+                    
                 }
 
                 else

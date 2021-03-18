@@ -74,6 +74,7 @@
     <Compile Include="CargoTrackingServices\HelperClasses\CargoTrackingTable.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\CargoTrackingIncrementalArgs.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\RecordUpdated.cs" />
+    <Compile Include="CargoTrackingServices\HelperClasses\SplittedDataArguments.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\UpdateCargoTrackingRecords.cs" />
     <Compile Include="CargoTrackingServices\Services\TableList\CargoTrackingTableList.cs" />
     <Compile Include="CargoTrackingServices\Services\TableStructure\CargoTrackingShipmentTableStructure.cs" />

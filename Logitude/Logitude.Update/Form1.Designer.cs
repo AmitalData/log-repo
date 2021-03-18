@@ -54,6 +54,7 @@
             this.loadTextCodeFromDiskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.internationalSiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createDecToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.accountingTesterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.productionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.customsBookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -179,6 +180,8 @@
             this.lblUInvoice = new System.Windows.Forms.Label();
             this.lblUQuote = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.uploadPackagesTypes = new System.Windows.Forms.Button();
+            this.updateBluesnapTransactionsLabel = new System.Windows.Forms.Label();
             this.bluesnapBtn = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
@@ -206,9 +209,10 @@
             this.AirlineLogoTenantTextBox = new System.Windows.Forms.TextBox();
             this.button46 = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.button51 = new System.Windows.Forms.Button();
-            this.updateBluesnapTransactionsLabel = new System.Windows.Forms.Label();
+            this.button52 = new System.Windows.Forms.Button();
             this.fixJournalsButton = new System.Windows.Forms.Button();
+            this.button51 = new System.Windows.Forms.Button();
+            this.uploadPackagesLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -382,7 +386,8 @@
             this.loadTextCodesToolStripMenuItem,
             this.textCodesToolStripMenuItem,
             this.internationalSiteToolStripMenuItem,
-            this.createDecToolStripMenuItem});
+            this.createDecToolStripMenuItem,
+            this.accountingTesterToolStripMenuItem});
             this.sandBoxToolStripMenuItem.Name = "sandBoxToolStripMenuItem";
             this.sandBoxToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.sandBoxToolStripMenuItem.Text = "SandBox";
@@ -390,21 +395,21 @@
             // fillCustomsTableToolStripMenuItem
             // 
             this.fillCustomsTableToolStripMenuItem.Name = "fillCustomsTableToolStripMenuItem";
-            this.fillCustomsTableToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.fillCustomsTableToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.fillCustomsTableToolStripMenuItem.Text = "FillCustomsTable";
             this.fillCustomsTableToolStripMenuItem.Click += new System.EventHandler(this.FillCustomsTableToolStripMenuItem_Click);
             // 
             // updateDocTypeToolStripMenuItem
             // 
             this.updateDocTypeToolStripMenuItem.Name = "updateDocTypeToolStripMenuItem";
-            this.updateDocTypeToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.updateDocTypeToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.updateDocTypeToolStripMenuItem.Text = "UpdateDocType";
             this.updateDocTypeToolStripMenuItem.Click += new System.EventHandler(this.updateDocTypeToolStripMenuItem_Click);
             // 
             // loadTextCodesToolStripMenuItem
             // 
             this.loadTextCodesToolStripMenuItem.Name = "loadTextCodesToolStripMenuItem";
-            this.loadTextCodesToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.loadTextCodesToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.loadTextCodesToolStripMenuItem.Text = "LoadTextCodes";
             this.loadTextCodesToolStripMenuItem.Click += new System.EventHandler(this.loadTextCodesToolStripMenuItem_Click);
             // 
@@ -415,11 +420,12 @@
             this.toolStripMenuItemExportTofil,
             this.loadTextCodeFromDiskToolStripMenuItem});
             this.textCodesToolStripMenuItem.Name = "textCodesToolStripMenuItem";
-            this.textCodesToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.textCodesToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.textCodesToolStripMenuItem.Text = "TextCodes";
             // 
             // toolStripTextBoxFilePath
             // 
+            this.toolStripTextBoxFilePath.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBoxFilePath.Name = "toolStripTextBoxFilePath";
             this.toolStripTextBoxFilePath.Size = new System.Drawing.Size(100, 23);
             this.toolStripTextBoxFilePath.Text = "c:\\TextCode.xml";
@@ -441,16 +447,23 @@
             // internationalSiteToolStripMenuItem
             // 
             this.internationalSiteToolStripMenuItem.Name = "internationalSiteToolStripMenuItem";
-            this.internationalSiteToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.internationalSiteToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.internationalSiteToolStripMenuItem.Text = "InternationalSite";
             this.internationalSiteToolStripMenuItem.Click += new System.EventHandler(this.internationalSiteToolStripMenuItem_Click);
             // 
             // createDecToolStripMenuItem
             // 
             this.createDecToolStripMenuItem.Name = "createDecToolStripMenuItem";
-            this.createDecToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.createDecToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.createDecToolStripMenuItem.Text = "CreateDec";
             this.createDecToolStripMenuItem.Click += new System.EventHandler(this.createDecToolStripMenuItem_Click);
+            // 
+            // accountingTesterToolStripMenuItem
+            // 
+            this.accountingTesterToolStripMenuItem.Name = "accountingTesterToolStripMenuItem";
+            this.accountingTesterToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.accountingTesterToolStripMenuItem.Text = "AccountingTester";
+            this.accountingTesterToolStripMenuItem.Click += new System.EventHandler(this.accountingTesterToolStripMenuItem_Click);
             // 
             // productionToolStripMenuItem
             // 
@@ -548,6 +561,7 @@
             // 
             // tenantTxtBox
             // 
+            this.tenantTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tenantTxtBox.Name = "tenantTxtBox";
             this.tenantTxtBox.Size = new System.Drawing.Size(100, 23);
             this.tenantTxtBox.Text = "1";
@@ -794,7 +808,7 @@
             this.checkBox1.AutoSize = true;
             this.checkBox1.Location = new System.Drawing.Point(522, 23);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(85, 17);
+            this.checkBox1.Size = new System.Drawing.Size(101, 20);
             this.checkBox1.TabIndex = 18;
             this.checkBox1.Text = "Save to disk";
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -805,7 +819,7 @@
             this.UpdateTenant0lbl.Location = new System.Drawing.Point(206, 23);
             this.UpdateTenant0lbl.MinimumSize = new System.Drawing.Size(100, 0);
             this.UpdateTenant0lbl.Name = "UpdateTenant0lbl";
-            this.UpdateTenant0lbl.Size = new System.Drawing.Size(100, 13);
+            this.UpdateTenant0lbl.Size = new System.Drawing.Size(100, 16);
             this.UpdateTenant0lbl.TabIndex = 32;
             this.UpdateTenant0lbl.Text = "...";
             // 
@@ -815,7 +829,7 @@
             this.UpdateCRMlbl.Location = new System.Drawing.Point(206, 52);
             this.UpdateCRMlbl.MinimumSize = new System.Drawing.Size(100, 0);
             this.UpdateCRMlbl.Name = "UpdateCRMlbl";
-            this.UpdateCRMlbl.Size = new System.Drawing.Size(100, 13);
+            this.UpdateCRMlbl.Size = new System.Drawing.Size(100, 16);
             this.UpdateCRMlbl.TabIndex = 33;
             this.UpdateCRMlbl.Text = "...";
             // 
@@ -825,7 +839,7 @@
             this.UpdateTMlbl.Location = new System.Drawing.Point(206, 246);
             this.UpdateTMlbl.MinimumSize = new System.Drawing.Size(100, 0);
             this.UpdateTMlbl.Name = "UpdateTMlbl";
-            this.UpdateTMlbl.Size = new System.Drawing.Size(100, 13);
+            this.UpdateTMlbl.Size = new System.Drawing.Size(100, 16);
             this.UpdateTMlbl.TabIndex = 33;
             this.UpdateTMlbl.Text = "...";
             // 
@@ -835,7 +849,7 @@
             this.UpdateBookinglbl.Location = new System.Drawing.Point(206, 86);
             this.UpdateBookinglbl.MinimumSize = new System.Drawing.Size(100, 0);
             this.UpdateBookinglbl.Name = "UpdateBookinglbl";
-            this.UpdateBookinglbl.Size = new System.Drawing.Size(100, 13);
+            this.UpdateBookinglbl.Size = new System.Drawing.Size(100, 16);
             this.UpdateBookinglbl.TabIndex = 34;
             this.UpdateBookinglbl.Text = "...";
             // 
@@ -845,7 +859,7 @@
             this.UpdateSociallbl.Location = new System.Drawing.Point(206, 115);
             this.UpdateSociallbl.MinimumSize = new System.Drawing.Size(100, 0);
             this.UpdateSociallbl.Name = "UpdateSociallbl";
-            this.UpdateSociallbl.Size = new System.Drawing.Size(100, 13);
+            this.UpdateSociallbl.Size = new System.Drawing.Size(100, 16);
             this.UpdateSociallbl.TabIndex = 35;
             this.UpdateSociallbl.Text = "...";
             // 
@@ -855,7 +869,7 @@
             this.UpdateAccountinglbl.Location = new System.Drawing.Point(206, 152);
             this.UpdateAccountinglbl.MinimumSize = new System.Drawing.Size(100, 0);
             this.UpdateAccountinglbl.Name = "UpdateAccountinglbl";
-            this.UpdateAccountinglbl.Size = new System.Drawing.Size(100, 13);
+            this.UpdateAccountinglbl.Size = new System.Drawing.Size(100, 16);
             this.UpdateAccountinglbl.TabIndex = 36;
             this.UpdateAccountinglbl.Text = "...";
             // 
@@ -865,7 +879,7 @@
             this.UpdateTenantslbl.Location = new System.Drawing.Point(437, 131);
             this.UpdateTenantslbl.MinimumSize = new System.Drawing.Size(100, 0);
             this.UpdateTenantslbl.Name = "UpdateTenantslbl";
-            this.UpdateTenantslbl.Size = new System.Drawing.Size(100, 13);
+            this.UpdateTenantslbl.Size = new System.Drawing.Size(100, 16);
             this.UpdateTenantslbl.TabIndex = 37;
             this.UpdateTenantslbl.Text = "...";
             this.UpdateTenantslbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -876,7 +890,7 @@
             this.UpdateCustomslbl.Location = new System.Drawing.Point(206, 180);
             this.UpdateCustomslbl.MinimumSize = new System.Drawing.Size(100, 0);
             this.UpdateCustomslbl.Name = "UpdateCustomslbl";
-            this.UpdateCustomslbl.Size = new System.Drawing.Size(100, 13);
+            this.UpdateCustomslbl.Size = new System.Drawing.Size(100, 16);
             this.UpdateCustomslbl.TabIndex = 39;
             this.UpdateCustomslbl.Text = "...";
             // 
@@ -967,7 +981,7 @@
             this.BuildZipFileslbl.Location = new System.Drawing.Point(437, 184);
             this.BuildZipFileslbl.MinimumSize = new System.Drawing.Size(100, 0);
             this.BuildZipFileslbl.Name = "BuildZipFileslbl";
-            this.BuildZipFileslbl.Size = new System.Drawing.Size(100, 13);
+            this.BuildZipFileslbl.Size = new System.Drawing.Size(100, 16);
             this.BuildZipFileslbl.TabIndex = 40;
             this.BuildZipFileslbl.Text = "...";
             this.BuildZipFileslbl.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -1011,7 +1025,7 @@
             this.WarehouseLable.Location = new System.Drawing.Point(206, 217);
             this.WarehouseLable.MinimumSize = new System.Drawing.Size(100, 0);
             this.WarehouseLable.Name = "WarehouseLable";
-            this.WarehouseLable.Size = new System.Drawing.Size(100, 13);
+            this.WarehouseLable.Size = new System.Drawing.Size(100, 16);
             this.WarehouseLable.TabIndex = 44;
             this.WarehouseLable.Text = "...";
             // 
@@ -1038,7 +1052,7 @@
             this.CustZibFilesLbl.Location = new System.Drawing.Point(437, 228);
             this.CustZibFilesLbl.MinimumSize = new System.Drawing.Size(100, 0);
             this.CustZibFilesLbl.Name = "CustZibFilesLbl";
-            this.CustZibFilesLbl.Size = new System.Drawing.Size(100, 13);
+            this.CustZibFilesLbl.Size = new System.Drawing.Size(100, 16);
             this.CustZibFilesLbl.TabIndex = 46;
             this.CustZibFilesLbl.Text = "...";
             this.CustZibFilesLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1048,7 +1062,7 @@
             this.ConvertXmalTemplateLable.AutoSize = true;
             this.ConvertXmalTemplateLable.Location = new System.Drawing.Point(519, 354);
             this.ConvertXmalTemplateLable.Name = "ConvertXmalTemplateLable";
-            this.ConvertXmalTemplateLable.Size = new System.Drawing.Size(0, 13);
+            this.ConvertXmalTemplateLable.Size = new System.Drawing.Size(0, 16);
             this.ConvertXmalTemplateLable.TabIndex = 47;
             this.ConvertXmalTemplateLable.UseMnemonic = false;
             // 
@@ -1058,7 +1072,7 @@
             this.UTZSLabel.Location = new System.Drawing.Point(370, 463);
             this.UTZSLabel.MinimumSize = new System.Drawing.Size(100, 0);
             this.UTZSLabel.Name = "UTZSLabel";
-            this.UTZSLabel.Size = new System.Drawing.Size(100, 13);
+            this.UTZSLabel.Size = new System.Drawing.Size(100, 16);
             this.UTZSLabel.TabIndex = 50;
             this.UTZSLabel.Text = "...";
             this.UTZSLabel.Visible = false;
@@ -1069,7 +1083,7 @@
             this.lblUShipment.Location = new System.Drawing.Point(206, 350);
             this.lblUShipment.MinimumSize = new System.Drawing.Size(100, 0);
             this.lblUShipment.Name = "lblUShipment";
-            this.lblUShipment.Size = new System.Drawing.Size(100, 13);
+            this.lblUShipment.Size = new System.Drawing.Size(100, 16);
             this.lblUShipment.TabIndex = 51;
             this.lblUShipment.Text = "...";
             // 
@@ -1079,7 +1093,7 @@
             this.UTenantsStatusLabel.Location = new System.Drawing.Point(370, 482);
             this.UTenantsStatusLabel.MinimumSize = new System.Drawing.Size(100, 0);
             this.UTenantsStatusLabel.Name = "UTenantsStatusLabel";
-            this.UTenantsStatusLabel.Size = new System.Drawing.Size(100, 13);
+            this.UTenantsStatusLabel.Size = new System.Drawing.Size(100, 16);
             this.UTenantsStatusLabel.TabIndex = 52;
             this.UTenantsStatusLabel.Text = "...";
             this.UTenantsStatusLabel.Visible = false;
@@ -1090,7 +1104,7 @@
             this.BuildZipFilesStatusLabel.Location = new System.Drawing.Point(370, 505);
             this.BuildZipFilesStatusLabel.MinimumSize = new System.Drawing.Size(100, 0);
             this.BuildZipFilesStatusLabel.Name = "BuildZipFilesStatusLabel";
-            this.BuildZipFilesStatusLabel.Size = new System.Drawing.Size(100, 13);
+            this.BuildZipFilesStatusLabel.Size = new System.Drawing.Size(100, 16);
             this.BuildZipFilesStatusLabel.TabIndex = 53;
             this.BuildZipFilesStatusLabel.Text = "...";
             this.BuildZipFilesStatusLabel.Visible = false;
@@ -1101,7 +1115,7 @@
             this.BuildZipFilesCustomsStatusLabel.Location = new System.Drawing.Point(370, 528);
             this.BuildZipFilesCustomsStatusLabel.MinimumSize = new System.Drawing.Size(100, 0);
             this.BuildZipFilesCustomsStatusLabel.Name = "BuildZipFilesCustomsStatusLabel";
-            this.BuildZipFilesCustomsStatusLabel.Size = new System.Drawing.Size(100, 13);
+            this.BuildZipFilesCustomsStatusLabel.Size = new System.Drawing.Size(100, 16);
             this.BuildZipFilesCustomsStatusLabel.TabIndex = 54;
             this.BuildZipFilesCustomsStatusLabel.Text = "...";
             this.BuildZipFilesCustomsStatusLabel.Visible = false;
@@ -1121,7 +1135,7 @@
             this.ConvertSignatureLable.AutoSize = true;
             this.ConvertSignatureLable.Location = new System.Drawing.Point(538, 58);
             this.ConvertSignatureLable.Name = "ConvertSignatureLable";
-            this.ConvertSignatureLable.Size = new System.Drawing.Size(0, 13);
+            this.ConvertSignatureLable.Size = new System.Drawing.Size(0, 16);
             this.ConvertSignatureLable.TabIndex = 49;
             this.ConvertSignatureLable.UseMnemonic = false;
             // 
@@ -1141,7 +1155,7 @@
             this.UpdatePortslbl.Location = new System.Drawing.Point(565, 484);
             this.UpdatePortslbl.MinimumSize = new System.Drawing.Size(100, 0);
             this.UpdatePortslbl.Name = "UpdatePortslbl";
-            this.UpdatePortslbl.Size = new System.Drawing.Size(100, 13);
+            this.UpdatePortslbl.Size = new System.Drawing.Size(100, 16);
             this.UpdatePortslbl.TabIndex = 51;
             this.UpdatePortslbl.Text = "...";
             // 
@@ -1178,7 +1192,7 @@
             this.CopyReportButtonLable.Location = new System.Drawing.Point(519, 497);
             this.CopyReportButtonLable.MinimumSize = new System.Drawing.Size(100, 0);
             this.CopyReportButtonLable.Name = "CopyReportButtonLable";
-            this.CopyReportButtonLable.Size = new System.Drawing.Size(100, 13);
+            this.CopyReportButtonLable.Size = new System.Drawing.Size(100, 16);
             this.CopyReportButtonLable.TabIndex = 58;
             this.CopyReportButtonLable.Text = "...";
             this.CopyReportButtonLable.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -1199,7 +1213,7 @@
             this.updateFillComputingLBL.Location = new System.Drawing.Point(565, 458);
             this.updateFillComputingLBL.MinimumSize = new System.Drawing.Size(100, 0);
             this.updateFillComputingLBL.Name = "updateFillComputingLBL";
-            this.updateFillComputingLBL.Size = new System.Drawing.Size(100, 13);
+            this.updateFillComputingLBL.Size = new System.Drawing.Size(100, 16);
             this.updateFillComputingLBL.TabIndex = 60;
             this.updateFillComputingLBL.Text = "...";
             // 
@@ -1209,7 +1223,7 @@
             this.updateFillComputingPortsLBL.Location = new System.Drawing.Point(565, 471);
             this.updateFillComputingPortsLBL.MinimumSize = new System.Drawing.Size(100, 0);
             this.updateFillComputingPortsLBL.Name = "updateFillComputingPortsLBL";
-            this.updateFillComputingPortsLBL.Size = new System.Drawing.Size(100, 13);
+            this.updateFillComputingPortsLBL.Size = new System.Drawing.Size(100, 16);
             this.updateFillComputingPortsLBL.TabIndex = 61;
             this.updateFillComputingPortsLBL.Text = "...";
             // 
@@ -1217,7 +1231,7 @@
             // 
             this.tenant_TXT.Location = new System.Drawing.Point(271, 408);
             this.tenant_TXT.Name = "tenant_TXT";
-            this.tenant_TXT.Size = new System.Drawing.Size(132, 20);
+            this.tenant_TXT.Size = new System.Drawing.Size(132, 22);
             this.tenant_TXT.TabIndex = 62;
             // 
             // button33
@@ -1236,7 +1250,7 @@
             this.addWarehouseLabel.Location = new System.Drawing.Point(565, 445);
             this.addWarehouseLabel.MinimumSize = new System.Drawing.Size(100, 0);
             this.addWarehouseLabel.Name = "addWarehouseLabel";
-            this.addWarehouseLabel.Size = new System.Drawing.Size(100, 13);
+            this.addWarehouseLabel.Size = new System.Drawing.Size(100, 16);
             this.addWarehouseLabel.TabIndex = 64;
             this.addWarehouseLabel.Text = "...";
             // 
@@ -1342,7 +1356,7 @@
             this.updateReportLocalNamesLabel.Location = new System.Drawing.Point(15, 330);
             this.updateReportLocalNamesLabel.MinimumSize = new System.Drawing.Size(100, 0);
             this.updateReportLocalNamesLabel.Name = "updateReportLocalNamesLabel";
-            this.updateReportLocalNamesLabel.Size = new System.Drawing.Size(100, 13);
+            this.updateReportLocalNamesLabel.Size = new System.Drawing.Size(100, 16);
             this.updateReportLocalNamesLabel.TabIndex = 75;
             this.updateReportLocalNamesLabel.Text = "...";
             // 
@@ -1361,7 +1375,7 @@
             this.RecalculateCashbookLbl.AutoSize = true;
             this.RecalculateCashbookLbl.Location = new System.Drawing.Point(12, 71);
             this.RecalculateCashbookLbl.Name = "RecalculateCashbookLbl";
-            this.RecalculateCashbookLbl.Size = new System.Drawing.Size(76, 13);
+            this.RecalculateCashbookLbl.Size = new System.Drawing.Size(77, 16);
             this.RecalculateCashbookLbl.TabIndex = 78;
             this.RecalculateCashbookLbl.Text = "                       ";
             // 
@@ -1379,7 +1393,7 @@
             // 
             this.textBox1.Location = new System.Drawing.Point(53, 39);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(56, 20);
+            this.textBox1.Size = new System.Drawing.Size(56, 22);
             this.textBox1.TabIndex = 79;
             // 
             // label2
@@ -1387,7 +1401,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 42);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(40, 13);
+            this.label2.Size = new System.Drawing.Size(47, 16);
             this.label2.TabIndex = 80;
             this.label2.Text = "tenant:";
             // 
@@ -1410,7 +1424,7 @@
             this.linkLabel1.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.linkLabel1.Location = new System.Drawing.Point(162, 42);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(19, 13);
+            this.linkLabel1.Size = new System.Drawing.Size(23, 16);
             this.linkLabel1.TabIndex = 81;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "(?)";
@@ -1433,7 +1447,7 @@
             this.UpdateINFlble.Location = new System.Drawing.Point(206, 274);
             this.UpdateINFlble.MinimumSize = new System.Drawing.Size(100, 0);
             this.UpdateINFlble.Name = "UpdateINFlble";
-            this.UpdateINFlble.Size = new System.Drawing.Size(100, 13);
+            this.UpdateINFlble.Size = new System.Drawing.Size(100, 16);
             this.UpdateINFlble.TabIndex = 83;
             this.UpdateINFlble.Text = "...";
             // 
@@ -1526,7 +1540,7 @@
             this.UpdateCargoTrackingLabel.Location = new System.Drawing.Point(437, 378);
             this.UpdateCargoTrackingLabel.MinimumSize = new System.Drawing.Size(100, 0);
             this.UpdateCargoTrackingLabel.Name = "UpdateCargoTrackingLabel";
-            this.UpdateCargoTrackingLabel.Size = new System.Drawing.Size(100, 13);
+            this.UpdateCargoTrackingLabel.Size = new System.Drawing.Size(100, 16);
             this.UpdateCargoTrackingLabel.TabIndex = 101;
             this.UpdateCargoTrackingLabel.Text = "...";
             this.UpdateCargoTrackingLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1546,7 +1560,7 @@
             this.cbxOldUpdateCode.AutoSize = true;
             this.cbxOldUpdateCode.Location = new System.Drawing.Point(431, 350);
             this.cbxOldUpdateCode.Name = "cbxOldUpdateCode";
-            this.cbxOldUpdateCode.Size = new System.Drawing.Size(103, 17);
+            this.cbxOldUpdateCode.Size = new System.Drawing.Size(123, 20);
             this.cbxOldUpdateCode.TabIndex = 99;
             this.cbxOldUpdateCode.Text = "Run Old Update";
             this.cbxOldUpdateCode.UseVisualStyleBackColor = true;
@@ -1577,7 +1591,7 @@
             this.UpdateRulesLabel.Location = new System.Drawing.Point(434, 280);
             this.UpdateRulesLabel.MinimumSize = new System.Drawing.Size(100, 0);
             this.UpdateRulesLabel.Name = "UpdateRulesLabel";
-            this.UpdateRulesLabel.Size = new System.Drawing.Size(100, 13);
+            this.UpdateRulesLabel.Size = new System.Drawing.Size(100, 16);
             this.UpdateRulesLabel.TabIndex = 97;
             this.UpdateRulesLabel.Text = "...";
             this.UpdateRulesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1618,7 +1632,7 @@
             this.lblUTariffModule.Location = new System.Drawing.Point(206, 522);
             this.lblUTariffModule.MinimumSize = new System.Drawing.Size(100, 0);
             this.lblUTariffModule.Name = "lblUTariffModule";
-            this.lblUTariffModule.Size = new System.Drawing.Size(100, 13);
+            this.lblUTariffModule.Size = new System.Drawing.Size(100, 16);
             this.lblUTariffModule.TabIndex = 94;
             this.lblUTariffModule.Text = "...";
             // 
@@ -1651,7 +1665,7 @@
             this.lblTenantNew.Location = new System.Drawing.Point(206, 321);
             this.lblTenantNew.MinimumSize = new System.Drawing.Size(100, 0);
             this.lblTenantNew.Name = "lblTenantNew";
-            this.lblTenantNew.Size = new System.Drawing.Size(100, 13);
+            this.lblTenantNew.Size = new System.Drawing.Size(100, 16);
             this.lblTenantNew.TabIndex = 92;
             this.lblTenantNew.Text = "...";
             // 
@@ -1661,7 +1675,7 @@
             this.lblUGlobal.Location = new System.Drawing.Point(206, 494);
             this.lblUGlobal.MinimumSize = new System.Drawing.Size(100, 0);
             this.lblUGlobal.Name = "lblUGlobal";
-            this.lblUGlobal.Size = new System.Drawing.Size(100, 13);
+            this.lblUGlobal.Size = new System.Drawing.Size(100, 16);
             this.lblUGlobal.TabIndex = 90;
             this.lblUGlobal.Text = "...";
             // 
@@ -1671,7 +1685,7 @@
             this.lblUInfra.Location = new System.Drawing.Point(206, 470);
             this.lblUInfra.MinimumSize = new System.Drawing.Size(100, 0);
             this.lblUInfra.Name = "lblUInfra";
-            this.lblUInfra.Size = new System.Drawing.Size(100, 13);
+            this.lblUInfra.Size = new System.Drawing.Size(100, 16);
             this.lblUInfra.TabIndex = 89;
             this.lblUInfra.Text = "...";
             // 
@@ -1681,7 +1695,7 @@
             this.lblUCommon.Location = new System.Drawing.Point(206, 442);
             this.lblUCommon.MinimumSize = new System.Drawing.Size(100, 0);
             this.lblUCommon.Name = "lblUCommon";
-            this.lblUCommon.Size = new System.Drawing.Size(100, 13);
+            this.lblUCommon.Size = new System.Drawing.Size(100, 16);
             this.lblUCommon.TabIndex = 88;
             this.lblUCommon.Text = "...";
             // 
@@ -1691,7 +1705,7 @@
             this.lblUInvoice.Location = new System.Drawing.Point(206, 410);
             this.lblUInvoice.MinimumSize = new System.Drawing.Size(100, 0);
             this.lblUInvoice.Name = "lblUInvoice";
-            this.lblUInvoice.Size = new System.Drawing.Size(100, 13);
+            this.lblUInvoice.Size = new System.Drawing.Size(100, 16);
             this.lblUInvoice.TabIndex = 87;
             this.lblUInvoice.Text = "...";
             // 
@@ -1701,13 +1715,15 @@
             this.lblUQuote.Location = new System.Drawing.Point(206, 382);
             this.lblUQuote.MinimumSize = new System.Drawing.Size(100, 0);
             this.lblUQuote.Name = "lblUQuote";
-            this.lblUQuote.Size = new System.Drawing.Size(100, 13);
+            this.lblUQuote.Size = new System.Drawing.Size(100, 16);
             this.lblUQuote.TabIndex = 86;
             this.lblUQuote.Text = "...";
             // 
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage2.Controls.Add(this.uploadPackagesLabel);
+            this.tabPage2.Controls.Add(this.uploadPackagesTypes);
             this.tabPage2.Controls.Add(this.updateBluesnapTransactionsLabel);
             this.tabPage2.Controls.Add(this.bluesnapBtn);
             this.tabPage2.Controls.Add(this.groupBox2);
@@ -1772,6 +1788,25 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
             // 
+            // uploadPackagesTypes
+            // 
+            this.uploadPackagesTypes.Location = new System.Drawing.Point(271, 550);
+            this.uploadPackagesTypes.Name = "uploadPackagesTypes";
+            this.uploadPackagesTypes.Size = new System.Drawing.Size(184, 23);
+            this.uploadPackagesTypes.TabIndex = 102;
+            this.uploadPackagesTypes.Text = "Upload packages types";
+            this.uploadPackagesTypes.UseVisualStyleBackColor = true;
+            this.uploadPackagesTypes.Click += new System.EventHandler(this.uploadPackagesTypes_Click);
+            // 
+            // updateBluesnapTransactionsLabel
+            // 
+            this.updateBluesnapTransactionsLabel.AutoSize = true;
+            this.updateBluesnapTransactionsLabel.Location = new System.Drawing.Point(212, 573);
+            this.updateBluesnapTransactionsLabel.Name = "updateBluesnapTransactionsLabel";
+            this.updateBluesnapTransactionsLabel.Size = new System.Drawing.Size(17, 16);
+            this.updateBluesnapTransactionsLabel.TabIndex = 101;
+            this.updateBluesnapTransactionsLabel.Text = "...";
+            // 
             // bluesnapBtn
             // 
             this.bluesnapBtn.Location = new System.Drawing.Point(10, 563);
@@ -1801,7 +1836,7 @@
             this.linkLabel2.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.linkLabel2.Location = new System.Drawing.Point(162, 42);
             this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(19, 13);
+            this.linkLabel2.Size = new System.Drawing.Size(23, 16);
             this.linkLabel2.TabIndex = 81;
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "(?)";
@@ -1811,7 +1846,7 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(12, 71);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(76, 13);
+            this.label7.Size = new System.Drawing.Size(77, 16);
             this.label7.TabIndex = 78;
             this.label7.Text = "                       ";
             // 
@@ -1830,7 +1865,7 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(12, 42);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(40, 13);
+            this.label8.Size = new System.Drawing.Size(47, 16);
             this.label8.TabIndex = 80;
             this.label8.Text = "tenant:";
             // 
@@ -1838,7 +1873,7 @@
             // 
             this.citiesTextBox.Location = new System.Drawing.Point(53, 39);
             this.citiesTextBox.Name = "citiesTextBox";
-            this.citiesTextBox.Size = new System.Drawing.Size(56, 20);
+            this.citiesTextBox.Size = new System.Drawing.Size(56, 22);
             this.citiesTextBox.TabIndex = 79;
             this.citiesTextBox.TextChanged += new System.EventHandler(this.citiesTextBox_TextChanged);
             // 
@@ -1907,7 +1942,7 @@
             this.HarmonizeCodesLabel.AutoSize = true;
             this.HarmonizeCodesLabel.Location = new System.Drawing.Point(199, 500);
             this.HarmonizeCodesLabel.Name = "HarmonizeCodesLabel";
-            this.HarmonizeCodesLabel.Size = new System.Drawing.Size(0, 13);
+            this.HarmonizeCodesLabel.Size = new System.Drawing.Size(0, 16);
             this.HarmonizeCodesLabel.TabIndex = 91;
             // 
             // HarmonizeCodesButton
@@ -1936,7 +1971,7 @@
             this.EncryptionDocumentLabel.Location = new System.Drawing.Point(10, 173);
             this.EncryptionDocumentLabel.MinimumSize = new System.Drawing.Size(100, 0);
             this.EncryptionDocumentLabel.Name = "EncryptionDocumentLabel";
-            this.EncryptionDocumentLabel.Size = new System.Drawing.Size(100, 13);
+            this.EncryptionDocumentLabel.Size = new System.Drawing.Size(100, 16);
             this.EncryptionDocumentLabel.TabIndex = 82;
             this.EncryptionDocumentLabel.Text = "...";
             // 
@@ -1962,7 +1997,7 @@
             this.AirlineLogosCheckBox.AutoSize = true;
             this.AirlineLogosCheckBox.Location = new System.Drawing.Point(73, 83);
             this.AirlineLogosCheckBox.Name = "AirlineLogosCheckBox";
-            this.AirlineLogosCheckBox.Size = new System.Drawing.Size(118, 17);
+            this.AirlineLogosCheckBox.Size = new System.Drawing.Size(143, 20);
             this.AirlineLogosCheckBox.TabIndex = 106;
             this.AirlineLogosCheckBox.Text = "Apply for all tenants";
             this.AirlineLogosCheckBox.UseVisualStyleBackColor = true;
@@ -1972,7 +2007,7 @@
             this.UpdateLogosLabel.AutoSize = true;
             this.UpdateLogosLabel.Location = new System.Drawing.Point(129, 101);
             this.UpdateLogosLabel.Name = "UpdateLogosLabel";
-            this.UpdateLogosLabel.Size = new System.Drawing.Size(19, 13);
+            this.UpdateLogosLabel.Size = new System.Drawing.Size(20, 16);
             this.UpdateLogosLabel.TabIndex = 105;
             this.UpdateLogosLabel.Text = "....";
             // 
@@ -1981,7 +2016,7 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(389, 30);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(223, 13);
+            this.label6.Size = new System.Drawing.Size(275, 16);
             this.label6.TabIndex = 104;
             this.label6.Text = "ex: C:\\Users\\SAMARA\\Desktop\\AirlineLogos";
             // 
@@ -1989,7 +2024,7 @@
             // 
             this.FilePathTextBox.Location = new System.Drawing.Point(73, 27);
             this.FilePathTextBox.Name = "FilePathTextBox";
-            this.FilePathTextBox.Size = new System.Drawing.Size(298, 20);
+            this.FilePathTextBox.Size = new System.Drawing.Size(298, 22);
             this.FilePathTextBox.TabIndex = 103;
             // 
             // label5
@@ -1997,7 +2032,7 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(20, 30);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(47, 13);
+            this.label5.Size = new System.Drawing.Size(59, 16);
             this.label5.TabIndex = 102;
             this.label5.Text = "File path";
             // 
@@ -2006,7 +2041,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(20, 61);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(41, 13);
+            this.label4.Size = new System.Drawing.Size(50, 16);
             this.label4.TabIndex = 101;
             this.label4.Text = "Tenant";
             // 
@@ -2014,7 +2049,7 @@
             // 
             this.AirlineLogoTenantTextBox.Location = new System.Drawing.Point(73, 57);
             this.AirlineLogoTenantTextBox.Name = "AirlineLogoTenantTextBox";
-            this.AirlineLogoTenantTextBox.Size = new System.Drawing.Size(66, 20);
+            this.AirlineLogoTenantTextBox.Size = new System.Drawing.Size(66, 22);
             this.AirlineLogoTenantTextBox.TabIndex = 100;
             // 
             // button46
@@ -2029,6 +2064,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.button52);
             this.tabPage4.Controls.Add(this.fixJournalsButton);
             this.tabPage4.Controls.Add(this.button51);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
@@ -2036,8 +2072,28 @@
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage4.Size = new System.Drawing.Size(850, 622);
             this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Misc";
+            this.tabPage4.Text = "Accounting Tools";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // button52
+            // 
+            this.button52.Location = new System.Drawing.Point(18, 105);
+            this.button52.Name = "button52";
+            this.button52.Size = new System.Drawing.Size(180, 36);
+            this.button52.TabIndex = 2;
+            this.button52.Text = "Journals Reapproval";
+            this.button52.UseVisualStyleBackColor = true;
+            this.button52.Click += new System.EventHandler(this.journalsReapproveBtn_Click);
+            // 
+            // fixJournalsButton
+            // 
+            this.fixJournalsButton.Location = new System.Drawing.Point(18, 63);
+            this.fixJournalsButton.Name = "fixJournalsButton";
+            this.fixJournalsButton.Size = new System.Drawing.Size(180, 36);
+            this.fixJournalsButton.TabIndex = 1;
+            this.fixJournalsButton.Text = "Fix Duplicated Journals";
+            this.fixJournalsButton.UseVisualStyleBackColor = true;
+            this.fixJournalsButton.Click += new System.EventHandler(this.fixJournalsButton_Click);
             // 
             // button51
             // 
@@ -2049,24 +2105,16 @@
             this.button51.UseVisualStyleBackColor = true;
             this.button51.Click += new System.EventHandler(this.button51_Click_1);
             // 
-            // updateBluesnapTransactionsLabel
+            // uploadPackagesLabel
             // 
-            this.updateBluesnapTransactionsLabel.AutoSize = true;
-            this.updateBluesnapTransactionsLabel.Location = new System.Drawing.Point(212, 573);
-            this.updateBluesnapTransactionsLabel.Name = "updateBluesnapTransactionsLabel";
-            this.updateBluesnapTransactionsLabel.Size = new System.Drawing.Size(16, 13);
-            this.updateBluesnapTransactionsLabel.TabIndex = 101;
-            this.updateBluesnapTransactionsLabel.Text = "...";
-            // 
-            // fixJournalsButton
-            // 
-            this.fixJournalsButton.Location = new System.Drawing.Point(18, 63);
-            this.fixJournalsButton.Name = "fixJournalsButton";
-            this.fixJournalsButton.Size = new System.Drawing.Size(180, 36);
-            this.fixJournalsButton.TabIndex = 1;
-            this.fixJournalsButton.Text = "Fix Duplicated Journals";
-            this.fixJournalsButton.UseVisualStyleBackColor = true;
-            this.fixJournalsButton.Click += new System.EventHandler(this.fixJournalsButton_Click);
+            this.uploadPackagesLabel.AutoSize = true;
+            this.uploadPackagesLabel.Location = new System.Drawing.Point(461, 560);
+            this.uploadPackagesLabel.MinimumSize = new System.Drawing.Size(100, 0);
+            this.uploadPackagesLabel.Name = "uploadPackagesLabel";
+            this.uploadPackagesLabel.Size = new System.Drawing.Size(100, 13);
+            this.uploadPackagesLabel.TabIndex = 103;
+            this.uploadPackagesLabel.Text = "...";
+            this.uploadPackagesLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // Form1
             // 
@@ -2301,6 +2349,10 @@
         private System.Windows.Forms.Button bluesnapBtn;
         private System.Windows.Forms.Label updateBluesnapTransactionsLabel;
         private System.Windows.Forms.Button fixJournalsButton;
+        private System.Windows.Forms.ToolStripMenuItem accountingTesterToolStripMenuItem;
+        private System.Windows.Forms.Button button52;
+        private System.Windows.Forms.Button uploadPackagesTypes;
+        private System.Windows.Forms.Label uploadPackagesLabel;
     }
 }
 

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c1203389-b7d7-48d2-b421-346acd178367",
+		"_postman_id": "d7063d7d-1e6f-47c5-9e92-f8f0562b5f4d",
 		"name": "PrepareFullAccountingVars",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -574,7 +574,7 @@
 							"      {",
 							"           tests[\"Current Month Opened  : \" + false ] = ( true );",
 							"           ",
-							"            postman.setNextRequest(\"OpenCurrentmonth\");",
+							"            postman.setNextRequest(\"OpenCurrentMonth\");",
 							"      }",
 							"      ",
 							"     else",
@@ -860,7 +860,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/currencyviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&GetCount=true&PageIndex=0&PageSize=23&&",
+					"raw": "{{URL}}/api/currencyviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&GetCount=true&PageIndex=0&PageSize=23&=&=",
 					"host": [
 						"{{URL}}"
 					],
@@ -1019,7 +1019,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/vattypeviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22EPT%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n&&&Filter1Value=EXMPT",
+					"raw": "{{URL}}/api/vattypeviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22EPT%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n&=&=&Filter1Value=EXMPT",
 					"host": [
 						"{{URL}}"
 					],
@@ -1326,7 +1326,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/accountingpaymentmethodviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Cash&GetCount=true&PageIndex=0&PageSize=23\n&&",
+					"raw": "{{URL}}/api/accountingpaymentmethodviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Cash&GetCount=true&PageIndex=0&PageSize=23\n&=&=",
 					"host": [
 						"{{URL}}"
 					],
@@ -1501,7 +1501,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{URL}}/api/branchviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=main&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22main%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n&&",
+					"raw": "{{URL}}/api/branchviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=main&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22main%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n&=&=",
 					"host": [
 						"{{URL}}"
 					],
@@ -1667,7 +1667,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/chargestypeviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=air%20freight&GetCount=true&PageIndex=0&PageSize=23&",
+					"raw": "{{URL}}/api/chargestypeviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=air%20freight&GetCount=true&PageIndex=0&PageSize=23&=",
 					"host": [
 						"{{URL}}"
 					],
@@ -1997,7 +1997,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/customerviews/getbyfilters?GetAll=true&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=22\n&&Filter1Value=12PMCS",
+					"raw": "{{URL}}/api/customerviews/getbyfilters?GetAll=true&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=22\n&=&Filter1Value=12PMCS",
 					"host": [
 						"{{URL}}"
 					],
@@ -2150,7 +2150,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/vendorviews/getbyfilters?GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=22\n&&&Filter1Value=1s5PMV2",
+					"raw": "{{URL}}/api/vendorviews/getbyfilters?GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=22\n&=&=&Filter1Value=1s5PMV2",
 					"host": [
 						"{{URL}}"
 					],

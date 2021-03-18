@@ -1,6 +1,7 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -19,6 +20,7 @@ using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
+
 
 namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 {
@@ -159,8 +161,9 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
 
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
-                CardQuery cardQuery = new CardQuery(tenant);
-                List<ShortPartnersDetails> connectedPartners = cardQuery.GetConnectedPartnerIdsByGLAccountId(glAccountId, tenant);
+                GLAccountConnectedPartnerService gLAccountConnectedPartnerService = new GLAccountConnectedPartnerService(tenant);
+                List<ShortPartnersDetails> connectedPartners= gLAccountConnectedPartnerService.GetAllConnectedPartnersByGLAccountId(glAccountId);
+
 
                 return Request.CreateResponse(HttpStatusCode.OK, connectedPartners);
             }
@@ -170,6 +173,5 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
     }
 }

@@ -1,6 +1,7 @@
 ﻿using EvoPdf;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -127,9 +128,30 @@ namespace WebFreight.Web.Helpers.BIReport
         private string GetEvoPdfHtmlFooter()
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("<div style='width:100%;vertical-align: center;text-align:center;height:86px;font-size:40px'>Printed by Logitude</div>");
+              
+            if (IsLogitudeEnvironment())
+            {
+                stringBuilder.Append(RenderPrintedByText("Logitude"));
+            }
 
             return stringBuilder.ToString();
+
+        }
+
+        private static string RenderPrintedByText(string printedByText)
+        {
+            return "<div style='width:100%;vertical-align: center;text-align:center;height:86px;font-size:40px'>Printed by "+ printedByText + "</div>";
+        }
+
+        private static bool IsLogitudeEnvironment()
+        {
+            bool isLogitude = true; ;
+            if (LogitudeSettings.WorkEnvironment == "logbox" || LogitudeSettings.WorkEnvironment == "cloud")
+            {
+                isLogitude = false;
+            }
+
+            return isLogitude; 
         }
 
         private bool CheckIfAllowExportBIReportToPdfFormat()

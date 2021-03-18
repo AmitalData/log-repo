@@ -174,8 +174,8 @@
                         <li *ngFor="let item of FuturesMilestoneFields" class="dimmed">
                             <ng-container *ngIf="item.EstimationDate">
                                 <div class="tick"> </div>
-                                <div class="date" style="width: 130px;">{{item.EstimationDate | date: 'dd/MM/yyyy, HH:mm'}}</div>
                                 <div class="caption" style="width: 205px;">{{item.Name}}</div>
+                                <div class="date" style="width: 130px;">{{item.EstimationDate | date: 'dd/MM/yyyy, HH:mm'}}</div>
                                 <div class="desc" style="width: calc(100% - 450px); padding: 0;" [attr.title]="item.Notes">{{item.Notes}} </div>
                             </ng-container>
                         </li>
@@ -186,9 +186,9 @@
                         <li class="highlighted" *ngIf="CurrentMilestoneField.Date">
                             <ng-container>
                                 <div class="tick"> </div>
-                                <div class="date" style="width: 130px;">{{CurrentMilestoneField.Date | date: 'dd/MM/yyyy, HH:mm'}}</div>
                                 <div class="caption" style="width: 205px;">{{CurrentMilestoneField.Name}}</div>
-                                <div class="desc" style="width: calc(100% - 450px); padding: 0;"  [attr.title]="CurrentMilestoneField.Notes" >{{CurrentMilestoneField.Notes}}</div>
+                                <div class="date" style="width: 130px;">{{CurrentMilestoneField.Date | date: 'dd/MM/yyyy, HH:mm'}}</div>
+                                <div class="desc" style="width: calc(100% - 450px); padding: 0;" [attr.title]="CurrentMilestoneField.Notes">{{CurrentMilestoneField.Notes}}</div>
                             </ng-container>
                         </li>
                     </ul>
@@ -198,8 +198,8 @@
                         <li *ngFor="let item of CompletedMilestoneFields" [class.hide]='!item.Date'>
                             <ng-container *ngIf="item.Date">
                                 <div class="tick"> <img src="./assets/images/icons/tick.png" alt=""> </div>
-                                <div class="date" style="width: 130px;">{{item.Date | date: 'dd/MM/yyyy, HH:mm'}}</div>
                                 <div class="caption" style="width: fit-content;max-width: 205px;">{{item.Name}}</div>
+                                <div class="date" style="width: 130px;">{{item.Date | date: 'dd/MM/yyyy, HH:mm'}}</div>
                                 <div class="desc" style="width: calc(100% - 450px); padding: 0;" [attr.title]="item.Notes">{{item.Notes}}</div>
                             </ng-container>
                         </li>
@@ -228,7 +228,7 @@
 
                 <div class="field">
                     <div class="label">Gross Weight</div>
-                    <div class="value">{{ Shipment.GrossWeight }}</div>
+                    <div class="value">{{ Shipment.GrossWeight | number }} {{Shipment.GrossWeightUnitCode||''}}</div>
                 </div>
 
                 <div class="field">

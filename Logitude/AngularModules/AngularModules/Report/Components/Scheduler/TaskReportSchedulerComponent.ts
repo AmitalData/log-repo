@@ -43,7 +43,8 @@ export class TaskReportSchedulerComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.RefreshButtonClicked();
+        this.BuildTasksColumns();
+        this.LoadTaskSchedulers();
     }
 
     SetWindowArgs(windowArgs) {
@@ -219,9 +220,10 @@ export class TaskReportSchedulerComponent implements OnInit {
     }
 
     TasksDataSource = {
-        pageSize: 20,
+        pageSize: 100,
         rowCount: null,
-
+        sortingCol: "CreateDateTime",
+        sortingDir: "Descending",
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
             var tempo = this.getTasksRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
 
@@ -232,10 +234,6 @@ export class TaskReportSchedulerComponent implements OnInit {
     getTasksRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
 
         filters = new ApiQueryFilters();
-        if (!sortingCol) {
-            sortingCol = "NextRunTime";
-            sortingDir = "descending";
-        }
 
         if (this.filterTypeCode == "AL") {
             filters.AdditionalFilters = [];
@@ -259,7 +257,7 @@ export class TaskReportSchedulerComponent implements OnInit {
         filters.addAdditionalFilter("EntityId", this.ReportList.Id, null, null, "Equals", true, false, false, "String");
         filters.GetCount = getCount;
         filters.PageIndex = skip;
-        filters.PageSize = take;
+        filters.PageSize = 100;
         if (sortingCol) {
             filters.SortBy = sortingCol;
         }
@@ -273,10 +271,12 @@ export class TaskReportSchedulerComponent implements OnInit {
 
     private LoadTaskSchedulers() {
 
-        this.BuildTasksColumns();
+        //this.BuildTasksColumns();
 
         this.filterAgrs = new ApiQueryFilters();
-        
+        this.filterAgrs.PageSize = 100;
+        this.filterAgrs.SortBy = "CreateDateTime";
+        this.filterAgrs.SortDirection = "Descending";
 
         if (this.filterTypeCode == "AL") {
             this.filterAgrs.AdditionalFilters = []; 

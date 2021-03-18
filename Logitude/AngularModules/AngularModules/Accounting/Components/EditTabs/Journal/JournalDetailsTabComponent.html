@@ -446,7 +446,7 @@
                         </div>
                         <div *ngIf="logcelltemplate.IsEditMode">
                           <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'AccDay'" [InputType]="'integer'" [DataContext]="item"
-                                      [Text]="item.AccDay" [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
+                                    (LostFocus)="item.AccDay_LostFocus($event)"  [Text]="item.AccDay" [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
                         </div>
                       </log-cell-template>
                     </ng-template>
@@ -553,8 +553,8 @@
                             <span>{{item.LocalAmount | NumbersPipe:'N2'}}</span>
                           </div>
                           <div *ngIf="logcelltemplate.IsEditMode">
-                            <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [ObjectFieldName]="'LocalAmount'" [InputType]="'sigdouble'" [DataContext]="item"
-                                        (ValueChanged)="item.AmountChanged('local',$event,null)" [Text]="item.LocalAmount" [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
+                            <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [DebounceTime]="3000" [ObjectFieldName]="'LocalAmount'" [InputType]="'sigdouble'" [DataContext]="item"
+                                        (ValueChanged)="item.AmountChanged('local',$event,item.ForeignAmount)" [Text]="item.LocalAmount" [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
                           </div>
                         </div>
                       </log-cell-template>
@@ -605,8 +605,8 @@
                         </div>
                         <div *ngIf="logcelltemplate.IsEditMode">
 
-                          <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [ObjectFieldName]="'ForeignAmount'" [InputType]="'sigdouble'" [DataContext]="item"
-                                      (ValueChanged)="item.AmountChanged('foreign',null,$event)" [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
+                          <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [DebounceTime]="3000" [ObjectFieldName]="'ForeignAmount'" [InputType]="'sigdouble'" [DataContext]="item"
+                                      (ValueChanged)="item.AmountChanged('foreign',item.LocalAmount,$event)" [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
 
                         </div>
 

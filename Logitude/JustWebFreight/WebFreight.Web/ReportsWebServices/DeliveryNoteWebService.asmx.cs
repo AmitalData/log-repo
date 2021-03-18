@@ -196,10 +196,12 @@ namespace WebFreight.Web.ReportsWebServices
             dataProvider.FinalDestinationCode = shipment.MainCarriageFinalDestinationPortCode;
             dataProvider.AMSBL = shipment.AMSBL;
             dataProvider.DescriptionOfGoods = DataProviders.General.GetFieldString(shipment.DescriptionOfGoods);
+            dataProvider.ContainersNumbersArray = shipment.ContainersNumbers;
             dataProvider.IncotermName = shipment.IncotermName;
             dataProvider.DeclarationNumber = shipment.DeclarationNumber;
             dataProvider.CustomsClearancePointName = shipment.CustomClearancePointName;
             dataProvider.ValueOfGoods = shipment.ValueOfGoods;
+            dataProvider.MainCarriageCarrierNumber = shipment.MainCarriageCarrierNumber;
 
             MapBranchData();
 

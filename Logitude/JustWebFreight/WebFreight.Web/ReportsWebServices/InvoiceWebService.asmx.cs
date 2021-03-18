@@ -377,7 +377,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.MainCarriageLastdestinationPortName = shipment.MainCarriageFinalDestinationPortName;
                     invoicedataprovider.MainCarriageLastdestinationPortCode = shipment.MainCarriageFinalDestinationPortCode;
                     invoicedataprovider.TrailerNumber = shipment.TrailerNumber;
-
+                    invoicedataprovider.SpecialServiceType = shipment.SpecialServicesTypeName;
                     invoicedataprovider.WarehouseFreeDays = shipment.WarehouseStorageFreeDays == null ? 0 : shipment.WarehouseStorageFreeDays.Value;
                     invoicedataprovider.PreCarriageVessel = !string.IsNullOrEmpty(shipment.PreCarriageVesselName) ? shipment.PreCarriageVesselName : shipment.MasterPreCarriageVesselName;
 
