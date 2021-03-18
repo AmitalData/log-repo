@@ -209,7 +209,7 @@ export function AssertUpdateVessel() {
         if (interception.response.statusCode === 400) {
             CheckError(interception);
         }
-        else if (interception.response.statusCode === 200) {
+        else{
             AssertPutVessel(interception.response.statusCode,200)
         }
     })
@@ -295,7 +295,7 @@ function CheckError(interception){
     if (interception.response.body.ErrorMessage.indexOf("This vessel already exists") !== -1) {
         GenerateNewRandomCode();
     } else {
-        throw new Error("Failed");
+        throw new Error(interception.response.body.ErrorMessage);
     }
 }
 
