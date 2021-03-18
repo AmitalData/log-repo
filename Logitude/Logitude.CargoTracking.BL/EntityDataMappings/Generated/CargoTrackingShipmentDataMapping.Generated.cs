@@ -96,7 +96,6 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         DeliveryExceptionReason,
 	         GrossWeightUnitCode,
 	         ForwardingShipmentNumber,
-	         DirectionId, 
 	         ShipmentLevelCode,
 	      }
 
@@ -187,7 +186,6 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         DeliveryExceptionReason,
 	         GrossWeightUnitCode,
 	         ForwardingShipmentNumber,
-	         DirectionId, 
 	         ShipmentLevelCode,
 	      }
 
