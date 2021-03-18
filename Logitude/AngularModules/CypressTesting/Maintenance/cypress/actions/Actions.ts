@@ -38,9 +38,15 @@ export function ChangePasswordMockChange(){
         {
           method: RestAPI.POST,     
           url: Urls.PostChangePassword,     
-        },[true] 
-      )
-      cy.Click(MaintenanceSelectors.RetypePassword, BaseSelectors.ContainsOK);   
+        }
+      ),[true] 
+      cy.intercept(
+        {
+          method: RestAPI.POST,     
+          url: '**/PasswordChange/PostCheckUserPassword',     
+        }
+      ),[true] 
+      cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);   
 }
 export function OpenTabInMaintenanceMenu(tabNameToSearch:string , tabSelector:string){
     cy.Click(BaseSelectors.MaintenanceMenu, null);

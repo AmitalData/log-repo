@@ -29,7 +29,7 @@ Given("{string} as a new paswword and confirm password",(password)=>{
 });
 
 When("sumbit",()=>{
-    cy.Click(CommonSelectors.ConfirmPassword, null);
+    cy.Click(CommonSelectors.SubmitButton, null);
 });
 
 Then("validate message should appear successfully",()=>{

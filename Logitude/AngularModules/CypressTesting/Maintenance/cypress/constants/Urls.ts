@@ -8,7 +8,7 @@ export class Urls
     public static readonly ContactsGetSingle = "**/contacts/getsingle?**";
     public static readonly VendorsGetSingle = "**/vendors/getsingle?**";
     public static readonly VendorsviewGetSingle = "**/vendorviews/getsingle/?**";
-    public static readonly PostChangePassword='**/PasswordChange/PostCheckUserPassword'
+    public static readonly PostChangePassword='**/PostChangePassword/**'
     public static GetFilterSearch(filterBy:string){
         return '**/getbyfilters?**'+filterBy+'**'
     }

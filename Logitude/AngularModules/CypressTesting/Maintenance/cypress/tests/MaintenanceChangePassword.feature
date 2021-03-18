@@ -5,4 +5,4 @@ Feature:Change Password
         Given the user logged in and navigates to change password window from maintenance menu
         And "Spec_Flow21" as a current password and "ahmed13!A15" as a new paswword
         When change password
-        Then the password should reset successfully
+        Then the password should change successfully
