@@ -1353,6 +1353,13 @@ namespace MeatadataGeneratorTool
                     SetAttribute("RecordType", GetStringValue(f.RecordType), fieldElement, null);
                 }
 
+                if (!string.IsNullOrEmpty(f.EntityType))
+                {
+                    SetAttribute("EntityType", GetStringValue(f.EntityType), fieldElement, null);
+                }
+
+
+
                 if (!string.IsNullOrEmpty(f.HtmlListComponentUrl))
                 {
                     SetAttribute("HtmlListComponentUrl", GetStringValue(f.HtmlListComponentUrl), fieldElement, null);

@@ -148,6 +148,9 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool CopyToDW { get; set; }
         public bool EnableFullscreenTextBox { get; set; }
 
+        public string EntityType { get; set; }
+
+
 
     }
 }

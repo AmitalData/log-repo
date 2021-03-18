@@ -81,6 +81,7 @@ export class ObjectFieldList {
 		FullNameTextCodeCode: string;
 		ShortNameTextCodeCode: string;
         HelpTextCodeCode: string;
+        EntityType: string;
 
 
 
