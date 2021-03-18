@@ -98,7 +98,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             ledgerTransactionBalanceFilter.To = RefDateTo.Value;
             ledgerTransactionBalanceFilter.DateTypeCode = "3";
             ledgerTransactionBalanceFilter.Tenant = tenant;
-            ledgerTransactionBalanceFilter.CurrencyId = GetTenantCurrency();
+          //  ledgerTransactionBalanceFilter.CurrencyId = GetTenantCurrency();
             ledgerTransactionBalanceFilter.PageSize = 30;
             return ledgerTransactionBalanceFilter;
         }
