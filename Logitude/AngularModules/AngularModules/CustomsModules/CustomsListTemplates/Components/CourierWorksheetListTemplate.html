@@ -284,8 +284,8 @@
                             </li>
 
                             <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true">
-                                <span *ngIf="_CourierWorksheet['AcceptanceStatusCode']==null" (click)="currSplitButtonComponent.DropdownDisplayClose();GetSendECTHRDataMaman($event);">ש.מ.ב למסוף</span>
-                                <span *ngIf="_CourierWorksheet['AcceptanceStatusCode']!=null" class="DimLI">ש.מ.ב למסוף</span>
+                                <span (click)="currSplitButtonComponent.DropdownDisplayClose();GetSendECTHRDataMaman($event);">ש.מ.ב למסוף</span>
+                                <!-- *ngIf="_CourierWorksheet['AcceptanceStatusCode']==null" <span *ngIf="_CourierWorksheet['AcceptanceStatusCode']!=null" class="DimLI">ש.מ.ב למסוף</span>-->
                             </li>
 
                         </ul>

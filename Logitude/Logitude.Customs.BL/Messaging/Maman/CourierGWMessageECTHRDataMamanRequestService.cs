@@ -99,10 +99,10 @@ namespace Logitude.Customs.BL.Messaging.Maman
             {
                 throw new Exception($"Declaration Is not CourierDeclaration  declarationId={declarationId}");
             }
-            if (myDeclarationPM.AcceptanceStatusCode != null)
-            {
-                throw new Exception("לא ניתן לשדר מסר ש.מ.ב לממן לאחר קליטת זמינות");
-            }
+            //if (myDeclarationPM.AcceptanceStatusCode != null)
+            //{
+            //    throw new Exception("לא ניתן לשדר מסר ש.מ.ב לממן לאחר קליטת זמינות");
+            //}
             //CourierDeclarations
             //myCourierMasterQueryService.GetNotConnectedDeclaratins
 
