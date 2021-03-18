@@ -105,6 +105,8 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                             MainImageId = entityPM.MainImageId,
                             LoginProgressImageId = entityPM.LoginProgressImageId,
                             ForgetPasswordImageId = entityPM.ForgetPasswordImageId,
+                            SecondaryColor = entityPM.SecondaryColor,
+                            CustomPrivateLabel = entityPM.CustomPrivateLabel,
                             SearchFields = entityPM.PrivateLabelName + "," + entityPM.PrivateLabelShortName + "," + entityPM.PrivateLabelUrl + "," + entityPM.ContactUsEmail + ",",
                             Id = IdCounter.GetNumber("TenantManagmentPrivateLabels", 0).ToString(),
                         };
@@ -161,6 +163,8 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                         Poco.MainImageId = entityPM.MainImageId;
                         Poco.LoginProgressImageId = entityPM.LoginProgressImageId;
                         Poco.ForgetPasswordImageId = entityPM.ForgetPasswordImageId;
+                        Poco.SecondaryColor = entityPM.SecondaryColor;
+                        Poco.CustomPrivateLabel = entityPM.CustomPrivateLabel;
                         Poco.SearchFields = entityPM.PrivateLabelName + "," + entityPM.PrivateLabelShortName + "," + entityPM.PrivateLabelUrl + "," + entityPM.ContactUsEmail + ",";
                         tenantManagmentPrivateLabelsRepository.Update(Poco);
                         tenantManagmentPrivateLabelsRepository.SubmitChanges();

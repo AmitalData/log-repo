@@ -29,6 +29,7 @@ namespace WebFreight.Web.DataContracts
         public byte[] MainImageBytes { get; set; } 
         public byte[] LoginProgressImageBytes { get; set; }
         public byte[] ForgetPasswordImageBytes { get; set; }
+        public string SecondaryColor { get; set; }
 
 
 

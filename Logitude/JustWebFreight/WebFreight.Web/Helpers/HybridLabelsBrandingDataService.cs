@@ -53,6 +53,7 @@ namespace WebFreight.Web.Helpers
                     MainImageId = tenantManagementPM.MainImageId,
                     LoginProgressImageId = tenantManagementPM.LoginProgressImageId,
                     ForgetPasswordImageId = tenantManagementPM.ForgetPasswordImageId,
+                    SecondaryColor = tenantManagementPM.SecondaryColor,
                 };
                 SetPrivateLabelsImages(hybridBrandingData, BrandingDataRequest);
             }

@@ -300,7 +300,7 @@ export class RootComponent implements AfterViewInit {
               this.ClearLocation();
               if (this.isPrivateLable == true) {
                   let privateLableTermOfUsePage = "./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/CustomTermsOfUse/";
-                  privateLableTermOfUsePage = +this.isDSV ? "DSVTermsOfUseStartupComponent" : "HybridTermsOfUseStartupComponent";
+                  privateLableTermOfUsePage += this.isDSV ? "DSVTermsOfUseStartupComponent" : "HybridTermsOfUseStartupComponent";
                   SessionLocator.DynamicLoader.Load(privateLableTermOfUsePage, this.Child.Location)
                       .then(cmpRef => {
                           cmpRef.instance.ComponentRef = cmpRef;

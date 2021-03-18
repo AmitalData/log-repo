@@ -52,6 +52,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              MainColor = a.MainColor,
                                              LoginProgressImageId = a.LoginProgressImageId,
                                              ForgetPasswordImageId = a.ForgetPasswordImageId,
+                                             SecondaryColor = a.SecondaryColor,
+                                             CustomPrivateLabel = a.CustomPrivateLabel,
                                          }).FirstOrDefault();
 
             return entity;
@@ -79,6 +81,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                          MainColor = a.MainColor,
                                                          LoginProgressImageId = a.LoginProgressImageId,
                                                          ForgetPasswordImageId = a.ForgetPasswordImageId,
+                                                         SecondaryColor = a.SecondaryColor,
+                                                         CustomPrivateLabel = a.CustomPrivateLabel,
 
                                                      }).FirstOrDefault();
 
@@ -107,6 +111,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                            MainColor = a.MainColor,
                                                            LoginProgressImageId = a.LoginProgressImageId,
                                                            ForgetPasswordImageId = a.ForgetPasswordImageId,
+                                                           SecondaryColor = a.SecondaryColor,
+                                                           CustomPrivateLabel = a.CustomPrivateLabel,
                                                        }).FirstOrDefault();
 
             return entity;
@@ -133,6 +139,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         MainColor = a.MainColor,
                         LoginProgressImageId = a.LoginProgressImageId,
                         ForgetPasswordImageId = a.ForgetPasswordImageId,
+                        SecondaryColor = a.SecondaryColor,
+                        CustomPrivateLabel = a.CustomPrivateLabel,
                     });
         }
         public IQueryable<TenantManagmentPrivateLabelsList> GetTenantManagmentPrivateLablesLists()
@@ -157,6 +165,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         MainColor = a.MainColor,
                         LoginProgressImageId = a.LoginProgressImageId,
                         ForgetPasswordImageId = a.ForgetPasswordImageId,
+                        SecondaryColor = a.SecondaryColor,
+                        CustomPrivateLabel = a.CustomPrivateLabel,
                     });
         }
 
@@ -183,6 +193,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        MainColor = a.MainColor,
                        LoginProgressImageId = a.LoginProgressImageId,
                        ForgetPasswordImageId = a.ForgetPasswordImageId,
+                       SecondaryColor = a.SecondaryColor,
+                       CustomPrivateLabel = a.CustomPrivateLabel,
                    };
 
         }

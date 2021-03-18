@@ -590,20 +590,19 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetShipmentsQueriesCounts(int tenant, string transportModeId, string directionId, string SearchFilter, string serviceContextUser, string TypeCode = null)
+        public HttpResponseMessage GetShipmentsQueriesCounts([FromUri] ShipmentsQueriesCountsArgs shipmentsQueriesCountsArgs)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-
                 string loggedUserEmail = authToken.Email;
 
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
+                SecurityUtility.AuthenticationOnTenant(shipmentsQueriesCountsArgs.Tenant);
+                SecurityUtility.CheckContactFeature("Shipment", "READ", shipmentsQueriesCountsArgs.Tenant);
 
-                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                ImporterQueriesDataCounts myResult = shipmentQuery.GetShipmentsQueriesCounts(tenant, transportModeId, directionId, SearchFilter, serviceContextUser, TypeCode);
+                ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentsQueriesCountsArgs.Tenant);
+                ImporterQueriesDataCounts myResult = shipmentQuery.GetShipmentsQueriesCounts(shipmentsQueriesCountsArgs);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }

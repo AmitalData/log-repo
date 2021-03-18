@@ -11412,32 +11412,112 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         }
 
-        public ImporterQueriesDataCounts GetShipmentsQueriesCounts(int tenant, string transportModeId, string directionId, string SearchFilter, string serviceContextUser, string TypeCode = null)
+        public ImporterQueriesDataCounts GetShipmentsQueriesCounts(ShipmentsQueriesCountsArgs shipmentsQueriesCountsArgs)
         {
             ImporterQueriesDataCounts myResult = new ImporterQueriesDataCounts() { Id = 1 };
+            IShipmentDataViewContext dataViewContext = ShipmentDataViewContext.GetContext(shipmentsQueriesCountsArgs.Tenant);
+            IQueryable<ShipmentDataView> allShipments = (from f in dataViewContext.ShipmentDataViews where f.Tenant == shipmentsQueriesCountsArgs.Tenant && f.IsCancelled == false select f);
+            allShipments = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ShipmentDataView>(new QueryOperations(), allShipments, shipmentsQueriesCountsArgs.Tenant);
+            allShipments = ProductPermitionsFilter.AddUserProductRestrictionFilters<ShipmentDataView>(new QueryOperations(), allShipments, shipmentsQueriesCountsArgs.Tenant);
+            allShipments = GetAllFliteredShipments(allShipments, shipmentsQueriesCountsArgs);
 
-            IShipmentDataViewContext dataViewContext = ShipmentDataViewContext.GetContext(tenant);
-            IQueryable<ShipmentDataView> allShipments = (from f in dataViewContext.ShipmentDataViews where f.Tenant == tenant && f.IsCancelled == false select f);
+            myResult.AllShipmentsCount = allShipments.Take(1001).Count();
+            MapOpenShipmentsCount(myResult, allShipments);
+            MapArchivedShipmentsCount(myResult, allShipments);
+            MapMissingDocsCount(myResult, allShipments);
+            MapAgentShipmentsCount(myResult, allShipments);
+            MapImporterShipmentsCount(myResult, allShipments);
+            MapRequestedDocsCount(myResult, allShipments);
+            MapRequiredActionsCount(myResult, allShipments);
 
-            allShipments = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ShipmentDataView>(new QueryOperations(), allShipments, tenant);
-            allShipments = ProductPermitionsFilter.AddUserProductRestrictionFilters<ShipmentDataView>(new QueryOperations(), allShipments, tenant);
+            return myResult;
+        }
 
-
-            if (!string.IsNullOrEmpty(transportModeId))
+        private void MapRequiredActionsCount(ImporterQueriesDataCounts myResult, IQueryable<ShipmentDataView> allShipments)
+        {
+            IQueryable<ShipmentDataView> allReqActionsShipments = allShipments.Where(d => d.IsRequestedDocuments || d.RequestedDocumentsCount > 0 || d.IsDigitalSignRequired == true || d.IsDepositionRequired == true || (d.IsImporterApprovalRequried == true && string.IsNullOrEmpty(d.ApprovedByUserName)));
+            if (allReqActionsShipments != null)
             {
-                allShipments = allShipments.Where(d => d.TransportModeId == transportModeId);
+                myResult.RequiredActionsCount = (from r in allReqActionsShipments select r).Take(1001).Count();
             }
-            if (!string.IsNullOrEmpty(directionId))
+        }
+
+        private void MapRequestedDocsCount(ImporterQueriesDataCounts myResult, IQueryable<ShipmentDataView> allShipments)
+        {
+            IQueryable<ShipmentDataView> allReqDocsShipments = allShipments.Where(d => d.IsRequestedDocuments == true || d.RequestedDocumentsCount > 0 || d.IsDigitalSignRequired == true || d.IsDepositionRequired == true || (d.IsImporterApprovalRequried == true && string.IsNullOrEmpty(d.ApprovedByUserName)));
+            if (allReqDocsShipments != null)
             {
-                allShipments = allShipments.Where(d => d.DirectionId == directionId);
+                myResult.RequestedDocsCount = (from r in allReqDocsShipments select r).Take(1001).Count();
             }
-            if (!string.IsNullOrEmpty(SearchFilter))
+        }
+
+        private void MapImporterShipmentsCount(ImporterQueriesDataCounts myResult, IQueryable<ShipmentDataView> allShipments)
+        {
+            IQueryable<ShipmentDataView> allImporterShipments = allShipments.Where(d => d.ForwarderShipmentNumber == null || d.ForwarderShipmentNumber == string.Empty);
+            if (allImporterShipments != null)
             {
-                allShipments = allShipments.Where(d => (d.SearchFields.ToUpper().Contains(SearchFilter.ToUpper()) || d.DocumentsSearchFields.ToUpper().Contains(SearchFilter.ToUpper())));
+                myResult.ImporterShipmentsCount = (from r in allImporterShipments select r).Take(1001).Count();
             }
-            if (!string.IsNullOrEmpty(TypeCode))
+        }
+
+        private void MapAgentShipmentsCount(ImporterQueriesDataCounts myResult, IQueryable<ShipmentDataView> allShipments)
+        {
+            IQueryable<ShipmentDataView> allAgentShipments = allShipments.Where(d => d.ForwarderShipmentNumber != null && d.ForwarderShipmentNumber != string.Empty);
+            if (allAgentShipments != null)
             {
-                if (TypeCode.ToUpper() == "O")
+                myResult.AgentShipmentsCount = (from r in allAgentShipments select r).Take(1001).Count();
+            }
+        }
+
+        private void MapMissingDocsCount(ImporterQueriesDataCounts myResult, IQueryable<ShipmentDataView> allShipments)
+        {
+            IQueryable<ShipmentDataView> allMissingDocs = allShipments.Where(d => d.IsMissingDocument == true);
+            if (allMissingDocs != null)
+            {
+                myResult.MissingDocsCount = (from r in allMissingDocs select r).Take(1001).Count();
+            }
+        }
+
+        private void MapArchivedShipmentsCount(ImporterQueriesDataCounts myResult, IQueryable<ShipmentDataView> allShipments)
+        {
+            IQueryable<ShipmentDataView> allClosedShipments = allShipments.Where(d => d.IsOperationalClosed == true);
+            if (allClosedShipments != null)
+            {
+                myResult.ArchivedShipmentsCount = (from r in allClosedShipments select r).Take(1001).Count();
+            }
+        }
+
+        private void MapOpenShipmentsCount(ImporterQueriesDataCounts myResult, IQueryable<ShipmentDataView> allShipments)
+        {
+            IQueryable<ShipmentDataView> allOpenShipments = allShipments.Where(d => d.IsOperationalClosed == false);
+            if (allOpenShipments != null)
+            {
+                myResult.OpenShipmentsCount = (from r in allOpenShipments select r).Take(1001).Count();
+            }
+        }
+
+        private IQueryable<ShipmentDataView> GetAllFliteredShipments(IQueryable<ShipmentDataView> allShipmentsDataViews, ShipmentsQueriesCountsArgs shipmentsQueriesCountsArgs)
+        {
+            IQueryable <ShipmentDataView> allShipments = allShipmentsDataViews;
+            if (!string.IsNullOrEmpty(shipmentsQueriesCountsArgs.ForwarderPartnerId))
+            {
+                allShipments = allShipments.Where(d => d.ForwarderPartnerId == shipmentsQueriesCountsArgs.ForwarderPartnerId);
+            }
+            if (!string.IsNullOrEmpty(shipmentsQueriesCountsArgs.TransportModeId))
+            {
+                allShipments = allShipments.Where(d => d.TransportModeId == shipmentsQueriesCountsArgs.TransportModeId);
+            }
+            if (!string.IsNullOrEmpty(shipmentsQueriesCountsArgs.DirectionId))
+            {
+                allShipments = allShipments.Where(d => d.DirectionId == shipmentsQueriesCountsArgs.DirectionId);
+            }
+            if (!string.IsNullOrEmpty(shipmentsQueriesCountsArgs.SearchFilter))
+            {
+                allShipments = allShipments.Where(d => (d.SearchFields.ToUpper().Contains(shipmentsQueriesCountsArgs.SearchFilter.ToUpper()) || d.DocumentsSearchFields.ToUpper().Contains(shipmentsQueriesCountsArgs.SearchFilter.ToUpper())));
+            }
+            if (!string.IsNullOrEmpty(shipmentsQueriesCountsArgs.TypeCode))
+            {
+                if (shipmentsQueriesCountsArgs.TypeCode.ToUpper() == "O")
                 {
                     allShipments = allShipments.Where(d => (d.IsOperationalClosed == false));
                 }
@@ -11445,48 +11525,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 {
                     allShipments = allShipments.Where(d => (d.IsOperationalClosed == true));
                 }
-
             }
 
-            IQueryable<ShipmentDataView> allOpenShipments = allShipments.Where(d => d.IsOperationalClosed == false);
-            IQueryable<ShipmentDataView> allClosedShipments = allShipments.Where(d => d.IsOperationalClosed == true);
-            IQueryable<ShipmentDataView> allMissingDocs = allShipments.Where(d => d.IsMissingDocument == true);
-
-            IQueryable<ShipmentDataView> allAgentShipments = allShipments.Where(d => d.ForwarderShipmentNumber != null && d.ForwarderShipmentNumber != string.Empty);
-            IQueryable<ShipmentDataView> allImporterShipments = allShipments.Where(d => d.ForwarderShipmentNumber == null || d.ForwarderShipmentNumber == string.Empty);
-            IQueryable<ShipmentDataView> allReqDocsShipments = allShipments.Where(d => d.IsRequestedDocuments == true || d.RequestedDocumentsCount > 0 || d.IsDigitalSignRequired == true || d.IsDepositionRequired == true || (d.IsImporterApprovalRequried == true && string.IsNullOrEmpty(d.ApprovedByUserName)));
-            IQueryable<ShipmentDataView> allReqActionsShipments = allShipments.Where(d => d.IsRequestedDocuments || d.RequestedDocumentsCount > 0 || d.IsDigitalSignRequired == true || d.IsDepositionRequired == true || (d.IsImporterApprovalRequried == true && string.IsNullOrEmpty(d.ApprovedByUserName)));
-
-            myResult.AllShipmentsCount = allShipments.Take(1001).Count();
-            if (allOpenShipments != null)
-            {
-                myResult.OpenShipmentsCount = (from r in allOpenShipments select r).Take(1001).Count();
-            }
-            if (allClosedShipments != null)
-            {
-                myResult.ArchivedShipmentsCount = (from r in allClosedShipments select r).Take(1001).Count();
-            }
-            if (allMissingDocs != null)
-            {
-                myResult.MissingDocsCount = (from r in allMissingDocs select r).Take(1001).Count();
-            }
-            if (allAgentShipments != null)
-            {
-                myResult.AgentShipmentsCount = (from r in allAgentShipments select r).Take(1001).Count();
-            }
-            if (allImporterShipments != null)
-            {
-                myResult.ImporterShipmentsCount = (from r in allImporterShipments select r).Take(1001).Count();
-            }
-            if (allReqDocsShipments != null)
-            {
-                myResult.RequestedDocsCount = (from r in allReqDocsShipments select r).Take(1001).Count();
-            }
-            if (allReqActionsShipments != null)
-            {
-                myResult.RequiredActionsCount = (from r in allReqActionsShipments select r).Take(1001).Count();
-            }
-            return myResult;
+            return allShipments;
         }
 
         public List<string> GetShipmentsByTenantCreateDateCustomer(int tenant, DateTime StartDate, DateTime EndDate, string CustomerId, string CustomerTenantAccessId)
@@ -13491,5 +13532,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
     public class ShipmentJoinPayablesList
     {
 
+    }
+
+    public class ShipmentsQueriesCountsArgs
+    {
+        public int Tenant { get; set; }
+        public string TransportModeId { get; set; }
+        public string DirectionId { get; set; }
+        public string SearchFilter { get; set; }
+        public string ServiceContextUser { get; set; }
+        public string TypeCode { get; set; }
+        public string ForwarderPartnerId { get; set; }
     }
 }

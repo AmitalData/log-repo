@@ -22,8 +22,6 @@ export var DSVLoginComponent = (function (_super) {
         this.MainLogo = "";
         this.LoginProcessImage = "";
         this.showSpinner = true;
-        this.showErrorMessage = false;
-        this.serverError = "";
     }
     DSVLoginComponent.prototype.ngOnInit = function () {
         this.get_cookie_data();

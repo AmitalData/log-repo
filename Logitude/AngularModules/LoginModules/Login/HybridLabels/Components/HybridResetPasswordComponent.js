@@ -39,8 +39,12 @@ export var HybridResetPasswordComponent = (function (_super) {
                 _this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage();
                 _this.MainLogo = BrandingDataService.GetMainLogo();
             }
-            _this.showSpinner = false;
+        }, function (error) {
+            _this.BackgroundImage = BrandingDataService.DefaultBackground;
+            _this.ForgetPasswordImage = BrandingDataService.DefaultForgetPassword;
+            _this.MainLogo = BrandingDataService.DefaultMainLogo;
         });
+        this.showSpinner = false;
     };
     HybridResetPasswordComponent.decorators = [
         { type: Component, args: [{

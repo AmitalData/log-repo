@@ -38,6 +38,9 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     mainColorOpacity: number = 100;
     private mainColorCode: string;
     wrongMainColor: boolean = false;
+    secondaryColorOpacity: number = 100;
+    private secondaryColorCode: string;
+    wrongSecondaryColor: boolean = false;
     public BackgroundImageId: string;
     public MainImageId: string;
     public LoginProgressImageId: string;
@@ -105,6 +108,10 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         if (this.EntityPM.MainColor) {
             this.mainColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.MainColor);
             this.mainColorCode = this.ConvertRGBAToHexColor(this.EntityPM.MainColor);
+        }
+        if (this.EntityPM.SecondaryColor) {
+            this.secondaryColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.SecondaryColor);
+            this.secondaryColorCode = this.ConvertRGBAToHexColor(this.EntityPM.SecondaryColor);
         } 
     }
 
@@ -174,7 +181,26 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         this.UpdateEntityMainColor();
     }
      
+    get SecondaryColorOpacity() {
+        return this.secondaryColorOpacity;
+    }
+    set SecondaryColorOpacity(value: number) {
+        this.secondaryColorOpacity = value;
+        this.UpdateEntitySecondaryColor();
+    }
 
+    private UpdateEntitySecondaryColor() {
+        this.EntitySecondaryColor = this.ConvertHexToRGBColor(this.SecondaryColorCode, this.SecondaryColorOpacity);
+    }
+
+    public get SecondaryColorCode(): string {
+        return this.secondaryColorCode;
+    }
+    public set SecondaryColorCode(hexColor: string) {
+        this.secondaryColorCode = hexColor;
+        this.ValidateSecondaryColorCode(hexColor);
+        this.UpdateEntitySecondaryColor();
+    }
 
     ValidateHexCode(value: string, fieldName: string) {
 
@@ -217,7 +243,24 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         this.EntityPM.MainColor = value;
 
     }
-     
+
+    private ValidateSecondaryColorCode(hexColor: string) {
+        if (!this.ValidateHexCode(hexColor, "SecondaryColorCode"))
+            this.wrongSecondaryColor = true;
+        else
+            this.wrongSecondaryColor = false;
+
+        //  this.UpdateEditComponentValidationErrors();
+    }
+
+    get EntitySecondaryColor() {
+        return this.EntityPM.SecondaryColor;
+    }
+    set EntitySecondaryColor(value: string) {
+        this.EntityPM.SecondaryColor = value;
+
+    }
+
     SetWindowArgs(windowArgs: any) {
         this.EntityPM = windowArgs.Entity;
         this.IsEditMode = true;
@@ -520,7 +563,15 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         }
     }
  
+    get SecondaryColor() {
+        return this.EntityPM.SecondaryColor;
+    }
 
+    set SecondaryColor(value: string) {
+        if (value != this.EntityPM.SecondaryColor) {
+            this.EntityPM.SecondaryColor = value;
+        }
+    }
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
@@ -534,7 +585,11 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
             errors.push("Hybrid Partner Field is Required");
         }
         if (this.wrongMainColor) {
-            errors.push("Please Enter Valid Color");
+            errors.push("Please Enter Valid Main Color");
+        }
+
+        if (this.wrongSecondaryColor) {
+            errors.push("Please Enter Valid Secondary Color");
         }
 
         this.ValidationErrorsList = errors;

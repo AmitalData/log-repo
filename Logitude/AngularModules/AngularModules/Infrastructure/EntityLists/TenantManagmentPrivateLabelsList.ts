@@ -24,5 +24,7 @@ export class TenantManagmentPrivateLabelsList {
 		MainColor: string;
 		LoginProgressImageId: string;
 		ForgetPasswordImageId: string;
+		SecondaryColor: string;
+		CustomPrivateLabel: string;
 	
 }

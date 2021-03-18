@@ -40,8 +40,12 @@ export var HybridLoginComponent = (function (_super) {
                 _this.MainLogo = BrandingDataService.GetMainLogo();
                 _this.SmallLogo = BrandingDataService.GetSmallLogo();
             }
-            _this.showSpinner = false;
+        }, function (error) {
+            _this.BackgroundImage = BrandingDataService.DefaultBackground;
+            _this.MainImage = BrandingDataService.DefaultMainImage;
+            _this.MainLogo = BrandingDataService.DefaultMainLogo;
         });
+        this.showSpinner = false;
     };
     HybridLoginComponent.prototype.ClearLocation = function () {
         if (SessionInfo.MainLocation) {
