@@ -1,2 +1,0 @@
-Warning: Missing Index In DXML File Vessel.dxml, The Found Index On DB Is IX_Vessels_AutomaticLastUpdateDate, The Index Should Added To The DXML File
-Warning: Missing Index In DXML File QuoteComputedField.dxml, The Found Index On DB Is IX_QuoteComputedFields_AutomaticLastUpdateDate, The Index Should Added To The DXML File

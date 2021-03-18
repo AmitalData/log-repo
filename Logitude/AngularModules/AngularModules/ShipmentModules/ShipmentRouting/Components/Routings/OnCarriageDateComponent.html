@@ -1,4 +1,4 @@
-﻿
+
 <ToggleButton [DropDownHeight]="170" [DropDownWidth]="400" [Position]="'Left'" [IconPath]="'./Images/CalenderBlue.png'" [IsOpened]="IsOpened" (Opened)="IsOpened = $event">
     <div class="MediaFillRelative">
         <div class="MediaFixedPadding5">
@@ -22,7 +22,7 @@
                                 <td style="width: 85px;" class="Label">Expected Date:</td>
 
                                 <td style="width: 105px;">
-                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ExpectedDate'" [SelectedDateValue]="ExpectedDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                    <LogDatePicker [IsDisabled]="!IsEnabled" [NoObjectField]="true" [ObjectFieldName]="'ExpectedDate'" [SelectedDateValue]="ExpectedDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                                 </td>
 
                                 <td style="width: 2px;">
@@ -30,7 +30,7 @@
                                 </td>
 
                                 <td style="width: 95px;">
-                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ExpectedDate'" [SelectedDateValue]="ExpectedDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                    <LogDatePicker [IsDisabled]="!IsEnabled" [NoObjectField]="true" [ObjectFieldName]="'ExpectedDate'" [SelectedDateValue]="ExpectedDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
                                 </td>
 
                                 <td style="width: 2px;">
@@ -50,7 +50,7 @@
                                 <td class="Label">Actual Date:</td>
 
                                 <td>
-                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ActualDate'" [SelectedDateValue]="ActualDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                    <LogDatePicker [IsDisabled]="!IsEnabled" [NoObjectField]="true" [ObjectFieldName]="'ActualDate'" [SelectedDateValue]="ActualDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                                 </td>
 
                                 <td>
@@ -58,7 +58,7 @@
                                 </td>
 
                                 <td>
-                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ActualDate'" [SelectedDateValue]="ActualDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                    <LogDatePicker [IsDisabled]="!IsEnabled" [NoObjectField]="true" [ObjectFieldName]="'ActualDate'" [SelectedDateValue]="ActualDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
                                 </td>
 
                                 <td>
@@ -98,7 +98,7 @@
                                 </td>
 
                                 <td style="width: 57px;">
-                                    <button class="RedButton CustomButton" id="{{ 'OnCarriageDateOKBtn' | IdGeneratorPipe}}"  (click)="OkButtonClicked()">Ok</button>
+                                    <button class="RedButton CustomButton" id="{{ 'OnCarriageDateOKBtn' | IdGeneratorPipe}}"  [disabled]="!IsEnabled" (click)="OkButtonClicked()">Ok</button>
                                 </td>
                             </tr>
                         </table>

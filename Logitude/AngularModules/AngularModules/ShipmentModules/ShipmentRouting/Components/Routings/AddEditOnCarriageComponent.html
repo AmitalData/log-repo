@@ -362,7 +362,7 @@
                                                                                 </td>
 
                                                                                 <td style="width:30px;">
-                                                                                    <OnCarriageDate [EntityPM]="item.EntityPM" [State]="'Departure'" (PopupClosed)="item.OnDateComponentClosed($event)"></OnCarriageDate>
+                                                                                    <OnCarriageDate [EntityPM]="item.EntityPM" [State]="'Departure'" [IsEnabled]="IsOkButtonEnabled" (PopupClosed)="item.OnDateComponentClosed($event)"></OnCarriageDate>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
@@ -380,7 +380,7 @@
                                                                             </td>
 
                                                                             <td style="width:30px;">
-                                                                                <OnCarriageDate [EntityPM]="item.EntityPM" [State]="'Arrival'" (PopupClosed)="item.OnDateComponentClosed($event)"></OnCarriageDate>
+                                                                                <OnCarriageDate [EntityPM]="item.EntityPM" [State]="'Arrival'" [IsEnabled]="IsOkButtonEnabled" (PopupClosed)="item.OnDateComponentClosed($event)"></OnCarriageDate>
                                                                             </td>
                                                                         </tr>
                                                                     </table>
@@ -389,7 +389,7 @@
                                                                 <!-- Tools -->
                                                                 <td class="CellTools">
                                                                     <span class="CellSeparator"></span>
-                                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditContainer(item)"></IconButton>
+                                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" [IsEnabled]="IsOkButtonEnabled" (click)="EditContainer(item)"></IconButton>
                                                                 </td>
                                                             </tr>
 
