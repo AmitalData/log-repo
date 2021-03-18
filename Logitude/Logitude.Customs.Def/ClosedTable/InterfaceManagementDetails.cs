@@ -453,6 +453,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = null,
                 DcaPrefixName2 = "SendDF_MSG8251__DeclarationStatus_Response_Out.",
+                DcaPrefixName3 = "SendDF_MSG8251__DeclarationStatus_Response_EX_Out."
                 //    NeedSignature = false
             });
 
@@ -567,6 +568,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 InOut = InOutEnum.I.ToString(),
                 Description = "התרה",
                 DcaPrefixName = "SendDF_MSG2470_ReleaseGoodsMessage_Out.",
+                DcaPrefixName2= "SendDF_MSG2470_ReleaseGoodsMessage_EX_Out.",
                 DefaultSendOptionsCode = null,
                 DefaultPriority = 5,
                 AllowRestore = true,
@@ -1422,6 +1424,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 InOut = InOutEnum.I.ToString(),
                 Description = "הודעות לסוכן",
                 DcaPrefixName = "SendDOC_MSG5101_GNMessageToAgent_Out.", //"SendDOC_NG_5101_GNMessageToAgentMsg_Out.",
+                DcaPrefixName2= "SendDOC_MSG5101_GNMessageToAgent_EX_Out.",
                 DefaultSendOptionsCode = null,
                 DefaultPriority = 5,
                 AllowRestore = true,
