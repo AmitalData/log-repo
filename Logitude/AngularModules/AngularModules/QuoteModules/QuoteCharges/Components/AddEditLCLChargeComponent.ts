@@ -345,7 +345,7 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
     }
 
     ValidateAddingPFCLUOM() {
-        if (this.QuotePM.QuoteCharges.filter(d => (d.CostMeasurementCode == "PFCL" || d.SaleMeasurementCode == "PFCL") && d != this.EntityPM).length > 0) {
+        if (this.QuotePM.QuoteCharges.filter(d => (d.CostMeasurementCode == "PFCL" || d.SaleMeasurementCode == "PFCL") && d != this.EntityPM).length > 1) {
             this.errors.push("Charge with Percent of foreign charges local amounts UOM already added");
         }
     }
