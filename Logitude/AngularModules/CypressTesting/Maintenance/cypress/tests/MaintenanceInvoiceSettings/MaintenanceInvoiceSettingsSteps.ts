@@ -18,7 +18,7 @@ let invoiceSettingsDetails: InvoiceSettingsDetails;
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
 let ARInvoiceNumber: string;
-//#region Disable/enavle void invoice settings
+//#region Disable/enable void invoice settings
 Given("the user logged in and navigate to {string} in maintenance menu", (InvoiceSettings) => {
     cy.Login()
     MaintenanceActions.OpenMaintenanceItemFromMaintenanceMenu(InvoiceSettings, MaintenanceSelectors.InvoiceSettingsMaintenanceItem)
@@ -43,7 +43,6 @@ Then("the invoice setting should update successfully", () => {
     MaintenanceActions.AssertUpdateInvoiceSettings()
 });
 //#endregion
-//#endregion
 
 //#region Create direct export air shipment
 Given("the user navigates to shipments workspace", () => {
@@ -65,7 +64,6 @@ Then("the shipment should create successfully", () => {
         shipmentNumber = interception.response.body.ShipmentNumber;
     })
 });
-
 //#endregion
 //#region add receivable 
 Given("a receivable with the following details", (dataTable) => {
@@ -94,7 +92,6 @@ When("create invoice", () => {
 Then("the invoice should create successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });
-
 //#endregion
 
 //#region Approve ARInvoice
@@ -130,10 +127,3 @@ Then("the invoice should void successfully", () => {
 });
 //#endregion
 
-//#region enable void invoice settings
-Given("the user navigates to {string} in maintenance menu", (InvoiceSettings) => {
-    cy.BackButton(BaseSelectors.ContainsShipment + shipmentNumber);
-    cy.BackButton(BaseSelectors.ContainsOperations);
-    MaintenanceActions.OpenMaintenanceItemFromMaintenanceMenu(InvoiceSettings, MaintenanceSelectors.InvoiceSettingsMaintenanceItem)
-});
-//#endregion
