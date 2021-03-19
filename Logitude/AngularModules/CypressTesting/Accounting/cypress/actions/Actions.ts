@@ -216,10 +216,13 @@ export function SetAsSentARInvoice() {
 export function VoidARInvoice() {
     cy.Click(BaseSelectors.MoreList, null, true)
     cy.Click(AccountingSelectors.ARInvoiceVoidButton, null)
-    if (InvoiceSettingsDetails.allowVoidARI) {
-        DefinePutARInvoicesRequest()
-        cy.Click(ShipmentSelectors.ConfirmWindowYes, null);
+    if (InvoiceSettingsDetails.AllowVoidARI) {
+        CompleteVoidProcess();
     }
+}
+function CompleteVoidProcess() {
+    DefinePutARInvoicesRequest()
+    cy.Click(ShipmentSelectors.ConfirmWindowYes, null);
 }
 function DefinePutARInvoicesRequest(){
     cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)

@@ -93,7 +93,6 @@ Then("the invoice should create successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });
 //#endregion
-
 //#region Approve ARInvoice
 When("approve invoice", () => {
     AccountingActions.ARApproveInvoice();
@@ -106,7 +105,6 @@ Then("the invoice should approve successfully", () => {
 });
 
 //#endregion
-
 //#region Void ARInvoice
 Given("the user goes back to ARInvoice", () => {
     ShipmentActions.NavigatesToShipmentsWorkspace()

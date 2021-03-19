@@ -1,5 +1,5 @@
 @dev @all 
-Feature: Disable Then Enable Voiding Invoice from Maintenance name
+Feature: Disable Then Enable Voiding Invoice from Maintenance 
     The user disables voiding invoices from Invoice Settings, creates AR invoice,
     tries to void it but gets an error, goes back to invoice settings in maintenance,
     enables voiding invoices, goes back to the same invoice and void it successfully
@@ -52,7 +52,7 @@ Feature: Disable Then Enable Voiding Invoice from Maintenance name
         When void invoice
         Then the following message "Accounting Settings doesn't allow void A/R Invoice" should appear
 
-    Scenario: enable void invoice settings
+    Scenario: Enable void invoice settings
         Given the user navigates to "invoice settings" in maintenance menu
         Given accounting settings with the following details
             | VoidInvoice | Allowed |

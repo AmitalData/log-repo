@@ -624,7 +624,7 @@ export function AssertUpdateInvoiceSettings() {
 }
 function AssertPutAccountingSettings() {
     BaseAssertion.AssertStatusCode(RequestAliases.AccountingSettings, 200).then((interception) => {
-        InvoiceSettingsDetails.allowVoidARI=interception.request.body.allowVoidARI
+        InvoiceSettingsDetails.AllowVoidARI=interception.request.body.allowVoidARI
     });
 }
 export function AssertVoidInvoiceMessage(Message:string){
