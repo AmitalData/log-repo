@@ -2188,11 +2188,11 @@ export class PartnerItem extends BaseComponent {
             var myPerspective: string = null;
             var myComponentPath: string = null;
 
-            if (this.CardDependencyProperty1 == "AG") {
+            if (this.Code == "AGENT") {
                 myComponentPath = "./CommonModules/CommonAgent/Components/NewEntity/NewAgentComponent";
             }
 
-            else if (this.CardDependencyProperty1 == "WH") {
+            else if (this.Code == "CLERN") {
                 myComponentPath = "./CommonModules/CommonPartners/Components/NewEntity/NewWarehouseComponent";
             }
 
