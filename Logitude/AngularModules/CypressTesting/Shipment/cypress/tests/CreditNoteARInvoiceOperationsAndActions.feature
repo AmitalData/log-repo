@@ -1,4 +1,4 @@
-@smoke @stable @leen
+@smoke @stable 
 Feature: Credit note ARInvoice operations and actions
     After the user logging in the system and Update Accounting System to be None,navigates to shipments workspace
     will create a direct shipment, after that create and approve a credit note ARInvoice
