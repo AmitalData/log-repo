@@ -2,5 +2,7 @@ export interface CustomerDetails{
     CompanyName:string,
     City: string,
     Country: string,
-    State:string
+    State:string,
+    PhoneNumber:string,
+    FaxNumber:string
 }

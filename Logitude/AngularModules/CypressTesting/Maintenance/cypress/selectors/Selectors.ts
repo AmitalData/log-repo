@@ -8,7 +8,7 @@ export class MaintenanceSelectors {
 
     public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";
 
-    //#region Customer
+    //#region Contact
     public static readonly ContactSaveButton = "#Contact-Save";
     public static readonly AnonymizeContactButton = "#ContactBAnonymize";
     public static readonly ContactEmail = "#Contact_Email";
@@ -66,7 +66,19 @@ export class MaintenanceSelectors {
     public static readonly VesselFirstRow = "div[id$='row0']"
 
     //#endregion
-
+    //#region Customer
+    public static readonly NewCustomerButton= "#NewCustomer"
+    public static readonly PotentialCustomerName = "#Customer_EnglishName"
+    public static readonly PotentialCustomerCity = "#Customer_City_Potential"
+    public static readonly PotentialCustomerCountry = "#Customer_CountryId_Potential"
+    public static readonly PotentialCustomerState = "#Customer_StateId_Potential"
+    public static readonly PotentialAddContactCheckBox = "#AddContactCheckBox"
+    public static readonly PotentialCustomerPhoneNumber = "#Customer_PhoneNumber_Potential"
+    public static readonly PotentialCustomerFaxNumber = "#Customer_FaxNumber_Potential"
+    public static readonly PotentialCustomerAddress1= "#Customer_Address1_Potential"
+    public static readonly OkAddPotentialCustomer = "#Ok-AddPotCustomer"
+    public static readonly ActivateCustomerButton= "#CustomerBActivate"
+    //#endregion
     public static NewWizardButton(name: string): string {
         return "#NewButton_" + name;
     }

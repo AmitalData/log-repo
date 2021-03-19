@@ -1,4 +1,4 @@
-@release @stable
+@release @stable @c
 Feature: Create customs credit note ARInvoice
     After the user logging in the system and Update Accounting System to be None,Activate Customs Management in Shipments,
     navigates to shipments workspace
@@ -22,6 +22,8 @@ Feature: Create customs credit note ARInvoice
             | City        | Anchorage   |
             | Country     | US          |
             | State       | AK          |
+            | PhoneNumber | 98765443    |
+            | FaxNumber   | 98765443    |
         When create customer
         Then the customer should create successfully
 

@@ -1,4 +1,4 @@
-@smoke @release @stable
+@smoke @release @stable @c
 Feature: Add and delete package from a quote
   After the user logging in the system and navigate to quotes workspace
   will create a customer as shipper in the new quote
@@ -11,6 +11,8 @@ Feature: Add and delete package from a quote
       | City        | Anchorage   |
       | Country     | US          |
       | State       | AK          |
+      | PhoneNumber | 98765443    |
+      | FaxNumber   | 98765443    |
     When create customer
     Then the customer should create successfully
 

@@ -1,4 +1,4 @@
-@smoke @release @stable
+@smoke @release @stable @c
 Feature: ARInvoice Approve, set as sent and void
     After the user logging in the system and Update Accounting System to be None,navigates to shipments workspace
     will create a direct shipment,update routing tab,packages.
@@ -18,6 +18,8 @@ Feature: ARInvoice Approve, set as sent and void
             | City        | Anchorage   |
             | Country     | US          |
             | State       | AK          |
+            | PhoneNumber | 98765443    |
+            | FaxNumber   | 98765443    |
         When create customer
         Then the customer should create successfully
 

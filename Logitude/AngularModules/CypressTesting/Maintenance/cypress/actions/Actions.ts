@@ -599,3 +599,26 @@ function AssertContactDatepickerNotSelected(dateType:string){
     });
 }
 //#endregion
+//#region Customer in CRM
+export function OpenNewPotentialCustomerWizard() {
+    cy.Click(MaintenanceSelectors.NewCustomerButton,null);
+}
+export function FillPotentialCustomerDetails(){
+ cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerName,"")   
+ cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerCity,"")   
+ cy.FillLogLov(MaintenanceSelectors.PotentialCustomerCountry,"",true)   
+ cy.FillLogLov(MaintenanceSelectors.PotentialCustomerState,"",true)   
+ cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerPhoneNumber,"")   
+ cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerFaxNumber,"")   
+}
+export function AddPotentialCustomer(){
+
+}
+export function AssertAddPotentialCustomer(){
+    
+}
+export function FillCustomerActivationWindow(){
+    FillPotentialCustomerDetails();
+     
+} 
+//#endregion
