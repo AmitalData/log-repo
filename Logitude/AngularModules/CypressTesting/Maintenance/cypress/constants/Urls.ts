@@ -14,9 +14,12 @@ export class Urls
     public static readonly Vessels = "**/vessels";
     public static readonly VesselsGetSingle = "**/vessels/getsingle?**";
     public static readonly VesselviewGetSingle = "**/vesselviews/getsingle/?**";
-
-
+    public static readonly Tenants="**/tenants"
     public static GetFilterSearch(filterBy:string){
         return '**/getbyfilters?**'+filterBy+'**'
+    }
+    
+    public static GetQuickSearch(CustomerNumber: string): string{
+        return  "**/GetCustomersQuickSearch?**" + CustomerNumber+"**";
     }
 }

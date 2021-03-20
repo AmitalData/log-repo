@@ -4,6 +4,7 @@ export class MaintenanceSelectors {
     public static readonly ContactsMaintenanceItem = "#MaintenanceItemMTCO";
     public static readonly VendorMaintenanceItem = "#MaintenanceItemMTVD"
     public static readonly VesselMaintenanceItem = "#MaintenanceItemMTVS"
+    public static readonly CustomerSettingsMaintenanceItem="#MaintenanceItemCUSA"
     //#endregion
 
     public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";
@@ -66,18 +67,32 @@ export class MaintenanceSelectors {
     public static readonly VesselFirstRow = "div[id$='row0']"
 
     //#endregion
-    //#region Customer
+    //#region Customer settings
+    public static readonly IsPotentialCustomerTelephoneRequiredCheckBox="#Tenant_IsPotentialTelRequired"
+    public static readonly IsCustomerTelephoneRequiredCheckBox="#Tenant_IsCustomerTelRequired"
+    public static readonly IsPotentialCustomerFaxRequiredCheckBox="#Tenant_IsPotentialFaxRequired"
+    public static readonly IsCustomerFaxRequiredCheckBox="#Tenant_IsCustomerFaxRequired"
+    public static readonly IsCustomerAddress1RequiredCheckBox="#Tenant_IsCustomerAddress1Required"
+
+    //#endregion
+    //#region Potential Customer
     public static readonly NewCustomerButton= "#NewCustomer"
     public static readonly PotentialCustomerName = "#Customer_EnglishName"
     public static readonly PotentialCustomerCity = "#Customer_City_Potential"
     public static readonly PotentialCustomerCountry = "#Customer_CountryId_Potential"
     public static readonly PotentialCustomerState = "#Customer_StateId_Potential"
-    public static readonly PotentialAddContactCheckBox = "#AddContactCheckBox"
+    public static readonly PotentialCustomerAddContactCheckBox = "#AddContactCheckBox"
     public static readonly PotentialCustomerPhoneNumber = "#Customer_PhoneNumber_Potential"
     public static readonly PotentialCustomerFaxNumber = "#Customer_FaxNumber_Potential"
     public static readonly PotentialCustomerAddress1= "#Customer_Address1_Potential"
     public static readonly OkAddPotentialCustomer = "#Ok-AddPotCustomer"
     public static readonly ActivateCustomerButton= "#CustomerBActivate"
+    public static readonly OKActivateCustomer="#Ok-activate"
+    //#endregion
+    //#region Customer workspace
+    public static CustomerSearchBar= "#Card_Search"
+    public static CustomerSearchParent="quicksearchtextbox"
+    public static CustomerSearchParentClass=".LogitudeQuickSearchTextBox"
     //#endregion
     public static NewWizardButton(name: string): string {
         return "#NewButton_" + name;
