@@ -9,6 +9,8 @@ import { EntityListService } from '../../../Infrastructure/Services/EntityListSe
 import { ReportGroupList } from '../../EntityLists/ReportGroupList';
 import { ReportList } from '../../EntityLists/ReportList';
 import { SchedulerDetails, ReportSchedulerDetails, FTPSchedulerDetails } from '../../../Infrastructure/DataContracts/SchedulerDetails';
+import { SchedulerExtendedPMService } from '../../../Infrastructure/Services/ExtendedPMs/SchedulerExtendedPMService';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     
@@ -30,6 +32,10 @@ export class TaskReportSchedulerComponent implements OnInit {
     @Output() TasksCustomColumnsReady = new EventEmitter();
     @Output() MenuHeaderchangeeventTasks = new EventEmitter();
     @Output() SelectedRowChanged = new EventEmitter();
+
+    schedulerExtendedPMService: SchedulerExtendedPMService;
+    public isExceedsScheduledTasksLimitPerReport = false;
+
     constructor(private _entityListService: EntityListService) {
 
         this.CurrentSession.SessionEvent.subscribe(($event: any) => {
@@ -40,6 +46,9 @@ export class TaskReportSchedulerComponent implements OnInit {
                 }
             }
         });
+
+
+        this.schedulerExtendedPMService = new SchedulerExtendedPMService();
     }
 
     ngOnInit() {
@@ -61,25 +70,43 @@ export class TaskReportSchedulerComponent implements OnInit {
     NewTaskClicked() {
         var newItem: TasksSchedulerPM = new TasksSchedulerPM();
         newItem.CreatedBy = SessionLocator.LoggedUserPM.EnglishName;
-        newItem.UpdatedBy = SessionLocator.LoggedUserPM.EnglishName;
-        newItem.TriggerType = "O";
+        newItem.UpdatedBy = SessionLocator.LoggedUserPM.EnglishName; 
         newItem.Tenant = SessionLocator.Tenant;
+        newItem.TriggerType = "O"; 
         newItem.Type = this.SchedulerType;
+        var y;
 
-        var windowArgs: any = {};
-        windowArgs.ReportGroupList = this.ReportGroupList;
-        windowArgs.ReportList = this.ReportList;
+        this.AddReportScheduler(newItem); 
+     
+    }
 
-        var logWindow = new LogitudeWindow();
-        logWindow.Height = 820;
-        logWindow.Width = 1250;
-        logWindow.Title = this.ReportList.Name + " Scheduler Details";
-        logWindow.DataContext = new TaskReportSchedulerItemClass(newItem, this, true);
-        logWindow.WindowArgs = windowArgs;
-        logWindow.Show('./Report/Components/Scheduler/AddEditReportSchedulerComponent');
-        logWindow.WindowClosed.subscribe(closed => {
-            this.IsEditReportSchedulerEventAlreadyExist = false;
+    private AddReportScheduler(newItem: TasksSchedulerPM) {
+        this.schedulerExtendedPMService.isExceedsScheduledTasksLimitPerReport(newItem.Tenant, newItem.CreatedBy, this.ReportList.Id).subscribe((serviceResponse: ServiceResponse) => {
+            if (!serviceResponse.HasError) {
+                this.isExceedsScheduledTasksLimitPerReport = serviceResponse.Result.body;
+                if (!this.isExceedsScheduledTasksLimitPerReport) {
+                    this.AddEditReportScheduler(newItem);
+                }
+            }
         });
+    }
+
+    AddEditReportScheduler(newItem: TasksSchedulerPM) {
+         
+            var windowArgs: any = {};
+            windowArgs.ReportGroupList = this.ReportGroupList;
+            windowArgs.ReportList = this.ReportList;
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Height = 820;
+            logWindow.Width = 1250;
+            logWindow.Title = this.ReportList.Name + " Scheduler Details";
+            logWindow.DataContext = new TaskReportSchedulerItemClass(newItem, this, true);
+            logWindow.WindowArgs = windowArgs;
+            logWindow.Show('./Report/Components/Scheduler/AddEditReportSchedulerComponent');
+            logWindow.WindowClosed.subscribe(closed => {
+                this.IsEditReportSchedulerEventAlreadyExist = false;
+            }); 
     }
 
     EditTaskClicked(DataContext) {

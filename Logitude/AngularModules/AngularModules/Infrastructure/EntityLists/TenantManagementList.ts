@@ -154,5 +154,6 @@ export class TenantManagementList {
 		LastTariffUsageDate: Date;
 		LastWeekCreatedTariffs: number;
 		LastMonthCreatedTariffs: number;
+		ScheduledTasksLimitPerReport: number;
 	
 }
