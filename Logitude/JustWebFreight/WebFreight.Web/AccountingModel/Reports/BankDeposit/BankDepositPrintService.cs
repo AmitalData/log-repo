@@ -96,7 +96,7 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
                 bankDepositDP.ForeignAmount = bankDepositPM.ForeignAmount;
                 bankDepositDP.CurrencyCode = bankDepositPM.DepositCurrencyCode;
 
-                SetCreatedByUserNameDPVariable(tenant, bankDepositDP, bankDepositPM);
+                SetCreatedByUserName(tenant, bankDepositDP, bankDepositPM);
 
                 // BankAccount mapping
                 BankAccountPM bankAccount = bankAccountQuery.GetByAccountNumber(bankDepositPM.BankAccountNumber, tenant);
@@ -131,7 +131,7 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
             return bankDepositDP;
         }
 
-        private static void SetCreatedByUserNameDPVariable(int tenant, BankDepositDataProvider bankDepositDP, BankDepositPM bankDepositPM)
+        private static void SetCreatedByUserName(int tenant, BankDepositDataProvider bankDepositDP, BankDepositPM bankDepositPM)
         {
             UserQuery userQuery = new UserQuery(tenant);
             UserPM userPM = userQuery.GetSinglePM(bankDepositPM.CreatedByUserId, tenant);
