@@ -555,8 +555,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
             }
 
             this.SetSelectedCashbookLines();
-            this.CalculateTotals();
             this.CheckIfOneOfTheOriginalLineUnChecked();
+            this.CalculateTotals();
 
         });
     }
@@ -574,10 +574,13 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     private CheckIfOneOfTheOriginalLineUnChecked() {
         for (let line of this.CashbookLines.Collection) {
             var CashbookLine = this.OriginalCashbookLines.Collection.filter(a => a.CashBookId == line.CashBookId && a.ARPChequeId == line.ARPChequeId)[0];
-            if (CashbookLine.IsSelected == false)
+            if (CashbookLine.IsSelected == false || CashbookLine.IsSelected == null)
                 this.isAllSelected = false;
-            if (CashbookLine.IsSelected != line.IsSelected)
+            if (CashbookLine.IsSelected != line.IsSelected) {
                 line.IsSelected = CashbookLine.IsSelected;
+                if (CashbookLine.IsSelected == true)
+                    this.SelectedCashbookLines.Collection.push(line);
+            }
         }
     }
 
