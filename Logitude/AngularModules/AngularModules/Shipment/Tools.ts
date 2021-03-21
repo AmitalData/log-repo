@@ -3721,30 +3721,29 @@ export class ShipmentGenerator {
         this.cardListService.getSingle(this.EntityPM.CustomerId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 receivableVatTypeId = myResponse.Result.VatTypeId;
-            }
-        });
-
-        if (AppTool.IsNullOrEmpty(receivableVatTypeId)) {
-            receivableVatTypeId = itemPM.VatTypeId;
-        }
-
-        if (!AppTool.IsNullOrEmpty(receivableVatTypeId)) {
-            var loadingDate = itemPM.CreateDate;
-            if (loadingDate == null) {
-                loadingDate = DateTool.GetCurrentDateAsUtc();
-            }
-            this.commonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    var vatTypePercentagesList = myResponse.Result;
-                    var vatTypePercentagePM = vatTypePercentagesList.filter(d => d.VatTypeId == receivableVatTypeId)[0];
-                    if (vatTypePercentagePM != null) {
-                        var percentage = vatTypePercentagePM.Percentage;
-                        itemPM.VatAmountLocal = AppTool.Round(itemPM.TotalAmountLocal + (itemPM.TotalAmountLocal * percentage / 100), 2);
-                        itemPM.VatAmountProfit = AppTool.Round(itemPM.AmountInProfitCurrency + (itemPM.AmountInProfitCurrency * percentage / 100), 2);
-                    }
+                if (AppTool.IsNullOrEmpty(receivableVatTypeId)) {
+                    receivableVatTypeId = itemPM.VatTypeId;
                 }
-            });
-        }
+
+                if (!AppTool.IsNullOrEmpty(receivableVatTypeId)) {
+                    var loadingDate = itemPM.CreateDate;
+                    if (loadingDate == null) {
+                        loadingDate = DateTool.GetCurrentDateAsUtc();
+                    }
+                    this.commonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse: ServiceResponse) => {
+                        if (!myResponse.HasError) {
+                            var vatTypePercentagesList = myResponse.Result;
+                            var vatTypePercentagePM = vatTypePercentagesList.filter(d => d.VatTypeId == receivableVatTypeId)[0];
+                            if (vatTypePercentagePM != null) {
+                                var percentage = vatTypePercentagePM.Percentage;
+                                itemPM.VatAmountLocal = AppTool.Round(itemPM.TotalAmountLocal + (itemPM.TotalAmountLocal * percentage / 100), 2);
+                                itemPM.VatAmountProfit = AppTool.Round(itemPM.AmountInProfitCurrency + (itemPM.AmountInProfitCurrency * percentage / 100), 2);
+                            }
+                        }
+                    });
+                }
+            }
+        }); 
     }
     public CalculatePayableVatAmount(itemPM: ShipmentPayablePM) {
         var payableVatTypeId = null;
@@ -3752,25 +3751,25 @@ export class ShipmentGenerator {
             this.cardListService.getSingle(itemPM.VendorId).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
                     payableVatTypeId = myResponse.Result.VatTypeId;
-                }
-            });
-        }
-        if (AppTool.IsNullOrEmpty(payableVatTypeId)) {
-            payableVatTypeId = itemPM.VatTypeId;
-        }
-        if (!AppTool.IsNullOrEmpty(payableVatTypeId)) {
-            var loadingDate = itemPM.CreateDate;
-            if (loadingDate == null) {
-                loadingDate = DateTool.GetCurrentDateAsUtc();
-            }
-            this.commonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    var vatTypePercentagesList = myResponse.Result;
-                    var vatTypePercentagePM = vatTypePercentagesList.filter(d => d.VatTypeId == payableVatTypeId)[0];
-                    if (vatTypePercentagePM != null) {
-                        var percentage = vatTypePercentagePM.Percentage;
-                        itemPM.VatAmountLocal = itemPM.ExpectedAmountLocal + AppTool.Round((itemPM.ExpectedAmountLocal * percentage / 100), 2);
-                        itemPM.VatAmountProfit = itemPM.ExpectedAmountInProfitCurrency + AppTool.Round((itemPM.ExpectedAmountInProfitCurrency * percentage / 100), 2);
+                    if (AppTool.IsNullOrEmpty(payableVatTypeId)) {
+                        payableVatTypeId = itemPM.VatTypeId;
+                    }
+                    if (!AppTool.IsNullOrEmpty(payableVatTypeId)) {
+                        var loadingDate = itemPM.CreateDate;
+                        if (loadingDate == null) {
+                            loadingDate = DateTool.GetCurrentDateAsUtc();
+                        }
+                        this.commonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse: ServiceResponse) => {
+                            if (!myResponse.HasError) {
+                                var vatTypePercentagesList = myResponse.Result;
+                                var vatTypePercentagePM = vatTypePercentagesList.filter(d => d.VatTypeId == payableVatTypeId)[0];
+                                if (vatTypePercentagePM != null) {
+                                    var percentage = vatTypePercentagePM.Percentage;
+                                    itemPM.VatAmountLocal = itemPM.ExpectedAmountLocal + AppTool.Round((itemPM.ExpectedAmountLocal * percentage / 100), 2);
+                                    itemPM.VatAmountProfit = itemPM.ExpectedAmountInProfitCurrency + AppTool.Round((itemPM.ExpectedAmountInProfitCurrency * percentage / 100), 2);
+                                }
+                            }
+                        });
                     }
                 }
             });
