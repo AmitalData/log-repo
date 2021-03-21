@@ -101,7 +101,7 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
     }
     HandleRange(range: any) {
         if (this.myMetaData.DontApplyVirtualization) {
-            this.fetchedPages.delete(0);
+            //this.fetchedPages.delete(0);
             this._fetchPage(0);
         }
         else {
@@ -132,13 +132,13 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
     }
     timer = null;
     private _fetchPage(page: number) {
-        if (this.fetchedPages.has(page) && this.myMetaData.DontApplyVirtualization) {
+        if (this.fetchedPages.has(page) && !this.myMetaData.DontApplyVirtualization) {
             if (!this.fetchedPages.has(page + 1)) {
                 this._fetchPage(page + 1);
                 //if (!this.fetchedPages.has(page + 2)) {  
                 //    this._fetchPage(page + 2);
                 //} 
-            } 
+            }
             //else {
             //this.dataStream.next(this.cachedData);
             //if (this.myMetaData.cd) {
@@ -148,7 +148,11 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
             return;
             //}
         }
-        this.getPageData(page)
+        else {
+            if (!this.fetchedPages.has(page)) {
+                this.getPageData(page)
+            }
+        }
     }
 
 
