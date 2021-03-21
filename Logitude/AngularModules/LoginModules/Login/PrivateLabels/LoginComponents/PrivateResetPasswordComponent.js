@@ -8,13 +8,13 @@ import { ResetPasswordComponent } from '../../Components/ResetPasswordComponent'
 import { LoginService } from '../../LoginService';
 import { SessionInfo } from '../../SessionInfo';
 import { BrandingDataService } from '../Services/BrandingDataService';
-import { HybridLabelsBrandingDataService } from '../Services/HybridLabelsBrandingDataService';
-export var HybridResetPasswordComponent = (function (_super) {
-    __extends(HybridResetPasswordComponent, _super);
-    function HybridResetPasswordComponent(ss, hybridLabelsBrandingDataService) {
+import { PrivateLabelsBrandingDataService } from '../Services/PrivateLabelsBrandingDataService';
+export var PrivateResetPasswordComponent = (function (_super) {
+    __extends(PrivateResetPasswordComponent, _super);
+    function PrivateResetPasswordComponent(ss, privateLabelsBrandingDataService) {
         _super.call(this, ss);
         this.ss = ss;
-        this.hybridLabelsBrandingDataService = hybridLabelsBrandingDataService;
+        this.privateLabelsBrandingDataService = privateLabelsBrandingDataService;
         this.MainColor = null;
         this.BackgroundImage = "";
         this.ForgetPasswordImage = "";
@@ -24,15 +24,15 @@ export var HybridResetPasswordComponent = (function (_super) {
         this.showSpinner = true;
         this.show = true;
     }
-    HybridResetPasswordComponent.prototype.ngOnInit = function () {
+    PrivateResetPasswordComponent.prototype.ngOnInit = function () {
         this.privateUrl = SessionInfo.GetLogitudeURL();
-        this.GetHybridLabelsData(this.privateUrl);
+        this.GetPrivateLabelsData(this.privateUrl);
     };
-    HybridResetPasswordComponent.prototype.GetHybridLabelsData = function (privateUrl) {
+    PrivateResetPasswordComponent.prototype.GetPrivateLabelsData = function (privateUrl) {
         var _this = this;
-        this.hybridLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetHybridLabelsDataRequest(privateUrl)).subscribe(function (response) {
+        this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe(function (response) {
             if (response.Result) {
-                //BrandingDataService.SetHybridLabelsDataRequest(response.Result, privateUrl);
+                //BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
                 _this.ContactUsEmail = response.Result.ContactUsEmail;
                 _this.MainColor = response.Result.MainColor;
                 _this.BackgroundImage = BrandingDataService.GetBackgroundImage();
@@ -46,19 +46,19 @@ export var HybridResetPasswordComponent = (function (_super) {
         });
         this.showSpinner = false;
     };
-    HybridResetPasswordComponent.decorators = [
+    PrivateResetPasswordComponent.decorators = [
         { type: Component, args: [{
-                    selector: 'HybridResetPasswordComponent',
+                    selector: 'PrivateResetPasswordComponent',
                     moduleId: './Login/Components/',
-                    templateUrl: 'HybridResetPasswordComponent.html',
-                    styleUrls: ['HybridResetPasswordComponent.css']
+                    templateUrl: 'PrivateResetPasswordComponent.html',
+                    styleUrls: ['PrivateResetPasswordComponent.css']
                 },] },
     ];
     /** @nocollapse */
-    HybridResetPasswordComponent.ctorParameters = [
+    PrivateResetPasswordComponent.ctorParameters = [
         { type: LoginService, },
-        { type: HybridLabelsBrandingDataService, },
+        { type: PrivateLabelsBrandingDataService, },
     ];
-    return HybridResetPasswordComponent;
+    return PrivateResetPasswordComponent;
 }(ResetPasswordComponent));
-//# sourceMappingURL=HybridResetPasswordComponent.js.map
+//# sourceMappingURL=PrivateResetPasswordComponent.js.map

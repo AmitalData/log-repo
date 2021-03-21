@@ -36,7 +36,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.LoginProgressImageId = entityPM.LoginProgressImageId;
             entityPOCO.ForgetPasswordImageId = entityPM.ForgetPasswordImageId; 
             entityPOCO.SecondaryColor = entityPM.SecondaryColor;
-            entityPOCO.CustomPrivateLabel = entityPM.CustomPrivateLabel;
+            entityPOCO.HasLogboxAccess = entityPM.HasLogboxAccess;
 
         }
     }

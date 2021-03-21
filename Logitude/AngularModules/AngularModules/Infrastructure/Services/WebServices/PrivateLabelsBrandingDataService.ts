@@ -1,6 +1,6 @@
  
 
-export class HybridLabelsBrandingDataService {
+export class PrivateLabelsBrandingDataService {
 
     public static DefaultBackground: string = "url('../../../Images/LoginScreen/map.png')"; 
     public static DefaultLoginProgress: string = "url('../../../Images/LoginScreen/screen_kids.jpg')"; 
@@ -26,12 +26,12 @@ export class HybridLabelsBrandingDataService {
 
     public static GetBackgroundImageFromStorage() {
          
-        let background = HybridLabelsBrandingDataService.GetImageFromStorage("BackgroundImage"); 
+        let background = PrivateLabelsBrandingDataService.GetImageFromStorage("BackgroundImage"); 
         console.log("BackgroundImage: " + background);
      
         if (background && background.Id != null) {
             console.log("BackgroundImage: Exist in local storage => " + background);
-            this.BackgroundImageURL = "url(" + HybridLabelsBrandingDataService.GetImageFromBytes(background.Data) + ")";
+            this.BackgroundImageURL = "url(" + PrivateLabelsBrandingDataService.GetImageFromBytes(background.Data) + ")";
         }
         else {
             console.log("BackgroundImage: Not Exist in local storage ");
@@ -43,12 +43,12 @@ export class HybridLabelsBrandingDataService {
       
     public static GetMainLogoFromStorage() {
 
-        let StorageMainImage = HybridLabelsBrandingDataService.GetImageFromStorage("MainLogo");
+        let StorageMainImage = PrivateLabelsBrandingDataService.GetImageFromStorage("MainLogo");
         console.log("MainLogo: " + StorageMainImage);
        
         if (StorageMainImage && StorageMainImage.Id != null) {
             console.log("MainLogo: Exist in local storage => " + StorageMainImage);
-            this.MainLogoURL = HybridLabelsBrandingDataService.GetImageFromBytes(StorageMainImage.Data);
+            this.MainLogoURL = PrivateLabelsBrandingDataService.GetImageFromBytes(StorageMainImage.Data);
         }
         else {
             console.log("MainLogo: Not Exist in local storage ");
@@ -58,7 +58,7 @@ export class HybridLabelsBrandingDataService {
     }
 
     private static StoreImageInStorage(ImgStorageKey: string, ImgId: string, ImgData: any) {
-        localStorage.setItem(ImgStorageKey, JSON.stringify(new HybridLabelsImage(ImgId, ImgData)));
+        localStorage.setItem(ImgStorageKey, JSON.stringify(new PrivateLabelsImage(ImgId, ImgData)));
     }
  
   
@@ -69,12 +69,12 @@ export class HybridLabelsBrandingDataService {
 
     public static GetLoginProgressFromStorage() {
 
-        let loginProcess = HybridLabelsBrandingDataService.GetImageFromStorage("LoginProgressImage");
+        let loginProcess = PrivateLabelsBrandingDataService.GetImageFromStorage("LoginProgressImage");
         console.log("loginProcess: " + loginProcess); 
 
         if (loginProcess && loginProcess.Id != null) {
             console.log("loginProcess: Exist in local storage => " + loginProcess);
-            this.LoginProgressURL = "url(" + HybridLabelsBrandingDataService.GetImageFromBytes(loginProcess.Data) + ")";
+            this.LoginProgressURL = "url(" + PrivateLabelsBrandingDataService.GetImageFromBytes(loginProcess.Data) + ")";
         }
         else {
             console.log("loginProcess: Not Exist in local storage ");
@@ -85,7 +85,7 @@ export class HybridLabelsBrandingDataService {
     } 
 }
 // just for test
-export class HybridLabelsImage {
+export class PrivateLabelsImage {
     public Data: any = null;
     public Id: string = null;
     constructor(Id: string, Data: any) {

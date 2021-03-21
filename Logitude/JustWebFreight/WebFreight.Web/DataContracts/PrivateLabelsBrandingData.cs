@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebFreight.Web.DataContracts
 {
-    public class HybridLabelsBrandingData
+    public class PrivateLabelsBrandingData
     { 
         public string Id { get; set; }
         public string PrivateLabelName { get; set; }

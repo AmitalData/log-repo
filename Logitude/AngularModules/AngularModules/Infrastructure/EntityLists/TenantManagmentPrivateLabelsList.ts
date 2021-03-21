@@ -25,6 +25,6 @@ export class TenantManagmentPrivateLabelsList {
 		LoginProgressImageId: string;
 		ForgetPasswordImageId: string;
 		SecondaryColor: string;
-		CustomPrivateLabel: string;
+		HasLogboxAccess: boolean;
 	
 }

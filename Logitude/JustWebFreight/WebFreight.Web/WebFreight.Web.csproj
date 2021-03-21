@@ -1051,8 +1051,8 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CancellationRequestStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ReferantTeamViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferantTeamController.Generated.cs" />
-    <Compile Include="DataContracts\HybridLabelsBrandingData.cs" />
-    <Compile Include="DataContracts\HybridLabelsBrandingDataRequest.cs" />
+    <Compile Include="DataContracts\PrivateLabelsBrandingData.cs" />
+    <Compile Include="DataContracts\PrivateLabelsBrandingDataRequest.cs" />
     <Compile Include="DataProviders\UserDefinedReportDataProvider.cs" />
     <Compile Include="ExternalAPIs\RatesUpdateController.cs" />
     <Compile Include="ExternalAPIs\ShipmentNumbersController.cs" />
@@ -2610,7 +2610,7 @@
     <Compile Include="Helpers\DataProviderHelpers\ShipmentsEventsListDataProvider.cs" />
     <Compile Include="Helpers\AutomationDocumentHelper.cs" />
     <Compile Include="Helpers\DocumentTypeTemplateDefultAttachmentService.cs" />
-    <Compile Include="Helpers\HybridLabelsBrandingDataService.cs" />
+    <Compile Include="Helpers\PrivateLabelsBrandingDataService.cs" />
     <Compile Include="Helpers\UserViewLinkLimitationService.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
     <Compile Include="Helpers\AgentSharedManifestHelper.cs" />

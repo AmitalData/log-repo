@@ -120,9 +120,9 @@ export class TenantManagmentPrivateLabelsPM {
     public set SecondaryColor(newValue: string) { if (this.secondaryColor != newValue) { this.secondaryColor = newValue; this.MarkAsDirty("SecondaryColor"); } }
        
 	 
-    private customPrivateLabel: string;
-    public get CustomPrivateLabel() { return this.customPrivateLabel; }
-    public set CustomPrivateLabel(newValue: string) { if (this.customPrivateLabel != newValue) { this.customPrivateLabel = newValue; this.MarkAsDirty("CustomPrivateLabel"); } }
+    private hasLogboxAccess: boolean;
+    public get HasLogboxAccess() { return this.hasLogboxAccess; }
+    public set HasLogboxAccess(newValue: boolean) { if (this.hasLogboxAccess != newValue) { this.hasLogboxAccess = newValue; this.MarkAsDirty("HasLogboxAccess"); } }
        
 	 
 

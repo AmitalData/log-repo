@@ -531,7 +531,15 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
      set InActive(value: boolean) {
          if (value != this.EntityPM.InActive)
              this.EntityPM.InActive = value;
-     }
+    }
+
+    get HasLogboxAccess() {
+        return this.EntityPM.HasLogboxAccess;
+    }
+    set HasLogboxAccess(value: boolean) {
+        if (value != this.EntityPM.HasLogboxAccess)
+            this.EntityPM.HasLogboxAccess = value;
+    }
 
      get MainLogo() {
          return this.EntityPM.MainLogo;

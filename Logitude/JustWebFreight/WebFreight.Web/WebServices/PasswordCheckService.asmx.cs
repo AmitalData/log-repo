@@ -252,7 +252,7 @@ namespace WebFreight.Web.WebServices
             string url = SecurityUtility.getLoggedDomain();
             if (IsPrivateLableUrl(url))
             {
-                resetPasswordHtmlArgs = GetResetPasswordArgsForHybridLable(newPassword, url);
+                resetPasswordHtmlArgs = GetResetPasswordArgsForPrivateLable(newPassword, url);
             }
             else
             {
@@ -268,7 +268,7 @@ namespace WebFreight.Web.WebServices
             return resetPasswordHtmlArgs;
         }
 
-        private ResetPasswordHtmlArgs GetResetPasswordArgsForHybridLable(string newPassword, string url)
+        private ResetPasswordHtmlArgs GetResetPasswordArgsForPrivateLable(string newPassword, string url)
         {
             ResetPasswordHtmlArgs resetPasswordHtmlArgs = new ResetPasswordHtmlArgs();
             TenantManagmentPrivateLabelsQuery tenantManagmentPrivateLabelsQuery = new TenantManagmentPrivateLabelsQuery(0);

@@ -96,7 +96,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     private handlePrivateLable() {
         if (SessionLocator.PrivateLableSettings) {
             this.isPrivateLabel = true;
-            this.IsDSV = SessionLocator.PrivateLableSettings.CustomPrivateLable == "DSV";
+            this.IsDSV = SessionLocator.PrivateLableSettings.PrivateLabelDomain.indexOf("DSV") > -1;
             this.AgentShipmentsLabel = SessionLocator.PrivateLableSettings.PrivateLabelShortName + " Shipments";
             this.LogoURL = "data:image/JPEG;base64," + SessionLocator.PrivateLableSettings.MainLogo;
             this.MainColor = SessionLocator.PrivateLableSettings.MainColor;

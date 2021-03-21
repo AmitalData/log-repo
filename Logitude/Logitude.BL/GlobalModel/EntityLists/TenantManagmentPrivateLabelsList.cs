@@ -25,7 +25,7 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public string LoginProgressImageId { get; set; }
         public string ForgetPasswordImageId { get; set; }
         public string SecondaryColor { get; set; }
-        public string CustomPrivateLabel { get; set; }
+        public bool HasLogboxAccess { get; set; }
 
     }
 }

@@ -7,14 +7,14 @@ import { Component } from '@angular/core';
 import { LoginService } from '../LoginService';
 import { SessionInfo } from '../SessionInfo';
 import { ResetPasswordComponent } from './ResetPasswordComponent';
-import { HybridLabelsBrandingDataService } from '../HybridLabels/Services/HybridLabelsBrandingDataService';
-import { BrandingDataService } from '../HybridLabels/Services/BrandingDataService';
+import { PrivateLabelsBrandingDataService } from '../PrivateLabels/Services/PrivateLabelsBrandingDataService';
+import { BrandingDataService } from '../PrivateLabels/Services/BrandingDataService';
 export var DSVResetPasswordComponent = (function (_super) {
     __extends(DSVResetPasswordComponent, _super);
-    function DSVResetPasswordComponent(ss, hybridLabelsBrandingDataService) {
+    function DSVResetPasswordComponent(ss, privateLabelsBrandingDataService) {
         _super.call(this, ss);
         this.ss = ss;
-        this.hybridLabelsBrandingDataService = hybridLabelsBrandingDataService;
+        this.privateLabelsBrandingDataService = privateLabelsBrandingDataService;
         this.MainColor = null;
         this.BackgroundImage = "";
         this.ForgetPasswordImage = "";
@@ -26,13 +26,13 @@ export var DSVResetPasswordComponent = (function (_super) {
     }
     DSVResetPasswordComponent.prototype.ngOnInit = function () {
         this.privateUrl = SessionInfo.GetLogitudeURL();
-        this.GetHybridLabelsData(this.privateUrl);
+        this.GetPrivateLabelsData(this.privateUrl);
     };
-    DSVResetPasswordComponent.prototype.GetHybridLabelsData = function (privateUrl) {
+    DSVResetPasswordComponent.prototype.GetPrivateLabelsData = function (privateUrl) {
         var _this = this;
-        this.hybridLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetHybridLabelsDataRequest(privateUrl)).subscribe(function (response) {
+        this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe(function (response) {
             if (response.Result) {
-                //BrandingDataService.SetHybridLabelsDataRequest(response.Result, privateUrl);
+                //BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
                 _this.ContactUsEmail = response.Result.ContactUsEmail;
                 _this.MainColor = response.Result.MainColor;
                 _this.BackgroundImage = BrandingDataService.GetBackgroundImage();
@@ -58,7 +58,7 @@ export var DSVResetPasswordComponent = (function (_super) {
     /** @nocollapse */
     DSVResetPasswordComponent.ctorParameters = [
         { type: LoginService, },
-        { type: HybridLabelsBrandingDataService, },
+        { type: PrivateLabelsBrandingDataService, },
     ];
     return DSVResetPasswordComponent;
 }(ResetPasswordComponent));

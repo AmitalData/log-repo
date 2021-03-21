@@ -1,4 +1,4 @@
-﻿export class HybridLabelsBrandingData {
+﻿export class PrivateLabelsBrandingData {
 
     public static Id: string;
     public static PrivateLabelName: string

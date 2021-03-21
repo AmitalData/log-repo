@@ -31,7 +31,7 @@ import {CommonDomainService} from '../../../../Common/Services/CommonDomainServi
 import {DateTool} from '../../../Tools';
 import {Guid} from '../../../Utilities/Guid';
 import {LoginComponent} from '../LoginComponent';
-import { HybridLabelsBrandingDataService } from '../../../Services/WebServices/HybridLabelsBrandingDataService';
+import { PrivateLabelsBrandingDataService } from '../../../Services/WebServices/PrivateLabelsBrandingDataService';
 declare var changeFavicon: any;
 declare var changeTitle: any;
 
@@ -61,9 +61,9 @@ export class DSVLoginProcessComponent extends LoginComponent implements OnInit {
     }
 
     GetHybridLabelsData() { 
-        this.BackgroundImage = HybridLabelsBrandingDataService.GetBackgroundImageFromStorage();
-        this.MainLogo = HybridLabelsBrandingDataService.GetMainLogoFromStorage();
-        this.LoginProgressImage = HybridLabelsBrandingDataService.GetLoginProgressFromStorage();
+        this.BackgroundImage = PrivateLabelsBrandingDataService.GetBackgroundImageFromStorage();
+        this.MainLogo = PrivateLabelsBrandingDataService.GetMainLogoFromStorage();
+        this.LoginProgressImage = PrivateLabelsBrandingDataService.GetLoginProgressFromStorage();
         this.showSpinner = false;
     } 
 }

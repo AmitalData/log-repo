@@ -123,7 +123,7 @@ export class RootComponent_Cust implements AfterViewInit {
     //this.isDSV = true;
     if (this.isDSV == true) {
       if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "dapp" && IsMobileDetected() == true) {
-        SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/CustomLoginComponents/DSVMobileLoginProcessComponent", this.Child.Location)
+          SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/PrivateLabelComponents/DSVMobileLoginProcessComponent", this.Child.Location)
           .then(cmpRef => {
 
             cmpRef.instance.Blocking.subscribe(s => {
@@ -137,7 +137,7 @@ export class RootComponent_Cust implements AfterViewInit {
           });
       }
       else {
-        SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/CustomLoginComponents/DSVLoginProcessComponent", this.Child.Location)
+          SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/PrivateLabelComponents/PrivateLabelLoginProcessComponent", this.Child.Location)
           .then(cmpRef => {
 
             cmpRef.instance.Blocking.subscribe(s => {

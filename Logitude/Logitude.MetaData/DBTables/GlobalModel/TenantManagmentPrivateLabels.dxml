@@ -142,10 +142,10 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="CustomPrivateLabel"
-    Type="varchar"
-    Size="100">
+    Name="HasLogboxAccess"
+    OldNames="CustomPrivateLabel"
+    Type="bit">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
 </Table>

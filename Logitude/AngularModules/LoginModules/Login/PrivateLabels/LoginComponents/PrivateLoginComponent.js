@@ -9,13 +9,13 @@ import { LoginService } from '../../LoginService';
 import { SessionInfo } from '../../SessionInfo';
 import { Tools } from '../../Utilities/Tools';
 import { BrandingDataService } from '../Services/BrandingDataService';
-import { HybridLabelsBrandingDataService } from '../Services/HybridLabelsBrandingDataService';
-export var HybridLoginComponent = (function (_super) {
-    __extends(HybridLoginComponent, _super);
-    function HybridLoginComponent(ss, hybridLabelsBrandingDataService) {
+import { PrivateLabelsBrandingDataService } from '../Services/PrivateLabelsBrandingDataService';
+export var PrivateLoginComponent = (function (_super) {
+    __extends(PrivateLoginComponent, _super);
+    function PrivateLoginComponent(ss, privateLabelsBrandingDataService) {
         _super.call(this, ss);
         this.ss = ss;
-        this.hybridLabelsBrandingDataService = hybridLabelsBrandingDataService;
+        this.privateLabelsBrandingDataService = privateLabelsBrandingDataService;
         this.MainColor = null;
         this.BackgroundImage = "";
         this.MainImage = "";
@@ -23,17 +23,17 @@ export var HybridLoginComponent = (function (_super) {
         this.SmallLogo = "";
         this.showSpinner = true;
     }
-    HybridLoginComponent.prototype.ngOnInit = function () {
+    PrivateLoginComponent.prototype.ngOnInit = function () {
         this.get_cookie_data();
         this.privateUrl = SessionInfo.GetLogitudeURL();
-        this.GetHybridLabelsData(this.privateUrl);
+        this.GetPrivateLabelsData(this.privateUrl);
     };
-    HybridLoginComponent.prototype.GetHybridLabelsData = function (privateUrl) {
+    PrivateLoginComponent.prototype.GetPrivateLabelsData = function (privateUrl) {
         var _this = this;
-        this.hybridLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetHybridLabelsDataRequest(privateUrl)).subscribe(function (response) {
+        this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe(function (response) {
             if (response.Result) {
                 _this.Tenant = response.Result.Tenant;
-                BrandingDataService.SetHybridLabelsDataRequest(response.Result, privateUrl);
+                BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
                 _this.MainColor = response.Result.MainColor;
                 _this.BackgroundImage = BrandingDataService.GetBackgroundImage();
                 _this.MainImage = BrandingDataService.GetMainImage();
@@ -47,30 +47,30 @@ export var HybridLoginComponent = (function (_super) {
         });
         this.showSpinner = false;
     };
-    HybridLoginComponent.prototype.ClearLocation = function () {
+    PrivateLoginComponent.prototype.ClearLocation = function () {
         if (SessionInfo.MainLocation) {
             SessionInfo.MainLocation.clear();
         }
     };
-    HybridLoginComponent.prototype.ForgotPasswordClicked = function () {
+    PrivateLoginComponent.prototype.ForgotPasswordClicked = function () {
         this.ClearLocation();
-        Tools.DynamicLoader.Load("/Login/HybridLabels/Components/HybridResetPasswordComponent", SessionInfo.MainLocation)
+        Tools.DynamicLoader.Load("/Login/PrivateLabels/LoginComponents/PrivateResetPasswordComponent", SessionInfo.MainLocation)
             .then(function (cmpRef) {
         });
     };
-    HybridLoginComponent.decorators = [
+    PrivateLoginComponent.decorators = [
         { type: Component, args: [{
-                    selector: 'HybridLoginComponent',
+                    selector: 'PrivateLoginComponent',
                     moduleId: './Login/Components/',
-                    templateUrl: 'HybridLoginComponent.html',
-                    styleUrls: ['HybridLoginComponent.css']
+                    templateUrl: 'PrivateLoginComponent.html',
+                    styleUrls: ['PrivateLoginComponent.css']
                 },] },
     ];
     /** @nocollapse */
-    HybridLoginComponent.ctorParameters = [
+    PrivateLoginComponent.ctorParameters = [
         { type: LoginService, },
-        { type: HybridLabelsBrandingDataService, },
+        { type: PrivateLabelsBrandingDataService, },
     ];
-    return HybridLoginComponent;
+    return PrivateLoginComponent;
 }(LoginComponent));
-//# sourceMappingURL=HybridLoginComponent.js.map
+//# sourceMappingURL=PrivateLoginComponent.js.map

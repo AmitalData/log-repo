@@ -66,10 +66,10 @@ export class RootComponent implements AfterViewInit {
     LoginToSystem() {
         const url = window.location.href;
         var data = window.sessionStorage.getItem('userdata');
-        if (url.indexOf('localhost:4200/?{%22$id') > -1) {
+        if (url.indexOf('localhost:4200/?D{%22$id') > -1 || url.indexOf('localhost:4200/?P{%22$id') > -1) {
             this.isPrivateLable = true;
-            this.isDSV = true;
-            data = url.split('?')[1];
+            this.isDSV = url.indexOf('localhost:4200/?D{%22$id') > -1;
+            data = url.split('?' + this.isDSV ? 'D' : 'P')[1];
         }
         if ((data && data == "SignOut") || (!data && !SessionLocator.IsExternalParams && (url.indexOf('localhost') == -1 && !this.isPrivateLable))) {
             document.location.href = ServiceHelper.GetLogitudeURL() + "Login.aspx";
@@ -165,10 +165,7 @@ export class RootComponent implements AfterViewInit {
     }
 
     private LoadPrivateLableLoginProcess() {
-        let privateLableLoginProcessPage = "./Infrastructure/Components/LoginComponent/CustomLoginComponents/";
-        privateLableLoginProcessPage += this.isDSV ? "DSVLoginProcessComponent" : "HybridLoginProcessComponent";
-
-        SessionLocator.DynamicLoader.Load(privateLableLoginProcessPage, this.Child.Location)
+        SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/PrivateLabelComponents/PrivateLabelLoginProcessComponent", this.Child.Location)
             .then(cmpRef => {
 
                 cmpRef.instance.Blocking.subscribe(s => {
@@ -183,7 +180,7 @@ export class RootComponent implements AfterViewInit {
     }
 
     LoadPrivateLableMobileLoginProcess() {
-        SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/CustomLoginComponents/DSVMobileLoginProcessComponent", this.Child.Location)
+        SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/PrivateLabelComponents/DSVMobileLoginProcessComponent", this.Child.Location)
             .then(cmpRef => {
 
                 cmpRef.instance.Blocking.subscribe(s => {

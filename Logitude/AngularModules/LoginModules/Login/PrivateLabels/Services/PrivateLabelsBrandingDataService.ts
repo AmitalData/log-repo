@@ -4,14 +4,14 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch'; 
 import 'rxjs/add/Observable/throw'; 
 import { BrandingDataService } from './BrandingDataService';
-import { HybridLabelsBrandingDataRequest } from '../DataContracts/HybridLabelsBrandingDataRequest';
+import { PrivateLabelsBrandingDataRequest } from '../DataContracts/PrivateLabelsBrandingDataRequest';
 import { ServiceResponse } from '../DataContracts/ServiceResponse'; 
 import { Observable } from 'rxjs/Observable';
 
 
 @Injectable()
 
-export class HybridLabelsBrandingDataService {
+export class PrivateLabelsBrandingDataService {
     private _apiUrl: string;
     private httpHeaders: Headers;
     constructor(private _http: Http, @Inject('BASE_URL') baseUrl: string) {
@@ -19,8 +19,8 @@ export class HybridLabelsBrandingDataService {
         this._apiUrl = BrandingDataService.GetAppURL(baseUrl) + 'api/TenantManagmentPrivateLabels';
     } 
 
-    GetUserDashboardBrandingData(BrandingDataRequest: HybridLabelsBrandingDataRequest) {
-        var url = '/PutGetHybridLabelsBrandingData';
+    GetUserDashboardBrandingData(BrandingDataRequest: PrivateLabelsBrandingDataRequest) {
+        var url = '/PutGetPrivateLabelsBrandingData';
         var callUrl = this._apiUrl.concat(url);
 
         return this._http.put(callUrl, BrandingDataRequest, { headers: this.httpHeaders }).map((response) => {

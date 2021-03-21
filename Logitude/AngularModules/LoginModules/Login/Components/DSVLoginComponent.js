@@ -8,14 +8,14 @@ import { LoginService } from '../LoginService';
 import { SessionInfo } from '../SessionInfo';
 import { LoginComponent } from './LoginComponent';
 import { Tools } from '../Utilities/Tools';
-import { HybridLabelsBrandingDataService } from '../HybridLabels/Services/HybridLabelsBrandingDataService';
-import { BrandingDataService } from '../HybridLabels/Services/BrandingDataService';
+import { PrivateLabelsBrandingDataService } from '../PrivateLabels/Services/PrivateLabelsBrandingDataService';
+import { BrandingDataService } from '../PrivateLabels/Services/BrandingDataService';
 export var DSVLoginComponent = (function (_super) {
     __extends(DSVLoginComponent, _super);
-    function DSVLoginComponent(ss, hybridLabelsBrandingDataService) {
+    function DSVLoginComponent(ss, privateLabelsBrandingDataService) {
         _super.call(this, ss);
         this.ss = ss;
-        this.hybridLabelsBrandingDataService = hybridLabelsBrandingDataService;
+        this.privateLabelsBrandingDataService = privateLabelsBrandingDataService;
         this.MainColor = null;
         this.BackgroundImage = "";
         this.MainImage = "";
@@ -26,15 +26,15 @@ export var DSVLoginComponent = (function (_super) {
     DSVLoginComponent.prototype.ngOnInit = function () {
         this.get_cookie_data();
         this.privateUrl = SessionInfo.GetLogitudeURL();
-        this.GetHybridLabelsData(this.privateUrl);
+        this.GetPrivateLabelsData(this.privateUrl);
         this.showSpinner = false;
     };
-    DSVLoginComponent.prototype.GetHybridLabelsData = function (privateUrl) {
+    DSVLoginComponent.prototype.GetPrivateLabelsData = function (privateUrl) {
         var _this = this;
-        this.hybridLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetHybridLabelsDataRequest(privateUrl)).subscribe(function (response) {
+        this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe(function (response) {
             if (response.Result) {
                 _this.Tenant = response.Result.Tenant;
-                BrandingDataService.SetHybridLabelsDataRequest(response.Result, privateUrl);
+                BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
                 _this.MainColor = response.Result.MainColor;
                 _this.BackgroundImage = BrandingDataService.GetBackgroundImage();
                 _this.MainImage = BrandingDataService.GetMainImage();
@@ -70,7 +70,7 @@ export var DSVLoginComponent = (function (_super) {
     /** @nocollapse */
     DSVLoginComponent.ctorParameters = [
         { type: LoginService, },
-        { type: HybridLabelsBrandingDataService, },
+        { type: PrivateLabelsBrandingDataService, },
     ];
     return DSVLoginComponent;
 }(LoginComponent));
