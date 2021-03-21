@@ -2611,7 +2611,6 @@
     <Compile Include="Helpers\AutomationDocumentHelper.cs" />
     <Compile Include="Helpers\DocumentTypeTemplateDefultAttachmentService.cs" />
     <Compile Include="Helpers\HybridLabelsBrandingDataService.cs" />
-    <Compile Include="Helpers\ReportBaseDataService.cs" />
     <Compile Include="Helpers\UserViewLinkLimitationService.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
     <Compile Include="Helpers\AgentSharedManifestHelper.cs" />
@@ -3023,6 +3022,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountCurrencyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountInterestPeriodUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountMoreDataUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountRecocileDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountTotalDateTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountWithholdingTaxUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\HazardousSubstanceUpdateClass.cs" />
@@ -3415,6 +3415,7 @@
     <Content Include="css\kendo.common.min.css.map" />
     <Content Include="css\kendo.default.min.css.map" />
     <Content Include="css\kendo.mobile.all.min.css.map" />
+    <Content Include="Integration Test\LoginVars\Production\Cloud\TeamIslam\LoginVars.csv" />
     <None Include="Properties\PublishProfiles\FeatureBranchPub.pubxml" />
     <None Include="Properties\PublishProfiles\MasterDev.pubxml" />
     <None Include="Properties\PublishProfiles\CustomsDev.pubxml" />

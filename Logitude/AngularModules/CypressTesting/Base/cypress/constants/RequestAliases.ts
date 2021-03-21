@@ -20,6 +20,17 @@ export class RequestAliases {
     public static readonly InvoiceDomain = 'InvoiceDomain';
     public static readonly ConsilidationInvoiceDomain = "ConsilidationInvoiceDomain"
     public static readonly Quotes = 'Quotes';
+    public static readonly PutQuotes = 'PutQuotes';
+    public static readonly PostQuotes = 'PostQuotes';
+    public static readonly GetQuoteSettings = 'GetQuoteSettings';
+    public static readonly QuoteGetsingle = 'QuoteGetsingle';
+    public static readonly UpdateQuotation = 'UpdateQuotation';
+    public static readonly SentToCustomer = 'SentToCustomer';
+
+
+    public static readonly PrintQuotationWindowOpen = 'PrintQuotationWindowOpen';
+
+
     public static readonly QuickSearchDataLoaded = 'QuickSearchDataLoaded';
     public static readonly ShipmentviewsGetbyfilters = 'ShipmentviewsGetbyfilters';
 
@@ -60,7 +71,6 @@ export class RequestAliases {
     public static readonly GetBookingMessageResultValidate = "GetBookingMessageResultValidate";
     public static readonly GetShippingInstructionMessageResultValidate = "GetShippingInstructionMessageResultValidate";
     public static readonly ContactLogLovLoad = "ContactLogLovLoad";
-    public static readonly PostContact = "PostContact";
     public static readonly INTTRAWebServiceSendEBooking = "INTTRAWebServiceSendEBooking";
     public static readonly INTTRAWebServiceSendShippingInstructions = "INTTRAWebServiceSendShippingInstructions";
     //
@@ -68,13 +78,34 @@ export class RequestAliases {
 
 
     //Maintenance
+    public static readonly PostWarehouses = "PostWarehouses"
+    public static readonly PutWarehouses = "PutWarehouses"
+
+    public static readonly PostContact = "PostContact";
+    public static readonly PutContact = "PutContact";
+
+    public static readonly PostVendor = "PostVendor";
+    public static readonly PutVendor = "PutVendor";
+
+    public static readonly PostVessel = "PostVessel";
+    public static readonly PutVessel = "PutVessel";
+
+    public static readonly GetSignle = "GetSignle"
+    public static readonly GetByFilter = "GetByFilter"
+    public static readonly GetFilterSearch = "GetFilterSearch"
     public static readonly ContactsGetSingle = "ContactsGetSingle";
     public static readonly GetContactMenuButtonGroups = "GetContactMenuButtonGroups";
-    public static readonly PutContact = "PutContact";
     public static readonly ContactViewsGetByFilters = "ContactViewsGetByFilters";
-    //
+    
+    //#endregion
     public static readonly GetTraceEventsForEntity = "GetTraceEventsForEntity"
-    public static readonly GetByFilter = "GetByFilter"
-    public static readonly PutWarehouses = "PutWarehouses"
     public static readonly GetLastUpdatedTables = "GetLastUpdatedTables"
+    public static readonly GetFilterSearch = "GetFilterSearch"
+    public static readonly GetSignle = "GetSignle"
+    //Login 
+    public static readonly Authentication="Authentication"
+    public static readonly PasswordResetRequestPage="PasswordResetRequestPage"
+    //Reset Password
+    public static readonly ResetPassword="ResetPassword"
+
 }

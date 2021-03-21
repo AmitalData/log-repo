@@ -8,6 +8,10 @@ export function AssertStatusCode(requestAlias: string, expectedStatusCode: numbe
     return Interception;
 }
 
+export function AssertWindowOpen(windowOpenAlias: string){
+  cy.get('@' + windowOpenAlias).should('be.called')
+}
+
 export function AssertElementExist(selector: string) {
     cy.get(selector).should("exist");
 }

@@ -2,8 +2,8 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["es5", "dom"],
-    "types": ["cypress","cypress-file-upload"],
-    "baseUrl": "./"
+    "types": ["cypress","cypress-file-upload", "@4tw/cypress-drag-drop"],
+    "baseUrl": "./",
   },
   "include": [
     "**/*.ts",

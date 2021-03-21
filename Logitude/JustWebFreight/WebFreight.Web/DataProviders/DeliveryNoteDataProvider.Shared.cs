@@ -205,5 +205,7 @@ namespace WebFreight.Web.DataProviders
         public string UserPhoneNumber { get; set; }
 
         public string TruckerCompanyContactName { get; set; }
+
+        public string MainCarriageCarrierNumber { get; set; }
     }
 }

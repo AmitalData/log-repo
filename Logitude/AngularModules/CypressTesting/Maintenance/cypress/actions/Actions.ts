@@ -1,27 +1,336 @@
 import { MaintenanceSelectors } from "../selectors/Selectors";
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import { Urls } from "../constants/Urls";
+import { Terms } from "../constants/Terms";
 import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
+import * as BaseActions from "../../../Base/cypress/actions/Actions";
 import * as gr from '../../../Base/cypress/actions/GenerateRandoms'
+import { BaseURLs } from "../../../Base/cypress/constants/URLs";
+import { Datepicker } from "../../../Base/cypress/models/Datepicker";
 import { ContactDetails } from "../models/ContactDetails";
 import { ContactContext } from "../models/ContactContext";
-import { BaseURLs } from "../../../Base/cypress/constants/URLs";
-import { Datepicker } from "../models/Datepicker";
+import { VendorDetails } from "../models/VendorDetails";
+import { VendorContext } from "../models/VendorContext";
+import { VesselDetails } from "../models/VesselDetails";
+import { VesselContext } from "../models/VesselContext";
 
-export function LoginAndNavigateMaintenanceMenu() {
-    cy.Login();
+//#region General
+export function OpenMaintenanceMenu() {
     cy.Click(BaseSelectors.MaintenanceMenu, null)
 }
 
-//////////Contacts
+export function OpenTabInMaintenanceMenu(maintenanceItemNameToSearch:string , maintenanceItemSelector:string){
+    cy.Click(BaseSelectors.MaintenanceMenu, null);
+    cy.FillLogTextBox(BaseSelectors.NullSearch, maintenanceItemNameToSearch);
+    cy.Click(maintenanceItemSelector, null);
+}
+
+export function OpenNewWizard(tabName:string) {
+    cy.Click(MaintenanceSelectors.NewWizardButton(tabName),null);
+}
+
+function DefineGetByFilterRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetByFilter, RequestAliases.GetByFilter);
+}
+
+function AssertGetByFilters() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetByFilter, 200);
+}
+//#endregion
+
+//#region Vendor
+export function FillVendorDetails(vendorDetails:VendorDetails){
+    cy.FillLogTextBox(MaintenanceSelectors.VendorCompanyName,vendorDetails.CompanyName);
+    cy.FillLogTextBox(MaintenanceSelectors.VendorPhone,vendorDetails.Phone);
+    cy.FillLogTextBox(MaintenanceSelectors.VendorLocalName,vendorDetails.LocalName);
+    cy.FillLogTextBox(MaintenanceSelectors.VendorFax,vendorDetails.Fax);
+    cy.FillLogTextBox(MaintenanceSelectors.VendorAddress1,vendorDetails.Address1);
+    cy.FillLogTextBox(MaintenanceSelectors.VendorZipCode,vendorDetails.Zip);
+    cy.FillLogTextBox(MaintenanceSelectors.VendorCity,vendorDetails.City);
+    cy.FillLogLov(MaintenanceSelectors.VendorCountry,vendorDetails.Country,true);
+    cy.FillLogLov(MaintenanceSelectors.VendorState,vendorDetails.State,true);
+}
+
+export function FillVendorContactDetails(conatactDetails:ContactDetails){
+    cy.SelectCheckBox(MaintenanceSelectors.VendorContactCheckBox)
+    cy.FillLogTextBox(MaintenanceSelectors.VendorContactEnglishName,conatactDetails.EnglishName);
+    cy.FillLogTextBox(MaintenanceSelectors.VendorContactPosition,conatactDetails.Position);
+    cy.FillLogTextBox(MaintenanceSelectors.VendorContactBusinessPhone,conatactDetails.BusinessPhone);
+    cy.FillLogTextBox(MaintenanceSelectors.VendorContactMobile,conatactDetails.Mobile);
+    cy.FillLogTextBox(MaintenanceSelectors.VendorContactFax,conatactDetails.Fax);
+}
+
+export function FillVendorGeneralTab(vendorDetails:VendorDetails){
+    if(vendorDetails.Website){
+        cy.FillLogTextBox(MaintenanceSelectors.VendorWebsite,vendorDetails.Website)
+    }
+    if(vendorDetails.Notes){
+        cy.FillLogTextBox(MaintenanceSelectors.VendorNotes,vendorDetails.Notes)
+    }
+}
+
+export function FillVendorBillingTab(vendorDetails:VendorDetails){
+    if(vendorDetails.VatNumber){
+        cy.FillLogTextBox(MaintenanceSelectors.VendorVatNumber,vendorDetails.VatNumber)
+    }
+    if(vendorDetails.BankName){
+        cy.FillLogTextBox(MaintenanceSelectors.VendorBankName,vendorDetails.BankName)
+    }
+}
+
+export function CreateVendor(){
+    DefinePostVendorRequest() 
+    DefineGetByFilterRequest()
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+export function UpdateVendor(){
+    DefinePutVendorRequest() 
+    cy.Click(MaintenanceSelectors.VendorSaveButton,null)
+}
+
+export function AssertCreateVendor(){
+    AssertPostVendor()
+    AssertGetByFilters()
+}
+
+export function AssertUpdateVendor(){
+    AssertPutVendor()
+}
+
+export function SearchVendor() {
+    let VendorCode = VendorContext.Code;
+    DefineVendorViewsGetByFiltersRequest(VendorCode);
+    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, VendorCode);
+    AssertVendorViewsGetByFilters();
+}
+
+export function AssertSearchVendor(companyName: string) {
+    cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
+        expect(text).to.contain(companyName);
+    });
+}
+
+export function OpenVendor() {
+    DefineVendorsGetSingleRequest();
+    DefineGetMenuButtonGroupsRequest();
+    cy.get(BaseSelectors.RowClass).eq(0).click();
+}
+
+export function AssertOpenVendor() {
+    AssertVendorGetSingle();
+    AssertGetMenuButtonGroups();
+    BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
+}
+
+export function CloseSaveVendor(){
+    DefineVendorViewGetSingleRequest()
+    cy.Click(MaintenanceSelectors.VendorSaveCloseButton,null);
+}
+
+export function AssertCloseSaveVendor() {
+    AssertVendorGetSingle();
+}
+
+function DefinePostVendorRequest() {
+    cy.DefineRequestWait(RestAPI.POST, Urls.PartnersDomain, RequestAliases.PostVendor);
+}
+
+function DefinePutVendorRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.Vendor, RequestAliases.PutVendor);
+}
+
+function AssertPostVendor() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PostVendor, 200).then((interception) => {
+        let responseBody = interception.response.body;
+        VendorContext.Code = responseBody.Vendor.Code;
+    });
+}
+function AssertPutVendor() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutVendor, 200);
+}
+
+function DefineVendorViewsGetByFiltersRequest(vendorCode:string){
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(vendorCode), RequestAliases.GetFilterSearch);
+}
+
+function AssertVendorViewsGetByFilters(){
+    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
+}
+
+function DefineVendorsGetSingleRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.VendorsGetSingle, RequestAliases.GetSignle);
+}
+
+function DefineVendorViewGetSingleRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.VendorsviewGetSingle, RequestAliases.GetSignle);
+}
+
+function AssertVendorGetSingle() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
+}
+//#endregion
+
+//#region Vessel
+export function FillVesselDetails(vesselDetails:VesselDetails){
+    FillVesselName(vesselDetails.Name)
+    cy.FillLogTextBox(MaintenanceSelectors.VesselIMOCode,vesselDetails.IMO);
+    cy.FillLogTextBox(MaintenanceSelectors.VesselLocalName,vesselDetails.LocalName);
+    cy.FillLogLov(MaintenanceSelectors.VesselFlag,vesselDetails.Flag,true);
+    cy.FillLogTextBox(MaintenanceSelectors.VesselNotes,vesselDetails.Notes);
+}
+
+export function FillVesselGeneralTab(vesselDetails:VesselDetails){
+    cy.FillLogTextBox(MaintenanceSelectors.VesselIMOCode,vesselDetails.IMO)
+    FillVesselCode(vesselDetails.Code)
+}
+
+export function CreateVessel(){
+    DefinePostVesselRequest() 
+    DefineGetByFilterRequest()
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+export function UpdateVessel(){
+    DefinePutVesselRequest() 
+    cy.Click(MaintenanceSelectors.VesselSaveButton,null)
+}
+
+export function AssertCreateVessel(){
+    AssertPostVessel()
+    AssertGetByFilters()
+}
+
+export function AssertUpdateVessel() {
+    let intercept = cy.wait("@" + RequestAliases.PutVessel);
+    intercept.then((interception) => {
+        if (interception.response.statusCode === 400) {
+            CheckError(interception);
+        }
+        else{
+            AssertPutVessel(interception.response.statusCode,200)
+        }
+    })
+}
+
+export function SearchVessel() {
+    let vesselName = VesselContext.Name;
+    if (vesselName) {
+        DefineVesselViewsGetByFiltersRequest(vesselName);
+        cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, vesselName);
+        AssertVesselViewsGetByFilters();
+    }
+}
+
+export function AssertSearchVessel() {
+    let vesselName = VesselContext.Name;
+    if (vesselName) {
+        cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
+            expect(text).to.contain(vesselName);
+        });
+    }
+}
+
+export function OpenVessel() {
+    DefineVesselsGetSingleRequest();
+    cy.get(MaintenanceSelectors.VesselFirstRow).click();
+}
+
+export function AssertOpenVessel() {
+    AssertVesselGetSingle();
+    BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
+}
+
+export function CloseSaveVessel(){
+    DefineVesselViewGetSingleRequest()
+    cy.Click(MaintenanceSelectors.VesselSaveCloseButton,null);
+}
+
+export function AssertCloseSaveVessel() {
+    AssertVesselGetSingle();
+}
+
+function FillVesselName(vesselName: string) {
+    if (vesselName) {
+        VesselContext.Name = vesselName.toLowerCase() == "random" ? (gr.GenerateRandomNumberAndString(5)) : vesselName;
+        cy.FillLogTextBox(MaintenanceSelectors.VesselName, VesselContext.Name);
+    }
+}
+
+function FillVesselCode(vesselCode:string){
+    let vesselName = VesselContext.Name
+    if (vesselCode) {
+        VesselContext.Code = vesselCode.toLowerCase() == "random" ? vesselName : vesselCode;
+        cy.FillLogTextBox(MaintenanceSelectors.VesselCode, VesselContext.Name);
+    }
+}
+
+function FillNewRandomCode() {
+    let NewRandomCode = gr.GenerateRandomNumberAndString(5)
+    VesselContext.Name = NewRandomCode;
+    VesselContext.Code = NewRandomCode;
+    cy.FillLogTextBox(MaintenanceSelectors.VesselName, VesselContext.Name);
+    cy.FillLogTextBox(MaintenanceSelectors.VesselCode, VesselContext.Code);
+}
+
+function DefinePostVesselRequest() {
+    cy.DefineRequestWait(RestAPI.POST, Urls.Vessels, RequestAliases.PostVessel);
+}
+
+function DefinePutVesselRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.Vessels, RequestAliases.PutVessel);
+}
+
+function AssertPostVessel() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PostVessel, 200);
+}
+
+function AssertPutVessel(responseStatusCode : number ,expectedStatusCode:number ) {
+    assert.equal(responseStatusCode, expectedStatusCode)
+}
+
+function CheckError(interception){
+    if (interception.response.body.ErrorMessage.indexOf("This vessel already exists") !== -1) {
+        GenerateNewRandomCode();
+    } else {
+        throw new Error(interception.response.body.ErrorMessage);
+    }
+}
+
+function GenerateNewRandomCode(){
+    FillNewRandomCode();
+    UpdateVessel();
+}
+
+function DefineVesselViewsGetByFiltersRequest(VesselCode:string){
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(VesselCode+"&GetCount=false"), RequestAliases.GetFilterSearch);
+}
+
+function AssertVesselViewsGetByFilters(){
+    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
+}
+
+function DefineVesselsGetSingleRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.VesselsGetSingle, RequestAliases.GetSignle);
+}
+
+function DefineVesselViewGetSingleRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.VesselviewGetSingle, RequestAliases.GetSignle);
+}
+
+function AssertVesselGetSingle() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
+}
+//#endregion
+
+//#region Contacts
 export function OpenContactsList() {
     cy.Click(MaintenanceSelectors.OthersMaintenanceTab, null);
     DefineContactViewsGetByFiltersRequest();
     cy.Click(MaintenanceSelectors.ContactsMaintenanceItem, null);
     AssertContactViewsGetByFilters();
-
     DefineContactViewsGetByFiltersRequest();
     cy.Click(BaseSelectors.QueryListToggleButton, null);
     cy.get(BaseSelectors.QueryListToggleButtonItem).contains(MaintenanceSelectors.ContainsContactsRegex).click();
@@ -40,10 +349,10 @@ export function FillContactDetails(contactDetails: ContactDetails) {
     FillContactBusinessPhone(contactDetails.BusinessPhone);
     FillContactMobile(contactDetails.Mobile);
     FillContactFax(contactDetails.Fax);
-    FillContactDatepicker(contactDetails.BirthdayDate, "birthday");
-    FillContactDateReminder(contactDetails.BirthdayReminder, "birthday");
-    FillContactDatepicker(contactDetails.AnniversaryDate, "anniversary");
-    FillContactDateReminder(contactDetails.AnniversaryReminder, "anniversary");
+    FillContactDatepicker(contactDetails.BirthdayDate, Terms.Birthday);
+    FillContactDateReminder(contactDetails.BirthdayReminder, Terms.Birthday);
+    FillContactDatepicker(contactDetails.AnniversaryDate, Terms.Anniversary);
+    FillContactDateReminder(contactDetails.AnniversaryReminder, Terms.Anniversary);
     FillContactNotes(contactDetails.Notes);
 }
 
@@ -116,13 +425,13 @@ export function AssertContactDetailsValues() {
     AssertContactInputHaveValue(MaintenanceSelectors.ContactMobile, "");
     AssertContactInputHaveValue(MaintenanceSelectors.ContactFax, "");
     AssertContactInputHaveValue(MaintenanceSelectors.ContactNotes, "");
-    AssertContactDatepickerNotSelected("birthday");
-    AssertContactDatepickerNotSelected("anniversary");
+    AssertContactDatepickerNotSelected(Terms.Birthday);
+    AssertContactDatepickerNotSelected(Terms.Anniversary);
 }
 
 function FillContactEmail(contactEmail: string) {
     if (contactEmail) {
-        let emailToFill = contactEmail.toLowerCase() == "random" ? (gr.GenerateRandomNumberAndString(16).toLowerCase() + "@test.com") : contactEmail;
+        let emailToFill = contactEmail.toLowerCase() == "random" ? (gr.GenerateCurrentDatetimeString("_") + "@test.com") : contactEmail;
         cy.FillLogTextBox(MaintenanceSelectors.ContactEmail, emailToFill);
     }
 }
@@ -171,12 +480,12 @@ function FillContactNotes(notes: string){
 
 function FillContactDatepicker(contactDate: string, dateType:string) {
     if (contactDate && dateType) {
-        let contactDatepicker: Datepicker = GetContactDatepicker(contactDate);
+        let contactDatepicker: Datepicker = BaseActions.GetDatepicker(contactDate);
         let indexOfDatepicker: number;
-        if(dateType.toLocaleLowerCase() == "birthday"){
+        if(dateType.toLowerCase() == Terms.Birthday){
             indexOfDatepicker = 0;
         }
-        else if(dateType.toLocaleLowerCase() == "anniversary"){
+        else if(dateType.toLowerCase() == Terms.Anniversary){
             indexOfDatepicker = 1;
         }
         cy.get(MaintenanceSelectors.ContactDatepicker).eq(indexOfDatepicker).within(() => {
@@ -212,43 +521,13 @@ function FillContactDateReminder(reminder: string, dateType:string){
 
 function GetContactDateReminderSelector(dateType:string){
     let reminderCheckboxSelector: string;
-    if(dateType.toLocaleLowerCase() == "birthday"){
+    if(dateType.toLowerCase() == Terms.Birthday){
         reminderCheckboxSelector = MaintenanceSelectors.ContactBirthdayReminder;
     }
-    else if(dateType.toLocaleLowerCase() == "anniversary"){
+    else if(dateType.toLowerCase() == Terms.Anniversary){
         reminderCheckboxSelector = MaintenanceSelectors.ContactAnniversaryReminder;
     }
     return reminderCheckboxSelector;
-}
-
-function GetContactDatepicker(contactDate: string): Datepicker{
-    let today = new Date();
-    let contactDateDay: number;
-    let contactDateMonth: number;
-    let contactDateYear: number;
-
-    if (contactDate.toLowerCase() == "today") {
-        contactDateDay = today.getDate();
-        contactDateMonth = today.getMonth() + 1;
-        contactDateYear = today.getFullYear();
-    }
-    else if (contactDate.toLowerCase() == "random") {
-        contactDateDay = gr.GenerateRandomNumber(1, 28);
-        contactDateMonth = gr.GenerateRandomNumber(1, 12);
-        contactDateYear = gr.GenerateRandomNumber(1950, today.getFullYear());
-    }
-    else{
-        let date = new Date(contactDate);
-        contactDateDay = date.getDate();
-        contactDateMonth = date.getMonth() + 1;
-        contactDateYear = date.getFullYear();
-    }
-
-    let datepicker = new Datepicker();
-    datepicker.Day = contactDateDay;
-    datepicker.Month = contactDateMonth;
-    datepicker.Year = contactDateYear;
-    return datepicker;
 }
 
 function DefineContactViewsGetByFiltersRequest(contactEmail: string = null) {
@@ -296,27 +575,27 @@ function AssertGetMenuButtonGroups() {
 }
 
 function AssertContactInputHaveValue(inputSelector: string, value: string){
-    cy.get(inputSelector).should("have.value", value);
+    BaseAssertion.AssertElementHaveValue(inputSelector, value);
 }
 
 function AssertContactDatepickerNotSelected(dateType:string){
     let indexOfDatepicker: number;
-    if(dateType.toLocaleLowerCase() == "birthday"){
+    if(dateType.toLowerCase() == Terms.Birthday){
         indexOfDatepicker = 0;
     }
-    else if(dateType.toLocaleLowerCase() == "anniversary"){
+    else if(dateType.toLowerCase() == Terms.Anniversary){
         indexOfDatepicker = 1;
     }
     cy.get(MaintenanceSelectors.ContactDatepicker).eq(indexOfDatepicker).within(() => {
         cy.get(BaseSelectors.ComboBox).eq(0).within(() => {
-            cy.get(BaseSelectors.SelectedComboboxItem).should("not.exist");
+            BaseAssertion.AssertElementNotExist(BaseSelectors.SelectedComboboxItem);
         });
         cy.get(BaseSelectors.ComboBox).eq(1).within(() => {
-            cy.get(BaseSelectors.SelectedComboboxItem).should("not.exist");
+            BaseAssertion.AssertElementNotExist(BaseSelectors.SelectedComboboxItem);
         });
         cy.get(BaseSelectors.ComboBox).eq(2).within(() => {
-            cy.get(BaseSelectors.SelectedComboboxItem).should("not.exist");
+            BaseAssertion.AssertElementNotExist(BaseSelectors.SelectedComboboxItem);
         });
     });
 }
-//////////
+//#endregion

@@ -102,13 +102,12 @@ using Simplog.Data.ShipmentsModel;
 				   temp.TransportModeCode = item.TransportModeCode;
 				   temp.Notes = item.Notes;
 				   temp.TruckerNumber = item.CarrierNumber;
+				   temp.PickUpReference = item.PickUpDeliveryNumber;
 				if(item.ShipmentPickUpDeliveryPackages != null && item.ShipmentPickUpDeliveryPackages.Count > 0)
 				{
-					 ShipmentPickUpDeliveryPackageQueryService ShipmentPickUpDeliveryPackageService5 = new ShipmentPickUpDeliveryPackageQueryService(Tenant);
-					 temp.ShipmentPickUpDeliveryPackages = ShipmentPickUpDeliveryPackageService5.ShipmentPickUpDeliveryPackageDataMapping(item.ShipmentPickUpDeliveryPackages,Tenant,ComputingPartnerName);
+					 PackageQueryService PackageService5 = new PackageQueryService(Tenant);
+					 temp.Packages = PackageService5.PackageDataMapping(item.ShipmentPickUpDeliveryPackages,Tenant,ComputingPartnerName);
 				}
-
-				   temp.PickUpReference = item.PickUpDeliveryNumber;					
 
 							 					
 					MyList.Add(temp);
@@ -340,26 +339,26 @@ using Simplog.Data.ShipmentsModel;
 
 										}  
 
-					 
-
-					if(item.ShipmentPickUpDeliveryPackages != null && item.ShipmentPickUpDeliveryPackages.Count > 0)
-					{
-						ShipmentPickUpDeliveryPackageQueryService ShipmentPickUpDeliveryPackageService5 = new ShipmentPickUpDeliveryPackageQueryService(Tenant);
-						  
-						if(!IsUpdate)
-						{								//throw new ApplicationException("ShipmentPickUpDeliveryPackages Can't be update"); 
-								temp.ShipmentPickUpDeliveryPackages = ShipmentPickUpDeliveryPackageService5.ShipmentPickUpDeliveryPackageDataMappingAndValidatin(item.ShipmentPickUpDeliveryPackages,Tenant,ComputingPartnerName,IsUpdate);
-
-					 
-						}  
-
-										}  
-
 					
                     
 					if(!IsUpdate)// && !string.IsNullOrEmpty(item.PickUpReference))
 					{							//throw new ApplicationException("PickUpReference Can't be update"); 
 							temp.PickUpDeliveryNumber = item.PickUpReference;
+
+										}  
+
+					 
+
+					if(item.Packages != null && item.Packages.Count > 0)
+					{
+						PackageQueryService PackageService5 = new PackageQueryService(Tenant);
+						  
+						if(!IsUpdate)
+						{								//throw new ApplicationException("Packages Can't be update"); 
+								temp.ShipmentPickUpDeliveryPackages = PackageService5.PackageDataMappingAndValidatin(item.Packages,Tenant,ComputingPartnerName,IsUpdate);
+
+					 
+						}  
 
 						
 					}
@@ -378,4 +377,4 @@ using Simplog.Data.ShipmentsModel;
         }
 		 
    }
-}
+}

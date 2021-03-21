@@ -56,12 +56,15 @@ export function GetValidContainerNumber(input: any) {
         validCheckDigit = 0;
     }
 
-    if (validCheckDigit != checkDigit) {
-        myResult = input.replace(/.$/, validCheckDigit.toString());
-    }
-
+    myResult = input.replace(/.$/, validCheckDigit.toString());
 
     return myResult;
+}
+
+export function GenerateCurrentDatetimeString(split: string): string {
+    let currentDate = new Date();
+    let currentDatetimeString = currentDate.getDate() + split + (currentDate.getMonth() + 1) + split + currentDate.getFullYear() + split + currentDate.getTime();
+    return currentDatetimeString;
 }
 
 function IsAlpha(input: string): boolean {

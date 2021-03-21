@@ -67,6 +67,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
                .HasMaxLength(1000)
                .IsUnicode(false);
 
+            this.Property(t => t.SignatureImageId).HasMaxLength(15);
+
             this.Property(t => t.ShowLogBoxToolTip).IsRequired();
             this.Property(t => t.UserRoles).HasMaxLength(400).IsUnicode(false);
             Property(t => t.LayoutDirection).HasMaxLength(3).IsUnicode(false);
@@ -104,7 +106,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
 
             this.Property(t => t.LayoutDirection).HasColumnName("LayoutDirection");
-
+            this.Property(t => t.SignatureImageId).HasColumnName("SignatureImageId");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -128,7 +130,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasRequired(t => t.Department).WithMany().HasForeignKey(d => d.DepartmentId);
             this.HasOptional(t => t.Freelancer).WithMany().HasForeignKey(d => d.FreelancerId);
             this.HasRequired(t => t.BusinessUnit).WithMany().HasForeignKey(d => d.BusinessUnitId);
-            this.HasOptional(t => t.ProductType).WithMany().HasForeignKey(d => d.ProductTypeCode);
+            this.HasOptional(t => t.ProductType).WithMany().HasForeignKey(d => d.ProductTypeCode); 
         }
     }
 }

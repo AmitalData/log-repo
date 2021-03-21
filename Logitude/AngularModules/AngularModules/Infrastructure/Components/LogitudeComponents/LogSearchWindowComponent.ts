@@ -106,7 +106,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         this.entityPMService = new EntityPMService;
         this.TenantPM = InfraSettings.TenantPM;
         //this.CurrentSession.SubscriptionAdd(
-        var UsingV2FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2" && d.TenantNumber == SessionLocator.Tenant)[0];
+        var UsingV2FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2")[0];
         if (UsingV2FeatureToggle || SessionLocator.LoggedUserPM.Email == "ahmada@logitudeworld.com") { this.UsingLogGridV2 = true; }
 
         this.PseventRowSelectEventSub=  this.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
@@ -317,10 +317,9 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     IsUseCardSearchMechanism() {
         var result: boolean = false;
         if (this.ObjectTableName == "Card") {
-            //var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CST" && d.TenantNumber == SessionLocator.Tenant)[0];
-            //if (featureToggle) {
+           
                 result = true;
-            //}
+           
         }
         return result;
 

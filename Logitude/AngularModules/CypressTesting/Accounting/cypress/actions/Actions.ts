@@ -165,7 +165,9 @@ export function FillARInvoiceDetails(aRInvoiceDetails: ARInvoiceDetails) {
         cy.FillLogLov(AccountingSelectors.ARInvoicePartner, aRInvoiceDetails.Partner, false)
     }
     cy.FillLogLov(AccountingSelectors.ARInvoiceInvoiceCurrency, aRInvoiceDetails.InvoiceCurrency, true)
-    cy.FillLogTextBox(AccountingSelectors.ARInvoiceExchangeRate, aRInvoiceDetails.InvoiceExchangeRate.toString());
+    if(aRInvoiceDetails.InvoiceExchangeRate) {
+        cy.FillLogTextBox(AccountingSelectors.ARInvoiceExchangeRate, aRInvoiceDetails.InvoiceExchangeRate.toString());
+    }
     cy.FillDate(AccountingSelectors.ARInvoiceInvoiceDate, aRInvoiceDetails.InvoiceDate)
     cy.FillLogLov(AccountingSelectors.ARInvoicePaymentTerm, aRInvoiceDetails.PaymentTerms, true)
     cy.FillDate(AccountingSelectors.ARInvoiceDueDate, aRInvoiceDetails.DueDate)
@@ -224,6 +226,16 @@ export function CancelDraftARInvoice() {
     cy.Click(AccountingSelectors.ARInvoiceCancelDraftButton, null)
     cy.Click(ShipmentSelectors.ConfirmWindowYes, null)
 }
+
+export function AutoCreditARInvoice() {
+    cy.Click(BaseSelectors.MoreList, null, true);
+    cy.Click(AccountingSelectors.ARInvoiceAutoCreditButton, null);
+}
+
+export function ApproveAutoCreditARInvoice() {
+    PostARApproveInvoice();
+    cy.Click(ShipmentSelectors.ConfirmWindowYes, null);
+}
 //#endregion
 
 //#region Add Two Shipment Lines And Edit Amount
@@ -244,7 +256,7 @@ export function AddTwoShipmentLinesAndEditAmount(shipmentNumbers: string[], VATT
         cy.FillLogTextBox(AccountingSelectors.APInvoiceLineForiegnCurrencyAmount, amount.toString());
         cy.FillLogLov(AccountingSelectors.APInvoiceVatType, VATType, true);
         cy.Click(BaseSelectors.Button, BaseSelectors.ContainsApplytoall);
-        cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.InvoiceDomain, RequestAliases.APInvoicesRequest);
+        cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.APInvoicesGetSingle, RequestAliases.APInvoicesRequest);
         cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
         BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
     }
@@ -445,16 +457,30 @@ function ClickOnSaveOnConfirmWindow() {
 }
 
 export function CreateARInvoiceGeneratedFromRoutingLeg(vat:string){
-    ClickAndWaitToLoad(AccountingSelectors.CreateARInvoiceButton);
+    WaitToLoad(AccountingSelectors.CreateARInvoiceButton);
     cy.FillLogTextBox(AccountingSelectors.ARInvoiceVatNumber, vat)
-    ClickAndWaitToLoad(AccountingSelectors.OkCreateARInvoiceButton);
+    WaitToLoad(AccountingSelectors.OkCreateARInvoiceButton);
     cy.FillLogLov(AccountingSelectors.ARInvoiceVatType , vat ,true)
-    ClickAndWaitToLoad(AccountingSelectors.VatTypeApplyToAll);
+    WaitToLoad(AccountingSelectors.VatTypeApplyToAll);
 }
 
-function ClickAndWaitToLoad(ButtonSelector:string){
+function WaitToLoad(ButtonSelector:string){
     cy.DefineRequestWait(RestAPI.GET, AccountingURLs.VatTypePercentageCall, RequestAliases.GetVatTypePercentage)
     cy.Click(ButtonSelector, null);
     BaseAssertion.AssertStatusCode(RequestAliases.GetVatTypePercentage, 200);
 
+}
+
+export function AssertARInvoiceStatus(status: string) {
+    cy.get(AccountingSelectors.ARInvoiceHeaderStatusName).should("have.text", status);
+}
+
+export function AssertARInvoiceAmount(expectedInvoiceAmount: number) {
+    cy.get(BaseSelectors.TabSummaryValue).eq(4).should("have.text", expectedInvoiceAmount.toFixed(2));
+}
+
+export function AssertAutoCreditByInvoiceNumber(invoiceNumber: string) {
+    cy.get(BaseSelectors.RightBorderRadius).invoke("text").then((text) => {
+        expect(text.replace(/\s/g, "")).to.equals("ByInvoice" + invoiceNumber);
+    });
 }

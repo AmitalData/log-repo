@@ -75,6 +75,7 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentType { get; set; }
         public string HouseNumber { get; set; }
         public string ClientNumber { get; set; }
+        public string SpecialServiceType { get; set; }
         public string Shipper { get; set; }
         public string Shipper_LocalName { get; set; }
         public string ShipperAddress { get; set; }
@@ -436,6 +437,7 @@ namespace WebFreight.Web.DataProviders
         public string ValueOfGoodsCurrency { get; set; }
         public class InvoicesReport
         {
+            public string BillToVatNumber { get; set; }
             public string InvoiceType { get; set; }
             public string InvoiceNumber { get; set; }
             public string InternalNumber { get; set; }

@@ -1,4 +1,4 @@
-@smoke @release @stable @all
+@smoke @release @stable
 Feature: Save Ticket Test
     This file will create ticket then test the following
     Save as close , as open and as resolved
@@ -6,15 +6,15 @@ Feature: Save Ticket Test
     Scenario: Create new ticket
         Given the user logged in and navigated to ticket workspace
         And a ticket with the following details
-            | EntityType         | shipment     |
-            | Company            | TestAgent    |
-            | Contact            | Test Contact |
-            | Subject            | Test Ticket  |
-            | Description        | Test Ticket  |
-            | MainClassification | Test         |
-            | Severity           | Medium       |
-            | EmployeeGroup      | Tester Group |
-            | Owner              | specflowTest |
+            | EntityType         | shipment                |
+            | Company            | TestAgent               |
+            | Contact            | TestAgentExport Contact |
+            | Subject            | Test Ticket             |
+            | Description        | Test Ticket             |
+            | MainClassification | Test                    |
+            | Severity           | Medium                  |
+            | EmployeeGroup      | Tester Group            |
+            | Owner              | specflowTest            |
         When create ticket
         Then the ticket should create successfully
 

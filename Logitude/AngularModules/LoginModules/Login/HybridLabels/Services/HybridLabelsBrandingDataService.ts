@@ -2,9 +2,11 @@
 import {Http, Headers, Response} from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch'; 
+import 'rxjs/add/Observable/throw'; 
 import { BrandingDataService } from './BrandingDataService';
 import { HybridLabelsBrandingDataRequest } from '../DataContracts/HybridLabelsBrandingDataRequest';
 import { ServiceResponse } from '../DataContracts/ServiceResponse'; 
+import { Observable } from 'rxjs/Observable';
 
 
 @Injectable()
@@ -24,9 +26,13 @@ export class HybridLabelsBrandingDataService {
         return this._http.put(callUrl, BrandingDataRequest, { headers: this.httpHeaders }).map((response) => {
             var result: ServiceResponse = response.json();
             return result;
-        });
+        }).catch(this.handleError)
     }
- 
+
+    private handleError(error: Response) {
+        console.error(error);
+        return Observable.throw(error);
+    } 
   }  
 
 

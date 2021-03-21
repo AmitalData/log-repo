@@ -79,7 +79,7 @@ export class SentToCustomComponent extends BaseComponent implements OnDestroy {
     }
     SetWindowArgs(windowArgs: ShipmentPM) {
         this.EntityPM = windowArgs;
-        this.AMSFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "AMS" && d.TenantNumber == SessionLocator.Tenant)[0];
+        this.AMSFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "AMS")[0];
         this.FillData();
     }
     FillData() {

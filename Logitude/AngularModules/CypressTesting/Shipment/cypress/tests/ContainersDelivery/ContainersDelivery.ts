@@ -11,7 +11,6 @@ import * as Assists from "../../../../Base/cypress/assists/Assists";
 //#region variables
 let shipmentDetails: ShipmentDetails;
 let packagesDetails: PackagesDetails[];
-let ContainerNumber = '';
 //#endregion
 
 //#region Create import ocean FCL shipment
@@ -34,7 +33,6 @@ Then("the shipment should create successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
         shipmentDetails.ShipmentNumber = interception.response.body.ShipmentNumber;
     })
-    ContainerNumber = Actions.GetGeneratedRandomContainerNumber();
 });
 //#endregion
 
@@ -42,7 +40,7 @@ Then("the shipment should create successfully", () => {
 Given("the user add a container with the following details", (dataTable) => {
     Actions.OpenShipment(shipmentDetails.ShipmentNumber);
     packagesDetails = Assists.CreateSet<PackagesDetails>(dataTable);
-    packagesDetails[0].ContainerNumber = ContainerNumber;
+    packagesDetails[0].ContainerNumber = Actions.GetGeneratedRandomContainerNumber();
     Actions.FillPackageTab(shipmentDetails.TransportMode, packagesDetails, shipmentDetails.ShipmentType);
 });
 //#endregion

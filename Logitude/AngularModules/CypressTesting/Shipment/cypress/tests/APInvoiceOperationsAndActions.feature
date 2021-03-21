@@ -1,4 +1,4 @@
-@smoke @release @all @stable
+@smoke @release @stable
 Feature: APInvoice Aprrove, cancel the approvement and void
     After the user logging in the system and Update Accounting System to be None,navigates to shipments workspace
     will create a direct shipment,update routing tab,packages.

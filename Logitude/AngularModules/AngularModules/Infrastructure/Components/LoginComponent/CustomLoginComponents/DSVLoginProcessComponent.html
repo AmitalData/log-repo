@@ -49,11 +49,21 @@
         background-position: center center;
     }
 
+    .image-container {
+        display: flex;
+        height: 100vh;
+        justify-content: center;
+        align-items: center;
+    }
 
 </style>
+<!--Spinner-->
 
+<div *ngIf="showSpinner" class="image-container">
+    <img src="./Images/LoginScreen/indicator.gif" width="100">
+</div>
 
-<table class="PreventSelect backgroundImage" [style.background-image]="this.BackgroundImage">
+<table *ngIf="!showSpinner" class="PreventSelect backgroundImage" [style.background-image]="this.BackgroundImage">
     <tr>
         <td>
             <div></div>

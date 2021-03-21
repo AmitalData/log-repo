@@ -90,10 +90,9 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
 
-            //var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "FPG" && d.TenantNumber == SessionLocator.Tenant)[0];
-            //if (featureToggle) {
+           
                 this.DisplayFechaPago = true;
-            //}
+          
         }
 
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {

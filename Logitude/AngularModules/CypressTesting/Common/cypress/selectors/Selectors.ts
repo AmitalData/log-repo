@@ -17,4 +17,10 @@ export class CommonSelectors {
     public static readonly EnableConsolidationInvoices = '[for="Customer_EnableConsolidationInvoices"]';
     public static readonly CustomerSave = '#Customer-Save';
     //#endregion
+    //#region Login 
+    public static readonly Email="#Email"
+    public static readonly LoginButton="#cmdLogin"
+    public static readonly ForgotYourPasswordLink="Forgot your password?"
+    public static readonly  ResetPasswordLinkSentMessage="#message";
+    //#endregion
 }

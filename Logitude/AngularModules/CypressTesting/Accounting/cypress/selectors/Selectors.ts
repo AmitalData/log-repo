@@ -89,8 +89,9 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly ARInvoiceExchangeRate = '#ARInvoice_InvoiceCurrencyExchangeRate';
     public static readonly OkCreateARInvoiceButton = '#Ok-CreateARInvoice';
     public static readonly ARInvoiceVatType = '#ARInvoice_VatTypeId';
-    public static readonly ARInvoiceApproveButton = '#ARInvoiceBApprove';
+    public static readonly ARInvoiceApproveButton = "button[id^='ARInvoiceBApprove']:last";
     public static readonly ARInvoiceSetAsSentButton = '#ARInvoiceBSetAsSent';
+    public static readonly ARInvoiceAutoCreditButton = '#ARInvoiceBAutoCredit';
     public static readonly ARInvoiceSaveButton = '#ARInvoiceBSaveAsDraft';
     public static readonly ARInvoiceVoidButton = '#ARInvoiceBVoid';
     public static readonly ARInvoiceCancelDraftButton = '#ARInvoiceBCancelDraft';
@@ -108,6 +109,10 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly ContainTransferredSuccessfully = "Transferred Successfully"
     public static readonly ContainNotReadyInvoices = "Not Ready Invoices"
     public static readonly ContainNewTransfer = "New Transfer"
+    
+    public static readonly ContainsARInvoice = "ARInvoice:";
+    public static readonly AutoCredit = "Auto Credit";
+    public static readonly AutoCredited = "Auto Credited";
     //#endregion
     //#region Transfer Status contain
     public static readonly ContainNotReady = "Not Ready"
@@ -139,6 +144,8 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly FTPDetailUseSFTP = "#FTPDetail_UseSFTP"
     public static readonly OKFTPDetails = "button[data-cy^=OKFTPDetails]"
     public static readonly OkFTP = "button[data-cy^=Ok_FTP]"
+
+    public static readonly ARInvoiceHeaderStatusName = "[id^='ARInvoiceHeaderStatusName']:last";
     //#endregion
 //#region check all in new transfer window
 public static readonly CheckAll='[data-cy="CheckALL"]'

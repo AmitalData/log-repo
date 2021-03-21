@@ -14,6 +14,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly SystemSettings = "#CMS"
     public static readonly CustomsSettings = "#MaintenanceItemCISE"
     public static readonly Warehouse = "#MaintenanceItemMTWH"
+    public static readonly Vendor = "#MaintenanceItemMTVD"
     //#endregion
     //#region charge Types
     public static readonly ChargesTypeAccounting="#ChargesTypeTHAccounting"
@@ -40,6 +41,8 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly SaveWizard = "#SaveWizard";
     public static readonly Backbutton = '#EditBackbutton';
     public static readonly SaveButton = '#SaveBtn';
+    public static readonly ConfrimApproved = '#ConfrimApproved';
+
     //#endregion
     //#region Contains
     public static readonly ContainsApplytoall = 'Apply to all';
@@ -61,9 +64,11 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ContainsExport = 'Export'
     public static readonly ContainsSendtoCustoms = "Send to Customs"
     public static readonly  ContainSave="Save"
+    public static readonly  ContainPrint="Print"
     public static readonly ContainSelected= "Selected:"
 
     public static readonly ContainsAddFollowup = "Add Follow up"
+    public static readonly ContainsFillDimensions = "Fill Dimensions"
 
     public static readonly ContainsAddContainerDelivery = "Add Container Delivery"
     public static readonly ContainsAddEmptyContainerReturn = "Add Empty Container Return"
@@ -71,6 +76,9 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ContainYes="Yes"
     public static readonly ContainNo="No"
     public static readonly ContainSettings="Settings"
+    public static readonly ContainWarehouse="Warehouse"
+    public static readonly ContainVendor="Vendor"
+
 
     //#endregion
     //#region general
@@ -87,10 +95,12 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly MouseoverTrigger='mouseover'
     public static readonly LogitudeScrollViewer='.LogitudeScrollViewer'
     public static readonly DeleteButton='button[id^=Delete]'
+    public static readonly Anchor="a"
     //#endregion
 
     public static readonly FirstElementInList = 'ul > li';
     public static readonly LastElement = ":last";
+    public static readonly FirstElement = ":first";
     public static readonly AddButton = "#Add";
     public static readonly SpanElement = "span";
     public static readonly DivElement = 'div';
@@ -102,7 +112,9 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly MTCPopup='#MTCPopup';
     public static readonly LogLOVFooterHyperLink = ".LogLOVFooter a";
     public static readonly DownArrowImage = "img[src='./Images/Buttons/downarrow.png']";
+    public static readonly RefreshImg = "img[src='./Images/Buttons/Refresh.png']";
     public static readonly Hyperlink = ".hyperlink";
+    public static readonly Title = ".Title";
 
     //#region Should Condition 
     public static readonly BeEmpty = 'be.empty'
@@ -183,11 +195,21 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly StepToColumn ="2"
     public static readonly StepFromColumn ="0"
     public static readonly SalePriceColumn ="3"
+    public static readonly RowNo0 ="0"
+    public static readonly RowNo1 ="1"
+    public static readonly ColNo1 ="1"
+    public static readonly ColNo8 ="8"
+    public static readonly ColNo5 ="5"
     public static readonly WarehouseTypeCode ="#Warehouse_TypeCode"
     public static readonly WarehouseChargeStorage ="#Warehouse_ChargeStorage"
     public static readonly WarehouseCurrency ="#Warehouse_CurrencyId"
     public static readonly WarehouseStorageFreeDays ="#Warehouse_StorageFreeDays"
     public static readonly WarehouseStorageDefaults ="Storage Defaults"
     public static readonly WarehouseSaveCloseBtn ="#Warehouse-SaveClose"
-    
+
+    public static readonly RightBorderRadius = ".RightBorderRadius:last";
+    public static readonly TabSummaryValue = ".LogitudeTabSummary:last .TabSummaryValue";
+    //#region  colors
+    public static readonly RedColor="rgb(255, 0, 0)"
+//#endregion
 }

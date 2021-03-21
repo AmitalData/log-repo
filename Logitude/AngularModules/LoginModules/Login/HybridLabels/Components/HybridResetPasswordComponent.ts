@@ -22,7 +22,8 @@ export class HybridResetPasswordComponent extends ResetPasswordComponent {
     public ForgetPasswordImage: string = "";
     public Id = "";
     public MainLogo: string = "";
-    public ContactUsEmail: string = "";
+    public ContactUsEmail: string = ""; 
+    public showSpinner = true; 
 
     public show = true;
     constructor(
@@ -45,10 +46,15 @@ export class HybridResetPasswordComponent extends ResetPasswordComponent {
                 this.MainColor = response.Result.MainColor;
                 this.BackgroundImage = BrandingDataService.GetBackgroundImage();
                 this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage(); 
-                this.MainLogo = BrandingDataService.GetMainLogo();
+                this.MainLogo = BrandingDataService.GetMainLogo();  
             }
-        });
-
+        },
+            (error) => {
+                this.BackgroundImage = BrandingDataService.DefaultBackground;
+                this.ForgetPasswordImage = BrandingDataService.DefaultForgetPassword;
+                this.MainLogo = BrandingDataService.DefaultMainLogo;
+            },
+        )
+        this.showSpinner = false;
     }
-
 }

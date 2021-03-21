@@ -1,19 +1,19 @@
-@release @not-stable @all
+@release @dev 
 Feature: Storage Calculations Gross Weight without Rounding
 
     The user sets up a warehouse with storage charges, creates a Direct Import Air shipment,
     adds a package with gross weight, adds a warehouse for storage calculation, adds dates,
     calculates fees/charges, checks receivables automatically added based on calculations of warehouse and creates an invoice.
 
-    Scenario: Update warehouse
+    Scenario: Set up a warehouse with storage charges
         Given the user logged in and navigate to warehouse workspace
         And open warehouse with "Testwarehouse" warehouse
         And fill with the following storage details for "CFS" Type
-            | Currency | StorageFreeDays |
-            | USD      | 2               |
+            | Currency        | USD |
+            | StorageFreeDays | 2   |
         And "Air" weight details as following
-            | Measurement  | Rounding |
-            | Gross Weight | None     |
+            | Measurement | Gross Weight |
+            | Rounding    | None         |
         And pricing defaults lines as following
             | StepFrom | NumberOfDays | StepTo | SalePrice |
             | 1        | 2            | 2      | 100       |
@@ -21,7 +21,7 @@ Feature: Storage Calculations Gross Weight without Rounding
         When update warehouse
         Then the warehouse should update successfully
 
-    Scenario: Create direct export air shipment
+    Scenario: Create direct import air shipment
         Given the user in shipment workspace
         And a shipment with the following details
             | ShipmentLevel        | Direct              |
@@ -37,27 +37,35 @@ Feature: Storage Calculations Gross Weight without Rounding
         Given the user open the shipment and navigate to packages workspace
         And a package with the following details
             | Quantity | Length | Width | Height | GrossWeight |
-            | 1        | 1      | 1     | 1      | 10          |
+            | 1        | 1      | 1     | 1      | 9.5         |
         When update shipment
         Then the direct shipment should update successfully
 
 
     Scenario: Add warehouse leg and check the calculation
         Given the user in the shipment's rounting tab
-        And add new warehouse leg with "Testwarehouse" as Termina
+        And a warehouse leg with "Testwarehouse" as terminal
         And fill "Today" as actual release and "8" days ago date as actual entry
         When calculate storage
-        Then the Storage Fee should be "6,000.00"
-        And Storage pricing should have weight "10" and Amount as following
+        Then the Storage Fee should be "5,700.00"
+        And Storage pricing should have weight "9.5" and Amount as following
             | Amount   |
-            | 2,000.00 |
-            | 4,000.00 |
-
-    Scenario: Add invoice
-        Given the user in the shipment's receivables tab
-        And receivables containts line with the following details
+            | 1,900.00 |
+            | 3,800.00 |
+        And a receivables line with the following details should appear
             | ChargesType    | Amount    |
-            | Import Storage | 6,000.000 |
-        When add new invoice with "Zero" vat type and number
-        Then the invoice should add successfully
+            | Import Storage | 5,700.000 |
+
+    Scenario: Create an ARInvoice
+        Given an ARInvoice with the following details
+            | PartnerType     | Customer    |
+            | InvoiceCurrency | USD         |
+            | InvoiceDate     | Today       |
+            | PaymentTerms    | Cash        |
+            | DueDate         | Today       |
+            | VATNo           | Zero        |
+            | Branch          | Main Office |
+            | VATType         | Zero        |
+        When create invoice
+        Then the invoice should create successfully
 

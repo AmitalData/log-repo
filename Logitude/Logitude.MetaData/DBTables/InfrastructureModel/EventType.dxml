@@ -169,7 +169,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IsNotModified"
+    Name="IsStatusNotModified"
+    OldNames="IsNotModified"
     Type="bit">
     <Constraints
       Nullable="false" />

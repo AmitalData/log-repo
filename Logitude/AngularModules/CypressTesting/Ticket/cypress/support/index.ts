@@ -18,7 +18,7 @@
 
 import '../../../Base/cypress/commands/Authentication'
 import '../../../Base/cypress/commands/Elements'
-import '../../../Base/cypress/commands/Api'
+import '../../../Base/cypress/commands/AliasDefinitions'
 
 import addContext from 'mochawesome/addContext'; 
 Cypress.on('test:after:run', (test, runnable) => {

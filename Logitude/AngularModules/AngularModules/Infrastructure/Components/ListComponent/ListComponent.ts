@@ -462,7 +462,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     private SessionEvent: any = null;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _ListComponentArgs: ListComponentArgs,private _http: HttpClient, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef) {
-        var UsingV2FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2" && d.TenantNumber == SessionLocator.Tenant)[0];
+        var UsingV2FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2")[0];
         if (UsingV2FeatureToggle || SessionLocator.LoggedUserPM.Email == "ahmada@logitudeworld.com") { this.UsingLogGridV2 = true; }
        
         if (this.CurrentSession == null) {
@@ -3515,7 +3515,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     IsUseCardSearchMechanism() {
         var result: boolean = false;
         if (this.ObjectTableName == "Customer") {
-            var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SCV" && d.TenantNumber == SessionLocator.Tenant)[0];
+            var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SCV")[0];
             if (featureToggle) {
             result = true;
             }

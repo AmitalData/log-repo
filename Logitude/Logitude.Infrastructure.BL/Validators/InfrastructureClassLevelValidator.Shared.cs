@@ -42,7 +42,15 @@ namespace Logitude.Infrastructure.BL.Validators
                     return v;
                 }
             }
-
+            else if(objectTableName == "FeatureToggle")
+            {
+                FeatureToggleClassLevelValidator featureToggleClassLevelValidator = new FeatureToggleClassLevelValidator();
+                if (!featureToggleClassLevelValidator.IsValid(value, context.ObjectInstance, context.MemberName))
+                {
+                    ValidationResult v = new ValidationResult(featureToggleClassLevelValidator.GetErrorMessage(value, context.ObjectInstance, context.MemberName), new string[] { context.MemberName });
+                    return v;
+                }
+            }
             else
             {
                 tenantProp = type.GetProperty("Tenant");

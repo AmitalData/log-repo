@@ -7,9 +7,9 @@ export class AccountingURLs {
     public static readonly APPayments = '**/appayments';
     public static readonly ARPayments = '**/arpayments';
     public static readonly InvoiceDomain = '**/InvoiceDomain';
+    public static readonly APInvoicesGetSingle = '**/apinvoices/getsingle?**';
     public static readonly ConsilidationInvoiceDomain = "**/ConsilidationInvoiceDomain"
     public static readonly VatTypePercentageCall = "**/GetVatTypePercentagePMByDate?**"
     public static readonly EntityResourceAccountingPeriod="**/EntityResource?objectTableName=AccountingPeriod&**"
     public static readonly PerformancelogsPostLogsList="**/performancelogs/PostLogsList"
-
 }

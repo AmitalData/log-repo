@@ -322,7 +322,7 @@ namespace WebFreight.Web.DataProviders
         public string DeliveryFromAddress { get; set; }
 
         public DateTime? ETD_DateTime { get; set; }
-
+        public string ValueOfGoodsCurrencyCode { get; set; }
         public string ValueOfGoodsCurrency { get; set; }
         public double? ValueOfGoods { get; set; }
 

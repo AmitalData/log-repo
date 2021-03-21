@@ -1,4 +1,4 @@
-@release @all @stable
+@release @stable
 Feature: ARInvoice Cancel Credit note draft
     After the user logging in the system and Update Accounting System to be None,navigates to shipments workspace
     will create a direct shipment, after that create a credit note ARInvoice and cancel draft.

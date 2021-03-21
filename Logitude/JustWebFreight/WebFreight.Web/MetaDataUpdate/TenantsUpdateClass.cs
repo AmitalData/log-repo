@@ -2528,7 +2528,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     {
                         updatedEventType.EnglishName = eventType.EnglishName;
                         updatedEventType.AddedManually = eventType.AddedManually;
-                        if (!updatedEventType.IsNotModified)
+                        if (!updatedEventType.IsStatusNotModified)
                             updatedEventType.EntityStatusId = currentTenantEntityStatu != null ? currentTenantEntityStatu.Id : null;
                         updatedEventType.FollowUpEnglishName = eventType.FollowUpEnglishName;
                         updatedEventType.FollowUpLocalName = eventType.FollowUpLocalName;

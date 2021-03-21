@@ -122,6 +122,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     CheckJournalActionCodeAndSplitedIt(item, entityPM.JournalLines);
                     OnCreateLine(entityPM, item);
+                    item.Notes = entityPM.JournalLines[0].Notes;
                 }
                 foreach (JournalLinePM item in SplitiedJournals)
                 {

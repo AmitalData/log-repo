@@ -22,11 +22,14 @@ export var DSVLoginComponent = (function (_super) {
         this.MainLogo = "";
         this.LoginProcessImage = "";
         this.showSpinner = true;
+        this.showErrorMessage = false;
+        this.serverError = "";
     }
     DSVLoginComponent.prototype.ngOnInit = function () {
         this.get_cookie_data();
         this.privateUrl = SessionInfo.GetLogitudeURL();
         this.GetHybridLabelsData(this.privateUrl);
+        this.showSpinner = false;
     };
     DSVLoginComponent.prototype.GetHybridLabelsData = function (privateUrl) {
         var _this = this;
@@ -39,9 +42,13 @@ export var DSVLoginComponent = (function (_super) {
                 _this.MainImage = BrandingDataService.GetMainImage();
                 _this.MainLogo = BrandingDataService.GetMainLogo();
                 _this.LoginProcessImage = BrandingDataService.GetLoginProgressImage();
-                _this.showSpinner = false;
             }
+        }, function (error) {
+            _this.BackgroundImage = BrandingDataService.DefaultBackground;
+            _this.MainImage = BrandingDataService.DefaultMainImage;
+            _this.MainLogo = BrandingDataService.DefaultMainLogo;
         });
+        this.showSpinner = false;
     };
     DSVLoginComponent.prototype.ClearLocation = function () {
         if (SessionInfo.MainLocation) {

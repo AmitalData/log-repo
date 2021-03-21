@@ -317,6 +317,10 @@ export function FillPackageTab(transportMode: string, packagesDetails: PackagesD
         } else {
             cy.Click(ShipmentSelectors.OceanPackageOKButton, null)
         }
+
+        if(packagesDetails[i].ChargeableWeight) {
+            cy.FillLogTextBox(ShipmentSelectors.PackageChargeableWeight, packagesDetails[i].ChargeableWeight.toString(), true)
+        }
     }
 }
 
@@ -460,10 +464,19 @@ export function CalculateStorage() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetAll, 200)
 }
 
+export function AssertStorageFee(expectedStorageFeeValue: string) {
+    // cy.get(ShipmentSelectors.StorageFeeResult).invoke('text').then((text) => {
+    //     if (text.trim() != expectedStorageFeeValue) {
+    //         AssertStorageFee(expectedStorageFeeValue)
+    //     }
+    // })
+    BaseAssertion.AssertElementContain(ShipmentSelectors.StorageCalculationScreen, expectedStorageFeeValue)
+}
+
 export function ValidateStoragePricing(AmountList:WarehouseStorage[],expectedWeight:string){
     cy.get(BaseSelectors.Hyperlink).contains(ShipmentSelectors.ContainsStoragePricing).click();
     for (let i = 0; i < AmountList.length; i++) {
-        BaseAssertion.AssertElementTextEqual(BaseSelectors.CellWithRowAndCol("5", (i + 1).toString()),AmountList[i].Amount,BaseSelectors.td)
+        BaseAssertion.AssertElementTextEqual(BaseSelectors.CellWithRowAndCol(BaseSelectors.ColNo5, (i + 1).toString()),AmountList[i].Amount,BaseSelectors.td)
     }
     BaseAssertion.AssertElementContain(BaseSelectors.LogitudeScrollViewer,ShipmentSelectors.ContainsWeight+expectedWeight)
     cy.Click(BaseSelectors.RedButton+BaseSelectors.LastElement,BaseSelectors.ContainsOK);

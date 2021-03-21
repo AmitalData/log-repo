@@ -21,6 +21,7 @@ export var DSVResetPasswordComponent = (function (_super) {
         this.Id = "";
         this.MainLogo = "";
         this.ContactUsEmail = "";
+        this.showSpinner = true;
         this.show = true;
     }
     DSVResetPasswordComponent.prototype.ngOnInit = function () {
@@ -39,7 +40,12 @@ export var DSVResetPasswordComponent = (function (_super) {
                 _this.Id = response.Result.Id;
                 _this.MainLogo = BrandingDataService.GetMainLogo();
             }
+        }, function (error) {
+            _this.BackgroundImage = BrandingDataService.DefaultBackground;
+            _this.ForgetPasswordImage = BrandingDataService.DefaultForgetPassword;
+            _this.MainLogo = BrandingDataService.DefaultMainLogo;
         });
+        this.showSpinner = false;
     };
     DSVResetPasswordComponent.decorators = [
         { type: Component, args: [{
