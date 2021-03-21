@@ -267,8 +267,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.UIProperties.SetRequired("ScheduledTasksLimitPerReport", this.ObjectTableName, true);
             this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push("Scheduled Tasks Limit Per Report is required");;
         } else {
-            this.UIProperties.SetRequired("ScheduledTasksLimitPerReport", this.ObjectTableName, false);
-            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = []
+            this.UIProperties.SetRequired("ScheduledTasksLimitPerReport", this.ObjectTableName, false); 
         };
 
     }
