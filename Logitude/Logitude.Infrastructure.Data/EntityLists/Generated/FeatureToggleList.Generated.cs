@@ -38,6 +38,8 @@ namespace Logitude.Infrastructure.Data.EntityLists
        public string ToggleName  { get; set; }
        [DataMember]
        public string CreatedByUser  { get; set; }
+       [DataMember]
+       public string ToggleDescription  { get; set; }
    }
 
 }

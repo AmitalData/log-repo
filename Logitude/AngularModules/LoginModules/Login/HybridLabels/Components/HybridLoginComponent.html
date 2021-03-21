@@ -1,0 +1,310 @@
+﻿<!--Spinner-->
+ 
+<div *ngIf="showSpinner" class="image-container">
+    <img src="images/LoginScreen/indicator.gif" width="100">
+</div>
+
+<!--BackgroundImage -->
+<table *ngIf="!showSpinner" class="PreventSelect backgroundImage" [style.background-image]="this.BackgroundImage">
+    <tr>
+        <td style="width:30%;">
+            <div></div>
+        </td>
+
+        <td>
+            <!--style="width: 1024px;"-->
+            <table>
+                <tr style="height: 50px;">
+                    <td>
+                        <div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr style="height: 114px;">
+                    <td style="text-align: center;">
+                        <a>
+                            <!--MainLogo-->
+                            <img [src]="MainLogo" id="loginlogo" style="width:290px; height:114px;float:left;" />
+                        </a>
+                    </td>
+                </tr>
+
+                <tr style="height: 20px;">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height: 16px;">
+
+                                            <td style="opacity: 0.7; background-image: url('Images/LoginScreen/shadow1.png'); background-repeat: no-repeat;">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height: 260px; min-height: 260px; background: white;">
+                                            <td style="width: 25%;">
+                                                <table>
+                                                    <tr>
+                                                        <td *ngIf="IsShowFormLogin" style="width: 25%;">
+                                                            <div style="height:100%" *ngIf="!IsShowPasswordExpirationDateArea">
+
+                                                                <table *ngIf="!ShowTenantList" style="margin-left:50px;">
+                                                                    <tr style="height: 20px;">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr [style.height]="IsShowAreaCaptcha ?'50px':'70px'">
+                                                                        <td>
+                                                                            <label [ngStyle]="MainColor != null ? {'color': MainColor} : {}">E-mail</label>
+                                                                            <div>
+                                                                                <input autocomplete="on" size="10" class="auto-style1" [(ngModel)]="Email" ngControl="emailF" required type="email" (blur)="onEmailBlur($event)" (keydown)="OnMouseDownEvt($event)" />
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr *ngIf="IsShowAreaCaptcha" style="height: 5px;">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr [style.height]="IsShowAreaCaptcha ?'50px':'70px'">
+                                                                        <td class="column1">
+                                                                            <label [ngStyle]="MainColor != null ? {'color': MainColor} : {}">password</label>
+                                                                            <div style="height:31px;width:280px;border:1px solid lightgray;border-radius:4px;" class="InputShow">
+                                                                                <input [attr.type]="InputPasswordType" [ngStyle]="{'width':Password ? '250px' : '280px' }" style="border:0px" class="auto-style1" id="Password" [(ngModel)]="Password" required (keydown)="OnMouseDownEvt($event)" />
+                                                                                <img src="{{PasswordImage}}" [hidden]="!Password" id="ShowHidePasswordImageId" title="{{PasswordTitle}} Password" alt="Show Password" style="padding-left:2px;font-size:12px;vertical-align:central;font-family:Arial; cursor:pointer;text-decoration:none;float:right;margin-top:3px;margin-right:2px;" (click)="ShowHidePasswordClick()" />
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr [style.height]="IsShowAreaCaptcha ?'5px':'10px'">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <!--<%--Start AreaCaptcha--%>-->
+
+                                                                    <tr *ngIf="IsShowAreaCaptcha" style="height:30px;">
+                                                                        <td>
+                                                                            <img src={{CaptchaImageUrl}} style="height:auto;width:auto;float:left;" />
+                                                                            <input [(ngModel)]="CaptchaTextValue" style="height:19px;margin-bottom:5px;margin-top:5px;float:left;" type="text" placeholder="type the text you see" id="CaptchaTextBox" />
+
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr *ngIf="IsShowAreaCaptcha" style="height: 5px;">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 30px">
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td style="width: 1px;">
+                                                                                        <button class="DSVLoginButton" (click)="LoginClicked()">LOGIN ></button>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    <a style="margin-left:15px;color:#4B4A4A;font-size:12px;font-family:Arial; cursor:pointer;" (click)="ForgotPasswordClicked()">Forgot your password?</a>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    <div style="margin-left:15px;color:#4B4A4A;font-size:12px;font-family:Arial;float:left;margin-top:2px;">
+                                                                                                        Don't have account?
+                                                                                                    </div><a [ngStyle]="MainColor != null ? {'color': MainColor} : {}" style="margin-left:6px;font-size:12px;font-weight:bold;font-family:Arial; cursor:pointer;" target="_blank" href="http://digital.dsv.co.il/joinus.html">Join us</a>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td class="column1">
+                                                                            <span style="background-color:red;white-space: normal;">
+                                                                                <p style="color:white;text-align:left;background-color:red;margin-top:3px;width:268px;white-space: normal;" id="errorsList">{{errorMessage}}</p>
+
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="width:50px">
+                                                                        <td>
+                                                                            <div style="float: right;width: 190px;" *ngIf="ShowLoadingIndicator"><img width="40" height="40" src="../../../Images/LoginScreen/indicator.gif" alt='loading' /></div>
+                                                                        </td>
+
+                                                                        <td></td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div></div>
+                                                                            <!--<div *ngIf="!HidePendingLoading" style="width: 50px; height: 50px; margin: auto; background: url(Images/LoginScreen/indicator.gif) center center no-repeat; background-size: 50px 50px;"></div>-->
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 20px;">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </table>
+
+
+                                                                <table [style.display]="ShowTenantList ? 'block' : 'none'" style="margin-left:50px">
+                                                                    <tr style="height: 55px;">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="height:25px">
+                                                                        <td style="text-align:left;width:300px;font-family:Myriad Pro;font-size:14px;color:teal;white-space: normal;">
+                                                                            You have more than one account, please choose which one you want to log in.
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="column1">
+                                                                            <div style="margin-top:5px"><input class="k-dropdown Ignore" id="cmbTenants" runat="server" style="display:normal;width:250px;margin-top:0px" /></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="height:30px;">
+                                                                        <td></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="column1">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td><button style="width:120px;height:35px;margin-left:0px;" class="DSVLoginButton" (click)="ContinueClicked()">Continue ></button></td>
+                                                                                    <td><a id="BackToLogin" style="margin-left:15px;margin-top:50px;color:#4B4A4A;font-size:12px;font-family:Arial;vertical-align:central;cursor:pointer;" (click)="BackToLoginClicked()">Back to login page</a></td>
+                                                                                    <td><div></div></td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+
+                                                            <div style="height:100%" *ngIf="IsShowPasswordExpirationDateArea">
+                                                                <table style="margin-left:50px;">
+                                                                    <tr style="height: 50px;">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height:25px">
+                                                                        <td><div style="font-size:17px;color:steelblue;line-height:1.4"> {{PasswordExpirationDateMessage}}</div></td>
+                                                                    </tr>
+                                                                    <tr style="height:25px">
+                                                                        <td><div style="font-size:17px;color:steelblue;line-height:1.4;margin-left:50px"> {{PasswordExpirationDateMessage2}}</div></td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 40px;">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="height:30px">
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td style="width: 1px;">
+                                                                                        <button class="promptButton" style="margin-left:42px" (click)="PasswordExpirationButtomClicked('Yes')"> Yes </button>
+                                                                                    </td>
+                                                                                    <td style="width:73px"><div></div></td>
+                                                                                    <td style="width: 1px;">
+                                                                                        <button class="promptButton" (click)="PasswordExpirationButtomClicked('No')"> No </button>
+                                                                                    </td>
+                                                                                    <td><div></div></td>
+                                                                                </tr>
+                                                                            </table>
+
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr><td></td></tr>
+                                                                </table>
+                                                            </div>
+                                                        </td>
+
+                                                        <td *ngIf="!IsShowFormLogin" style="width: 25%;">
+                                                            <div style="height:100%">
+                                                                <table style="margin-left:50px;"></table>
+                                                            </div>
+                                                        </td>
+
+                                                        <!-- MainImage -->
+                                                        <td class="MainImage" [style.background-image]="this.MainImage">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height: 16px;">
+                                            <td style="opacity: 0.7; background-image: url('Images/LoginScreen/shadow2.png'); background-repeat: no-repeat;">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+        <td>
+            <div></div>
+        </td>
+    </tr>
+</table> 

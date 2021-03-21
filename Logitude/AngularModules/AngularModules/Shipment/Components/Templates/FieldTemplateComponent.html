@@ -34,19 +34,18 @@
 
                                 <div *ngIf="FieldName == 'StatusName'" class="TemplateTrimming">
                                     <div class="TemplateTrimmingChild">
-                                        <span [ngStyle]="{color: FieldValue | StringToColorPipe}">{{FieldValue}}</span>
-                                        <span [ngStyle]="{color: FieldValue | StringToColorPipe}" *ngIf="Entity.StatusLocation" style="margin-left: 3px;">({{Entity.StatusLocation}})</span>
+                                        <span [ngStyle]="{color: Entity.ExactStatusName | StringToColorPipe}">{{FieldValue}}</span>
                                     </div>
                                 </div>
 
                                 <table *ngIf="FieldName == 'ShipmentType' || FieldName == 'ShipmentTypeViewField'">
                                     <tr>
                                         <td style="width: 15px; max-width: 15px;" *ngIf="IsHouseIconVisible">
-                                            <img *ngIf="IsHouseNotConnected" style="vertical-align: middle; float: left;" src="./Images/NotConnected.png" />
+                                            <img *ngIf="IsHouseNotConnected" style="vertical-align: middle; float: left;" src="./Images/NotConnected.png" data-cy="ShipmentNotConnectedIcon" />
                                             <div *ngIf="!IsHouseNotConnected" style="width:15px; background: red;"></div>
                                         </td>
 
-                                        <td style="text-align: left;">{{FieldValue}}</td>
+                                        <td style="text-align: left;" data-cy="ShipmentTypeValue">{{FieldValue}}</td>
                                     </tr>
                                 </table>
 

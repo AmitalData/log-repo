@@ -38,6 +38,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
     public DepartureHeader: string = "Departure";
     public ArrivalHeader: string = "Arrival";
     private CurrentSession = SessionLocator.SelectedSession;
+    public LegType: string;
     constructor() {
         super();
         this.InitServices();
@@ -56,6 +57,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         this.EntityPM = args['EntityPM'];
         this.ObjectTableName = args['ObjectTableName'];
         this.FatherComponent = args['FatherComponent'];
+        this.LegType = args['LegType'];
         this.Clone();
 
         this.SetDefaultValues();
@@ -70,18 +72,40 @@ export class AddEditOnCarriageComponent extends BaseComponent {
 
         if (this.EntityPM.ShipmentLevelCode == "H" && !AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId)) {
             this.IsConnectedHouse = true;
-            this.OnCarriageFromPortId = this.EntityPM.ToPortId;
+            this.OnForwardingFromPortId = this.EntityPM.ToPortId;
         }
     }
 
     private ComputeHeaders() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.OnCarriageFromPortName)) {
-            this.DepartureHeader = "Departure from " + this.EntityPM.OnCarriageFromPortName;
+        if (this.EntityPM.ShipmentLevelCode == "H") {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.OnForwardingFromPortName)) {
+                this.DepartureHeader = "Departure from " + this.EntityPM.OnForwardingFromPortName;
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.OnForwardingToPortName)) {
+                this.ArrivalHeader = "Arrival to " + this.EntityPM.OnForwardingToPortName;
+            }
         }
 
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.OnCarriageToPortName)) {
-            this.ArrivalHeader = "Arrival to " + this.EntityPM.OnCarriageToPortName;
+        else {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.OnCarriageFromPortName)) {
+                this.DepartureHeader = "Departure from " + this.EntityPM.OnCarriageFromPortName;
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.OnCarriageToPortName)) {
+                this.ArrivalHeader = "Arrival to " + this.EntityPM.OnCarriageToPortName;
+            }
         }
+    }
+
+    get IsCloseHouseInfoVisible() {
+        var myResult = false;
+
+        if (this.EntityPM.ShipmentLevelCode == "H" && this.EntityPM.MasterShipmentDataId != null && this.LegType == "On Carriage") {
+            myResult = true;
+        }
+
+        return myResult;
     }
 
     BuildData() {
@@ -104,10 +128,25 @@ export class AddEditOnCarriageComponent extends BaseComponent {
     public IsEditingEnabled: boolean = false;
     SetUIProperties() {
         var isEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
+        this.IsEditingEnabled = isEditingEnabled;
 
+
+        if (this.EntityPM.ShipmentLevelCode == "H") {
+            this.SetUIProperties_Forwarding();
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId) && this.LegType == "On Carriage") {
+                this.SetUIProperties_Carriage_ConnectedMaster();
+            }
+        }
+
+        else {
+            this.SetUIProperties_Carriage();
+        }
+    }
+    SetUIProperties_Carriage() {
         var isTransportFieldEnabled = false;
         var isCarrierNumberFieldEnabled = false;
-        if (isEditingEnabled) {
+        if (this.IsEditingEnabled) {
             if (!AppTool.IsNullOrEmpty(this.OnCarriageTransportModeId)) {
                 isTransportFieldEnabled = true;
             }
@@ -117,28 +156,53 @@ export class AddEditOnCarriageComponent extends BaseComponent {
             }
         }
 
-        this.IsEditingEnabled = isEditingEnabled;
-        this.UIProperties.SetEnabled("OnCarriageTransportModeId", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("OnCarriageTransportModeId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("OnCarriageFromPortId", this.ObjectTableName, isTransportFieldEnabled && this.IsConnectedHouse == false);
         this.UIProperties.SetEnabled("OnCarriageToPortId", this.ObjectTableName, isTransportFieldEnabled);
         this.UIProperties.SetEnabled("OnCarriageCarrierId", this.ObjectTableName, isTransportFieldEnabled);
         this.UIProperties.SetEnabled("OnCarriageCarrierNumber", this.ObjectTableName, isCarrierNumberFieldEnabled);
-        this.UIProperties.SetEnabled("OnCarriageVesselId", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetEnabled("OnCarriageETD", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetEnabled("OnCarriageETA", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetEnabled("OnCarriageATD", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetEnabled("OnCarriageATA", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("OnCarriageVesselId", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("OnCarriageETD", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("OnCarriageETA", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("OnCarriageATD", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("OnCarriageATA", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetVisibility("OnCarriageVesselId", this.ObjectTableName, this.OnCarriageTransportModeId == "O" ? true : false);
-        this.SetUIProperties_RequiredFields();
-        this.SetUIProperties_ValidateActualDates();
+        this.SetUIProperties_Carriage_RequiredFields();
+        this.SetUIProperties_Carriage_ValidateActualDates();
     }
-    SetUIProperties_RequiredFields() {
+    SetUIProperties_Forwarding() {
+        var isTransportFieldEnabled = false;
+        var isCarrierNumberFieldEnabled = false;
+        if (this.IsEditingEnabled) {
+            if (!AppTool.IsNullOrEmpty(this.OnForwardingTransportModeId)) {
+                isTransportFieldEnabled = true;
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.OnForwardingCarrierId)) {
+                isCarrierNumberFieldEnabled = true;
+            }
+        }
+
+        this.UIProperties.SetEnabled("OnForwardingTransportModeId", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("OnForwardingFromPortId", this.ObjectTableName, isTransportFieldEnabled);
+        this.UIProperties.SetEnabled("OnForwardingToPortId", this.ObjectTableName, isTransportFieldEnabled);
+        this.UIProperties.SetEnabled("OnForwardingCarrierId", this.ObjectTableName, isTransportFieldEnabled);
+        this.UIProperties.SetEnabled("OnForwardingCarrierNumber", this.ObjectTableName, isCarrierNumberFieldEnabled);
+        this.UIProperties.SetEnabled("OnForwardingVesselId", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("OnForwardingETD", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("OnForwardingETA", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("OnForwardingATD", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("OnForwardingATA", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetVisibility("OnForwardingVesselId", this.ObjectTableName, this.OnForwardingTransportModeId == "O" ? true : false);
+        this.SetUIProperties_Forwarding_RequiredFields();
+        this.SetUIProperties_Forwarding_ValidateActualDates();
+    }
+    SetUIProperties_Carriage_RequiredFields() {
         this.UIProperties.SetRequired("OnCarriageTransportModeId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.OnCarriageTransportModeId) ? true : false);
         this.UIProperties.SetRequired("OnCarriageFromPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.OnCarriageFromPortId) ? true : false);
         this.UIProperties.SetRequired("OnCarriageToPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.OnCarriageToPortId) ? true : false);
     }
-    SetUIProperties_ValidateActualDates() {
-
+    SetUIProperties_Carriage_ValidateActualDates() {
         this.UIProperties.SetValidity("OnCarriageATD", this.ObjectTableName, true, null);
         this.UIProperties.SetValidity("OnCarriageATA", this.ObjectTableName, true, null);
 
@@ -152,12 +216,52 @@ export class AddEditOnCarriageComponent extends BaseComponent {
             this.UIProperties.SetValidity("OnCarriageATA", this.ObjectTableName, false, errorMessage);
         }
     }
+    SetUIProperties_Forwarding_RequiredFields() {
+        this.UIProperties.SetRequired("OnForwardingTransportModeId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.OnForwardingTransportModeId) ? true : false);
+        this.UIProperties.SetRequired("OnForwardingFromPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.OnForwardingFromPortId) ? true : false);
+        this.UIProperties.SetRequired("OnForwardingToPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.OnForwardingToPortId) ? true : false);
+    }
+    SetUIProperties_Forwarding_ValidateActualDates() {
+        this.UIProperties.SetValidity("OnForwardingATD", this.ObjectTableName, true, null);
+        this.UIProperties.SetValidity("OnForwardingATA", this.ObjectTableName, true, null);
+
+        if (!DateTool.IsActualDateValid(this.OnForwardingATD)) {
+            var errorMessage = DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.ATD"));
+            this.UIProperties.SetValidity("OnForwardingATD", this.ObjectTableName, false, errorMessage);
+        }
+
+        if (!DateTool.IsActualDateValid(this.OnForwardingATA)) {
+            var errorMessage = DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.ATA"));
+            this.UIProperties.SetValidity("OnForwardingATA", this.ObjectTableName, false, errorMessage);
+        }
+    }
+    SetUIProperties_Carriage_ConnectedMaster() {
+        this.UIProperties.SetEnabled("OnCarriageTransportModeId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("OnCarriageFromPortId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("OnCarriageToPortId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("OnCarriageCarrierId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("OnCarriageCarrierNumber", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("OnCarriageVesselId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("OnCarriageETD", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("OnCarriageETA", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("OnCarriageATD", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("OnCarriageATA", this.ObjectTableName, false);
+        this.UIProperties.SetVisibility("OnCarriageVesselId", this.ObjectTableName, this.OnCarriageTransportModeId == "O" ? true : false);
+    }
 
     public CarrierDependencyProperty1: string = null;
     SetDependencies() {
         var myResult: string = null;
+        var transportModeId = null;
 
-        switch (this.OnCarriageTransportModeId) {
+        if (this.EntityPM.ShipmentLevelCode == "H") {
+            transportModeId = this.OnForwardingTransportModeId;
+        }
+        else {
+            transportModeId = this.OnCarriageTransportModeId;
+        }
+
+        switch (transportModeId) {
             case "A": { myResult = "AL"; break; }
             case "O": { myResult = "SL"; break; }
             case "I": { myResult = "TR"; break; }
@@ -179,7 +283,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
             this.OnCarriageCarrierId = null;
             this.OnCarriageCarrierNumber = null;
             this.OnCarriageVesselId = null;
-            this.SetUIProperties();
+            this.SetUIProperties_Carriage();
             this.SetDependencies();
         }
     }
@@ -195,7 +299,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
     set OnCarriageFromPortId(value: string) {
         if (this.EntityPM.OnCarriageFromPortId != value) {
             this.EntityPM.OnCarriageFromPortId = value;
-            this.SetUIProperties_RequiredFields();
+            this.SetUIProperties_Carriage_RequiredFields();
 
             if (AppTool.IsNullOrEmpty(value)) {
                 RoutingHelper.OnCarriageFromPortChanged(this.EntityPM, null);
@@ -230,7 +334,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
     set OnCarriageToPortId(value: string) {
         if (this.EntityPM.OnCarriageToPortId != value) {
             this.EntityPM.OnCarriageToPortId = value;
-            this.SetUIProperties_RequiredFields();
+            this.SetUIProperties_Carriage_RequiredFields();
 
             if (AppTool.IsNullOrEmpty(value)) {
                 this.EntityPM.OnCarriageToPortCode = null;
@@ -346,7 +450,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
     set OnCarriageATD(value: Date) {
         if (this.EntityPM.OnCarriageATD != value) {
             this.EntityPM.OnCarriageATD = value;
-            this.SetUIProperties_ValidateActualDates();
+            this.SetUIProperties_Carriage_ValidateActualDates();
         }
     }
 
@@ -354,7 +458,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
     set OnCarriageATA(value: Date) {
         if (this.EntityPM.OnCarriageATA != value) {
             this.EntityPM.OnCarriageATA = value;
-            this.SetUIProperties_ValidateActualDates();
+            this.SetUIProperties_Carriage_ValidateActualDates();
         }
     }
 
@@ -385,6 +489,222 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         }
     }
 
+
+    get OnForwardingTransportModeId() { return this.EntityPM.OnForwardingTransportModeId; }
+    set OnForwardingTransportModeId(value: string) {
+        if (this.EntityPM.OnForwardingTransportModeId != value) {
+            this.EntityPM.OnForwardingTransportModeId = value;
+            this.OnForwardingFromPortId = null;           
+            this.OnForwardingToPortId = null;
+            this.OnForwardingCarrierId = null;
+            this.OnForwardingCarrierNumber = null;
+            this.OnForwardingVesselId = null;
+            this.SetUIProperties_Forwarding();
+            this.SetDependencies();
+        }
+    }
+
+    get OnForwardingAdditionalTransportModeCode() { return this.EntityPM.OnForwardingAdditionalTransportModeCode; }
+    set OnForwardingAdditionalTransportModeCode(value: string) {
+        if (this.EntityPM.OnForwardingAdditionalTransportModeCode != value) {
+            this.EntityPM.OnForwardingAdditionalTransportModeCode = value;
+        }
+    }
+
+    get OnForwardingFromPortId() { return this.EntityPM.OnForwardingFromPortId; }
+    set OnForwardingFromPortId(value: string) {
+        if (this.EntityPM.OnForwardingFromPortId != value) {
+            this.EntityPM.OnForwardingFromPortId = value;
+            this.SetUIProperties_Forwarding_RequiredFields();
+
+            if (AppTool.IsNullOrEmpty(value)) {
+                RoutingHelper.OnForwardingFromPortChanged(this.EntityPM, null);
+                this.ComputeHeaders();
+            }
+
+            else {
+                this.myPortListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: PortList = myResponse.Result;
+                        if (list) {
+                            RoutingHelper.OnForwardingFromPortChanged(this.EntityPM, list);
+                            this.ComputeHeaders();
+                        }
+
+                        else {
+                            this.myPortListService.getSingle(value).subscribe((myResponse2: ServiceResponse) => {
+                                if (!myResponse2.HasError) {
+                                    list = myResponse2.Result;
+                                    RoutingHelper.OnForwardingFromPortChanged(this.EntityPM, list);
+                                    this.ComputeHeaders();
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    get OnForwardingToPortId() { return this.EntityPM.OnForwardingToPortId; }
+    set OnForwardingToPortId(value: string) {
+        if (this.EntityPM.OnForwardingToPortId != value) {
+            this.EntityPM.OnForwardingToPortId = value;
+            this.SetUIProperties_Forwarding_RequiredFields();
+
+            if (AppTool.IsNullOrEmpty(value)) {
+                this.EntityPM.OnForwardingToPortCode = null;
+                this.EntityPM.OnForwardingToPortName = null;
+                this.EntityPM.OnForwardingToPortCountryCode = null;
+                this.EntityPM.OnForwardingToPortCountryName = null;
+                this.ComputeHeaders();
+            }
+
+            else {
+                this.myPortListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: PortList = myResponse.Result;
+                        if (list) {
+                            this.EntityPM.OnForwardingToPortCode = list.Code;
+                            this.EntityPM.OnForwardingToPortName = list.EnglishName;
+                            this.EntityPM.OnForwardingToPortCountryCode = list.CountryCode;
+                            this.EntityPM.OnForwardingToPortCountryName = list.CountryName;
+                            this.ComputeHeaders();
+                        }
+
+                        else {
+                            this.myPortListService.getSingle(value).subscribe((myResponse2: ServiceResponse) => {
+                                if (!myResponse2.HasError) {
+                                    list = myResponse2.Result;
+                                    if (list) {
+                                        this.EntityPM.OnForwardingToPortCode = list.Code;
+                                        this.EntityPM.OnForwardingToPortName = list.EnglishName;
+                                        this.EntityPM.OnForwardingToPortCountryCode = list.CountryCode;
+                                        this.EntityPM.OnForwardingToPortCountryName = list.CountryName;
+                                        this.ComputeHeaders();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    get OnForwardingCarrierId() { return this.EntityPM.OnForwardingCarrierId; }
+    set OnForwardingCarrierId(value: string) {
+        if (this.EntityPM.OnForwardingCarrierId != value) {
+            this.EntityPM.OnForwardingCarrierId = value;
+            this.SetUIProperties();
+
+            if (AppTool.IsNullOrEmpty(value)) {
+                this.EntityPM.OnForwardingCarrierCode = null;
+                this.EntityPM.OnForwardingCarrierName = null;
+                this.EntityPM.OnForwardingCarrierWebSite = null;
+            }
+
+            else {
+                this.myCardListService.getSingle(value).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: CardList = myResponse.Result;
+                        if (list) {
+                            this.EntityPM.OnForwardingCarrierCode = list.Code;
+                            this.EntityPM.OnForwardingCarrierName = list.EnglishName;
+                            this.EntityPM.OnForwardingCarrierWebSite = list.WebSite;
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    get OnForwardingCarrierNumber() { return this.EntityPM.OnForwardingCarrierNumber; }
+    set OnForwardingCarrierNumber(value: string) {
+        if (this.EntityPM.OnForwardingCarrierNumber != value) {
+            this.EntityPM.OnForwardingCarrierNumber = value;
+        }
+    }
+
+    get OnForwardingVesselId() { return this.EntityPM.OnForwardingVesselId; }
+    set OnForwardingVesselId(value: string) {
+        if (this.EntityPM.OnForwardingVesselId != value) {
+            this.EntityPM.OnForwardingVesselId = value;
+
+            if (AppTool.IsNullOrEmpty(value)) {
+                this.EntityPM.OnForwardingVesselName = null;
+            }
+
+            else {
+                this.myVesselListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: VesselList = myResponse.Result;
+                        if (list) {
+                            this.EntityPM.OnForwardingVesselName = list.EnglishName;
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    get OnForwardingETD() { return this.EntityPM.OnForwardingETD; }
+    set OnForwardingETD(value: Date) {
+        if (this.EntityPM.OnForwardingETD != value) {
+            this.EntityPM.OnForwardingETD = value;
+        }
+    }
+
+    get OnForwardingETA() { return this.EntityPM.OnForwardingETA; }
+    set OnForwardingETA(value: Date) {
+        if (this.EntityPM.OnForwardingETA != value) {
+            this.EntityPM.OnForwardingETA = value;
+        }
+    }
+
+    get OnForwardingATD() { return this.EntityPM.OnForwardingATD; }
+    set OnForwardingATD(value: Date) {
+        if (this.EntityPM.OnForwardingATD != value) {
+            this.EntityPM.OnForwardingATD = value;
+            this.SetUIProperties_Forwarding_ValidateActualDates();
+        }
+    }
+
+    get OnForwardingATA() { return this.EntityPM.OnForwardingATA; }
+    set OnForwardingATA(value: Date) {
+        if (this.EntityPM.OnForwardingATA != value) {
+            this.EntityPM.OnForwardingATA = value;
+            this.SetUIProperties_Forwarding_ValidateActualDates();
+        }
+    }
+
+    get SplitOnForwarding() { return this.EntityPM.SplitOnForwarding; }
+    set SplitOnForwarding(value: boolean) {
+        if (this.EntityPM.SplitOnForwarding != value) {
+            this.EntityPM.SplitOnForwarding = value;
+
+            this.EntityPM.ShipmentPackages.forEach((item) => {
+                //if (item.OnForwardingETD == null) {
+                //    item.OnForwardingETD = this.OnForwardingETD;
+                //}
+
+                //if (item.OnForwardingATD == null) {
+                //    item.OnForwardingATD = this.OnForwardingATD;
+                //}
+
+                //if (item.OnForwardingETA == null) {
+                //    item.OnForwardingETA = this.OnForwardingETA;
+                //}
+
+                //if (item.OnForwardingATA == null) {
+                //    item.OnForwardingATA = this.OnForwardingATA;
+                //}
+            });
+
+            this.BuildData();
+        }
+    }
+
     private searchText: string = null;
     public get SearchText() { return this.searchText; }
     public set SearchText(value: string) {
@@ -399,9 +719,18 @@ export class AddEditOnCarriageComponent extends BaseComponent {
     }
 
     SetActualDateClicked(fieldName: string) {
-        switch (fieldName) {
-            case "OnCarriageETD": { this.OnCarriageATD = DateTool.GetDateParts(this.OnCarriageETD).DateObject; break; }
-            case "OnCarriageETA": { this.OnCarriageATA = DateTool.GetDateParts(this.OnCarriageETA).DateObject; break; }
+        if (this.EntityPM.ShipmentLevelCode == "H") {
+            switch (fieldName) {
+                case "OnForwardingETD": { this.OnForwardingATD = DateTool.GetDateParts(this.OnForwardingETD).DateObject; break; }
+                case "OnForwardingETA": { this.OnForwardingATA = DateTool.GetDateParts(this.OnForwardingETA).DateObject; break; }
+            }
+        }
+
+        else {
+            switch (fieldName) {
+                case "OnCarriageETD": { this.OnCarriageATD = DateTool.GetDateParts(this.OnCarriageETD).DateObject; break; }
+                case "OnCarriageETA": { this.OnCarriageATA = DateTool.GetDateParts(this.OnCarriageETA).DateObject; break; }
+            }
         }
     }
 
@@ -413,6 +742,54 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         var errors: string[] = [];
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
+        if (this.EntityPM.ShipmentLevelCode == "H") {
+            errors = this.ValidatePreForwarding(msg);
+        }
+
+        else {
+            errors = this.ValidatePreCarriage(msg);
+        }
+
+        this.ValidationErrorsList = errors;
+
+        if (errors.length == 0) {
+
+            if (this.EntityPM.ShipmentLevelCode == "H") {
+                if (this.OnForwardingAdditionalTransportModeCode) {
+                    this.EntityPM.ShipmentPackages.forEach(item => {
+
+                        if (AppTool.IsNullOrEmpty(item.DeliveryId)) {
+                            item.DeliveryTransportModeCode = this.OnForwardingAdditionalTransportModeCode;
+                        }
+
+                        if (AppTool.IsNullOrEmpty(item.EmptyContainerReturnId)) {
+                            item.ECRTransportModeCode = this.OnForwardingAdditionalTransportModeCode;
+                        }
+                    });
+                }
+            }
+
+            else {
+                if (this.OnCarriageAdditionalTransportModeCode) {
+                    this.EntityPM.ShipmentPackages.forEach(item => {
+
+                        if (AppTool.IsNullOrEmpty(item.DeliveryId)) {
+                            item.DeliveryTransportModeCode = this.OnCarriageAdditionalTransportModeCode;
+                        }
+
+                        if (AppTool.IsNullOrEmpty(item.EmptyContainerReturnId)) {
+                            item.ECRTransportModeCode = this.OnCarriageAdditionalTransportModeCode;
+                        }
+                    });
+                }
+            }
+
+            this.FatherComponent.BuildItemsCollection();
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
+        }
+    }
+    ValidatePreCarriage(msg: string): string[] {
+        var errors: string[] = [];
 
         if (AppTool.IsNullOrEmpty(this.OnCarriageTransportModeId)) {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("Shipment.O.Routings.TransportMode")));
@@ -447,26 +824,45 @@ export class AddEditOnCarriageComponent extends BaseComponent {
             errors.push(DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.ATA")));
         }
 
-        this.ValidationErrorsList = errors;
+        return errors;
+    }
+    ValidatePreForwarding(msg: string): string[] {
+        var errors: string[] = [];
 
-        if (errors.length == 0) {
-
-            if (this.OnCarriageAdditionalTransportModeCode) {
-                this.EntityPM.ShipmentPackages.forEach(item => {
-
-                    if (AppTool.IsNullOrEmpty(item.DeliveryId)) {
-                        item.DeliveryTransportModeCode = this.OnCarriageAdditionalTransportModeCode;
-                    }
-
-                    if (AppTool.IsNullOrEmpty(item.EmptyContainerReturnId)) {
-                        item.ECRTransportModeCode = this.OnCarriageAdditionalTransportModeCode;
-                    }
-                });
-            }
-
-            this.FatherComponent.BuildItemsCollection();
-            this.CurrentSession.CloseCurrentWindowEmit("OK");
+        if (AppTool.IsNullOrEmpty(this.OnForwardingTransportModeId)) {
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("Shipment.O.Routings.TransportMode")));
         }
+
+        if (AppTool.IsNullOrEmpty(this.OnForwardingFromPortId)) {
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("Shipment.O.Routings.From")));
+        }
+
+        if (AppTool.IsNullOrEmpty(this.OnForwardingToPortId)) {
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("Shipment.O.Routings.To")));
+        }
+
+        if (!this.SplitOnForwarding) {
+            this.EntityPM.ShipmentPackages.forEach((item) => {
+                //item.OnForwardingETD = null;
+                //item.OnForwardingATD = null;
+                //item.OnForwardingETA = null;
+                //item.OnForwardingATA = null;
+            });
+        }
+
+        // Series Dates
+        RoutingHelper.ValidateRoutingsSeriesDates(this.EntityPM, errors, "OnForwarding");
+
+        // Actual Dates
+        if (!DateTool.IsActualDateValid(this.OnForwardingATD)) {
+            errors.push(DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.ATD")));
+        }
+
+        if (!DateTool.IsActualDateValid(this.OnForwardingATA)) {
+            errors.push(DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.ATA")));
+        }
+
+        return errors;
     }
 
     EditContainer(itemComponent: OnCarriagePackageItem) {
@@ -527,6 +923,17 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         this.myCloner.AddField('OnCarriageATD');
         this.myCloner.AddField('OnCarriageATA');
         this.myCloner.AddField('SplitOnCarriage');
+        this.myCloner.AddField('OnForwardingTransportModeId');
+        this.myCloner.AddField('OnForwardingFromPortId');
+        this.myCloner.AddField('OnForwardingToPortId');
+        this.myCloner.AddField('OnForwardingCarrierId');
+        this.myCloner.AddField('OnForwardingCarrierNumber');
+        this.myCloner.AddField('OnForwardingVesselId');
+        this.myCloner.AddField('OnForwardingETD');
+        this.myCloner.AddField('OnForwardingETA');
+        this.myCloner.AddField('OnForwardingATD');
+        this.myCloner.AddField('OnForwardingATA');
+        this.myCloner.AddField('SplitOnForwarding');
         this.myCloner.AddEntity(this.EntityPM);
 
         this.entityCloner = new Cloner(this.EntityPM);
@@ -627,6 +1034,10 @@ export class OnCarriagePackageItem extends BaseComponent {
         this.myCloner.AddField('OnCarriageETA');
         this.myCloner.AddField('OnCarriageATD');
         this.myCloner.AddField('OnCarriageATA');
+        this.myCloner.AddField('OnForwardingETD');
+        this.myCloner.AddField('OnForwardingETA');
+        this.myCloner.AddField('OnForwardingATD');
+        this.myCloner.AddField('OnForwardingATA');
         this.myCloner.AddEntity(this.EntityPM);
     }
     public RejectChanges() {
@@ -647,7 +1058,14 @@ export class OnCarriagePackageItem extends BaseComponent {
         var myETD: Date = this.EntityPM.OnCarriageETD;
         var myATD: Date = this.EntityPM.OnCarriageATD;
         var myETA: Date = this.EntityPM.OnCarriageETA;
-        var myATA: Date = this.EntityPM.OnCarriageATA;            
+        var myATA: Date = this.EntityPM.OnCarriageATA;
+
+        //if (this.ShipmentPM.ShipmentLevelCode == "H") {
+        //    var myETD: Date = this.EntityPM.OnForwardingETD;
+        //    var myATD: Date = this.EntityPM.OnForwardingATD;
+        //    var myETA: Date = this.EntityPM.OnForwardingETA;
+        //    var myATA: Date = this.EntityPM.OnForwardingATA;    
+        //}
         
         if (myATD != null) {
             myDepartureDate = myATD;

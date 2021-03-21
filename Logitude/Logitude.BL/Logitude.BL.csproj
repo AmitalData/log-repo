@@ -423,6 +423,8 @@
     <Compile Include="Helpers\ObjectFieldPropertyGetter.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\EntityStatus.Generated.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\QueryService\EntityStatusQueryService.Generated.cs" />
+    <Compile Include="InfrastructureModel\APIDataContract\Messages\RatesUpdateService.cs" />
+    <Compile Include="InfrastructureModel\APIDataContract\RatesUpdate.cs" />
     <Compile Include="InfrastructureModel\FieldShortNameGetters\ObjectFieldsShortNamesGetter.cs" />
     <Compile Include="GlobalModel\EntityLists\BluesnapTransactionList.cs" />
     <Compile Include="GlobalModel\EntityLists\HelpResourceList.cs" />
@@ -614,16 +616,22 @@
     <Compile Include="InvoiceModel\Tools\TraceEvents\ARInvoiceStockTracing.cs" />
     <Compile Include="InvoiceModel\Tools\Validating\ARInvoiceStockValidating.cs" />
     <Compile Include="Helpers\ShipmentComputedFieldsHelper.cs" />
+    <Compile Include="QuoteModel\EntityLists\QuoteComputedFieldList.cs" />
+    <Compile Include="QuoteModel\EntityPMs\QuoteComputedFieldPM.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\DashboardQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\QuoteConversionQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\SentQuotesKPIQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\TopFiveSalesmanQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\QuotesByCountryQuery.cs" />
     <Compile Include="QuoteModel\EntityQueries\Charts\StageFunnelQuery.cs" />
+    <Compile Include="QuoteModel\EntityQueries\QuoteComputedFieldQuery.cs" />
+    <Compile Include="QuoteModel\Tools\Behaviours\EntityAutomationQuoteMappingPMFields.cs" />
     <Compile Include="QuoteModel\Tools\Behaviours\QuoteBehaviours\QuoteFieldsBehaviour.cs" />
     <Compile Include="QuoteModel\Tools\Behaviours\QuoteBehaviours\QuoteSalesmanBehavior.cs" />
+    <Compile Include="QuoteModel\Tools\Behaviours\UpdateQuoteComputedFieldBehaviour.cs" />
     <Compile Include="QuoteModel\Tools\DataMapping\QuoteMapping.QuoteClosingReasonService.cs" />
     <Compile Include="QuoteModel\Tools\EntityService\QuoteClosingReasonService.cs" />
+    <Compile Include="QuoteModel\Tools\EntityService\QuoteFollowUpUpdateService.cs" />
     <Compile Include="QuoteModel\Tools\EntityService\QuoteSubjectService.cs" />
     <Compile Include="QuoteModel\Tools\Initializers\QuoteServiceInitializer.cs" />
     <Compile Include="QuoteModel\Tools\TraceEvents\QuoteTracing.QuoteClosingReason.cs" />
@@ -2435,6 +2443,7 @@
     <Compile Include="ShipmentsModel\APIDataContract\Master.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\Messages\ShipmentNumbersXML.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\OceanOrInlandPackage.Generated.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\Package.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\Payable.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\PickUp.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\AirPackageQueryService.Generated.cs" />
@@ -2455,6 +2464,7 @@
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\MasterQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\OceanOrInlandPackageQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\OceanOrInlandPackageQueryService.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\QueryService\PackageQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\PayableQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\PickUpQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\ReceivableQueryService.Generated.cs" />

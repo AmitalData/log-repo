@@ -6093,6 +6093,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
 
+                else if (entityPM.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(this.entityPM.OnForwardingToPortId))
+                {
+                    Port onCarriageToPort = myPortRepository.GetSinglePort(tenant, this.entityPM.OnForwardingToPortId);
+                    if (onCarriageToPort != null)
+                    {
+                        this.entityPM.LastFinalDestination = onCarriageToPort.EnglishName;
+                    }
+                }
+
                 else if (!string.IsNullOrEmpty(this.entityPM.OnCarriageToPortId))
                 {
                     Port onCarriageToPort = myPortRepository.GetSinglePort(tenant, this.entityPM.OnCarriageToPortId);
@@ -6465,6 +6474,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     if (warehouse != null)
                     {
                         this.entityPM.Origin = warehouse.EnglishName;
+                    }
+                }
+
+                else if (entityPM.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(entityPM.PreForwardingFromPortId))
+                {
+                    Port myPort = myPortRepository.GetSinglePort(tenant, entityPM.PreForwardingFromPortId);
+                    if (myPort != null)
+                    {
+                        this.entityPM.Origin = myPort.EnglishName;
                     }
                 }
 

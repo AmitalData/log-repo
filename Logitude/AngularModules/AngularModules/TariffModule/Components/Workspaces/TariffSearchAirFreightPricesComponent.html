@@ -1087,7 +1087,7 @@
 
                                                                                                             <td style="width:20px">
                                                                                                                 <img *ngIf="item.IsShown" (click)="ShowTariffclicked(item)" src="./Images/Buttons/uparrow.png" style="cursor:pointer;width:15px;float:right" />
-                                                                                                                <img *ngIf="!item.IsShown" (click)="ShowTariffclicked(item)" src="./Images/Buttons/downarrow.png" style="cursor:pointer;width:15px;float:right" />
+                                                                                                                <img *ngIf="!item.IsShown" attr.data-cy="{{'DownArrow' | IdGeneratorPipe}}" (click)="ShowTariffclicked(item)" src="./Images/Buttons/downarrow.png" style="cursor:pointer;width:15px;float:right" />
                                                                                                             </td>
 
                                                                                                         </tr>
@@ -1132,7 +1132,7 @@
                                                                                 </tr>
 
                                                                                 <tr class="FormFieldRow">
-                                                                                    <td class="Value" style="font-size:16px; font-weight: 700;">{{item.Price  | NumbersPipe:'N2'}} {{item.CurrencySign}}</td>
+                                                                                    <td class="Value" style="font-size:16px; font-weight: 700;" attr.data-cy="{{'FreightPriceValue' | IdGeneratorPipe}}">{{item.Price  | NumbersPipe:'N2'}} {{item.CurrencySign}}</td>
                                                                                     <td style="width:18px;">
                                                                                         <img *ngIf="item.IsMinIconVisible" src="./Images/CellIcons/M-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [attr.title]="'Min Price'" />
                                                                                     </td>
@@ -1140,7 +1140,7 @@
 
                                                                                 <tr class="FormFieldRow">
                                                                                     <td colspan="2" (click)="PriceClick(item)">
-                                                                                        <p class="hyperlink">View Tariff</p>
+                                                                                        <p class="hyperlink" attr.data-cy="{{'FreightTariffLink' | IdGeneratorPipe}}" >View Tariff</p>
                                                                                     </td>
                                                                                 </tr>
 
@@ -1205,12 +1205,12 @@
                                                                                 </tr>
 
                                                                                 <tr class="FormFieldRow">
-                                                                                    <td class="Value" style="font-size:16px; font-weight: 700;">{{item.SurchargesPrice  | NumbersPipe:'N2'}} {{item.CurrencySign}}</td>
+                                                                                    <td class="Value" style="font-size:16px; font-weight: 700;" attr.data-cy="{{'SurchargePriceValue' | IdGeneratorPipe}}">{{item.SurchargesPrice  | NumbersPipe:'N2'}} {{item.CurrencySign}}</td>
                                                                                 </tr>
 
                                                                                 <tr class="FormFieldRow">
                                                                                     <td>
-                                                                                        <Hyperlink [IsEnabled]="item.SurchargesWithoutAllIn != null && item.SurchargesWithoutAllIn.length != 0" (click)="ViewSurchargesClicked(item)">View Tariff</Hyperlink>
+                                                                                        <Hyperlink [IsEnabled]="item.SurchargesWithoutAllIn != null && item.SurchargesWithoutAllIn.length != 0" (click)="ViewSurchargesClicked(item)" attr.data-cy="{{'SurchargeTariffLink' | IdGeneratorPipe}}">View Tariff</Hyperlink>
                                                                                         <!--<p class="hyperlink" [class.HyperlinkDisabled]="!IsViewSurchargesClickedEnabled">View Tariff</p>-->
                                                                                     </td>
                                                                                 </tr>
@@ -1306,7 +1306,7 @@
                                                                                             </tr>
 
                                                                                             <tr style="height:28px;">
-                                                                                                <td style="font-size:16px; font-weight: 700; text-align:center" class="ColorBlue">{{item.WholePriceWithoutAllIn | NumbersPipe:'N2'}} {{item.CurrencySign}}</td>
+                                                                                                <td style="font-size:16px; font-weight: 700; text-align:center" class="ColorBlue" attr.data-cy="{{'WholePrice' | IdGeneratorPipe}}">{{item.WholePriceWithoutAllIn | NumbersPipe:'N2'}} {{item.CurrencySign}}</td>
                                                                                             </tr>
 
                                                                                             <tr>

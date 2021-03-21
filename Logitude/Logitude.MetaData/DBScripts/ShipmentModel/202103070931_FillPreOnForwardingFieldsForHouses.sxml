@@ -1,0 +1,32 @@
+﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Shipments">
+  <Sql Version="1">
+    <![CDATA[
+
+update Shipments
+set PreForwardingTransportModeId = PreCarriageTransportModeId,
+    PreForwardingFromPortId = PreCarriageFromPortId,
+    PreForwardingToPortId = PreCarriageToPortId,
+    PreForwardingCarrierId = PreCarriageCarrierId,
+    PreForwardingCarrierNumber = PreCarriageCarrierNumber,
+    PreForwardingETD = PreCarriageETD,
+    PreForwardingATD = PreCarriageATD,
+    PreForwardingETA = PreCarriageETA,
+    PreForwardingATA = PreCarriageATA,
+    PreForwardingVesselId = PreCarriageVesselId,
+    OnForwardingTransportModeId = OnCarriageTransportModeId,
+    OnForwardingFromPortId = OnCarriageFromPortId,
+    OnForwardingToPortId = OnCarriageToPortId,
+    OnForwardingCarrierId = OnCarriageCarrierId,
+    OnForwardingCarrierNumber = OnCarriageCarrierNumber,
+    OnForwardingETD = OnCarriageETD,
+    OnForwardingATD = OnCarriageATD,
+    OnForwardingETA = OnCarriageETA,
+    OnForwardingATA = OnCarriageATA,
+    OnForwardingVesselId = OnCarriageVesselId,
+    OnForwardingAdditionalTransportModeCode = OnCarriageAdditionalTransportModeCode,
+    SplitOnForwarding = SplitOnCarriage
+where ShipmentLevelCode = 'H' and $LastCounterWhere$
+    
+    ]]>
+  </Sql>
+</Script>

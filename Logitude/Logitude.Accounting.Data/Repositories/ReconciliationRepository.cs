@@ -37,8 +37,21 @@ namespace Logitude.Accounting.Data.Repositories
             }
         }
 
+        public Reconciliation GetLastOpenReconciliation(int tenant, string accountId, string cancelledReconciliationId)
+        {
+            var q= (from record in context.Reconciliations 
+                    where record.Tenant == tenant
+                    where record.AccountId == accountId
+                    where !record.IsCancelled
+                    where record.Id != cancelledReconciliationId
+                    orderby record.CreateDate descending
+                    select record);
+            
 
-   }
+            var poco= q.FirstOrDefault();
+            return poco;
+        }
+    }
 
 }
    

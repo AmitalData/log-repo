@@ -395,14 +395,9 @@ export class CustomerMenuButtonsHandler {
     private CurrentSession = SessionLocator.SelectedSession;
     SetAsPotential() {
 
-        if (this.EntityPM.LastShipmentDate != null) {
-            var messageWindow: MessageWindow = new MessageWindow();
-            var validationErrorMessage = "This customer can't be set as potential since it has shipment(s).";
-            messageWindow.Show(validationErrorMessage);
-        }
-        else {
+
             this.IsCustomerConnectedToEntities();
-        }
+        
     }
 
     private isCustomerConnectedToEntities: boolean = false;

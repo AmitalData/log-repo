@@ -1,0 +1,140 @@
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [SingleLine]="true" [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table class="FixedTable">
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 150px;">
+                                    <LogLabel [NoObjectField]="true" [DataContext]="DataContext" [Text]="'New Currency'"></LogLabel>
+                                </td>
+
+                                <td style="width: 230px;">
+                                    <LogLov [ObjectFieldName]="'NewCurrencyId'"
+                                            [NoObjectField]="true"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Currency'"
+                                            [SelectedValue]="NewCurrencyId"
+                                            (SelectedItemChanged)="NewCurrency = $event">
+                                    </LogLov>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow" *ngIf="Type=='Profit'">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 150px;">
+                                    <LogLabel [NoObjectField]="true" [DataContext]="DataContext" [Text]="'Rate'"></LogLabel>
+                                </td>
+
+                                <td style="width: 230px;">
+                                    <LogTextBox [InputType]="'double'" [NoObjectField]="true" [ObjectFieldName]="'ProfitCurrencyRate'" [DataContext]="DataContext" [Text]="ProfitCurrencyRate"></LogTextBox>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr *ngIf="Type=='Profit'">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow" *ngIf="Type=='Accounting'">
+                    <td class="BlueTitle">Rates</td>
+                </tr>
+
+                <tr *ngIf="Type=='Accounting'">
+                    <td>
+                        <div class="MediaFill">
+                            <div class="SimpleGridView">
+                                <div class="SimpleGridViewHeader">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 100px;min-width:100px;max-width: 100px;">Currency</td>
+                                            <td style="width: 100px;min-width:100px;max-width: 100px;">Rate</td>
+                                            <td class="LastChild">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="SimpleGridViewBody">
+                                    <table>
+                                        <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
+
+                                            <td class="GridViewCell" style="width: 100px;min-width: 100px;max-width: 100px;">
+                                                {{item.Code}}
+                                            </td>
+
+                                            <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                                <LogTextBox [NoObjectField]="true" [InputType]="'double'" [ObjectFieldName]="'Rate'" [DataContext]="item.DataContext" [HideColumns]="true" [Text]="item.Rate"></LogTextBox>
+                                            </td>
+
+                                            <td class="CellTools">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="3">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

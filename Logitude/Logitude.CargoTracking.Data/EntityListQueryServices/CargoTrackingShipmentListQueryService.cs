@@ -97,12 +97,12 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                AssignedCustomsAgentEstDate = a.AssignedCustomsAgentEstDate,
                                                                AssignedCustomsAgentExcReason = a.AssignedCustomsAgentExcReason,
                                                                AssignedCustomsAgentNotes= a.AssignedCustomsAgentNotes,
+            
+                                                               ShipmentLevelCode = a.ShipmentLevelCode,
                                                                AssignedTruckerDate = a.AssignedTruckerDate,
                                                                AssignedTruckerDone = a.AssignedTruckerDone,
                                                                GrossWeightUnitCode = a.GrossWeightUnitCode,
-                                                               ShipmentLevelCode = a.ShipmentLevelCode,
                                                            });
-            
             return query;
         }
 
@@ -225,6 +225,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                    PackagesQuantity = poco.PackagesQuantity,
 
                    CustomerReference = poco.CustomerReference,
+                    ShipmentLevelCode = poco.ShipmentLevelCode,
 
                    AssignedTruckerDate = poco.AssignedTruckerDate,
                    AssignedTruckerDone  = poco.AssignedTruckerDone,
@@ -240,7 +241,6 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
                    DeliveryDone = poco.DeliveryDone,
 
-                   DeliveryDate = poco.DeliveryDate,
 
                    DeliveryEstimationDate= poco.DeliveryEstimationDate,
 
@@ -250,7 +250,6 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
                    GrossWeightUnitCode = poco.GrossWeightUnitCode,
                    
-                    ShipmentLevelCode = poco.ShipmentLevelCode,
                 };
             if(list != null)
             {

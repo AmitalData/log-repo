@@ -145,7 +145,8 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "Shipment", RelatedEntities = tableNameLists.Where(d => d.TableName == "ShipmentPayable" || d.TableName == "ShipmentReceivable").ToList(), KeyName = "Id", DBTableName = "Shipments", Dw_TableName = "dw_Shipments", HasConstraint = true, DispayInScreen = true, RelatedFactTables = new List<string> { "Fact_Charges" , "Fact_Shipments" } });
             
             tableNameLists.Add(new TableClass() { TableName = "Quote", KeyName = "Id", DBTableName = "Quotes", Dw_TableName = "dw_Quotes", HasConstraint = true, DispayInScreen = true ,RelatedFactTables = new List<string> { "Fact_Quotes" } });
-           
+            tableNameLists.Add(new TableClass() { TableName = "QuoteComputedField", DBTableName = "QuoteComputedFields", Dw_TableName = "dw_QuoteComputedFields", KeyName = "Id", HasConstraint = true, DispayInScreen = true, RelatedFactTables = new List<string> { "Fact_Quotes" } });
+
 
             //Dimension  Table
             tableNameLists.Add(new TableClass() { TableName = "CustomPickList", DBTableName = "CustomPickLists", Dw_TableName = "dw_CustomPickLists", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_CustomPickLists", BuildScriptName = "BuildCustomPickListDimensionsTable", IncrementalScriptName = "UpdateCustomPickListDimensionsTable", FieldsDBName = "Code,Value,IsMultipleChoice", RelatedFactTables = GetAllFactTableLists() });

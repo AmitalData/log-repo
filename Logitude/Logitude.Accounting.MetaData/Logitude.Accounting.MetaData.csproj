@@ -79,6 +79,7 @@
     <None Include="DBScripts\202011101133_AvailableForScheduling.sxml" />
     <None Include="DBScripts\202102070900_UpdateNullableGLAccountFutureFields.sxml" />
     <None Include="DBScripts\202101141620_ UpdateStatusCodeFieldOnTaxReportLine.sxml" />
+    <None Include="DBScripts\Post\202103160820_ RebuildGLAccountRecocileDatas.sxml" />
     <None Include="DBTables\AccountingCompanyType.dxml" />
     <None Include="DBTables\AccountingEntity.dxml" />
     <None Include="DBTables\AccountingIntegrityCheck.dxml" />
@@ -116,6 +117,7 @@
     <None Include="DBTables\GLAccountCurrency.dxml" />
     <None Include="DBTables\GLAccountInterestPeriod.dxml" />
     <None Include="DBTables\GLAccountMoreData.dxml" />
+    <None Include="DBTables\GLAccountRecocileData.dxml" />
     <None Include="DBTables\GLAccountTotalByMonth.dxml" />
     <None Include="DBTables\GLAccountTotalDateType.dxml" />
     <None Include="DBTables\GLAccountType.dxml" />
@@ -176,6 +178,7 @@
     <None Include="EntityFiles\CalculatedChartsLineType.lxml" />
     <None Include="EntityFiles\GLAccountCounter.lxml" />
     <None Include="EntityFiles\GLAccountInterestPeriod.lxml" />
+    <None Include="EntityFiles\GLAccountRecocileData.lxml" />
     <None Include="EntityFiles\IntegrityCheckStatus.lxml">
       <SubType>Designer</SubType>
     </None>

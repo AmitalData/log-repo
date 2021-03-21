@@ -8,61 +8,52 @@ export function AssertStatusCode(requestAlias: string, expectedStatusCode: numbe
     return Interception;
 }
 
-export function IsImport(direction: string) {
-    return (direction === "Import" || direction === "I");
+export function AssertWindowOpen(windowOpenAlias: string){
+  cy.get('@' + windowOpenAlias).should('be.called')
 }
 
-export function IsExport(direction: string) {
-    return (direction === "Export" || direction === "E");
+export function AssertElementExist(selector: string) {
+    cy.get(selector).should("exist");
 }
 
-export function IsDrop(direction: string) {
-    return (direction === "Drop" || direction === "R");
+export function AssertElementHaveClass(selector: string, classValue: string) {
+    cy.get(selector).should("have.class", classValue);
 }
 
-export function IsDomestic(direction: string) {
-    return (direction === "Domestic" || direction === "D");
+export function AssertElementNotHaveClass(selector: string, classValue: string) {
+    cy.get(selector).should("not.have.class", classValue);
 }
 
-export function IsAir(transportMode: string) {
-    return (transportMode === "Air" || transportMode === "A");
+export function AssertElementHaveValue(selector: string, Value: string) {
+    cy.get(selector).should("have.value", Value);
 }
 
-export function IsInland(transportMode: string) {
-    return (transportMode === "Inland" || transportMode === "I");
+export function AssertElementNotExist(selector: string) {
+    cy.get(selector).should("not.exist");
 }
 
-export function IsOcean(transportMode: string) {
-    return (transportMode === "Ocean" || transportMode === "O");
+//be.disable | not.be.disable
+export function AssertElementDisabled(selector: string, condition: string) {
+    cy.get(selector).should(condition);
 }
 
-export function IsMaster(shipmentLevel: string) {
-    return (shipmentLevel === "Master" || shipmentLevel === "C");
+export function AssertElementHaveClasss(selector: string, condition: string , classValue:string) {
+    cy.get(selector).should(condition,classValue);
 }
 
-export function IsInlandDomestic(direction: string, transportMode: string) {
-    return (IsDomestic(direction) && IsInland(transportMode));
+export function AssertElementContain(selector: string, Value: string){
+    cy.get(selector).should('contain', Value)
 }
 
-export function IsFCL(shipmentType: string) {
-    return shipmentType === "FCLD";
-}
-
-export function IsFTL(shipmentType: string) {
-    return shipmentType === "FTL";
-}
-
-export function IsLCL(shipmentType: string) {
-    return shipmentType === "LCLD";
-}
-
-export function IsLTL(shipmentType: string) {
-    return shipmentType === "LTL";
-}
-
-export function IsGroupage(shipmentType: string) {
-    return shipmentType === "Groupage";
-}
-export function hasPacakageType(shipmentType: string) {
-    return IsFCL(shipmentType) || IsFTL(shipmentType) || IsLCL(shipmentType) || IsLTL(shipmentType);
+export function AssertElementTextEqual(elementSelector :string ,expectedValue:string ,find? :string){
+    if(find){
+        cy.get(elementSelector).find(find).invoke('text').then((text) => {
+            assert.equal(text.trim(), expectedValue)
+        })
+    }else{
+        cy.get(elementSelector).invoke('text').then((text) => {
+            assert.equal(text.trim(), expectedValue)
+        })
+    }
+    
 }

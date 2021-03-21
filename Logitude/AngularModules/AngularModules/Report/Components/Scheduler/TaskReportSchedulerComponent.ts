@@ -496,6 +496,16 @@ export class TaskReportSchedulerItemClass extends BaseComponent {
             this.isFTP = newValue;
         }
     }
+
+    get SendIfEmpty() {
+        return this.SchedulerDetails.SendIfEmpty;
+    }
+    set SendIfEmpty(newValue: boolean) {
+        if (this.SchedulerDetails.SendIfEmpty != newValue) {
+            this.SchedulerDetails.SendIfEmpty = newValue;
+        }
+    }
+
     SetReportSchedulerDetailsData(schedulerDetails: SchedulerDetails) {
         this.SchedulerDetails = schedulerDetails;
         if (schedulerDetails) {

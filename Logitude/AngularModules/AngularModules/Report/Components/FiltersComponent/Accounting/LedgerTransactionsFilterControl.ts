@@ -124,14 +124,11 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     }
 
     FillDefaultDateDetails() {
-        if (AppTool.IsNullOrEmpty(this.ToDate)) {
-            this.ToDate = new Date();
-        }
-
-        if (AppTool.IsNullOrEmpty(this.FromDate)) {
-            var today = new Date();
-            var lastmonth = today.setMonth(today.getMonth() - 1);
-            this.FromDate = new Date(lastmonth);
+        if (!this.IsSchedulerReport) {
+            this.ToDate = AppTool.IsNullOrEmpty(this.ToDate) ? new Date() : this.ToDate;
+            const today = new Date();
+            const lastmonth = today.setMonth(today.getMonth() - 1);
+            this.FromDate = AppTool.IsNullOrEmpty(this.FromDate) ? new Date(lastmonth) : this.FromDate;
         }
     }
 

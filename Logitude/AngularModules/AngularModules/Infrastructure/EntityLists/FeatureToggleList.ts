@@ -20,6 +20,7 @@ export class FeatureToggleList {
 	ToggleCode: string;
 	ToggleName: string;
 	CreatedByUser: string;
+	ToggleDescription: string;
 	
 }
  

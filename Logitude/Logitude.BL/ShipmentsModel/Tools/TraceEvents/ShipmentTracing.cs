@@ -204,8 +204,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                     }
                 }
 
-
-
                 this.TraceOtherData();
                 this.TraceMasterData();
                 this.TraceRoutingData();
@@ -479,23 +477,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             this.TraceRoutingDateLocation(new RoutingDateArgs()
             {
                 EventCode = "PRCD",
-                EntityDate = entityPM.PreCarriageATD,
-                EntityDate_Original = entityPM.PreCarriageATD_Original,
-                EntityPortId = entityPM.PreCarriageFromPortId,
-                DataBaseDate = entityPoco.PreCarriageATD,
-                DataBasePortId = entityPoco.PreCarriageFromPortId,
-                EventNotes = "From " + entityPM.PreCarriageFromPortName
+                EntityDate = entityPM.ShipmentLevelCode == "H" ? entityPM.PreForwardingATD : entityPM.PreCarriageATD,
+                EntityDate_Original = entityPM.ShipmentLevelCode == "H" ? entityPM.PreForwardingATD_Original : entityPM.PreCarriageATD_Original,
+                EntityPortId = entityPM.ShipmentLevelCode == "H" ? entityPM.PreForwardingFromPortId : entityPM.PreCarriageFromPortId,
+                DataBaseDate = entityPM.ShipmentLevelCode == "H" ? entityPoco.PreForwardingATD : entityMasterData.PreCarriageATD,
+                DataBasePortId = entityPM.ShipmentLevelCode == "H" ? entityPoco.PreForwardingFromPortId : entityMasterData.PreCarriageFromPortId,
+                EventNotes = "From " + (entityPM.ShipmentLevelCode == "H" ? entityPM.PreForwardingFromPortName : entityPM.PreCarriageFromPortName)
             });
 
             this.TraceRoutingDateLocation(new RoutingDateArgs()
             {
                 EventCode = "PRCA",
-                EntityDate = entityPM.PreCarriageATA,
-                EntityDate_Original = entityPM.PreCarriageATA_Original,
-                EntityPortId = entityPM.PreCarriageToPortId,
-                DataBaseDate = entityPoco.PreCarriageATA,
-                DataBasePortId = entityPoco.PreCarriageToPortId,
-                EventNotes = "To " + entityPM.PreCarriageToPortName
+                EntityDate = entityPM.ShipmentLevelCode == "H" ? entityPM.PreForwardingATA : entityPM.PreCarriageATA,
+                EntityDate_Original = entityPM.ShipmentLevelCode == "H" ? entityPM.PreForwardingATA_Original : entityPM.PreCarriageATA_Original,
+                EntityPortId = entityPM.ShipmentLevelCode == "H" ? entityPM.PreForwardingToPortId : entityPM.PreCarriageToPortId,
+                DataBaseDate = entityPM.ShipmentLevelCode == "H" ? entityPoco.PreForwardingATA : entityMasterData.PreCarriageATA,
+                DataBasePortId = entityPM.ShipmentLevelCode == "H" ? entityPoco.PreForwardingToPortId : entityMasterData.PreCarriageToPortId,
+                EventNotes = "To " + entityPM.ShipmentLevelCode == "H" ? entityPM.PreForwardingToPortName : entityPM.PreCarriageToPortName
             });
         }
         private void TraceRoutingDataOnCarriage()
@@ -503,23 +501,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             this.TraceRoutingDateLocation(new RoutingDateArgs()
             {
                 EventCode = "ONCD",
-                EntityDate = entityPM.OnCarriageATD,
-                EntityDate_Original = entityPM.OnCarriageATD_Original,
-                EntityPortId = entityPM.OnCarriageFromPortId,
-                DataBaseDate = entityPoco.OnCarriageATD,
-                DataBasePortId = entityPoco.OnCarriageFromPortId,
-                EventNotes = "From " + entityPM.OnCarriageFromPortName
+                EntityDate = entityPM.ShipmentLevelCode == "H" ? entityPM.OnForwardingATD : entityPM.OnCarriageATD,
+                EntityDate_Original = entityPM.ShipmentLevelCode == "H" ? entityPM.OnForwardingATD_Original : entityPM.OnCarriageATD_Original,
+                EntityPortId = entityPM.ShipmentLevelCode == "H" ? entityPM.OnForwardingFromPortId : entityPM.OnCarriageFromPortId,
+                DataBaseDate = entityPM.ShipmentLevelCode == "H" ? entityPoco.OnForwardingATD : entityMasterData.OnCarriageATD,
+                DataBasePortId = entityPM.ShipmentLevelCode == "H" ? entityPoco.OnForwardingFromPortId : entityMasterData.OnCarriageFromPortId,
+                EventNotes = "From " + (entityPM.ShipmentLevelCode == "H" ? entityPM.OnForwardingFromPortName : entityPM.OnCarriageFromPortName)
             });
 
             this.TraceRoutingDateLocation(new RoutingDateArgs()
             {
                 EventCode = "ONCA",
-                EntityDate = entityPM.OnCarriageATA,
-                EntityDate_Original = entityPM.OnCarriageATA_Original,
-                EntityPortId = entityPM.OnCarriageToPortId,
-                DataBaseDate = entityPoco.OnCarriageATA,
-                DataBasePortId = entityPoco.OnCarriageToPortId,
-                EventNotes = "To " + entityPM.OnCarriageToPortName
+                EntityDate = entityPM.ShipmentLevelCode == "H" ? entityPM.OnForwardingATA : entityPM.OnCarriageATA,
+                EntityDate_Original = entityPM.ShipmentLevelCode == "H" ? entityPM.OnForwardingATA_Original : entityPM.OnCarriageATA_Original,
+                EntityPortId = entityPM.ShipmentLevelCode == "H" ? entityPM.OnForwardingToPortId : entityPM.OnCarriageToPortId,
+                DataBaseDate = entityPM.ShipmentLevelCode == "H" ? entityPoco.OnForwardingATA : entityMasterData.OnCarriageATA,
+                DataBasePortId = entityPM.ShipmentLevelCode == "H" ? entityPoco.OnForwardingToPortId : entityMasterData.OnCarriageToPortId,
+                EventNotes = "To " + (entityPM.ShipmentLevelCode == "H" ? entityPM.OnForwardingToPortName : entityPM.OnCarriageToPortName)
             });
         }
 
@@ -1397,13 +1395,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                 case "ONCD":
                     {
-                        myResult = entityPM.OnCarriageFromPortCode;
+                        myResult = entityPM.ShipmentLevelCode == "H" ? entityPM.OnForwardingFromPortCode : entityPM.OnCarriageFromPortCode;
                         break;
                     }
 
                 case "ONCA":
                     {
-                        myResult = entityPM.OnCarriageToPortCode;
+                        myResult = entityPM.ShipmentLevelCode == "H" ? entityPM.OnForwardingToPortCode : entityPM.OnCarriageToPortCode;
                         break;
                     }
 
@@ -1433,13 +1431,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                 case "PRCD":
                     {
-                        myResult = entityPM.PreCarriageFromPortCode;
+                        myResult = entityPM.ShipmentLevelCode == "H" ? entityPM.PreForwardingFromPortCode : entityPM.PreCarriageFromPortCode;
                         break;
                     }
 
                 case "PRCA":
                     {
-                        myResult = entityPM.PreCarriageToPortCode;
+                        myResult = entityPM.ShipmentLevelCode == "H" ? entityPM.PreForwardingToPortCode : entityPM.PreCarriageToPortCode;
                         break;
                     }
 

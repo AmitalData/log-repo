@@ -32,7 +32,6 @@ import { LoginServiceHelper } from 'src/Infrastructure/Utilities/LoginServiceHel
 import { DatePipe } from '@angular/common';
 
 
-
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
 }

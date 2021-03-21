@@ -1508,7 +1508,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 List<ObjectFieldPM> fieldsList = objectFieldLists.Where(d => d.ObjectTableId == objectTable.Id).ToList();
                 if (fieldsList != null)
                 {
-                    var josn = LogitudeXmlSerializer.SerializeObjectToJosnString(fieldsList);
+                    var josn = LogitudeXmlSerializer.SerializeObjectToJosnStringMax(fieldsList);
                     var buffer = System.Text.Encoding.UTF8.GetBytes(josn);
                     cachedObjectFieldsJosnByte.Add(objectTable.Name, buffer);
                 }

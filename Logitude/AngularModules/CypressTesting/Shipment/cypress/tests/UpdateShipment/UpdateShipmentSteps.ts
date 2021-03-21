@@ -1,6 +1,5 @@
 import * as Actions from "../../actions/Actions"
-import { Selectors } from "../../selectors/Selectors"
-import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
+import { ShipmentSelectors } from "../../selectors/Selectors"
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { PartnersDetails } from "cypress/models/PartnersDetails";
 import { PayableDetails } from "cypress/models/PayableDetails"
@@ -8,6 +7,8 @@ import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { ShipmentDetails } from "cypress/models/ShipmentDetails";
 import { ReceivableDetails } from "cypress/models/ReceivableDetails"
 import { PackagesDetails } from "cypress/models/PackagesDetails";
+import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 //#region variables
 let shipmentDetails: ShipmentDetails;
@@ -21,43 +22,43 @@ Given("the user logged in and navigates to shipments workspace", () => {
 });
 
 Given("a direct shipment with the following details", (dataTable) => {
-    shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+    shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
     Actions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
     Actions.FillShipmentWizardsFields(shipmentDetails);
 });
 //#endregion
 
 //#region Update general tab given step
-Given("the user fill {string} as GrossWeight and {string} as a MoveType", (GrossWeight, MoveType) => {
+Given("the user fill {string} as ValueOfGoods and {string} as a MoveType", (ValueOfGoods, MoveType) => {
     Actions.OpenShipment(shipmentDetails.ShipmentNumber);
-    Actions.FillGeneralTab(GrossWeight, MoveType)
+    Actions.FillGeneralTab(ValueOfGoods, MoveType)
 });
 //#endregion
 
 //#region Update orders tab given step
 Given("the user add order package with the following details", (dataTable) => {
-    packagesDetails = dataTable.hashes() as PackagesDetails[];
+    packagesDetails = Assists.CreateSet<PackagesDetails>(dataTable);
     Actions.FillOrdersTab(packagesDetails)
 });
 //#endregion
 
 //#region Update partners tab given step
 Given("the user add partners with following details", (dataTable) => {
-    const partnersDetails = dataTable.hashes()[0] as PartnersDetails;
+    const partnersDetails = Assists.CreateInstance<PartnersDetails>(dataTable, true);
     Actions.FillPartnersTab(shipmentDetails.Direction, shipmentDetails.TransportMode, partnersDetails)
 });
 //#endregion
 
 //#region Update packages tab given step
 Given("the user add package with the following details", (dataTable) => {
-    packagesDetails = dataTable.hashes() as PackagesDetails[];
+    packagesDetails = Assists.CreateSet<PackagesDetails>(dataTable);
     Actions.FillPackageTab(shipmentDetails.TransportMode, packagesDetails)
 });
 //#endregion
 
 //#region Update receivables tab given step
 Given("the user fill receivables with the following details", (dataTable) => {
-    const ReceivableData = dataTable.hashes() as ReceivableDetails[];
+    const ReceivableData = Assists.CreateSet<ReceivableDetails>(dataTable);
     Actions.FillReceivablesTab(ReceivableData)
 });
 //#endregion
@@ -77,7 +78,7 @@ Given("add pre carriage and on carriage from port {string} to port {string}", (f
 
 //#region  Update payables tab given step
 Given("the user add payable with the following details", (dataTable) => {
-    const PayableData = dataTable.hashes()[0] as PayableDetails;
+    const PayableData = Assists.CreateInstance<PayableDetails>(dataTable, true);
     Actions.FillPayablesTab(PayableData)
 });
 //#endregion
@@ -88,18 +89,18 @@ When("create shipment", () => {
 });
 
 When("update shipment", () => {
-    Actions.UpdateShipment(Selectors.ShipmentSaveButton)
+    Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
 });
 //#endregion
 
 //#region Assert steps
 Then("the direct should create successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200).then((interception) => {
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
         shipmentDetails.ShipmentNumber = interception.response.body.ShipmentNumber;
     })
 });
 
 Then("the direct should update successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutShipmentRequest", 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });
 //#endregion

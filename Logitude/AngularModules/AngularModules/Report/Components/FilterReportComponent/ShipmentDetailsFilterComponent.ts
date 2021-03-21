@@ -35,14 +35,11 @@ export class ShipmentDetailsFilterComponent extends BaseComponent {
     }
 
     FillDefaultDateDetails() {
-        var month = new Date().getMonth();
-        var Year = new Date().getFullYear();
-        if (AppTool.IsNullOrEmpty(this.ToDate)) {
-            this.ToDate = this.SetDate(Year, month);
-        }
-
-        if (AppTool.IsNullOrEmpty(this.FromDate)) {
-            this.FromDate = this.SetDate(Year, month - 1);
+        if (!this.IsSchedulerReport) {
+            const month = new Date().getMonth();
+            const Year = new Date().getFullYear();
+            this.ToDate = AppTool.IsNullOrEmpty(this.ToDate) ? this.SetDate(Year, month) : this.ToDate;
+            this.FromDate = AppTool.IsNullOrEmpty(this.FromDate) ? this.SetDate(Year, month - 1) : this.FromDate;
         }
     }
   

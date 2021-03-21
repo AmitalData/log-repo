@@ -17,6 +17,7 @@ using System.Net.Http;
 using System.Transactions;
 using System.Web;
 using System.Web.Http;
+using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 
@@ -39,6 +40,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, tenantManagmentPrivateLabelsPM);
+                 
 
             }
             catch (Exception ex)
@@ -46,6 +48,25 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+
+        // Hybrid Labels   
+        
+        public HttpResponseMessage PutGetHybridLabelsBrandingData(HybridLabelsBrandingDataRequest BrandingDataRequest)
+        {
+
+            try
+            {
+                HybridLabelsBrandingDataService hybridLabelsBrandingDataService = new HybridLabelsBrandingDataService();
+                HybridLabelsBrandingData brandingData = hybridLabelsBrandingDataService.GeHybridLabelsBrandingDataByUrl(BrandingDataRequest);
+                ServiceResponse response = new ServiceResponse();
+                response.Result = brandingData;
+                return Request.CreateResponse(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
         }
 
 
@@ -65,7 +86,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                         IGlobalContext MyContext = GlobalContext.GetContext();
 
                         TenantManagmentPrivateLabelsRepository repository = new TenantManagmentPrivateLabelsRepository(MyContext);
-                        
+
 
                         TenantManagmentPrivateLabels poco = new TenantManagmentPrivateLabels()
                         {
@@ -79,8 +100,13 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                             PrivateLabelUrl = entityPM.PrivateLabelUrl,
                             PrivateLabelDomain = entityPM.PrivateLabelDomain,
                             PrivateLabelShortName = entityPM.PrivateLabelShortName,
-                            SearchFields = entityPM.PrivateLabelName+","+entityPM.PrivateLabelShortName+","+entityPM.PrivateLabelUrl+","+entityPM.ContactUsEmail+",",
-                            Id=IdCounter.GetNumber("TenantManagmentPrivateLabels",0).ToString(),
+                            MainColor = entityPM.MainColor,
+                            BackgroundImageId = entityPM.BackgroundImageId,
+                            MainImageId = entityPM.MainImageId,
+                            LoginProgressImageId = entityPM.LoginProgressImageId,
+                            ForgetPasswordImageId = entityPM.ForgetPasswordImageId,
+                            SearchFields = entityPM.PrivateLabelName + "," + entityPM.PrivateLabelShortName + "," + entityPM.PrivateLabelUrl + "," + entityPM.ContactUsEmail + ",",
+                            Id = IdCounter.GetNumber("TenantManagmentPrivateLabels", 0).ToString(),
                         };
 
                         repository.Add(poco);
@@ -118,7 +144,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                         IGlobalContext MyContext = GlobalContext.GetContext();
 
                         TenantManagmentPrivateLabelsRepository tenantManagmentPrivateLabelsRepository = new TenantManagmentPrivateLabelsRepository(MyContext);
-                        TenantManagmentPrivateLabels Poco= tenantManagmentPrivateLabelsRepository.GetSingleTenantManagmentPrivateLabels(entityPM.Id);
+                        TenantManagmentPrivateLabels Poco = tenantManagmentPrivateLabelsRepository.GetSingleTenantManagmentPrivateLabels(entityPM.Id);
 
                         Poco.ContactUsEmail = entityPM.ContactUsEmail;
                         Poco.HybridPartnerId = entityPM.HybridPartnerId;
@@ -130,6 +156,11 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                         Poco.PrivateLabelDomain = entityPM.PrivateLabelDomain;
                         Poco.ReceiveAllStatuses = entityPM.ReceiveAllStatuses;
                         Poco.SmallLogo = entityPM.SmallLogo;
+                        Poco.MainColor = entityPM.MainColor;
+                        Poco.BackgroundImageId = entityPM.BackgroundImageId;
+                        Poco.MainImageId = entityPM.MainImageId;
+                        Poco.LoginProgressImageId = entityPM.LoginProgressImageId;
+                        Poco.ForgetPasswordImageId = entityPM.ForgetPasswordImageId;
                         Poco.SearchFields = entityPM.PrivateLabelName + "," + entityPM.PrivateLabelShortName + "," + entityPM.PrivateLabelUrl + "," + entityPM.ContactUsEmail + ",";
                         tenantManagmentPrivateLabelsRepository.Update(Poco);
                         tenantManagmentPrivateLabelsRepository.SubmitChanges();

@@ -756,11 +756,13 @@ export class AWBWizardComponent implements AfterViewInit{
                         }
                         case "PAC": {
                             if (this.PageChild_PAC == null) {
-                                this._entityResourceService.getEntityResourceByTableName("ShipmentPackage").subscribe(response=> {
-                                    SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentAWB/Components/AWBWizard/Packages/AWBPackagesTabComponent', myLocation.viewContainerRef)
-                                    .then(cmpRef => {
-                                        this.PageChild_PAC = cmpRef.instance;
-                                        this.PageChild_PAC.InitTab(this);
+                                this._entityResourceService.getEntityResourceByTableName("ShipmentPackage").subscribe(response => {
+                                    this._entityResourceService.getEntityResourceByTableName("ShipmentCommodity").subscribe(response2 => {
+                                        SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentAWB/Components/AWBWizard/Packages/AWBPackagesTabComponent', myLocation.viewContainerRef)
+                                            .then(cmpRef => {
+                                                this.PageChild_PAC = cmpRef.instance;
+                                                this.PageChild_PAC.InitTab(this);
+                                            });
                                     });
                                 });
                             }

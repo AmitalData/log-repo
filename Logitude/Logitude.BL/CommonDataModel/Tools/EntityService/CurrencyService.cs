@@ -6,6 +6,7 @@ using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using System;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -47,7 +48,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             CurrencyMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
-            entityRepository.SubmitChanges();            
+            entityRepository.SubmitChanges();
         }
 
 
@@ -67,6 +68,27 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
             CurrencyValidating.Validate(entityPM);
+        }
+
+        public string CopyCurrencyToTenant(string currencyId, int tenant)
+        {
+            entityRepository = new CurrencyRepository(objectContext);
+            Currency zeroCurrency = entityRepository.GetSingleCurrency(currencyId, 0);
+            CurrencyPM tenantCurrency = new CurrencyPM()
+            {
+                Code = zeroCurrency.Code,
+                AccountingExternalCode = zeroCurrency.AccountingExternalCode,
+                AddedManually = zeroCurrency.AddedManually,
+                EnglishName = zeroCurrency.EnglishName,
+                InActive = zeroCurrency.InActive,
+                LocalName = zeroCurrency.LocalName,
+                Notes = zeroCurrency.Notes,
+                SearchFields = zeroCurrency.SearchFields,
+                Tenant = tenant,
+                Sign = zeroCurrency.Sign,
+            };
+            this.Create(tenantCurrency);
+            return tenantCurrency.Id;
         }
     }
 }

@@ -191,6 +191,15 @@ export class AddEditReportTaskSchedulerComponent {
         }
     }
 
+    get SendIfEmpty() {
+        return this.DataContext.SendIfEmpty;
+    }
+    set SendIfEmpty(newValue: boolean) {
+        if (this.DataContext.SendIfEmpty != newValue) {
+            this.DataContext.SendIfEmpty = newValue;
+        }
+    }
+
     SetFormatAdvanced(formatAdvanced: string) {
         this.SelectedFormatAdvanced = formatAdvanced;
         this.EntityPM.AdvancedFormat = formatAdvanced;

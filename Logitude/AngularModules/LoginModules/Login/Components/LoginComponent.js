@@ -1,24 +1,12 @@
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var LoginService_1 = require("../LoginService");
-var SessionInfo_1 = require("../SessionInfo");
-var Tools_1 = require("../Utilities/Tools");
-var LoginComponent = /** @class */ (function () {
+import { Component } from '@angular/core';
+import { LoginService, LoginParameters, LoginTokenParameter } from '../LoginService';
+import { SessionInfo } from '../SessionInfo';
+import { Tools } from '../Utilities/Tools';
+export var LoginComponent = (function () {
     //private _objectTableRulePMService: ObjectTableRulePMService = new ObjectTableRulePMService();
     //private _objectTableRuleFieldPMService: ObjectTableRuleFieldPMService = new ObjectTableRuleFieldPMService();
     function LoginComponent(loginService //, public IndexedDbService: IndexedDbService, private entityResourceService: EntityResourceService, private _applicationTimersManager: ApplicationTimersManager, public entityListService: EntityListService,
-    //private _userLastLoginPMService: UserLastLoginPMService
-    ) {
+        ) {
         this.loginService = loginService;
         this.IsShowTenantList = false;
         this.IsProduction = false;
@@ -50,7 +38,7 @@ var LoginComponent = /** @class */ (function () {
         this.HideLoginForm = false;
         this.HideTenantForm = true;
         this.LoginFailed = false;
-        this.LoginParams = new LoginService_1.LoginParameters();
+        this.LoginParams = new LoginParameters();
         this.HidePendingLoading = true;
         //var temp = window.sessionStorage.getItem("LogoURL");
         //var LogoCode = window.sessionStorage.getItem("LogoCode");
@@ -145,7 +133,7 @@ var LoginComponent = /** @class */ (function () {
             var tokenKey = externalTenant ? "Token_" + externalTenant : "Token";
             var token = window.localStorage.getItem(tokenKey);
             if (token) {
-                var loginTokenParameter = new LoginService_1.LoginTokenParameter();
+                var loginTokenParameter = new LoginTokenParameter();
                 loginTokenParameter.Token = token;
                 this.loginService.LoginUsingAuthenticaionToken(loginTokenParameter).subscribe(function (userData) {
                     if (!userData.HasError) {
@@ -156,10 +144,10 @@ var LoginComponent = /** @class */ (function () {
                         var urlMenu = "";
                         if (userData.HtmlVersion) {
                             var version = userData.HtmlVersion;
-                            AngularURL = SessionInfo_1.SessionInfo.GetLogitudeURL() + "Angular" + version + "/index.html";
+                            AngularURL = SessionInfo.GetLogitudeURL() + "Angular" + version + "/index.html";
                         }
                         else {
-                            AngularURL = SessionInfo_1.SessionInfo.GetLogitudeURL() + "Angular/index.html";
+                            AngularURL = SessionInfo.GetLogitudeURL() + "Angular/index.html";
                         }
                         if (mypageUrl && mypageUrl.indexOf("Menu=") > -1) {
                             urlMenu = mypageUrl.split("Menu=")[1];
@@ -195,18 +183,18 @@ var LoginComponent = /** @class */ (function () {
             this.HideTenantForm = true;
             this.HidePendingLoading = true;
             this.ShowLoginBusyIndicator = true;
-            SessionInfo_1.SessionInfo.LoggedUserEmail = userData.UserName;
-            SessionInfo_1.SessionInfo.LoggedUserId = userData.Id;
-            SessionInfo_1.SessionInfo.Token = userData.Token;
+            SessionInfo.LoggedUserEmail = userData.UserName;
+            SessionInfo.LoggedUserId = userData.Id;
+            SessionInfo.Token = userData.Token;
             this.authHeader.append('token', userData.Token);
             if (userData.CurrentTenant != null) {
-                SessionInfo_1.SessionInfo.LoggedUserTenant = Number(userData.CurrentTenant + "");
+                SessionInfo.LoggedUserTenant = Number(userData.CurrentTenant + "");
             }
-            if (SessionInfo_1.SessionInfo.LoggedUserTenant != null) {
+            if (SessionInfo.LoggedUserTenant != null) {
                 this.loginService.AuthHeader = this.authHeader;
                 this.loginService.CurrentTenant = userData.CurrentTenant;
-                this.loginService.LoggedUserId = SessionInfo_1.SessionInfo.LoggedUserId;
-                this.loginService.LoggedUserEmail = SessionInfo_1.SessionInfo.LoggedUserEmail;
+                this.loginService.LoggedUserId = SessionInfo.LoggedUserId;
+                this.loginService.LoggedUserEmail = SessionInfo.LoggedUserEmail;
             }
         }
         window.sessionStorage.setItem("userdata", "");
@@ -231,11 +219,11 @@ var LoginComponent = /** @class */ (function () {
     };
     LoginComponent.prototype.PasswordExpirationButtomClicked = function (type) {
         if (type == "Yes") {
-            SessionInfo_1.SessionInfo.LoggedUserEmail = this.UserDataPrompt.UserName;
-            if (SessionInfo_1.SessionInfo.MainLocation) {
-                SessionInfo_1.SessionInfo.MainLocation.clear();
+            SessionInfo.LoggedUserEmail = this.UserDataPrompt.UserName;
+            if (SessionInfo.MainLocation) {
+                SessionInfo.MainLocation.clear();
             }
-            Tools_1.Tools.DynamicLoader.Load("./Login/Components/" + SessionInfo_1.SessionInfo.PlShortName + "ChangePasswordComponent", SessionInfo_1.SessionInfo.MainLocation)
+            Tools.DynamicLoader.Load("./Login/Components/" + SessionInfo.PlShortName + "ChangePasswordComponent", SessionInfo.MainLocation)
                 .then(function (cmpRef) {
             });
         }
@@ -283,7 +271,7 @@ var LoginComponent = /** @class */ (function () {
         }
         else {
             this.SaveDataToCookie();
-            this.loginService.LoggedUserEmail = SessionInfo_1.SessionInfo.LoggedUserEmail;
+            this.loginService.LoggedUserEmail = SessionInfo.LoggedUserEmail;
             this.ShowLoadingIndicator = true;
             this.LoginParams = {
                 Email: this.Email,
@@ -317,11 +305,11 @@ var LoginComponent = /** @class */ (function () {
                     alert(userData.ExceptionMessage);
                 }
                 if (userData.MustChangePassword) {
-                    SessionInfo_1.SessionInfo.LoggedUserEmail = userData.UserName;
-                    if (SessionInfo_1.SessionInfo.MainLocation) {
-                        SessionInfo_1.SessionInfo.MainLocation.clear();
+                    SessionInfo.LoggedUserEmail = userData.UserName;
+                    if (SessionInfo.MainLocation) {
+                        SessionInfo.MainLocation.clear();
                     }
-                    Tools_1.Tools.DynamicLoader.Load("./Login/Components/" + SessionInfo_1.SessionInfo.PlShortName + "ChangePasswordComponent", SessionInfo_1.SessionInfo.MainLocation)
+                    Tools.DynamicLoader.Load("./Login/Components/" + SessionInfo.PlShortName + "ChangePasswordComponent", SessionInfo.MainLocation)
                         .then(function (cmpRef) {
                     });
                 }
@@ -422,11 +410,18 @@ var LoginComponent = /** @class */ (function () {
                     }
                 }
                 if (userData.HtmlVersion) {
-                    var version = userData.HtmlVersion;
-                    AngularURL = SessionInfo_1.SessionInfo.GetLogitudeURL() + "Angular" + version + "/index.html";
+                    if (SessionInfo.GetLogitudeURL().indexOf('localhost:9996') > -1)
+                        AngularURL = "http://localhost:4200/?" + data;
+                    else {
+                        var version = userData.HtmlVersion;
+                        AngularURL = SessionInfo.GetLogitudeURL() + "Angular" + version + "/index.html";
+                    }
                 }
                 else {
-                    AngularURL = SessionInfo_1.SessionInfo.GetLogitudeURL() + "Angular/index.html";
+                    if (SessionInfo.GetLogitudeURL().indexOf('localhost:9996') > -1)
+                        AngularURL = "http://localhost:4200/?" + data;
+                    else
+                        AngularURL = SessionInfo.GetLogitudeURL() + "Angular/index.html";
                 }
                 if (mypageUrl && mypageUrl.indexOf("Menu=") > -1) {
                     urlMenu = mypageUrl.split("Menu=")[1];
@@ -485,20 +480,20 @@ var LoginComponent = /** @class */ (function () {
         //get_update_date();
     };
     LoginComponent.prototype.BackToLoginClicked = function () {
-        document.location.href = SessionInfo_1.SessionInfo.GetLogitudeURL() + "Login.aspx";
+        document.location.href = SessionInfo.GetLogitudeURL() + "Login.aspx";
     };
-    LoginComponent = __decorate([
-        core_1.Component({
-            selector: 'LoginComponent',
-            moduleId: './Login/Components/',
-            templateUrl: 'LoginComponent.html',
-            styleUrls: ['LoginComponent.css']
-        }),
-        __metadata("design:paramtypes", [LoginService_1.LoginService //, public IndexedDbService: IndexedDbService, private entityResourceService: EntityResourceService, private _applicationTimersManager: ApplicationTimersManager, public entityListService: EntityListService,
-            //private _userLastLoginPMService: UserLastLoginPMService
-        ])
-    ], LoginComponent);
+    LoginComponent.decorators = [
+        { type: Component, args: [{
+                    selector: 'LoginComponent',
+                    moduleId: './Login/Components/',
+                    templateUrl: 'LoginComponent.html',
+                    styleUrls: ['LoginComponent.css']
+                },] },
+    ];
+    /** @nocollapse */
+    LoginComponent.ctorParameters = [
+        { type: LoginService, },
+    ];
     return LoginComponent;
 }());
-exports.LoginComponent = LoginComponent;
 //# sourceMappingURL=LoginComponent.js.map
