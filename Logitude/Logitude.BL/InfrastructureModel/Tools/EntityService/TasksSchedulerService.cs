@@ -71,10 +71,10 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             }
         }
 
-        public bool isExceedsScheduledTasksLimitPerReport(int tenant, string createdBy, string entityId)
+        public bool isExceedsScheduledTasksLimitPerReport(int tenant, string entityId)
         {
            int scheduledTasksLimitPerReport = tenantManagementRepository.GetScheduledTasksLimitPerReport(tenant);
-           int userDefinedTaskPerCurrentReport = entityRepository.GetUserTasksSchedulerPerReport(tenant, createdBy, entityId);
+           int userDefinedTaskPerCurrentReport = entityRepository.GetUserTasksSchedulerPerReport(tenant, entityId);
 
             if(userDefinedTaskPerCurrentReport >= scheduledTasksLimitPerReport)
             {

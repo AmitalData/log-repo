@@ -180,7 +180,7 @@ export class SchedulerExtendedPMService {
     }
 
     isExceedsScheduledTasksLimitPerReport(tenant,createdBy: string, entityId: string) { 
-        let url = this.apiUrl + "/GetIsExceedsScheduledTasksLimitPerReport" + '?tenant=' + tenant + "&createdBy=" + createdBy + "&entityId=" + entityId;
+        let url = this.apiUrl + "/GetIsExceedsScheduledTasksLimitPerReport" + '?tenant=' + tenant + "&entityId=" + entityId;
 
         return this.httpClient.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
             var serviceResponse: ServiceResponse;
