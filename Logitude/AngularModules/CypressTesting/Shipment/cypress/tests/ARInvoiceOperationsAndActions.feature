@@ -1,4 +1,4 @@
-@smoke @release @stable
+@smoke @release @stable 
 Feature: ARInvoice Approve, set as sent and void
     After the user logging in the system and Update Accounting System to be None,navigates to shipments workspace
     will create a direct shipment,update routing tab,packages.
@@ -10,6 +10,13 @@ Feature: ARInvoice Approve, set as sent and void
         Given accounting System as "None"
         When change the accounting system
         Then the accounting system should update successfully
+
+    Scenario: enable void invoice settings
+        Given the user navigates to "invoice settings" in maintenance menu
+        Given accounting settings with the following details
+            | VoidInvoice | Allowed |
+        When update invoice settings
+        Then the invoice setting should update successfully
 
     Scenario: Create customer
         Given the user navigates to customers workspace

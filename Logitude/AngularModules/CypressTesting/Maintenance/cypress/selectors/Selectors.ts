@@ -4,6 +4,8 @@ export class MaintenanceSelectors {
     public static readonly ContactsMaintenanceItem = "#MaintenanceItemMTCO";
     public static readonly VendorMaintenanceItem = "#MaintenanceItemMTVD"
     public static readonly VesselMaintenanceItem = "#MaintenanceItemMTVS"
+    public static readonly InvoiceSettingsMaintenanceItem = "#MaintenanceItemINVS";
+
     //#endregion
 
     public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";
@@ -66,7 +68,9 @@ export class MaintenanceSelectors {
     public static readonly VesselFirstRow = "div[id$='row0']"
 
     //#endregion
-
+//#region Invoice Settings
+public static readonly VoidinvoiceCheckBox= "#Tenant_Voidinvoice"
+//#endregion
     public static NewWizardButton(name: string): string {
         return "#NewButton_" + name;
     }

@@ -89,7 +89,7 @@ export class RequestAliases {
 
     public static readonly PostVessel = "PostVessel";
     public static readonly PutVessel = "PutVessel";
-
+    public static readonly AccountingSettings="AccountingSettings"
     public static readonly GetSignle = "GetSignle"
     public static readonly GetByFilter = "GetByFilter"
     public static readonly GetFilterSearch = "GetFilterSearch"

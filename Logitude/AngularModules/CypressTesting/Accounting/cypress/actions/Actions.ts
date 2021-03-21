@@ -16,7 +16,7 @@ import { QuickSearchDetails } from '../../../Base/cypress/models/QuickSearchDeta
 import { RestAPI } from '../../../Base/cypress/constants/RestAPI'
 import * as BaseActions from '../../../Base/cypress/actions/Actions';
 import { intersection } from 'cypress/types/lodash';
-
+import { InvoiceSettingsDetails } from "../../../Maintenance/cypress/models/InvoiceSettingsDetails";
 export function NavigatesToAccountingMenu() {
     cy.Click(BaseSelectors.AccountingMenu, null)
 }
@@ -216,10 +216,17 @@ export function SetAsSentARInvoice() {
 export function VoidARInvoice() {
     cy.Click(BaseSelectors.MoreList, null, true)
     cy.Click(AccountingSelectors.ARInvoiceVoidButton, null)
-    cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
+    if (InvoiceSettingsDetails.AllowVoidARI) {
+        CompleteVoidProcess();
+    }
+}
+function CompleteVoidProcess() {
+    DefinePutARInvoicesRequest()
     cy.Click(ShipmentSelectors.ConfirmWindowYes, null);
 }
-
+function DefinePutARInvoicesRequest(){
+    cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
+}
 export function CancelDraftARInvoice() {
     cy.Click(BaseSelectors.MoreList, null, true)
     cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
