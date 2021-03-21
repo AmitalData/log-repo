@@ -5,6 +5,8 @@ export class MaintenanceSelectors {
     public static readonly VendorMaintenanceItem = "#MaintenanceItemMTVD"
     public static readonly VesselMaintenanceItem = "#MaintenanceItemMTVS"
     public static readonly CustomerSettingsMaintenanceItem="#MaintenanceItemCUSA"
+    public static readonly InvoiceSettingsMaintenanceItem = "#MaintenanceItemINVS";
+
     //#endregion
 
     public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";
@@ -94,6 +96,9 @@ export class MaintenanceSelectors {
     public static CustomerSearchParent="quicksearchtextbox"
     public static CustomerSearchParentClass=".LogitudeQuickSearchTextBox"
     //#endregion
+//#region Invoice Settings
+public static readonly VoidinvoiceCheckBox= "#Tenant_Voidinvoice"
+//#endregion
     public static NewWizardButton(name: string): string {
         return "#NewButton_" + name;
     }

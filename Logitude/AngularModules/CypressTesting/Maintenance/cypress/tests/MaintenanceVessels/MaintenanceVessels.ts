@@ -10,7 +10,7 @@ let vesselDetails: VesselDetails;
 //#region Create new vessel
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login()
-    Actions.OpenTabInMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.VesselMaintenanceItem)
+    Actions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.VesselMaintenanceItem)
 });
 
 Given("a vessel with the following details", (dataTable) => {

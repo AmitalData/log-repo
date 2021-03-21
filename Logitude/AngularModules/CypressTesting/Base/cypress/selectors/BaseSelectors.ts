@@ -91,6 +91,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly button = "button"
     public static readonly typeCheckbox = '[type="checkbox"]'
     public static readonly LogitudeWindow = ".LogitudeWindow";
+    public static readonly MessageWindow = ".MessageWindow"
     public static readonly LabelClass = ".Label"
     public static readonly ListItem='[class="Row ag-row tooltip"]'
     public static readonly DivListItem='div[class="Row ag-row tooltip"]'

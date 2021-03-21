@@ -229,23 +229,23 @@
                                                                     </tr>
 
                                                                     <!--<tr class="FormFieldRow">
-        <td>
-            <LogLabel [ObjectFieldName]="'Technology'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        </td>
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'Technology'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
 
-        <td>
-            <ComboBox [ItemsSource]="TechnologiesList" [Binding]="'Name'" [SelectedItem]="SelectedTechnology" (SelectedItemChanged)="SelectedTechnology = $event"></ComboBox>
-        </td>
-    </tr>-->
+                                                                        <td>
+                                                                            <ComboBox [ItemsSource]="TechnologiesList" [Binding]="'Name'" [SelectedItem]="SelectedTechnology" (SelectedItemChanged)="SelectedTechnology = $event"></ComboBox>
+                                                                        </td>
+                                                                    </tr>-->
                                                                     <!-- <tr class="FormFieldRow">
-        <td>
-            <LogLabel [ObjectFieldName]="'SilverlightEndDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        </td>
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'SilverlightEndDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
 
-        <td>
-            <LogDatePicker [HideColumns]="true" style="height:100%;width:100%" [ObjectFieldName]="'SilverlightEndDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-        </td>
-    </tr> -->
+                                                                        <td>
+                                                                            <LogDatePicker [HideColumns]="true" style="height:100%;width:100%" [ObjectFieldName]="'SilverlightEndDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                                        </td>
+                                                                    </tr> -->
 
                                                                     <tr class="FormFieldRow">
                                                                         <td>
@@ -278,15 +278,35 @@
                                                                         </td>
                                                                     </tr>
 
-                                                                    <!--<tr class="FormFieldRow">
-        <td>
-            <label style="margin-left: 10px;color: rgb(110, 113, 114);">Document Share As Default</label>
-        </td>
+                                                                    <!-- ScheduledTasksLimitPerReport -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'ScheduledTasksLimitPerReport'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
 
-        <td>
-            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'DocumentShareAsDefault'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-        </td>
-    </tr>-->
+                                                                        <td>
+                                                                            <LogTextBox [ObjectFieldName]="'ScheduledTasksLimitPerReport'" [Text]="ScheduledTasksLimitPerReport" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+
+                                                                    <!--<tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <label style="margin-left: 10px;color: rgb(110, 113, 114);">Document Share As Default</label>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'DocumentShareAsDefault'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                        </td>
+                                                                    </tr>-->
                                                                 </table>
                                                             </td>
 
@@ -554,7 +574,7 @@
                                                                                         </td>
                                                                                     </tr>
                                                                                 </table>
-                                                                            </td>                                                                           
+                                                                            </td>
                                                                         </tr>
 
                                                                         <!-- Fields -->

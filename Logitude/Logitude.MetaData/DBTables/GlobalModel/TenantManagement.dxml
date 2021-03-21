@@ -937,15 +937,23 @@
   </Column>
   <Column
     Name="LastWeekCreatedTariffs"
-    Type="int" DefaultValue="0">
+    Type="int"
+    DefaultValue="0">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
     Name="LastMonthCreatedTariffs"
-    Type="int" DefaultValue="0">
+    Type="int"
+    DefaultValue="0">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="ScheduledTasksLimitPerReport"
+    Type="int">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="Id"

@@ -178,4 +178,16 @@ export class SchedulerExtendedPMService {
         entityPM.Tenant = InfraSettings.TenantPM.Id;
         return entityPM;
     }
+
+    isExceedsScheduledTasksLimitPerReport(tenant,createdBy: string, entityId: string) { 
+        let url = this.apiUrl + "/GetIsExceedsScheduledTasksLimitPerReport" + '?tenant=' + tenant + "&createdBy=" + createdBy + "&entityId=" + entityId;
+
+        return this.httpClient.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            serviceResponse.Result = response; 
+            return serviceResponse;
+        }), catchError(ServiceHelper.HandleServiceError));
+    }
+
 }
