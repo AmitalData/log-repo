@@ -54,7 +54,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             this.IsChildFeatureExists = true;
         }
 
-        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "PRE" && d.TenantNumber == SessionLocator.Tenant)[0];   
+        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "PRE")[0];   
         if (this.EntityPM.ShipmentLevelCode == "D" || (this.EntityPM.ShipmentLevelCode == "C" && featureToggle)) {
             this.IsAddingPreOnCarriageVisible = true;
         }

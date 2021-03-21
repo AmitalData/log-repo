@@ -556,7 +556,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     }
 
     LoadDocumentTypeTemplate(documentTypeList: DocumentTypeList) {
-        const automationDocumentCopyfeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ADC" && d.TenantNumber == SessionLocator.Tenant)[0];
+        const automationDocumentCopyfeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ADC")[0];
         this.ShowDocumentsCopy = documentTypeList.IsDocumentOneTimePrintLimited && automationDocumentCopyfeatureToggle != null;
         this.LoadDocumentTypeHTMLTemplate(documentTypeList);
 
@@ -952,7 +952,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             }
 
             if (this.ObjectTableName == "APInvoice") {
-                const documentSendFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "DSR" && d.TenantNumber == SessionLocator.Tenant)[0];
+                const documentSendFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "DSR")[0];
                 if (documentSendFeatureToggle != null) this.ResultCodeList.push(new ResultCode("Documents Send", "SENDDOCUMENT"));
             }
 

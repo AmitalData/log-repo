@@ -95,7 +95,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                     this.OnFiltersChanged();
                 }
 
-                this.SubTypeFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SUB" && d.TenantNumber == SessionLocator.Tenant)[0];                
+                this.SubTypeFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SUB")[0];                
                 this.LoadAllowedAirline();
                 this.LoadShipmentSubTypes();
                 this.ScreenIsReady = true;

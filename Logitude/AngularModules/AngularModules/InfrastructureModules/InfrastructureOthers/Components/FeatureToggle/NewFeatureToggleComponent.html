@@ -1,0 +1,157 @@
+
+<table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="4">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+
+                <!-- ToggleCode -->
+                <tr class="FormFieldRow">
+                    <td style="width:120px;">
+                        <LogLabel [ObjectFieldName]="'ToggleCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:230px;">
+                        <LogLov [ObjectFieldName]="'ToggleCode'"
+                                [SelectedValue]="ToggleCode"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Toggle'">
+                        </LogLov>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- RadioButton -->
+                <tr class="FormFieldRow">
+                    <td colspan="2">
+                        <table>
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width: 10px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 90px;">
+                                                <RadioButton [Name]="'MultiTenantRadio'" [IsChecked]="!IsMultiTenant" (Checked)="SetIsMultiTenant(false)" [Text]="'Single Tenant'"></RadioButton>
+                                            </td>
+
+                                            <td style="width: 10px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 90px;">
+                                                <RadioButton [Name]="'MultiTenantRadio'" [IsChecked]="IsMultiTenant" (Checked)="SetIsMultiTenant(true)" [Text]="'Multi Tenant'"></RadioButton>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- Tenant Number -->
+                <tr *ngIf="!IsMultiTenant" class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'TenantNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'TenantNumber'" [Text]="TenantNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- Multi Tenant -->
+                <tr *ngIf="IsMultiTenant" class="FormFieldRow">
+                    <td colspan="2">
+                        <table>
+                            <tr>
+                                <td style="width: 90px;">
+                                    <LogLabel [ObjectFieldName]="'FromTenantNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width: 50px;">
+                                    <LogTextBox [ObjectFieldName]="'FromTenantNumber'" [Text]="FromTenantNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                </td>
+                                <td style="width: 10px;">
+                                    <div></div>
+                                </td>
+                                <td style="width: 80px;">
+                                    <LogLabel [ObjectFieldName]="'ToTenantNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width: 50px;">
+                                    <LogTextBox [ObjectFieldName]="'ToTenantNumber'" [Text]="ToTenantNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- Inactive -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'Inactive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogCheckBox [ObjectFieldName]="'Inactive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom;">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

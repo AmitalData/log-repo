@@ -134,7 +134,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
         this.InitializeService();
         this.LoadEntityResources();
-        this.KPIFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "KPI" && d.TenantNumber == SessionLocator.Tenant)[0];
+        this.KPIFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "KPI")[0];
     }
 
 

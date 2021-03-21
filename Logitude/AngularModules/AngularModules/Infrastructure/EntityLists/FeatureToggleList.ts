@@ -21,6 +21,9 @@ export class FeatureToggleList {
 	ToggleName: string;
 	CreatedByUser: string;
 	ToggleDescription: string;
+	IsMultiTenant: boolean;
+	FromTenantNumber: number;
+	ToTenantNumber: number;
 	
 }
  

@@ -229,7 +229,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             if (!myResponse.HasError) {
                 var mySubType = myResponse.Result;
 
-                var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "HRS" && d.TenantNumber == SessionLocator.Tenant)[0];
+                var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "HRS")[0];
                 if (FeatureToggle && mySubType && mySubType.Code == "HORSE") {
                     this.HorseFieldIsVisible = true;
                 }

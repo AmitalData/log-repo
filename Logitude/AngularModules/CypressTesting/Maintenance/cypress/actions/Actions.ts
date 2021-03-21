@@ -7,26 +7,38 @@ import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import * as BaseActions from "../../../Base/cypress/actions/Actions";
 import * as gr from '../../../Base/cypress/actions/GenerateRandoms'
-import { ContactDetails } from "../models/ContactDetails";
-import { ContactContext } from "../models/ContactContext";
 import { BaseURLs } from "../../../Base/cypress/constants/URLs";
 import { Datepicker } from "../../../Base/cypress/models/Datepicker";
+import { ContactDetails } from "../models/ContactDetails";
+import { ContactContext } from "../models/ContactContext";
 import { VendorDetails } from "../models/VendorDetails";
 import { VendorContext } from "../models/VendorContext";
+import { VesselDetails } from "../models/VesselDetails";
+import { VesselContext } from "../models/VesselContext";
 
+//#region General
 export function OpenMaintenanceMenu() {
     cy.Click(BaseSelectors.MaintenanceMenu, null)
 }
 
-export function OpenTabInMaintenanceMenu(tabNameToSearch:string , tabSelector:string){
+export function OpenTabInMaintenanceMenu(maintenanceItemNameToSearch:string , maintenanceItemSelector:string){
     cy.Click(BaseSelectors.MaintenanceMenu, null);
-    cy.FillLogTextBox(BaseSelectors.NullSearch, tabNameToSearch);
-    cy.Click(tabSelector, null);
+    cy.FillLogTextBox(BaseSelectors.NullSearch, maintenanceItemNameToSearch);
+    cy.Click(maintenanceItemSelector, null);
 }
 
 export function OpenNewWizard(tabName:string) {
     cy.Click(MaintenanceSelectors.NewWizardButton(tabName),null);
 }
+
+function DefineGetByFilterRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetByFilter, RequestAliases.GetByFilter);
+}
+
+function AssertGetByFilters() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetByFilter, 200);
+}
+//#endregion
 
 //#region Vendor
 export function FillVendorDetails(vendorDetails:VendorDetails){
@@ -110,7 +122,7 @@ export function OpenVendor() {
 export function AssertOpenVendor() {
     AssertVendorGetSingle();
     AssertGetMenuButtonGroups();
-    BaseAssertion.AssertElementExist(MaintenanceSelectors.VendorEditScreen)
+    BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
 }
 
 export function CloseSaveVendor(){
@@ -130,10 +142,6 @@ function DefinePutVendorRequest() {
     cy.DefineRequestWait(RestAPI.PUT, Urls.Vendor, RequestAliases.PutVendor);
 }
 
-function DefineGetByFilterRequest() {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetByFilter, RequestAliases.GetByFilter);
-}
-
 function AssertPostVendor() {
     BaseAssertion.AssertStatusCode(RequestAliases.PostVendor, 200).then((interception) => {
         let responseBody = interception.response.body;
@@ -142,10 +150,6 @@ function AssertPostVendor() {
 }
 function AssertPutVendor() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutVendor, 200);
-}
-
-function AssertGetByFilters() {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetByFilter, 200);
 }
 
 function DefineVendorViewsGetByFiltersRequest(vendorCode:string){
@@ -167,7 +171,158 @@ function DefineVendorViewGetSingleRequest() {
 function AssertVendorGetSingle() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
 }
+//#endregion
 
+//#region Vessel
+export function FillVesselDetails(vesselDetails:VesselDetails){
+    FillVesselName(vesselDetails.Name)
+    cy.FillLogTextBox(MaintenanceSelectors.VesselIMOCode,vesselDetails.IMO);
+    cy.FillLogTextBox(MaintenanceSelectors.VesselLocalName,vesselDetails.LocalName);
+    cy.FillLogLov(MaintenanceSelectors.VesselFlag,vesselDetails.Flag,true);
+    cy.FillLogTextBox(MaintenanceSelectors.VesselNotes,vesselDetails.Notes);
+}
+
+export function FillVesselGeneralTab(vesselDetails:VesselDetails){
+    cy.FillLogTextBox(MaintenanceSelectors.VesselIMOCode,vesselDetails.IMO)
+    FillVesselCode(vesselDetails.Code)
+}
+
+export function CreateVessel(){
+    DefinePostVesselRequest() 
+    DefineGetByFilterRequest()
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+export function UpdateVessel(){
+    DefinePutVesselRequest() 
+    cy.Click(MaintenanceSelectors.VesselSaveButton,null)
+}
+
+export function AssertCreateVessel(){
+    AssertPostVessel()
+    AssertGetByFilters()
+}
+
+export function AssertUpdateVessel() {
+    let intercept = cy.wait("@" + RequestAliases.PutVessel);
+    intercept.then((interception) => {
+        if (interception.response.statusCode === 400) {
+            CheckError(interception);
+        }
+        else{
+            AssertPutVessel(interception.response.statusCode,200)
+        }
+    })
+}
+
+export function SearchVessel() {
+    let vesselName = VesselContext.Name;
+    if (vesselName) {
+        DefineVesselViewsGetByFiltersRequest(vesselName);
+        cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, vesselName);
+        AssertVesselViewsGetByFilters();
+    }
+}
+
+export function AssertSearchVessel() {
+    let vesselName = VesselContext.Name;
+    if (vesselName) {
+        cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
+            expect(text).to.contain(vesselName);
+        });
+    }
+}
+
+export function OpenVessel() {
+    DefineVesselsGetSingleRequest();
+    cy.get(MaintenanceSelectors.VesselFirstRow).click();
+}
+
+export function AssertOpenVessel() {
+    AssertVesselGetSingle();
+    BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
+}
+
+export function CloseSaveVessel(){
+    DefineVesselViewGetSingleRequest()
+    cy.Click(MaintenanceSelectors.VesselSaveCloseButton,null);
+}
+
+export function AssertCloseSaveVessel() {
+    AssertVesselGetSingle();
+}
+
+function FillVesselName(vesselName: string) {
+    if (vesselName) {
+        VesselContext.Name = vesselName.toLowerCase() == "random" ? (gr.GenerateRandomNumberAndString(5)) : vesselName;
+        cy.FillLogTextBox(MaintenanceSelectors.VesselName, VesselContext.Name);
+    }
+}
+
+function FillVesselCode(vesselCode:string){
+    let vesselName = VesselContext.Name
+    if (vesselCode) {
+        VesselContext.Code = vesselCode.toLowerCase() == "random" ? vesselName : vesselCode;
+        cy.FillLogTextBox(MaintenanceSelectors.VesselCode, VesselContext.Name);
+    }
+}
+
+function FillNewRandomCode() {
+    let NewRandomCode = gr.GenerateRandomNumberAndString(5)
+    VesselContext.Name = NewRandomCode;
+    VesselContext.Code = NewRandomCode;
+    cy.FillLogTextBox(MaintenanceSelectors.VesselName, VesselContext.Name);
+    cy.FillLogTextBox(MaintenanceSelectors.VesselCode, VesselContext.Code);
+}
+
+function DefinePostVesselRequest() {
+    cy.DefineRequestWait(RestAPI.POST, Urls.Vessels, RequestAliases.PostVessel);
+}
+
+function DefinePutVesselRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.Vessels, RequestAliases.PutVessel);
+}
+
+function AssertPostVessel() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PostVessel, 200);
+}
+
+function AssertPutVessel(responseStatusCode : number ,expectedStatusCode:number ) {
+    assert.equal(responseStatusCode, expectedStatusCode)
+}
+
+function CheckError(interception){
+    if (interception.response.body.ErrorMessage.indexOf("This vessel already exists") !== -1) {
+        GenerateNewRandomCode();
+    } else {
+        throw new Error(interception.response.body.ErrorMessage);
+    }
+}
+
+function GenerateNewRandomCode(){
+    FillNewRandomCode();
+    UpdateVessel();
+}
+
+function DefineVesselViewsGetByFiltersRequest(VesselCode:string){
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(VesselCode+"&GetCount=false"), RequestAliases.GetFilterSearch);
+}
+
+function AssertVesselViewsGetByFilters(){
+    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
+}
+
+function DefineVesselsGetSingleRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.VesselsGetSingle, RequestAliases.GetSignle);
+}
+
+function DefineVesselViewGetSingleRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.VesselviewGetSingle, RequestAliases.GetSignle);
+}
+
+function AssertVesselGetSingle() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
+}
 //#endregion
 
 //#region Contacts

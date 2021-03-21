@@ -884,8 +884,8 @@ export class LoginComponent implements OnInit {
 
         this.myInfrastructureDomainService.GetFeatureToggles().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                SessionLocator.FeatureToggles = myResponse.Result;
-                
+                SessionLocator.FeatureToggles = myResponse.Result.filter(d => d.TenantNumber == this.Tenant ||
+                                                                        (this.Tenant >= d.FromTenantNumber && this.Tenant <= d.ToTenantNumber));
                 //33
             }
             this.IncreaseProgressBar();
