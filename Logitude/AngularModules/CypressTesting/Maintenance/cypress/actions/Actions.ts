@@ -34,19 +34,9 @@ export function FillChangePasswordWindow(CurrentPassword:string,NewPassword:stri
     }  
 }
 export function ChangePasswordMockChange(){
-    cy.intercept(
-        {
-          method: RestAPI.POST,     
-          url: Urls.PostChangePassword,     
-        }
-      ),[true] 
-      cy.intercept(
-        {
-          method: RestAPI.POST,     
-          url: '**/PasswordChange/PostCheckUserPassword',     
-        }
-      ),[true] 
-      cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);   
+    cy.intercept(Urls.PostChangePassword,[true])
+   
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);   
 }
 export function OpenTabInMaintenanceMenu(tabNameToSearch:string , tabSelector:string){
     cy.Click(BaseSelectors.MaintenanceMenu, null);
