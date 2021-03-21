@@ -1,16 +1,11 @@
+import { IObjectTableMenuButtonsBuilder } from '../Interface/IObjectTableMenuButtonsBuilder';
 
-import { ShipmentTestMenuButtonsBuilder } from '../ObjectTableMenuButtonsBuilder/ShipmentTestMenuButtonsBuilder';
 
 export class ObjectTableMenuButtonsBuilderService {
 
-    public static GetInstance(name: string) {
+    public static GetInstance(name: string): IObjectTableMenuButtonsBuilder {
 
-        var myResult: any = null;
-
-        switch (name) {
-            case "ShipmentTest": { myResult = new ShipmentTestMenuButtonsBuilder(); break; }
-        }
-        return myResult;
+        return null;
 
     }
 

@@ -748,20 +748,34 @@ export class EditComponent implements OnDestroy {
             }
         }
     }
-    private BuildTabsItemsSource() {
 
-        this.TabsItemsSource = [];
 
+    BuildObjectTableTabByQuerySection() {
+        let objectTableTabs: TabItem[] =[];
         let objectTableTabsBuilder: IObjectTableTabsBuilder = ObjectTableTabBuilderService.GetInstance(this.QuerySection);
         if (objectTableTabsBuilder) {
-            this.TabsItemsSource = objectTableTabsBuilder.BuildTabs({
+            objectTableTabs = objectTableTabsBuilder.BuildTabs({
                 ObjectTableId: this.ObjectTableId,
                 ObjectTableName: this.ObjectTableName,
                 QuerySection: this.QuerySection,
                 EntityPM: this.EntityPM,
             });
 
-        } else {
+        }
+        return objectTableTabs;
+    }
+
+
+
+    private BuildTabsItemsSource() {
+
+        this.TabsItemsSource = [];
+
+        if (!AppTool.IsNullOrEmpty(this.QuerySection)) {
+            this.TabsItemsSource = this.BuildObjectTableTabByQuerySection();
+        }
+
+        else {
 
             var allTabs: any[] = [];
             var myTabsSorted: any[] = [];

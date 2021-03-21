@@ -65,9 +65,6 @@ export class MainMenuComponent {
                 } 
             }
 
-            if (item.QuerySection == "ShipmentTest") {
-                isAddingItem = true;
-            }
 
             if (isAddingItem) {
                 var menuItem: MainMenuItem = new MainMenuItem(item.TextCode, AppTool.GetMainMenuIconCode(item.TextCode));
@@ -76,9 +73,7 @@ export class MainMenuComponent {
                 menuItem.HtmlView = item.HtmlView;
                 menuItem.ObjectTableName = item.ObjectTableName;
                 menuItem.QuerySection = item.QuerySection;
-                if (menuItem.QuerySection == "ShipmentTest") {
-                    console.log("sssssssssssssssssss yes");
-                }
+                
                 myResult.push(menuItem);
             }
         });

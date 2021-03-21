@@ -142,17 +142,7 @@ export class MenuButtonsComponent implements OnDestroy {
         }
 
 
-        let objectTableMenuButtonsBuilder: IObjectTableMenuButtonsBuilder = ObjectTableMenuButtonsBuilderService.GetInstance(this.QuerySection);
-        if (objectTableMenuButtonsBuilder) {
-            buttons = objectTableMenuButtonsBuilder.BuildMenuButtons({
-                ObjectTableId: this.entityArgs.ObjectTableName,
-                ObjectTableName: this.entityArgs.EntityPM,
-                QuerySection: this.QuerySection,
-                EntityPM: this.EntityPM,
-                MenuButtons: buttons,
-            });
-        }
-
+        buttons = this.GetObjectTableMenuButtonsByQuerySection(this.QuerySection);
 
         var objectTableName = this.ObjectTable.Name;
         if (objectTableName.indexOf('Customs.') > -1) {
@@ -194,6 +184,20 @@ export class MenuButtonsComponent implements OnDestroy {
         });
     }
     public DisplayText: string;
+    private GetObjectTableMenuButtonsByQuerySection( querySection:string) {
+  
+        let objectTableMenuButtonsBuilder: IObjectTableMenuButtonsBuilder = ObjectTableMenuButtonsBuilderService.GetInstance(querySection);
+        if (objectTableMenuButtonsBuilder) {
+          return  objectTableMenuButtonsBuilder.BuildMenuButtons({
+                ObjectTableId: this.entityArgs.ObjectTableName,
+                ObjectTableName: this.entityArgs.EntityPM,
+                QuerySection: this.QuerySection,
+                EntityPM: this.EntityPM,
+            });
+        }
+        return null;
+    }
+
     public OnClick(button: MenuButtonPM) {
         this.MenuButtonsHandler.MenuButtonClick(button);
     }

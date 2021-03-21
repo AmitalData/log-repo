@@ -998,13 +998,14 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     //  //  this.ShowTipEvent.emit("true");
     //}
 
-
     FilterQuerysByMenuTableQuerySection(allQueries: any) {
 
-        let menuTableQuerySection: string = !AppTool.IsNullOrEmpty(this.MenuTableQuerySection) ? this.MenuTableQuerySection : this.ObjectTableName;
-        return  allQueries.filter(d => d.QuerySection == menuTableQuerySection || d.QuerySection == (menuTableQuerySection + "FollowUp"));
+        if (!AppTool.IsNullOrEmpty(this.MenuTableQuerySection)) {
+            return allQueries.filter(d => d.QuerySection == this.MenuTableQuerySection);
+        }
+        return allQueries; 
+    
     }
-
 
 
     public UserId: string = SessionInfo.LoggedUserId;
@@ -1012,8 +1013,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     GetQueries() {
 
         var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id ).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
-        allQueries = this.FilterQuerysByMenuTableQuerySection(allQueries);
-
+        this.FilterQuerysByMenuTableQuerySection(allQueries);
         this.Queries = allQueries.filter(x => x.UserId == null && x.SystemLevel == true);
 
         if(!this.ObjectTable.IsClosed){

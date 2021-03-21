@@ -1,17 +1,10 @@
-import { ShipmentTestTabsBuilder } from '../ObjectTableTabsBuilder/ShipmentTestTabsBuilder';
+import { IObjectTableTabsBuilder } from '../Interface/IObjectTableTabsBuilder';
 
 export class ObjectTableTabBuilderService {
 
-    public static GetInstance(name: string) {
+    public static GetInstance(name: string): IObjectTableTabsBuilder {
 
-        var myResult: any = null;
-
-        switch (name) {
-            case "ShipmentTest": { myResult = new ShipmentTestTabsBuilder(); break; }
-                
-        }
-        return myResult;
-
+        return null;
     }
 
 }
