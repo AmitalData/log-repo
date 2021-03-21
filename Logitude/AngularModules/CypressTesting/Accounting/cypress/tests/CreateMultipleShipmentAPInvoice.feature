@@ -1,4 +1,4 @@
-@smoke @release @dev
+@smoke @release @dev 
 Feature: Create multiple shipment AP Invoice
   After the user logging in the system and navigate to customers workspace
   will create a customer as shipper in the new shipments
@@ -17,6 +17,8 @@ Feature: Create multiple shipment AP Invoice
       | City        | Anchorage   |
       | Country     | US          |
       | State       | AK          |
+      | PhoneNumber | 98765443    |
+      | FaxNumber   | 98765443    |
     When create customer
     Then the customer should create successfully
 

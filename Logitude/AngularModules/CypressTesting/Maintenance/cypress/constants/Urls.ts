@@ -17,7 +17,12 @@ export class Urls
 
     public static readonly AccountingSettings="**/accountingsettings"
 
+    public static readonly Tenants="**/tenants"
     public static GetFilterSearch(filterBy:string){
         return '**/getbyfilters?**'+filterBy+'**'
+    }
+    
+    public static GetQuickSearch(CustomerNumber: string): string{
+        return  "**/GetCustomersQuickSearch?**" + CustomerNumber+"**";
     }
 }

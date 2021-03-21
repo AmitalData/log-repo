@@ -15,6 +15,11 @@ import { VendorDetails } from "../models/VendorDetails";
 import { VendorContext } from "../models/VendorContext";
 import { VesselDetails } from "../models/VesselDetails";
 import { VesselContext } from "../models/VesselContext";
+import {CustomerSettingsDetails} from "../models/CustomerSettingsDetails"
+import { CustomerDetails } from "../../../Common/cypress/models/CustomerDetails";
+import { URLs } from "../../../Common/cypress/constants/URLs"
+import { QuickSearchDetails } from "../../../Base/cypress/models/QuickSearchDetails";
+import {constants} from "../../../Base/cypress/constants/constants"
 import { InvoiceSettingsDetails } from "../models/InvoiceSettingsDetails";
 
 //#region General
@@ -27,6 +32,11 @@ export function SearchMaintenanceItemInMaintenanceMenu(MaintenanceItem: string) 
 }
 export function OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemNameToSearch: string, maintenanceItemSelector: string) {
     SearchMaintenanceItemInMaintenanceMenu(maintenanceItemNameToSearch);
+    cy.Click(maintenanceItemSelector, null);
+}
+export function OpenTabInMaintenanceMenu(maintenanceItemNameToSearch:string , maintenanceItemSelector:string){
+    cy.Click(BaseSelectors.MaintenanceMenu, null);
+    cy.FillLogTextBox(BaseSelectors.NullSearch, maintenanceItemNameToSearch);
     cy.Click(maintenanceItemSelector, null);
 }
 
@@ -627,6 +637,149 @@ function AssertPutAccountingSettings() {
         InvoiceSettingsDetails.AllowVoidARI=interception.request.body.allowVoidARI
     });
 }
+//#endregion
+//#region Customer Settings
+export function FillCustomerSettingsDetails(customerSettingsDetails: CustomerSettingsDetails) {
+    FillIsCustomerTelphoneRequiredCheckBox(customerSettingsDetails.IsCustomerTelphoneRequired);
+    FillIsPotentialTelphoneRequiredCheckBox(customerSettingsDetails.IsPotentialCustomerTelphoneRequired);
+    FillIsCustomerFaxRequiredCheckBox(customerSettingsDetails.IsCustomerFaxRequired);
+    FillIsPotentialCustomerFaxRequiredCheckBox(customerSettingsDetails.IsPotentialCustomerFaxRequired);
+    FillIsCustomerAddress1RequiredCheckBox(customerSettingsDetails.IsCustomerAddress1Required);
+}
+function FillIsCustomerTelphoneRequiredCheckBox(IsCustomerTelphoneRequired: string) {
+    if (IsCustomerTelphoneRequired.toUpperCase() == constants.YES) {
+        cy.get(MaintenanceSelectors.IsCustomerTelephoneRequiredCheckBox).check({ force: true });
+    }
+}
+function FillIsPotentialTelphoneRequiredCheckBox(IsPotentialCustomerTelphoneRequired: string) {
+    if (IsPotentialCustomerTelphoneRequired.toUpperCase() == constants.YES) {
+        cy.get(MaintenanceSelectors.IsPotentialCustomerTelephoneRequiredCheckBox).check({ force: true });
+    }
+}
+function FillIsCustomerFaxRequiredCheckBox(IsCustomerFaxRequired: string) {
+    if (IsCustomerFaxRequired.toUpperCase() == constants.YES) {
+        cy.get(MaintenanceSelectors.IsCustomerFaxRequiredCheckBox).check({ force: true });
+    }
+}
+function FillIsPotentialCustomerFaxRequiredCheckBox(IsPotentialCustomerFaxRequired: string) {
+    if (IsPotentialCustomerFaxRequired.toUpperCase() == constants.YES) {
+        cy.get(MaintenanceSelectors.IsPotentialCustomerFaxRequiredCheckBox).check({ force: true });
+    }
+}
+function FillIsCustomerAddress1RequiredCheckBox(IsCustomerAddress1Required) {
+    if (IsCustomerAddress1Required.toUpperCase() == constants.YES) {
+        cy.get(MaintenanceSelectors.IsCustomerAddress1RequiredCheckBox).check({ force: true });
+    }
+}
+export function UpdateCustomerSettings() {
+    DefinePutCustomerSettings()
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK)
+}
+function DefinePutCustomerSettings() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.Tenants, RequestAliases.Tenants);
+}
+export function AssertPutCustomerSettings() {
+    BaseAssertion.AssertStatusCode(RequestAliases.Tenants, 200);
+
+}
+//#endregion
+//#region Customer in CRM
+export function NavigatesToCustomerCRMWorkspace() {
+    cy.Click(BaseSelectors.CRMMenu, null)
+    cy.Click(BaseSelectors.CRMCustomers, null)
+}
+export function OpenNewPotentialCustomerWizard() {
+    cy.Click(MaintenanceSelectors.NewCustomerButton, null);
+}
+export function FillPotentialCustomerDetails(customerDetails: CustomerDetails) {
+    FillPotentialCustomerName(customerDetails.CompanyName)
+    FillPotentialCustomerCity(customerDetails.City)
+    FillPotentialCustomerCountry(customerDetails.Country)
+    FillPotentialCustomerState(customerDetails.State)
+    FillPotentialCustomerPhoneNumber(customerDetails.PhoneNumber)
+    FillPotentialCustomerFaxNumber(customerDetails.FaxNumber)
+    fillPotentialCustomerAddress1(customerDetails.Address1);
+    if (customerDetails.AddContact) {
+        FillPotentialCustomerAddContactCheckBox(customerDetails.AddContact);
+    }
+}
+function FillPotentialCustomerName(CustomerName: string) {
+    cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerName, CustomerName)
+}
+function FillPotentialCustomerCity(City: string) {
+    cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerCity, City)
+}
+function FillPotentialCustomerCountry(Country: string) {
+    cy.FillLogLov(MaintenanceSelectors.PotentialCustomerCountry, Country, true)
+}
+function FillPotentialCustomerState(State: string) {
+    if (State) {
+        cy.FillLogLov(MaintenanceSelectors.PotentialCustomerState, State, true)
+    }
+}
+function FillPotentialCustomerPhoneNumber(PhoneNumber: string) {
+    if (PhoneNumber) {
+        cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerPhoneNumber, PhoneNumber)
+    }
+}
+function FillPotentialCustomerFaxNumber(FaxNumber: string) {
+    if (FaxNumber) {
+        cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerFaxNumber, FaxNumber)
+    }
+}
+function fillPotentialCustomerAddress1(Address1: string) {
+    if (Address1) {
+        cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerAddress1, Address1)
+    }
+}
+function FillPotentialCustomerAddContactCheckBox(AddContact: string) {
+    if (AddContact.toUpperCase() == constants.YES) {
+        cy.get(MaintenanceSelectors.PotentialCustomerAddContactCheckBox).check({ force: true })
+    }
+    else {
+        cy.get(MaintenanceSelectors.PotentialCustomerAddContactCheckBox).find(BaseSelectors.input).uncheck({ force: true })
+    }
+}
+export function AddPotentialCustomer() {
+    DefinePostPotentialCustomer()
+    cy.Click(MaintenanceSelectors.OkAddPotentialCustomer, null);
+}
+function DefinePostPotentialCustomer() {
+    cy.DefineRequestWait(RestAPI.POST, Urls.PartnersDomain, RequestAliases.PartnersDomainRequest)
+}
+export function AssertAddPotentialCustomer() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PartnersDomainRequest, 200).then((interception) => {
+        CustomerDetails.Code = interception.response.body.Customer.Code;
+    });
+}
+export function SearchCustomer() {
+    var quickSearchDetails = {
+        Selector: MaintenanceSelectors.CustomerSearchBar,
+        Parent: MaintenanceSelectors.CustomerSearchParent,
+        ParentClass: MaintenanceSelectors.CustomerSearchParentClass,
+        WaitURL: Urls.GetQuickSearch(CustomerDetails.Code),
+        Value: CustomerDetails.Code,
+        RequestAliase: RequestAliases.GetCustomersQuickSearch
+    } as QuickSearchDetails;
+    cy.SelectQuickSearchFirstElement(quickSearchDetails);
+}
+export function AssertCustomerStatus(CustomerStatus: string) {
+    BaseAssertion.AssertElementContain(BaseSelectors.HeaderScreen, CustomerStatus)
+}
+export function FillCustomerActivationWindow(customerDetails: CustomerDetails) {
+    FillPotentialCustomerDetails(customerDetails);
+}
+export function ActivateCustomer() {
+    DefinePutCustomer()
+    cy.Click(MaintenanceSelectors.OKActivateCustomer, null);
+}
+function DefinePutCustomer() {
+    cy.DefineRequestWait(RestAPI.PUT, URLs.Customers, RequestAliases.Customers)
+}
+export function AssertActivateCustomer() {
+    BaseAssertion.AssertStatusCode(RequestAliases.Customers, 200);
+}
+//#endregion
 export function AssertVoidInvoiceMessage(Message:string){
     cy.get(BaseSelectors.MessageWindow).should('contain.text', Message)
     cy.Click(BaseSelectors.Button,BaseSelectors.ContainsOK)

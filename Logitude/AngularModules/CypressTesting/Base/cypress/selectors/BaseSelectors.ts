@@ -5,10 +5,14 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly OperationsMenu = '#GeneralMHOperations';
     public static readonly AccountingMenu = '#GeneralMHAccounting';
     public static readonly CustomersMenu = '#GeneralMHCustomers';
+    public static readonly CRMMenu = "#GeneralMHCRM"
     public static readonly TicketsMenu = '#GeneralMHTicket';
     public static readonly MaintenanceMenu = "#GeneralMHMaintenance"
 	public static readonly TariffMenu = "#GeneralMHTariffModule";
     public static readonly ShippingLine = "#MaintenanceItemMTSL"
+    //#endregion
+    //#region CRM
+    public static readonly CRMCustomers="#CRMCUS"
     //#endregion
     //#region Maintenance
     public static readonly SystemSettings = "#CMS"
@@ -116,6 +120,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly RefreshImg = "img[src='./Images/Buttons/Refresh.png']";
     public static readonly Hyperlink = ".hyperlink";
     public static readonly Title = ".Title";
+    public static readonly input = "input"
 
     //#region Should Condition 
     public static readonly BeEmpty = 'be.empty'

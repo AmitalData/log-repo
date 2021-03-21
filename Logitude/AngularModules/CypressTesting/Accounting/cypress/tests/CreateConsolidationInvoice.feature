@@ -1,4 +1,4 @@
-@release @dev
+@release @dev 
 Feature: Create Consolidation Invoice
     After the user logging in the system,Update Accounting System to be None and navigate to customers workspace
     will create a customer as shipper in the new shipment, after update packages and payables tabs,
@@ -19,6 +19,8 @@ Feature: Create Consolidation Invoice
             | City        | Anchorage   |
             | Country     | US          |
             | State       | AK          |
+            | PhoneNumber | 98765443    |
+            | FaxNumber   | 98765443    |
         When create customer
         Then the customer should create successfully
 

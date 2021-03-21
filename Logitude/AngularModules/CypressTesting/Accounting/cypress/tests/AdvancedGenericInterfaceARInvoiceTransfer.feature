@@ -1,4 +1,4 @@
-@release  
+@release 
 Feature: Advanced Generic Interface AR Invoice Transfer
     The user disables the Accounting Transfer in settings, creates AR invoice,
     changes the settings for Accounting Transfer to Advanced Generic Interface,
@@ -18,6 +18,8 @@ Feature: Advanced Generic Interface AR Invoice Transfer
             | City        | Anchorage   |
             | Country     | US          |
             | State       | AK          |
+            | PhoneNumber | 98765443    |
+            | FaxNumber   | 98765443    |
         When create customer
         Then the customer should create successfully
 

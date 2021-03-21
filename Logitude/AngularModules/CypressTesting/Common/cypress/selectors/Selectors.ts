@@ -12,6 +12,8 @@ export class CommonSelectors {
     public static readonly CustomerCity = '#Address_City';
     public static readonly CustomerCountry = '#Address_CountryId';
     public static readonly CustomerState = '#Address_StateId';
+    public static readonly CustomerPhoneNumber ="#Address_PhoneNumber"
+    public static readonly CustomerFaxNumber="#Address_FaxNumber"
     public static readonly AddCustomer = '#Ok-AddCustomer';
     public static readonly CustomerBillingTab = '#CustomerTHBilling';
     public static readonly EnableConsolidationInvoices = '[for="Customer_EnableConsolidationInvoices"]';
