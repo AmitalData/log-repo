@@ -233,7 +233,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             });
 
 
-            if (GetFilterValue<string>("ChartOfAccountId") != null)
+            //if (GetFilterValue<string>("ChartOfAccountId") != null)
                 transactionsAccounts = GetGLAccountsInsideTransactions(transactions);
 
             transactionsDataProvider.Transactions = new List<ReportLedgerTransaction>();
@@ -264,7 +264,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 reportTransaction.AccountEnglishName = glaccountPM.EnglishName;
                 reportTransaction.AccountLocalName = glaccountPM.LocalName;
             }
-            else if (GetFilterValue<string>("ChartOfAccountId") != null)
+            else
             {
                 GLAccountList account = accounts.FirstOrDefault(d => d.Id == reportTransaction.AccountId);
                 reportTransaction.GLAccountRecoMethodCode = account.ReconcileMethodCode;
@@ -273,6 +273,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 reportTransaction.AccountLocalName = account.LocalName;
 
             }
+            
         }
 
         private ReportLedgerTransaction GetReportNewLedgerTransaction(LedgerTransactionList transaction)
