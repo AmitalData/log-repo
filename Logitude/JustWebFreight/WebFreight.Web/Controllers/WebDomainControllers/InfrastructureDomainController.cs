@@ -409,7 +409,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                         else
                         {
-                            FeatureToggle featureToggle = featureToggles.Where(d => d.TenantNumber == tenant || (tenant >= d.FromTenantNumber && tenant <= d.ToTenantNumber)).FirstOrDefault();
+                            FeatureToggle featureToggle = featureToggles.Where(d => d.ToggleCode == item.ToggleCode && (d.TenantNumber == tenant || (tenant >= d.FromTenantNumber && tenant <= d.ToTenantNumber))).FirstOrDefault();
                             if (featureToggle != null)
                             {
                                 myResult.Add(item);
