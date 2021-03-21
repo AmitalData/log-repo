@@ -78,6 +78,7 @@ export class DeclarationReferantDataList {
 	ForwarderId: string;
 	ForwarderName: string;
 	FclLclName: string;
+	TeamName: string;
 	
 }
  
