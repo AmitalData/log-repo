@@ -614,10 +614,10 @@ function AssertContactDatepickerNotSelected(dateType: string) {
 //#endregion
 //#region Invoice Settings
 export function ChangeInvoiceSettings(invoiceSettings: InvoiceSettingsDetails) {
-    if (invoiceSettings.VoidInvoice.toLocaleUpperCase() == Constants.Allowed) {
+    if (invoiceSettings.VoidInvoice.toUpperCase() == Constants.Allowed) {
         cy.get(MaintenanceSelectors.VoidinvoiceCheckBox).check({ force: true })
     }
-    else if (invoiceSettings.VoidInvoice.toLocaleUpperCase() == Constants.NotAllowed) {
+    else if (invoiceSettings.VoidInvoice.toUpperCase() == Constants.NotAllowed) {
         cy.get(MaintenanceSelectors.VoidinvoiceCheckBox).uncheck({ force: true })
     }
 }
