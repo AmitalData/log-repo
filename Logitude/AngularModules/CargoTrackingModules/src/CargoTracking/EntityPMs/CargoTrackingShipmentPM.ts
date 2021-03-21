@@ -439,11 +439,6 @@ export class CargoTrackingShipmentPM {
     public set ForwardingShipmentNumber(newValue: string) { if (this.forwardingShipmentNumber != newValue) { this.forwardingShipmentNumber = newValue; this.MarkAsDirty("ForwardingShipmentNumber"); } }
        
 	 
-    private shipmentLevelCode: string;
-    public get ShipmentLevelCode() { return this.shipmentLevelCode; }
-    public set ShipmentLevelCode(newValue: string) { if (this.shipmentLevelCode != newValue) { this.shipmentLevelCode = newValue; this.MarkAsDirty("ShipmentLevelCode"); } }
-       
-	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		
@@ -472,4 +467,4 @@ export class CargoTrackingShipmentPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
