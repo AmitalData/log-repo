@@ -48,8 +48,8 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
         [Then(@"the shipment should not create successfully")]
         public void ThenTheShipmentShouldNotCreateSuccessfully()
         {
-            Context.act.Should().ThrowExactly<Exception>()
-                .Where(m => m.Message.Contains("Sorry! you have no permission to do this operation on Tenant"));
+            Context.act.Should().ThrowExactly<AggregateException>()
+                .And.InnerExceptions[0].Message.Contains("Sorry! you have no permission to do this operation on Tenant");
         }
         #endregion
 
@@ -78,8 +78,8 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
         [Then(@"the shipment should not update successfully")]
         public void ThenTheShipmentShouldNotUpdateSuccessfully()
         {
-            Context.act.Should().ThrowExactly<Exception>()
-                .Where(m => m.Message.Contains("Sorry! you have no permission to do this operation on Tenant"));
+            Context.act.Should().ThrowExactly<AggregateException>()
+                .And.InnerExceptions[0].Message.Contains("Sorry! you have no permission to do this operation on Tenant");
         }
         #endregion
 

@@ -49,13 +49,13 @@
                                         </div>
                                         <div>
                                             <div *ngIf="AirSurchargesCostVisibility">
-                                                <HyperlinkQuery (click)="ViewTariffs('AS')">Air ({{AirSurchargeCount}})</HyperlinkQuery>
+                                                <HyperlinkQuery (click)="ViewTariffs('AS')" attr.data-cy="{{'Surcharge_Air' | IdGeneratorPipe}}">Air ({{AirSurchargeCount}})</HyperlinkQuery>
                                             </div>
                                             <div *ngIf="OceanLCLSurchargesCostVisibility">
-                                                <HyperlinkQuery (click)="ViewTariffs('OSC')">Ocean LCL ({{OceanSurchargeCount}})</HyperlinkQuery>
+                                                <HyperlinkQuery (click)="ViewTariffs('OSC')" attr.data-cy="{{'Surcharge_OceanLCL' | IdGeneratorPipe}}">Ocean LCL ({{OceanSurchargeCount}})</HyperlinkQuery>
                                             </div>
                                             <div *ngIf="OceanFCLSurchargesCostVisibility">
-                                                <HyperlinkQuery (click)="ViewTariffs('OFS')">Ocean FCL ({{OceanFCLSurchargesCount}})</HyperlinkQuery>
+                                                <HyperlinkQuery (click)="ViewTariffs('OFS')" attr.data-cy="{{'Surcharge_OceanFCL' | IdGeneratorPipe}}">Ocean FCL ({{OceanFCLSurchargesCount}})</HyperlinkQuery>
                                             </div>
                                         </div>
                                     </div>

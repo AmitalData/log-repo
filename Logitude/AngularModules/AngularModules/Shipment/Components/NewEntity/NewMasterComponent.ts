@@ -79,7 +79,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
         var loadPr = listservice.getMock("Port");
         loadPr.then((res: any) => {
             res.subscribe((resp: any) => {
-                this.SubTypeFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SUB" && d.TenantNumber == SessionLocator.Tenant)[0]; 
+                this.SubTypeFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SUB")[0]; 
                 this.ScreenIsReady = true;
 
                 this.BuildFiltersLists();
@@ -107,7 +107,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
 
                 var screenCode = "NewMaster";
                 cmpRef.instance.LabelWidth = 110;
-                cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
+                cmpRef.instance.Run(this.EntityPM, "Shipment", screenCode, false, false, this.ObjectTableName);
             });
     }
 

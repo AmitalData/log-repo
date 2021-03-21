@@ -97,7 +97,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.WarehouseReleaseNumber = itemPM.WarehouseReleaseNumber;
             itemPoco.InUse = itemPM.InUse;
             itemPoco.HorseId = itemPM.HorseId;
-
+            itemPoco.LCLContainerTypeId = itemPM.LCLContainerTypeId;
             if (itemPM.TemperatureUnitCode == null)
             {
                 itemPM.TemperatureUnitCode = loggedTenant.TemperatureUnitCode;

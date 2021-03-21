@@ -1,49 +1,46 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { TicketDetails } from "../../models/TicketDetails"
-import { ShipmentDetails } from "../../../../Shipment/cypress/models/ShipmentDetails"
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
-import { TicketSelectors } from "../../selectors/TicketSelectors";
-import { ShipmentSelector } from "../../../../Shipment/cypress/selectors/Selectors";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import * as Actions from "../../actions/Actions";
-import * as ShipmentActions from "../../../../Shipment/cypress/actions/Actions"
-import { URLs } from "../../constants/URLs";
+import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
+import { TicketSelectors } from "../../selectors/TicketSelectors";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 let TicketData: TicketDetails;
 
+//#region Create Ticket
 Given("the user logged in and navigated to ticket workspace", () => {
     cy.Login();
     cy.Click(BaseSelectors.TicketsMenu, null)
 });
 
 Given("a ticket with the following details", (dataTable) => {
-    let ticketDetails = dataTable.hashes()[0] as TicketDetails;
-    TicketData = ticketDetails;
-    cy.Click(BaseSelectors.Button,"New");
+    TicketData = Assists.CreateInstance<TicketDetails>(dataTable, true);
+    cy.Click(BaseSelectors.Button,TicketSelectors.ContainsNew);
     Actions.FillTicketFields(TicketData);
 });
 
 When("create ticket", () => {
-    cy.DefineRequestWait("POST",URLs.CRMDomain, "WaitPostTicketRequest")
-    cy.Click(BaseSelectors.RedButton, "Create");
+    Actions.CreateTicket();
 });
 
 Then("the ticket should create successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPostTicketRequest", 200).then((interception) => {
+    BaseAssertion.AssertStatusCode(RequestAliases.PostTicket, 200).then((interception) => {
         TicketData.TicketNumber = interception.response.body.TicketNumber;
     })
 });
+//#endregion
 
-Given("the user edit the description", () => {
+Given("the user fill the description with {string}", (description) => {
     Actions.OpenTicket(TicketData.TicketNumber);
-    Actions.EditTheTicket();
+    Actions.EditTheTicket(description);
 });
 
 When("save as open", () => {
-    cy.DefineRequestWait("PUT", URLs.Tickets, "WaitPutTicketRequest")
-    cy.Click(BaseSelectors.SaveAsOpenButton, null);
+    Actions.UpdateTicket();
 });
 
 Then("the ticket should save successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutTicketRequest", 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.PutTicket, 200);
 });

@@ -4653,7 +4653,233 @@ export class ShipmentPM {
     public get AccrualsApprovalDate() { return this.accrualsApprovalDate; }
     public set AccrualsApprovalDate(newValue: Date) { if (this.accrualsApprovalDate != newValue) { this.accrualsApprovalDate = newValue; this.MarkAsDirty("AccrualsApprovalDate"); } }
 
+    private isGroupageHousesUpdated: boolean;
+    public get IsGroupageHousesUpdated() { return this.isGroupageHousesUpdated; }
+    public set IsGroupageHousesUpdated(newValue: boolean) { if (this.isGroupageHousesUpdated != newValue) { this.isGroupageHousesUpdated = newValue; this.MarkAsDirty("IsGroupageHousesUpdated"); } }
 
+    private preForwardingTransportModeId: string;
+    public get PreForwardingTransportModeId() { return this.preForwardingTransportModeId; }
+    public set PreForwardingTransportModeId(newValue: string) { if (this.preForwardingTransportModeId != newValue) { this.preForwardingTransportModeId = newValue; this.MarkAsDirty("PreForwardingTransportModeId"); } }
+
+    private preForwardingFromPortId: string;
+    public get PreForwardingFromPortId() { return this.preForwardingFromPortId; }
+    public set PreForwardingFromPortId(newValue: string) { if (this.preForwardingFromPortId != newValue) { this.preForwardingFromPortId = newValue; this.MarkAsDirty("PreForwardingFromPortId"); } }
+
+    private preForwardingToPortId: string;
+    public get PreForwardingToPortId() { return this.preForwardingToPortId; }
+    public set PreForwardingToPortId(newValue: string) { if (this.preForwardingToPortId != newValue) { this.preForwardingToPortId = newValue; this.MarkAsDirty("PreForwardingToPortId"); } }
+
+    private preForwardingCarrierId: string;
+    public get PreForwardingCarrierId() { return this.preForwardingCarrierId; }
+    public set PreForwardingCarrierId(newValue: string) { if (this.preForwardingCarrierId != newValue) { this.preForwardingCarrierId = newValue; this.MarkAsDirty("PreForwardingCarrierId"); } }
+
+    private preForwardingCarrierNumber: string;
+    public get PreForwardingCarrierNumber() { return this.preForwardingCarrierNumber; }
+    public set PreForwardingCarrierNumber(newValue: string) { if (this.preForwardingCarrierNumber != newValue) { this.preForwardingCarrierNumber = newValue; this.MarkAsDirty("PreForwardingCarrierNumber"); } }
+
+    private preForwardingCarrierName: string;
+    public get PreForwardingCarrierName() { return this.preForwardingCarrierName; }
+    public set PreForwardingCarrierName(newValue: string) { if (this.preForwardingCarrierName != newValue) { this.preForwardingCarrierName = newValue; this.MarkAsDirty("PreForwardingCarrierName"); } }
+
+    private preForwardingCarrierCode: string;
+    public get PreForwardingCarrierCode() { return this.preForwardingCarrierCode; }
+    public set PreForwardingCarrierCode(newValue: string) { if (this.preForwardingCarrierCode != newValue) { this.preForwardingCarrierCode = newValue; this.MarkAsDirty("PreForwardingCarrierCode"); } }
+
+    private preForwardingFromPortCode: string;
+    public get PreForwardingFromPortCode() { return this.preForwardingFromPortCode; }
+    public set PreForwardingFromPortCode(newValue: string) { if (this.preForwardingFromPortCode != newValue) { this.preForwardingFromPortCode = newValue; this.MarkAsDirty("PreForwardingFromPortCode"); } }
+
+    private preForwardingFromPortName: string;
+    public get PreForwardingFromPortName() { return this.preForwardingFromPortName; }
+    public set PreForwardingFromPortName(newValue: string) { if (this.preForwardingFromPortName != newValue) { this.preForwardingFromPortName = newValue; this.MarkAsDirty("PreForwardingFromPortName"); } }
+
+    private preForwardingFromPortCountryCode: string;
+    public get PreForwardingFromPortCountryCode() { return this.preForwardingFromPortCountryCode; }
+    public set PreForwardingFromPortCountryCode(newValue: string) { if (this.preForwardingFromPortCountryCode != newValue) { this.preForwardingFromPortCountryCode = newValue; this.MarkAsDirty("PreForwardingFromPortCountryCode"); } }
+
+    private preForwardingFromPortCountryName: string;
+    public get PreForwardingFromPortCountryName() { return this.preForwardingFromPortCountryName; }
+    public set PreForwardingFromPortCountryName(newValue: string) { if (this.preForwardingFromPortCountryName != newValue) { this.preForwardingFromPortCountryName = newValue; this.MarkAsDirty("PreForwardingFromPortCountryName"); } }
+
+    private preForwardingToPortCode: string;
+    public get PreForwardingToPortCode() { return this.preForwardingToPortCode; }
+    public set PreForwardingToPortCode(newValue: string) { if (this.preForwardingToPortCode != newValue) { this.preForwardingToPortCode = newValue; this.MarkAsDirty("PreForwardingToPortCode"); } }
+
+    private preForwardingToPortName: string;
+    public get PreForwardingToPortName() { return this.preForwardingToPortName; }
+    public set PreForwardingToPortName(newValue: string) { if (this.preForwardingToPortName != newValue) { this.preForwardingToPortName = newValue; this.MarkAsDirty("PreForwardingToPortName"); } }
+
+    private preForwardingToPortCountryCode: string;
+    public get PreForwardingToPortCountryCode() { return this.preForwardingToPortCountryCode; }
+    public set PreForwardingToPortCountryCode(newValue: string) { if (this.preForwardingToPortCountryCode != newValue) { this.preForwardingToPortCountryCode = newValue; this.MarkAsDirty("PreForwardingToPortCountryCode"); } }
+
+    private preForwardingToPortCountryName: string;
+    public get PreForwardingToPortCountryName() { return this.preForwardingToPortCountryName; }
+    public set PreForwardingToPortCountryName(newValue: string) { if (this.preForwardingToPortCountryName != newValue) { this.preForwardingToPortCountryName = newValue; this.MarkAsDirty("PreForwardingToPortCountryName"); } }
+
+    private preForwardingETD: Date;
+    public get PreForwardingETD() { return this.preForwardingETD; }
+    public set PreForwardingETD(newValue: Date) { if (this.preForwardingETD != newValue) { this.preForwardingETD = newValue; this.MarkAsDirty("PreForwardingETD"); } }
+
+    private preForwardingATD: Date;
+    public get PreForwardingATD() { return this.preForwardingATD; }
+    public set PreForwardingATD(newValue: Date) { if (this.preForwardingATD != newValue) { this.preForwardingATD = newValue; this.MarkAsDirty("PreForwardingATD"); } }
+
+    private preForwardingETA: Date;
+    public get PreForwardingETA() { return this.preForwardingETA; }
+    public set PreForwardingETA(newValue: Date) { if (this.preForwardingETA != newValue) { this.preForwardingETA = newValue; this.MarkAsDirty("PreForwardingETA"); } }
+
+    private preForwardingATA: Date;
+    public get PreForwardingATA() { return this.preForwardingATA; }
+    public set PreForwardingATA(newValue: Date) { if (this.preForwardingATA != newValue) { this.preForwardingATA = newValue; this.MarkAsDirty("PreForwardingATA"); } }
+
+    private preForwardingCarrierWebSite: string;
+    public get PreForwardingCarrierWebSite() { return this.preForwardingCarrierWebSite; }
+    public set PreForwardingCarrierWebSite(newValue: string) { if (this.preForwardingCarrierWebSite != newValue) { this.preForwardingCarrierWebSite = newValue; this.MarkAsDirty("PreForwardingCarrierWebSite"); } }
+
+    private preForwardingVesselId: string;
+    public get PreForwardingVesselId() { return this.preForwardingVesselId; }
+    public set PreForwardingVesselId(newValue: string) { if (this.preForwardingVesselId != newValue) { this.preForwardingVesselId = newValue; this.MarkAsDirty("PreForwardingVesselId"); } }
+
+    private preForwardingVesselName: string;
+    public get PreForwardingVesselName() { return this.preForwardingVesselName; }
+    public set PreForwardingVesselName(newValue: string) { if (this.preForwardingVesselName != newValue) { this.preForwardingVesselName = newValue; this.MarkAsDirty("PreForwardingVesselName"); } }
+
+    private hasPreForwarding: boolean;
+    public get HasPreForwarding() { return this.hasPreForwarding; }
+    public set HasPreForwarding(newValue: boolean) { if (this.hasPreForwarding != newValue) { this.hasPreForwarding = newValue; this.MarkAsDirty("HasPreForwarding"); } }
+
+    private preForwardingETD_Original: Date;
+    public get PreForwardingETD_Original() { return this.preForwardingETD_Original; }
+    public set PreForwardingETD_Original(newValue: Date) { if (this.preForwardingETD_Original != newValue) { this.preForwardingETD_Original = newValue; this.MarkAsDirty("PreForwardingETD_Original"); } }
+
+    private preForwardingATD_Original: Date;
+    public get PreForwardingATD_Original() { return this.preForwardingATD_Original; }
+    public set PreForwardingATD_Original(newValue: Date) { if (this.preForwardingATD_Original != newValue) { this.preForwardingATD_Original = newValue; this.MarkAsDirty("PreForwardingATD_Original"); } }
+
+    private preForwardingETA_Original: Date;
+    public get PreForwardingETA_Original() { return this.preForwardingETA_Original; }
+    public set PreForwardingETA_Original(newValue: Date) { if (this.preForwardingETA_Original != newValue) { this.preForwardingETA_Original = newValue; this.MarkAsDirty("PreForwardingETA_Original"); } }
+
+    private preForwardingATA_Original: Date;
+    public get PreForwardingATA_Original() { return this.preForwardingATA_Original; }
+    public set PreForwardingATA_Original(newValue: Date) { if (this.preForwardingATA_Original != newValue) { this.preForwardingATA_Original = newValue; this.MarkAsDirty("PreForwardingATA_Original"); } }
+
+    private onForwardingTransportModeId: string;
+    public get OnForwardingTransportModeId() { return this.onForwardingTransportModeId; }
+    public set OnForwardingTransportModeId(newValue: string) { if (this.onForwardingTransportModeId != newValue) { this.onForwardingTransportModeId = newValue; this.MarkAsDirty("OnForwardingTransportModeId"); } }
+
+    private onForwardingFromPortId: string;
+    public get OnForwardingFromPortId() { return this.onForwardingFromPortId; }
+    public set OnForwardingFromPortId(newValue: string) { if (this.onForwardingFromPortId != newValue) { this.onForwardingFromPortId = newValue; this.MarkAsDirty("OnForwardingFromPortId"); } }
+
+    private onForwardingToPortId: string;
+    public get OnForwardingToPortId() { return this.onForwardingToPortId; }
+    public set OnForwardingToPortId(newValue: string) { if (this.onForwardingToPortId != newValue) { this.onForwardingToPortId = newValue; this.MarkAsDirty("OnForwardingToPortId"); } }
+
+    private onForwardingCarrierId: string;
+    public get OnForwardingCarrierId() { return this.onForwardingCarrierId; }
+    public set OnForwardingCarrierId(newValue: string) { if (this.onForwardingCarrierId != newValue) { this.onForwardingCarrierId = newValue; this.MarkAsDirty("OnForwardingCarrierId"); } }
+
+    private onForwardingCarrierNumber: string;
+    public get OnForwardingCarrierNumber() { return this.onForwardingCarrierNumber; }
+    public set OnForwardingCarrierNumber(newValue: string) { if (this.onForwardingCarrierNumber != newValue) { this.onForwardingCarrierNumber = newValue; this.MarkAsDirty("OnForwardingCarrierNumber"); } }
+
+    private onForwardingCarrierName: string;
+    public get OnForwardingCarrierName() { return this.onForwardingCarrierName; }
+    public set OnForwardingCarrierName(newValue: string) { if (this.onForwardingCarrierName != newValue) { this.onForwardingCarrierName = newValue; this.MarkAsDirty("OnForwardingCarrierName"); } }
+
+    private onForwardingCarrierCode: string;
+    public get OnForwardingCarrierCode() { return this.onForwardingCarrierCode; }
+    public set OnForwardingCarrierCode(newValue: string) { if (this.onForwardingCarrierCode != newValue) { this.onForwardingCarrierCode = newValue; this.MarkAsDirty("OnForwardingCarrierCode"); } }
+
+    private onForwardingFromPortCode: string;
+    public get OnForwardingFromPortCode() { return this.onForwardingFromPortCode; }
+    public set OnForwardingFromPortCode(newValue: string) { if (this.onForwardingFromPortCode != newValue) { this.onForwardingFromPortCode = newValue; this.MarkAsDirty("OnForwardingFromPortCode"); } }
+
+    private onForwardingFromPortName: string;
+    public get OnForwardingFromPortName() { return this.onForwardingFromPortName; }
+    public set OnForwardingFromPortName(newValue: string) { if (this.onForwardingFromPortName != newValue) { this.onForwardingFromPortName = newValue; this.MarkAsDirty("OnForwardingFromPortName"); } }
+
+    private onForwardingFromPortCountryCode: string;
+    public get OnForwardingFromPortCountryCode() { return this.onForwardingFromPortCountryCode; }
+    public set OnForwardingFromPortCountryCode(newValue: string) { if (this.onForwardingFromPortCountryCode != newValue) { this.onForwardingFromPortCountryCode = newValue; this.MarkAsDirty("OnForwardingFromPortCountryCode"); } }
+
+    private onForwardingFromPortCountryName: string;
+    public get OnForwardingFromPortCountryName() { return this.onForwardingFromPortCountryName; }
+    public set OnForwardingFromPortCountryName(newValue: string) { if (this.onForwardingFromPortCountryName != newValue) { this.onForwardingFromPortCountryName = newValue; this.MarkAsDirty("OnForwardingFromPortCountryName"); } }
+
+    private onForwardingToPortCode: string;
+    public get OnForwardingToPortCode() { return this.onForwardingToPortCode; }
+    public set OnForwardingToPortCode(newValue: string) { if (this.onForwardingToPortCode != newValue) { this.onForwardingToPortCode = newValue; this.MarkAsDirty("OnForwardingToPortCode"); } }
+
+    private onForwardingToPortName: string;
+    public get OnForwardingToPortName() { return this.onForwardingToPortName; }
+    public set OnForwardingToPortName(newValue: string) { if (this.onForwardingToPortName != newValue) { this.onForwardingToPortName = newValue; this.MarkAsDirty("OnForwardingToPortName"); } }
+
+    private onForwardingToPortCountryCode: string;
+    public get OnForwardingToPortCountryCode() { return this.onForwardingToPortCountryCode; }
+    public set OnForwardingToPortCountryCode(newValue: string) { if (this.onForwardingToPortCountryCode != newValue) { this.onForwardingToPortCountryCode = newValue; this.MarkAsDirty("OnForwardingToPortCountryCode"); } }
+
+    private onForwardingToPortCountryName: string;
+    public get OnForwardingToPortCountryName() { return this.onForwardingToPortCountryName; }
+    public set OnForwardingToPortCountryName(newValue: string) { if (this.onForwardingToPortCountryName != newValue) { this.onForwardingToPortCountryName = newValue; this.MarkAsDirty("OnForwardingToPortCountryName"); } }
+
+    private onForwardingETD: Date;
+    public get OnForwardingETD() { return this.onForwardingETD; }
+    public set OnForwardingETD(newValue: Date) { if (this.onForwardingETD != newValue) { this.onForwardingETD = newValue; this.MarkAsDirty("OnForwardingETD"); } }
+
+    private onForwardingATD: Date;
+    public get OnForwardingATD() { return this.onForwardingATD; }
+    public set OnForwardingATD(newValue: Date) { if (this.onForwardingATD != newValue) { this.onForwardingATD = newValue; this.MarkAsDirty("OnForwardingATD"); } }
+
+    private onForwardingETA: Date;
+    public get OnForwardingETA() { return this.onForwardingETA; }
+    public set OnForwardingETA(newValue: Date) { if (this.onForwardingETA != newValue) { this.onForwardingETA = newValue; this.MarkAsDirty("OnForwardingETA"); } }
+
+    private onForwardingATA: Date;
+    public get OnForwardingATA() { return this.onForwardingATA; }
+    public set OnForwardingATA(newValue: Date) { if (this.onForwardingATA != newValue) { this.onForwardingATA = newValue; this.MarkAsDirty("OnForwardingATA"); } }
+
+    private onForwardingCarrierWebSite: string;
+    public get OnForwardingCarrierWebSite() { return this.onForwardingCarrierWebSite; }
+    public set OnForwardingCarrierWebSite(newValue: string) { if (this.onForwardingCarrierWebSite != newValue) { this.onForwardingCarrierWebSite = newValue; this.MarkAsDirty("OnForwardingCarrierWebSite"); } }
+
+    private onForwardingVesselId: string;
+    public get OnForwardingVesselId() { return this.onForwardingVesselId; }
+    public set OnForwardingVesselId(newValue: string) { if (this.onForwardingVesselId != newValue) { this.onForwardingVesselId = newValue; this.MarkAsDirty("OnForwardingVesselId"); } }
+
+    private onForwardingVesselName: string;
+    public get OnForwardingVesselName() { return this.onForwardingVesselName; }
+    public set OnForwardingVesselName(newValue: string) { if (this.onForwardingVesselName != newValue) { this.onForwardingVesselName = newValue; this.MarkAsDirty("OnForwardingVesselName"); } }
+
+    private hasOnForwarding: boolean;
+    public get HasOnForwarding() { return this.hasOnForwarding; }
+    public set HasOnForwarding(newValue: boolean) { if (this.hasOnForwarding != newValue) { this.hasOnForwarding = newValue; this.MarkAsDirty("HasOnForwarding"); } }
+
+    private onForwardingAdditionalTransportModeCode: string;
+    public get OnForwardingAdditionalTransportModeCode() { return this.onForwardingAdditionalTransportModeCode; }
+    public set OnForwardingAdditionalTransportModeCode(newValue: string) { this.onForwardingAdditionalTransportModeCode = newValue; this.MarkAsDirty(); }
+
+    private splitOnForwarding: boolean;
+    public get SplitOnForwarding() { return this.splitOnForwarding; }
+    public set SplitOnForwarding(newValue: boolean) { if (this.splitOnForwarding != newValue) { this.splitOnForwarding = newValue; this.MarkAsDirty(); } }      
+
+    private onForwardingETD_Original: Date;
+    public get OnForwardingETD_Original() { return this.onForwardingETD_Original; }
+    public set OnForwardingETD_Original(newValue: Date) { if (this.onForwardingETD_Original != newValue) { this.onForwardingETD_Original = newValue; this.MarkAsDirty("OnForwardingETD_Original"); } }
+
+    private onForwardingATD_Original: Date;
+    public get OnForwardingATD_Original() { return this.onForwardingATD_Original; }
+    public set OnForwardingATD_Original(newValue: Date) { if (this.onForwardingATD_Original != newValue) { this.onForwardingATD_Original = newValue; this.MarkAsDirty("OnForwardingATD_Original"); } }
+
+    private onForwardingETA_Original: Date;
+    public get OnForwardingETA_Original() { return this.onForwardingETA_Original; }
+    public set OnForwardingETA_Original(newValue: Date) { if (this.onForwardingETA_Original != newValue) { this.onForwardingETA_Original = newValue; this.MarkAsDirty("OnForwardingETA_Original"); } }
+
+    private onForwardingATA_Original: Date;
+    public get OnForwardingATA_Original() { return this.onForwardingATA_Original; }
+    public set OnForwardingATA_Original(newValue: Date) { if (this.onForwardingATA_Original != newValue) { this.onForwardingATA_Original = newValue; this.MarkAsDirty("OnForwardingATA_Original"); } }
 
     public OldEntityPM: ShipmentPM;
 

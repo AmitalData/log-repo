@@ -630,7 +630,7 @@ namespace Logitude.TariffModule.BL.Helpers
                 {
                     decimal? Sum = 0;
                     decimal? Sum_WithoutAllIn = 0;
-                    TariffSearchSummary tariffsSummary = new TariffSearchSummary() { TariffId = result.Id };
+                    this.tariffsSummary = new TariffSearchSummary() { TariffId = result.Id };
                     tariffsSummary.SurchargesWithoutAllIn = new List<SurchargeSummary>();
                     decimal? minprice = 1;
                     TariffLine SelectedLine = null;
@@ -653,34 +653,10 @@ namespace Logitude.TariffModule.BL.Helpers
                         tariffsSummary.LineId = SelectedLine.Id;
                     }
 
-                    if (item.PriceIndex != 0)
-                    {
-                        if ((item.Price * (decimal)weight) < minprice)
-                        {
-                            item.Price = minprice;
-                            tariffsSummary.IsMinIconVisible = true;
-                        }
-                        else
-                        {
-                            item.Price = item.Price * (decimal)weight;
-                        }
-                    }
-                    else
-                    {
-                        if (minprice != null)
-                        {
-                            item.Price = minprice;
-                            tariffsSummary.IsMinIconVisible = true;
-                        }
-                        else
-                        {
-                            item.Price = 0;
-                        }
-                    }
-
+                    this.CalculateTariffActualPrice(item, minprice);
+                    this.CalculateTariffMinPrice(item, minprice);
                     tariffsSummary.TransitTime = SelectedLine.TransitTime;
                     tariffsSummary.Price = Math.Round((double)CalculateLocalAmount(item.Price != null ? item.Price.Value : 0, currencyId, result.CurrencyId), 2).ToString("0.00");
-                    tariffsSummary.ActualPrice = item.Price;
                     List<TariffVersionAllInCharge> allinList = TariffVersionAllInChargesList.Where(p => p.TariffId == item.tariffid && p.Version == item.TariffVersion).ToList();
                     if (allinList != null && allinList.Count > 0)
                     {
@@ -939,6 +915,39 @@ namespace Logitude.TariffModule.BL.Helpers
             tariffSearchSummaries = tariffSearchSummaries.OrderBy(p => p.decimalprice).ToList();
             return tariffSearchSummaries;
         }
+
+        private void CalculateTariffActualPrice(TariffResult tariff, decimal? minprice)
+        {
+            decimal? actualPrice = 0;
+            if (tariff.PriceIndex != 0)
+            {
+                actualPrice = tariff.Price * (decimal)weight;
+            }
+            tariffsSummary.ActualPrice = actualPrice;
+        }
+
+        private void CalculateTariffMinPrice(TariffResult tariff, decimal? minprice)
+        {
+            if (tariff.PriceIndex != 0)
+            {
+                tariff.Price = tariff.Price * (decimal)weight;
+                if (tariff.Price < minprice)
+                {
+                    tariff.Price = minprice;
+                    tariffsSummary.IsMinIconVisible = true;
+                }
+            }
+            else
+            {
+                tariff.Price = 0;
+                if (minprice != null)
+                {
+                    tariff.Price = minprice;
+                    tariffsSummary.IsMinIconVisible = true;
+                }
+            }
+        }
+
         private string AssignSignCode(Dictionary<string, string> currencies, string currencyId, string uom)
         {
             string code_sign = currencies.Keys.Contains(currencyId) ? currencies[currencyId] : null;
@@ -947,17 +956,12 @@ namespace Logitude.TariffModule.BL.Helpers
             {
                 string[] code_sign_array = code_sign.Split(',');
 
-                if (uom == "PRFR")
-                {
-                    sign = "%";
-                }
-                else
-                {
+
                     if (code_sign_array.Count() > 1)
                     {
                         sign = code_sign_array[1];
                     }
-                }
+             
             }
             return sign;
         }

@@ -138,7 +138,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                     item.InReconcileProgress = /*true*/ Value_inReconcileProgress;
                 }
-                this.UpdateMulti(pmList, new List<LedgerTransactionPM>(), new EntityPM(), true);
+                bool supperssSaveOnUpdateMultiDueIsFaster = true;
+                this.UpdateMulti(pmList, new List<LedgerTransactionPM>(), new EntityPM(), !supperssSaveOnUpdateMultiDueIsFaster);
+                if (supperssSaveOnUpdateMultiDueIsFaster)
+                {
+                    this.SubmitChanges();
+                }
                 //scope.Complete();
             }
         }
@@ -160,7 +165,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                 item.InProgressExternalReconcile = /*true*/ Value_ExternalReconcileInProgress;
             }
-            this.UpdateMulti(pmList, new List<LedgerTransactionPM>(), new EntityPM(), true);
+            bool supperssSaveOnUpdateMultiDueIsFaster = true;
+            this.UpdateMulti(pmList, new List<LedgerTransactionPM>(), new EntityPM(), !supperssSaveOnUpdateMultiDueIsFaster);
+            if (supperssSaveOnUpdateMultiDueIsFaster)
+            {
+                this.SubmitChanges();
+            }
         }
     }
 }

@@ -48,7 +48,8 @@ namespace Logitude.CommonTests.Steps.Security
         [Then(@"should receive error message say no permission to do this operation on tenant")]
         public void ThenShouldReceiveErrorMessageSayNoPermissionToDoThisOperationOnTenant()
         {
-            Context.act.Should().ThrowExactly<Exception>().Where(m => m.Message.Contains("Sorry! you have no permission to do this operation on Tenant"));
+            Context.act.Should().ThrowExactly<AggregateException>()
+                .And.InnerExceptions[0].Message.Contains("Sorry! you have no permission to do this operation on Tenant");
         }
         #endregion
 
@@ -73,15 +74,15 @@ namespace Logitude.CommonTests.Steps.Security
                 .City("New York City")
                 .Name("Te")
                 .AddressTypeId("M")
-                .Address1("18 West 48th Street ")
-                .Address2("#5B, New York3")
-                .ZipCode("+001")
-                .FaxNumber("asd")
-                .PhoneNumber("+001598137715")
-                .StateEnglishName("New York")
-                .VatNumber("89898")
-                .CardCode("10027")
-                .CardEnglishName("Simplog LTD.")
+                //.Address1("18 West 48th Street ")
+                //.Address2("#5B, New York3")
+                //.ZipCode("+001")
+                //.FaxNumber("asd")
+                //.PhoneNumber("+001598137715")
+                //.StateEnglishName("New York")
+                //.VatNumber("89898")
+                //.CardCode("10027")
+                //.CardEnglishName("Simplog LTD.")
                 .Build();
 
             ApiResponse<AddressPM> response = APICaller.CallPost<AddressPM>(addressPM, Urls.AddressController, UserTenant.Token);

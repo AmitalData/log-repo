@@ -4,6 +4,9 @@ import { ShipmentDetails } from "../../models/ShipmentDetails";
 import { PackagesDetails } from "../../models/PackagesDetails";
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
+import { ShipmentSelectors } from "../../selectors/Selectors";
+import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 let ShipmentData: ShipmentDetails;
 let ShipmentNumber: string;
@@ -14,7 +17,7 @@ Given("the user logged in and navigate to shipments workspace", () => {
 });
 
 Given("a direct shipment with the following details", (dataTable) => {
-    let shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+    let shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
     ShipmentData = shipmentDetails;
     Actions.OpenNewShipmentWizard(ShipmentData.ShipmentLevel);
     Actions.FillShipmentWizardsFields(ShipmentData);
@@ -29,7 +32,7 @@ When("create shipment", () => {
 });
 
 Then("the shipment should create successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200).then((interception) => {
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
         ShipmentNumber = interception.response.body.ShipmentNumber;
     });
 });
@@ -43,16 +46,16 @@ When("open the AWB wizard", () => {
 });
 
 Then("the overview tab should appear successfully", () => {
-    BaseAssertion.AssertElementExist("overviewtabcomponent");
-    BaseAssertion.AssertElementHaveClass("#OVE", "Selected");
+    BaseAssertion.AssertElementExist(ShipmentSelectors.OverviewTabComponentInAWBWizard);
+    BaseAssertion.AssertElementHaveClass(ShipmentSelectors.OverviewTabInAWBWizard, "Selected");
 });
 
 Given("the user in the AWB wizard packages tab", () => {
-    cy.Click("#PAC", null);
+    cy.Click(ShipmentSelectors.PackagesTabInAWBWizard, null);
 });
 
-Given("add the follwing packages", (dataTable) => {
-    let packagesDetailsList = dataTable.hashes() as PackagesDetails[];
+Given("add the following packages", (dataTable) => {
+    let packagesDetailsList = Assists.CreateSet<PackagesDetails>(dataTable);
     Actions.FillAWBWizardPackagesTab(packagesDetailsList);
 });
 
@@ -61,5 +64,5 @@ When("save the AWB wizard", () => {
 });
 
 Then("the shipment should update successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPutShipmentRequest", 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });

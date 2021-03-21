@@ -10,6 +10,8 @@ import { JournalPMService } from '../../../Services/StandardPMs/JournalPMService
 import { ajax } from 'rxjs/ajax';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { JournalExtendedPMService } from '../../../Services/ExtendedPMs/JournalExtendedPMService';
 declare var attachmentUploader, ResultAsArray: any;
 
 @Component({
@@ -28,13 +30,8 @@ export class AccountingMainTesterComponent extends BaseComponent {
     JsonOut: string;
     SelectedItem: string;
 
-    JournalId2Void: string = "1-401";
-    overrideStorno =
-        {
-            AccountingEntityCode: "7",//	הפקדת מזומן	Cash Deposit
-            AccountingEntityReference: "Cash Deposit 7",
-            AccountingEntityId: "Deposit1212",
-        };
+    JournalId2Void: string = "1-5599183";
+    OverrideStornoString: string = '{"AccountingEntityCode":"7","AccountingEntityReference":"Cash Deposit 7","AccountingEntityId":"1-22222"}';
 
     _MenuList: string[] = [];
     public ValidationErrorsList: string[];
@@ -51,9 +48,15 @@ export class AccountingMainTesterComponent extends BaseComponent {
         this._MenuList.push("JournalSend");
         this._MenuList.push("JournalApproveService");
         this._MenuList.push("Reports");
-        
-        this._MenuList.push("Aging");
+
+       
+
+
+        this._MenuList.push("MSIC");
         this._MenuList.push("Alex");
+        this._MenuList.push("FIX");
+        
+
 
         this.UIProperties.SetRequired("Email", this.ObjectTableName, true);
         this.CurrentSession.StopBusyIndicator();
@@ -62,7 +65,24 @@ export class AccountingMainTesterComponent extends BaseComponent {
     selected() {
 
     }
+    JournalId2Void_click() {
+        
+        let overrideStorno1 = JSON.parse(this.OverrideStornoString);
+        let myJournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
+        this.CurrentSession.StartBusyIndicatorCreating();
+        myJournalExtendedPMService
+            .VoidJournal(SessionLocator.Tenant, this.JournalId2Void,
+                overrideStorno1.AccountingEntityCode,// "7",//	הפקדת מזומן	Cash Deposit
+                overrideStorno1.AccountingEntityId,// "Deposit1212",
+                overrideStorno1.AccountingEntityReference//"Cash Deposit 7",
+            ).subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
 
+            );
+
+    }
     JournalSend_Click() {
         if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
             this.SetJournalExample();
@@ -146,51 +166,6 @@ export class AccountingMainTesterComponent extends BaseComponent {
         });
 
     }
-    //XXX_Click() {
-
-    //}
-    //YYY_Click() {
-
-    //}
-    //Aging_Click() {
-    //    let aging_params = {
-    //        Tenant: 1,
-    //        "AgingForDate": new Date(),
-    //        "NumberOfmonthsbackwards": 6,
-    //        VendorCustomerId: "1-1",
-    //        Aging4AccountTypeCode: 'Customer2',
-    //        Category1Id: "",
-    //        Category2Id: "",
-    //        Category3Id: "",
-    //        Category4Id: "",
-    //        Category5Id: "",
-    //        Category6Id: "",
-    //        CollectorId: "",
-    //        SalesmanId: "",
-    //        ChartOfAccountsTypeCode: "",
-    //        ChartOfAccountsId: "",
-    //        AggregateByGLAccountCurrencies: false,
-    //        AggregateByGLAccountChildren: false,
-    //        AgingMethod_Options: 'TotalByMonthMethod;TotalByMonthFIFOMethod;ReconcileOpenBalanceMethod',
-    //        AgingMethod: 'ReconcileOpenBalanceMethod',
-    //        GroupByDate: 'DueDate',
-    //        GroupByDate_Options: 'DueDate;AccountingDate',
-    //        Aging4AccountTypeCode_Options: 'ControlAccountOnly1;Customer2;Vendor3',
-    //        BuildPivot: true,
-    //    };
-        
-    //    let opr = "Aging_Click";
-
-    //    this.StrandartOp(opr, aging_params, () => {
-    //        //if (aging_params.BuildPivot) {
-    //            let resObj = JSON.parse(this.JsonOut);
-    //            if (Array.isArray(resObj)) {
-    //                this.JsonList = resObj;
-    //            }
-    //        //}
-    //    });
-
-    //}
 
 
     CardIndexNew_Click() {
@@ -278,23 +253,74 @@ export class AccountingMainTesterComponent extends BaseComponent {
         this.StrandartOp(opr, obj, () => { });
       
     }
+   
     _ButtonReverseTotal_Click() {
         let opr = "_ButtonReverseTotal_Click";
         let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
         this.StrandartOp(opr, obj, () => { });
     }
+
+    _ButtonReverseTotalFIX_Click() {
+        let opr = "_ButtonReverseTotalFIX_Click";
+        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        this.StrandartOp(opr, obj, () => { });
+
+    }
+    _ButtonReverseGLBalanceFIX_Click() {
+        let opr = "_ButtonReverseGLBalanceFIX_Click";
+        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        this.StrandartOp(opr, obj, () => { });
+
+    }
+    _ButtonReverseDueDate_Click() {
+        let opr = "_ButtonReverseDueDate_Click";
+        let obj = { MyTenant: SessionLocator.Tenant, MyGLAccId: "1-131321" };
+        this.StrandartOp(opr, obj, () => { });
+
+    }
+    ButtonLoadSystem1000_Click() {
+        let opr = "ButtonLoadSystem1000_Click";
+        let str: string =
+            `Please insert page, you can add a header  //Tenant=1071
+Line2
+Line3
+`;
+        this.PostOp(opr, str, () => { });
+    }
+    _ButtonFixDueLocalBalance_Click() {
+        let opr = "_ButtonFixDueLocalBalance_Click";
+        let obj = { MyTenant: SessionLocator.Tenant, /*MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321"*/ };
+        this.StrandartOp(opr, obj, () => { });
+
+    }
+
+    _ButtonReverseTotalFIXControl_Click() {
+        let opr = "_ButtonReverseTotalFIXControl_Click";
+        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31), ChangeSupplier2Customer : false, };
+        this.StrandartOp(opr, obj, () => { });
+    }
     //type myCallback = () => any;
 
-    StrandartOp(opr: string, defaultObj, onEndExec: () => any) {
+    StrandartOp(opr: string, defaultObj, onEndExec: () => any, isFlatFile: boolean = false) {
         try {
-            if (AppTool.IsNullOrEmpty(this._TextBoxParam) || this._LastState != opr) {
-                
+            if (!isFlatFile) {
+                if (AppTool.IsNullOrEmpty(this._TextBoxParam) || this._LastState != opr) {
 
-                this._TextBoxParam = JSON.stringify(defaultObj);
-                return;
+
+                    this._TextBoxParam = JSON.stringify(defaultObj);
+                    return;
+                }
+                let parseobj = JSON.parse(this._TextBoxParam);
+            } else {
+                if (AppTool.IsNullOrEmpty(this._TextBoxParam) || this._LastState != opr) {
+
+
+                    this._TextBoxParam = defaultObj.toString();
+                    return;
+                }
+                let parseobj = { FlatFile: this._TextBoxParam };
             }
             
-            let parseobj = JSON.parse(this._TextBoxParam);
             this.CurrentSession.StartBusyIndicatorCreating();
             this._AccountingOpService.GetTestOperation(opr, this._TextBoxParam)
                 .subscribe(
@@ -326,6 +352,50 @@ export class AccountingMainTesterComponent extends BaseComponent {
         
         
     }
+    PostOp(opr: string, defaultObj, onEndExec: () => any) {
+        try {
+
+            if (AppTool.IsNullOrEmpty(this._TextBoxParam) || this._LastState != opr) {
+
+
+                this._TextBoxParam = defaultObj.toString();
+                return;
+            }
+            let parseobj = { OperationId: opr,  FlatFile: this._TextBoxParam };
+
+
+            this.CurrentSession.StartBusyIndicatorCreating();
+            this._AccountingOpService.PostTestOperation(opr, parseobj)
+                .subscribe(
+                    (res: ServiceResponse) => {
+                        this._LabelLog = res.Result.Log;
+                        this.JsonOut = res.Result.JsonOut;
+
+                        this.ErrorMess = res.Result.ExceptionMess;
+
+                        this.CurrentSession.StopBusyIndicator();
+                        onEndExec();
+                    },
+                    (err) => {
+
+                        alert(err);
+                    },
+                    () => {
+                        this.CurrentSession.StopBusyIndicator();
+                    }
+
+                );
+        }
+        catch (err) {
+            this._LabelLog = err;
+        }
+        finally {
+            this._LastState = opr;
+        }
+
+
+    }
+
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
@@ -345,7 +415,56 @@ export class AccountingMainTesterComponent extends BaseComponent {
         }
         return headers;
     }
+    CreateJournalTask_Click() {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 750;
+        logitudeWindow.Height = 500;
+        logitudeWindow.Title = "Accounting Load Test";
+        logitudeWindow.Show('./Accounting/Components/Maintenance/AccountingLoadTestComponent');
+    }
+    BuildTenant_Click() {
+        let paramDefault: any =
+        {
+            ///Tenant: 1,
+            YYYY: 2020,
+          
+            //BuildAccountingTenant:
+            //{
+            //    VatAccounts: false,
+            //    ControlAccounts: false,
+            //    ExchangeRateDiff: false,
+            //    RevenueExpense: false,
+            //    TaxWithholding: false
+            //},
 
+            BuildGLAccountEachType: 2,
+            BuildJournalEachMonth: 2,
+        };
+        let opr = "BuildTenant_Click";
+        this.StrandartOp(opr, paramDefault, () => { });
+    }
+    YearTransfer_Click() {
+        let paramDefault: any =
+        {
+            Tenant: 1,
+            YY: 20,
+            Immediate: false
+        };
+        let opr = "YearTransfer_Click";
+        //let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        this.StrandartOp(opr, paramDefault, () => { });
+    }
+    YearTransferCancel_Click() {
+        let paramDefault: any =
+        {
+            Tenant: 1,
+            YY: 20,
+           
+        };
+        let opr = "YearTransferCancel_Click";
+        //let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        this.StrandartOp(opr, paramDefault, () => { });
+    }
     ButtonReconcileStageCBatch_Click() {
         let defaultParam: any = {};
         defaultParam.Tenant = 1;
@@ -418,6 +537,36 @@ export class AccountingMainTesterComponent extends BaseComponent {
             );
 
     }
+    ButtonCardGLAccountConnect_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _CardGLAccountConnectUrl = ServiceHelper.GetLogitudeURL() + '/api/CardGLAccountConnect';
+        let myUrl = _CardGLAccountConnectUrl + "?tenant=" + objToCheck1.Tenant;
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+    }
+    ButtonLoadConsolTaxRep_Click() {
+        let opr = "ButtonLoadConsolTaxRep_Click";
+        let str: string =
+            `Please insert page, you can add a header  //Tenant=1071
+//ReportId=1-12345678
+Line3
+Line4
+`;
+        this.PostOp(opr, str, () => { });
+    }
+
     SetJournalExample() {
         let journal = {
             "Id": null,

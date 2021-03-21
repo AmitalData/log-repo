@@ -103,6 +103,11 @@ export class TenantManagementStatisticsTabComponent extends BaseComponent implem
         this.NumberOfSISentLastWeek = this.EntityPM.NumberOfSISentLastWeek;
         this.LastContainerStatusReceived = this.EntityPM.LastContainerStatusReceived;
 
+        this.LastTariffUpdateDate = this.EntityPM.LastTariffUpdateDate;
+        this.LastTariffUsageDate = this.EntityPM.LastTariffUsageDate;
+        this.LastWeekCreatedTariffs = this.EntityPM.LastWeekCreatedTariffs;
+        this.LastMonthCreatedTariffs = this.EntityPM.LastMonthCreatedTariffs;
+
         this.SetColors();
     }
 
@@ -270,6 +275,11 @@ export class TenantManagementStatisticsTabComponent extends BaseComponent implem
     public NumberOfBookingSentLastWeek: number;
     public NumberOfSISentLastWeek: number;
     public LastContainerStatusReceived: Date;
+
+    public LastTariffUpdateDate: Date;
+    public LastTariffUsageDate: Date;
+    public LastWeekCreatedTariffs: number;
+    public LastMonthCreatedTariffs: number;
 
     RefreshClicked() {
         this.CurrentSession.StartBusyIndicator("Refreshing....");

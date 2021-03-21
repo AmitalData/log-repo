@@ -82,7 +82,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 					IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                     CustomsQueryService mappingService = new CustomsQueryService(authToken.Tenant);
                     ShipmentPM entityPM = mappingService.CustomsCustomDataMappingAndValidatin(entity, authToken.Tenant);
-
+                    entityPM.IsExternalAPI = true;
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         if (string.IsNullOrEmpty(entityPM.VolumeUnitCode))
@@ -217,7 +217,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     CustomsQueryService mappingService = new CustomsQueryService(authToken.Tenant);
                     ShipmentQuery query = new ShipmentQuery(authToken.Tenant);
                     ShipmentPM entityPM = query.GetSinglePMByShipmentNumber(entity.ShipmentNumber, authToken.Tenant);
-
+                    
 
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
@@ -236,6 +236,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             else
                             {
                                 ShipmentPM directPM = mappingService.CustomsCustomDataMappingAndValidatin(entity, authToken.Tenant);
+                                directPM.IsExternalAPI = true;
                                 directPM.VolumeUnitCode = entity.VolumeUnit!=null? entity.VolumeUnit.Code:null;
                                 directPM.GrossWeightUnitCode = entity.GrossWeightUnit!=null? entity.GrossWeightUnit.Code:null;
                                 directPM.ChargeableWeightUnitCode = entity.ChargeableWeightUnit!=null? entity.ChargeableWeightUnit.Code:null;

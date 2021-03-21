@@ -2,6 +2,9 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+  
+
+
 namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
 {
     public class TenantManagmentPrivateLabels
@@ -11,6 +14,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string PrivateLabelName { get; set; }
         public string PrivateLabelShortName { get; set; }
         public string PrivateLabelUrl { get; set; }
+        public string PrivateLabelDomain { get; set; }
         public byte[] MainLogo { get; set; }
         public byte[] SmallLogo { get; set; }
         public string ContactUsEmail { get; set; }
@@ -19,6 +23,16 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string SearchFields { get; set; }
         public bool InActive { get; set; }
         public int Tenant { get; set; }
+
+
+        public string BackgroundImageId { get; set; }
+          
+        public string MainImageId { get; set; }
+        public string MainColor { get; set; }
+        public string LoginProgressImageId { get; set; }
+        public string ForgetPasswordImageId { get; set; }
+         
+
         //[ForeignKey("MainLogoId")]
         //public virtual ImageDetail ImageDetail { get; set; }
 

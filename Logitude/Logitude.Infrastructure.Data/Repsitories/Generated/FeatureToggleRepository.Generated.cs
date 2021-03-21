@@ -38,7 +38,7 @@ namespace Logitude.Infrastructure.Data.Repsitories
         public IQueryable<FeatureToggle> GetAll(int tenant)
         {
             return from a in context.FeatureToggles  
-                   where a.Tenant == tenant
+                   where a.Tenant == tenant || (tenant >= a.FromTenantNumber && tenant <= a.ToTenantNumber)
                    select a;
         }
 				 

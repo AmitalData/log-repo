@@ -3,7 +3,9 @@ import { TicketDetails } from "../../models/TicketDetails"
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors"
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import * as Actions from "../../actions/Actions";
-import { URLs } from "../../constants/URLs";
+import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
+import { TicketSelectors } from "../../selectors/TicketSelectors";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 let TicketData: TicketDetails;
 
@@ -13,17 +15,15 @@ Given("the user logged in and navigated to ticket workspace", () => {
 });
 
 Given("a ticket with the following details", (dataTable) => {
-    let ticketDetails = dataTable.hashes()[0] as TicketDetails;
-    TicketData = ticketDetails;
-    cy.Click(BaseSelectors.Button , "New ");
+    TicketData = Assists.CreateInstance<TicketDetails>(dataTable, true);
+    cy.Click(BaseSelectors.Button ,TicketSelectors.ContainsNew);
     Actions.FillTicketFields(TicketData);
 });
 
 When("create ticket", () => {
-    cy.DefineRequestWait("POST",URLs.CRMDomain, "WaitPostTicketRequest")
-    cy.Click(BaseSelectors.RedButton, "Create");
+    Actions.CreateTicket();
 });
 
 Then("the ticket should create successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPostTicketRequest", 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.PostTicket, 200);
 });

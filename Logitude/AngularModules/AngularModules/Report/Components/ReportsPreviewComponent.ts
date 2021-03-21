@@ -59,7 +59,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
 
-  IsHaveRunReportViewWorkerRoleToggleFeature: boolean = true;
+    IsHaveRunReportViewWorkerRoleToggleFeature: boolean = true;
     constructor(public _reportService: ReportService, private cd: ChangeDetectorRef) {
         var idIndex = this.CurrentSession.GetNewId("ReportsPreviewComponent");
         this.ComponentId = "ReportsPreview_" + idIndex;
@@ -67,12 +67,6 @@ export class ReportsPreviewComponent implements AfterViewInit {
         this.reportsTemplateListExtendedService = new ReportsTemplateListExtendedService();
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-
-        //ReportRunViewWorkerRole
-        //var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "RRW" && d.TenantNumber == SessionLocator.Tenant)[0];
-        //if (featureToggle) {
-        //    this.IsHaveRunReportViewWorkerRoleToggleFeature = true;//
-        //}
 
     }
 

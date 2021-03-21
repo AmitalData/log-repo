@@ -135,7 +135,18 @@ namespace Logitude.ShipmentTests.Services
         private static string GetChargeTypeIdFromUserTenant(ApiQueryFilters apiQueryFilters)
         {
             ApiResponse<IEnumerable<ChargeType>> response = APICaller.CallGetByFilters<IEnumerable<ChargeType>>(Urls.ChargeTypeViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            return response.Data?.FirstOrDefault()?.Id;
+            ChargeType chargeType = response.Data?.FirstOrDefault();
+            if (chargeType != null && !chargeType.IsCustoms)
+            {
+                UpdateChargeType(chargeType);
+            }
+            return chargeType?.Id;
+        }
+
+        private static void UpdateChargeType(ChargeType chargeType)
+        {
+            chargeType.IsCustoms = true;
+            APICaller.CallPut<ChargeType>(chargeType, Urls.ChargesTypes, UserTenant.Token);
         }
 
         #endregion

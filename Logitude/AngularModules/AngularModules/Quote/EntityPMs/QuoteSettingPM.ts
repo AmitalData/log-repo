@@ -105,6 +105,16 @@ export class QuoteSettingPM {
     public set AutomaticallyCloseDays(newValue: number) { if (this.automaticallyCloseDays != newValue) { this.automaticallyCloseDays = newValue; this.MarkAsDirty("AutomaticallyCloseDays"); } }
        
 	 
+    private isMultiCurrency: boolean;
+    public get IsMultiCurrency() { return this.isMultiCurrency; }
+    public set IsMultiCurrency(newValue: boolean) { if (this.isMultiCurrency != newValue) { this.isMultiCurrency = newValue; this.MarkAsDirty("IsMultiCurrency"); } }
+       
+	 
+    private quoteExpirationDays: number;
+    public get QuoteExpirationDays() { return this.quoteExpirationDays; }
+    public set QuoteExpirationDays(newValue: number) { if (this.quoteExpirationDays != newValue) { this.quoteExpirationDays = newValue; this.MarkAsDirty("QuoteExpirationDays"); } }
+       
+	 
 
     public OldEntityPM: QuoteSettingPM;
 		

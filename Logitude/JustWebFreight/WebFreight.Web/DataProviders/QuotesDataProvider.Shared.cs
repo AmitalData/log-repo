@@ -46,6 +46,7 @@ namespace WebFreight.Web.DataProviders
             public string DirectionTransportMode { get; set; }
             public DateTime? OpenDate { get; set; }
             public string DeclineReason { get; set; }
+            public double? EstimateProfit { get; set; }
         }
     }
 }

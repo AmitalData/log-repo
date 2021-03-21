@@ -1627,13 +1627,22 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 Shipment myShipment = shipmentRepository.GetSingleShipment(shipmentId, tenant);
                 if (myShipment != null)
                 {
-                    QuoteRepository quoteRepository = new QuoteRepository(tenant);
+                    IQuotesContext quotesContext = QuotesContext.GetContext(tenant);
+                    QuoteRepository quoteRepository = new QuoteRepository(quotesContext);
+                    QuoteComputedFieldRepository quoteComputedFieldRepository = new QuoteComputedFieldRepository(quotesContext);
                     Quote myQuote = quoteRepository.GetSingleQuote(myShipment.QuoteId, tenant);
+                    QuoteComputedField quoteComputedField = quoteComputedFieldRepository.GetSingleQuoteComputedField(myShipment.QuoteId, tenant);
                     if (myQuote != null)
                     {
                         if (myQuote.UsageCount == 1)
                         {
                             myQuote.UsageCount = null;
+                            if (quoteComputedField != null)
+                            {
+                                quoteComputedField.ConnectedToShipment = false;
+                                quoteComputedFieldRepository.Update(quoteComputedField);
+                                quoteComputedFieldRepository.SubmitChanges();
+                            }
                         }
 
                         else
@@ -2644,13 +2653,35 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             if (type == "AMAS")
             {
-                if (string.IsNullOrEmpty(item.AirlinePrefix) && string.IsNullOrEmpty(item.Master))
+                if (!string.IsNullOrEmpty(item.AirlinePrefix) && !string.IsNullOrEmpty(item.Master))
                 {
-                    myResult = "Missing Master B/L";
+                    // nothing
                 }
                 else
                 {
-                    myResult = "Invalid Master B/L";
+                    if(string.IsNullOrEmpty(item.AirlinePrefix) && string.IsNullOrEmpty(item.Master))
+                    {
+                        if (string.IsNullOrEmpty(myResult))
+                        {
+                            myResult = "Missing Master B/L";
+                        }
+                        else
+                        {
+                            myResult = myResult + ", Missing Master B/L";
+                        }
+                    }
+
+                    else
+                    {
+                        if (string.IsNullOrEmpty(myResult))
+                        {
+                            myResult = "Invalid Master B/L";
+                        }
+                        else
+                        {
+                            myResult = myResult + ", Invalid Master B/L";
+                        }
+                    }
                 }
 
                 if (string.IsNullOrEmpty(item.MainCarriageFromPortCode))

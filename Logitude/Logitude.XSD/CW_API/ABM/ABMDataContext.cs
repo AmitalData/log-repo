@@ -252,7 +252,7 @@ namespace Logitude.XSD.CW_API.ABM
             }
             else
             {
-                this.FromPortCode = Shipment.MainCarriageFromPortCode;
+                this.FromPortCode = Shipment.MainCarriageFromPortCountryCode + Shipment.MainCarriageFromPortCode;
             }
 
             if (!string.IsNullOrEmpty(finalDestinationPortTranslatedCode))
@@ -261,7 +261,7 @@ namespace Logitude.XSD.CW_API.ABM
             }
             else
             {
-                this.FinalDestinationPortCode = Shipment.MainCarriageFinalDestinationPortCode;
+                this.FinalDestinationPortCode = Shipment.MainCarriageFinalDestinationPortCountryCode + Shipment.MainCarriageFinalDestinationPortCode;
             }
         }
 
@@ -409,26 +409,26 @@ namespace Logitude.XSD.CW_API.ABM
             }
               
         
-            if (!string.IsNullOrEmpty(iReference1) || !string.IsNullOrEmpty(iReference2))
-            {
-                if (!string.IsNullOrEmpty(iReference1))
-                {
-                    list.Add(new CWXSD.Reference()
-                    {
-                        RefCode = "reference 1",
-                        RefText = iReference1,
-                    });
-                }
+            //if (!string.IsNullOrEmpty(iReference1) || !string.IsNullOrEmpty(iReference2))
+           // {
+                //if (!string.IsNullOrEmpty(iReference1))
+                //{
+                //    list.Add(new CWXSD.Reference()
+                //    {
+                //        RefCode = "reference 1",
+                //        RefText = iReference1,
+                //    });
+                //}
 
-                if (!string.IsNullOrEmpty(iReference2))
-                {
-                    list.Add(new CWXSD.Reference()
-                    {
-                        RefCode = "reference 2",
-                        RefText = iReference2,
-                    });
-                }
-            }
+                //if (!string.IsNullOrEmpty(iReference2))
+                //{
+                //    list.Add(new CWXSD.Reference()
+                //    {
+                //        RefCode = "reference 2",
+                //        RefText = iReference2,
+                //    });
+                //}
+           // }
 
             return list;
         }

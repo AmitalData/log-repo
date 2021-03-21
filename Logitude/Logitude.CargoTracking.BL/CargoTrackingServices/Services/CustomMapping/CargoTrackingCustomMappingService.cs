@@ -41,7 +41,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
         {
             if (dataTable.Columns.IndexOf(columnName) ==-1)
             {
-                dataTable.Columns.Add(columnName);
+                DataColumn dataColumn = new DataColumn(columnName);
+                dataColumn.AllowDBNull = true;
+                dataTable.Columns.Add(dataColumn);
             }
             sqlBulkCopy.ColumnMappings.Add(columnName, columnName);
         }

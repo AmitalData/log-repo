@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logitude.CargoTracking.BL.CloseTables;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                 SetFieldsForCustomShipment(tableRow);
             SetFieldsForForwardingShipment(tableRow);
             SetFieldsForCustomShipment(tableRow);
+            SetGrossWeightUnit(tableRow);
             SetCurrentMilestone(tableRow);
         }
 
@@ -41,13 +43,35 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             SetCustomsPaymentMilestones(tableRow);
             SetClearanceMilestones(tableRow);
             SetDeliveredMilestones(tableRow);
+            SetDeliveryMilestones(tableRow);
+            SetTruckerMilestoneFields(tableRow);
+            SetCustomAgentFields(tableRow);
 
+        }
+        private static void SetCustomAgentFields(DataRow tableRow)
+        {
+            tableRow.SetField("AssignedCustomsAgentDate", tableRow["AssginedToCustomsAgentDate"]);
+            tableRow.SetField("AssignedCustomsAgentDone", !IsFieldNullOrEmpty(tableRow, "AssignedCustomsAgentDate"));
         }
         private static void SetDeliveredMilestones(DataRow tableRow)
         {
             tableRow.SetField("DeliveredEstimationDate", tableRow["FinalDeliveryETA"]);
             tableRow.SetField("DeliveredDate", tableRow["FinalDeliveryATA"]);
             SetDeliveredDone(tableRow);
+
+        }
+        private static void SetTruckerMilestoneFields(DataRow tableRow)
+        {
+            tableRow.SetField("AssignedTruckerDate", tableRow["AssignedToTruckerDate"]);
+            tableRow.SetField("AssignedTruckerDone", !IsFieldNullOrEmpty(tableRow, "AssignedToTruckerDate"));
+            //tableRow.SetField("AssignedTruckerEstimationDate", tableRow["AssignedTruckerEstimationDate"]);
+            //tableRow.SetField("AssignedTruckerNotes", tableRow["AssignedTruckerNotes"]);
+        }
+        private static void SetDeliveryMilestones(DataRow tableRow)
+        {
+            tableRow.SetField("DeliveryEstimationDate", tableRow["FinalDeliveryETD"]);
+            tableRow.SetField("DeliveryDate", tableRow["FinalDeliveryATD"]);
+            SetDeliveryDone(tableRow);
 
         }
         private static void SetClearanceMilestones(DataRow tableRow)
@@ -108,56 +132,80 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                 tableRow.SetField("CustomerReference", tableRow["CustomerReference2"]);
             }
         }
- 
 
+        private static void SetGrossWeightUnit(DataRow tableRow)
+        {
+
+            tableRow.SetField("GrossWeightUnitCode", tableRow["GrossWeightUnitCode"]);
+        }
         private static void SetCurrentMilestone(DataRow tableRow)
         {
             if (!IsFieldNullOrEmpty(tableRow, "DeliveredDone") && !tableRow["DeliveredDone"].Equals("False"))
             {
-                tableRow.SetField("CurrentMilestoneCode", "11");
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Delivered);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["DeliveredDate"]);
+
+            }
+            else if (!IsFieldNullOrEmpty(tableRow, "DeliveryDone") && !tableRow["DeliveryDone"].Equals("False"))
+            {
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.DeliveryOut);
+                tableRow.SetField("CurrentMilestoneDate", tableRow["DeliveryDate"]);
+
+            }
+            else if (!IsFieldNullOrEmpty(tableRow, "AssignedTruckerDone") && !tableRow["AssignedTruckerDone"].Equals("False"))
+            {
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.AssignedToTrucker);
+                tableRow.SetField("CurrentMilestoneDate", tableRow["AssignedTruckerDate"]);
 
             }
             else if (!IsFieldNullOrEmpty(tableRow, "ClearanceDone") && !tableRow["ClearanceDone"].Equals("False"))
             {
-                tableRow.SetField("CurrentMilestoneCode", "9");
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Clearance);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["ClearanceDate"]);
 
             }
             else if (!IsFieldNullOrEmpty(tableRow, "CustomsPaymentDone") && !tableRow["CustomsPaymentDone"].Equals("False"))
             {
-                tableRow.SetField("CurrentMilestoneCode", "8");
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.CustomsPayment);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["CustomsPaymentDate"]);
 
             }
- 
+
+            //CustomsProcess
+            //AssignedToCustomsAgent
+            else if (!IsFieldNullOrEmpty(tableRow, "AssignedCustomsAgentDone") && !tableRow["AssignedCustomsAgentDone"].Equals("False"))
+            {
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.AssignedToCustomsAgent);
+                tableRow.SetField("CurrentMilestoneDate", tableRow["AssignedCustomsAgentDate"]);
+
+            }
             else if (!IsFieldNullOrEmpty(tableRow, "ToWarehouseDone") && !tableRow["ToWarehouseDone"].Equals("False"))
             {
-                tableRow.SetField("CurrentMilestoneCode", "6");
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.ToWarehouse);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["ToWarehouseDate"]);
 
             }
             else if (!IsFieldNullOrEmpty(tableRow, "ArrivalDone") && !tableRow["ArrivalDone"].Equals("False"))
             {
-                tableRow.SetField("CurrentMilestoneCode", "5");
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Arrival);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["ArrivalDate"]);
 
             }
             else if (!IsFieldNullOrEmpty(tableRow, "DepartureDone") && !tableRow["DepartureDone"].Equals("False"))
             {
-                tableRow.SetField("CurrentMilestoneCode", "4");
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Departure);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["DepartureDate"]);
 
             }
             else if (!IsFieldNullOrEmpty(tableRow, "FromWarehouseDone") && !tableRow["FromWarehouseDone"].Equals("False"))
             {
-                tableRow.SetField("CurrentMilestoneCode", "3");
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.FromWarehouse);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["FromWarehouseDate"]);
 
             }
             else if (!IsFieldNullOrEmpty(tableRow, "PickupDone") && !tableRow["PickupDone"].Equals("False"))
             {
-                tableRow.SetField("CurrentMilestoneCode", "2");
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Pickup);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["PickupDate"]);
 
             }
@@ -188,6 +236,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
 
                 if (!tableRow["CustomFileId"].Equals(null) && !tableRow["CustomFileId"].Equals("") && tableRow["CustomFileId"].GetType().Name != "DBNull")
                 {
+                    tableRow.SetField("CustomsShipmentHeaderId", tableRow["CustomFileId"]);
                     tableRow.SetField("IsMainRecord", false);
                 }
                 else
@@ -195,8 +244,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                     tableRow.SetField("IsMainRecord", true);
 
                 }
+                tableRow.SetField("ForwardingShipmentNumber", DBNull.Value);
             }
-           
+
+
         }
 
 
@@ -314,6 +365,21 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             else
             {
                 tableRow.SetField("DeliveredDone", false);
+
+            }
+
+
+        }
+
+        private static void SetDeliveryDone(DataRow tableRow)
+        {
+            if (!IsFieldNullOrEmpty(tableRow, "DeliveryDate"))
+            {
+                tableRow.SetField("DeliveryDone", true);
+            }
+            else
+            {
+                tableRow.SetField("DeliveryDone", false);
 
             }
 

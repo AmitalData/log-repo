@@ -140,6 +140,7 @@ export class ShipmentList {
 		hasChanges: boolean;
 		StatusId: string;
 		StatusName: string;
+		ExactStatusName: string;
 		StatusDate: Date;
 		StatusLocation: string;
 		Master: string;
@@ -410,6 +411,7 @@ export class ShipmentList {
 		INTTRABookingStatusCode: string;
 		INTTRABookingTransStatusName: string;
 		INTTRABookingStatusName: string;
+		INTTRALastEBbookingSendDate: Date;
 		From: string;
 		To: string;
 		Origin: string;

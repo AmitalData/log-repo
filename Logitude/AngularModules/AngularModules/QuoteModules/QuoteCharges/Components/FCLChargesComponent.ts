@@ -62,7 +62,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             this.IsShowTotalPerContainer = true;
         }
 
-        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TAR" && d.TenantNumber == SessionLocator.Tenant)[0];
+        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TAR")[0];
         if (FeatureLocator.HasFeaturePermession("Quote", "QuotePriceCheck") && featureToggle != null) {
             this.IsPriceCheckVisible = true;
         }
@@ -1091,7 +1091,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     DeleteAllClicked() {
         if (this.IsEditingEnabled) {
             var confirmWindow = new ConfirmWindow();
-            confirmWindow.Show("Please note that deleting will erase all the lines with the amounts inserted");
+            confirmWindow.Show("Please note that deleting will erase all the charges lines");
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     this.EntityPM.QuoteCharges = [];

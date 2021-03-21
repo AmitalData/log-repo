@@ -50,10 +50,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
                 this.HandleDeliveries();
             }
 
+            else if (entityPM.ShipmentLevelCode == "H" && (entityPM.OnForwardingFromPortId != null && entityPM.OnForwardingToPortId != null))
+            {
+                HasOnCarriage = true;
+                this.HandleOnCarriage();
+            }
+
             else if (entityPM.OnCarriageFromPortId != null && entityPM.OnCarriageToPortId != null)
             {
                 HasOnCarriage = true;
-
                 this.HandleOnCarriage();
             }
 
@@ -79,24 +84,32 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
 
             else if (entityPM.ShipmentLevelCode != "H" && !HasDeliveries && !HasOnCarriage)
             {
-                if (entityPM.Transshipment3FromPortId != null && EntityMasterData.Transshipment3ToPortId != null)
-                {
-                    this.HandleTransshipment3();
-                }
-
-                else if (entityPM.Transshipment2FromPortId != null && EntityMasterData.Transshipment2ToPortId != null)
-                {
-                    this.HandleTransshipment2();
-                }
-
-                else if (entityPM.Transshipment1FromPortId != null && EntityMasterData.Transshipment1ToPortId != null)
-                {
-                    this.HandleTransshipment1();
-                }
-
-                else if (entityPM.MainCarriageFromPortId != null && EntityMasterData.MainCarriageToPortId != null)
+                if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
                 {
                     this.HandleMainCarriage();
+                }
+
+                else
+                {
+                    if (entityPM.Transshipment3FromPortId != null && EntityMasterData.Transshipment3ToPortId != null)
+                    {
+                        this.HandleTransshipment3();
+                    }
+
+                    else if (entityPM.Transshipment2FromPortId != null && EntityMasterData.Transshipment2ToPortId != null)
+                    {
+                        this.HandleTransshipment2();
+                    }
+
+                    else if (entityPM.Transshipment1FromPortId != null && EntityMasterData.Transshipment1ToPortId != null)
+                    {
+                        this.HandleTransshipment1();
+                    }
+
+                    else if (entityPM.MainCarriageFromPortId != null && EntityMasterData.MainCarriageToPortId != null)
+                    {
+                        this.HandleMainCarriage();
+                    }
                 }
             }
 
@@ -150,20 +163,35 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
 
         private void HandleOnCarriage()
         {
-            if (entityPM.OnCarriageATA != null)
+            DateTime? ATA = null;
+            DateTime? ETA = null;
+
+            if(entityPM.ShipmentLevelCode == "H")
             {
-                this.FinalArrivalDate = entityPM.OnCarriageATA;
-                this.ActualFinalArrivalDate = entityPM.OnCarriageATA;
+                ATA = entityPM.OnForwardingATA;
+                ETA = entityPM.OnForwardingETA;
             }
 
-            if (entityPM.OnCarriageETA != null)
+            else
+            {
+                ATA = entityPM.OnCarriageATA;
+                ETA = entityPM.OnCarriageETA;
+            }
+
+            if (ATA != null)
+            {
+                this.FinalArrivalDate = ATA;
+                this.ActualFinalArrivalDate = ATA;
+            }
+
+            if (ETA != null)
             {
                 if(this.FinalArrivalDate == null)
                 {
-                    this.FinalArrivalDate= entityPM.OnCarriageETA;
+                    this.FinalArrivalDate= ETA;
                 }
 
-                this.EstimatedFinalArrivalDate = entityPM.OnCarriageETA;
+                this.EstimatedFinalArrivalDate = ETA;
             }
         }
 

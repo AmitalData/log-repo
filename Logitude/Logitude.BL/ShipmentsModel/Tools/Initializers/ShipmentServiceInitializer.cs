@@ -59,6 +59,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         public bool IsMappingComposition { get; internal set; }
         public bool IsUpdatingSubType { get; set; }
         public bool IsUpdatingProfitFromConversion { get; set; }
+        public bool IsUpdatingHouses { get; set; }
+        public bool IsUpdatingHousesFinalArrivalDate { get; set; }
+        public List<string> DeletedHousesIds { get; set; }
+        public List<string> ConnectedHousesIds { get; set; }
 
         public List<ShipmentPackagePM> ShipmentPackagesChangeSet;
         public List<ShipmentOrderPackagePM> ShipmentOrderPackagesChangeSet;
@@ -105,6 +109,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
 
             this.TodayDateTime = TenantServerConfigration.GetCurrentDateTime(Tenant);
             this.TodayDate = this.TodayDateTime.Date;
+
+            this.DeletedHousesIds = new List<string>();
+            this.ConnectedHousesIds = new List<string>();
         }
 
         public void Initialize()

@@ -37,6 +37,7 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -130,8 +131,8 @@ namespace WebFreight.Web.ReportsWebServices
                 // tenant data
                 if (tenantSettings != null)
                 {
-                    
-
+                    paymentDataProvider.Address1 = tenantSettings.InvoiceSection1;
+                    paymentDataProvider.Address2 = tenantSettings.InvoiceSection2;
                     paymentDataProvider.TenantName = tenantSettings.Company != null ? tenantSettings.Company : "";
                     paymentDataProvider.TenantVatNo = tenantSettings.VatNumber != null ? tenantSettings.VatNumber : "";
                     paymentDataProvider.Signature = tenantSettings.Signature != null ? tenantSettings.Signature : "";
@@ -317,15 +318,17 @@ namespace WebFreight.Web.ReportsWebServices
                     paymentDataProvider.PrintNotes = currentPayment.PrintNotes != null ? currentPayment.PrintNotes : "";
 
                     //Crate by user
-                    User createByUserId = (from user in commonContext.Users
-                                           where user.Id == currentPayment.CreatedByUserId
-                                           select user).FirstOrDefault();
+                    ARPaymentQuery aRPaymentQuery = new ARPaymentQuery(tenant);
+                    User createByUserId = aRPaymentQuery.getUserByARPayment(currentPayment);
+
+                   
                     if (createByUserId != null)
                     {
                         Contact contact = createByUserId.Contact;
                         if (contact != null)
                         {
                             paymentDataProvider.IssuedByUserName = contact.EnglishName != null ? contact.EnglishName : "";
+                            paymentDataProvider.IssuedByLocalName = contact.LocalName != null ? contact.LocalName : "";
                         }
                     }
 

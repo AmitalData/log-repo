@@ -1,4 +1,4 @@
-@smoke @not-stable
+@smoke @stable
 Feature: Update direct export air shipment
   After the user logging in the system and navigate to shipments workspace
   will create a directe shipment, after that update general, orders
@@ -7,13 +7,17 @@ Feature: Update direct export air shipment
   Scenario: Create direct export air shipment
     Given the user logged in and navigates to shipments workspace
     And a direct shipment with the following details
-      | ShipmentLevel | Direction | TransportMode | Shipper           | MainCarriageFromPort | MainCarriageToPort |
-      | Direct        | Export    | Air           | TestShipperExport | LHR                  | MIA                |
+      | ShipmentLevel        | Direct            |
+      | Direction            | Export            |
+      | TransportMode        | Air               |
+      | Shipper              | TestShipperExport |
+      | MainCarriageFromPort | LHR               |
+      | MainCarriageToPort   | MIA               |
     When create shipment
     Then the direct should create successfully
 
   Scenario: Update general tab
-    Given the user fill "100" as GrossWeight and "MTA" as a MoveType
+    Given the user fill "100" as ValueOfGoods and "MTA" as a MoveType
     When update shipment
     Then the direct should update successfully
 
@@ -27,8 +31,19 @@ Feature: Update direct export air shipment
 
   Scenario: Update partners tab
     Given the user add partners with following details
-      | Consignee       | Agent            | CustomsAgentExport     | CustomsAgentImport     | Notify1 | Notify2 | ShipperNotExporter   | ConsigneeNotImporter   | FreightForwarder     | Coloader     | CustomClearancePoint     | Consolidator     | ReleasingAgent  |
-      | ConsigneeExport | IntegrationAgent | InegrationCustomsAgent | InegrationCustomsAgent | notify  | notify  | shipper not exporter | consignee not importer | FreightForwarderTest | ColoaderTest | CustomClearancePointTest | ConsolidatorTest | releasing agent |
+      | Consignee            | TestConsigneeExport |
+      | Agent                | TestAgent           |
+      | CustomsAgentExport   | TestCustomAgent     |
+      | CustomsAgentImport   | TestCustomAgent     |
+      | Notify1              | TestAgent           |
+      | Notify2              | TestAgent           |
+      | ShipperNotExporter   | TestShipperExport   |
+      | ConsigneeNotImporter | TestConsigneeExport |
+      | FreightForwarder     | TestAgent           |
+      | Coloader             | TestAgent           |
+      | CustomClearancePoint | TestWarehouse       |
+      | Consolidator         | TestAgent           |
+      | ReleasingAgent       | TestAgent           |
     When update shipment
     Then the direct should update successfully
 
@@ -48,14 +63,18 @@ Feature: Update direct export air shipment
 
   Scenario: Update routing tab
     Given the user add new pickup
-    And add delivery with "IntegrationAgent" as a partner routing
+    And add delivery with "TestAgent" as a partner routing
     And add pre carriage and on carriage from port "JFK" to port "MIA"
     When update shipment
     Then the direct should update successfully
 
   Scenario: Update payables tab
     Given the user add payable with the following details
-      | ChargesType | UOM  | Quantity | UnitPrice | Currency |
-      | AFT         | GRWT | 5        | 10        | EUR      |
+      | ChargesType  | AFT  |
+      | UOM          | GRWT |
+      | Quantity     | 5    |
+      | UnitPrice    | 10   |
+      | Currency     | EUR  |
+      | ExchangeRate | 4    |
     When update shipment
     Then the direct should update successfully

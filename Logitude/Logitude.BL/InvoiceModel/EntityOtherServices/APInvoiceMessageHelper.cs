@@ -53,6 +53,14 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         private APInvoiceTotalVATRepository totalVATRepository;
         private bool UsingFTP = false;
         private string FTPDetailId;
+        private List<APInvoiceLine> allInvoicesLines;
+        private List<string> allChargesTypesIds;
+        private List<ChargesExternalAccountsByProduct> allChargesExternalByProducts;
+        private List<string> allInvoiceIds;
+        private List<string> allCardsIds;
+        private List<Card> allCards;
+        private List<APInvoiceTotalVAT> allInvoicesTotalVATs;
+
         public APInvoiceMessageHelper(List<APInvoice> invoices, string filename, int tenant, bool isDropBox = false, bool isFTP = false)
         {
             this.tenant = tenant;
@@ -130,34 +138,16 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             APInvoiceRoot log = new APInvoiceRoot();
             log.Invoices = new List<APInvoiceElement>();
 
-            List<string> allInvoiceIds = invoices.Select(s => s.Id).ToList();
-            List<string> allCardsIds = invoices.Select(s => s.VendorId).ToList();
+            allInvoiceIds = invoices.Select(s => s.Id).ToList();
+            allCardsIds = invoices.Select(s => s.VendorId).ToList();
 
-            List<Card> allCards = (from d in commonContext.Cards
+            allCards = (from d in commonContext.Cards
                                    where d.Tenant == tenant
                                    && allCardsIds.Contains(d.Id)
                                    select d).ToList();
 
-            List<APInvoiceLine> allInvoicesLines = (from d in invoiceCotnext.APInvoiceLines.Include("ChargesType").Include("VatType")
-                                                    where d.Tenant == tenant
-                                                    && allInvoiceIds.Contains(d.APInvoiceId)
-                                                    select d).ToList();
-
-            List<string> allChargesTypesIds = (from d in allInvoicesLines
-                                               group d by d.ChargesTypeId into g
-                                               select g.Key).ToList();
-
-            List<ChargesExternalAccountsByProduct> allChargesExternalByProducts
-                = (from f in commonContext.ChargesExternalAccountsByProducts
-                   where f.Tenant == tenant
-                   && allChargesTypesIds.Contains(f.ChargesTypeId)
-                   select f).ToList();
-
-            List<APInvoiceTotalVAT> allInvoicesTotalVATs = (from d in invoiceCotnext.APInvoiceTotalVATs.Include("VatType")
-                                                            where d.Tenant == tenant
-                                                            && allInvoiceIds.Contains(d.APInvoiceId)
-                                                            select d).ToList();
-
+            this.FillAllPreparedData(false);
+           
             CardExternalAccountsByProductRepository myCardExternalAccountsByProductRepository = new CardExternalAccountsByProductRepository(commonContext);
             MeasurementRepository measurementRepository = new MeasurementRepository(this.commonContext);
             AddressQuery addressQuery = new AddressQuery(new AddressRepository(this.commonContext));
@@ -273,6 +263,10 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 #region Lines
                 invoiceElement.InvoiceLines = new List<APInvoiceLineElement>();
                 List<APInvoiceLine> dueVatLines = new List<APInvoiceLine>();
+                if (item.TotalVATOnly)
+                {
+                    this.FillAllPreparedData(item.TotalVATOnly);
+                }
                 List<APInvoiceLine> lines = allInvoicesLines.Where(d => d.APInvoiceId == item.Id).OrderBy(o => o.ChargesType.ViewOrder).ToList();
                 List<string> allInvoiceLinesVATTypesIds = lines.Select(s => s.VatTypeId).Distinct().ToList();
 
@@ -730,6 +724,12 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                                     invoiceElement.ShipmentDetails.PickUpAddress = myAddress.City != null ? myAddress.City : "";
                                 }
                             }
+
+                            else if (shipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(shipment.PreForwardingFromPortName))
+                            {
+                                invoiceElement.ShipmentDetails.PickUpAddress = shipment.PreForwardingFromPortName;
+                            }
+
                             else if (!string.IsNullOrEmpty(shipment.PreCarriageFromPortName))
                             {
                                 invoiceElement.ShipmentDetails.PickUpAddress = shipment.PreCarriageFromPortName;
@@ -762,39 +762,39 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         }
 
                         #region PreCarriage
-                        invoiceElement.ShipmentDetails.PreCarriageTransportMode = this.Helper.GetTransportModes(shipment.PreCarriageTransportModeId);
-                        invoiceElement.ShipmentDetails.PreCarriageFromPortCode = shipment.PreCarriageFromPortCode;
-                        invoiceElement.ShipmentDetails.PreCarriageFromPortName = shipment.PreCarriageFromPortName;
-                        invoiceElement.ShipmentDetails.PreCarriageFromPortCountryCode = shipment.PreCarriageFromPortCountryCode;
-                        invoiceElement.ShipmentDetails.PreCarriageFromPortCountryName = shipment.PreCarriageFromPortCountryName;
-                        invoiceElement.ShipmentDetails.PreCarriageToPortCode = shipment.PreCarriageToPortCode;
-                        invoiceElement.ShipmentDetails.PreCarriageToPortName = shipment.PreCarriageToPortName;
-                        invoiceElement.ShipmentDetails.PreCarriageToPortCountryCode = shipment.PreCarriageToPortCountryCode;
-                        invoiceElement.ShipmentDetails.PreCarriageToPortCountryName = shipment.PreCarriageToPortCountryName;
-                        invoiceElement.ShipmentDetails.PreCarriageCarrierName = shipment.PreCarriageCarrierName;
-                        invoiceElement.ShipmentDetails.PreCarriageCarrierNumber = shipment.PreCarriageCarrierNumber;
-                        invoiceElement.ShipmentDetails.PreCarriageETD = shipment.PreCarriageETD;
-                        invoiceElement.ShipmentDetails.PreCarriageETA = shipment.PreCarriageETA;
-                        invoiceElement.ShipmentDetails.PreCarriageATD = shipment.PreCarriageATD;
-                        invoiceElement.ShipmentDetails.PreCarriageATA = shipment.PreCarriageATA;
+                        invoiceElement.ShipmentDetails.PreCarriageTransportMode = this.Helper.GetTransportModes(shipment.ShipmentLevelCode == "H"? shipment.PreForwardingTransportModeId : shipment.PreCarriageTransportModeId);
+                        invoiceElement.ShipmentDetails.PreCarriageFromPortCode = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingFromPortCode :shipment.PreCarriageFromPortCode;
+                        invoiceElement.ShipmentDetails.PreCarriageFromPortName = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingFromPortName : shipment.PreCarriageFromPortName;
+                        invoiceElement.ShipmentDetails.PreCarriageFromPortCountryCode = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingFromPortCountryCode : shipment.PreCarriageFromPortCountryCode;
+                        invoiceElement.ShipmentDetails.PreCarriageFromPortCountryName = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingFromPortCountryName : shipment.PreCarriageFromPortCountryName;
+                        invoiceElement.ShipmentDetails.PreCarriageToPortCode = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingToPortCode : shipment.PreCarriageToPortCode;
+                        invoiceElement.ShipmentDetails.PreCarriageToPortName = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingToPortName : shipment.PreCarriageToPortName;
+                        invoiceElement.ShipmentDetails.PreCarriageToPortCountryCode = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingToPortCountryCode : shipment.PreCarriageToPortCountryCode;
+                        invoiceElement.ShipmentDetails.PreCarriageToPortCountryName = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingToPortCountryName : shipment.PreCarriageToPortCountryName;
+                        invoiceElement.ShipmentDetails.PreCarriageCarrierName = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingCarrierName : shipment.PreCarriageCarrierName;
+                        invoiceElement.ShipmentDetails.PreCarriageCarrierNumber = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingCarrierNumber : shipment.PreCarriageCarrierNumber;
+                        invoiceElement.ShipmentDetails.PreCarriageETD = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingETD : shipment.PreCarriageETD;
+                        invoiceElement.ShipmentDetails.PreCarriageETA = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingETA : shipment.PreCarriageETA;
+                        invoiceElement.ShipmentDetails.PreCarriageATD = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingATD : shipment.PreCarriageATD;
+                        invoiceElement.ShipmentDetails.PreCarriageATA = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingATA : shipment.PreCarriageATA;
                         #endregion
 
                         #region OnCarriage
-                        invoiceElement.ShipmentDetails.OnCarriageTransportMode = this.Helper.GetTransportModes(shipment.OnCarriageTransportModeId);
-                        invoiceElement.ShipmentDetails.OnCarriageFromPortCode = shipment.OnCarriageFromPortCode;
-                        invoiceElement.ShipmentDetails.OnCarriageFromPortName = shipment.OnCarriageFromPortName;
-                        invoiceElement.ShipmentDetails.OnCarriageFromPortCountryCode = shipment.OnCarriageFromPortCountryCode;
-                        invoiceElement.ShipmentDetails.OnCarriageFromPortCountryName = shipment.OnCarriageFromPortCountryName;
-                        invoiceElement.ShipmentDetails.OnCarriageToPortCode = shipment.OnCarriageToPortCode;
-                        invoiceElement.ShipmentDetails.OnCarriageToPortName = shipment.OnCarriageToPortName;
-                        invoiceElement.ShipmentDetails.OnCarriageToPortCountryCode = shipment.OnCarriageToPortCountryCode;
-                        invoiceElement.ShipmentDetails.OnCarriageToPortCountryName = shipment.OnCarriageToPortCountryName;
-                        invoiceElement.ShipmentDetails.OnCarriageCarrierName = shipment.OnCarriageCarrierName;
-                        invoiceElement.ShipmentDetails.OnCarriageCarrierNumber = shipment.OnCarriageCarrierNumber;
-                        invoiceElement.ShipmentDetails.OnCarriageETD = shipment.OnCarriageETD;
-                        invoiceElement.ShipmentDetails.OnCarriageETA = shipment.OnCarriageETA;
-                        invoiceElement.ShipmentDetails.OnCarriageATD = shipment.OnCarriageATD;
-                        invoiceElement.ShipmentDetails.OnCarriageATA = shipment.OnCarriageATA;
+                        invoiceElement.ShipmentDetails.OnCarriageTransportMode = this.Helper.GetTransportModes(shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingTransportModeId : shipment.OnCarriageTransportModeId);
+                        invoiceElement.ShipmentDetails.OnCarriageFromPortCode = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingFromPortCode : shipment.OnCarriageFromPortCode;
+                        invoiceElement.ShipmentDetails.OnCarriageFromPortName = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingFromPortName : shipment.OnCarriageFromPortName;
+                        invoiceElement.ShipmentDetails.OnCarriageFromPortCountryCode = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingFromPortCountryCode : shipment.OnCarriageFromPortCountryCode;
+                        invoiceElement.ShipmentDetails.OnCarriageFromPortCountryName = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingFromPortCountryName : shipment.OnCarriageFromPortCountryName;
+                        invoiceElement.ShipmentDetails.OnCarriageToPortCode = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingToPortCode : shipment.OnCarriageToPortCode;
+                        invoiceElement.ShipmentDetails.OnCarriageToPortName = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingToPortName : shipment.OnCarriageToPortName;
+                        invoiceElement.ShipmentDetails.OnCarriageToPortCountryCode = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingToPortCountryCode : shipment.OnCarriageToPortCountryCode;
+                        invoiceElement.ShipmentDetails.OnCarriageToPortCountryName = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingToPortCountryName : shipment.OnCarriageToPortCountryName;
+                        invoiceElement.ShipmentDetails.OnCarriageCarrierName = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingCarrierName : shipment.OnCarriageCarrierName;
+                        invoiceElement.ShipmentDetails.OnCarriageCarrierNumber = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingCarrierNumber : shipment.OnCarriageCarrierNumber;
+                        invoiceElement.ShipmentDetails.OnCarriageETD = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingETD : shipment.OnCarriageETD;
+                        invoiceElement.ShipmentDetails.OnCarriageETA = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingETA : shipment.OnCarriageETA;
+                        invoiceElement.ShipmentDetails.OnCarriageATD = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingATD : shipment.OnCarriageATD;
+                        invoiceElement.ShipmentDetails.OnCarriageATA = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingATA : shipment.OnCarriageATA;
                         #endregion
 
                         #region MainCarriage
@@ -1059,6 +1059,49 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             }
 
             this.BuildXMLFile(log, tenant, filename);
+        }
+
+        private void FillAllPreparedData(bool isTotalVATOnly)
+        {
+            this.FillInvoiceLines(isTotalVATOnly);
+            this.FillAllChargesTypesIds();
+            this.FillAllChargesExternalByProducts();
+            this.FillAllInvoicesTotalVATs(isTotalVATOnly);
+        }
+        private void FillInvoiceLines(bool isTotalVATOnly)
+        {
+            allInvoicesLines = isTotalVATOnly ? (from d in invoiceCotnext.APInvoiceLines.Include("ChargesType")
+                                                 where d.Tenant == tenant
+                                                 && allInvoiceIds.Contains(d.APInvoiceId)
+                                                 select d).ToList():(from d in invoiceCotnext.APInvoiceLines.Include("ChargesType").Include("VatType")
+                                                                      where d.Tenant == tenant
+                                                                      && allInvoiceIds.Contains(d.APInvoiceId)
+                                                                      select d).ToList();
+        }
+        private void FillAllChargesTypesIds()
+        {
+            allChargesTypesIds = (from d in allInvoicesLines
+                                  group d by d.ChargesTypeId into g
+                                  select g.Key).ToList();
+        }
+        private void FillAllChargesExternalByProducts()
+        {
+            allChargesExternalByProducts
+                = (from f in commonContext.ChargesExternalAccountsByProducts
+                   where f.Tenant == tenant
+                   && allChargesTypesIds.Contains(f.ChargesTypeId)
+                   select f).ToList();
+        }
+
+        private void FillAllInvoicesTotalVATs(bool isTotalVATOnly)
+        {
+            allInvoicesTotalVATs = isTotalVATOnly ? (from d in invoiceCotnext.APInvoiceTotalVATs
+                                                     where d.Tenant == tenant
+                                                     && allInvoiceIds.Contains(d.APInvoiceId)
+                                                     select d).ToList() : (from d in invoiceCotnext.APInvoiceTotalVATs.Include("VatType")
+                                                                           where d.Tenant == tenant
+                                                                           && allInvoiceIds.Contains(d.APInvoiceId)
+                                                                           select d).ToList();
         }
 
         private void GetOriginalTranferData()

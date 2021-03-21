@@ -66,6 +66,11 @@ namespace Logitude.CRM.Data.Repsitories
             return (from a in context.Activities where a.Tenant == tenant && a.ShipmentId == shipmentId && a.ActivityTypeCode == "TX" select a);
         }
 
+        public IQueryable<Activity> GetExtendedActivitiesByQuoteId(string quoteId, int tenant)
+        {
+            return (from a in context.Activities where a.Tenant == tenant && a.QuoteId == quoteId && a.ActivityTypeCode == "TX" select a);
+        }
+
         public IQueryable<Activity> GetExtendedActivities(int tenant)
         {
             return (from a in context.Activities where a.Tenant == tenant && a.ActivityTypeCode == "TX" select a);

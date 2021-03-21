@@ -12,23 +12,28 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
     {
         public static void Validate(UserPM entityPM, bool isNew)
         {
-            RoleQuery roleQuery = new RoleQuery(entityPM.Tenant);
-            List<RolePM> roles = new List<RolePM>();
 
-            if (isNew)
+            if (!entityPM.SignupRole && !entityPM.IsHybrid)
             {
-                roles = entityPM.RolePMLists;
-            }
-            else
-            {
-                roles = roleQuery.GetRolesByUser(entityPM.Id, entityPM.Tenant).ToList();
-            }
+                RoleQuery roleQuery = new RoleQuery(entityPM.Tenant);
+                List<RolePM> roles = new List<RolePM>();
 
-            List<string> parentRolesIds = roles.Where(d => d.Exists && !string.IsNullOrEmpty(d.ParentRoleId)).Select(a => a.ParentRoleId).ToList();
+                if (isNew)
+                {
+                    roles = entityPM.RolePMLists;
+                }
+                else
+                {
+                    roles = roleQuery.GetRolesByUser(entityPM.Id, entityPM.Tenant).ToList();
+                }
 
-            if (roles.Where(d => parentRolesIds.Contains(d.Id)).Any())
-            {
-                throw new Exception("Can't add both a parent and a child roles");                
+                roles = roles.Where(d => d.Exists).ToList();
+                List<string> parentRolesIds = roles.Where(d => !string.IsNullOrEmpty(d.ParentRoleId)).Select(a => a.ParentRoleId).ToList();
+
+                if (roles.Where(d => parentRolesIds.Contains(d.Id)).Any())
+                {
+                    throw new Exception("Can't add both a parent and a child roles");
+                }
             }
         }
     }

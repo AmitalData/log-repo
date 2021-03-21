@@ -2,11 +2,14 @@
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Web;
 
 namespace WebFreight.Web
@@ -124,8 +127,47 @@ namespace WebFreight.Web
                 IShipmentsContext myContext = ShipmentsContext.GetContext((int)Tenant);
                 ShipmentConsoleShipmentQuery shipmentConsoleShipmentQuery = new ShipmentConsoleShipmentQuery(myContext);
                 List<Shipment> connectedHousesShipments = shipmentConsoleShipmentQuery.GetMasterConnectedHouseShipments(CurrentEntityId, (int)Tenant);
-                if (connectedHousesShipments != null) ConnectedHousesShipments = connectedHousesShipments;
+                SetConnectedHousesShipmentsWithMoreDetails(connectedHousesShipments);
             }
+        }
+
+        private void SetConnectedHousesShipmentsWithMoreDetails(List<Shipment> connectedHouses)
+        {
+            if (connectedHouses != null)
+            {
+                List<Shipment> connectedHousesShipments = FillMissingShipperDetails(connectedHouses);
+                ConnectedHousesShipments = connectedHousesShipments;
+            }
+        }
+
+        private List<Shipment> FillMissingShipperDetails(List<Shipment> connectedHouses)
+        {
+            List<Shipment> connectedHousesShipmentsWithShipperDetails = connectedHouses;
+            List<Card> shippers = GetShippersWhoHaveAnIdAndNoName(connectedHouses);
+            if (shippers != null && shippers.Count > 0)
+            {
+                connectedHousesShipmentsWithShipperDetails.Where(ship => ShipmentHaveShipperIdWithoutShipperName(ship)).ToList()?.ForEach(shipment =>
+                {
+                    Card card = shippers.Where(myCard => myCard.Id == shipment.ShipperId).FirstOrDefault();
+                    shipment.ShipperName = card != null ? card.EnglishName : shipment.ShipperName;
+                });
+            }
+
+            return connectedHousesShipmentsWithShipperDetails;
+        }
+
+        private List<Card> GetShippersWhoHaveAnIdAndNoName(List<Shipment> connectedHouses)
+        {
+            List<string> shipperIds = connectedHouses.Where(ship => ShipmentHaveShipperIdWithoutShipperName(ship)).Select(shipment => shipment.ShipperId).ToList();
+            int tenant = (int)Tenant;
+            CardRepository cardRepository = new CardRepository(tenant);
+            List<Card> shippers = cardRepository.GetCardsFromIdList(shipperIds, tenant);
+            return shippers;
+        }
+
+        private bool ShipmentHaveShipperIdWithoutShipperName(Shipment ship)
+        {
+            return string.IsNullOrEmpty(ship.ShipperName) && !string.IsNullOrEmpty(ship.ShipperId);
         }
 
         private string ConvertHexaToRGBA(string hexString)

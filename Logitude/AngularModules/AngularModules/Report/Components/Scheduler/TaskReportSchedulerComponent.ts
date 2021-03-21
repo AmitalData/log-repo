@@ -9,6 +9,8 @@ import { EntityListService } from '../../../Infrastructure/Services/EntityListSe
 import { ReportGroupList } from '../../EntityLists/ReportGroupList';
 import { ReportList } from '../../EntityLists/ReportList';
 import { SchedulerDetails, ReportSchedulerDetails, FTPSchedulerDetails } from '../../../Infrastructure/DataContracts/SchedulerDetails';
+import { SchedulerExtendedPMService } from '../../../Infrastructure/Services/ExtendedPMs/SchedulerExtendedPMService';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     
@@ -30,6 +32,10 @@ export class TaskReportSchedulerComponent implements OnInit {
     @Output() TasksCustomColumnsReady = new EventEmitter();
     @Output() MenuHeaderchangeeventTasks = new EventEmitter();
     @Output() SelectedRowChanged = new EventEmitter();
+
+    schedulerExtendedPMService: SchedulerExtendedPMService;
+    public isExceedsScheduledTasksLimitPerReport = false;
+
     constructor(private _entityListService: EntityListService) {
 
         this.CurrentSession.SessionEvent.subscribe(($event: any) => {
@@ -40,10 +46,14 @@ export class TaskReportSchedulerComponent implements OnInit {
                 }
             }
         });
+
+
+        this.schedulerExtendedPMService = new SchedulerExtendedPMService();
     }
 
     ngOnInit() {
-        this.RefreshButtonClicked();
+        this.BuildTasksColumns();
+        this.LoadTaskSchedulers();
     }
 
     SetWindowArgs(windowArgs) {
@@ -60,25 +70,43 @@ export class TaskReportSchedulerComponent implements OnInit {
     NewTaskClicked() {
         var newItem: TasksSchedulerPM = new TasksSchedulerPM();
         newItem.CreatedBy = SessionLocator.LoggedUserPM.EnglishName;
-        newItem.UpdatedBy = SessionLocator.LoggedUserPM.EnglishName;
-        newItem.TriggerType = "O";
+        newItem.UpdatedBy = SessionLocator.LoggedUserPM.EnglishName; 
         newItem.Tenant = SessionLocator.Tenant;
+        newItem.TriggerType = "O"; 
         newItem.Type = this.SchedulerType;
+        var y;
 
-        var windowArgs: any = {};
-        windowArgs.ReportGroupList = this.ReportGroupList;
-        windowArgs.ReportList = this.ReportList;
+        this.AddReportScheduler(newItem); 
+     
+    }
 
-        var logWindow = new LogitudeWindow();
-        logWindow.Height = 820;
-        logWindow.Width = 1250;
-        logWindow.Title = this.ReportList.Name + " Scheduler Details";
-        logWindow.DataContext = new TaskReportSchedulerItemClass(newItem, this, true);
-        logWindow.WindowArgs = windowArgs;
-        logWindow.Show('./Report/Components/Scheduler/AddEditReportSchedulerComponent');
-        logWindow.WindowClosed.subscribe(closed => {
-            this.IsEditReportSchedulerEventAlreadyExist = false;
+    private AddReportScheduler(newItem: TasksSchedulerPM) {
+        this.schedulerExtendedPMService.isExceedsScheduledTasksLimitPerReport(newItem.Tenant, newItem.CreatedBy, this.ReportList.Id).subscribe((serviceResponse: ServiceResponse) => {
+            if (!serviceResponse.HasError) {
+                this.isExceedsScheduledTasksLimitPerReport = serviceResponse.Result.body;
+                if (!this.isExceedsScheduledTasksLimitPerReport) {
+                    this.AddEditReportScheduler(newItem);
+                }
+            }
         });
+    }
+
+    AddEditReportScheduler(newItem: TasksSchedulerPM) {
+         
+            var windowArgs: any = {};
+            windowArgs.ReportGroupList = this.ReportGroupList;
+            windowArgs.ReportList = this.ReportList;
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Height = 820;
+            logWindow.Width = 1250;
+            logWindow.Title = this.ReportList.Name + " Scheduler Details";
+            logWindow.DataContext = new TaskReportSchedulerItemClass(newItem, this, true);
+            logWindow.WindowArgs = windowArgs;
+            logWindow.Show('./Report/Components/Scheduler/AddEditReportSchedulerComponent');
+            logWindow.WindowClosed.subscribe(closed => {
+                this.IsEditReportSchedulerEventAlreadyExist = false;
+            }); 
     }
 
     EditTaskClicked(DataContext) {
@@ -219,9 +247,10 @@ export class TaskReportSchedulerComponent implements OnInit {
     }
 
     TasksDataSource = {
-        pageSize: 20,
+        pageSize: 100,
         rowCount: null,
-
+        sortingCol: "CreateDateTime",
+        sortingDir: "Descending",
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
             var tempo = this.getTasksRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
 
@@ -232,10 +261,6 @@ export class TaskReportSchedulerComponent implements OnInit {
     getTasksRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
 
         filters = new ApiQueryFilters();
-        if (!sortingCol) {
-            sortingCol = "NextRunTime";
-            sortingDir = "descending";
-        }
 
         if (this.filterTypeCode == "AL") {
             filters.AdditionalFilters = [];
@@ -259,7 +284,7 @@ export class TaskReportSchedulerComponent implements OnInit {
         filters.addAdditionalFilter("EntityId", this.ReportList.Id, null, null, "Equals", true, false, false, "String");
         filters.GetCount = getCount;
         filters.PageIndex = skip;
-        filters.PageSize = take;
+        filters.PageSize = 100;
         if (sortingCol) {
             filters.SortBy = sortingCol;
         }
@@ -273,10 +298,12 @@ export class TaskReportSchedulerComponent implements OnInit {
 
     private LoadTaskSchedulers() {
 
-        this.BuildTasksColumns();
+        //this.BuildTasksColumns();
 
         this.filterAgrs = new ApiQueryFilters();
-        
+        this.filterAgrs.PageSize = 100;
+        this.filterAgrs.SortBy = "CreateDateTime";
+        this.filterAgrs.SortDirection = "Descending";
 
         if (this.filterTypeCode == "AL") {
             this.filterAgrs.AdditionalFilters = []; 
@@ -496,6 +523,16 @@ export class TaskReportSchedulerItemClass extends BaseComponent {
             this.isFTP = newValue;
         }
     }
+
+    get SendIfEmpty() {
+        return this.SchedulerDetails.SendIfEmpty;
+    }
+    set SendIfEmpty(newValue: boolean) {
+        if (this.SchedulerDetails.SendIfEmpty != newValue) {
+            this.SchedulerDetails.SendIfEmpty = newValue;
+        }
+    }
+
     SetReportSchedulerDetailsData(schedulerDetails: SchedulerDetails) {
         this.SchedulerDetails = schedulerDetails;
         if (schedulerDetails) {

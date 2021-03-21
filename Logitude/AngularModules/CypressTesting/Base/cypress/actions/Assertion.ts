@@ -8,10 +8,52 @@ export function AssertStatusCode(requestAlias: string, expectedStatusCode: numbe
     return Interception;
 }
 
-export function AssertElementExist(selector: string){
+export function AssertWindowOpen(windowOpenAlias: string){
+  cy.get('@' + windowOpenAlias).should('be.called')
+}
+
+export function AssertElementExist(selector: string) {
     cy.get(selector).should("exist");
 }
 
-export function AssertElementHaveClass(selector: string, classValue: string){
+export function AssertElementHaveClass(selector: string, classValue: string) {
     cy.get(selector).should("have.class", classValue);
+}
+
+export function AssertElementNotHaveClass(selector: string, classValue: string) {
+    cy.get(selector).should("not.have.class", classValue);
+}
+
+export function AssertElementHaveValue(selector: string, Value: string) {
+    cy.get(selector).should("have.value", Value);
+}
+
+export function AssertElementNotExist(selector: string) {
+    cy.get(selector).should("not.exist");
+}
+
+//be.disable | not.be.disable
+export function AssertElementDisabled(selector: string, condition: string) {
+    cy.get(selector).should(condition);
+}
+
+export function AssertElementHaveClasss(selector: string, condition: string , classValue:string) {
+    cy.get(selector).should(condition,classValue);
+}
+
+export function AssertElementContain(selector: string, Value: string){
+    cy.get(selector).should('contain', Value)
+}
+
+export function AssertElementTextEqual(elementSelector :string ,expectedValue:string ,find? :string){
+    if(find){
+        cy.get(elementSelector).find(find).invoke('text').then((text) => {
+            assert.equal(text.trim(), expectedValue)
+        })
+    }else{
+        cy.get(elementSelector).invoke('text').then((text) => {
+            assert.equal(text.trim(), expectedValue)
+        })
+    }
+    
 }

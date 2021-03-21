@@ -1,47 +1,65 @@
-"use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var LoginService_1 = require("../LoginService");
-var ResetPasswordComponent_1 = require("./ResetPasswordComponent");
-var DSVResetPasswordComponent = /** @class */ (function (_super) {
+import { Component } from '@angular/core';
+import { LoginService } from '../LoginService';
+import { SessionInfo } from '../SessionInfo';
+import { ResetPasswordComponent } from './ResetPasswordComponent';
+import { HybridLabelsBrandingDataService } from '../HybridLabels/Services/HybridLabelsBrandingDataService';
+import { BrandingDataService } from '../HybridLabels/Services/BrandingDataService';
+export var DSVResetPasswordComponent = (function (_super) {
     __extends(DSVResetPasswordComponent, _super);
-    function DSVResetPasswordComponent(ss) {
-        var _this = _super.call(this, ss) || this;
-        _this.ss = ss;
-        return _this;
+    function DSVResetPasswordComponent(ss, hybridLabelsBrandingDataService) {
+        _super.call(this, ss);
+        this.ss = ss;
+        this.hybridLabelsBrandingDataService = hybridLabelsBrandingDataService;
+        this.MainColor = null;
+        this.BackgroundImage = "";
+        this.ForgetPasswordImage = "";
+        this.Id = "";
+        this.MainLogo = "";
+        this.ContactUsEmail = "";
+        this.showSpinner = true;
+        this.show = true;
     }
-    DSVResetPasswordComponent = __decorate([
-        core_1.Component({
-            selector: 'DSVResetPasswordComponent',
-            moduleId: './Login/Components/',
-            templateUrl: 'DSVResetPasswordComponent.html',
-            styleUrls: ['ChangePasswordComponent.css']
-        }),
-        __metadata("design:paramtypes", [LoginService_1.LoginService])
-    ], DSVResetPasswordComponent);
+    DSVResetPasswordComponent.prototype.ngOnInit = function () {
+        this.privateUrl = SessionInfo.GetLogitudeURL();
+        this.GetHybridLabelsData(this.privateUrl);
+    };
+    DSVResetPasswordComponent.prototype.GetHybridLabelsData = function (privateUrl) {
+        var _this = this;
+        this.hybridLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetHybridLabelsDataRequest(privateUrl)).subscribe(function (response) {
+            if (response.Result) {
+                //BrandingDataService.SetHybridLabelsDataRequest(response.Result, privateUrl);
+                _this.ContactUsEmail = response.Result.ContactUsEmail;
+                _this.MainColor = response.Result.MainColor;
+                _this.BackgroundImage = BrandingDataService.GetBackgroundImage();
+                _this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage();
+                _this.Id = response.Result.Id;
+                _this.MainLogo = BrandingDataService.GetMainLogo();
+            }
+        }, function (error) {
+            _this.BackgroundImage = BrandingDataService.DefaultBackground;
+            _this.ForgetPasswordImage = BrandingDataService.DefaultForgetPassword;
+            _this.MainLogo = BrandingDataService.DefaultMainLogo;
+        });
+        this.showSpinner = false;
+    };
+    DSVResetPasswordComponent.decorators = [
+        { type: Component, args: [{
+                    selector: 'DSVResetPasswordComponent',
+                    moduleId: './Login/Components/',
+                    templateUrl: 'DSVResetPasswordComponent.html',
+                    styleUrls: ['ChangePasswordComponent.css']
+                },] },
+    ];
+    /** @nocollapse */
+    DSVResetPasswordComponent.ctorParameters = [
+        { type: LoginService, },
+        { type: HybridLabelsBrandingDataService, },
+    ];
     return DSVResetPasswordComponent;
-}(ResetPasswordComponent_1.ResetPasswordComponent));
-exports.DSVResetPasswordComponent = DSVResetPasswordComponent;
+}(ResetPasswordComponent));
 //# sourceMappingURL=DSVResetPasswordComponent.js.map

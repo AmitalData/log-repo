@@ -5,6 +5,7 @@ import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 //#region variables
 let shipmentDetails: ShipmentDetails;
@@ -18,7 +19,7 @@ Given("the user logged in and navigates to shipments workspace", () => {
 });
 
 Given("a master Shipment with the following details", (dataTable) => {
-    shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+    shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
     Actions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
     Actions.FillShipmentWizardsFields(shipmentDetails);
 });
@@ -38,7 +39,7 @@ When("create shipment", () => {
 
 //#region Create house export air shipment steps
 Given("a house Shipment with the following details", (dataTable) => {
-    shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+    shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
     Actions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
     Actions.FillShipmentWizardsFields(shipmentDetails);
 });
@@ -58,7 +59,7 @@ Given("the user in the master's Shipment tab", () => {
 
 When("connect the house shipment", () => {
     cy.get('#EditComponentBusyIndicator_0').should('not.exist');
-    cy.Click("#EditComponentCellId_0_0 > div.MediaFill > table > tr:nth-child(3) > td > div > div.MediaFillAbsolute.CurvedEditArea > table > tr > td:nth-child(2) > div > ng-component:nth-child(3) > div > scrollviewer > div > div > div > ng-component > table > tr:nth-child(1) > td > div > table > tr:nth-child(3) > td > div > div > div.SimpleGridViewBody > table > tr:nth-child(1) > td > table > tr:nth-child(2) > td:nth-child(2) > table > tr > td:nth-child(2) > button", null);
+    cy.Click("#ConnectAll", null);
     Actions.ConnectOrDisconnectShipment();
 });
 
@@ -70,11 +71,14 @@ Then("the shipment should connect successfully", () => {
 //#region Disconnect the house shipment
 When("the user disconnect the house shipment", () => {
     cy.get('#EditComponentBusyIndicator_0').should('not.exist');
-    cy.Click("#EditComponentCellId_0_0 > div.MediaFill > table > tr:nth-child(3) > td > div > div.MediaFillAbsolute.CurvedEditArea > table > tr > td:nth-child(2) > div > ng-component:nth-child(3) > div > scrollviewer > div > div > div > ng-component > table > tr:nth-child(1) > td > div > table > tr:nth-child(3) > td > div > div > div.SimpleGridViewBody > table > tr:nth-child(1) > td > table > tr:nth-child(2) > td:nth-child(2) > table > tr > td:nth-child(2) > button", null);
+    cy.Click("#DisconnectALL", null);
     Actions.ConnectOrDisconnectShipment();
 });
 
 Then("the shipment should disconnect successfully", () => {
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+    cy.Click("#ConnectAll", null);
+    Actions.ConnectOrDisconnectShipment();
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });
 //#endregion

@@ -93,6 +93,7 @@
     <Compile Include="BuildWarehouseForm.Designer.cs">
       <DependentUpon>BuildWarehouseForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Service\EnvironmentDWTableUnUseSqlProvider.cs" />
     <Compile Include="Service\FeatureDataWarehouseService.cs" />
     <Compile Include="Service\WarehouseHelper.cs" />
     <Compile Include="Service\CustomFieldWarehouseService.cs" />
@@ -353,9 +354,10 @@
     </Content>
     <Content Include="WarehouseScript\Others\Day 19 [Wesam] Build Categories.sql" />
     <Content Include="WarehouseScript\Others\Day 20 [Abed ] Connect DWFields To Categories.sql" />
-    <Content Include="WarehouseScript\Others\Day 21 [Abed ] AddIndexesToFactTables.sql">
+    <Content Include="WarehouseScript\Others\AddAdditionalIndexesToDWTables.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\Others\[Abed] FillDWHEnvironmentSettingsTable.sql" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">

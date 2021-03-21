@@ -390,7 +390,7 @@
 
                         <td style="vertical-align:top">
                             <div style="width:160px;height:100px">
-                                <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'200px'"
+                                <ImageComponent [KeepOriginalSize]="true" [ImageResizeHeight]="83" 
                                                 [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="ComapnylogoId"
                                                 [EntityId]="EntityId" [EntityName]="'TenantManagement'" [Extension]="'png'"
                                                 (UploadCompleted)="ComapnylogoUploadedCompleted($event)"
@@ -410,16 +410,16 @@
                         </td>
                         <td style="width:180px;height:22px; vertical-align:top">
                             <LogLabel [ObjectFieldName]="'InvertedLogoId'" [ObjectTableName]="'TenantManagement'"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td style="vertical-align:top">
                             <div style="width:160px;height:100px">
                                 <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'200px'"
-                                    [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="InvertedLogoId"
-                                    [EntityId]="EntityId" [EntityName]="'TenantManagement'" [Extension]="'png'"
-                                    (UploadCompleted)="InvertedLogoUploadedCompleted($event)"
-                                    style="height:72px;width:72px">
+                                                [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="InvertedLogoId"
+                                                [EntityId]="EntityId" [EntityName]="'TenantManagement'" [Extension]="'png'"
+                                                (UploadCompleted)="InvertedLogoUploadedCompleted($event)"
+                                                style="height:72px;width:72px">
                                 </ImageComponent>
                             </div>
                             <a (click)="RemoveImage('inverted')">remove</a>
@@ -463,6 +463,31 @@
                             <div></div>
                         </td>
                     </tr>
+                    <tr>
+                        <td style="width:8px">
+                            <div></div>
+                        </td>
+                        <td style="width:180px;height:22px; vertical-align:top">
+                            <LogLabel [ObjectFieldName]="'ShipmentHeaderImageId'" [ObjectTableName]="'TenantManagement'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td style="vertical-align:top">
+                            <div style="width:160px;height:100px">
+                                <ImageComponent [KeepOriginalSize]="'true'" [WidthImage]="'160px'"
+                                                [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="ShipmentHeaderImageId"
+                                                [EntityId]="EntityId" [EntityName]="'TenantManagement'" [Extension]="'png'"
+                                                (UploadCompleted)="ShipmentHeaderImageUploadedCompleted($event)"
+                                                style="height:72px;width:72px">
+                                </ImageComponent>
+                            </div>
+                            <a (click)="RemoveImage('ShipmentHeader')">remove</a>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
                     <tr>
                         <td colspan="4"></td>
                     </tr>

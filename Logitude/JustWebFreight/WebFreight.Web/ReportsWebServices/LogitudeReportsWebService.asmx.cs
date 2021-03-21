@@ -79,6 +79,9 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.Resolvers;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
+using System.Reflection;
+using System.Collections;
+using WebFreight.Web.Helpers;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -1433,6 +1436,7 @@ namespace WebFreight.Web.ReportsWebServices
                 quotesRecored.OpenDate = a.OpenDate;
                 quotesRecored.DirectionTransportMode = a.DirectionName + " / " + a.TransportModeName;
                 quotesRecored.DeclineReason = a.QuoteClosingReasonName;
+                quotesRecored.EstimateProfit = a.EstimateProfit;
 
                 if (a.QuoteTypeCode == "A")
                 {
@@ -3445,6 +3449,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.InvoiceDate = a.InvoiceDate.Value;
                 invoicesRecored.InvoiceNumber = a.InvoiceNumber;
                 invoicesRecored.BillTo = a.VendorName;
+                invoicesRecored.BillToVatNumber = a.VATNumber;
                 invoicesRecored.OurRefNumber = a.MainEntityReference;
                 invoicesRecored.InvoiceStatus = a.StatusName;
                 invoicesRecored.Currency = a.InvoiceCurrencyCode;
@@ -8805,7 +8810,8 @@ namespace WebFreight.Web.ReportsWebServices
                         record.Routing = shipment.Routing;
                         record.ProfitInLocalCurrency = shipment.ProfitInLocalCurrency;
                         record.ProfitInProfitCurrency = shipment.ProfitInProfitCurrency;
-
+                        record.Consignee = shipment.ConsigneeName;
+                        record.Shipper = shipment.ShipperName;
                         if (!string.IsNullOrEmpty(shipment.CustomerReference1))
                         {
                             record.CustomerReference = shipment.CustomerReference1;
@@ -10078,7 +10084,7 @@ namespace WebFreight.Web.ReportsWebServices
         #endregion
 
         #region Ledger Transaction report
-        public byte[] LoadLedgerTransactionDataProvider(byte[] xmlFilters, int tenant)
+        public byte[] LoadLedgerTransactionDataProvider(byte[] xmlFilters, ReportFliter reportFliter, int tenant)
         {
             LedgerTransactionsDataProvider dataprovider = GetLedgerTransactionsDataProvider(xmlFilters, tenant);
             XmlSerializer serializer = new XmlSerializer(typeof(LedgerTransactionsDataProvider));
@@ -10088,6 +10094,7 @@ namespace WebFreight.Web.ReportsWebServices
             var reader = new StreamReader(memstream);
             string content = reader.ReadToEnd();
             byte[] bytearray = memstream.ToArray();
+            bytearray = IsDataProviderHaveListWithValues(dataprovider, reportFliter) ? bytearray : null;
             return bytearray;
         }
 
@@ -10213,6 +10220,7 @@ namespace WebFreight.Web.ReportsWebServices
                     myRecord.HouseNumber = a.House;
                     myRecord.NumberOfContainers = a.NumberOfContainers;
                     myRecord.ETA = a.MainCarriageETA;
+                    myRecord.ATA = a.MainCarriageATA;
                     myRecord.IsCancelled = a.IsCancelled;
                     myRecord.LastSharedEventDate = a.LastSharedEventDate;
                     myRecord.LastSharedEventNote = a.LastSharedEventNotes;
@@ -11973,7 +11981,7 @@ namespace WebFreight.Web.ReportsWebServices
         #endregion
 
         #region Shipment Details
-        public byte[] LoadShipmentDetailsDataProvider(byte[] xmlFilters, int tenant)
+        public byte[] LoadShipmentDetailsDataProvider(byte[] xmlFilters, ReportFliter reportFliter, int tenant)
         {
             ShipmentDetailsDataProvider dataprovider = GetShipmentDetailsDataProvider(xmlFilters, tenant);
             XmlSerializer serializer = new XmlSerializer(typeof(ShipmentDetailsDataProvider));
@@ -11983,6 +11991,7 @@ namespace WebFreight.Web.ReportsWebServices
             var reader = new StreamReader(memstream);
             string content = reader.ReadToEnd();
             byte[] bytearray = memstream.ToArray();
+            bytearray = IsDataProviderHaveListWithValues(dataprovider, reportFliter) ? bytearray : null;
             return bytearray;
         }
 
@@ -12880,6 +12889,41 @@ namespace WebFreight.Web.ReportsWebServices
             return email;
         }
 
+        private bool IsDataProviderHaveListWithValues(object dataProvider, ReportFliter reportFliter)
+        {
+            if (!reportFliter.IsSchedulerReport) return true;
+            if (reportFliter.SendIfEmpty) return true;
+            List<PropertyInfo> properties = dataProvider?.GetType()?.GetProperties()?
+                .Where(prop => prop.GetValue(dataProvider) is IList).ToList();
+            foreach (PropertyInfo propInfo in properties)
+            {
+                object value = propInfo.GetValue(dataProvider, null);
+                List<object> genericList = (value as IEnumerable<object>).Cast<object>()?.ToList();
+                if (IsListHaveData(genericList)) return true;
+            }
+
+            return false;
+        }
+
+        private bool IsListHaveData(List<object> genericList)
+        {
+            bool listHaveData = false;
+            if (genericList != null && genericList.Count() == 1 && typeof(GLAccountBalanceList).IsInstanceOfType(genericList[0]))
+            {
+                listHaveData = GLAccountBalanceListsHaveData(genericList) ? true : false;
+            }
+            else if (genericList != null && genericList.Count() > 0)
+            {
+                listHaveData = true;
+            }
+            return listHaveData;
+        }
+        private bool GLAccountBalanceListsHaveData(List<object> genericList)
+        {
+            GLAccountBalanceList gLAccountBalanceLists = (GLAccountBalanceList)genericList[0];
+            string GLAccountBalanceCurrencyId = gLAccountBalanceLists.CurrencyId;
+            return !string.IsNullOrEmpty(GLAccountBalanceCurrencyId);
+        }
 
         private ContactPM GetLoggedContact(int tenant)
         {

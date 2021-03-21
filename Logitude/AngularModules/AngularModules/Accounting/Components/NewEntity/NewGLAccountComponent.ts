@@ -254,7 +254,7 @@ export class NewGLAccountComponent extends BaseComponent {
             if (value != null) {
                 this.UIProperties.SetValidity("ChartOfAccountsId", this.ObjectTableName, true, "");
             } else {
-                this.UIProperties.SetValidity("ChartOfAccountsId", this.ObjectTableName, false, "");
+                this.UIProperties.SetValidity("ChartOfAccountsId", this.ObjectTableName, false, "111");
             }
             var filter = this.ParentsFilterItems.AdditionalFilters.find(d => d.FieldName == "ChartOfAccountsId");
             filter.FieldValue = value;
@@ -450,12 +450,12 @@ export class NewGLAccountComponent extends BaseComponent {
         if (item == null) {
             this.ChartOfAccountsId = null;
             this.UIProperties.SetEnabled("ChartOfAccountsId", this.ObjectTableName, false);
-            this.UIProperties.SetRequired("ChartOfAccountsId", this.ObjectTableName, false);
-            this.UIProperties.SetValidity("ChartOfAccountsId", this.ObjectTableName, true, "Chart Of Accounts is requierd");
+           //// this.UIProperties.SetRequired("ChartOfAccountsId", this.ObjectTableName, false);
+           // this.UIProperties.SetValidity("ChartOfAccountsId", this.ObjectTableName, true, "Chart Of Accounts is requierd");
         } else {
             this.UIProperties.SetEnabled("ChartOfAccountsId", this.ObjectTableName, true);
-            this.UIProperties.SetRequired("ChartOfAccountsId", this.ObjectTableName, true);
-            this.UIProperties.SetValidity("ChartOfAccountsId", this.ObjectTableName, false, "");
+            //this.UIProperties.SetRequired("ChartOfAccountsId", this.ObjectTableName, true);
+            //this.UIProperties.SetValidity("ChartOfAccountsId", this.ObjectTableName, false, "");
         }
     }
 

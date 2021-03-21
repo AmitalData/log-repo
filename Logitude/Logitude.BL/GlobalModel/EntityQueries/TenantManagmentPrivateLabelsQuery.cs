@@ -39,6 +39,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              PrivateLabelName = a.PrivateLabelName,
                                              PrivateLabelShortName = a.PrivateLabelShortName,
                                              PrivateLabelUrl = a.PrivateLabelUrl,
+                                             PrivateLabelDomain = a.PrivateLabelDomain,
                                              ReceiveAllStatuses = a.ReceiveAllStatuses,
                                              MainLogo = a.MainLogo,
                                              InActive = a.InActive,
@@ -46,6 +47,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              ContactUsEmail = a.ContactUsEmail,
                                              SearchFields = a.SearchFields,
                                              SmallLogo = a.SmallLogo,
+                                             BackgroundImageId = a.BackgroundImageId,
+                                             MainImageId = a.MainImageId,
+                                             MainColor = a.MainColor,
+                                             LoginProgressImageId = a.LoginProgressImageId,
+                                             ForgetPasswordImageId = a.ForgetPasswordImageId,
                                          }).FirstOrDefault();
 
             return entity;
@@ -60,6 +66,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                          PrivateLabelName = a.PrivateLabelName,
                                                          PrivateLabelShortName = a.PrivateLabelShortName,
                                                          PrivateLabelUrl = a.PrivateLabelUrl,
+                                                         PrivateLabelDomain = a.PrivateLabelDomain,
                                                          ReceiveAllStatuses = a.ReceiveAllStatuses,
                                                          MainLogo = a.MainLogo,
                                                          InActive = a.InActive,
@@ -67,6 +74,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                          ContactUsEmail = a.ContactUsEmail,
                                                          SearchFields = a.SearchFields,
                                                          SmallLogo = a.SmallLogo,
+                                                         BackgroundImageId = a.BackgroundImageId,
+                                                         MainImageId = a.MainImageId,
+                                                         MainColor = a.MainColor,
+                                                         LoginProgressImageId = a.LoginProgressImageId,
+                                                         ForgetPasswordImageId = a.ForgetPasswordImageId,
 
                                                      }).FirstOrDefault();
 
@@ -82,6 +94,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                            PrivateLabelName = a.PrivateLabelName,
                                                            PrivateLabelShortName = a.PrivateLabelShortName,
                                                            PrivateLabelUrl = a.PrivateLabelUrl,
+                                                           PrivateLabelDomain = a.PrivateLabelDomain,
                                                            ReceiveAllStatuses = a.ReceiveAllStatuses,
                                                            MainLogo = a.MainLogo,
                                                            InActive = a.InActive,
@@ -89,7 +102,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                            ContactUsEmail = a.ContactUsEmail,
                                                            SearchFields = a.SearchFields,
                                                            SmallLogo = a.SmallLogo,
-
+                                                           BackgroundImageId = a.BackgroundImageId,
+                                                           MainImageId = a.MainImageId,
+                                                           MainColor = a.MainColor,
+                                                           LoginProgressImageId = a.LoginProgressImageId,
+                                                           ForgetPasswordImageId = a.ForgetPasswordImageId,
                                                        }).FirstOrDefault();
 
             return entity;
@@ -103,6 +120,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         PrivateLabelName = a.PrivateLabelName,
                         PrivateLabelShortName = a.PrivateLabelShortName,
                         PrivateLabelUrl = a.PrivateLabelUrl,
+                        PrivateLabelDomain = a.PrivateLabelDomain,
                         ReceiveAllStatuses = a.ReceiveAllStatuses,
                         MainLogo = a.MainLogo,
                         InActive = a.InActive,
@@ -110,7 +128,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         ContactUsEmail = a.ContactUsEmail,
                         SearchFields = a.SearchFields,
                         SmallLogo = a.SmallLogo,
-
+                        BackgroundImageId = a.BackgroundImageId,
+                        MainImageId = a.MainImageId,
+                        MainColor = a.MainColor,
+                        LoginProgressImageId = a.LoginProgressImageId,
+                        ForgetPasswordImageId = a.ForgetPasswordImageId,
                     });
         }
         public IQueryable<TenantManagmentPrivateLabelsList> GetTenantManagmentPrivateLablesLists()
@@ -122,6 +144,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         PrivateLabelName = a.PrivateLabelName,
                         PrivateLabelShortName = a.PrivateLabelShortName,
                         PrivateLabelUrl = a.PrivateLabelUrl,
+                        PrivateLabelDomain = a.PrivateLabelDomain,
                         ReceiveAllStatuses = a.ReceiveAllStatuses,
                         MainLogo = a.MainLogo,
                         InActive = a.InActive,
@@ -129,7 +152,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         ContactUsEmail = a.ContactUsEmail,
                         SearchFields = a.SearchFields,
                         SmallLogo = a.SmallLogo,
-
+                        BackgroundImageId = a.BackgroundImageId,
+                        MainImageId = a.MainImageId,
+                        MainColor = a.MainColor,
+                        LoginProgressImageId = a.LoginProgressImageId,
+                        ForgetPasswordImageId = a.ForgetPasswordImageId,
                     });
         }
 
@@ -143,6 +170,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        PrivateLabelName = a.PrivateLabelName,
                        PrivateLabelShortName = a.PrivateLabelShortName,
                        PrivateLabelUrl = a.PrivateLabelUrl,
+                       PrivateLabelDomain = a.PrivateLabelDomain,
                        ReceiveAllStatuses = a.ReceiveAllStatuses,
                        MainLogo = a.MainLogo,
                        InActive = a.InActive,
@@ -150,6 +178,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        ContactUsEmail = a.ContactUsEmail,
                        SearchFields = a.SearchFields,
                        SmallLogo = a.SmallLogo,
+                       BackgroundImageId = a.BackgroundImageId,
+                       MainImageId = a.MainImageId,
+                       MainColor = a.MainColor,
+                       LoginProgressImageId = a.LoginProgressImageId,
+                       ForgetPasswordImageId = a.ForgetPasswordImageId,
                    };
 
         }

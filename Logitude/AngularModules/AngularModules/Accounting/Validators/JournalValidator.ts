@@ -1,17 +1,16 @@
 import { JournalPM } from '../EntityPMs/JournalPM';
 import { JournalLinePM } from '../EntityPMs/JournalLinePM';
-import {AppTool} from '../../Infrastructure/Tools';
+import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
 
 export class JournalValidator
 {
     private static CurrentSession = SessionLocator.SelectedSession;
+  
 
     public static ValidateJournal(entityPM: any)
     {
-
-
         return [];
     }
 
@@ -21,8 +20,8 @@ export class JournalValidator
         return [];
     }
 
-    public static ValidateJournalLine(line: any) {
 
+    public static ValidateJournalLines(line: any) {
         var errors = [];
         if (line) {
             if (line.ActionCode == null || line.ActionCode == undefined) {
@@ -60,6 +59,7 @@ export class JournalValidator
 
                 }
 
+
                 // Credit and Debit account (same currency)
                 if (line.ActionCode == '3') {
                     if (line.CreditAccount == undefined || line.DebitAccount == undefined) return errors;
@@ -70,6 +70,7 @@ export class JournalValidator
                     }
                 }
 
+                
                 // Ref. + Due Dates
                 if (!line.DocumentDate) {
                     errors.push(TextCodeTranslator.Translate("Accounting.General.O.chooseRefDate") + " " + line.Line  ); //You should choose Ref. Date for line
@@ -90,6 +91,7 @@ export class JournalValidator
         SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList=errors;
         return errors;
     }
+
 
     public static ValidateTotals(entityPM: JournalPM) {
 
@@ -139,30 +141,43 @@ export class JournalValidator
         }
         return errors;
     }
-
+    FillErrorList(result:string[]) {
+        if (result.length > 0) {
+            for (var error in result) {
+                this.errorList.push(result[error]);
+            }
+        }
+      }
+    errorList: string[];
     public Validate(entityPM: JournalPM) {
 
         JournalValidator.CurrentSession = SessionLocator.SelectedSession;
 
-        var errors = [];
+        this.errorList = [];
         var result = [];
+      
         // Validate last row of journal lines
-        if (!AppTool.IsNullOrEmpty(entityPM.JournalLines)) {
-            var lastRow = entityPM.JournalLines[entityPM.JournalLines.length - 1];
+        //if (!AppTool.IsNullOrEmpty(entityPM.JournalLines)) {
+        //    var lastRow = entityPM.JournalLines[entityPM.JournalLines.length - 1];
+        //}
+       
+        for (var line in entityPM.JournalLines) {
+            var journalLine = entityPM.JournalLines[line];
+            result = JournalValidator.ValidateJournalLines(journalLine);
+            this.FillErrorList(result); 
         }
-        result = JournalValidator.ValidateJournalLine(lastRow)
-        if (result.length > 0) {
-            return result;
-        }
+
 
         // Validate Totals
         result = JournalValidator.ValidateTotals(entityPM)
         if (result.length > 0) {
-            return result;
+            this.FillErrorList(result); 
+            return this.errorList;
         }
 
-        return errors;
+        return this.errorList ;
     }
+
 
     public static Abs(number: number) {
         return number < 0 ? number * -1 : number;

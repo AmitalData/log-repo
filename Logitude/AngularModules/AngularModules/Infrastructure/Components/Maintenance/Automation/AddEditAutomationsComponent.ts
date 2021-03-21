@@ -556,7 +556,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     }
 
     LoadDocumentTypeTemplate(documentTypeList: DocumentTypeList) {
-        const automationDocumentCopyfeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ADC" && d.TenantNumber == SessionLocator.Tenant)[0];
+        const automationDocumentCopyfeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ADC")[0];
         this.ShowDocumentsCopy = documentTypeList.IsDocumentOneTimePrintLimited && automationDocumentCopyfeatureToggle != null;
         this.LoadDocumentTypeHTMLTemplate(documentTypeList);
 
@@ -817,7 +817,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         windowArgs.CurrentEntityPM = this.DocumentTypeSelected;
         windowArgs.DocumentTypeTemplateLists = this.DocumentTypeTemplateLists;
         windowArgs.TypeTab = "Document";
-        windowArgs.RequestAreaName = "Automtaion";
+        windowArgs.RequestAreaName = "Automation";
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 800;
         logitudeWindow.Height = 550;
@@ -952,7 +952,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             }
 
             if (this.ObjectTableName == "APInvoice") {
-                const documentSendFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "DSR" && d.TenantNumber == SessionLocator.Tenant)[0];
+                const documentSendFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "DSR")[0];
                 if (documentSendFeatureToggle != null) this.ResultCodeList.push(new ResultCode("Documents Send", "SENDDOCUMENT"));
             }
 
@@ -973,6 +973,14 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 if (this.IsShowSendInterfaceResult) {
                     this.ResultCodeList.push(new ResultCode("Send Interface", "SENDINTERFACE"));
                 }
+            }
+
+            //Quotes
+            if (this.ObjectTableName == "Quote") {
+                this.ResultCodeList.push(new ResultCode("F/U Creation", "FOLLOWUP"));
+                this.ResultCodeList.push(new ResultCode("Docs Out F/U Creation", "DOCOUTFOLLOWUP"));
+                this.ResultCodeList.push(new ResultCode("Docs In F/U Creation", "DOCINFOLLOWUP")); 
+                this.ResultCodeList.push(new ResultCode("Set Fields Value", "FIELDSET"));
             }
 
             this.ResultCodeSelected = this.ResultCodeList.filter(d => d.Code == this.AutomatedBackupClass.ResultCode)[0];
@@ -1288,6 +1296,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             }
 
             if (objectField.AutomationEmailRecipient && (objectField.ObjectTable_LookUpTableName == "User" || objectField.ObjectTable_LookUpTableName == "Contact" || objectField.DataTypeCode == "Emails")) {
+
                 this.AutomationEmailRecipientFieldLists.push(new AutomationEmailRecipientFieldItem(objectField));
             }
 
@@ -1295,6 +1304,12 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
             if (objectField.FieldName == "CreatedByUserId" || objectField.FieldName == "SalesmanUserId" || objectField.FieldName == "UpdatedByUserId" || objectField.FieldName == "AccountManagerUserId") {
                 this.FollowUpOwnerObjectFieldLists.push(objectField);
+            }
+
+            if (this.ObjectTableName == "Quote") {
+                if (objectField.FieldName == "ETA" || objectField.FieldName == "ETD" || objectField.FieldName == "StartDate" || objectField.FieldName == "AutomaticallyCloseDate" || objectField.FieldName == "ExpirationDate") {
+                    this.FollowUpDateObjectFieldLists.push(objectField);
+                }
             }
 
             if (objectField.FieldName == "MainCarriageETD" || objectField.FieldName == "MainCarriageATD" || objectField.FieldName == "MainCarriageFinalDestinationETA" || objectField.FieldName == "MainCarriageFinalDestinationATA") {
@@ -1476,6 +1491,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
     }
 
+    
+
     ResultCodeListValueChanged(value) {
 
         this.ClearAutomationResult(this.ResultCodeSelected.Code);
@@ -1490,8 +1507,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.FollowUpNote = "";
         }
 
-
-        if (value.Code == "FIELDSET" && this.ObjectTableName == "Shipment") {
+         
+        if (this.HasFieldSetResult(value.Code)) {
             this.AutomatedBackupClass.Type = "Immeduiatly";
             this.IsSelectedImmediatly = true;
             this.IsSelectedDelayed = false;
@@ -1504,8 +1521,11 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         this.LoadAuomationResultComponent(value.Code);
 
     }
+     
+    private HasFieldSetResult(resultCode: string) {
+        return (resultCode == "FIELDSET" && (this.ObjectTableName == "Shipment" || this.ObjectTableName == "Quote"));
+    }
 
-    
     ClearAutomationResult(resultCode: string) {
         let myGeneratedComponentLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == resultCode)[0];
         if (myGeneratedComponentLocation != null) {
@@ -1703,7 +1723,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         if (this.AutomationCondationAndList.length > 0) {
             this.AutomationCondationAndList.forEach((item) => {
                 if (((item.CurrentEntityPM.Value == "" || item.CurrentEntityPM.Value == null ) && (item.CurrentEntityPM.ObjectFieldType != "Boolean" &&
-                    item.CurrentEntityPM.OperatorCode != "ISNOTEMPTY" && item.CurrentEntityPM.OperatorCode != "ISEMPTY")) ||
+                    item.CurrentEntityPM.OperatorCode != "ISNOTEMPTY" && item.CurrentEntityPM.OperatorCode != "ISEMPTY" && item.CurrentEntityPM.OperatorCode != "CHANGED")) ||
                     (item.CurrentEntityPM.Value == null && (item.CurrentEntityPM.ObjectFieldType == "nText" || item.CurrentEntityPM.ObjectFieldType == "Text"))) {
                     this.ValidationErrorsList.push("Field value is required");
                 }
@@ -1715,7 +1735,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         if (this.AutomationCondationOrList.length > 0) {
             this.AutomationCondationOrList.forEach((item) => {
                 if (((item.CurrentEntityPM.Value == "" || item.CurrentEntityPM.Value == null) && (item.CurrentEntityPM.ObjectFieldType != "Boolean" &&
-                    item.CurrentEntityPM.OperatorCode != "ISNOTEMPTY" && item.CurrentEntityPM.OperatorCode != "ISEMPTY")) ||
+                    item.CurrentEntityPM.OperatorCode != "ISNOTEMPTY" && item.CurrentEntityPM.OperatorCode != "ISEMPTY" && item.CurrentEntityPM.OperatorCode != "CHANGED")) ||
                     (item.CurrentEntityPM.Value == null && (item.CurrentEntityPM.ObjectFieldType == "nText" || item.CurrentEntityPM.ObjectFieldType == "Text"))) {
                     this.ValidationErrorsList.push("Field value is required");
                 }
@@ -2290,7 +2310,18 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 this.DueDateFieldList.push(dateItem);
             }            
         });
-        
+
+        var quoteObjecttableId: string = window.ObjectTables.filter(f => f.Id == this.ObjectTableId)[0].Id;
+        var taskObjectFields: ObjectFieldPM[] = window.ObjectFields.filter(f => f.ObjectTableId == quoteObjecttableId && f.DataTypeCode == "DateTime");
+
+        taskObjectFields.forEach((item) => {
+            if (item.FieldName == "ETA" || item.FieldName == "ETD" || item.FieldName == "StartDate" || item.FieldName == "AutomaticallyCloseDate"
+                || item.FieldName == "ExpirationDate") {
+                var dateItem: CodeNameClass = new CodeNameClass(item.FieldName, item.FullNameTextCodeDefaultText);
+                this.DueDateFieldList.push(dateItem);
+            }
+        });
+
         this.TaskOffsetTypeList.push(new CodeNameClass("B", "Before"));
         this.TaskOffsetTypeList.push(new CodeNameClass("A", "After"));
 

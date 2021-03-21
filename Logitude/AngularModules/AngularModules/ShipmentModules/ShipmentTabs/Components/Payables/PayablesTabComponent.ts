@@ -290,7 +290,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
             this.IsDeleteAllPayablesVisible = true;
         }
 
-        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TAR" && d.TenantNumber == SessionLocator.Tenant)[0];
+        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TAR")[0];
         if (FeatureLocator.HasFeaturePermession("Shipment", "ShipmentPriceCheck") && (this.IsLCLEntity || this.IsFCLEntity) && this.EntityPM.TransportModeId != "I"
             && featureToggle  != null) {
             this.IsPriceCheckVisible = true;
@@ -2454,7 +2454,7 @@ export class ShipmentPayableItem extends BaseComponent {
             }
         }
     }
-    ComputeTotalAmount() {
+    public ComputeTotalAmount() {
 
         var iAmount: number = null;
 

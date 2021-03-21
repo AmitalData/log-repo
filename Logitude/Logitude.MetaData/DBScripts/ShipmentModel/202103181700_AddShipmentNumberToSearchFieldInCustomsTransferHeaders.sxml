@@ -1,0 +1,10 @@
+﻿<Script DBType="Main" Module="Shipment" >
+  <Sql Version="1">
+    <![CDATA[
+           update CustomsTransferHeaders set SearchFields = SearchFields + ','+ ShipmentNumber
+    ]]>
+  </Sql>
+</Script>
+
+
+

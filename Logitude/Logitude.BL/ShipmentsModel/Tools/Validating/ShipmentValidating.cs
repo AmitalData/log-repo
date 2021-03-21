@@ -972,11 +972,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
 
                 // PreCarriage
-                if (entityPM.PreCarriageATD > todayDateTime)
+                if (entityPM.ShipmentLevelCode == "H" && entityPM.PreForwardingATD > todayDateTime)
+                {
+                    throw new ApplicationException(message.Replace("Field", "Pre Forwarding ATD"));
+                }
+                else if (entityPM.PreCarriageATD > todayDateTime)
                 {
                     throw new ApplicationException(message.Replace("Field", "Pre Carriage ATD"));
                 }
-                if (entityPM.PreCarriageATA > todayDateTime)
+
+                if (entityPM.ShipmentLevelCode == "H" && entityPM.PreForwardingATA > todayDateTime)
+                {
+                    throw new ApplicationException(message.Replace("Field", "Pre Forwarding ATA"));
+                }
+                else if (entityPM.PreCarriageATA > todayDateTime)
                 {
                     throw new ApplicationException(message.Replace("Field", "Pre Carriage ATA"));
                 }
@@ -1038,11 +1047,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
 
                 // OnCarriage
-                if (entityPM.OnCarriageATD > todayDateTime)
+                if (entityPM.ShipmentLevelCode == "H" && entityPM.OnForwardingATD > todayDateTime)
+                {
+                    throw new ApplicationException(message.Replace("Field", "On Forwarding ATD"));
+                }
+                else if (entityPM.OnCarriageATD > todayDateTime)
                 {
                     throw new ApplicationException(message.Replace("Field", "On Carriage ATD"));
                 }
-                if (entityPM.OnCarriageATA > todayDateTime)
+
+                if (entityPM.ShipmentLevelCode == "H" && entityPM.OnForwardingATA > todayDateTime)
+                {
+                    throw new ApplicationException(message.Replace("Field", "On Forwarding ATA"));
+                }
+                else if (entityPM.OnCarriageATA > todayDateTime)
                 {
                     throw new ApplicationException(message.Replace("Field", "On Carriage ATA"));
                 }

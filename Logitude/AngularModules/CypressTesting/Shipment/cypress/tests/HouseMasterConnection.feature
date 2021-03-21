@@ -1,4 +1,4 @@
-@stable @smoke
+@smoke @stable
 Feature: Connect and disconnect separate house and master
   After the user logging in the system and navigate to shipments workspace
   will create a Separate master and house shipments
@@ -7,15 +7,23 @@ Feature: Connect and disconnect separate house and master
   Scenario: Create master export air shipment
     Given the user logged in and navigates to shipments workspace
     And a master Shipment with the following details
-      | ShipmentLevel | Direction | TransportMode | Agent            | MainCarriageFromPort | MainCarriageToPort |
-      | Master        | Export    | Air           | IntegrationAgent | LHR                  | MIA                |
+      | ShipmentLevel        | Master    |
+      | Direction            | Export    |
+      | TransportMode        | Air       |
+      | Agent                | TestAgent |
+      | MainCarriageFromPort | LHR       |
+      | MainCarriageToPort   | MIA       |
     When create shipment
     Then the master should create successfully
 
   Scenario: Create house export air shipment
     Given a house Shipment with the following details
-      | ShipmentLevel | Direction | TransportMode | Shipper           | MainCarriageFromPort | MainCarriageToPort |
-      | House         | Export    | Air           | TestShipperExport | LHR                  | MIA                |
+      | ShipmentLevel        | House             |
+      | Direction            | Export            |
+      | TransportMode        | Air               |
+      | Shipper              | TestShipperExport |
+      | MainCarriageFromPort | LHR               |
+      | MainCarriageToPort   | MIA               |
     When create shipment
     Then the house should create successfully
 

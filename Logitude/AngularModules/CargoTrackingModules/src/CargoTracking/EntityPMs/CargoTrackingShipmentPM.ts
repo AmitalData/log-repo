@@ -347,11 +347,101 @@ export class CargoTrackingShipmentPM {
     private packagesQuantity: number;
     public get PackagesQuantity() { return this.packagesQuantity; }
     public set PackagesQuantity(newValue: number) { if (this.packagesQuantity != newValue) { this.packagesQuantity = newValue; this.MarkAsDirty("PackagesQuantity"); } }
-
+       
 	 
     private directionId: string;
     public get DirectionId() { return this.directionId; }
     public set DirectionId(newValue: string) { if (this.directionId != newValue) { this.directionId = newValue; this.MarkAsDirty("DirectionId"); } }
+       
+	 
+    private shipmentLevelCode: string;
+    public get ShipmentLevelCode() { return this.shipmentLevelCode; }
+    public set ShipmentLevelCode(newValue: string) { if (this.shipmentLevelCode != newValue) { this.shipmentLevelCode = newValue; this.MarkAsDirty("ShipmentLevelCode"); } }
+       
+	 
+    private assignedTruckerDone: boolean;
+    public get AssignedTruckerDone() { return this.assignedTruckerDone; }
+    public set AssignedTruckerDone(newValue: boolean) { if (this.assignedTruckerDone != newValue) { this.assignedTruckerDone = newValue; this.MarkAsDirty("AssignedTruckerDone"); } }
+       
+	 
+    private assignedTruckerDate: Date;
+    public get AssignedTruckerDate() { return this.assignedTruckerDate; }
+    public set AssignedTruckerDate(newValue: Date) { if (this.assignedTruckerDate != newValue) { this.assignedTruckerDate = newValue; this.MarkAsDirty("AssignedTruckerDate"); } }
+       
+	 
+    private assignedTruckerEstimationDate: Date;
+    public get AssignedTruckerEstimationDate() { return this.assignedTruckerEstimationDate; }
+    public set AssignedTruckerEstimationDate(newValue: Date) { if (this.assignedTruckerEstimationDate != newValue) { this.assignedTruckerEstimationDate = newValue; this.MarkAsDirty("AssignedTruckerEstimationDate"); } }
+       
+	 
+    private assignedTruckerNotes: string;
+    public get AssignedTruckerNotes() { return this.assignedTruckerNotes; }
+    public set AssignedTruckerNotes(newValue: string) { if (this.assignedTruckerNotes != newValue) { this.assignedTruckerNotes = newValue; this.MarkAsDirty("AssignedTruckerNotes"); } }
+       
+	 
+    private assignedCustomsAgentDone: boolean;
+    public get AssignedCustomsAgentDone() { return this.assignedCustomsAgentDone; }
+    public set AssignedCustomsAgentDone(newValue: boolean) { if (this.assignedCustomsAgentDone != newValue) { this.assignedCustomsAgentDone = newValue; this.MarkAsDirty("AssignedCustomsAgentDone"); } }
+       
+	 
+    private assignedCustomsAgentDate: Date;
+    public get AssignedCustomsAgentDate() { return this.assignedCustomsAgentDate; }
+    public set AssignedCustomsAgentDate(newValue: Date) { if (this.assignedCustomsAgentDate != newValue) { this.assignedCustomsAgentDate = newValue; this.MarkAsDirty("AssignedCustomsAgentDate"); } }
+       
+	 
+    private assignedCustomsAgentEstDate: Date;
+    public get AssignedCustomsAgentEstDate() { return this.assignedCustomsAgentEstDate; }
+    public set AssignedCustomsAgentEstDate(newValue: Date) { if (this.assignedCustomsAgentEstDate != newValue) { this.assignedCustomsAgentEstDate = newValue; this.MarkAsDirty("AssignedCustomsAgentEstDate"); } }
+       
+	 
+    private assignedCustomsAgentNotes: string;
+    public get AssignedCustomsAgentNotes() { return this.assignedCustomsAgentNotes; }
+    public set AssignedCustomsAgentNotes(newValue: string) { if (this.assignedCustomsAgentNotes != newValue) { this.assignedCustomsAgentNotes = newValue; this.MarkAsDirty("AssignedCustomsAgentNotes"); } }
+       
+	 
+    private assignedCustomsAgentExcReason: string;
+    public get AssignedCustomsAgentExcReason() { return this.assignedCustomsAgentExcReason; }
+    public set AssignedCustomsAgentExcReason(newValue: string) { if (this.assignedCustomsAgentExcReason != newValue) { this.assignedCustomsAgentExcReason = newValue; this.MarkAsDirty("AssignedCustomsAgentExcReason"); } }
+       
+	 
+    private deliveryDone: boolean;
+    public get DeliveryDone() { return this.deliveryDone; }
+    public set DeliveryDone(newValue: boolean) { if (this.deliveryDone != newValue) { this.deliveryDone = newValue; this.MarkAsDirty("DeliveryDone"); } }
+       
+	 
+    private deliveryDate: Date;
+    public get DeliveryDate() { return this.deliveryDate; }
+    public set DeliveryDate(newValue: Date) { if (this.deliveryDate != newValue) { this.deliveryDate = newValue; this.MarkAsDirty("DeliveryDate"); } }
+       
+	 
+    private deliveryEstimationDate: Date;
+    public get DeliveryEstimationDate() { return this.deliveryEstimationDate; }
+    public set DeliveryEstimationDate(newValue: Date) { if (this.deliveryEstimationDate != newValue) { this.deliveryEstimationDate = newValue; this.MarkAsDirty("DeliveryEstimationDate"); } }
+       
+	 
+    private deliveryNotes: string;
+    public get DeliveryNotes() { return this.deliveryNotes; }
+    public set DeliveryNotes(newValue: string) { if (this.deliveryNotes != newValue) { this.deliveryNotes = newValue; this.MarkAsDirty("DeliveryNotes"); } }
+       
+	 
+    private deliveryExceptionReason: string;
+    public get DeliveryExceptionReason() { return this.deliveryExceptionReason; }
+    public set DeliveryExceptionReason(newValue: string) { if (this.deliveryExceptionReason != newValue) { this.deliveryExceptionReason = newValue; this.MarkAsDirty("DeliveryExceptionReason"); } }
+       
+	 
+    private grossWeightUnitCode: string;
+    public get GrossWeightUnitCode() { return this.grossWeightUnitCode; }
+    public set GrossWeightUnitCode(newValue: string) { if (this.grossWeightUnitCode != newValue) { this.grossWeightUnitCode = newValue; this.MarkAsDirty("GrossWeightUnitCode"); } }
+       
+	 
+    private forwardingShipmentNumber: string;
+    public get ForwardingShipmentNumber() { return this.forwardingShipmentNumber; }
+    public set ForwardingShipmentNumber(newValue: string) { if (this.forwardingShipmentNumber != newValue) { this.forwardingShipmentNumber = newValue; this.MarkAsDirty("ForwardingShipmentNumber"); } }
+       
+	 
+    private shipmentLevelCode: string;
+    public get ShipmentLevelCode() { return this.shipmentLevelCode; }
+    public set ShipmentLevelCode(newValue: string) { if (this.shipmentLevelCode != newValue) { this.shipmentLevelCode = newValue; this.MarkAsDirty("ShipmentLevelCode"); } }
        
 	 
 

@@ -69,6 +69,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         }
                     }
+                    scope.Complete();
                     if (MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.Count > 0)
                     {
                         string text = MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.FirstOrDefault();
@@ -84,7 +85,6 @@ namespace Logitude.Accounting.BL.CoreBL
                         string text = MyResultLoadFlatFile.ExceptionVendorList.FirstOrDefault();
                         throw new Exception($"{text}");
                     }
-                    scope.Complete();
 
 
                 }

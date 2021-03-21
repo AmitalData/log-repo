@@ -46,6 +46,15 @@
                     </div>
 
                 </div>
+
+                <!-- FeatureToggle -->
+                <div *ngIf="ObjectTableName == 'FeatureToggle'">
+                    <div *ngIf="FieldName == 'TenantNumber'">
+                        <div *ngIf="!Entity.IsMultiTenant">{{ FieldValue }}</div>
+                        <div *ngIf="Entity.IsMultiTenant">{{ Entity.FromTenantNumber }} - {{Entity.ToTenantNumber}}</div>
+                    </div>
+                </div>
+
             </div>
         </td>
     </tr>

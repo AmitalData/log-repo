@@ -603,6 +603,14 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="LCLContainerTypeId"
+    OldNames="LCLContainerType"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ShipmentId"
     ReferencedTable="Shipments"
@@ -661,6 +669,11 @@
   <Relation
     ForeignKeyColumn="HorseId"
     ReferencedTable="Horses"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="LCLContainerTypeId"
+    ReferencedTable="PackageTypes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

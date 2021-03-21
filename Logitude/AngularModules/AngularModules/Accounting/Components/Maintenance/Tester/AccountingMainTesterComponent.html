@@ -12,114 +12,139 @@
     }
 </style>
 <div style="direction: ltr">
-<select [(ngModel)]="SelectedItem" (change)="selected()">
-    <option *ngFor="let item of _MenuList" [ngValue]="item">{{item}}</option>
-</select>
-<div *ngIf="SelectedItem=='AccountingIntegrityService'">
-    <table>
-        <tr>
-            <td style="width:200px"><button class="Button" (click)="_ButtonReverseTotal_Click()">Reverse from Total to Ledger</button></td>
-            <td style="width:200px"><button class="Button" (click)="_ButtonReverseTrans_Click()">Reverse from Ledger to journal line</button></td>
-            <td style="width:200px"></td>
-            <td style="width:200px"></td>
-        </tr>
-    </table>
+    <select [(ngModel)]="SelectedItem" (change)="selected()">
+        <option *ngFor="let item of _MenuList" [ngValue]="item">{{item}}</option>
+    </select>
+    <div *ngIf="SelectedItem=='AccountingIntegrityService'">
+        <table>
+            <tr>
+                <td style="width:200px"><button class="Button" (click)="_ButtonReverseTotal_Click()">Reverse from Total to Ledger</button></td>
+                <td style="width:200px"><button class="Button" (click)="_ButtonReverseTrans_Click()">Reverse from Ledger to journal line</button></td>
+                <td style="width:200px"><button class="Button" (click)="_ButtonReverseDueDate_Click()">ReverseDueDate</button></td>
+                <td style="width:200px"></td>
+            </tr>
+        </table>
+    </div>
+    <div *ngIf="SelectedItem=='FIX'">
+        <table>
+            <tr>
+                <td style="width:200px"><button class="Button" (click)="_ButtonReverseTotalFIX_Click()">FIX TOTAL from  Ledger</button></td>
+                <td style="width:200px"><button class="Button" (click)="_ButtonReverseGLBalanceFIX_Click()">FIX ReverseGLBalance</button></td>
+                <td style="width:200px"><button class="Button" (click)="_ButtonReverseTotalFIXControl_Click()">FIX TOTAL from  Ledger ***control**"</button></td>
+                <td style="width:200px"><button class="Button" (click)="_ButtonFixDueLocalBalance_Click()">FixDueLocalBalance</button></td>
+                
+            </tr>
+        </table>
+    </div>
+    <div *ngIf="SelectedItem=='Reports'">
+        <table>
+            <tr>
+                <td style="width:200px">
+                    <button class="Button" (click)="_TrailReport_Click()">TrailReport</button>
+                </td>
+                <td style="width:200px">
+                    <button class="Button" (click)="CardIndexNew_Click()">CardIndexNew</button>
+                </td>
+                <td style="width:200px" class="Button" (click)="CardIndexNewDrillDown1st_Click()">CardIndexNewDrillDown1st</td>
+                <td style="width:200px"></td>
+            </tr>
+            <tr>
+                <td style="width:200px">
+                    <button class="Button" (click)="Aging_Click()">Aging Report</button>
+                </td>
+                <td style="width:200px">
+                </td>
+                <td style="width:200px"></td>
+                <td style="width:200px"></td>
+            </tr>
+
+        </table>
 
 
-</div>
-<div *ngIf="SelectedItem=='Reports'">
-    <table>
-        <tr>
-            <td style="width:200px">
-                <button class="Button" (click)="_TrailReport_Click()">TrailReport</button>
-            </td>
-            <td style="width:200px">
-                <button class="Button" (click)="CardIndexNew_Click()">CardIndexNew</button>
-            </td>
-            <td style="width:200px" class="Button" (click)="CardIndexNewDrillDown1st_Click()">CardIndexNewDrillDown1st</td>
-            <td style="width:200px"></td>
-        </tr>
 
-    </table>
+    </div>
+    <div *ngIf="SelectedItem=='JournalApproveService'">
+        <table>
+            <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+                <td style="padding-left: 10px; padding-right: 10px; overflow-x: auto;" colspan="4">
+                    <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:200px">
+                    <button class="Button" (click)="WorkWithoutQueue_Click()">WorkWithoutQueue</button>
+                </td>
+                <td style="width:200px">
+                    <button class="Button" (click)="JournalApproveQueue_Click()">Queue</button>
+                </td>
+                <td style="width:200px"></td>
+                <td style="width:200px"></td>
+            </tr>
 
-
-   
-</div>
-<div *ngIf="SelectedItem=='JournalApproveService'">
-    <table>
-        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-            <td style="padding-left: 10px; padding-right: 10px; overflow-x: auto;" colspan="4">
-                <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
-            </td>
-        </tr>
-        <tr>
-            <td style="width:200px">
-                <button class="Button" (click)="WorkWithoutQueue_Click()">WorkWithoutQueue</button>
-            </td>
-            <td style="width:200px">
-                <button class="Button" (click)="JournalApproveQueue_Click()">Queue</button>
-            </td>
-            <td style="width:200px"></td>
-            <td style="width:200px"></td>
-        </tr>
-
-    </table>
+        </table>
 
 
-    <br />
+        <br />
 
-    <button class="Button" (click)="_ButtonReverseTrans_Click()">Reverse from Ledger to journal line</button>
-</div>
-<div *ngIf="SelectedItem=='JournalSend'">
-    <table>
-        <tr>
-            <td style="width:200px">
-                <button class="Button">JournalId2Void</button>
-            </td>
-            <td style="width:200px">
-                <input [(ngModel)]="JournalId2Void" />
-                overrideStorno<input [(ngModel)]="overrideStorno" />
-            </td>
-            <td style="width:200px"></td>
-            <td style="width:200px"></td>
-        </tr>
-        <tr>
-            <td style="width:200px">
-                <button class="Button" (click)="JournalSend_Click()">JournalSend</button>
-            </td>
-            <td style="width:200px">
-            </td>
-            <td style="width:200px"></td>
-            <td style="width:200px"></td>
-        </tr>
-    </table>
+        <button class="Button" (click)="_ButtonReverseTrans_Click()">Reverse from Ledger to journal line</button>
+    </div>
+    <div *ngIf="SelectedItem=='JournalSend'">
+        <table>
+            <tr>
+                <td style="width:200px">
+                    <button class="Button" (click)="JournalId2Void_click()">JournalId2Void</button>
+                </td>
+                <td style="width:200px">
+                    JournalId2Void
+                    <input [(ngModel)]="JournalId2Void" />
+                </td>
+                <td style="width:200px">
+                    overrideStorno
+                    <input [(ngModel)]="OverrideStornoString" />
 
-
-    <br />
-
-    <button class="Button" (click)="_ButtonReverseTrans_Click()">Reverse from Ledger to journal line</button>
-</div>
+                </td>
+                <td style="width:200px"></td>
+            </tr>
+            <tr>
+                <td style="width:200px">
+                    <button class="Button" (click)="JournalSend_Click()">JournalSend</button>
+                </td>
+                <td style="width:200px">
+                </td>
+                <td style="width:200px"></td>
+                <td style="width:200px"></td>
+            </tr>
+        </table>
 
 
-<div *ngIf="SelectedItem=='Aging'">
-    <table>
-       
-        <tr>
-            <td style="width:200px">
-                <button class="Button" (click)="Aging_Click()">Aging Report</button>
-            </td>
-            <td style="width:200px">
-            </td>
-            <td style="width:200px"></td>
-            <td style="width:200px"></td>
-        </tr>
-    </table>
+        <br />
+
+        <button class="Button" (click)="_ButtonReverseTrans_Click()">Reverse from Ledger to journal line</button>
+    </div>
 
 
-</div>
+    <div *ngIf="SelectedItem=='MSIC'">
+        <table>
 
-<div *ngIf="SelectedItem=='Alex'">
-    <table>
+            <tr>
+                <td style="width:200px">
+                    <button class="Button" (click)="BuildTenant_Click()">Build Tenant</button>
+                </td>
+                <td style="width:200px">
+                    <button class="Button" (click)="CreateJournalTask_Click()">Create journal -Task  </button>
+                </td>
+                <td style="width:200px">
+                    <button class="Button" (click)="ButtonLoadSystem1000_Click()">LoadSystem1000</button>
+                </td>
+                <td style="width:200px"></td>
+            </tr>
+        </table>
+
+
+    </div>
+
+    <div *ngIf="SelectedItem=='Alex'">
+        <table>
 
         <tr>
             <td style="width:200px">
@@ -133,68 +158,83 @@
         </tr>
         <tr>
             <td style="width:200px">
-                <button class="Button" (click)="YYY_Click()">YYY</button>
+                <button class="Button" (click)="YearTransfer_Click()">YearTransfer</button>
             </td>
             <td style="width:200px">
+                <button class="Button" (click)="YearTransferCancel_Click()">YearTransfer Cancel</button>
+            </td>
+            <td style="width:200px"></td>
+            <td style="width:200px"></td>
+        </tr>
+        <tr>
+            <td style="width:200px">
+                <button class="Button" (click)="ButtonCardGLAccountConnect_Click()">CardGLAccountConnect</button>
+            </td>
+            <td style="width:200px"></td>
+            <td style="width:200px"></td>
+        </tr>
+        <tr>
+            <td style="width:200px">
+                <button class="Button" (click)="ButtonLoadConsolTaxRep_Click()">Load Consol. Tax Rep.(Tenant)</button>
             </td>
             <td style="width:200px"></td>
             <td style="width:200px"></td>
         </tr>
 
-    </table>
+        </table>
 
 
-</div>
+    </div>
 
-<div>
-    <table>
-        <tr style="height:100px">
-            <td>
-                <LogTextBox [ObjectFieldName]="'_TextBoxParam'"
-                            [Text]="_TextBoxParam" [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext"
-                            [IsMultiline]="true"></LogTextBox>
-            </td>
-            <td>
-                <LogTextBox [ObjectFieldName]="'_LabelLog'"
-                            [Text]="_LabelLog" [ObjectTableName]="'Customs.Consignment'"
-                            [HideColumns]="true"
-                            [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
-            </td>
-        </tr>
-        <tr style="height:25px">
+    <div>
+        <table>
+            <tr style="height:100px">
+                <td>
+                    <LogTextBox [ObjectFieldName]="'_TextBoxParam'"
+                                [Text]="_TextBoxParam" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [IsMultiline]="true"></LogTextBox>
+                </td>
+                <td>
+                    <LogTextBox [ObjectFieldName]="'_LabelLog'"
+                                [Text]="_LabelLog" [ObjectTableName]="'Customs.Consignment'"
+                                [HideColumns]="true"
+                                [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
+                </td>
+            </tr>
+            <tr style="height:25px">
 
-            <td>
-                <LogTextBox [ObjectFieldName]="'ErrorMess'"
-                            [Text]="ErrorMess" [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext"
-                            [IsMultiline]="true"></LogTextBox>
-            </td>
-            <td>
-                <LogTextBox [ObjectFieldName]="'JsonOut'"
-                            [Text]="JsonOut" [ObjectTableName]="'Customs.Consignment'"
-                            [HideColumns]="true"
-                            [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
-            </td>
+                <td>
+                    <LogTextBox [ObjectFieldName]="'ErrorMess'"
+                                [Text]="ErrorMess" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [IsMultiline]="true"></LogTextBox>
+                </td>
+                <td>
+                    <LogTextBox [ObjectFieldName]="'JsonOut'"
+                                [Text]="JsonOut" [ObjectTableName]="'Customs.Consignment'"
+                                [HideColumns]="true"
+                                [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
+                </td>
 
 
-        </tr>
-    </table>
-</div>
-
-<div style="height:650px;overflow:scroll;margin-top:35px;">
-    <div class="play-container">
-        <table border>
-            <thead>
-                <tr>
-                    <th *ngFor="let header of getHeaders()">{{header}}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of JsonList">
-                    <td *ngFor="let key of getHeaders()">{{item[key]}}</td>
-                </tr>
-            </tbody>
+            </tr>
         </table>
     </div>
-</div>
+
+    <div style="height:650px;overflow:scroll;margin-top:35px;">
+        <div class="play-container">
+            <table border>
+                <thead>
+                    <tr>
+                        <th *ngFor="let header of getHeaders()">{{header}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of JsonList">
+                        <td *ngFor="let key of getHeaders()">{{item[key]}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>

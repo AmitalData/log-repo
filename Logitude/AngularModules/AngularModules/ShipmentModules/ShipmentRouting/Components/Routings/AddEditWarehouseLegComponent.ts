@@ -119,7 +119,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 }
             }
 
-            var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "STR" && d.TenantNumber == SessionLocator.Tenant)[0];
+            var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "STR")[0];
             if (FeatureToggle) {
                 this.IsStoragePricingAreaVisible = true;
             }
@@ -471,6 +471,8 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     set WarehouseLegExpectedReleaseDate(value: Date) {
         if (this.EntityPM.WarehouseLegExpectedReleaseDate != value) {
             this.EntityPM.WarehouseLegExpectedReleaseDate = value;
+
+            this.SetStorageDays();
         }
     }
 
@@ -696,7 +698,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                         storageReceivable.AmountInProfitCurrency = (storageReceivable.TotalAmountLocal / storageReceivable.ProfitCurrencyExchangeRate);
                     }
 
-                    this.CurrentSession.FireEvent("StorageReceivableCurrencyChanged");
+                    this.CurrentSession.FireEvent("StorageReceivableCalculationsChanged");
                 }
             });            
         }
@@ -706,23 +708,57 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     public StorageFee: number;
     public Days: string;
     private SetStorageDays() {
-        if (this.WarehouseLegActualEntryDate != null && this.WarehouseLegActualReleaseDate != null) {
-            if (DateTool.GetDateFromDate(this.WarehouseLegActualReleaseDate) >= DateTool.GetDateFromDate( this.WarehouseLegActualEntryDate)) {
-                var days = DateTool.GetDaysBetweenDates(this.WarehouseLegActualEntryDate, this.WarehouseLegActualReleaseDate);
-                this.StorageDays = days;
-                this.Days = " Days";
+        var storageReceivables: ShipmentReceivablePM[] = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE");
+
+        if (this.WarehouseLegActualEntryDate != null) {
+            if (storageReceivables.length > 0 && this.WarehouseLegActualReleaseDate == null && this.WarehouseLegExpectedReleaseDate != null) {
+                if (DateTool.GetDateFromDate(this.WarehouseLegExpectedReleaseDate) >= DateTool.GetDateFromDate(this.WarehouseLegActualEntryDate)) {
+                    var days = DateTool.GetDaysBetweenDates(this.WarehouseLegActualEntryDate, this.WarehouseLegExpectedReleaseDate);
+                    this.StorageDays = days;
+                    this.Days = " Days";
+                }
+
+                else {
+                    this.StorageDays = null;
+                    this.Days = null;
+                }
             }
 
             else {
-                this.StorageDays = null;
-                this.Days = null;
+                if (this.WarehouseLegActualReleaseDate != null) {
+                    if (DateTool.GetDateFromDate(this.WarehouseLegActualReleaseDate) >= DateTool.GetDateFromDate(this.WarehouseLegActualEntryDate)) {
+                        var days = DateTool.GetDaysBetweenDates(this.WarehouseLegActualEntryDate, this.WarehouseLegActualReleaseDate);
+                        this.StorageDays = days;
+                        this.Days = " Days";
+                    }
+
+                    else {
+                        this.StorageDays = null;
+                        this.Days = null;
+                    }
+                }
             }
-        }
+        }        
     }
     private ComputeStorageFee() {
+        var adjustedAmount = 0;
+
+        if (this.StorageDays <= this.EntityPM.WarehouseStorageFreeDays) {
+            var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
+
+            var invoicedStorageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && !AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
+            if (invoicedStorageReceivable && storageReceivable == null) {
+                adjustedAmount = invoicedStorageReceivable.TotalAmount * -1;
+            }
+
+            else if (storageReceivable) {
+                adjustedAmount = storageReceivable.TotalAmount * -1;
+            }
+        }
+
         var storageReceivables: ShipmentReceivablePM[] = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE");
         if (storageReceivables.length > 0) {
-            this.StorageFee = ArrayTool.Sum(storageReceivables, "TotalAmount");
+            this.StorageFee = ArrayTool.Sum(storageReceivables, "TotalAmount") + adjustedAmount;
         }
 
         else {
@@ -798,7 +834,22 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 date = this.WarehouseLegExpectedReleaseDate;
             }
 
-            this.CheckStorageProperties(date); 
+            this.CheckStorageProperties(date);
+
+            if (this.StorageDays <= this.EntityPM.WarehouseStorageFreeDays) {
+                var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
+
+                var invoicedStorageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && !AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
+                if (invoicedStorageReceivable && storageReceivable == null) {
+                    this.CreateReceivable(invoicedStorageReceivable.TotalAmount * -1);
+                }
+
+                else if (storageReceivable) {
+                    this.EntityPM.RemoveReceivable(storageReceivable);
+                    this.CurrentSession.FireEvent("StorageReceivableCalculationsChanged");
+                }
+            }
+
             this.FatherComponent.BuildItemsCollection();
             this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
@@ -831,19 +882,12 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                     }
                 }
             }
-
-            else {
-                var invoicedStorageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && !AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
-                if (invoicedStorageReceivable) {
-                    this.CreateReceivable();
-                }
-            }
         }
 
         else {            
             if (storageReceivable) {
                 this.EntityPM.RemoveReceivable(storageReceivable);
-                this.CurrentSession.FireEvent("StorageReceivableRemoved");
+                this.CurrentSession.FireEvent("StorageReceivableCalculationsChanged");
             }
         }
 
@@ -856,20 +900,36 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     }
     private UpdateStorageReceivable(storageReceivable: ShipmentReceivablePM) {
         var amount: number = this.ComputeReceivableAmount();
-       
-        storageReceivable.TotalAmount = amount;
-        storageReceivable.TotalAmountLocal = AppTool.Round(storageReceivable.TotalAmount * storageReceivable.Rate, 2);
 
-        if (storageReceivable.CurrencyId == this.EntityPM.ProfitCurrencyId) {
-            storageReceivable.AmountInProfitCurrency = storageReceivable.TotalAmount;
+        if (AppTool.IsNullOrZero(amount)) {
+            this.EntityPM.RemoveReceivable(storageReceivable);
         }
 
         else {
-            storageReceivable.AmountInProfitCurrency = (storageReceivable.TotalAmountLocal / storageReceivable.ProfitCurrencyExchangeRate);
+            storageReceivable.TotalAmount = amount;
+            storageReceivable.TotalAmountLocal = AppTool.Round(storageReceivable.TotalAmount * storageReceivable.Rate, 2);
+
+            if (storageReceivable.CurrencyId == this.EntityPM.ProfitCurrencyId) {
+                storageReceivable.AmountInProfitCurrency = storageReceivable.TotalAmount;
+            }
+
+            else {
+                storageReceivable.AmountInProfitCurrency = (storageReceivable.TotalAmountLocal / storageReceivable.ProfitCurrencyExchangeRate);
+            }
         }
+
+        this.CurrentSession.FireEvent("StorageReceivableCalculationsChanged");
     }
-    private CreateReceivable() {
-        var amount: number = this.ComputeReceivableAmount();
+    private CreateReceivable(invoicedStorageReceivableAmount : number = null) {
+        var amount: number = 0;
+
+        if (!AppTool.IsNullOrZero(invoicedStorageReceivableAmount)) {
+            amount = invoicedStorageReceivableAmount;
+        }
+
+        else {
+            amount = this.ComputeReceivableAmount();
+        }
 
         if (!AppTool.IsNullOrZero(amount)) {
             var myService = new CommonDomainService();
@@ -955,7 +1015,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
 
                                             this.EntityPM.AddReceivable(storageReceivable);
                                             this.ComputeStorageFee();
-                                            this.CurrentSession.FireEvent("StorageReceivableCreated");
+                                            this.CurrentSession.FireEvent("StorageReceivableCalculationsChanged");
                                         }
                                     }
                                 });

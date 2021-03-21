@@ -67,11 +67,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {       
            
         }
-
-      
-
-
-    }
+		  
+		 
+	 
+   }
    
 }
 	 

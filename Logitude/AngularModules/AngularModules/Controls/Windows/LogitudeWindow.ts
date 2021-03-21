@@ -1,7 +1,9 @@
 import {Component, AfterViewInit, ViewChild, ViewContainerRef, Output, EventEmitter, HostListener} from '@angular/core';
 import { ChildDirective } from '../Directives/ChildDirective';
 import { Settings } from '../../Infrastructure/Settings';
-import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
+import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
+import { ObjectsLocator } from '../../Infrastructure/Locators/ObjectsLocator';
+
 declare var dragger: any;
 
 export class LogitudeWindow {
@@ -419,43 +421,44 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
             var topProperty: number = (appHeight - windowHeight) / 2;
             var leftProperty: number = (appWidth - windowWidth) / 2;
 
+            if (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
+                //#region Abdullah: this code to paint the window over editcomponent section while split component is opened (customs)
+                var windowPlaceholderWidth: number = null;
+                var windowPlaceholderHeight: number = null;
+                var isOverEditComponent: boolean = false;
 
-            //#region Abdullah: this code to paint the window over editcomponent section while split component is opened (customs)
-            var windowPlaceholderWidth: number = null;
-            var windowPlaceholderHeight: number = null;
-            var isOverEditComponent: boolean = false;
+                isOverEditComponent = this.CurrentSession.CurrentEditComponent != null && this.CurrentSession.CurrentEditComponent != undefined;
 
-            isOverEditComponent = this.CurrentSession.CurrentEditComponent != null && this.CurrentSession.CurrentEditComponent != undefined;
-
-            // if (this.CurrentSession.CurrentWindow.IsOverWindow)
-            //     isOverEditComponent = false;
+                // if (this.CurrentSession.CurrentWindow.IsOverWindow)
+                //     isOverEditComponent = false;
 
 
-            if (this.IsEditComponent && this.logWindow.IsOverEditComponentWindow) {
-                // Task 64019
-            }
-
-            else if (this.IsEditComponent && this.logWindow.IsOverWindow && isOverEditComponent) {
-            // Task 64019
-            }
-
-            //change window position according to editcomponent location
-            else if (isOverEditComponent || (isOverEditComponent && this.logWindow.IsOverWindow)) {
-
-                //get window location from edit component
-                var editComponentCelId = this.CurrentSession.CurrentEditComponent.EditComponentCellId;
-                var windowPlaceholderDiv = document.getElementById(editComponentCelId);
-                if (windowPlaceholderDiv) {
-                    windowPlaceholderWidth = windowPlaceholderDiv.clientWidth;
-                    windowPlaceholderHeight = windowPlaceholderDiv.clientHeight;
+                if (this.IsEditComponent && this.logWindow.IsOverEditComponentWindow) {
+                    // Task 64019
                 }
 
-                //update top,left poisition
-                topProperty = (windowPlaceholderHeight - windowHeight) / 2;
-                leftProperty = (windowPlaceholderWidth - windowWidth) / 2;
-            }
+                else if (this.IsEditComponent && this.logWindow.IsOverWindow && isOverEditComponent) {
+                    // Task 64019
+                }
 
-            //#endregion
+                //change window position according to editcomponent location
+                else if (isOverEditComponent || (isOverEditComponent && this.logWindow.IsOverWindow)) {
+
+                    //get window location from edit component
+                    var editComponentCelId = this.CurrentSession.CurrentEditComponent.EditComponentCellId;
+                    var windowPlaceholderDiv = document.getElementById(editComponentCelId);
+                    if (windowPlaceholderDiv) {
+                        windowPlaceholderWidth = windowPlaceholderDiv.clientWidth;
+                        windowPlaceholderHeight = windowPlaceholderDiv.clientHeight;
+                    }
+
+                    //update top,left poisition
+                    topProperty = (windowPlaceholderHeight - windowHeight) / 2;
+                    leftProperty = (windowPlaceholderWidth - windowWidth) / 2;
+                }
+
+                //#endregion
+            }
 
             if (SetOverProperty) {
                 if (this.logWindow.IsOverWindow) {

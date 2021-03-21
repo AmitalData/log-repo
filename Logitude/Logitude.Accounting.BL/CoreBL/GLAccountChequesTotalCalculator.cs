@@ -29,9 +29,9 @@ namespace Logitude.Accounting.BL.CoreBL
         public void RecalculateChequesTotalForBillToAccount(string billToAccountId)
         {
             GLAccountMoreDataPM glaccountMoreData = GetGLAccountMoreDataConnectedToBillToAccount(tenant, billToAccountId);
-            
+
             ResetChequesTotals(glaccountMoreData);
-            
+
             List<ARPaymentChequePM> cheques = GetChequesOfPaymentBillToAccount(tenant, billToAccountId);
             foreach (ARPaymentChequePM cheque in cheques)
                 AddChequeAmountToTotal(glaccountMoreData, cheque);

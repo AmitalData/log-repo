@@ -440,3 +440,15 @@ __pycache__/
 *.png
 /Logitude/AngularModules/CypressTesting/Shipment/cypress/Reports
 /Logitude/AngularModules/CypressTesting/Shipment/mochawesome-report
+ 
+
+/Logitude/AngularModules/CypressTesting/Accounting/mochawesome-report
+
+/Logitude/JustWebFreight/WebFreight.Web/AngularLogin
+
+ 
+
+/Logitude/AngularModules/CypressTesting/Ticket/mochawesome-report
+
+/Logitude/AngularModules/LoginModules/dist/build.js
+

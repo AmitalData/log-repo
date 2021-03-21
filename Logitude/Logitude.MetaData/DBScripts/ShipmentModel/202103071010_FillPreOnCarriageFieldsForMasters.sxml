@@ -1,0 +1,34 @@
+﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Shipments">
+  <Sql Version="1">
+    <![CDATA[
+
+UPDATE ShipmentMasterDatas 
+SET PreCarriageTransportModeId = Shipments.PreCarriageTransportModeId,
+    PreCarriageFromPortId = Shipments.PreCarriageFromPortId,
+    PreCarriageToPortId = Shipments.PreCarriageToPortId,
+    PreCarriageCarrierId = Shipments.PreCarriageCarrierId,
+    PreCarriageCarrierNumber = Shipments.PreCarriageCarrierNumber,
+    PreCarriageETD = Shipments.PreCarriageETD,
+    PreCarriageATD = Shipments.PreCarriageATD,
+    PreCarriageETA = Shipments.PreCarriageETA,
+    PreCarriageATA = Shipments.PreCarriageATA,
+    PreCarriageVesselId = Shipments.PreCarriageVesselId,
+    OnCarriageTransportModeId = Shipments.OnCarriageTransportModeId,
+    OnCarriageFromPortId = Shipments.OnCarriageFromPortId,
+    OnCarriageToPortId = Shipments.OnCarriageToPortId,
+    OnCarriageCarrierId = Shipments.OnCarriageCarrierId,
+    OnCarriageCarrierNumber = Shipments.OnCarriageCarrierNumber,
+    OnCarriageETD = Shipments.OnCarriageETD,
+    OnCarriageATD = Shipments.OnCarriageATD,
+    OnCarriageETA = Shipments.OnCarriageETA,
+    OnCarriageATA = Shipments.OnCarriageATA,
+    OnCarriageVesselId = Shipments.OnCarriageVesselId,
+    OnCarriageAdditionalTransportModeCode = Shipments.OnCarriageAdditionalTransportModeCode,
+    SplitOnCarriage = Shipments.SplitOnCarriage  
+FROM Shipments 
+INNER JOIN ShipmentMasterDatas ON ShipmentMasterDatas.Id = Shipments.Id  
+WHERE Shipments.ShipmentLevelCode != 'H' and $LastCounterWhere$
+
+    ]]>
+  </Sql>
+</Script>

@@ -76,7 +76,7 @@
                                                 <div></div>
                                             </td>
                                             <td style="width: 50px;">
-                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="item.EditClicked()" [disabled]="!item.IsTransferredEnabled"></IconButton>
+                                                <IconButton [Name]="'Edit'" attr.data-cy="{{'Edit' + item.DescriptionTitle | IdGeneratorPipe}}" [IsSmall]="true" (click)="item.EditClicked()" [disabled]="!item.IsTransferredEnabled"></IconButton>
                                             </td>
                                             <td style="width:2px;">
                                                 <div></div>

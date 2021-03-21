@@ -42,6 +42,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
         private PortRepository PortRepository;
         private ShipmentSubTypeRepository shipmentSubTypeRepository;
         private ShipmentSubTypeQuery shipmentSubTypeQuery;
+        private ContactRepository contactRepository;
         public CustomsTransferService(List<ShipmentDataView> shipments, string filename, string type, int tenant)
         {
             this.tenant = tenant;
@@ -58,6 +59,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
             PortRepository = new PortRepository(commoContext);
             shipmentSubTypeRepository = new ShipmentSubTypeRepository(tenant);
             shipmentSubTypeQuery = new ShipmentSubTypeQuery(shipmentSubTypeRepository);
+            contactRepository = new ContactRepository(tenant);
             this.InitializeExcelFile();            
         }
 
@@ -88,6 +90,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                         sheet1.Range["A1:AX1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
                         sheet1.Range["K1"].EntireColumn.IsStringsPreserved = true;
                         sheet1.Range["O1"].EntireColumn.IsStringsPreserved = true;
+                        sheet1.Range["AQ2"].EntireColumn.IsStringsPreserved = true;
                         break;
                     }
 
@@ -323,12 +326,14 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
 
                         if (string.IsNullOrEmpty(containerType))
                         {
-                            containerType = package.PackageType == null ? "" : package.PackageType.Code;
+                            containerType = item.ShipmentTypeId == "LCL"  || item.ShipmentTypeId == "LCLD" ? (package.LCLPackageType == null ? "" : package.LCLPackageType.Code) : (package.PackageType == null ? "" : package.PackageType.Code);
                         }
 
                         else
                         {
-                            containerType += ", " + (package.PackageType == null ? "" : package.PackageType.Code);
+                            containerType += item.ShipmentTypeId == "LCL" || item.ShipmentTypeId == "LCLD" ? 
+                                (", " + (package.LCLPackageType == null ? "" : package.LCLPackageType.Code)):
+                                (", " + (package.PackageType == null ? "" : package.PackageType.Code));
                         }
                     }
                     #endregion
@@ -355,6 +360,11 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                         {
                             dangerousUNNumber += ", " + package.UnNumber;
                         }                        
+                    }
+                    Contact emergancyContact = null;
+                    if (item.EmergencyContactId != null)
+                    {
+                        emergancyContact = contactRepository.GetSingleContact(item.EmergencyContactId, tenant);
                     }
                     #endregion
 
@@ -411,7 +421,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
 
                     if (dangerousShipmentPackages.Count > 0 || item.IsDangerous)
                     {
-                        row[31] = "12";
+                        row[31] = "Y";
                     }
 
                     else
@@ -437,8 +447,8 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                     //row[39] = "";
                     row[40] = dangerousClassNumber;
                     row[41] = dangerousUNNumber;
-                    row[42] = "";
-                    row[43] = "";
+                    row[42] = emergancyContact != null ? emergancyContact.BusinessPhone : "";
+                    row[43] = emergancyContact != null ? emergancyContact.EnglishName : "";
                     row[44] = "1";
                     row[45] = containerNumber;
                     row[46] = containerType;
@@ -540,6 +550,11 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                             {
                                 row[16] = countryCity.Code;
                             }
+
+                            else
+                            {
+                                row[16] = shipperAddress.City;
+                            }
                         }
 
                         row[17] = shipperAddress.City;
@@ -563,6 +578,11 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                             if (countryCity != null)
                             {
                                 row[22] = countryCity.Code;
+                            }
+
+                            else
+                            {
+                                row[22] = consigneeAddress.City;
                             }
                         }
 

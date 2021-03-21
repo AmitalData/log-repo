@@ -138,6 +138,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ShipmentSubTypeFeature = tenantFeatures.Where(d => d.Code == "ShipmentSubType.M.ShipmentSubTypes" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature HorseFeature = tenantFeatures.Where(d => d.Code == "Horse.M.Horses" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature UserDefinedReportFeature = tenantFeatures.Where(d => d.Code == "UserDefinedReportFeature" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature DailyCurrenciesRatesFeature = tenantFeatures.Where(d => d.Code == "DailyCurrenciesRates" && d.FeatureTypeCode == "MENU").FirstOrDefault();
 
             #endregion
 

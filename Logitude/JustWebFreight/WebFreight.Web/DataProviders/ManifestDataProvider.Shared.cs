@@ -135,6 +135,7 @@ namespace WebFreight.Web.DataProviders
 
         public string ShipmentType { get; set; }
         public string ConsigneeName { get; set; }
+        public string ConsigneeAddress { get; set; }
         public string ConsigneeContactName { get; set; }
         public string ConsigneeContactEmail { get; set; }
         public string ConsigneePhoneNumber { get; set; }

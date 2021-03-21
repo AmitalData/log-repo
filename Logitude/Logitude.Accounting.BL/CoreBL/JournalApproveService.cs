@@ -31,6 +31,7 @@ using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 using Logitude.Server.Tools;
+using System.Web;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -45,18 +46,19 @@ namespace Logitude.Accounting.BL.CoreBL
         public const string QP_JournalId = "JournalId";
 
         private string _QMessageId;
-
+        private string _SelectedQueue;
         int _Tenant;
         string _SeedJournalId;
         private IAccountingContext _AccountingContext;
         private JournalPM _JournalPM;
         private JournalApproveParser _JournalApproveParser = null;
 
-        public JournalApproveService(int tenant, string seedJournalId, string MessageId)
+        public JournalApproveService(int tenant, string seedJournalId, string MessageId, string selectedQueue)
         {
             _Tenant = tenant;
             _SeedJournalId = seedJournalId;
             this._QMessageId = MessageId;
+            this._SelectedQueue = selectedQueue;
         }
 
 
@@ -206,10 +208,12 @@ namespace Logitude.Accounting.BL.CoreBL
                     _AccountingContext = AccountingContext.GetContext(_Tenant);
                     logger = (_AccountingContext as DbContextBase).CreateLogger();
 
-                    
+                    bool supperssSaveOnUpdateMultiDueIsFaster = true;
                     //if (_ExecAsSP)
                     //{
                     this.Exec_usp_AccountingStreaming(myLedgerTransactionsWithCounters, allGLAccountTotalByMonths.ToList());
+
+                    Impersonate();
                     //CreateReconcileFromStorno(myLedgerTransactionsWithCounters);
                     ICreateAutoReconcileWhileStreamingService myCreateAutoReconcileWhileStreamingService = new CreateAutoReconcileWhileStreamingService();
                     myCreateAutoReconcileWhileStreamingService.MustInit(_AccountingContext, _JournalPM, myLedgerTransactionsWithCounters);
@@ -220,7 +224,12 @@ namespace Logitude.Accounting.BL.CoreBL
                         var myReconciliationUpdateService = new ReconciliationUpdateService(_AccountingContext, new Dictionary<string, IContext>(), _JournalPM.Tenant);
                         myReconciliationUpdateService.SuppressResetDraftOpenReconciliation = true;
 
-                        myReconciliationUpdateService.UpdateMulti(myCreateAutoReconcileWhileStreamingService.ReconciliationList, new List<ReconciliationPM>(), _JournalPM, true);
+                        myReconciliationUpdateService.UpdateMulti(myCreateAutoReconcileWhileStreamingService.ReconciliationList, new List<ReconciliationPM>(), _JournalPM, !supperssSaveOnUpdateMultiDueIsFaster);
+                        if (supperssSaveOnUpdateMultiDueIsFaster)
+                        {
+                            _AccountingContext.SaveChanges();
+                        }
+
                         var toUpdateInReconcileProgressToFalse = true;// i think its not happened - have to test b4 
                         if (toUpdateInReconcileProgressToFalse)
                         {
@@ -244,8 +253,11 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             var myExternalReconciliationUpdateService = new ExternalReconciliationUpdateService(_AccountingContext, new Dictionary<string, IContext>(), _JournalPM.Tenant);
 
-                            myExternalReconciliationUpdateService.UpdateMulti(myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList, new List<ExternalReconciliationPM>(), _JournalPM, true);
-
+                            myExternalReconciliationUpdateService.UpdateMulti(myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList, new List<ExternalReconciliationPM>(), _JournalPM, !supperssSaveOnUpdateMultiDueIsFaster);
+                            if (supperssSaveOnUpdateMultiDueIsFaster)
+                            {
+                                _AccountingContext.SaveChanges();
+                            }
                             var toUpdateInReconcileProgressToFalse = true;// next sprint
                             if (toUpdateInReconcileProgressToFalse)
                             {
@@ -290,6 +302,50 @@ namespace Logitude.Accounting.BL.CoreBL
                     LogMessagingUtil.Instance.AppendLine("AccountingStreamingInNewSerializableTransaction:Took:" + sw.Elapsed.ToString());
                 }
             }
+        }
+
+        private void Impersonate()
+        {
+            try
+            {
+                var 
+                userIdentityNameb4 = AuthenticationUtil.ResolveUserIdentityName(_JournalPM.Tenant); 
+                if (HttpContext.Current != null)
+                {
+                    return; 
+                }
+                    
+                if (string.IsNullOrEmpty(_JournalPM.CreatedByUserId))
+                {
+                    LogMessagingUtil.Instance.AppendLine("no Impersonate");
+                    return; 
+                }
+                ContactRepository contactRep = new ContactRepository(_JournalPM.Tenant);
+                var contact = contactRep.GetSingleContact(_JournalPM.CreatedByUserId, _JournalPM.Tenant);
+                if (contact == null)
+                {
+                    LogMessagingUtil.Instance.AppendLine("no Impersonate contact == null");
+                    return; 
+                }
+                
+                if (string.IsNullOrEmpty(contact.Email))
+                {
+                    LogMessagingUtil.Instance.AppendLine("no Impersonate");
+                    return;
+                }
+                LogMessagingUtil.Instance.AppendLine($"Impersonate to {contact.Email}");
+                AuthenticationUtil.Impersonate(_JournalPM.Tenant, contact.Email,"");
+                
+                var userIdentityNameafter = AuthenticationUtil.ResolveUserIdentityName(_JournalPM.Tenant);
+                LogMessagingUtil.Instance.AppendLine($"Impersonate to {contact.Email}");
+
+            }
+            catch (Exception ee)
+            {
+
+                LogMessagingUtil.Instance.AppendLine($"no Impersonate Exception ee{ee.Message}");
+            }
+            
         }
 
         private void UpdateInExternalReconcileProgressToFalse()
@@ -536,7 +592,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 try
                 {
                     var guid = Guid.NewGuid().GetHashCode().ToString();
-                    var approveJournalService = new JournalApproveService(SeedTenant, journalId, guid);
+                    var approveJournalService = new JournalApproveService(SeedTenant, journalId, guid,K_AccountingJournalApproveWR);
                     approveJournalService.SubmitApprove(actions);
                 }
                 catch (Exception eee)
@@ -604,7 +660,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 try
                 {
                     var guid = Guid.NewGuid().GetHashCode().ToString();
-                    var approveJournalService = new JournalApproveService(SeedTenant, journalId, guid);
+                    var approveJournalService = new JournalApproveService(SeedTenant, journalId, guid,K_AccountingJournalApproveWR);
                     approveJournalService.SubmitApprove(actions);
                 }
                 catch (Exception eee)
@@ -693,7 +749,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
         //private static void ProcessMessage(BrokeredMessage message)
-        private static bool ProcessMessage_Db(DbQueueService myDbQueueService, QueueResponse message)
+        private static bool ProcessMessage_Db(DbQueueService myDbQueueService, QueueResponse message, string selectedQueue)
         {
             string MessageId = "";
             int tenant = -1;
@@ -719,7 +775,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 JournalApproveService.MyActions actions =
             JournalApproveService.MyActions.BuildLedgerTransaction | JournalApproveService.MyActions.BuildGLAccountTotalByMonths;
-                var myJournalApproveService = new JournalApproveService(tenant, qpJournalId, MessageId);
+                var myJournalApproveService = new JournalApproveService(tenant, qpJournalId, MessageId, selectedQueue);
                 var res = myJournalApproveService.SubmitApprove(actions);
                 
                 if (res.Success)
@@ -875,12 +931,14 @@ namespace Logitude.Accounting.BL.CoreBL
                               AmountToReconcile = r.AmountToReconcile,
 
                               Mark = r.Mark,
+                              //IsReconciled = 
+                              //(this._SelectedQueue == K_AccountingJournalApproveWR && r.OpenAmount == 0) 
+                              //? true : r.IsReconciled,
                               IsReconciled = r.IsReconciled,
                               IsExternalReconcile = r.IsExternalReconcile
                           }
                     ).ToList();
-
-
+                       
                         var tableLTRans = DBTypeLedgerTransactionsWithCounters.ToDataTable();
 
                         SqlParameter tLedgerTransactionsTypePar = new SqlParameter("@tLedgerTransactionsType", SqlDbType.Structured);
@@ -1008,7 +1066,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
                     SetLastActivate?.Invoke();
-                    if (ProcessMessage_Db(queueservice, response))
+                    if (ProcessMessage_Db(queueservice, response, selectedQueue))
                     {
                         LogDoneItemInMemoryAction?.Invoke();
                     }

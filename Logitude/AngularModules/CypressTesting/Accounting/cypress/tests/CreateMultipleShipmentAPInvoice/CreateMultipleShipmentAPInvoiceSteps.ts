@@ -6,12 +6,12 @@ import { ShipmentSelectors } from '../../../../Shipment/cypress/selectors/Select
 import { ShipmentDetails } from '../../../../Shipment/cypress/models/ShipmentDetails';
 import { PackagesDetails } from '../../../../Shipment/cypress/models/PackagesDetails';
 import { PayableDetails } from '../../../../Shipment/cypress/models/PayableDetails';
-import { APInvoiceDetails } from '../../../../Shipment/cypress/models/APInvoiceDetails';
+import { APInvoiceDetails } from 'cypress/models/APInvoiceDetails';
 import * as BaseAssertion from '../../../../Base/cypress/actions/Assertion';
 import { CustomerDetails } from '../../../../Common/cypress/models/CustomerDetails';
 import { RequestAliases } from '../../../../Base/cypress/constants/RequestAliases';
-import { CommonSelectors } from '../../../../Common/cypress/selectors/Selectors';
 import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors';
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 //#region variables
 let shipmentDetails: ShipmentDetails;
@@ -19,16 +19,32 @@ let apInvoiceDetails: APInvoiceDetails;
 let payableDetails: PayableDetails;
 let shipmentNumbers: string[] = [];
 let customerCode: string;
-//#endregion
+let AccountingSystem: string;
 
-//#region Create customer
-Given("the user logged in and navigates to customers workspace", () => {
+//#endregion
+//#region Update Accounting System
+Given("the user logged in", () => {
   cy.Login();
+});
+Given("accounting System as {string}", (accountingSystem) => {
+  AccountingSystem = accountingSystem;
+});
+
+When("change the accounting system", () => {
+  AccountingActions.changeAccountingsSystem(AccountingSystem)
+});
+
+Then("the accounting system should update successfully", () => {
+  BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
+});
+//#endregion
+//#region Create customer
+Given("the user navigates to customers workspace", () => {
   CommonActions.NavigatesToCustomersWorkspace();
 });
 
 Given("a customer with the following details", (dataTable) => {
-  let customerDetails = dataTable.hashes()[0] as CustomerDetails;
+  let customerDetails = Assists.CreateInstance<CustomerDetails>(dataTable, true);
   CommonActions.AddNewCustomer(customerDetails);
 });
 
@@ -43,30 +59,13 @@ Then("the customer should create successfully", () => {
 });
 //#endregion
 
-//#region Update customer
-Given("the user in the customer's billing tab", () => {
-  CommonActions.OpenCustomer(customerCode);
-  cy.Click(CommonSelectors.CustomerBillingTab, null, false);
-});
-
-When("activate consolidated invoice option", () => {
-  cy.Click(CommonSelectors.EnableConsolidationInvoices, null, false);
-  CommonActions.UpdateCustomer();
-});
-
-Then("the customer should update successfully", () => {
-  BaseAssertion.AssertStatusCode(RequestAliases.Customers, 200)
-  cy.Click(BaseSelectors.Backbutton, null, false);
-});
-//#endregion
-
 //#region Create first/second direct export air shipment
 Given("the user in shipments workspace", () => {
   ShipmentActions.NavigatesToShipmentsWorkspace();
 });
 
 Given("a direct shipment with the following details", (dataTable) => {
-  shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+  shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
   ShipmentActions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
   shipmentDetails.Shipper = customerCode;
   ShipmentActions.FillShipmentWizardsFields(shipmentDetails);
@@ -94,13 +93,13 @@ Then("the second direct should create successfully", () => {
 //#region Update packages/payable tabs
 Given("the user add package with the following details", (dataTable) => {
   ShipmentActions.OpenShipment(shipmentDetails.ShipmentNumber);
-  let packagesDetails = dataTable.hashes() as PackagesDetails[];
+  let packagesDetails = Assists.CreateSet<PackagesDetails>(dataTable);
   ShipmentActions.FillPackageTab(shipmentDetails.TransportMode, packagesDetails)
 });
 
 Given("the user add payable with the following details", (dataTable) => {
   ShipmentActions.OpenShipment(shipmentDetails.ShipmentNumber);
-  payableDetails = dataTable.hashes()[0] as PayableDetails;
+  payableDetails = Assists.CreateInstance<PayableDetails>(dataTable, true);
   ShipmentActions.FillPayablesTab(payableDetails);
 });
 
@@ -121,7 +120,7 @@ Given("the user in Accounts Payable workspace", () => {
 });
 
 Given("a multiple AP invoice  with a random invoice number and the following details", (dataTable) => {
-  apInvoiceDetails = dataTable.hashes()[0] as APInvoiceDetails
+  apInvoiceDetails = Assists.CreateInstance<APInvoiceDetails>(dataTable, true)
   AccountingActions.FillAPInvoiceDetails(apInvoiceDetails, true);
 });
 

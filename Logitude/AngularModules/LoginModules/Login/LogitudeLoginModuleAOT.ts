@@ -9,8 +9,19 @@ import {LoginComponents} from './ModuleDeclarations';
 import {ErrorHandler} from '@angular/core';
 import {LoginService} from './LoginService';
 import {PasswordChangeService} from './PasswordChangeService';
+import { HybridLabelsBrandingDataService } from './HybridLabels/Services/HybridLabelsBrandingDataService';
+import { BrandingDataService } from './HybridLabels/Services/BrandingDataService';
+import { CommonModule } from '@angular/common';
+import { SessionInfo } from './SessionInfo';
+
+export function getBaseUrl() {
+    const logitudeURL = SessionInfo.GetLogitudeURL();
+    return logitudeURL;
+}
+
 @NgModule({
-    imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule],
+
+    imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule, CommonModule],
 
     declarations:
     [ 
@@ -39,10 +50,14 @@ import {PasswordChangeService} from './PasswordChangeService';
     providers:
     [
         LoginService,
-        PasswordChangeService
+            PasswordChangeService,
+            HybridLabelsBrandingDataService,
+            BrandingDataService ,
+              { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] }
     ],
 
     bootstrap: [RootComponentAOT]
 })
+     
 
 export class LogitudeLoginModuleAOT { }
