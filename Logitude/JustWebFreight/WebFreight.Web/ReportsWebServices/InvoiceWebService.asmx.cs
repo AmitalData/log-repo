@@ -1268,7 +1268,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.IRSNumber = billToCard.IRSNumber;
                     invoicedataprovider.BillToCustomerCode = billToCard.Code;
                     invoicedataprovider.ReceivablesExternalID = billToCard.ReceivablesAccountingCard;
-
+                    SetBillToSalesMan(invoicedataprovider, userRepository, billToCard);
                     Address billToCardAddress = addressRepository.GetSingleAddress(currentInvoice.BillToAddressId, tenant);
                     if (billToCardAddress != null)
                     {
@@ -1293,7 +1293,7 @@ namespace WebFreight.Web.ReportsWebServices
                             }
 
                             if (billToCardAddress.State != null)
-                            invoicedataprovider.BillToState = loggedcontact.DontShowLocalLabels ? billToCardAddress.State.EnglishName : billToCardAddress.State.LocalName;
+                                invoicedataprovider.BillToState = loggedcontact.DontShowLocalLabels ? billToCardAddress.State.EnglishName : billToCardAddress.State.LocalName;
 
                             if (billToCardAddress.IsLocalLanguage && !string.IsNullOrEmpty(invoicedataprovider.BillTo_LocalName))
                             {
@@ -1335,7 +1335,7 @@ namespace WebFreight.Web.ReportsWebServices
                     }
 
                     Address billingAddress = addressRepository.GetBillingAddressByCardId(billToCard.Id, tenant);
-                    if(billingAddress != null)
+                    if (billingAddress != null)
                     {
                         invoicedataprovider.BillToBillingAddress = General.GetAddress(billingAddress);
                     }
@@ -2359,6 +2359,21 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             return invoicedataprovider;
+        }
+
+        private static void SetBillToSalesMan(InvoiceDataProvider invoicedataprovider, UserRepository userRepository, Card billToCard)
+        {
+            User salesman = userRepository.GetSingleUser(billToCard.SalesmanUserId, billToCard.Tenant, false);
+            if (salesman != null)
+            {
+                if (salesman.Contact != null)
+                {
+                    var showLocals = !salesman.Contact.DontShowLocalLabels;
+                    var englishName = salesman.Contact.EnglishName;
+                    var localName = salesman.Contact.LocalName;
+                    invoicedataprovider.BillToSalesMan = showLocals ? (localName == null ? englishName : localName) : englishName;
+                }
+            }
         }
 
         public static string FirstCharToUpper(string input)
