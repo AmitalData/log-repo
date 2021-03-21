@@ -25,7 +25,7 @@ export class AWBDangerousPackageComponent extends BaseComponent {
 
     SetWindowArgs(entityPM: ShipmentPM) {
         this.EntityPM = entityPM;
-        this.ObjectTableName = this.EntityPM.ShipmentLevelCode == "C" ? "Master" : "Shipment";
+        this.ObjectTableName = "Shipment";
         this.SetUIProperties();
         this.Clone();
     }
