@@ -26,6 +26,7 @@ import { TariffProductListService } from '../../Services/StandardLists/TariffPro
 import { TariffProductList } from '../../EntityLists/TariffProductList';
 import { TariffSettingPM } from '../../EntityPMs/TariffSettingPM';
 import { QuoteChargesBehaviours } from '../../../QuoteModules/QuoteCharges/Behaviours/QuoteChargesBehaviours';
+import { QuotePM } from '../../../Quote/EntityPMs/QuotePM';
 
 @Component({
 
@@ -925,7 +926,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 }
 
                 var isDuplicate = this.CheckTariffPayablesDuplicate();
-                if (isDuplicate) {
+                var isSellerDifferentFromMainCarrier = this.CheckTariffSellerAndShipmentMainCarrier(item);
+                if (isDuplicate && !isSellerDifferentFromMainCarrier ) {
                     // override
                     var confirmWindow = new ConfirmWindow();
                     confirmWindow.Show("This generate will update on the existing lines.");
@@ -939,10 +941,37 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                         }
                     });
                 }
-                else {
-                    this.CurrentSession.StartBusyIndicatorLoading();
-                    this.AssignTariffPayablesToShipment();
+                else if (!isDuplicate && isSellerDifferentFromMainCarrier) {
+                      // override
+                      var confirmWindow = new ConfirmWindow();
+                       confirmWindow.Show("Confirm adding a price check with a different Carrier than the main carriage carrier.");
+                       confirmWindow.WindowClosed.subscribe((event: any) => {
+                          if (confirmWindow.Yes) {
+                            this.CurrentSession.StartBusyIndicatorLoading();
+                            this.OverrideTariffPayablesOfShipment();
+                          }
+                          if (confirmWindow.No) {
+                            //nothing
+                          }
+                       });      
                 }
+                else if (isDuplicate && isSellerDifferentFromMainCarrier) {
+                    var confirmWindow = new ConfirmWindow();
+                    confirmWindow.Show("Confirm adding a price check with a different Carrier than the main carriage carrier. Also, This generate will update on the existing lines.");
+                    confirmWindow.WindowClosed.subscribe((event: any) => {
+                        if (confirmWindow.Yes) {
+                            this.CurrentSession.StartBusyIndicatorLoading();
+                            this.OverrideTariffPayablesOfShipment();
+                        }
+                        if (confirmWindow.No) {
+                            //nothing
+                        }
+                    });
+                }
+                else {
+                       this.CurrentSession.StartBusyIndicatorLoading();
+                       this.AssignTariffPayablesToShipment();
+                     }
             }
         }
     }
@@ -987,6 +1016,19 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             }
         });
         return isDuplicate;
+    }
+
+    CheckTariffSellerAndShipmentMainCarrier(item: TariffSearchSummary): any {
+        var isDifferentFromCarrier = true;
+        this.TariffList_Shipment.forEach(payable => {
+            var shipment: ShipmentPM = this.FatherComponent.EntityPM;
+            if (shipment != null) {
+                if (shipment.MainCarriageCarrierId == item.SellerId || shipment.MainCarriageCarrierId == null) {
+                    isDifferentFromCarrier = false;
+                }         
+            }
+        });
+        return isDifferentFromCarrier;
     }
 
     AddNewTariffPayable(newRecord: any, notes = null, packageId = null) {
@@ -1172,7 +1214,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
 
             var isDuplicate = this.CheckTariffChargesDuplicate();
-            if (isDuplicate) {
+            var isSellerDifferentFromMainCarrier = this.CheckTariffSellerAndQuoteMainCarrier(item);
+            if (isDuplicate && !isSellerDifferentFromMainCarrier) {
                 // override
                 var confirmWindow = new ConfirmWindow();
                 confirmWindow.Show("This generate will update on the existing lines.");
@@ -1185,6 +1228,33 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                         //nothing
                     }
                 });
+            }
+            else if (!isDuplicate && isSellerDifferentFromMainCarrier) {
+                // override
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Show("Confirm adding a price check with a different Carrier than the main carriage carrier.");
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                        this.CurrentSession.StartBusyIndicatorLoading();
+                        this.OverrideTariffQuoteCharges();
+                    }
+                    if (confirmWindow.No) {
+                        //nothing
+                    }
+                });
+            } else if (isDuplicate && isSellerDifferentFromMainCarrier) {
+                // override
+                 var confirmWindow = new ConfirmWindow();
+                 confirmWindow.Show("Confirm adding a price check with a different Carrier than the main carriage carrier.Also,This generate will update on the existing lines.");
+                 confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                        this.CurrentSession.StartBusyIndicatorLoading();
+                        this.OverrideTariffQuoteCharges();
+                    }
+                    if (confirmWindow.No) {
+                        //nothing
+                    }
+                 });
             }
             else {
                 var freightChrage = this.CheckFreightDuplicate();
@@ -1329,6 +1399,19 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             }
         });
         return isDuplicate;
+    }
+
+    CheckTariffSellerAndQuoteMainCarrier(item: TariffSearchSummary): any {
+        var isDifferentFromCarrier = true;
+        this.TariffList_Quote.forEach(payable => {
+            var quote: QuotePM = this.FatherComponent.EntityPM;
+            if (quote != null) {
+                if (quote.MainCarriageCarrierId == item.SellerId || quote.MainCarriageCarrierId == null  ) {
+                    isDifferentFromCarrier = false;
+                }
+            }
+        });
+        return isDifferentFromCarrier;
     }
     AddNewTariffQuoteCharge(item: any, isOFC: boolean, isSurcharge : boolean) {
         this.myChargesTypeListService.getSingleFromCache(item.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
