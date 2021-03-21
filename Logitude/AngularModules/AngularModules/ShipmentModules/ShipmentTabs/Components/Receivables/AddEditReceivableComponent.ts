@@ -126,6 +126,10 @@ export class AddEditReceivableComponent {
                     this.DataContext.fatherComponent.OnFreightAmountChanged();
                 }
 
+                if (this.DataContext.MeasurementCode == "PFCL") {
+                this.DataContext.fatherComponent.OnPercentForeignAmountChanged();
+            }
+
                 this.DataContext.fatherComponent.ComputeShipmentFields();
             }
 
@@ -146,8 +150,10 @@ export class AddEditReceivableComponent {
     }
 
     ValidateAddingPFCLUOM() {
-        if (this.DataContext.ShipmentPM.ShipmentReceivables.filter(d => d.MeasurementCode == "PFCL").length == 1 && this.EntityPM.MeasurementCode == "PFCL") {
-            this.errors.push("Charge with Percent of foreign charges local amounts UOM already added");
+        if (this.EntityPM.MeasurementCode == "PFCL") {
+            if (this.DataContext.ShipmentPM.ShipmentReceivables.filter(d => d.MeasurementCode == "PFCL" && d != this.EntityPM).length > 0) {
+                this.errors.push("Charge with Percent of foreign charges local amounts UOM already added");
+            }
         }
     }
 
