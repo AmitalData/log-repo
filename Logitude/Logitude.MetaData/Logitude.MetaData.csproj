@@ -179,9 +179,19 @@
       <LastGenOutput>ControllersGenerator.cs</LastGenOutput>
       <LastOutputs>.\ControllersGenerator.cs</LastOutputs>
     </Content>
+    <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_APInvoices.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_APPayments.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_ARInvoices.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_ARPayments.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_Quotes.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_Shipments.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantProfitCurrency.dxml" />
+    <None Include="DBOthers\QuoteModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateQuoteComputedFields.dxml" />
     <None Include="DBOthers\QuoteModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateQuotes.dxml" />
+    <None Include="DBOthers\QuoteModel\Triggers\Trigger_AutomaticLastUpdateDateQuoteComputedFields.dxml" />
     <None Include="DBOthers\QuoteModel\Triggers\Trigger_AutomaticLastUpdateDateQuotes.dxml" />
     <None Include="DBScripts\GlobalModel\202102161503_UpdateTenantManagmentPrivatLabelDomain.sxml" />
+    <None Include="DBScripts\GlobalModel\202103133804_UpdateTenantManagmentScheduledTasksLimit.sxml" />
     <None Include="DBScripts\InfrastructureModel\202101120950_ModifyDBMigrationLastScriptTrigger.sxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\dbo.usp_DoTheTableDeletionSet.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\usp_SearchForeignkeyTree.dxml" />
@@ -274,6 +284,9 @@
     <None Include="DBScripts\GlobalModel\202010151325_InsertDocumentApprovalQueue.sxml" />
     <None Include="DBScripts\GlobalModel\202012291502_AddWarmCargoTrackingForBatchServicesDefinitions.sxml" />
     <None Include="DBScripts\GlobalModel\202012311128_UpdateWarmCargoTrackingForBatchServicesDefinitionsToInActive.sxml" />
+    <None Include="DBScripts\InfrastructureModel\GetDateFormateFunction.sxml" />
+    <None Include="DBScripts\InfrastructureModel\DropChangeCurrencyFunctions.sxml" />
+    <None Include="DBScripts\InfrastructureModel\GetLastRateFunction.sxml" />
     <None Include="DBScripts\InsertDBMigrationSettingsData.sxml" />
     <None Include="DBScripts\InvoiceModel\202012060902_FillPaidDateOfAPInvoices.sxml" />
     <None Include="DBScripts\InvoiceModel\202012201448_SAT voided invoices and payments.sxml" />
@@ -282,12 +295,23 @@
     <None Include="DBScripts\InvoiceModel\202128011350_AddNotesToAPInvoiceSearchField.sxml" />
     <None Include="DBScripts\InvoiceModel\202128011350_AddNotesToAPPaymentSearchField.sxml" />
     <None Include="DBScripts\InvoiceModel\202128011350_AddNotesToARInvoiceSearchField.sxml" />
+    <None Include="DBScripts\QuoteModel\202103081133_CalculateReceivablesPayablesQuoteComputedFileds.sxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DBScripts\QuoteModel\202103071547_FillQuoteComputedFileds.sxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DBScripts\QuoteModel\202103071234_CalculateCostAmountInSaleCurrencyInQouteCharges.sxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="DBScripts\QuoteModel\202010270950_AddIsRegionalTAXToQuoteTemplateTextCode.sxml" />
     <None Include="DBScripts\InvoiceModel\202010260915_UpdateSearchFieldsOfARInvoices.sxml" />
     <None Include="DBScripts\InvoiceModel\202010261215_UpdateSearchFieldsOfAPPayments.sxml" />
     <None Include="DBScripts\InvoiceModel\202010261230_UpdateSearchFieldsOfARPayments.sxml" />
+    <None Include="DBScripts\QuoteModel\202102281440_SetDefaultQuoteExpirationDays.sxml" />
     <None Include="DBScripts\QuoteModel\UpdateAutomaticLastUpdateDateOnQuote.sxml" />
     <None Include="DBScripts\QuoteModel\UpdateAutomaticLastUpdateDateOnQuoteClosingReason.sxml" />
+    <None Include="DBScripts\QuoteModel\UpdateAutomaticLastUpdateDateOnQuoteComputedFields.sxml" />
     <None Include="DBScripts\QuoteModel\UpdateAutomaticLastUpdateDateOnQuoteStages.sxml" />
     <None Include="DBScripts\ScreenField Unique index removal.sxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\UpdateAllTenantsCustomersActualDataProcedure.dxml" />
@@ -443,6 +467,9 @@
     <None Include="DBScripts\ShipmentModel\202009281700_MapValuesFromIsBondedToIsCFS.sxml" />
     <None Include="DBScripts\ShipmentModel\202012100302_ComputeMasterHousesAmounts.sxml" />
     <None Include="DBScripts\ShipmentModel\202101100944_FillQuoteNumberOnShipmentBackward.sxml" />
+    <None Include="DBScripts\ShipmentModel\202103070931_FillPreOnForwardingFieldsForHouses.sxml" />
+    <None Include="DBScripts\ShipmentModel\202103071010_FillPreOnCarriageFieldsForMasters.sxml" />
+    <None Include="DBScripts\ShipmentModel\202103181700_AddShipmentNumberToSearchFieldInCustomsTransferHeaders.sxml" />
     <None Include="DBScripts\ShipmentModel\202101271225_AddNewSpecialHandlingCodes.sxml" />
     <None Include="DBScripts\ShipmentModel\202102241906_UpdateCustomerContactAndAddress.sxml" />
     <None Include="DBScripts\ShipmentModel\UpdateshipmentsCalculateDocumentsKPIFields.sxml" />
@@ -867,6 +894,7 @@
     <None Include="DBTables\QuoteModel\Quote.dxml" />
     <None Include="DBTables\QuoteModel\QuoteCharge.dxml" />
     <None Include="DBTables\QuoteModel\QuoteClosingReason.dxml" />
+    <None Include="DBTables\QuoteModel\QuoteComputedField.dxml" />
     <None Include="DBTables\QuoteModel\QuoteCustomerType.dxml" />
     <None Include="DBTables\QuoteModel\QuoteDocumentVersion.dxml" />
     <None Include="DBTables\QuoteModel\QuotePackage.dxml" />
@@ -976,6 +1004,7 @@
     <None Include="EntityFiles\InfrastructureModel\DescriptionOfGoods.lxml" />
     <None Include="EntityFiles\InfrastructureModel\QueryExportExecutionLog.lxml" />
     <None Include="EntityFiles\InfrastructureModel\WorkerRoleName.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuoteComputedField.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteSalesTotal.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteTemplateSectionType.lxml" />
     <None Include="EntityFiles\CommonDataModel\SharedLogistics.lxml" />

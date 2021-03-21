@@ -96,6 +96,7 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
     public AllShipments = 0;
     public OpenQuotes = 0;
     public OpenShipments = 0;
+    public CancelledShipments = 0;
     LoadQuriesCount() {
         var service = new QuoteDomainService();
         service.GetDataCountsForCRM(this.TenantPM.Id, this.EntityPM.Id).subscribe((myResult: any) => {
@@ -103,6 +104,7 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
             this.AllShipments = myResult.Result.AllShipments;
             this.OpenQuotes = myResult.Result.OpenQuotes;
             this.OpenShipments = myResult.Result.OpenShipments;
+            this.CancelledShipments = myResult.Result.CancelledShipments;
         });
     }
 
@@ -807,6 +809,13 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
                 myTableName = "Shipment";
                 myQueryCode = "All Shipments";
                 displayName="All Shipments"
+                break;
+            }
+
+            case "CancelledShipments": {
+                myTableName = "Shipment";
+                myQueryCode = "Cancelled Shipments";
+                displayName = "Cancelled Shipments"
                 break;
             }
 

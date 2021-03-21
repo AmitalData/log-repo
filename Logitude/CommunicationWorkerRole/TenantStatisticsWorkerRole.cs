@@ -31,6 +31,8 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using Logitude.SystemLogs.POCOs;
 using Logitude.SystemLogs.Repositories;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
 
 namespace CommunicationWorkerRole
 {
@@ -137,6 +139,8 @@ namespace CommunicationWorkerRole
                 OpportunityRepository myOpportunityRepository = new OpportunityRepository(tenantManagement.Id);
                 CommunicationLogRepository myCommunicationLogRepository = new CommunicationLogRepository(tenantManagement.Id);
                 ContactActivityLogRepository contactActivityLogRepository;
+                TariffRepository tariffsRepository = new TariffRepository(tenantManagement.Id);
+
                 Tenant tenant = tenantRepository.GetSingleTenant(tenantManagement.Id);
                 if (tenant != null && tenant.Address != null)
                 {
@@ -169,6 +173,7 @@ namespace CommunicationWorkerRole
                 IQueryable<Activity> myActivities = myActivityRepository.GetAll(tenantManagement.Id);
                 IQueryable<Opportunity> myOpportunities = myOpportunityRepository.GetAll(tenantManagement.Id);
                 IQueryable<CommunicationLog> myCommunicationLogs = myCommunicationLogRepository.GetCommunicationLogsByTenant(tenantManagement.Id);
+                IQueryable<Tariff> tariffs = tariffsRepository.GetAll(tenantManagement.Id);
 
                 if (shipments.Count() > 0)
                 {
@@ -385,6 +390,14 @@ namespace CommunicationWorkerRole
                             tenantManagement.FSALastReceivedDate = myCommunicationLogs.Where(d => d.Subject == "FSA" && d.CreateDate >= tenantManagement.FSALastReceivedDate).Max(s => s.CreateDate);
                         }
                     }
+                }
+
+                if (tariffs.Count() > 0)
+                {
+                    tenantManagement.LastTariffUpdateDate = tariffs.Max(s => s.UpdateDate);
+                    tenantManagement.LastTariffUsageDate = tariffs.Max(s => s.LastUsedDate);
+                    tenantManagement.LastWeekCreatedTariffs = tariffs.Where(s => s.CreateDate >= lastweek).Count();
+                    tenantManagement.LastMonthCreatedTariffs = tariffs.Where(s => s.CreateDate >= lastmonth).Count();
                 }
 
                 try

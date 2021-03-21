@@ -141,6 +141,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public int? PackagesQuantity { get; set; }
         [Column("DirectionId")]
 	    public string DirectionId { get; set; }
+        [Column("ShipmentLevelCode")]
+	    public string ShipmentLevelCode { get; set; }
         [Column("AssignedTruckerDone")]
 	    public bool AssignedTruckerDone { get; set; }
         [Column("AssignedTruckerDate")]
@@ -173,8 +175,6 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public string GrossWeightUnitCode { get; set; }
         [Column("ForwardingShipmentNumber")]
 	    public string ForwardingShipmentNumber { get; set; }
-        [Column("ShipmentLevelCode")]
-	    public string ShipmentLevelCode { get; set; }
     }
 }
 	 

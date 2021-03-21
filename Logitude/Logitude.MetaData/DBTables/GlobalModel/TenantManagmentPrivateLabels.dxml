@@ -88,11 +88,50 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="BackgroundImageId"
+    OldNames="BackgroundImage"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MainImageId"
+    OldNames="MainImage"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="PrivateLabelDomain"
     Type="varchar"
     Size="100"
     DefaultValue="'dsv.co.il'">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="MainColor"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LoginProgressImageId"
+    OldNames="LoginProgressImage"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ForgetPasswordImageId"
+    OldNames="ForgetPasswordImage"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
 </Table>

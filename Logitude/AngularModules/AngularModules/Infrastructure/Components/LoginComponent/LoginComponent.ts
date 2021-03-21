@@ -84,6 +84,7 @@ export class LoginComponent implements OnInit {
     private sATInterfaceSettingPMService: SATInterfaceSettingPMService;
     private UserExtendedPMService: UserExtendedPMService;
     private generalDomainService: GeneralDomainService;
+    private isLocalPrivateLable: boolean = false;
     constructor(private logitudeApplicationService: LogitudeApplicationService, private loginService: LoginService, public IndexedDbService: IndexedDbService, private entityResourceService: EntityResourceService, private _applicationTimersManager: ApplicationTimersManager, public entityListService: EntityListService,
         private _userLastLoginPMService: UserLastLoginPMService
     ) {
@@ -174,7 +175,12 @@ export class LoginComponent implements OnInit {
     StartLoginProcess() {
 
         var url = window.location.href;
-        if (url && url.indexOf('localhost') > -1) {
+        if (url.indexOf('localhost') > -1 && !AppTool.IsNullOrEmpty(url.split('?')[1])) {
+            this.isLocalPrivateLable = true;
+            window.sessionStorage.setItem('userdata', url.split('?')[1]);
+            SessionLocator.IsExternalParams = false;
+        }
+        if (url && url.indexOf('localhost') > -1 && !this.isLocalPrivateLable) {
             this.Email = "angular@fnarsoft.com";
             this.Password = "1";
             this.IsShowLoginForm = true;
@@ -220,6 +226,7 @@ export class LoginComponent implements OnInit {
                 this.HideTenantForm = true;
                 this.HidePendingLoading = true;
                 this.ShowLoginBusyIndicator = true;
+                data = this.isLocalPrivateLable ? decodeURIComponent(data) : data;
                 var userData = JSON.parse(data);
                 this.StartLoading(userData);
             }
@@ -502,6 +509,7 @@ export class LoginComponent implements OnInit {
         });
 
     }
+    GlobalSettings: any;
     LoadClosedTablesToWindow(CurrentTenant: number) {
 
         this.IndexedDbService.InitializeIndexedDB().subscribe((response:any) => {
@@ -535,19 +543,9 @@ export class LoginComponent implements OnInit {
                 });
 
                 this.loginService.GetGlobalSetting().subscribe((myResult: any) => {
-
-                    // Accounting - Abdullah
-                    if (InfraSettings.TenantPM) {
-
-
-                        myResult.LayoutDirection = SessionInfo.LoggedUserPM.LayoutDirection ? SessionInfo.LoggedUserPM.LayoutDirection.toLowerCase() : (InfraSettings.TenantPM.LayoutDirection ? InfraSettings.TenantPM.LayoutDirection.toLowerCase() : InfraSettings.TenantPM.LayoutDirection);
-
-                    }
-
-                    //
-
-                    ObjectsLocator.UpdateGlobalSetting(myResult);
-
+                    this.GlobalSettings = myResult;
+                    ObjectsLocator.UpdateGlobalSetting(this.GlobalSettings);
+                    
                     CachedDataManager.CheckSystemMetadataLastUpdate().subscribe((response: any) => {
                         this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe((response: any) => {
                             if(ObjectsLocator.GlobalSetting.WorkEnvironment=="customs"){
@@ -876,8 +874,8 @@ export class LoginComponent implements OnInit {
 
         this.myInfrastructureDomainService.GetFeatureToggles().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                SessionLocator.FeatureToggles = myResponse.Result;
-                
+                SessionLocator.FeatureToggles = myResponse.Result.filter(d => d.TenantNumber == this.Tenant ||
+                                                                        (this.Tenant >= d.FromTenantNumber && this.Tenant <= d.ToTenantNumber));
                 //33
             }
             this.IncreaseProgressBar();
@@ -1007,13 +1005,21 @@ export class LoginComponent implements OnInit {
             }
 
           if (this.CompletedLoadsCount === this.TotalNumberOfLoads && this.generalTableResourcesIsLoaded === true) {
-                console.log("===============>Changing Page<==================");
+              console.log("===============>Changing Page<==================");
+              this.SetLayoutDirection();
+              
                 ServiceLocator.RulesValidator = new RulesValidator();
                 this.timerToken = setTimeout(() => this.ChangePage(), 1000);
             }
         }
 
         //console.log("login load count:" + this.CompletedLoadsCount);
+    }
+    private SetLayoutDirection() {
+        if (InfraSettings.TenantPM) {
+            this.GlobalSettings.LayoutDirection = SessionInfo.LoggedUserPM.LayoutDirection ? SessionInfo.LoggedUserPM.LayoutDirection.toLowerCase() : (InfraSettings.TenantPM.LayoutDirection ? InfraSettings.TenantPM.LayoutDirection.toLowerCase() : InfraSettings.TenantPM.LayoutDirection);
+        }
+        ObjectsLocator.SetLayoutDirection(this.GlobalSettings.LayoutDirection);
     }
     private ChangePage() {
         if (this.timerToken) {

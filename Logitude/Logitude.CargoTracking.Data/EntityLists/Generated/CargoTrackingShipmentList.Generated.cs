@@ -151,6 +151,8 @@ namespace Logitude.CargoTracking.Data.EntityLists
        [DataMember]
        public string DirectionId  { get; set; }
        [DataMember]
+       public string ShipmentLevelCode  { get; set; }
+       [DataMember]
        public bool AssignedTruckerDone  { get; set; }
        [DataMember]
        public DateTime? AssignedTruckerDate  { get; set; }
@@ -182,8 +184,6 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public string GrossWeightUnitCode  { get; set; }
        [DataMember]
        public string ForwardingShipmentNumber  { get; set; }
-       [DataMember]
-       public string ShipmentLevelCode  { get; set; }
    }
 
 }

@@ -105,8 +105,15 @@
   </Column>
   <Column
     Name="IsMultiCurrency"
-    Type="bit">
+    Type="bit"
+    DefaultValue="0">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="QuoteExpirationDays"
+    Type="int">
+    <Constraints
+      Nullable="true" />
   </Column>
 </Table>

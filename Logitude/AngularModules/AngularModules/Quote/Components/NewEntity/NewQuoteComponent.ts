@@ -77,7 +77,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         var loadPr = listservice.getMock("Port");
         loadPr.then((res: any) => {
             res.subscribe((resp: any) => {
-                this.SubTypeFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SUB" && d.TenantNumber == SessionLocator.Tenant)[0]; 
+                this.SubTypeFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SUB")[0]; 
                 this.ScreenIsReady = true;
                 this.BuildFiltersLists();
                 this.OnFiltersChanged();
@@ -182,7 +182,8 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
             if (myResponse.HasError == false) {
                 if (myResponse.Result) {
                     if (myResponse.Result.Id) {
-                        this.QuoteSetting = myResponse.Result;                        
+                        this.QuoteSetting = myResponse.Result;
+                        this.ExpirationDays = this.QuoteSetting.QuoteExpirationDays;
                     }
 
                     if (this.IsCopyFromQuote) {
@@ -190,7 +191,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
                     }
                 }
 
-                this.IsAutomaticallyClosed = true;
+                this.IsAutomaticallyClosed = true;                
             }
         });
     }
@@ -2313,7 +2314,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         var myComponentPath: string = null;
         var title = "";
 
-        if (this.CustomerDependencyProperty1 == "AG") {
+        if (this.QuoteCustomerTypeCode == "AGT") {
             myComponentPath = "./CommonModules/CommonAgent/Components/NewEntity/NewAgentComponent";
         }
 

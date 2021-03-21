@@ -45,7 +45,8 @@ namespace Logitude.CommonTests.Steps.Security
         [Then(@"should receive error message say not authenticated to view company info")]
         public void ThenShouldReceiveErrorMessageSayNotAuthenticatedToViewCompanyInfo()
         {
-            Context.act.Should().ThrowExactly<Exception>().Where(m => m.Message.Contains("Sorry you’re not authenticated to view company info"));
+            Context.act.Should().ThrowExactly<AggregateException>()
+                .And.InnerExceptions[0].Message.Contains("Sorry you’re not authenticated to view company info");
         }
         #endregion
 

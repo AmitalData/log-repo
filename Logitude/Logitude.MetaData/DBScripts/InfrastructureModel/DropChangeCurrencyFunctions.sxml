@@ -1,0 +1,17 @@
+﻿<Script DBType="Main" Pre="true" Module="Infrastructure">
+  <Sql Version="3">
+    <![CDATA[
+    
+IF OBJECT_ID (N'dbo.GetDateFormate', N'FN') IS NOT NULL
+begin
+    DROP FUNCTION dbo.GetDateFormate;
+end
+
+IF OBJECT_ID (N'dbo.GetLastRate', N'FN') IS NOT NULL
+begin
+    DROP FUNCTION dbo.GetLastRate;
+end
+
+    ]]>
+  </Sql>
+</Script>

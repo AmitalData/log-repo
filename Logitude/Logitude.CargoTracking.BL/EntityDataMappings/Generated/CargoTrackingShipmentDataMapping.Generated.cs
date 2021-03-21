@@ -80,6 +80,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         ContainersNumbers, 
 	         PackagesQuantity, 
 	         DirectionId, 
+	         ShipmentLevelCode, 
 	         AssignedTruckerDone, 
 	         AssignedTruckerDate, 
 	         AssignedTruckerEstimationDate, 
@@ -95,8 +96,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         DeliveryNotes, 
 	         DeliveryExceptionReason, 
 	         GrossWeightUnitCode, 
-	         ForwardingShipmentNumber, 
-	         ShipmentLevelCode,
+	         ForwardingShipmentNumber,
 	      }
 
 
@@ -169,6 +169,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         ContainersNumbers, 
 	         PackagesQuantity, 
 	         DirectionId, 
+	         ShipmentLevelCode, 
 	         AssignedTruckerDone, 
 	         AssignedTruckerDate, 
 	         AssignedTruckerEstimationDate, 
@@ -184,8 +185,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         DeliveryNotes, 
 	         DeliveryExceptionReason, 
 	         GrossWeightUnitCode, 
-	         ForwardingShipmentNumber, 
-	         ShipmentLevelCode,
+	         ForwardingShipmentNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -479,6 +479,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 				entityPOCO.DirectionId = entityPM.DirectionId;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentLevelCode))
+            {
+				entityPOCO.ShipmentLevelCode = entityPM.ShipmentLevelCode;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedTruckerDone))
             {
 				entityPOCO.AssignedTruckerDone = entityPM.AssignedTruckerDone;
@@ -557,11 +562,6 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwardingShipmentNumber))
             {
 				entityPOCO.ForwardingShipmentNumber = entityPM.ForwardingShipmentNumber;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentLevelCode))
-            {
-				entityPOCO.ShipmentLevelCode = entityPM.ShipmentLevelCode;
 			}
 			}
 
@@ -858,6 +858,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.DirectionId = entityPOCO.DirectionId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShipmentLevelCode))
+            {
+					entityPM.ShipmentLevelCode = entityPOCO.ShipmentLevelCode;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AssignedTruckerDone))
             {
 					entityPM.AssignedTruckerDone = entityPOCO.AssignedTruckerDone;
@@ -936,11 +941,6 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForwardingShipmentNumber))
             {
 					entityPM.ForwardingShipmentNumber = entityPOCO.ForwardingShipmentNumber;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShipmentLevelCode))
-            {
-					entityPM.ShipmentLevelCode = entityPOCO.ShipmentLevelCode;
             }
 
 		}
@@ -1234,6 +1234,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
                 oldEntityPM.DirectionId = entityPM.DirectionId;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentLevelCode))
+            {
+                oldEntityPM.ShipmentLevelCode = entityPM.ShipmentLevelCode;
+            }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AssignedTruckerDone))
             {
                 oldEntityPM.AssignedTruckerDone = entityPM.AssignedTruckerDone;
@@ -1312,11 +1317,6 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwardingShipmentNumber))
             {
                 oldEntityPM.ForwardingShipmentNumber = entityPM.ForwardingShipmentNumber;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentLevelCode))
-            {
-                oldEntityPM.ShipmentLevelCode = entityPM.ShipmentLevelCode;
             }
 			
 		}

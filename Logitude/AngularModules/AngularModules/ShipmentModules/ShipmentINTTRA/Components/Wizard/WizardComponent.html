@@ -15,7 +15,7 @@
     </tr>
 
     <tr style="height: 1px;" *ngIf="ResultMessage">
-        <td style="text-align: center; vertical-align: middle; font-size: 14px; color: #009161;">
+        <td attr.data-cy="{{'ResultMessage' | IdGeneratorPipe}}" style="text-align: center; vertical-align: middle; font-size: 14px; color: #009161;">
             {{ResultMessage}}
         </td>
     </tr>

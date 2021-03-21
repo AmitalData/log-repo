@@ -60,6 +60,10 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(120)
                 .IsUnicode(false);
 
+            this.Property(t => t.QuerySection)
+                 .HasMaxLength(100)
+                 .IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("MenusTables");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -75,6 +79,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Code).HasColumnName("Code");
             this.Property(t => t.HtmlView).HasColumnName("HtmlView");
             this.Property(t => t.FeatureUniqeCode).HasColumnName("FeatureUniqeCode");
+            this.Property(t => t.QuerySection).HasColumnName("QuerySection");
 
 
             // Relationships

@@ -27,5 +27,6 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public bool IsSaleAsCostCurrency { get; set; }
         public int AutomaticallyCloseDays { get; set; }
         public bool IsMultiCurrency { get; set; }
+        public int? QuoteExpirationDays { get; set; }
     }
 }

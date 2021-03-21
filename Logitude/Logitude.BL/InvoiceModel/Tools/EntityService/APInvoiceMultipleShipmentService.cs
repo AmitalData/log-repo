@@ -1002,6 +1002,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void CreateInvoicePayment(APInvoicePaymentPM itemPM)
         {
+            this.ValidateIfSameRecordAdded(itemPM);
+
             itemPM.Id = IdCounter.GetNumber("APInvoicePayment", entityPM.Tenant);
 
             APInvoicePayment invoicePayment = new APInvoicePayment()
@@ -1240,6 +1242,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             invoice.PaidDate = entityPM.PaidDate;
+        }
+
+        private void ValidateIfSameRecordAdded(APInvoicePaymentPM item)
+        {
+            IQueryable<APInvoicePayment> invoicePayments = invoicePaymentRepository.GetAPInvoicePayments(item.APPaymentId, item.APInvoiceId, entityPM.Tenant);
+            if (invoicePayments.Count() > 0)
+            {
+                throw new Exception("This invoice already connected to same payment");
+            }
         }
         #endregion
 

@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     label {
         font-size: 13px;
@@ -28,9 +28,42 @@
         background: -moz-linear-gradient(left,red,orange,yellow,green,blue,indig);
         background: linear-gradient(to right, red,orange,yellow,green,blue,indigo);
     }
-</style>
 
-<table class="PreventSelect" style="background: url(Images/LoginScreen/screen_bg.jpg) center center;background-size: 100% 100%;position: absolute;">
+
+    .backgroundImage {
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-position: center center;
+        position: absolute;
+    }
+
+    .MainImage {
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    }
+
+    .loginProcess {
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-position: center center;
+    }
+
+    .image-container {
+        display: flex;
+        height: 100vh;
+        justify-content: center;
+        align-items: center;
+    }
+
+</style>
+<!--Spinner-->
+
+<div *ngIf="showSpinner" class="image-container">
+    <img src="./Images/LoginScreen/indicator.gif" width="100">
+</div>
+
+<table *ngIf="!showSpinner" class="PreventSelect backgroundImage" [style.background-image]="this.BackgroundImage">
     <tr>
         <td>
             <div></div>
@@ -47,7 +80,7 @@
                 <tr style="height: 114px;">
                     <td style="text-align: center;">
                         <a>
-                            <img src="./Images/LoginScreen/HeaderLogo.jpg" id="loginlogo" style="width:290px; height:114px;float:left;" />
+                            <img [src]="MainLogo" id="loginlogo" style="width:290px; height:114px;float:left;" />
                         </a>
                     </td>
                 </tr>
@@ -82,7 +115,7 @@
 
                                         <tr style="height: 260px; min-height: 260px; background: white;">
                                             <td>
-                                                <table style="background:url(./Images/LoginScreen/screen_kids.jpg) center center no-repeat; background-size: 100% 100%;">
+                                                <table class="loginProcess" [style.background-image]="this.LoginProgressImage">
                                                     <tr style="height: 10px;">
                                                         <td style="height: 10px;" colspan="2">
                                                             <div id="myBar"></div>

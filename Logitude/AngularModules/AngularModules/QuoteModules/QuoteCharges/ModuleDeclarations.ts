@@ -16,7 +16,7 @@ export const Components =
         FCLChargesComponent,
         LCLChargesComponent,
         QuoteVATDetailsComponent,
-        SelectBreaksComponent,
+        SelectBreaksComponent, 
     ];
 
 export class ModuleDeclarations {
@@ -32,7 +32,8 @@ export class ModuleDeclarations {
             case "FCLChargesComponent": { myResult = FCLChargesComponent; break; }
             case "LCLChargesComponent": { myResult = LCLChargesComponent; break; }
             case "QuoteVATDetailsComponent": { myResult = QuoteVATDetailsComponent; break; }
-            case "SelectBreaksComponent": { myResult = SelectBreaksComponent; break; }                
+            case "SelectBreaksComponent": { myResult = SelectBreaksComponent; break; } 
+                 
         }
 
         return myResult;

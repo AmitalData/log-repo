@@ -111,6 +111,12 @@
     <Content Include="Login\Components\DSVMobileLoginComponent.html" />
     <Content Include="Login\Components\DSVResetPasswordComponent.html" />
     <Content Include="Login\Components\ResetPasswordComponent.html" />
+    <Content Include="Login\HybridLabels\Components\HybridLoginProcessComponent.css" />
+    <Content Include="Login\HybridLabels\Components\HybridResetPasswordComponent.css" />
+    <Content Include="Login\HybridLabels\Components\HybridLoginComponent.css" />
+    <Content Include="Login\HybridLabels\Components\HybridLoginComponent.html" />
+    <Content Include="Login\HybridLabels\Components\HybridLoginProcessComponent.html" />
+    <Content Include="Login\HybridLabels\Components\HybridResetPasswordComponent.html" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -317,6 +323,15 @@
     <TypeScriptCompile Include="Login\Components\DSVResetPasswordComponent.ts" />
     <TypeScriptCompile Include="Login\Components\LoginComponent.ts" />
     <TypeScriptCompile Include="Login\Components\ResetPasswordComponent.ts" />
+    <TypeScriptCompile Include="Login\HybridLabels\Components\HybridLoginComponent.ts" />
+    <TypeScriptCompile Include="Login\HybridLabels\Components\HybridLoginProcessComponent.ts" />
+    <TypeScriptCompile Include="Login\HybridLabels\Components\HybridResetPasswordComponent.ts" />
+    <TypeScriptCompile Include="Login\HybridLabels\DataContracts\HybridLabelsBrandingData.ts" />
+    <TypeScriptCompile Include="Login\HybridLabels\DataContracts\HybridLabelsBrandingDataRequest.ts" />
+    <TypeScriptCompile Include="Login\HybridLabels\DataContracts\HybridLabelsImage.ts" />
+    <TypeScriptCompile Include="Login\HybridLabels\DataContracts\ServiceResponse.ts" />
+    <TypeScriptCompile Include="Login\HybridLabels\Services\BrandingDataService.ts" />
+    <TypeScriptCompile Include="Login\HybridLabels\Services\HybridLabelsBrandingDataService.ts" />
     <TypeScriptCompile Include="Login\LoginService.ts" />
     <TypeScriptCompile Include="Login\LogitudeLoginModuleAOT.ts" />
     <TypeScriptCompile Include="Login\LogitudeLoginModule.ts" />

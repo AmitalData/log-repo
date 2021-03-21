@@ -119,7 +119,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 }
             }
 
-            var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "STR" && d.TenantNumber == SessionLocator.Tenant)[0];
+            var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "STR")[0];
             if (FeatureToggle) {
                 this.IsStoragePricingAreaVisible = true;
             }

@@ -3,5 +3,7 @@ export interface PayableDetails {
     Currency: string,
     UOM: string,
     UnitPrice: number,
-    Quantity: number
+    Quantity: number,
+    Vendor: string,
+    ExchangeRate:number
 }

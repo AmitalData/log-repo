@@ -1,14 +1,31 @@
-@smoke
+@smoke @stable 
 Feature: Credit note ARInvoice operations and actions
-    After the user logging in the system and navigate to shipments workspace
-    will create a direct shipmen, after that create and approve a credit note ARInvoice
+    After the user logging in the system and Update Accounting System to be None,navigates to shipments workspace
+    will create a direct shipment, after that create and approve a credit note ARInvoice
     set as sent and void the invoice.
-    
+
+    Scenario: Update Accounting System
+        Given the user logged in
+        Given accounting System as "None"
+        When change the accounting system
+        Then the accounting system should update successfully
+
+    Scenario: enable void invoice settings
+        Given the user navigates to "invoice settings" in maintenance menu
+        Given accounting settings with the following details
+            | VoidInvoice | Allowed |
+        When update invoice settings
+        Then the invoice setting should update successfully
+
     Scenario: Create direct export air shipment
-        Given the user logged in and navigates to shipments workspace
+        Given the user navigates to shipments workspace
         And a direct shipment with the following details
-            | ShipmentLevel | Direction | TransportMode | Shipper           | MainCarriageFromPort | MainCarriageToPort |
-            | Direct        | Export    | Air           | TestShipperExport | LHR                  | MIA                |
+            | ShipmentLevel        | Direct            |
+            | Direction            | Export            |
+            | TransportMode        | Air               |
+            | Shipper              | TestShipperExport |
+            | MainCarriageFromPort | LHR               |
+            | MainCarriageToPort   | MIA               |
         When create shipment
         Then the shipment should create successfully
 
@@ -17,8 +34,15 @@ Feature: Credit note ARInvoice operations and actions
             | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
             | AFT         | GRWT | 5        | -10       | EUR      | 4            |
         And a credit ARInvoice with a random invoice number and the following details
-            | PartnerType | InvoiceCurrency | InvoiceExchangeRate | InvoiceDate | PaymentTerms | DueDate | VATNo | Branch      | VATType |
-            | Customer    | EUR             | 4                   | Today       | Cash         | Today   | Zero  | Main Office | Zero    |
+            | PartnerType         | Customer    |
+            | InvoiceCurrency     | EUR         |
+            | InvoiceExchangeRate | 4           |
+            | InvoiceDate         | Today       |
+            | PaymentTerms        | Cash        |
+            | DueDate             | Today       |
+            | VATNo               | Zero        |
+            | Branch              | Main Office |
+            | VATType             | Zero        |
         When create invoice
         Then the invoice should create successfully
 

@@ -243,6 +243,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      NumberOfBookingSentLastWeek = a.NumberOfBookingSentLastWeek,
                                                      NumberOfSISentLastWeek = a.NumberOfSISentLastWeek,
                                                      LastContainerStatusReceived = a.LastContainerStatusReceived,
+                                                     LastTariffUpdateDate = a.LastTariffUpdateDate,
+                                                     LastTariffUsageDate = a.LastTariffUsageDate,
+                                                     LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
+                                                     LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
+                                                     ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -434,6 +439,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   NumberOfBookingSentLastWeek = a.NumberOfBookingSentLastWeek,
                                                   NumberOfSISentLastWeek = a.NumberOfSISentLastWeek,
                                                   LastContainerStatusReceived = a.LastContainerStatusReceived,
+                                                  LastTariffUpdateDate = a.LastTariffUpdateDate,
+                                                  LastTariffUsageDate = a.LastTariffUsageDate,
+                                                  LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
+                                                  LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
+                                                  ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
 
                                               }).FirstOrDefault();
 
@@ -618,6 +628,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         NumberOfBookingSentLastWeek = a.NumberOfBookingSentLastWeek,
                         NumberOfSISentLastWeek = a.NumberOfSISentLastWeek,
                         LastContainerStatusReceived = a.LastContainerStatusReceived,
+                        LastTariffUpdateDate = a.LastTariffUpdateDate,
+                        LastTariffUsageDate = a.LastTariffUsageDate,
+                        LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
+                        LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
+                        ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
 
                     });
         }
@@ -752,6 +767,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     NumberOfBookingSentLastWeek = entity.NumberOfBookingSentLastWeek,
                     NumberOfSISentLastWeek = entity.NumberOfSISentLastWeek,
                     LastContainerStatusReceived = entity.LastContainerStatusReceived,
+                    LastTariffUpdateDate = entity.LastTariffUpdateDate,
+                    LastTariffUsageDate = entity.LastTariffUsageDate,
+                    LastWeekCreatedTariffs = entity.LastWeekCreatedTariffs,
+                    LastMonthCreatedTariffs = entity.LastMonthCreatedTariffs,
+                    ScheduledTasksLimitPerReport = entity.ScheduledTasksLimitPerReport,
                 };
             }
 
@@ -884,7 +904,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        NumberOfBookingSentLastWeek = a.NumberOfBookingSentLastWeek,
                        NumberOfSISentLastWeek = a.NumberOfSISentLastWeek,
                        LastContainerStatusReceived = a.LastContainerStatusReceived,
-
+                       LastTariffUpdateDate = a.LastTariffUpdateDate,
+                       LastTariffUsageDate = a.LastTariffUsageDate,
+                       LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
+                       LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
+                       ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
                    };
         }
 
@@ -1154,7 +1178,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              NumberOfBookingSentLastWeek = a.NumberOfBookingSentLastWeek,
                                              NumberOfSISentLastWeek = a.NumberOfSISentLastWeek,
                                              LastContainerStatusReceived = a.LastContainerStatusReceived,
-
+                                             LastTariffUpdateDate = a.LastTariffUpdateDate,
+                                             LastTariffUsageDate = a.LastTariffUsageDate,
+                                             LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
+                                             LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
+                                             ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
                                          }).FirstOrDefault();
 
             return tenant;

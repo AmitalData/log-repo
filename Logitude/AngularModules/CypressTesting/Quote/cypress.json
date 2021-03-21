@@ -1,0 +1,35 @@
+{
+    "numTestsKeptInMemory":1,	
+    "watchForFileChanges":false,
+    "viewportWidth": 1200,
+    "viewportHeight": 800,
+    "integrationFolder": "cypress/tests",
+    "screenshotsFolder": "cypress/Reports/html/screenshots",
+    "projectId":"k5gju5",
+    "ignoreTestFiles": "*.ts",
+    "env": {
+        "Mode": "Development"
+    },
+    "defaultCommandTimeout": 120000,
+    "responseTimeout": 180000,
+    "requestTimeout": 180000,
+    "video": false,
+    "screenshotOnRunFailure": true,
+    "screenshots": true,
+    "trashAssetsBeforeRuns": false,
+    "reporter": "cypress-multi-reporters",
+    "reporterOptions": {
+        "reporterEnabled": "mochawesome",
+        "mochawesomeReporterOptions": {
+            "reportDir": "./mochawesome-report",
+            "quite": true,
+            "overwrite": false,
+            "html": false,
+            "json": true
+        }
+    },
+    "retries": { 
+        "runMode": 0,
+        "openMode": 0
+      }
+}

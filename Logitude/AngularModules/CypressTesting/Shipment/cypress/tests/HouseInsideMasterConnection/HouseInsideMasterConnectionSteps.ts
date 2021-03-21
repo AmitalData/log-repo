@@ -1,8 +1,10 @@
 import * as Actions from '../../actions/Actions';
-import { Selectors } from '../../selectors/Selectors';
+import { ShipmentSelectors } from '../../selectors/Selectors';
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
 import * as BaseAssertion from '../../../../Base/cypress/actions/Assertion';
 import { ShipmentDetails } from '../../models/ShipmentDetails';
+import { RequestAliases } from '../../../../Base/cypress/constants/RequestAliases';
+import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 //#region variables
 let MasterShipmentDetails: ShipmentDetails;
@@ -16,7 +18,7 @@ Given("the user logged in and navigates to shipments workspace", () => {
 });
 
 Given("a master Shipment with following details",(dataTable)=>{
-    const shipmentDetails = dataTable.hashes()[0] as ShipmentDetails;
+    const shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
     MasterShipmentDetails = shipmentDetails;
     Actions.OpenNewShipmentWizard(MasterShipmentDetails.ShipmentLevel);
     Actions.FillShipmentWizardsFields(MasterShipmentDetails);
@@ -27,7 +29,7 @@ When("create shipment", () => {
   });
   
 Then("the master should create successfully", () => {
-    BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200).then((interception) => {
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
         shipmentNumber = interception.response.body.ShipmentNumber;
     })
 });
@@ -36,17 +38,17 @@ Then("the master should create successfully", () => {
 //#region Create house export air shipment inside the master
 Given("the user in the master's Shipment tab",()=>{
     Actions.OpenShipment(shipmentNumber);
-    cy.Click(Selectors.ShipmentsTab, null);
+    cy.Click(ShipmentSelectors.ShipmentsTab, null);
 });
 
 When("create house with {string} as Shipper",(Shipper)=>{
-    cy.Click(Selectors.NewAttachedHouse,null);
+    cy.Click(ShipmentSelectors.NewAttachedHouse,null);
     Actions.FillHouseInShipmentsTab(Shipper);
     Actions.CreateShipment("House");
 });
 
 Then("the house should create and connect successfully",()=>{
-    BaseAssertion.AssertStatusCode("WaitPostShipmentRequest", 200)
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
 });
 //#endregion
 
@@ -58,6 +60,6 @@ When("disconnect shipment",()=>{
 });
 
 Then("the shipment should disconnect successfully",()=>{
-    BaseAssertion.AssertStatusCode("WaitPutShipmentRequest", 200)
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
 });
 //#endregion

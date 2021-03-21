@@ -142,6 +142,8 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new GLAccountMoreDataMap());
 	
+            modelBuilder.Configurations.Add(new GLAccountRecocileDataMap());
+	
             modelBuilder.Configurations.Add(new GLAccountTotalByMonthMap());
 	
             modelBuilder.Configurations.Add(new GLAccountTotalDateTypeMap());
@@ -894,6 +896,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<GLAccountMoreData> GLAccountMoreDatas 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<GLAccountRecocileData> GLAccountRecocileDatas 
 	 {
 	      get; set;
 	 

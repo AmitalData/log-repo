@@ -55,6 +55,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                    ObjectTableName = a.ObjectTable.Name,
                                    Tenant = a.Tenant,
                                    UserTenant = tenant,
+                                   QuerySection = a.QuerySection,
                                }).ToList();
 
 
@@ -101,6 +102,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                       ObjectTableName = a.ObjectTable.Name,
                                       Tenant = a.Tenant,
                                       UserTenant = tenant,
+                                      QuerySection = a.QuerySection,
+
                                   }).ToList();
 
 

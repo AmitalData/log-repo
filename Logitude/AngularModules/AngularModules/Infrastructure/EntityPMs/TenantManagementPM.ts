@@ -704,6 +704,11 @@ export class TenantManagementPM {
     public set ComapnylogoId(newValue: string) { if (this.comapnylogoId != newValue) { this.comapnylogoId = newValue; this.MarkAsDirty("ComapnylogoId"); } }
        
 	 
+    private invertedLogoId: string;
+    public get InvertedLogoId() { return this.invertedLogoId; }
+    public set InvertedLogoId(newValue: string) { if (this.invertedLogoId != newValue) { this.invertedLogoId = newValue; this.MarkAsDirty("InvertedLogoId"); } }
+       
+	 
     private browserIconId: string;
     public get BrowserIconId() { return this.browserIconId; }
     public set BrowserIconId(newValue: string) { if (this.browserIconId != newValue) { this.browserIconId = newValue; this.MarkAsDirty("BrowserIconId"); } }
@@ -712,10 +717,7 @@ export class TenantManagementPM {
     private shipmentHeaderImageId: string;
     public get ShipmentHeaderImageId() { return this.shipmentHeaderImageId; }
     public set ShipmentHeaderImageId(newValue: string) { if (this.shipmentHeaderImageId != newValue) { this.shipmentHeaderImageId = newValue; this.MarkAsDirty("ShipmentHeaderImageId"); } }
-
-    private invertedLogoId: string;
-    public get InvertedLogoId() { return this.invertedLogoId; }
-    public set InvertedLogoId(newValue: string) { if (this.invertedLogoId != newValue) { this.invertedLogoId = newValue; this.MarkAsDirty("InvertedLogoId"); } }
+       
 	 
     private privateLabelId: string;
     public get PrivateLabelId() { return this.privateLabelId; }
@@ -881,6 +883,31 @@ export class TenantManagementPM {
     private lastContainerStatusReceived: Date;
     public get LastContainerStatusReceived() { return this.lastContainerStatusReceived; }
     public set LastContainerStatusReceived(newValue: Date) { if (this.lastContainerStatusReceived != newValue) { this.lastContainerStatusReceived = newValue; this.MarkAsDirty("LastContainerStatusReceived"); } }
+       
+	 
+    private lastTariffUpdateDate: Date;
+    public get LastTariffUpdateDate() { return this.lastTariffUpdateDate; }
+    public set LastTariffUpdateDate(newValue: Date) { if (this.lastTariffUpdateDate != newValue) { this.lastTariffUpdateDate = newValue; this.MarkAsDirty("LastTariffUpdateDate"); } }
+       
+	 
+    private lastTariffUsageDate: Date;
+    public get LastTariffUsageDate() { return this.lastTariffUsageDate; }
+    public set LastTariffUsageDate(newValue: Date) { if (this.lastTariffUsageDate != newValue) { this.lastTariffUsageDate = newValue; this.MarkAsDirty("LastTariffUsageDate"); } }
+       
+	 
+    private lastWeekCreatedTariffs: number;
+    public get LastWeekCreatedTariffs() { return this.lastWeekCreatedTariffs; }
+    public set LastWeekCreatedTariffs(newValue: number) { if (this.lastWeekCreatedTariffs != newValue) { this.lastWeekCreatedTariffs = newValue; this.MarkAsDirty("LastWeekCreatedTariffs"); } }
+       
+	 
+    private lastMonthCreatedTariffs: number;
+    public get LastMonthCreatedTariffs() { return this.lastMonthCreatedTariffs; }
+    public set LastMonthCreatedTariffs(newValue: number) { if (this.lastMonthCreatedTariffs != newValue) { this.lastMonthCreatedTariffs = newValue; this.MarkAsDirty("LastMonthCreatedTariffs"); } }
+       
+	 
+    private scheduledTasksLimitPerReport: number;
+    public get ScheduledTasksLimitPerReport() { return this.scheduledTasksLimitPerReport; }
+    public set ScheduledTasksLimitPerReport(newValue: number) { if (this.scheduledTasksLimitPerReport != newValue) { this.scheduledTasksLimitPerReport = newValue; this.MarkAsDirty("ScheduledTasksLimitPerReport"); } }
        
 	 
 

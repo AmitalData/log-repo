@@ -52,7 +52,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
         this._UserLastSettingsPMService = new UserLastSettingsPMService();
         this._UserLastSettingsExtendedPMService = new UserLastSettingsExtendedPMService();
-        var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX" && d.TenantNumber == SessionLocator.Tenant)[0];
+        var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX")[0];
         if (FeatureToggle) {
             this.ToggleIsExportShipments = true;
         }

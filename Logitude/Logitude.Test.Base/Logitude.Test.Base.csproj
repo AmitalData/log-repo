@@ -85,10 +85,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\Transforms.cs" />
-    <Compile Include="Hooks\PrepareDataBeforeFeature.cs" />
     <Compile Include="Models\Infrastructure\Configurations.cs" />
+    <Compile Include="Models\LocationsPreparation\City.cs" />
     <Compile Include="Models\LocationsPreparation\Country.cs" />
     <Compile Include="Models\PartnersPreparation\Address.cs" />
+    <Compile Include="Models\PartnersPreparation\Contact.cs" />
+    <Compile Include="Models\PartnersPreparation\PartnerParameters.cs" />
     <Compile Include="Models\UserTenantPreparation\Credentials.cs" />
     <Compile Include="Models\PartnersPreparation\Partner.cs" />
     <Compile Include="Models\LocationsPreparation\Port.cs" />
@@ -97,7 +99,7 @@
     <Compile Include="Models\Shared\Urls.cs" />
     <Compile Include="Context\SecurityAccessStepsContext.cs" />
     <Compile Include="Extensions\TableExtensions.cs" />
-    <Compile Include="Hooks\PrepareUserTenantBeforeTestRun.cs" />
+    <Compile Include="Hooks\BeforeTestRun.cs" />
     <Compile Include="Models\Api\ApiQueryFilters.cs" />
     <Compile Include="Models\Api\ApiRequestParameters.cs" />
     <Compile Include="Models\Api\ApiResponse.cs" />

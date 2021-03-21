@@ -830,5 +830,43 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string AssginedtoCustomsAgentId { get; set; }
         public DateTime? AssginedToCustomsAgentDate { get; set; }
         public virtual Card CustomsAgentCard { get; set; }
+
+        public string PreForwardingTransportModeId { get; set; }
+        public string PreForwardingFromPortId { get; set; }
+        public string PreForwardingToPortId { get; set; }
+        public string PreForwardingCarrierId { get; set; }
+        public string PreForwardingCarrierNumber { get; set; }
+        public DateTime? PreForwardingETD { get; set; }
+        public DateTime? PreForwardingATD { get; set; }
+        public DateTime? PreForwardingETA { get; set; }
+        public DateTime? PreForwardingATA { get; set; }
+        public string PreForwardingVesselId { get; set; }
+
+        //on Forwarding
+        public string OnForwardingTransportModeId { get; set; }
+        public string OnForwardingFromPortId { get; set; }
+        public string OnForwardingToPortId { get; set; }
+        public string OnForwardingCarrierId { get; set; }
+        public string OnForwardingCarrierNumber { get; set; }
+        public DateTime? OnForwardingETD { get; set; }
+        public DateTime? OnForwardingATD { get; set; }
+        public DateTime? OnForwardingETA { get; set; }
+        public DateTime? OnForwardingATA { get; set; }
+        public string OnForwardingVesselId { get; set; }
+        public string OnForwardingAdditionalTransportModeCode { get; set; }
+        public bool SplitOnForwarding { get; set; }
+
+        public Vessel PreForwardingVessel { get; set; }
+        public virtual TransportMode PreForwardingTransportMode { get; set; }
+        public virtual Port PreForwardingFromPort { get; set; }
+        public virtual Port PreForwardingToPort { get; set; }
+        public virtual Card PreForwardingCarrierCard { get; set; }
+
+        public Vessel OnForwardingVessel { get; set; }
+        public virtual TransportMode OnForwardingTransportMode { get; set; }
+        public virtual Port OnForwardingFromPort { get; set; }
+        public virtual Port OnForwardingToPort { get; set; }
+        public virtual Card OnForwardingCarrierCard { get; set; }
+        public virtual PickUpDeliveryTransportMode OnForwardingAdditionalTransportMode { get; set; }
     }
 }

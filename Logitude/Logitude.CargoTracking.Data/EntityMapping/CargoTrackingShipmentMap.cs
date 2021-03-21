@@ -139,6 +139,8 @@ namespace Logitude.CargoTracking.Data.EntityMapping
 
             this.Property(t => t.DirectionId).HasColumnName("DirectionId").IsRequired().HasMaxLength(1).IsUnicode(false);
 
+            this.Property(t => t.ShipmentLevelCode).HasColumnName("ShipmentLevelCode").HasMaxLength(1).IsUnicode(false);
+
             this.Property(t => t.AssignedTruckerDone).HasColumnName("AssignedTruckerDone");
 
             this.Property(t => t.AssignedTruckerDate).HasColumnName("AssignedTruckerDate");
@@ -170,8 +172,6 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.GrossWeightUnitCode).HasColumnName("GrossWeightUnitCode").HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.ForwardingShipmentNumber).HasColumnName("ForwardingShipmentNumber").HasMaxLength(100).IsUnicode(false);
-
-            this.Property(t => t.ShipmentLevelCode).HasColumnName("ShipmentLevelCode").HasMaxLength(1).IsUnicode(false);
         }
     }
 }

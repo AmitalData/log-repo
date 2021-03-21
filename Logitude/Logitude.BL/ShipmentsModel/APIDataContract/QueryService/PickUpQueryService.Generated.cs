@@ -102,7 +102,14 @@ using Simplog.Data.ShipmentsModel;
 				   temp.TransportModeCode = item.TransportModeCode;
 				   temp.Notes = item.Notes;
 				   temp.TruckerNumber = item.CarrierNumber;
-				   temp.PickUpReference = item.PickUpDeliveryNumber;					
+				   temp.PickUpReference = item.PickUpDeliveryNumber;
+				if(item.ShipmentPickUpDeliveryPackages != null && item.ShipmentPickUpDeliveryPackages.Count > 0)
+				{
+					 PackageQueryService PackageService5 = new PackageQueryService(Tenant);
+					 temp.Packages = PackageService5.PackageDataMapping(item.ShipmentPickUpDeliveryPackages,Tenant,ComputingPartnerName);
+				}
+
+							 					
 					MyList.Add(temp);
 				}
 					
@@ -340,7 +347,23 @@ using Simplog.Data.ShipmentsModel;
 
 										}  
 
-										   
+					 
+
+					if(item.Packages != null && item.Packages.Count > 0)
+					{
+						PackageQueryService PackageService5 = new PackageQueryService(Tenant);
+						  
+						if(!IsUpdate)
+						{								//throw new ApplicationException("Packages Can't be update"); 
+								temp.ShipmentPickUpDeliveryPackages = PackageService5.PackageDataMappingAndValidatin(item.Packages,Tenant,ComputingPartnerName,IsUpdate);
+
+					 
+						}  
+
+						
+					}
+
+								 					   
 						MyList.Add(temp);
 					}
 						

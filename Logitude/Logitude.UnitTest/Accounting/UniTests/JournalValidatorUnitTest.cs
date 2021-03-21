@@ -1561,7 +1561,16 @@ namespace Logitude.UnitTest.Accounting.UniTests
             };
             DateTime? dateTimeUtcNow = new DateTime(2017, 01, 12); 
             var myFullAccountingSettingPM = new FullAccountingSettingPM();
-            
+
+
+
+            IJournalValidatorRateDataProvider myStubIJournalValidatorRateDataProvider = A.Fake<IJournalValidatorRateDataProvider>();
+            A.CallTo(() => myStubIJournalValidatorRateDataProvider
+            .ExistRate(A<string>.Ignored, A<string>.Ignored, A<DateTime?>.Ignored, A<int>.Ignored))
+                   .ReturnsLazily(
+                (string TenantCurrency, string foreignCurrencyId, DateTime? date, int tenent) => { return true; }
+                );
+
             var myNewJournalValidatorContext = AccountingValidationContextServiceProvider
                 .NewJournalValidatorContext(
                 entityPM, 
@@ -1571,6 +1580,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 fakeAccountingSettingResolver,
                 myFullAccountingSettingPM ,
                 SuppressCheckGLAccountIsMultiCurrencyWI40640,
+                myStubIJournalValidatorRateDataProvider, "tenantCurrencyId",
                 dateTimeUtcNow);
 
             return myNewJournalValidatorContext;

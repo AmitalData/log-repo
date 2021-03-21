@@ -47,6 +47,7 @@ import { CarrierAreasPortPM } from '../EntityPMs/CarrierAreasPortPM';
 import { AccountingPartnerPMService } from './StandardPMs/AccountingPartnerPMService';
 import { TariffCarrierTranslationPM } from '../EntityPMs/TariffCarrierTranslationPM';
 import { WarehouseStoragePricingPM } from '../EntityPMs/WarehouseStoragePricingPM';
+import { CustomFieldClass } from '../../Infrastructure/DataContracts/CustomFieldClass'
 
 @Injectable()
 
@@ -57,6 +58,8 @@ export class PartnersDomainService {
         this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/PartnersDomain';
     }
+
+   
 
     GetAllowedAirlineId() {
         var authHeader = new Headers();
@@ -1941,6 +1944,8 @@ export class PartnersDomainService {
 
         return entityPM;
     }
+
+
 }
 export class AirlineMessagingRuleList {
     Id: string;

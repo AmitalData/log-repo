@@ -134,7 +134,8 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
 
         this.SetUIProperties_Distributor();
         this.SetUIProperties_NumberOfUsers();
-        this.SetUIProperties_ManageLicencesPerUser();
+        this.SetUIProperties_ManageLicencesPerUser(); 
+        this.SetUIProperties_ScheduledTasksLimitPerReport();
 
         if (this.isTenantManagementEditable) {
             this.SetUIProperties_PaymentFailure();
@@ -144,7 +145,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.SetUIProperties_TemporalPackage();
             this.SetUIProperties_TenantType();
             this.SetUIProperties_ParentTenant();
-            this.SetUIProperties_TotalPrice();
+            this.SetUIProperties_TotalPrice();  
         }
 
         else {
@@ -259,6 +260,17 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.UIProperties.SetEnabled("TrialEndDate", this.ObjectTableName, false);
         }
     }
+
+    private SetUIProperties_ScheduledTasksLimitPerReport() {
+
+        if (AppTool.IsNullOrEmpty(this.ScheduledTasksLimitPerReport)) {
+            this.UIProperties.SetRequired("ScheduledTasksLimitPerReport", this.ObjectTableName, true); 
+        } else {
+            this.UIProperties.SetRequired("ScheduledTasksLimitPerReport", this.ObjectTableName, false); 
+        };
+
+    }
+
     private SetUIProperties_IsRecurring() {
         if (this.EntityPM.IsRecurring) {
             this.UIProperties.SetRequired("RecurringPeriodCode", "TenantManagement", AppTool.IsNullOrEmpty(this.RecurringPeriodCode));
@@ -605,6 +617,14 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     set IsDistributorSupportEnabled(newValue: boolean) {
         if (this.EntityPM.IsDistributorSupportEnabled != newValue) {
             this.EntityPM.IsDistributorSupportEnabled = newValue;
+        }
+    }
+
+    get ScheduledTasksLimitPerReport() { return this.EntityPM.ScheduledTasksLimitPerReport; }
+    set ScheduledTasksLimitPerReport(newValue) {
+        if (this.EntityPM.ScheduledTasksLimitPerReport != newValue) {
+            this.EntityPM.ScheduledTasksLimitPerReport = newValue;
+             
         }
     }
 

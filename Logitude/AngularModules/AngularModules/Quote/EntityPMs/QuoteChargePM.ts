@@ -235,6 +235,11 @@ export class QuoteChargePM {
     public set CostTotalAmountLocal(newValue: number) { if (this.costTotalAmountLocal != newValue) { this.costTotalAmountLocal = newValue; this.MarkAsDirty("CostTotalAmountLocal"); } }
        
 	 
+    private costAmountInSaleCurrency: number;
+    public get CostAmountInSaleCurrency() { return this.costAmountInSaleCurrency; }
+    public set CostAmountInSaleCurrency(newValue: number) { if (this.costAmountInSaleCurrency != newValue) { this.costAmountInSaleCurrency = newValue; this.MarkAsDirty("CostAmountInSaleCurrency"); } }
+       
+	 
     private saleCurrencyId: string;
     public get SaleCurrencyId() { return this.saleCurrencyId; }
     public set SaleCurrencyId(newValue: string) { if (this.saleCurrencyId != newValue) { this.saleCurrencyId = newValue; this.MarkAsDirty("SaleCurrencyId"); } }
@@ -483,11 +488,6 @@ export class QuoteChargePM {
     private costUnitPrice5InSaleCurrency: number;
     public get CostUnitPrice5InSaleCurrency() { return this.costUnitPrice5InSaleCurrency; }
     public set CostUnitPrice5InSaleCurrency(newValue: number) { if (this.costUnitPrice5InSaleCurrency != newValue) { this.costUnitPrice5InSaleCurrency = newValue; this.MarkAsDirty("CostUnitPrice5InSaleCurrency"); } }
-       
-	 
-    private costAmountInSaleCurrency: number;
-    public get CostAmountInSaleCurrency() { return this.costAmountInSaleCurrency; }
-    public set CostAmountInSaleCurrency(newValue: number) { if (this.costAmountInSaleCurrency != newValue) { this.costAmountInSaleCurrency = newValue; this.MarkAsDirty("CostAmountInSaleCurrency"); } }
        
 	 
     private isBackToBack: boolean;

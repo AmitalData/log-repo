@@ -789,7 +789,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
+
         // Partners, Address, Contact
         public HttpResponseMessage PostPartnerAddress(PartnerServicePM args)
         {
@@ -1015,7 +1015,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-      
+
         public HttpResponseMessage GetRecentCustomers(string ownerId, string businessUnitId)
         {
             try

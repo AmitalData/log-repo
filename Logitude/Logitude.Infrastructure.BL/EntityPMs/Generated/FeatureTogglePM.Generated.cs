@@ -181,12 +181,12 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
-	  private int tenantNumber ;
+	  private int? tenantNumber ;
 	  	  
        
 	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int TenantNumber  
+       public int? TenantNumber  
 	   {
 	    
 	     get
@@ -197,7 +197,7 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 		 {
 		   if(tenantNumber != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TenantNumber",OldValue=tenantNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TenantNumber",OldValue=tenantNumber,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   tenantNumber=value;
 		   }
@@ -292,6 +292,98 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUser",OldValue=createdByUser,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   createdByUser=value;
+		   }
+			
+		 }
+	   }
+	  private string toggleDescription ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToggleDescription  
+	   {
+	    
+	     get
+		{
+		   return toggleDescription;
+		 }
+		 set
+		 {
+		   if(toggleDescription != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToggleDescription",OldValue=toggleDescription,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toggleDescription=value;
+		   }
+			
+		 }
+	   }
+	  private bool isMultiTenant ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsMultiTenant  
+	   {
+	    
+	     get
+		{
+		   return isMultiTenant;
+		 }
+		 set
+		 {
+		   if(isMultiTenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsMultiTenant",OldValue=isMultiTenant,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isMultiTenant=value;
+		   }
+			
+		 }
+	   }
+	  private int? fromTenantNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? FromTenantNumber  
+	   {
+	    
+	     get
+		{
+		   return fromTenantNumber;
+		 }
+		 set
+		 {
+		   if(fromTenantNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromTenantNumber",OldValue=fromTenantNumber,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   fromTenantNumber=value;
+		   }
+			
+		 }
+	   }
+	  private int? toTenantNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? ToTenantNumber  
+	   {
+	    
+	     get
+		{
+		   return toTenantNumber;
+		 }
+		 set
+		 {
+		   if(toTenantNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToTenantNumber",OldValue=toTenantNumber,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   toTenantNumber=value;
 		   }
 			
 		 }

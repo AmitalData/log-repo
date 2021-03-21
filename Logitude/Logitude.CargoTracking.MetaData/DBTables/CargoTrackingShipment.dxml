@@ -378,6 +378,13 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="ShipmentLevelCode"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="AssignedTruckerDone"
     Type="bit">
     <Constraints
@@ -477,13 +484,6 @@
     Name="ForwardingShipmentNumber"
     Type="varchar"
     Size="100">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ShipmentLevelCode"
-    Type="varchar"
-    Size="1">
     <Constraints
       Nullable="true" />
   </Column>

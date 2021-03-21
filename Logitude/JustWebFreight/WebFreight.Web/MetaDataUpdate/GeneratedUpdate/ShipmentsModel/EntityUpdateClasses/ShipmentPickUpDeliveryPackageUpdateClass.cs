@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentPickUpDeliveryPackageUpdateClass
    {  		
-		public const string HashString = "11d510da437fc0de8de40650d3a718c3";
+		public const string HashString = "83c8b56fced82d2f726bf4b143c85855";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment PickUp Delivery Package",
-			      				    Code =  "3827",
+			      				    Code =  "1a40",
 			      				    Name =  "ShipmentPickUpDeliveryPackage",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
@@ -1254,7 +1254,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable ShipmentPickUpDeliveryPackageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShipmentPickUpDeliveryPackage" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> ShipmentPickUpDeliveryPackageObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ShipmentPickUpDeliveryPackage").ToList();
+		       
+	      
+
+	         Screen ShipmentPickUpDeliveryPackageShipmentPickUpDeliveryPackageHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ShipmentPickUpDeliveryPackage.HeaderScreen", Name = "ShipmentPickUpDeliveryPackageHeaderScreen", ObjectTableId = ShipmentPickUpDeliveryPackageObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    ShipmentPickUpDeliveryPackageObjectTable.HeaderScreenId = ShipmentPickUpDeliveryPackageShipmentPickUpDeliveryPackageHeaderScreenScreen0.Id;
+		    ShipmentPickUpDeliveryPackageObjectTable.HeaderScreenCode = ShipmentPickUpDeliveryPackageShipmentPickUpDeliveryPackageHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

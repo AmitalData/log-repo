@@ -19,6 +19,8 @@ namespace Logitude.BL.InfrastructureModel.DataContracts
 
         [DataMember]
         public ReportSchedulerDetails ReportDetails { get; set; }
+        [DataMember]
+        public bool SendIfEmpty { get; set; }
 
     }
 

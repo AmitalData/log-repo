@@ -183,6 +183,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='DirectionId' Type='varchar' Size='1'>"+
 "    <Constraints Nullable='false' />"+
 "  </Column>"+
+"  <Column Name='ShipmentLevelCode' Type='varchar' Size='1'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
 "  <Column Name='AssignedTruckerDone' Type='bit'>"+
 "    <Constraints Nullable='false' />"+
 "  </Column>"+
@@ -229,9 +232,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='ForwardingShipmentNumber' Type='varchar' Size='100'>"+
-"    <Constraints Nullable='true' />"+
-"  </Column>"+
-"  <Column Name='ShipmentLevelCode' Type='varchar' Size='1'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Relation ForeignKeyColumn='EntityType' ReferencedTable='CargoTrackingHeaderEntityTypes' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+

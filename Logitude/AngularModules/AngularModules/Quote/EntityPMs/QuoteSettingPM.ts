@@ -110,6 +110,11 @@ export class QuoteSettingPM {
     public set IsMultiCurrency(newValue: boolean) { if (this.isMultiCurrency != newValue) { this.isMultiCurrency = newValue; this.MarkAsDirty("IsMultiCurrency"); } }
        
 	 
+    private quoteExpirationDays: number;
+    public get QuoteExpirationDays() { return this.quoteExpirationDays; }
+    public set QuoteExpirationDays(newValue: number) { if (this.quoteExpirationDays != newValue) { this.quoteExpirationDays = newValue; this.MarkAsDirty("QuoteExpirationDays"); } }
+       
+	 
 
     public OldEntityPM: QuoteSettingPM;
 		

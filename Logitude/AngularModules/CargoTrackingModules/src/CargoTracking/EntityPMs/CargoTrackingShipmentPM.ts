@@ -354,6 +354,11 @@ export class CargoTrackingShipmentPM {
     public set DirectionId(newValue: string) { if (this.directionId != newValue) { this.directionId = newValue; this.MarkAsDirty("DirectionId"); } }
        
 	 
+    private shipmentLevelCode: string;
+    public get ShipmentLevelCode() { return this.shipmentLevelCode; }
+    public set ShipmentLevelCode(newValue: string) { if (this.shipmentLevelCode != newValue) { this.shipmentLevelCode = newValue; this.MarkAsDirty("ShipmentLevelCode"); } }
+       
+	 
     private assignedTruckerDone: boolean;
     public get AssignedTruckerDone() { return this.assignedTruckerDone; }
     public set AssignedTruckerDone(newValue: boolean) { if (this.assignedTruckerDone != newValue) { this.assignedTruckerDone = newValue; this.MarkAsDirty("AssignedTruckerDone"); } }
@@ -432,11 +437,6 @@ export class CargoTrackingShipmentPM {
     private forwardingShipmentNumber: string;
     public get ForwardingShipmentNumber() { return this.forwardingShipmentNumber; }
     public set ForwardingShipmentNumber(newValue: string) { if (this.forwardingShipmentNumber != newValue) { this.forwardingShipmentNumber = newValue; this.MarkAsDirty("ForwardingShipmentNumber"); } }
-       
-	 
-    private shipmentLevelCode: string;
-    public get ShipmentLevelCode() { return this.shipmentLevelCode; }
-    public set ShipmentLevelCode(newValue: string) { if (this.shipmentLevelCode != newValue) { this.shipmentLevelCode = newValue; this.MarkAsDirty("ShipmentLevelCode"); } }
        
 	 
 

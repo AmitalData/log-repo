@@ -885,8 +885,8 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
                         fakeJournalUpdateOnUpdating.OnUpdating(myPM, JournalPoco, mychangTrack);
                     },
-                    //Check
-                "BLException :Approved Journal Can Only Change To Voided Property (Change JournalLines)",
+                //Check
+                "Approved Journal Can Only Change To Voided Property (Change JournalLines fix credrit or debit) line=",
                 "if (propChanged.Any())");
 
             }

@@ -292,8 +292,52 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     //Voided
                 }
             }
-
+            this.GLAccountRecocileDataUpSert(_CancelledAction, entityPM);
             base.OnUpdating(entityPM, entityPOCO);
+        }
+
+        private void GLAccountRecocileDataUpSert(bool cancelledAction, ReconciliationPM entityPM)
+        {
+            int tenant= entityPM.Tenant;
+            string accountId= entityPM.AccountId; 
+            DateTime? createDate =entityPM.CreateDate; 
+            string createdByUserId= entityPM.CreatedByUserId;
+        
+            var gLAccountRecocileDataQueryService = new GLAccountRecocileDataQueryService(this.MainContext as IAccountingContext) ;
+            var pm=gLAccountRecocileDataQueryService.GetSingle(accountId, false, false);
+            ChangeSetOperation changeSetOperation = ChangeSetOperation.Insert;
+            if (pm != null)
+            {
+                changeSetOperation = ChangeSetOperation.Update;
+            }
+            if (cancelledAction)
+            {
+                string cancelledReconciliationId = entityPM.Id;
+                var reconciliationRepository = new ReconciliationRepository(this.MainContext as IAccountingContext);
+                var last=reconciliationRepository.GetLastOpenReconciliation(tenant, accountId, cancelledReconciliationId);
+                if (last==null)
+                {
+                    createDate = null;
+                    createdByUserId = null;
+
+                }
+                else
+                {
+                    createDate = last.CreateDate;
+                    createdByUserId = last.CreatedByUserId;
+
+                }
+            }
+            var gLAccountRecocileDataUpdateService = new GLAccountRecocileDataUpdateService(this.MainContext, new Dictionary<string, IContext>(), tenant);
+            gLAccountRecocileDataUpdateService.Update(new GLAccountRecocileDataPM()
+            {
+                AccountId = accountId,
+                Tenant = tenant,
+                ChangeSetOp = changeSetOperation,
+                LastReconcileDateTime = createDate,
+                LastReconciledByUserId = createdByUserId
+
+            }, true);
         }
 
         private bool IsMonthOpenForAccountingDate(DateTime accountingDate, int tenant)

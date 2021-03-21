@@ -274,7 +274,7 @@ export class AppTool {
         var logitude_url = location.href.replace('index.html', '');
 
         if (location.href.indexOf('localhost') > -1) {
-            logitude_url = 'http://localhost:9996/';//test.logitudeworld.com/test/';
+            logitude_url = 'http://localhost:9996/';//test.logitudeworld.com/test/';//
         }
 
         else {
@@ -1563,8 +1563,8 @@ export class DateTool {
 
             else {
                 myDateParts.Year = input.getUTCFullYear();
-                myDateParts.Month = input.getMonth() + 1;
-                myDateParts.Day = input.getDate();
+                myDateParts.Month = input.getUTCMonth() + 1;
+                myDateParts.Day = input.getUTCDate();
                 myDateParts.Hours = input.getUTCHours();
                 myDateParts.Minutes = input.getUTCMinutes();
                 myDateParts.Seconds = input.getUTCSeconds();
