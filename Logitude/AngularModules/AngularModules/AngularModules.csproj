@@ -1838,7 +1838,10 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\TogglePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\WebhookKeysPM.ts" />
     <TypeScriptCompile Include="Infrastructure\Helpers\DWQueryBuilderHelper.ts" />
+    <TypeScriptCompile Include="Infrastructure\Interface\IObjectTableMenuButtonsBuilder.ts" />
+    <TypeScriptCompile Include="Infrastructure\Interface\IObjectTableTabsBuilder.ts" />
     <TypeScriptCompile Include="Infrastructure\material-module.ts" />
+    <TypeScriptCompile Include="Infrastructure\ObjectTableMenuButtonsBuilder\ShipmentTestMenuButtonsBuilder.ts" />
     <TypeScriptCompile Include="Infrastructure\Pipes\HighlightSearch.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\BIReportFolderExtendedListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\CustomPickListPMExtendedService.ts" />
@@ -1864,6 +1867,8 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\HelpResourcePMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\TeamPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\WebServices\HybridLabelsBrandingDataService.ts" />
+    <TypeScriptCompile Include="Infrastructure\ObjectTableTabsBuilder\ShipmentTestTabsBuilder.ts" />
+    <TypeScriptCompile Include="Infrastructure\Utilities\ObjectTableMenuButtonsBuilderService.ts" />
     <TypeScriptCompile Include="Infrastructure\Utilities\PackageAmountCalculator.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\BusinessProcessDomainService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\DWObjectTableExtendedListService.ts" />
@@ -1903,6 +1908,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\PriceStepPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\SharedLogisticsSettingPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\WebhookKeysPMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Utilities\ObjectTableTabBuilderService.ts" />
     <TypeScriptCompile Include="Infrastructure\Validators\EventTypeValidator.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\Components\EditTabs\APInvoiceAuditTabComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\Components\Others\APInvoiceTotalVATOnlyComponent.ts" />

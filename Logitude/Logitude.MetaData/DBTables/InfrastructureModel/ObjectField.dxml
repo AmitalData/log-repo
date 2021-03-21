@@ -220,7 +220,6 @@
   <Column
     Name="DisplayInSearchWindowFiltersIndex"
     ShortName="SearchWindowFiltersIndex"
-    OldNames="SearchWindowFiltersIndex"
     Type="int">
     <Constraints
       Nullable="false" />
@@ -427,7 +426,6 @@
   <Column
     Name="AllowedInCustomerFieldsSettings"
     ShortName="AllowedInCustFieldsSettings"
-    OldNames="AllowedInCustFieldsSettings"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -594,6 +592,13 @@
   <Column
     Name="AutomaticLastUpdateDate"
     Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EntityType"
+    Type="varchar"
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>
