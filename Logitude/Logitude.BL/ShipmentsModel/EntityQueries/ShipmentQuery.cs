@@ -1819,7 +1819,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.AssginedToCustomsAgentDate = shipment.AssginedToCustomsAgentDate;
             shipmentPM.AssginedtoCustomsAgentId = shipment.AssginedtoCustomsAgentId;
 
-
             if (!string.IsNullOrEmpty(shipmentPM.UpdatedByUserId))
             {
                 Contact myContact = ContactRepository.GetSingleContact(shipmentPM.UpdatedByUserId, tenant, true);
@@ -1859,17 +1858,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             shipmentPM.OriginShipmentId = shipment.OriginShipmentId;
-
             shipmentPM.FBLIsFromStock = shipment.FBLIsFromStock;
             shipmentPM.StatusId = shipment.StatusId;
             shipmentPM.StatusName = shipment.EntityStatus.Name;
             shipmentPM.StatusLocation = shipment.StatusLocation;
             shipmentPM.StatusDate = shipment.StatusDate;
             shipmentPM.StatusWeight = shipment.EntityStatus.StatusWeight;
-
             shipmentPM.LastSentByUserId = shipment.LastSentByUserId;
             shipmentPM.ProfitCurrencyId = shipment.ProfitCurrencyId;
             shipmentPM.ProfitExchangeRate = shipment.ProfitExchangeRate;
+
             if (shipmentPM.ProfitCurrencyId != null)
             {
                 Currency myCurrency = CurrencyRepository.GetSingleCurrency(shipmentPM.ProfitCurrencyId, tenant, true);
@@ -2086,6 +2084,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
 
                 shipmentPM.ShipmentPackages = shipmentPackageQuery.GetShipmentPackages(shipment.Id, shipment.ShipmentNumber, shipment.Tenant);
+                if (shipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(shipment.MasterShipmentDataId) && masterData != null)
+                {
+                    shipmentPM.ConnectedMasterPackages = shipmentPackageQuery.GetShipmentPackages(masterData.Id, shipment.ShipmentNumber, shipment.Tenant);
+                }
                 #endregion
 
                 #region AWB Print Onlies
@@ -12271,6 +12273,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                QuoteNumber = f.QuoteNumber,
                                StatusName = !string.IsNullOrEmpty(f.StatusLocation) ? f.StatusName + " (" + f.StatusLocation + ")" : f.StatusName,
                                ExactStatusName = f.StatusName,
+                               PreForwardingETD = f.PreForwardingETD,
                            };
             return myResult;
         }
@@ -12631,6 +12634,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     QuoteNumber = f.QuoteNumber,
                     StatusName = !string.IsNullOrEmpty(f.StatusLocation) ? f.StatusName + "(" + f.StatusLocation + ")" : f.StatusName,
                     ExactStatusName = f.StatusName,
+                    PreForwardingETD = f.PreForwardingETD,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

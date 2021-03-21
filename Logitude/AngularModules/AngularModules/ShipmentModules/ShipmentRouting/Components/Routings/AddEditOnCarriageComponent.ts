@@ -21,8 +21,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {PackagesTabComponent, ShipmentPackageItem} from '../../../ShipmentPackages/Components/Packages/PackagesTabComponent';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
-@Component({
-    
+@Component({    
     templateUrl: './AddEditOnCarriageComponent.html',
 })
 
@@ -73,7 +72,14 @@ export class AddEditOnCarriageComponent extends BaseComponent {
 
         if (this.EntityPM.ShipmentLevelCode == "H" && !AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId)) {
             this.IsConnectedHouse = true;
-            this.OnForwardingFromPortId = this.EntityPM.ToPortId;
+            
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.OnCarriageToPortId)) {
+                this.OnForwardingFromPortId = this.EntityPM.OnCarriageToPortId;
+            }
+
+            else {
+                this.OnForwardingFromPortId = this.EntityPM.ToPortId;
+            }
         }
     }
 
@@ -111,19 +117,28 @@ export class AddEditOnCarriageComponent extends BaseComponent {
 
     BuildData() {
         this.ItemsSource = [];
+        var packagesSource: ShipmentPackagePM[];
         var myItems: ShipmentPackagePM[];
 
-        if (!AppTool.IsNullOrEmpty(this.SearchText)) {
-            myItems = this.EntityPM.ShipmentPackages.filter(f => f.ContainerNumber != null && f.ContainerNumber.toLowerCase().startsWith(this.SearchText.toLowerCase())); 
+        if (this.EntityPM.ShipmentLevelCode == "H" && this.EntityPM.MasterShipmentDataId != null && this.LegType == "On Carriage") {
+            packagesSource = this.EntityPM.ConnectedMasterPackages;
         }
 
         else {
-            myItems = this.EntityPM.ShipmentPackages;
+            packagesSource = this.EntityPM.ShipmentPackages;
+        }       
+
+        if (!AppTool.IsNullOrEmpty(this.SearchText)) {
+            myItems = packagesSource.filter(f => f.ContainerNumber != null && f.ContainerNumber.toLowerCase().startsWith(this.SearchText.toLowerCase()));
+        }
+
+        else {
+            myItems = packagesSource;
         }
 
         myItems.forEach((item) => {
             this.ItemsSource.push(new OnCarriagePackageItem(item, this));
-        });       
+        });
     }
 
     public IsEditingEnabled: boolean = false;
@@ -188,7 +203,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         }
 
         this.UIProperties.SetEnabled("OnForwardingTransportModeId", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("OnForwardingFromPortId", this.ObjectTableName, isTransportFieldEnabled);
+        this.UIProperties.SetEnabled("OnForwardingFromPortId", this.ObjectTableName, isTransportFieldEnabled && this.IsConnectedHouse == false);
         this.UIProperties.SetEnabled("OnForwardingToPortId", this.ObjectTableName, isTransportFieldEnabled);
         this.UIProperties.SetEnabled("OnForwardingCarrierId", this.ObjectTableName, isTransportFieldEnabled);
         this.UIProperties.SetEnabled("OnForwardingCarrierNumber", this.ObjectTableName, isCarrierNumberFieldEnabled);
@@ -497,12 +512,15 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         }
     }
 
-
     get OnForwardingTransportModeId() { return this.EntityPM.OnForwardingTransportModeId; }
     set OnForwardingTransportModeId(value: string) {
         if (this.EntityPM.OnForwardingTransportModeId != value) {
             this.EntityPM.OnForwardingTransportModeId = value;
-            this.OnForwardingFromPortId = null;           
+
+            if (!this.IsConnectedHouse) {
+                this.OnForwardingFromPortId = null;
+            }
+
             this.OnForwardingToPortId = null;
             this.OnForwardingCarrierId = null;
             this.OnForwardingCarrierNumber = null;

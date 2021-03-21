@@ -22,8 +22,7 @@ export class OnCarriageDateComponent extends BaseComponent implements OnInit {
     public State: string = "Departure";
     public DataContext = this;
     public EntityPM: ShipmentPackagePM;
-    public ValidationErrorsList: string[] = [];
-    public IsEnabled: boolean = true;
+    public ValidationErrorsList: string[] = [];    
     @Output() PopupClosed = new EventEmitter<any>();
     constructor() {
         super();
@@ -32,7 +31,15 @@ export class OnCarriageDateComponent extends BaseComponent implements OnInit {
     ngOnInit() {
         this.Clone();
     }
-    
+
+    private isEnabled: boolean = true;
+    get IsEnabled() { return this.isEnabled; }
+    set IsEnabled(newValue: boolean) {
+        if (this.isEnabled != newValue) {
+            this.isEnabled = newValue;
+        }
+    }
+
     public get ExpectedDate() {
         if (this.State == "Departure") {
             return this.EntityPM.OnCarriageETD;

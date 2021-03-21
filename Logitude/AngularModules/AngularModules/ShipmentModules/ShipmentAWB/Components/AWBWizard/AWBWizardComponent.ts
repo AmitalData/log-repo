@@ -1571,12 +1571,12 @@ export class AWBWizardComponent implements AfterViewInit{
         }
 
         else {
-            if (this.EntityPM.HasPreCarriage && AppTool.IsNullOrEmpty(this.EntityPM.PreCarriageFromPortId)) {
-                screenErrors.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.PreCarriageFromPortId")));
+            if (this.EntityPM.HasPreForwarding && AppTool.IsNullOrEmpty(this.EntityPM.PreForwardingFromPortId)) {
+                screenErrors.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.PreForwardingFromPortId")));
             }
 
-            if (this.EntityPM.HasOnCarriage && AppTool.IsNullOrEmpty(this.EntityPM.OnCarriageToPortId)) {
-                screenErrors.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.OnCarriageToPortId")));
+            if (this.EntityPM.HasOnForwarding && AppTool.IsNullOrEmpty(this.EntityPM.OnForwardingToPortId)) {
+                screenErrors.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.OnForwardingToPortId")));
             }
             if (!this.IsImportWizard) {
                 if (AppTool.IsNullOrEmpty(this.EntityPM.House)) {
@@ -3132,19 +3132,6 @@ export class AWBWizardComponent implements AfterViewInit{
 
         this.GetDocstOut();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     private ExecuteSend() {
 

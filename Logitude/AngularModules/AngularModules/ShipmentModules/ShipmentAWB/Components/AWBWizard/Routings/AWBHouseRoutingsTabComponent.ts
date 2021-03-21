@@ -54,10 +54,20 @@ export class AWBHouseRoutingsTabComponent extends BaseComponent implements After
                 if (isSaveSuccess) {
                     this.EntityPM = this.Wizard.EntityPM;
                     this.SetUIProperties();
+                    this.FireWizardEvent();
+                }
+            });
+
+            this.Wizard.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (isLoadSuccess) {
+                    this.EntityPM = this.Wizard.EntityPM;
+                    this.SetUIProperties();
+                    this.FireWizardEvent();
                 }
             });
         }
     }
+
 
     public IsEditingEnabled: boolean = false;
     private SetUIProperties() {
@@ -248,19 +258,24 @@ export class AWBHouseRoutingsTabComponent extends BaseComponent implements After
             this.toPort = list;
             this.AddPort(list);
 
-            if (list == null) {
-                this.EntityPM.ToCountryId = null;
-                this.EntityPM.ToCountryIsEC = false;
-                this.EntityPM.FinalDistenationPortId = null;
-                ShipmentTool.ComputeSCI(this.EntityPM);
-            }
+            var Code = list == null ? null : list.Code;
+            if (Code != this.EntityPM.MainCarriageToPortCode) {
+                if (list == null) {
+                    this.EntityPM.ToCountryId = null;
+                    this.EntityPM.ToCountryIsEC = false;
+                    this.EntityPM.MainCarriageToPortCode = null;
+                    this.EntityPM.FinalDistenationPortId = null;
+                    ShipmentTool.ComputeSCI(this.EntityPM);
+                }
 
-            else {
-                this.EntityPM.ToCountryId = list.CountryId;
-                this.EntityPM.ToCountryIsEC = list.CountryEC;
-                this.EntityPM.FinalDistenationPortId = list.Id;
-                ShipmentTool.ComputeSCI(this.EntityPM);
-            }
+                else {
+                    this.EntityPM.ToCountryId = list.CountryId;
+                    this.EntityPM.ToCountryIsEC = list.CountryEC;
+                    this.EntityPM.MainCarriageToPortCode = list.Code;
+                    this.EntityPM.FinalDistenationPortId = list.Id;
+                    ShipmentTool.ComputeSCI(this.EntityPM);
+                }
+            }            
         }
     }
 

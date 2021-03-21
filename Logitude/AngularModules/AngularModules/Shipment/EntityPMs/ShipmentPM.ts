@@ -5314,6 +5314,20 @@ export class ShipmentPM {
         }
     }
 
+    private connectedMasterPackages: ShipmentPackagePM[];
+    get ConnectedMasterPackages() {
+        if (this.connectedMasterPackages == null) {
+            this.connectedMasterPackages = [];
+        }
+
+        return this.connectedMasterPackages;
+    }
+    set ConnectedMasterPackages(newValue: ShipmentPackagePM[]) {
+        if (this.connectedMasterPackages != newValue) {
+            this.connectedMasterPackages = newValue;
+        }
+    }
+
     public ShipmentARInvoices: Array<any>;
     public ShipmentAPInvoices: Array<any>;
     public ShipmentCarrierStatuses: Array<any>;

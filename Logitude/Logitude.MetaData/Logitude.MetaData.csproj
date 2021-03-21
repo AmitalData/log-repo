@@ -469,6 +469,7 @@
     <None Include="DBScripts\ShipmentModel\202103181700_AddShipmentNumberToSearchFieldInCustomsTransferHeaders.sxml" />
     <None Include="DBScripts\ShipmentModel\202101271225_AddNewSpecialHandlingCodes.sxml" />
     <None Include="DBScripts\ShipmentModel\202102241906_UpdateCustomerContactAndAddress.sxml" />
+    <None Include="DBScripts\ShipmentModel\202103211413_UpdateOnForwardingDepartedEventStatusWeight.sxml" />
     <None Include="DBScripts\ShipmentModel\UpdateshipmentsCalculateDocumentsKPIFields.sxml" />
     <None Include="DBScripts\ShipmentModel\UpdateShipmentsCalculateSendDocumentField.sxml" />
     <None Include="DBTables\CommonDataModel\CardSearch.dxml" />

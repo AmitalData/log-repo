@@ -59,7 +59,14 @@ export class AddEditPreCarriageComponent extends BaseComponent {
     SetDefaultValues() {
         if (this.EntityPM.ShipmentLevelCode == "H" && !AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId)) {
             this.IsConnectedHouse = true;
-            this.PreCarriageToPortId = this.EntityPM.MainCarriageFromPortId;
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.PreCarriageFromPortId)) {
+                this.PreForwardingToPortId = this.EntityPM.PreCarriageFromPortId;
+            }
+
+            else {
+                this.PreForwardingToPortId = this.EntityPM.MainCarriageFromPortId;
+            }
         }
     }
 
@@ -124,7 +131,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
 
         this.UIProperties.SetEnabled("PreForwardingTransportModeId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("PreForwardingFromPortId", this.ObjectTableName, isTransportFieldEnabled);
-        this.UIProperties.SetEnabled("PreForwardingToPortId", this.ObjectTableName, isTransportFieldEnabled);
+        this.UIProperties.SetEnabled("PreForwardingToPortId", this.ObjectTableName, isTransportFieldEnabled && this.IsConnectedHouse == false);
         this.UIProperties.SetEnabled("PreForwardingCarrierId", this.ObjectTableName, isTransportFieldEnabled);
         this.UIProperties.SetEnabled("PreForwardingCarrierNumber", this.ObjectTableName, isCarrierNumberFieldEnabled);
         this.UIProperties.SetEnabled("PreForwardingVesselId", this.ObjectTableName, this.IsEditingEnabled);
@@ -405,7 +412,11 @@ export class AddEditPreCarriageComponent extends BaseComponent {
         if (this.EntityPM.PreForwardingTransportModeId != value) {
             this.EntityPM.PreForwardingTransportModeId = value;
             this.PreForwardingFromPortId = null;
-            this.PreForwardingToPortId = null;
+
+            if (!this.IsConnectedHouse) {
+                this.PreForwardingToPortId = null;
+            }
+
             this.PreForwardingCarrierId = null;
             this.PreForwardingCarrierNumber = null;
             this.PreForwardingVesselId = null;
