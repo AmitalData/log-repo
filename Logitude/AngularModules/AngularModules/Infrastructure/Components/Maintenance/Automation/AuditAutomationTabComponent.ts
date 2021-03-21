@@ -9,6 +9,8 @@ import {ChangeField} from '../../../../Common/DataContracts/ChangeField';
 import {EntityChangeAutomation} from '../../../../Common/DataContracts/EntityChangeAutomation';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { AutomationConditionsDetailsComponent } from './AutomationConditionsDetailsComponent';
 
 @Component({
     
@@ -46,6 +48,36 @@ export class AuditAutomationTabComponent implements OnInit, AfterViewInit {
         }
 
         this.Listen();
+    }
+
+    SetWindowArgs(windowArgs) {
+        //this.ReportGroupList = windowArgs.ReportGroupList;
+        //this.ReportList = windowArgs.ReportList;
+    }
+
+    ShowCondithionsDetails() {
+        var entityChange: EntityChangePM = this.EntityChangeListSelected;
+       // newItem.CreatedBy = SessionLocator.LoggedUserPM.EnglishName;
+        ////newItem.UpdatedBy = SessionLocator.LoggedUserPM.EnglishName;
+       // newItem.TriggerType = "O";
+       // newItem.Tenant = SessionLocator.Tenant;
+       // newItem.Type = this.SchedulerType;
+
+        var windowArgs: any = {}; 
+
+        var logWindow = new LogitudeWindow(); 
+        logWindow.DataContext = this;
+        logWindow.Height = 800;
+        logWindow.Width = 840;
+        logWindow.Title = "Conditions Statuses";
+        logWindow.DataContext = this;
+        windowArgs.CurrentEntityPM = this.AutomationList;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.IsShowCloseButton = true;
+        logWindow.Show('./Infrastructure/Components/Maintenance/Automation/AutomationConditionsDetailsComponent');
+        logWindow.WindowClosed.subscribe(closed => {
+         //   this.IsEditReportSchedulerEventAlreadyExist = false;
+        });
     }
 
     Listen() {

@@ -186,6 +186,7 @@ import { FTPAutomationDetailsComponent } from './Components/Maintenance/Automati
 import { ToolTipFloatDirective } from './Utilities/RTLDirectives/ToolTipFloatDirective';
 import { SendDocumentResultComponent } from './Components/Maintenance/Automation/AutomationResult/SendDocumentResultComponent';
 import { HybridLoginProcessComponent } from './Components/LoginComponent/CustomLoginComponents/HybridLabels/Components/HybridLoginProcessComponent';
+import { AutomationConditionsDetailsComponent } from './Components/Maintenance/Automation/AutomationConditionsDetailsComponent';
 
 
 
@@ -307,6 +308,7 @@ export const ControlsComponents =
         SendInterfaceResultComponent,
         FTPAutomationDetailsComponent,
         SendDocumentResultComponent,
+        AuditAutomationTabComponent,
     ];
 export const Components =
     [
@@ -383,6 +385,7 @@ export const Components =
         LastSuccessfulLoginComponent,
         FTBSchedulerTemplateComponent,
         HybridLoginProcessComponent,
+        AutomationConditionsDetailsComponent
         
     ];
 
@@ -424,8 +427,8 @@ export class ModuleDeclarations {
             case 'ChooseSpecificUserComponent': { myResult = ChooseSpecificUserComponent; break; }
             case 'DelayAutomationconditionsComponent': { myResult = DelayAutomationconditionsComponent; break; }
             case 'ViewAutomationHistoryComponent': { myResult = ViewAutomationHistoryComponent; break; }
-
-
+            case 'AutomationConditionsDetailsComponent': { myResult = AutomationConditionsDetailsComponent; break; }
+                 
 
             case 'NewViewComponent': { myResult = NewViewComponent; break; }
             case 'Export2ExcelControl': { myResult = Export2ExcelControl; break; }

@@ -49,6 +49,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                     string lastUpdate = GetLastAuomationUpdateDate(automationResultArgs.AutomationObjectTable, automationResultArgs.OtherAutomationObjectTable, automation);
 
                     ValidateAutomationResultClass validateResult = this.ValidateAutomation(automation, entityChange, automationFieldLists, lastUpdate, "");
+                    entityChangesAutomation.ConditionsList = validateResult.ConditionsList;
 
                     if (validateResult.Type == "Delayed")
                     {
@@ -73,6 +74,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                     }
                     else
                     {
+                        entityChangesAutomation.ConditionsList = validateResult.ConditionsList;
                         entityChangesAutomation.DoneDate = TenantServerConfigration.GetCurrentDateTime(entityChange.Tenant);
                         automationResultArgs.MainEntityChangeService.EntityChangesAutomationsFailedList.Add(entityChangesAutomation);
                         entityChangesAutomation.ExecutionTime = (int)((DateTime.Now.Ticks - dateNow.Ticks) / TimeSpan.TicksPerMillisecond);

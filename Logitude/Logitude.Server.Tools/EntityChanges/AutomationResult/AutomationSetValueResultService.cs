@@ -45,6 +45,8 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 string lastUpdate = GetLastAuomationUpdateDate(automationResultArgs.AutomationObjectTable, automationResultArgs.OtherAutomationObjectTable, automation);
 
                 ValidateAutomationResultClass validateResult = ValidateAutomation(automation, entityChange, automationFieldLists, lastUpdate, "");
+                entityChangesAutomation.ConditionsList = validateResult.ConditionsList;
+
                 var isShipmentSetFieldDelayed = (validateResult.IsAutomationValid && automation.ResultCode == "FIELDSET" && validateResult.Type == "Delayed") ? objecttableRepository.IsObjectTableShipment(automation.ObjectTableId) : false;
                 if (validateResult.Type == "Delayed" && !isShipmentSetFieldDelayed)
                 {
@@ -64,6 +66,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 }
                 else
                 {
+                    entityChangesAutomation.ConditionsList = validateResult.ConditionsList;
                     entityChangesAutomation.DoneDate = TenantServerConfigration.GetCurrentDateTime(entityChange.Tenant);
                     this.automationResultArgs.MainEntityChangeService.EntityChangesAutomationsFailedList.Add(entityChangesAutomation);
                     entityChangesAutomation.ExecutionTime = (int)((DateTime.Now.Ticks - dateBefore.Ticks) / TimeSpan.TicksPerMillisecond);

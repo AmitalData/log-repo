@@ -1,0 +1,127 @@
+<style>
+    .TabBody {
+        overflow: auto;
+    }
+</style>
+
+<style>
+    .TabBody {
+        overflow: auto;
+    }
+</style>
+  
+<div style="height:100%;width:100%;margin-top:5px;  border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:6px;vertical-align:top">
+    <p style="font-size:11px;margin-left:5px;margin-top:1px;color:#1B90CB">Conditions (meet ALL Conditions in this area)</p>
+    <table style="border :none;vertical-align:top;">
+
+        <tr [style.height]="ListHeight" style="vertical-align:top;">
+
+            <td style="vertical-align:top">
+
+                <div class="ScrollViewer">
+                    <div class="ScrollContent">
+                        <!--All-->
+                        <table>
+                            <tr style="vertical-align:central">
+
+                                <td colspan="3" style="vertical-align:central" class="CellStretch">
+                                    <div class="SimpleGridView">
+                                        <div class="SimpleGridViewHeader">
+
+                                            <table>
+                                                <tr>
+                                                    <td style="width: 350px; min-width: 150px;">Condition</td>
+                                                    <td style="width: 350px; min-width: 165px;">Met</td>
+                                                </tr>
+
+                                                <!--ANY Conditions in this area-->
+                                                <tr style="background-color:#EDEDED;" *ngFor="let item of AutomationCondationAndList">
+                                                    <td>
+                                                        <span> {{item.ObjectFieldCode }} </span> 
+                                                        <span> {{item.OperatorCode }} </span>
+                                                        <span> {{ item.Value }} </span>
+                                                    </td>
+                                                    <td>
+                                                        <div style="width:95px">
+                                                            <img class="CenterCenter" style="width:20px;height:20px" *ngIf="item.IsValid" src="./Images/Icons/MiniGreenTick.png" />
+
+                                                            <img *ngIf="!item.IsValid" class="CenterCenter" style="width:14px;height:14px" src="./Images/RedX.png" />
+
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                            <table>
+                                                <tr style="height: 32px;">
+                                                    <td style="vertical-align: bottom">
+                                                        <table style="height: 22px;">
+                                                            <tr>
+
+                                                                <td style="width: 57px">
+                                                                     
+                                                                </td>
+
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <!--Any-->
+                                            <div style="height:100%;width:100%;margin-top:5px;  border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:6px;vertical-align:top">
+                                                <p style="background-color: #EDEDED;font-size: 11px; margin-left: 5px; margin-top: 1px; color: #1B90CB">Conditions (meet ANY Conditions in this area)</p>
+                                               </div>
+                                                <table>
+                                                    <tr style="background-color:#EDEDED;">
+                                                        <td style="width: 350px; min-width: 150px;">Condition</td>
+                                                        <td style="width: 350px; min-width: 165px;">Met</td>
+                                                    </tr>
+
+                                                    <!--ANY Conditions in this area-->
+                                                    <tr style="background-color:#EDEDED;" *ngFor="let item of AutomationCondationOrList"> 
+
+                                                        <td>
+                                                            <span> {{item.ObjectFieldCode }} </span> 
+                                                            <span> {{item.OperatorCode }} </span>
+                                                            <span> {{ item.Value }} </span>
+                                                        </td>
+                                                        <td> 
+                                                            <div style="width:95px">
+                                                                <img class="CenterCenter" style="width:20px;height:20px" *ngIf="item.IsValid" src="./Images/Icons/MiniGreenTick.png" />
+
+                                                                <img *ngIf="!item.IsValid" class="CenterCenter" style="width:14px;height:14px" src="./Images/RedX.png" />
+
+                                                            </div>
+
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                            </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                      
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr style="height: 32px;">
+            <td style="vertical-align: bottom">
+                <table style="height: 22px;">
+                    <tr>
+
+                        <td style="width: 57px">
+                            <button style="cursor:pointer" class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
+                        </td>
+
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+</div>
+
