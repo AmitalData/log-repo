@@ -154,6 +154,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string ForwarderName  { get; set; }
        [DataMember]
        public string FclLclName  { get; set; }
+       [DataMember]
+       public string TeamName  { get; set; }
    }
 
 }
