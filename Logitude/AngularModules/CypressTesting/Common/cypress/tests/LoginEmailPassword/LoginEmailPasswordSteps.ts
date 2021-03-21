@@ -22,7 +22,7 @@ When("login", () => {
     Actions.Login();
 });
 
-Then("the login should failed", () => {
+Then("the login should fail", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.Authentication, 200).then((interception) => {
         assert.equal(interception.response.body.InValidMailOrPassword, true)
     })
