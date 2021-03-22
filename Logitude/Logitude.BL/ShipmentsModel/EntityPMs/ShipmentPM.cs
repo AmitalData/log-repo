@@ -1542,6 +1542,32 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
             }
         }
 
+        private List<ShipmentPackagePM> connectedMasterPackages;
+        [Include]
+        [DataMember]
+        [Composition]
+        [Association("MasterPackagePMShipment", "Id", "ShipmentId")]
+        public virtual List<ShipmentPackagePM> ConnectedMasterPackages
+        {
+            get
+            {
+                if (connectedMasterPackages == null)
+                {
+                    connectedMasterPackages = new List<ShipmentPackagePM>();
+                }
+
+                return this.connectedMasterPackages;
+            }
+
+            set
+            {
+                if (value != null)
+                {
+                    connectedMasterPackages = value;
+                }
+            }
+        }
+
         private List<ShipmentOrderPackagePM> shipmentOrderPackages;
         [Include]
         [Composition]

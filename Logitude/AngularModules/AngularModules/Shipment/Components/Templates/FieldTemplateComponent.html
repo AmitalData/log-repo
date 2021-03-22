@@ -32,9 +32,16 @@
                                     <img style="vertical-align:middle;" *ngIf="FieldValue" src="./Images/Icons/IsClosed.png" />
                                 </div>
 
-                                <div *ngIf="FieldName == 'StatusName'" class="TemplateTrimming">
+                                <div *ngIf="!IsHeaderScreenTemplate && FieldName == 'StatusName'" class="TemplateTrimming">
                                     <div class="TemplateTrimmingChild">
                                         <span [ngStyle]="{color: Entity.ExactStatusName | StringToColorPipe}">{{FieldValue}}</span>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="IsHeaderScreenTemplate && FieldName == 'StatusName'" class="TemplateTrimming">
+                                    <div class="TemplateTrimmingChild">
+                                        <span [ngStyle]="{color: FieldValue | StringToColorPipe}">{{FieldValue}}</span>
+                                        <span [ngStyle]="{color: FieldValue | StringToColorPipe}" *ngIf="Entity.StatusLocation" style="margin-left: 3px;">({{Entity.StatusLocation}})</span>
                                     </div>
                                 </div>
 
@@ -127,13 +134,13 @@
                             <div class="MediaFill">
 
                                 <div *ngIf="FieldName == 'DeliveryTransportModeName'" class="MediaFillRelative">
-                                    <img *ngIf="Entity['DeliveryTransportModeCode'] == 'BYTR'" class="CenterCenter" [attr.src]="'./Images/truck.png'" style="width:23px;height:30px;"/>
-                                    <img *ngIf="Entity['DeliveryTransportModeCode'] == 'BYRA'" class="CenterCenter" [attr.src]="'./Images/train.png'" style="width:23px;height:20px;"/>
+                                    <img *ngIf="Entity['DeliveryTransportModeCode'] == 'BYTR'" class="CenterCenter" [attr.src]="'./Images/truck.png'" style="width:23px;height:30px;" />
+                                    <img *ngIf="Entity['DeliveryTransportModeCode'] == 'BYRA'" class="CenterCenter" [attr.src]="'./Images/train.png'" style="width:23px;height:20px;" />
                                 </div>
 
                                 <div *ngIf="FieldName == 'ECRTransportModeName'" class="MediaFillRelative">
-                                    <img *ngIf="Entity['ECRTransportModeCode'] == 'BYTR'" class="CenterCenter" [attr.src]="'./Images/truck.png'" style="width:23px;height:30px;"/>
-                                    <img *ngIf="Entity['ECRTransportModeCode'] == 'BYRA'" class="CenterCenter" [attr.src]="'./Images/train.png'" style="width:23px;height:20px;"/>
+                                    <img *ngIf="Entity['ECRTransportModeCode'] == 'BYTR'" class="CenterCenter" [attr.src]="'./Images/truck.png'" style="width:23px;height:30px;" />
+                                    <img *ngIf="Entity['ECRTransportModeCode'] == 'BYRA'" class="CenterCenter" [attr.src]="'./Images/train.png'" style="width:23px;height:20px;" />
                                 </div>
 
                                 <div *ngIf="FieldName == 'TransportModeId'" class="MediaFillRelative">
@@ -169,16 +176,16 @@
                                 </div>
 
                                 <!--<div *ngIf="FieldName == 'MarksAndNumbers' && FieldValue" style="height: 100%; width: 100%; position: relative;">
-        <div class="CenterCenter" style="height: 16px; width: 16px;">
-            <CellTooltip [IconPath]="'./Images/CellIcons/Info_Blue.png'" [Head]="'Marks And Numbers'" [Body]="FieldValue"></CellTooltip>
-        </div>
-    </div>
+                                    <div class="CenterCenter" style="height: 16px; width: 16px;">
+                                        <CellTooltip [IconPath]="'./Images/CellIcons/Info_Blue.png'" [Head]="'Marks And Numbers'" [Body]="FieldValue"></CellTooltip>
+                                    </div>
+                                </div>
 
-    <div *ngIf="FieldName == 'Description' && FieldValue" style="height: 100%; width: 100%; position: relative;">
-        <div class="CenterCenter" style="height: 16px; width: 16px;">
-            <CellTooltip [IconPath]="'./Images/CellIcons/Info_Blue.png'" [Head]="'Description'" [Body]="FieldValue"></CellTooltip>
-        </div>
-    </div>-->
+                                <div *ngIf="FieldName == 'Description' && FieldValue" style="height: 100%; width: 100%; position: relative;">
+                                    <div class="CenterCenter" style="height: 16px; width: 16px;">
+                                        <CellTooltip [IconPath]="'./Images/CellIcons/Info_Blue.png'" [Head]="'Description'" [Body]="FieldValue"></CellTooltip>
+                                    </div>
+                                </div>-->
 
                                 <div class="TemplateTrimming" *ngIf="FieldName == 'Description' && FieldValue" [title]="Entity['Description']">
                                     <div class="TemplateTrimmingChild">{{FieldValue}}</div>

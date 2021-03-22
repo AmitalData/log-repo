@@ -761,128 +761,17 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                             invoiceElement.ShipmentDetails.DeliveryATA = myDelivery.ATA;
                         }
 
-                        #region PreCarriage
-                        invoiceElement.ShipmentDetails.PreCarriageTransportMode = this.Helper.GetTransportModes(shipment.ShipmentLevelCode == "H"? shipment.PreForwardingTransportModeId : shipment.PreCarriageTransportModeId);
-                        invoiceElement.ShipmentDetails.PreCarriageFromPortCode = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingFromPortCode :shipment.PreCarriageFromPortCode;
-                        invoiceElement.ShipmentDetails.PreCarriageFromPortName = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingFromPortName : shipment.PreCarriageFromPortName;
-                        invoiceElement.ShipmentDetails.PreCarriageFromPortCountryCode = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingFromPortCountryCode : shipment.PreCarriageFromPortCountryCode;
-                        invoiceElement.ShipmentDetails.PreCarriageFromPortCountryName = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingFromPortCountryName : shipment.PreCarriageFromPortCountryName;
-                        invoiceElement.ShipmentDetails.PreCarriageToPortCode = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingToPortCode : shipment.PreCarriageToPortCode;
-                        invoiceElement.ShipmentDetails.PreCarriageToPortName = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingToPortName : shipment.PreCarriageToPortName;
-                        invoiceElement.ShipmentDetails.PreCarriageToPortCountryCode = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingToPortCountryCode : shipment.PreCarriageToPortCountryCode;
-                        invoiceElement.ShipmentDetails.PreCarriageToPortCountryName = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingToPortCountryName : shipment.PreCarriageToPortCountryName;
-                        invoiceElement.ShipmentDetails.PreCarriageCarrierName = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingCarrierName : shipment.PreCarriageCarrierName;
-                        invoiceElement.ShipmentDetails.PreCarriageCarrierNumber = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingCarrierNumber : shipment.PreCarriageCarrierNumber;
-                        invoiceElement.ShipmentDetails.PreCarriageETD = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingETD : shipment.PreCarriageETD;
-                        invoiceElement.ShipmentDetails.PreCarriageETA = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingETA : shipment.PreCarriageETA;
-                        invoiceElement.ShipmentDetails.PreCarriageATD = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingATD : shipment.PreCarriageATD;
-                        invoiceElement.ShipmentDetails.PreCarriageATA = shipment.ShipmentLevelCode == "H" ? shipment.PreForwardingATA : shipment.PreCarriageATA;
-                        #endregion
-
-                        #region OnCarriage
-                        invoiceElement.ShipmentDetails.OnCarriageTransportMode = this.Helper.GetTransportModes(shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingTransportModeId : shipment.OnCarriageTransportModeId);
-                        invoiceElement.ShipmentDetails.OnCarriageFromPortCode = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingFromPortCode : shipment.OnCarriageFromPortCode;
-                        invoiceElement.ShipmentDetails.OnCarriageFromPortName = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingFromPortName : shipment.OnCarriageFromPortName;
-                        invoiceElement.ShipmentDetails.OnCarriageFromPortCountryCode = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingFromPortCountryCode : shipment.OnCarriageFromPortCountryCode;
-                        invoiceElement.ShipmentDetails.OnCarriageFromPortCountryName = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingFromPortCountryName : shipment.OnCarriageFromPortCountryName;
-                        invoiceElement.ShipmentDetails.OnCarriageToPortCode = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingToPortCode : shipment.OnCarriageToPortCode;
-                        invoiceElement.ShipmentDetails.OnCarriageToPortName = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingToPortName : shipment.OnCarriageToPortName;
-                        invoiceElement.ShipmentDetails.OnCarriageToPortCountryCode = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingToPortCountryCode : shipment.OnCarriageToPortCountryCode;
-                        invoiceElement.ShipmentDetails.OnCarriageToPortCountryName = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingToPortCountryName : shipment.OnCarriageToPortCountryName;
-                        invoiceElement.ShipmentDetails.OnCarriageCarrierName = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingCarrierName : shipment.OnCarriageCarrierName;
-                        invoiceElement.ShipmentDetails.OnCarriageCarrierNumber = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingCarrierNumber : shipment.OnCarriageCarrierNumber;
-                        invoiceElement.ShipmentDetails.OnCarriageETD = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingETD : shipment.OnCarriageETD;
-                        invoiceElement.ShipmentDetails.OnCarriageETA = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingETA : shipment.OnCarriageETA;
-                        invoiceElement.ShipmentDetails.OnCarriageATD = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingATD : shipment.OnCarriageATD;
-                        invoiceElement.ShipmentDetails.OnCarriageATA = shipment.ShipmentLevelCode == "H" ? shipment.OnForwardingATA : shipment.OnCarriageATA;
-                        #endregion
-
-                        #region MainCarriage
-                        invoiceElement.ShipmentDetails.MainCarriageCarrierCode = shipment.MainCarriageCarrierCode;
-                        invoiceElement.ShipmentDetails.MainCarriageCarrierName = shipment.MainCarriageCarrierName;
-                        invoiceElement.ShipmentDetails.MainCarriageAirlinePrefix = shipment.MainCarriageCarrierPrefix;
-                        invoiceElement.ShipmentDetails.MainCarriageCarrierNumber = shipment.MainCarriageCarrierNumber;
-                        invoiceElement.ShipmentDetails.MainCarriageETD = shipment.MainCarriageETD;
-                        invoiceElement.ShipmentDetails.MainCarriageATD = shipment.MainCarriageATD;
-                        invoiceElement.ShipmentDetails.MainCarriageETA = shipment.MainCarriageETA;
-                        invoiceElement.ShipmentDetails.MainCarriageATA = shipment.MainCarriageATA;
-                        invoiceElement.ShipmentDetails.MainCarriageVessel = shipment.MainCarriageVesselName;
-                        #endregion
-
-                        #region Via1
-                        invoiceElement.ShipmentDetails.Via1CarrierCode = shipment.Transshipment1CarrierCode;
-                        invoiceElement.ShipmentDetails.Via1CarrierName = shipment.Transshipment1CarrierName;
-                        invoiceElement.ShipmentDetails.Via1AirlinePrefix = shipment.Transshipment1CarrierPrefix;
-                        invoiceElement.ShipmentDetails.Via1CarrierNumber = shipment.Transshipment1CarrierNumber;
-                        invoiceElement.ShipmentDetails.Via1ETD = shipment.Transshipment1ETD;
-                        invoiceElement.ShipmentDetails.Via1ATD = shipment.Transshipment1ATD;
-                        invoiceElement.ShipmentDetails.Via1ETA = shipment.Transshipment1ETA;
-                        invoiceElement.ShipmentDetails.Via1ATA = shipment.Transshipment1ATA;
-                        invoiceElement.ShipmentDetails.Via1Vessel = shipment.Transshipment1VesselName;
-                        #endregion
-
-                        #region Via2
-                        invoiceElement.ShipmentDetails.Via2CarrierCode = shipment.Transshipment2CarrierCode;
-                        invoiceElement.ShipmentDetails.Via2CarrierName = shipment.Transshipment2CarrierName;
-                        invoiceElement.ShipmentDetails.Via2AirlinePrefix = shipment.Transshipment2CarrierPrefix;
-                        invoiceElement.ShipmentDetails.Via2CarrierNumber = shipment.Transshipment2CarrierNumber;
-                        invoiceElement.ShipmentDetails.Via2ETD = shipment.Transshipment2ETD;
-                        invoiceElement.ShipmentDetails.Via2ATD = shipment.Transshipment2ATD;
-                        invoiceElement.ShipmentDetails.Via2ETA = shipment.Transshipment2ETA;
-                        invoiceElement.ShipmentDetails.Via2ATA = shipment.Transshipment2ATA;
-                        invoiceElement.ShipmentDetails.Via2Vessel = shipment.Transshipment2VesselName;
-                        #endregion
-
-                        #region Via3
-                        invoiceElement.ShipmentDetails.Via3CarrierCode = shipment.Transshipment3CarrierCode;
-                        invoiceElement.ShipmentDetails.Via3CarrierName = shipment.Transshipment3CarrierName;
-                        invoiceElement.ShipmentDetails.Via3AirlinePrefix = shipment.Transshipment3CarrierPrefix;
-                        invoiceElement.ShipmentDetails.Via3CarrierNumber = shipment.Transshipment3CarrierNumber;
-                        invoiceElement.ShipmentDetails.Via3ETD = shipment.Transshipment3ETD;
-                        invoiceElement.ShipmentDetails.Via3ATD = shipment.Transshipment3ATD;
-                        invoiceElement.ShipmentDetails.Via3ETA = shipment.Transshipment3ETA;
-                        invoiceElement.ShipmentDetails.Via3ATA = shipment.Transshipment3ATA;
-                        invoiceElement.ShipmentDetails.Via3Vessel = shipment.Transshipment3VesselName;
-                        #endregion
-
-                        #region FromLocation
-                        invoiceElement.ShipmentDetails.FromPortCode = shipment.FromPort;
-                        invoiceElement.ShipmentDetails.FromPortName = shipment.FromPortName;
-                        invoiceElement.ShipmentDetails.FromCountryCode = shipment.FromPortCountry;
-                        invoiceElement.ShipmentDetails.FromCountryName = shipment.FromPortCountryName;
-
-                        if (isInlandDomesticShipment)
-                        {
-                            AddressPM fromAddress = addressQuery.GetSingleAddressPM(shipment.MainCarriageFromAddressId, tenant, true);
-                            invoiceElement.ShipmentDetails.FromAddress = this.Helper.GetAddress(fromAddress);
-                        }
-                        #endregion
-
-                        #region ToLocation
-                        invoiceElement.ShipmentDetails.ToPortCode = shipment.ToPort;
-                        invoiceElement.ShipmentDetails.ToPortName = shipment.ToPortName;
-                        invoiceElement.ShipmentDetails.ToCountryCode = shipment.ToPortCountry;
-                        invoiceElement.ShipmentDetails.ToCountryName = shipment.ToPortCountryName;
-
-                        if (isInlandDomesticShipment)
-                        {
-                            AddressPM toAddress = addressQuery.GetSingleAddressPM(shipment.MainCarriageToAddressId, tenant, true);
-                            invoiceElement.ShipmentDetails.ToAddress = this.Helper.GetAddress(toAddress);
-                        }
-                        #endregion
-
-                        #region FinalLocation
-                        invoiceElement.ShipmentDetails.FinalPortCode = shipment.MainCarriageFinalDestinationPortCode;
-                        invoiceElement.ShipmentDetails.FinalPortName = shipment.MainCarriageFinalDestinationPortName;
-                        invoiceElement.ShipmentDetails.FinalCountryCode = shipment.MainCarriageFinalDestinationPortCountryCode;
-                        invoiceElement.ShipmentDetails.FinalCountryName = shipment.MainCarriageFinalDestinationPortCountryName;
-
-                        if (isInlandDomesticShipment)
-                        {
-                            AddressPM finalAddress = addressQuery.GetSingleAddressPM(shipment.MainCarriageToAddressId, tenant, true);
-                            invoiceElement.ShipmentDetails.FinalAddress = this.Helper.GetAddress(finalAddress);
-                        }
-                        #endregion
+                        this.SetPreCarriageValues(invoiceElement, shipment);
+                        this.SetOnCarriageValues(invoiceElement, shipment);
+                        this.SetPreForwardingValues(invoiceElement, shipment);
+                        this.SetOnForwardingValues(invoiceElement, shipment);
+                        this.SetMainCarriageValues(invoiceElement, shipment);
+                        this.SetVia1Values(invoiceElement, shipment);
+                        this.SetVia2Values(invoiceElement, shipment);
+                        this.SetVia3Values(invoiceElement, shipment);
+                        this.SetFromLocationValues(invoiceElement, shipment, addressQuery);
+                        this.SetToLocationValues(invoiceElement, shipment, addressQuery);
+                        this.SetFinalLocationValues(invoiceElement, shipment, addressQuery);                      
 
                         #endregion
 
@@ -1061,6 +950,165 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             this.BuildXMLFile(log, tenant, filename);
         }
 
+        private void SetPreCarriageValues(APInvoiceElement invoiceElement, ShipmentPM shipment)
+        {
+            invoiceElement.ShipmentDetails.PreCarriageTransportMode = this.Helper.GetTransportModes(shipment.PreCarriageTransportModeId);
+            invoiceElement.ShipmentDetails.PreCarriageFromPortCode = shipment.PreCarriageFromPortCode;
+            invoiceElement.ShipmentDetails.PreCarriageFromPortName = shipment.PreCarriageFromPortName;
+            invoiceElement.ShipmentDetails.PreCarriageFromPortCountryCode = shipment.PreCarriageFromPortCountryCode;
+            invoiceElement.ShipmentDetails.PreCarriageFromPortCountryName = shipment.PreCarriageFromPortCountryName;
+            invoiceElement.ShipmentDetails.PreCarriageToPortCode = shipment.PreCarriageToPortCode;
+            invoiceElement.ShipmentDetails.PreCarriageToPortName = shipment.PreCarriageToPortName;
+            invoiceElement.ShipmentDetails.PreCarriageToPortCountryCode = shipment.PreCarriageToPortCountryCode;
+            invoiceElement.ShipmentDetails.PreCarriageToPortCountryName = shipment.PreCarriageToPortCountryName;
+            invoiceElement.ShipmentDetails.PreCarriageCarrierName = shipment.PreCarriageCarrierName;
+            invoiceElement.ShipmentDetails.PreCarriageCarrierNumber = shipment.PreCarriageCarrierNumber;
+            invoiceElement.ShipmentDetails.PreCarriageETD = shipment.PreCarriageETD;
+            invoiceElement.ShipmentDetails.PreCarriageETA = shipment.PreCarriageETA;
+            invoiceElement.ShipmentDetails.PreCarriageATD = shipment.PreCarriageATD;
+            invoiceElement.ShipmentDetails.PreCarriageATA = shipment.PreCarriageATA;
+        }
+        private void SetOnCarriageValues(APInvoiceElement invoiceElement, ShipmentPM shipment)
+        {
+            invoiceElement.ShipmentDetails.OnCarriageTransportMode = this.Helper.GetTransportModes(shipment.OnCarriageTransportModeId);
+            invoiceElement.ShipmentDetails.OnCarriageFromPortCode = shipment.OnCarriageFromPortCode;
+            invoiceElement.ShipmentDetails.OnCarriageFromPortName = shipment.OnCarriageFromPortName;
+            invoiceElement.ShipmentDetails.OnCarriageFromPortCountryCode = shipment.OnCarriageFromPortCountryCode;
+            invoiceElement.ShipmentDetails.OnCarriageFromPortCountryName = shipment.OnCarriageFromPortCountryName;
+            invoiceElement.ShipmentDetails.OnCarriageToPortCode = shipment.OnCarriageToPortCode;
+            invoiceElement.ShipmentDetails.OnCarriageToPortName = shipment.OnCarriageToPortName;
+            invoiceElement.ShipmentDetails.OnCarriageToPortCountryCode = shipment.OnCarriageToPortCountryCode;
+            invoiceElement.ShipmentDetails.OnCarriageToPortCountryName = shipment.OnCarriageToPortCountryName;
+            invoiceElement.ShipmentDetails.OnCarriageCarrierName = shipment.OnCarriageCarrierName;
+            invoiceElement.ShipmentDetails.OnCarriageCarrierNumber = shipment.OnCarriageCarrierNumber;
+            invoiceElement.ShipmentDetails.OnCarriageETD = shipment.OnCarriageETD;
+            invoiceElement.ShipmentDetails.OnCarriageETA = shipment.OnCarriageETA;
+            invoiceElement.ShipmentDetails.OnCarriageATD = shipment.OnCarriageATD;
+            invoiceElement.ShipmentDetails.OnCarriageATA = shipment.OnCarriageATA;
+        }
+        private void SetPreForwardingValues(APInvoiceElement invoiceElement, ShipmentPM shipment)
+        {
+            invoiceElement.ShipmentDetails.PreForwardingTransportMode = this.Helper.GetTransportModes(shipment.PreForwardingTransportModeId);
+            invoiceElement.ShipmentDetails.PreForwardingFromPortCode = shipment.PreForwardingFromPortCode;
+            invoiceElement.ShipmentDetails.PreForwardingFromPortName = shipment.PreForwardingFromPortName;
+            invoiceElement.ShipmentDetails.PreForwardingFromPortCountryCode = shipment.PreForwardingFromPortCountryCode;
+            invoiceElement.ShipmentDetails.PreForwardingFromPortCountryName = shipment.PreForwardingFromPortCountryName;
+            invoiceElement.ShipmentDetails.PreForwardingToPortCode = shipment.PreForwardingToPortCode;
+            invoiceElement.ShipmentDetails.PreForwardingToPortName = shipment.PreForwardingToPortName;
+            invoiceElement.ShipmentDetails.PreForwardingToPortCountryCode = shipment.PreForwardingToPortCountryCode;
+            invoiceElement.ShipmentDetails.PreForwardingToPortCountryName = shipment.PreForwardingToPortCountryName;
+            invoiceElement.ShipmentDetails.PreForwardingCarrierName = shipment.PreForwardingCarrierName;
+            invoiceElement.ShipmentDetails.PreForwardingCarrierNumber = shipment.PreForwardingCarrierNumber;
+            invoiceElement.ShipmentDetails.PreForwardingETD = shipment.PreForwardingETD;
+            invoiceElement.ShipmentDetails.PreForwardingETA = shipment.PreForwardingETA;
+            invoiceElement.ShipmentDetails.PreForwardingATD = shipment.PreForwardingATD;
+            invoiceElement.ShipmentDetails.PreForwardingATA = shipment.PreForwardingATA;
+        }
+        private void SetOnForwardingValues(APInvoiceElement invoiceElement, ShipmentPM shipment)
+        {
+            invoiceElement.ShipmentDetails.OnForwardingTransportMode = this.Helper.GetTransportModes(shipment.OnForwardingTransportModeId);
+            invoiceElement.ShipmentDetails.OnForwardingFromPortCode = shipment.OnForwardingFromPortCode;
+            invoiceElement.ShipmentDetails.OnForwardingFromPortName = shipment.OnForwardingFromPortName;
+            invoiceElement.ShipmentDetails.OnForwardingFromPortCountryCode = shipment.OnForwardingFromPortCountryCode;
+            invoiceElement.ShipmentDetails.OnForwardingFromPortCountryName = shipment.OnForwardingFromPortCountryName;
+            invoiceElement.ShipmentDetails.OnForwardingToPortCode = shipment.OnForwardingToPortCode;
+            invoiceElement.ShipmentDetails.OnForwardingToPortName = shipment.OnForwardingToPortName;
+            invoiceElement.ShipmentDetails.OnForwardingToPortCountryCode = shipment.OnForwardingToPortCountryCode;
+            invoiceElement.ShipmentDetails.OnForwardingToPortCountryName = shipment.OnForwardingToPortCountryName;
+            invoiceElement.ShipmentDetails.OnForwardingCarrierName = shipment.OnForwardingCarrierName;
+            invoiceElement.ShipmentDetails.OnForwardingCarrierNumber = shipment.OnForwardingCarrierNumber;
+            invoiceElement.ShipmentDetails.OnForwardingETD = shipment.OnForwardingETD;
+            invoiceElement.ShipmentDetails.OnForwardingETA = shipment.OnForwardingETA;
+            invoiceElement.ShipmentDetails.OnForwardingATD = shipment.OnForwardingATD;
+            invoiceElement.ShipmentDetails.OnForwardingATA = shipment.OnForwardingATA;
+        }
+        private void SetMainCarriageValues(APInvoiceElement invoiceElement, ShipmentPM shipment)
+        {
+            invoiceElement.ShipmentDetails.MainCarriageCarrierCode = shipment.MainCarriageCarrierCode;
+            invoiceElement.ShipmentDetails.MainCarriageCarrierName = shipment.MainCarriageCarrierName;
+            invoiceElement.ShipmentDetails.MainCarriageAirlinePrefix = shipment.MainCarriageCarrierPrefix;
+            invoiceElement.ShipmentDetails.MainCarriageCarrierNumber = shipment.MainCarriageCarrierNumber;
+            invoiceElement.ShipmentDetails.MainCarriageETD = shipment.MainCarriageETD;
+            invoiceElement.ShipmentDetails.MainCarriageATD = shipment.MainCarriageATD;
+            invoiceElement.ShipmentDetails.MainCarriageETA = shipment.MainCarriageETA;
+            invoiceElement.ShipmentDetails.MainCarriageATA = shipment.MainCarriageATA;
+            invoiceElement.ShipmentDetails.MainCarriageVessel = shipment.MainCarriageVesselName;
+        }
+        private void SetVia1Values(APInvoiceElement invoiceElement, ShipmentPM shipment)
+        {
+            invoiceElement.ShipmentDetails.Via1CarrierCode = shipment.Transshipment1CarrierCode;
+            invoiceElement.ShipmentDetails.Via1CarrierName = shipment.Transshipment1CarrierName;
+            invoiceElement.ShipmentDetails.Via1AirlinePrefix = shipment.Transshipment1CarrierPrefix;
+            invoiceElement.ShipmentDetails.Via1CarrierNumber = shipment.Transshipment1CarrierNumber;
+            invoiceElement.ShipmentDetails.Via1ETD = shipment.Transshipment1ETD;
+            invoiceElement.ShipmentDetails.Via1ATD = shipment.Transshipment1ATD;
+            invoiceElement.ShipmentDetails.Via1ETA = shipment.Transshipment1ETA;
+            invoiceElement.ShipmentDetails.Via1ATA = shipment.Transshipment1ATA;
+            invoiceElement.ShipmentDetails.Via1Vessel = shipment.Transshipment1VesselName;
+        }
+        private void SetVia2Values(APInvoiceElement invoiceElement, ShipmentPM shipment)
+        {
+            invoiceElement.ShipmentDetails.Via2CarrierCode = shipment.Transshipment2CarrierCode;
+            invoiceElement.ShipmentDetails.Via2CarrierName = shipment.Transshipment2CarrierName;
+            invoiceElement.ShipmentDetails.Via2AirlinePrefix = shipment.Transshipment2CarrierPrefix;
+            invoiceElement.ShipmentDetails.Via2CarrierNumber = shipment.Transshipment2CarrierNumber;
+            invoiceElement.ShipmentDetails.Via2ETD = shipment.Transshipment2ETD;
+            invoiceElement.ShipmentDetails.Via2ATD = shipment.Transshipment2ATD;
+            invoiceElement.ShipmentDetails.Via2ETA = shipment.Transshipment2ETA;
+            invoiceElement.ShipmentDetails.Via2ATA = shipment.Transshipment2ATA;
+            invoiceElement.ShipmentDetails.Via2Vessel = shipment.Transshipment2VesselName;
+        }
+        private void SetVia3Values(APInvoiceElement invoiceElement, ShipmentPM shipment)
+        {
+            invoiceElement.ShipmentDetails.Via3CarrierCode = shipment.Transshipment3CarrierCode;
+            invoiceElement.ShipmentDetails.Via3CarrierName = shipment.Transshipment3CarrierName;
+            invoiceElement.ShipmentDetails.Via3AirlinePrefix = shipment.Transshipment3CarrierPrefix;
+            invoiceElement.ShipmentDetails.Via3CarrierNumber = shipment.Transshipment3CarrierNumber;
+            invoiceElement.ShipmentDetails.Via3ETD = shipment.Transshipment3ETD;
+            invoiceElement.ShipmentDetails.Via3ATD = shipment.Transshipment3ATD;
+            invoiceElement.ShipmentDetails.Via3ETA = shipment.Transshipment3ETA;
+            invoiceElement.ShipmentDetails.Via3ATA = shipment.Transshipment3ATA;
+            invoiceElement.ShipmentDetails.Via3Vessel = shipment.Transshipment3VesselName;
+        }
+        private void SetFromLocationValues(APInvoiceElement invoiceElement, ShipmentPM shipment, AddressQuery addressQuery)
+        {
+            invoiceElement.ShipmentDetails.FromPortCode = shipment.FromPort;
+            invoiceElement.ShipmentDetails.FromPortName = shipment.FromPortName;
+            invoiceElement.ShipmentDetails.FromCountryCode = shipment.FromPortCountry;
+            invoiceElement.ShipmentDetails.FromCountryName = shipment.FromPortCountryName;
+
+            if (shipment.DirectionId == "D" && shipment.TransportModeId == "I")
+            {
+                AddressPM fromAddress = addressQuery.GetSingleAddressPM(shipment.MainCarriageFromAddressId, tenant, true);
+                invoiceElement.ShipmentDetails.FromAddress = this.Helper.GetAddress(fromAddress);
+            }           
+        }
+        private void SetToLocationValues(APInvoiceElement invoiceElement, ShipmentPM shipment, AddressQuery addressQuery)
+        {
+            invoiceElement.ShipmentDetails.ToPortCode = shipment.ToPort;
+            invoiceElement.ShipmentDetails.ToPortName = shipment.ToPortName;
+            invoiceElement.ShipmentDetails.ToCountryCode = shipment.ToPortCountry;
+            invoiceElement.ShipmentDetails.ToCountryName = shipment.ToPortCountryName;
+
+            if (shipment.DirectionId == "D" && shipment.TransportModeId == "I")
+            {
+                AddressPM toAddress = addressQuery.GetSingleAddressPM(shipment.MainCarriageToAddressId, tenant, true);
+                invoiceElement.ShipmentDetails.ToAddress = this.Helper.GetAddress(toAddress);
+            }
+        }
+        private void SetFinalLocationValues(APInvoiceElement invoiceElement, ShipmentPM shipment, AddressQuery addressQuery)
+        {
+            invoiceElement.ShipmentDetails.FinalPortCode = shipment.MainCarriageFinalDestinationPortCode;
+            invoiceElement.ShipmentDetails.FinalPortName = shipment.MainCarriageFinalDestinationPortName;
+            invoiceElement.ShipmentDetails.FinalCountryCode = shipment.MainCarriageFinalDestinationPortCountryCode;
+            invoiceElement.ShipmentDetails.FinalCountryName = shipment.MainCarriageFinalDestinationPortCountryName;
+
+            if (shipment.DirectionId == "D" && shipment.TransportModeId == "I")
+            {
+                AddressPM finalAddress = addressQuery.GetSingleAddressPM(shipment.MainCarriageToAddressId, tenant, true);
+                invoiceElement.ShipmentDetails.FinalAddress = this.Helper.GetAddress(finalAddress);
+            }
+        }
         private void FillAllPreparedData(bool isTotalVATOnly)
         {
             this.FillInvoiceLines(isTotalVATOnly);
