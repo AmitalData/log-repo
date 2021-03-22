@@ -214,13 +214,17 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
         {
             CreateFtpDefinitionsEvery10Min();
 
-            while (true)
+            while (!WorkerRoleServiceLocator.PleaseShutDown)
             {
 
                 foreach (CustomsPartnerFtpPM ftpDef in _FtpDefinitions)
                 {
                     LastActivity = DateTime.UtcNow;
                     DownloadFTPFiles(ftpDef);
+                    if (WorkerRoleServiceLocator.PleaseShutDown)
+                    {
+                        break;
+                    }
                 }
 
 

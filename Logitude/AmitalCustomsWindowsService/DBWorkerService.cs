@@ -137,7 +137,12 @@ namespace AmitalCustomsWindowsService
 
         private void AllThreadsAreAlive()
         {
+            if (WorkerRoleServiceLocator.PleaseShutDown)
+            {
+                WorkerRoleServiceLocator.PleaseShutDown = false;
+                Logger.LogMe("WorkerRoleServiceLocator.PleaseShutDown = false;", false);
 
+            }
             for (Int32 iWorker = 0; iWorker < _Workers.Count; iWorker++)
             {
                 _Workers[iWorker].ServiceStarted = true;//startIt
@@ -277,14 +282,36 @@ namespace AmitalCustomsWindowsService
             }
             try
             {
-
+                ///WorkerRoleServiceLocator.PleaseShutDown = true;
 
                 for (int i = 0; i < _Workers.Count; i++)
                 {
                     StopThread(i);
 
                 }
-                Thread.Sleep(1000);
+                //if (WorkerRoleServiceLocator.HaveCourierTenant)
+                //{
+                //    Logger.LogMe("Is Courier Wait 60Sec", false);
+                //    var sw = Stopwatch.StartNew();
+                //    while (sw.Elapsed < TimeSpan.FromSeconds(60))
+                //    {
+                //        if (!_Threads.Any(r => !r.IsAlive))
+                //        {
+                //            break;
+                //        }
+                //        Thread.Sleep(300);
+                //    }
+                //    bool b = _Threads.Any(r => !r.IsAlive);
+                //    Logger.LogMe($"All thread down == _Threads.Any(r => !r.IsAlive)? ={b} ", false);
+                //    Thread.Sleep(100);
+                //}
+                //else
+                {
+                    Thread.Sleep(1000);
+                }
+                
+               
+                
 
             }
             catch (Exception e)
@@ -297,6 +324,7 @@ namespace AmitalCustomsWindowsService
 
         private void StopThread(int iWorker)
         {
+            
             _Workers[iWorker].ServiceStarted = false;//== dispose !!!
             Logger.LogMe(GetThreadName(iWorker), false, "StopThread");
         }

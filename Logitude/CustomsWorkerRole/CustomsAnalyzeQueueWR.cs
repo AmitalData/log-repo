@@ -69,7 +69,7 @@ update  BATCHSERVICESDEFINITIONMODS  set  NUMBEROFTHREADS =3 where CODE='SendWEB
         public override void Run()
         {
 
-            while (true)
+            while (!WorkerRoleServiceLocator.PleaseShutDown)
             {
 
                 if (!General.IsUpdating())

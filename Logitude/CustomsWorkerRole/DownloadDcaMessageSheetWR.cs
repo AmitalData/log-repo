@@ -43,7 +43,7 @@ namespace CustomsWorkerRole
         public override void Run()
         {
 
-            while (true)
+            while (!WorkerRoleServiceLocator.PleaseShutDown)
             {
 
                 if (!General.IsUpdating())

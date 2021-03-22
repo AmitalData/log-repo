@@ -602,7 +602,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private void AnalyzePaymentDocument(Attachment attachment, NewPaymentRequestParams requestParams)
         {
             //ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant);
+            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "3053", IsCourier = IsCourier(requestParams.Tenant) });
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
             var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
             DocumentsFilingPM documentsFilingPM = null;
@@ -655,7 +655,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private void UpdatePaymentDocument(DocumentsFilingPM documentsFilingPM, Attachment attachment, NewPaymentRequestParams requestParams)
         {
             //ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant);
+            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "3053", IsCourier = IsCourier(requestParams.Tenant) });
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
             var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
             string logMessage = "";
@@ -675,7 +675,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private void CreatePaymentDocument(Attachment attachment, NewPaymentRequestParams requestParams)
         {
             //ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant);
+            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "3053" , IsCourier= IsCourier(requestParams.Tenant) });
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
             var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
             string logMessage = "";
@@ -726,6 +726,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
             documentsFilingService.Create(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
             LogMessagingUtil.Instance.AppendLine("File document " + documentsFilingPM.Code + logMessage);
             _ReturnMessage = string.Concat(_ReturnMessage, " ונוצר מסמך ", documentsFilingPM.Code);
+        }
+
+        private bool IsCourier(int tenant)
+        {
+            var pm=CustomsSettingQueryService.GetSettingByTenant(tenant);
+            return pm?.CompanyType == "B";//Courier
         }
 
         private List<PaymentOrderLinePM> GetPaymentOrderLines(string paymentOrderNumber, int tenant, TaxParagraph[] taxParagraph)
@@ -805,7 +811,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public DocumentsFilingPM GetDocumentsFiling(RequestParamsBase requestParams)
         {
-            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant);
+            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "3053", IsCourier = IsCourier(requestParams.Tenant) });
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
             var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
             DocumentsFilingPM documentsFilingPM = null;
@@ -848,7 +854,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public void UpdatePaymentDocument(DocumentsFilingPM documentsFilingPM, /*Attachment attachment*/byte[] content, RequestParamsBase requestParams)
         {
             //ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant);
+            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "3053", IsCourier = IsCourier(requestParams.Tenant) });
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
             var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
             string logMessage = "";
@@ -864,11 +870,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
             LogMessagingUtil.Instance.AppendLine("File document " + documentsFilingPM.Code + logMessage);
             _ReturnMessage = string.Concat(_ReturnMessage, " ועודכן מסמך ", documentsFilingPM.Code);
         }
-
+        private bool IsCourier(int tenant)
+        {
+            var pm = CustomsSettingQueryService.GetSettingByTenant(tenant);
+            return pm?.CompanyType == "B";//Courier
+        }
         public void CreatePaymentDocument(/*Attachment attachment*/byte[] content, RequestParamsBase requestParams)
         {
             //ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant);
+            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "3053", IsCourier = IsCourier(requestParams.Tenant) });
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
             var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
             string logMessage = "";

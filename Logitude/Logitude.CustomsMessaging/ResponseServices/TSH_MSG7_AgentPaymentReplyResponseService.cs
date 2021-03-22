@@ -357,7 +357,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private void UpdatePaymentDocument(string DeclarationId, int Tenant, string LoggedUserId)
         {
             ICommonDataContext dataContext = CommonDataContext.GetContext(Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, Tenant);
+            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "3051" });
             var documentTypeQuery = new DocumentTypeQuery(Tenant);
             var documentsFilingQuery = new DocumentsFilingQuery(Tenant);
 
