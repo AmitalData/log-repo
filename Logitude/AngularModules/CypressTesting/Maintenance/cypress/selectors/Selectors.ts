@@ -1,9 +1,12 @@
-export class MaintenanceSelectors {
+import { RegexSelectors } from '../selectors/RegexSelectors';
+
+export class MaintenanceSelectors extends RegexSelectors {
     //#region Tabs
     public static readonly OthersMaintenanceTab = "#OTH";
     public static readonly ContactsMaintenanceItem = "#MaintenanceItemMTCO";
     public static readonly VendorMaintenanceItem = "#MaintenanceItemMTVD"
     public static readonly VesselMaintenanceItem = "#MaintenanceItemMTVS"
+    public static readonly QuoteTemplatesMaintenanceItem = "#MaintenanceItemMTQT"
     //#endregion
 
     public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";
@@ -64,18 +67,15 @@ export class MaintenanceSelectors {
     public static readonly VesselNotes = "#Vessel_Notes"
     public static readonly VesselCode = "#Vessel_Code"
     public static readonly VesselFirstRow = "div[id$='row0']"
+    //#endregion
+
+    //#region Quote Template
+
+    public static readonly QuoteTemplateName="#QuoteTemplate_Name"
+    public static readonly ValidationSummary=".ValidationSummary"
+    public static readonly QuoteSettingsLabel ="[data-cy='Labels']"
+    public static readonly AddDataField ="#AddDataField"
 
     //#endregion
 
-    public static NewWizardButton(name: string): string {
-        return "#NewButton_" + name;
-    }
-
-    public static SaveButton(itemName: string): string {
-        return "#"+itemName+"-Save"
-    }
-
-    public static SaveCloseButton(itemName: string): string {
-        return "#"+itemName+"-SaveClose"
-    }
 }

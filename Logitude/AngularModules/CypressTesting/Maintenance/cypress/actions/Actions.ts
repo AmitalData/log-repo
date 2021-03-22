@@ -15,6 +15,8 @@ import { VendorDetails } from "../models/VendorDetails";
 import { VendorContext } from "../models/VendorContext";
 import { VesselDetails } from "../models/VesselDetails";
 import { VesselContext } from "../models/VesselContext";
+import { QuoteTemplateContext } from "../models/QuoteTemplateContext";
+import { QuoteTemplateDetails } from "cypress/models/QuoteTemplateDetails";
 
 //#region General
 export function OpenMaintenanceMenu() {
@@ -598,4 +600,176 @@ function AssertContactDatepickerNotSelected(dateType:string){
         });
     });
 }
+//#endregion
+
+//#region Quote Template
+export function FillQuoteTemplateName(quoteTemplateName:string){
+    let NameToFill = quoteTemplateName.toLowerCase() == "random" ? ("Quote_" + gr.GenerateRandomNumberAndString(4)) : quoteTemplateName;
+    QuoteTemplateContext.Name =  NameToFill
+    cy.FillLogTextBox(MaintenanceSelectors.QuoteTemplateName,QuoteTemplateContext.Name);
+}
+
+export function CreateQuoteTemplate() {
+    DefinePostQuoteTemplateRequest();
+    DefineQuoteTemplatetGetSingleRequest();
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+export function OpenQuoteTemplateSection(section:string){
+    cy.Click(MaintenanceSelectors.QuoteTemplateSectionsButton(section), null)
+}
+
+export function FillQuoteHeaderFooterColumnWidth(coulmnWidthDetails:QuoteTemplateDetails){
+    cy.FillLogTextBox(MaintenanceSelectors.HeaderFooterColumnWidth("1"), coulmnWidthDetails.Width1)
+    cy.FillLogTextBox(MaintenanceSelectors.HeaderFooterColumnWidth("2"), coulmnWidthDetails.Width2)
+    cy.FillLogTextBox(MaintenanceSelectors.HeaderFooterColumnWidth("3"), coulmnWidthDetails.Width3)
+}
+
+export function ValidateWidthErrorMesseage(){
+    BaseAssertion.AssertElementNotExist(MaintenanceSelectors.ValidationSummary)
+}
+
+export function DragAndDropFields(fieldDetails:QuoteTemplateDetails[]){
+    for (let i = 0; i < fieldDetails.length; i++) {
+        cy.get(MaintenanceSelectors.AvaliableColumnsFields(fieldDetails[i].Field)).drag(MaintenanceSelectors.ColumnDropArea(fieldDetails[i].Column))
+    }
+}
+
+export function EditLabelField(labelToEdit:string,newFieldValue:string){
+    cy.Navigate(MaintenanceSelectors.QuoteSettingsLabel);
+    cy.Click(MaintenanceSelectors.LabelDiv(labelToEdit), null);
+    cy.get(MaintenanceSelectors.LabelTextBox(labelToEdit)).type(newFieldValue);
+}
+
+export function AddDataFieldToIntroduction(fieldToBeAdd:string){
+    cy.Click(MaintenanceSelectors.AddDataField, null)
+    cy.Click(MaintenanceSelectors.IntroductionDataField(fieldToBeAdd), null)
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+export function AddColumnsToPricingTable(coulmnsList:QuoteTemplateDetails[]){
+    for (let i = 0; i < coulmnsList.length; i++) {
+        cy.SelectCheckBox(MaintenanceSelectors.PricingCheckBox(coulmnsList[i].Column))
+    }
+}
+
+export function OpenQuoteTemplate() {
+    SearchQuoteTemplate()
+    DefineQuoteTemplatetGetSingleRequest()
+    cy.get(BaseSelectors.RowClass).last().click();
+    AssertOpenQuoteTemplate();
+}
+
+export function ReopenQuoteTemplate(){
+    DefineQuoteTemplatetGetSingleRequest()
+    cy.get(BaseSelectors.RowClass).last().click({ force: true });
+    AssertOpenQuoteTemplate();
+}
+
+export function UpdateQuoteTemplate(){
+    DefinePutQuoteTemplateRequest()
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+export function UpdateQuoteHeaderTemplate(){
+    DefineQuoteTemplatetPutTextDesignRequest();
+    DefineQuoteTemplatetPutHeaderFieldsRequest();
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+export function UpdateQuotePricingTemplate(){
+    DefineQuoteTemplatetPutSettingsRequest();
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+export function UpdateQuoteIntroductionTemplate(){
+    DefineQuoteTemplatetPutSectionsRequest();
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+export function AssertCreateQuoteTemplate() {
+    AssertPostQuoteTemplate();
+    AssertQuoteTemplatetGetSingle();
+}
+
+export function AssertUpdateQuoteTemplate(){
+    AssertPutQuoteTemplate();
+}
+
+export function AssertUpdateQuoteHeaderTemplate(){
+    AssertQuoteTemplatetPutHeaderFields();
+    AssertQuoteTemplatetPutTextDesign();
+}
+
+function SearchQuoteTemplate() {
+    let quoteTemplateName = QuoteTemplateContext.Name;
+    DefineQuoteTemplateViewsGetByFiltersRequest(quoteTemplateName);
+    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, quoteTemplateName);
+    AssertQuoteTemplateViewsGetByFilters();
+}
+
+function AssertOpenQuoteTemplate() {
+    AssertQuoteTemplatetGetSingle();
+    BaseAssertion.AssertElementExist(".SectionBody")
+}
+
+function DefinePostQuoteTemplateRequest() {
+    cy.DefineRequestWait(RestAPI.POST, Urls.QuoteTemplateExtended, RequestAliases.PostQuoteTemplate);
+}
+
+function DefinePutQuoteTemplateRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.QuoteTemplatetextdesigns, RequestAliases.PutQuoteTemplate);
+}
+
+function DefineQuoteTemplatetGetSingleRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.QuoteTemplateGetSingle, RequestAliases.GetSignle);
+}
+
+function DefineQuoteTemplateViewsGetByFiltersRequest(quoteTemplateName:string){
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(quoteTemplateName), RequestAliases.GetFilterSearch);
+}
+
+function DefineQuoteTemplatetPutHeaderFieldsRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.PutQuoteTemplateHeaderFields, RequestAliases.PutQuoteTemplateHeaderFields);
+}
+
+function DefineQuoteTemplatetPutTextDesignRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.PutQuoteTemplateTextDesignPMs, RequestAliases.PutQuoteTemplateTextDesignPMs);
+}
+
+function DefineQuoteTemplatetPutSettingsRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.QuotetemplateSettings, RequestAliases.PutQuoteTemplate);
+}
+
+function DefineQuoteTemplatetPutSectionsRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.Quotetemplatesections, RequestAliases.PutQuoteTemplate);
+}
+
+function AssertPostQuoteTemplate() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PostQuoteTemplate, 200).then((interception) => {
+        let responseBody = interception.response.body;
+        QuoteTemplateContext.QuoteTemplateSettingId = responseBody.QuoteTemplateSettingId;
+    });
+}
+
+function AssertQuoteTemplatetGetSingle() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
+}
+
+function AssertQuoteTemplateViewsGetByFilters(){
+    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
+}
+
+function AssertPutQuoteTemplate(){
+    BaseAssertion.AssertStatusCode(RequestAliases.PutQuoteTemplate, 200);
+}
+
+function AssertQuoteTemplatetPutHeaderFields() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.PutQuoteTemplateHeaderFields, RequestAliases.PutQuoteTemplateHeaderFields);
+}
+
+function AssertQuoteTemplatetPutTextDesign() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.PutQuoteTemplateTextDesignPMs, RequestAliases.PutQuoteTemplateTextDesignPMs);
+}
+
 //#endregion
