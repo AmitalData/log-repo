@@ -10,6 +10,7 @@ export class Urls
     public static readonly PartnersDomain = "**/PartnersDomain";
     public static readonly VendorsGetSingle = "**/vendors/getsingle?**";
     public static readonly VendorsviewGetSingle = "**/vendorviews/getsingle/?**";
+
     public static readonly Vessels = "**/vessels";
     public static readonly VesselsGetSingle = "**/vessels/getsingle?**";
     public static readonly VesselviewGetSingle = "**/vesselviews/getsingle/?**";
@@ -22,11 +23,11 @@ export class Urls
     public static readonly PutQuoteTemplateTextDesignPMs = "**/PutQuoteTemplateTextDesignPMs";
     public static readonly PutQuoteTemplateHeaderFields = "**/PutQuoteTemplateHeaderFields";
 
-
     public static readonly AccountingSettings="**/accountingsettings"
 
     public static readonly Tenants="**/tenants"
     public static readonly PostChangePassword='**/PostChangeUserPassword'
+
     public static GetFilterSearch(filterBy:string){
         return '**/getbyfilters?**'+filterBy+'**'
     }

@@ -60,7 +60,6 @@ When("save quote header", () => {
 Then("the quote header template should update successfully", () => {
     Actions.AssertUpdateQuoteHeaderTemplate();
 });
-
 //#endregion
 
 //#region Edit the quote template's Quote Introduction
