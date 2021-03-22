@@ -879,6 +879,10 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 closingDetails.FinalShipID = new SeaTransportationIDType { Value = entityClosingDeclaration.FinalShipCode } ;
                 closingDetails.FinalLoadingSite = new FinalLoadingSiteIDType { Value = entityClosingDeclaration.FinalLoadingSite };
+                if (entityClosingDeclaration.LoadingDateTime.HasValue)
+                {
+                    closingDetails.DepartureDateTime = new DepartureDateTimeType { Value = (DateTime)entityClosingDeclaration.LoadingDateTime };
+                }
                 closingDetails.FinalTransportContractDocument = new DeclarationDMExtensionsDeclarationClosingDetailsFinalTransportContractDocument
                 {
                     FirstCargoID = new TransportContractDocumentIdentificationIDType { Value = entityClosingDeclaration.FinalManifestNumber},

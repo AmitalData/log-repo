@@ -1471,6 +1471,18 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             let obj = response.Result;
         var firstInvoice: SupplierInvoicePM = this.Parent.Get1SupplierInvoice();
 
+             if (obj) {
+                 let DefaultValue = obj['DefaultValue'];
+                 if (!AppTool.IsNullOrEmpty(DefaultValue) && DefaultValue == "Y" && this.IncotermCode == 'CIF' && this.IsFirstInvoice()) {
+                     this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
+                     this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
+                     this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
+                     return;
+
+                 }
+             }
+
+
         if (this.EntityPM != null && this.EntityPM.IncotermCode != null) {
             //#region for insurance
             if (!this.IsFirstInvoice()) {
@@ -1640,16 +1652,6 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         }
                 
 
-            if (obj) {
-                let DefaultValue = obj['DefaultValue'];
-                if (!AppTool.IsNullOrEmpty(DefaultValue) && DefaultValue == "Y" && this.IncotermCode == 'CIF' && this.IsFirstInvoice()) {
-                    this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
-                    this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
-                    this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
-
-                 
-                }
-            }
 
          });
     }

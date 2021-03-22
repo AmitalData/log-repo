@@ -853,6 +853,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
             }
         }
+ 
         public void SendClientSearch()
         {
             int.TryParse(_AmitalCustomsFile.Tenant, out int Tenant);

@@ -683,7 +683,7 @@
                     <td>
                         <div style="width:30px"></div>
                     </td>
-                    <td rowspan="2">
+                    <td *ngIf="declarationPM.Direction != 'E'" rowspan="2">
                         <!--<span *ngIf="allowExport" class="LeftTop buttonelipsis"
                               style="background-color: white; color: black; border: 2px solid #e7e7e7; width: 30px; text-align: center; font-weight: bold;cursor: pointer;"
                               (click)="OpenExporterInvoiceWindow()">...E</span>
