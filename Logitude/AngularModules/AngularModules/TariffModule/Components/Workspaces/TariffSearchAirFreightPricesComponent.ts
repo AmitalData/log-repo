@@ -1181,6 +1181,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             case "GWKG": { myQuantity = this.GrossWeightInKG; break; }
             case "QTY": { myQuantity = this.FatherComponent.EntityPM.NumberOfPackages != null ? this.FatherComponent.EntityPM.NumberOfPackages : null; break; }
             case "VCBM": { myQuantity = this.VolumeInCBM; break; }
+            case "PFCL": { myQuantity = ArrayTool.Sum(this.TariffList_Shipment.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId), "AccountedAmountInLocalCurrency"); break; }
+
             default: { break; }
         }
         return myQuantity;

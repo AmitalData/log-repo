@@ -4881,6 +4881,7 @@ export class ShipmentPM {
     public get OnForwardingATA_Original() { return this.onForwardingATA_Original; }
     public set OnForwardingATA_Original(newValue: Date) { if (this.onForwardingATA_Original != newValue) { this.onForwardingATA_Original = newValue; this.MarkAsDirty("OnForwardingATA_Original"); } }
 
+
     public OldEntityPM: ShipmentPM;
 
     private aWBOCIPMs: AWBOCIPM[];

@@ -162,6 +162,10 @@ export class ConsoleShipmentPM {
     public get VolumeInCBM() { return this.volumeInCBM; }
     public set VolumeInCBM(newValue: number) { this.volumeInCBM = newValue; this.MarkAsDirty(); }
 
+    private percentForeignChargesLocal: number;
+    public get PercentForeignChargesLocal() { return this.percentForeignChargesLocal; }
+    public set PercentForeignChargesLocal(newValue: number) { this.percentForeignChargesLocal = newValue; this.MarkAsDirty(); }
+
     private fCLDataList: HouseContainerPackage[];
     get FCLDataList() {
         if (this.fCLDataList == null) {

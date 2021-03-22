@@ -547,7 +547,9 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? AccrualsApprovalDate { get; set; }
 
         public string MainHarmonize { get; set; }
+
         public string PreForwardingFromPortId { get; set; }
         public string OnForwardingToPortId { get; set; }
+
     }
 }
