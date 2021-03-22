@@ -1,5 +1,5 @@
 ﻿ 
-	export class HybridLabelsBrandingDataRequest
+	export class PrivateLabelsBrandingDataRequest
 	{
         public PrivateLabelUrl :string
         public BackgroundImageId : string

@@ -31,7 +31,9 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string MainColor { get; set; }
         public string LoginProgressImageId { get; set; }
         public string ForgetPasswordImageId { get; set; }
-         
+        public string SecondaryColor { get; set; }
+        public bool HasLogboxAccess { get; set; }
+
 
         //[ForeignKey("MainLogoId")]
         //public virtual ImageDetail ImageDetail { get; set; }

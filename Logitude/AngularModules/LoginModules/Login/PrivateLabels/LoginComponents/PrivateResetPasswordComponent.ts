@@ -4,15 +4,15 @@ import { LoginService } from '../../LoginService';
 import { SessionInfo } from '../../SessionInfo';
 import { ServiceResponse } from '../DataContracts/ServiceResponse';
 import { BrandingDataService } from '../Services/BrandingDataService';
-import { HybridLabelsBrandingDataService } from '../Services/HybridLabelsBrandingDataService';
+import { PrivateLabelsBrandingDataService } from '../Services/PrivateLabelsBrandingDataService';
 
 @Component({
-    selector: 'HybridResetPasswordComponent',
+    selector: 'PrivateResetPasswordComponent',
     moduleId: './Login/Components/',
-    templateUrl: 'HybridResetPasswordComponent.html',
-    styleUrls: ['HybridResetPasswordComponent.css']
+    templateUrl: 'PrivateResetPasswordComponent.html',
+    styleUrls: ['PrivateResetPasswordComponent.css']
 })
-export class HybridResetPasswordComponent extends ResetPasswordComponent {
+export class PrivateResetPasswordComponent extends ResetPasswordComponent {
      
 
     public authHeader;
@@ -28,20 +28,20 @@ export class HybridResetPasswordComponent extends ResetPasswordComponent {
     public show = true;
     constructor(
         private ss: LoginService,
-        private hybridLabelsBrandingDataService: HybridLabelsBrandingDataService) {
+        private privateLabelsBrandingDataService: PrivateLabelsBrandingDataService) {
         super(ss);
     }
 
     ngOnInit() {
         this.privateUrl = SessionInfo.GetLogitudeURL();
-        this.GetHybridLabelsData(this.privateUrl);
+        this.GetPrivateLabelsData(this.privateUrl);
     }
 
 
-    GetHybridLabelsData(privateUrl: string) {
-        this.hybridLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetHybridLabelsDataRequest(privateUrl)).subscribe((response: ServiceResponse) => {
+    GetPrivateLabelsData(privateUrl: string) {
+        this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe((response: ServiceResponse) => {
             if (response.Result) {
-                //BrandingDataService.SetHybridLabelsDataRequest(response.Result, privateUrl);
+                //BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
                 this.ContactUsEmail = response.Result.ContactUsEmail;
                 this.MainColor = response.Result.MainColor;
                 this.BackgroundImage = BrandingDataService.GetBackgroundImage();

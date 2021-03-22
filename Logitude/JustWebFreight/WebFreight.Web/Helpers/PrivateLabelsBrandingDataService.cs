@@ -11,7 +11,7 @@ using WebFreight.Web.WebServices;
 
 namespace WebFreight.Web.Helpers
 {
-    public class HybridLabelsBrandingDataService
+    public class PrivateLabelsBrandingDataService
     {
         //const string PrivateLabelsImageFolderPath = "HybridLabels/HybridLabelsImages";
         const string PrivateLabelsImageExtensionType = "png";
@@ -19,22 +19,22 @@ namespace WebFreight.Web.Helpers
         string imageBrandingData = "";
         string imageBrandingDataRequest = "";
         string[] imagesFields = { "BackgroundImage", "MainImage", "LoginProgressImage", "ForgetPasswordImage" };
-        public HybridLabelsBrandingData GeHybridLabelsBrandingDataByUrl(HybridLabelsBrandingDataRequest BrandingDataRequest)
+        public PrivateLabelsBrandingData GePrivateLabelsBrandingDataByUrl(PrivateLabelsBrandingDataRequest BrandingDataRequest)
         {
             TenantManagmentPrivateLabelsQuery tenantManagementQuery = new TenantManagmentPrivateLabelsQuery();
             string loggedDomainURL = SecurityUtility.getLoggedDomain();
             TenantManagmentPrivateLabelsPM tenantManagementPM = tenantManagementQuery.GetSingleActivePMByUrl(loggedDomainURL);
-            HybridLabelsBrandingData BrandingData = MapBrandingData(tenantManagementPM, BrandingDataRequest);
+            PrivateLabelsBrandingData BrandingData = MapBrandingData(tenantManagementPM, BrandingDataRequest);
 
             return BrandingData;
         }
 
-        private HybridLabelsBrandingData MapBrandingData(TenantManagmentPrivateLabelsPM tenantManagementPM, HybridLabelsBrandingDataRequest BrandingDataRequest)
+        private PrivateLabelsBrandingData MapBrandingData(TenantManagmentPrivateLabelsPM tenantManagementPM, PrivateLabelsBrandingDataRequest BrandingDataRequest)
         {
-            HybridLabelsBrandingData hybridBrandingData = null;
+            PrivateLabelsBrandingData privateBrandingData = null;
             if (tenantManagementPM != null)
             {
-                hybridBrandingData = new HybridLabelsBrandingData()
+                privateBrandingData = new PrivateLabelsBrandingData()
                 {
                     Id = tenantManagementPM.Id,
                     PrivateLabelName = tenantManagementPM.PrivateLabelName,
@@ -53,14 +53,15 @@ namespace WebFreight.Web.Helpers
                     MainImageId = tenantManagementPM.MainImageId,
                     LoginProgressImageId = tenantManagementPM.LoginProgressImageId,
                     ForgetPasswordImageId = tenantManagementPM.ForgetPasswordImageId,
+                    SecondaryColor = tenantManagementPM.SecondaryColor,
                 };
-                SetPrivateLabelsImages(hybridBrandingData, BrandingDataRequest);
+                SetPrivateLabelsImages(privateBrandingData, BrandingDataRequest);
             }
 
-            return hybridBrandingData;
+            return privateBrandingData;
         }
-        private void SetPrivateLabelsImages(HybridLabelsBrandingData hybridLabelsBrandingData,
-                                            HybridLabelsBrandingDataRequest hybridLabelsBrandingDataRequest)
+        private void SetPrivateLabelsImages(PrivateLabelsBrandingData privateLabelsBrandingData,
+                                            PrivateLabelsBrandingDataRequest privateLabelsBrandingDataRequest)
         {
 
             // SetBackgroundImageBase64(hybridLabelsBrandingData, hybridLabelsBrandingDataRequest, isFromPrivateSite); 
@@ -70,32 +71,32 @@ namespace WebFreight.Web.Helpers
                 switch (image)
                 {
                     case "BackgroundImage":
-                        imageBrandingData = hybridLabelsBrandingData.BackgroundImageId;
-                        imageBrandingDataRequest = hybridLabelsBrandingDataRequest.BackgroundImageId;
+                        imageBrandingData = privateLabelsBrandingData.BackgroundImageId;
+                        imageBrandingDataRequest = privateLabelsBrandingDataRequest.BackgroundImageId;
                         break;
                     case "MainImage":
-                        imageBrandingData = hybridLabelsBrandingData.MainImageId;
-                        imageBrandingDataRequest = hybridLabelsBrandingDataRequest.MainImageId;
+                        imageBrandingData = privateLabelsBrandingData.MainImageId;
+                        imageBrandingDataRequest = privateLabelsBrandingDataRequest.MainImageId;
                         break;
                     case "LoginProgressImage":
-                        imageBrandingData = hybridLabelsBrandingData.LoginProgressImageId;
-                        imageBrandingDataRequest = hybridLabelsBrandingDataRequest.LoginProgressImageId;
+                        imageBrandingData = privateLabelsBrandingData.LoginProgressImageId;
+                        imageBrandingDataRequest = privateLabelsBrandingDataRequest.LoginProgressImageId;
                         break;
                     case "ForgetPasswordImage":
-                        imageBrandingData = hybridLabelsBrandingData.ForgetPasswordImageId;
-                        imageBrandingDataRequest = hybridLabelsBrandingDataRequest.ForgetPasswordImageId;
+                        imageBrandingData = privateLabelsBrandingData.ForgetPasswordImageId;
+                        imageBrandingDataRequest = privateLabelsBrandingDataRequest.ForgetPasswordImageId;
                         break;
                     default:
                         break;
                 }
 
-                SetImageBase64(image, hybridLabelsBrandingData);
+                SetImageBase64(image, privateLabelsBrandingData);
 
             }
 
         }
 
-        private void SetImageBase64(string image, HybridLabelsBrandingData hybridLabelsBrandingData)
+        private void SetImageBase64(string image, PrivateLabelsBrandingData privateLabelsBrandingData)
         {
             if (!string.IsNullOrEmpty(imageBrandingData) &&
                                      imageBrandingDataRequest != imageBrandingData)
@@ -103,26 +104,26 @@ namespace WebFreight.Web.Helpers
                 byte[] filedata = GeImageBytesById(imageBrandingData);
                 if (filedata != null)
                 {
-                    setImageBytes(image, hybridLabelsBrandingData, filedata);
+                    setImageBytes(image, privateLabelsBrandingData, filedata);
                 }
             }
         }
 
-        private void setImageBytes(string image, HybridLabelsBrandingData hybridLabelsBrandingData, byte[] filedata)
+        private void setImageBytes(string image, PrivateLabelsBrandingData privateLabelsBrandingData, byte[] filedata)
         {
             switch (image)
             {
                 case "BackgroundImage":
-                    hybridLabelsBrandingData.BackgroundImageBytes = filedata;
+                    privateLabelsBrandingData.BackgroundImageBytes = filedata;
                     break;
                 case "MainImage":
-                    hybridLabelsBrandingData.MainImageBytes = filedata;
+                    privateLabelsBrandingData.MainImageBytes = filedata;
                     break;
                 case "LoginProgressImage":
-                    hybridLabelsBrandingData.LoginProgressImageBytes = filedata;
+                    privateLabelsBrandingData.LoginProgressImageBytes = filedata;
                     break;
                 case "ForgetPasswordImage":
-                    hybridLabelsBrandingData.ForgetPasswordImageBytes = filedata;
+                    privateLabelsBrandingData.ForgetPasswordImageBytes = filedata;
                     break;
                 default:
                     break;

@@ -18,7 +18,7 @@ import {EntityLastActivityService} from './Services/EntityLastActivityService';
 import {TotangoService} from './Services/WebServices/TotangoService';
 import {LogitudeErrorHandler} from './Utilities/LogitudeErrorHandler'
 import {ErrorHandler} from '@angular/core';
-import { HybridLabelsBrandingDataService } from './Services/WebServices/HybridLabelsBrandingDataService';
+import {PrivateLabelsBrandingDataService} from './Services/WebServices/PrivateLabelsBrandingDataService';
 
 @NgModule({
     imports: [ControlsModule, MaterialModule],
@@ -36,7 +36,7 @@ import { HybridLabelsBrandingDataService } from './Services/WebServices/HybridLa
         IndexedDbService,
         EntityResourceService,
          EntityLastActivityService,
-         HybridLabelsBrandingDataService,
+         PrivateLabelsBrandingDataService,
         TotangoService,
 
 

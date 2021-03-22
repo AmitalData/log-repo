@@ -314,6 +314,22 @@
 
                                                 </tr>
 
+
+                                                <tr class="FormFieldRow">
+
+                                                    <!-- HasLogboxAccess -->
+                                                    <td>
+                                                        <LogLabel [Text]="'Has Logbox Access'" [ObjectFieldName]="'HasLogboxAccess'" [ObjectTableName]="ObjectTableName"
+                                                                  [DataContext]="DataContext"></LogLabel>
+                                                    </td>
+                                                    <td>
+                                                        <LogCheckBox [ObjectFieldName]="'HasLogboxAccess'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                    </td>
+
+                                                    <td></td>
+
+                                                </tr>
+
                                                 <tr class="FormFieldRow">
 
                                                     <!-- Main Logo -->
@@ -536,6 +552,76 @@
                                         </td>
 
                                         <td></td>
+                                    </tr>
+
+
+
+                                    <!-- Main Color -->
+                                    <tr class="FormFieldRow">
+                                        <td style="width:200px;">
+                                            <LogLabel [Text]="'Main Color'" [ObjectFieldName]="'MainColor'" [ObjectTableName]="'ObjectTableName'"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td colspan="3">
+                                            <div style="width:70px; direction: ltr;" float-start>
+                                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'MainColorCode'"
+                                                            [ObjectTableName]="'ObjectTableName'" [Text]="MainColorCode" [DataContext]="DataContext">
+                                                </LogTextBox>
+                                            </div>
+                                            <div float-start style="width: 5px;height: 10px;"></div>
+                                            <div class="color-picker-wrapper" float-start>
+                                                <input type="color" [(ngModel)]="MainColorCode" class="colorPicker" id="color" [style.opacity]="MainColorOpacity/100"
+                                                       value="">
+                                            </div>
+                                            <div float-start style="width: 20px;height: 10px;"></div>
+                                            <div float-start style="color: #757575;padding: 5px 5px 0 5px">
+                                                Opacity:
+                                            </div>
+                                            <div float-start class="range">
+                                                <input [(ngModel)]="MainColorOpacity" class="slider"
+                                                       id="slider0" min="25" max="100" step="25" type="range" />
+                                                <span style="position: absolute;top: 7px; padding: 0 7px;">{{MainColorOpacity}}%</span>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Secondary Color -->
+                                    <tr class="FormFieldRow">
+                                        <td style="width:200px;">
+                                            <LogLabel [Text]="'Secondary Color'" [ObjectFieldName]="'SecondaryColor'" [ObjectTableName]="'ObjectTableName'"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td colspan="3">
+                                            <div style="width:70px; direction: ltr;" float-start>
+                                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'SecondaryColorCode'"
+                                                            [ObjectTableName]="'ObjectTableName'" [Text]="SecondaryColorCode" [DataContext]="DataContext">
+                                                </LogTextBox>
+                                            </div>
+                                            <div float-start style="width: 5px;height: 10px;"></div>
+                                            <div class="color-picker-wrapper" float-start>
+                                                <input type="color" [(ngModel)]="SecondaryColorCode" class="colorPicker" id="color" [style.opacity]="SecondaryColorOpacity/100"
+                                                       value="">
+                                            </div>
+                                            <div float-start style="width: 20px;height: 10px;"></div>
+                                            <div float-start style="color: #757575;padding: 5px 5px 0 5px">
+                                                Opacity:
+                                            </div>
+                                            <div float-start class="range">
+                                                <input [(ngModel)]="SecondaryColorOpacity" class="slider"
+                                                       id="slider0" min="25" max="100" step="25" type="range" />
+                                                <span style="position: absolute;top: 7px; padding: 0 7px;">{{SecondaryColorOpacity}}%</span>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
                                     </tr>
 
                                 </table>

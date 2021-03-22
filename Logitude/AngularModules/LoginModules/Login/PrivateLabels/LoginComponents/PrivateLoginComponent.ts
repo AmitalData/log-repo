@@ -6,15 +6,15 @@ import { SessionInfo } from '../../SessionInfo';
 import { Tools } from '../../Utilities/Tools';
 import { ServiceResponse } from '../DataContracts/ServiceResponse';
 import { BrandingDataService } from '../Services/BrandingDataService';
-import { HybridLabelsBrandingDataService } from '../Services/HybridLabelsBrandingDataService'; 
+import { PrivateLabelsBrandingDataService } from '../Services/PrivateLabelsBrandingDataService'; 
  
 @Component({
-    selector: 'HybridLoginComponent',
+    selector: 'PrivateLoginComponent',
     moduleId: './Login/Components/',
-    templateUrl: 'HybridLoginComponent.html',
-    styleUrls: ['HybridLoginComponent.css']
+    templateUrl: 'PrivateLoginComponent.html',
+    styleUrls: ['PrivateLoginComponent.css']
 })
-export class HybridLoginComponent extends LoginComponent implements OnInit { 
+export class PrivateLoginComponent extends LoginComponent implements OnInit { 
     public authHeader;
     private privateUrl;
     public MainColor: string = null;
@@ -25,21 +25,21 @@ export class HybridLoginComponent extends LoginComponent implements OnInit {
     public showSpinner = true;
     constructor(
         private ss: LoginService,
-        private hybridLabelsBrandingDataService: HybridLabelsBrandingDataService) {
+        private privateLabelsBrandingDataService: PrivateLabelsBrandingDataService) {
         super(ss);
     }
     ngOnInit() {
         this.get_cookie_data();
         this.privateUrl = SessionInfo.GetLogitudeURL();
-        this.GetHybridLabelsData(this.privateUrl);
+        this.GetPrivateLabelsData(this.privateUrl);
     }
      
 
-    GetHybridLabelsData(privateUrl: string) {
-        this.hybridLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetHybridLabelsDataRequest(privateUrl)).subscribe((response: ServiceResponse) => {
+    GetPrivateLabelsData(privateUrl: string) {
+        this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe((response: ServiceResponse) => {
             if (response.Result) {
                 this.Tenant = response.Result.Tenant;
-                BrandingDataService.SetHybridLabelsDataRequest(response.Result, privateUrl);
+                BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
                 this.MainColor = response.Result.MainColor;
                 this.BackgroundImage = BrandingDataService.GetBackgroundImage();
                 this.MainImage = BrandingDataService.GetMainImage(); 
@@ -64,7 +64,7 @@ export class HybridLoginComponent extends LoginComponent implements OnInit {
 
     ForgotPasswordClicked() {
         this.ClearLocation();
-        Tools.DynamicLoader.Load("/Login/HybridLabels/Components/HybridResetPasswordComponent", SessionInfo.MainLocation)
+        Tools.DynamicLoader.Load("/Login/PrivateLabels/LoginComponents/PrivateResetPasswordComponent", SessionInfo.MainLocation)
             .then(cmpRef => {
             });
     }

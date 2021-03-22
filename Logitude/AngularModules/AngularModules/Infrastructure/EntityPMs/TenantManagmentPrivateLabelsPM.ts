@@ -115,6 +115,16 @@ export class TenantManagmentPrivateLabelsPM {
     public set ForgetPasswordImageId(newValue: string) { if (this.forgetPasswordImageId != newValue) { this.forgetPasswordImageId = newValue; this.MarkAsDirty("ForgetPasswordImageId"); } }
        
 	 
+    private secondaryColor: string;
+    public get SecondaryColor() { return this.secondaryColor; }
+    public set SecondaryColor(newValue: string) { if (this.secondaryColor != newValue) { this.secondaryColor = newValue; this.MarkAsDirty("SecondaryColor"); } }
+       
+	 
+    private hasLogboxAccess: boolean;
+    public get HasLogboxAccess() { return this.hasLogboxAccess; }
+    public set HasLogboxAccess(newValue: boolean) { if (this.hasLogboxAccess != newValue) { this.hasLogboxAccess = newValue; this.MarkAsDirty("HasLogboxAccess"); } }
+       
+	 
 
     public OldEntityPM: TenantManagmentPrivateLabelsPM;
 		

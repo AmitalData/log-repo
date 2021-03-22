@@ -4,14 +4,14 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 import { Component } from '@angular/core';
-import { LoginService } from '../LoginService';
-import { SessionInfo } from '../SessionInfo';
-import { ResetPasswordComponent } from './ResetPasswordComponent';
-import { PrivateLabelsBrandingDataService } from '../PrivateLabels/Services/PrivateLabelsBrandingDataService';
-import { BrandingDataService } from '../PrivateLabels/Services/BrandingDataService';
-export var DSVResetPasswordComponent = (function (_super) {
-    __extends(DSVResetPasswordComponent, _super);
-    function DSVResetPasswordComponent(ss, privateLabelsBrandingDataService) {
+import { ResetPasswordComponent } from '../../Components/ResetPasswordComponent';
+import { LoginService } from '../../LoginService';
+import { SessionInfo } from '../../SessionInfo';
+import { BrandingDataService } from '../Services/BrandingDataService';
+import { PrivateLabelsBrandingDataService } from '../Services/PrivateLabelsBrandingDataService';
+export var PrivateResetPasswordComponent = (function (_super) {
+    __extends(PrivateResetPasswordComponent, _super);
+    function PrivateResetPasswordComponent(ss, privateLabelsBrandingDataService) {
         _super.call(this, ss);
         this.ss = ss;
         this.privateLabelsBrandingDataService = privateLabelsBrandingDataService;
@@ -24,11 +24,11 @@ export var DSVResetPasswordComponent = (function (_super) {
         this.showSpinner = true;
         this.show = true;
     }
-    DSVResetPasswordComponent.prototype.ngOnInit = function () {
+    PrivateResetPasswordComponent.prototype.ngOnInit = function () {
         this.privateUrl = SessionInfo.GetLogitudeURL();
         this.GetPrivateLabelsData(this.privateUrl);
     };
-    DSVResetPasswordComponent.prototype.GetPrivateLabelsData = function (privateUrl) {
+    PrivateResetPasswordComponent.prototype.GetPrivateLabelsData = function (privateUrl) {
         var _this = this;
         this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe(function (response) {
             if (response.Result) {
@@ -37,7 +37,6 @@ export var DSVResetPasswordComponent = (function (_super) {
                 _this.MainColor = response.Result.MainColor;
                 _this.BackgroundImage = BrandingDataService.GetBackgroundImage();
                 _this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage();
-                _this.Id = response.Result.Id;
                 _this.MainLogo = BrandingDataService.GetMainLogo();
             }
         }, function (error) {
@@ -47,19 +46,19 @@ export var DSVResetPasswordComponent = (function (_super) {
         });
         this.showSpinner = false;
     };
-    DSVResetPasswordComponent.decorators = [
+    PrivateResetPasswordComponent.decorators = [
         { type: Component, args: [{
-                    selector: 'DSVResetPasswordComponent',
+                    selector: 'PrivateResetPasswordComponent',
                     moduleId: './Login/Components/',
-                    templateUrl: 'DSVResetPasswordComponent.html',
-                    styleUrls: ['ChangePasswordComponent.css']
+                    templateUrl: 'PrivateResetPasswordComponent.html',
+                    styleUrls: ['PrivateResetPasswordComponent.css']
                 },] },
     ];
     /** @nocollapse */
-    DSVResetPasswordComponent.ctorParameters = [
+    PrivateResetPasswordComponent.ctorParameters = [
         { type: LoginService, },
         { type: PrivateLabelsBrandingDataService, },
     ];
-    return DSVResetPasswordComponent;
+    return PrivateResetPasswordComponent;
 }(ResetPasswordComponent));
-//# sourceMappingURL=DSVResetPasswordComponent.js.map
+//# sourceMappingURL=PrivateResetPasswordComponent.js.map

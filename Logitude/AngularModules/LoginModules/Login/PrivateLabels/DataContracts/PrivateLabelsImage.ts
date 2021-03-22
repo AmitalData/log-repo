@@ -1,5 +1,5 @@
 ﻿ 
-export class HybridLabelsImage {
+export class PrivateLabelsImage {
     public Data: any = null;
     public Id: string = null;
     constructor(Id: string, Data: any) {

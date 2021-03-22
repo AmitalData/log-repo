@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebFreight.Web.DataContracts
 {
-    public class HybridLabelsBrandingDataRequest
+    public class PrivateLabelsBrandingDataRequest
     {
         public string PrivateLabelUrl { get; set; }
         public string BackgroundImageId { get; set; }
