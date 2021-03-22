@@ -55,26 +55,13 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
     constructor() {
         super();
         this.ModificationsList = new ObservableCollection([]);
-
-
-        // initialize query filters for Parent Account
-        this.TypeCodeFilterItems = new ApiQueryFilters();
-        this.TypeCodeFilterItems.addAdditionalFilter("Code", "I02", null, null, "Exclude", false, false, false, "string", false, true); //Task 36745: Supplier Invoice Modifications - Logic for Code "I02" CALL#302294
-        //this.TypeCodeFilterItems.addAdditionalFilter("LocalName", "I02", null, null, "Exclude", false, false, false, "string", false, true); //Task 36745: Supplier Invoice Modifications - Logic for Code "I02" CALL#302294
-        this.TypeCodeFilterItems.addAdditionalFilter("LocalName", "I02", null, null, "NotContains", false, false, false, "string", false, true); //Task 36745: Supplier Invoice Modifications - Logic for Code "I02" CALL#302294
-        //this.TypeCodeFilterItems.addAdditionalFilter("SearchFields", "I02", null, null, "Exclude", false, false, false, "string", false, true); //Task 36745: Supplier Invoice Modifications - Logic for Code "I02" CALL#302294
-      this.TypeCodeFilterItems.addAdditionalFilter("SearchFields", "I02", null, null, "NotContains", false, false, false, "string", false, true); //Task 36745: Supplier Invoice Modifications - Logic for Code "I02" CALL#302294
-
-
-      this.TypeCodeFilterItems = new ApiQueryFilters(); 
-        this.TypeCodeFilterItems.addAdditionalFilter("Code", "I02", null, null, "NotContains", false, false, false, "string", false, true); //Task 36745: Supplier Invoice Modifications - Logic for Code "I02" CALL#302294
-        this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantInvoice", true, null, null, "Equals", false, false, false, "boolean");
+       
     }
 
     SetTabArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {
             this.InvoicePM = args.InvoicePM;
-            this.declarationPM = args.DeclarationPM;
+            this.declarationPM = args.DeclarationPM; 
             this.IsDisplayOnly = args.IsDisplayOnly;
             this.Parent = args.Parent;
 
@@ -87,13 +74,23 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
     }
 
     FillGridData() {
+        this.TypeCodeFilterItems = new ApiQueryFilters();
+        this.TypeCodeFilterItems.addAdditionalFilter("Code", "I02", null, null, "NotContains", false, false, false, "string", false, true); //Task 36745: Supplier Invoice Modifications - Logic for Code "I02" CALL#302294
+        this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantInvoice", true, null, null, "Equals", false, false, false, "boolean");
         this.ModificationsList = new ObservableCollection([]);
         for (let item of this.InvoicePM.SupplierInvoiceModifications) {
-            if (item.TypeCode != "I02")
-                this.ModificationsList.Insert(new ModificationItemModel(item, this));
+            if (item.TypeCode != "I02" && item.TypeCode != "67" && item.TypeCode != "144") {
+                if (this.declarationPM.Direction == "E" && item.TypeCode != "160") {
+                    this.ModificationsList.Insert(new ModificationItemModel(item, this));
+                }
+            }
+
         }
 
         if (this.declarationPM.Direction == "E") {
+            this.TypeCodeFilterItems = new ApiQueryFilters();
+            this.TypeCodeFilterItems.addAdditionalFilter("Code", "160", null, null, "NotContains", false, false, false, "string", false, true);
+            this.TypeCodeFilterItems.addAdditionalFilter("IsRelevantInvoice", true, null, null, "Equals", false, false, false, "boolean");
             this.UCRList = new ObservableCollection([]);
             for (let item of this.InvoicePM.SupplierInvoiceUCRs) {
                      this.UCRList.Insert(new UCRItemModel(item));
