@@ -25,7 +25,10 @@ export class TotangoService {
             //}
 
             if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
-                AmitalGatewayUtil.Instance.SendTotangoUserActivity(module, activity);
+                if (true) {
+                    AmitalGatewayUtil.Instance.SendTotangoUserActivity(module, activity);
+                }
+                
             }
             if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
                 if (module == "Agent" || module == "CustomAgent" || module == "ShippingAgent" || module == "Customer" || module == "PotentialCustomer"
