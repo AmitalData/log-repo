@@ -28,7 +28,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
     public SalesmanFilterItems: ApiQueryFilters;
     public ChartOfAccountTypeFilterItems: ApiQueryFilters;
     private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
-    public TenantPM: TenantPM;
+    public TenantPM: TenantPM = SessionLocator.TenantPM;
     private CurrentSession = SessionLocator.SelectedSession;
 
     entityResourceService: EntityResourceService = new EntityResourceService();
@@ -45,7 +45,6 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
 
         this.InitComponent();
 
-        this.TenantPM = SessionLocator.TenantPM;
     }
 
     private InitComponent()
