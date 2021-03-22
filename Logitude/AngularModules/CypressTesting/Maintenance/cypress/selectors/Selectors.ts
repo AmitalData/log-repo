@@ -12,6 +12,8 @@ export class MaintenanceSelectors {
     public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";
 
     //#region Contact
+    public static readonly PersonalSettingsMaintenanceTab="#PRS"
+    public static readonly ChangePasswordMaintenanceItem="#MaintenanceItemCHPA"
     public static readonly ContactSaveButton = "#Contact-Save";
     public static readonly AnonymizeContactButton = "#ContactBAnonymize";
     public static readonly ContactEmail = "#Contact_Email";
@@ -68,7 +70,14 @@ export class MaintenanceSelectors {
     public static readonly VesselCode = "#Vessel_Code"
     public static readonly VesselFirstRow = "div[id$='row0']"
 
+
+
     //#endregion
+//#region change password window
+public static readonly CurrentPassword="#CurrentPassword";
+public static readonly NewPassword="#NewPassword";
+public static readonly RetypePassword="#RetypePassword"
+//#endregion
     //#region Customer settings
     public static readonly IsPotentialCustomerTelephoneRequiredCheckBox="#Tenant_IsPotentialTelRequired"
     public static readonly IsCustomerTelephoneRequiredCheckBox="#Tenant_IsCustomerTelRequired"

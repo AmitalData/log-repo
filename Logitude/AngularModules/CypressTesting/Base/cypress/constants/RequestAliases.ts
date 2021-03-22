@@ -99,6 +99,8 @@ export class RequestAliases {
     public static readonly ContactViewsGetByFilters = "ContactViewsGetByFilters";
     public static readonly GetCustomersQuickSearch = "GetCustomersQuickSearch"
     //#endregion
+    public static readonly PostChangePassword="PostChangePassword"
+    //
     public static readonly GetTraceEventsForEntity = "GetTraceEventsForEntity"
     public static readonly GetLastUpdatedTables = "GetLastUpdatedTables"
     public static readonly GetFilterSearch = "GetFilterSearch"

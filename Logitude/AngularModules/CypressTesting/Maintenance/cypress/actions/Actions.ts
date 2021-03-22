@@ -22,10 +22,21 @@ import { QuickSearchDetails } from "../../../Base/cypress/models/QuickSearchDeta
 import {constants} from "../../../Base/cypress/constants/constants"
 import { InvoiceSettingsDetails } from "../models/InvoiceSettingsDetails";
 
-//#region General
+
+//#region change password
+export function OpenChangeUserPasswordWindow(){
+    OpenPersonalSettingsTab();
+    cy.Click(MaintenanceSelectors.ChangePasswordMaintenanceItem,null)
+}
+function OpenPersonalSettingsTab(){
+    OpenMaintenanceMenu();
+    cy.Click(MaintenanceSelectors.PersonalSettingsMaintenanceTab,null)
+}
+//#endregion
 export function OpenMaintenanceMenu() {
     cy.Click(BaseSelectors.MaintenanceMenu, null)
 }
+
 export function SearchMaintenanceItemInMaintenanceMenu(MaintenanceItem: string) {
     OpenMaintenanceMenu();
     cy.FillLogTextBox(BaseSelectors.NullSearch, MaintenanceItem);
@@ -33,6 +44,18 @@ export function SearchMaintenanceItemInMaintenanceMenu(MaintenanceItem: string) 
 export function OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemNameToSearch: string, maintenanceItemSelector: string) {
     SearchMaintenanceItemInMaintenanceMenu(maintenanceItemNameToSearch);
     cy.Click(maintenanceItemSelector, null);
+}
+export function FillChangePasswordWindow(CurrentPassword:string,NewPassword:string,RetypePassword:string){
+    cy.FillLogTextBox(MaintenanceSelectors.CurrentPassword, CurrentPassword)
+    cy.FillLogTextBox(MaintenanceSelectors.NewPassword, NewPassword)
+    if (RetypePassword != null) {
+        cy.FillLogTextBox(MaintenanceSelectors.RetypePassword, RetypePassword)
+    }  
+}
+export function ChangePasswordMockChange(){
+    cy.intercept(Urls.PostChangePassword,[true])
+   
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);   
 }
 export function OpenTabInMaintenanceMenu(maintenanceItemNameToSearch:string , maintenanceItemSelector:string){
     cy.Click(BaseSelectors.MaintenanceMenu, null);
