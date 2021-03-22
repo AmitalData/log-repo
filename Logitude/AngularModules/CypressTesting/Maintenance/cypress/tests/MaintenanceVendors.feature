@@ -38,7 +38,7 @@ Feature: Vendor Create, Search and Edit from Maintenance
         And fill the following vendor Billing details
             | VatNumber | Zero        |
             | BankName  | Vendor Bank |
-        When edit vendor
+        When save vendor
         Then the vendor should update successfully
 
     Scenario: Save and close the vendor
