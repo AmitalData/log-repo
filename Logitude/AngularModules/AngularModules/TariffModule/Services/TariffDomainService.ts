@@ -405,6 +405,8 @@ export class TariffSearchSummary {
     CurrencySign: string;
     NoteMissingContainers: string;
     MoreLessDetailsLabel: string = "More Details";
+    ActualMinPrice: number;
+    IsDifferentCurrency: boolean;
 }
 
 export class ContainersPrice {

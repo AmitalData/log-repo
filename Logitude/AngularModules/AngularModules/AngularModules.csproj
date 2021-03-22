@@ -7579,6 +7579,7 @@
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffListService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffTypeListService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardPMs\TariffPMService.ts" />
+    <TypeScriptCompile Include="TariffModule\Tools.ts" />
     <TypeScriptCompile Include="TariffModule\Validators\TariffValidator.ts" />
     <TypeScriptCompile Include="test.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\Connections\ConnectToParentComponent.ts" />
