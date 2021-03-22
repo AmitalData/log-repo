@@ -14,7 +14,7 @@ Feature: Vessel Create, Search and Edit from Maintenance
         When create vessel
         Then the vessel should create successfully
 
-    Scenario: Search for the vessel
+    Scenario: Search for the vessel by name
         When search vessel
         Then the vessel should appear successfully
 

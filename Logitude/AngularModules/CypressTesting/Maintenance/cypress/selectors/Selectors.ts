@@ -1,19 +1,21 @@
-export class MaintenanceSelectors {
+import { RegexSelectors } from '../selectors/RegexSelectors';
+
+export class MaintenanceSelectors extends RegexSelectors {
     //#region Tabs
     public static readonly OthersMaintenanceTab = "#OTH";
     public static readonly ContactsMaintenanceItem = "#MaintenanceItemMTCO";
     public static readonly VendorMaintenanceItem = "#MaintenanceItemMTVD"
     public static readonly VesselMaintenanceItem = "#MaintenanceItemMTVS"
-    public static readonly CustomerSettingsMaintenanceItem="#MaintenanceItemCUSA"
+    public static readonly CustomerSettingsMaintenanceItem = "#MaintenanceItemCUSA"
     public static readonly InvoiceSettingsMaintenanceItem = "#MaintenanceItemINVS";
-
+    public static readonly QuoteTemplatesMaintenanceItem = "#MaintenanceItemMTQT"
     //#endregion
 
     public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";
 
     //#region Contact
-    public static readonly PersonalSettingsMaintenanceTab="#PRS"
-    public static readonly ChangePasswordMaintenanceItem="#MaintenanceItemCHPA"
+    public static readonly PersonalSettingsMaintenanceTab = "#PRS"
+    public static readonly ChangePasswordMaintenanceItem = "#MaintenanceItemCHPA"
     public static readonly ContactSaveButton = "#Contact-Save";
     public static readonly AnonymizeContactButton = "#ContactBAnonymize";
     public static readonly ContactEmail = "#Contact_Email";
@@ -69,25 +71,24 @@ export class MaintenanceSelectors {
     public static readonly VesselNotes = "#Vessel_Notes"
     public static readonly VesselCode = "#Vessel_Code"
     public static readonly VesselFirstRow = "div[id$='row0']"
-
-
-
     //#endregion
-//#region change password window
-public static readonly CurrentPassword="#CurrentPassword";
-public static readonly NewPassword="#NewPassword";
-public static readonly RetypePassword="#RetypePassword"
-//#endregion
+
+    //#region change password window
+    public static readonly CurrentPassword = "#CurrentPassword";
+    public static readonly NewPassword = "#NewPassword";
+    public static readonly RetypePassword = "#RetypePassword"
+    //#endregion
+
     //#region Customer settings
-    public static readonly IsPotentialCustomerTelephoneRequiredCheckBox="#Tenant_IsPotentialTelRequired"
-    public static readonly IsCustomerTelephoneRequiredCheckBox="#Tenant_IsCustomerTelRequired"
-    public static readonly IsPotentialCustomerFaxRequiredCheckBox="#Tenant_IsPotentialFaxRequired"
-    public static readonly IsCustomerFaxRequiredCheckBox="#Tenant_IsCustomerFaxRequired"
-    public static readonly IsCustomerAddress1RequiredCheckBox="#Tenant_IsCustomerAddress1Required"
-
+    public static readonly IsPotentialCustomerTelephoneRequiredCheckBox = "#Tenant_IsPotentialTelRequired"
+    public static readonly IsCustomerTelephoneRequiredCheckBox = "#Tenant_IsCustomerTelRequired"
+    public static readonly IsPotentialCustomerFaxRequiredCheckBox = "#Tenant_IsPotentialFaxRequired"
+    public static readonly IsCustomerFaxRequiredCheckBox = "#Tenant_IsCustomerFaxRequired"
+    public static readonly IsCustomerAddress1RequiredCheckBox = "#Tenant_IsCustomerAddress1Required"
     //#endregion
+
     //#region Potential Customer
-    public static readonly NewCustomerButton= "#NewCustomer"
+    public static readonly NewCustomerButton = "#NewCustomer"
     public static readonly PotentialCustomerName = "#Customer_EnglishName"
     public static readonly PotentialCustomerCity = "#Customer_City_Potential"
     public static readonly PotentialCustomerCountry = "#Customer_CountryId_Potential"
@@ -95,28 +96,27 @@ public static readonly RetypePassword="#RetypePassword"
     public static readonly PotentialCustomerAddContactCheckBox = "#AddContactCheckBox"
     public static readonly PotentialCustomerPhoneNumber = "#Customer_PhoneNumber_Potential"
     public static readonly PotentialCustomerFaxNumber = "#Customer_FaxNumber_Potential"
-    public static readonly PotentialCustomerAddress1= "#Customer_Address1_Potential"
+    public static readonly PotentialCustomerAddress1 = "#Customer_Address1_Potential"
     public static readonly OkAddPotentialCustomer = "#Ok-AddPotCustomer"
-    public static readonly ActivateCustomerButton= "#CustomerBActivate"
-    public static readonly OKActivateCustomer="#Ok-activate"
+    public static readonly ActivateCustomerButton = "#CustomerBActivate"
+    public static readonly OKActivateCustomer = "#Ok-activate"
     //#endregion
+
     //#region Customer workspace
-    public static CustomerSearchBar= "#Card_Search"
-    public static CustomerSearchParent="quicksearchtextbox"
-    public static CustomerSearchParentClass=".LogitudeQuickSearchTextBox"
+    public static CustomerSearchBar = "#Card_Search"
+    public static CustomerSearchParent = "quicksearchtextbox"
+    public static CustomerSearchParentClass = ".LogitudeQuickSearchTextBox"
     //#endregion
-//#region Invoice Settings
-public static readonly VoidinvoiceCheckBox= "#Tenant_Voidinvoice"
-//#endregion
-    public static NewWizardButton(name: string): string {
-        return "#NewButton_" + name;
-    }
 
-    public static SaveButton(itemName: string): string {
-        return "#"+itemName+"-Save"
-    }
+    //#region Invoice Settings
+    public static readonly VoidinvoiceCheckBox = "#Tenant_Voidinvoice"
+    //#endregion
 
-    public static SaveCloseButton(itemName: string): string {
-        return "#"+itemName+"-SaveClose"
-    }
+    //#region Quote Template
+    public static readonly QuoteTemplateName = "#QuoteTemplate_Name"
+    public static readonly ValidationSummary = ".ValidationSummary"
+    public static readonly QuoteSettingsLabel = "[data-cy='Labels']"
+    public static readonly AddDataField = "#AddDataField"
+    //#endregion
+
 }
