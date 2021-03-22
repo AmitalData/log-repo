@@ -709,6 +709,7 @@ export class VersionHistoryTariffLine {
     public CurrencyCode: string;
     public StartDate: Date;
     public TransitTime: string;
+    public IsDifferentCurrenciesPerCharge: boolean;;
 
     //AFC || OLC
     public MinPrice: number;
@@ -798,6 +799,7 @@ export class VersionHistoryTariffLine {
         this.CurrencyCode = this.myTariffLine.CurrencyCode;
         this.StartDate = this.myTariffLine.StartDate;
         this.TransitTime = this.myTariffLine.TransitTime;
+        this.IsDifferentCurrenciesPerCharge = this.myTariffLine.IsDifferentCurrenciesPerCharge;
     }
 
     private AssignData_FreightCost() {

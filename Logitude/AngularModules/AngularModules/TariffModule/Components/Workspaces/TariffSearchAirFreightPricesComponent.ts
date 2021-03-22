@@ -1069,7 +1069,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 shipmentPayable.Notes = notes;
                 shipmentPayable.VendorId = newRecord.SellerId;
                 shipmentPayable.VendorName = newRecord.SellerName;
-                shipmentPayable.MinAmount = newRecord.MinPrice;
+                shipmentPayable.MinAmount = newRecord.IsDifferentCurrency ? newRecord.ActualMinPrice : newRecord.MinPrice;
                 this.TariffList_Shipment.push(shipmentPayable);
             }
         });
@@ -1363,7 +1363,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 var measurementId = item.UnitOfMesurmentId;
 
                 if (!item.IsAllIn) {
-                    chargePM.CostMinAmount = AppTool.Round(item.MinPrice, 3);
+                    chargePM.CostMinAmount = AppTool.Round(item.IsDifferentCurrency ? item.ActualMinPrice : item.MinPrice, 3);
                     var costAmount = AppTool.Round(item.ActualPrice, 3);
                     chargePM.CostTotalAmount = costAmount;
                     if (isOFC) {

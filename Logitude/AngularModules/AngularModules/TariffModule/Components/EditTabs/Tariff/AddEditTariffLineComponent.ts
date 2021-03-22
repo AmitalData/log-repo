@@ -13,14 +13,11 @@ import { Validator } from '../../../../Infrastructure/Validators/Validator';
 
 export class AddEditTariffLineComponent  {
   public StartDate: any;
-
-
     public TariffType: string;
     public EntityPM: TariffLinePM;
     public DataContext: any;
     public ObjectTableName: string = "TariffLine";
     private CurrentSession = SessionLocator.SelectedSession;
-
     public ValidationErrorsList: string[];
     public OriginDependencyFilterValue: string = "A";
     public DestinationDependencyFilterValue = "A";

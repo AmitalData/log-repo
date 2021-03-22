@@ -780,10 +780,11 @@ namespace Logitude.TariffModule.BL.Helpers
                                                 var LinePrice = CalculateLocalAmount((CurrentSurchargePriceCalculation == null ? 0 : CurrentSurchargePriceCalculation.Value), currencyId, tariffLineCurrencyId);
 
                                                 decimal? minPriceSurcharge = null;
+                                                decimal? actualMinimumPrice = null;
                                                 if (valueofSurchargeMin != null)
                                                 {
-                                                    decimal minimumPrice = (decimal)valueofSurchargeMin;
-                                                    minPriceSurcharge = CalculateLocalAmount(minimumPrice, currencyId, tariffLineCurrencyId);
+                                                    actualMinimumPrice = (decimal)valueofSurchargeMin;
+                                                    minPriceSurcharge = CalculateLocalAmount(actualMinimumPrice.Value, currencyId, tariffLineCurrencyId);
                                                     if (minPriceSurcharge > LinePrice)
                                                     {
                                                         LinePrice = minPriceSurcharge.Value;
@@ -803,6 +804,8 @@ namespace Logitude.TariffModule.BL.Helpers
                                                 SurchargeItem.SellerId = CurrentSurcharge.SellerId;
                                                 SurchargeItem.SellerName = sellerName;
                                                 SurchargeItem.MinPrice = minPriceSurcharge;
+                                                SurchargeItem.ActualMinPrice = actualMinimumPrice;
+                                                SurchargeItem.IsDifferentCurrency = ChargesfilteredLines.IsDifferentCurrenciesPerCharge;
                                                 SurchargeItem.CurrencySign = AssignSignCode(Currencies, currencyId, SurchargeItem.UnitOfMesurmentCode);
                                                 surchargesList.Add(SurchargeItem);
                                             }
