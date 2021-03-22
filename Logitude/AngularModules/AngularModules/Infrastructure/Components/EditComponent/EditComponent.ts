@@ -1783,10 +1783,10 @@ export class EditComponent implements OnDestroy {
     nextPreviousTimerToken: any;
     LoadNextPreviousEntity() {
 
-     var selectedTab=this.PreSelectedTabCode;
-     this.NextButtonDisabled = true;
-     this.PreviousButtonDisabled = true;
-     this.cd.detectChanges();
+        var selectedTab = this.PreSelectedTabCode;
+        this.NextButtonDisabled = true;
+        this.PreviousButtonDisabled = true;
+        this.cd.detectChanges();
 
         this.TabsItemsSource = [];
         this.LoadedTabsList.forEach((tab) => {
@@ -1796,7 +1796,12 @@ export class EditComponent implements OnDestroy {
 
         this.TabControlBodyViewContainerRef.clear();
         if (this.EditComponentController) {
-            this.EditComponentController.OnCloseEditControl();
+            this.EditComponentController.OnCloseEditControl(
+                () => {
+                    this.LoadNextPreviousEntity_AfterCloseEditControl(selectedTab);
+                });
+        } else {
+            this.LoadNextPreviousEntity_AfterCloseEditControl(selectedTab);
         }
 
         //if (this.ComponentRef != null) {
@@ -1805,19 +1810,19 @@ export class EditComponent implements OnDestroy {
         //  this.ComponentRef = null;
         //}
 
+
+
+    }
+    LoadNextPreviousEntity_AfterCloseEditControl(selectedTab:any) {
         this.CurrentSession.RemoveEditComponent(this);
-        
         this.ngOnDestroy();
-
-
-
-     var args: any = {};
-     args.EntityId = this.NavigationIds[this.CurrentNavigatedIndex];
-     args.ObjectTableName = this.ObjectTableName;
-     args.BackButtonLabel = this.BackButtonLabel;
-     args.NavigationIds = this.NavigationIds;
-     args.SelectedTabCode=selectedTab;
-     this.Run(args);
+        var args: any = {};
+        args.EntityId = this.NavigationIds[this.CurrentNavigatedIndex];
+        args.ObjectTableName = this.ObjectTableName;
+        args.BackButtonLabel = this.BackButtonLabel;
+        args.NavigationIds = this.NavigationIds;
+        args.SelectedTabCode = selectedTab;
+        this.Run(args);
 
     }
 
@@ -1927,7 +1932,7 @@ export class EditComponentDefaultController implements IEditComponentController 
 export interface IEditComponentController {
     OnFirstTimeAfterSingleDataLoaded(CurrentEntity): Promise<boolean>;
     OnReloadEntityPM(): Promise<any>;
-    OnCloseEditControl(): void;
+    OnCloseEditControl(onCallBack?: () => void ): void;
     HaveSaved: boolean;
     InDisplayMode: boolean;
     ToCancell: boolean;
