@@ -1,5 +1,5 @@
 Feature:Change Password
-    The user changes password from the Maintenance Module and signs in with the new password.
+The user changes password from the Maintenance Module 
 
     Scenario: Change Password
         Given the user logged in and navigates to change password window from maintenance menu
