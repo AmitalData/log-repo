@@ -216,7 +216,7 @@ export class InvoiceQueueComponent
             confirm.YesButtonText = TextCodeTranslator.Translate("General.O.Confirm");
             confirm.NoButtonText = TextCodeTranslator.Translate("General.O.Void");
             // confirm.Show(TextCodeTranslator.Translate("Customs.Declarations.O.UnSavedRemark"));
-            confirm.Show("ביציםה מהמסך לם ישמרו הערות לחשבונית שהוזנו במסך")
+            confirm.Show("ביציאה מהמסך לא ישמרו הערות לחשבונית שהוזנו במסך")
             confirm.WindowClosed.subscribe((event: any) => {
                 if (confirm.Yes) {
                     confirm.Close();

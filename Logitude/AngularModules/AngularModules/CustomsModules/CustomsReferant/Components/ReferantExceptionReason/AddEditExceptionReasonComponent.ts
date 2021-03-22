@@ -15,6 +15,7 @@ import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { KeyValuePair } from '../../../CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent';
 import { ExceptionReasonExtendedListService } from '../../../../Customs/Services/ExtendedLists/ExceptionReasonExtendedListService';
 import { ExceptionReasonPM } from '../../../../Customs/EntityPMs/ExceptionReasonPM';
+import { ExceptionReasonPMService } from '../../../../Customs/Services/StandardPMs/ExceptionReasonPMService';
 
 
 @Component({
@@ -202,26 +203,26 @@ export class AddEditExceptionReasonComponent extends BaseComponent {
                         this.DeletedCodeList.splice(this.DeletedCodeList.indexOf(item), 1);
                     });
                 });
-                this._declarationReferantDataPMService.update(this.EntityPM).subscribe((response: any) => {
-                    this.ReferantExceptionItemsSource.Collection.forEach((item: ExceptionReason) => {
-                        if (item.IsNew == true) {
-                            this._referantExceptionPMService.insert(item.EntityPM).subscribe((response: any) => {
-                                item.IsNew = false;
-                                item.ShowCode = true;
-                                this.IsLastItemInCollection(item);
-                            });
-                        } else if (item.EntityPM.IsDirty == true) {
-                            this._referantExceptionPMService.update(item.EntityPM).subscribe((response: any) => {
-                                this.IsLastItemInCollection(item);
-                            });
-                        } else {
+                this.ReferantExceptionItemsSource.Collection.forEach((item: ExceptionReason) => {
+                    if (item.IsNew == true) {
+                        this._referantExceptionPMService.insert(item.EntityPM).subscribe((response: any) => {
+                            item.IsNew = false;
+                            item.ShowCode = true;
                             this.IsLastItemInCollection(item);
-                        }
-                    });
-                    if (this.ReferantExceptionItemsSource.Collection.length == 0) {
-                        SessionLocator.SelectedSession.CloseCurrentWindow();
+                        });
+                    } else if (item.EntityPM.IsDirty == true) {
+                        this._referantExceptionPMService.update(item.EntityPM).subscribe((response: any) => {
+                            this.IsLastItemInCollection(item);
+                        });
+                    } else {
+                        this.IsLastItemInCollection(item);
                     }
                 });
+                if (this.ReferantExceptionItemsSource.Collection.length == 0) {
+                    this._declarationReferantDataPMService.update(this.EntityPM).subscribe((response: any) => {
+                        SessionLocator.SelectedSession.CloseCurrentWindow();
+                    });
+                }
             }
             this.exceptionReasonSharedDataService.IsDirty = false;
         } else {
@@ -237,10 +238,13 @@ export class AddEditExceptionReasonComponent extends BaseComponent {
     }
 
     IsLastItemInCollection(item: any) {
-        var lastItem = this.ReferantExceptionItemsSource.Collection[this.ReferantExceptionItemsSource.Collection.length-1]
+        var lastItem = this.ReferantExceptionItemsSource.Collection[this.ReferantExceptionItemsSource.Collection.length - 1]
         if (item == lastItem) {
-            SessionLocator.SelectedSession.CloseCurrentWindow();
+            this._declarationReferantDataPMService.update(this.EntityPM).subscribe((response: any) => {
+                SessionLocator.SelectedSession.CloseCurrentWindow();
+            });
         }
+
     }
 
     OnRowEnded($event) {
@@ -265,7 +269,7 @@ export class ExceptionReason extends BaseComponent {
     public parent: AddEditExceptionReasonComponent;
     public ShowCode: boolean = true;
     _StatusItems: KeyValuePair[] = [];
-    exceptionReasonExtendedListService: ExceptionReasonExtendedListService = new ExceptionReasonExtendedListService();
+    exceptionReasonPMService: ExceptionReasonPMService = new ExceptionReasonPMService();
     constructor(entity: ReferantExceptionPM, Parent: AddEditExceptionReasonComponent, public spotlightSharedDataService: SpotlightSharedDataService) {
         super();
         this.parent = Parent;
@@ -276,7 +280,7 @@ export class ExceptionReason extends BaseComponent {
             this.ShowCode = false;
         }
         if (this.EntityPM.ExceptionReasonsCode != null) {
-            this.exceptionReasonExtendedListService.get(this.EntityPM.ExceptionReasonsCode).subscribe(response => {
+            this.exceptionReasonPMService.get(this.EntityPM.ExceptionReasonsCode).subscribe(response => {
                 this.ExceptionReason = response.Result;
             });
         }

@@ -1134,7 +1134,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
 
                                         var msg = new MessageWindow();
                                         //msg.ZIndex = 5;
-                                        msg.Show("לם נמצםה ישות להצגה");
+                                        msg.Show("לא נמצאה ישות להצגה");
                                         break;
                                     }
 
@@ -1169,7 +1169,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                     {
                                         var msg = new MessageWindow();
                                         //msg.ZIndex = 5;
-                                        msg.Show("לם נמצםה ישות להצגה");
+                                        msg.Show("לא נמצאה ישות להצגה");
                                         break;
                                     }
 
@@ -1236,7 +1236,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                     {
                                         var msg = new MessageWindow();
                                         //msg.ZIndex = 5;
-                                        msg.Show("לם נמצםה ישות להצגה");
+                                        msg.Show("לא נמצאה ישות להצגה");
                                         break;
                                     }
 
@@ -1304,7 +1304,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                     {
                                         var msg = new MessageWindow();
                                         //msg.ZIndex = 5;
-                                        msg.Show("לם נמצםה ישות להצגה");
+                                        msg.Show("לא נמצאה ישות להצגה");
                                         break;
                                     }
 
@@ -1698,7 +1698,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                 if (this.DataSource.rowCount > 1000) {
                     var msg = new MessageWindow();
 
-                    msg.Show("1000 התרםות שנבחרו סומנו כ-לם נקרםו");
+                    msg.Show("1000 התראות שנבחרו סומנו כ-לא נקראו");
                 }
             });
         }

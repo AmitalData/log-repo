@@ -591,6 +591,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             }
         }
 
+ 
         private void UpdateDeclarationPending(string declarationPendingCode)
         {
             if (currentDeclarationCourierStatusPM != null)

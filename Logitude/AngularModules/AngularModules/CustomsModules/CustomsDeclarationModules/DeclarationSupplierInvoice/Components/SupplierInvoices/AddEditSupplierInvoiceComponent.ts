@@ -1056,7 +1056,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     }
 
     OnCTRL_Shift_S_HotKeyPressed(){
-        this.SaveAndNewButtonClicked();
+        this.OkButtonClicked();
     }
 
 
