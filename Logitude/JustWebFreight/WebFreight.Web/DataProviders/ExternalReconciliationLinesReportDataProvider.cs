@@ -21,8 +21,7 @@ namespace WebFreight.Web.DataProviders
         public int? ExternalReconciliationNumber { get; set; }
       
         public List<BankDetails> BankDetails { get; set; }
-
-
+      
     }
 
     public class ExternalReconciliationPeriod
@@ -63,6 +62,19 @@ namespace WebFreight.Web.DataProviders
         public decimal? TotalClosed { get; set; }
 
         public decimal? TotalOpen { get; set; }
+
+        public decimal? GlaccountTotalOpened { get; set; }
+
+        public decimal? GlaccountTotalClosed { get; set; }
+
+        public decimal? TransferTotalOpened { get; set; }
+
+        public decimal? TransferTotalClosed { get; set; }
+
+        public decimal? BankTotalOpened { get; set; }
+
+        public decimal? BankTotalClosed { get; set; }
+
         public decimal? TotalInLocalCurrency { get; set; }
 
     }

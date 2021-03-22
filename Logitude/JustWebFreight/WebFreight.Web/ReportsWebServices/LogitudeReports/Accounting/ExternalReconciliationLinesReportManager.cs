@@ -150,13 +150,18 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                  TotalClosed = AllExternalReconciliationPeriod == null ? null : AllExternalReconciliationPeriod.Where(s => s.BankAccountId == a.Id && s.IsRecomncile == true).Sum(b => b.Amount),
                                                  TotalOpen = AllExternalReconciliationPeriod == null ? null : AllExternalReconciliationPeriod.Where(s => s.BankAccountId == a.Id && s.IsRecomncile == false).Sum(b => b.Amount),
                                                  ExternalReconciliationPeriods = AllExternalReconciliationPeriod == null ? null : AllExternalReconciliationPeriod.Where(s => s.BankAccountId == a.Id).ToList(),
-                                                TotalInLocalCurrency=  transactionsbalance.Where(d=> d.BankAccountId==a.Id).FirstOrDefault() != null ? transactionsbalance.Where(d => d.BankAccountId == a.Id).FirstOrDefault().TotalInLocalCurrency: null,
+                                                 GlaccountTotalOpened = AllExternalReconciliationPeriod == null ? 0 : AllExternalReconciliationPeriod.Where(s => s.BankAccountId == a.Id && s.EnglishType == "GLAccount" && s.IsRecomncile == false).Sum(b => b.Amount),
+                                                 GlaccountTotalClosed = AllExternalReconciliationPeriod == null ? 0 : AllExternalReconciliationPeriod.Where(s => s.BankAccountId == a.Id && s.EnglishType == "GLAccount" && s.IsRecomncile == true).Sum(b => b.Amount),
+                                                 TransferTotalOpened = AllExternalReconciliationPeriod == null ? 0 : AllExternalReconciliationPeriod.Where(s => s.BankAccountId == a.Id && s.EnglishType == "Transfer" && s.IsRecomncile == false).Sum(b => b.Amount),
+                                                 TransferTotalClosed = AllExternalReconciliationPeriod == null ? 0 : AllExternalReconciliationPeriod.Where(s => s.BankAccountId == a.Id && s.EnglishType == "Transfer" && s.IsRecomncile == true).Sum(b => b.Amount),
+                                                 BankTotalOpened = AllExternalReconciliationPeriod == null ? 0 : AllExternalReconciliationPeriod.Where(s => s.BankAccountId == a.Id && s.EnglishType == "Bank" && s.IsRecomncile == false).Sum(b => b.Amount),
+                                                 BankTotalClosed = AllExternalReconciliationPeriod == null ? 0 : AllExternalReconciliationPeriod.Where(s => s.BankAccountId == a.Id && s.EnglishType == "Bank" && s.IsRecomncile == true).Sum(b => b.Amount),
+                                                 TotalInLocalCurrency = transactionsbalance.Where(d => d.BankAccountId == a.Id).FirstOrDefault() != null ? transactionsbalance.Where(d => d.BankAccountId == a.Id).FirstOrDefault().TotalInLocalCurrency : null,
                                              }).Where(s => s.ExternalReconciliationPeriods.Count > 0).ToList();
 
             }
             
         }
-
 
         private List<BankAccountPM> GetAllBankAccountsByFilters()
         {
