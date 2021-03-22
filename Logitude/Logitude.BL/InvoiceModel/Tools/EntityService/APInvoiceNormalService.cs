@@ -1487,8 +1487,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             List<VATTypesGroup> allVATTypesGroup = (from d in initializer.CommonContext.VATTypesGroups where d.Tenant == initializer.Tenant select d).ToList();
             List<VATTypesGroup> vatTypesGroup = allVATTypesGroup.Where(d => d.GroupVATTypeId == invoiceline.VatTypeId).ToList();
-            invoiceLinesVatAmountLocal = invoiceline.LocalCurrencyAmount;
-            invoiceLinesVatAmountProfit = invoiceline.ProfitCurrencyAmount;
+            invoiceLinesVatAmountLocal = invoiceLinesVatAmountLocal+ invoiceline.LocalCurrencyAmount;
+            invoiceLinesVatAmountProfit = invoiceLinesVatAmountProfit + invoiceline.ProfitCurrencyAmount;
             foreach (VATTypesGroup itemGroup in vatTypesGroup)
             {
                 VatType vatType = initializer.AllVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
