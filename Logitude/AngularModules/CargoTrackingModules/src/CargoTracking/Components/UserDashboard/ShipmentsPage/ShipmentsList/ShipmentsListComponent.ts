@@ -63,6 +63,7 @@ export class ShipmentsListComponent implements AfterViewInit
     {
         this.GetPreservedToggleFiltersFromSessionInfo();
         this.GetCompanyLoginsFromCache();
+
     }
 
     private GetPreservedToggleFiltersFromSessionInfo()
