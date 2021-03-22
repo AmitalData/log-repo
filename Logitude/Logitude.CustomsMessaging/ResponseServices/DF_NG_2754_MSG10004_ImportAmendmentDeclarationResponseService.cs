@@ -964,9 +964,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     switch (GetValueCodeType(goodsItemAmount.AmountType))
                                     {
                                         case "3":
+                                            {if(!_isUpdateAfterAccept)
+                                                {
+                                                    supplierInvoiceItemPM.ItemPrice = GetValueAmountType(goodsItemAmount.CustomsValueAmount);
+                                                    supplierInvoiceItemPM.ItemPriceCurrencyCode = goodsItemAmount.CustomsValueAmount.currencyID.ToString();
+
+                                                }
+                                                break;
+
+                                            }
+                                        case "1":
                                             {
-                                                supplierInvoiceItemPM.ItemPrice = GetValueAmountType(goodsItemAmount.CustomsValueAmount);
-                                                supplierInvoiceItemPM.ItemPriceCurrencyCode = goodsItemAmount.CustomsValueAmount.currencyID.ToString();
+                                                if (_isUpdateAfterAccept)
+                                                {
+                                                    supplierInvoiceItemPM.ItemPrice = GetValueAmountType(goodsItemAmount.CustomsValueAmount);
+                                                    supplierInvoiceItemPM.ItemPriceCurrencyCode = goodsItemAmount.CustomsValueAmount.currencyID.ToString();
+
+                                                }
                                                 break;
 
                                             }
