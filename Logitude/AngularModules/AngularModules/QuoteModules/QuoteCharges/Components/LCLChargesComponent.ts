@@ -633,7 +633,13 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 var isDifferentOrders: boolean = false;
                 var isDifferentPRVL: boolean = false;
                 var isDifferentPRFR: boolean = false;
-               
+
+
+                //"PFCL"
+                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PFCL" || f.SaleMeasurementCode == "PFCL").length > 0) {
+                    isDifferentOrders = this.CheckUpdateMessageforPFCL();
+                }
+
                 //"GRWT"
                 entityQuantity = this.EntityPM.GrossWeight;
                 if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "GRWT" && f.CostQuantity != entityQuantity).length > 0) {
@@ -756,11 +762,6 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                             isDifferentPRFR = true;
                         }
                     }
-                }
-
-                //"PFCL"
-                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PFCL" || f.SaleMeasurementCode == "PFCL").length > 0) {
-                    isDifferentOrders = this.CheckUpdateMessageforPFCL();
                 }
 
 
