@@ -168,10 +168,11 @@ export class DeclarationEditComponentController implements IEditComponentControl
                 resolve();
                 return;
             }
-            this.RaiseCFIFILMLockReturnCFIFILMAlreadyLock(resolve);
+            setTimeout(() => { this.RaiseCFIFILMLockReturnCFIFILMAlreadyLock(resolve);},500)
+            
         });
     }
-    OnCloseEditControl() {
+    OnCloseEditControl(onCallBack?: () => void) {
         if (!this._ControllerOn) {
             return;
         }
@@ -180,8 +181,47 @@ export class DeclarationEditComponentController implements IEditComponentControl
             ///&& this._CurrentEntity.IsConvertedDeclaration != true /// yuval +im - not need 
         ) //Yuval Chalup 25.11.2015 TASK-17450 (Add _CurrentEntity.IsConvertedDeclaration != true)
         {
-            AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseUnlockCFIFILEM(this._CurrentEntity.CustomFileNo, this._CurrentEntity.Id, this.HaveSaved);
+          
+
+
+            let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+                .subscribe(
+                    (mess: UnifreightMessageM) => {
+                        var IsMatchUnifreightCallbackCommand = (
+                            //mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                            
+                            mess.LogitudeEntityNumber == this._CurrentEntity.Id &&
+                            mess.UnifreightEntityNumber == this._CurrentEntity.CustomFileNo);
+                        if (IsMatchUnifreightCallbackCommand) {
+                            sub.unsubscribe();
+                            if (!AppTool.IsNullOrEmpty(onCallBack)) {
+                                onCallBack();
+                            }
+
+
+
+                        }
+                    }
+            );
+
+            if (!AppTool.IsNullOrEmpty(onCallBack)) {
+                setTimeout(() => {
+                    AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseUnlockCFIFILEM(this._CurrentEntity.CustomFileNo, this._CurrentEntity.Id, this.HaveSaved);
+
+                },300);
+            } else {
+                AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseUnlockCFIFILEM(this._CurrentEntity.CustomFileNo, this._CurrentEntity.Id, this.HaveSaved);
+
+            }
+            
+
+        } else {
+            if (!AppTool.IsNullOrEmpty(onCallBack)) {
+                onCallBack();
+            }
+
         }
+
     }
     private GetBoolean(myUnifreightMessageM: UnifreightMessageM, theKey: string): boolean {
         let myBool = false;
