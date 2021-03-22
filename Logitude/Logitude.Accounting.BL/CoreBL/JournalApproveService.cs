@@ -32,6 +32,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 using Logitude.Server.Tools;
 using System.Web;
+using Logitude.Accounting.BL.CoreBL.Reports.Aging;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -80,15 +81,16 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (actions.HasFlag(MyActions.BuildLedgerTransaction) && actions.HasFlag(MyActions.FixLedgerTransaction)) return new ResultApproveJournalM() { Success = false, FailDue = "Or BuildLedgerTransaction Or FixLedgerTransaction" };
 
 
-
-                myResultApproveJournalM = CheckJournal(actions, ref myLedgerTransactionsWithCounters);
+                List<GLAccountAgingDataPM> gLAccountAgingDataPMs = null;
+                myResultApproveJournalM = CheckJournal(actions, ref myLedgerTransactionsWithCounters,out gLAccountAgingDataPMs);
                 if (myResultApproveJournalM != null)
                 {
                     return myResultApproveJournalM;
                 }
                 //
 
-                AccountingStreamingInNewSerializableTransaction(actions, myLedgerTransactionsWithCounters);
+
+                AccountingStreamingInNewSerializableTransaction(actions, myLedgerTransactionsWithCounters, gLAccountAgingDataPMs);
 
 
 
@@ -109,8 +111,9 @@ namespace Logitude.Accounting.BL.CoreBL
             throw new NotImplementedException();
         }
 
-        private ResultApproveJournalM CheckJournal(MyActions actions, ref List<LedgerTransactionPM> myLedgerTransactionsWithCounters)
+        private ResultApproveJournalM CheckJournal(MyActions actions, ref List<LedgerTransactionPM> myLedgerTransactionsWithCounters ,out List<GLAccountAgingDataPM> gLAccountAgingDataPMs)
         {
+            gLAccountAgingDataPMs = new List<GLAccountAgingDataPM>();
             using (var scope = TransactionFactory.GetTransaction())
             {
                 _AccountingContext = AccountingContext.GetContext(_Tenant);
@@ -159,6 +162,11 @@ namespace Logitude.Accounting.BL.CoreBL
                     myLedgerTransactionsWithCounters = _JournalApproveParser.LedgerTransactions
                         .OrderBy(rec => rec.JournalId).ThenBy(rec => rec.JournalLineNumber)
                         .ToList();
+
+                    var ledgerTransactionsAgingBuilderService = new LedgerTransactionsAgingBuilderService(_AccountingContext);
+                    gLAccountAgingDataPMs= ledgerTransactionsAgingBuilderService.GetAgingPMs(myLedgerTransactionsWithCounters);
+
+
                     //if (!_ExecAsSP)
                     {
                         FillIdCountersUseNewDBTransaction(myLedgerTransactionsWithCounters);
@@ -170,7 +178,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
-        private void AccountingStreamingInNewSerializableTransaction(MyActions actions, List<LedgerTransactionPM> myLedgerTransactionsWithCounters)
+        private void AccountingStreamingInNewSerializableTransaction(MyActions actions, List<LedgerTransactionPM> myLedgerTransactionsWithCounters, List<GLAccountAgingDataPM> gLAccountAgingDataPMs)
         {
             /// orian 300000 trans in a month >> 1 journal 6 transaction no more then 6 GLAccountTotalByMonths >  in a secound 
 

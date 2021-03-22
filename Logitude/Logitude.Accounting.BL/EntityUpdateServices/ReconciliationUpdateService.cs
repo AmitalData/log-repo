@@ -40,6 +40,7 @@ using Simplog.Data.InvoiceModel;
 using Logitude.BL.InvoiceModel.CloseTables;
 using System.Diagnostics;
 using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
+using Logitude.Accounting.BL.CoreBL.Reports;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -420,6 +421,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             ledgerTransactionUpdateService._CancelledAction = this._CancelledAction;
             ledgerTransactionUpdateService.UpdateMulti(LedgerTransactionPMsUpdated, new List<LedgerTransactionPM>(), entityPM, false);
+
+
+            var reconciliationUpdateAgingService = new ReconciliationUpdateAgingService(this.MainContext as IAccountingContext);
+            var deltaGLAccountAgingDataPM =reconciliationUpdateAgingService.GetDelta(this._CancelledAction, entityPM);
+            reconciliationUpdateAgingService.UpdateDelta(deltaGLAccountAgingDataPM,false);
+            
+
+
         }
 
         public bool SuppressResetDraftOpenReconciliation { get; set; }

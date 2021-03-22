@@ -1,0 +1,12 @@
+﻿<Script DBType="Main"  Module="Accounting" >
+  <Sql Version="3">
+    <![CDATA[
+
+truncate table GLAccountagingdatas
+---select * From GLAccountagingdatas
+insert into GLAccountAgingDatas (accountid,tenant)
+select id as  accountid , Tenant from GLAccounts
+---select * From GLAccountagingdatas
+]]>      
+  </Sql>
+</Script>

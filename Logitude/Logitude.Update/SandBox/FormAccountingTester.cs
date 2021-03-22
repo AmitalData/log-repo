@@ -1,6 +1,10 @@
 ﻿using Logitude.Accounting.BL.CoreBL.BuildTenant.MumpsOpenReconcile;
+using Logitude.Accounting.BL.CoreBL.Reports;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.BL.Resolvers;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Update.PatchDistribution;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,6 +26,7 @@ namespace Logitude.Update.SandBox
             InitializeComponent();
             TraceListener debugListener = new MyTraceListener(this.textBoxLogger);
             Debug.Listeners.Add(debugListener);
+            LoggedContactResolver.RegisterLoggedContactUtil();
 
         }
 
@@ -95,6 +100,16 @@ namespace Logitude.Update.SandBox
             }
 
             return list100;
+        }
+
+        private void agingFixRepoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            int tenant = 1;
+            string reconcileId = "1-100";
+
+            var agingReportRebulidTesterService = new AgingReportRebulidTesterService();
+            agingReportRebulidTesterService.RebulidReconcile(tenant, reconcileId);
         }
     }
 }
