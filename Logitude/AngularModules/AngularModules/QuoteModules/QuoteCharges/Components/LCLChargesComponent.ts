@@ -633,12 +633,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 var isDifferentOrders: boolean = false;
                 var isDifferentPRVL: boolean = false;
                 var isDifferentPRFR: boolean = false;
-
-                //"PFCL"
-                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PFCL" || f.SaleMeasurementCode == "PFCL").length > 0) {
-                    isDifferentOrders = this.CheckUpdateMessageforPFCL();
-                }
-                
+               
                 //"GRWT"
                 entityQuantity = this.EntityPM.GrossWeight;
                 if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "GRWT" && f.CostQuantity != entityQuantity).length > 0) {
@@ -763,6 +758,12 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                     }
                 }
 
+                //"PFCL"
+                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PFCL" || f.SaleMeasurementCode == "PFCL").length > 0) {
+                    isDifferentOrders = this.CheckUpdateMessageforPFCL();
+                }
+
+
                 if (isDifferentOrders) {
                     updateMessage = "You have updated the expected order details, apply the new values?";
                 }
@@ -885,7 +886,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     }
 
     OnPercentForeignAmountChanged() {
-        this.ItemsSource.Collection.filter(f => f.MeasurementCode == "PFCL").forEach(item => {
+        this.ItemsSource.Collection.filter(f => f.SaleMeasurementCode == "PFCL" || f.SaleMeasurementCode == "PFCL").forEach(item => {
             item.SetCostQuantity();
             item.SetSaleQuantity();
         });

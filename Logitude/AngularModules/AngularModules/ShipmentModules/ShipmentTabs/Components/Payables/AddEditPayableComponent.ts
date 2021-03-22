@@ -179,10 +179,6 @@ export class AddEditPayableComponent implements OnDestroy {
                 this.DataContext.fatherComponent.OnFreightAmountChanged();
             }
 
-            if (this.DataContext.MeasurementCode == "PFCL") {
-                this.DataContext.fatherComponent.OnPercentForeignAmountChanged();
-            }
-
             this.DataContext.fatherComponent.ComputeShipmentFields();
         }
 
@@ -196,6 +192,8 @@ export class AddEditPayableComponent implements OnDestroy {
 
             this.DataContext.fatherComponent.ComputeShipmentFields();
         }
+
+        this.DataContext.fatherComponent.OnPercentForeignAmountChanged();
 
         if (!AppTool.IsNullOrEmpty(this.DataContext.TariffId) && this.EntityPM.IsDirty && !this.DataContext.IsNewEntity) {
 

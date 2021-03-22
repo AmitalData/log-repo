@@ -126,10 +126,6 @@ export class AddEditReceivableComponent {
                     this.DataContext.fatherComponent.OnFreightAmountChanged();
                 }
 
-                if (this.DataContext.MeasurementCode == "PFCL") {
-                this.DataContext.fatherComponent.OnPercentForeignAmountChanged();
-            }
-
                 this.DataContext.fatherComponent.ComputeShipmentFields();
             }
 
@@ -143,6 +139,8 @@ export class AddEditReceivableComponent {
 
                 this.DataContext.fatherComponent.ComputeShipmentFields();
             }
+
+            this.DataContext.fatherComponent.OnPercentForeignAmountChanged();
 
             this.DataContext.IsNewEntity = false;
             this.CurrentSession.CloseCurrentWindowEmit("OK");

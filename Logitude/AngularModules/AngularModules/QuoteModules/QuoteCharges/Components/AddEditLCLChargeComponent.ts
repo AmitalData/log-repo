@@ -346,7 +346,7 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
 
     ValidateAddingPFCLUOM() {
         if (this.EntityPM.CostMeasurementCode == "PFCL" || this.EntityPM.SaleMeasurementCode == "PFCL") {
-            if (this.QuotePM.QuoteCharges.filter(d => d.CostMeasurementCode == "PFCL" || d.SaleMeasurementCode == "PFCL" && d != this.EntityPM).length > 0) {
+            if (this.QuotePM.QuoteCharges.filter(d => (d.CostMeasurementCode == "PFCL" || d.SaleMeasurementCode == "PFCL") && d != this.EntityPM).length > 0) {
                 this.errors.push("Charge with Percent of foreign charges local amounts UOM already added");
             }
         }
@@ -375,6 +375,7 @@ export class AddEditLCLChargeComponent extends BaseComponent implements OnDestro
             }
         }
 
+        this.DataContext.fatherComponent.OnPercentForeignAmountChanged();
 
         if (!AppTool.IsNullOrEmpty(this.DataContext.TariffId) && this.EntityPM.IsDirty && !this.DataContext.IsNew) {
             var property = this.propertiesChanges.filter(a => a == "CostUnitPrice" || a == "CostTotalAmount" || a == "CostCurrencyId")[0];

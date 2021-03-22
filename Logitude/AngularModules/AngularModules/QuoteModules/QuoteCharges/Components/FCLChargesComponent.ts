@@ -1065,7 +1065,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     }
 
      OnPercentForeignAmountChanged() {
-        this.ItemsSource.Collection.filter(f => f.MeasurementCode == "PFCL").forEach(item => {
+         this.ItemsSource.Collection.filter(f => f.CostMeasurementCode == "PFCL" || f.SaleMeasurementCode == "PFCL").forEach(item => {
             item.SetCostQuantity();
             item.SetSaleQuantity();
         });

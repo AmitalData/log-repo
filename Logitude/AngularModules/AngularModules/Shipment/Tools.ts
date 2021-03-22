@@ -2773,6 +2773,10 @@ export class ShipmentGenerator {
         myRecordPM.AccountedAmountInLocalCurrency = 0;
         myRecordPM.AccountedAmountInProfitCurrency = 0;
         myRecordPM.ShipmentPayableLineStatusCode = (myQuantity != null && myUnitPrice != null) ? "OAMT" : "EMPT";
+
+        if (myRecordPM.MeasurementCode == "PFCL") {
+            myQuantity = ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal");
+        }
     }
     private ComputePayableQuoteAmounts_FCL(itemPM: ShipmentPayablePM, quantity: number) {
         if (itemPM.ProfitCurrencyExchangeRate == 0) {
