@@ -1,4 +1,4 @@
-@dev 
+@release @dev 
 Feature: Wrong Email and Password Login and Reset Password
     The user fails to log in using wrong email and password and requests a password reset.
 
@@ -8,7 +8,7 @@ Feature: Wrong Email and Password Login and Reset Password
             | Email    | WrongEmail@Wrong.com |
             | Password | Random               |
         When login
-        Then the login should failed
+        Then the login should fail
         And a validation message with "Login failed! invalid user name or password." error should appear
 
     Scenario:Login using wrong password
@@ -17,7 +17,7 @@ Feature: Wrong Email and Password Login and Reset Password
             | Email    | specflowtest@logitudeworld.com |
             | Password | WrongPassword                  |
         When login
-        Then the login should failed
+        Then the login should fail
         And a validation message with "Login failed! invalid user name or password." error should appear
 
     Scenario:Send a password reset request

@@ -14,5 +14,10 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool IsReadOnly { get; set; }
         public string ObjectTableName { get; set; }
         public string Name { get; set; }
+        public string QuerySection { get; set; }
+
+
+        
+
     }
 }

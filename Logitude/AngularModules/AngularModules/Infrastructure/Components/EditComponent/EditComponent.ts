@@ -24,6 +24,8 @@ import { EditTabComponent } from './EditTabComponent';
 import { Subscription, TeardownLogic } from 'rxjs';//itzik
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
+import { IObjectTableTabsBuilder } from '../../../Infrastructure/Interface/IObjectTableTabsBuilder';
+import { ObjectTableTabBuilderService } from '../../Utilities/ObjectTableTabBuilderService';
 
 
 @Component({    
@@ -131,6 +133,7 @@ export class EditComponent implements OnDestroy {
             }
     }
 
+    private QuerySection: string;
     private EntityFields: any[] = null;
     public Run(args: any) {
         this.EntityId = args['EntityId'];
@@ -138,6 +141,8 @@ export class EditComponent implements OnDestroy {
         this.EntityParentPM = args['EntityParentPM'];
         this.ObjectTableName = args['ObjectTableName'];
         this.PreSelectedTabCode = args['SelectedTabCode'];
+        this.QuerySection = !AppTool.IsNullOrEmpty(args['QuerySection']) ? args['QuerySection']:null ;
+
         this.BackButtonLabel = !AppTool.IsNullOrEmpty(args['BackButtonLabel']) ? args['BackButtonLabel'] : TextCodeTranslator.Translate("General.B.Back");  // "Back";
         this.ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
         this.ObjectTableId = this.ObjectTable.Id;
@@ -412,6 +417,7 @@ export class EditComponent implements OnDestroy {
         }
     }
     private BuildMenuButtons() {
+
         if (this.HasMenuButtons) {
             if (this.MenuButtonsViewContainerRef) {
                 this.MenuButtonsViewContainerRef.clear();
@@ -420,7 +426,7 @@ export class EditComponent implements OnDestroy {
 
                 SessionLocator.DynamicLoader.Load(myComponentPath, this.MenuButtonsViewContainerRef)
                     .then(cmpRef => {
-                        cmpRef.instance.Run({ EntityPM: this.EntityPM, ObjectTable: this.ObjectTable });
+                        cmpRef.instance.Run({ EntityPM: this.EntityPM, ObjectTable: this.ObjectTable, QuerySection : this.QuerySection});
                     });
             }
         }
@@ -451,7 +457,8 @@ export class EditComponent implements OnDestroy {
     public SavedWidthOfHeader: number = 0;
     public BuildHeaderScreen() {
 
-        var myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code.indexOf("HeaderScreen") != -1)[0];
+        var myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code.indexOf("HeaderScreen") != -1 &&  d.QuerySection == this.QuerySection)[0];
+
         var myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === this.ObjectTableId);
 
         if (this.ObjectTableName == "Shipment") {
@@ -462,7 +469,7 @@ export class EditComponent implements OnDestroy {
                     const masterObjectTable = window.ObjectTables.filter(x => x.Name === "Master")[0];
                     const shipmentObjectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
 
-                    myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === masterObjectTable.Id && d.Code.indexOf("HeaderScreen") != -1)[0];
+                    myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === masterObjectTable.Id && d.Code.indexOf("HeaderScreen") != -1 && d.QuerySection == this.QuerySection )[0];
 
                     const masterFields = window.ObjectFields.filter(d => d.ObjectTableId === masterObjectTable.Id);
                     const shipmentFields = window.ObjectFields.filter(d => d.ObjectTableId === shipmentObjectTable.Id);
@@ -741,106 +748,130 @@ export class EditComponent implements OnDestroy {
             }
         }
     }
+
+
+    BuildObjectTableTabByQuerySection() {
+        let objectTableTabs: TabItem[] =[];
+        let objectTableTabsBuilder: IObjectTableTabsBuilder = ObjectTableTabBuilderService.GetInstance(this.QuerySection);
+        if (objectTableTabsBuilder) {
+            objectTableTabs = objectTableTabsBuilder.BuildTabs({
+                ObjectTableId: this.ObjectTableId,
+                ObjectTableName: this.ObjectTableName,
+                QuerySection: this.QuerySection,
+                EntityPM: this.EntityPM,
+            });
+
+        }
+        return objectTableTabs;
+    }
+
+
+
     private BuildTabsItemsSource() {
-        var allTabs: any[] = [];
-        var myTabsSorted: any[] = [];
+
         this.TabsItemsSource = [];
 
-        allTabs = window.ObjectTableTabs.filter(d => d.ObjectTableId === this.ObjectTableId);
-        allTabs = this.FilterTabs(allTabs);
-        allTabs = allTabs.sort((a, b) => { return a.IndexOrder - b.IndexOrder });
-         for (var i = 0; i < allTabs.length; i++) {
-            var tab = allTabs[i];
-
-            if (tab.ControlPath != null) {
-                if (tab.ControlPath.indexOf("ExternalDocumentsControl") != -1) {
-                    if (!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "DOCSIN")) {
-                        continue;
-                    }
-                }
-
-                if (tab.ControlPath.indexOf("EventsControl") != -1) {
-                    var eventsTabCode = tab.ObjectTableName + ".Tab.Events";
-                    var eventsTabFeature = FeatureLocator.Features.filter(f => (f.Code == "EVENTS" || f.Code == eventsTabCode) && f.ObjectTableId == tab.ObjectTableId)[0];
-                    if (eventsTabFeature = null) {
-                        continue;
-                    }
-                }
-
-
-
-
-                //if (tab.ControlPath.indexOf("WarehouseConnectionsTabComponent") != -1) {
-                //    if (this.EntityPM && AppTool.IsNullOrEmpty(this.EntityPM.ShipmentId)) continue;
-                //}
-            }
-
-            if (FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
-
-                if (this.ObjectTableName == "GLAccount") {
-
-                    switch (tab.Code) {
-
-                        case "GAAD":
-                            {
-                                if (this.EntityPM.AccountTypeCode == "2" || this.EntityPM.AccountTypeCode == "3")
-                                    myTabsSorted.push(tab);
-                                break;
-                            }
-                        case "GLTX":
-                            {
-                                if (this.EntityPM.AccountTypeCode == "3")
-                                    myTabsSorted.push(tab);
-                                break;
-                            }
-                        case "GAOV":
-                            {
-                                if (this.EntityPM.AccountTypeCode == "2")  // 2- Customer GLAccount
-                                    myTabsSorted.push(tab);
-                                break;
-                            }
-                        case "GAIT":
-                            {
-                                if (this.EntityPM.AccountTypeCode == "2")  // 2- Customer GLAccount
-                                    myTabsSorted.push(tab);
-                                break;
-                            }
-                        default:
-                            {
-                                myTabsSorted.push(tab);
-                                break;
-                            }
-                    }
-                }
-                else
-                    myTabsSorted.push(tab);
-            }
+        if (!AppTool.IsNullOrEmpty(this.QuerySection)) {
+            this.TabsItemsSource = this.BuildObjectTableTabByQuerySection();
         }
 
-        //this.ObjectTableTabs = myTabsSorted;
+        else {
 
-        myTabsSorted.forEach(item => {
+            var allTabs: any[] = [];
+            var myTabsSorted: any[] = [];
 
-            var itemTab: TabItem = new TabItem(item);
-            itemTab.IsDisabled = this.EditComponentController.IsDisabled(itemTab.Code)
-            if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                if (item.ControlPath.indexOf("Doc") > -1) {
-                    switch (this.ObjectTableName) {
-                        case "ARInvoice":
-                        case "APInvoice":
-                        case "ARPayment":
-                        case "APPayment":
-                            {
-                                itemTab.IsDisabled = true;
-                                break;
-                            }
+            allTabs = window.ObjectTableTabs.filter(d => d.ObjectTableId === this.ObjectTableId);
+            allTabs = this.FilterTabs(allTabs);
+            allTabs = allTabs.sort((a, b) => { return a.IndexOrder - b.IndexOrder });
+            for (var i = 0; i < allTabs.length; i++) {
+                var tab = allTabs[i];
+
+                if (tab.ControlPath != null) {
+                    if (tab.ControlPath.indexOf("ExternalDocumentsControl") != -1) {
+                        if (!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "DOCSIN")) {
+                            continue;
+                        }
                     }
+
+                    if (tab.ControlPath.indexOf("EventsControl") != -1) {
+                        var eventsTabCode = tab.ObjectTableName + ".Tab.Events";
+                        var eventsTabFeature = FeatureLocator.Features.filter(f => (f.Code == "EVENTS" || f.Code == eventsTabCode) && f.ObjectTableId == tab.ObjectTableId)[0];
+                        if (eventsTabFeature = null) {
+                            continue;
+                        }
+                    }
+
+                }
+
+                if (FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
+
+                    if (this.ObjectTableName == "GLAccount") {
+
+                        switch (tab.Code) {
+
+                            case "GAAD":
+                                {
+                                    if (this.EntityPM.AccountTypeCode == "2" || this.EntityPM.AccountTypeCode == "3")
+                                        myTabsSorted.push(tab);
+                                    break;
+                                }
+                            case "GLTX":
+                                {
+                                    if (this.EntityPM.AccountTypeCode == "3")
+                                        myTabsSorted.push(tab);
+                                    break;
+                                }
+                            case "GAOV":
+                                {
+                                    if (this.EntityPM.AccountTypeCode == "2")  // 2- Customer GLAccount
+                                        myTabsSorted.push(tab);
+                                    break;
+                                }
+                            case "GAIT":
+                                {
+                                    if (this.EntityPM.AccountTypeCode == "2")  // 2- Customer GLAccount
+                                        myTabsSorted.push(tab);
+                                    break;
+                                }
+                            default:
+                                {
+                                    myTabsSorted.push(tab);
+                                    break;
+                                }
+                        }
+                    }
+                    else
+                        myTabsSorted.push(tab);
                 }
             }
+            myTabsSorted.forEach(item => {
 
-            this.TabsItemsSource.push(itemTab);
-        });
+                var itemTab: TabItem = new TabItem(item);
+                itemTab.IsDisabled = this.EditComponentController.IsDisabled(itemTab.Code)
+                if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                    if (item.ControlPath.indexOf("Doc") > -1) {
+                        switch (this.ObjectTableName) {
+                            case "ARInvoice":
+                            case "APInvoice":
+                            case "ARPayment":
+                            case "APPayment":
+                                {
+                                    itemTab.IsDisabled = true;
+                                    break;
+                                }
+                        }
+                    }
+                }
+
+                this.TabsItemsSource.push(itemTab);
+            });
+        }
+
     }
+
+
+
+
     private FilterTabs(allTabs: any[]) {
         switch (this.ObjectTableName) {
 
@@ -1934,7 +1965,7 @@ class HeaderScreenRow {
     public ObjectField: ObjectFieldPM;
     public HideField: boolean = false;
 }
-class TabItem {
+export class TabItem {
     public Code: string;
     public EntityPM: any;
     public TextCode: string;

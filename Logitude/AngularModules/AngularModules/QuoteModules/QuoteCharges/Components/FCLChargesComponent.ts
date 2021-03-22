@@ -62,7 +62,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             this.IsShowTotalPerContainer = true;
         }
 
-        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TAR" && d.TenantNumber == SessionLocator.Tenant)[0];
+        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TAR")[0];
         if (FeatureLocator.HasFeaturePermession("Quote", "QuotePriceCheck") && featureToggle != null) {
             this.IsPriceCheckVisible = true;
         }

@@ -18,6 +18,8 @@ Feature: Generic Interface AR Invoice Transfer
             | City        | Anchorage   |
             | Country     | US          |
             | State       | AK          |
+            | PhoneNumber | 98765443    |
+            | FaxNumber   | 98765443    |
         When create customer
         Then the customer should create successfully
 

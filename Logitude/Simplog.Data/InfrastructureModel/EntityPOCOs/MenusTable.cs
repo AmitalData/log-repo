@@ -21,7 +21,9 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string Code { get; set; }
         public string HtmlView { get; set; }
         public string FeatureUniqeCode { get; set; }
+        public string QuerySection { get; set; }
 
+        
         //[Include]
         //[Association("MenuTypeMenusTable", "MenuTypeCode", "Code", IsForeignKey = true)]
         [ForeignKey("MenuTypeCode")]

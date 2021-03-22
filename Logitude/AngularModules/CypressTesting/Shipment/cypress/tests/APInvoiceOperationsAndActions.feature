@@ -1,4 +1,4 @@
-@smoke @release @stable
+@smoke @release @stable @c
 Feature: APInvoice Aprrove, cancel the approvement and void
     After the user logging in the system and Update Accounting System to be None,navigates to shipments workspace
     will create a direct shipment,update routing tab,packages.
@@ -11,6 +11,13 @@ Feature: APInvoice Aprrove, cancel the approvement and void
         When change the accounting system
         Then the accounting system should update successfully
 
+    Scenario: enable void invoice settings
+        Given the user navigates to "invoice settings" in maintenance menu
+        Given accounting settings with the following details
+            | VoidInvoice | Allowed |
+        When update invoice settings
+        Then the invoice setting should update successfully
+
     Scenario: Create customer
         Given the user navigates to customers workspace
         And a customer with the following details
@@ -18,6 +25,8 @@ Feature: APInvoice Aprrove, cancel the approvement and void
             | City        | Anchorage   |
             | Country     | US          |
             | State       | AK          |
+            | PhoneNumber | 98765443    |
+            | FaxNumber   | 98765443    |
         When create customer
         Then the customer should create successfully
 

@@ -291,6 +291,8 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\DeclarationAmendment\DeclarationAmendmentComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureGettingStarted\Components\SystemCurrencies\ChangeCurrencyComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureOthers\Components\FeatureToggle\FeatureToggleGeneralTabComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureOthers\Components\FeatureToggle\NewFeatureToggleComponent.html" />
     <Content Include="Infrastructure\Components\LoginComponent\CustomLoginComponents\HybridLabels\Components\HybridLoginProcessComponent.css" />
     <Content Include="Infrastructure\Components\LoginComponent\CustomLoginComponents\HybridLabels\Components\HybridLoginProcessComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.html" />
@@ -1730,6 +1732,8 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureHelpResource\ModuleInfrastructureHelpResource.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\CreateTenant\CreateTenantComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\EventType\CustomEventTypeComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\FeatureToggle\FeatureToggleGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\FeatureToggle\NewFeatureToggleComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\PriceSteps\PriceStepsGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookTesterComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookKeysComponent.ts" />
@@ -1834,7 +1838,10 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\TogglePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\WebhookKeysPM.ts" />
     <TypeScriptCompile Include="Infrastructure\Helpers\DWQueryBuilderHelper.ts" />
+    <TypeScriptCompile Include="Infrastructure\Interface\IObjectTableMenuButtonsBuilder.ts" />
+    <TypeScriptCompile Include="Infrastructure\Interface\IObjectTableTabsBuilder.ts" />
     <TypeScriptCompile Include="Infrastructure\material-module.ts" />
+    <TypeScriptCompile Include="Infrastructure\ObjectTableMenuButtonsBuilder\ShipmentTestMenuButtonsBuilder.ts" />
     <TypeScriptCompile Include="Infrastructure\Pipes\HighlightSearch.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\BIReportFolderExtendedListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\CustomPickListPMExtendedService.ts" />
@@ -1860,6 +1867,8 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\HelpResourcePMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\TeamPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\WebServices\HybridLabelsBrandingDataService.ts" />
+    <TypeScriptCompile Include="Infrastructure\ObjectTableTabsBuilder\ShipmentTestTabsBuilder.ts" />
+    <TypeScriptCompile Include="Infrastructure\Utilities\ObjectTableMenuButtonsBuilderService.ts" />
     <TypeScriptCompile Include="Infrastructure\Utilities\PackageAmountCalculator.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\BusinessProcessDomainService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\DWObjectTableExtendedListService.ts" />
@@ -1899,6 +1908,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\PriceStepPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\SharedLogisticsSettingPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\WebhookKeysPMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Utilities\ObjectTableTabBuilderService.ts" />
     <TypeScriptCompile Include="Infrastructure\Validators\EventTypeValidator.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\Components\EditTabs\APInvoiceAuditTabComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\Components\Others\APInvoiceTotalVATOnlyComponent.ts" />

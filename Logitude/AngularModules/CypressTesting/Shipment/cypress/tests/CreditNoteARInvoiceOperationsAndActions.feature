@@ -1,4 +1,4 @@
-@smoke @stable
+@smoke @stable 
 Feature: Credit note ARInvoice operations and actions
     After the user logging in the system and Update Accounting System to be None,navigates to shipments workspace
     will create a direct shipment, after that create and approve a credit note ARInvoice
@@ -9,6 +9,13 @@ Feature: Credit note ARInvoice operations and actions
         Given accounting System as "None"
         When change the accounting system
         Then the accounting system should update successfully
+
+    Scenario: enable void invoice settings
+        Given the user navigates to "invoice settings" in maintenance menu
+        Given accounting settings with the following details
+            | VoidInvoice | Allowed |
+        When update invoice settings
+        Then the invoice setting should update successfully
 
     Scenario: Create direct export air shipment
         Given the user navigates to shipments workspace

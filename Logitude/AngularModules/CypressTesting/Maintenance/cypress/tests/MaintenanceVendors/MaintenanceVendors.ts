@@ -10,7 +10,7 @@ let vendorDetails :VendorDetails
 //#region Create new vendor
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login()
-    Actions.OpenTabInMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.VendorMaintenanceItem)
+    Actions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.VendorMaintenanceItem)
 });
 
 Given("a vendor with the following details", (dataTable) => {

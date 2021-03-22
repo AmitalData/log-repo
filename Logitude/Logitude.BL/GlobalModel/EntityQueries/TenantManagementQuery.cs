@@ -247,6 +247,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      LastTariffUsageDate = a.LastTariffUsageDate,
                                                      LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
                                                      LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
+                                                     ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -442,6 +443,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   LastTariffUsageDate = a.LastTariffUsageDate,
                                                   LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
                                                   LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
+                                                  ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
 
                                               }).FirstOrDefault();
 
@@ -630,6 +632,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         LastTariffUsageDate = a.LastTariffUsageDate,
                         LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
                         LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
+                        ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
 
                     });
         }
@@ -768,6 +771,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     LastTariffUsageDate = entity.LastTariffUsageDate,
                     LastWeekCreatedTariffs = entity.LastWeekCreatedTariffs,
                     LastMonthCreatedTariffs = entity.LastMonthCreatedTariffs,
+                    ScheduledTasksLimitPerReport = entity.ScheduledTasksLimitPerReport,
                 };
             }
 
@@ -904,6 +908,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        LastTariffUsageDate = a.LastTariffUsageDate,
                        LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
                        LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
+                       ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
                    };
         }
 
@@ -1177,6 +1182,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              LastTariffUsageDate = a.LastTariffUsageDate,
                                              LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
                                              LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
+                                             ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
                                          }).FirstOrDefault();
 
             return tenant;
