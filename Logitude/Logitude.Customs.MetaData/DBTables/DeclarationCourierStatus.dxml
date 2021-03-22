@@ -159,7 +159,7 @@
   <Column
     Name="LastMileStatusName"
     Type="varchar"
-    Size="30">   
+    Size="30">
     <Constraints
       Nullable="true" />
   </Column>
@@ -180,6 +180,13 @@
     Name="DistributionArea"
     Type="nvarchar"
     Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CrateNumber"
+    Type="varchar"
+    Size="10">
     <Constraints
       Nullable="true" />
   </Column>

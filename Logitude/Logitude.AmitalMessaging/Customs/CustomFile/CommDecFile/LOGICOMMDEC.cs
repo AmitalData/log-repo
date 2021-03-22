@@ -144,6 +144,8 @@
 
         private string siteCodeField;
 
+        private string crateNumberField;
+
         /// <remarks/>
         public string CustomFileNo
         {
@@ -729,6 +731,19 @@
             set
             {
                 this.siteCodeField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string CrateNumber
+        {
+            get
+            {
+                return this.crateNumberField;
+            }
+            set
+            {
+                this.crateNumberField = value;
             }
         }
     }
