@@ -369,6 +369,11 @@ export class DeclarationCourierStatusPM {
     public set DistributionArea(newValue: string) { if (this.distributionArea != newValue) { this.distributionArea = newValue; this.MarkAsDirty("DistributionArea"); } }
        
 	 
+    private crateNumber: string;
+    public get CrateNumber() { return this.crateNumber; }
+    public set CrateNumber(newValue: string) { if (this.crateNumber != newValue) { this.crateNumber = newValue; this.MarkAsDirty("CrateNumber"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		
