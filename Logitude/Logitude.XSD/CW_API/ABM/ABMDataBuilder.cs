@@ -175,7 +175,7 @@ namespace Logitude.XSD.CW_API.ABM
             {
                 Text = new string[] { this.Context.FromPortCode },
                 PortCountry = this.Context.MainCarriageFromPortCountryCode,
-                PortType = "Origin",
+                PortType = "ConsignmentOrigin",
                 CodeType = PortCodeType.UNLOC,
             });
 
@@ -183,7 +183,7 @@ namespace Logitude.XSD.CW_API.ABM
             {
                 Text = new string[] { this.Context.FinalDestinationPortCode },
                 PortCountry = this.Context.FinalDestinationPortCountryCode,
-                PortType = "Arrival",
+                PortType = "ConsignmentDestination",
                 CodeType = PortCodeType.UNLOC,
             });
 

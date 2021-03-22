@@ -323,11 +323,11 @@
                             <div>
                                 <div class="subtitle">Status</div>
                                 <div class="value">
-                                    {{GetStatusName(shipment)}}
+                                    {{GetShipmentStatus(shipment)}}
                                 </div>
 
                                 <div class="subtitle">Last Updated</div>
-                                <div class="value">{{  (shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneDate : shipment.FutureMilstoneDate) | date: 'dd/MM/yyyy, HH:MM' }}</div>
+                                <div class="value">{{  (shipment.CurrentMilestoneName != null? shipment.CurrentMilestoneDate : shipment.FutureMilstoneDate) | date: 'dd/MM/yyyy, HH:mm' }}</div>
                             </div>
                         </div>
                     </div>

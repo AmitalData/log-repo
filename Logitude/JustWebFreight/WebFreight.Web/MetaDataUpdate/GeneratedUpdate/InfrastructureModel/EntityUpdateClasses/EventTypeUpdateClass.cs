@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class EventTypeUpdateClass
    {  		
-		public const string HashString = "d9f325a6cf95af0f849db9ee8ba04cf6";
+		public const string HashString = "1ed3c050604bc541a840a1131e5d276b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1545,7 +1545,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "IsNotModified",
+					 						FieldName =  "IsStatusNotModified",
 					  						ObjectTableName =  "EventType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1563,8 +1563,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "IsNotModified",
-					  						ListPropertyPath =  "IsNotModified",
+					  						PMPropertyPath =  "IsStatusNotModified",
+					  						ListPropertyPath =  "IsStatusNotModified",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1580,8 +1581,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "IsNotModified",
-					  						DefaultText =  "Not Modified",
+					  						FullFieldLable =  "IsStatusNotModified",
+					  						DefaultText =  "Status Not Modified",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

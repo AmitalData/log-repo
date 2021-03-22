@@ -33,7 +33,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         private formBuilder: FormBuilder,
         private location: Location,
         private searchService: CargoTrackingSearchService,
-        public datepipe: DatePipe)
+        public DatePipe: DatePipe)
     {
         this.GetSearchTextFromURI();
         this.listenToRouterEvents();
@@ -303,22 +303,36 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         return iconPath;
     }
 
-    GetStatusName(shipment: CargoTrackingShipmentList)
+    GetShipmentStatus(shipment: CargoTrackingShipmentList)
     {
         if(shipment.CurrentMilestoneCode)
-        {
-            var name = shipment.CurrentMilestoneName;
-            if(shipment.CurrentMilestoneDate)
-                var date = shipment.CurrentMilestoneDate;
-        }
+            var status = this.GetShipmentStatusFromCurrentMilestone(shipment);
         else if(shipment.FutureMilstoneCode)
-        {
-            var name = shipment.FutureMilstoneName;
-            if(shipment.FutureMilstoneDate)
-                var date = shipment.FutureMilstoneDate;
-        }
+            var status = this.GetShipmentStatusFromFutureMilestone(shipment);
 
-        var status = name + ' on ' + this.datepipe.transform(date, 'd-MMM-y, HH:MM');
+        return status;
+    }
+
+    private GetShipmentStatusFromFutureMilestone(shipment: CargoTrackingShipmentList)
+    {
+        let name = shipment.FutureMilstoneName;
+        let status = name;
+        if (shipment.FutureMilstoneDate){
+            let date = shipment.FutureMilstoneDate;
+            status += ' on ' + this.DatePipe.transform(date, 'd-MMM-y, HH:mm');
+        }
+        return status;
+    }
+
+    private GetShipmentStatusFromCurrentMilestone(shipment: CargoTrackingShipmentList)
+    {
+        let name = shipment.CurrentMilestoneName;
+        var status = name;
+
+        if (shipment.CurrentMilestoneDate){
+            var date = shipment.CurrentMilestoneDate;
+            status += ' on ' + this.DatePipe.transform(date, 'd-MMM-y, HH:mm')
+        }
         return status;
     }
 }

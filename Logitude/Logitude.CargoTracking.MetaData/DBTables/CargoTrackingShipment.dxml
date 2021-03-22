@@ -473,11 +473,17 @@
     <Constraints
       Nullable="true" />
   </Column>
-
   <Column
     Name="ForwardingShipmentNumber"
     Type="varchar"
     Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShipmentLevelCode"
+    Type="varchar"
+    Size="1">
     <Constraints
       Nullable="true" />
   </Column>

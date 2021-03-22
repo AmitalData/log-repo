@@ -71,7 +71,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
 
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "Master");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ForwarderShipmentNumber");
-                AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "House");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "CustomFileNumber");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "CustomsDeclarationNumber");
                 AddNewRecord(tableRow, bulkDataPreperation.InnerDataTable, "ShipperName");
@@ -184,7 +183,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
         {
             if (!IsNullOrEmpty(tableRow, coulmnName))
             {
-                var Value = tableRow[coulmnName];
+                var Value = tableRow[coulmnName];         
                 string SearchField = (string)Value;
                 ReferencecArgs ReferencecArgs = new ReferencecArgs()
                 {
@@ -225,7 +224,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             bool IsPublic = true;
             if (PrivateRefrencesList.Contains(coulmnName))
                 IsPublic = false;
- 
+            if (coulmnName == "Master" && TableRow["ShipmentLevelCode"].Equals("H"))
+            {
+                IsPublic = false;
+            }
             TableRow.SetField("IsPublic", IsPublic);
 
         }

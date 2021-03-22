@@ -57,7 +57,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("DWObjectField", "READ", authToken.Tenant);
 				
 		    	IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
 				DWObjectFieldRepository  dWObjectFieldRepository = new DWObjectFieldRepository(MyContext);
@@ -95,7 +94,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("DWObjectField", "READ", authToken.Tenant);
 
 
 				IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
@@ -126,9 +124,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				int tenant = authToken.Tenant;
-				                
-				SecurityUtility.CheckContactFeature("DWObjectField", "READ", authToken.Tenant);
-	
+				
                 QueryOperations queryOperations = new QueryOperations()
                 {
                     ObjectTableName = "DWObjectField",
