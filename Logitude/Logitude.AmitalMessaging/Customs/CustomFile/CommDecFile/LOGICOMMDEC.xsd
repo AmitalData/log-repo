@@ -55,6 +55,7 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="CarrierPrefix" />
         <xs:element minOccurs="0" maxOccurs="1" ref="IsAutonomy" />
         <xs:element minOccurs="0" maxOccurs="1" ref="SiteCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CrateNumber" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -301,4 +302,5 @@
   <xs:element name="CarrierPrefix" type="xs:string" />
   <xs:element name="IsAutonomy" type="xs:string" />
   <xs:element name="SiteCode" type="xs:string" />
+  <xs:element name="CrateNumber" type="xs:string" />
 </xs:schema>

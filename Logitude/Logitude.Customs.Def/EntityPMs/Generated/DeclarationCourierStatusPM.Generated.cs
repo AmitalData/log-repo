@@ -1481,6 +1481,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string crateNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CrateNumber  
+	   {
+	    
+	     get
+		{
+		   return crateNumber;
+		 }
+		 set
+		 {
+		   if(crateNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CrateNumber",OldValue=crateNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   crateNumber=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
