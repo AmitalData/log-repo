@@ -991,11 +991,12 @@ function DefinePutCustomer() {
 }
 //#endregion
 
-//#region change password
+//#region Change password
 export function OpenChangeUserPasswordWindow() {
     OpenPersonalSettingsTab();
     cy.Click(MaintenanceSelectors.ChangePasswordMaintenanceItem, null)
 }
+
 function OpenPersonalSettingsTab() {
     OpenMaintenanceMenu();
     cy.Click(MaintenanceSelectors.PersonalSettingsMaintenanceTab, null)

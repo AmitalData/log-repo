@@ -67,7 +67,7 @@ Given("fill the following vendor Billing details", (dataTable) => {
     Actions.FillVendorBillingTab(vendorBillingDetails);
 });
 
-When("edit vendor", () => {
+When("save vendor", () => {
     Actions.UpdateVendor()
 });
 

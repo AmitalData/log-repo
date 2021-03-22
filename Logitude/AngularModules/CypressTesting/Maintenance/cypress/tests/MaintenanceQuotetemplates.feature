@@ -9,7 +9,7 @@ Feature: Create, Search, Open and Edit a Quote Template from Maintenance
         Then the quote template should create successfully
 
     Scenario: Edit the quote template's Page Header
-        And fill the "Page Header" settings with the following details
+        Given fill the "Page Header" settings with the following details
             | Width1 | 10 |
             | Width2 | 10 |
             | Width3 | 80 |
