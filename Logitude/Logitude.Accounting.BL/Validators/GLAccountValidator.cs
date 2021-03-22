@@ -178,6 +178,24 @@ namespace Logitude.Accounting.BL.Validators
             {
                 return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.LocalCurrencyErr", myGLAccountPM.Tenant, showLocals));
             }
+            if (myGLAccountPM.IsMultiCurrency == false && myGLAccountPM.ReconcileMethodCode != "0")
+            {
+                TenantQuery tenantQuery = new TenantQuery(myGLAccountPM.Tenant);
+                TenantPM tPM = tenantQuery.GetSinglePM(myGLAccountPM.Tenant);
+                string accountingCurrencyId = tPM.CurrencyId;
+                if (tPM == null)
+                {
+                    return null;
+                }
+                if (tPM.CurrencyId == null)
+                {
+                    return null;
+                }
+                if (myGLAccountPM.CurrencyId == tPM.CurrencyId)
+                {
+                    return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.RecoCurrencyErr", myGLAccountPM.Tenant, showLocals));
+                }
+            }
             if (myGLAccountPM.IsControlAccount.GetValueOrDefault())
             {
                 if (FromFullAccountingProvider)
