@@ -1505,8 +1505,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             double? openAmountInLocalCurrency = CalculatePayableVatOpenAmount(myPayable, myPayable.OpenAmountInLocalCurrency);
             double? openAmountInProfitCurrency = CalculatePayableVatOpenAmount(myPayable, myPayable.OpenAmountInProfitCurrency);
-            myPayable.VatAmountLocal = MethodHelper.Round(invoiceLinesVatAmountLocal + openAmountInLocalCurrency, 2);
-            myPayable.VatAmountProfit = MethodHelper.Round(invoiceLinesVatAmountProfit + openAmountInProfitCurrency, 2);
+            myPayable.VatAmountLocal = MethodHelper.Round(invoiceLinesVatAmountLocal + (openAmountInLocalCurrency == null ? 0 : openAmountInLocalCurrency), 2);
+            myPayable.VatAmountProfit = MethodHelper.Round(invoiceLinesVatAmountProfit + (openAmountInProfitCurrency == null ? 0 : openAmountInProfitCurrency), 2);
         }
 
         private double? CalculatePayableVatOpenAmount(ShipmentPayable shipmentPayable, double? amount)
