@@ -608,9 +608,9 @@ export class ObjectFieldPM {
     public set EnableFullscreenTextBox(newValue: boolean) { if (this.enableFullscreenTextBox != newValue) { this.enableFullscreenTextBox = newValue; this.MarkAsDirty("EnableFullscreenTextBox"); } }
        
 
-    private additionalQuerySections: boolean;
+    private additionalQuerySections: string;
     public get AdditionalQuerySections() { return this.additionalQuerySections; }
-    public set AdditionalQuerySections(newValue: boolean) { if (this.additionalQuerySections != newValue) { this.additionalQuerySections = newValue; this.MarkAsDirty("AdditionalQuerySections"); } }
+    public set AdditionalQuerySections(newValue: string) { if (this.additionalQuerySections != newValue) { this.additionalQuerySections = newValue; this.MarkAsDirty("AdditionalQuerySections"); } }
 
 
     public OldEntityPM: ObjectFieldPM;

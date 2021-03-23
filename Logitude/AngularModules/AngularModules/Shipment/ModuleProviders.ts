@@ -34,9 +34,9 @@ import { AWBAdditionalHandlingInfoListService } from './Services/StandardLists/A
 import { ShipmentSubTypeListService } from './Services/StandardLists/ShipmentSubTypeListService';
 import { ShipmentSubTypePMService } from './Services/StandardPMs/ShipmentSubTypePMService';
 
-import { ShipmentTabsService } from './MetaDataServices/TabsServices/ShipmentTabsService';
-import { ShipmentHeaderScreenService } from './MetaDataServices/HeaderScreenServices/ShipmentHeaderScreenService';
-import { ShipmentMenuButtonService } from './MetaDataServices/MenuButtonServices/ShipmentMenuButtonService';
+//import { ShipmentTabsService } from './MetaDataServices/TabsServices/ShipmentTabsService';
+//import { ShipmentHeaderScreenService } from './MetaDataServices/HeaderScreenServices/ShipmentHeaderScreenService';
+//import { ShipmentMenuButtonService } from './MetaDataServices/MenuButtonServices/ShipmentMenuButtonService';
 
 
 
@@ -86,9 +86,9 @@ export class ModuleProviders {
             // Handler
             case "MessagingStockMenuButtonsHandler": { myResult = new MessagingStockMenuButtonsHandler(); break; }
             case "ShipmentMenuButtonsHandler": { myResult = new ShipmentMenuButtonsHandler(); break; }
-            case "ShipmentTabsService": { myResult = new ShipmentTabsService(); break; }
-            case "ShipmentHeaderScreenService": { myResult = new ShipmentHeaderScreenService(); break; }
-            case "ShipmentMenuButtonService": { myResult = new ShipmentMenuButtonService(); break; }
+            //case "ShipmentTabsService": { myResult = new ShipmentTabsService(); break; }
+            //case "ShipmentHeaderScreenService": { myResult = new ShipmentHeaderScreenService(); break; }
+            //case "ShipmentMenuButtonService": { myResult = new ShipmentMenuButtonService(); break; }
 
                 
         }
