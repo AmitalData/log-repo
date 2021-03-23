@@ -2276,7 +2276,9 @@ export class AirSurchargeTariffLineData extends BaseComponent {
 
     private SurchargesCurrencies(defaultCurrencyId: string) {
         for (var i = 1; i <= 10; i++) {
-            this["Surcharge" + i + "CurrencyId"] = defaultCurrencyId;
+            if (this.FatherComponent["Surcharge" + i + "PriceVisibility"]) {
+                this["Surcharge" + i + "CurrencyId"] = defaultCurrencyId;
+            }
         }
     }
 }
