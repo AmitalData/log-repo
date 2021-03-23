@@ -1827,6 +1827,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LastRunDetailPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LBPTeamMemberPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LogitudeLeadPM.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\ObjectTableTabPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\PriceStepPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\RuleUpdateHistoryPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\SchedulerLogsPM.ts" />
@@ -1839,8 +1840,8 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\WebhookKeysPM.ts" />
     <TypeScriptCompile Include="Infrastructure\Helpers\DWQueryBuilderHelper.ts" />
     <TypeScriptCompile Include="Infrastructure\Interface\IObjectTableMenuButtonsBuilder.ts" />
-    <TypeScriptCompile Include="Infrastructure\Interface\IObjectTableTabsBuilder.ts" />
-    <TypeScriptCompile Include="Infrastructure\Interface\IScreenHeaderBuilder.ts" />
+    <TypeScriptCompile Include="Infrastructure\Interface\IObjectTableTabsService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Interface\IHeaderScreenService.ts" />
     <TypeScriptCompile Include="Infrastructure\material-module.ts" />
     <TypeScriptCompile Include="Infrastructure\Pipes\HighlightSearch.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\BIReportFolderExtendedListService.ts" />
@@ -7366,7 +7367,6 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\Components\Windows\Tariffs\TariffsComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\ModuleShipmentTabs.ts" />
-    <TypeScriptCompile Include="Shipment\Components\HeaderBuilderService\ShipmentHeaderBuilderService.ts" />
     <TypeScriptCompile Include="Shipment\Components\Helpers\AnalyzeChampXMLComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\CustomReferenceListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\RemoveTasksButtonListTemplate.ts" />
@@ -7382,13 +7382,12 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelApprovePaymentComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\AddEditPrivateLabelShipmentComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\TaskCellDisplayListTemplate.ts" />
-    <TypeScriptCompile Include="Shipment\Components\MenuButtonsBuilderService\ShipmentMenuButtonBuilderService.ts" />
     <TypeScriptCompile Include="Shipment\Components\MenuButtons\MasterActionConfirmationComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\MenuButtons\ShipmenDirectionConvertComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\SplitShipment\SplitPartialPackageComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\SplitShipment\SplitShipmentComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\Spotlight\SpotLightDateComponent.ts" />
-    <TypeScriptCompile Include="Shipment\Components\TabsBuilderService\ShipmentTabsBuilderService.ts" />
+    <TypeScriptCompile Include="Shipment\Components\TabsBuilder\ShipmentTabsBuilder.ts" />
     <TypeScriptCompile Include="Shipment\Components\Workspaces\AMANACComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\Workspaces\ContainersFUsComponent.ts" />
     <TypeScriptCompile Include="Shipment\DataContract\LogboxShipmentExportExcelArgs.ts" />
@@ -7421,6 +7420,8 @@
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentPackageHarmonizePM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentStoragePricingPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentSubTypePM.ts" />
+    <TypeScriptCompile Include="Shipment\MetaDataServices\HeaderScreenServices\ShipmentHeaderScreenService.ts" />
+    <TypeScriptCompile Include="Shipment\MetaDataServices\TabsServices\ShipmentTabsService.ts" />
     <TypeScriptCompile Include="Shipment\Services\ContainersFUDomainService.ts" />
     <TypeScriptCompile Include="Shipment\Services\ExtendedPMs\AWBSpecialHandlingCodeExtendedPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\ExtendedPMs\FBLStockExtenedPMService.ts" />
@@ -8357,6 +8358,7 @@
     <Folder Include="Quote\Services\ExtendedLists\" />
     <Folder Include="Report\Components\FiltersComponent\Quotes\" />
     <Folder Include="Report\Components\FiltersComponent\Statistics\" />
+    <Folder Include="Shipment\MetaDataServices\MenuButtonServices\" />
     <Folder Include="Shipment\Services\ExtendedLists\" />
     <Folder Include="Test\e2e\Contact\" />
     <Folder Include="Test\e2e\Customer\" />

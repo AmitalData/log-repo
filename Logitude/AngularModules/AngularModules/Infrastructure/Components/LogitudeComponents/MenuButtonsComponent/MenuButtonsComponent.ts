@@ -106,6 +106,19 @@ export class MenuButtonsComponent implements OnDestroy {
 
     }
 
+
+
+    private GetObjectTableName() {
+
+        if (this.ObjectTable.Name.indexOf('Customs.') > -1) {
+            return this.ObjectTable.Name.split('.')[1];
+        }
+        else return this.ObjectTable.Name;
+    }
+
+
+
+
   private LoadMenuButtons() {
     ServiceHelper.HttpClient.get(this.baseMetaUrlApi + "/getmenubuttongrouppms?tenant=" + SessionLocator.Tenant + "&objecttableid=" + this.ObjectTable.Id).subscribe((response) => {
             var pm = response[0];
@@ -141,16 +154,11 @@ export class MenuButtonsComponent implements OnDestroy {
             }
         }
 
+        let objectTableName = this.GetObjectTableName();
 
         buttons = this.GetObjectTableMenuButtonsByQuerySection(this.QuerySection);
 
-        var objectTableName = this.ObjectTable.Name;
-        if (objectTableName.indexOf('Customs.') > -1) {
-            objectTableName = objectTableName.split('.')[1];
-        }
         var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/MenuButtons/" + objectTableName + "MenuButtonsHandler";
-        var myComponentName = AppTool.GetComponentName(myComponentPath);
-
         SessionLocator.DynamicLoader.GetInstance(myComponentPath).then((instance: any) => {
             if (instance) {
                 this.MenuButtonsHandler = instance;

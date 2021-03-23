@@ -117,7 +117,6 @@ export class ListComponent implements OnInit, AfterViewInit {
         windowArgs.queryCode = /*this.ObjectTableName + '.' +*/this.SelectedQueryCode;
         windowArgs.isNewQueryMode = false;
         windowArgs.currentObjectTable = this.ObjectTableName;
-        windowArgs.QuerySection = this.MenuTableQuerySection;
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 960;
         logitudeWindow.Height = 520;

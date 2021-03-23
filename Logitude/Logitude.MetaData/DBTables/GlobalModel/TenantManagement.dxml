@@ -953,7 +953,7 @@
     Name="ScheduledTasksLimitPerReport"
     Type="int">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="Id"
