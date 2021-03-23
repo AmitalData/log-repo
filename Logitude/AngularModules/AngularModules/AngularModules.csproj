@@ -7421,6 +7421,7 @@
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentStoragePricingPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentSubTypePM.ts" />
     <TypeScriptCompile Include="Shipment\MetaDataServices\HeaderScreenServices\ShipmentHeaderScreenService.ts" />
+    <TypeScriptCompile Include="Shipment\MetaDataServices\MenuButtonServices\ShipmentMenuButtonService.ts" />
     <TypeScriptCompile Include="Shipment\MetaDataServices\TabsServices\ShipmentTabsService.ts" />
     <TypeScriptCompile Include="Shipment\Services\ContainersFUDomainService.ts" />
     <TypeScriptCompile Include="Shipment\Services\ExtendedPMs\AWBSpecialHandlingCodeExtendedPMService.ts" />
@@ -8358,7 +8359,6 @@
     <Folder Include="Quote\Services\ExtendedLists\" />
     <Folder Include="Report\Components\FiltersComponent\Quotes\" />
     <Folder Include="Report\Components\FiltersComponent\Statistics\" />
-    <Folder Include="Shipment\MetaDataServices\MenuButtonServices\" />
     <Folder Include="Shipment\Services\ExtendedLists\" />
     <Folder Include="Test\e2e\Contact\" />
     <Folder Include="Test\e2e\Customer\" />
