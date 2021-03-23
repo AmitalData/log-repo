@@ -82,6 +82,16 @@ export class TariffLinesContainersPricePM {
     public set CostPrice(newValue: number) { if (this.costPrice != newValue) { this.costPrice = newValue; this.MarkAsDirty("CostPrice"); } }
        
 	 
+    private currencyId: string;
+    public get CurrencyId() { return this.currencyId; }
+    public set CurrencyId(newValue: string) { if (this.currencyId != newValue) { this.currencyId = newValue; this.MarkAsDirty("CurrencyId"); } }
+       
+	 
+    private currencyCode: string;
+    public get CurrencyCode() { return this.currencyCode; }
+    public set CurrencyCode(newValue: string) { if (this.currencyCode != newValue) { this.currencyCode = newValue; this.MarkAsDirty("CurrencyCode"); } }
+       
+	 
 
     public OldEntityPM: TariffLinesContainersPricePM;
 	

@@ -160,6 +160,28 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.CurrencyId).HasColumnName("CurrencyId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.TransitTime).HasColumnName("TransitTime").HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.IsDifferentCurrenciesPerCharge).HasColumnName("IsDifferentCurrenciesPerCharge");
+
+            this.Property(t => t.Surcharge1CurrencyId).HasColumnName("Surcharge1CurrencyId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge2CurrencyId).HasColumnName("Surcharge2CurrencyId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge3CurrencyId).HasColumnName("Surcharge3CurrencyId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge4CurrencyId).HasColumnName("Surcharge4CurrencyId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge5CurrencyId).HasColumnName("Surcharge5CurrencyId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge6CurrencyId).HasColumnName("Surcharge6CurrencyId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge7CurrencyId).HasColumnName("Surcharge7CurrencyId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge8CurrencyId).HasColumnName("Surcharge8CurrencyId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge9CurrencyId).HasColumnName("Surcharge9CurrencyId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge10CurrencyId).HasColumnName("Surcharge10CurrencyId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

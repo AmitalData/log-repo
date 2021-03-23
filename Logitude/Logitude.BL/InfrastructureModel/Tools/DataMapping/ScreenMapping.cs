@@ -12,6 +12,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             screen.ObjectTableId = screenPM.ObjectTableId;
             screen.Name = screenPM.Name;
             screen.Tenant = screenPM.Tenant;
+            screen.QuerySection = screenPM.QuerySection;
 
             if (screenModification != null)
             {

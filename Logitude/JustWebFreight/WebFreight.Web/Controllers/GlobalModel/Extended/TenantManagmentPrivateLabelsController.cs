@@ -52,13 +52,13 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
 
         // Hybrid Labels   
         
-        public HttpResponseMessage PutGetHybridLabelsBrandingData(HybridLabelsBrandingDataRequest BrandingDataRequest)
+        public HttpResponseMessage PutGetPrivateLabelsBrandingData(PrivateLabelsBrandingDataRequest BrandingDataRequest)
         {
 
             try
             {
-                HybridLabelsBrandingDataService hybridLabelsBrandingDataService = new HybridLabelsBrandingDataService();
-                HybridLabelsBrandingData brandingData = hybridLabelsBrandingDataService.GeHybridLabelsBrandingDataByUrl(BrandingDataRequest);
+                PrivateLabelsBrandingDataService privateLabelsBrandingDataService = new PrivateLabelsBrandingDataService();
+                PrivateLabelsBrandingData brandingData = privateLabelsBrandingDataService.GePrivateLabelsBrandingDataByUrl(BrandingDataRequest);
                 ServiceResponse response = new ServiceResponse();
                 response.Result = brandingData;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
@@ -105,6 +105,8 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                             MainImageId = entityPM.MainImageId,
                             LoginProgressImageId = entityPM.LoginProgressImageId,
                             ForgetPasswordImageId = entityPM.ForgetPasswordImageId,
+                            SecondaryColor = entityPM.SecondaryColor,
+                            HasLogboxAccess = entityPM.HasLogboxAccess,
                             SearchFields = entityPM.PrivateLabelName + "," + entityPM.PrivateLabelShortName + "," + entityPM.PrivateLabelUrl + "," + entityPM.ContactUsEmail + ",",
                             Id = IdCounter.GetNumber("TenantManagmentPrivateLabels", 0).ToString(),
                         };
@@ -161,6 +163,8 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                         Poco.MainImageId = entityPM.MainImageId;
                         Poco.LoginProgressImageId = entityPM.LoginProgressImageId;
                         Poco.ForgetPasswordImageId = entityPM.ForgetPasswordImageId;
+                        Poco.SecondaryColor = entityPM.SecondaryColor;
+                        Poco.HasLogboxAccess = entityPM.HasLogboxAccess;
                         Poco.SearchFields = entityPM.PrivateLabelName + "," + entityPM.PrivateLabelShortName + "," + entityPM.PrivateLabelUrl + "," + entityPM.ContactUsEmail + ",";
                         tenantManagmentPrivateLabelsRepository.Update(Poco);
                         tenantManagmentPrivateLabelsRepository.SubmitChanges();

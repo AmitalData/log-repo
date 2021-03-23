@@ -733,6 +733,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
             tariffLine.Surcharge8MinPrice = item.Surcharge8MinPrice;
             tariffLine.Surcharge9MinPrice = item.Surcharge9MinPrice;
             tariffLine.Surcharge10MinPrice = item.Surcharge10MinPrice;
+            tariffLine.IsDifferentCurrenciesPerCharge = item.IsDifferentCurrenciesPerCharge;
 
             item.ContainersPrices.forEach(containerItem => {
                 var containerPrice = new TariffLinesContainersPricePM(tariffLine);
@@ -743,6 +744,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
                 containerPrice.Price4 = containerItem.Price4;
                 containerPrice.Price5 = containerItem.Price5
                 containerPrice.CostPrice = containerItem.CostPrice;
+                containerPrice.CurrencyId = containerItem.CurrencyId;
                 tariffLine.AddTariffLinesContainersPrice(containerPrice);
             });
 
@@ -1107,13 +1109,26 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         }
     }
     private SetUIProperties_Currency() {
-        var isCurrencyRequired: boolean = false;
+        var isDefaultCurrencyRequired: boolean = false;
+        var isDefaultCurrencyEnabled: boolean = false;
 
-        if (AppTool.IsNullOrEmpty(this.CurrencyId)) {
-            isCurrencyRequired = true;
+        if (this.IsDifferentCurrenciesPerCharge) {
+            isDefaultCurrencyRequired = false;
+            isDefaultCurrencyEnabled = false;
+        }
+        else {
+            isDefaultCurrencyEnabled = true;
+            if (AppTool.IsNullOrEmpty(this.CurrencyId)) {
+                isDefaultCurrencyRequired = true;
+            }
         }
 
-        this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, isCurrencyRequired);
+        this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, isDefaultCurrencyRequired);
+        this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, isDefaultCurrencyEnabled);
+
+        this.ContainerPricesItemsSource.forEach(item => {
+            item.SetUIProperties();
+        });
     }
 
     public compareContainerPricesList: TariffLinesContainersPricePM[] = [];
@@ -1615,6 +1630,34 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
             this.isLineSelected = value;
         }
     }
+
+    get IsDifferentCurrenciesPerCharge() {
+        return this.EntityPM.IsDifferentCurrenciesPerCharge;
+    }
+    set IsDifferentCurrenciesPerCharge(value: boolean) {
+        if (this.EntityPM.IsDifferentCurrenciesPerCharge != value) {
+            this.EntityPM.IsDifferentCurrenciesPerCharge = value;
+
+            this.SetUIProperties_Currency();
+            this.SurchargesCurrencies(this.CurrencyId);
+
+            if (value) {
+                this.CurrencyId = null;
+            }
+
+            else {
+                this.ContainerPricesItemsSource.forEach(item => {
+                    item.CurrencyId = null;
+                });
+            }
+        }
+    }
+
+    private SurchargesCurrencies(defaultCurrencyId: string) {
+        this.ContainerPricesItemsSource.forEach(item => {
+            item.CurrencyId = defaultCurrencyId;
+        });
+    }
 }
 
 export class ContainerPricesItem extends BaseComponent {
@@ -1631,20 +1674,7 @@ export class ContainerPricesItem extends BaseComponent {
         this.IsNewEntity = isNew;
         
         this.SetUIProperties();
-        if (this.IsNewEntity) {
-            
-        }
-
         this.FillChargeLabels();
-    }
-
-    public IsEditingEnabled: boolean = false;
-    public SetUIProperties() {        
-        this.IsEditingEnabled = this.FatherComponent.IsEditEnabled;
-        
-        if (this.IsEditingEnabled) {
-            
-        }        
     }
 
     public ChargeLabel: string;
@@ -1702,8 +1732,22 @@ export class ContainerPricesItem extends BaseComponent {
                 this.UIProperties.SetEnabled("CostPrice", this.ObjectTableName, false);
             }
         }
+
+        //this.SetUIProperties();
     }
 
+    public IsEditingEnabled: boolean = false;
+    public SetUIProperties() {
+        this.IsEditingEnabled = this.FatherComponent.IsEditEnabled;
+
+        var isCurrencyEnabled: boolean = false;
+
+        if (this.IsEditingEnabled && this.FatherComponent.IsDifferentCurrenciesPerCharge) {
+            isCurrencyEnabled = true;
+        }
+
+        this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, isCurrencyEnabled);
+    }
     SetUIProperties_TariffLinesContainersPrice(isEnabled) {
         this.SetUIProperties_Price(1, isEnabled);
         this.SetUIProperties_Price(2, isEnabled);
@@ -1713,7 +1757,6 @@ export class ContainerPricesItem extends BaseComponent {
     }
 
     private SetUIProperties_Price(index: number, isEnabled) {
-
         this.UIProperties.SetEnabled(("Price" + index), this.ObjectTableName, isEnabled);
     }
 
@@ -1797,7 +1840,39 @@ export class ContainerPricesItem extends BaseComponent {
             this.ComparePrice(5);
         }
     }
-    
+
+    get CurrencyId() {
+        return this.EntityPM.CurrencyId;
+    }
+    set CurrencyId(value: string) {
+        if (this.EntityPM.CurrencyId != value) {
+            this.EntityPM.CurrencyId = value;
+            this.TariffLinePM.LineEdited = true;
+        }
+    }
+
+    get CurrencyCode() {
+        return this.EntityPM.CurrencyCode;
+    }
+    set CurrencyCode(value: string) {
+        if (this.EntityPM.CurrencyCode != value) {
+            this.EntityPM.CurrencyCode = value;
+        }
+    }
+
+    currency: CurrencyList;
+    get Currency() { return this.currency; }
+    set Currency(value: CurrencyList) {
+        if (this.currency != value) {
+            this.currency = value;
+        }
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.CurrencyCode = value.Code;
+        } else {
+            this.CurrencyCode = null;
+        }
+    }
+
     public ComparingPrice1: number;
     public ComparingPrice2: number;
     public ComparingPrice3: number;

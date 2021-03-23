@@ -91,6 +91,12 @@ export class RequestAliases {
     public static readonly PutVessel = "PutVessel";
     public static readonly AccountingSettings="AccountingSettings"
     public static readonly Tenants = "Tenants"
+
+    public static readonly PostQuoteTemplate = "PostQuoteTemplate";
+    public static readonly PutQuoteTemplate = "PutQuoteTemplate";
+    public static readonly PutQuoteTemplateHeaderFields = "PutQuoteTemplateHeaderFields";
+    public static readonly PutQuoteTemplateTextDesignPMs = "PutQuoteTemplateTextDesignPMs";
+
     public static readonly GetSignle = "GetSignle"
     public static readonly GetByFilter = "GetByFilter"
     public static readonly GetFilterSearch = "GetFilterSearch"
@@ -99,10 +105,11 @@ export class RequestAliases {
     public static readonly ContactViewsGetByFilters = "ContactViewsGetByFilters";
     public static readonly GetCustomersQuickSearch = "GetCustomersQuickSearch"
     //#endregion
+    public static readonly PostChangePassword="PostChangePassword"
+    //
     public static readonly GetTraceEventsForEntity = "GetTraceEventsForEntity"
     public static readonly GetLastUpdatedTables = "GetLastUpdatedTables"
-    public static readonly GetFilterSearch = "GetFilterSearch"
-    public static readonly GetSignle = "GetSignle"
+
     //Login 
     public static readonly Authentication="Authentication"
     public static readonly PasswordResetRequestPage="PasswordResetRequestPage"

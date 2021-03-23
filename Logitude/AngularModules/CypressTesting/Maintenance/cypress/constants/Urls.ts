@@ -1,5 +1,4 @@
-export class Urls
-{
+export class Urls {
     public static readonly GetByFilter = "**/getbyfilters?**";
 
     public static readonly Contacts = "**/contacts";
@@ -15,14 +14,24 @@ export class Urls
     public static readonly VesselsGetSingle = "**/vessels/getsingle?**";
     public static readonly VesselviewGetSingle = "**/vesselviews/getsingle/?**";
 
-    public static readonly AccountingSettings="**/accountingsettings"
+    public static readonly QuoteTemplateExtended = "**/QuoteTemplateExtended";
+    public static readonly QuoteTemplatetextdesigns = "**/quotetemplatetextdesigns";
+    public static readonly QuotetemplateSettings = "**/quotetemplatesettings";
+    public static readonly Quotetemplatesections = "**/quotetemplatesections";
+    public static readonly QuoteTemplateGetSingle = "**/quotetemplatesettings/getsingle?**";
+    public static readonly PutQuoteTemplateTextDesignPMs = "**/PutQuoteTemplateTextDesignPMs";
+    public static readonly PutQuoteTemplateHeaderFields = "**/PutQuoteTemplateHeaderFields";
 
-    public static readonly Tenants="**/tenants"
-    public static GetFilterSearch(filterBy:string){
-        return '**/getbyfilters?**'+filterBy+'**'
+    public static readonly AccountingSettings = "**/accountingsettings"
+
+    public static readonly Tenants = "**/tenants"
+    public static readonly PostChangePassword = '**/PostChangeUserPassword'
+
+    public static GetFilterSearch(filterBy: string) {
+        return '**/getbyfilters?**' + filterBy + '**'
     }
-    
-    public static GetQuickSearch(CustomerNumber: string): string{
-        return  "**/GetCustomersQuickSearch?**" + CustomerNumber+"**";
+
+    public static GetQuickSearch(CustomerNumber: string): string {
+        return "**/GetCustomersQuickSearch?**" + CustomerNumber + "**";
     }
 }

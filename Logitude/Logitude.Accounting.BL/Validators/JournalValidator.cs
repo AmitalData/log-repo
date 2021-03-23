@@ -606,8 +606,10 @@ namespace Logitude.Accounting.BL.Validators
         private bool CheckIfFutureDateErrorsExist(JournalPM myJournalPM)
         {
             const string statusCode_JournalApproved = "2";
+            const string AccountingEntityCode_Journal = "1";
+            var isJournalManuallyCreated = myJournalPM.AccountingEntityCode == AccountingEntityCode_Journal;
             var isIsFutureDateErrorsExistAndJournalApproved = IsFutureDateErrorsExist && myJournalPM.StatusCode == statusCode_JournalApproved;
-            if (isIsFutureDateErrorsExistAndJournalApproved)
+            if (isIsFutureDateErrorsExistAndJournalApproved && isJournalManuallyCreated)
                 return true;
             else
                 return false;

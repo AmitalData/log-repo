@@ -9,7 +9,7 @@ export var RootComponentAOT = (function () {
         this.resolver = resolver;
         this.http = http;
         this.isPrivateLable = false;
-        this.isDSV = true;
+        this.isDSV = false;
         //ServiceHelper.Http = http;
         DynamicLoaderAOT.Compiler = compiler;
         DynamicLoaderAOT.Resolver = resolver;
@@ -57,8 +57,7 @@ export var RootComponentAOT = (function () {
         if (this.isPrivateLable) {
             var privateLableShortName = window.sessionStorage.getItem("PrivateLabelShortName");
             SessionInfo.PlShortName = privateLableShortName;
-            //Temp Code, must changed to dynamic 
-            changeFavicon('data:image/JPEG;base64,/9j/4AAQSkZJRgABAAAAAQABAAD//gAgSnBlZyBDb2RlYyB8IGZsdXhjYXBhY2l0eS5uZXQg/9sAhAADAgIDAgIDAwMDBAMDBAUIBQUEBAUKBwcGCAwKDAwLCgsLDQ4SEA0OEQ4LCxAWEBETFBUVFQwPFxgWFBgSFBUUAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAAZABkDAREAAhEBAxEB/8QBogAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoLEAACAQMDAgQDBQUEBAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+foBAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKCxEAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD4pyK/SzwQyKADNAz6i8H/APIpaJ/14wf+i1r8kx3+9Vf8UvzYHs3wJ+FKT+CPg/cy+EvAfirwrrdvO3iO61KyjtrvTIVYBXMzT5kdgXxhP4MEDOR9tiK1p1FzSUlt2f4HbCOkdEz0YeCfhn4lguNR8G+FPCuj+FNNspZIr3XdCtri3vTCzBiLgXolAbbgExdATk5FcvtK0NKkm5N9G9L+VrfiaWi9YrQ8X+I/w8+FPww8C+Mfi5pkGkanpnjPS7a38KeH3xN9gu513XB2H7vl7GIJ+7yvBxXfSq16044d3Ti3zPult95jKMIpzXXY4TwfHHD4L0WTht2n24A9/LXNfG46MYYirLvJ/myeWMIc3c+WBPKI/LEr7MY27jjH0r9ROYQTSCPyxI/l/wB3ccflQAhdiioXYqvRSeBQI+n/AAf/AMilon/XjB/6LWvyTG/71V/xS/NjD/hD9B/6Amnf+Akf+FH13Ff8/Zf+BP8AzEH/AAh+g/8AQE07/wABI/8ACj67iv8An7L/AMCf+YB/wh+g/wDQE07/AMBI/wDCj67iv+fsv/An/mBqwwx28SRRIsUSKFREGFUDoAOwrklJyblJ3bAA/9k=');
+            changeFavicon(window.sessionStorage.getItem("SmallLogoURL"));
             changeTitle(privateLableShortName);
         }
         SessionInfo.MainLocation = this.location;
@@ -119,16 +118,13 @@ export var RootComponentAOT = (function () {
         }
     };
     RootComponentAOT.prototype.LoadPrivateLableChangePasswordPage = function () {
-        var privateLableChangePasswordPage = "./Login/Components/";
-        privateLableChangePasswordPage += this.isDSV ? "DSVChangePasswordComponent" : "HybridChangePasswordComponent";
-        DynamicLoaderAOT.Load(privateLableChangePasswordPage, this.location)
+        DynamicLoaderAOT.Load("./Login/Components/DSVChangePasswordComponent", this.location)
             .then(function (cmpRef) {
             window.sessionStorage.setItem("ResetPWD", "false");
         });
     };
     RootComponentAOT.prototype.LoadPrivateLableLoginPage = function () {
-        var privateLableLoginPage = this.isDSV ? "./Login/Components/DSVLoginComponent" : "./Login/HybridLabels/Components/HybridLoginComponent";
-        DynamicLoaderAOT.Load(privateLableLoginPage, this.location)
+        DynamicLoaderAOT.Load("./Login/PrivateLabels/LoginComponents/PrivateLoginComponent", this.location)
             .then(function (cmpRef) { });
     };
     RootComponentAOT.prototype.LoadDSVMobileLoginPage = function () {

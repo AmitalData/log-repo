@@ -607,8 +607,11 @@ export class ObjectFieldPM {
     public get EnableFullscreenTextBox() { return this.enableFullscreenTextBox; }
     public set EnableFullscreenTextBox(newValue: boolean) { if (this.enableFullscreenTextBox != newValue) { this.enableFullscreenTextBox = newValue; this.MarkAsDirty("EnableFullscreenTextBox"); } }
        
-	 
 
+    private entityType: boolean;
+    public get EntityType() { return this.entityType; }
+    public set EntityType(newValue: boolean) { if (this.entityType != newValue) { this.entityType = newValue; this.MarkAsDirty("EntityType"); } }
+    
     public OldEntityPM: ObjectFieldPM;
 		
     public IsDirty: boolean;

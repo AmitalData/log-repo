@@ -99,22 +99,20 @@ export class ShipmentPickupValidator {
         var ATA: number = DateTool.GetDateParts(this.EntityPM.ATA).DateTicks;
 
         var isWarehouseLegExists: boolean = (this.ShipmentPM.WarehouseLegWarehouseId != null && this.ShipmentPM.DirectionId != "I") ? true : false;
-        var WarehouseLegEED: number = isWarehouseLegExists ? DateTool.GetDateParts(this.ShipmentPM.WarehouseLegExpectedEntryDate).DateTicks : 0;
-        var WarehouseLegERD: number = isWarehouseLegExists ? DateTool.GetDateParts(this.ShipmentPM.WarehouseLegExpectedReleaseDate).DateTicks : 0;
+        var WarehouseLegEED: number = isWarehouseLegExists ? DateTool.GetDateParts(this.ShipmentPM.WarehouseLegExpectedEntryDate).DateTicks : 0;        
         var WarehouseLegAED: number = isWarehouseLegExists ? DateTool.GetDateParts(this.ShipmentPM.WarehouseLegActualEntryDate).DateTicks : 0;
-        var WarehouseLegARD: number = isWarehouseLegExists ? DateTool.GetDateParts(this.ShipmentPM.WarehouseLegActualReleaseDate).DateTicks : 0;
 
         var isPreCarriageExists: boolean = (this.ShipmentPM.PreCarriageFromPortId != null && this.ShipmentPM.PreCarriageToPortId != null) ? true : false;
         var PreCarriageETD: number = isPreCarriageExists ? DateTool.GetDateParts(this.ShipmentPM.PreCarriageETD).DateTicks : 0;
-        var PreCarriageETA: number = isPreCarriageExists ? DateTool.GetDateParts(this.ShipmentPM.PreCarriageETA).DateTicks : 0;
         var PreCarriageATD: number = isPreCarriageExists ? DateTool.GetDateParts(this.ShipmentPM.PreCarriageATD).DateTicks : 0;
-        var PreCarriageATA: number = isPreCarriageExists ? DateTool.GetDateParts(this.ShipmentPM.PreCarriageATA).DateTicks : 0;
+
+        var isPreForwardingExists: boolean = (this.ShipmentPM.PreForwardingFromPortId != null && this.ShipmentPM.PreForwardingToPortId != null) ? true : false;
+        var PreForwardingETD: number = isPreForwardingExists ? DateTool.GetDateParts(this.ShipmentPM.PreForwardingETD).DateTicks : 0;
+        var PreForwardingATD: number = isPreForwardingExists ? DateTool.GetDateParts(this.ShipmentPM.PreForwardingATD).DateTicks : 0;
 
         var isMainCarriageExists: boolean = true;
         var MainCarriageETD: number = DateTool.GetDateParts(this.ShipmentPM.MainCarriageETD).DateTicks;
-        var MainCarriageETA: number = DateTool.GetDateParts(this.ShipmentPM.MainCarriageETA).DateTicks;
         var MainCarriageATD: number = DateTool.GetDateParts(this.ShipmentPM.MainCarriageATD).DateTicks;
-        var MainCarriageATA: number = DateTool.GetDateParts(this.ShipmentPM.MainCarriageATA).DateTicks;
 
         // Self
         if (!RoutingHelper.IsRoutingLegDatesValid(ETD, ETA)) {
@@ -124,14 +122,6 @@ export class ShipmentPickupValidator {
         if (!RoutingHelper.IsRoutingLegDatesValid(ATD, ATA)) {
             this.errors.push("Actual departure must be less than Actual arrival");
         }
-
-        //if (RoutingHelper.CompairDateSeries(ETD, ETA, ">")) {
-        //    errors.push("Expected departure must be less than Expected arrival");
-        //}
-
-        //if (RoutingHelper.CompairDateSeries(ATD, ATA, ">")) {
-        //    errors.push("Actual departure must be less than Actual arrival");
-        //}
 
         // Next
         if (isWarehouseLegExists) {
@@ -155,6 +145,16 @@ export class ShipmentPickupValidator {
                 if (RoutingHelper.IsDateSeriesBiggerNotEqual(ATA, WarehouseLegAED)) {
                     this.errors.push("Actual arrival must be equal or less than Warehouse actual entry");
                 }
+            }
+        }
+
+        else if (isPreForwardingExists) {
+            if (RoutingHelper.IsDateSeriesBigger(ETA, PreForwardingETD)) {
+                this.errors.push("Expected arrival must be less than pre forwarding expected departure");
+            }
+
+            if (RoutingHelper.IsDateSeriesBigger(ATA, PreForwardingATD)) {
+                this.errors.push("Actual arrival must be less than pre forwarding actual departure");
             }
         }
 

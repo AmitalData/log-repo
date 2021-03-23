@@ -14,7 +14,7 @@ Feature: Vendor Create, Search and Edit from Maintenance
             | State       | Alaska                  |
             | Phone       | 9999999999              |
             | Fax         | 999999                  |
-        And a contact with the following details
+        And a vendor contact with the following details
             | EnglishName   | TestContact |
             | Position      | Developer   |
             | BusinessPhone | 8888888888  |
@@ -35,10 +35,10 @@ Feature: Vendor Create, Search and Edit from Maintenance
         Given the user fill the following vendor details
             | Website | www.Scenario.com |
             | Notes   | Test edit vendor |
-        And fill the following vebdor Billing
+        And fill the following vendor Billing details
             | VatNumber | Zero        |
             | BankName  | Vendor Bank |
-        When edit vendor
+        When save vendor
         Then the vendor should update successfully
 
     Scenario: Save and close the vendor

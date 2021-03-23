@@ -47,7 +47,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                  FeatureCode = a.Feature.Code,
                                                  Code = a.Code,
                                                  HtmlView = a.HtmlView,
-                                                 FeatureUniqeCode = a.FeatureUniqeCode
+                                                 FeatureUniqeCode = a.FeatureUniqeCode,
+                                                 QuerySection = a.QuerySection,
                                              };
 
             return menus.OrderBy(d => d.IndexOfOrder);
@@ -75,7 +76,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                       FeatureId = a.FeatureId,
                       Code = a.Code,
                       HtmlView = a.HtmlView,
-                      FeatureUniqeCode = a.FeatureUniqeCode
+                      FeatureUniqeCode = a.FeatureUniqeCode,
+                      QuerySection = a.QuerySection,
+
                   };
 
             return mainMenu.OrderBy(d => d.IndexOfOrder);
@@ -103,7 +106,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                       FeatureCode = a.Feature.Code,
                       Code = a.Code,
                       HtmlView = a.HtmlView,
-                      FeatureUniqeCode = a.FeatureUniqeCode
+                      FeatureUniqeCode = a.FeatureUniqeCode,
+                      QuerySection = a.QuerySection,
+
                   };
             return mainMenu.OrderBy(d => d.IndexOfOrder);
         }

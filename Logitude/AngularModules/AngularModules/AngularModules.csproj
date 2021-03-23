@@ -293,8 +293,8 @@
     <Content Include="InfrastructureModules\InfrastructureGettingStarted\Components\SystemCurrencies\ChangeCurrencyComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\FeatureToggle\FeatureToggleGeneralTabComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\FeatureToggle\NewFeatureToggleComponent.html" />
-    <Content Include="Infrastructure\Components\LoginComponent\CustomLoginComponents\HybridLabels\Components\HybridLoginProcessComponent.css" />
-    <Content Include="Infrastructure\Components\LoginComponent\CustomLoginComponents\HybridLabels\Components\HybridLoginProcessComponent.html" />
+    <Content Include="Infrastructure\Components\LoginComponent\PrivateLabelComponents\PrivateLabelLoginProcessComponent.css" />
+    <Content Include="Infrastructure\Components\LoginComponent\PrivateLabelComponents\PrivateLabelLoginProcessComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityPackageComponent.html" />
     <Content Include="_Resources\js\UnifreightJSBridge.js" />
@@ -1740,7 +1740,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\CargoTrackingBrandingComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\CustomControls\RatioBoxComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\ExportBI2ExcelControl\ExportBI2ExcelControl.ts" />
-    <TypeScriptCompile Include="Infrastructure\Components\LoginComponent\CustomLoginComponents\HybridLabels\Components\HybridLoginProcessComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\LoginComponent\PrivateLabelComponents\PrivateLabelLoginProcessComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DropdownMenuComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DWDateComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DWLovComponent.ts" />
@@ -1838,7 +1838,10 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\TogglePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\WebhookKeysPM.ts" />
     <TypeScriptCompile Include="Infrastructure\Helpers\DWQueryBuilderHelper.ts" />
+    <TypeScriptCompile Include="Infrastructure\Interface\IObjectTableMenuButtonsBuilder.ts" />
+    <TypeScriptCompile Include="Infrastructure\Interface\IObjectTableTabsBuilder.ts" />
     <TypeScriptCompile Include="Infrastructure\material-module.ts" />
+    <TypeScriptCompile Include="Infrastructure\ObjectTableMenuButtonsBuilder\ShipmentTestMenuButtonsBuilder.ts" />
     <TypeScriptCompile Include="Infrastructure\Pipes\HighlightSearch.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\BIReportFolderExtendedListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\CustomPickListPMExtendedService.ts" />
@@ -1863,7 +1866,9 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWQueryFilterPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\HelpResourcePMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\TeamPMService.ts" />
-    <TypeScriptCompile Include="Infrastructure\Services\WebServices\HybridLabelsBrandingDataService.ts" />
+    <TypeScriptCompile Include="Infrastructure\ObjectTableTabsBuilder\ShipmentTestTabsBuilder.ts" />
+    <TypeScriptCompile Include="Infrastructure\Utilities\ObjectTableMenuButtonsBuilderService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\WebServices\PrivateLabelsBrandingDataService.ts" />
     <TypeScriptCompile Include="Infrastructure\Utilities\PackageAmountCalculator.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\BusinessProcessDomainService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\DWObjectTableExtendedListService.ts" />
@@ -1903,6 +1908,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\PriceStepPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\SharedLogisticsSettingPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\WebhookKeysPMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Utilities\ObjectTableTabBuilderService.ts" />
     <TypeScriptCompile Include="Infrastructure\Validators\EventTypeValidator.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\Components\EditTabs\APInvoiceAuditTabComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\Components\Others\APInvoiceTotalVATOnlyComponent.ts" />
@@ -2341,8 +2347,8 @@
     <Content Include="Infrastructure\Components\Documents\DocsInTabComponent.html" />
     <Content Include="Infrastructure\Components\Documents\DocsOutTabComponent.html" />
     <Content Include="Infrastructure\Components\EditComponent\EditTabComponent.html" />
-    <Content Include="Infrastructure\Components\LoginComponent\CustomLoginComponents\DSVLoginProcessComponent.html" />
-    <Content Include="Infrastructure\Components\LoginComponent\CustomLoginComponents\DSVMobileLoginProcessComponent.html" />
+    <Content Include="Infrastructure\Components\LoginComponent\PrivateLabelComponents\DSVLoginProcessComponent.html" />
+    <Content Include="Infrastructure\Components\LoginComponent\PrivateLabelComponents\DSVMobileLoginProcessComponent.html" />
     <Content Include="Infrastructure\Components\LogitudeComponents\Followups\AddDocumentFollowupComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureGettingStarted\Components\AirlineSettings\AirlineSettingsComponent.html" />
     <Content Include="Common\Components\Maintenance\CompetitorComponent.html" />
@@ -4833,8 +4839,8 @@
     <TypeScriptCompile Include="Customs\Components\Spotlight\CustomsSpotlightComponent.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\VendorCommissionService.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\EditComponent\EditTabComponent.ts" />
-    <TypeScriptCompile Include="Infrastructure\Components\LoginComponent\CustomLoginComponents\DSVLoginProcessComponent.ts" />
-    <TypeScriptCompile Include="Infrastructure\Components\LoginComponent\CustomLoginComponents\DSVMobileLoginProcessComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\LoginComponent\PrivateLabelComponents\DSVLoginProcessComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\LoginComponent\PrivateLabelComponents\DSVMobileLoginProcessComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\Followups\AddDocumentFollowupComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\AirlineSettings\AirlineSettingsComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\CompetitorComponent.ts" />
@@ -7573,6 +7579,7 @@
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffListService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffTypeListService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardPMs\TariffPMService.ts" />
+    <TypeScriptCompile Include="TariffModule\Tools.ts" />
     <TypeScriptCompile Include="TariffModule\Validators\TariffValidator.ts" />
     <TypeScriptCompile Include="test.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\Connections\ConnectToParentComponent.ts" />

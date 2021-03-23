@@ -253,7 +253,8 @@
                                         <ng-template let-item>
                                             <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                    <span>{{item.CurrencyCode}}</span>
+                                                    <span *ngIf="!item.IsDifferentCurrenciesPerCharge">{{item.CurrencyCode}}</span>
+                                                    <span *ngIf="item.IsDifferentCurrenciesPerCharge">Multi</span>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
@@ -675,7 +676,8 @@
                                         <ng-template let-item> 
                                             <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                    <span>{{item.CurrencyCode}}</span>
+                                                    <span *ngIf="!item.IsDifferentCurrenciesPerCharge">{{item.CurrencyCode}}</span>
+                                                    <span *ngIf="item.IsDifferentCurrenciesPerCharge">Multi</span>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>

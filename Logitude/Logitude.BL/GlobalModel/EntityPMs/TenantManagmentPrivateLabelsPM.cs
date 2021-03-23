@@ -28,6 +28,8 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public string MainColor { get; set; }
         public string LoginProgressImageId { get; set; }
         public string ForgetPasswordImageId { get; set; }
+        public string SecondaryColor { get; set; }
+        public bool HasLogboxAccess { get; set; }
 
     }
 }

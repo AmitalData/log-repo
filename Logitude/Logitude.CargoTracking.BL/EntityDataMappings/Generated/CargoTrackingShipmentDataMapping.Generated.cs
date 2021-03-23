@@ -95,7 +95,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         DeliveryEstimationDate, 
 	         DeliveryNotes, 
 	         DeliveryExceptionReason, 
-	         GrossWeightUnitCode,
+	         GrossWeightUnitCode, 
 	         ForwardingShipmentNumber,
 	      }
 
@@ -178,14 +178,13 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         AssignedCustomsAgentDate, 
 	         AssignedCustomsAgentEstDate, 
 	         AssignedCustomsAgentNotes, 
-	         AssignedCustomsAgentExcReason,
-	         
+	         AssignedCustomsAgentExcReason, 
 	         DeliveryDone, 
 	         DeliveryDate, 
 	         DeliveryEstimationDate, 
 	         DeliveryNotes, 
-	         DeliveryExceptionReason,
-	         GrossWeightUnitCode,
+	         DeliveryExceptionReason, 
+	         GrossWeightUnitCode, 
 	         ForwardingShipmentNumber,
 	      }
 
@@ -479,7 +478,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
 				entityPOCO.DirectionId = entityPM.DirectionId;
 			}
-
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentLevelCode))
             {
 				entityPOCO.ShipmentLevelCode = entityPM.ShipmentLevelCode;
@@ -559,7 +558,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
 				entityPOCO.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
 			}
-
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForwardingShipmentNumber))
             {
 				entityPOCO.ForwardingShipmentNumber = entityPM.ForwardingShipmentNumber;
@@ -918,12 +917,6 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
 					entityPM.DeliveryDate = entityPOCO.DeliveryDate;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GrossWeightUnitCode))
-            {
-					entityPM.GrossWeightUnitCode = entityPOCO.GrossWeightUnitCode;
-            }
-
-		
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeliveryEstimationDate))
             {
@@ -939,7 +932,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
 					entityPM.DeliveryExceptionReason = entityPOCO.DeliveryExceptionReason;
             }
-		
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GrossWeightUnitCode))
+            {
+					entityPM.GrossWeightUnitCode = entityPOCO.GrossWeightUnitCode;
+            }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForwardingShipmentNumber))
             {

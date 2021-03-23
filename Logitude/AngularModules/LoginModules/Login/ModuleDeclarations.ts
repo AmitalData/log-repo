@@ -6,8 +6,8 @@ import {DSVChangePasswordComponent} from './Components/DSVChangePasswordComponen
 import {ResetPasswordComponent} from './Components/ResetPasswordComponent'
 import {RootComponent}   from './RootComponent';
 import {DSVResetPasswordComponent} from './Components/DSVResetPasswordComponent'
-import { HybridLoginComponent } from './HybridLabels/Components/HybridLoginComponent';  
-import { HybridResetPasswordComponent } from './HybridLabels/Components/HybridResetPasswordComponent'; 
+import { PrivateLoginComponent } from './PrivateLabels/LoginComponents/PrivateLoginComponent';  
+import { PrivateResetPasswordComponent } from './PrivateLabels/LoginComponents/PrivateResetPasswordComponent'; 
 export const LoginComponents =
     [
         LoginComponent,
@@ -18,8 +18,8 @@ export const LoginComponents =
         ResetPasswordComponent,
         DSVResetPasswordComponent,
         DSVMobileLoginComponent,
-        HybridLoginComponent,
-        HybridResetPasswordComponent, 
+        PrivateLoginComponent,
+        PrivateResetPasswordComponent, 
     ];
 
 export class LoginModuleDeclarations {
@@ -37,8 +37,8 @@ export class LoginModuleDeclarations {
             case "ResetPasswordComponent": { myResult = ResetPasswordComponent; break; }
             case "DSVResetPasswordComponent": { myResult = DSVResetPasswordComponent; break; }
             case "DSVMobileLoginComponent": { myResult = DSVMobileLoginComponent; break; }
-            case "HybridLoginComponent": { myResult = HybridLoginComponent; break; }
-            case "HybridResetPasswordComponent": { myResult = HybridResetPasswordComponent; break; }  
+            case "PrivateLoginComponent": { myResult = PrivateLoginComponent; break; }
+            case "PrivateResetPasswordComponent": { myResult = PrivateResetPasswordComponent; break; }  
 
         }
 

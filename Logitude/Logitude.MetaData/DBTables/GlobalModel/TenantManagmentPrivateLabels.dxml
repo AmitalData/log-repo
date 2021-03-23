@@ -134,4 +134,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="SecondaryColor"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HasLogboxAccess"
+    OldNames="CustomPrivateLabel"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
 </Table>

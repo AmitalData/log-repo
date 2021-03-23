@@ -3,7 +3,6 @@ import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { ContactDetails } from "../../models/ContactDetails";
 import { VendorDetails } from "../../models/VendorDetails";
-import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
 import { MaintenanceSelectors } from "../../selectors/Selectors";
 
 let vendorDetails :VendorDetails
@@ -20,10 +19,9 @@ Given("a vendor with the following details", (dataTable) => {
     Actions.FillVendorDetails(vendorDetails)
 });
 
-Given("a contact with the following details", (dataTable) => {
+Given("a vendor contact with the following details", (dataTable) => {
     let contactDetails = Assists.CreateInstance<ContactDetails>(dataTable, true);
     Actions.FillVendorContactDetails(contactDetails)
-
 });
 
 When("create vendor", () => {
@@ -63,13 +61,13 @@ Given("the user fill the following vendor details", (dataTable) => {
     Actions.FillVendorGeneralTab(vendorDetails)
 });
 
-Given("fill the following vebdor Billing", (dataTable) => {
+Given("fill the following vendor Billing details", (dataTable) => {
     let vendorBillingDetails = Assists.CreateInstance<VendorDetails>(dataTable, true);
     cy.Navigate(MaintenanceSelectors.VendorBillingTab);
     Actions.FillVendorBillingTab(vendorBillingDetails);
 });
 
-When("edit vendor", () => {
+When("save vendor", () => {
     Actions.UpdateVendor()
 });
 

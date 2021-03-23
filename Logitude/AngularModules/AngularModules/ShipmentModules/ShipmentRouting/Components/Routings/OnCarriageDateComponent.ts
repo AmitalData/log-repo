@@ -1,4 +1,4 @@
-﻿import {Input, Output, Component, EventEmitter, OnInit} from '@angular/core';
+import {Input, Output, Component, EventEmitter, OnInit} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties, UIPropertyArgs} from '../../../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -13,7 +13,7 @@ import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
     selector: 'OnCarriageDate',
     
     templateUrl: './OnCarriageDateComponent.html',
-    inputs: ['EntityPM', 'State'],
+    inputs: ['EntityPM', 'State', 'IsEnabled'],
 })
 
 export class OnCarriageDateComponent extends BaseComponent implements OnInit {
@@ -22,7 +22,7 @@ export class OnCarriageDateComponent extends BaseComponent implements OnInit {
     public State: string = "Departure";
     public DataContext = this;
     public EntityPM: ShipmentPackagePM;
-    public ValidationErrorsList: string[] = [];
+    public ValidationErrorsList: string[] = [];    
     @Output() PopupClosed = new EventEmitter<any>();
     constructor() {
         super();
@@ -31,7 +31,15 @@ export class OnCarriageDateComponent extends BaseComponent implements OnInit {
     ngOnInit() {
         this.Clone();
     }
-    
+
+    private isEnabled: boolean = true;
+    get IsEnabled() { return this.isEnabled; }
+    set IsEnabled(newValue: boolean) {
+        if (this.isEnabled != newValue) {
+            this.isEnabled = newValue;
+        }
+    }
+
     public get ExpectedDate() {
         if (this.State == "Departure") {
             return this.EntityPM.OnCarriageETD;

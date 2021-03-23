@@ -533,16 +533,20 @@ export class LoginComponent {
 
                  
                 if (userData.HtmlVersion) {
-                    if (SessionInfo.GetLogitudeURL().indexOf('localhost:9996') > -1)  
-                        AngularURL = "http://localhost:4200/?" + data; 
+                    if (SessionInfo.GetLogitudeURL().indexOf('localhost:9996') > -1) {
+                        const isDSV = window.sessionStorage.getItem("IsDSV") == "true";
+                        AngularURL = "http://localhost:4200/?" + (isDSV ? "D" : "P") + data;
+                    }
                     else {
                         var version = userData.HtmlVersion;
                         AngularURL = SessionInfo.GetLogitudeURL() + "Angular" + version + "/index.html";
                     }
                 }
                 else {
-                    if (SessionInfo.GetLogitudeURL().indexOf('localhost:9996') > -1)
-                        AngularURL = "http://localhost:4200/?" + data;
+                    if (SessionInfo.GetLogitudeURL().indexOf('localhost:9996') > -1) {
+                        const isDSV = window.sessionStorage.getItem("IsDSV") == "true";
+                        AngularURL = "http://localhost:4200/?" + (isDSV ? "D":"P") + data;
+                    }
                     else
                         AngularURL = SessionInfo.GetLogitudeURL() + "Angular/index.html";
                 }

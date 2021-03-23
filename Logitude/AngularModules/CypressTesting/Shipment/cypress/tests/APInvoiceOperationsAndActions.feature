@@ -11,6 +11,13 @@ Feature: APInvoice Aprrove, cancel the approvement and void
         When change the accounting system
         Then the accounting system should update successfully
 
+    Scenario: enable void invoice settings
+        Given the user navigates to "invoice settings" in maintenance menu
+        Given accounting settings with the following details
+            | VoidInvoice | Allowed |
+        When update invoice settings
+        Then the invoice setting should update successfully
+
     Scenario: Create customer
         Given the user navigates to customers workspace
         And a customer with the following details

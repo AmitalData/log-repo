@@ -6,9 +6,9 @@ import {PasswordChangeService} from '../PasswordChangeService';
 import {Tools} from '../Utilities/Tools';
 import {ResetPasswordComponent} from './ResetPasswordComponent'; 
 import { Router } from '@angular/router';
-import { HybridLabelsBrandingDataService } from '../HybridLabels/Services/HybridLabelsBrandingDataService';
-import { BrandingDataService } from '../HybridLabels/Services/BrandingDataService';
-import { ServiceResponse } from '../HybridLabels/DataContracts/ServiceResponse';
+import { PrivateLabelsBrandingDataService } from '../PrivateLabels/Services/PrivateLabelsBrandingDataService';
+import { BrandingDataService } from '../PrivateLabels/Services/BrandingDataService';
+import { ServiceResponse } from '../PrivateLabels/DataContracts/ServiceResponse';
 
 @Component({
     selector: 'DSVResetPasswordComponent',
@@ -31,20 +31,20 @@ export class DSVResetPasswordComponent extends ResetPasswordComponent {
     public show = true;
     constructor( 
         private ss: LoginService,
-        private hybridLabelsBrandingDataService: HybridLabelsBrandingDataService) {
+        private privateLabelsBrandingDataService: PrivateLabelsBrandingDataService) {
         super(ss); 
     }
 
     ngOnInit() { 
         this.privateUrl = SessionInfo.GetLogitudeURL();  
-        this.GetHybridLabelsData(this.privateUrl); 
+        this.GetPrivateLabelsData(this.privateUrl); 
     }
 
 
-    GetHybridLabelsData(privateUrl: string) {
-        this.hybridLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetHybridLabelsDataRequest(privateUrl)).subscribe((response: ServiceResponse) => {
+    GetPrivateLabelsData(privateUrl: string) {
+        this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe((response: ServiceResponse) => {
             if (response.Result) {
-                //BrandingDataService.SetHybridLabelsDataRequest(response.Result, privateUrl);
+                //BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
                 this.ContactUsEmail = response.Result.ContactUsEmail;
                 this.MainColor = response.Result.MainColor;
                 this.BackgroundImage = BrandingDataService.GetBackgroundImage(); 

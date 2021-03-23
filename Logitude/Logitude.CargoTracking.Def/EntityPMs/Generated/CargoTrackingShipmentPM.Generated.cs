@@ -1906,8 +1906,6 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
-
-
 	  private string forwardingShipmentNumber ;
 	  	  
        

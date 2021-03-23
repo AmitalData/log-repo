@@ -177,7 +177,8 @@ export class LoginComponent implements OnInit {
         var url = window.location.href;
         if (url.indexOf('localhost') > -1 && !AppTool.IsNullOrEmpty(url.split('?')[1])) {
             this.isLocalPrivateLable = true;
-            window.sessionStorage.setItem('userdata', url.split('?')[1]);
+            let isDSV = url.indexOf('?D') > -1;
+            window.sessionStorage.setItem('userdata', url.split(isDSV ? '?D' : '?P')[1]);
             SessionLocator.IsExternalParams = false;
         }
         if (url && url.indexOf('localhost') > -1 && !this.isLocalPrivateLable) {

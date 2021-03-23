@@ -117,6 +117,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         windowArgs.queryCode = /*this.ObjectTableName + '.' +*/this.SelectedQueryCode;
         windowArgs.isNewQueryMode = false;
         windowArgs.currentObjectTable = this.ObjectTableName;
+        windowArgs.QuerySection = this.MenuTableQuerySection;
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 960;
         logitudeWindow.Height = 520;
@@ -173,12 +174,20 @@ export class ListComponent implements OnInit, AfterViewInit {
         //}
     }
 
+
+    GetMethodName() {
+        if (this.MenuTableQuerySection) return this.ObjectTableName;
+        let methodName = this.SelectedQuery.QuerySection;
+        if (methodName.indexOf("Customs.") > -1) {
+            methodName = methodName.split('.')[1];
+        }
+        return methodName;
+
+       
+    }
     ApplyPreDefinedFilters() {
         if (this.SelectedQuery != null) {
-            this.MethodName = this.SelectedQuery.QuerySection;
-            if (this.MethodName.indexOf("Customs.") > -1) {
-                this.MethodName = this.MethodName.split('.')[1];
-            }
+            this.MethodName =  this.GetMethodName();
             this.SelectedQueryCode = this.SelectedQuery.UniqueCode;
             this.SelectedQueryId = this.SelectedQuery.Id;
 
@@ -909,11 +918,12 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     private listArgs: ListComponentArgs;
     ShowViews: boolean = true;
     ResourcesLoaded: boolean = false;
+
+  MenuTableQuerySection: string;
   Run(args: ListComponentArgs) {
     this.CurrentSession.AddMenuReference(this.ComponentRef);
     this.CurrentSession.AddListComponent(this);
-
-    this.listArgs = args;
+      this.listArgs = args;
     if (!this.IsDemoTenant) {
       if (!AppTool.IsNullOrEmpty(this.listArgs.DisplayTitle)) {
         this.Title = this.listArgs.DisplayTitle;
@@ -925,6 +935,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
       this.MethodName = args.MethodName;
       this.BackBtnTitle = args.BackButtonTitle;
       this.ShowViews = args.ShowViews;
+      this.MenuTableQuerySection = args.QuerySection;
+
       this.ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
       this.SeachBoxIsDisabled = this.ObjectTable.DisableSearchBox;
 
@@ -986,13 +998,22 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     //  //  this.ShowTipEvent.emit("true");
     //}
 
+    FilterQuerysByMenuTableQuerySection(allQueries: any) {
 
+        if (!AppTool.IsNullOrEmpty(this.MenuTableQuerySection)) {
+            return allQueries.filter(d => d.QuerySection == this.MenuTableQuerySection);
+        }
+        return allQueries; 
+    
+    }
 
 
     public UserId: string = SessionInfo.LoggedUserId;
     public Tenant: number = SessionInfo.LoggedUserTenant;
     GetQueries() {
-        var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
+
+        var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id ).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
+        this.FilterQuerysByMenuTableQuerySection(allQueries);
         this.Queries = allQueries.filter(x => x.UserId == null && x.SystemLevel == true);
 
         if(!this.ObjectTable.IsClosed){
@@ -1180,10 +1201,10 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         }
         if (this.SelectedQuery != null) {
             this.QueryCode = this.SelectedQuery.UniqueCode;
-            this.MethodName = this.SelectedQuery.QuerySection;
-            if (this.MethodName.indexOf("Customs.") > -1) {
-                this.MethodName = this.MethodName.split('.')[1];
-            }
+          
+            this.MethodName = this.GetMethodName();
+
+
             this.SelectedQueryCode = this.SelectedQuery.UniqueCode;
             this.SelectedQueryId = this.SelectedQuery.Id;
 
@@ -2375,7 +2396,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 cmpRef.instance.Run({
                                     EntityId: selectedEntityId,///$event.rowData.Id
                                     ObjectTableName: myObjectTableName,
-                                    BackButtonLabel: label
+                                    BackButtonLabel: label,
+                                    QuerySection: this.MenuTableQuerySection
                                 });
                                 cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
                                     this.isEditControlOpened = false;

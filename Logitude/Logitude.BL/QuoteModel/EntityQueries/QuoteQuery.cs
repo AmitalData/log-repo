@@ -294,6 +294,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                RegionalTaxId = f.RegionalTaxId,
                                                RegionalTaxPercentage=f.RegionalTaxPercentage,
                                                IsMultiCurrency = f.IsMultiCurrency,
+
                                            };
             return result;
         }

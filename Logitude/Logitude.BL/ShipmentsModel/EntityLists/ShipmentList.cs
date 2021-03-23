@@ -343,6 +343,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
 
         public string SalesmanUserId { get; set; }
         public DateTime? PreCarriageETD { get; set; }
+        public DateTime? PreForwardingETD { get; set; }
         public bool IsException { get; set; }
 
         public string SalesmanUserName { get; set; }
@@ -546,5 +547,9 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? AccrualsApprovalDate { get; set; }
 
         public string MainHarmonize { get; set; }
+
+        public string PreForwardingFromPortId { get; set; }
+        public string OnForwardingToPortId { get; set; }
+
     }
 }
