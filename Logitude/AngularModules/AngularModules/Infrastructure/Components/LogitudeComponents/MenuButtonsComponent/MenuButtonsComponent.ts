@@ -14,7 +14,7 @@ import {MenuButtonsEvents, MenuButtonsStateChangedEventArgs} from '../../../../I
 import {ObjectsLocator} from '../../../Locators/ObjectsLocator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { IObjectTableMenuButtonsBuilder } from '../../../Interface/IObjectTableMenuButtonsBuilder';
-import { ObjectTableMenuButtonsBuilderService } from '../../../Utilities/ObjectTableMenuButtonsBuilderService';
+//import { ObjectTableMenuButtonsBuilderService } from '../../../Utilities/ObjectTableMenuButtonsBuilderService';
 
 @Component({
     
@@ -186,15 +186,15 @@ export class MenuButtonsComponent implements OnDestroy {
     public DisplayText: string;
     private GetObjectTableMenuButtonsByQuerySection( querySection:string) {
   
-        let objectTableMenuButtonsBuilder: IObjectTableMenuButtonsBuilder = ObjectTableMenuButtonsBuilderService.GetInstance(querySection);
-        if (objectTableMenuButtonsBuilder) {
-          return  objectTableMenuButtonsBuilder.BuildMenuButtons({
-                ObjectTableId: this.entityArgs.ObjectTableName,
-                ObjectTableName: this.entityArgs.EntityPM,
-                QuerySection: this.QuerySection,
-                EntityPM: this.EntityPM,
-            });
-        }
+        //let objectTableMenuButtonsBuilder: IObjectTableMenuButtonsBuilder = ObjectTableMenuButtonsBuilderService.GetInstance(querySection);
+        //if (objectTableMenuButtonsBuilder) {
+        //  return  objectTableMenuButtonsBuilder.BuildMenuButtons({
+        //        ObjectTableId: this.entityArgs.ObjectTableName,
+        //        ObjectTableName: this.entityArgs.EntityPM,
+        //        QuerySection: this.QuerySection,
+        //        EntityPM: this.EntityPM,
+        //    });
+        //}
         return null;
     }
 

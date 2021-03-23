@@ -160,7 +160,9 @@ export class QueryColumnsEditComponent {
 
 
                 this.unselectedObjectFields = window.ObjectFields.filter(a => a.ObjectTableName == this.CurrentObjectTable).filter(d => d.DisplayInList == true && (d.Tenant == SessionInfo.LoggedUserTenant || d.Tenant == 0) && ((d.ValidForQuerySection1 == currentQuery.QuerySection || d.ValidForQuerySection2 == currentQuery.QuerySection) || d.IsCustom == true));
-                
+
+
+
                 //if (this.QuerySection) {
                 //    this.unselectedObjectFields = this.unselectedObjectFields.filter(d=> d.EntityType == this.QuerySection);
                 //}

@@ -25,7 +25,6 @@ import { Subscription, TeardownLogic } from 'rxjs';//itzik
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 import { IObjectTableTabsBuilder } from '../../../Infrastructure/Interface/IObjectTableTabsBuilder';
-import { ObjectTableTabBuilderService } from '../../Utilities/ObjectTableTabBuilderService';
 
 
 @Component({    
@@ -752,16 +751,16 @@ export class EditComponent implements OnDestroy {
 
     BuildObjectTableTabByQuerySection() {
         let objectTableTabs: TabItem[] =[];
-        let objectTableTabsBuilder: IObjectTableTabsBuilder = ObjectTableTabBuilderService.GetInstance(this.QuerySection);
-        if (objectTableTabsBuilder) {
-            objectTableTabs = objectTableTabsBuilder.BuildTabs({
-                ObjectTableId: this.ObjectTableId,
-                ObjectTableName: this.ObjectTableName,
-                QuerySection: this.QuerySection,
-                EntityPM: this.EntityPM,
-            });
+        //let objectTableTabsBuilder: IObjectTableTabsBuilder = ObjectTableTabBuilderService.GetInstance(this.QuerySection);
+        //if (objectTableTabsBuilder) {
+        //    objectTableTabs = objectTableTabsBuilder.BuildTabs({
+        //        ObjectTableId: this.ObjectTableId,
+        //        ObjectTableName: this.ObjectTableName,
+        //        QuerySection: this.QuerySection,
+        //        EntityPM: this.EntityPM,
+        //    });
 
-        }
+        //}
         return objectTableTabs;
     }
 

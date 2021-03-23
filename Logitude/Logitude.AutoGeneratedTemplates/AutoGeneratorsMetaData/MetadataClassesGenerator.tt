@@ -1207,13 +1207,6 @@ private void WriteAddScreenMethod(XElement entity,XElement ScreenAtt,string TblN
 	   var NumberOfColumns = ScreenAtt.Attributes().Where(a => a.Name == "NumberOfColumns").FirstOrDefault().Value;
 	   var NumberOfRows = ScreenAtt.Attributes().Where(a => a.Name == "NumberOfRows").FirstOrDefault().Value; 
 	   var IsHeaderScreen = ScreenAtt.Attributes().Where(a => a.Name == "IsHeaderScreen").FirstOrDefault().Value; 
-	   var QuerySection = ScreenAtt.Attributes().Where(a => a.Name == "QuerySection").Select(d=>d.Value).FirstOrDefault(); 
-	   
-	
-
-
-
-
 	   string Code = Name.Trim('"');
 	   if (IsHeaderScreen.ToLower() == "true" && !Name.Contains("HeaderScreen"))
        { 
@@ -1229,22 +1222,10 @@ private void WriteAddScreenMethod(XElement entity,XElement ScreenAtt,string TblN
 		   screenCode  = ScreenDBCode.Value.ToString().Trim('"');
 	   
 	    string screenClassName = TblName.Trim('"').Replace(" ","").Replace(".","") +  Name.Trim('"').Replace(" ","").Replace(".","") + "Screen" + index;
-       if(!string.IsNullOrEmpty(QuerySection)){
-	        #> 
-
-	         Screen <#=screenClassName#> = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { QuerySection = <#= QuerySection #> ,  Code = "<#= screenCode #>", Name = <#= Name #>, ObjectTableId = <#= TblName.Trim('"').Replace(" ","") #>ObjectTable.Id, NumberOfColumns = <#= NumberOfColumns #>, NumberOfRows = <#= NumberOfRows #>, IsReadOnly = <#= IsReadOnly.ToLower() #> }, screensRepository, tenantScreens);
-      <#+
-	   }
-	 else
-    {
-	         #> 
+           #> 
 
 	         Screen <#=screenClassName#> = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "<#= screenCode #>", Name = <#= Name #>, ObjectTableId = <#= TblName.Trim('"').Replace(" ","") #>ObjectTable.Id, NumberOfColumns = <#= NumberOfColumns #>, NumberOfRows = <#= NumberOfRows #>, IsReadOnly = <#= IsReadOnly.ToLower() #> }, screensRepository, tenantScreens);
       <#+
-    }
-
-
-
 	    int i = 0;
 	    foreach(XElement ScreenField in ScreenAtt.Elements("ScreenFields").FirstOrDefault().Elements("ScreenField"))
 		{  //get all Queries
