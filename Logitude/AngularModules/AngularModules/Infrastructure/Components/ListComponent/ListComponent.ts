@@ -997,13 +997,19 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     //  //  this.ShowTipEvent.emit("true");
     //}
 
-    FilterQuerysByMenuTableQuerySection(allQueries: any) {
+    //FilterQuerysByMenuTableQuerySection(allQueries: any) {
 
-        if (!AppTool.IsNullOrEmpty(this.MenuTableQuerySection)) {
-            return allQueries.filter(d => d.QuerySection == this.MenuTableQuerySection);
-        }
-        return allQueries; 
+    //    if (!AppTool.IsNullOrEmpty(this.MenuTableQuerySection)) {
+    //        return allQueries.filter(d => d.QuerySection == this.MenuTableQuerySection);
+    //    }
+    //    return allQueries; 
     
+    //}
+
+
+    FilterQuerysByQuerySection(allQueries: any) {
+        let querySection: string = !AppTool.IsNullOrEmpty(this.MenuTableQuerySection) ? this.MenuTableQuerySection : this.ObjectTableName;
+        return allQueries.filter(d => d.QuerySection == querySection || d.QuerySection == (querySection + "FollowUp"));
     }
 
 
@@ -1012,7 +1018,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     GetQueries() {
 
         var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id ).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
-        this.FilterQuerysByMenuTableQuerySection(allQueries);
+        allQueries = this.FilterQuerysByQuerySection(allQueries);
+
         this.Queries = allQueries.filter(x => x.UserId == null && x.SystemLevel == true);
 
         if(!this.ObjectTable.IsClosed){
