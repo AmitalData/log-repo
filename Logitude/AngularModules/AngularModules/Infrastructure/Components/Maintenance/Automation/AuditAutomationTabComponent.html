@@ -445,7 +445,7 @@
 
 
                                                                                                                                     <!--CondithionsDetails-->
-                                                                                                                                    <a (click)="ShowCondithionsDetails()">Details</a>
+                                                                                                                                    <a *ngIf="ShowConditionsDetailsLink" (click)="ShowCondithionsDetails()">Details</a>
 
                                                                                                                                     <div style="width:95px">
                                                                                                                                         <img class="CenterCenter" style="width:20px;height:20px" *ngIf="item.IsConditionTrue" src="./Images/Icons/MiniGreenTick.png" />

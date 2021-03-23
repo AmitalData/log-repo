@@ -41,6 +41,8 @@ export class AuditAutomationTabComponent implements OnInit, AfterViewInit {
     SelectedEntityAutomationList: EntityChangeAutomation;
     IsCustomerCareUser: boolean = true;
     private CurrentSession = SessionLocator.SelectedSession;
+    ShowConditionsDetailsLink: boolean = true;
+
     constructor(private _entityChangeExtendedPMService: EntityChangeExtendedPMService, private cd: ChangeDetectorRef) {
 
         if (SessionLocator.LoggedUserPM.IsCustomerCare) {
@@ -72,6 +74,7 @@ export class AuditAutomationTabComponent implements OnInit, AfterViewInit {
         logWindow.Title = "Conditions Statuses";
         logWindow.DataContext = this;
         windowArgs.CurrentEntityPM = this.AutomationList;
+        windowArgs.DataViewModel = this;
         logWindow.WindowArgs = windowArgs;
         logWindow.IsShowCloseButton = true;
         logWindow.Show('./Infrastructure/Components/Maintenance/Automation/AutomationConditionsDetailsComponent');
@@ -158,6 +161,11 @@ export class AuditAutomationTabComponent implements OnInit, AfterViewInit {
                 if (entityChangeAutomationsSummary) {
                     this.ChangeFieldsList = entityChangeAutomationsSummary.ChangeFieldsList;
                     this.AutomationList = this.EntityAutomationList = entityChangeAutomationsSummary.EntityChangeAutomationList;
+                    if (this.AutomationList.length && !this.AutomationList[0].ConditionsList.length) {
+                        this.ShowConditionsDetailsLink = false;
+                    } else {
+                        this.ShowConditionsDetailsLink = true;
+                    }
 
                 }
             }

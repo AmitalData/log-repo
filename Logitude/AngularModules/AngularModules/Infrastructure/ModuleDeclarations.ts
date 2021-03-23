@@ -187,6 +187,7 @@ import { ToolTipFloatDirective } from './Utilities/RTLDirectives/ToolTipFloatDir
 import { SendDocumentResultComponent } from './Components/Maintenance/Automation/AutomationResult/SendDocumentResultComponent';
 import { HybridLoginProcessComponent } from './Components/LoginComponent/CustomLoginComponents/HybridLabels/Components/HybridLoginProcessComponent';
 import { AutomationConditionsDetailsComponent } from './Components/Maintenance/Automation/AutomationConditionsDetailsComponent';
+import { AutomationsConditionsViewDetailsComponent } from './Components/Maintenance/Automation/AutomationsConditionsViewDetailsComponent';
 
 
 
@@ -309,6 +310,7 @@ export const ControlsComponents =
         FTPAutomationDetailsComponent,
         SendDocumentResultComponent,
         AuditAutomationTabComponent,
+        AutomationsConditionsViewDetailsComponent
     ];
 export const Components =
     [
@@ -385,7 +387,8 @@ export const Components =
         LastSuccessfulLoginComponent,
         FTBSchedulerTemplateComponent,
         HybridLoginProcessComponent,
-        AutomationConditionsDetailsComponent
+        AutomationConditionsDetailsComponent,
+        AutomationsConditionsViewDetailsComponent
         
     ];
 
@@ -474,7 +477,9 @@ export class ModuleDeclarations {
             case 'WizardAccountingComponent': { myResult = WizardAccountingComponent; break; }
             case 'SelectDocumentTypesComponent': { myResult = SelectDocumentTypesComponent; break; }
             case 'StimulsoftDesignerComponent': { myResult = StimulsoftDesignerComponent; break; }
-              case 'AutomationsConditionAreaComponent': { myResult = AutomationsConditionAreaComponent; break; }
+            case 'AutomationsConditionAreaComponent': { myResult = AutomationsConditionAreaComponent; break; }
+            case 'AutomationsConditionAreaComponent': { myResult = AutomationsConditionsViewDetailsComponent; break; }
+                 
 
             case 'EraseTenantManagementDataComponent': { myResult = EraseTenantManagementDataComponent; break; }
 

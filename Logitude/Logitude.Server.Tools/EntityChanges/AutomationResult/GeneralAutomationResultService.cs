@@ -31,7 +31,8 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 
             AutomatedBackup automatedBackup = GetAutomatedBackupClass(automation, entityChange, lastupdateautomation);
 
-            if (typeConditionValidate == "Delayed") automationConditionList = automatedBackup.DelayAautomationConditionLists;
+            if (typeConditionValidate == "Delayed")  
+                automationConditionList = automatedBackup.DelayAautomationConditionLists;
             else automationConditionList = automatedBackup.AautomationConditionLists;
 
             if (automationConditionList != null && automationConditionList.Count() > 0)
@@ -53,24 +54,32 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                     //if (!validconditionAnd) break;
                 }
 
-                if (validconditionAnd)
-                {
+                // Check ValidConditionOr even if ValidConditionAnd is false
+               // if (validconditionAnd)
+               // {
                     foreach (AutomationCondition automationCondition in automationConditionList.Where(d => d.ConditionType == "Or"))
                     {
                         validconditionOr = ValidateCondition(automationConditionFields, automationCondition, entityChange);
-                        // Add condition to the list with the new field IsValid
+
+                        // Add condition list with the result
                         validateResult.ConditionsList.Add(automationCondition);
 
-                        // Delete this condition to check all automation list
+                        // Delete to check all automation list
                         //if (validconditionOr) break;
                     }
-                }
+                // }
 
+                
                 if (validconditionAnd && validconditionOr) IsConditionValid = true;
             }
 
-            else IsConditionValid = true;
+            else IsConditionValid = true; 
             validateResult.IsAutomationValid = IsConditionValid;
+
+            if (typeConditionValidate == "Delayed")
+            {
+                automatedBackup.AautomationConditionLists = validateResult.ConditionsList;
+            }
 
             if (automatedBackup != null)
             {
@@ -78,7 +87,8 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 validateResult.DelaytimeIndicator = automatedBackup.DelaytimeIndicator;
                 validateResult.Delaytime = automatedBackup.Delaytime;
                 validateResult.DelaytimeOp = automatedBackup.DelaytimeOp;
-                validateResult.SelectedDelaytimeFieldCode = automatedBackup.SelectedDelaytimeFieldCode; 
+                validateResult.SelectedDelaytimeFieldCode = automatedBackup.SelectedDelaytimeFieldCode;
+                validateResult.ConditionsList = automatedBackup.AautomationConditionLists;
             }
 
             return validateResult;

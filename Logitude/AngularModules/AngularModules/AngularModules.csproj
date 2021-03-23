@@ -294,6 +294,7 @@
     <Content Include="Infrastructure\Components\LoginComponent\CustomLoginComponents\HybridLabels\Components\HybridLoginProcessComponent.css" />
     <Content Include="Infrastructure\Components\LoginComponent\CustomLoginComponents\HybridLabels\Components\HybridLoginProcessComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationConditionsDetailsComponent.html" />
+    <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationsConditionsViewDetailsComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityPackageComponent.html" />
     <Content Include="_Resources\js\UnifreightJSBridge.js" />
@@ -1756,6 +1757,7 @@
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\FTPAutomationDetailsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\SendDocumentResultComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\SendInterfaceResultComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationsConditionsViewDetailsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\ChooseSpecificUserComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\BatchTaskExecution\BTEGeneralTabComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\BatchTaskExecution\BTELogTabComponent.ts" />
