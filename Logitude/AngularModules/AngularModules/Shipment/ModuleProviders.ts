@@ -36,6 +36,7 @@ import { ShipmentSubTypePMService } from './Services/StandardPMs/ShipmentSubType
 
 import { ShipmentTabsService } from './MetaDataServices/TabsServices/ShipmentTabsService';
 import { ShipmentHeaderScreenService } from './MetaDataServices/HeaderScreenServices/ShipmentHeaderScreenService';
+import { ShipmentMenuButtonService } from './MetaDataServices/MenuButtonServices/ShipmentMenuButtonService';
 
 
 
@@ -87,8 +88,9 @@ export class ModuleProviders {
             case "ShipmentMenuButtonsHandler": { myResult = new ShipmentMenuButtonsHandler(); break; }
             case "ShipmentTabsService": { myResult = new ShipmentTabsService(); break; }
             case "ShipmentHeaderScreenService": { myResult = new ShipmentHeaderScreenService(); break; }
-                
+            case "ShipmentMenuButtonService": { myResult = new ShipmentMenuButtonService(); break; }
 
+                
         }
 
         return myResult;

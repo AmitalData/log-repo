@@ -1,15 +1,14 @@
-import { TabItem } from '../Components/EditComponent/EditComponent';
 import { ObjectFieldPM } from '../EntityPMs/ObjectFieldPM';
 import { ScreenPM } from '../EntityPMs/ScreenPM';
 
 export interface IHeaderScreenService {
-    GetHeaderScreens(args): HeaderScreenServiceResult; 
+    GetHeaderScreens(args): HeaderScreenDataResult; 
 }
 
 
 
 
-export class HeaderScreenServiceResult{
+export class HeaderScreenDataResult{
     public ObjectFields: ObjectFieldPM[];
     public HeaderScreen: ScreenPM;
 }

@@ -24,7 +24,7 @@ import { EditTabComponent } from './EditTabComponent';
 import { Subscription, TeardownLogic } from 'rxjs';//itzik
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
-import { HeaderScreenServiceResult } from '../../Interface/IHeaderScreenService';
+import { HeaderScreenDataResult } from '../../Interface/IHeaderScreenService';
 
 
 @Component({    
@@ -466,7 +466,7 @@ export class EditComponent implements OnDestroy {
         var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/MetaDataServices/HeaderScreenServices/" + this.GetObjectTableName() + "HeaderScreenService";
         SessionLocator.DynamicLoader.GetInstance(myComponentPath, true).then((headerScreenService: any) => {
             if (headerScreenService) {
-                let result: HeaderScreenServiceResult  = headerScreenService.GetHeaderScreens({ ObjectTableId: this.ObjectTableId, EntityPM: this.EntityPM });
+                let result: HeaderScreenDataResult  = headerScreenService.GetHeaderScreens({ ObjectTableId: this.ObjectTableId, EntityPM: this.EntityPM });
                 this.GenerateHeaderScreen(result.HeaderScreen, result.ObjectFields);
             }
             else {
@@ -794,23 +794,6 @@ export class EditComponent implements OnDestroy {
             }
         }
     }
-
-
-    BuildObjectTableTabByQuerySection() {
-        let objectTableTabs: TabItem[] =[];
-        //let objectTableTabsBuilder: IObjectTableTabsBuilder = ObjectTableTabBuilderService.GetInstance(this.QuerySection);
-        //if (objectTableTabsBuilder) {
-        //    objectTableTabs = objectTableTabsBuilder.BuildTabs({
-        //        ObjectTableId: this.ObjectTableId,
-        //        ObjectTableName: this.ObjectTableName,
-        //        QuerySection: this.QuerySection,
-        //        EntityPM: this.EntityPM,
-        //    });
-
-        //}
-        return objectTableTabs;
-    }
-
 
 
 
