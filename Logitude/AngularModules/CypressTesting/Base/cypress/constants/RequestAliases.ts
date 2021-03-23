@@ -92,6 +92,9 @@ export class RequestAliases {
     public static readonly AccountingSettings="AccountingSettings"
     public static readonly Tenants = "Tenants"
 
+    public static readonly PostCountry="PostCountry"
+    public static readonly PutCountry="PutCountry"
+    
     public static readonly PostQuoteTemplate = "PostQuoteTemplate";
     public static readonly PutQuoteTemplate = "PutQuoteTemplate";
     public static readonly PutQuoteTemplateHeaderFields = "PutQuoteTemplateHeaderFields";

@@ -27,6 +27,9 @@ export class Urls {
     public static readonly Tenants = "**/tenants"
     public static readonly PostChangePassword = '**/PostChangeUserPassword'
 
+    public static readonly Countries = "**/countries"
+    public static readonly CountriesGetSingle = "**/countries/getsingle?**";
+
     public static GetFilterSearch(filterBy: string) {
         return '**/getbyfilters?**' + filterBy + '**'
     }

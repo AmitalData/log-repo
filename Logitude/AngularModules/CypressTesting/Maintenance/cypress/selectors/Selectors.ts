@@ -9,6 +9,7 @@ export class MaintenanceSelectors extends RegexSelectors {
     public static readonly CustomerSettingsMaintenanceItem = "#MaintenanceItemCUSA"
     public static readonly InvoiceSettingsMaintenanceItem = "#MaintenanceItemINVS";
     public static readonly QuoteTemplatesMaintenanceItem = "#MaintenanceItemMTQT"
+    public static readonly MaintenanceItemCountry="#MaintenanceItemMTCN"
     //#endregion
 
     public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";
@@ -119,4 +120,17 @@ export class MaintenanceSelectors extends RegexSelectors {
     public static readonly AddDataField = "#AddDataField"
     //#endregion
 
+    //#region country
+    public static readonly CountryCode = "#Country_Code";
+    public static readonly CountryEnglishName = "#Country_EnglishName";
+    public static readonly CountryLocalName = "#Country_LocalName";
+    public static readonly CountryGlobalZone = "#Country_GlobalZoneId";
+    public static readonly InActiveCountryCheckBox = "#Country_InActive";
+    public static readonly CountryECCheckBox = "#Country_EC";
+    public static readonly CountryIsNorthAmericaCheckBox = "#Country_IsNorthAmerica";
+    public static readonly CountryIsStateRequiredCheckBox = "#Country_IsStateRequired";
+    public static readonly CountryHasCitiesCheckBox = "#Country_HasCitiesList";
+    public static readonly CountryNotes="#Country_Notes";
+    public static readonly CountrySaveButton="#Country-Save"
+    //#endregion
 }
