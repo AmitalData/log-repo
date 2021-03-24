@@ -17,7 +17,7 @@ Feature: Cross Docks Entries and Releases
         Then the shipment should create successfully
 
     Scenario: Add packages
-        Given the user open the shipment and navigate to packages workspace
+        Given the user open the shipment and navigate to packages tab
         And a package with the following details
             | Quantity | Length | Width | Height | GrossWeight |
             | 2        | 100    | 100   | 100    | 200         |
@@ -25,7 +25,7 @@ Feature: Cross Docks Entries and Releases
         Then the direct shipment should save successfully
 
     Scenario: Add cross dock entry
-        Given the user in Connected Entities workspace
+        Given the user in Connected Entities tab
         And a corss dock "Entry" with the following details
             | Warehouse         | TestWarehouse |
             | ExpectedEntryDate | Today         |

@@ -41,7 +41,7 @@ Then("the shipment should create successfully", () => {
 //#endregion
 
 //#region Add packages
-Given("the user open the shipment and navigate to packages workspace", () => {
+Given("the user open the shipment and navigate to packages tab", () => {
     ShipmentActions.OpenShipment(CrossdockContext.ShipmentNumber);
     cy.Navigate(ShipmentSelectors.PackagesTab);
 });
@@ -62,7 +62,7 @@ Then("the direct shipment should save successfully", () => {
 //#endregion
 
 //#region Add cross dock entry
-Given("the user in Connected Entities workspace", () => {
+Given("the user in Connected Entities tab", () => {
     cy.Navigate(ShipmentSelectors.ConnectionsTab);
 });
 
