@@ -469,6 +469,11 @@ export class SupplierInvoicePM {
     public set ItemFOBAmountNIS(newValue: number) { if (this.itemFOBAmountNIS != newValue) { this.itemFOBAmountNIS = newValue; this.MarkAsDirty("ItemFOBAmountNIS"); } }
        
 	 
+    private insruanceCurrencyTypeCodeName: string;
+    public get InsruanceCurrencyTypeCodeName() { return this.insruanceCurrencyTypeCodeName; }
+    public set InsruanceCurrencyTypeCodeName(newValue: string) { if (this.insruanceCurrencyTypeCodeName != newValue) { this.insruanceCurrencyTypeCodeName = newValue; this.MarkAsDirty("InsruanceCurrencyTypeCodeName"); } }
+       
+	 
 
     public OldEntityPM: SupplierInvoicePM;
 		

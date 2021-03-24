@@ -262,7 +262,7 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ItemFOBAmountForeign"  
+    Name="ItemFOBAmountForeign"
     Type="decimal"
     Precision="16"
     Scale="2">

@@ -1592,15 +1592,25 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         // SupplierInvoiceModifications
         for (let item of this.EntityPM.SupplierInvoiceModifications) {
             //Validator.TryValidateObject(item, new ValidationContext(item, null, null), errors);
-
-            if (AppTool.IsNullOrEmpty(item.CurrencyTypeCode)) {
-                errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoiceModification.F.CurrencyTypeCode") + " - מסך נוספים");
-            }
-            if (AppTool.IsNullOrEmpty(item.TypeCode)) {
-                errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoiceModification.F.TypeCode") + " - מסך נוספים");
-            }
-            if (AppTool.IsNullOrEmpty(item.Amount)) {
-                errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoiceModification.F.Amount") + " - מסך נוספים");
+            if (this.declarationPM.Direction == "E" && item.TypeCode == "160") {
+                if (!(AppTool.IsNullOrEmpty(item.CurrencyTypeCode) && AppTool.IsNullOrEmpty(item.Amount))) {
+                    if (AppTool.IsNullOrEmpty(item.CurrencyTypeCode)) {
+                        errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoiceModification.F.CurrencyTypeCode") + "- הוצאות נוספות ");
+                    }
+                    if (AppTool.IsNullOrEmpty(item.Amount)) {
+                        errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoiceModification.F.Amount") + " -  הוצאות נוספות");
+                    }
+                }
+            } else {
+                if (AppTool.IsNullOrEmpty(item.CurrencyTypeCode)) {
+                    errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoiceModification.F.CurrencyTypeCode") + " - מסך נוספים");
+                }
+                if (AppTool.IsNullOrEmpty(item.TypeCode)) {
+                    errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoiceModification.F.TypeCode") + " - מסך נוספים");
+                }
+                if (AppTool.IsNullOrEmpty(item.Amount)) {
+                    errors.push(this.GetRequierdFieldErrorText("Customs.SupplierInvoiceModification.F.Amount") + " - מסך נוספים");
+                }
             }
 
         }
@@ -2221,8 +2231,13 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 var typeCode = mod.TypeCode;
                 if (typeCode == "I02") {
                     //itzik+yaron20180201 validationErrors.push(TextCodeTranslator.Translate("Customs.Declaration.O.CalculatedFee") + " - מסך נוספים");
-                } else {
-
+                } else
+                    if (this.declarationPM.Direction == "E" && typeCode == "160") {
+                        if (mod.Amount == null || mod.CurrencyTypeCode == null) {
+                            
+                        }
+                    }
+                    else {
                     var exists = [];
                     if (this.EntityPM.SupplierInvoiceModifications.length != 0) {
                         exists = this.EntityPM.SupplierInvoiceModifications.filter(d => d.TypeCode == typeCode);
@@ -2230,7 +2245,6 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     if (exists.length > 1) {
                         validationErrors.push(TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType") + " - מסך נוספים");
                     }
-
                 }
             });
 

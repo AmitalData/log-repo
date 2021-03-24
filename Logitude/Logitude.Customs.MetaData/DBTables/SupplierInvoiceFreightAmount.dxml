@@ -20,17 +20,17 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="CurrencyTypeCode"
     Type="varchar"
     Size="3">
     <Constraints
       PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Tenant"
-    Type="int">
-    <Constraints
       Nullable="false" />
   </Column>
   <Column

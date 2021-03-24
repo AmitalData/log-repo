@@ -96,6 +96,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 CurrencyTypePM currencyTypePM = currencyTypeQueryService.GetSingle(entityPOCO.InvoiceCurrencyTypeCode, false, true);
                 entityPM.InvoiceCurrencyTypeName = currencyTypePM.LocalName;
             }
+            if (!string.IsNullOrWhiteSpace(entityPOCO.InsruanceCurrencyTypeCode)) 
+            {
+                CurrencyTypeQueryService currencyTypeQueryService = new CurrencyTypeQueryService(entityPOCO.Tenant);
+                CurrencyTypePM currencyTypePM = currencyTypeQueryService.GetSingle(entityPOCO.InsruanceCurrencyTypeCode, false, true);
+                entityPM.InsruanceCurrencyTypeCodeName = currencyTypePM.LocalName;
+            }
         }
     }
 }
