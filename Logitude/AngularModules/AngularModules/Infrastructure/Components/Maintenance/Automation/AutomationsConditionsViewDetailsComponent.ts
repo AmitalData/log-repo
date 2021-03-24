@@ -34,11 +34,7 @@ export class AutomationsConditionsViewDetailsComponent extends BaseComponent imp
     ngOnInit() {
         if (!this.ListHeight) {
             this.ListHeight = "120px";
-        }
-        console.log(" heba "  )
-        for (let item of this.AutomationCondationLists) {
-            console.log(" ite, "+ item.IsValid)
-        }
+        } 
 
     }
 

@@ -31,10 +31,7 @@ export class AutomationsConditionAreaComponent extends BaseComponent implements 
       
     }
     item: any;
-    ngOnInit() {
-        for (let item of this.AutomationCondationLists) { 
-            console.log("AutomationCondationLists Is Valid" + item.IsValid)
-        }
+    ngOnInit() { 
         if (!this.ListHeight) {
             this.ListHeight = "120px";
         }
