@@ -101,6 +101,7 @@ import { EntityTypeLookupListService } from './Services/StandardLists/EntityType
 import { FacilitationTypeListService } from './Services/StandardLists/FacilitationTypeListService';
 import { FaultInspectionTypeListService } from './Services/StandardLists/FaultInspectionTypeListService';
 import { FuelTypeListService } from './Services/StandardLists/FuelTypeListService';
+import { FullnessCodeListService } from './Services/StandardLists/FullnessCodeListService';
 import { GenderListService } from './Services/StandardLists/GenderListService';
 import { GovernmentProcedureTypeListService } from './Services/StandardLists/GovernmentProcedureTypeListService';
 import { GuaranteeCertificateTypeListService } from './Services/StandardLists/GuaranteeCertificateTypeListService';
@@ -492,6 +493,7 @@ export class ModuleProviders {
             case "GovernmentProcedureTypeListService": { myResult = new GovernmentProcedureTypeListService(); break; }
             case "GuaranteeCertificateTypeListService": { myResult = new GuaranteeCertificateTypeListService(); break; }
             case "GuaranteeCustomerActivityListService": { myResult = new GuaranteeCustomerActivityListService(); break; }
+            case "FullnessCodeListService": { myResult = new FullnessCodeListService(); break; }
             case "GuaranteeListService": { myResult = new GuaranteeListService(); break; }
             case "ImporterDeclarationTypeListService": { myResult = new ImporterDeclarationTypeListService(); break; }
             case "ImporterDespositionListService": { myResult = new ImporterDespositionListService(); break; }
