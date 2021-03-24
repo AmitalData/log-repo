@@ -174,7 +174,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ConfirmWindow="[class=ConfirmWindow]"
     public static readonly CurvedEditArea=".CurvedEditArea"
     public static readonly ListDataLoaded='div[id=ListDataLoaded]'
-    
+    public static readonly ErrorPopUp = ".ErrorPopUp";
    
 
     public static readonly ShortTitleDiv = ".ShortTitleDiv";

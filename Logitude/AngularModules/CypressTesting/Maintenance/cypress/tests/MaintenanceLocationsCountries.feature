@@ -1,20 +1,26 @@
 @release @dev @all
-Feature: Create Country, Inactivate and activate it from Maintenance
-    This scenario the user creates a Country, Inactivates it, selects it
-    to edit and activates it from the Maintenance module.
-    Scenario: Add Country
+Feature: Create Country, Edit, inactivate or activate it from Maintenance
+    The user creates a Country, Inactivates it, then selects a different country,
+    edits it and activates or inactivates it from the Maintenance module.
+
+    Scenario: Add CountryCode with lenght more than 2
         Given the user logged in and navigate to "Countries" in maintenance menu
-        And a country with the following details
-            | CountryCode       | Random   |
-            | CountryName       | Random   |
-            | CountryLocalName  | Random   |
-            | CountryGlobalZone | AF       |
-            | InactiveCountry   | Yes      |
-            | EC                | Yes      |
-            | NorthAmerica      | Yes      |
-            | IsStateRequired   | Yes      |
-            | HasCities         | Yes      |
-            | Notes             | TestNote |
+        And a "123" as CountryCode
+        When add country code
+        Then a validation message with "Code Field must be less than 2" error should appear
+
+    Scenario: Add Country
+        Given a country with the following details
+            | CountryCode       | 29                   |
+            | CountryName       | TestCountryName      |
+            | CountryLocalName  | TestCountryLocalName |
+            | CountryGlobalZone | AF                   |
+            | InactiveCountry   | Yes                  |
+            | EC                | Yes                  |
+            | NorthAmerica      | Yes                  |
+            | IsStateRequired   | Yes                  |
+            | HasCities         | Yes                  |
+            | Notes             | TestNote             |
         When add country
         Then the country should add successfully
 
@@ -27,6 +33,7 @@ Feature: Create Country, Inactivate and activate it from Maintenance
         Then the country should open successfully
 
     Scenario: Edit the country
+        Given a "random" as CountryLocalName
         Given the user change InactiveCountry check box
         When edit country
         Then the country should update successfully

@@ -1006,145 +1006,140 @@ function OpenPersonalSettingsTab() {
 //#endregion
 //#region Create country
 export function FillCountryDetails(countryDetails: CountryDetails) {
-    let countryToFill:string;
-    if(countryDetails.CountryCode){
-     countryToFill = countryDetails.CountryCode.toLowerCase() == "random" ? (gr.GenerateRandomNumberAndString(2)) : countryDetails.CountryCode;
-    }
-    FillCountryCode(countryToFill);
-    FillCountryName(countryToFill);
-    FillCountryLocalName(countryToFill);
+    FillCountryCode(countryDetails.CountryCode);
+    FillCountryName(countryDetails.CountryName);
+    FillCountryLocalName(countryDetails.CountryLocalName);
     FillCountryGlobalZone(countryDetails.CountryGlobalZone);
-   
     FillInactiveCountryCheckBox(countryDetails.InactiveCountry);
- 
-
-    
     FillECCheckBox(countryDetails.EC);
     FillNorthAmericaCheckBox(countryDetails.NorthAmerica);
     FillIsStateRequiredCheckBox(countryDetails.IsStateRequired);
     FillHasCitiesCheckBox(countryDetails.HasCities);
     FillNotes(countryDetails.Notes);
 }
-function FillCountryCode(CountryCode: string) {
-    if(CountryCode){
-        cy.FillLogTextBox(MaintenanceSelectors.CountryCode, CountryCode); 
+export function FillCountryCode(CountryCode: string) {
+    if (CountryCode) {
+        cy.FillLogTextBox(MaintenanceSelectors.CountryCode, CountryCode);
     }
 }
-function FillCountryName(CountryName:string){
-    if(CountryName){
-    cy.FillLogTextBox(MaintenanceSelectors.CountryEnglishName,CountryName)
+export function FillCountryName(CountryName: string) {
+    if (CountryName) {
+        cy.FillLogTextBox(MaintenanceSelectors.CountryEnglishName, CountryName)
     }
 }
-function FillCountryLocalName(LocalName:string){
-    if(LocalName){
-    cy.FillLogTextBox(MaintenanceSelectors.CountryLocalName,LocalName) 
+export function FillCountryLocalName(LocalName: string) {
+    if (LocalName) {
+        cy.FillLogTextBox(MaintenanceSelectors.CountryLocalName, GenerateName(LocalName))
     }
 }
-function FillCountryGlobalZone(GlobalZone:string){
-    if(GlobalZone){
-    cy.FillLogLov(MaintenanceSelectors.CountryGlobalZone,GlobalZone,true)
+function GenerateName(Name:string){
+    return Name.toLowerCase() == "random" ? (gr.GenerateRandomNumberAndString(10)) : Name; 
+}
+export function FillCountryGlobalZone(GlobalZone: string) {
+    if (GlobalZone) {
+        cy.FillLogLov(MaintenanceSelectors.CountryGlobalZone, GlobalZone, true)
     }
 }
-function FillInactiveCountryCheckBox(InactiveCountry:string){
-   if(InactiveCountry){
-    CompleteFillInactiveCountryCheckBoxProcess(InactiveCountry); 
-   }
-}
-function CompleteFillInactiveCountryCheckBoxProcess(InactiveCountry:string){
-    if(InactiveCountry.toUpperCase()==constants.YES){
-        if(MaintenanceSelectors.InActiveCountryCheckBox)
-        cy.get(MaintenanceSelectors.InActiveCountryCheckBox).check({force:true})
-    }
-    else if(InactiveCountry.toUpperCase()==constants.NO){
-        cy.get(MaintenanceSelectors.InActiveCountryCheckBox).uncheck({force:true})
+export function FillInactiveCountryCheckBox(InactiveCountry: string) {
+    if (InactiveCountry) {
+        CompleteFillInactiveCountryCheckBoxProcess(InactiveCountry);
     }
 }
-function FillECCheckBox(EC:String){
-   if(EC){
-    CompleteFillECCheckBoxProcess(EC);
-   }
-}
-function CompleteFillECCheckBoxProcess(EC:String){
-    if(EC.toUpperCase()==constants.YES){
-        cy.get(MaintenanceSelectors.CountryECCheckBox).check({force:true})
+function CompleteFillInactiveCountryCheckBoxProcess(InactiveCountry: string) {
+    if (InactiveCountry.toUpperCase() == constants.YES) {
+        if (MaintenanceSelectors.InActiveCountryCheckBox)
+            cy.get(MaintenanceSelectors.InActiveCountryCheckBox).check({ force: true })
     }
-    else if(EC.toUpperCase()==constants.NO){
-        cy.get(MaintenanceSelectors.CountryECCheckBox).uncheck({force:true})
+    else if (InactiveCountry.toUpperCase() == constants.NO) {
+        cy.get(MaintenanceSelectors.InActiveCountryCheckBox).uncheck({ force: true })
     }
 }
-function FillNorthAmericaCheckBox(NorthAmerica:string){
-   if(NorthAmerica){
-    CompleteFillNorthAmericaCheckBoxProcess(NorthAmerica); 
-   }
-}
-function CompleteFillNorthAmericaCheckBoxProcess(NorthAmerica:string){
-    if(NorthAmerica.toUpperCase()==constants.YES){
-        cy.get(MaintenanceSelectors.CountryIsNorthAmericaCheckBox).check({force:true})
-    }
-    else if(NorthAmerica.toUpperCase()==constants.NO){
-        cy.get(MaintenanceSelectors.CountryIsNorthAmericaCheckBox).uncheck({force:true})
+export function FillECCheckBox(EC: String) {
+    if (EC) {
+        CompleteFillECCheckBoxProcess(EC);
     }
 }
-function FillIsStateRequiredCheckBox(IsStateRequired:string){
-    if(IsStateRequired){
+function CompleteFillECCheckBoxProcess(EC: String) {
+    if (EC.toUpperCase() == constants.YES) {
+        cy.get(MaintenanceSelectors.CountryECCheckBox).check({ force: true })
+    }
+    else if (EC.toUpperCase() == constants.NO) {
+        cy.get(MaintenanceSelectors.CountryECCheckBox).uncheck({ force: true })
+    }
+}
+export function FillNorthAmericaCheckBox(NorthAmerica: string) {
+    if (NorthAmerica) {
+        CompleteFillNorthAmericaCheckBoxProcess(NorthAmerica);
+    }
+}
+function CompleteFillNorthAmericaCheckBoxProcess(NorthAmerica: string) {
+    if (NorthAmerica.toUpperCase() == constants.YES) {
+        cy.get(MaintenanceSelectors.CountryIsNorthAmericaCheckBox).check({ force: true })
+    }
+    else if (NorthAmerica.toUpperCase() == constants.NO) {
+        cy.get(MaintenanceSelectors.CountryIsNorthAmericaCheckBox).uncheck({ force: true })
+    }
+}
+export function FillIsStateRequiredCheckBox(IsStateRequired: string) {
+    if (IsStateRequired) {
         CompleteFillIsStateRequiredCheckBoxProcess(IsStateRequired);
     }
 }
-function CompleteFillIsStateRequiredCheckBoxProcess(IsStateRequired:string){
-    if(IsStateRequired.toUpperCase()==constants.YES){
-        cy.get(MaintenanceSelectors.CountryIsStateRequiredCheckBox).check({force:true})
+function CompleteFillIsStateRequiredCheckBoxProcess(IsStateRequired: string) {
+    if (IsStateRequired.toUpperCase() == constants.YES) {
+        cy.get(MaintenanceSelectors.CountryIsStateRequiredCheckBox).check({ force: true })
     }
-    else if(IsStateRequired.toUpperCase()==constants.NO){
-        cy.get(MaintenanceSelectors.CountryIsStateRequiredCheckBox).uncheck({force:true})
-    }
-}
-function FillHasCitiesCheckBox(HasCities:string){
-   if(HasCities){
-    CompleteFillHasCitiesCheckBoxProcess(HasCities); 
-   }
-}
-function CompleteFillHasCitiesCheckBoxProcess(HasCities:string){
-    if(HasCities.toUpperCase()==constants.YES){
-        cy.get(MaintenanceSelectors.CountryHasCitiesCheckBox).check({force:true})
-    }
-    else if(HasCities.toUpperCase()==constants.NO){
-        cy.get(MaintenanceSelectors.CountryHasCitiesCheckBox).uncheck({force:true})
+    else if (IsStateRequired.toUpperCase() == constants.NO) {
+        cy.get(MaintenanceSelectors.CountryIsStateRequiredCheckBox).uncheck({ force: true })
     }
 }
-function FillNotes(Notes:string){
-if(Notes){
-    cy.FillLogTextBox(MaintenanceSelectors.CountryNotes,Notes)
+export function FillHasCitiesCheckBox(HasCities: string) {
+    if (HasCities) {
+        CompleteFillHasCitiesCheckBoxProcess(HasCities);
+    }
 }
+function CompleteFillHasCitiesCheckBoxProcess(HasCities: string) {
+    if (HasCities.toUpperCase() == constants.YES) {
+        cy.get(MaintenanceSelectors.CountryHasCitiesCheckBox).check({ force: true })
+    }
+    else if (HasCities.toUpperCase() == constants.NO) {
+        cy.get(MaintenanceSelectors.CountryHasCitiesCheckBox).uncheck({ force: true })
+    }
+}
+export function FillNotes(Notes: string) {
+    if (Notes) {
+        cy.FillLogTextBox(MaintenanceSelectors.CountryNotes, Notes)
+    }
 }
 export function ChangeInactiveCountryCheckBoxValue() {
     cy.get(MaintenanceSelectors.InActiveCountryCheckBox).then($InActiveCountryCheckBox => {
         if ($InActiveCountryCheckBox.is(':checked')) {
-            cy.get(MaintenanceSelectors.InActiveCountryCheckBox).uncheck({force:true})
+            cy.get(MaintenanceSelectors.InActiveCountryCheckBox).uncheck({ force: true })
         }
         else {
-            cy.get(MaintenanceSelectors.InActiveCountryCheckBox).check({force:true})
+            cy.get(MaintenanceSelectors.InActiveCountryCheckBox).check({ force: true })
         }
     })
 }
 export function CreateCountry() {
     DefinePostCountryMockRequest()
     DefineGetByFilterRequest()
-    cy.Click(BaseSelectors.RedButton,BaseSelectors.ContainsOK);
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
 }
 function DefinePostCountryMockRequest() {
-    cy.intercept(RestAPI.POST,Urls.Countries, [true])
+    cy.intercept(RestAPI.POST, Urls.Countries, [true])
 }
 export function AssertCreateCountry() {
     AssertMockPostCountry();
     AssertGetByFilters();
 }
-export function AssertMockPostCountry(){
+export function AssertMockPostCountry() {
     BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow)
 }
-export function SearchCountry(CountryName:string) {
+export function SearchCountry(CountryName: string) {
     DefineCountryViewsGetByFiltersRequest(CountryName);
-        cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, CountryName);
-        AssertCountryViewsGetByFilters();
+    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, CountryName);
+    AssertCountryViewsGetByFilters();
 }
 export function AssertSearchCountry(CountryName: string) {
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
@@ -1154,7 +1149,7 @@ export function AssertSearchCountry(CountryName: string) {
 export function DefineCountryViewsGetByFiltersRequest(CountryName: string) {
     cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(CountryName + "&GetCount=false"), RequestAliases.GetFilterSearch);
 }
-export function AssertCountryViewsGetByFilters(){
+export function AssertCountryViewsGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
 }
 export function OpenCountry() {
@@ -1179,26 +1174,29 @@ export function EditCountry() {
 function DefinePutCountryRequest() {
     cy.DefineRequestWait(RestAPI.PUT, Urls.Countries, RequestAliases.PutCountry);
 }
-export function AssertEditCountry(){
+export function AssertEditCountry() {
     AssertPutCountry();
 }
-export function AssertPutCountry(){
+export function AssertPutCountry() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutCountry, 200).
-    //then(inActive)
-    then((interception) => {
-        CountryDetails.inActive = interception.request.body.inActive;
-    });
+        then((interception) => {
+            CountryDetails.inActive = interception.request.body.inActive;
+        });
 }
-export function CountryConversionEventsMapping(eventDetailsList: EventTypeDetails[] ): EventTypeDetails[]{
+export function CountryConversionEventsMapping(eventDetailsList: EventTypeDetails[]): EventTypeDetails[] {
     for (let i = 0; i < eventDetailsList.length; i++) {
-        if(CountryDetails.inActive){
+        if (CountryDetails.inActive) {
             eventDetailsList[i].Notes = eventDetailsList[i].Notes.replace(/\"status\"/gi, "Inactivated");
         }
-        else{
+        else {
             eventDetailsList[i].Notes = eventDetailsList[i].Notes.replace(/\"status\"/gi, "Activated");
- 
+
         }
     }
     return eventDetailsList;
+}
+export function ValidateErrorPopUpMessage(Message: string) {
+    cy.get(BaseSelectors.ErrorPopUp).should("contain.text", Message)
+
 }
 //#endregion

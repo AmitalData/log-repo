@@ -132,5 +132,6 @@ export class MaintenanceSelectors extends RegexSelectors {
     public static readonly CountryHasCitiesCheckBox = "#Country_HasCitiesList";
     public static readonly CountryNotes="#Country_Notes";
     public static readonly CountrySaveButton="#Country-Save"
+    public static readonly CountryEventsTab = "#CountryTHEvents"
     //#endregion
 }

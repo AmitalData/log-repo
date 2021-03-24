@@ -1,6 +1,6 @@
 export class CountryDetails {
      CountryCode: string;
-    public static CountryName: string;
+    CountryName: string;
     CountryLocalName: string;
     CountryGlobalZone: string;
     InactiveCountry: string;
