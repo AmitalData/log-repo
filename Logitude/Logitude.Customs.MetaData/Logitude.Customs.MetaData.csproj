@@ -326,6 +326,7 @@
     <None Include="DBTables\FclLclCode.dxml" />
     <None Include="DBTables\FreightPaymentMethod.dxml" />
     <None Include="DBTables\FuelType.dxml" />
+    <None Include="DBTables\FullnessCode.dxml" />
     <None Include="DBTables\GatepassRequest.dxml" />
     <None Include="DBTables\GatepassReturnCode.dxml" />
     <None Include="DBTables\Gender.dxml" />
@@ -480,6 +481,7 @@
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
     <None Include="EntityFiles\AutonomyRegionType.lxml" />
+    <None Include="EntityFiles\FullnessCode.lxml" />
     <None Include="EntityFiles\CancellationReasonRequestType.lxml" />
     <None Include="EntityFiles\CancellationRequestStatus.lxml" />
     <None Include="EntityFiles\DeclarationReferantData.lxml" />

@@ -524,6 +524,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(bankTable, bankObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(bankTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData FullnessCodeTable = closedSystemTables.Where(d => d.id == "1365").FirstOrDefault();
+            ObjectTable FullnessCodeObjectTable = objectTableRepository.GetObjectTableByName("Customs.FullnessCode", 0, false);
+            InsertClosedTableRecord(FullnessCodeTable, FullnessCodeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(FullnessCodeTable);
+
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData customsBranchTable = closedSystemTables.Where(d => d.id == "1118").FirstOrDefault();
             ObjectTable customsBranchObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomsBranch", 0, false);
             InsertClosedTableRecord(customsBranchTable, customsBranchObjectTable, customsClosedTables, customsClosedTableRepository);

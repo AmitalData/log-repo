@@ -201,6 +201,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<FclLclCode> FclLclCodes { get; }
 		 IDbSet<FreightPaymentMethod> FreightPaymentMethods { get; }
 		 IDbSet<FuelType> FuelTypes { get; }
+		 IDbSet<FullnessCode> FullnessCodes { get; }
 		 IDbSet<GatepassRequest> GatepassRequests { get; }
 		 IDbSet<GatepassReturnCode> GatepassReturnCodes { get; }
 		 IDbSet<Gender> Genders { get; }

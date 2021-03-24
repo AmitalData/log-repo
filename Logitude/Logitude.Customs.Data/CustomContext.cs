@@ -436,6 +436,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new FuelTypeMap());
 	
+            modelBuilder.Configurations.Add(new FullnessCodeMap());
+	
             modelBuilder.Configurations.Add(new GatepassRequestMap());
 	
             modelBuilder.Configurations.Add(new GatepassReturnCodeMap());
@@ -2344,6 +2346,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<FuelType> FuelTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<FullnessCode> FullnessCodes 
 	 {
 	      get; set;
 	 

@@ -164,6 +164,7 @@
     <Compile Include="EntityKeys\ExporterRoleTypeKeys.cs" />
     <Compile Include="EntityKeys\FclLclCodeKeys.cs" />
     <Compile Include="EntityKeys\FreightPaymentMethodKeys.cs" />
+    <Compile Include="EntityKeys\FullnessCodeKeys.cs" />
     <Compile Include="EntityKeys\GatepassRequestKeys.cs" />
     <Compile Include="EntityKeys\GatepassReturnCodeKeys.cs" />
     <Compile Include="EntityKeys\HazardousSubstanceKeys.cs" />
@@ -263,6 +264,7 @@
     <Compile Include="EntityListQueryServices\ExporterRoleTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\FclLclCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\FreightPaymentMethodListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\FullnessCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\GatepassRequestListQueryService.cs" />
     <Compile Include="EntityListQueryServices\GatepassReturnCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\Generated\AcceptanceStatusListQueryService.Generated.cs" />
@@ -328,6 +330,7 @@
     <Compile Include="EntityListQueryServices\Generated\ExporterRoleTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\FclLclCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\FreightPaymentMethodListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\FullnessCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\GatepassRequestListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\GatepassReturnCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\HazardousSubstanceListQueryService.Generated.cs" />
@@ -461,6 +464,7 @@
     <Compile Include="EntityLists\Generated\ExporterRoleTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\FclLclCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\FreightPaymentMethodList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\FullnessCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GatepassRequestList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GatepassReturnCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\HazardousSubstanceList.Generated.cs" />
@@ -561,6 +565,7 @@
     <Compile Include="EntityMapping\ExporterRoleTypeMap.cs" />
     <Compile Include="EntityMapping\FclLclCodeMap.cs" />
     <Compile Include="EntityMapping\FreightPaymentMethodMap.cs" />
+    <Compile Include="EntityMapping\FullnessCodeMap.cs" />
     <Compile Include="EntityMapping\GatepassRequestMap.cs" />
     <Compile Include="EntityMapping\GatepassReturnCodeMap.cs" />
     <Compile Include="EntityMapping\HazardousSubstanceMap.cs" />
@@ -660,6 +665,7 @@
     <Compile Include="EntityPOCOs\ExporterRoleType.cs" />
     <Compile Include="EntityPOCOs\FclLclCode.cs" />
     <Compile Include="EntityPOCOs\FreightPaymentMethod.cs" />
+    <Compile Include="EntityPOCOs\FullnessCode.cs" />
     <Compile Include="EntityPOCOs\GatepassRequest.cs" />
     <Compile Include="EntityPOCOs\GatepassReturnCode.cs" />
     <Compile Include="EntityPOCOs\HazardousSubstance.cs" />
@@ -760,6 +766,7 @@
     <Compile Include="Repsitories\ExporterRoleTypeRepository.cs" />
     <Compile Include="Repsitories\FclLclCodeRepository.cs" />
     <Compile Include="Repsitories\FreightPaymentMethodRepository.cs" />
+    <Compile Include="Repsitories\FullnessCodeRepository.cs" />
     <Compile Include="Repsitories\GatepassRequestRepository.cs" />
     <Compile Include="Repsitories\GatepassReturnCodeRepository.cs" />
     <Compile Include="Repsitories\Generated\AcceptanceStatusRepository.Generated.cs" />
@@ -825,6 +832,7 @@
     <Compile Include="Repsitories\Generated\ExporterRoleTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\FclLclCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\FreightPaymentMethodRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\FullnessCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\GatepassRequestRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\GatepassReturnCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\HazardousSubstanceRepository.Generated.cs" />
