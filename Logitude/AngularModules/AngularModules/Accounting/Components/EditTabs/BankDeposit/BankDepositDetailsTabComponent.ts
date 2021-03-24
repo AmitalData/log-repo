@@ -550,7 +550,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                 this.NoCashBookRows = true;
             }
 
-            if (this.IsOriginalCashbookLinesNeedeToFill) {
+            if (this.IsOriginalCashbookLinesNeedeToFill || this.OriginalCashbookLines.Length == 0) {
                 this.OriginalCashbookLines = this.CashbookLines;
                 this.IsOriginalCashbookLinesNeedeToFill = false;
             }
