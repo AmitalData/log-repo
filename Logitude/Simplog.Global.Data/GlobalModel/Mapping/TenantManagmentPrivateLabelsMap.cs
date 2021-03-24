@@ -25,6 +25,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.MainImageId).HasMaxLength(15);
             this.Property(t => t.LoginProgressImageId).HasMaxLength(15);
             this.Property(t => t.ForgetPasswordImageId).HasMaxLength(15);
+            this.Property(t => t.SecondaryColor).HasMaxLength(100).IsUnicode(false);
 
 
             this.ToTable("TenantManagmentPrivateLabels");
@@ -46,6 +47,8 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.MainColor).HasColumnName("MainColor");
             this.Property(t => t.LoginProgressImageId).HasColumnName("LoginProgressImageId");
             this.Property(t => t.ForgetPasswordImageId).HasColumnName("ForgetPasswordImageId");
+            this.Property(t => t.SecondaryColor).HasColumnName("SecondaryColor");
+            this.Property(t => t.HasLogboxAccess).HasColumnName("HasLogboxAccess");
 
 
             //this.HasRequired(t => t.GlobalTenant).WithOptional(t => t.TenantManagement);

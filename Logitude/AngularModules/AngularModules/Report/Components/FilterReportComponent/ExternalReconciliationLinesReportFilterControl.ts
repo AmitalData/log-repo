@@ -38,7 +38,7 @@ export class ExternalReconciliationLinesReportFilterControl extends BaseComponen
         super();
          this._entityResourceService.getEntityResourceByTableName("LedgerTransaction", 0).subscribe((response: any) => { this.IsScreenLoaded=true;});
     }
-
+    
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
         var month = new Date().getMonth();
@@ -97,7 +97,7 @@ export class ExternalReconciliationLinesReportFilterControl extends BaseComponen
         }
     }
 
-    public IncludesTransferGlaccount:boolean =false;
+    public IncludesTransferGlaccount:boolean =true;
 
     private externalReconciliationNumber: number;
     public get ExternalReconciliationNumber() { return this.externalReconciliationNumber; }

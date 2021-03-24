@@ -898,6 +898,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 InsertGLAccountMoreData(entityPM);
+                InsertGLAccountRecocileData(entityPM);
             }
 
             var gLAccountWithholdingTaxUpdateService = new GLAccountWithholdingTaxUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
@@ -2039,6 +2040,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }, false);
         }
 
+        
+            
         private void InterestPeriodUpdate(List<GLAccountInterestPeriodPM> GLAccountInterestPeriods, List<GLAccountInterestPeriodPM> DeletedGLAccountInterestPeriods, int Tenant)
         {
             var myGLAccountInterestPeriodUpdateService = new GLAccountInterestPeriodUpdateService(this.MainContext, new Dictionary<string, IContext>(), Tenant);
@@ -2332,6 +2335,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 // Allow to change 
             }
         }
+        private void InsertGLAccountRecocileData(GLAccountPM entityPM)
+        {
+            var myGLAccountRecocileDataUpdateService = new GLAccountRecocileDataUpdateService(this.MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+            myGLAccountRecocileDataUpdateService.Update(new GLAccountRecocileDataPM()
+            {
+                AccountId = entityPM.Id,
+                Tenant = entityPM.Tenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+
+
+
+            }, false);
+        }
     }
 
 
@@ -2383,5 +2399,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             //while Journal Aprove Update Balance- no need to  write AddAcitivityLog !!
             //base.AddAcitivityLog(entityPM, activityTypeCode);
         }
+       
+
     }
 }

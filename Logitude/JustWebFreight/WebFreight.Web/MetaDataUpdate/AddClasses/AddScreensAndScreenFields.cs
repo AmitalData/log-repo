@@ -20,7 +20,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 screen.NumberOfColumns = screenDetails.NumberOfColumns;
                 screen.NumberOfRows = screenDetails.NumberOfRows;
                 screen.Name = screenDetails.Name;
-                screen.QuerySection = screenDetails.QuerySection;
 
 
                 screenRepository.Update(screen);
@@ -38,7 +37,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     Id = IdCounter.GetNumber("Screen",screenDetails.Tenant).ToString(),
                     ObjectTableId = screenDetails.ObjectTableId,
                     Tenant = 0,
-                    QuerySection = screenDetails.QuerySection,
 
                 };
                 screenRepository.Add(newScreen);

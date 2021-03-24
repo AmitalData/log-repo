@@ -10,6 +10,8 @@ using Logitude.Server.Tools;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.EntityPMs; 
 using Logitude.TariffModule.Data;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.TariffModule.BL.EntityDataMappings
 {
@@ -30,7 +32,16 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 
         public void CustomPOCOToPM(TariffLinesContainersPricePM entityPM, TariffLinesContainersPrice entityPOCO)
         {
-            //throw new NotImplementedException();
+            CurrencyRepository currencyRepository = new CurrencyRepository(entityPOCO.Tenant);
+
+            if (!string.IsNullOrEmpty(entityPOCO.CurrencyId))
+            {
+                Currency currency = currencyRepository.GetSingleCurrency(entityPOCO.CurrencyId, entityPOCO.Tenant);
+                if (currency != null)
+                {
+                    entityPM.CurrencyCode = currency.Code;
+                }
+            }
         }
    }
 }

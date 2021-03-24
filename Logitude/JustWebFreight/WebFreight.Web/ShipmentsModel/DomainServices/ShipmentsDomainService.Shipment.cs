@@ -2511,14 +2511,14 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             return myResult;
         }
 
-        public ImporterQueriesDataCounts GetShipmentsQueriesCounts(int tenant, string transportModeId, string SearchFilter,string TypeCode = null)
-        {
-            SecurityUtility.AuthenticationOnTenant(tenant);
+        //public ImporterQueriesDataCounts GetShipmentsQueriesCounts(int tenant, string transportModeId, string SearchFilter,string TypeCode = null)
+        //{
+        //    SecurityUtility.AuthenticationOnTenant(tenant);
 
-            shipmentQuery = new ShipmentQuery(tenant);
-            ImporterQueriesDataCounts result = shipmentQuery.GetShipmentsQueriesCounts(tenant, transportModeId, SearchFilter, ServiceContext.User.Identity.Name, TypeCode);
-            return result;
-        }
+        //    shipmentQuery = new ShipmentQuery(tenant);
+        //    ImporterQueriesDataCounts result = shipmentQuery.GetShipmentsQueriesCounts(tenant, transportModeId, SearchFilter, ServiceContext.User.Identity.Name, TypeCode);
+        //    return result;
+        //}
 
         public ShipmentPM GetUnSecuredShipmentPMTest(int tenant)
         {

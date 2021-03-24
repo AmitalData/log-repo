@@ -469,31 +469,40 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         }
         private void TraceRoutingData()
         {
-            this.TraceRoutingDataPreCarriage();
-            this.TraceRoutingDataOnCarriage();
+            if (entityPM.ShipmentLevelCode == "H")
+            {
+                this.TraceRoutingDataPreForwarding();
+                this.TraceRoutingDataOnForwarding();
+            }
+
+            else
+            {
+                this.TraceRoutingDataPreCarriage();
+                this.TraceRoutingDataOnCarriage();
+            }
         }
         private void TraceRoutingDataPreCarriage()
         {
             this.TraceRoutingDateLocation(new RoutingDateArgs()
             {
                 EventCode = "PRCD",
-                EntityDate = entityPM.ShipmentLevelCode == "H" ? entityPM.PreForwardingATD : entityPM.PreCarriageATD,
-                EntityDate_Original = entityPM.ShipmentLevelCode == "H" ? entityPM.PreForwardingATD_Original : entityPM.PreCarriageATD_Original,
-                EntityPortId = entityPM.ShipmentLevelCode == "H" ? entityPM.PreForwardingFromPortId : entityPM.PreCarriageFromPortId,
-                DataBaseDate = entityPM.ShipmentLevelCode == "H" ? entityPoco.PreForwardingATD : entityMasterData.PreCarriageATD,
-                DataBasePortId = entityPM.ShipmentLevelCode == "H" ? entityPoco.PreForwardingFromPortId : entityMasterData.PreCarriageFromPortId,
-                EventNotes = "From " + (entityPM.ShipmentLevelCode == "H" ? entityPM.PreForwardingFromPortName : entityPM.PreCarriageFromPortName)
+                EntityDate = entityPM.PreCarriageATD,
+                EntityDate_Original = entityPM.PreCarriageATD_Original,
+                EntityPortId = entityPM.PreCarriageFromPortId,
+                DataBaseDate = entityMasterData.PreCarriageATD,
+                DataBasePortId = entityMasterData.PreCarriageFromPortId,
+                EventNotes = "From " + entityPM.PreCarriageFromPortName
             });
 
             this.TraceRoutingDateLocation(new RoutingDateArgs()
             {
                 EventCode = "PRCA",
-                EntityDate = entityPM.ShipmentLevelCode == "H" ? entityPM.PreForwardingATA : entityPM.PreCarriageATA,
-                EntityDate_Original = entityPM.ShipmentLevelCode == "H" ? entityPM.PreForwardingATA_Original : entityPM.PreCarriageATA_Original,
-                EntityPortId = entityPM.ShipmentLevelCode == "H" ? entityPM.PreForwardingToPortId : entityPM.PreCarriageToPortId,
-                DataBaseDate = entityPM.ShipmentLevelCode == "H" ? entityPoco.PreForwardingATA : entityMasterData.PreCarriageATA,
-                DataBasePortId = entityPM.ShipmentLevelCode == "H" ? entityPoco.PreForwardingToPortId : entityMasterData.PreCarriageToPortId,
-                EventNotes = "To " + entityPM.ShipmentLevelCode == "H" ? entityPM.PreForwardingToPortName : entityPM.PreCarriageToPortName
+                EntityDate = entityPM.PreCarriageATA,
+                EntityDate_Original = entityPM.PreCarriageATA_Original,
+                EntityPortId = entityPM.PreCarriageToPortId,
+                DataBaseDate = entityMasterData.PreCarriageATA,
+                DataBasePortId = entityMasterData.PreCarriageToPortId,
+                EventNotes = "To " + entityPM.PreCarriageToPortName
             });
         }
         private void TraceRoutingDataOnCarriage()
@@ -501,23 +510,72 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             this.TraceRoutingDateLocation(new RoutingDateArgs()
             {
                 EventCode = "ONCD",
-                EntityDate = entityPM.ShipmentLevelCode == "H" ? entityPM.OnForwardingATD : entityPM.OnCarriageATD,
-                EntityDate_Original = entityPM.ShipmentLevelCode == "H" ? entityPM.OnForwardingATD_Original : entityPM.OnCarriageATD_Original,
-                EntityPortId = entityPM.ShipmentLevelCode == "H" ? entityPM.OnForwardingFromPortId : entityPM.OnCarriageFromPortId,
-                DataBaseDate = entityPM.ShipmentLevelCode == "H" ? entityPoco.OnForwardingATD : entityMasterData.OnCarriageATD,
-                DataBasePortId = entityPM.ShipmentLevelCode == "H" ? entityPoco.OnForwardingFromPortId : entityMasterData.OnCarriageFromPortId,
-                EventNotes = "From " + (entityPM.ShipmentLevelCode == "H" ? entityPM.OnForwardingFromPortName : entityPM.OnCarriageFromPortName)
+                EntityDate = entityPM.OnCarriageATD,
+                EntityDate_Original = entityPM.OnCarriageATD_Original,
+                EntityPortId = entityPM.OnCarriageFromPortId,
+                DataBaseDate = entityMasterData.OnCarriageATD,
+                DataBasePortId = entityMasterData.OnCarriageFromPortId,
+                EventNotes = "From " + entityPM.OnCarriageFromPortName
             });
 
             this.TraceRoutingDateLocation(new RoutingDateArgs()
             {
                 EventCode = "ONCA",
-                EntityDate = entityPM.ShipmentLevelCode == "H" ? entityPM.OnForwardingATA : entityPM.OnCarriageATA,
-                EntityDate_Original = entityPM.ShipmentLevelCode == "H" ? entityPM.OnForwardingATA_Original : entityPM.OnCarriageATA_Original,
-                EntityPortId = entityPM.ShipmentLevelCode == "H" ? entityPM.OnForwardingToPortId : entityPM.OnCarriageToPortId,
-                DataBaseDate = entityPM.ShipmentLevelCode == "H" ? entityPoco.OnForwardingATA : entityMasterData.OnCarriageATA,
-                DataBasePortId = entityPM.ShipmentLevelCode == "H" ? entityPoco.OnForwardingToPortId : entityMasterData.OnCarriageToPortId,
-                EventNotes = "To " + (entityPM.ShipmentLevelCode == "H" ? entityPM.OnForwardingToPortName : entityPM.OnCarriageToPortName)
+                EntityDate = entityPM.OnCarriageATA,
+                EntityDate_Original = entityPM.OnCarriageATA_Original,
+                EntityPortId = entityPM.OnCarriageToPortId,
+                DataBaseDate = entityMasterData.OnCarriageATA,
+                DataBasePortId = entityMasterData.OnCarriageToPortId,
+                EventNotes = "To " + entityPM.OnCarriageToPortName
+            });
+        }
+
+        private void TraceRoutingDataPreForwarding()
+        {
+            this.TraceRoutingDateLocation(new RoutingDateArgs()
+            {
+                EventCode = "PRFD",
+                EntityDate = entityPM.PreForwardingATD,
+                EntityDate_Original = entityPM.PreForwardingATD_Original,
+                EntityPortId = entityPM.PreForwardingFromPortId,
+                DataBaseDate = entityPoco.PreForwardingATD,
+                DataBasePortId = entityPoco.PreForwardingFromPortId,
+                EventNotes = "From " + entityPM.PreForwardingFromPortName
+            });
+
+            this.TraceRoutingDateLocation(new RoutingDateArgs()
+            {
+                EventCode = "PRFA",
+                EntityDate = entityPM.PreForwardingATA,
+                EntityDate_Original = entityPM.PreForwardingATA_Original,
+                EntityPortId = entityPM.PreForwardingToPortId,
+                DataBaseDate = entityPoco.PreForwardingATA,
+                DataBasePortId = entityPoco.PreForwardingToPortId,
+                EventNotes = "To " + entityPM.PreForwardingToPortName
+            });
+        }
+        private void TraceRoutingDataOnForwarding()
+        {
+            this.TraceRoutingDateLocation(new RoutingDateArgs()
+            {
+                EventCode = "ONFD",
+                EntityDate = entityPM.OnForwardingATD,
+                EntityDate_Original = entityPM.OnForwardingATD_Original,
+                EntityPortId = entityPM.OnForwardingFromPortId,
+                DataBaseDate = entityPoco.OnForwardingATD,
+                DataBasePortId = entityPoco.OnForwardingFromPortId,
+                EventNotes = "From " + entityPM.OnForwardingFromPortName
+            });
+
+            this.TraceRoutingDateLocation(new RoutingDateArgs()
+            {
+                EventCode = "ORFA",
+                EntityDate = entityPM.OnForwardingATA,
+                EntityDate_Original = entityPM.OnForwardingATA_Original,
+                EntityPortId = entityPM.OnForwardingToPortId,
+                DataBaseDate = entityPoco.OnForwardingATA,
+                DataBasePortId = entityPoco.OnForwardingToPortId,
+                EventNotes = "To " + entityPM.OnForwardingToPortName
             });
         }
 
@@ -1395,13 +1453,25 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                 case "ONCD":
                     {
-                        myResult = entityPM.ShipmentLevelCode == "H" ? entityPM.OnForwardingFromPortCode : entityPM.OnCarriageFromPortCode;
+                        myResult = entityPM.OnCarriageFromPortCode;
                         break;
                     }
 
+                case "ONFD":
+                    {
+                        myResult = entityPM.OnForwardingFromPortCode;
+                        break;
+                    } 
+
                 case "ONCA":
                     {
-                        myResult = entityPM.ShipmentLevelCode == "H" ? entityPM.OnForwardingToPortCode : entityPM.OnCarriageToPortCode;
+                        myResult = entityPM.OnCarriageToPortCode;
+                        break;
+                    }
+
+                case "ORFA":
+                    {
+                        myResult = entityPM.OnForwardingToPortCode;
                         break;
                     }
 
@@ -1431,13 +1501,25 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                 case "PRCD":
                     {
-                        myResult = entityPM.ShipmentLevelCode == "H" ? entityPM.PreForwardingFromPortCode : entityPM.PreCarriageFromPortCode;
+                        myResult = entityPM.PreCarriageFromPortCode;
+                        break;
+                    }
+
+                case "PRFD":
+                    {
+                        myResult = entityPM.PreForwardingFromPortCode;
                         break;
                     }
 
                 case "PRCA":
                     {
-                        myResult = entityPM.ShipmentLevelCode == "H" ? entityPM.PreForwardingToPortCode : entityPM.PreCarriageToPortCode;
+                        myResult = entityPM.PreCarriageToPortCode;
+                        break;
+                    }
+
+                case "PRFA":
+                    {
+                        myResult = entityPM.PreForwardingToPortCode;
                         break;
                     }
 

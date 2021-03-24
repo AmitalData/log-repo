@@ -13,14 +13,11 @@ import { Validator } from '../../../../Infrastructure/Validators/Validator';
 
 export class AddEditTariffLineComponent  {
   public StartDate: any;
-
-
     public TariffType: string;
     public EntityPM: TariffLinePM;
     public DataContext: any;
     public ObjectTableName: string = "TariffLine";
     private CurrentSession = SessionLocator.SelectedSession;
-
     public ValidationErrorsList: string[];
     public OriginDependencyFilterValue: string = "A";
     public DestinationDependencyFilterValue = "A";
@@ -114,8 +111,27 @@ export class AddEditTariffLineComponent  {
                     errors.push("From port or From All Other Ports is Required");
                 }
 
-                if (AppTool.IsNullOrEmpty(this.DataContext.CurrencyId)) {
-                    errors.push("Currency Field is Required");
+                if (this.DataContext.IsDifferentCurrenciesPerCharge) {
+                    if (this.TariffType == "OFS") {
+                        if (this.DataContext.ContainerPricesItemsSource.filter(d => AppTool.IsNullOrEmpty(d.CurrencyId)).length > 0) {
+                            errors.push("Some Containers Prices missing Currency");
+                        }
+                    }
+
+                    else {
+                        for (var i = 1; i <= 10; i++) {
+                            if (this.DataContext.FatherComponent["Surcharge" + i + "PriceVisibility"]) {
+                                if (AppTool.IsNullOrEmpty(this.DataContext["Surcharge" + i + "CurrencyId"])) {
+                                    errors.push("Surcharge " + i + " Currency Field is Required");
+                                }
+                            }
+                        }
+                    }
+                }
+                else {
+                    if (AppTool.IsNullOrEmpty(this.DataContext.CurrencyId)) {
+                        errors.push("Currency Field is Required");
+                    }
                 }
             }
         }
@@ -137,7 +153,8 @@ export class AddEditTariffLineComponent  {
                 if (this.DataContext.ContainerPricesItemsSource) {
                     this.DataContext.ContainerPricesItemsSource.forEach((item) => {
                         if (item.IsNewEntity && (!AppTool.IsNullOrZero(item.Price1) || !AppTool.IsNullOrZero(item.Price2) || !AppTool.IsNullOrZero(item.Price3)
-                            || !AppTool.IsNullOrZero(item.Price4) || !AppTool.IsNullOrZero(item.Price5)) || !AppTool.IsNullOrZero(item.CostPrice)) {
+                            || !AppTool.IsNullOrZero(item.Price4) || !AppTool.IsNullOrZero(item.Price5)) || !AppTool.IsNullOrZero(item.CostPrice)
+                            || !AppTool.IsNullOrEmpty(item.CurrencyId)) {
 
                             if (this.EntityPM.ContainersPrices.indexOf(item.EntityPM) == -1) {
                                 this.EntityPM.AddTariffLinesContainersPrice(item.EntityPM);
@@ -201,6 +218,17 @@ export class AddEditTariffLineComponent  {
             this.myCloner.AddField('Surcharge9MinPrice');
             this.myCloner.AddField('Surcharge10MinPrice');
 
+            this.myCloner.AddField('Surcharge1CurrencyId');
+            this.myCloner.AddField('Surcharge2CurrencyId');
+            this.myCloner.AddField('Surcharge3CurrencyId');
+            this.myCloner.AddField('Surcharge4CurrencyId');
+            this.myCloner.AddField('Surcharge5CurrencyId');
+            this.myCloner.AddField('Surcharge6CurrencyId');
+            this.myCloner.AddField('Surcharge7CurrencyId');
+            this.myCloner.AddField('Surcharge8CurrencyId');
+            this.myCloner.AddField('Surcharge9CurrencyId');
+            this.myCloner.AddField('Surcharge10CurrencyId');
+
             this.myCloner.AddField('IsFromAllOtherPorts');
             this.myCloner.AddField('IsToAllOtherPorts');
             this.myCloner.AddField('Index');
@@ -208,6 +236,7 @@ export class AddEditTariffLineComponent  {
             this.myCloner.AddField('DestinationPortText');
             this.myCloner.AddField('CurrencyId');
             this.myCloner.AddField('CurrencyCode');
+            this.myCloner.AddField('IsDifferentCurrenciesPerCharge');
         }
 
         this.myCloner.AddEntity(this.EntityPM);

@@ -1,0 +1,14 @@
+﻿<Script DBType="Main" Module="Shipment" >
+  <Sql Version="1">
+    <![CDATA[
+
+update EventTypes set IsFollowUp = 1, FollowUpEnglishName = 'Pre Forwarding Departure', FollowUpLocalName = 'Pre Forwarding Departure' where Code = 'PRFD'
+update EventTypes set IsFollowUp = 1, FollowUpEnglishName = 'Pre Forwarding Arrival', FollowUpLocalName = 'Pre Forwarding Arrival' where Code = 'PRFA'
+update EventTypes set IsFollowUp = 1, FollowUpEnglishName = 'On Forwarding Departure', FollowUpLocalName = 'On Forwarding Departure' where Code = 'ONFD'
+update EventTypes set IsFollowUp = 1, FollowUpEnglishName = 'On Forwarding Arrival', FollowUpLocalName = 'On Forwarding Arrival' where Code = 'ONFA'
+
+    update ObjectTableLastUpdates set LastUpdateDate = GETDATE() where ObjectTableId = (select id from ObjectTables where Name = 'EventType')
+
+    ]]>
+  </Sql>
+</Script>

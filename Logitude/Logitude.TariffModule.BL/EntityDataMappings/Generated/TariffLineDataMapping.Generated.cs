@@ -90,7 +90,18 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Surcharge9MinPrice, 
 	         Surcharge10MinPrice, 
 	         CurrencyId, 
-	         TransitTime,
+	         TransitTime, 
+	         IsDifferentCurrenciesPerCharge, 
+	         Surcharge1CurrencyId, 
+	         Surcharge2CurrencyId, 
+	         Surcharge3CurrencyId, 
+	         Surcharge4CurrencyId, 
+	         Surcharge5CurrencyId, 
+	         Surcharge6CurrencyId, 
+	         Surcharge7CurrencyId, 
+	         Surcharge8CurrencyId, 
+	         Surcharge9CurrencyId, 
+	         Surcharge10CurrencyId,
 	      }
 
 
@@ -185,7 +196,18 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         IsPrice6Minus, 
 	         IsPrice7Minus, 
 	         IsPrice8Minus, 
-	         LineEdited,
+	         LineEdited, 
+	         IsDifferentCurrenciesPerCharge, 
+	         Surcharge1CurrencyId, 
+	         Surcharge2CurrencyId, 
+	         Surcharge3CurrencyId, 
+	         Surcharge4CurrencyId, 
+	         Surcharge5CurrencyId, 
+	         Surcharge6CurrencyId, 
+	         Surcharge7CurrencyId, 
+	         Surcharge8CurrencyId, 
+	         Surcharge9CurrencyId, 
+	         Surcharge10CurrencyId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -532,6 +554,61 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransitTime))
             {
 				entityPOCO.TransitTime = entityPM.TransitTime;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDifferentCurrenciesPerCharge))
+            {
+				entityPOCO.IsDifferentCurrenciesPerCharge = entityPM.IsDifferentCurrenciesPerCharge;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge1CurrencyId))
+            {
+				entityPOCO.Surcharge1CurrencyId = entityPM.Surcharge1CurrencyId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge2CurrencyId))
+            {
+				entityPOCO.Surcharge2CurrencyId = entityPM.Surcharge2CurrencyId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge3CurrencyId))
+            {
+				entityPOCO.Surcharge3CurrencyId = entityPM.Surcharge3CurrencyId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge4CurrencyId))
+            {
+				entityPOCO.Surcharge4CurrencyId = entityPM.Surcharge4CurrencyId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge5CurrencyId))
+            {
+				entityPOCO.Surcharge5CurrencyId = entityPM.Surcharge5CurrencyId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge6CurrencyId))
+            {
+				entityPOCO.Surcharge6CurrencyId = entityPM.Surcharge6CurrencyId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge7CurrencyId))
+            {
+				entityPOCO.Surcharge7CurrencyId = entityPM.Surcharge7CurrencyId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge8CurrencyId))
+            {
+				entityPOCO.Surcharge8CurrencyId = entityPM.Surcharge8CurrencyId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge9CurrencyId))
+            {
+				entityPOCO.Surcharge9CurrencyId = entityPM.Surcharge9CurrencyId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge10CurrencyId))
+            {
+				entityPOCO.Surcharge10CurrencyId = entityPM.Surcharge10CurrencyId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -885,6 +962,61 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.TransitTime = entityPOCO.TransitTime;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsDifferentCurrenciesPerCharge))
+            {
+					entityPM.IsDifferentCurrenciesPerCharge = entityPOCO.IsDifferentCurrenciesPerCharge;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge1CurrencyId))
+            {
+					entityPM.Surcharge1CurrencyId = entityPOCO.Surcharge1CurrencyId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge2CurrencyId))
+            {
+					entityPM.Surcharge2CurrencyId = entityPOCO.Surcharge2CurrencyId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge3CurrencyId))
+            {
+					entityPM.Surcharge3CurrencyId = entityPOCO.Surcharge3CurrencyId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge4CurrencyId))
+            {
+					entityPM.Surcharge4CurrencyId = entityPOCO.Surcharge4CurrencyId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge5CurrencyId))
+            {
+					entityPM.Surcharge5CurrencyId = entityPOCO.Surcharge5CurrencyId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge6CurrencyId))
+            {
+					entityPM.Surcharge6CurrencyId = entityPOCO.Surcharge6CurrencyId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge7CurrencyId))
+            {
+					entityPM.Surcharge7CurrencyId = entityPOCO.Surcharge7CurrencyId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge8CurrencyId))
+            {
+					entityPM.Surcharge8CurrencyId = entityPOCO.Surcharge8CurrencyId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge9CurrencyId))
+            {
+					entityPM.Surcharge9CurrencyId = entityPOCO.Surcharge9CurrencyId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge10CurrencyId))
+            {
+					entityPM.Surcharge10CurrencyId = entityPOCO.Surcharge10CurrencyId;
+            }
+
 		}
 
 		public void PMToOldPM(TariffLinePM entityPM, TariffLinePM oldEntityPM)
@@ -1229,6 +1361,61 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransitTime))
             {
                 oldEntityPM.TransitTime = entityPM.TransitTime;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDifferentCurrenciesPerCharge))
+            {
+                oldEntityPM.IsDifferentCurrenciesPerCharge = entityPM.IsDifferentCurrenciesPerCharge;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge1CurrencyId))
+            {
+                oldEntityPM.Surcharge1CurrencyId = entityPM.Surcharge1CurrencyId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge2CurrencyId))
+            {
+                oldEntityPM.Surcharge2CurrencyId = entityPM.Surcharge2CurrencyId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge3CurrencyId))
+            {
+                oldEntityPM.Surcharge3CurrencyId = entityPM.Surcharge3CurrencyId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge4CurrencyId))
+            {
+                oldEntityPM.Surcharge4CurrencyId = entityPM.Surcharge4CurrencyId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge5CurrencyId))
+            {
+                oldEntityPM.Surcharge5CurrencyId = entityPM.Surcharge5CurrencyId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge6CurrencyId))
+            {
+                oldEntityPM.Surcharge6CurrencyId = entityPM.Surcharge6CurrencyId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge7CurrencyId))
+            {
+                oldEntityPM.Surcharge7CurrencyId = entityPM.Surcharge7CurrencyId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge8CurrencyId))
+            {
+                oldEntityPM.Surcharge8CurrencyId = entityPM.Surcharge8CurrencyId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge9CurrencyId))
+            {
+                oldEntityPM.Surcharge9CurrencyId = entityPM.Surcharge9CurrencyId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge10CurrencyId))
+            {
+                oldEntityPM.Surcharge10CurrencyId = entityPM.Surcharge10CurrencyId;
             }
 			
 		}

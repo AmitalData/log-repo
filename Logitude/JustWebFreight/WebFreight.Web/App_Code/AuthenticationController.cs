@@ -905,6 +905,8 @@ namespace WebFreight.Web
 
                     loginsList = loginsList.Where(s => s.LicensedUser == true || s.IsUser == false).OrderBy(c => c.CompanyName).ToList();
 
+                    List<string> logboxAccessiblePrivateLabelTenantsIds = GetLogboxAccessiblePrivateLabelTenantsIds(url);
+
                     if (loginsList.Count == 1)
                     {
                         CompanyLogin companyAccess = loginsList.First();
@@ -928,7 +930,7 @@ namespace WebFreight.Web
                         }
                         else
                         {
-                            if (privatelabel == null && !string.IsNullOrEmpty(companyAccess.PrivateLabelId))
+                            if (privatelabel == null && (!string.IsNullOrEmpty(companyAccess.PrivateLabelId) && !logboxAccessiblePrivateLabelTenantsIds.Contains(companyAccess.PrivateLabelId)))
                             {
                                 data = new UserData()
                                 {
@@ -957,7 +959,7 @@ namespace WebFreight.Web
                                 };
                             }
                             else
-                            { 
+                            {
                                 data = PostLoginData(new LoginParameters()
                                 {
 
@@ -991,7 +993,7 @@ namespace WebFreight.Web
                         }
                         else
                         {
-                            temp = loginsList.Where(a => a.PrivateLabelId == null).ToList();
+                            temp = loginsList.Where(a => a.PrivateLabelId == null || (a.PrivateLabelId != null && logboxAccessiblePrivateLabelTenantsIds.Contains(a.PrivateLabelId))).ToList();
                         }
                         if (temp.Count == 1)
                         {
@@ -1175,7 +1177,18 @@ namespace WebFreight.Web
                 return data;
             }
         }
-        
+
+        private List<string> GetLogboxAccessiblePrivateLabelTenantsIds(string url)
+        {
+            List<string> logboxAccessiblePrivateLabelTenantsIds = new List<string>();
+            if (url.Contains("system.logbox.co.il") || url.Contains("localhost"))
+            {
+                TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(0);
+                logboxAccessiblePrivateLabelTenantsIds = query.GetLogboxAccessibleTenantManagmentPrivateLabelsIds();
+            }
+            return logboxAccessiblePrivateLabelTenantsIds;
+        }
+
         private UserData CheckCaptchaState(LoginParameters loginParameters , bool withoutCheckUsed = false)
         {
             CaptchaHelper captchaHelper = new CaptchaHelper();

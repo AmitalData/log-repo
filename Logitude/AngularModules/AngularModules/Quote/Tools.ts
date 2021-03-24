@@ -3,6 +3,7 @@ import {AppTool, ArrayTool} from '../Infrastructure/Tools';
 import {QuoteStageList} from './EntityLists/QuoteStageList';
 import {QuoteStageListService} from './Services/StandardLists/QuoteStageListService';
 import { QuoteUtilities } from './Utilities/QuoteUtilities';
+import { SessionLocator } from '../Infrastructure/Utilities/SessionLocator';
 
 export class QuoteTool {
     public static IsQuoteEditEnabled(entityPM: QuotePM) {
@@ -110,6 +111,7 @@ export class QuoteTool {
                                 case "GWKG": { myCostQuantity = entityPM.GrossWeightInKG; break; }
                                 case "VCBM": { myCostQuantity = entityPM.VolumeInCBM; break; }
                                 case "PDCW": { myCostQuantity = entityPM.PickupDeliveryChargeableWeight; break; }
+                                case "PFCL": { myCostQuantity = ArrayTool.Sum(entityPM.QuoteCharges.filter(d => d.CostCurrencyId != SessionLocator.LocalCurrencyId && d.CostMeasurementCode != "PFCL"), "CostTotalAmountLocal"); break; }
                                 default: { break; }
                             }
 
@@ -128,6 +130,7 @@ export class QuoteTool {
                                 case "GWKG": { mySaleQuantity = entityPM.GrossWeightInKG; break; }
                                 case "VCBM": { mySaleQuantity = entityPM.VolumeInCBM; break; }
                                 case "PDCW": { mySaleQuantity = entityPM.PickupDeliveryChargeableWeight; break; }
+                                case "PFCL": { mySaleQuantity = ArrayTool.Sum(entityPM.QuoteCharges.filter(d => d.SaleCurrencyId != SessionLocator.LocalCurrencyId && d.SaleMeasurementCode != "PFCL"), "SaleTotalAmountLocal"); break; }
                                 default: { break; }
                             }
 
@@ -199,6 +202,11 @@ export class QuoteTool {
         if (entityPM.QuoteTypeCode == "A") {
             if (entityPM.QuoteCharges.filter(d => d.SaleUnitPrice != null || d.CostUnitPrice != null).length > 0) {
                 var entityQuantity: number = null;
+
+                //"PFCL"
+                if (entityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PFCL" || f.SaleMeasurementCode == "PFCL").length > 0) {
+                    myResult = this.CheckUpdateMessageforPFCL(entityPM);
+                }
 
                 //"GRWT"
                 entityQuantity = entityPM.GrossWeight;
@@ -328,6 +336,29 @@ export class QuoteTool {
         }
 
         return myResult;
+    }
+
+    private static CheckUpdateMessageforPFCL(entityPM: QuotePM): boolean {
+        var isDifferentOrders = false;
+        var PFCL_CostQuantity = ArrayTool.Sum(entityPM.QuoteCharges.filter(d => d.CostCurrencyId != SessionLocator.LocalCurrencyId && d.CostMeasurementCode != "PFCL"), "CostTotalAmountLocal");
+        var PFCL_SaleQuantity = ArrayTool.Sum(entityPM.QuoteCharges.filter(d => d.SaleCurrencyId != SessionLocator.LocalCurrencyId && d.SaleMeasurementCode != "PFCL"), "SaleTotalAmountLocal");;
+
+        if (AppTool.IsNullOrZero(PFCL_CostQuantity)) {
+            PFCL_CostQuantity = 0;
+        }
+
+        if (AppTool.IsNullOrZero(PFCL_SaleQuantity)) {
+            PFCL_SaleQuantity = 0;
+        }
+
+        if (entityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PFCL" && f.CostQuantity != null && f.CostQuantity != 0 && f.CostQuantity != PFCL_CostQuantity).length > 0) {
+            isDifferentOrders = true;
+        }
+
+        if (entityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "PFCL" && f.SaleQuantity != null && f.SaleQuantity != 0 && f.SaleQuantity != PFCL_SaleQuantity).length > 0) {
+            isDifferentOrders = true;
+        }
+        return isDifferentOrders;
     }
     private static CheckUpdateQuantities_FCL(entityPM: QuotePM) {
         var myResult: boolean = false;
