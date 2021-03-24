@@ -1,9 +1,7 @@
 @smoke @release @stable @c
-Feature: APInvoice Aprrove, cancel the approvement and void
-    After the user logging in the system and Update Accounting System to be None,navigates to shipments workspace
-    will create a direct shipment,update routing tab,packages.
-    add payables, create and approve an APInvoice
-    cancel the approvement and void the invoice.
+Feature: AP Invoice Approve, Cancel Approval and Void
+    The user creates a Direct Export Air shipment, updates routings and packages, adds payable, 
+    creates AP Invoice, approves the AP Invoice, cancels the AP Invoice approval and voids the AP Invoice.
 
     Scenario: Update Accounting System
         Given the user logged in

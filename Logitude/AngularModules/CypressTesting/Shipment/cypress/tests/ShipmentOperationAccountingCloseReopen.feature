@@ -1,8 +1,8 @@
 @smoke @stable 
-Feature:  Closing and reopening direct shipment
-  After the user logging in the system and navigate to shipments workspace
-  will create a direct shipment, after that cclose and reopen it operationally and Accountly.
-
+Feature:  Operation Accounting Close and Reopen Direct Export Air Shipment
+ The user creates a Direct Export Air Shipment, operationally closes the shipment, 
+ closes accounting, reopens accounting and operationally reopens the shipment.
+ 
   Scenario: Create direct export air shipment
     Given the user logged in and navigates to shipments workspace
     And a direct shipment with the following details

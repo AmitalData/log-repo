@@ -1,8 +1,7 @@
 @smoke @stable
-Feature: Copy direct export air shipment
-    After the user logging in the system and navigate to shipments workspace
-    will will create a direct shipment and copy it.
-
+Feature: Copy Direct Export Air Shipment
+    The user creates a Direct Export Air shipment and copies it.
+    
     Scenario: Create direct export air shipment
         Given the user logged in and navigates to shipments workspace
         And a direct shipment with the following details

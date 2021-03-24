@@ -1,9 +1,8 @@
-@smoke @release @stable 
-Feature: ARInvoice Approve, set as sent and void
-    After the user logging in the system and Update Accounting System to be None,navigates to shipments workspace
-    will create a direct shipment,update routing tab,packages.
-    add payables, generate receivables from payables, create and approve an ARInvoice,
-    set as sent and void the invoice.
+@release @stable
+
+Feature:AR Invoice Create Customs Invoice
+  The user activates customs, creates a customer, creates a Direct Export Air shipment, 
+  updates routings and packages, adds a receivable, creates and approves customs AR Invoice.
 
     Scenario: Update Accounting System
         Given the user logged in
@@ -11,12 +10,9 @@ Feature: ARInvoice Approve, set as sent and void
         When change the accounting system
         Then the accounting system should update successfully
 
-    Scenario: enable void invoice settings
-        Given the user navigates to "invoice settings" in maintenance menu
-        Given accounting settings with the following details
-            | VoidInvoice | Allowed |
-        When update invoice settings
-        Then the invoice setting should update successfully
+    Scenario: Activate Customs Management in Shipments
+        When the user activate customs settings
+        Then the customs settings should activate successfully
 
     Scenario: Create customer
         Given the user navigates to customers workspace
@@ -58,23 +54,11 @@ Feature: ARInvoice Approve, set as sent and void
         When update shipment
         Then the direct should update successfully
 
-    Scenario: Add Payables
-        Given a payable with the following details
-            | ChargesType  | AFT  |
-            | UOM          | GRWT |
-            | Quantity     | 5    |
-            | UnitPrice    | 10   |
-            | Currency     | EUR  |
-            | ExchangeRate | 4    |
-        When add payables
-        Then the payables should add successfully
-
-    Scenario: Add Charges in Receivables by generating from payables
-        When generate receivables from payables
-        Then the receivables should generate successfully
-
-    Scenario: Create ARInvoice
-        Given an ARInvoice with a random invoice number and the following details
+    Scenario: Create customs ARInvoice
+        Given a receivable with the following details
+            | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
+            | AFT         | GRWT | 5        | 20        | EUR      | 4            |
+        And an ARInvoice with the following details
             | PartnerType         | Customer    |
             | InvoiceCurrency     | EUR         |
             | InvoiceExchangeRate | 4           |
@@ -90,11 +74,3 @@ Feature: ARInvoice Approve, set as sent and void
     Scenario: Approve ARInvoice
         When approve invoice
         Then the invoice should approve successfully
-
-    Scenario: Set ARInvoice as sent
-        When set invoice as sent
-        Then the invoice should set as sent successfully
-
-    Scenario: Void ARInvoice
-        When void invoice
-        Then the invoice should void successfully

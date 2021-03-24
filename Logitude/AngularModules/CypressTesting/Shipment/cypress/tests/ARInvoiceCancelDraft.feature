@@ -1,8 +1,6 @@
 @release @stable
-Feature: ARInvoice Cancel Credit note draft
-    After the user logging in the system and Update Accounting System to be None,navigates to shipments workspace
-    will create a direct shipment, after that create a credit note ARInvoice and cancel draft.
-
+Feature: AR Invoice Cancel Draft
+    The user creates a Direct Export Air shipment, creates receivable, creates AR Invoice draft and cancels it.
     Scenario: Update Accounting System
         Given the user logged in
         Given accounting System as "None"
@@ -11,7 +9,7 @@ Feature: ARInvoice Cancel Credit note draft
 
     Scenario: Create direct export air shipment
         Given the user navigates to shipments workspace
-        And a direct shipment with the following details
+        Given a direct shipment with the following details
             | ShipmentLevel        | Direct            |
             | Direction            | Export            |
             | TransportMode        | Air               |
@@ -21,11 +19,11 @@ Feature: ARInvoice Cancel Credit note draft
         When create shipment
         Then the shipment should create successfully
 
-    Scenario: Create credit note ARInvoice
+    Scenario: Create ARInvoice
         Given a receivable with the following details
             | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
-            | AFT         | GRWT | 5        | -10       | EUR      | 4            |
-        And a credit ARInvoice with a random invoice number and the following details
+            | AFT         | GRWT | 5        | 20        | EUR      | 4            |
+        And an ARInvoice with a random invoice number and the following details
             | PartnerType         | Customer    |
             | InvoiceCurrency     | EUR         |
             | InvoiceExchangeRate | 4           |
@@ -38,6 +36,6 @@ Feature: ARInvoice Cancel Credit note draft
         When create invoice
         Then the invoice should create successfully
 
-    Scenario: Cancel draft credit note ARInvoice
+    Scenario: Cancel draft ARInvoice
         When cancel draft
         Then the invoice should cancel successfully

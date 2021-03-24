@@ -1,10 +1,7 @@
-@release @stable
-
-Feature: Create customs ARInvoice
-    After the user logging in the system and Update Accounting System to be None,Activate Customs Management in Shipments,
-    navigates to shipments workspace
-    will create a customer and direct shipment, after that update routing
-    and packages tabs, create customs ARInvoice and approve it.
+@release @stable 
+Feature: AR Invoice Create Customs Credit Note
+    The user activates customs, creates a customer, creates a Direct Export Air shipment, updates routings and packages,
+     adds a receivable, creates and approves customs AR Invoice, creates and approves customs credit note.
 
     Scenario: Update Accounting System
         Given the user logged in
@@ -56,11 +53,11 @@ Feature: Create customs ARInvoice
         When update shipment
         Then the direct should update successfully
 
-    Scenario: Create customs ARInvoice
+    Scenario: Create customs credit note ARInvoice
         Given a receivable with the following details
             | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
-            | AFT         | GRWT | 5        | 20        | EUR      | 4            |
-        And an ARInvoice with the following details
+            | AFT         | GRWT | 5        | -20       | EUR      | 4            |
+        And a customs credit note ARInvoice with a random invoice number and the following details
             | PartnerType         | Customer    |
             | InvoiceCurrency     | EUR         |
             | InvoiceExchangeRate | 4           |
@@ -73,6 +70,6 @@ Feature: Create customs ARInvoice
         When create invoice
         Then the invoice should create successfully
 
-    Scenario: Approve ARInvoice
+    Scenario: Approve customs credit note ARInvoice
         When approve invoice
         Then the invoice should approve successfully
