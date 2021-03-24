@@ -17,7 +17,7 @@ import {ObjectsLocator} from '../../../Locators/ObjectsLocator';
              </div>
 
 `,
-    inputs: ['htmlListComponentUrl', 'htmlListComponentName', 'fieldName', 'rowData', 'PassAdditionalData', 'AdditionalData', 'AdditionalDataCustom','SearchTerm']
+    inputs: ['htmlListComponentUrl', 'htmlListComponentName', 'fieldName', 'rowData', 'PassAdditionalData', 'AdditionalData', 'AdditionalDataCustom', 'SearchTerm', 'EntityChangedData']
 })
  
 export class ListTemplateComponent implements OnInit {
@@ -31,6 +31,7 @@ export class ListTemplateComponent implements OnInit {
     public AdditionalDataCustom: any;
     public SearchTerm: string;
     public RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);
+    public LoadedComponent: any;
 
     constructor(private _elementRef: ElementRef, private _ViewContainerRef: ViewContainerRef, private CD: ChangeDetectorRef) {
         this.noComponent = false;
@@ -39,13 +40,13 @@ export class ListTemplateComponent implements OnInit {
     public noComponent: boolean;
 
     ngOnInit() {
-
         if (this.htmlListComponentName && this.htmlListComponentUrl) {
             this.noComponent = false;
             if (this.PassAdditionalData == true) {
                 SessionLocator.DynamicLoader.Load(this.htmlListComponentUrl, this._ViewContainerRef)
                     .then((res) => {
                         //console.log("specific response: ", res);
+                        this.LoadedComponent = res.instance;
                         res.instance.setVariables(this.rowData, this.fieldName, this.AdditionalData, this.AdditionalDataCustom);
                     });
             }
@@ -53,16 +54,32 @@ export class ListTemplateComponent implements OnInit {
                 SessionLocator.DynamicLoader.Load(this.htmlListComponentUrl, this._ViewContainerRef)
                     .then((res) => {
                         //console.log("specific response: ", res);
+                        this.LoadedComponent = res.instance;
                         res.instance.setVariables(this.rowData, this.fieldName, this.AdditionalDataCustom);
                     });
             }
-            
+
         }
         else {
             this.noComponent = true;
         }
-
+        
         //this.CD.detectChanges();
+    }
+
+    public get EntityChangedData() {
+        return;// this.test;
+    }
+    public set EntityChangedData(newValue: any) {
+        this.rowData = newValue;
+        this.LoadData();
+        this.CD.detectChanges();
+    }
+
+    private LoadData() {
+        if (this.LoadedComponent) {
+            this.LoadedComponent.setVariables(this.rowData, this.fieldName, this.AdditionalData, this.AdditionalDataCustom);
+        }
     }
     
 }
