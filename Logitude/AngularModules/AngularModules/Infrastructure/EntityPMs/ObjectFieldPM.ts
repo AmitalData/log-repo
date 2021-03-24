@@ -608,10 +608,11 @@ export class ObjectFieldPM {
     public set EnableFullscreenTextBox(newValue: boolean) { if (this.enableFullscreenTextBox != newValue) { this.enableFullscreenTextBox = newValue; this.MarkAsDirty("EnableFullscreenTextBox"); } }
        
 
-    private entityType: boolean;
-    public get EntityType() { return this.entityType; }
-    public set EntityType(newValue: boolean) { if (this.entityType != newValue) { this.entityType = newValue; this.MarkAsDirty("EntityType"); } }
-    
+    private additionalQuerySections: string;
+    public get AdditionalQuerySections() { return this.additionalQuerySections; }
+    public set AdditionalQuerySections(newValue: string) { if (this.additionalQuerySections != newValue) { this.additionalQuerySections = newValue; this.MarkAsDirty("AdditionalQuerySections"); } }
+
+
     public OldEntityPM: ObjectFieldPM;
 		
     public IsDirty: boolean;

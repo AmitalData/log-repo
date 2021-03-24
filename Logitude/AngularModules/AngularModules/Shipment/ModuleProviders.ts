@@ -1,3 +1,4 @@
+
 import {AccountingInformationIdentifierListService} from './Services/StandardLists/AccountingInformationIdentifierListService';
 import {AWBChargesCodeListService} from './Services/StandardLists/AWBChargesCodeListService';
 import {AWBCustomsInformationListService} from './Services/StandardLists/AWBCustomsInformationListService';
@@ -32,6 +33,12 @@ import { CustomsTransferHeaderPMService } from './Services/StandardPMs/CustomsTr
 import { AWBAdditionalHandlingInfoListService } from './Services/StandardLists/AWBAdditionalHandlingInfoListService';
 import { ShipmentSubTypeListService } from './Services/StandardLists/ShipmentSubTypeListService';
 import { ShipmentSubTypePMService } from './Services/StandardPMs/ShipmentSubTypePMService';
+
+//import { ShipmentTabsService } from './MetaDataServices/TabsServices/ShipmentTabsService';
+//import { ShipmentHeaderScreenService } from './MetaDataServices/HeaderScreenServices/ShipmentHeaderScreenService';
+//import { ShipmentMenuButtonService } from './MetaDataServices/MenuButtonServices/ShipmentMenuButtonService';
+
+
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -78,7 +85,12 @@ export class ModuleProviders {
 
             // Handler
             case "MessagingStockMenuButtonsHandler": { myResult = new MessagingStockMenuButtonsHandler(); break; }
-            case "ShipmentMenuButtonsHandler": { myResult = new ShipmentMenuButtonsHandler(); break; }                           
+            case "ShipmentMenuButtonsHandler": { myResult = new ShipmentMenuButtonsHandler(); break; }
+            //case "ShipmentTabsService": { myResult = new ShipmentTabsService(); break; }
+            //case "ShipmentHeaderScreenService": { myResult = new ShipmentHeaderScreenService(); break; }
+            //case "ShipmentMenuButtonService": { myResult = new ShipmentMenuButtonService(); break; }
+
+                
         }
 
         return myResult;

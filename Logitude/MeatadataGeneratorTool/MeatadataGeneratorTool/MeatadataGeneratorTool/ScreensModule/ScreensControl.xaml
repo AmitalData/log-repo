@@ -40,19 +40,12 @@
                                    VerticalAlignment="Center"
                                    FontWeight="Bold"
                                    Text="Code :" />
-                        
+
                         <TextBlock Height="25"
                                    Margin="5"
                                    VerticalAlignment="Center"
                                    FontWeight="Bold"
                                    Text="Name :" />
-
-                        <TextBlock Height="25"
-                                   Margin="5"
-                                   VerticalAlignment="Center"
-                                   FontWeight="Bold"
-                                   Text="Query Section :" />
-
 
                         <TextBlock Width="80"
                                    Height="25"
@@ -80,14 +73,6 @@
                                  VerticalAlignment="Center"
                                  Text="{Binding Name,
                                                 Mode=TwoWay}" />
-
-                        <TextBox Height="25"
-                                 Margin="5"
-                                 VerticalAlignment="Center"
-                                 Text="{Binding QuerySection,
-                                                Mode=TwoWay}" />
-                        
-
                         <CheckBox Height="25"
                                   Margin="5"
                                   VerticalAlignment="Center"

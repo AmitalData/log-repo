@@ -596,7 +596,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="EntityType"
+    Name="AdditionalQuerySections"
+    OldNames="EntityType"
     Type="varchar"
     Size="200">
     <Constraints
