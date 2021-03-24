@@ -187,12 +187,10 @@ import { ToolTipFloatDirective } from './Utilities/RTLDirectives/ToolTipFloatDir
 import { SendDocumentResultComponent } from './Components/Maintenance/Automation/AutomationResult/SendDocumentResultComponent';
 
 import { PrivateLabelLoginProcessComponent } from './Components/LoginComponent/PrivateLabelComponents/PrivateLabelLoginProcessComponent';
-
-import { HybridLoginProcessComponent } from './Components/LoginComponent/CustomLoginComponents/HybridLabels/Components/HybridLoginProcessComponent';
-import { AutomationConditionsDetailsComponent } from './Components/Maintenance/Automation/AutomationConditionsDetailsComponent';
 import { AutomationsConditionsViewDetailsComponent } from './Components/Maintenance/Automation/AutomationsConditionsViewDetailsComponent';
-
-
+import { AutomationConditionsDetailsComponent } from './Components/Maintenance/Automation/AutomationConditionsDetailsComponent';
+ 
+ 
 
 
 
@@ -392,8 +390,7 @@ export const Components =
         FTBSchedulerTemplateComponent,
 
         PrivateLabelLoginProcessComponent,
-
-        HybridLoginProcessComponent,
+         
         AutomationConditionsDetailsComponent,
         AutomationsConditionsViewDetailsComponent
 
