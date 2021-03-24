@@ -19,10 +19,9 @@ namespace WebFreight.Web.DataProviders
         public string IsExternalReconciled { get; set; }
         public bool IncludesTransferGlaccount { get; set; }
         public int? ExternalReconciliationNumber { get; set; }
-
+      
         public List<BankDetails> BankDetails { get; set; }
-
-
+      
     }
 
     public class ExternalReconciliationPeriod
@@ -45,6 +44,7 @@ namespace WebFreight.Web.DataProviders
         public string BankAccountId { get; set; }
         public bool IsDuplicated { get; set; }
         public string ExternalPageLineId { get; set; }
+        public string GLAccountId { get; set; }
     }
 
     public class BankDetails
@@ -63,7 +63,20 @@ namespace WebFreight.Web.DataProviders
 
         public decimal? TotalOpen { get; set; }
 
-         
+        public decimal? GlaccountTotalOpened { get; set; }
+
+        public decimal? GlaccountTotalClosed { get; set; }
+
+        public decimal? TransferTotalOpened { get; set; }
+
+        public decimal? TransferTotalClosed { get; set; }
+
+        public decimal? BankTotalOpened { get; set; }
+
+        public decimal? BankTotalClosed { get; set; }
+
+        public decimal? TotalInLocalCurrency { get; set; }
+
     }
 
 }

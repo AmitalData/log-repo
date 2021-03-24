@@ -1898,6 +1898,8 @@ namespace WebFreight.Web.WebServices
                             }
                         }
 
+                        packageline.IsDangerous = package.IsDangerous ? "Yes" : "No";
+
                         //InsidePackages
                         foreach (InsideShipmentPackage insideItem in insidePackages)
                         {

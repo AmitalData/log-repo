@@ -653,7 +653,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         private static Milestone GetMostRecentEstimatedMilestone(List<Milestone> milestones)
         {
             return milestones.Where(s => s.IsEstimation == true && s.EstimationDate != null)
-                                                        .OrderByDescending(s => s.Date).ThenByDescending(s => s.Id)
+                                                        .OrderBy(s => s.Date).ThenByDescending(s => s.Id)
                                                         .FirstOrDefault();
         }
 
