@@ -361,7 +361,7 @@ export class SendDeclarationService implements OnDestroy {
                     if (UnifreightResponseStatus) {
                         //busyIndicatorStartEvent.Publish(new BusyIndicatorStartEventArgs() { Start = true, Message = TextCodeTranslator.Translate("Customs.General.O.Sending") });
                         //var IFritz_feature = FeatureLocator.Features.filter(d => d.Code == "IFRITZ")[0];
-                        if (FeatureLocator.IsFeatureGrantedByCode("IFRITZ")) {//    o        לאחר שמירה ובדיקת שדות לשליחה, יש לבדוק Feature כפי שבודקים במסך חשבון ספק
+                        if (FeatureLocator.IsFeatureGrantedByCode("IFRITZ") || FeatureLocator.IsFeatureGrantedByCode("ICL") ) {//    o        לאחר שמירה ובדיקת שדות לשליחה, יש לבדוק Feature כפי שבודקים במסך חשבון ספק
                             console.log("FritzFeatureIsON .. ");
                             this.UnifreightRequestExpenseFreight();
 
