@@ -67,7 +67,7 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     private initComponent() {
-        document.body.style.background = "#fff";
+        // document.body.style.background = "#fff";
     }
 
     private captchaCode: string = "";

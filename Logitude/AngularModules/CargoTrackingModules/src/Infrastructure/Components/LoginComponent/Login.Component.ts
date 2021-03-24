@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit {
     }
 
     private initComponent() {
-        document.body.style.background = "#fff";
+        // document.body.style.background = "#fff";
     }
 
     public passEyeClicked() {

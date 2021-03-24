@@ -57,6 +57,7 @@ export class ShipmentsListComponent implements AfterViewInit
 
 
         this.InitComponent();
+        this.SetDefaultBackgroundColor();
 
     }
     ngAfterViewInit(): void
@@ -64,6 +65,11 @@ export class ShipmentsListComponent implements AfterViewInit
         this.GetPreservedToggleFiltersFromSessionInfo();
         this.GetCompanyLoginsFromCache();
 
+    }
+
+    private SetDefaultBackgroundColor()
+    {
+        document.documentElement.style.setProperty('--BGColor', 'RGB(250,251,252)');
     }
 
     private GetPreservedToggleFiltersFromSessionInfo()
@@ -79,7 +85,7 @@ export class ShipmentsListComponent implements AfterViewInit
     {
 
         this.InitForm();
-
+        ''.substring(''.indexOf('('))
     }
 
     private GetCompanyLoginsFromCache()
@@ -100,7 +106,12 @@ export class ShipmentsListComponent implements AfterViewInit
 
         this.InvitedCustomers = SessionInfo.LoggedUserCompanyLogins
             .filter(d => d.CardType == 'CS' && d.CardId != null && d.Tenant == this.tenant)
-            .map(d => ({ IsSelected: false, ...d }));
+            .map(d => (
+                {
+                    IsSelected: false,
+                    Name: d.CompanyName.substring(0,d.CompanyName.indexOf('(')),
+                    ...d }
+                ));
 
 
         console.log("[Invited Customers]", this.InvitedCustomersIds);
@@ -358,6 +369,7 @@ export class ShipmentsListComponent implements AfterViewInit
     ClearFilters()
     {
         this.SelectedFilters = [];
+        this.ClearAdvancedFilters();
         this.LoadScreenData();
     }
 
@@ -402,6 +414,12 @@ export class ShipmentsListComponent implements AfterViewInit
     FocusOnSearchInput(){
         this.searchInput.nativeElement.focus();
     }
+
+
+    public get SelectedCustomers() : any[] {
+        return this.InvitedCustomers.filter(customer=>customer.IsSelected) || [];
+    }
+
 }
 
 export class ToggleFilter

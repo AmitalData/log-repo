@@ -53,14 +53,16 @@
     <div class="clearFix hide-mobile"></div>
 
     <!-- PC: Search Filters -->
-    <div class="selected-filters" *ngIf="SelectedFilters.length > 0">
+    <div class="selected-filters" *ngIf="SelectedFilters.length > 0 || SelectedCustomers.length > 0 ">
         <ul>
             <li *ngFor="let filter of SelectedFilters" (click)="DeselectFilter(filter)">
                 {{filter.Name}}
-                <span style=" font-size: 24px;
-                            font-weight: 400;
-                            position: absolute;
-                            padding-left: 9px; ">×</span>
+                <span class="filter-close-btn">×</span>
+            </li>
+
+            <li *ngFor="let customer of SelectedCustomers" (click)="customer.IsSelected=false">
+                {{customer.Name}}
+                <span class="filter-close-btn">×</span>
             </li>
 
             <li class="clear" (click)="ClearFilters()">Clear</li>
@@ -304,7 +306,7 @@
 
                     <div class="checkbox-filteritem" *ngFor="let customer of InvitedCustomers">
                         <CheckBox [Bind]="'IsSelected'" [Value]="customer.IsSelected"
-                            [Text]="customer.CompanyName" [DataContext]="customer"></CheckBox>
+                            [Text]="customer.Name" [DataContext]="customer"></CheckBox>
                         <!-- <div style="float: right;" class="counter">0</div> -->
                     </div>
 
