@@ -44,6 +44,8 @@ namespace Simplog.Data.Helpers
         [DataMember]
         public string PartnerObjectFieldCode { get; set; }
 
+        [DataMember]
+        public Boolean IsValid { get; set; }
     }
 }
 
