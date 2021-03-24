@@ -2361,21 +2361,27 @@ namespace WebFreight.Web.ReportsWebServices
             return invoicedataprovider;
         }
 
-        private  void SetBillToSalesMan(InvoiceDataProvider invoicedataprovider,  Card billToCard)
+        private  string GetBillToSalesManUserName( Card billToCard)
         {
-            UserRepository userRepository = new UserRepository(billToCard.Tenant);
-            User salesman = userRepository.GetSingleUser(billToCard.SalesmanUserId, billToCard.Tenant, false);
-            if (salesman != null)
+            User salesman = GetSalesmanUser(billToCard);
+            var SalesManUserName = "";
+            if (salesman?.Contact != null)
             {
-                if (salesman.Contact != null)
-                {
                     Contact loggedcontact = GetLoggedContact(billToCard.Tenant);
                     var showLocals = !loggedcontact.DontShowLocalLabels;
                     var englishName = salesman.Contact.EnglishName;
                     var localName = salesman.Contact.LocalName;
-                    invoicedataprovider.BillToSalesMan = showLocals ? (localName == null ? englishName : localName) : englishName;
-                }
+                    SalesManUserName = showLocals ? (localName == null ? englishName : localName) : englishName;
             }
+
+            return SalesManUserName;
+        }
+
+        private static User GetSalesmanUser(Card billToCard)
+        {
+            UserRepository userRepository = new UserRepository(billToCard.Tenant);
+            User salesman = userRepository.GetSingleUser(billToCard.SalesmanUserId, billToCard.Tenant, false);
+            return salesman;
         }
 
         public static string FirstCharToUpper(string input)
@@ -2848,7 +2854,7 @@ namespace WebFreight.Web.ReportsWebServices
                         invoiceDataProvider.BillTo = billToCard.EnglishName != null ? billToCard.EnglishName + Environment.NewLine : "";
                         invoiceDataProvider.BillTo_LocalName = billToCard.LocalName != null ? billToCard.LocalName : "";
                         invoiceDataProvider.BillToCustomerCode = billToCard.Code;
-                        SetBillToSalesMan(invoiceDataProvider, billToCard);
+                        invoiceDataProvider.BillToSalesMan = GetBillToSalesManUserName(billToCard);
 
                         if (!string.IsNullOrEmpty(entityPOCO.BillToAddressId))
                         {
