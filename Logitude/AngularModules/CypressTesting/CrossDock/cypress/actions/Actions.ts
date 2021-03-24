@@ -63,7 +63,7 @@ export function ValidateEntryDisableFields() {
     cy.Click(CrossdockSelectors.WarehouseEntryGeneralTab, null);
     BaseAssertion.AssertElementHaveClasss(CrossdockSelectors.CrossdockExpectedEntryDateDiv,BaseSelectors.HaveClass, CrossdockSelectors.ContainsDatePickerDisabled)
     cy.Click(CrossdockSelectors.WarehouseEntryPackagesTab+BaseSelectors.LastElement,null);
-    BaseAssertion.AssertElementDisabled(BaseSelectors.SettingsButton, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(CrossdockSelectors.WarehousePackageEditButton, BaseSelectors.BeDisabled)
 }
 
 function NavigateToShipmentEntryConnectedEntities() {

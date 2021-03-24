@@ -112,7 +112,6 @@ Then("entry fields will be disable", () => {
 Then("linked entry status should be {string}", (status) => {
     cy.BackButton(BaseSelectors.ContainsShipment);
     BaseAssertion.AssertElementContain(CrossdockSelectors.CrossdockStatus(CrossdockContext.EntryNumber),status)
-
 });
 //#endregion
 

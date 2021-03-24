@@ -16,6 +16,7 @@ export class CrossdockSelectors {
     public static readonly WarehouseEntryGeneralTab = "#WarehouseEntryTHGeneral"
     public static readonly WarehouseEntryPackagesTab = "#WarehouseEntryTHPackages"
     public static readonly ContainsDatePickerDisabled = "DatePickerInputDivDisabled"
+    public static readonly WarehousePackageEditButton = "button[id^='Edit']"
     // public static readonly
 
 
