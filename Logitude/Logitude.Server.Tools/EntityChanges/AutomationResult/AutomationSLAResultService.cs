@@ -50,8 +50,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 }
 
                 else
-                {
-                    entityChangesAutomation.ConditionsList = validateResult.ConditionsList;
+                { 
                     entityChangesAutomation.DoneDate = TenantServerConfigration.GetCurrentDateTime(entityChange.Tenant);
                     automationResultArgs.MainEntityChangeService.EntityChangesAutomationsFailedList.Add(entityChangesAutomation);
                     entityChangesAutomation.ExecutionTime = (int)((DateTime.Now.Ticks - dateBefore.Ticks) / TimeSpan.TicksPerMillisecond);

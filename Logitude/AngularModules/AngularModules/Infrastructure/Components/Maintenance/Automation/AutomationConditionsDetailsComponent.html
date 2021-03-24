@@ -15,11 +15,11 @@
     <tr style="height:5px"><td><div style="height:5px"></div></td></tr>
     <!--ALL Conditions in this area-->
 
-    <tr style="height:180px">
+    <tr style="height:180px; overflow-x: auto;">
 
         <td>
 
-            <AutomationsConditionsViewDetailsComponent [AutomationCondationLists]="AutomationCondationAndList" [Title]="'Conditions (meet ALL Conditions in this area)'" [TiggerComponent]="DataContext" [CondationListType]="'And'" [IsDisabled]="true" [ListHeight]="'150px'"></AutomationsConditionsViewDetailsComponent>
+            <AutomationsConditionsViewDetailsComponent *ngIf="IsAtuomationResourceReady" [AutomationCondationLists]="AutomationCondationAndList" [Title]="'Conditions (meet ALL Conditions in this area)'" [TiggerComponent]="DataContext" [CondationListType]="'And'" [IsDisabled]="true" [ListHeight]="'150px'"></AutomationsConditionsViewDetailsComponent>
 
         </td>
 
@@ -31,13 +31,13 @@
     <tr style="height:180px">
 
         <td>
-            <AutomationsConditionsViewDetailsComponent [AutomationCondationLists]="AutomationCondationOrList" [Title]="'Conditions (meet ANY Conditions in this area)'" [TiggerComponent]="DataContext" [CondationListType]="'Or'" [IsDisabled]="true" [ListHeight]="'150px'"></AutomationsConditionsViewDetailsComponent>
+            <AutomationsConditionsViewDetailsComponent *ngIf="IsAtuomationResourceReady" [AutomationCondationLists]="AutomationCondationOrList" [Title]="'Conditions (meet ANY Conditions in this area)'" [TiggerComponent]="DataContext" [CondationListType]="'Or'" [IsDisabled]="true" [ListHeight]="'150px'"></AutomationsConditionsViewDetailsComponent>
         </td>
 
 
     </tr>
 
-     
+
     <!--Close Area-->
     <tr style="height: 32px;">
         <td style="vertical-align: bottom">
@@ -45,7 +45,7 @@
                 <tr>
                     <td>
                         <div></div>
-                    </td> 
+                    </td>
 
                     <td style="width: 57px;">
                         <button class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>

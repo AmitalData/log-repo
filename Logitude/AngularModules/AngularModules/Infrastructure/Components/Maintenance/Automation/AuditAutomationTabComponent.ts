@@ -57,29 +57,21 @@ export class AuditAutomationTabComponent implements OnInit, AfterViewInit {
         //this.ReportList = windowArgs.ReportList;
     }
 
-    ShowCondithionsDetails() {
-        var entityChange: EntityChangePM = this.EntityChangeListSelected;
-       // newItem.CreatedBy = SessionLocator.LoggedUserPM.EnglishName;
-        ////newItem.UpdatedBy = SessionLocator.LoggedUserPM.EnglishName;
-       // newItem.TriggerType = "O";
-       // newItem.Tenant = SessionLocator.Tenant;
-       // newItem.Type = this.SchedulerType;
-
-        var windowArgs: any = {}; 
-
-        var logWindow = new LogitudeWindow(); 
+    ShowCondithionsDetails(item) { 
+        let windowArgs: any = {};  
+        let logWindow = new LogitudeWindow(); 
         logWindow.DataContext = this;
         logWindow.Height = 800;
         logWindow.Width = 840;
         logWindow.Title = "Conditions Statuses";
         logWindow.DataContext = this;
-        windowArgs.CurrentEntityPM = this.AutomationList;
+        windowArgs.CurrentEntityPM = item; 
+        windowArgs.AutomationHistoryPM = item;
         windowArgs.DataViewModel = this;
         logWindow.WindowArgs = windowArgs;
         logWindow.IsShowCloseButton = true;
         logWindow.Show('./Infrastructure/Components/Maintenance/Automation/AutomationConditionsDetailsComponent');
-        logWindow.WindowClosed.subscribe(closed => {
-         //   this.IsEditReportSchedulerEventAlreadyExist = false;
+        logWindow.WindowClosed.subscribe(closed => { 
         });
     }
 

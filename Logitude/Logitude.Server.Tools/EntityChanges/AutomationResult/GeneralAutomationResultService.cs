@@ -40,37 +40,38 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 int conditionAndCount = automationConditionList.Where(d => d.ConditionType == "And").Count();
                 int conditionOrCount = automationConditionList.Where(d => d.ConditionType == "Or").Count();
 
+                 bool validconditionAndList = true;
+
 
                 if (conditionOrCount == 0) validconditionOr = true;
                 foreach (AutomationCondition automationCondition in automationConditionList.Where(d => d.ConditionType == "And"))
                 {
-                     
+                    
                     validconditionAnd = ValidateCondition(automationConditionFields, automationCondition, entityChange);
-
-                    // Add condition list with the result 
+                     
                     validateResult.ConditionsList.Add(automationCondition);
+                     
+                    if (!validconditionAnd)
+                    {
+                        validconditionAndList = false;
+                    }
 
-                    // Delete this condition to check all automation list
                     //if (!validconditionAnd) break;
                 }
-
-                // Check ValidConditionOr even if ValidConditionAnd is false
-               // if (validconditionAnd)
-               // {
-                    foreach (AutomationCondition automationCondition in automationConditionList.Where(d => d.ConditionType == "Or"))
+                 
+                // if (validconditionAnd)
+                // {
+                foreach (AutomationCondition automationCondition in automationConditionList.Where(d => d.ConditionType == "Or"))
                     {
                         validconditionOr = ValidateCondition(automationConditionFields, automationCondition, entityChange);
-
-                        // Add condition list with the result
+                     
                         validateResult.ConditionsList.Add(automationCondition);
-
-                        // Delete to check all automation list
+                     
                         //if (validconditionOr) break;
                     }
-                // }
-
+                // } 
                 
-                if (validconditionAnd && validconditionOr) IsConditionValid = true;
+                if (validconditionAndList && validconditionOr) IsConditionValid = true;
             }
 
             else IsConditionValid = true; 
