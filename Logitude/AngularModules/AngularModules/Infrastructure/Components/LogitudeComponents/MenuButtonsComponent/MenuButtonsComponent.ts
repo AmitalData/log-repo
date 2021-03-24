@@ -142,7 +142,7 @@ export class MenuButtonsComponent implements OnDestroy {
         }
 
 
-        buttons = this.GetObjectTableMenuButtonsByQuerySection(this.QuerySection);
+       // buttons = this.GetObjectTableMenuButtonsByQuerySection(this.QuerySection);
 
         var objectTableName = this.ObjectTable.Name;
         if (objectTableName.indexOf('Customs.') > -1) {

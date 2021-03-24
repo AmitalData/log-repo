@@ -1268,7 +1268,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.IRSNumber = billToCard.IRSNumber;
                     invoicedataprovider.BillToCustomerCode = billToCard.Code;
                     invoicedataprovider.ReceivablesExternalID = billToCard.ReceivablesAccountingCard;
-                    SetBillToSalesMan(invoicedataprovider, userRepository, billToCard);
+                    
                     Address billToCardAddress = addressRepository.GetSingleAddress(currentInvoice.BillToAddressId, tenant);
                     if (billToCardAddress != null)
                     {
@@ -2361,14 +2361,16 @@ namespace WebFreight.Web.ReportsWebServices
             return invoicedataprovider;
         }
 
-        private static void SetBillToSalesMan(InvoiceDataProvider invoicedataprovider, UserRepository userRepository, Card billToCard)
+        private  void SetBillToSalesMan(InvoiceDataProvider invoicedataprovider,  Card billToCard)
         {
+            UserRepository userRepository = new UserRepository(billToCard.Tenant);
             User salesman = userRepository.GetSingleUser(billToCard.SalesmanUserId, billToCard.Tenant, false);
             if (salesman != null)
             {
                 if (salesman.Contact != null)
                 {
-                    var showLocals = !salesman.Contact.DontShowLocalLabels;
+                    Contact loggedcontact = GetLoggedContact(billToCard.Tenant);
+                    var showLocals = !loggedcontact.DontShowLocalLabels;
                     var englishName = salesman.Contact.EnglishName;
                     var localName = salesman.Contact.LocalName;
                     invoicedataprovider.BillToSalesMan = showLocals ? (localName == null ? englishName : localName) : englishName;
@@ -2662,7 +2664,6 @@ namespace WebFreight.Web.ReportsWebServices
                 List<ChargesType> allChargesTypes = (from d in commonContext.ChargesTypes where d.Tenant == tenant select d).ToList();
                 invoiceDataProvider.AccountDisplayNumber = GetGLAccountDisplayNumberByBillToId(entityPOCO);
                 Contact loggedcontact = GetLoggedContact(entityPOCO.Tenant);
-
                 #region Tenant Properties
                 Tenant myTenant = (from a in commonContext.Tenants where a.Id == tenant select a).FirstOrDefault();
                 if (myTenant != null)
@@ -2847,6 +2848,7 @@ namespace WebFreight.Web.ReportsWebServices
                         invoiceDataProvider.BillTo = billToCard.EnglishName != null ? billToCard.EnglishName + Environment.NewLine : "";
                         invoiceDataProvider.BillTo_LocalName = billToCard.LocalName != null ? billToCard.LocalName : "";
                         invoiceDataProvider.BillToCustomerCode = billToCard.Code;
+                        SetBillToSalesMan(invoiceDataProvider, billToCard);
 
                         if (!string.IsNullOrEmpty(entityPOCO.BillToAddressId))
                         {
