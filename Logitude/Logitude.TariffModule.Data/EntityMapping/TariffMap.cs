@@ -119,6 +119,8 @@ namespace Logitude.TariffModule.Data.EntityMapping
 
             this.Property(t => t.TariffProductId).HasColumnName("TariffProductId").HasMaxLength(15).IsUnicode(false);
 
+            this.Property(t => t.SellerPartnerTypeId).HasColumnName("SellerPartnerTypeId").HasMaxLength(2).IsUnicode(false);
+
             this.Property(t => t.LastUsedDate).HasColumnName("LastUsedDate");
 
             this.Property(t => t.FreightChargeId).HasColumnName("FreightChargeId").HasMaxLength(15).IsUnicode(false);
