@@ -1458,6 +1458,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         default: { break; }
                     }
                 }
+
+                List<ShipmentPickUpPM> deletedPickups = initializer.ShipmentPickUpsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete).ToList();
+                foreach (ShipmentPickUpPM deletedPickup in deletedPickups)
+                {
+                    this.entityPM.ShipmentPickUps.Remove(deletedPickup);
+                }
             }
         }
         private void UpdateShipmentDeliveriesCollection()
@@ -1489,6 +1495,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         default: { break; }
                     }
                 }
+
+                List<ShipmentDeliveryPM> deletedDeliveries = initializer.ShipmentDeliveriesChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete).ToList();
+                foreach (ShipmentDeliveryPM deletedDelivery in deletedDeliveries)
+                {
+                    this.entityPM.ShipmentDeliveries.Remove(deletedDelivery);
+                }
             }
         }
         private void UpdateShipmentPayablesCollection()
@@ -1519,6 +1531,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
+                }
+
+                List<ShipmentPayablePM> deletedPayables = initializer.ShipmentPayablesChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete).ToList();
+                foreach (ShipmentPayablePM deletedPayable in deletedPayables)
+                {
+                    this.entityPM.ShipmentPayables.Remove(deletedPayable);
                 }
             }
         }
@@ -1552,6 +1570,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
+                }
+
+                List<ShipmentReceivablePM> deletedReceivables = initializer.ShipmentReceivablesChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete).ToList();
+                foreach (ShipmentReceivablePM deletedReceivable in deletedReceivables)
+                {
+                    this.entityPM.ShipmentReceivables.Remove(deletedReceivable);
                 }
             }
         }
@@ -5338,7 +5362,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 shipmentPayableRepository.Remove(itemPoco);
                 calculateProfit = true;
-                calculatePayables = true;
+                calculatePayables = true;                
             }
         }
         private void CreateChildPayable(ShipmentPayablePM childPayablePM, string parentId)
