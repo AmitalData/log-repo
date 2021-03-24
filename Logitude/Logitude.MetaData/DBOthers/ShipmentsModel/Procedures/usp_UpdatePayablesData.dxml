@@ -1095,12 +1095,7 @@ BEGIN
 						
 							-- Compute Amounts
 							BEGIN
-								set @ExpectedAmount = @Quantity * @UnitPrice
-
-								if (@MasterPayableMeasurementId = @PRFR_Id)
-								BEGIN
-									set @ExpectedAmount = @Quantity * @UnitPrice / 100
-								END
+								set @ExpectedAmount = @Quantity * @UnitPrice / 100
 
 								if (@MasterPayableAmountTypeCode = 'NEXP')
 								begin

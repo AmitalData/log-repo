@@ -856,7 +856,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                     }
 
                     var newPrice: number = 0;                    
-                    if (feightPayable.MeasurementCode == "PRVL" || feightPayable.MeasurementCode == "PRFR") {
+                    if (feightPayable.MeasurementCode == "PRVL" || feightPayable.MeasurementCode == "PRFR" || feightPayable.MeasurementCode == "PFCL") {
                         var price = loadedResult.ActualPrice * 100;
                         newPrice = AppTool.Round(price / quantity, 3);
                     }
@@ -909,7 +909,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                             }
 
                             var newPrice: number = 0;
-                            if (surchargePayable.MeasurementCode == "PRVL" || surchargePayable.MeasurementCode == "PRFR") {
+                            if (surchargePayable.MeasurementCode == "PRVL" || surchargePayable.MeasurementCode == "PRFR" || surchargePayable.MeasurementCode == "PFCL") {
                                 var price = item.ActualPrice * 100;
                                 newPrice = AppTool.Round(price / quantity, 3);
                             }
@@ -2480,7 +2480,7 @@ export class ShipmentPayableItem extends BaseComponent {
         var iAmount: number = null;
 
         if (this.Quantity != null && this.UnitPrice != null) {
-            if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR") {
+            if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR" || this.MeasurementCode == "PFCL") {
                 var price = this.EntityPM.UnitPrice / 100;
                 iAmount = this.EntityPM.Quantity * price;
             }
@@ -2921,7 +2921,7 @@ export class ShipmentPayableItem extends BaseComponent {
 
                         var expectedAmount = quantity * unitPrice;
 
-                        if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR") {
+                        if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR" || this.MeasurementCode == "PFCL" ) {
                             expectedAmount = quantity * unitPrice / 100;
                         }
 
@@ -3335,7 +3335,7 @@ export class InsidePayableViewModel {
         if (this.Quantity != null && this.UnitPrice != null) {
             iAmount = this.Quantity * this.UnitPrice;
 
-            if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR") {
+            if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR" || this.MeasurementCode == "PFCL") {
                 iAmount = this.Quantity * this.UnitPrice / 100;
             }
         }
