@@ -63,6 +63,7 @@ export class ShipmentsListComponent implements AfterViewInit
     {
         this.GetPreservedToggleFiltersFromSessionInfo();
         this.GetCompanyLoginsFromCache();
+
     }
 
     private GetPreservedToggleFiltersFromSessionInfo()
@@ -100,14 +101,14 @@ export class ShipmentsListComponent implements AfterViewInit
         this.InvitedCustomers = SessionInfo.LoggedUserCompanyLogins
             .filter(d => d.CardType == 'CS' && d.CardId != null && d.Tenant == this.tenant)
             .map(d => ({ IsSelected: false, ...d }));
-            
- 
+
+
         console.log("[Invited Customers]", this.InvitedCustomersIds);
 
         this.LoadScreenData();
     }
 
-  
+
 
     private AddDemoCustomersForTest()
     {
@@ -133,7 +134,7 @@ export class ShipmentsListComponent implements AfterViewInit
         });
 
     }
- 
+
 
 
 
@@ -177,7 +178,7 @@ export class ShipmentsListComponent implements AfterViewInit
     ShipmentsCounter: CargoTrackingShipmentsCounter = new CargoTrackingShipmentsCounter();
     LoadScreenData()
     {
-        if (this.tenant) 
+        if (this.tenant)
         {
             var shipmentFilters = this.BuildShipmentFilters();
             this.LoadShipments(shipmentFilters);
@@ -191,8 +192,10 @@ export class ShipmentsListComponent implements AfterViewInit
         if (this.ShipmentsDataSource)
             this.ReloadShipments(shipmentFilters);
 
-        else
+        else{
             this.InitiateShipmentDataSource(shipmentFilters);
+            this.ReloadShipments(shipmentFilters);
+        }
     }
 
     private LoadShipmentsCounter(shipmentFilters: CargoTrackingShipmentFilters)
@@ -231,9 +234,9 @@ export class ShipmentsListComponent implements AfterViewInit
         shipmentFilters.Tenant = this.tenant;
         shipmentFilters.SearchText = this._SearchText ? this._SearchText.trim().toLowerCase() : '';
 
-        
+
         shipmentFilters.SortDescending = this.isSortDescending;
-        
+
         this.SetCustomersFilter(shipmentFilters);
         this.SetTransportModeFilters(shipmentFilters);
         this.SetDirectionFilters(shipmentFilters);
@@ -248,7 +251,7 @@ export class ShipmentsListComponent implements AfterViewInit
         }else{
             var str = this.InvitedCustomers.map(d => d.CardId)?.join(',');
         }
-        
+
         shipmentFilters.CustomersIds = this.InvitedCustomersIds;
         shipmentFilters.CustomersIdsString = str;
     }
@@ -449,7 +452,7 @@ export class ToggleFilter
 }
 
 export class CargoTrackingShipmentsCounter{
-    
+
     Import: number = 0;
     Export: number = 0;
     Air: number = 0;

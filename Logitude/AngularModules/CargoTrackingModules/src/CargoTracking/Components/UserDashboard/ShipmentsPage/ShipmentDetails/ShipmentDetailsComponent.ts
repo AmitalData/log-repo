@@ -75,7 +75,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     InitSlider()
     {
 
-        var PAGERS_WIDTH = 200; // 100 * 2 pager 
+        var PAGERS_WIDTH = 200; // 100 * 2 pager
         var screenwidth = window.innerWidth;
 
         var sliderWrapperWidth = this.SliderWrapperElement.nativeElement.offsetWidth;
@@ -88,7 +88,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
         this.sliderVisibleCardsWidth = count * this.sliderCardWidth;
         this.sliderMarginCardCount = 0;
-        this.sliderMarginLeft = screenwidth < 470 ? (this.sliderCardWidth + 55) * -1 : 0; // mobile: add 
+        this.sliderMarginLeft = screenwidth < 470 ? (this.sliderCardWidth + 55) * -1 : 0; // mobile: add
 
     }
     LoadShipment()
@@ -132,6 +132,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
     MoveSlider(dir)
     {
+
+
         var margin = this.sliderMarginLeft;
 
         // inc\dec
@@ -155,6 +157,12 @@ export class ShipmentDetailsComponent implements AfterViewInit
         var screenwidth = window.innerWidth;
         if (screenwidth < 470)
             this.sliderMarginLeft - 55;
+
+        if(dir == 'right' && this.sliderMarginLeft==0)
+            return;
+
+        if(dir == 'left' && ((this.sliderMarginCardCount+this.sliderVisibleCardsCount)>=this.SliderCards.length) || (this.sliderVisibleCardsCount >= this.SliderCards.length))
+            return;
 
     }
     GetModeIcon()
@@ -201,4 +209,3 @@ export class ShipmentDetailsComponent implements AfterViewInit
         this.router.navigate(['Cargo-Tracking', 'shipments']);
     }
 }
- 
