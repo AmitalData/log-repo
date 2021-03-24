@@ -2363,25 +2363,37 @@ namespace WebFreight.Web.ReportsWebServices
 
         private  string GetBillToSalesManUserName( Card billToCard)
         {
-            User salesman = GetSalesmanUser(billToCard);
+            User salesman = GetSalesManUser(billToCard);
             var SalesManUserName = "";
             if (salesman?.Contact != null)
             {
-                    Contact loggedcontact = GetLoggedContact(billToCard.Tenant);
-                    var showLocals = !loggedcontact.DontShowLocalLabels;
-                    var englishName = salesman.Contact.EnglishName;
-                    var localName = salesman.Contact.LocalName;
-                    SalesManUserName = showLocals ? (localName == null ? englishName : localName) : englishName;
+                SalesManUserName = GetLocalizedSalesManUserName(salesman,billToCard);
             }
 
             return SalesManUserName;
         }
 
-        private static User GetSalesmanUser(Card billToCard)
+        private static User GetSalesManUser(Card billToCard)
         {
             UserRepository userRepository = new UserRepository(billToCard.Tenant);
             User salesman = userRepository.GetSingleUser(billToCard.SalesmanUserId, billToCard.Tenant, false);
             return salesman;
+        }
+
+        private string GetLocalizedSalesManUserName(User salesman, Card billToCard)
+        {
+            bool showLocals = MustContactShowLocalLables(billToCard);
+            var englishName = salesman.Contact.EnglishName;
+            var localName = salesman.Contact.LocalName;
+            string SalesManUserName = showLocals ? (localName == null ? englishName : localName) : englishName;
+            return SalesManUserName;
+        }
+
+        private bool MustContactShowLocalLables(Card billToCard)
+        {
+            Contact loggedcontact = GetLoggedContact(billToCard.Tenant);
+            var showLocals = !loggedcontact.DontShowLocalLabels;
+            return showLocals;
         }
 
         public static string FirstCharToUpper(string input)
