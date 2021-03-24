@@ -45,6 +45,7 @@ namespace RestClientApplication
             this.apiCombo.Items.Add("CustomerOpenFilesAmount");
             apiCombo.Items.Add("APInvoiceCancellation");
             apiCombo.Items.Add("GLAccountMoreData");
+            apiCombo.Items.Add("GLAccountChequeDetails");
             this.operationCombo.Items.Add("Create (POST)");
             this.operationCombo.Items.Add("Update (PUT)");
             this.operationCombo.Items.Add("Get");
@@ -1035,10 +1036,24 @@ namespace RestClientApplication
                         break;
                     }
 
+                #endregion
+
+                #region GLAccountChequeDetails
+
+                case 17:
+                    {
+
+                        lblParameter.Text = "Internal NO.:";
+                        lblParameter.Visible = true;
+                        txtParameter.Visible = true;
+                        apiName = "GLAccountChequeDetails";
+                        break;
+                    }
+
                     #endregion
 
 
-                 
+
             }
 
             txtRequestBody.Text = requestText;

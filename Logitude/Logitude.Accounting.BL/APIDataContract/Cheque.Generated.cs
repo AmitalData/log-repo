@@ -16,7 +16,7 @@ using System.Xml.Serialization;
 namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 {
    
-    public partial class ARPaymentCheque
+    public partial class Cheque
     {
 
 	    
@@ -40,7 +40,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     
     public string BankAccount { get; set; }
     
-    public StatusCode StatusCode { get; set; }
+    public string StatusCode { get; set; }
     
     public string StatusName { get; set; }
     }

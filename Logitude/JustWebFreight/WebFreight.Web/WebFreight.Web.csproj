@@ -1052,6 +1052,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferantTeamController.Generated.cs" />
     <Compile Include="DataProviders\UserDefinedReportDataProvider.cs" />
     <Compile Include="ExternalAPIs\ShipmentNumbersController.cs" />
+    <Compile Include="ExternalAPIs\V1\GLAccountChequeDetailsController.cs" />
     <Compile Include="FileNotFound.aspx.cs">
       <DependentUpon>FileNotFound.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2582,6 +2583,7 @@
     <Compile Include="Helpers\APIHelpers\APITransshipmentHelper.cs" />
     <Compile Include="Helpers\APIHelpers\ConsolidationServiceBatch.cs" />
     <Compile Include="Helpers\APIHelpers\GenerateTariffsHelper.cs" />
+    <Compile Include="Helpers\APIHelpers\GLAccountChequeDetailsHelper.cs" />
     <Compile Include="Helpers\APIHelpers\ImageLibraryControllerHelper.cs" />
     <Compile Include="Helpers\APIHelpers\PartnersUploadHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TariffGeneratorFromExcel.cs" />
