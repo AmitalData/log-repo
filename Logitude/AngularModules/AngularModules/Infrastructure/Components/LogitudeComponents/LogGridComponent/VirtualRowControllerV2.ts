@@ -111,9 +111,9 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
                 this._fetchPage(i);
             }
         }
-        if (this.myMetaData.cd) {
-            this.myMetaData.cd.detectChanges();
-        }
+        //if (this.myMetaData.cd) {
+        //    this.myMetaData.cd.detectChanges();
+        //}
     }
 
     disconnect(): void {
@@ -144,7 +144,7 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
             //if (this.myMetaData.cd) {
             //    this.myMetaData.cd.detectChanges();
             //}
-            this.dataStream.next(this.cachedData);
+            //this.dataStream.next(this.cachedData);
             return;
             //}
         }
