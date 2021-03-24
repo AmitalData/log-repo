@@ -1181,7 +1181,7 @@ namespace WebFreight.Web
         private List<string> GetLogboxAccessiblePrivateLabelTenantsIds(string url)
         {
             List<string> logboxAccessiblePrivateLabelTenantsIds = new List<string>();
-            if (url.Contains("system.logbox.co.il") || url.Contains("localhost"))
+            if (url.Contains("system.logbox.co.il") || url.Contains("test.logitudeworld.com") || url.Contains("localhost"))
             {
                 TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(0);
                 logboxAccessiblePrivateLabelTenantsIds = query.GetLogboxAccessibleTenantManagmentPrivateLabelsIds();
