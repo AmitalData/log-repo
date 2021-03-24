@@ -1047,10 +1047,9 @@ export function FillInactiveCountryCheckBox(InactiveCountry: string) {
 }
 function CompleteFillInactiveCountryCheckBoxProcess(InactiveCountry: string) {
     if (InactiveCountry.toUpperCase() == constants.YES) {
-        if (MaintenanceSelectors.InActiveCountryCheckBox)
-            cy.get(MaintenanceSelectors.InActiveCountryCheckBox).check({ force: true })
+        cy.get(MaintenanceSelectors.InActiveCountryCheckBox).check({ force: true })
     }
-    else if (InactiveCountry.toUpperCase() == constants.NO) {
+    else {
         cy.get(MaintenanceSelectors.InActiveCountryCheckBox).uncheck({ force: true })
     }
 }
@@ -1063,7 +1062,7 @@ function CompleteFillECCheckBoxProcess(EC: String) {
     if (EC.toUpperCase() == constants.YES) {
         cy.get(MaintenanceSelectors.CountryECCheckBox).check({ force: true })
     }
-    else if (EC.toUpperCase() == constants.NO) {
+    else {
         cy.get(MaintenanceSelectors.CountryECCheckBox).uncheck({ force: true })
     }
 }
@@ -1076,7 +1075,7 @@ function CompleteFillNorthAmericaCheckBoxProcess(NorthAmerica: string) {
     if (NorthAmerica.toUpperCase() == constants.YES) {
         cy.get(MaintenanceSelectors.CountryIsNorthAmericaCheckBox).check({ force: true })
     }
-    else if (NorthAmerica.toUpperCase() == constants.NO) {
+    else {
         cy.get(MaintenanceSelectors.CountryIsNorthAmericaCheckBox).uncheck({ force: true })
     }
 }
@@ -1089,7 +1088,7 @@ function CompleteFillIsStateRequiredCheckBoxProcess(IsStateRequired: string) {
     if (IsStateRequired.toUpperCase() == constants.YES) {
         cy.get(MaintenanceSelectors.CountryIsStateRequiredCheckBox).check({ force: true })
     }
-    else if (IsStateRequired.toUpperCase() == constants.NO) {
+    else {
         cy.get(MaintenanceSelectors.CountryIsStateRequiredCheckBox).uncheck({ force: true })
     }
 }
@@ -1102,7 +1101,7 @@ function CompleteFillHasCitiesCheckBoxProcess(HasCities: string) {
     if (HasCities.toUpperCase() == constants.YES) {
         cy.get(MaintenanceSelectors.CountryHasCitiesCheckBox).check({ force: true })
     }
-    else if (HasCities.toUpperCase() == constants.NO) {
+    else {
         cy.get(MaintenanceSelectors.CountryHasCitiesCheckBox).uncheck({ force: true })
     }
 }
