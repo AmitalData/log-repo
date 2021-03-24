@@ -25,6 +25,7 @@ import { QuoteTemplateContext } from "../models/QuoteTemplateContext";
 import { QuoteTemplateDetails } from "cypress/models/QuoteTemplateDetails";
 import { CountryDetails } from "../models/CountryDetails";
 import { EventTypeDetails } from "../../../Base/cypress/models/EventTypeDetails";
+import { StateDetails } from "cypress/models/StateDetails";
 
 //#region General Actions
 export function OpenMaintenanceMenu() {
@@ -1004,6 +1005,7 @@ function OpenPersonalSettingsTab() {
     cy.Click(MaintenanceSelectors.PersonalSettingsMaintenanceTab, null)
 }
 //#endregion
+
 //#region Create country
 export function FillCountryDetails(countryDetails: CountryDetails) {
     FillCountryCode(countryDetails.CountryCode);
@@ -1017,34 +1019,41 @@ export function FillCountryDetails(countryDetails: CountryDetails) {
     FillHasCitiesCheckBox(countryDetails.HasCities);
     FillNotes(countryDetails.Notes);
 }
+
 export function FillCountryCode(CountryCode: string) {
     if (CountryCode) {
         cy.FillLogTextBox(MaintenanceSelectors.CountryCode, CountryCode);
     }
 }
+
 export function FillCountryName(CountryName: string) {
     if (CountryName) {
         cy.FillLogTextBox(MaintenanceSelectors.CountryEnglishName, CountryName)
     }
 }
+
 export function FillCountryLocalName(LocalName: string) {
     if (LocalName) {
         cy.FillLogTextBox(MaintenanceSelectors.CountryLocalName, GenerateName(LocalName))
     }
 }
+
 function GenerateName(Name:string){
     return Name.toLowerCase() == "random" ? (gr.GenerateRandomNumberAndString(10)) : Name; 
 }
+
 export function FillCountryGlobalZone(GlobalZone: string) {
     if (GlobalZone) {
         cy.FillLogLov(MaintenanceSelectors.CountryGlobalZone, GlobalZone, true)
     }
 }
+
 export function FillInactiveCountryCheckBox(InactiveCountry: string) {
     if (InactiveCountry) {
         CompleteFillInactiveCountryCheckBoxProcess(InactiveCountry);
     }
 }
+
 function CompleteFillInactiveCountryCheckBoxProcess(InactiveCountry: string) {
     if (InactiveCountry.toUpperCase() == constants.YES) {
         cy.get(MaintenanceSelectors.InActiveCountryCheckBox).check({ force: true })
@@ -1053,11 +1062,13 @@ function CompleteFillInactiveCountryCheckBoxProcess(InactiveCountry: string) {
         cy.get(MaintenanceSelectors.InActiveCountryCheckBox).uncheck({ force: true })
     }
 }
+
 export function FillECCheckBox(EC: String) {
     if (EC) {
         CompleteFillECCheckBoxProcess(EC);
     }
 }
+
 function CompleteFillECCheckBoxProcess(EC: String) {
     if (EC.toUpperCase() == constants.YES) {
         cy.get(MaintenanceSelectors.CountryECCheckBox).check({ force: true })
@@ -1066,11 +1077,13 @@ function CompleteFillECCheckBoxProcess(EC: String) {
         cy.get(MaintenanceSelectors.CountryECCheckBox).uncheck({ force: true })
     }
 }
+
 export function FillNorthAmericaCheckBox(NorthAmerica: string) {
     if (NorthAmerica) {
         CompleteFillNorthAmericaCheckBoxProcess(NorthAmerica);
     }
 }
+
 function CompleteFillNorthAmericaCheckBoxProcess(NorthAmerica: string) {
     if (NorthAmerica.toUpperCase() == constants.YES) {
         cy.get(MaintenanceSelectors.CountryIsNorthAmericaCheckBox).check({ force: true })
@@ -1079,11 +1092,13 @@ function CompleteFillNorthAmericaCheckBoxProcess(NorthAmerica: string) {
         cy.get(MaintenanceSelectors.CountryIsNorthAmericaCheckBox).uncheck({ force: true })
     }
 }
+
 export function FillIsStateRequiredCheckBox(IsStateRequired: string) {
     if (IsStateRequired) {
         CompleteFillIsStateRequiredCheckBoxProcess(IsStateRequired);
     }
 }
+
 function CompleteFillIsStateRequiredCheckBoxProcess(IsStateRequired: string) {
     if (IsStateRequired.toUpperCase() == constants.YES) {
         cy.get(MaintenanceSelectors.CountryIsStateRequiredCheckBox).check({ force: true })
@@ -1092,11 +1107,13 @@ function CompleteFillIsStateRequiredCheckBoxProcess(IsStateRequired: string) {
         cy.get(MaintenanceSelectors.CountryIsStateRequiredCheckBox).uncheck({ force: true })
     }
 }
+
 export function FillHasCitiesCheckBox(HasCities: string) {
     if (HasCities) {
         CompleteFillHasCitiesCheckBoxProcess(HasCities);
     }
 }
+
 function CompleteFillHasCitiesCheckBoxProcess(HasCities: string) {
     if (HasCities.toUpperCase() == constants.YES) {
         cy.get(MaintenanceSelectors.CountryHasCitiesCheckBox).check({ force: true })
@@ -1105,11 +1122,13 @@ function CompleteFillHasCitiesCheckBoxProcess(HasCities: string) {
         cy.get(MaintenanceSelectors.CountryHasCitiesCheckBox).uncheck({ force: true })
     }
 }
+
 export function FillNotes(Notes: string) {
     if (Notes) {
         cy.FillLogTextBox(MaintenanceSelectors.CountryNotes, Notes)
     }
 }
+
 export function ChangeInactiveCountryCheckBoxValue() {
     cy.get(MaintenanceSelectors.InActiveCountryCheckBox).then($InActiveCountryCheckBox => {
         if ($InActiveCountryCheckBox.is(':checked')) {
@@ -1120,37 +1139,46 @@ export function ChangeInactiveCountryCheckBoxValue() {
         }
     })
 }
+
 export function CreateCountry() {
     DefinePostCountryMockRequest()
     DefineGetByFilterRequest()
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
 }
+
 function DefinePostCountryMockRequest() {
     cy.intercept(RestAPI.POST, Urls.Countries, [true])
 }
+
 export function AssertCreateCountry() {
     AssertMockPostCountry();
     AssertGetByFilters();
 }
+
 export function AssertMockPostCountry() {
     BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow)
 }
+
 export function SearchCountry(CountryName: string) {
     DefineCountryViewsGetByFiltersRequest(CountryName);
     cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, CountryName);
     AssertCountryViewsGetByFilters();
 }
+
 export function AssertSearchCountry(CountryName: string) {
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
         expect(text).to.contain(CountryName);
     });
 }
+
 export function DefineCountryViewsGetByFiltersRequest(CountryName: string) {
     cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(CountryName + "&GetCount=false"), RequestAliases.GetFilterSearch);
 }
+
 export function AssertCountryViewsGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
 }
+
 export function OpenCountry() {
     DefineCountriesGetSingleRequest();
     cy.get(BaseSelectors.RowClass).eq(0).click();
@@ -1160,28 +1188,35 @@ export function AssertOpenCountry() {
     AssertCountrieGetSingle();
     BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
 }
+
 function DefineCountriesGetSingleRequest() {
     cy.DefineRequestWait(RestAPI.GET, Urls.CountriesGetSingle, RequestAliases.GetSignle);
 }
+
 function AssertCountrieGetSingle() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
 }
+
 export function EditCountry() {
     DefinePutCountryRequest();
     cy.Click(MaintenanceSelectors.CountrySaveButton, null);
 }
+
 function DefinePutCountryRequest() {
     cy.DefineRequestWait(RestAPI.PUT, Urls.Countries, RequestAliases.PutCountry);
 }
+
 export function AssertEditCountry() {
     AssertPutCountry();
 }
+
 export function AssertPutCountry() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutCountry, 200).
         then((interception) => {
             CountryDetails.inActive = interception.request.body.inActive;
         });
 }
+
 export function CountryConversionEventsMapping(eventDetailsList: EventTypeDetails[]): EventTypeDetails[] {
     for (let i = 0; i < eventDetailsList.length; i++) {
         if (CountryDetails.inActive) {
@@ -1194,8 +1229,144 @@ export function CountryConversionEventsMapping(eventDetailsList: EventTypeDetail
     }
     return eventDetailsList;
 }
+
 export function ValidateErrorPopUpMessage(Message: string) {
     cy.get(BaseSelectors.ErrorPopUp).should("contain.text", Message)
 
 }
+//#endregion
+
+//#region State
+export function FillStateDetails(stateDetails:StateDetails){
+    cy.FillLogTextBox(MaintenanceSelectors.StateCode , stateDetails.StateCode)
+    cy.FillLogTextBox(MaintenanceSelectors.StateEnglishName , stateDetails.StateName)
+    cy.FillLogTextBox(MaintenanceSelectors.StateLocalName , stateDetails.StateLocalName)
+    cy.FillLogLov(MaintenanceSelectors.StateCountry , stateDetails.Country,true)
+    CompleteFillInactiveStateCheckBoxProcess(stateDetails.InactiveState)
+    cy.FillLogTextBox(MaintenanceSelectors.StateNotes , stateDetails.Notes)
+}
+
+export function FillStateCode(StateCode: string) {
+    if (StateCode) {
+        cy.FillLogTextBox(MaintenanceSelectors.StateCode, StateCode);
+    }
+}
+
+function CompleteFillInactiveStateCheckBoxProcess(InactiveState: string) {
+    if (InactiveState.toUpperCase() == constants.YES) {
+        cy.get(MaintenanceSelectors.InActiveStateCheckBox).check({ force: true })
+    }
+    else {
+        cy.get(MaintenanceSelectors.InActiveStateCheckBox).uncheck({ force: true })
+    }
+}
+
+export function CreateState() {
+    DefinePostStateMockRequest()
+    DefineGetByFilterRequest()
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
+}
+
+function DefinePostStateMockRequest() {
+    cy.intercept(RestAPI.POST, Urls.States, [true])
+}
+
+export function AssertCreateState() {
+    AssertMockPostState();
+    AssertGetByFilters();
+}
+
+export function AssertMockPostState() {
+    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow)
+}
+
+export function SearchState(StateName: string) {
+    DefineStateViewsGetByFiltersRequest(StateName);
+    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, StateName);
+    AssertStateViewsGetByFilters();
+}
+
+export function AssertSearchState(StateName: string) {
+    cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
+        expect(text).to.contain(StateName);
+    });
+}
+
+export function DefineStateViewsGetByFiltersRequest(StateName: string) {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(StateName + "&GetCount=false"), RequestAliases.GetFilterSearch);
+}
+
+export function AssertStateViewsGetByFilters() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
+}
+
+export function OpenState() {
+    DefineStatesGetSingleRequest();
+    cy.get(BaseSelectors.RowClass).eq(0).click();
+}
+
+export function AssertOpenState() {
+    AssertStatesGetSingle();
+    BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
+}
+
+function DefineStatesGetSingleRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.StatesGetSingle, RequestAliases.GetSignle);
+}
+
+function AssertStatesGetSingle() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
+}
+
+export function FillStateLocalName(LocalName: string) {
+    let LocalNameToFill = LocalName.toLowerCase() == "random" ? (gr.GenerateRandomNumberAndString(10)) : LocalName; 
+    if (LocalName) {
+        cy.FillLogTextBox(MaintenanceSelectors.StateLocalName, LocalNameToFill)
+    }
+}
+
+export function ChangeInactiveStateCheckBoxValue() {
+    cy.get(MaintenanceSelectors.InActiveStateCheckBox).then($InActiveStatesCheckBox => {
+        if ($InActiveStatesCheckBox.is(':checked')) {
+            cy.get(MaintenanceSelectors.InActiveStateCheckBox).uncheck({ force: true })
+        }
+        else {
+            cy.get(MaintenanceSelectors.InActiveStateCheckBox).check({ force: true })
+        }
+    })
+}
+
+export function EditState() {
+    DefinePutStateRequest();
+    cy.Click("#State-Save", null);
+}
+
+function DefinePutStateRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.States, RequestAliases.PutState);
+}
+
+export function AssertEditState() {
+    AssertPutState();
+}
+
+export function AssertPutState() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutState, 200).
+        then((interception) => {
+            CountryDetails.inActive = interception.request.body.inActive;
+        });
+}
+
+export function StateConversionEventsMapping(eventDetailsList: EventTypeDetails[]): EventTypeDetails[] {
+    for (let i = 0; i < eventDetailsList.length; i++) {
+        if (CountryDetails.inActive) {
+            eventDetailsList[i].Notes = eventDetailsList[i].Notes.replace(/\"status\"/gi, "Inactivated");
+        }
+        else {
+            eventDetailsList[i].Notes = eventDetailsList[i].Notes.replace(/\"status\"/gi, "Activated");
+
+        }
+    }
+    return eventDetailsList;
+}
+
 //#endregion
