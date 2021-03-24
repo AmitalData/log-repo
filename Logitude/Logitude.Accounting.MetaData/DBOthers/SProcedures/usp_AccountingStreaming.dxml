@@ -1,0 +1,375 @@
+<View DBType="Main" Name="CardGLAccountDataView" Schema="dbo" Module="Accounting">
+  <SqlScript>
+    <![CDATA[
+/****** Object:  UserDefinedTableType [dbo].[GLAccountTotalByMonthsType]    Script Date: 3/24/2021 9:02:50 AM ******/
+DROP TYPE [dbo].[GLAccountTotalByMonthsType]
+GO
+
+/****** Object:  UserDefinedTableType [dbo].[GLAccountTotalByMonthsType]    Script Date: 3/24/2021 9:02:50 AM ******/
+CREATE TYPE [dbo].[GLAccountTotalByMonthsType] AS TABLE(
+	[AccountId] [varchar](15) NOT NULL,
+	[DateTypeCode] [varchar](1) NOT NULL,
+	[Year] [int] NOT NULL,
+	[Month] [int] NOT NULL,
+	[CurrencyId] [varchar](15) NOT NULL,
+	[Tenant] [int] NOT NULL,
+	[LocalAmountDebit] [decimal](16, 2) NOT NULL,
+	[LocalAmountCredit] [decimal](16, 2) NOT NULL,
+	[ForeignAmountDebit] [decimal](16, 2) NOT NULL,
+	[ForeignAmountCredit] [decimal](16, 2) NOT NULL
+)
+
+
+/****** Object:  UserDefinedTableType [dbo].[LedgerTransactionsType]    Script Date: 3/24/2021 9:01:21 AM ******/
+DROP TYPE [dbo].[LedgerTransactionsType]
+GO
+
+/****** Object:  UserDefinedTableType [dbo].[LedgerTransactionsType]    Script Date: 3/24/2021 9:01:21 AM ******/
+CREATE TYPE [dbo].[LedgerTransactionsType] AS TABLE(
+	[JournalId] [varchar](15) NOT NULL,
+	[JournalLineNumber] [int] NOT NULL,
+	[Id] [varchar](15) NOT NULL,
+	[Tenant] [int] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[ControlAccountId] [varchar](15) NULL,
+	[AccountId] [varchar](15) NOT NULL,
+	[AccountingDate] [datetime] NOT NULL,
+	[DocumentDate] [datetime] NOT NULL,
+	[DueDate] [datetime] NOT NULL,
+	[LocalAmountDebit] [decimal](16, 2) NOT NULL,
+	[LocalAmountCredit] [decimal](16, 2) NOT NULL,
+	[CurrencyId] [varchar](15) NULL,
+	[ForeignAmountDebit] [decimal](16, 2) NOT NULL,
+	[ForeignAmountCredit] [decimal](16, 2) NOT NULL,
+	[ExchangeRate] [decimal](16, 5) NOT NULL,
+	[Reference1] [varchar](60) NULL,
+	[Reference2] [varchar](60) NULL,
+	[Reference3] [varchar](60) NULL,
+	[OpenAmount] [decimal](16, 2) NOT NULL,
+	[OppositeAccountId] [varchar](15) NULL,
+	[SearchFields] [nvarchar](4000) NULL,
+	[OpenAmountCurrencyId] [varchar](15) NULL,
+	[Notes] [nvarchar](2000) NULL,
+	[AmountToReconcile] [decimal](16, 2) NOT NULL,
+	[Mark] [bit] NOT NULL,
+	[IsReconciled] [bit] NOT NULL,
+	[IsExternalReconcile] [bit] NOT NULL
+)
+GO
+
+
+/****** Object:  StoredProcedure [dbo].[usp_AccountingStreaming]    Script Date: 3/24/2021 9:03:06 AM ******/
+DROP PROCEDURE [dbo].[usp_AccountingStreaming]
+GO
+
+/****** Object:  StoredProcedure [dbo].[usp_AccountingStreaming]    Script Date: 3/24/2021 9:03:06 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+
+
+
+
+-- =============================================
+-- Author:		itzik
+-- Create date: 
+-- Description:	
+-- =============================================
+CREATE PROCEDURE [dbo].[usp_AccountingStreaming] 
+	-- Add the parameters for the stored procedure here
+	@pJournalId varchar(15) , 
+	@pTenant int ,
+	@pQMessageId varchar(15) , 
+	@tLedgerTransactionsType LedgerTransactionsType READONLY,
+	@tGLAccountTotalByMonthsType dbo.GLAccountTotalByMonthsType READONLY
+AS
+BEGIN
+declare @myrowcount int 
+select @myrowcount =count(*) from @tLedgerTransactionsType 
+print N'@tLedgerTransactionsType rows :'  
+print @myrowcount
+
+
+select @myrowcount =count(*) from @tGLAccountTotalByMonthsType 
+print N'tGLAccountTotalByMonthsType rows :'  
+print @myrowcount
+
+DECLARE @GLAccountStruct  table(
+[AccountId] VARCHAR(15) NOT NULL,
+AccountingDateDeltaAmount DECIMAL(16,2),
+DueDateDeltaAmount DECIMAL(16,2),
+NextDueDate date
+);
+
+  
+--RAISERROR (52000,-1,-1 ,'The journal not in StatusCode 2 !! occure only OnApproveUpdating');   
+
+--BEGIN TRY
+
+
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT on;
+	print N'start'
+	
+	declare Journal_cursor  Cursor for
+	SELECT  TOP 1 
+	---[Id]      ,[Tenant]      ,[JournalNumber]      ,[CreateDate]      ,[AccountingDate]      ,[TypeCode]      ,[StatusCode]      ,[CreatedByUserId]      ,[AccountingEntityCode]      ,[AccountingEntityId]      ,[ExternalNo]      ,[UpdateDate]      ,[UpdatedByUserId]      ,[ApproveDate]      ,[ApprovedByUserId]      ,[SearchFields]      ,[AccountingEntityReference]      ,[OriginalJournalId]      ,[VoidedByUserId]      ,[VoidDate]      ,[IsVoided]      ,[ExternalSystem]      ,[QueueId]      ,[VoidedByJournalId]  
+	[QueueId] ,StatusCode
+	FROM [dbo].[Journals] WITH(NOWAIT)  --WITH  (ROWLOCK)--(UPDLOCK, ROWLOCK) 
+	WHERE [Journals].Id=  @pJournalId; --and [Journals].Tenant = @pTenant;
+
+
+	declare  @QueueId varchar ;
+	declare  @StatusCode  varchar ;
+
+print N'open  Journal_cursor' 
+open  Journal_cursor
+print N'FETCH NEXT FROM Journal_cursor:' + @pJournalId
+	FETCH NEXT FROM Journal_cursor  
+	INTO @QueueId ,@StatusCode 
+
+print N'Check  Journal_cursor'
+	if (@QueueId is not null) RAISERROR (51000,-1,-1 , 'The journal already Streamed have QUEUEID !!');   
+	If (@StatusCode != '2') RAISERROR (52000,-1,-1 ,'The journal not in StatusCode 2 !! occure only OnApproveUpdating');   
+	
+	
+	
+--	If  (LEN(ISNULL(@pQMessageId,'')) = 0 )  
+	If  (@pQMessageId = '' or  @pQMessageId is null  )  
+	begin
+		--print N'set quid to queueid'
+		set  @pQMessageId = NEWID()  ;	
+	end
+
+UPDATE [dbo].[Journals]
+SET [QueueId]= @pQMessageId,[IsLedgerCreated]=1
+WHERE [Journals].Id=  @pJournalId and [Journals].Tenant = @pTenant;
+
+ SELECT @myrowcount = @@ROWCOUNT
+print N'affected rows :'
+print @myrowcount 
+
+
+CLOSE Journal_cursor;  
+DEALLOCATE Journal_cursor;  
+
+
+    -- Insert statements for procedure here
+	DECLARE	@pTableName  varchar(40);
+	set		@pTableName = N'LedgerTransaction';
+	 print N'LedgerTransactions insert as is -always'
+	INSERT INTO dbo.LedgerTransactions 
+	( [Id] ,
+	[JournalId], [JournalLineNumber],  [Tenant], [CreateDate], [ControlAccountId], [AccountId], [AccountingDate], [DocumentDate], [DueDate], [LocalAmountDebit], [LocalAmountCredit], [CurrencyId], [ForeignAmountDebit], [ForeignAmountCredit], [ExchangeRate], [Reference1], [Reference2], [Reference3], [OpenAmount], [OppositeAccountId], [SearchFields], [OpenAmountCurrencyId], [Notes], [AmountToReconcile], [Mark], [IsReconciled], [IsExternalReconcile])
+    SELECT 
+	[Id] ,
+	---dbo.GetNextTableIdValue (@pTableName) ,
+	[JournalId], [JournalLineNumber],  [Tenant], [CreateDate], [ControlAccountId], [AccountId], [AccountingDate], [DocumentDate], [DueDate], [LocalAmountDebit], [LocalAmountCredit], [CurrencyId], [ForeignAmountDebit], [ForeignAmountCredit], [ExchangeRate], [Reference1], [Reference2], [Reference3], [OpenAmount], [OppositeAccountId], [SearchFields], [OpenAmountCurrencyId], [Notes], [AmountToReconcile], [Mark], [IsReconciled] , [IsExternalReconcile]
+	FROM @tLedgerTransactionsType ;  
+
+SELECT @myrowcount = @@ROWCOUNT
+print N'affected rows :'
+print @myrowcount 
+
+
+
+	print N'Update Dalta of GLAccountTotalByMonths  '
+	UPDATE   GLAccountTotalByMonths  
+	SET 
+	--[LocalAmountDebit] ,	[LocalAmountCredit] ,	[ForeignAmountDebit] ,	[ForeignAmountCredit] )
+	[LocalAmountDebit] =   GLAccountTotalByMonths.[LocalAmountDebit] + toDoTotal.[LocalAmountDebit] ,
+	[LocalAmountCredit] =  GLAccountTotalByMonths.[LocalAmountCredit] + toDoTotal.[LocalAmountCredit] ,
+	[ForeignAmountDebit] = GLAccountTotalByMonths.[ForeignAmountDebit] + toDoTotal.[ForeignAmountDebit] ,
+	[ForeignAmountCredit] =GLAccountTotalByMonths.[ForeignAmountCredit] + toDoTotal.[ForeignAmountCredit] 
+	from @tGLAccountTotalByMonthsType toDoTotal
+	WHERE  GLAccountTotalByMonths.AccountId=toDoTotal.AccountId
+	and GLAccountTotalByMonths.[DateTypeCode]=toDoTotal.[DateTypeCode]
+	and GLAccountTotalByMonths.[Year]=toDoTotal.[Year]
+	and GLAccountTotalByMonths.[Month]=toDoTotal.[Month]
+	and GLAccountTotalByMonths.[CurrencyId]=toDoTotal.[CurrencyId]
+	and GLAccountTotalByMonths.tenant=toDoTotal.tenant
+	
+
+
+	SELECT @myrowcount = @@ROWCOUNT
+print N'affected rows :'
+print @myrowcount 
+	
+	
+
+	print N'Insert  New GLAccountTotalByMonths  '
+	INSERT INTO  GLAccountTotalByMonths  
+	([AccountId] ,	[DateTypeCode] ,	[Year] ,	[Month] ,	[CurrencyId] ,	[Tenant] ,	
+	[LocalAmountDebit] ,	
+	[LocalAmountCredit] ,	
+	[ForeignAmountDebit] ,	
+	[ForeignAmountCredit] )
+	SELECT 
+	toDoTotal.[AccountId] ,	toDoTotal.[DateTypeCode] ,	toDoTotal.[Year] ,	toDoTotal.[Month] ,	toDoTotal.[CurrencyId] ,	toDoTotal.[Tenant] ,
+	toDoTotal.[LocalAmountDebit] ,
+	toDoTotal.[LocalAmountCredit] ,
+	toDoTotal.[ForeignAmountDebit] ,
+	toDoTotal.[ForeignAmountCredit] 
+	from GLAccountTotalByMonths dbTotal
+	right join @tGLAccountTotalByMonthsType toDoTotal
+	on dbTotal.AccountId=toDoTotal.AccountId
+	and dbTotal.[DateTypeCode]=toDoTotal.[DateTypeCode]
+	and dbTotal.[Year]=toDoTotal.[Year]
+	and dbTotal.[Month]=toDoTotal.[Month]
+	and dbTotal.[CurrencyId]=toDoTotal.[CurrencyId]
+	and dbTotal.tenant=toDoTotal.tenant
+	WHERE dbTotal.AccountId Is Null
+
+
+SELECT @myrowcount = @@ROWCOUNT
+print N'affected rows :'
+print @myrowcount 
+
+
+
+
+delete from  @GLAccountStruct ;
+ 
+print N'GLAccunt Prepare : Accounting Date Delta Amount'
+insert into @GLAccountStruct (AccountId,AccountingDateDeltaAmount )
+select  
+tot.[AccountId] ,  SUM(tot.[LocalAmountDebit]-  tot.[LocalAmountCredit])
+from @tGLAccountTotalByMonthsType tot
+where tot.[DateTypeCode] ='1'  -- Accountingdate
+group by tot.[AccountId] 
+having SUM(tot.[LocalAmountDebit]-  tot.[LocalAmountCredit]) !=0
+
+
+
+
+
+
+update  GLAccountMoreDatas 
+set GLAccountMoreDatas.BalanceInLocalCurrency = ISNULL ( GLAccountMoreDatas.BalanceInLocalCurrency, 0 )   + toUpdate.AccountingDateDeltaAmount
+from @GLAccountStruct toUpdate
+where  GLAccountMoreDatas.AccountId = toUpdate.AccountId and  GLAccountMoreDatas.Tenant = @pTenant 
+
+SELECT @myrowcount = @@ROWCOUNT
+print N'affected rows :'
+print @myrowcount 
+
+
+declare @toDayIs date;
+set @toDayIs =CONVERT(DATE,GETDATE());
+
+
+
+
+delete from @GLAccountStruct;
+
+print N'GLAccunt Prepare (clients/Vendors) : until today  Due Date Delta amount'
+insert into @GLAccountStruct (AccountId,DueDateDeltaAmount )
+select  
+trans.[AccountId] ,  SUM(trans.[LocalAmountDebit]-  trans.[LocalAmountCredit])
+from @tLedgerTransactionsType trans
+where trans.DueDate<=@toDayIs 
+group by trans.[AccountId] 
+having SUM(trans.[LocalAmountDebit]-  trans.[LocalAmountCredit]) !=0
+
+
+--round( round(GLAccounts.LocalBalanceInDue,2)  + round(toUpdate.DueDateDeltaAmount,2),2)
+--cast(
+--(GLAccounts.LocalBalanceInDue + toUpdate.DueDateDeltaAmount) 
+--as Decimal(16,2)
+--)
+update  GLAccountMoreDatas 
+set GLAccountMoreDatas.LocalBalanceInDue = ISNULL ( GLAccountMoreDatas.LocalBalanceInDue, 0 )  +    toUpdate.DueDateDeltaAmount
+from @GLAccountStruct toUpdate
+inner join GLAccounts on toUpdate.AccountId = GLAccounts.id
+where  GLAccountMoreDatas.AccountId = toUpdate.AccountId
+and   GLAccounts.AccountTypeCode in ('2','3')  --(clients/Vendors)
+and  GLAccountMoreDatas.Tenant = @pTenant 
+
+
+SELECT @myrowcount = @@ROWCOUNT
+print N'affected rows :'
+print @myrowcount 
+
+delete from @GLAccountStruct;
+
+print N'GLAccunt Prepare (clients/Vendors) : NEXT Date to update dueDate Amount '
+insert into @GLAccountStruct (AccountId,NextDueDate )
+select  
+trans.[AccountId] ,  Min(trans.DueDate)
+from @tLedgerTransactionsType trans
+where trans.DueDate > @toDayIs 
+group by trans.[AccountId] 
+
+
+SELECT @myrowcount = @@ROWCOUNT
+print N'affected rows :'
+print @myrowcount 
+
+
+update  GLAccountMoreDatas 
+set GLAccountMoreDatas.NextDueDate =    toUpdate.NextDueDate
+from @GLAccountStruct toUpdate
+inner join GLAccounts on toUpdate.AccountId = GLAccounts.id
+where  GLAccountMoreDatas.AccountId= toUpdate.AccountId 
+and   GLAccounts.AccountTypeCode in ('2','3')  --(clients/Vendors)
+and  GLAccountMoreDatas.Tenant = @pTenant 
+and 
+(GLAccountMoreDatas.NextDueDate is null 
+or
+(GLAccountMoreDatas.NextDueDate is not null  and   GLAccountMoreDatas.NextDueDate >    toUpdate.NextDueDate)
+)
+
+
+SELECT @myrowcount = @@ROWCOUNT
+print N'affected rows :'
+print @myrowcount 
+
+
+---RAISERROR (52000,-1,-1 ,'The journal not in StatusCode 2 !! occure only OnApproveUpdating');   
+
+
+print N'end'
+
+--END TRY
+--BEGIN CATCH
+--DECLARE @ErrorMessage NVARCHAR(4000);
+--DECLARE @ErrorSeverity INT;
+--DECLARE @ErrorState INT;
+--SELECT
+--@ErrorMessage = ERROR_MESSAGE(),
+--@ErrorSeverity = ERROR_SEVERITY(),
+--@ErrorState = ERROR_STATE();
+---- Use RAISERROR inside the CATCH block to return error
+---- information about the original error that caused
+---- execution to jump to the CATCH block.
+--RAISERROR (@ErrorMessage, -- Message text.
+--@ErrorSeverity, -- Severity.
+--@ErrorState -- State.
+--);
+--CLOSE Journal_cursor;  
+--DEALLOCATE Journal_cursor;  
+
+--END CATCH;
+
+
+END
+
+
+
+
+GO
+
+
+
+        
+    ]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</View>

@@ -70,6 +70,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="DBOthers\SProcedures\usp_AccountingStreaming.dxml" />
     <None Include="DBOthers\Views\CardGLAccountDataView.dxml" />
     <None Include="DBScripts\202008241136_EventTypesConverteLocalNameToEnglishName.sxml" />
     <None Include="DBScripts\202009231117_UpdateActiveForInterestFieldOnGLAccount.sxml" />
