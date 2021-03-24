@@ -1,7 +1,6 @@
 @smoke @stable
-Feature: Create shipments
-  After the user logging in the system and navigate to shipments workspace
-  will will create a direct shipment.
+Feature: Create Direct Export Air Shipment
+  The user creates a Direct Export Air shipment.
 
   Scenario: Create direct export air shipment
     Given the user logged in and navigates to shipments workspace

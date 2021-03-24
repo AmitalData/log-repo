@@ -1,8 +1,6 @@
 @smoke @stable
-Feature: Update direct export air shipment
-  After the user logging in the system and navigate to shipments workspace
-  will create a directe shipment, after that update general, orders
-  partners, packages, receivables, routing and payables tabs.
+Feature: Shipment Update
+ The user creates a Direct Export Air shipment and updates it.
 
   Scenario: Create direct export air shipment
     Given the user logged in and navigates to shipments workspace

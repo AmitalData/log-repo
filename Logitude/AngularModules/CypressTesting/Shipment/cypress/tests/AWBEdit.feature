@@ -1,8 +1,8 @@
 @release @stable
-Feature: Edit AWB Shipment
-    The authenticated user will create a direct export air shipment,
-    and open AWB wizard screen to show overview tab and add packages from AWB wizard.
-
+Feature: AWB Edit
+   The user creates a Direct Export Air shipment, edits the AWB Wizard, 
+   checks that the overview tabs appears, adds packages and saves.
+   
     Scenario: Login and create direct export air shipment
         Given the user logged in and navigate to shipments workspace
         And a direct shipment with the following details

@@ -1,21 +1,13 @@
-@smoke @stable 
-Feature: Credit note ARInvoice operations and actions
-    After the user logging in the system and Update Accounting System to be None,navigates to shipments workspace
-    will create a direct shipment, after that create and approve a credit note ARInvoice
-    set as sent and void the invoice.
+@release @stable
+Feature: AR Invoice Cancel Credit Note Draft
+    The user creates a Direct Export Air shipment, creates receivable, creates AR Invoice, 
+    creates credit note draft and cancels it.
 
     Scenario: Update Accounting System
         Given the user logged in
         Given accounting System as "None"
         When change the accounting system
         Then the accounting system should update successfully
-
-    Scenario: enable void invoice settings
-        Given the user navigates to "invoice settings" in maintenance menu
-        Given accounting settings with the following details
-            | VoidInvoice | Allowed |
-        When update invoice settings
-        Then the invoice setting should update successfully
 
     Scenario: Create direct export air shipment
         Given the user navigates to shipments workspace
@@ -46,15 +38,6 @@ Feature: Credit note ARInvoice operations and actions
         When create invoice
         Then the invoice should create successfully
 
-    Scenario: Approve credit note ARInvoice
-        When approve invoice
-        Then the invoice should approve successfully
-
-    Scenario: Set credit note ARInvoice as sent
-        When set invoice as sent
-        Then the invoice should set as sent successfully
-
-    Scenario: Void credit note ARInvoice
-        When void invoice
-        Then the invoice should void successfully
-
+    Scenario: Cancel draft credit note ARInvoice
+        When cancel draft
+        Then the invoice should cancel successfully
