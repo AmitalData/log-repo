@@ -274,12 +274,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     }
                     else
                     {
-                        entity = (from record in context.Ports.Include("Country") where record.Code == code && record.Country.Code == countryCode && a.IsAir && record.Tenant == tenant select record).FirstOrDefault();
+                        entity = (from record in context.Ports.Include("Country") where record.Code == code && record.Country.Code == countryCode && record.IsAir && record.Tenant == tenant select record).FirstOrDefault();
                     }
                 }
                 else
                 {
-                    entity = (from record in context.Ports.Include("Country") where record.Code == code && record.Country.Code == countryCode && a.IsAir && record.Tenant == tenant select record).FirstOrDefault();
+                    entity = (from record in context.Ports.Include("Country") where record.Code == code && record.Country.Code == countryCode && record.IsAir && record.Tenant == tenant select record).FirstOrDefault();
                 }
                 return entity;
 
