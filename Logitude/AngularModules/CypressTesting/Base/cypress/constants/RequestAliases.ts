@@ -97,6 +97,9 @@ export class RequestAliases {
     public static readonly PutQuoteTemplateHeaderFields = "PutQuoteTemplateHeaderFields";
     public static readonly PutQuoteTemplateTextDesignPMs = "PutQuoteTemplateTextDesignPMs";
 
+    public static readonly PostCrossdock = "PostCrossdock";
+    public static readonly PutCrossdock = "PutCrossdock";
+
     public static readonly GetSignle = "GetSignle"
     public static readonly GetByFilter = "GetByFilter"
     public static readonly GetFilterSearch = "GetFilterSearch"

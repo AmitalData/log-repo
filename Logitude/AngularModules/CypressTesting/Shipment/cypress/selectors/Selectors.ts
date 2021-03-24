@@ -42,6 +42,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly DocsOutTab = '#ShipmentTHDocsOut';
   public static readonly DocsInTabb = '#ShipmentTHDocsIn';
   public static readonly EventsTab = '#ShipmentTHEvents';
+  public static readonly ConnectionsTab = '#ShipmentTHConnections';
   public static readonly CustomsTab = '#ShipmentTHCustoms';
   //#endregion
   //#region General tab
