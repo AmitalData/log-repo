@@ -25,12 +25,12 @@ Feature: AMANAC Ocean Shipment Validations, Marked as Blocked, Marked as Not Blo
         Then the shipment should create successfully
 
     Scenario: Marked as blocked for transfer
-        When the user marke the shipment "as blocked" for transfer in "New Transfer" view
+        When the user click "Mark as blocked for transfer" in "New Transfer" view
         Then the shipment should appear in the "Marked as blocked for transfer" view in the AMANAC workspace
         And AMANAC and customs transmissions statuses should be "Blocked For Sending"
 
     Scenario: Marked as not blocked for transfer
-        When the user marke the shipment "as not blocked" for transfer in "Marked as blocked for transfer" view
+        When the user click "Mark as not blocked for transfer" in "Marked as blocked for transfer" view
         Then the shipment should appear in the "New Transfer" view in the AMANAC workspace
         And should not appear in the "Marked as blocked for transfer" view in the AMANAC workspace
         And AMANAC and customs transmissions statuses should be "Not sent"
