@@ -583,10 +583,13 @@ export class ConsigmentTabContentComponent
                 }
             case '16':
                 {
-                    this.ManifestNumberPlaceholder = "הזן שנה";
-                    this.SecondCargoIDPlaceholder = "הזן שמ”ב / שמ”פ";
-                    this.ThirdCargoIdPlaceholder = "הזן ח.תעופה/משלח";
-                    break;
+                    if (this.declarationPM.TransportModeId == 'A' && this.ConsignmentType == 'E') {
+                        this.ManifestNumberPlaceholder = "הזן שנה";
+                        this.SecondCargoIDPlaceholder = "הזן שמ”ב / שמ”פ";
+                        this.ThirdCargoIdPlaceholder = "הזן ח.תעופה/משלח";
+                        break;
+                    }
+                
                 }
             default:
                 {
