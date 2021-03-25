@@ -26,9 +26,9 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     
     public DateTime DueDate { get; set; }
     
-    public decimal LocalAmountCredit { get; set; }
+    public decimal LocalAmount { get; set; }
     
-    public decimal ForeignAmountCredit { get; set; }
+    public decimal ForeignAmount { get; set; }
     
     public string Reference1 { get; set; }
     

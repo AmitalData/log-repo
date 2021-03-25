@@ -64,12 +64,47 @@ namespace WebFreight.Web.Helpers.APIHelpers
             else { return account; }
         }
 
+        private List<CardList> GetGLaccountConnectedCards(GLAccountPM account)
+        {
+            CardQuery cardQuery = new CardQuery(account.Tenant);
+            return cardQuery.GetAllCardsByGLAccount(account.Id, account.Tenant);
+
+        }
+
         private List<LedgerTransaction> GetGLaccountConnectedExternalTransactions(GLAccountPM gLAccount)
+        {
+            List<LedgerTransactionList> transactions = GetTransactionsForGLaccount(gLAccount);
+            List<LedgerTransaction> externalTransactions = FillExternalTransactionsList(transactions);
+            return externalTransactions;
+        }
+
+        private List<LedgerTransactionList> GetTransactionsForGLaccount(GLAccountPM gLAccount)
         {
             var accountingContext = AccountingContext.GetContext(tenant);
             LedgerTransactionListQueryService service = new LedgerTransactionListQueryService(accountingContext);
-            List<LedgerTransaction>  transactions = (List<LedgerTransaction>)service.GetExternalTransactionsForAccount(gLAccount.Id , tenant);
+            var transactions = service.GetExternalTransactionsForAccount(gLAccount.Id, tenant).ToList();
             return transactions;
+        }
+
+        private List<LedgerTransaction> FillExternalTransactionsList(List<LedgerTransactionList> transactions)
+        {
+            List<LedgerTransaction> externalTransactions = new List<LedgerTransaction>();
+            foreach (LedgerTransactionList transaction in transactions)
+            {
+                LedgerTransaction ledgerTransaction = new LedgerTransaction()
+                {
+                    Currency = CurrencyQuery.GetCurrencyById(transaction.CurrencyId, transaction.Tenant),
+                    DueDate = transaction.DueDate,
+                    LocalAmount = transaction.LocalAmountCredit,
+                    ForeignAmount = transaction.ForeignAmountCredit,
+                    Reference1 = transaction.Reference1,
+                    Reference2 = transaction.Reference2,
+                    Notes = transaction.Notes
+                };
+                externalTransactions.Add(ledgerTransaction);
+            }
+
+            return externalTransactions;
         }
 
         private List<ARPaymentChequeReplicaPM> GetCardPaymentCheques(CardList card)
@@ -113,11 +148,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
            
         }
 
-        private List<CardList> GetGLaccountConnectedCards(GLAccountPM account)
-        {
-            CardQuery cardQuery = new CardQuery(account.Tenant);
-           return cardQuery.GetAllCardsByGLAccount(account.Id, account.Tenant);
-
-        }
+   
     }
 }
