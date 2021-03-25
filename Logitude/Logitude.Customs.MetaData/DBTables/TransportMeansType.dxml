@@ -15,7 +15,7 @@
   <Column
     Name="LocalName"
     Type="nvarchar"
-    Size="40">
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
