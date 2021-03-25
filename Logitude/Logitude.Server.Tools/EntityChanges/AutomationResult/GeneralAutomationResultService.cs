@@ -40,20 +40,21 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 int conditionAndCount = automationConditionList.Where(d => d.ConditionType == "And").Count();
                 int conditionOrCount = automationConditionList.Where(d => d.ConditionType == "Or").Count();
 
-                 bool validconditionAndList = true;
+                 bool validAndList = true;
+                 bool validOrList = false;
 
 
                 if (conditionOrCount == 0) validconditionOr = true;
                 foreach (AutomationCondition automationCondition in automationConditionList.Where(d => d.ConditionType == "And"))
                 {
-                    
+                     
                     validconditionAnd = ValidateCondition(automationConditionFields, automationCondition, entityChange);
                      
                     validateResult.ConditionsList.Add(automationCondition);
                      
                     if (!validconditionAnd)
                     {
-                        validconditionAndList = false;
+                        validAndList = false;
                     }
 
                     //if (!validconditionAnd) break;
@@ -62,16 +63,22 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 // if (validconditionAnd)
                 // {
                 foreach (AutomationCondition automationCondition in automationConditionList.Where(d => d.ConditionType == "Or"))
-                    {
-                        validconditionOr = ValidateCondition(automationConditionFields, automationCondition, entityChange);
+                    { 
+
+                       validconditionOr = ValidateCondition(automationConditionFields, automationCondition, entityChange);
                      
                         validateResult.ConditionsList.Add(automationCondition);
-                     
-                        //if (validconditionOr) break;
+
+                    if (validconditionOr)
+                    {
+                        validOrList = true;
                     }
+
+                    //if (validconditionOr) break;
+                }
                 // } 
-                
-                if (validconditionAndList && validconditionOr) IsConditionValid = true;
+
+                if (validAndList && validOrList) IsConditionValid = true;
             }
 
             else IsConditionValid = true; 
