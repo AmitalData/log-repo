@@ -16,51 +16,85 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
         public static string GetAllCustomsShipmentsThatContainForwardingShipments(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs, 
             CargoTrackingTable table, string LastUpdate)
         {
-            string fielsdName = !string.IsNullOrEmpty(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName) ? 
-                cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName : "*";
+            string shipmentFields = !string.IsNullOrEmpty(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName) ?  cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName : "*";
+            shipmentFields = " C." + shipmentFields.Replace(",", " ,C.");
 
-            fielsdName = " C." + fielsdName.Replace(",", " ,C.");
-            string getAllCustomsShipmentsThatContainForwardingShipmentsCommand 
-                = "SELECT " + fielsdName + ", Min(P.Id) as ForwardingIdForCustom" +
-                ",com.ContainersNumbers as ContainersNumbers,com.FinalDeliveryETA as FinalDeliveryETA," +
-                "com.FinalDeliveryETD as FinalDeliveryETD,com.FinalDeliveryATD as FinalDeliveryATD," +
-                "com.FinalDeliveryATA as FinalDeliveryATA ,com.FirstPickupATD as FirstPickupATD," +
-                " Mas.MainCarriageATD as MainCarriageATD,Mas.Master as Master ,  Mas.MainCarriageETD  as MainCarriageETD" +
-                " , Mas.MainCarriageATA  as MainCarriageATA , Mas.MainCarriageETA  as MainCarriageETA "
-                + ", min(P.ShipmentNumber) as ForwardingShipmentNumber"
-                
-                + " FROM dbo." + table.DBTableName + " P JOIN dbo." + table.DBTableName + // P: forwarding shipment
-                " C ON P.CustomFileId = C.Id  Left Outer JOIN dbo.ShipmentComputedFields com on com.Id = C.Id  " + // C: custom shipment
-                "Left outer JOIN dbo.ShipmentMasterDatas Mas on Mas.Id = C.MasterShipmentDataId ";
+            var shipmentComputedFields =
+                 "com.ContainersNumbers as ContainersNumbers," +
+                " com.FinalDeliveryETA as FinalDeliveryETA,com.FinalDeliveryATA as FinalDeliveryATA, " +
+                "com.FinalDeliveryETD as FinalDeliveryETD,com.FinalDeliveryATD as FinalDeliveryATD" +
+                ",com.FirstPickupATD as FirstPickupATD";
+
+            var shipmentMasterFields =
+                 "Mas.MainCarriageATD as MainCarriageATD, Mas.Master as Master " +
+                ", Mas.MainCarriageETD  as MainCarriageETD , Mas.MainCarriageATA  as MainCarriageATA " +
+                ", Mas.MainCarriageETA  as MainCarriageETA";
+
+
+            var groupSelect = "Min(P.Id) as ForwardingIdForCustom" +
+                            ", min(P.ShipmentNumber) as ForwardingShipmentNumber ";
+
+            var selectScript = $"SELECT {shipmentFields}, {shipmentComputedFields}, {shipmentMasterFields}, {groupSelect} ";
+
+
+
+            var fromScript = $"FROM dbo.{table.DBTableName} P ";
+
+            var joinScript = $"JOIN dbo.{table.DBTableName} C                   ON P.CustomFileId = C.Id " +
+                             $"LEFT OUTER JOIN dbo.ShipmentComputedFields com ON com.Id = C.Id " +
+                             $"LEFT OUTER JOIN dbo.ShipmentMasterDatas Mas    ON Mas.Id = C.MasterShipmentDataId ";
+
+
+            List<string> whereConditions = new List<string>();
+
+
 
             if (cargoTrackingDataBaseArgs.CargoTrackingArguments == null)
             {
-                LastUpdate = ServiceHelper.GetTableLastUpdate(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName,
-                    cargoTrackingDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
+                LastUpdate = ServiceHelper.GetTableLastUpdate(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName, cargoTrackingDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
 
-                getAllCustomsShipmentsThatContainForwardingShipmentsCommand += " where (C.AutomaticLastUpdateDate > '" + LastUpdate + "')";
-                    //+" or (Mas.AutomaticLastUpdateDate > '" + LastUpdate + "') or (com.AutomaticLastUpdateDate > '" + LastUpdate + "'))";
+                string lastUpdateCondition = $" (C.AutomaticLastUpdateDate > '{LastUpdate}')";
+                whereConditions.Add(lastUpdateCondition);
             }
             else
             {
                 if (cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant != null)
-                    getAllCustomsShipmentsThatContainForwardingShipmentsCommand += " where C.Tenant=" + 
-                        cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant + " and DATEADD(dd, DATEDIFF(dd, 0, P.CreateDateTime ), 0) >= '"
-                        + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date + 
-                        "' and DATEADD(dd, DATEDIFF(dd, 0, P.CreateDateTime ), 0) <= '" + 
-                        cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date + "'";
-                else
-                    getAllCustomsShipmentsThatContainForwardingShipmentsCommand += " where DATEADD(dd, DATEDIFF(dd, 0, C.CreateDateTime ), 0) >= '" 
-                        + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date + 
-                        "' and DATEADD(dd, DATEDIFF(dd, 0, C.CreateDateTime ), 0) <= '" + 
-                        cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date + "'";
+                {
+                    string tenantCondition = $" C.Tenant = {cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant}";
+                    whereConditions.Add(tenantCondition);
+                }
+
+
+                var createDateWithoutTime = "DATEADD(dd, DATEDIFF(dd, 0, C.CreateDateTime ), 0)";
+                string datePeriodCondition = $" {createDateWithoutTime} >= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date}' and" +
+                                             $" {createDateWithoutTime} <= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date}'";
+                whereConditions.Add(datePeriodCondition);
             }
 
-            getAllCustomsShipmentsThatContainForwardingShipmentsCommand += " group by " + fielsdName + ",com.ContainersNumbers,com.FinalDeliveryETA," +
-                "com.FinalDeliveryATA,com.FirstPickupATD,Mas.MainCarriageATD,Mas.Master,Mas.MainCarriageETD,Mas.MainCarriageATA,Mas.MainCarriageETA ,com.FinalDeliveryETD,com.FinalDeliveryATD";
+            var whereScript = " WHERE " + string.Join(" AND ", whereConditions);
 
 
-            return getAllCustomsShipmentsThatContainForwardingShipmentsCommand;
+
+
+            var groupByScript =
+                $" GROUP BY {shipmentFields}" +
+                @",com.ContainersNumbers,
+                    com.FinalDeliveryETA,
+                    com.FinalDeliveryATA,
+                    com.FirstPickupATD,
+                    com.FinalDeliveryETD,
+                    com.FinalDeliveryATD,
+                    Mas.Master,
+                    Mas.MainCarriageATD,
+                    Mas.MainCarriageETD,
+                    Mas.MainCarriageATA,
+                    Mas.MainCarriageETA";
+
+
+            string sqlQuery = string.Join(Environment.NewLine, selectScript , fromScript , joinScript , whereScript , groupByScript);
+
+
+            return sqlQuery;
         }
 
 
@@ -69,48 +103,94 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
         public static string GetAllNonCustomShipmentsThatContainForwardingShipments(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs,
             CargoTrackingTable table, string LastUpdate)
         {
-            string fieldsName = !string.IsNullOrEmpty(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName) ?
-                cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName : "*";
 
-            fieldsName = " P." + fieldsName.Replace(",", " ,P.");
-            string getAllNonCustomShipmentsThatContainForwardingShipmentsCommand = "Select " + fieldsName + ",com.ContainersNumbers as ContainersNumbers," +
+            // Select
+
+            string shipmentFields = !string.IsNullOrEmpty(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName) ? cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName : "*";
+
+            shipmentFields = " P." + shipmentFields.Replace(",", " ,P.");
+
+            var shipmentComputedFields =
+                 "com.ContainersNumbers as ContainersNumbers," +
                 " com.FinalDeliveryETA as FinalDeliveryETA,com.FinalDeliveryATA as FinalDeliveryATA, " +
                 "com.FinalDeliveryETD as FinalDeliveryETD,com.FinalDeliveryATD as FinalDeliveryATD" +
-                ",com.FirstPickupATD as FirstPickupATD, Mas.MainCarriageATD as MainCarriageATD, Mas.Master as Master " +
-                ",  Mas.MainCarriageETD  as MainCarriageETD , Mas.MainCarriageATA  as MainCarriageATA " +
-                ", Mas.MainCarriageETA  as MainCarriageETA,min(P.ShipmentNumber) as ForwardingShipmentNumber "
+                ",com.FirstPickupATD as FirstPickupATD";
 
-                + "FROM dbo. " + table.DBTableName +
-                " P Left Outer JOIN dbo.ShipmentComputedFields com on com.Id = P.Id " +
-                " Left outer JOIN dbo.ShipmentMasterDatas Mas on Mas.Id = P.MasterShipmentDataId " + 
-                " Where P.Id not in (Select C.Id From  dbo." + table.DBTableName + " SH JOIN dbo." + table.DBTableName + " C ON SH.CustomFileId = C.Id) ";
+            var shipmentMasterFields =
+                 "Mas.MainCarriageATD as MainCarriageATD, Mas.Master as Master " +
+                ",  Mas.MainCarriageETD  as MainCarriageETD , Mas.MainCarriageATA  as MainCarriageATA " +
+                ", Mas.MainCarriageETA  as MainCarriageETA," +
+                "min(P.ShipmentNumber) as ForwardingShipmentNumber ";
+
+
+            var selectScript = $"Select {shipmentFields} , {shipmentComputedFields} , {shipmentMasterFields} ";
+
+
+
+
+            // From
+
+            var fromScript = $"FROM dbo.{table.DBTableName} P ";
+
+
+            var joinScript = @"LEFT OUTER JOIN dbo.ShipmentComputedFields com ON com.Id = P.Id 
+                         LEFT OUTER JOIN dbo.ShipmentMasterDatas Mas    ON Mas.Id = P.MasterShipmentDataId ";
+
+
+
+            // Where
+            List<string> whereConditions = new List<string>();
+
+            var notCustomShipment = $" P.Id NOT IN (SELECT C.Id FROM  dbo.{table.DBTableName } SH " +
+                                                    $"JOIN  dbo.{table.DBTableName}  C  ON SH.CustomFileId = C.Id) ";
+            whereConditions.Add(notCustomShipment);
+
+
             if (cargoTrackingDataBaseArgs.CargoTrackingArguments == null)
             {
-                LastUpdate = ServiceHelper.GetTableLastUpdate(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName,
-                    cargoTrackingDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
+                LastUpdate = ServiceHelper.GetTableLastUpdate(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName,cargoTrackingDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
 
-                getAllNonCustomShipmentsThatContainForwardingShipmentsCommand += " and (P.AutomaticLastUpdateDate > '" + LastUpdate + "')";
-                    //+" or (Mas.AutomaticLastUpdateDate > '" + LastUpdate + "') or (com.AutomaticLastUpdateDate > '" + LastUpdate + "'))";
+                string lastUpdateCondition = $" (P.AutomaticLastUpdateDate > '{LastUpdate}')";
+                whereConditions.Add(lastUpdateCondition);
             }
             else
             {
+
                 if (cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant != null)
-                    getAllNonCustomShipmentsThatContainForwardingShipmentsCommand += " and P.Tenant=" + 
-                        cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant + " and DATEADD(dd, DATEDIFF(dd, 0, P.CreateDateTime ), 0) >= '" 
-                        + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date +
-                        "' and DATEADD(dd, DATEDIFF(dd, 0, P.CreateDateTime ), 0) <= '" + 
-                        cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date + "'";
-                else
-                    getAllNonCustomShipmentsThatContainForwardingShipmentsCommand += " and DATEADD(dd, DATEDIFF(dd, 0, P.CreateDateTime ), 0) >= '" 
-                        + cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date + 
-                        "' and DATEADD(dd, DATEDIFF(dd, 0, P.CreateDateTime ), 0) <= '" 
-                        + cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date + "'";
+                {
+                    string tenantCondition = $" P.Tenant = {cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant}";
+                    whereConditions.Add(tenantCondition);
+                }
+
+
+                var createDateWithoutTime = "DATEADD(dd, DATEDIFF(dd, 0, P.CreateDateTime ), 0)";
+                string datePeriodCondition = $" {createDateWithoutTime} >= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date}' and" +
+                                             $" {createDateWithoutTime} <= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date}'";
+                whereConditions.Add(datePeriodCondition );
             }
 
-            getAllNonCustomShipmentsThatContainForwardingShipmentsCommand += " group by " + fieldsName + ",com.ContainersNumbers,com.FinalDeliveryETA," +
-                "com.FinalDeliveryATA,com.FirstPickupATD,Mas.MainCarriageATD,Mas.MainCarriageETD,Mas.Master,Mas.MainCarriageATA,Mas.MainCarriageETA,com.FinalDeliveryETD,com.FinalDeliveryATD";
+            var whereScript = " WHERE " +  string.Join(" AND ", whereConditions);
 
-            return getAllNonCustomShipmentsThatContainForwardingShipmentsCommand;
+
+            // Group By
+            var groupByScript =
+                $" GROUP BY {shipmentFields}" +
+                @",com.ContainersNumbers,
+                    com.FinalDeliveryETA,
+                    com.FinalDeliveryATA,
+                    com.FirstPickupATD,
+                    com.FinalDeliveryETD,
+                    com.FinalDeliveryATD,
+                    Mas.Master,
+                    Mas.MainCarriageATD,
+                    Mas.MainCarriageETD,
+                    Mas.MainCarriageATA,
+                    Mas.MainCarriageETA";
+
+
+            string sqlQuery = selectScript + fromScript + joinScript + whereScript + groupByScript;
+
+            return sqlQuery;
         }
 
     }
