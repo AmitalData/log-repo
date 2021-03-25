@@ -231,12 +231,12 @@ export var BrandingDataService = (function () {
         authHeader.append('Access-Control-Allow-Origin', '*');
         return authHeader;
     };
-    BrandingDataService.DefaultBackground = "url('./Images/LoginScreen/map.png')";
-    BrandingDataService.DefaultMainImage = "url('./Images/LoginScreen/screen_trucks.jpg')";
-    BrandingDataService.DefaultLoginProgress = "url('./Images/LoginScreen/screen_kids.jpg')";
-    BrandingDataService.DefaultForgetPassword = "url('./Images/LoginScreen/screen_kids.jpg')";
-    BrandingDataService.DefaultMainLogo = "./Images/LoginScreen/header.jpg";
-    BrandingDataService.DefaultSmallLogo = "./Images/LoginScreen/sheader.jpg";
+    BrandingDataService.DefaultBackground = "url('./Images/PrivateLabel/Background.png')";
+    BrandingDataService.DefaultMainImage = "url('./Images/PrivateLabel/MainImage.png')";
+    BrandingDataService.DefaultLoginProgress = "url('./Images/PrivateLabel/MainImage.png')";
+    BrandingDataService.DefaultForgetPassword = "url('./Images/PrivateLabel/MainImage.png')";
+    BrandingDataService.DefaultMainLogo = "./Images/PrivateLabel/LogBoxLogo.png";
+    BrandingDataService.DefaultSmallLogo = "./Images/PrivateLabel/LogBoxLogo.png";
     return BrandingDataService;
 }());
 //# sourceMappingURL=BrandingDataService.js.map

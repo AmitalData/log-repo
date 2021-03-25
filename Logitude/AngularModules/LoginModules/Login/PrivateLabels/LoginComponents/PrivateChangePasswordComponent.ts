@@ -1,33 +1,34 @@
-import { Component } from '@angular/core';
-import {LoginService, LoginParameters} from '../LoginService';
-import {Headers} from '@angular/http';
-import {SessionInfo} from '../SessionInfo';
-import {PasswordChangeService} from '../PasswordChangeService';
-import {Tools} from '../Utilities/Tools'; 
-import {ChangePasswordComponent} from './ChangePasswordComponent';
-import { PrivateLabelsBrandingDataService } from '../PrivateLabels/Services/PrivateLabelsBrandingDataService';
-import { BrandingDataService } from '../PrivateLabels/Services/BrandingDataService';
-import { ServiceResponse } from '../PrivateLabels/DataContracts/ServiceResponse';
+﻿import { Component } from '@angular/core'; 
+import { Headers } from '@angular/http'; 
+import { ChangePasswordComponent } from '../../Components/ChangePasswordComponent';
+import { LoginService } from '../../LoginService';
+import { PasswordChangeService } from '../../PasswordChangeService';
+import { SessionInfo } from '../../SessionInfo';
+import { ServiceResponse } from '../DataContracts/ServiceResponse';
+import { BrandingDataService } from '../Services/BrandingDataService';
+import { PrivateLabelsBrandingDataService } from '../Services/PrivateLabelsBrandingDataService';
 
 @Component({
-    selector: 'DSVChangePasswordComponent',
+    selector: 'PrivateChangePasswordComponent',
     moduleId: './Login/Components/',
-    templateUrl: 'DSVChangePasswordComponent.html',
-    styleUrls: ['ChangePasswordComponent.css']
+    templateUrl: 'PrivateChangePasswordComponent.html',
+    styleUrls: ['PrivateChangePasswordComponent.css']
 })
-export class DSVChangePasswordComponent extends ChangePasswordComponent {
-     
+export class PrivateChangePasswordComponent extends ChangePasswordComponent {
+
     public MainColor: string = null;
     public BackgroundImage: string = "";
     public ForgetPasswordImage: string = "";
     public Id = "";
     public MainLogo: string = "";
     public ContactUsEmail: string = "";
-    public showSpinner = true;
-    private privateUrl;
+    public showSpinner = true; 
+    private privateUrl; 
 
     constructor(public ss: PasswordChangeService, public ll: LoginService, private privateLabelsBrandingDataService: PrivateLabelsBrandingDataService) {
-        super(ss, ll); 
+        super(ss, ll);
+        console.log("CHANGE PRIVATE");
+
     }
 
     ngOnInit() {
@@ -44,7 +45,7 @@ export class DSVChangePasswordComponent extends ChangePasswordComponent {
                 this.MainColor = response.Result.MainColor;
                 this.BackgroundImage = BrandingDataService.GetBackgroundImage();
                 this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage();
-                this.MainLogo = BrandingDataService.GetMainLogo();
+                this.MainLogo = BrandingDataService.GetMainLogo(); 
             }
         },
             (error) => {
