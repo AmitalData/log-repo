@@ -421,6 +421,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.UpdateShipmentStoragePricingsCollection();
                     this.InitializeBookingData();
 
+                    this.RemoveDeletedItemsFromEntityPM();
+
                     if (entityPM.WarehouseStorageFreeDays != entityPoco.WarehouseStorageFreeDays)
                     {
                         calculatePayables = true;
@@ -500,7 +502,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
                     this.UpdateShipmentFollowUpsCollection();
 
-
                     ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext);
 
                     this.ComputeAgentComputed(entityPM, entityPoco);
@@ -560,6 +561,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
+        private void RemoveDeletedItemsFromEntityPM()
+        {
+            this.entityPM.ShipmentPickUps = initializer.ShipmentPickUpsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            this.entityPM.ShipmentDeliveries = initializer.ShipmentDeliveriesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            this.entityPM.ShipmentPayables = initializer.ShipmentPayablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            this.entityPM.ShipmentReceivables = initializer.ShipmentReceivablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+        }
         private void UpdateMasterHouses()
         {
             MasterHousesBehaviour MasterHousesBehaviour = new MasterHousesBehaviour(this.initializer, this.allHouses, this.isNewEntity);
@@ -1178,7 +1186,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             return (!string.IsNullOrEmpty(CurrentTenant.PrivateLabelId));
         }
 
-
         private bool IsImporterTenantHasExportFeatureForExportShipments(int ImporterTenant, ShipmentPM entityPM)
         {
             if ((entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R") && !FeatureToggleHelper.HasFeatureToggle("LEX", ImporterTenant, entityPM.Tenant))
@@ -1457,13 +1464,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
-                }
-
-                List<ShipmentPickUpPM> deletedPickups = initializer.ShipmentPickUpsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete).ToList();
-                foreach (ShipmentPickUpPM deletedPickup in deletedPickups)
-                {
-                    this.entityPM.ShipmentPickUps.Remove(deletedPickup);
-                }
+                }                             
             }
         }
         private void UpdateShipmentDeliveriesCollection()
@@ -1494,13 +1495,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
-                }
-
-                List<ShipmentDeliveryPM> deletedDeliveries = initializer.ShipmentDeliveriesChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete).ToList();
-                foreach (ShipmentDeliveryPM deletedDelivery in deletedDeliveries)
-                {
-                    this.entityPM.ShipmentDeliveries.Remove(deletedDelivery);
-                }
+                }                         
             }
         }
         private void UpdateShipmentPayablesCollection()
@@ -1531,13 +1526,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
-                }
-
-                List<ShipmentPayablePM> deletedPayables = initializer.ShipmentPayablesChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete).ToList();
-                foreach (ShipmentPayablePM deletedPayable in deletedPayables)
-                {
-                    this.entityPM.ShipmentPayables.Remove(deletedPayable);
-                }
+                }                             
             }
         }
         private void UpdateShipmentReceivablesCollection()
@@ -1570,13 +1559,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
-                }
-
-                List<ShipmentReceivablePM> deletedReceivables = initializer.ShipmentReceivablesChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete).ToList();
-                foreach (ShipmentReceivablePM deletedReceivable in deletedReceivables)
-                {
-                    this.entityPM.ShipmentReceivables.Remove(deletedReceivable);
-                }
+                }                
             }
         }
         private void UpdateShipmentAWBPrintOnliesCollection()
@@ -1640,8 +1623,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
-
-
         private void UpdateShipmentFollowUpsCollection(string changeSet = "Update")
         {
             if (initializer.ShipmentFollowUpsChangeSet != null)
@@ -1762,7 +1743,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             }
         }
-
         private void UpdateShipmentCarrierStatusesCollection()
         {
             if (initializer.ShipmentCarrierStatusesChangeSet != null)
@@ -1918,7 +1898,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
-
         private void BuildShipmentExternalUpdate()
         {
             if (!string.IsNullOrEmpty(entityPM.AgentSharedManifestRef))
