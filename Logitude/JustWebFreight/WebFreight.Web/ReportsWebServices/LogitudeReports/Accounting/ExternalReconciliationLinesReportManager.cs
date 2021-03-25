@@ -71,7 +71,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private void BuildReportHeader()
         {
 
-            if (this.ExternalReconciliationNumber ==null)
+            if (this.ExternalReconciliationNumber == null)
             {
                 iDataProvider.BankAccountId = this.BankAccountId;
                 iDataProvider.Type = this.Type;
@@ -84,11 +84,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             iDataProvider.ExternalReconciliationNumber = this.ExternalReconciliationNumber;
             iDataProvider.SortBy = this.SortBy;
 
-            ExternalPagesBalanceService externalPagesBalanceService = new ExternalPagesBalanceService(tenant);
-            iDataProvider.BankPagesClosingBalance = externalPagesBalanceService.GetClosingBalanceByDate("BankAccount",BankAccountId,RefDateTo.Value);
-
+            SetBankPagesClosingBalance();
 
         }
+
+        private void SetBankPagesClosingBalance()
+        {
+            ExternalPagesBalanceService externalPagesBalanceService = new ExternalPagesBalanceService(tenant);
+            iDataProvider.BankPagesClosingBalance = externalPagesBalanceService.GetClosingBalanceByDate("BankAccount", BankAccountId, RefDateTo.Value);
+        }
+
         private void BuildSourceData()
         {
             List<BankAccountPM> AllBankAccounts = GetAllBankAccountsByFilters();

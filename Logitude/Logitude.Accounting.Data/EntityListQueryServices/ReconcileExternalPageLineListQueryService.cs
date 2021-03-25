@@ -14,6 +14,7 @@ using System.Xml.Serialization;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityLists;
 using System.Linq.Expressions;
+using Logitude.Accounting.Data.Repositories;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 {
@@ -69,11 +70,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         }
         public List<ReconcileExternalPageLine> GetPageLines(string pageId, int tenant)
         {
-            IQueryable<ReconcileExternalPageLine> pageLineQuery = (from a in context.ReconcileExternalPageLines
-                                                                   where a.ReconcileExternalPageId == pageId && a.Tenant == tenant
-                                                                   select a);
-
-            return pageLineQuery.ToList();
+            ReconcileExternalPageLineRepository pageLineRepository = new ReconcileExternalPageLineRepository(tenant);
+            List<ReconcileExternalPageLine> pageLineQuery = pageLineRepository.GetPageLines(pageId, tenant);
+            return pageLineQuery;
         }
         public IQueryable<ReconcileExternalPageLine> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<ReconcileExternalPageLine> iQueryable, int tenant)
         {

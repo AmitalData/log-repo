@@ -30,38 +30,36 @@ namespace Logitude.Accounting.BL.CoreBL
         public decimal GetClosingBalanceByDate(string objectTableName,string EntityId,DateTime date)
         {
             List<ReconcileExternalPage> externalPages = GetApprovedExternalPages(objectTableName, EntityId);
-            
-            decimal closedBalance = 0;
-
             if (externalPages != null && externalPages.Count() > 0)
-                closedBalance = CalculateClosedBalanceFromExternalPages(date, externalPages);
-
-            return closedBalance;
+                return CalculateClosedBalanceFromExternalPages(date, externalPages);
+            return 0;
         }
 
         private decimal CalculateClosedBalanceFromExternalPages(DateTime date, List<ReconcileExternalPage> externalPages)
         {
             decimal closedBalance = 0;
-            var pageContainsTheDate = externalPages.FirstOrDefault(page => page.FromDate <= date && date <= page.ToDate);
-            var lastPage = externalPages.OrderByDescending(d => d.ToDate).FirstOrDefault();
-            var firstPage = externalPages.OrderBy(d => d.ToDate).FirstOrDefault();
-            var mostRecentPageBeforeTheDate = externalPages.OrderByDescending(d => d.ToDate).Where(d => d.ToDate <= date).FirstOrDefault();
 
-            if (pageContainsTheDate != null)
-                closedBalance = CalculateClosedBalanceFromPage(pageContainsTheDate, date);
-            else if (date > lastPage.ToDate)
-                closedBalance = lastPage.CloseBalance;
-            else if (date < firstPage.FromDate)
-                closedBalance = firstPage.StartBalance;
-            else if (mostRecentPageBeforeTheDate != null)
-                closedBalance = mostRecentPageBeforeTheDate.CloseBalance;
+            ExternalPagesDescriptor pagesDescription = new ExternalPagesDescriptor(date, externalPages);
+            pagesDescription.BuildDescriptor();
+
+            if (pagesDescription.HasPageThatContainsTheDate)
+                closedBalance = CalculateClosedBalanceFromPage(pagesDescription.PageThatContainsTheDate, date);
+
+            else if (pagesDescription.IsDateAfterThanAllPages)
+                closedBalance = pagesDescription.LastPage.CloseBalance;
+
+            else if (pagesDescription.IsDateEarlierThanAllPages)
+                closedBalance = pagesDescription.FirstPage.StartBalance;
+
+            else if (pagesDescription.IsDateBetweenThePages)
+                closedBalance = pagesDescription.MostRecentPageBeforeTheDate.CloseBalance;
 
             return closedBalance;
         }
 
         private decimal CalculateClosedBalanceFromPage(ReconcileExternalPage page, DateTime date)
         {
-            List<ReconcileExternalPageLine> lines = GetPageLines(page);
+            List<ReconcileExternalPageLine> lines = GetPageLinesOrderedByReferenceDate(page);
 
             decimal linesSummationUpToDate = GetLinesSummationUpToDate(date, lines);
             decimal closedBalance = page.StartBalance + linesSummationUpToDate;
@@ -75,7 +73,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                                         .Sum(line => line.CreditAmount - line.DebitAmount);
         }
 
-        private List<ReconcileExternalPageLine> GetPageLines(ReconcileExternalPage page)
+        private List<ReconcileExternalPageLine> GetPageLinesOrderedByReferenceDate(ReconcileExternalPage page)
         {
             var accountingContext = AccountingContext.GetContext(tenant);
             ReconcileExternalPageLineListQueryService linesQueryService = new ReconcileExternalPageLineListQueryService(accountingContext);
@@ -102,5 +100,49 @@ namespace Logitude.Accounting.BL.CoreBL
             string objectTableId = objectTable.Id;
             return objectTableId;
         }
+    }
+
+
+
+    public class ExternalPagesDescriptor
+    {
+        private List<ReconcileExternalPage> externalPages;
+        private DateTime date;
+        public ExternalPagesDescriptor(DateTime date, List<ReconcileExternalPage> externalPages)
+        {
+            this.date = date;
+            this.externalPages = externalPages;
+        }
+
+        public void BuildDescriptor()
+        {
+            BuildPagesFacts();
+            SetNamedPages();
+        }
+        private void BuildPagesFacts()
+        {
+            HasPageThatContainsTheDate = PageThatContainsTheDate != null;
+            IsDateAfterThanAllPages = date > LastPage.ToDate;
+            IsDateEarlierThanAllPages = date < FirstPage.FromDate;
+            IsDateBetweenThePages = MostRecentPageBeforeTheDate != null;
+        }
+
+        private void SetNamedPages()
+        {
+            PageThatContainsTheDate = externalPages.FirstOrDefault(page => page.FromDate <= date && date <= page.ToDate);
+            LastPage = externalPages.OrderByDescending(d => d.ToDate).FirstOrDefault();
+            FirstPage = externalPages.OrderBy(d => d.ToDate).FirstOrDefault();
+            MostRecentPageBeforeTheDate = externalPages.OrderByDescending(d => d.ToDate).Where(d => d.ToDate <= date).FirstOrDefault();
+        }
+
+        public bool HasPageThatContainsTheDate { get; set; }
+        public bool IsDateAfterThanAllPages { get; set; }
+        public bool IsDateEarlierThanAllPages { get; set; }
+        public bool IsDateBetweenThePages { get; set; }
+        public ReconcileExternalPage PageThatContainsTheDate { get; set; }
+        public ReconcileExternalPage LastPage { get; set; }
+        public ReconcileExternalPage FirstPage { get; set; }
+        public ReconcileExternalPage MostRecentPageBeforeTheDate { get; set; }
+
     }
 }
