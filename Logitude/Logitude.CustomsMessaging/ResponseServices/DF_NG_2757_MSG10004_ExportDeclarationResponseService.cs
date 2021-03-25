@@ -21,7 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
- using UnifreightIIG.Common.MessageLib.Collateral;
+using UnifreightIIG.Common.MessageLib.Collateral;
 using Logitude.Customs.BL.TraceEvents;
 using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO;
 using Logitude.Customs.BL.BL;
@@ -119,21 +119,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
     //        }
 
- 
-          
 
-            
+
+
+
     //    }
 
 
-  
+
 
     //}
 
     public class DF_NG_2757_MSG10004_ExportDeclarationResponseService :
         ResponseServiceBase<INF_MSG_GenericResponseData, DF_NG_2757_MSG10004_ExportDeclarationResponse, GenericRequestParams>
     {
-  
+
         DeclarationPM _MyDeclarationPM;
         private bool _FastDelete;
         //private List<SupplierInvoiceItemsTaxesModPM> _SupplierInvoiceItemsTaxesModificationPMList;
@@ -590,14 +590,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //Update Declaration 
             _MyDeclarationPM.VersionId = customResponse.Response.Declaration.DMExtensions.VersionID.Value;
 
-            if(customResponse.Response.Declaration.DMExtensions.TransshipmentApprovalDateTime != null)
+            if (customResponse.Response.Declaration.DMExtensions.TransshipmentApprovalDateTime != null)
             {
                 _MyDeclarationPM.TransshipmentApprovalDateTime = customResponse.Response.Declaration.DMExtensions.TransshipmentApprovalDateTime.Value;
 
             }
             _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status[0].NameCode.Value;
-            if(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalFOBNISAmount!=null)
-             _MyDeclarationPM.FOBValueNIS = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalFOBNISAmount.Value, 2);
+            if (customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalFOBNISAmount != null)
+                _MyDeclarationPM.FOBValueNIS = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalFOBNISAmount.Value, 2);
             if (customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalFOBUSDAmount != null)
 
                 _MyDeclarationPM.FOBValueDollar = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalFOBUSDAmount.Value, 2);
@@ -857,21 +857,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 _MyDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
                 if (_MyDeclarationCourierStatusPM != null)
                 {
-                    CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(context);
-                    CourierPendingReasonPM courierPendingReasonPM_901 = myCourierPendingReasonQueryService.GetSingleCourierPendingReasonByCode("901", requestParams.Tenant);
-                    CourierPendingReasonPM courierPendingReasonPM_900 = myCourierPendingReasonQueryService.GetSingleCourierPendingReasonByCode("900", requestParams.Tenant);
                     DeclarationPendingPM declarationPendingPM_900 = null;
                     DeclarationPendingPM declarationPendingPM_901 = null;
                     if (_MyDeclarationCourierStatusPM.DeclarationPendings != null && _MyDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
                     {
-                        if (courierPendingReasonPM_900 != null)
-                        {
-                            declarationPendingPM_900 = _MyDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == _MyDeclarationCourierStatusPM.DeclarationId && r.CourierPendingReasonCode == courierPendingReasonPM_900.Id).FirstOrDefault();
-                        }
-                        if (courierPendingReasonPM_901 != null)
-                        {
-                            declarationPendingPM_901 = _MyDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == _MyDeclarationCourierStatusPM.DeclarationId && r.CourierPendingReasonCode == courierPendingReasonPM_901.Id).FirstOrDefault();
-                        }
+                        declarationPendingPM_900 = _MyDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == _MyDeclarationCourierStatusPM.DeclarationId && r.CourierPendingReasonCode == "900").FirstOrDefault();
+                        declarationPendingPM_901 = _MyDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == _MyDeclarationCourierStatusPM.DeclarationId && r.CourierPendingReasonCode == "901").FirstOrDefault();
                     }
                     // Pending 901
                     Boolean isSetPendingTo901 = false;
@@ -881,7 +872,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             if (errorItem.ValidationCode != null && errorItem.ValidationCode.Value == "2382")
                             {
-                                if (courierPendingReasonPM_901 == null)
+                                CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(context);
+                                CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle("901", false, false);
+                                if (courierPendingReasonPM == null)
                                 {
                                     LogMessagingUtil.Instance.AppendLine("לא קיים קוד Pending - הצהרה פלסטינאית = 901 בטבלת סיבות Pending");
                                     break;
@@ -890,14 +883,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 isSetPendingTo901 = true;
                                 if (declarationPendingPM_901 == null)
                                 {
-                                    if (courierPendingReasonPM_901 != null && courierPendingReasonPM_901.Code == "901")
-                                    {
-                                        declarationPendingPM_901 = new DeclarationPendingPM();
-                                        declarationPendingPM_901.CourierPendingReasonCode = courierPendingReasonPM_901.Id;
-                                        declarationPendingPM_901.Status = "A";
-                                        declarationPendingPM_901.ChangeSetOp = ChangeSetOperation.Insert;
-                                        _MyDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_901);
-                                    }
+                                    declarationPendingPM_901 = new DeclarationPendingPM();
+                                    declarationPendingPM_901.CourierPendingReasonCode = "901";
+                                    declarationPendingPM_901.Status = "A";
+                                    declarationPendingPM_901.ChangeSetOp = ChangeSetOperation.Insert;
+                                    _MyDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_901);
                                 }
                                 else if (declarationPendingPM_901.Status != "A")
                                 {
@@ -932,7 +922,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         bool isCollectActive = def.DEFDATA == "Y";
                         if (declarationPendingPM_900 == null)
                         {
-                            if (courierPendingReasonPM_900 == null)
+                            CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(context);
+                            CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle("900", false, false);
+                            if (courierPendingReasonPM == null)
                             {
                                 LogMessagingUtil.Instance.AppendLine("לא קיים קוד תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900 בטבלת סיבות Pending");
                                 isCollectActive = false;
@@ -961,14 +953,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             {
                                 if (declarationPendingPM_900 == null)
                                 {
-                                    if(courierPendingReasonPM_900 != null && courierPendingReasonPM_900.Code == "900")
-                                    {
-                                        declarationPendingPM_900 = new DeclarationPendingPM();
-                                        declarationPendingPM_900.CourierPendingReasonCode = courierPendingReasonPM_900.Id;
-                                        declarationPendingPM_900.Status = "A";
-                                        declarationPendingPM_900.ChangeSetOp = ChangeSetOperation.Insert;
-                                        _MyDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_900);
-                                    }
+
+                                    declarationPendingPM_900 = new DeclarationPendingPM();
+                                    declarationPendingPM_900.CourierPendingReasonCode = "900";
+                                    declarationPendingPM_900.Status = "A";
+                                    declarationPendingPM_900.ChangeSetOp = ChangeSetOperation.Insert;
+                                    _MyDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_900);
                                 }
                                 else if (declarationPendingPM_900.Status != "A")
                                 {
@@ -1489,7 +1479,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //}
 
             //Check if there is a DECLARED Fee (I01) in message
-        //    DeclarationGoodsShipmentCustomsValuation declarationGoodsShipmentCustomsValuation_I01 = goodsShipment.CustomsValuation.FirstOrDefault(rec => rec.ChargesTypeCode.Value == "I01");
+            //    DeclarationGoodsShipmentCustomsValuation declarationGoodsShipmentCustomsValuation_I01 = goodsShipment.CustomsValuation.FirstOrDefault(rec => rec.ChargesTypeCode.Value == "I01");
 
             //foreach (var valuationItem in goodsShipment.CustomsValuation)
             //{
@@ -1579,14 +1569,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                        "unable to find the supplierInvoiceItemPM from governmentAgencyGoodsItem.SequenceNumeric " + governmentAgencyGoodsItem.SequenceNumeric);
                 }
 
-           
+
                 //Added by Yuval Chalup 26.05.2015 TASK-13473 --->
 
                 var supplierInvoiceItemsTaxPMList = new List<SupplierInvoiceItemsTaxPM>();
                 //Update supplier item Valuation Adjustment - Commodity price adjustments
-               //// supplierInvoiceItemPM.SupplierInvoiceItemsMods = GetSupplierInvoiceItemsModifications(governmentAgencyGoodsItem.ValuationAdjustment, supplierInvoiceItemPM);
+                //// supplierInvoiceItemPM.SupplierInvoiceItemsMods = GetSupplierInvoiceItemsModifications(governmentAgencyGoodsItem.ValuationAdjustment, supplierInvoiceItemPM);
                 // moran 24.11.15 - Task 17424 -->
-              //  supplierInvoiceItemPM.SupplierInvoiceItemModVehicles = GetSupplierInvoiceItemsModVehicles(governmentAgencyGoodsItem.DMExtensions.VehicleValuationAdjustment, supplierInvoiceItemPM);
+                //  supplierInvoiceItemPM.SupplierInvoiceItemModVehicles = GetSupplierInvoiceItemsModVehicles(governmentAgencyGoodsItem.DMExtensions.VehicleValuationAdjustment, supplierInvoiceItemPM);
                 // moran 24.11.15 - Task 17424 <--
 
                 supplierInvoiceItemPM.SupplierInvioceItemCertificats = GetSupplierInvioceItemCertificats(supplierInvoicePM, supplierInvoiceItemPM);
@@ -1597,11 +1587,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 //TODO:DDDD
 
-              if(governmentAgencyGoodsItem.Commodity.DMExtensions!= null)
-                {if (governmentAgencyGoodsItem.Commodity.DMExtensions.ItemFOBAmountForeign != null)
-                    supplierInvoiceItemPM.ItemFOBAmountForeign = Math.Round(governmentAgencyGoodsItem.Commodity.DMExtensions.ItemFOBAmountForeign.Value, 2);
-                if(governmentAgencyGoodsItem.Commodity.DMExtensions.ItemFOBAmountNIS!= null)
-                    supplierInvoiceItemPM.ItemFOBAmountNIS= Math.Round(governmentAgencyGoodsItem.Commodity.DMExtensions.ItemFOBAmountNIS.Value, 2);
+                if (governmentAgencyGoodsItem.Commodity.DMExtensions != null)
+                {
+                    if (governmentAgencyGoodsItem.Commodity.DMExtensions.ItemFOBAmountForeign != null)
+                        supplierInvoiceItemPM.ItemFOBAmountForeign = Math.Round(governmentAgencyGoodsItem.Commodity.DMExtensions.ItemFOBAmountForeign.Value, 2);
+                    if (governmentAgencyGoodsItem.Commodity.DMExtensions.ItemFOBAmountNIS != null)
+                        supplierInvoiceItemPM.ItemFOBAmountNIS = Math.Round(governmentAgencyGoodsItem.Commodity.DMExtensions.ItemFOBAmountNIS.Value, 2);
 
                 }
                 if (governmentAgencyGoodsItem.Commodity.DutyTaxFee != null)
@@ -1611,7 +1602,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     foreach (var dutyTaxFee in governmentAgencyGoodsItem.Commodity.DutyTaxFee)
                     {
-                       
+
 
                         var supplierInvoiceItemsTaxPM = new SupplierInvoiceItemsTaxPM();
                         supplierInvoiceItemsTaxPM.ChangeSetOp = ChangeSetOperation.Insert;
@@ -2228,7 +2219,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 declarationTaxPM.Tenant = this._MyDeclarationPM.Tenant;
                 declarationTaxPM.TaxTypeCode = dutyTaxFee.TypeCode.Value;
                 declarationTaxPM.TotalAmount = dutyTaxFee.DMExtensions.CalculatedTax.Amount.Value;
-               // declarationTaxPM.DeferredTaxAmount = dutyTaxFee.DMExtensions.CalculatedTax.DeferedTaxAmount.Value;
+                // declarationTaxPM.DeferredTaxAmount = dutyTaxFee.DMExtensions.CalculatedTax.DeferedTaxAmount.Value;
                 declarationTaxPM.TaxBaseAmount = dutyTaxFee.AdValoremTaxBaseAmount.Value;
 
                 declarationTaxPMList.Add(declarationTaxPM);
