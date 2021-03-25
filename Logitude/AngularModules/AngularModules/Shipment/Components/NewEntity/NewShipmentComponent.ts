@@ -1660,7 +1660,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             else {
                 title = "New " + this.ComputeAddCustomerTitle();
 
-                if (this.ShipmentCustomerTypeCode == "AGT") {
+                if (this.ShipmentCustomerTypeCode == "AGT" || this.ShipmentCustomerTypeCode == "FOR" || this.ShipmentCustomerTypeCode == "COL") {
                     myComponentPath = "./CommonModules/CommonAgent/Components/NewEntity/NewAgentComponent";
                 }
 

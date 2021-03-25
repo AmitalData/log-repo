@@ -2188,7 +2188,7 @@ export class PartnerItem extends BaseComponent {
             var myPerspective: string = null;
             var myComponentPath: string = null;
 
-            if (this.Code == "AGENT") {
+            if (this.Code == "AGENT" || this.Code == "COLOD" || this.Code == "FRTFR") {
                 myComponentPath = "./CommonModules/CommonAgent/Components/NewEntity/NewAgentComponent";
             }
 
