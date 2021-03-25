@@ -964,7 +964,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     switch (GetValueCodeType(goodsItemAmount.AmountType))
                                     {
                                         case "3":
-                                            {if(!_isUpdateAfterAccept)
+                                            {if(!isFromImporter)
                                                 {
                                                     supplierInvoiceItemPM.ItemPrice = GetValueAmountType(goodsItemAmount.CustomsValueAmount);
                                                     supplierInvoiceItemPM.ItemPriceCurrencyCode = goodsItemAmount.CustomsValueAmount.currencyID.ToString();
@@ -975,7 +975,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                             }
                                         case "1":
                                             {
-                                                if (_isUpdateAfterAccept)
+                                                if (isFromImporter)
                                                 {
                                                     supplierInvoiceItemPM.ItemPrice = GetValueAmountType(goodsItemAmount.CustomsValueAmount);
                                                     supplierInvoiceItemPM.ItemPriceCurrencyCode = goodsItemAmount.CustomsValueAmount.currencyID.ToString();
