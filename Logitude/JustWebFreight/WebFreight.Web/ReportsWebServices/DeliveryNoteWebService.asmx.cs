@@ -859,17 +859,28 @@ namespace WebFreight.Web.ReportsWebServices
                 dataProvider.DeliveryTime_DateTime_New = childEntity.ETA;
             }
 
-            dataProvider.PickupDeliveryDeparture = childEntity.ATD;
-            if(dataProvider.PickupDeliveryDeparture == null)
+            dataProvider.PickupDeliveryDeparture = this.GetActualOrExpectedDeparture();
+            dataProvider.PickupDeliveryArrival = this.GetActualOrExpectedArrival();           
+        }
+        private DateTime? GetActualOrExpectedDeparture()
+        {
+            DateTime? myDate = childEntity.ATD;
+            if (myDate == null)
             {
-                dataProvider.PickupDeliveryDeparture = childEntity.ETD;
+                myDate = childEntity.ETD;
             }
 
-            dataProvider.PickupDeliveryArrival = childEntity.ATA;
-            if (dataProvider.PickupDeliveryArrival == null)
+            return myDate;
+        } 
+        private DateTime? GetActualOrExpectedArrival()
+        {
+            DateTime? myDate = childEntity.ATA;
+            if (myDate == null)
             {
-                dataProvider.PickupDeliveryArrival = childEntity.ETA;
+                myDate = childEntity.ETA;
             }
+
+            return myDate;
         }
         private void MapChildEntityCarrier()
         {
