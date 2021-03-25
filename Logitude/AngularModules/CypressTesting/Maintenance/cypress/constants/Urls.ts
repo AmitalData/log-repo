@@ -30,6 +30,9 @@ export class Urls {
     public static readonly Countries = "**/countries"
     public static readonly CountriesGetSingle = "**/countries/getsingle?**";
 
+    public static readonly States = "**/states"
+    public static readonly StatesGetSingle = "**/states/getsingle?**";
+
     public static GetFilterSearch(filterBy: string) {
         return '**/getbyfilters?**' + filterBy + '**'
     }
