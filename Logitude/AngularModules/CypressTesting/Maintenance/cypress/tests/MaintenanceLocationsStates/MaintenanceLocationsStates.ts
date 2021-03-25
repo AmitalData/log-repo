@@ -67,7 +67,7 @@ Given("a {string} as stateLocalName", (NewStateLocalName) => {
 });
 
 Given("the user change Inactivestate check box", () => {
-    MaintenanceActions.ChangeInactiveStateCheckBoxValue()
+    MaintenanceActions.ChangeInactiveCheckBoxValue(MaintenanceSelectors.InActiveStateCheckBox)
 });
 
 When("edit state", () => {

@@ -25,7 +25,7 @@ import { QuoteTemplateContext } from "../models/QuoteTemplateContext";
 import { QuoteTemplateDetails } from "cypress/models/QuoteTemplateDetails";
 import { CountryDetails } from "../models/CountryDetails";
 import { EventTypeDetails } from "../../../Base/cypress/models/EventTypeDetails";
-import { StateDetails } from "cypress/models/StateDetails";
+import { StateDetails } from "../models/StateDetails";
 
 //#region General Actions
 export function OpenMaintenanceMenu() {
@@ -65,14 +65,6 @@ export function OpenTabInMaintenanceMenu(maintenanceItemNameToSearch: string, ma
 export function OpenNewWizard(tabName: string) {
     cy.Click(MaintenanceSelectors.NewWizardButton(tabName), null);
 }
-
-function DefineGetByFilterRequest() {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetByFilter, RequestAliases.GetByFilter);
-}
-
-function AssertGetByFilters() {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetByFilter, 200);
-}
 //#endregion
 
 //#region Vendor
@@ -84,12 +76,12 @@ export function FillVendorDetails(vendorDetails: VendorDetails) {
     cy.FillLogTextBox(MaintenanceSelectors.VendorAddress1, vendorDetails.Address1);
     cy.FillLogTextBox(MaintenanceSelectors.VendorZipCode, vendorDetails.Zip);
     cy.FillLogTextBox(MaintenanceSelectors.VendorCity, vendorDetails.City);
-    cy.FillLogLov(MaintenanceSelectors.VendorCountry, vendorDetails.Country, true);
-    cy.FillLogLov(MaintenanceSelectors.VendorState, vendorDetails.State, true);
+    cy.FillLogLov(MaintenanceSelectors.VendorCountry, vendorDetails.Country,true);
+    cy.FillLogLov(MaintenanceSelectors.VendorState, vendorDetails.State,true);
 }
 
 export function FillVendorContactDetails(conatactDetails: ContactDetails) {
-    cy.SelectCheckBox(MaintenanceSelectors.VendorContactCheckBox)
+    FillCheckBoxProcess(MaintenanceSelectors.VendorContactCheckBox,conatactDetails.AddContact)
     cy.FillLogTextBox(MaintenanceSelectors.VendorContactEnglishName, conatactDetails.EnglishName);
     cy.FillLogTextBox(MaintenanceSelectors.VendorContactPosition, conatactDetails.Position);
     cy.FillLogTextBox(MaintenanceSelectors.VendorContactBusinessPhone, conatactDetails.BusinessPhone);
@@ -378,17 +370,17 @@ export function OpenNewContactWizard() {
 
 export function FillContactDetails(contactDetails: ContactDetails) {
     FillContactEmail(contactDetails.Email);
-    FillEnglishContactName(contactDetails.EnglishName);
-    FillLocalContactName(contactDetails.LocalName);
-    FillContactPosition(contactDetails.Position);
-    FillContactBusinessPhone(contactDetails.BusinessPhone);
-    FillContactMobile(contactDetails.Mobile);
-    FillContactFax(contactDetails.Fax);
+    cy.FillLogTextBox(MaintenanceSelectors.ContactEnglishName , contactDetails.EnglishName)
+    cy.FillLogTextBox(MaintenanceSelectors.ContactLocalName , contactDetails.LocalName)
+    cy.FillLogTextBox(MaintenanceSelectors.ContactPosition , contactDetails.Position)
+    cy.FillLogTextBox(MaintenanceSelectors.ContactBusinessPhone , contactDetails.BusinessPhone)
+    cy.FillLogTextBox(MaintenanceSelectors.ContactMobile , contactDetails.Mobile)
+    cy.FillLogTextBox(MaintenanceSelectors.ContactFax , contactDetails.Fax)
+    cy.FillLogTextBox(MaintenanceSelectors.ContactNotes, contactDetails.Notes)
     FillContactDatepicker(contactDetails.BirthdayDate, Constants.Birthday);
-    FillContactDateReminder(contactDetails.BirthdayReminder, Constants.Birthday);
+    FillCheckBoxProcess(MaintenanceSelectors.ContactBirthdayReminder ,contactDetails.BirthdayReminder);
     FillContactDatepicker(contactDetails.AnniversaryDate, Constants.Anniversary);
-    FillContactDateReminder(contactDetails.AnniversaryReminder, Constants.Anniversary);
-    FillContactNotes(contactDetails.Notes);
+    FillCheckBoxProcess(MaintenanceSelectors.ContactAnniversaryReminder,contactDetails.AnniversaryReminder);
 }
 
 export function CreateContact() {
@@ -471,48 +463,6 @@ function FillContactEmail(contactEmail: string) {
     }
 }
 
-function FillEnglishContactName(contactEnglishName: string) {
-    if (contactEnglishName) {
-        cy.FillLogTextBox(MaintenanceSelectors.ContactEnglishName, contactEnglishName);
-    }
-}
-
-function FillLocalContactName(contactLocalName: string) {
-    if (contactLocalName) {
-        cy.FillLogTextBox(MaintenanceSelectors.ContactLocalName, contactLocalName);
-    }
-}
-
-function FillContactPosition(contactPosition: string) {
-    if (contactPosition) {
-        cy.FillLogTextBox(MaintenanceSelectors.ContactPosition, contactPosition);
-    }
-}
-
-function FillContactBusinessPhone(contactBusinessPhone: string) {
-    if (contactBusinessPhone) {
-        cy.FillLogTextBox(MaintenanceSelectors.ContactBusinessPhone, contactBusinessPhone);
-    }
-}
-
-function FillContactMobile(contactMobile: string) {
-    if (contactMobile) {
-        cy.FillLogTextBox(MaintenanceSelectors.ContactMobile, contactMobile);
-    }
-}
-
-function FillContactFax(contactFax: string) {
-    if (contactFax) {
-        cy.FillLogTextBox(MaintenanceSelectors.ContactFax, contactFax);
-    }
-}
-
-function FillContactNotes(notes: string) {
-    if (notes) {
-        cy.FillLogTextBox(MaintenanceSelectors.ContactNotes, notes);
-    }
-}
-
 function FillContactDatepicker(contactDate: string, dateType: string) {
     if (contactDate && dateType) {
         let contactDatepicker: Datepicker = BaseActions.GetDatepicker(contactDate);
@@ -540,29 +490,6 @@ function FillContactDatepicker(contactDate: string, dateType: string) {
 function SelectComboBoxToggleItem(value: string) {
     cy.get(BaseSelectors.ToggleIconImage).click();
     cy.get(BaseSelectors.SpanTitle(value)).parent().click();
-}
-
-function FillContactDateReminder(reminder: string, dateType: string) {
-    if (reminder && dateType) {
-        let reminderCheckboxSelector = GetContactDateReminderSelector(dateType);
-        if (reminder.toLowerCase() == "yes") {
-            cy.get(reminderCheckboxSelector).check({ force: true });
-        }
-        else {
-            cy.get(reminderCheckboxSelector).uncheck({ force: true });
-        }
-    }
-}
-
-function GetContactDateReminderSelector(dateType: string) {
-    let reminderCheckboxSelector: string;
-    if (dateType.toLowerCase() == Constants.Birthday) {
-        reminderCheckboxSelector = MaintenanceSelectors.ContactBirthdayReminder;
-    }
-    else if (dateType.toLowerCase() == Constants.Anniversary) {
-        reminderCheckboxSelector = MaintenanceSelectors.ContactAnniversaryReminder;
-    }
-    return reminderCheckboxSelector;
 }
 
 function DefineContactViewsGetByFiltersRequest(contactEmail: string = null) {
@@ -844,44 +771,22 @@ export function AssertVoidInvoiceMessage(Message: string) {
 
 //#region Customer Settings
 export function FillCustomerSettingsDetails(customerSettingsDetails: CustomerSettingsDetails) {
-    FillIsCustomerTelphoneRequiredCheckBox(customerSettingsDetails.IsCustomerTelphoneRequired);
-    FillIsPotentialTelphoneRequiredCheckBox(customerSettingsDetails.IsPotentialCustomerTelphoneRequired);
-    FillIsCustomerFaxRequiredCheckBox(customerSettingsDetails.IsCustomerFaxRequired);
-    FillIsPotentialCustomerFaxRequiredCheckBox(customerSettingsDetails.IsPotentialCustomerFaxRequired);
-    FillIsCustomerAddress1RequiredCheckBox(customerSettingsDetails.IsCustomerAddress1Required);
+    FillCheckBoxProcess(MaintenanceSelectors.IsCustomerTelephoneRequiredCheckBox,customerSettingsDetails.IsCustomerTelphoneRequired)
+    FillCheckBoxProcess(MaintenanceSelectors.IsPotentialCustomerTelephoneRequiredCheckBox,customerSettingsDetails.IsPotentialCustomerTelphoneRequired)
+    FillCheckBoxProcess(MaintenanceSelectors.IsCustomerFaxRequiredCheckBox,customerSettingsDetails.IsCustomerFaxRequired)
+    FillCheckBoxProcess(MaintenanceSelectors.IsPotentialCustomerFaxRequiredCheckBox,customerSettingsDetails.IsPotentialCustomerFaxRequired)
+    FillCheckBoxProcess(MaintenanceSelectors.IsCustomerAddress1RequiredCheckBox,customerSettingsDetails.IsCustomerAddress1Required)
 }
-function FillIsCustomerTelphoneRequiredCheckBox(IsCustomerTelphoneRequired: string) {
-    if (IsCustomerTelphoneRequired.toUpperCase() == constants.YES) {
-        cy.get(MaintenanceSelectors.IsCustomerTelephoneRequiredCheckBox).check({ force: true });
-    }
-}
-function FillIsPotentialTelphoneRequiredCheckBox(IsPotentialCustomerTelphoneRequired: string) {
-    if (IsPotentialCustomerTelphoneRequired.toUpperCase() == constants.YES) {
-        cy.get(MaintenanceSelectors.IsPotentialCustomerTelephoneRequiredCheckBox).check({ force: true });
-    }
-}
-function FillIsCustomerFaxRequiredCheckBox(IsCustomerFaxRequired: string) {
-    if (IsCustomerFaxRequired.toUpperCase() == constants.YES) {
-        cy.get(MaintenanceSelectors.IsCustomerFaxRequiredCheckBox).check({ force: true });
-    }
-}
-function FillIsPotentialCustomerFaxRequiredCheckBox(IsPotentialCustomerFaxRequired: string) {
-    if (IsPotentialCustomerFaxRequired.toUpperCase() == constants.YES) {
-        cy.get(MaintenanceSelectors.IsPotentialCustomerFaxRequiredCheckBox).check({ force: true });
-    }
-}
-function FillIsCustomerAddress1RequiredCheckBox(IsCustomerAddress1Required) {
-    if (IsCustomerAddress1Required.toUpperCase() == constants.YES) {
-        cy.get(MaintenanceSelectors.IsCustomerAddress1RequiredCheckBox).check({ force: true });
-    }
-}
+
 export function UpdateCustomerSettings() {
     DefinePutCustomerSettings()
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK)
 }
+
 function DefinePutCustomerSettings() {
     cy.DefineRequestWait(RestAPI.PUT, Urls.Tenants, RequestAliases.Tenants);
 }
+
 export function AssertPutCustomerSettings() {
     BaseAssertion.AssertStatusCode(RequestAliases.Tenants, 200);
 
@@ -897,54 +802,16 @@ export function OpenNewPotentialCustomerWizard() {
     cy.Click(MaintenanceSelectors.NewCustomerButton, null);
 }
 export function FillPotentialCustomerDetails(customerDetails: CustomerDetails) {
-    FillPotentialCustomerName(customerDetails.CompanyName)
-    FillPotentialCustomerCity(customerDetails.City)
-    FillPotentialCustomerCountry(customerDetails.Country)
-    FillPotentialCustomerState(customerDetails.State)
-    FillPotentialCustomerPhoneNumber(customerDetails.PhoneNumber)
-    FillPotentialCustomerFaxNumber(customerDetails.FaxNumber)
-    fillPotentialCustomerAddress1(customerDetails.Address1);
-    if (customerDetails.AddContact) {
-        FillPotentialCustomerAddContactCheckBox(customerDetails.AddContact);
-    }
+    cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerName , customerDetails.CompanyName)
+    cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerCity , customerDetails.City)
+    cy.FillLogLov(MaintenanceSelectors.PotentialCustomerCountry , customerDetails.Country,true)
+    cy.FillLogLov(MaintenanceSelectors.PotentialCustomerState , customerDetails.State,true)
+    cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerPhoneNumber , customerDetails.PhoneNumber)
+    cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerFaxNumber , customerDetails.FaxNumber)
+    cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerAddress1 , customerDetails.Address1)
+    FillCheckBoxProcess(MaintenanceSelectors.PotentialCustomerAddContactCheckBox ,customerDetails.AddContact )
 }
-function FillPotentialCustomerName(CustomerName: string) {
-    cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerName, CustomerName)
-}
-function FillPotentialCustomerCity(City: string) {
-    cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerCity, City)
-}
-function FillPotentialCustomerCountry(Country: string) {
-    cy.FillLogLov(MaintenanceSelectors.PotentialCustomerCountry, Country, true)
-}
-function FillPotentialCustomerState(State: string) {
-    if (State) {
-        cy.FillLogLov(MaintenanceSelectors.PotentialCustomerState, State, true)
-    }
-}
-function FillPotentialCustomerPhoneNumber(PhoneNumber: string) {
-    if (PhoneNumber) {
-        cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerPhoneNumber, PhoneNumber)
-    }
-}
-function FillPotentialCustomerFaxNumber(FaxNumber: string) {
-    if (FaxNumber) {
-        cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerFaxNumber, FaxNumber)
-    }
-}
-function fillPotentialCustomerAddress1(Address1: string) {
-    if (Address1) {
-        cy.FillLogTextBox(MaintenanceSelectors.PotentialCustomerAddress1, Address1)
-    }
-}
-function FillPotentialCustomerAddContactCheckBox(AddContact: string) {
-    if (AddContact.toUpperCase() == constants.YES) {
-        cy.get(MaintenanceSelectors.PotentialCustomerAddContactCheckBox).check({ force: true })
-    }
-    else {
-        cy.get(MaintenanceSelectors.PotentialCustomerAddContactCheckBox).find(BaseSelectors.input).uncheck({ force: true })
-    }
-}
+
 export function AddPotentialCustomer() {
     DefinePostPotentialCustomer()
     cy.Click(MaintenanceSelectors.OkAddPotentialCustomer, null);
@@ -1006,138 +873,28 @@ function OpenPersonalSettingsTab() {
 }
 //#endregion
 
-//#region Create country
+//#region Country
 export function FillCountryDetails(countryDetails: CountryDetails) {
-    FillCountryCode(countryDetails.CountryCode);
-    FillCountryName(countryDetails.CountryName);
-    FillCountryLocalName(countryDetails.CountryLocalName);
-    FillCountryGlobalZone(countryDetails.CountryGlobalZone);
-    FillInactiveCountryCheckBox(countryDetails.InactiveCountry);
-    FillECCheckBox(countryDetails.EC);
-    FillNorthAmericaCheckBox(countryDetails.NorthAmerica);
-    FillIsStateRequiredCheckBox(countryDetails.IsStateRequired);
-    FillHasCitiesCheckBox(countryDetails.HasCities);
-    FillNotes(countryDetails.Notes);
+    cy.FillLogTextBox(MaintenanceSelectors.CountryCode,countryDetails.CountryCode);
+    cy.FillLogTextBox(MaintenanceSelectors.CountryEnglishName,countryDetails.CountryName);
+    cy.FillLogTextBox(MaintenanceSelectors.CountryLocalName,countryDetails.CountryLocalName);
+    cy.FillLogLov(MaintenanceSelectors.CountryGlobalZone,countryDetails.CountryGlobalZone,true);
+    FillCheckBoxProcess(MaintenanceSelectors.InActiveCountryCheckBox,countryDetails.InactiveCountry);
+    FillCheckBoxProcess(MaintenanceSelectors.CountryECCheckBox,countryDetails.EC);
+    FillCheckBoxProcess(MaintenanceSelectors.CountryIsNorthAmericaCheckBox,countryDetails.NorthAmerica);
+    FillCheckBoxProcess(MaintenanceSelectors.CountryIsStateRequiredCheckBox,countryDetails.IsStateRequired);
+    FillCheckBoxProcess(MaintenanceSelectors.CountryHasCitiesCheckBox,countryDetails.HasCities);
+    cy.FillLogTextBox(MaintenanceSelectors.CountryNotes,countryDetails.Notes);
+
 }
 
-export function FillCountryCode(CountryCode: string) {
-    if (CountryCode) {
-        cy.FillLogTextBox(MaintenanceSelectors.CountryCode, CountryCode);
-    }
+export function FillRandomCountryLocalName(LocalName: string) {
+    let randomLocalName = GenerateRandomName(LocalName, 10)
+    cy.FillLogTextBox(MaintenanceSelectors.CountryLocalName, randomLocalName)
 }
 
-export function FillCountryName(CountryName: string) {
-    if (CountryName) {
-        cy.FillLogTextBox(MaintenanceSelectors.CountryEnglishName, CountryName)
-    }
-}
-
-export function FillCountryLocalName(LocalName: string) {
-    if (LocalName) {
-        cy.FillLogTextBox(MaintenanceSelectors.CountryLocalName, GenerateName(LocalName))
-    }
-}
-
-function GenerateName(Name:string){
-    return Name.toLowerCase() == "random" ? (gr.GenerateRandomNumberAndString(10)) : Name; 
-}
-
-export function FillCountryGlobalZone(GlobalZone: string) {
-    if (GlobalZone) {
-        cy.FillLogLov(MaintenanceSelectors.CountryGlobalZone, GlobalZone, true)
-    }
-}
-
-export function FillInactiveCountryCheckBox(InactiveCountry: string) {
-    if (InactiveCountry) {
-        CompleteFillInactiveCountryCheckBoxProcess(InactiveCountry);
-    }
-}
-
-function CompleteFillInactiveCountryCheckBoxProcess(InactiveCountry: string) {
-    if (InactiveCountry.toUpperCase() == constants.YES) {
-        cy.get(MaintenanceSelectors.InActiveCountryCheckBox).check({ force: true })
-    }
-    else {
-        cy.get(MaintenanceSelectors.InActiveCountryCheckBox).uncheck({ force: true })
-    }
-}
-
-export function FillECCheckBox(EC: String) {
-    if (EC) {
-        CompleteFillECCheckBoxProcess(EC);
-    }
-}
-
-function CompleteFillECCheckBoxProcess(EC: String) {
-    if (EC.toUpperCase() == constants.YES) {
-        cy.get(MaintenanceSelectors.CountryECCheckBox).check({ force: true })
-    }
-    else {
-        cy.get(MaintenanceSelectors.CountryECCheckBox).uncheck({ force: true })
-    }
-}
-
-export function FillNorthAmericaCheckBox(NorthAmerica: string) {
-    if (NorthAmerica) {
-        CompleteFillNorthAmericaCheckBoxProcess(NorthAmerica);
-    }
-}
-
-function CompleteFillNorthAmericaCheckBoxProcess(NorthAmerica: string) {
-    if (NorthAmerica.toUpperCase() == constants.YES) {
-        cy.get(MaintenanceSelectors.CountryIsNorthAmericaCheckBox).check({ force: true })
-    }
-    else {
-        cy.get(MaintenanceSelectors.CountryIsNorthAmericaCheckBox).uncheck({ force: true })
-    }
-}
-
-export function FillIsStateRequiredCheckBox(IsStateRequired: string) {
-    if (IsStateRequired) {
-        CompleteFillIsStateRequiredCheckBoxProcess(IsStateRequired);
-    }
-}
-
-function CompleteFillIsStateRequiredCheckBoxProcess(IsStateRequired: string) {
-    if (IsStateRequired.toUpperCase() == constants.YES) {
-        cy.get(MaintenanceSelectors.CountryIsStateRequiredCheckBox).check({ force: true })
-    }
-    else {
-        cy.get(MaintenanceSelectors.CountryIsStateRequiredCheckBox).uncheck({ force: true })
-    }
-}
-
-export function FillHasCitiesCheckBox(HasCities: string) {
-    if (HasCities) {
-        CompleteFillHasCitiesCheckBoxProcess(HasCities);
-    }
-}
-
-function CompleteFillHasCitiesCheckBoxProcess(HasCities: string) {
-    if (HasCities.toUpperCase() == constants.YES) {
-        cy.get(MaintenanceSelectors.CountryHasCitiesCheckBox).check({ force: true })
-    }
-    else {
-        cy.get(MaintenanceSelectors.CountryHasCitiesCheckBox).uncheck({ force: true })
-    }
-}
-
-export function FillNotes(Notes: string) {
-    if (Notes) {
-        cy.FillLogTextBox(MaintenanceSelectors.CountryNotes, Notes)
-    }
-}
-
-export function ChangeInactiveCountryCheckBoxValue() {
-    cy.get(MaintenanceSelectors.InActiveCountryCheckBox).then($InActiveCountryCheckBox => {
-        if ($InActiveCountryCheckBox.is(':checked')) {
-            cy.get(MaintenanceSelectors.InActiveCountryCheckBox).uncheck({ force: true })
-        }
-        else {
-            cy.get(MaintenanceSelectors.InActiveCountryCheckBox).check({ force: true })
-        }
-    })
+export function FillCountryCode(CountryCode:string){
+    cy.FillLogTextBox(MaintenanceSelectors.CountryCode , CountryCode)
 }
 
 export function CreateCountry() {
@@ -1242,23 +999,12 @@ export function FillStateDetails(stateDetails:StateDetails){
     cy.FillLogTextBox(MaintenanceSelectors.StateEnglishName , stateDetails.StateName)
     cy.FillLogTextBox(MaintenanceSelectors.StateLocalName , stateDetails.StateLocalName)
     cy.FillLogLov(MaintenanceSelectors.StateCountry , stateDetails.Country,true)
-    CompleteFillInactiveStateCheckBoxProcess(stateDetails.InactiveState)
+    FillCheckBoxProcess(MaintenanceSelectors.InActiveStateCheckBox,stateDetails.InactiveState)
     cy.FillLogTextBox(MaintenanceSelectors.StateNotes , stateDetails.Notes)
 }
 
 export function FillStateCode(StateCode: string) {
-    if (StateCode) {
-        cy.FillLogTextBox(MaintenanceSelectors.StateCode, StateCode);
-    }
-}
-
-function CompleteFillInactiveStateCheckBoxProcess(InactiveState: string) {
-    if (InactiveState.toUpperCase() == constants.YES) {
-        cy.get(MaintenanceSelectors.InActiveStateCheckBox).check({ force: true })
-    }
-    else {
-        cy.get(MaintenanceSelectors.InActiveStateCheckBox).uncheck({ force: true })
-    }
+    cy.FillLogTextBox(MaintenanceSelectors.StateCode, StateCode);
 }
 
 export function CreateState() {
@@ -1325,17 +1071,6 @@ export function FillStateLocalName(LocalName: string) {
     }
 }
 
-export function ChangeInactiveStateCheckBoxValue() {
-    cy.get(MaintenanceSelectors.InActiveStateCheckBox).then($InActiveStatesCheckBox => {
-        if ($InActiveStatesCheckBox.is(':checked')) {
-            cy.get(MaintenanceSelectors.InActiveStateCheckBox).uncheck({ force: true })
-        }
-        else {
-            cy.get(MaintenanceSelectors.InActiveStateCheckBox).check({ force: true })
-        }
-    })
-}
-
 export function EditState() {
     DefinePutStateRequest();
     cy.Click("#State-Save", null);
@@ -1352,13 +1087,13 @@ export function AssertEditState() {
 export function AssertPutState() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutState, 200).
         then((interception) => {
-            CountryDetails.inActive = interception.request.body.inActive;
+            StateDetails.inActive = interception.request.body.inActive;
         });
 }
 
 export function StateConversionEventsMapping(eventDetailsList: EventTypeDetails[]): EventTypeDetails[] {
     for (let i = 0; i < eventDetailsList.length; i++) {
-        if (CountryDetails.inActive) {
+        if (StateDetails.inActive) {
             eventDetailsList[i].Notes = eventDetailsList[i].Notes.replace(/\"status\"/gi, "Inactivated");
         }
         else {
@@ -1368,5 +1103,40 @@ export function StateConversionEventsMapping(eventDetailsList: EventTypeDetails[
     }
     return eventDetailsList;
 }
+//#endregion
 
+//#region Common 
+function GenerateRandomName(Name:string ,lenght:number){
+    return Name.toLowerCase() == "random" ? (gr.GenerateRandomNumberAndString(lenght)) : Name; 
+}
+
+export function ChangeInactiveCheckBoxValue(InActivateSelector:string) {
+    cy.get(InActivateSelector).then($InActiveStatesCheckBox => {
+        if ($InActiveStatesCheckBox.is(':checked')) {
+            cy.get(InActivateSelector).uncheck({ force: true })
+        }
+        else {
+            cy.get(InActivateSelector).check({ force: true })
+        }
+    })
+}
+
+function FillCheckBoxProcess(CheckBoxSelector: string, IsCheck: string) {
+    if (IsCheck) {
+        if (IsCheck.toUpperCase() == constants.YES) {
+            cy.get(CheckBoxSelector).check({ force: true })
+        }
+        else {
+            cy.get(CheckBoxSelector).find(BaseSelectors.input).uncheck({ force: true })
+        }
+    }
+}
+
+function DefineGetByFilterRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetByFilter, RequestAliases.GetByFilter);
+}
+
+function AssertGetByFilters() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetByFilter, 200);
+}
 //#endregion
