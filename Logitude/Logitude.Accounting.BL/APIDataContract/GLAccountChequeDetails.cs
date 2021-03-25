@@ -10,7 +10,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
   public partial class GLAccountChequeDetails
     {
         public List<Cheque> GLaccountCheques { get; set; }
-        public List<LedgerTransaction> ExternalTransaction { get; set; }
+        public List<LedgerTransaction> ExternalTransactions { get; set; }
 
     }
 }

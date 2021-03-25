@@ -1,5 +1,7 @@
 ﻿using Logitude.Accounting.BL.APIDataContract.ApiV1;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityLists;
@@ -30,7 +32,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
         public GLAccountChequeDetails GetLAccountChequeDetails(string number)
         {
             GLAccountPM gLAccount = GetGLAccountByNumber(number, tenant);
-            List<CardList> cards = GetGLaccountConnectedCards(gLAccount);           
+            List<CardList> cards = GetGLaccountConnectedCards(gLAccount);
+            List<LedgerTransaction>  externalTransactions = GetGLaccountConnectedExternalTransactions(gLAccount);
             foreach (CardList card in cards)
             {
                 paymentCheques= GetCardPaymentCheques(card);
@@ -44,10 +47,12 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 TotFutureOpenChequesInLocalCur = gLAccount.TotFutureOpenChequesInLocalCur,
                 LocalName = gLAccount.LocalName,
                 Tenant = gLAccount.Tenant,
-                GLaccountCheques = cheques
+                GLaccountCheques = cheques,
+                ExternalTransactions = externalTransactions
             };
             return gLAccountChequeDetails;
         }
+     
         private GLAccountPM GetGLAccountByNumber(string internalNumber, int tenant)
         {
             Logitude.Accounting.BL.EntityQueryServices.GLAccountQueryService Service = new Logitude.Accounting.BL.EntityQueryServices.GLAccountQueryService(tenant);
@@ -57,6 +62,14 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 throw new Exception("There is no GLAccount with number" + internalNumber);
             }
             else { return account; }
+        }
+
+        private List<LedgerTransaction> GetGLaccountConnectedExternalTransactions(GLAccountPM gLAccount)
+        {
+            var accountingContext = AccountingContext.GetContext(tenant);
+            LedgerTransactionListQueryService service = new LedgerTransactionListQueryService(accountingContext);
+            List<LedgerTransaction>  transactions = (List<LedgerTransaction>)service.GetExternalTransactionsForAccount(gLAccount.Id , tenant);
+            return transactions;
         }
 
         private List<ARPaymentChequeReplicaPM> GetCardPaymentCheques(CardList card)
