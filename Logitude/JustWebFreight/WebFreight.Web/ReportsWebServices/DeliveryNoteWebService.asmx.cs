@@ -202,6 +202,7 @@ namespace WebFreight.Web.ReportsWebServices
             dataProvider.CustomsClearancePointName = shipment.CustomClearancePointName;
             dataProvider.ValueOfGoods = shipment.ValueOfGoods;
             dataProvider.MainCarriageCarrierNumber = shipment.MainCarriageCarrierNumber;
+            dataProvider.CarrierCode = shipment.MainCarriageCarrierCode;
 
             MapBranchData();
 
@@ -589,6 +590,7 @@ namespace WebFreight.Web.ReportsWebServices
                 dataProvider.TruckNumber = childEntity.TruckNumber;
                 dataProvider.TruckerNumber = childEntity.CarrierNumber;
                 dataProvider.SpecialInstructions = childEntity.Notes != null ? childEntity.Notes : "";
+                dataProvider.PickupDeliveryNumber = childEntity.PickUpDeliveryNumber;
 
                 this.MapChildEntityFrom();
                 this.MapChildEntityTo();
@@ -855,6 +857,18 @@ namespace WebFreight.Web.ReportsWebServices
                 dataProvider.DeliveryDate = String.Format("{0:dd/MMM/yyyy}", childEntity.ETA);
                 dataProvider.DeliveryTime = String.Format("{0:hh:mm}", childEntity.ETA);
                 dataProvider.DeliveryTime_DateTime_New = childEntity.ETA;
+            }
+
+            dataProvider.PickupDeliveryDeparture = childEntity.ATD;
+            if(dataProvider.PickupDeliveryDeparture == null)
+            {
+                dataProvider.PickupDeliveryDeparture = childEntity.ETD;
+            }
+
+            dataProvider.PickupDeliveryArrival = childEntity.ATA;
+            if (dataProvider.PickupDeliveryArrival == null)
+            {
+                dataProvider.PickupDeliveryArrival = childEntity.ETA;
             }
         }
         private void MapChildEntityCarrier()
