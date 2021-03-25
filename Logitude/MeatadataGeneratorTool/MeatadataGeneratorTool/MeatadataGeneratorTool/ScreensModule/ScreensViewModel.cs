@@ -116,28 +116,6 @@ namespace MeatadataGeneratorTool.ScreensModule
         }
 
 
-
-
-        private string querySection;
-        public string QuerySection
-        {
-            get
-            {
-                return querySection;
-            }
-            set
-            {
-                querySection = value;
-
-                FirePropertyChanged("QuerySection");
-            }
-        }
-
-
-        
-
-
-
         public Visibility ButtonsVisibility { get; set; }
 
         private string errorMessages;

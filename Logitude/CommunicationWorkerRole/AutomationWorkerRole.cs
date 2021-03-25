@@ -209,6 +209,7 @@ namespace CommunicationWorkerRole
                                 }
 
                                 ValidateAutomationResultClass validateResult = generalAutomationResultService.ValidateAutomation(automation, entityChange, AutomationConditionFieldLists, automationLastUpdateDate, executedImmediately ? "": "Delayed");
+                                entityChangesAutomation.ConditionsList = validateResult.ConditionsList;
 
                                 if (validateResult.IsAutomationValid && executedImmediately && validateResult.Type == "Delayed")
                                 {

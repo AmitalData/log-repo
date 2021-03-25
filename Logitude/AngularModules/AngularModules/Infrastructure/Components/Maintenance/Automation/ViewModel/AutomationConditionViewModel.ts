@@ -48,7 +48,8 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
     PartnerObjectFieldCode: string = null;
    CurrentEntityType: string;
    ObjectFieldCode: string = "";
-   IsRefreshAutomationCondationField: boolean;
+    IsRefreshAutomationCondationField: boolean;
+    IsValid: boolean;
 
    //IsSystemVariables: boolean = false;
     CustomObjectFieldCode: string = "";
@@ -66,6 +67,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         this.PartnerObjectFieldCode = this.CurrentEntityPM.PartnerObjectFieldCode ? this.CurrentEntityPM.PartnerObjectFieldCode:null;
 
         this.FieldValue = this.CurrentEntityPM.Value;
+        this.IsValid = this.CurrentEntityPM.IsValid;
         this.DateTypeList = [];
 
         this.FillAutomationEntityObjectField();
@@ -241,7 +243,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
                 //    recordType = "";
                 //}
             }
-        }
+        } 
         return recordType.replace(" ", "");
     }
 

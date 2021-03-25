@@ -560,6 +560,7 @@ export function AMANACView(TransportMode: string, AMANACView: string) {
 
 export function AMANACMarkeShipmentAs(MarkAs: string, ShipmentNumber: string) {
     MarkAs = MarkAs.replace(/\s/g, "");
+    MarkAs = MarkAs.replace(/fortransfer/g, "");
     //SearchAShipmentInNullSearch(ShipmentNumber);
     cy.Click(ShipmentSelectors.AMANACMarkeShipmentAs(MarkAs, ShipmentNumber), null)
     cy.Click(BaseSelectors.Button, BaseSelectors.ContainsClose)

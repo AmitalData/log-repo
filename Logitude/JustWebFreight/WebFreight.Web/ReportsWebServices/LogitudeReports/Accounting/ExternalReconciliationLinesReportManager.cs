@@ -158,7 +158,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                  BankTotalClosed = AllExternalReconciliationPeriod == null ? 0 : AllExternalReconciliationPeriod.Where(s => s.BankAccountId == a.Id && s.EnglishType == "Bank" && s.IsRecomncile == true).Sum(b => b.Amount),
 
                                                 TotalInLocalCurrency=  transactionsbalance.Where(d=> d.BankAccountId==a.Id).FirstOrDefault() != null ? transactionsbalance.Where(d => d.BankAccountId == a.Id).FirstOrDefault().TotalInLocalCurrency: null,
-            }).Where(s => s.ExternalReconciliationPeriods.Count > 0).ToList();
+                                             }).Where(s => s.ExternalReconciliationPeriods.Count > 0).ToList();
 
             }
             

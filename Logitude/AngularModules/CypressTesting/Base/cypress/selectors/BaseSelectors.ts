@@ -46,6 +46,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly Backbutton = '#EditBackbutton';
     public static readonly SaveButton = '#SaveBtn';
     public static readonly ConfrimApproved = '#ConfrimApproved';
+    public static readonly SettingsButton = '#Settings';
 
     //#endregion
     //#region Contains
@@ -174,7 +175,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ConfirmWindow="[class=ConfirmWindow]"
     public static readonly CurvedEditArea=".CurvedEditArea"
     public static readonly ListDataLoaded='div[id=ListDataLoaded]'
-    
+    public static readonly ErrorPopUp = ".ErrorPopUp";
    
 
     public static readonly ShortTitleDiv = ".ShortTitleDiv";

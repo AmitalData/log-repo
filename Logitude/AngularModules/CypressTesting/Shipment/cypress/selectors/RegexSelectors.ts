@@ -32,7 +32,7 @@ export class RegexSelectors {
     }
 
     public static AMANACMarkeShipmentAs(MarkAs: string, ShipmentNumber: string): string{
-        return "button[data-cy^=Mark" + MarkAs + "_" + ShipmentNumber + "]";
+        return "button[data-cy^=" + MarkAs + "_" + ShipmentNumber + "]";
     }
 
     public static AMANACShipmentNumber(ShipmentNumber: string): string{

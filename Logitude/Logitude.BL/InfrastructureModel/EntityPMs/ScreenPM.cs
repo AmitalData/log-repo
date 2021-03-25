@@ -24,7 +24,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string ObjectTableName { get; set; }
         public string Name { get; set; }
         public int  UserTenant { get; set; }
-        public string QuerySection { get; set; }
 
 
         [Include]

@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main"  Module="Accounting" >
-  <Sql Version="2">
+  <Sql Version="3">
     <![CDATA[
 ---this script is POST!!!
 ---if it crash >> please note itzik !!
@@ -13,6 +13,17 @@ JOIN
 ( select AccountId,Tenant,MAX(CreateDate) as  LastCreateDate from Reconciliations where IsCancelled=0 group by AccountId,Tenant)
 AS subQuery ON  r.AccountId = subQuery.AccountId and r.CreateDate = subQuery.LastCreateDate and r.Tenant = subQuery.Tenant
 
+
+
+
+
+
+INSERT INTO [GLAccountRecocileDatas] ([AccountId], [Tenant] , [LastReconcileDateTime] , [LastReconciledByUserId] ) 
+select a.id,a.Tenant,null   [LastReconcileDateTime],null [LastReconciledByUserId]   
+from GLAccounts  a
+left  join  [GLAccountRecocileDatas] r
+on a.Id = r.AccountId
+where r.AccountId is null 
 
 ]]>      
   </Sql>

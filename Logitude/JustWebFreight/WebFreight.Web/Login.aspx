@@ -1996,7 +1996,7 @@
                 window.sessionStorage.setItem("LogoURL", privateLable.LogoURL);
                 window.sessionStorage.setItem("PrivateLabelUrl", privateLable.PrivateLabelUrl);
                 window.sessionStorage.setItem("PrivateLabelShortName", privateLable.PrivateLabelShortName);
-                window.sessionStorage.setItem("IsDSV", privateLable.PrivateLabelDomain.indexOf("DSV") > -1);
+                window.sessionStorage.setItem("IsDSV", privateLable.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1);
             }
 
             var urlMenu = "";

@@ -61,7 +61,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     private handlePrivateLable() {
         if (SessionLocator.PrivateLableSettings) {
             this.IsPrivateLabel = true;
-            this.IsDSV = SessionLocator.PrivateLableSettings.PrivateLabelDomain.indexOf("DSV") > -1;
+            this.IsDSV = SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
         }
     }
 
