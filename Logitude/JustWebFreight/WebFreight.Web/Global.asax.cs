@@ -775,23 +775,19 @@ namespace WebFreight.Web
             }
         }
 
-		private string GetContactPasswordFromCache(string email)
+        private static object _lock = new object();
+        private string GetContactPasswordFromCache(string email)
 		{
 			ContactPasswordRepository contactPasswordRep = new ContactPasswordRepository();
-
 			string cahce_key = "ContactPassword_" + email;
 			if (CacheManager.CacheWrapper != null)
 			{
 				if (CacheManager.CacheWrapper.Get(cahce_key) == null)
 				{
-					ContactPassword contactPassword = contactPasswordRep.GetSingleContactPassword(email);
-					if (CacheManager.CacheWrapper.Get(cahce_key) == null && contactPassword != null)
-					{
-						CacheManager.CacheWrapper.Insert(cahce_key, contactPassword.Password, null, DateTime.UtcNow.AddMinutes(5), TimeSpan.Zero);
-						
-					}
-
-					return contactPassword.Password;
+                    lock (_lock)
+                    {
+                        return GetContactPassword(email, contactPasswordRep, cahce_key);
+                    }
 				}
 				else
 				{
@@ -806,7 +802,24 @@ namespace WebFreight.Web
 
 		}
 
-		protected void Application_Error(object sender, EventArgs e)
+        private string GetContactPassword(string email, ContactPasswordRepository contactPasswordRep, string cahce_key)
+        {
+            if (CacheManager.CacheWrapper.Get(cahce_key) == null)
+            {
+                ContactPassword contactPassword = contactPasswordRep.GetSingleContactPassword(email);
+                if (contactPassword != null)
+                {
+                    CacheManager.CacheWrapper.Insert(cahce_key, contactPassword.Password, null, DateTime.UtcNow.AddMinutes(5), TimeSpan.Zero);
+                }
+
+                return contactPassword != null ? contactPassword.Password : "";
+            }
+            return (string)CacheManager.CacheWrapper.Get(cahce_key);
+        }
+
+
+
+        protected void Application_Error(object sender, EventArgs e)
         {
 
         }
