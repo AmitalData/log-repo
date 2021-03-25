@@ -1003,10 +1003,6 @@ export function FillStateDetails(stateDetails:StateDetails){
     cy.FillLogTextBox(MaintenanceSelectors.StateNotes , stateDetails.Notes)
 }
 
-export function FillStateCode(StateCode: string) {
-    cy.FillLogTextBox(MaintenanceSelectors.StateCode, StateCode);
-}
-
 export function CreateState() {
     DefinePostStateMockRequest()
     DefineGetByFilterRequest()

@@ -18,7 +18,7 @@ Given("the user logged in and navigate to {string} in maintenance menu", (mainte
 
 When("add {string} as state code", (stateCode) => {
     MaintenanceActions.OpenNewWizard("State");
-    MaintenanceActions.FillStateCode(stateCode);
+    cy.FillLogTextBox(MaintenanceSelectors.StateCode, stateCode);
 });
 
 Then("a validation message with {string} error should appear", (ValidationMessage) => {
