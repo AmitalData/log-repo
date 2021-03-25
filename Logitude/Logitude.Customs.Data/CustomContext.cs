@@ -698,6 +698,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new TransferCargoMethodTypeMap());
 	
+            modelBuilder.Configurations.Add(new TransportMeansTypeMap());
+	
             modelBuilder.Configurations.Add(new TreatmentWayMap());
 	
             modelBuilder.Configurations.Add(new UIMessageMap());
@@ -3132,6 +3134,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<TransferCargoMethodType> TransferCargoMethodTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TransportMeansType> TransportMeansTypes 
 	 {
 	      get; set;
 	 

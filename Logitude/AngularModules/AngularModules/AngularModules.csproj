@@ -1332,6 +1332,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\SeizureMethodTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\TransactionNatureTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\TransferCargoMethodTypeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\TransportMeansTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\UpdateCodeList.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\AmendCancellRequestInitiatorPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\AmendmentFieldStatusTypePM.ts" />
@@ -1398,6 +1399,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\SupplierInvoiceUCRPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\TransactionNatureTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\TransferCargoMethodTypePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\TransportMeansTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\UpdateCodePM.ts" />
     <TypeScriptCompile Include="Customs\Services\DataChange\SpotlightSharedDataService.ts" />
     <TypeScriptCompile Include="Customs\Services\DataChange\CustomsCollateralAnswerSharedDataService.ts" />
@@ -1488,6 +1490,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\SeizureMethodTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\TransactionNatureTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\TransferCargoMethodTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\TransportMeansTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\TreatmentWayListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\UpdateCodeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\AutonomyRegionTypePMService.ts" />

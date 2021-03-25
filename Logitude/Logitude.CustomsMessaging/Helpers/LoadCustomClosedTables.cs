@@ -354,6 +354,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(modificationAndDiscountTypeTable, modificationAndDiscountTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(modificationAndDiscountTypeTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData transportMeansTypeTable = closedSystemTables.Where(d => d.id == "1307").FirstOrDefault();
+            ObjectTable transportMeansTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.TransportMeansType", 0, false);
+            InsertClosedTableRecord(transportMeansTypeTable, transportMeansTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(transportMeansTypeTable);
+
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData customerTypeGeneralTable = closedSystemTables.Where(d => d.id == "1294").FirstOrDefault();
             ObjectTable customerTypeGeneralObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomerTypeGeneral", 0, false);
             InsertClosedTableRecord(customerTypeGeneralTable, customerTypeGeneralObjectTable, customsClosedTables, customsClosedTableRepository);

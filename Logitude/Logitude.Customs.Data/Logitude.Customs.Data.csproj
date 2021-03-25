@@ -197,6 +197,7 @@
     <Compile Include="EntityKeys\TPGFileTypeKeys.cs" />
     <Compile Include="EntityKeys\TransactionNatureTypeKeys.cs" />
     <Compile Include="EntityKeys\TransferCargoMethodTypeKeys.cs" />
+    <Compile Include="EntityKeys\TransportMeansTypeKeys.cs" />
     <Compile Include="EntityKeys\TreatmentWayKeys.cs" />
     <Compile Include="EntityKeys\UIMessageAdditionalKeys.cs" />
     <Compile Include="EntityKeys\UIMessageKeys.cs" />
@@ -363,6 +364,7 @@
     <Compile Include="EntityListQueryServices\Generated\TPGFileTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TransactionNatureTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TransferCargoMethodTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\TransportMeansTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TreatmentWayListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\UIMessageAdditionalListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\UIMessageListQueryService.Generated.cs" />
@@ -397,6 +399,7 @@
     <Compile Include="EntityListQueryServices\TPGFileTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TransactionNatureTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TransferCargoMethodTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\TransportMeansTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TreatmentWayListQueryService.cs" />
     <Compile Include="EntityListQueryServices\UIMessageAdditionalListQueryService.cs" />
     <Compile Include="EntityListQueryServices\UIMessageListQueryService.cs" />
@@ -498,6 +501,7 @@
     <Compile Include="EntityLists\Generated\TPGFileTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TransactionNatureTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TransferCargoMethodTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\TransportMeansTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TreatmentWayList.Generated.cs" />
     <Compile Include="EntityLists\Generated\UIMessageAdditionalList.Generated.cs" />
     <Compile Include="EntityLists\Generated\UIMessageList.Generated.cs" />
@@ -598,6 +602,7 @@
     <Compile Include="EntityMapping\TPGFileTypeMap.cs" />
     <Compile Include="EntityMapping\TransactionNatureTypeMap.cs" />
     <Compile Include="EntityMapping\TransferCargoMethodTypeMap.cs" />
+    <Compile Include="EntityMapping\TransportMeansTypeMap.cs" />
     <Compile Include="EntityMapping\TreatmentWayMap.cs" />
     <Compile Include="EntityMapping\UIMessageAdditionalMap.cs" />
     <Compile Include="EntityMapping\UIMessageMap.cs" />
@@ -699,6 +704,7 @@
     <Compile Include="EntityPOCOs\TPGFileType.cs" />
     <Compile Include="EntityPOCOs\TransactionNatureType.cs" />
     <Compile Include="EntityPOCOs\TransferCargoMethodType.cs" />
+    <Compile Include="EntityPOCOs\TransportMeansType.cs" />
     <Compile Include="EntityPOCOs\TreatmentWay.cs" />
     <Compile Include="EntityPOCOs\UIMessage.cs" />
     <Compile Include="EntityPOCOs\UIMessageAdditional.cs" />
@@ -865,6 +871,7 @@
     <Compile Include="Repsitories\Generated\TPGFileTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TransactionNatureTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TransferCargoMethodTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\TransportMeansTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TreatmentWayRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\UIMessageAdditionalRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\UIMessageRepository.Generated.cs" />
@@ -899,6 +906,7 @@
     <Compile Include="Repsitories\TPGFileTypeRepository.cs" />
     <Compile Include="Repsitories\TransactionNatureTypeRepository.cs" />
     <Compile Include="Repsitories\TransferCargoMethodTypeRepository.cs" />
+    <Compile Include="Repsitories\TransportMeansTypeRepository.cs" />
     <Compile Include="Repsitories\TreatmentWayRepository.cs" />
     <Compile Include="Repsitories\UIMessageAdditionalRepository.cs" />
     <Compile Include="Repsitories\UIMessageRepository.cs" />

@@ -83,6 +83,7 @@ import { CustomsVendorListService } from './Services/StandardLists/CustomsVendor
 import { CustomsVerificationStatusTypeListService } from './Services/StandardLists/CustomsVerificationStatusTypeListService';
 import { DangerousGoodsPackingReqListService } from './Services/StandardLists/DangerousGoodsPackingReqListService';
 import { DebtNotificationTypeListService } from './Services/StandardLists/DebtNotificationTypeListService';
+import { TransportMeansTypeListService } from './Services/StandardLists/TransportMeansTypeListService';
 import { DeclarationErrorMappingListService } from './Services/StandardLists/DeclarationErrorMappingListService';
 import { DeclarationListService } from './Services/StandardLists/DeclarationListService';
 import { DeclarationPaymentListService } from './Services/StandardLists/DeclarationPaymentListService';
@@ -566,6 +567,7 @@ export class ModuleProviders {
             case "ValidCustomsItemListService": { myResult = new ValidCustomsItemListService(); break; }
             case "VehicleListService": { myResult = new VehicleListService(); break; }
             case "VehicleManufacturerListService": { myResult = new VehicleManufacturerListService(); break; }
+            case "TransportMeansTypeListService": { myResult = new TransportMeansTypeListService(); break; }
             case "VehiclePoolTypeListService": { myResult = new VehiclePoolTypeListService(); break; }
             case "VehiclePriceListTypeListService": { myResult = new VehiclePriceListTypeListService(); break; }
             case "VehicleReductionTypeListService": { myResult = new VehicleReductionTypeListService(); break; }

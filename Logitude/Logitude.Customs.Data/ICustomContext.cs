@@ -332,6 +332,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<TradeLevyExamptType> TradeLevyExamptTypes { get; }
 		 IDbSet<TransactionNatureType> TransactionNatureTypes { get; }
 		 IDbSet<TransferCargoMethodType> TransferCargoMethodTypes { get; }
+		 IDbSet<TransportMeansType> TransportMeansTypes { get; }
 		 IDbSet<TreatmentWay> TreatmentWays { get; }
 		 IDbSet<UIMessage> UIMessages { get; }
 		 IDbSet<UIMessageAdditional> UIMessageAdditionals { get; }
