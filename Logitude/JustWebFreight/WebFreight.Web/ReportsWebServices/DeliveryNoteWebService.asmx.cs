@@ -329,7 +329,7 @@ namespace WebFreight.Web.ReportsWebServices
         {
             if (!string.IsNullOrEmpty(shipment.ShipperId))
             {
-                dataProvider.ClientReferenceNumber = shipment.ShipperReference1 != null ? shipment.ShipperReference1 : "";
+                dataProvider.ClientReferenceNumber = shipment.CustomerReference1 != null ? shipment.CustomerReference1 : "";
                 dataProvider.ShipperReference2 = shipment.ShipperReference2;
 
                 Card card = CardRepository.GetSingleCard(shipment.ShipperId, tenant, true);
