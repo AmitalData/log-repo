@@ -319,6 +319,7 @@
     <None Include="DBTables\DocumentTypeCustomsData.dxml" />
     <None Include="DBTables\EntitlementType.dxml" />
     <None Include="DBTables\EntityTypeLookup.dxml" />
+    <None Include="DBTables\ExceptionReason.dxml" />
     <None Include="DBTables\ExportDeclarationClosingData.dxml" />
     <None Include="DBTables\ExporterRoleType.dxml" />
     <None Include="DBTables\FacilitationType.dxml" />
@@ -453,6 +454,7 @@
     <None Include="DBTables\TradeLevyExamptType.dxml" />
     <None Include="DBTables\TransactionNatureType.dxml" />
     <None Include="DBTables\TransferCargoMethodType.dxml" />
+    <None Include="DBTables\TransportMeansType.dxml" />
     <None Include="DBTables\TreatmentWay.dxml" />
     <None Include="DBTables\UIMessage.dxml" />
     <None Include="DBTables\UIMessageAdditional.dxml" />
@@ -481,6 +483,7 @@
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
     <None Include="EntityFiles\AutonomyRegionType.lxml" />
+    <None Include="EntityFiles\SecurityClearenceTypeCode.lxml" />
     <None Include="EntityFiles\TransportMeansType.lxml" />
     <None Include="EntityFiles\FullnessCode.lxml" />
     <None Include="EntityFiles\CancellationReasonRequestType.lxml" />

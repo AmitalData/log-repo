@@ -616,6 +616,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new SealUpdateReasonTypeMap());
 	
+            modelBuilder.Configurations.Add(new SecurityClearenceTypeCodeMap());
+	
             modelBuilder.Configurations.Add(new SeizureFactorTypeMap());
 	
             modelBuilder.Configurations.Add(new SeizureMethodTypeMap());
@@ -2888,6 +2890,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<SealUpdateReasonType> SealUpdateReasonTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SecurityClearenceTypeCode> SecurityClearenceTypeCodes 
 	 {
 	      get; set;
 	 
