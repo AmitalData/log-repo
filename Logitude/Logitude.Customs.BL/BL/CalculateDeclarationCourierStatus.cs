@@ -46,7 +46,7 @@ namespace Logitude.Customs.BL.BL
 
             }
         }
-         public static void UpdateCourierManifestStatusCode(int Tenant, string DeclarationId)
+        public static void UpdateCourierManifestStatusCode(int Tenant, string DeclarationId)
         {
             var customContext = CustomContext.GetContext(Tenant);
             DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(customContext);
@@ -75,7 +75,7 @@ namespace Logitude.Customs.BL.BL
             {
                 this.declarationPM = declarationPM;
             }
-            else if(!string.IsNullOrWhiteSpace(declarationId) && tenant > 0)
+            else if (!string.IsNullOrWhiteSpace(declarationId) && tenant > 0)
             {
                 var context = CustomContext.GetContext(tenant);
                 DeclarationQueryService declarationQueryService = new DeclarationQueryService(context);
@@ -83,7 +83,7 @@ namespace Logitude.Customs.BL.BL
                 this.declarationPM = declarationQueryService.GetSingle(declarationId, true, false);
             }
         }
-        public void Update( Action<DeclarationCourierStatusPM> UPDATEDeclarationCourierStatusPM)
+        public void Update(Action<DeclarationCourierStatusPM> UPDATEDeclarationCourierStatusPM)
         {
             var context = CustomContext.GetContext(this.declarationPM.Tenant);
             DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
@@ -175,7 +175,7 @@ namespace Logitude.Customs.BL.BL
             DeclarationMamanSpecialActionRepository declarationMamanSpecialActionRepository = new DeclarationMamanSpecialActionRepository(myDeclarationCourierStatusPM.Tenant);
             List<DeclarationMamanSpecialAction> list = declarationMamanSpecialActionRepository.GetDeclarationMamanSpecialActionByDeclarationId(myDeclarationCourierStatusPM.DeclarationId, myDeclarationCourierStatusPM.Tenant);
 
-            if(list != null && list.Count() > 0)
+            if (list != null && list.Count() > 0)
             {
                 int isError = list.Where(SA => SA.MamanSpecialActionStatusCode == "2").ToList().Count();
                 if (isError > 0)
@@ -337,7 +337,7 @@ namespace Logitude.Customs.BL.BL
                                 break;
                             case "11":
                             case "13":
-                                if(declarationPM.IsChanged == true)
+                                if (declarationPM.IsChanged == true)
                                 {
                                     myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "R";
                                 }
@@ -360,7 +360,7 @@ namespace Logitude.Customs.BL.BL
             var customContext = CustomContext.GetContext(myDeclarationCourierStatusPM.Tenant);
             //CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
             CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
- 
+
             //List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", myDeclarationCourierStatusPM.Tenant, "Declaration");
 
             List<CustomDocumentTypePM> CustomDocumentTypePMList = docTypeQuery.GetMandatoryCustomDocumentTypesForCourier(declarationPM.Tenant);
@@ -368,7 +368,7 @@ namespace Logitude.Customs.BL.BL
             {
                 foreach (CustomDocumentTypePM customDocumentTypePMItem in CustomDocumentTypePMList)
                 {
-                    CustomsDocumentsTicketPM customsDocumentsTicketPM = customsDocumentsTicketPMList.Where(d => d.DocumentTypeCode == customDocumentTypePMItem.Code && d.DocumentsFilingId != null ).FirstOrDefault();
+                    CustomsDocumentsTicketPM customsDocumentsTicketPM = customsDocumentsTicketPMList.Where(d => d.DocumentTypeCode == customDocumentTypePMItem.Code && d.DocumentsFilingId != null).FirstOrDefault();
                     if (customsDocumentsTicketPM == null)
                     {
                         return true;
@@ -392,11 +392,11 @@ namespace Logitude.Customs.BL.BL
             //{
             //    foreach (CustomDocumentTypePM customDocumentTypePMItem in CustomDocumentTypePMList) d.DocumentTypeCode == customDocumentTypePMItem.Code &&
             //    {
-            CustomsDocumentsTicketPM customsDocumentsTicketPM = customsDocumentsTicketPMList.Where(d =>  d.DocumentsFilingId != null && d.DocumentStatusCode == "2").FirstOrDefault();
-                    if (customsDocumentsTicketPM != null)
-                    {
-                        return true;
-                    }
+            CustomsDocumentsTicketPM customsDocumentsTicketPM = customsDocumentsTicketPMList.Where(d => d.DocumentsFilingId != null && d.DocumentStatusCode == "2").FirstOrDefault();
+            if (customsDocumentsTicketPM != null)
+            {
+                return true;
+            }
             //    }
             //}
 
@@ -407,7 +407,7 @@ namespace Logitude.Customs.BL.BL
         {
             if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
             //Set TotalInvoiceAmountInUSD - sum field InvoiceAmountInUSD from all SupplierInvoices
-            
+
             if (declarationPM.SupplierInvoices != null && declarationPM.SupplierInvoices.Count() > 0)
             {
                 myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD = 0;
@@ -465,7 +465,7 @@ namespace Logitude.Customs.BL.BL
             }
             else
             {
-                if(myDeclarationCourierStatusPM.HighLowValue == "L")
+                if (myDeclarationCourierStatusPM.HighLowValue == "L")
                 {
                     myDeclarationCourierStatusPM.FastIndividualProcessCode = "F";
                 }
@@ -487,22 +487,17 @@ namespace Logitude.Customs.BL.BL
                 declarationPendingPM_902 = myDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.CourierPendingReasonCode == "902").FirstOrDefault();
             }
             if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > 150 && string.IsNullOrEmpty(declarationPM.ImporterId) && string.IsNullOrEmpty(declarationPM.ImporterCode))
-            { 
+            {
                 // Set Pending 902- Missing ID
                 // LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code 900");
                 if (declarationPendingPM_902 == null)
+
                 {
-                    
-                    CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(declarationPM.Tenant);
-                    CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingleCourierPendingReasonByCode("902", declarationPM.Tenant);
-                    if (courierPendingReasonPM != null && courierPendingReasonPM.Code == "902")
-                    {
-                        declarationPendingPM_902 = new DeclarationPendingPM();
-                        declarationPendingPM_902.CourierPendingReasonCode = courierPendingReasonPM.Id;
-                        declarationPendingPM_902.Status = "A";
-                        declarationPendingPM_902.ChangeSetOp = ChangeSetOperation.Insert;
-                        myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_902);
-                    }
+                    declarationPendingPM_902 = new DeclarationPendingPM();
+                    declarationPendingPM_902.CourierPendingReasonCode = "902";
+                    declarationPendingPM_902.Status = "A";
+                    declarationPendingPM_902.ChangeSetOp = ChangeSetOperation.Insert;
+                    myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_902);
                     
                 }
                 else if (declarationPendingPM_902.Status != "A")

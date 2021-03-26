@@ -122,6 +122,8 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
 
         Consignment.ConsignmentType = 'E';
 
+        if (this.TransportMode == 'A') Consignment.CargoTypeCode = "16";
+
         this.EntityPM.AddConsignment(Consignment); 
 
         this.declarationPMService.insert(this.EntityPM).subscribe(myResult => {

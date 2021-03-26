@@ -78,6 +78,7 @@ export class ConsigmentTabContentComponent
 
         this.SiteList = [];
         this.LoadingPortFilterItems = new ApiQueryFilters();//38388
+
         this.Listen();
 
 
@@ -87,6 +88,12 @@ export class ConsigmentTabContentComponent
 
     public ConsignmentTypeSelectionChanged(value) {
         this.ConsignmentType = value;
+        if (this.declarationPM.TransportModeId == 'A' && this.ConsignmentType== 'E')
+        {
+            this.CargoTypeCode = "16";
+        }
+
+        this.SetTipsInsideCargoIdentifires(this.EntityPM.CargoTypeCode);
 
     }
     ngOnDestroy() {
@@ -138,6 +145,7 @@ export class ConsigmentTabContentComponent
     private Listen() {
         this._SubDisplayModeChanged=
         DeclarationEventManager.DisplayModeChanged.subscribe((IsDisplayOnly: any) => {
+         
 
             if (this.ShowExcludeConsignmentBoolean && this.ExcludeConsignment)
                 this.IsDisplayOnly = true;
@@ -191,6 +199,10 @@ export class ConsigmentTabContentComponent
 
         this.SetExcludeConsignmentVisibility();
 
+        if (this.declarationPM.TransportModeId == 'A' && this.ConsignmentType == 'E') {
+            this.CargoTypeCode = "16";
+        }
+
         this.SetTipsInsideCargoIdentifires(this.EntityPM.CargoTypeCode);
 
         //this.EntityPM.PropertyChanged.subscribe((event) => { console.log("PropertyChanged: ", event); });
@@ -229,6 +241,7 @@ export class ConsigmentTabContentComponent
         this.InitLOVFilters();//38388
         this.CheckRequrierdFieldsForSend();
 
+  
         console.log("Tabs Args: ", args);
     }
 
@@ -567,6 +580,16 @@ export class ConsigmentTabContentComponent
                     this.SecondCargoIDPlaceholder = " ";
                     this.ThirdCargoIdPlaceholder = " ";
                     break;
+                }
+            case '16':
+                {
+                    if (this.declarationPM.TransportModeId == 'A' && this.ConsignmentType == 'E') {
+                        this.ManifestNumberPlaceholder = "הזן שנה";
+                        this.SecondCargoIDPlaceholder = "הזן שמ”ב / שמ”פ";
+                        this.ThirdCargoIdPlaceholder = "הזן ח.תעופה/משלח";
+                        break;
+                    }
+                
                 }
             default:
                 {
