@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExportDeliveryDocumentMessageSenderCodeUpdateClass
    {  		
-		public const string HashString = "048badea6f1c093a8dac3bb6a0fd476c";
+		public const string HashString = "f7c843755991c40f7f3d8ff0df954114";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -176,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ExportDeliveryDocumentMessageSenderCode",
+					  						ValidForQuerySection1 =  "ExportDeliveryDocumentMessageSenderCode",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -239,7 +239,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ExportDeliveryDocumentMessageSenderCode",
+					  						ValidForQuerySection1 =  "ExportDeliveryDocumentMessageSenderCode",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -302,7 +302,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ExportDeliveryDocumentMessageSenderCode",
+					  						ValidForQuerySection1 =  "ExportDeliveryDocumentMessageSenderCode",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -365,7 +365,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ExportDeliveryDocumentMessageSenderCode",
+					  						ValidForQuerySection1 =  "ExportDeliveryDocumentMessageSenderCode",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -428,7 +428,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ExportDeliveryDocumentMessageSenderCode",
+					  						ValidForQuerySection1 =  "ExportDeliveryDocumentMessageSenderCode",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -489,7 +489,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query EDDMQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExportDeliveryDocumentMessageSenderCodeTextCode_0.Id, NameTextCodeCode = ExportDeliveryDocumentMessageSenderCodeTextCode_0.Code, ObjectTableName = "Customs.ExportDeliveryDocumentMessageSenderCode", Code = "EDDM",  QueryGroupCode = "2ea0", IndexOrder = 0, Tenant = 0, ObjectTableId = ExportDeliveryDocumentMessageSenderCodeObjectTable.Id, QuerySection = "Customs.ExportDeliveryDocumentMessageSenderCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ExportDeliveryDocumentMessageSenderCodeFeature_0.Id,FeatureUniqeCode= ExportDeliveryDocumentMessageSenderCodeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+			  Query EDDMQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExportDeliveryDocumentMessageSenderCodeTextCode_0.Id, NameTextCodeCode = ExportDeliveryDocumentMessageSenderCodeTextCode_0.Code, ObjectTableName = "Customs.ExportDeliveryDocumentMessageSenderCode", Code = "EDDM",  QueryGroupCode = "2ea0", IndexOrder = 0, Tenant = 0, ObjectTableId = ExportDeliveryDocumentMessageSenderCodeObjectTable.Id, QuerySection = "ExportDeliveryDocumentMessageSenderCode", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ExportDeliveryDocumentMessageSenderCodeFeature_0.Id,FeatureUniqeCode= ExportDeliveryDocumentMessageSenderCodeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
 			 QueryColumn EDDMQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EDDMQuery.Id,QueryCode = EDDMQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ExportDeliveryDocumentMessageSenderCode.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
