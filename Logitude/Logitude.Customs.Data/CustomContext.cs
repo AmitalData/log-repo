@@ -424,6 +424,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ExportDeclarationClosingDataMap());
 	
+            modelBuilder.Configurations.Add(new ExportDeliveryDocumentMessageSenderCodeMap());
+	
             modelBuilder.Configurations.Add(new ExporterRoleTypeMap());
 	
             modelBuilder.Configurations.Add(new FacilitationTypeMap());
@@ -2314,6 +2316,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ExportDeclarationClosingData> ExportDeclarationClosingDatas 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ExportDeliveryDocumentMessageSenderCode> ExportDeliveryDocumentMessageSenderCodes 
 	 {
 	      get; set;
 	 

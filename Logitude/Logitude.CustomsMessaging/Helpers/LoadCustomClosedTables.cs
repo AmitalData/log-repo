@@ -472,7 +472,12 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData SecurityClearenceTypeCodeTable = closedSystemTables.Where(d => d.id == "23674").FirstOrDefault();
             ObjectTable SecurityClearenceTypeCodeObjectTable = objectTableRepository.GetObjectTableByName("Customs.SecurityClearenceTypeCode", 0, false);
             InsertClosedTableRecord(SecurityClearenceTypeCodeTable, SecurityClearenceTypeCodeObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(vendorTypeTable);
+            addedClosedTables.Add(SecurityClearenceTypeCodeTable);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData ExportDeliveryDocumentMessageSenderCodeTable = closedSystemTables.Where(d => d.id == "23676").FirstOrDefault();
+            ObjectTable ExportDeliveryDocumentMessageSenderCodeObjectTable = objectTableRepository.GetObjectTableByName("Customs.SecurityClearenceTypeCode", 0, false);
+            InsertClosedTableRecord(ExportDeliveryDocumentMessageSenderCodeTable, ExportDeliveryDocumentMessageSenderCodeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(ExportDeliveryDocumentMessageSenderCodeTable);
 
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData paymentTypeTable = closedSystemTables.Where(d => d.id == "1897").FirstOrDefault();
             ObjectTable paymentTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.PaymentType", 0, false);

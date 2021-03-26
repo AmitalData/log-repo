@@ -1309,6 +1309,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\DocumentRejectTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ExceptionReasonList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ExportDeclarationClosingDataList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\ExportDeliveryDocumentMessageSenderCodeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ExporterRoleTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\FclLclCodeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\FullnessCodeList.ts" />
@@ -1371,6 +1372,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\DocumentRejectTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ExceptionReasonPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ExportDeclarationClosingDataPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\ExportDeliveryDocumentMessageSenderCodePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ExporterRoleTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\Extended\InvoiceQueue.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\Extended\DeclarationRemarks.ts" />
@@ -1460,6 +1462,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeficitDecisionListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ExceptionReasonListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ExportDeclarationClosingDataListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\ExportDeliveryDocumentMessageSenderCodeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ExporterRoleTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\FclLclCodeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\FullnessCodeListService.ts" />

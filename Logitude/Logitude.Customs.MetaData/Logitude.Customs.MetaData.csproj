@@ -321,6 +321,7 @@
     <None Include="DBTables\EntityTypeLookup.dxml" />
     <None Include="DBTables\ExceptionReason.dxml" />
     <None Include="DBTables\ExportDeclarationClosingData.dxml" />
+    <None Include="DBTables\ExportDeliveryDocumentMessageSenderCode.dxml" />
     <None Include="DBTables\ExporterRoleType.dxml" />
     <None Include="DBTables\FacilitationType.dxml" />
     <None Include="DBTables\FaultInspectionType.dxml" />
@@ -413,6 +414,7 @@
     <None Include="DBTables\RequiredGuaranteeType.dxml" />
     <None Include="DBTables\ReturnCondition.dxml" />
     <None Include="DBTables\SalesTaxExemptionType.dxml" />
+    <None Include="DBTables\SecurityClearenceTypeCode.dxml" />
     <None Include="DBTables\SeizureFactorType.dxml" />
     <None Include="DBTables\SeizureMethodType.dxml" />
     <None Include="DBTables\SignatureType.dxml" />
@@ -478,6 +480,7 @@
     <None Include="DBTables\VendorStatus.dxml" />
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
+    <None Include="EntityFiles\ExportDeliveryDocumentMessageSenderCode.lxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
     <None Include="EntityFiles\AmendRequestRejectReasonType.lxml" />
     <None Include="EntityFiles\AmendmentStatus.lxml" />
