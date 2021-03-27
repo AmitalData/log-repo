@@ -278,26 +278,47 @@ export class ShipmentHelperComponent implements OnDestroy {
     AWBButtonClicked() {
         if (!this.isAWBButtonClicked) {
             this.isAWBButtonClicked = true;
-
+            this.AddFreightChargeToFreightChargesTab();
             if (this.entityArgs.EditComponent) {
                 this.entityArgs.EditComponent.SaveChanges();
             }
         }
+    }
+
+    AddFreightChargeToFreightChargesTab() {
+        if (!this.EntityPM.IsMultipleCommodities && AppTool.IsNullOrZero(this.EntityPM.AWBChargeRate)) {
+            var airFreightCode = "AFT";
+            var airFreightCharge = this.EntityPM.ShipmentPayables.filter(a => a.ChargesTypeCode == airFreightCode)[0];
+            if (airFreightCharge != null) {
+                this.EntityPM.AWBChargeRate = airFreightCharge.UnitPrice;
+                this.EntityPM.AWBCurrencyId = airFreightCharge.CurrencyId;
+                this.ComputeAWBChargeAmount();
+            }
+        }
+    }
+    private ComputeAWBChargeAmount() {
+        var chargeAmount = this.EntityPM.ChargeableWeight;
+        if (this.EntityPM.RateClassCode == "K") {
+            chargeAmount = this.EntityPM.ChargeableWeightInKG;
+        }
+        this.EntityPM.AWBChargeAmount = ShipmentTool.ComputeAWBChargeAmount(this.EntityPM.RateClassCode, this.EntityPM.AWBChargeRate, chargeAmount);
     }
 
     AWBImportButtonClicked() {
         if (!this.isAWBImportButtonClicked) {
             this.isAWBImportButtonClicked = true;
-
+            var isFullWizard: boolean = this.IsFullWizard();
+            if (isFullWizard) {
+                this.AddFreightChargeToFreightChargesTab();
+            }
             if (this.entityArgs.EditComponent) {
                 this.entityArgs.EditComponent.SaveChanges();
             }
         }
     }
+
     ImportWizard() {
-
-        var isFullWizard: boolean = ShipmentTool.IsFullAWBWizard(this.EntityPM.DirectionId);
-
+        var isFullWizard: boolean = this.IsFullWizard();
         if (isFullWizard) {
             var myAWBWizardArgs: AWBWizardArgs = new AWBWizardArgs();
             myAWBWizardArgs.EntityPM = this.EntityPM;
@@ -329,6 +350,11 @@ export class ShipmentHelperComponent implements OnDestroy {
                 this.CurrentSession.FireEvent("AWBWizardClosed");
             });
         }
+    }
+
+    IsFullWizard(): boolean {
+        var isFullWizard: boolean = ShipmentTool.IsFullAWBWizard(this.EntityPM.DirectionId);
+        return isFullWizard;
     }
 
     // Send To Custom 

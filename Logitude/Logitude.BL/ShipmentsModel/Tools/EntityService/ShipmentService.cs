@@ -3163,6 +3163,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 if (entityPM.TransportModeId == "A")
                 {
+                    this.ComputeAWBChargeRate();
+
                     if (string.IsNullOrEmpty(entityPM.RateClassCode))
                     {
                         entityPM.RateClassCode = "Q";
@@ -3266,6 +3268,85 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
+        private void ComputeAWBChargeRate()
+        {
+            if (entityPM.AWBChargeRate == null)
+            {
+                var airFreightCode = "AFT";
+                var airFreightCharge =entityPM.ShipmentPayables.Where(a => a.ChargesTypeCode == airFreightCode).FirstOrDefault();
+                if (airFreightCharge != null)
+                {
+                    entityPM.AWBChargeRate = airFreightCharge.UnitPrice;
+                    entityPM.AWBCurrencyId = airFreightCharge.CurrencyId;
+                    this.ComputeAWBChargeAmount();
+                }
+            }
+        }
+        private void ComputeAWBChargeAmount()
+        {
+            var chargeAmount = entityPM.ChargeableWeight;
+            if (entityPM.RateClassCode == "K")
+            {
+                chargeAmount = entityPM.ChargeableWeightInKG;
+            }
+            entityPM.AWBChargeAmount =this.ComputeAWBChargeAmount(entityPM.RateClassCode, entityPM.AWBChargeRate, chargeAmount);
+        }
+        public double? ComputeAWBChargeAmount(string myRateClassCode, double? myChargeRate, double?  myChargeableWeight)
+        {
+            double? myResult = null;
+
+            var groupCode = this.GetRateClassGroupCode(myRateClassCode);
+
+            if (groupCode == "M")
+            {
+                myResult = myChargeRate;
+            }
+
+            else if (groupCode == "R")
+            {
+                myResult = myChargeRate * myChargeableWeight;
+            }
+
+            return myResult;
+        }
+        public string GetRateClassGroupCode(string rateClassCode)
+        {
+            var code = "";
+            switch (rateClassCode)
+            {
+                case "M":
+                case "B":
+                    {
+                        code = "M";
+                        break;
+                    }
+
+                case "R":
+                case "X":
+                case "Y":
+                    {
+                        code = "S";
+                        break;
+                    }
+
+                case "C":
+                case "E":
+                case "K":
+                case "N":
+                case "P":
+                case "Q":
+                case "U":
+                case "S":
+                    {
+                        code = "R";
+                        break;
+                    }
+
+                default: { break; }
+            }
+            return code;
+        }
+
         private void InitializeHouseField()
         {
             if (string.IsNullOrEmpty(entityPM.House))
