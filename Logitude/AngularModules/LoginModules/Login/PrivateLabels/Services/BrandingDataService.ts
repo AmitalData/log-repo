@@ -6,16 +6,18 @@ import { PrivateLabelsImage } from '../DataContracts/PrivateLabelsImage';
 export class BrandingDataService {
      
     public static DefaultBackground: string = "url('./Images/LoginScreen/map.png')";
-    public static DefaultMainImage: string = "url('./Images/LoginScreen/screen_trucks.jpg')";
+    public static DefaultLoginImage: string = "url('./Images/LoginScreen/screen_trucks.jpg')";
     public static DefaultLoginProgress: string = "url('./Images/LoginScreen/screen_kids.jpg')";
     public static DefaultForgetPassword: string = "url('./Images/LoginScreen/screen_kids.jpg')";
     public static DefaultMainLogo: string = "./Images/LoginScreen/header.jpg";
     public static DefaultSmallLogo: string = "./Images/LoginScreen/sheader.jpg"; 
+    // need static variables for SecondaryColor and MainColor
+     
 
     constructor() {
 
     }
-
+     
     public static GetAppURL(baseUrl: string) {
 
         if (window.location.origin.indexOf('localhost') > -1)
@@ -31,7 +33,7 @@ export class BrandingDataService {
 
     public static GetPrivateLabelsDataRequest(baseUrl: string) {
         let BackgroundImageId: string = this.GetImageIdFromStorage("BackgroundImage");
-        let MainImageId: string = this.GetImageIdFromStorage("MainImage");
+        let LoginImageId: string = this.GetImageIdFromStorage("LoginImage");
         let LoginProgressImageId: string = this.GetImageIdFromStorage("LoginProgressImage");
         let ForgetPasswordImageId: string = this.GetImageIdFromStorage("ForgetPasswordImage"); 
         let MainLogoId: string = this.GetImageIdFromStorage("MainLog"); 
@@ -40,7 +42,7 @@ export class BrandingDataService {
 
         let BrandingDataRequest: PrivateLabelsBrandingDataRequest = new PrivateLabelsBrandingDataRequest();
         BrandingDataRequest.BackgroundImageId = BackgroundImageId;
-        BrandingDataRequest.MainImageId = MainImageId;
+        BrandingDataRequest.LoginImageId = LoginImageId;
         BrandingDataRequest.LoginProgressImageId = LoginProgressImageId;
         BrandingDataRequest.ForgetPasswordImageId = ForgetPasswordImageId;
         BrandingDataRequest.MainLogoId = MainLogoId;
@@ -68,11 +70,11 @@ export class BrandingDataService {
     }
     private static SetPrivateLabelsImages(BrandingData: any, baseUrl: string) {
         this.SetBackgroundImage(BrandingData);
-        this.SetMainImage(BrandingData);
+        this.SetLoginImage(BrandingData);
         this.SetLoginProgressImage(BrandingData);
         this.SetForgetPasswordImage(BrandingData); 
         this.SetMainLogo(BrandingData); 
-        this.SetSmallLogo(BrandingData); 
+        this.SetSmallLogo(BrandingData);  
     }
 
     // Bingind as [src] img 
@@ -127,18 +129,18 @@ export class BrandingDataService {
         }
     }
 
-    private static SetMainImage(BrandingData) {
-        if (BrandingData.MainImageBytes) {
-            PrivateLabelsBrandingData.MainImageURL = "url(" + BrandingDataService.GetImageFromBytes(BrandingData.MainImageBytes) + ")";
-            this.StoreImageInStorage("MainImage", BrandingData.MainImageId, BrandingData.MainImageBytes);
+    private static SetLoginImage(BrandingData) {
+        if (BrandingData.LoginImageBytes) {
+            PrivateLabelsBrandingData.LoginImageURL = "url(" + BrandingDataService.GetImageFromBytes(BrandingData.LoginImageBytes) + ")";
+            this.StoreImageInStorage("LoginImage", BrandingData.LoginImageId, BrandingData.LoginImageBytes);
         }
         else {
-            var StorageMainImage: PrivateLabelsImage = BrandingDataService.GetImageFromStorage("MainImage");
-            if (StorageMainImage && StorageMainImage.Id != null && StorageMainImage.Id == BrandingData.MainImageId) {
-                PrivateLabelsBrandingData.MainImageURL = "url(" + BrandingDataService.GetImageFromBytes(StorageMainImage.Data) + ")";
+            var StorageLoginImage: PrivateLabelsImage = BrandingDataService.GetImageFromStorage("LoginImage");
+            if (StorageLoginImage && StorageLoginImage.Id != null && StorageLoginImage.Id == BrandingData.LoginImageId) {
+                PrivateLabelsBrandingData.LoginImageURL = "url(" + BrandingDataService.GetImageFromBytes(StorageLoginImage.Data) + ")";
             }
             else { 
-                PrivateLabelsBrandingData.MainImageURL = this.DefaultMainImage;
+                PrivateLabelsBrandingData.LoginImageURL = this.DefaultLoginImage;
             }
         }
     }
@@ -278,11 +280,11 @@ export class BrandingDataService {
             PrivateLabelsBrandingData.SmallLogoURL = this.DefaultSmallLogo;
     }
 
-    public static GetMainImage() { 
-        if (PrivateLabelsBrandingData.MainImageURL != null)
-            return PrivateLabelsBrandingData.MainImageURL;
+    public static GetLoginImage() { 
+        if (PrivateLabelsBrandingData.LoginImageURL != null)
+            return PrivateLabelsBrandingData.LoginImageURL;
         else
-            PrivateLabelsBrandingData.MainImageURL = this.DefaultMainImage;
+            PrivateLabelsBrandingData.LoginImageURL = this.DefaultLoginImage;
     } 
 
         public static GetHeaders() { 

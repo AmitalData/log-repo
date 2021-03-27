@@ -23,9 +23,8 @@ export class DSVLoginComponent extends LoginComponent implements OnInit {
     private privateUrl;
     public MainColor: string = null;
     public BackgroundImage: string = "";
-    public MainImage: string = "";
-    public MainLogo: string = "";
-    public LoginProcessImage: string = ""; 
+    public LoginImage: string = "";
+    public MainLogo: string = ""; 
     public showSpinner = true; 
 
 
@@ -35,34 +34,39 @@ export class DSVLoginComponent extends LoginComponent implements OnInit {
         super(ss); 
     }
     ngOnInit() { 
-        this.get_cookie_data(); 
+        this.get_cookie_data();
         this.privateUrl = SessionInfo.GetLogitudeURL();
-        this.GetPrivateLabelsData(this.privateUrl);  
-        this.showSpinner = false;
+        // Get Images from storage, then request from server to change if there is an update
+        this.GetImagesFromStorage();
+        this.GetPrivateLabelsData(this.privateUrl);
     }
-      
+
+    GetImagesFromStorage() {
+        this.GetLoginPageImages();
+    }
+
+    private GetLoginPageImages() {
+        this.BackgroundImage = BrandingDataService.GetBackgroundImage();
+        this.MainLogo = BrandingDataService.GetMainLogo();
+        this.LoginImage = BrandingDataService.GetLoginImage();
+    }
+
     GetPrivateLabelsData(privateUrl: string) {
-        this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe(
-            (response: ServiceResponse) => {
-                if (response.Result) {
-                    this.Tenant = response.Result.Tenant;
-                    BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
-                    this.MainColor = response.Result.MainColor;
-                    this.BackgroundImage = BrandingDataService.GetBackgroundImage();
-                    this.MainImage = BrandingDataService.GetMainImage();
-                    this.MainLogo = BrandingDataService.GetMainLogo();
-                    this.LoginProcessImage = BrandingDataService.GetLoginProgressImage();
-                }
-            },  
+        this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe((response: ServiceResponse) => {
+            if (response.Result) {
+                BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
+                this.MainColor = response.Result.MainColor;
+                this.GetLoginPageImages();
+            }
+        },
             (error) => {
                 this.BackgroundImage = BrandingDataService.DefaultBackground;
-                this.MainImage = BrandingDataService.DefaultMainImage;
+                this.LoginImage = BrandingDataService.DefaultLoginImage;
                 this.MainLogo = BrandingDataService.DefaultMainLogo;
-            },  
+            },
         )
         this.showSpinner = false;
-    } 
-
+    }
     private ClearLocation() {
         if (SessionInfo.MainLocation) {
             SessionInfo.MainLocation.clear();

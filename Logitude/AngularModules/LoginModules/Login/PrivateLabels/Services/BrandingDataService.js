@@ -3,6 +3,7 @@ import { PrivateLabelsBrandingData } from '../DataContracts/PrivateLabelsBrandin
 import { PrivateLabelsBrandingDataRequest } from '../DataContracts/PrivateLabelsBrandingDataRequest';
 import { PrivateLabelsImage } from '../DataContracts/PrivateLabelsImage';
 export var BrandingDataService = (function () {
+    // need static variables for SecondaryColor and MainColor
     function BrandingDataService() {
     }
     BrandingDataService.GetAppURL = function (baseUrl) {
@@ -16,14 +17,14 @@ export var BrandingDataService = (function () {
     };
     BrandingDataService.GetPrivateLabelsDataRequest = function (baseUrl) {
         var BackgroundImageId = this.GetImageIdFromStorage("BackgroundImage");
-        var MainImageId = this.GetImageIdFromStorage("MainImage");
+        var LoginImageId = this.GetImageIdFromStorage("LoginImage");
         var LoginProgressImageId = this.GetImageIdFromStorage("LoginProgressImage");
         var ForgetPasswordImageId = this.GetImageIdFromStorage("ForgetPasswordImage");
         var MainLogoId = this.GetImageIdFromStorage("MainLog");
         var SmallLogoId = this.GetImageIdFromStorage("SmallLogo");
         var BrandingDataRequest = new PrivateLabelsBrandingDataRequest();
         BrandingDataRequest.BackgroundImageId = BackgroundImageId;
-        BrandingDataRequest.MainImageId = MainImageId;
+        BrandingDataRequest.LoginImageId = LoginImageId;
         BrandingDataRequest.LoginProgressImageId = LoginProgressImageId;
         BrandingDataRequest.ForgetPasswordImageId = ForgetPasswordImageId;
         BrandingDataRequest.MainLogoId = MainLogoId;
@@ -45,7 +46,7 @@ export var BrandingDataService = (function () {
     };
     BrandingDataService.SetPrivateLabelsImages = function (BrandingData, baseUrl) {
         this.SetBackgroundImage(BrandingData);
-        this.SetMainImage(BrandingData);
+        this.SetLoginImage(BrandingData);
         this.SetLoginProgressImage(BrandingData);
         this.SetForgetPasswordImage(BrandingData);
         this.SetMainLogo(BrandingData);
@@ -98,18 +99,18 @@ export var BrandingDataService = (function () {
             }
         }
     };
-    BrandingDataService.SetMainImage = function (BrandingData) {
-        if (BrandingData.MainImageBytes) {
-            PrivateLabelsBrandingData.MainImageURL = "url(" + BrandingDataService.GetImageFromBytes(BrandingData.MainImageBytes) + ")";
-            this.StoreImageInStorage("MainImage", BrandingData.MainImageId, BrandingData.MainImageBytes);
+    BrandingDataService.SetLoginImage = function (BrandingData) {
+        if (BrandingData.LoginImageBytes) {
+            PrivateLabelsBrandingData.LoginImageURL = "url(" + BrandingDataService.GetImageFromBytes(BrandingData.LoginImageBytes) + ")";
+            this.StoreImageInStorage("LoginImage", BrandingData.LoginImageId, BrandingData.LoginImageBytes);
         }
         else {
-            var StorageMainImage = BrandingDataService.GetImageFromStorage("MainImage");
-            if (StorageMainImage && StorageMainImage.Id != null && StorageMainImage.Id == BrandingData.MainImageId) {
-                PrivateLabelsBrandingData.MainImageURL = "url(" + BrandingDataService.GetImageFromBytes(StorageMainImage.Data) + ")";
+            var StorageLoginImage = BrandingDataService.GetImageFromStorage("LoginImage");
+            if (StorageLoginImage && StorageLoginImage.Id != null && StorageLoginImage.Id == BrandingData.LoginImageId) {
+                PrivateLabelsBrandingData.LoginImageURL = "url(" + BrandingDataService.GetImageFromBytes(StorageLoginImage.Data) + ")";
             }
             else {
-                PrivateLabelsBrandingData.MainImageURL = this.DefaultMainImage;
+                PrivateLabelsBrandingData.LoginImageURL = this.DefaultLoginImage;
             }
         }
     };
@@ -220,11 +221,11 @@ export var BrandingDataService = (function () {
         else
             PrivateLabelsBrandingData.SmallLogoURL = this.DefaultSmallLogo;
     };
-    BrandingDataService.GetMainImage = function () {
-        if (PrivateLabelsBrandingData.MainImageURL != null)
-            return PrivateLabelsBrandingData.MainImageURL;
+    BrandingDataService.GetLoginImage = function () {
+        if (PrivateLabelsBrandingData.LoginImageURL != null)
+            return PrivateLabelsBrandingData.LoginImageURL;
         else
-            PrivateLabelsBrandingData.MainImageURL = this.DefaultMainImage;
+            PrivateLabelsBrandingData.LoginImageURL = this.DefaultLoginImage;
     };
     BrandingDataService.GetHeaders = function () {
         var authHeader = new Headers();
@@ -232,7 +233,7 @@ export var BrandingDataService = (function () {
         return authHeader;
     };
     BrandingDataService.DefaultBackground = "url('./Images/LoginScreen/map.png')";
-    BrandingDataService.DefaultMainImage = "url('./Images/LoginScreen/screen_trucks.jpg')";
+    BrandingDataService.DefaultLoginImage = "url('./Images/LoginScreen/screen_trucks.jpg')";
     BrandingDataService.DefaultLoginProgress = "url('./Images/LoginScreen/screen_kids.jpg')";
     BrandingDataService.DefaultForgetPassword = "url('./Images/LoginScreen/screen_kids.jpg')";
     BrandingDataService.DefaultMainLogo = "./Images/LoginScreen/header.jpg";
