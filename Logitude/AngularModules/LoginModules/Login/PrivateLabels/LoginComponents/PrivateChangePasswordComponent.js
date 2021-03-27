@@ -9,44 +9,25 @@ import { LoginService } from '../../LoginService';
 import { PasswordChangeService } from '../../PasswordChangeService';
 import { SessionInfo } from '../../SessionInfo';
 import { BrandingDataService } from '../Services/BrandingDataService';
-import { PrivateLabelsBrandingDataService } from '../Services/PrivateLabelsBrandingDataService';
 export var PrivateChangePasswordComponent = (function (_super) {
     __extends(PrivateChangePasswordComponent, _super);
-    function PrivateChangePasswordComponent(ss, ll, privateLabelsBrandingDataService) {
+    function PrivateChangePasswordComponent(ss, ll) {
         _super.call(this, ss, ll);
         this.ss = ss;
         this.ll = ll;
-        this.privateLabelsBrandingDataService = privateLabelsBrandingDataService;
-        this.MainColor = null;
         this.BackgroundImage = "";
         this.ForgetPasswordImage = "";
-        this.Id = "";
         this.MainLogo = "";
         this.ContactUsEmail = "";
-        this.showSpinner = true;
-        console.log("CHANGE PRIVATE");
     }
     PrivateChangePasswordComponent.prototype.ngOnInit = function () {
         this.privateUrl = SessionInfo.GetLogitudeURL();
-        this.GetPrivateLabelsData(this.privateUrl);
+        this.GetPrivateLabelsData();
     };
-    PrivateChangePasswordComponent.prototype.GetPrivateLabelsData = function (privateUrl) {
-        var _this = this;
-        this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe(function (response) {
-            if (response.Result) {
-                //BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
-                _this.ContactUsEmail = response.Result.ContactUsEmail;
-                _this.MainColor = response.Result.MainColor;
-                _this.BackgroundImage = BrandingDataService.GetBackgroundImage();
-                _this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage();
-                _this.MainLogo = BrandingDataService.GetMainLogo();
-            }
-        }, function (error) {
-            _this.BackgroundImage = BrandingDataService.DefaultBackground;
-            _this.ForgetPasswordImage = BrandingDataService.DefaultForgetPassword;
-            _this.MainLogo = BrandingDataService.DefaultMainLogo;
-        });
-        this.showSpinner = false;
+    PrivateChangePasswordComponent.prototype.GetPrivateLabelsData = function () {
+        this.BackgroundImage = BrandingDataService.GetBackgroundImage();
+        this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage();
+        this.MainLogo = BrandingDataService.GetMainLogo();
     };
     PrivateChangePasswordComponent.decorators = [
         { type: Component, args: [{
@@ -60,7 +41,6 @@ export var PrivateChangePasswordComponent = (function (_super) {
     PrivateChangePasswordComponent.ctorParameters = [
         { type: PasswordChangeService, },
         { type: LoginService, },
-        { type: PrivateLabelsBrandingDataService, },
     ];
     return PrivateChangePasswordComponent;
 }(ChangePasswordComponent));
