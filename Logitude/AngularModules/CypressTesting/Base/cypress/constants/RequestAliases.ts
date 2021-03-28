@@ -50,6 +50,7 @@ export class RequestAliases {
     public static readonly PostUpdateRequest = 'WaitPostUpdateRequest';
     public static readonly PostShippingline = 'WaitPostShippinglinesRequest';
     public static readonly PostUploadExcelFile = 'WaitUpload';
+    public static readonly DownloadFile = 'DownloadFile';
     public static readonly GetCarrierViews = "GetCarrierViews";
     public static readonly GetCardviews = "GetCardViews";
     public static readonly GetEntityResource = "EntityResourceShippingLineTable";
