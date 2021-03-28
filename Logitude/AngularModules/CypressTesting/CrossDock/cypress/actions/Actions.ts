@@ -21,16 +21,22 @@ export function OpenNewCrossDock(crossDockType: string) {
 export function FillCrossdockWizardsFields(crossdockDetails: CrossDockDetails, crossDockType: string) {
     let txt;
     if (crossDockType == Constants.Entry) {
-        cy.FillLogLov(CrossdockSelectors.CrossdockWarehouseEntry, crossdockDetails.Warehouse, true);
-        cy.FillDate(CrossdockSelectors.CrossdockExpectedEntryDate, crossdockDetails.ExpectedEntryDate);
-        cy.FillLogTextBox(CrossdockSelectors.CrossdockExpectedEntryTime, crossdockDetails.ExpectedEntryTime);
+        FillCrossdockWizardsEntryFields(crossdockDetails);
     }
     else {
-        cy.FillLogLov(CrossdockSelectors.CrossdockWarehouseRelease, crossdockDetails.Warehouse, true);
-        cy.FillDate(CrossdockSelectors.CrossdockExpectedReleaseDate, crossdockDetails.ExpectedReleaseDate);
-        cy.FillLogTextBox(CrossdockSelectors.CrossdockExpectedReleaseTime, crossdockDetails.ExpectedReleaseTime);
-        AddPackageToCrossDockRelease();
+        FillCrossdockWizardsReleaseFields(crossdockDetails)
     }
+}
+function FillCrossdockWizardsEntryFields(crossdockEntryDetails: CrossDockDetails) {
+    cy.FillLogLov(CrossdockSelectors.CrossdockWarehouseEntry, crossdockEntryDetails.Warehouse, true);
+    cy.FillDate(CrossdockSelectors.CrossdockExpectedEntryDate, crossdockEntryDetails.ExpectedEntryDate);
+    cy.FillLogTextBox(CrossdockSelectors.CrossdockExpectedEntryTime, crossdockEntryDetails.ExpectedEntryTime);
+}
+function FillCrossdockWizardsReleaseFields(crossdockReleaseDetails: CrossDockDetails) {
+    cy.FillLogLov(CrossdockSelectors.CrossdockWarehouseRelease, crossdockReleaseDetails.Warehouse, true);
+    cy.FillDate(CrossdockSelectors.CrossdockExpectedReleaseDate, crossdockReleaseDetails.ExpectedReleaseDate);
+    cy.FillLogTextBox(CrossdockSelectors.CrossdockExpectedReleaseTime, crossdockReleaseDetails.ExpectedReleaseTime);
+    AddPackageToCrossDockRelease();
 }
 function AddPackageToCrossDockRelease() {
     cy.Click(BaseSelectors.Button, Constants.ChoosePackage)
@@ -156,10 +162,10 @@ export function ValidateLinkedReleaseInShipment(linkedReleaseyDetails: CrossDock
 }
 export function ValidateLinkedReleaseInEntry(linkedReleaseDetails: LinkedReleaseDetails) {
     NavigateToShipmentConnectedEntities()
-    BaseAssertion.AssertElementContain(CrossdockSelectors.EntityNumberLink(CrossDockContext.ReleaseNumber)+BaseSelectors.LastElement, linkedReleaseDetails.ReleaseNumber)
-    BaseAssertion.AssertElementContain(CrossdockSelectors.ShipmentNumber(CrossDockContext.ShipmentNumber)+BaseSelectors.LastElement, linkedReleaseDetails.ShipmentNumber)
-    BaseAssertion.AssertElementContain(CrossdockSelectors.CrossdockConnectedTo(CrossDockContext.ReleaseNumber)+BaseSelectors.LastElement, linkedReleaseDetails.ConnectedTo)
-    BaseAssertion.AssertElementContain(CrossdockSelectors.CrossdockStatus(CrossDockContext.ReleaseNumber)+BaseSelectors.LastElement, linkedReleaseDetails.Status)
+    BaseAssertion.AssertElementContain(CrossdockSelectors.EntityNumberLink(CrossDockContext.ReleaseNumber) + BaseSelectors.LastElement, linkedReleaseDetails.ReleaseNumber)
+    BaseAssertion.AssertElementContain(CrossdockSelectors.ShipmentNumber(CrossDockContext.ShipmentNumber) + BaseSelectors.LastElement, linkedReleaseDetails.ShipmentNumber)
+    BaseAssertion.AssertElementContain(CrossdockSelectors.CrossdockConnectedTo(CrossDockContext.ReleaseNumber) + BaseSelectors.LastElement, linkedReleaseDetails.ConnectedTo)
+    BaseAssertion.AssertElementContain(CrossdockSelectors.CrossdockStatus(CrossDockContext.ReleaseNumber) + BaseSelectors.LastElement, linkedReleaseDetails.Status)
 }
 export function CancelRelease() {
     DefinePutCancleReleaseRequest()
