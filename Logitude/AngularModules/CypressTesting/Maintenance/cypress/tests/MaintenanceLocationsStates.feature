@@ -19,15 +19,15 @@ Feature: Create State, Inactivate and activate it from Maintenance
         When add state
         Then the state should add successfully
 
-    Scenario: Search for the state by name
-        When search for "TestState" state
-        Then the "TestState" state should appear successfully
+    Scenario: Search for the city by name
+        When search for "TestCity" state
+        Then the "TestCity" state should appear successfully
 
-    Scenario: Open the state
+    Scenario: Open the city
         When open state
         Then the state should open successfully
 
-    Scenario: Edit the state
+    Scenario: Edit the city
         Given a "random" as stateLocalName
         Given the user change Inactivestate check box
         When edit state

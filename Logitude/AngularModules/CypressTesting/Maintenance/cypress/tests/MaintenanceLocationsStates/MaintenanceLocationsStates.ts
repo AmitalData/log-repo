@@ -5,6 +5,7 @@ import { StateDetails } from "../../../cypress/models/StateDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
+import { Constants } from "../../constants/Constants";
 
 //#region variable
 let stateDetails: StateDetails
@@ -17,7 +18,7 @@ Given("the user logged in and navigate to {string} in maintenance menu", (mainte
 });
 
 When("add {string} as state code", (stateCode) => {
-    MaintenanceActions.OpenNewWizard("State");
+    MaintenanceActions.OpenNewWizard(Constants.State);
     cy.FillLogTextBox(MaintenanceSelectors.StateCode, stateCode);
 });
 
