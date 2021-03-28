@@ -30,9 +30,9 @@ Feature: Create City, Inactivate and activate it from Maintenance
 
     Scenario: Edit the city
         Given a "random" as cityLocalName
-        Given the user change InactiveCity check box
+        And the user change InactiveCity check box
         When edit city
         Then the city should update successfully
-        Then following event should appear in events tab
+        And following event should appear in events tab
             | Event        | Notes         |
             | City Updated | City "status" |

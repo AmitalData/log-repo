@@ -6,5 +6,4 @@ export class CityDetails {
     State:string;
     InactiveCity: string;
     Notes: string;
-    public static inActive: boolean
 }

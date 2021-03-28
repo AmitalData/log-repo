@@ -27,7 +27,12 @@ import { CountryDetails } from "../models/CountryDetails";
 import { EventTypeDetails } from "../../../Base/cypress/models/EventTypeDetails";
 import { StateDetails } from "../models/StateDetails";
 import { CityDetails } from "../models/CityDetails";
+//#region variables
+let inActiveCountry=false;
+let inActiveState=false;
+let inActiveCity=false;
 
+//#endregion
 //#region General Actions
 export function OpenMaintenanceMenu() {
     cy.Click(BaseSelectors.MaintenanceMenu, null)
@@ -967,24 +972,15 @@ function DefinePutCountryRequest() {
 export function AssertEditCountry() {
     AssertPutCountry();
 }
-
 export function AssertPutCountry() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutCountry, 200).
         then((interception) => {
-            CountryDetails.inActive = interception.request.body.inActive;
+            inActiveCountry = interception.response.body.InActive;   
         });
 }
 
 export function CountryConversionEventsMapping(eventDetailsList: EventTypeDetails[]): EventTypeDetails[] {
-    for (let i = 0; i < eventDetailsList.length; i++) {
-        if (CountryDetails.inActive) {
-            eventDetailsList[i].Notes = eventDetailsList[i].Notes.replace(/\"status\"/gi, "Inactivated");
-        }
-        else {
-            eventDetailsList[i].Notes = eventDetailsList[i].Notes.replace(/\"status\"/gi, "Activated");
-
-        }
-    }
+    ConversionEventsMapping(eventDetailsList,inActiveCountry)
     return eventDetailsList;
 }
 
@@ -1084,19 +1080,14 @@ export function AssertEditState() {
 export function AssertPutState() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutState, 200).
         then((interception) => {
-            StateDetails.inActive = interception.request.body.inActive;
+            inActiveState = interception.response.body.InActive;
         });
 }
 
 export function StateConversionEventsMapping(eventDetailsList: EventTypeDetails[]): EventTypeDetails[] {
     for (let i = 0; i < eventDetailsList.length; i++) {
-        if (StateDetails.inActive) {
-            eventDetailsList[i].Notes = eventDetailsList[i].Notes.replace(/\"status\"/gi, "Inactivated");
-        }
-        else {
-            eventDetailsList[i].Notes = eventDetailsList[i].Notes.replace(/\"status\"/gi, "Activated");
-
-        }
+        ConversionEventsMapping(eventDetailsList,inActiveState)
+    return eventDetailsList;
     }
     return eventDetailsList;
 }
@@ -1211,7 +1202,21 @@ function DefinePutCityRequest() {
 export function AssertPutCity() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutCity, 200).
         then((interception) => {
-            CityDetails.inActive = interception.request.body.InActive;
+           inActiveCity = interception.response.body.InActive;
         });
+}
+export function CityConversionEventsMapping(eventDetailsList: EventTypeDetails[]): EventTypeDetails[] {
+    ConversionEventsMapping(eventDetailsList,inActiveCity)
+    return eventDetailsList;
+}
+export function ConversionEventsMapping(eventDetailsList: EventTypeDetails[],inActiveField:boolean){
+    for (let i = 0; i < eventDetailsList.length; i++) {
+    if (inActiveField) {
+        eventDetailsList[i].Notes = eventDetailsList[i].Notes.replace(/\"status\"/gi, "Inactivated");
+    }
+    else {
+        eventDetailsList[i].Notes = eventDetailsList[i].Notes.replace(/\"status\"/gi, "Activated");
+    } 
+}  
 }
 //#endregion

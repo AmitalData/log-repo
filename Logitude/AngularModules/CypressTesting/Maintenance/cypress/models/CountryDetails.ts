@@ -9,5 +9,4 @@ export class CountryDetails {
     IsStateRequired: string;
     HasCities: string;
     Notes: string;
-    public static inActive: boolean
 }

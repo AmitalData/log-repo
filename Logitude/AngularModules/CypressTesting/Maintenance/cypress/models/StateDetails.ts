@@ -5,5 +5,4 @@ export class StateDetails {
     Country: string;
     InactiveState: string;
     Notes: string;
-    public static inActive: boolean
 }

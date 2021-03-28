@@ -81,7 +81,7 @@ Then("the city should update successfully", () => {
 
 Then("following event should appear in events tab", (dataTable) => {
     let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
-    eventDetailsList = MaintenanceActions.StateConversionEventsMapping(eventDetailsList)
+    eventDetailsList = MaintenanceActions.CityConversionEventsMapping(eventDetailsList)
     BaseActions.ValidateEventsTab(eventDetailsList, MaintenanceSelectors.CityEventTab);
 });
 //#endregion
