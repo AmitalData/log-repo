@@ -19,8 +19,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
 {
     public class GLAccountChequeDetailsInstanceCreator
     {
-        CurrencyQueryService CurrencyQuery;
-        List<ARPaymentChequeReplicaPM> paymentCheques;
+        CurrencyQueryService CurrencyQuery;    
         List<Cheque> cheques;
         List<LedgerTransaction> externalTransactions;
         int tenant;
@@ -31,19 +30,23 @@ namespace WebFreight.Web.Helpers.APIHelpers
             cheques = new List<Cheque>();
         }
 
-        public GLAccountChequeDetails GetLAccountChequeDetails(string number)
+        public GLAccountChequeDetails CreateGLAccountChequeDetailsInstance(string number)
         {
             GLAccountPM gLAccount = GetGLAccountByNumber(number, tenant);
-            List<CardList> cards = GetGLaccountConnectedCards(gLAccount);
-             externalTransactions = GetGLaccountConnectedExternalTransactions(gLAccount);
-            foreach (CardList card in cards)
-            {
-                paymentCheques = GetCardPaymentCheques(card);
-                FillARPaymentChequesList(paymentCheques);
-            }
-            return MapGLAccountChequeFields(gLAccount);
+            List<CardList> connectedCards = GetGLaccountConnectedCards(gLAccount);
+            externalTransactions = GetGLaccountConnectedExternalTransactions(gLAccount);
+            FillChequesForConnectedCards(connectedCards);
+            return CreateMappedGLAccountChequeDetailsInstance(gLAccount);
         }
-      private GLAccountChequeDetails MapGLAccountChequeFields(GLAccountPM gLAccount)
+        private void FillChequesForConnectedCards(List<CardList> connectedCards)
+        {
+            foreach (CardList card in connectedCards)
+            {
+                List<ARPaymentChequeReplicaPM> paymentCheques = GetPaymentChequesForConnectedCard(card);
+                FillCheques(paymentCheques);
+            }
+        }
+      private GLAccountChequeDetails CreateMappedGLAccountChequeDetailsInstance(GLAccountPM gLAccount)
         {
             return new GLAccountChequeDetails()
             {
@@ -96,26 +99,31 @@ namespace WebFreight.Web.Helpers.APIHelpers
             List<LedgerTransaction> externalTransactions = new List<LedgerTransaction>();
             foreach (LedgerTransactionList transaction in transactions)
             {
-                LedgerTransaction ledgerTransaction = new LedgerTransaction()
-                {
-                    Currency = CurrencyQuery.GetCurrencyById(transaction.CurrencyId, transaction.Tenant),
-                    DueDate = transaction.DueDate,
-                    LocalAmount = transaction.LocalAmountCredit,
-                    ForeignAmount = transaction.ForeignAmountCredit,
-                    Reference1 = transaction.Reference1,
-                    Reference2 = transaction.Reference2,
-                    Notes = transaction.Notes
-                };
+                LedgerTransaction ledgerTransaction =   CreateLedgerTransactionInstance(transaction);              
                 externalTransactions.Add(ledgerTransaction);
             }
 
             return externalTransactions;
         }
 
-        private List<ARPaymentChequeReplicaPM> GetCardPaymentCheques(CardList card)
+        private LedgerTransaction CreateLedgerTransactionInstance(LedgerTransactionList transaction)
         {
-          
-            paymentCheques = new List<ARPaymentChequeReplicaPM>();
+            LedgerTransaction ledgerTransaction = new LedgerTransaction()
+            {
+                Currency = CurrencyQuery.GetCurrencyById(transaction.CurrencyId, transaction.Tenant),
+                DueDate = transaction.DueDate,
+                LocalAmount = transaction.LocalAmountCredit,
+                ForeignAmount = transaction.ForeignAmountCredit,
+                Reference1 = transaction.Reference1,
+                Reference2 = transaction.Reference2,
+                Notes = transaction.Notes
+            };
+            return ledgerTransaction;
+        }
+        private List<ARPaymentChequeReplicaPM> GetPaymentChequesForConnectedCard(CardList card)
+        {
+
+            List<ARPaymentChequeReplicaPM> paymentCheques = new List<ARPaymentChequeReplicaPM>();
             List<ARPaymentPM> payments = GetARPayments(card);           
            foreach(ARPaymentPM payment in payments)
             {
@@ -129,30 +137,32 @@ namespace WebFreight.Web.Helpers.APIHelpers
             ARPaymentQuery aRPaymentQuery = new ARPaymentQuery(card.Tenant);
            return aRPaymentQuery.GetARpaymentsForCard(card.Id, card.Tenant);
         }
-        private  void FillARPaymentChequesList(List<ARPaymentChequeReplicaPM> paymentCheques)
+        private  void FillCheques(List<ARPaymentChequeReplicaPM> paymentCheques)
         {
-          
-              foreach(ARPaymentChequeReplicaPM paymentCheque in paymentCheques)
-                {
-                    Cheque cheque = new Cheque()
-                    {
-                        ChequeNumber = paymentCheque.ChequeNumber,
-                        BankAccount = paymentCheque.BankAccount,
-                        ForeignAmount = paymentCheque.ForeignAmount,
-                        LocalAmount = paymentCheque.LocalAmount,
-                        BankBranch = paymentCheque.BankBranch,
-                        Id = paymentCheque.Id,
-                        Tenant = paymentCheque.Tenant,
-                        BankId = paymentCheque.BankId,
-                        Currency = CurrencyQuery.GetCurrencyById(paymentCheque.CurrencyId, paymentCheque.Tenant),
-                        StatusCode = paymentCheque.StatusCode,
-                        ValueDate = paymentCheque.ValueDate,
-                    };
-                    cheques.Add(cheque);
-                }
-           
+            foreach (ARPaymentChequeReplicaPM paymentCheque in paymentCheques)
+            {
+                Cheque cheque = CreateChequeInstance(paymentCheque);
+                cheques.Add(cheque);
+            }           
         }
 
-   
+        private Cheque CreateChequeInstance(ARPaymentChequeReplicaPM paymentCheque)
+        {
+            return new Cheque()
+            {
+                ChequeNumber = paymentCheque.ChequeNumber,
+                BankAccount = paymentCheque.BankAccount,
+                ForeignAmount = paymentCheque.ForeignAmount,
+                LocalAmount = paymentCheque.LocalAmount,
+                BankBranch = paymentCheque.BankBranch,
+                Id = paymentCheque.Id,
+                Tenant = paymentCheque.Tenant,
+                BankId = paymentCheque.BankId,
+                Currency = CurrencyQuery.GetCurrencyById(paymentCheque.CurrencyId, paymentCheque.Tenant),
+                StatusCode = paymentCheque.StatusCode,
+                ValueDate = paymentCheque.ValueDate,
+            };
+        }
+
     }
 }

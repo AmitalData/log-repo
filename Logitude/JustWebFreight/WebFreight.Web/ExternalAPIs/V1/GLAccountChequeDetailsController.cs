@@ -46,7 +46,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
         private GLAccountChequeDetails GetGLAccountChequeDetails(int tenant, string number)
         {
             GLAccountChequeDetailsInstanceCreator helper = new GLAccountChequeDetailsInstanceCreator(tenant);
-            return helper.GetLAccountChequeDetails(number);
+            return helper.CreateGLAccountChequeDetailsInstance(number);
         }
         private AuthenticationToken GetAuthenticationToken()
         {
