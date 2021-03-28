@@ -17,14 +17,14 @@ using System.Web;
 
 namespace WebFreight.Web.Helpers.APIHelpers
 {
-    public class GLAccountChequeDetailsHelper
+    public class GLAccountChequeDetailsInstanceCreator
     {
         CurrencyQueryService CurrencyQuery;
         List<ARPaymentChequeReplicaPM> paymentCheques;
         List<Cheque> cheques;
         List<LedgerTransaction> externalTransactions;
         int tenant;
-        public GLAccountChequeDetailsHelper(int Tenant)
+        public GLAccountChequeDetailsInstanceCreator(int Tenant)
         {
            tenant = Tenant;
             CurrencyQuery = new CurrencyQueryService(tenant);

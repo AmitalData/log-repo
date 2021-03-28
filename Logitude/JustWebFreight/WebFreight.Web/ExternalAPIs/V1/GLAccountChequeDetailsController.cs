@@ -32,19 +32,22 @@ namespace WebFreight.Web.ExternalAPIs.V1
             try
             {
                 AuthenticationToken authToken = GetAuthenticationToken();
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticateAPICall(authToken.Tenant);             
-                GLAccountChequeDetailsHelper helper = new GLAccountChequeDetailsHelper(authToken.Tenant);
-                GLAccountChequeDetails gLAccountChequeDetails = helper.GetLAccountChequeDetails(number);
-                return Request.CreateResponse(HttpStatusCode.OK, gLAccountChequeDetails);
+                SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                GLAccountChequeDetails gLAccountChequeDetails = GetGLAccountChequeDetails(authToken.Tenant,number);
+                return CreateSuccessfulResponse(gLAccountChequeDetails);
+             
             }
             catch (Exception ex)
             {
-                return CreateResponse(ex, null);
+                return CreateFailedResponse(ex);
             }
         }
 
-
+        private GLAccountChequeDetails GetGLAccountChequeDetails(int tenant, string number)
+        {
+            GLAccountChequeDetailsInstanceCreator helper = new GLAccountChequeDetailsInstanceCreator(tenant);
+            return helper.GetLAccountChequeDetails(number);
+        }
         private AuthenticationToken GetAuthenticationToken()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
@@ -53,18 +56,15 @@ namespace WebFreight.Web.ExternalAPIs.V1
             return authToken;
         }
 
-        private HttpResponseMessage CreateResponse(Exception exception, string message)
+        private HttpResponseMessage CreateSuccessfulResponse(GLAccountChequeDetails gLAccountChequeDetails)
         {
-            if (exception == null && message != null)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, message);
-            }
-            else
-            {
-                var apiExceptionResult = ApiExceptionHandler.HandleException(exception);
-                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
-            }
+                return Request.CreateResponse(HttpStatusCode.OK, gLAccountChequeDetails);
         }
-       
+        private HttpResponseMessage CreateFailedResponse(Exception exception)
+        {
+            var apiExceptionResult = ApiExceptionHandler.HandleException(exception);
+            return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+
+        }
     }
 }
