@@ -31,7 +31,11 @@ import { CurrencyDetails } from "../models/CurrencyDetails";
 import { QuoteSelectors } from "../../../Quote/cypress/selectors/Selectors";
 import { ShipmentSelectors } from "../../../Shipment/cypress/selectors/Selectors";
 import { ReceivableDetails } from "../../../Shipment/cypress/models/ReceivableDetails";
+import { GlobalZoneDetails } from "../models/GlobalZoneDetails";
 
+//#region variables
+let inActiveGlobalZone=false;
+//#endregion
 //#region General Actions
 export function OpenMaintenanceMenu() {
     cy.Click(BaseSelectors.MaintenanceMenu, null)
@@ -1230,4 +1234,103 @@ export function ValidateReceivableCostRate(expectedValue:string){
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 }
 
+//#endregion
+//#region Global Zone
+export function FillGlobalZoneCode(GlobalZoneCode:string){
+    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneCode , GlobalZoneCode)
+}
+export function FillGlobalZoneDetails(globalZoneDetails:GlobalZoneDetails){
+    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneCode, globalZoneDetails.GlobalZoneCode)
+    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneEnglishName, globalZoneDetails.GlobalZoneName)
+    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneLocalName, globalZoneDetails.GlobalZoneLocalName)
+    FillCheckBoxProcess(MaintenanceSelectors.InActiveGlobalZoneCheckBox,globalZoneDetails.InactiveGlobalZone)
+}
+export function CreateGlobalZone() {
+    DefinePostGlobalZoneMockRequest()
+    DefineGetByFilterRequest()
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
+}
+
+function DefinePostGlobalZoneMockRequest() {
+    cy.intercept(RestAPI.POST, Urls.GlobalZones, [true])
+}
+
+export function AssertCreateGlobalZone() {
+    AssertMockPostGlobalZone();
+    AssertGetByFilters();
+}
+
+export function AssertMockPostGlobalZone() {
+    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow)
+}
+export function SearchGlobalZone(GlobalZoneName: string) {
+    DefineGlobalZoneViewsGetByFiltersRequest(GlobalZoneName);
+    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, GlobalZoneName);
+    AsserGlobalZoneViewsGetByFilters();
+}
+export function DefineGlobalZoneViewsGetByFiltersRequest(GlobalZoneName: string) {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(GlobalZoneName + "&GetCount=false"), RequestAliases.GetFilterSearch);
+}
+export function AsserGlobalZoneViewsGetByFilters() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
+}
+export function AssertSearchGlobalZone(GlobalZoneName: string) {
+    cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
+        expect(text).to.contain(GlobalZoneName);
+    });
+}
+export function OpenGlobalZone() {
+    DefineGlobalZonesGetSingleRequest();
+    cy.get(BaseSelectors.RowClass).eq(0).click();
+}
+function DefineGlobalZonesGetSingleRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GlobalZonesGetSingle, RequestAliases.GetSignle);
+}
+export function AssertOpenGlobalZone() {
+    AssertGlobalZoneGetSingle();
+    BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
+}
+
+function AssertGlobalZoneGetSingle() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
+}
+export function FillGlobalZoneLocalName(LocalName: string) {
+    let LocalNameToFill = LocalName.toLowerCase() == "random" ? (gr.GenerateRandomNumberAndString(10)) : LocalName; 
+    if (LocalName) {
+        cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneLocalName, LocalNameToFill)
+    }
+}
+export function EditGlobalZone() {
+    DefinePutGlobalZoneRequest();
+    cy.Click(MaintenanceSelectors.GlobalZoneSaveButton, null);
+}
+
+function DefinePutGlobalZoneRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.GlobalZones, RequestAliases.PutGlobalZone);
+}
+
+export function AssertEditGlobalZone() {
+    AssertPutGlobalZone();
+}
+
+export function AssertPutGlobalZone() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutGlobalZone, 200).
+        then((interception) => {
+            inActiveGlobalZone= interception.response.body.InActive;
+        });
+}
+export function GlobalZoneConversionEventsMapping(eventDetailsList: EventTypeDetails[]): EventTypeDetails[] {
+    ConversionEventsMapping(eventDetailsList,inActiveGlobalZone)
+    return eventDetailsList;
+}
+export function ConversionEventsMapping(eventDetailsList: EventTypeDetails[],inActiveField:boolean){
+    for (let i = 0; i < eventDetailsList.length; i++) {
+    if (inActiveField) {
+        eventDetailsList[i].Notes = eventDetailsList[i].Notes.replace(/\"status\"/gi, "Inactivated");
+    }
+    else {
+        eventDetailsList[i].Notes = eventDetailsList[i].Notes.replace(/\"status\"/gi, "Activated");
+    } 
+}  
+}
 //#endregion
