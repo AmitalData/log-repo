@@ -294,7 +294,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             SearchFilter: this.SearchFilter == null ? "" : this.SearchFilter,
             ServiceContextUser: SessionLocator.LoggedUserId,
             TypeCode: this.SelectedArchiveFilter == "All" ? "" : this.SelectedArchiveFilter,
-            ForwarderPartnerId: this.isPrivateLabel && !this.IsDSV ? SessionLocator.PrivateLableSettings.HybridPartnerId : null,
+            ForwarderPartnerId: this.isPrivateLabel && !this.IsDSV ? SessionLocator.PrivateLableSettings.HybridPartnerId : '',
         };
         this.myShipmentDomainService.GetShipmentsQueriesCounts(shipmentsQueriesCountsArgs).subscribe((myResult: ImporterQueriesDataCounts) => {
             if (myResult != null) {

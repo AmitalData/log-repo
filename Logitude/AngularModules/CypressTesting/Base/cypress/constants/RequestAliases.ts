@@ -98,6 +98,8 @@ export class RequestAliases {
     public static readonly PutState="PutState"
     public static readonly PutGlobalZone="PutGlobalZone"
 
+    public static readonly PutCity="PutCity"
+
     public static readonly PostQuoteTemplate = "PostQuoteTemplate";
     public static readonly PutQuoteTemplate = "PutQuoteTemplate";
     public static readonly PutQuoteTemplateHeaderFields = "PutQuoteTemplateHeaderFields";

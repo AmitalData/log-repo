@@ -33,6 +33,9 @@ export class Urls {
     public static readonly States = "**/states"
     public static readonly StatesGetSingle = "**/states/getsingle?**";
 
+    public static readonly CountryCities="**/countrycities"
+    public static readonly CountryCitiesGetSingle = "**/countrycities/getsingle?**";
+
     public static readonly GlobalZones = "**/globalzones"
     public static readonly GlobalZonesGetSingle = "**/globalzones/getsingle?**"
     

@@ -19,10 +19,11 @@ export class PrivateLoginComponent extends LoginComponent implements OnInit {
     private privateUrl;
     public MainColor: string = null;
     public BackgroundImage: string = "";
-    public MainImage: string = ""; 
+    public LoginImage: string = ""; 
     public MainLogo: string = "";
     public SmallLogo: string = ""; 
     public showSpinner = true;
+
     constructor(
         private ss: LoginService,
         private privateLabelsBrandingDataService: PrivateLabelsBrandingDataService) {
@@ -31,28 +32,31 @@ export class PrivateLoginComponent extends LoginComponent implements OnInit {
     ngOnInit() {
         this.get_cookie_data();
         this.privateUrl = SessionInfo.GetLogitudeURL();
-        this.GetPrivateLabelsData(this.privateUrl);
+        // Get Images from storage, then request from server to change
+        this.GetImagesFromStorage();
+         this.GetPrivateLabelsData(this.privateUrl);
     }
-     
+
+    GetImagesFromStorage() {
+        this.GetLoginPageImages();
+    }      
+
+    private GetLoginPageImages() {
+    this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage"); 
+    this.MainLogo = BrandingDataService.GetImage("MainLogo"); 
+    this.LoginImage = BrandingDataService.GetImage("LoginImage"); 
+    this.LoginImage = BrandingDataService.GetImage("LoginImage"); 
+    this.showSpinner = false;
+    }
 
     GetPrivateLabelsData(privateUrl: string) {
         this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe((response: ServiceResponse) => {
-            if (response.Result) {
-                this.Tenant = response.Result.Tenant;
+            if (response.Result) { 
                 BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
                 this.MainColor = response.Result.MainColor;
-                this.BackgroundImage = BrandingDataService.GetBackgroundImage();
-                this.MainImage = BrandingDataService.GetMainImage(); 
-                this.MainLogo = BrandingDataService.GetMainLogo();
-                this.SmallLogo = BrandingDataService.GetSmallLogo(); 
-            }
-        },
-            (error) => {
-                this.BackgroundImage = BrandingDataService.DefaultBackground;
-                this.MainImage = BrandingDataService.DefaultMainImage;
-                this.MainLogo = BrandingDataService.DefaultMainLogo;
-            },
-        )
+                BrandingDataService.MainColor = this.MainColor;
+                this.GetLoginPageImages();  
+            } })
         this.showSpinner = false;
     } 
 

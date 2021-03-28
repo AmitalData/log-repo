@@ -7,7 +7,6 @@ import { Component } from '@angular/core';
 import { ChangePasswordComponent } from '../../Components/ChangePasswordComponent';
 import { LoginService } from '../../LoginService';
 import { PasswordChangeService } from '../../PasswordChangeService';
-import { SessionInfo } from '../../SessionInfo';
 import { BrandingDataService } from '../Services/BrandingDataService';
 export var PrivateChangePasswordComponent = (function (_super) {
     __extends(PrivateChangePasswordComponent, _super);
@@ -18,16 +17,14 @@ export var PrivateChangePasswordComponent = (function (_super) {
         this.BackgroundImage = "";
         this.ForgetPasswordImage = "";
         this.MainLogo = "";
-        this.ContactUsEmail = "";
     }
     PrivateChangePasswordComponent.prototype.ngOnInit = function () {
-        this.privateUrl = SessionInfo.GetLogitudeURL();
         this.GetPrivateLabelsData();
     };
     PrivateChangePasswordComponent.prototype.GetPrivateLabelsData = function () {
-        this.BackgroundImage = BrandingDataService.GetBackgroundImage();
-        this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage();
-        this.MainLogo = BrandingDataService.GetMainLogo();
+        this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
+        this.MainLogo = BrandingDataService.GetImage("MainLogo");
+        this.ForgetPasswordImage = BrandingDataService.GetImage("ForgetPasswordImage");
     };
     PrivateChangePasswordComponent.decorators = [
         { type: Component, args: [{
