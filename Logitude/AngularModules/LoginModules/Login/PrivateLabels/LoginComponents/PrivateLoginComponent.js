@@ -34,9 +34,11 @@ export var PrivateLoginComponent = (function (_super) {
         this.GetLoginPageImages();
     };
     PrivateLoginComponent.prototype.GetLoginPageImages = function () {
-        this.BackgroundImage = BrandingDataService.GetBackgroundImage();
-        this.MainLogo = BrandingDataService.GetMainLogo();
-        this.LoginImage = BrandingDataService.GetLoginImage();
+        this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
+        this.MainLogo = BrandingDataService.GetImage("MainLogo");
+        this.LoginImage = BrandingDataService.GetImage("LoginImage");
+        this.LoginImage = BrandingDataService.GetImage("LoginImage");
+        this.showSpinner = false;
     };
     PrivateLoginComponent.prototype.GetPrivateLabelsData = function (privateUrl) {
         var _this = this;

@@ -11,8 +11,15 @@ export class BrandingDataService {
     public static DefaultForgetPassword: string = "url('./Images/LoginScreen/screen_kids.jpg')";
     public static DefaultMainLogo: string = "./Images/LoginScreen/header.jpg";
     public static DefaultSmallLogo: string = "./Images/LoginScreen/sheader.jpg"; 
-    // need static variables for SecondaryColor and MainColor
-     
+    // need static variables for SecondaryColor and MainColor 
+    public static DefaultImages = [
+        { id: "BackgroundImage", image: "url('./Images/LoginScreen/map.png')" },
+        { id: "LoginImage", image: "url('./Images/LoginScreen/header.jpg')"},
+        { id: "LoginProgressImage", image: "url('./Images/LoginScreen/header.jpg')" },
+        { id: "ForgetPasswordImage", image: "url('./Images/LoginScreen/header.jpg')" },
+        { id: "MainLogo", image: "./Images/LoginScreen/header.jpg" },
+        { id: "SmallLogo", image: "./Images/LoginScreen/sheader.jpg" },
+    ];
 
     constructor() {
 
@@ -231,6 +238,26 @@ export class BrandingDataService {
     }
 
 
+    public static GetImage(id: string) {
+        let imageURL = null;
+        let image = BrandingDataService.GetImageFromStorage(id);
+
+        if (image && image.Id != null) { 
+            if (id == "MainLogo")
+            {
+                imageURL = BrandingDataService.GetImageFromBytes(image.Data);
+            }
+            else {
+
+              imageURL = "url(" + BrandingDataService.GetImageFromBytes(image.Data) + ")"
+            }
+        } else {
+            imageURL = BrandingDataService.DefaultImages.find(x => x.id === id).image;
+            console.log("print defualt " + imageURL);
+        }
+        return imageURL;
+    }
+
     public static GetMainLogoFromStorage() {
 
        let StorageMainImage: PrivateLabelsImage = BrandingDataService.GetImageFromStorage("MainLogo");
@@ -256,7 +283,21 @@ export class BrandingDataService {
         }
         return PrivateLabelsBrandingData.LoginProgressImageURL;
     }
-     
+
+
+    public static GetLoginImageFromStorage() {
+
+        let loginImage: PrivateLabelsImage = BrandingDataService.GetImageFromStorage("LoginImage");
+        if (loginImage && loginImage.Id != null) {
+            PrivateLabelsBrandingData.LoginImageURL = "url(" + BrandingDataService.GetImageFromBytes(loginImage.Data) + ")";
+        }
+        else {
+            PrivateLabelsBrandingData.LoginImageURL = this.DefaultLoginImage;
+
+        }
+        return PrivateLabelsBrandingData.LoginImageURL;
+    }
+
 
 
     public static GetBackgroundImage() { 
