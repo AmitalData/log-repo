@@ -14,8 +14,6 @@ export class CustomerList {
 		RankName: string;
 		IndustryId: string;
 		LeadSourceId: string;
-		BillToId: string;
-		BillToName: string;
 		SalesmanUserId: string;
 		SalesmanUserEnglishName: string;
 		SalesmanBusinessUnitId: string;
