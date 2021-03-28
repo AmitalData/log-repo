@@ -4,7 +4,7 @@ Feature: Change the currency rate value
 
     Scenario: Edit exchange rate value
         Given the user logged in and open "Currencies Rates" from tenant settings
-        Given fill "EUR" today's exchange rate if it's not updated with the following details
+        And today's exchange rate for "EUR" with the following details
             | ExchangeDate | Today   |
             | Rate         | 3.80000 |
         When edit currency rate

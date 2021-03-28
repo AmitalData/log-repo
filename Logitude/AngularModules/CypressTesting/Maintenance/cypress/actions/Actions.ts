@@ -1150,31 +1150,31 @@ export function NavigateToCurrenctRateSettings(navigateTo:string){
     BaseAssertion.AssertStatusCode(RequestAliases.GetCurrencyRate, 200);
 }
 
-export function UpdateCurrencyRateIfNeed(currency: string, currencyDetails: CurrencyDetails) {
+export function UpdateCurrencyRate(currency: string, currencyDetails: CurrencyDetails) {
     cy.get(MaintenanceSelectors.CurrencyDate(currency)).invoke('text').then((text) => {
         if (text.trim() != currencyDetails.ExchangeDate) {
-            UpdateCurrencyRate(currency, currencyDetails)
+            EditCurrencyRate(currency, currencyDetails)
         } else {
             CurrencyDetails.IsUpdated = true
         }
     })
 }
 
-function UpdateCurrencyRate(currency: string, currencyDetails: CurrencyDetails) {
+function EditCurrencyRate(currency: string, currencyDetails: CurrencyDetails) {
     cy.Click(MaintenanceSelectors.CurrencyEditButton(currency), null)
     cy.FillDate(MaintenanceSelectors.RatesTableDate, currencyDetails.ExchangeDate);
     cy.FillLogTextBox(MaintenanceSelectors.RatesTableRate, currencyDetails.Rate);
 }
 
-export function CreateCurrencyRateIfNeed() {
+export function CreateCurrencyRate() {
     if (!CurrencyDetails.IsUpdated) {
-        CreateCurrencyRate()
+        DefineCreateCurrencyRate()
     }else{
         cy.log("Currency is already updated for today")
     }
 }
 
-export function AssertPostCurrencyRateIfNeed() {
+export function AssertPostCurrencyRate() {
     if (!CurrencyDetails.IsUpdated) {
         BaseAssertion.AssertStatusCode(RequestAliases.PostCurrencyRate, 200);
     }else{
@@ -1192,7 +1192,7 @@ export function ValidateHistoryValues(historyDetails: CurrencyDetails) {
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, "Close");
 }
 
-function CreateCurrencyRate() {
+function DefineCreateCurrencyRate() {
     DefinePostCurrencyRateRequest()
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, "Ok");
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, "Yes");

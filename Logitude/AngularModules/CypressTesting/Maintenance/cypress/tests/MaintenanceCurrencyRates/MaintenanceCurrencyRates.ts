@@ -23,17 +23,17 @@ Given("the user logged in and open {string} from tenant settings", (navigateTo) 
     MaintenanceActions.NavigateToCurrenctRateSettings(navigateTo)
 });
 
-Given("fill {string} today's exchange rate if it's not updated with the following details", (currency, dataTable) => {
+Given("today's exchange rate for {string} with the following details", (currency, dataTable) => {
     let currencyDetails = Assists.CreateInstance<CurrencyDetails>(dataTable, true);
-    MaintenanceActions.UpdateCurrencyRateIfNeed(currency, currencyDetails)
+    MaintenanceActions.UpdateCurrencyRate(currency, currencyDetails)
 });
 
 When("edit currency rate", () => {
-    MaintenanceActions.CreateCurrencyRateIfNeed();
+    MaintenanceActions.CreateCurrencyRate();
 });
 
 Then("the currency rate should update successfully", () => {
-    MaintenanceActions.AssertPostCurrencyRateIfNeed();
+    MaintenanceActions.AssertPostCurrencyRate();
 });
 
 Then("currency history will contain the following details", (dataTable) => {
