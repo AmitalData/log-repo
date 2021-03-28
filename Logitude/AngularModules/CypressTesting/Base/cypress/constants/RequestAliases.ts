@@ -104,6 +104,9 @@ export class RequestAliases {
     public static readonly PostCrossdock = "PostCrossdock";
     public static readonly PutCrossdock = "PutCrossdock";
 
+    public static readonly PostCurrencyRate = "PostCurrencyRate";
+    public static readonly GetCurrencyRate = "GetCurrencyRate";
+
     public static readonly GetSignle = "GetSignle"
     public static readonly GetByFilter = "GetByFilter"
     public static readonly GetFilterSearch = "GetFilterSearch"

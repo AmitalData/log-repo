@@ -6,7 +6,8 @@ import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
 import * as BaseActions from "../../../Base/cypress/actions/Actions";
-import * as gr from '../../../Base/cypress/actions/GenerateRandoms'
+import * as gr from '../../../Base/cypress/actions/GenerateRandoms';
+import * as ShipmentActions from "../../../Shipment/cypress/actions/Actions"
 import { BaseURLs } from "../../../Base/cypress/constants/URLs";
 import { Datepicker } from "../../../Base/cypress/models/Datepicker";
 import { ContactDetails } from "../models/ContactDetails";
@@ -26,6 +27,10 @@ import { QuoteTemplateDetails } from "cypress/models/QuoteTemplateDetails";
 import { CountryDetails } from "../models/CountryDetails";
 import { EventTypeDetails } from "../../../Base/cypress/models/EventTypeDetails";
 import { StateDetails } from "../models/StateDetails";
+import { CurrencyDetails } from "../models/CurrencyDetails";
+import { QuoteSelectors } from "../../../Quote/cypress/selectors/Selectors";
+import { ShipmentSelectors } from "../../../Shipment/cypress/selectors/Selectors";
+import { ReceivableDetails } from "../../../Shipment/cypress/models/ReceivableDetails";
 
 //#region General Actions
 export function OpenMaintenanceMenu() {
@@ -1135,4 +1140,94 @@ function DefineGetByFilterRequest() {
 function AssertGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetByFilter, 200);
 }
+//#endregion
+
+//#region Currency Settings 
+export function NavigateToCurrenctRateSettings(navigateTo:string){
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetCurrenciesExchangeRateValue, RequestAliases.GetCurrencyRate);
+    cy.Click(MaintenanceSelectors.SettingButton,null)
+    cy.Click(BaseSelectors.button,navigateTo);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetCurrencyRate, 200);
+}
+
+export function UpdateCurrencyRateIfNeed(currency: string, currencyDetails: CurrencyDetails) {
+    cy.get(MaintenanceSelectors.CurrencyDate(currency)).invoke('text').then((text) => {
+        if (text.trim() != currencyDetails.ExchangeDate) {
+            UpdateCurrencyRate(currency, currencyDetails)
+        } else {
+            CurrencyDetails.IsUpdated = true
+        }
+    })
+}
+
+function UpdateCurrencyRate(currency: string, currencyDetails: CurrencyDetails) {
+    cy.Click(MaintenanceSelectors.CurrencyEditButton(currency), null)
+    cy.FillDate(MaintenanceSelectors.RatesTableDate, currencyDetails.ExchangeDate);
+    cy.FillLogTextBox(MaintenanceSelectors.RatesTableRate, currencyDetails.Rate);
+}
+
+export function CreateCurrencyRateIfNeed() {
+    if (!CurrencyDetails.IsUpdated) {
+        CreateCurrencyRate()
+    }else{
+        cy.log("Currency is already updated for today")
+    }
+}
+
+export function AssertPostCurrencyRateIfNeed() {
+    if (!CurrencyDetails.IsUpdated) {
+        BaseAssertion.AssertStatusCode(RequestAliases.PostCurrencyRate, 200);
+    }else{
+        cy.log("Currency is already updated for today")
+    }
+}
+
+export function ValidateHistoryValues(historyDetails: CurrencyDetails) {
+    OpenViewHistory(historyDetails.Currency)
+    cy.get(BaseSelectors.RowHover).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
+        expect(text).to.contain(historyDetails.ExchangeDate);
+        expect(text).to.contain(historyDetails.Rate);
+    });
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, "Close");
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, "Close");
+}
+
+function CreateCurrencyRate() {
+    DefinePostCurrencyRateRequest()
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, "Ok");
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, "Yes");
+}
+
+function DefinePostCurrencyRateRequest() {
+    cy.DefineRequestWait(RestAPI.POST, Urls.CurrencyRate, RequestAliases.PostCurrencyRate);
+}
+
+function OpenViewHistory(Currency:string){
+    DefineGetByFilterRequest()
+    cy.Click(MaintenanceSelectors.CurrencyHistoryButton(Currency), null)
+    AssertGetByFilters()
+}
+
+export function ValidateQuoteCostRate(expectedValue:string){
+    cy.get(QuoteSelectors.QuoteChargeCostExchangeRate).should(BaseSelectors.HaveValue, expectedValue)
+    cy.Click(QuoteSelectors.QuoteCancelAddCharges,null)
+    cy.BackButton(QuoteSelectors.ContaintsQuote)
+}
+
+export function FillReceivableFields(receivableData:ReceivableDetails){
+    cy.Click(ShipmentSelectors.ReceivablesTab, null) 
+    cy.Click(ShipmentSelectors.AddNewReceivableLine, null)
+    cy.FillLogLov(ShipmentSelectors.ReceivableChargesType, receivableData.ChargesType, true)
+    cy.FillLogLov(ShipmentSelectors.ReceivableMeasurement, receivableData.UOM, true)
+    cy.FillLogTextBox(ShipmentSelectors.ReceivableQuantity,receivableData.Quantity.toString())
+    cy.FillLogTextBox(ShipmentSelectors.ReceivableUnitPrice,receivableData.UnitPrice.toString())
+}
+
+export function ValidateReceivableCostRate(expectedValue:string){
+    cy.get(ShipmentSelectors.ShipmentReceivableRate).should(BaseSelectors.HaveValue, expectedValue)
+    cy.Click(ShipmentSelectors.AddReceivableOkButton, null);
+    ShipmentActions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton);
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+}
+
 //#endregion
