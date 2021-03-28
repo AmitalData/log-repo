@@ -187,7 +187,7 @@ export function UpdateCrossdockRelease() {
     cy.Click(CrossdockSelectors.WarehouseReleaseSaveButton + BaseSelectors.LastElement, null);
 }
 function DefinePutCrossdockReleaseRequest() {
-    cy.DefineRequestWait(RestAPI.PUT, CrossDockURLs.warehousereleases, RequestAliases.PutCrossdockRelease);
+    cy.DefineRequestWait(RestAPI.PUT, CrossDockURLs.WarehouseReleases, RequestAliases.PutCrossdockRelease);
 }
 export function AssertUpdateCrossdockRelease() {
     AssertPutCrossdockRelease()

@@ -61,7 +61,7 @@ Feature: Cross Docks Entries and Releases
 
     Scenario: Edit entry
         Given the user open the created entry
-        Given fill the entry with the following details
+        And fill the entry with the following details
             | ActualEntryDate | 26/03/2021 |
             | ActualEntryTime | 00:00      |
         When save entry
@@ -118,7 +118,7 @@ Feature: Cross Docks Entries and Releases
 
     Scenario: Edit release
         Given the user open the created release
-        Given fill the release with the following details
+        And fill the release with the following details
             | ActualReleaseDate | 26/03/2021 |
             | ActualReleaseTime | 00:00      |
         When save release
@@ -134,7 +134,7 @@ Feature: Cross Docks Entries and Releases
     Scenario: Add delivery
         When Add delivery
         Then the delivery should add successfully
-        And the delivery leg should appear in routing tab with the following details
+        And the delivery leg should appear in the shipment routing tab with the following details
             | ToPartner        | TestShipperExport |
             | ETDDepartureDate | 26/03/2021        |
             | ETDDepartureTime | 02:00 PM          |

@@ -242,7 +242,7 @@ Then("the delivery should add successfully", () => {
     Actions.AssertAddDelivery()
 });
 
-Then("the delivery leg should appear in routing tab with the following details", (dataTable) => {
+Then("the delivery leg should appear in the shipment routing tab with the following details", (dataTable) => {
     let deliveryDetails = Assists.CreateInstance<DeliveryDetails>(dataTable, true);
     cy.BackButton(BaseSelectors.ContainsShipment + CrossDockContext.ShipmentNumber)
     Actions.ValidateRoutingsReleaseDeliveryLegFields(deliveryDetails)
