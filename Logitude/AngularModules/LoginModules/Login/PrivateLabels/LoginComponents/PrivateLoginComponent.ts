@@ -68,7 +68,7 @@ export class PrivateLoginComponent extends LoginComponent implements OnInit {
 
     ForgotPasswordClicked() {
         this.ClearLocation();
-        Tools.DynamicLoader.Load("/Login/PrivateLabels/LoginComponents/PrivateResetPasswordComponent", SessionInfo.MainLocation)
+        Tools.DynamicLoader.Load("/Login/PrivateLabels/LoginComponents/PrivateChangePasswordComponent", SessionInfo.MainLocation)
             .then(cmpRef => {
             });
     }
