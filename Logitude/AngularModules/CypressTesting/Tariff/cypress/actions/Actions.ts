@@ -256,6 +256,20 @@ export function UploadExcelFile() {
         })
 }
 
+export function DownloadExcelFile(){
+    DefineDownloadRequest()
+    cy.Click(TariffSelectors.TariffActionsMenu, TariffSelectors.ContainsActions);
+    cy.Click(BaseSelectors.button, TariffSelectors.ContainsDownloadExcel);
+}
+
+export function ValidateDownloadFile(){
+    BaseAssertion.AssertStatusCode(RequestAliases.DownloadFile, 200);
+}
+
+function DefineDownloadRequest(){
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetDownloadTariff, RequestAliases.DownloadFile)
+}
+
 export function CopyIntoNewVersion(date:string) {
     DefineRequestsForApproveOrCopyTariffVersion()
     cy.Click(TariffSelectors.TariffActionsMenu, TariffSelectors.ContainsActions);
