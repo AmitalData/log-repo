@@ -102,8 +102,11 @@ export class RequestAliases {
     public static readonly PutQuoteTemplateHeaderFields = "PutQuoteTemplateHeaderFields";
     public static readonly PutQuoteTemplateTextDesignPMs = "PutQuoteTemplateTextDesignPMs";
 
-    public static readonly PostCrossdock = "PostCrossdock";
-    public static readonly PutCrossdock = "PutCrossdock";
+    public static readonly PostCrossdockEntry = "PostCrossdockEntry";
+    public static readonly PutCrossdockEntry = "PutCrossdockEntry";
+
+    public static readonly PostCrossdockRelease="PostCrossdockRelease"
+    public static readonly PutCrossdockRelease = "PutCrossdockRelease";
 
     public static readonly PostCurrencyRate = "PostCurrencyRate";
     public static readonly GetCurrencyRate = "GetCurrencyRate";
