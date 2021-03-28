@@ -18,7 +18,7 @@ namespace WebFreight.Web.Helpers
 
         string imageBrandingData = "";
         string imageBrandingDataRequest = "";
-        string[] imagesFields = { "BackgroundImage", "MainImage", "LoginProgressImage", "ForgetPasswordImage" };
+        string[] imagesFields = { "BackgroundImage", "LoginImage", "LoginProgressImage", "ForgetPasswordImage" };
         public PrivateLabelsBrandingData GePrivateLabelsBrandingDataByUrl(PrivateLabelsBrandingDataRequest BrandingDataRequest)
         {
             TenantManagmentPrivateLabelsQuery tenantManagementQuery = new TenantManagmentPrivateLabelsQuery();
@@ -50,7 +50,7 @@ namespace WebFreight.Web.Helpers
                     Tenant = tenantManagementPM.Tenant,
                     MainColor = tenantManagementPM.MainColor,
                     BackgroundImageId = tenantManagementPM.BackgroundImageId,
-                    MainImageId = tenantManagementPM.MainImageId,
+                    LoginImageId = tenantManagementPM.LoginImageId,
                     LoginProgressImageId = tenantManagementPM.LoginProgressImageId,
                     ForgetPasswordImageId = tenantManagementPM.ForgetPasswordImageId,
                     SecondaryColor = tenantManagementPM.SecondaryColor,
@@ -74,9 +74,9 @@ namespace WebFreight.Web.Helpers
                         imageBrandingData = privateLabelsBrandingData.BackgroundImageId;
                         imageBrandingDataRequest = privateLabelsBrandingDataRequest.BackgroundImageId;
                         break;
-                    case "MainImage":
-                        imageBrandingData = privateLabelsBrandingData.MainImageId;
-                        imageBrandingDataRequest = privateLabelsBrandingDataRequest.MainImageId;
+                    case "LoginImage":
+                        imageBrandingData = privateLabelsBrandingData.LoginImageId;
+                        imageBrandingDataRequest = privateLabelsBrandingDataRequest.LoginImageId;
                         break;
                     case "LoginProgressImage":
                         imageBrandingData = privateLabelsBrandingData.LoginProgressImageId;
@@ -116,8 +116,8 @@ namespace WebFreight.Web.Helpers
                 case "BackgroundImage":
                     privateLabelsBrandingData.BackgroundImageBytes = filedata;
                     break;
-                case "MainImage":
-                    privateLabelsBrandingData.MainImageBytes = filedata;
+                case "LoginImage":
+                    privateLabelsBrandingData.LoginImageBytes = filedata;
                     break;
                 case "LoginProgressImage":
                     privateLabelsBrandingData.LoginProgressImageBytes = filedata;

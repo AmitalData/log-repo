@@ -453,7 +453,7 @@
                                 <table>
                                     <tr class="FormFieldRow">
                                     </tr>
-                                    <!-- BackgroundImage and MainImage-->
+                                    <!-- BackgroundImage and LoginImage-->
 
                                     <tr class="FormFieldRow">
                                         <td style="width:180px;height:22px; vertical-align:top">
@@ -481,7 +481,7 @@
 
                                         <td style="width:180px;height:22px; vertical-align:top">
                                             <span class="ImageName">
-                                                <LogLabel [Text]="'Main Image'" [ObjectFieldName]="'MainImageId'" [ObjectTableName]="'ObjectTableName'"
+                                                <LogLabel [Text]="'Login Image'" [ObjectFieldName]="'LoginImageId'" [ObjectTableName]="'ObjectTableName'"
                                                           [DataContext]="DataContext"></LogLabel>
                                             </span>
                                         </td>
@@ -489,13 +489,13 @@
                                         <td style="vertical-align:top; overflow:hidden;">
                                             <div style="width:160px;height:100px; overflow:hidden;">
                                                 <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'200px'"
-                                                                [HeightImage]="'95px'" [ImageId]="MainImageId"
+                                                                [HeightImage]="'95px'" [ImageId]="LoginImageId"
                                                                 [EntityId]="EntityId" [EntityName]="'ObjectTableName'" [Extension]="'png'"
-                                                                (UploadCompleted)="MainImageImageUploadedCompleted($event)"
+                                                                (UploadCompleted)="LoginImageImageUploadedCompleted($event)"
                                                                 style="height:72px;width:72px">
                                                 </ImageComponent>
                                             </div>
-                                            <a class="removeLine" (click)="RemoveImage('MainImage')">remove</a>
+                                            <a class="removeLine" (click)="RemoveImage('LoginImage')">remove</a>
 
                                         </td>
 

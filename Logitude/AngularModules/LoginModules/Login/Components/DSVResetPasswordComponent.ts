@@ -22,43 +22,25 @@ export class DSVResetPasswordComponent extends ResetPasswordComponent {
     private privateUrl;
     public MainColor: string = null;
     public BackgroundImage: string = "";
-    public ForgetPasswordImage: string = "";
-    public Id = "";
+    public ForgetPasswordImage: string = ""; 
     public MainLogo: string = "";
-    public ContactUsEmail: string = "";  
-    public showSpinner = true; 
+    public ContactUsEmail: string = sessionStorage.getItem('ContactEmail');  
 
-    public show = true;
     constructor( 
-        private ss: LoginService,
-        private privateLabelsBrandingDataService: PrivateLabelsBrandingDataService) {
+        private ss: LoginService) {
         super(ss); 
     }
 
     ngOnInit() { 
         this.privateUrl = SessionInfo.GetLogitudeURL();  
-        this.GetPrivateLabelsData(this.privateUrl); 
+        this.GetPrivateLabelsData(); 
     }
 
 
-    GetPrivateLabelsData(privateUrl: string) {
-        this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe((response: ServiceResponse) => {
-            if (response.Result) {
-                //BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
-                this.ContactUsEmail = response.Result.ContactUsEmail;
-                this.MainColor = response.Result.MainColor;
-                this.BackgroundImage = BrandingDataService.GetBackgroundImage(); 
-                this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage();
-                this.Id = response.Result.Id; 
-                this.MainLogo = BrandingDataService.GetMainLogo();   
-            }
-        },
-            (error) => {
-                this.BackgroundImage = BrandingDataService.DefaultBackground;
-                this.ForgetPasswordImage = BrandingDataService.DefaultForgetPassword;
-                this.MainLogo = BrandingDataService.DefaultMainLogo;
-            },
-        )
-        this.showSpinner = false;
-    } 
+    GetPrivateLabelsData() {
+        this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
+        this.MainLogo = BrandingDataService.GetImage("MainLogo");
+        this.ForgetPasswordImage = BrandingDataService.GetImage("ForgetPasswordImage")  
+     }
+          
 }

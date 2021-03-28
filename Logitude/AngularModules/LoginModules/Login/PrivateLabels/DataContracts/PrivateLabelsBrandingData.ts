@@ -23,10 +23,10 @@
     public static BackgroundImageURL: string;
     public static BackgroundImageBytes: any
 
-    public static MainImage: string;
-    public static MainImageId: string
-    public static MainImageURL: string;
-    public static MainImageBytes: any
+    public static LoginImage: string;
+    public static LoginImageId: string
+    public static LoginImageURL: string;
+    public static LoginImageBytes: any
 
     public static LoginProgressImage: string;
     public static LoginProgressImageId: string

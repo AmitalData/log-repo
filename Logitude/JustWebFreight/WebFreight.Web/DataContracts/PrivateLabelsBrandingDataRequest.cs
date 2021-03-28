@@ -9,7 +9,7 @@ namespace WebFreight.Web.DataContracts
     {
         public string PrivateLabelUrl { get; set; }
         public string BackgroundImageId { get; set; }
-        public string MainImageId { get; set; }
+        public string LoginImageId { get; set; }
         public string LoginProgressImageId { get; set; }
         public string ForgetPasswordImageId { get; set; }  
 
