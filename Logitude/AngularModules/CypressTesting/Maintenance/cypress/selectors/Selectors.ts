@@ -144,6 +144,13 @@ export class MaintenanceSelectors extends RegexSelectors {
     public static readonly InActiveStateCheckBox = "#State_InActive";
     public static readonly StateNotes = "#State_Notes";
     public static readonly StateEventTab = "#StateTHEvents";
+    //#endregion
 
+    //#region Currency 
+
+    public static readonly SettingButton = "img[src='./Images/Icons/Settings.png']"
+    public static readonly RatesTableDate = "#date_RatesTable_ValueDate"
+    public static readonly RatesTableRate = "#RatesTable_Rate"
+    
     //#endregion
 }
