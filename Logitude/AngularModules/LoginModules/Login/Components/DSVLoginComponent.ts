@@ -37,8 +37,7 @@ export class DSVLoginComponent extends LoginComponent implements OnInit {
     ngOnInit() { 
         this.get_cookie_data(); 
         this.privateUrl = SessionInfo.GetLogitudeURL();
-        this.GetPrivateLabelsData(this.privateUrl);  
-        this.showSpinner = false;
+        this.GetPrivateLabelsData(this.privateUrl);   
     }
       
     GetPrivateLabelsData(privateUrl: string) {

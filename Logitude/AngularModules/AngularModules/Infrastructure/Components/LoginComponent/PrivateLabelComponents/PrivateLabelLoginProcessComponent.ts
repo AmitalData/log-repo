@@ -29,8 +29,7 @@ export class PrivateLabelLoginProcessComponent extends LoginComponent implements
 
 
     ngOnInit() {
-        this.StartLoginProcess();
-        //HybridLabelsBrandingDataService.SetLoginProcessImage();
+        this.StartLoginProcess(); 
         this.GetPrivateLabelsBrandingData();
     }
 

@@ -4,14 +4,14 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 import { Component } from '@angular/core';
-import { LoginService } from '../LoginService';
-import { SessionInfo } from '../SessionInfo';
-import { PasswordChangeService } from '../PasswordChangeService';
-import { ChangePasswordComponent } from './ChangePasswordComponent';
-import { BrandingDataService } from '../PrivateLabels/Services/BrandingDataService';
-export var DSVChangePasswordComponent = (function (_super) {
-    __extends(DSVChangePasswordComponent, _super);
-    function DSVChangePasswordComponent(ss, ll) {
+import { ChangePasswordComponent } from '../../Components/ChangePasswordComponent';
+import { LoginService } from '../../LoginService';
+import { PasswordChangeService } from '../../PasswordChangeService';
+import { SessionInfo } from '../../SessionInfo';
+import { BrandingDataService } from '../Services/BrandingDataService';
+export var PrivateChangePasswordComponent = (function (_super) {
+    __extends(PrivateChangePasswordComponent, _super);
+    function PrivateChangePasswordComponent(ss, ll) {
         _super.call(this, ss, ll);
         this.ss = ss;
         this.ll = ll;
@@ -20,28 +20,28 @@ export var DSVChangePasswordComponent = (function (_super) {
         this.MainLogo = "";
         this.ContactUsEmail = "";
     }
-    DSVChangePasswordComponent.prototype.ngOnInit = function () {
+    PrivateChangePasswordComponent.prototype.ngOnInit = function () {
         this.privateUrl = SessionInfo.GetLogitudeURL();
         this.GetPrivateLabelsData();
     };
-    DSVChangePasswordComponent.prototype.GetPrivateLabelsData = function () {
+    PrivateChangePasswordComponent.prototype.GetPrivateLabelsData = function () {
         this.BackgroundImage = BrandingDataService.GetBackgroundImage();
         this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage();
         this.MainLogo = BrandingDataService.GetMainLogo();
     };
-    DSVChangePasswordComponent.decorators = [
+    PrivateChangePasswordComponent.decorators = [
         { type: Component, args: [{
-                    selector: 'DSVChangePasswordComponent',
+                    selector: 'PrivateChangePasswordComponent',
                     moduleId: './Login/Components/',
-                    templateUrl: 'DSVChangePasswordComponent.html',
-                    styleUrls: ['ChangePasswordComponent.css']
+                    templateUrl: 'PrivateChangePasswordComponent.html',
+                    styleUrls: ['PrivateChangePasswordComponent.css']
                 },] },
     ];
     /** @nocollapse */
-    DSVChangePasswordComponent.ctorParameters = [
+    PrivateChangePasswordComponent.ctorParameters = [
         { type: PasswordChangeService, },
         { type: LoginService, },
     ];
-    return DSVChangePasswordComponent;
+    return PrivateChangePasswordComponent;
 }(ChangePasswordComponent));
-//# sourceMappingURL=DSVChangePasswordComponent.js.map
+//# sourceMappingURL=PrivateChangePasswordComponent.js.map
