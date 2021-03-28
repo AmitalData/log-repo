@@ -14,15 +14,15 @@ using Logitude.Customs.Data;
 namespace Logitude.Customs.BL.EntityDataMappings
 {
    
-   public partial class ExportDeliveryDocumentMessageSenderCodeDataMapping: IMapping<ExportDeliveryDocumentMessageSenderCodePM, ExportDeliveryDocumentMessageSenderCode>
+   public partial class ExportDeliveryDocumentMessageDataMapping: IMapping<ExportDeliveryDocumentMessagePM, ExportDeliveryDocumentMessage>
    {
 
-        public void CustomPMToPOCO(ExportDeliveryDocumentMessageSenderCodePM entityPM, ExportDeliveryDocumentMessageSenderCode entityPOCO)
+        public void CustomPMToPOCO(ExportDeliveryDocumentMessagePM entityPM, ExportDeliveryDocumentMessage entityPOCO)
         {
             //throw new NotImplementedException();
         }
 
-        public void CustomPOCOToPM(ExportDeliveryDocumentMessageSenderCodePM entityPM, ExportDeliveryDocumentMessageSenderCode entityPOCO)
+        public void CustomPOCOToPM(ExportDeliveryDocumentMessagePM entityPM, ExportDeliveryDocumentMessage entityPOCO)
         {
             //throw new NotImplementedException();
         }

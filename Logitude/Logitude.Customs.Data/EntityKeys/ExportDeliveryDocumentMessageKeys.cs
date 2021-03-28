@@ -10,7 +10,7 @@ using Simplog.Server.Infrastructure;
   
 namespace Logitude.Customs.Data.EntityKeys
 {
-   public partial class ExportDeliveryDocumentMessageSenderCodeKeys : EntityKeyFields
+   public partial class ExportDeliveryDocumentMessageKeys : EntityKeyFields
    {
    	  public string Code  { get; set; }
 	  
@@ -26,7 +26,7 @@ namespace Logitude.Customs.Data.EntityKeys
 
       public override string GetEntityPMName()
       {
-          return "ExportDeliveryDocumentMessageSenderCodePM";
+          return "ExportDeliveryDocumentMessagePM";
       }
 	 
    }

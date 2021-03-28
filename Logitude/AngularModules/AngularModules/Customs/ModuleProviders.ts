@@ -383,7 +383,7 @@ import { CancellationRequestStatusListService } from './Services/StandardLists/C
 import { AmendmentFieldStatusTypeListService } from './Services/StandardLists/AmendmentFieldStatusTypeListService';
 import { LoadingSiteTypeListService } from './Services/StandardLists/LoadingSiteTypeListService';
 import { AmendCancellRequestInitiatorListService } from './Services/StandardLists/AmendCancellRequestInitiatorListService';
-import { ExportDeliveryDocumentMessageSenderCodeListService } from './Services/StandardLists/ExportDeliveryDocumentMessageSenderCodeListService';
+import { ExportDeliveryDocumentMessageListService } from './Services/StandardLists/ExportDeliveryDocumentMessageListService';
 
 
 export class ModuleProviders {
@@ -645,7 +645,7 @@ export class ModuleProviders {
             case "FclLclCodeListService": { myResult = new FclLclCodeListService(); break; }
             case "SecurityClearenceTypeCodeListService": { myResult = new SecurityClearenceTypeCodeListService(); break; }
             case "AmendCancellRequestInitiatorListService": { myResult = new AmendCancellRequestInitiatorListService(); break; }
-            case "ExportDeliveryDocumentMessageSenderCodeListService": { myResult = new ExportDeliveryDocumentMessageSenderCodeListService(); break; }
+            case "ExportDeliveryDocumentMessageListService": { myResult = new ExportDeliveryDocumentMessageListService(); break; }
 
              //#endregion                
 

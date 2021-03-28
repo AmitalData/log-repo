@@ -12,10 +12,10 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.Data.Repsitories
 {
-   public partial class ExportDeliveryDocumentMessageSenderCodeRepository:IRepository<ExportDeliveryDocumentMessageSenderCode>
+   public partial class ExportDeliveryDocumentMessageRepository:IRepository<ExportDeliveryDocumentMessage>
    {
         
-		public List<ExportDeliveryDocumentMessageSenderCode> GetMulti(EntityKeyFields entityKeys)
+		public List<ExportDeliveryDocumentMessage> GetMulti(EntityKeyFields entityKeys)
         {
             
 			throw new NotImplementedException();

@@ -10,16 +10,16 @@ using System.Runtime.Serialization;
 namespace Logitude.Customs.Data.EntityLists
 {
    [DataContract]
-   public partial class ExportDeliveryDocumentMessageSenderCodeList
+   public partial class ExportDeliveryDocumentMessageList
    {
    
        [Key]
        [DataMember]
        public string Code  { get; set; }
        [DataMember]
-       public string LocalName  { get; set; }
-       [DataMember]
        public string EnglishName  { get; set; }
+       [DataMember]
+       public string LocalName  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }
        [DataMember]

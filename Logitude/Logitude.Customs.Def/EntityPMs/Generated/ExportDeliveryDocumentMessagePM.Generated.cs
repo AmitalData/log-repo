@@ -16,7 +16,7 @@ namespace Logitude.Customs.Def.EntityPMs
 {
    [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
    [DataContract]
-   public partial class ExportDeliveryDocumentMessageSenderCodePM : EntityPM
+   public partial class ExportDeliveryDocumentMessagePM : EntityPM
    {
    	  private string code ;
 	  
@@ -43,29 +43,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string localName ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string LocalName  
-	   {
-	    
-	     get
-		{
-		   return localName;
-		 }
-		 set
-		 {
-		   if(localName != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalName",OldValue=localName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   localName=value;
-		   }
-			
-		 }
-	   }
 	  private string englishName ;
 	  	  
        
@@ -85,6 +62,29 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EnglishName",OldValue=englishName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   englishName=value;
+		   }
+			
+		 }
+	   }
+	  private string localName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LocalName  
+	   {
+	    
+	     get
+		{
+		   return localName;
+		 }
+		 set
+		 {
+		   if(localName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalName",OldValue=localName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   localName=value;
 		   }
 			
 		 }

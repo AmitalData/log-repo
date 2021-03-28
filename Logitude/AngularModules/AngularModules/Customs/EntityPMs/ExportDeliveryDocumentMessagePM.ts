@@ -14,7 +14,7 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
-export class ExportDeliveryDocumentMessageSenderCodePM {
+export class ExportDeliveryDocumentMessagePM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -29,14 +29,14 @@ export class ExportDeliveryDocumentMessageSenderCodePM {
     public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
        
 	 
-    private localName: string;
-    public get LocalName() { return this.localName; }
-    public set LocalName(newValue: string) { if (this.localName != newValue) { this.localName = newValue; this.MarkAsDirty("LocalName"); } }
-       
-	 
     private englishName: string;
     public get EnglishName() { return this.englishName; }
     public set EnglishName(newValue: string) { if (this.englishName != newValue) { this.englishName = newValue; this.MarkAsDirty("EnglishName"); } }
+       
+	 
+    private localName: string;
+    public get LocalName() { return this.localName; }
+    public set LocalName(newValue: string) { if (this.localName != newValue) { this.localName = newValue; this.MarkAsDirty("LocalName"); } }
        
 	 
     private searchFields: string;
@@ -50,7 +50,7 @@ export class ExportDeliveryDocumentMessageSenderCodePM {
        
 	 
 
-    public OldEntityPM: ExportDeliveryDocumentMessageSenderCodePM;
+    public OldEntityPM: ExportDeliveryDocumentMessagePM;
 		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
@@ -61,13 +61,13 @@ export class ExportDeliveryDocumentMessageSenderCodePM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.ExportDeliveryDocumentMessageSenderCode");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.ExportDeliveryDocumentMessage");
            
         }
        }
     }
 
-    private MyClone: ExportDeliveryDocumentMessageSenderCodePM;
+    private MyClone: ExportDeliveryDocumentMessagePM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

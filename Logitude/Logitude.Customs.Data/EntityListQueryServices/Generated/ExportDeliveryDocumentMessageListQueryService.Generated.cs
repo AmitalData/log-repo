@@ -17,20 +17,20 @@ using Logitude.Customs.Data.EntityLists;
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
 
-    public partial class ExportDeliveryDocumentMessageSenderCodeListQueryService
+    public partial class ExportDeliveryDocumentMessageListQueryService
     {
          private ICustomContext context;
-        public ExportDeliveryDocumentMessageSenderCodeListQueryService(ICustomContext context)
+        public ExportDeliveryDocumentMessageListQueryService(ICustomContext context)
         {
             this.context = context;
         }
 
-        public List<ExportDeliveryDocumentMessageSenderCodeList> GetList(QueryOperations queryOperations, int tenant)
+        public List<ExportDeliveryDocumentMessageList> GetList(QueryOperations queryOperations, int tenant)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<ExportDeliveryDocumentMessageSenderCode> iQueryable = (from a in context.ExportDeliveryDocumentMessageSenderCodes
+            IQueryable<ExportDeliveryDocumentMessage> iQueryable = (from a in context.ExportDeliveryDocumentMessages
                                                select a);
             			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
@@ -39,20 +39,20 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
-            iQueryable = filter.GetFilteredQuery<ExportDeliveryDocumentMessageSenderCode>(nonListQueryOperation, iQueryable);
+            iQueryable = filter.GetFilteredQuery<ExportDeliveryDocumentMessage>(nonListQueryOperation, iQueryable);
 
             int skippedPorts = queryOperations.PageIndex;
 
-            IQueryable<ExportDeliveryDocumentMessageSenderCodeList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<ExportDeliveryDocumentMessageList> query2 = GetIqueryableList(iQueryable);
            
-            query2 = filter.GetFilteredQuery<ExportDeliveryDocumentMessageSenderCodeList>(listQueryOperation, query2);
+            query2 = filter.GetFilteredQuery<ExportDeliveryDocumentMessageList>(listQueryOperation, query2);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
-                PropertyInfo propInfo = typeof(ExportDeliveryDocumentMessageSenderCodeList).GetProperty(queryOperations.SortByColumnName);
-                List<ObjectField> ExportDeliveryDocumentMessageSenderCodeObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.ExportDeliveryDocumentMessageSenderCode",tenant).ToList();
+                PropertyInfo propInfo = typeof(ExportDeliveryDocumentMessageList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> ExportDeliveryDocumentMessageObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.ExportDeliveryDocumentMessage",tenant).ToList();
 
-                ObjectField objectField = (from a in ExportDeliveryDocumentMessageSenderCodeObjectFields
+                ObjectField objectField = (from a in ExportDeliveryDocumentMessageObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
 
@@ -60,7 +60,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 {
 				 if (objectField.IsCustom)
                     {
-                        query2 = sortClass.GetSorterQuery<ExportDeliveryDocumentMessageSenderCodeList, string>(queryOperations, query2);
+                        query2 = sortClass.GetSorterQuery<ExportDeliveryDocumentMessageList, string>(queryOperations, query2);
                     }
                     else
                     {
@@ -69,36 +69,36 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                          case "ntext":
                         case "text":
                             {
-                                query2 = sortClass.GetSorterQuery<ExportDeliveryDocumentMessageSenderCodeList, string>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<ExportDeliveryDocumentMessageList, string>(queryOperations, query2);
                                 break;
                             }
 						case "sigdouble":
 						case "double":
                             {
-                                query2 = sortClass.GetSorterQuery<ExportDeliveryDocumentMessageSenderCodeList, double>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<ExportDeliveryDocumentMessageList, double>(queryOperations, query2);
                                 break;
                             }
 						case "date":
                         case "datetime":
                             {
-                                query2 = sortClass.GetSorterQuery<ExportDeliveryDocumentMessageSenderCodeList, DateTime>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<ExportDeliveryDocumentMessageList, DateTime>(queryOperations, query2);
                                 break;
                             }
 						case "unsinteger":
                         case "integer":
                             {
-                                query2 = sortClass.GetSorterQuery<ExportDeliveryDocumentMessageSenderCodeList, int>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<ExportDeliveryDocumentMessageList, int>(queryOperations, query2);
                                 break;
                             }
                         case "boolean":
                             {
-                                query2 = sortClass.GetSorterQuery<ExportDeliveryDocumentMessageSenderCodeList, bool>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<ExportDeliveryDocumentMessageList, bool>(queryOperations, query2);
                                 break;
                             }
 						case "unsdecimal":
 						case "decimal":
                             {
-                                query2 = sortClass.GetSorterQuery<ExportDeliveryDocumentMessageSenderCodeList, decimal>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<ExportDeliveryDocumentMessageList, decimal>(queryOperations, query2);
                                 break;
                             }
                         default:
@@ -124,21 +124,21 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     
         }
 
-         public List<ExportDeliveryDocumentMessageSenderCodeList> GetList(int tenant)
+         public List<ExportDeliveryDocumentMessageList> GetList(int tenant)
          {
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public ExportDeliveryDocumentMessageSenderCodeList GetSingle(string code)
+        public ExportDeliveryDocumentMessageList GetSingle(string code)
         {
-            IQueryable<ExportDeliveryDocumentMessageSenderCode> ExportDeliveryDocumentMessageSenderCodeQuery = (from a in context.ExportDeliveryDocumentMessageSenderCodes
+            IQueryable<ExportDeliveryDocumentMessage> ExportDeliveryDocumentMessageQuery = (from a in context.ExportDeliveryDocumentMessages
                                                        where a.Code == code
                                                        select a);
 
              
-            IQueryable<ExportDeliveryDocumentMessageSenderCodeList> ExportDeliveryDocumentMessageSenderCodeListQuery = GetIqueryableList( ExportDeliveryDocumentMessageSenderCodeQuery);
-            ExportDeliveryDocumentMessageSenderCodeList ExportDeliveryDocumentMessageSenderCodeList = ExportDeliveryDocumentMessageSenderCodeListQuery.FirstOrDefault();
-            return ExportDeliveryDocumentMessageSenderCodeList;
+            IQueryable<ExportDeliveryDocumentMessageList> ExportDeliveryDocumentMessageListQuery = GetIqueryableList( ExportDeliveryDocumentMessageQuery);
+            ExportDeliveryDocumentMessageList ExportDeliveryDocumentMessageList = ExportDeliveryDocumentMessageListQuery.FirstOrDefault();
+            return ExportDeliveryDocumentMessageList;
            
         }
 
@@ -147,7 +147,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<ExportDeliveryDocumentMessageSenderCode> iQueryable = (from a in context.ExportDeliveryDocumentMessageSenderCodes  select a);
+            IQueryable<ExportDeliveryDocumentMessage> iQueryable = (from a in context.ExportDeliveryDocumentMessages  select a);
 
 			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
@@ -156,11 +156,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
             
-			iQueryable = filter.GetFilteredQuery<ExportDeliveryDocumentMessageSenderCode>(nonListQueryOperation, iQueryable);
+			iQueryable = filter.GetFilteredQuery<ExportDeliveryDocumentMessage>(nonListQueryOperation, iQueryable);
 
-            IQueryable<ExportDeliveryDocumentMessageSenderCodeList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<ExportDeliveryDocumentMessageList> query2 = GetIqueryableList(iQueryable);
 
-            query2 = filter.GetFilteredQuery<ExportDeliveryDocumentMessageSenderCodeList>(listQueryOperation, query2);
+            query2 = filter.GetFilteredQuery<ExportDeliveryDocumentMessageList>(listQueryOperation, query2);
             int count = query2.Count();
             return count;
         }

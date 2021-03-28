@@ -47,7 +47,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class ExportDeliveryDocumentMessageSenderCodeViewsController : ApiController
+    public partial class ExportDeliveryDocumentMessageViewsController : ApiController
     {
 	  
        
@@ -60,11 +60,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                ExportDeliveryDocumentMessageSenderCodeListQueryService exportDeliveryDocumentMessageSenderCodeQuery = new ExportDeliveryDocumentMessageSenderCodeListQueryService(MyContext);
-                ExportDeliveryDocumentMessageSenderCodeList exportDeliveryDocumentMessageSenderCodeList = exportDeliveryDocumentMessageSenderCodeQuery.GetSingle(code);
+                ExportDeliveryDocumentMessageListQueryService exportDeliveryDocumentMessageQuery = new ExportDeliveryDocumentMessageListQueryService(MyContext);
+                ExportDeliveryDocumentMessageList exportDeliveryDocumentMessageList = exportDeliveryDocumentMessageQuery.GetSingle(code);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
-                return Request.CreateResponse(HttpStatusCode.OK,  exportDeliveryDocumentMessageSenderCodeList);
+                return Request.CreateResponse(HttpStatusCode.OK,  exportDeliveryDocumentMessageList);
             }
             catch (Exception ex)
             {
@@ -82,8 +82,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                ExportDeliveryDocumentMessageSenderCodeListQueryService exportDeliveryDocumentMessageSenderCodeQuery = new ExportDeliveryDocumentMessageSenderCodeListQueryService(MyContext);
-                List<ExportDeliveryDocumentMessageSenderCodeList> result = exportDeliveryDocumentMessageSenderCodeQuery.GetList(authToken.Tenant);
+                ExportDeliveryDocumentMessageListQueryService exportDeliveryDocumentMessageQuery = new ExportDeliveryDocumentMessageListQueryService(MyContext);
+                List<ExportDeliveryDocumentMessageList> result = exportDeliveryDocumentMessageQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -108,17 +108,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "Customs.ExportDeliveryDocumentMessageSenderCode",
+                    ObjectTableName = "Customs.ExportDeliveryDocumentMessage",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "Customs.ExportDeliveryDocumentMessageSenderCodes",
+                    QuerySection = "Customs.ExportDeliveryDocumentMessages",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
 				
-				List<ObjectField> ExportDeliveryDocumentMessageSenderCodeObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.ExportDeliveryDocumentMessageSenderCode",tenant);
+				List<ObjectField> ExportDeliveryDocumentMessageObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.ExportDeliveryDocumentMessage",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -141,7 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             //}
 						//}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = ExportDeliveryDocumentMessageSenderCodeObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = ExportDeliveryDocumentMessageObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                        if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -169,7 +169,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = ExportDeliveryDocumentMessageSenderCodeObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = ExportDeliveryDocumentMessageObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -192,14 +192,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
                 ICustomContext MyContext = CustomContext.GetContext(tenant);
-				ExportDeliveryDocumentMessageSenderCodeListQueryService exportDeliveryDocumentMessageSenderCodeQuery = new ExportDeliveryDocumentMessageSenderCodeListQueryService(MyContext);
+				ExportDeliveryDocumentMessageListQueryService exportDeliveryDocumentMessageQuery = new ExportDeliveryDocumentMessageListQueryService(MyContext);
 
-                List<ExportDeliveryDocumentMessageSenderCodeList> entityLists = exportDeliveryDocumentMessageSenderCodeQuery.GetList(queryOperations, tenant);
+                List<ExportDeliveryDocumentMessageList> entityLists = exportDeliveryDocumentMessageQuery.GetList(queryOperations, tenant);
 				
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = exportDeliveryDocumentMessageSenderCodeQuery.GetListCount(queryOperations);
+                    int count = exportDeliveryDocumentMessageQuery.GetListCount(queryOperations);
                     response.Count = count;
                 }
 

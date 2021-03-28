@@ -19,17 +19,17 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
-import {ExportDeliveryDocumentMessageSenderCodeList} from '../../EntityLists/ExportDeliveryDocumentMessageSenderCodeList';
+import {ExportDeliveryDocumentMessageList} from '../../EntityLists/ExportDeliveryDocumentMessageList';
 
 @Injectable()
 
-export class ExportDeliveryDocumentMessageSenderCodeListService {
+export class ExportDeliveryDocumentMessageListService {
 	private _http: HttpClient;
     private _apiUrl: string;   
-	public static CachedData: Array<ExportDeliveryDocumentMessageSenderCodeList> = [];
+	public static CachedData: Array<ExportDeliveryDocumentMessageList> = [];
     constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/exportdeliverydocumentmessagesendercodeviews';  
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/exportdeliverydocumentmessageviews';  
     }
 
 	getSingle(code: string) {
@@ -42,7 +42,7 @@ export class ExportDeliveryDocumentMessageSenderCodeListService {
 					map((response: HttpResponse<any>) => {
 
 						var list = response.body;                    
-						var entity: ExportDeliveryDocumentMessageSenderCodeList;
+						var entity: ExportDeliveryDocumentMessageList;
 						if (list) {
 							entity = this.MapJsonToEntityList(list);
 						}
@@ -52,7 +52,7 @@ export class ExportDeliveryDocumentMessageSenderCodeListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ExportDeliveryDocumentMessageSenderCode", "GetSingleList", 'code=' + code); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ExportDeliveryDocumentMessage", "GetSingleList", 'code=' + code); 
 
 						return serviceResponse;
 					}),
@@ -71,10 +71,10 @@ export class ExportDeliveryDocumentMessageSenderCodeListService {
 					map((response: HttpResponse<any>) => {
 
 						var allLists = response.body;
-						var _mappedListsArray: Array<ExportDeliveryDocumentMessageSenderCodeList> = [];
+						var _mappedListsArray: Array<ExportDeliveryDocumentMessageList> = [];
 						if (allLists) {
 							for (var key in allLists) {			
-								var entity: ExportDeliveryDocumentMessageSenderCodeList = this.MapJsonToEntityList(allLists[key]);
+								var entity: ExportDeliveryDocumentMessageList = this.MapJsonToEntityList(allLists[key]);
 								_mappedListsArray.push(entity);
 							}
 						}
@@ -84,7 +84,7 @@ export class ExportDeliveryDocumentMessageSenderCodeListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ExportDeliveryDocumentMessageSenderCode", "GetAll", ""); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ExportDeliveryDocumentMessage", "GetAll", ""); 
 
 						return serviceResponse;
 					}),
@@ -131,11 +131,11 @@ export class ExportDeliveryDocumentMessageSenderCodeListService {
 					map((response: HttpResponse<any>) => {
 
 						var serviceResponse: ServiceResponse = response.body;
-						var _mappedListsArray: Array<ExportDeliveryDocumentMessageSenderCodeList> = [];
+						var _mappedListsArray: Array<ExportDeliveryDocumentMessageList> = [];
 
 						if (serviceResponse.Result) {
 							for (var key in serviceResponse.Result) {				
-								var entity: ExportDeliveryDocumentMessageSenderCodeList = this.MapJsonToEntityList(serviceResponse.Result[key]);
+								var entity: ExportDeliveryDocumentMessageList = this.MapJsonToEntityList(serviceResponse.Result[key]);
 								_mappedListsArray.push(entity);
 							}
 						}   
@@ -144,7 +144,7 @@ export class ExportDeliveryDocumentMessageSenderCodeListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ExportDeliveryDocumentMessageSenderCode", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ExportDeliveryDocumentMessage", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
                  								            
 						return serviceResponse;
 					}),
@@ -163,9 +163,9 @@ export class ExportDeliveryDocumentMessageSenderCodeListService {
 
         var serviceResponse: ServiceResponse = new ServiceResponse();
 
-		if (ExportDeliveryDocumentMessageSenderCodeListService.CachedData.length > 0) {
+		if (ExportDeliveryDocumentMessageListService.CachedData.length > 0) {
 			return defer(() => {
-				var filteredData = ExportDeliveryDocumentMessageSenderCodeListService.CachedData.filter(a => a.Code === code)[0];
+				var filteredData = ExportDeliveryDocumentMessageListService.CachedData.filter(a => a.Code === code)[0];
 				serviceResponse.CallTime = callTime;
 				serviceResponse.Result = filteredData; 
                 return of(serviceResponse);
@@ -173,25 +173,25 @@ export class ExportDeliveryDocumentMessageSenderCodeListService {
         }
 
         else {
-            return CachedDataManager.GetClosedTableData("Customs.ExportDeliveryDocumentMessageSenderCode").pipe(
+            return CachedDataManager.GetClosedTableData("Customs.ExportDeliveryDocumentMessage").pipe(
 				map((cachedJson:any) => {
 
-					var _mappedListsArray: Array<ExportDeliveryDocumentMessageSenderCodeList> = [];
+					var _mappedListsArray: Array<ExportDeliveryDocumentMessageList> = [];
 
 					if (cachedJson) {
 						for (var key in cachedJson) {
-							var entity: ExportDeliveryDocumentMessageSenderCodeList = this.MapJsonToEntityList(cachedJson[key]);
+							var entity: ExportDeliveryDocumentMessageList = this.MapJsonToEntityList(cachedJson[key]);
 							_mappedListsArray.push(entity);
 						}
 					}
 
-					ExportDeliveryDocumentMessageSenderCodeListService.CachedData = _mappedListsArray;
+					ExportDeliveryDocumentMessageListService.CachedData = _mappedListsArray;
 
-					var filteredData = ExportDeliveryDocumentMessageSenderCodeListService.CachedData.filter(a => a.Code === code)[0];
+					var filteredData = ExportDeliveryDocumentMessageListService.CachedData.filter(a => a.Code === code)[0];
 					serviceResponse.Result = filteredData; 
 					serviceResponse.CallTime = callTime;
 			     
-					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ExportDeliveryDocumentMessageSenderCode", "GetSingleListFromCache", 'code=' + code); 
+					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ExportDeliveryDocumentMessage", "GetSingleListFromCache", 'code=' + code); 
 
 					return serviceResponse;
 				}),
@@ -222,14 +222,14 @@ export class ExportDeliveryDocumentMessageSenderCodeListService {
 
         var serviceResponse: ServiceResponse = new ServiceResponse();
 
-        if (ExportDeliveryDocumentMessageSenderCodeListService.CachedData.length > 0) {
+        if (ExportDeliveryDocumentMessageListService.CachedData.length > 0) {
             return defer(() => {
                 if (filters.GetAll) {
-					serviceResponse.Result = ExportDeliveryDocumentMessageSenderCodeListService.CachedData; 
+					serviceResponse.Result = ExportDeliveryDocumentMessageListService.CachedData; 
 				}
 
 				else {
-					var filteredData = InfraGenericFilter.GetFilteredArray(ExportDeliveryDocumentMessageSenderCodeListService.CachedData, filters);
+					var filteredData = InfraGenericFilter.GetFilteredArray(ExportDeliveryDocumentMessageListService.CachedData, filters);
 					serviceResponse.Result = filteredData; 
 					serviceResponse.CallTime = callTime;
 				}
@@ -239,18 +239,18 @@ export class ExportDeliveryDocumentMessageSenderCodeListService {
         }
 
         else {
-            return CachedDataManager.GetClosedTableData("Customs.ExportDeliveryDocumentMessageSenderCode").pipe(
+            return CachedDataManager.GetClosedTableData("Customs.ExportDeliveryDocumentMessage").pipe(
 				map((cachedJson:any) => {
 
-					var _mappedListsArray: Array<ExportDeliveryDocumentMessageSenderCodeList> = [];
+					var _mappedListsArray: Array<ExportDeliveryDocumentMessageList> = [];
 					if (cachedJson) {
 						for (var key in cachedJson) {
-							var entity: ExportDeliveryDocumentMessageSenderCodeList = this.MapJsonToEntityList(cachedJson[key]);
+							var entity: ExportDeliveryDocumentMessageList = this.MapJsonToEntityList(cachedJson[key]);
 							_mappedListsArray.push(entity);
 						}
 					}
 
-					ExportDeliveryDocumentMessageSenderCodeListService.CachedData = _mappedListsArray;
+					ExportDeliveryDocumentMessageListService.CachedData = _mappedListsArray;
 
 					if (filters.GetAll) {
 						serviceResponse.Result = _mappedListsArray; 
@@ -260,7 +260,7 @@ export class ExportDeliveryDocumentMessageSenderCodeListService {
 
 						_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
 
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ExportDeliveryDocumentMessageSenderCode", "GetAllFromCache", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ExportDeliveryDocumentMessage", "GetAllFromCache", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll); 
                  	
 						serviceResponse.Result = _mappedListsArray; 
 						serviceResponse.CallTime = callTime;
@@ -275,8 +275,8 @@ export class ExportDeliveryDocumentMessageSenderCodeListService {
 	
 	    MapJsonToEntityList(jsonList: any) {
        
-            var entityList: ExportDeliveryDocumentMessageSenderCodeList;
-            entityList = new ExportDeliveryDocumentMessageSenderCodeList();
+            var entityList: ExportDeliveryDocumentMessageList;
+            entityList = new ExportDeliveryDocumentMessageList();
             var jsonListKeys = Object.keys(jsonList);
 
             for (var key in jsonListKeys) {

@@ -14,17 +14,17 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 namespace Logitude.Customs.Data.EntityPOCOs
 {
    
-    public class ExportDeliveryDocumentMessageSenderCode
+    public class ExportDeliveryDocumentMessage
     {
 	 string dbms;
 
         [Key]
         [Column("Code")]
 	    public string Code { get; set; }
-        [Column("LocalName")]
-	    public string LocalName { get; set; }
         [Column("EnglishName")]
 	    public string EnglishName { get; set; }
+        [Column("LocalName")]
+	    public string LocalName { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
         [Column("Inactive")]

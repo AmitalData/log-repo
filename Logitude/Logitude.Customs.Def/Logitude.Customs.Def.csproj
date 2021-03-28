@@ -79,7 +79,7 @@
     <Compile Include="EntityPMs\Generated\DocumentRejectTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExceptionReasonPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExportDeclarationClosingDataPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\ExportDeliveryDocumentMessageSenderCodePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ExportDeliveryDocumentMessagePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExporterRoleTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FclLclCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FullnessCodePM.Generated.cs" />

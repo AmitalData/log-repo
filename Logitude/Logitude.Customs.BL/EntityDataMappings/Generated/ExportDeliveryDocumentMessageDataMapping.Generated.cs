@@ -17,14 +17,14 @@ using Logitude.Customs.Data;
 namespace Logitude.Customs.BL.EntityDataMappings
 {
    
-   public partial class ExportDeliveryDocumentMessageSenderCodeDataMapping: IMapping<ExportDeliveryDocumentMessageSenderCodePM, ExportDeliveryDocumentMessageSenderCode>,IMappingEncodeBase64NVARCHARFields<ExportDeliveryDocumentMessageSenderCodePM>
+   public partial class ExportDeliveryDocumentMessageDataMapping: IMapping<ExportDeliveryDocumentMessagePM, ExportDeliveryDocumentMessage>,IMappingEncodeBase64NVARCHARFields<ExportDeliveryDocumentMessagePM>
    {
           public enum POCOPropertyNames
           { 
 		     None,  
 	         Code, 
-	         LocalName, 
 	         EnglishName, 
+	         LocalName, 
 	         SearchFields, 
 	         Inactive,
 	      }
@@ -34,8 +34,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
           { 
 		     None,  
 	         Code, 
-	         LocalName, 
 	         EnglishName, 
+	         LocalName, 
 	         SearchFields, 
 	         Inactive,
 	      }
@@ -43,17 +43,17 @@ namespace Logitude.Customs.BL.EntityDataMappings
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
     
-	    public void PMToPOCO(ExportDeliveryDocumentMessageSenderCodePM entityPM, ExportDeliveryDocumentMessageSenderCode entityPOCO)
+	    public void PMToPOCO(ExportDeliveryDocumentMessagePM entityPM, ExportDeliveryDocumentMessage entityPOCO)
         {
 			 
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalName))
-            {
-				entityPOCO.LocalName = entityPM.LocalName;
-			}
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EnglishName))
             {
 				entityPOCO.EnglishName = entityPM.EnglishName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalName))
+            {
+				entityPOCO.LocalName = entityPM.LocalName;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
@@ -69,7 +69,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
-		public void POCOToPM(ExportDeliveryDocumentMessageSenderCodePM entityPM, ExportDeliveryDocumentMessageSenderCode entityPOCO)
+		public void POCOToPM(ExportDeliveryDocumentMessagePM entityPM, ExportDeliveryDocumentMessage entityPOCO)
         {
 			 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Code))
@@ -77,14 +77,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Code = entityPOCO.Code;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LocalName))
-            {
-					entityPM.LocalName = entityPOCO.LocalName;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EnglishName))
             {
 					entityPM.EnglishName = entityPOCO.EnglishName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LocalName))
+            {
+					entityPM.LocalName = entityPOCO.LocalName;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
@@ -99,18 +99,18 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
 		}
 
-		public void PMToOldPM(ExportDeliveryDocumentMessageSenderCodePM entityPM, ExportDeliveryDocumentMessageSenderCodePM oldEntityPM)
+		public void PMToOldPM(ExportDeliveryDocumentMessagePM entityPM, ExportDeliveryDocumentMessagePM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalName))
-            {
-                oldEntityPM.LocalName = entityPM.LocalName;
-            }
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EnglishName))
             {
                 oldEntityPM.EnglishName = entityPM.EnglishName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalName))
+            {
+                oldEntityPM.LocalName = entityPM.LocalName;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
@@ -125,7 +125,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			
 		}
 
-	    public void EncodeBase64NVARCHARFields(ExportDeliveryDocumentMessageSenderCodePM entityPM)
+	    public void EncodeBase64NVARCHARFields(ExportDeliveryDocumentMessagePM entityPM)
         {
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {
@@ -154,7 +154,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             CustomMappedPMProperties.Add(pocoPropertyName);
         }
 		
-		private void BuildSearchFieldsGenerated(ExportDeliveryDocumentMessageSenderCodePM entityPM, ExportDeliveryDocumentMessageSenderCode entityPOCO, bool isNewEntity)
+		private void BuildSearchFieldsGenerated(ExportDeliveryDocumentMessagePM entityPM, ExportDeliveryDocumentMessage entityPOCO, bool isNewEntity)
         {
             string mySearchFields = "";
 			

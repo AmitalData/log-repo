@@ -6,11 +6,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class ExportDeliveryDocumentMessageSenderCodeList {
+export class ExportDeliveryDocumentMessageList {
    
 	Code: string;
-	LocalName: string;
 	EnglishName: string;
+	LocalName: string;
 	SearchFields: string;
 	Inactive: boolean;
 	

@@ -321,7 +321,7 @@
     <None Include="DBTables\EntityTypeLookup.dxml" />
     <None Include="DBTables\ExceptionReason.dxml" />
     <None Include="DBTables\ExportDeclarationClosingData.dxml" />
-    <None Include="DBTables\ExportDeliveryDocumentMessageSenderCode.dxml" />
+    <None Include="DBTables\ExportDeliveryDocumentMessage.dxml" />
     <None Include="DBTables\ExporterRoleType.dxml" />
     <None Include="DBTables\FacilitationType.dxml" />
     <None Include="DBTables\FaultInspectionType.dxml" />
@@ -480,12 +480,12 @@
     <None Include="DBTables\VendorStatus.dxml" />
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
-    <None Include="EntityFiles\ExportDeliveryDocumentMessageSenderCode.lxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
     <None Include="EntityFiles\AmendRequestRejectReasonType.lxml" />
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
     <None Include="EntityFiles\AutonomyRegionType.lxml" />
+    <None Include="EntityFiles\ExportDeliveryDocumentMessage.lxml" />
     <None Include="EntityFiles\SecurityClearenceTypeCode.lxml" />
     <None Include="EntityFiles\TransportMeansType.lxml" />
     <None Include="EntityFiles\FullnessCode.lxml" />

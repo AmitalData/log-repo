@@ -22,44 +22,44 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 { 
-   public partial class ExportDeliveryDocumentMessageSenderCodeUpdateService:EntityUpdateService<ExportDeliveryDocumentMessageSenderCode,ExportDeliveryDocumentMessageSenderCodePM,EntityPM>
+   public partial class ExportDeliveryDocumentMessageUpdateService:EntityUpdateService<ExportDeliveryDocumentMessage,ExportDeliveryDocumentMessagePM,EntityPM>
    {
    
-        ExportDeliveryDocumentMessageSenderCodeRepository entityRepository;
-        public ExportDeliveryDocumentMessageSenderCodeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+        ExportDeliveryDocumentMessageRepository entityRepository;
+        public ExportDeliveryDocumentMessageUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
             : base(mainContext,additionalContexts, tenant)
         {
             ICustomContext  context = mainContext as CustomContext;
             context = context ??mainContext as ICustomContext ; //Up line is A BUG -and i need it 4 Fakes
-            Mapping = new ExportDeliveryDocumentMessageSenderCodeDataMapping();
-            Repository = new ExportDeliveryDocumentMessageSenderCodeRepository(context);
+            Mapping = new ExportDeliveryDocumentMessageDataMapping();
+            Repository = new ExportDeliveryDocumentMessageRepository(context);
         }
 
        
         private ICustomContext currentContext;
-        public ExportDeliveryDocumentMessageSenderCodeUpdateService(int tenant)
+        public ExportDeliveryDocumentMessageUpdateService(int tenant)
         {
             currentContext = CustomContext.GetContext(tenant);
         }
 
-        public ExportDeliveryDocumentMessageSenderCodeUpdateService(ICustomContext context)
+        public ExportDeliveryDocumentMessageUpdateService(ICustomContext context)
         {
             currentContext = context;
         }
 
 		
-		protected override EntityKeyFields GetKeys(ExportDeliveryDocumentMessageSenderCodePM entityPM)
+		protected override EntityKeyFields GetKeys(ExportDeliveryDocumentMessagePM entityPM)
         {
-            ExportDeliveryDocumentMessageSenderCodeKeys entityKeys = new ExportDeliveryDocumentMessageSenderCodeKeys() { Code = entityPM.Code };
+            ExportDeliveryDocumentMessageKeys entityKeys = new ExportDeliveryDocumentMessageKeys() { Code = entityPM.Code };
             return entityKeys;
         }
 
 		
-	    protected override void FillDefaultValuesOnCreate(ExportDeliveryDocumentMessageSenderCodePM entityPM)
+	    protected override void FillDefaultValuesOnCreate(ExportDeliveryDocumentMessagePM entityPM)
         {
  
 		}
-		protected override void FillDefaultValuesOnUpdate(ExportDeliveryDocumentMessageSenderCodePM entityPM)
+		protected override void FillDefaultValuesOnUpdate(ExportDeliveryDocumentMessagePM entityPM)
 		{
  
 		}
