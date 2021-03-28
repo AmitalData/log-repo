@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExportDeliveryDocumentMessageUpdateClass
    {  		
-		public const string HashString = "d8e329852195a07adf47fc023da2b0cd";
+		public const string HashString = "230408697589cfebd3f3c64bc6adc8f8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -120,7 +120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "ExportDeliveryDocumentMessage",
-			      				    Code =  "ExportDeliveryDocumentMessage",
+			      				    Code =  "EDCM",
 			      				    Name =  "Customs.ExportDeliveryDocumentMessage",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
@@ -459,7 +459,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-	        QueryGroup ExportDeliveryDocumentMessageQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ExportDeliveryDocumentMessage", Name = "Customs.ExportDeliveryDocumentMessage" }, queryGroupRepository,tenantQueryGroups);
+	        QueryGroup ExportDeliveryDocumentMessageQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "EDCM", Name = "Customs.ExportDeliveryDocumentMessage" }, queryGroupRepository,tenantQueryGroups);
 						QueryGroup ExportDeliveryDocumentMessageQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "a3ab", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable ExportDeliveryDocumentMessageObjectTable = objectTables.ContainsKey("Customs.ExportDeliveryDocumentMessage") ? objectTables["Customs.ExportDeliveryDocumentMessage"] : null;
@@ -478,23 +478,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode ExportDeliveryDocumentMessageTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportDeliveryDocumentMessage.Q.ExportDeliveryDocumentMessageQuery", DefaultText = @"ExportDeliveryDocumentMessages",LocalDefaultText = "בנק", ObjectTableId = ExportDeliveryDocumentMessageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ExportDeliveryDocumentMessageFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportDeliveryDocumentMessageS", ObjectTableId = ExportDeliveryDocumentMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ExportDeliveryDocumentMessage.Features.ExportDeliveryDocumentMessages", NameTextCodeDefaultText = "ExportDeliveryDocumentMessages", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ExportDeliveryDocumentMessageObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ExportDeliveryDocumentMessageTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExportDeliveryDocumentMessage.Q.EDDM", DefaultText = @"ExportDeliveryDocumentMessageSenderCode",LocalDefaultText = "ExportDeliveryDocumentMessageSenderCode", ObjectTableId = ExportDeliveryDocumentMessageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ExportDeliveryDocumentMessageFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportDeliveryDocumentMessage.Q.EDDM", ObjectTableId = ExportDeliveryDocumentMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExportDeliveryDocumentMessageFeatures.EDDM", NameTextCodeDefaultText = "EDDM", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ExportDeliveryDocumentMessageObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ExportDeliveryDocumentMessageQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExportDeliveryDocumentMessageTextCode_0.Id, NameTextCodeCode = ExportDeliveryDocumentMessageTextCode_0.Code, ObjectTableName = "Customs.ExportDeliveryDocumentMessage", Code = "ExportDeliveryDocumentMessage",  QueryGroupCode = "ExportDeliveryDocumentMessage", IndexOrder = 0, Tenant = 0, ObjectTableId = ExportDeliveryDocumentMessageObjectTable.Id, QuerySection = "ExportDeliveryDocumentMessages", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ExportDeliveryDocumentMessageFeature_0.Id,FeatureUniqeCode= ExportDeliveryDocumentMessageFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
-	
-			 QueryColumn ExportDeliveryDocumentMessageQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeliveryDocumentMessageQuery.Id,QueryCode = ExportDeliveryDocumentMessageQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ExportDeliveryDocumentMessage.Code" , ColumnWidth = 70 }, addedQueryColumns);
-
-			 QueryColumn ExportDeliveryDocumentMessageQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeliveryDocumentMessageQuery.Id,QueryCode = ExportDeliveryDocumentMessageQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ExportDeliveryDocumentMessage.EnglishName" , ColumnWidth = 250 }, addedQueryColumns);
-
-			 QueryColumn ExportDeliveryDocumentMessageQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeliveryDocumentMessageQuery.Id,QueryCode = ExportDeliveryDocumentMessageQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ExportDeliveryDocumentMessage.LocalName" , ColumnWidth = 250 }, addedQueryColumns);
-
-			 QueryColumn ExportDeliveryDocumentMessageQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDeliveryDocumentMessageQuery.Id,QueryCode = ExportDeliveryDocumentMessageQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ExportDeliveryDocumentMessage.Inactive" , ColumnWidth = 250 }, addedQueryColumns);
-			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			  Query EDDMQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExportDeliveryDocumentMessageTextCode_0.Id, NameTextCodeCode = ExportDeliveryDocumentMessageTextCode_0.Code, ObjectTableName = "Customs.ExportDeliveryDocumentMessage", Code = "EDDM",  QueryGroupCode = "EDCM", IndexOrder = 0, Tenant = 0, ObjectTableId = ExportDeliveryDocumentMessageObjectTable.Id, QuerySection = "Customs.ExportDeliveryDocumentMessage", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ExportDeliveryDocumentMessageFeature_0.Id,FeatureUniqeCode= ExportDeliveryDocumentMessageFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+				SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
 			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
