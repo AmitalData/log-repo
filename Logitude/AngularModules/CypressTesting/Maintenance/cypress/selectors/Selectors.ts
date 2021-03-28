@@ -11,6 +11,7 @@ export class MaintenanceSelectors extends RegexSelectors {
     public static readonly QuoteTemplatesMaintenanceItem = "#MaintenanceItemMTQT"
     public static readonly MaintenanceItemCountry="#MaintenanceItemMTCN"
     public static readonly MaintenanceItemState="#MaintenanceItemMTST"
+    public static readonly MaintenanceItemCities="#MaintenanceItemMTCY"
     //#endregion
 
     public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";
@@ -144,6 +145,19 @@ export class MaintenanceSelectors extends RegexSelectors {
     public static readonly InActiveStateCheckBox = "#State_InActive";
     public static readonly StateNotes = "#State_Notes";
     public static readonly StateEventTab = "#StateTHEvents";
+    public static readonly StateSaveButton="#State-Save"
+    //#endregion
+
+    //#region City
+    public static readonly CityCode = "#CountryCity_Code"
+    public static readonly CityEnglishName = "#CountryCity_EnglishName"
+    public static readonly CityLocalName = "#CountryCity_LocalName"
+    public static readonly CityCountry = "#CountryCity_CountryId"
+    public static readonly CityState = "#CountryCity_StateId";
+    public static readonly InActiveCityCheckBox = "#CountryCity_InActive"
+    public static readonly CityNotes = "#CountryCity_Notes"
+    public static readonly CityEventTab = "#CountryCityTHEvents"
+    public static readonly CitySaveButton="#CountryCity-Save"
     //#endregion
 
     //#region Currency 
