@@ -95,9 +95,9 @@ export class TenantManagmentPrivateLabelsPM {
     public set BackgroundImageId(newValue: string) { if (this.backgroundImageId != newValue) { this.backgroundImageId = newValue; this.MarkAsDirty("BackgroundImageId"); } }
        
 	 
-    private mainImageId: string;
-    public get MainImageId() { return this.mainImageId; }
-    public set MainImageId(newValue: string) { if (this.mainImageId != newValue) { this.mainImageId = newValue; this.MarkAsDirty("MainImageId"); } }
+    private loginImageId: string;
+    public get LoginImageId() { return this.loginImageId; }
+    public set LoginImageId(newValue: string) { if (this.loginImageId != newValue) { this.loginImageId = newValue; this.MarkAsDirty("LoginImageId"); } }
        
 	 
     private mainColor: string;

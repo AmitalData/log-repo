@@ -7,13 +7,25 @@ import { Component } from '@angular/core';
 import { LoginService } from '../LoginService';
 import { PasswordChangeService } from '../PasswordChangeService';
 import { ChangePasswordComponent } from './ChangePasswordComponent';
+import { BrandingDataService } from '../PrivateLabels/Services/BrandingDataService';
 export var DSVChangePasswordComponent = (function (_super) {
     __extends(DSVChangePasswordComponent, _super);
     function DSVChangePasswordComponent(ss, ll) {
         _super.call(this, ss, ll);
         this.ss = ss;
         this.ll = ll;
+        this.BackgroundImage = "";
+        this.ForgetPasswordImage = "";
+        this.MainLogo = "";
     }
+    DSVChangePasswordComponent.prototype.ngOnInit = function () {
+        this.GetPrivateLabelsData();
+    };
+    DSVChangePasswordComponent.prototype.GetPrivateLabelsData = function () {
+        this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
+        this.MainLogo = BrandingDataService.GetImage("MainLogo");
+        this.ForgetPasswordImage = BrandingDataService.GetImage("ForgetPasswordImage");
+    };
     DSVChangePasswordComponent.decorators = [
         { type: Component, args: [{
                     selector: 'DSVChangePasswordComponent',

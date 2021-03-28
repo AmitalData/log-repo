@@ -46,21 +46,15 @@ namespace WebFreight.Web.DataProviders
         public string TruckerNumber { get; set; }
         public string ForwarderAgentCode { get; set; }
         public string ForwarderAgentAddress { get; set; }
-
         public List<PackageLine> PackagesLines { get; set; }
         public List<PackageLine> AttachmentList { get; set; }
-
         public double VerticalShift { get; set; }
         public double HorizontalShift { get; set; }
-
         public string DescriptionOfGoods { get; set; }
         public string ContainersNumbersArray { get; set; }
-
         public bool InServerSide { get; set; }
-
         public string TenantName { get; set; }
         public string Signature { get; set; }
-
         public string ShipmentField1 { get; set; }
         public string ShipmentField2 { get; set; }
         public string ShipmentField3 { get; set; }
@@ -101,11 +95,9 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField38 { get; set; }
         public string ShipmentField39 { get; set; }
         public string ShipmentField40 { get; set; }
-
         public string MoveTypeCode { get; set; }
         public string MoveTypeName { get; set; }
         public string HAWB { get; set; }
-
         public string BookingNumber { get; set; }
         public string ConsigneeName { get; set; }
         public string ConsigneeAddress { get; set; }
@@ -114,7 +106,6 @@ namespace WebFreight.Web.DataProviders
         public string MainCarriageETA { get; set; }
         public string MainCarriageCarrierName { get; set; }
         public string MainCarriageVesselName { get; set; }
-
         public string DeliveryCompanyLocalName { get; set; }
         public string DeliveryCompanyContactLocalName { get; set; }
         public string DeliveryCompanyContactPhone { get; set; }
@@ -126,16 +117,12 @@ namespace WebFreight.Web.DataProviders
         public string ShipperReference2 { get; set; }
         public string ShipperContactName { get; set; }
         public string ShipperContactMobileNumber { get; set; }
-
         public int? TotalNumberOfPackages { get; set; }
         public double? TotalGrossWeight { get; set; }
         public double? TotalVolume { get; set; }
-
         public DateTime? DeliveryETATime { get; set; } //( the time ) 
         public DateTime? DeliveryETADate { get; set; } //( the date )
-
         public string LongMaster { get; set; }
-
         public string LastMainCarriageVesselNameAndNumber { get; set; }
         public string MainCarriageVesselNameAndNumber { get; set; }
         public string LoadingPortName { get; set; }
@@ -145,19 +132,14 @@ namespace WebFreight.Web.DataProviders
         public DateTime? MainCarriageETD_DateTime { get; set; }
         public DateTime? MainCarriageETA_DateTime { get; set; }
         public DateTime? MainCarriageATA_DateTime { get; set; }
-
         public string OriginCountry { get; set; }
-
         public List<InsidePackageLine> InsidePackagesLines { get; set; }
-
         public string EmptyContainer { get; set; }
         public string EmptyContainerRef { get; set; }
         public string EmptyContainerReturn { get; set; }
         public string EmptyContainerReturnRef { get; set; }
-
         public DateTime? CutOffDateAsDate { get; set; }
         public string CutOffTime { get; set; }
-
         public string UserName { get; set; }
         public string IssuingCarrierAgentName { get; set; }
         public string IssuingCarrierAgentAddress { get; set; }
@@ -165,27 +147,22 @@ namespace WebFreight.Web.DataProviders
         public string TransportMode { get; set; }
         public string ShipmentSalesman { get; set; }
         public string FinalDestinationCode { get; set; }
-
         public string Reference1 { get; set; }
         public string Reference2 { get; set; }
         public string Reference3 { get; set; }
         public string Reference4 { get; set; }
-
         public string OnCarriageCarrier { get; set; }
         public string FreightLocation { get; set; }
         public DateTime? LastFreeDate { get; set; }
-
         public string CustomerContactName { get; set; }
         public string CustomerContactPhoneNumber { get; set; }
         public string ShipmentNumber { get; set; }
         public string DriverName { get; set; }
-
         public string ProjectNumber { get; set; }
         public string ITNumber { get; set; }
         public string AMSBL { get; set; }
         public string SalesmanEmail { get; set; }
         public string ToPartnerAddressName { get; set; }
-
         public string IncotermName { get; set; }
         public string ShipperVATNumber { get; set; }
         public string ConsigneeVATNumber { get; set; }
@@ -194,18 +171,17 @@ namespace WebFreight.Web.DataProviders
         public string TruckerName { get; set; }
         public string CustomsClearancePointName { get; set; }
         public string DeclarationNumber { get; set; }
-
         public string WarehouseReferenceNumber { get; set; }
         public int? StorageFreeDays { get; set; }
-
         public string BranchName { get; set; }
         public string BranchAddress { get; set; }
         public string BranchLocalName { get; set; }
-
         public string UserPhoneNumber { get; set; }
-
         public string TruckerCompanyContactName { get; set; }
-
         public string MainCarriageCarrierNumber { get; set; }
+        public DateTime? PickupDeliveryDeparture { get; set; }//(ATD, if null then take ETD)
+        public DateTime? PickupDeliveryArrival { get; set; }//(ATA, if null then take ETA)
+        public string PickupDeliveryNumber { get; set; }
+        public string CarrierCode { get; set; }//(Airline code from Main carriage for example)
     }
 }

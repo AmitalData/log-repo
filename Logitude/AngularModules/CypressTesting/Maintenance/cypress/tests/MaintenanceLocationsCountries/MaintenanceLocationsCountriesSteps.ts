@@ -5,6 +5,7 @@ import { CountryDetails } from "../../../cypress/models/CountryDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
+import { Constants } from "../../constants/Constants";
 
 //#region variable
 let countryDetails: CountryDetails
@@ -17,7 +18,7 @@ Given("the user logged in and navigate to {string} in maintenance menu", (mainte
 });
 
 When("add {string} as country code", (countryCode) => {
-    MaintenanceActions.OpenNewWizard("Country");
+    MaintenanceActions.OpenNewWizard(Constants.Country);
     MaintenanceActions.FillCountryCode(countryCode);
 });
 

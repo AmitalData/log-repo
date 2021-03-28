@@ -1109,6 +1109,7 @@ namespace WebFreight.Web.WebServices
                         myDataProvider.UserName = currentContact.EnglishName;
                         myDataProvider.UserEmail = currentContact.Email != null ? currentContact.Email : "";
                         myDataProvider.UserPhoneNumber = currentContact.BusinessPhone;
+                        myDataProvider.UserMobileNumber = currentContact.Mobile;
                     }
                 }
 

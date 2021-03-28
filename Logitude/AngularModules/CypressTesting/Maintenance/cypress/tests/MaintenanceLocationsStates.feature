@@ -29,9 +29,9 @@ Feature: Create State, Inactivate and activate it from Maintenance
 
     Scenario: Edit the state
         Given a "random" as stateLocalName
-        Given the user change Inactivestate check box
+        And the user change Inactivestate check box
         When edit state
         Then the state should update successfully
-        Then following event should appear in events tab
+        And following event should appear in events tab
             | Event         | Notes          |
             | State Updated | State "status" |

@@ -32,6 +32,10 @@ export class AutomationTestReportFilterComponent extends BaseComponent {
         this.RunReportTitle = "Preview";
     }
 
+    GetMainCustomerFieldName() {
+        return null;
+    }
+
     IsPartnersChanged() {
         return false;
     }

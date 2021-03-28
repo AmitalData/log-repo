@@ -119,6 +119,7 @@
     .ImageName {
         position: absolute;
         top: 44px;
+        font-size: 11px;
     }
 
     .removeLine {
@@ -129,6 +130,19 @@
 
     .TabBody {
         overflow: auto;
+    }
+    .ImageSize {
+        font-size: 11px; 
+        top: 65px;
+        position: relative;
+        left: 10px;
+    }
+
+    .LogoImageSize {
+        font-size: 11px;
+        bottom: 65px;
+        position: relative;
+        left: 10px;
     }
 </style>
 
@@ -336,8 +350,9 @@
                                                     <td>
                                                         <LogLabel [Text]="'Main Logo'" [ObjectFieldName]="'MainLogo'" [ObjectTableName]="ObjectTableName"
                                                                   [DataContext]="DataContext"></LogLabel>
-                                                    </td>
+                                                    </td> 
                                                     <td>
+
                                                         <button [class.HyperlinkDisabled]="DemoMessageVisibility" style="width: 57px;" class="Button" (click)="OpenUpLoadMainLogo()">Upload</button>
                                                         <input [attr.id]="LogoMainFileHtmlId" accept=".jpg,.jpeg,.JPG,.JPEG" type="file" (change)="UploadogoFileMain($event)" style="display:none" class="upload" />
 
@@ -367,7 +382,8 @@
                                                 <tr class="FormFieldRow">
 
                                                     <!-- Image Display -->
-                                                    <td>
+                                                    <td> 
+                                                        <span class="LogoImageSize"> Size: (239X85 pixels)  </span>
                                                     </td>
                                                     <td style="vertical-align:top">
                                                         <div style="width:300px;vertical-align:top; border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:5px">
@@ -453,7 +469,7 @@
                                 <table>
                                     <tr class="FormFieldRow">
                                     </tr>
-                                    <!-- BackgroundImage and MainImage-->
+                                    <!-- BackgroundImage and LoginImage-->
 
                                     <tr class="FormFieldRow">
                                         <td style="width:180px;height:22px; vertical-align:top">
@@ -461,6 +477,7 @@
                                                 <LogLabel [Text]="'Background Image'" [ObjectFieldName]="'BackgroundImageId'" [ObjectTableName]="'ObjectTableName'"
                                                           [DataContext]="DataContext"></LogLabel>
                                             </span>
+                                            <span class="ImageSize">Size: (1530X765 pixels)</span>
                                         </td>
 
                                         <td style="vertical-align:top; overflow:hidden;">
@@ -481,21 +498,24 @@
 
                                         <td style="width:180px;height:22px; vertical-align:top">
                                             <span class="ImageName">
-                                                <LogLabel [Text]="'Main Image'" [ObjectFieldName]="'MainImageId'" [ObjectTableName]="'ObjectTableName'"
+                                                <LogLabel [Text]="'Login Image'" [ObjectFieldName]="'LoginImageId'" [ObjectTableName]="'ObjectTableName'"
                                                           [DataContext]="DataContext"></LogLabel>
+
                                             </span>
+                                            <span class="ImageSize">Size: (864X260 pixels)</span>
+
                                         </td>
 
                                         <td style="vertical-align:top; overflow:hidden;">
                                             <div style="width:160px;height:100px; overflow:hidden;">
                                                 <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'200px'"
-                                                                [HeightImage]="'95px'" [ImageId]="MainImageId"
+                                                                [HeightImage]="'95px'" [ImageId]="LoginImageId"
                                                                 [EntityId]="EntityId" [EntityName]="'ObjectTableName'" [Extension]="'png'"
-                                                                (UploadCompleted)="MainImageImageUploadedCompleted($event)"
+                                                                (UploadCompleted)="LoginImageImageUploadedCompleted($event)"
                                                                 style="height:72px;width:72px">
                                                 </ImageComponent>
                                             </div>
-                                            <a class="removeLine" (click)="RemoveImage('MainImage')">remove</a>
+                                            <a class="removeLine" (click)="RemoveImage('LoginImage')">remove</a>
 
                                         </td>
 
@@ -508,11 +528,12 @@
 
                                     <tr class="FormFieldRow">
 
-                                        <td style="width:190px;height:22px; vertical-align:top">
+                                        <td style="width:180px;height:22px; vertical-align:top">
                                             <span class="ImageName">
                                                 <LogLabel [Text]="'Login Progress Image'" [ObjectFieldName]="'LoginProgressImageId'" [ObjectTableName]="'ObjectTableName'"
-                                                          [DataContext]="DataContext"></LogLabel>
+                                                          [DataContext]="DataContext"></LogLabel> 
                                             </span>
+                                            <span class="ImageSize">Size: (980X260 pixels)</span>
                                         </td>
 
                                         <td style="vertical-align:top; overflow:hidden;">
@@ -534,8 +555,9 @@
                                         <td style="width:180px;height:22px; vertical-align:top">
                                             <span class="ImageName">
                                                 <LogLabel [Text]="'Forget Password Image'" [ObjectFieldName]="'ForgetPasswordImageId'" [ObjectTableName]="'ObjectTableName'"
-                                                          [DataContext]="DataContext"></LogLabel>
+                                                          [DataContext]="DataContext"></LogLabel>  
                                             </span>
+                                            <span class="ImageSize">Size: (894X267 pixels)</span>
                                         </td>
 
                                         <td style="vertical-align:top; overflow:hidden;">

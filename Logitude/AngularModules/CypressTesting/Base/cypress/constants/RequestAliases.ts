@@ -50,6 +50,7 @@ export class RequestAliases {
     public static readonly PostUpdateRequest = 'WaitPostUpdateRequest';
     public static readonly PostShippingline = 'WaitPostShippinglinesRequest';
     public static readonly PostUploadExcelFile = 'WaitUpload';
+    public static readonly DownloadFile = 'DownloadFile';
     public static readonly GetCarrierViews = "GetCarrierViews";
     public static readonly GetCardviews = "GetCardViews";
     public static readonly GetEntityResource = "EntityResourceShippingLineTable";
@@ -95,14 +96,21 @@ export class RequestAliases {
     public static readonly PostCountry="PostCountry"
     public static readonly PutCountry="PutCountry"
     public static readonly PutState="PutState"
-    
+    public static readonly PutCity="PutCity"
+
     public static readonly PostQuoteTemplate = "PostQuoteTemplate";
     public static readonly PutQuoteTemplate = "PutQuoteTemplate";
     public static readonly PutQuoteTemplateHeaderFields = "PutQuoteTemplateHeaderFields";
     public static readonly PutQuoteTemplateTextDesignPMs = "PutQuoteTemplateTextDesignPMs";
 
-    public static readonly PostCrossdock = "PostCrossdock";
-    public static readonly PutCrossdock = "PutCrossdock";
+    public static readonly PostCrossdockEntry = "PostCrossdockEntry";
+    public static readonly PutCrossdockEntry = "PutCrossdockEntry";
+
+    public static readonly PostCrossdockRelease="PostCrossdockRelease"
+    public static readonly PutCrossdockRelease = "PutCrossdockRelease";
+
+    public static readonly PostCurrencyRate = "PostCurrencyRate";
+    public static readonly GetCurrencyRate = "GetCurrencyRate";
 
     public static readonly GetSignle = "GetSignle"
     public static readonly GetByFilter = "GetByFilter"

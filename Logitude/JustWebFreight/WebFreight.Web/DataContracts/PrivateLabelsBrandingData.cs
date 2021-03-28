@@ -20,13 +20,13 @@ namespace WebFreight.Web.DataContracts
         public bool InActive { get; set; }
         public int Tenant { get; set; }
         public string BackgroundImageId { get; set; }
-        public string MainImageId { get; set; }
+        public string LoginImageId { get; set; }
         public string MainColor { get; set; }
         public string LoginProgressImageId { get; set; }
         public string ForgetPasswordImageId { get; set; }
 
         public byte[] BackgroundImageBytes { get; set; }
-        public byte[] MainImageBytes { get; set; } 
+        public byte[] LoginImageBytes { get; set; } 
         public byte[] LoginProgressImageBytes { get; set; }
         public byte[] ForgetPasswordImageBytes { get; set; }
         public string SecondaryColor { get; set; }
