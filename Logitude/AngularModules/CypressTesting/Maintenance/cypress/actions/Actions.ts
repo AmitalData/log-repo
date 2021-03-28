@@ -28,15 +28,14 @@ import { CountryDetails } from "../models/CountryDetails";
 import { EventTypeDetails } from "../../../Base/cypress/models/EventTypeDetails";
 import { StateDetails } from "../models/StateDetails";
 import { CityDetails } from "../models/CityDetails";
-//#region variables
-let inActiveCountry=false;
-let inActiveState=false;
-let inActiveCity=false;
 import { CurrencyDetails } from "../models/CurrencyDetails";
 import { QuoteSelectors } from "../../../Quote/cypress/selectors/Selectors";
 import { ShipmentSelectors } from "../../../Shipment/cypress/selectors/Selectors";
 import { ReceivableDetails } from "../../../Shipment/cypress/models/ReceivableDetails";
-
+//#region variables
+let inActiveCountry=false;
+let inActiveState=false;
+let inActiveCity=false;
 //#endregion
 //#region General Actions
 export function OpenMaintenanceMenu() {
