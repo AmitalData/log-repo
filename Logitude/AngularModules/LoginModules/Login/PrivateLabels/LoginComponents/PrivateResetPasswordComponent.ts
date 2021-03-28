@@ -14,8 +14,7 @@ import { PrivateLabelsBrandingDataService } from '../Services/PrivateLabelsBrand
 })
 export class PrivateResetPasswordComponent extends ResetPasswordComponent {
       
-    public authHeader;
-    private privateUrl;
+    public authHeader; 
     public MainColor: string = null;
     public BackgroundImage: string = "";
     public ForgetPasswordImage: string = "";
@@ -27,8 +26,7 @@ export class PrivateResetPasswordComponent extends ResetPasswordComponent {
         super(ss);
     }
 
-    ngOnInit() {
-        this.privateUrl = SessionInfo.GetLogitudeURL();
+    ngOnInit() { 
         this.GetPrivateLabelsData();
          
     }
@@ -36,7 +34,8 @@ export class PrivateResetPasswordComponent extends ResetPasswordComponent {
     GetPrivateLabelsData() {   
         this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage"); 
         this.MainLogo = BrandingDataService.GetImage("MainLogo");   
-        this.ForgetPasswordImage = BrandingDataService.GetImage("ForgetPasswordImage");       
+        this.ForgetPasswordImage = BrandingDataService.GetImage("ForgetPasswordImage"); 
+        this.MainColor = BrandingDataService.MainColor; 
      } 
   }
  

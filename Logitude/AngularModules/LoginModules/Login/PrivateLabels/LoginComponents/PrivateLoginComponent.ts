@@ -32,7 +32,7 @@ export class PrivateLoginComponent extends LoginComponent implements OnInit {
     ngOnInit() {
         this.get_cookie_data();
         this.privateUrl = SessionInfo.GetLogitudeURL();
-        // Get Images from storage, then request from server to change if there is an update
+        // Get Images from storage, then request from server to change
         this.GetImagesFromStorage();
          this.GetPrivateLabelsData(this.privateUrl);
     }
@@ -54,15 +54,9 @@ export class PrivateLoginComponent extends LoginComponent implements OnInit {
             if (response.Result) { 
                 BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
                 this.MainColor = response.Result.MainColor;
+                BrandingDataService.MainColor = this.MainColor;
                 this.GetLoginPageImages();  
-            }
-        },
-            (error) => {
-                this.BackgroundImage = BrandingDataService.DefaultBackground;
-                this.LoginImage = BrandingDataService.DefaultLoginImage;
-                this.MainLogo = BrandingDataService.DefaultMainLogo;
-            },
-        )
+            } })
         this.showSpinner = false;
     } 
 

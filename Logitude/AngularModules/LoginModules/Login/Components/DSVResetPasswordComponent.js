@@ -24,9 +24,9 @@ export var DSVResetPasswordComponent = (function (_super) {
         this.GetPrivateLabelsData();
     };
     DSVResetPasswordComponent.prototype.GetPrivateLabelsData = function () {
-        this.BackgroundImage = BrandingDataService.GetBackgroundImage();
-        this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage();
-        this.MainLogo = BrandingDataService.GetMainLogo();
+        this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
+        this.MainLogo = BrandingDataService.GetImage("MainLogo");
+        this.ForgetPasswordImage = BrandingDataService.GetImage("ForgetPasswordImage");
     };
     DSVResetPasswordComponent.decorators = [
         { type: Component, args: [{

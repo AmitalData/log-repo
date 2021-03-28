@@ -33,7 +33,8 @@ export class DSVLoginComponent extends LoginComponent implements OnInit {
         private privateLabelsBrandingDataService: PrivateLabelsBrandingDataService) {
         super(ss); 
     }
-    ngOnInit() { 
+
+    ngOnInit() {
         this.get_cookie_data();
         this.privateUrl = SessionInfo.GetLogitudeURL();
         // Get Images from storage, then request from server to change if there is an update
@@ -46,9 +47,11 @@ export class DSVLoginComponent extends LoginComponent implements OnInit {
     }
 
     private GetLoginPageImages() {
-        this.BackgroundImage = BrandingDataService.GetBackgroundImage();
-        this.MainLogo = BrandingDataService.GetMainLogo();
-        this.LoginImage = BrandingDataService.GetLoginImage();
+        this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
+        this.MainLogo = BrandingDataService.GetImage("MainLogo");
+        this.LoginImage = BrandingDataService.GetImage("LoginImage");
+        this.LoginImage = BrandingDataService.GetImage("LoginImage");
+        this.showSpinner = false;
     }
 
     GetPrivateLabelsData(privateUrl: string) {
@@ -57,16 +60,10 @@ export class DSVLoginComponent extends LoginComponent implements OnInit {
                 BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
                 this.MainColor = response.Result.MainColor;
                 this.GetLoginPageImages();
-            }
-        },
-            (error) => {
-                this.BackgroundImage = BrandingDataService.DefaultBackground;
-                this.LoginImage = BrandingDataService.DefaultLoginImage;
-                this.MainLogo = BrandingDataService.DefaultMainLogo;
-            },
-        )
+            }})
         this.showSpinner = false;
-    }
+    } 
+
     private ClearLocation() {
         if (SessionInfo.MainLocation) {
             SessionInfo.MainLocation.clear();

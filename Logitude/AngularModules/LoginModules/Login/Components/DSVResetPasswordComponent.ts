@@ -37,10 +37,10 @@ export class DSVResetPasswordComponent extends ResetPasswordComponent {
     }
 
 
-    GetPrivateLabelsData() {  
-         this.BackgroundImage = BrandingDataService.GetBackgroundImage(); 
-         this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage(); 
-         this.MainLogo = BrandingDataService.GetMainLogo();   
+    GetPrivateLabelsData() {
+        this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
+        this.MainLogo = BrandingDataService.GetImage("MainLogo");
+        this.ForgetPasswordImage = BrandingDataService.GetImage("ForgetPasswordImage")  
      }
           
 }

@@ -33,9 +33,11 @@ export var DSVLoginComponent = (function (_super) {
         this.GetLoginPageImages();
     };
     DSVLoginComponent.prototype.GetLoginPageImages = function () {
-        this.BackgroundImage = BrandingDataService.GetBackgroundImage();
-        this.MainLogo = BrandingDataService.GetMainLogo();
-        this.LoginImage = BrandingDataService.GetLoginImage();
+        this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
+        this.MainLogo = BrandingDataService.GetImage("MainLogo");
+        this.LoginImage = BrandingDataService.GetImage("LoginImage");
+        this.LoginImage = BrandingDataService.GetImage("LoginImage");
+        this.showSpinner = false;
     };
     DSVLoginComponent.prototype.GetPrivateLabelsData = function (privateUrl) {
         var _this = this;
@@ -45,10 +47,6 @@ export var DSVLoginComponent = (function (_super) {
                 _this.MainColor = response.Result.MainColor;
                 _this.GetLoginPageImages();
             }
-        }, function (error) {
-            _this.BackgroundImage = BrandingDataService.DefaultBackground;
-            _this.LoginImage = BrandingDataService.DefaultLoginImage;
-            _this.MainLogo = BrandingDataService.DefaultMainLogo;
         });
         this.showSpinner = false;
     };

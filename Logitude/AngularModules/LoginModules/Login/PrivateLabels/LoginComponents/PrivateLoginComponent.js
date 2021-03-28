@@ -26,7 +26,7 @@ export var PrivateLoginComponent = (function (_super) {
     PrivateLoginComponent.prototype.ngOnInit = function () {
         this.get_cookie_data();
         this.privateUrl = SessionInfo.GetLogitudeURL();
-        // Get Images from storage, then request from server to change if there is an update
+        // Get Images from storage, then request from server to change
         this.GetImagesFromStorage();
         this.GetPrivateLabelsData(this.privateUrl);
     };
@@ -46,12 +46,9 @@ export var PrivateLoginComponent = (function (_super) {
             if (response.Result) {
                 BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
                 _this.MainColor = response.Result.MainColor;
+                BrandingDataService.MainColor = _this.MainColor;
                 _this.GetLoginPageImages();
             }
-        }, function (error) {
-            _this.BackgroundImage = BrandingDataService.DefaultBackground;
-            _this.LoginImage = BrandingDataService.DefaultLoginImage;
-            _this.MainLogo = BrandingDataService.DefaultMainLogo;
         });
         this.showSpinner = false;
     };
@@ -62,7 +59,7 @@ export var PrivateLoginComponent = (function (_super) {
     };
     PrivateLoginComponent.prototype.ForgotPasswordClicked = function () {
         this.ClearLocation();
-        Tools.DynamicLoader.Load("/Login/PrivateLabels/LoginComponents/PrivateChangePasswordComponent", SessionInfo.MainLocation)
+        Tools.DynamicLoader.Load("/Login/PrivateLabels/LoginComponents/PrivateResetPasswordComponent", SessionInfo.MainLocation)
             .then(function (cmpRef) {
         });
     };

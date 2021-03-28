@@ -14,7 +14,7 @@ export class PrivateChangePasswordComponent extends ChangePasswordComponent {
      
     public BackgroundImage: string = "";
     public ForgetPasswordImage: string = ""; 
-    public MainLogo: string = "";  
+    public MainLogo: string = "";   
 
     constructor(public ss: PasswordChangeService, public ll: LoginService) {
         super(ss, ll); 
@@ -26,9 +26,9 @@ export class PrivateChangePasswordComponent extends ChangePasswordComponent {
     }
 
 
-    GetPrivateLabelsData() {  
-        this.BackgroundImage = BrandingDataService.GetBackgroundImage();
-        this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage();
-        this.MainLogo = BrandingDataService.GetMainLogo();   
+    GetPrivateLabelsData() {     
+        this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
+        this.MainLogo = BrandingDataService.GetImage("MainLogo");
+        this.ForgetPasswordImage = BrandingDataService.GetImage("ForgetPasswordImage");  
     }
 }

@@ -6,7 +6,6 @@ var __extends = (this && this.__extends) || function (d, b) {
 import { Component } from '@angular/core';
 import { ResetPasswordComponent } from '../../Components/ResetPasswordComponent';
 import { LoginService } from '../../LoginService';
-import { SessionInfo } from '../../SessionInfo';
 import { BrandingDataService } from '../Services/BrandingDataService';
 export var PrivateResetPasswordComponent = (function (_super) {
     __extends(PrivateResetPasswordComponent, _super);
@@ -21,13 +20,13 @@ export var PrivateResetPasswordComponent = (function (_super) {
         this.ContactUsEmail = sessionStorage.getItem('ContactEmail');
     }
     PrivateResetPasswordComponent.prototype.ngOnInit = function () {
-        this.privateUrl = SessionInfo.GetLogitudeURL();
         this.GetPrivateLabelsData();
     };
     PrivateResetPasswordComponent.prototype.GetPrivateLabelsData = function () {
         this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
         this.MainLogo = BrandingDataService.GetImage("MainLogo");
         this.ForgetPasswordImage = BrandingDataService.GetImage("ForgetPasswordImage");
+        this.MainColor = BrandingDataService.MainColor;
     };
     PrivateResetPasswordComponent.decorators = [
         { type: Component, args: [{
