@@ -10,13 +10,13 @@
     "env": {
         "Mode": "Development"
     },
-    "defaultCommandTimeout": 120000,
+    "defaultCommandTimeout": 300000,
     "responseTimeout": 180000,
     "requestTimeout": 180000,
     "video": false,
     "screenshotOnRunFailure": true,
     "screenshots": true,
-    "trashAssetsBeforeRuns": false,
+    "trashAssetsBeforeRuns": true,
     "reporter": "cypress-multi-reporters",
     "reporterOptions": {
         "reporterEnabled": "mochawesome",

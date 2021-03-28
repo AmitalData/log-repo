@@ -5,12 +5,10 @@ import { PrivateLabelsImage } from '../DataContracts/PrivateLabelsImage';
 
 export class BrandingDataService {
      
-    public static DefaultBackground: string = "url('./Images/LoginScreen/map.png')";
-    public static DefaultLoginImage: string = "url('./Images/LoginScreen/screen_trucks.jpg')";
-    public static DefaultLoginProgress: string = "url('./Images/LoginScreen/screen_kids.jpg')";
-    public static DefaultForgetPassword: string = "url('./Images/LoginScreen/screen_kids.jpg')";
-    public static DefaultMainLogo: string = "./Images/LoginScreen/header.jpg";
-    public static DefaultSmallLogo: string = "./Images/LoginScreen/sheader.jpg"; 
+ 
+     
+    
+    public static DefaultLoginImage: string = "url('./Images/LoginScreen/screen_trucks.jpg')"; 
     // need static variables for SecondaryColor and MainColor 
     public static DefaultImages = [
         { id: "BackgroundImage", image: "url('./Images/LoginScreen/map.png')" },
@@ -20,6 +18,13 @@ export class BrandingDataService {
         { id: "MainLogo", image: "./Images/LoginScreen/header.jpg" },
         { id: "SmallLogo", image: "./Images/LoginScreen/sheader.jpg" },
     ];
+ 
+    public static DefaultBackground: string = "url('./Images/PrivateLabel/Background.png')";
+    public static DefaultMainImage: string = "url('./Images/PrivateLabel/MainImage.png')";
+    public static DefaultLoginProgress: string = "url('./Images/PrivateLabel/MainImage.png')";
+    public static DefaultForgetPassword: string = "url('./Images/PrivateLabel/MainImage.png')";
+    public static DefaultMainLogo: string = "./Images/PrivateLabel/LogBoxLogo.png";
+    public static DefaultSmallLogo: string = "./Images/PrivateLabel/LogBoxLogo.png";  
 
     constructor() {
 

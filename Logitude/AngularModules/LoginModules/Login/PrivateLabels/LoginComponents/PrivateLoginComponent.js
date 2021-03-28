@@ -62,7 +62,7 @@ export var PrivateLoginComponent = (function (_super) {
     };
     PrivateLoginComponent.prototype.ForgotPasswordClicked = function () {
         this.ClearLocation();
-        Tools.DynamicLoader.Load("/Login/PrivateLabels/LoginComponents/PrivateResetPasswordComponent", SessionInfo.MainLocation)
+        Tools.DynamicLoader.Load("/Login/PrivateLabels/LoginComponents/PrivateChangePasswordComponent", SessionInfo.MainLocation)
             .then(function (cmpRef) {
         });
     };

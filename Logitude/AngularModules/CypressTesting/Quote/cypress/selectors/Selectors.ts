@@ -1,12 +1,14 @@
 export class QuoteSelectors {
      //#region Create
      public static readonly CreateQuote = '#CreateQuote';
+     public static readonly QuoteCharges = '#QuoteTHCharges';
      public static readonly NewQuote = '#NewQuote';
      public static readonly QuoteShipper = '#Quote_ShipperId';
      public static readonly QuoteConsignee = '#Quote_ConsigneeId';
      public static readonly QuoteFromPort = '#Quote_FromPortId';
      public static readonly QuoteToPort = '#Quote_ToPortId';
      public static readonly QuoteCustomerType = '#Quote_QuoteCustomerTypeCode';
+     public static readonly QuoteAddCharges = '#AddCharges';
      //#endregion
      //#region Quick Search
      public static readonly QuoteSearch = '#Quote_Search';
@@ -49,8 +51,16 @@ export class QuoteSelectors {
      public static readonly CopiedQuotePartnersTab = "li[id^='QuoteTHPartners_']";
      public static readonly CopiedQuotePackagesTab = "li[id^='QuoteTHPackages_']";
      public static readonly CopiedQuoteRoutingTab = "li[id^='QuoteTHRoutings_']";
+     //#endregion
+
+     //#region Charges 
+     public static readonly QuoteChargeCostCurrency = "#QuoteCharge_CostCurrencyId";
+     public static readonly QuoteChargeCostExchangeRate = "#QuoteCharge_CostExchangeRate";
+     public static readonly QuoteCancelAddCharges = "#CancelAddCharges";
+     public static readonly ContaintsQuote = "Quotes";
 
      //#endregion
+
      //#region Regex selectors
      public static PackageLineSelector(Selector: string, lineNumber: number): string {
           return lineNumber > 0 ? Selector + '_' + lineNumber : Selector;

@@ -33,6 +33,12 @@ export class Urls {
     public static readonly States = "**/states"
     public static readonly StatesGetSingle = "**/states/getsingle?**";
 
+    public static readonly CurrencyRate = "**/ratestables"
+    public static readonly GetCurrenciesExchangeRateValue = "**/GetCurrenciesExchangeRateByValueDate?**"
+    public static readonly ratestableviewsGetByFilter = "**/ratestableviews/getbyfilters?**"
+
+
+
     public static GetFilterSearch(filterBy: string) {
         return '**/getbyfilters?**' + filterBy + '**'
     }

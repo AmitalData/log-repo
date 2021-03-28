@@ -380,6 +380,10 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         }
     }
 
+    GetMainCustomerFieldName() {
+        return 'GLAccountId';
+    }
+
     IsPartnersChanged(SelectedTab) {
         if (SelectedTab == '2')
             this.GLAccountChanged = false;

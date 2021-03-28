@@ -1,11 +1,16 @@
-export interface CrossdockDetails {
+export interface CrossDockDetails {
     Warehouse: string,
+    Status: string,
+    EntryNumber: string,
+    ReleaseNumber: string,
+    EntryDate: string,
+    ReleaseDate: string,
     ExpectedEntryDate: string,
+    ExpectedReleaseDate: string,
     ExpectedEntryTime: string,
-    ActualEntryDate: string,
     ActualEntryTime: string,
-    EntryNumber:string,
-    ReleaseNumber:string,
-    EntryDate:string,
-    Status:string,
+    ActualEntryDate: string,
+    ActualReleaseDate: string,
+    ExpectedReleaseTime: string,
+    ActualReleaseTime: string,
 }
