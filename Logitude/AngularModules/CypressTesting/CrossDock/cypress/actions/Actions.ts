@@ -206,7 +206,11 @@ export function ValidateRoutingsReleaseFields(releaseDetails: CrossDockDetails) 
 }
 export function AddDelivery() {
     cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
+    cy.DefineRequestWait(RestAPI.GET, URLs.CardViews, RequestAliases.CardViewsRequest)
+    cy.DefineRequestWait(RestAPI.GET, URLs.AddressViews, RequestAliases.AddressViewsRequest)
     cy.Click(CrossdockSelectors.WarehouseReleaseCreateDeliveryButton, null)
+    BaseAssertion.AssertStatusCode(RequestAliases.CardViewsRequest, 200)
+    BaseAssertion.AssertStatusCode(RequestAliases.AddressViewsRequest, 200)
     cy.Click(BaseSelectors.SaveCloseButton, null)
 }
 export function AssertAddDelivery() {
