@@ -124,7 +124,14 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             GLAccountPM account = gLAccountQueryService.GetSinglePM(interestReportPM.GLAccountId, interestReportPM.Tenant);
             interestReportPM.CreditAllotmentPercentage = account != null ? account.CreditAllotmentPercentage : null;
         }
-
+        private DateTime GetFirstTransactionDate(InterestTransactionPM firstTransaction, CloseBalanceInterestReportData previousInterestReport)
+        {
+            if (previousInterestReport != null)
+            {
+                return firstTransaction.InterestValueDate.Date.AddDays(1);
+            }
+            else return firstTransaction.InterestValueDate.Date;
+        }
         private void CreateOpenBalanceInterestTransaction()
         {
             CloseBalanceInterestReportData previousInterestReport = GetCloseBalanceCalculationDateAndStatusOfTheLastInterestReport();
@@ -132,11 +139,9 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             InterestTransactionPM firstTransaction = interestTransactionPMs.OrderBy(d => d.InterestValueDate).FirstOrDefault();
             DateTime previousInterestReportCalculationDate = GetOpenBalanceInterestValueDate(previousInterestReport);
             DateTime date = firstTransaction.InterestValueDate.Date;
-            if (previousInterestReport != null)
-            {
-                 date = firstTransaction.InterestValueDate.Date.AddDays(1);
-            }
-            if (OpenBalanceTransaction == null && (firstTransaction == null || previousInterestReportCalculationDate != date))
+            DateTime firstTransactionDate = GetFirstTransactionDate(firstTransaction, previousInterestReport);
+          
+            if (OpenBalanceTransaction == null && (firstTransaction == null || previousInterestReportCalculationDate != firstTransactionDate))
             {
                 CreateNewInterestTransactionPM(previousInterestReportCalculationDate, previousInterestReport?.Id);
                 //if (previousInterestReport != null)
