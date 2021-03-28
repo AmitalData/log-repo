@@ -5,15 +5,30 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 import { Component } from '@angular/core';
 import { LoginService } from '../LoginService';
+import { SessionInfo } from '../SessionInfo';
 import { PasswordChangeService } from '../PasswordChangeService';
 import { ChangePasswordComponent } from './ChangePasswordComponent';
+import { BrandingDataService } from '../PrivateLabels/Services/BrandingDataService';
 export var DSVChangePasswordComponent = (function (_super) {
     __extends(DSVChangePasswordComponent, _super);
     function DSVChangePasswordComponent(ss, ll) {
         _super.call(this, ss, ll);
         this.ss = ss;
         this.ll = ll;
+        this.BackgroundImage = "";
+        this.ForgetPasswordImage = "";
+        this.MainLogo = "";
+        this.ContactUsEmail = "";
     }
+    DSVChangePasswordComponent.prototype.ngOnInit = function () {
+        this.privateUrl = SessionInfo.GetLogitudeURL();
+        this.GetPrivateLabelsData();
+    };
+    DSVChangePasswordComponent.prototype.GetPrivateLabelsData = function () {
+        this.BackgroundImage = BrandingDataService.GetBackgroundImage();
+        this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage();
+        this.MainLogo = BrandingDataService.GetMainLogo();
+    };
     DSVChangePasswordComponent.decorators = [
         { type: Component, args: [{
                     selector: 'DSVChangePasswordComponent',

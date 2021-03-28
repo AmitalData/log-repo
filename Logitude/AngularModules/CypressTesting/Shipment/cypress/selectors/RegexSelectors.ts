@@ -6,7 +6,7 @@ export class RegexSelectors {
     public static readonly ShipmentEventTab= "li[id^='ShipmentTHEvents_']"
     public static readonly Shipment_GrossWeight= "input[id^='Shipment_GrossWeight_']"
     public static readonly ShipmentNumberInTitle= "div[data-cy^='ShipmentNumber']"
-
+    public static readonly RoutingDeliveryLeg='[data-cy^="Routing_Delivery"]'
     public static DirectionRadio(direction: string): string {
         return "input[id^='DirectionRadio_'][id$='" + ShipmentMapping.GetDirectionCode(direction) + "']";
     }

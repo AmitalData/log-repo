@@ -111,11 +111,16 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     public get Customer() { return this.customer; }
     public set Customer(value: string) {
         if (this.customer != value) {
+            this.SetGLAccountChanged(this.customer);
             this.customer = value;
-
             this.DimAndResetCategoryFields(value);
 
         }
+    }
+
+    private SetGLAccountChanged(value: string) {
+        if (value != undefined)
+            this.GLAccountChanged = true;
     }
 
     private chartOfAccount: string;
@@ -172,6 +177,11 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
         }
         return true;
     }
+
+    GetMainCustomerFieldName() {
+        return 'CustomerId';
+    }
+
     IsPartnersChanged(SelectedTab) {
         if (SelectedTab == '2')
             this.GLAccountChanged = false;
@@ -201,7 +211,7 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     public set Collector(value: string) {
         if (this.collector != value) {
             this.collector = value;
-            this.GLAccountChanged = true;
+            //this.GLAccountChanged = true;
         }
     }
 

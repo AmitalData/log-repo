@@ -36,29 +36,29 @@
                         <table>
                             <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
 
-                                <td class="GridViewCell" style="width: 100px;min-width: 100px">
+                                <td class="GridViewCell" style="width: 100px;min-width: 100px" attr.data-cy="{{item.Code}}">
                                     {{item.Code}}
                                 </td>
 
-                                <td class="GridViewCell" style="width: 100px;min-width: 100px">
+                                <td class="GridViewCell" style="width: 100px;min-width: 100px" attr.data-cy="{{'Date_' + item.Code}}">
                                     {{item.CurrentValueDate | DateTimeToDatePipe}}
                                 </td>
 
-                                <td class="GridViewCell" style="width: 140px;min-width: 140px">
+                                <td class="GridViewCell" style="width: 140px;min-width: 140px" attr.data-cy="{{'Rate_' + item.Code}}">
                                     <table class="FixedTable">
                                         <tr>
                                             <td style="width:10px;overflow:hidden;"> 1 </td>
                                             <td style="width:30px;overflow:hidden;"> {{item.Code}}</td>
                                             <td style="width:15px;overflow:hidden;"> = </td>
-                                            <td style="width:55px;overflow:hidden;"> {{item.CurrentRate | RatesNumbersPipe:'N5'}} </td>
+                                            <td style="width:55px;overflow:hidden;" attr.data-cy="{{'CurrentRate_' + item.Code}}"> {{item.CurrentRate | RatesNumbersPipe:'N5'}} </td>
                                             <td style="width:30px;overflow:hidden;"> {{item.LocalCode}} </td>
                                         </tr>
                                     </table>
                                 </td>
 
                                 <td style="width: 130px;min-width: 130px">
-                                    <IconButton [Name]="'Edit'" [IsSmall]="true" style="display: block; float: left; margin-top:3px; margin-right:5px;margin-left:3px;" (click)="EditRate(item)"></IconButton>
-                                    <button type="button" style="width:95px; margin-left:3px; float: left" class="Button" (click)="ViewHistory(item)" [disabled]="!item.ViewHistoryIsEnabled">
+                                    <IconButton [Name]="'Edit'" [IsSmall]="true" style="display: block; float: left; margin-top:3px; margin-right:5px;margin-left:3px;" (click)="EditRate(item)" attr.data-cy="{{'EditButton_' + item.Code}}" ></IconButton>
+                                    <button type="button" style="width:95px; margin-left:3px; float: left" class="Button" (click)="ViewHistory(item)" [disabled]="!item.ViewHistoryIsEnabled" attr.data-cy="{{'HistoryButton_' + item.Code}}" >
                                         <table>
                                             <tr>
                                                 <td style="width: 14px; height: 14px;">

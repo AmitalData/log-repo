@@ -27,7 +27,6 @@ export var DSVLoginComponent = (function (_super) {
         this.get_cookie_data();
         this.privateUrl = SessionInfo.GetLogitudeURL();
         this.GetPrivateLabelsData(this.privateUrl);
-        this.showSpinner = false;
     };
     DSVLoginComponent.prototype.GetPrivateLabelsData = function (privateUrl) {
         var _this = this;

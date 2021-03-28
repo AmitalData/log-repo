@@ -12,5 +12,6 @@ export class Urls
     public static readonly GetCarrierViews = "**/carrierviews/**";
     public static readonly GetCardviews = "**/cardviews/**";
     public static readonly GetEntityResource = "**/EntityResource?objectTableName=ShippingLine&tenant=0";
+    public static readonly GetDownloadTariff = "**/GetDownloadTariff?**";
 
 }

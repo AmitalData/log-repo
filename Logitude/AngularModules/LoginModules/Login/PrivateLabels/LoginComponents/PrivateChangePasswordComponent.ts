@@ -1,0 +1,34 @@
+﻿import { Component } from '@angular/core';  
+import { ChangePasswordComponent } from '../../Components/ChangePasswordComponent';
+import { LoginService } from '../../LoginService';
+import { PasswordChangeService } from '../../PasswordChangeService';  
+import { BrandingDataService } from '../Services/BrandingDataService'; 
+
+@Component({
+    selector: 'PrivateChangePasswordComponent',
+    moduleId: './Login/Components/',
+    templateUrl: 'PrivateChangePasswordComponent.html',
+    styleUrls: ['PrivateChangePasswordComponent.css']
+})
+export class PrivateChangePasswordComponent extends ChangePasswordComponent {
+     
+    public BackgroundImage: string = "";
+    public ForgetPasswordImage: string = ""; 
+    public MainLogo: string = "";  
+
+    constructor(public ss: PasswordChangeService, public ll: LoginService) {
+        super(ss, ll); 
+
+    }
+
+    ngOnInit() { 
+        this.GetPrivateLabelsData();
+    }
+
+
+    GetPrivateLabelsData() {  
+        this.BackgroundImage = BrandingDataService.GetBackgroundImage();
+        this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage();
+        this.MainLogo = BrandingDataService.GetMainLogo();   
+    }
+}
