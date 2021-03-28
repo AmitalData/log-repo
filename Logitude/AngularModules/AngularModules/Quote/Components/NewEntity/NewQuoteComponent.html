@@ -107,7 +107,7 @@
                                             <div style="font-size: 13px; color: #6E7172;">{{'Quote.F.DirectionId' | TextCodeTranslationPipe}}:</div>
                                             <div style="margin-top: -2px;">
                                                 <div class="RadioButton" *ngFor="let item of DirectionsList">
-                                                    <input [attr.id]="'DirectionRadio_' + SessionIndex + item.Code" type="radio" [attr.name]="'DirectionsRadio' + SessionIndex" [checked]="DirectionId == item.Code" (click)="DirectionId = item.Code" />
+                                                    <input [attr.id]="'DirectionRadio_' + SessionIndex + item.Code" type="radio" [attr.name]="'DirectionsRadio' + SessionIndex" [checked]="DirectionId == item.Code" (click)="DirectionId = item.Code" [disabled]="ConvertTransportMode"/>
                                                     <label [attr.for]="'DirectionRadio_' + SessionIndex + item.Code" style="text-indent: 40px; font-size: 12px" [ngStyle]="{color: DirectionId == item.Code ? '#287828':'#282E30'}">
                                                         <img class="LeftCenter" style="margin-left: 20px;" [attr.src]="'./Images/Directions/' + item.Code + '.png'" />
                                                         {{item.Name}}
