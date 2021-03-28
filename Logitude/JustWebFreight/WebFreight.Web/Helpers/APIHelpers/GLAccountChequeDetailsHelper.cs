@@ -2,6 +2,7 @@
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityLists;
@@ -21,6 +22,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
         CurrencyQueryService CurrencyQuery;
         List<ARPaymentChequeReplicaPM> paymentCheques;
         List<Cheque> cheques;
+        List<LedgerTransaction> externalTransactions;
         int tenant;
         public GLAccountChequeDetailsHelper(int Tenant)
         {
@@ -28,18 +30,22 @@ namespace WebFreight.Web.Helpers.APIHelpers
             CurrencyQuery = new CurrencyQueryService(tenant);
             cheques = new List<Cheque>();
         }
-      
+
         public GLAccountChequeDetails GetLAccountChequeDetails(string number)
         {
             GLAccountPM gLAccount = GetGLAccountByNumber(number, tenant);
             List<CardList> cards = GetGLaccountConnectedCards(gLAccount);
-            List<LedgerTransaction>  externalTransactions = GetGLaccountConnectedExternalTransactions(gLAccount);
+             externalTransactions = GetGLaccountConnectedExternalTransactions(gLAccount);
             foreach (CardList card in cards)
             {
-                paymentCheques= GetCardPaymentCheques(card);
+                paymentCheques = GetCardPaymentCheques(card);
                 FillARPaymentChequesList(paymentCheques);
             }
-            GLAccountChequeDetails gLAccountChequeDetails = new GLAccountChequeDetails()
+            return MapGLAccountChequeFields(gLAccount);
+        }
+      private GLAccountChequeDetails MapGLAccountChequeFields(GLAccountPM gLAccount)
+        {
+            return new GLAccountChequeDetails()
             {
                 DisplayNumber = gLAccount.DisplayNumber,
                 Id = gLAccount.Id,
@@ -50,9 +56,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 GLaccountCheques = cheques,
                 ExternalTransactions = externalTransactions
             };
-            return gLAccountChequeDetails;
+          
         }
-     
         private GLAccountPM GetGLAccountByNumber(string internalNumber, int tenant)
         {
             Logitude.Accounting.BL.EntityQueryServices.GLAccountQueryService Service = new Logitude.Accounting.BL.EntityQueryServices.GLAccountQueryService(tenant);
