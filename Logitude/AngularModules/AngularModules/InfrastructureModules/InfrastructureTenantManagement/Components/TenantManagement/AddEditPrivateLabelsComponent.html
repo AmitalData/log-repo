@@ -132,9 +132,16 @@
         overflow: auto;
     }
     .ImageSize {
+        font-size: 11px; 
+        top: 65px;
         position: relative;
-        bottom: 60px;
+        left: 10px;
+    }
+
+    .LogoImageSize {
         font-size: 11px;
+        bottom: 65px;
+        position: relative;
         left: 10px;
     }
 </style>
@@ -376,7 +383,7 @@
 
                                                     <!-- Image Display -->
                                                     <td> 
-                                                        <span class="ImageSize"> size: (239X85 pixels)  </span>
+                                                        <span class="LogoImageSize"> Size: (239X85 pixels)  </span>
                                                     </td>
                                                     <td style="vertical-align:top">
                                                         <div style="width:300px;vertical-align:top; border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:5px">
@@ -468,8 +475,9 @@
                                         <td style="width:180px;height:22px; vertical-align:top">
                                             <span class="ImageName">
                                                 <LogLabel [Text]="'Background Image'" [ObjectFieldName]="'BackgroundImageId'" [ObjectTableName]="'ObjectTableName'"
-                                                          [DataContext]="DataContext"></LogLabel> Size: (1530X765 pixels)
+                                                          [DataContext]="DataContext"></LogLabel>
                                             </span>
+                                            <span class="ImageSize">Size: (1530X765 pixels)</span>
                                         </td>
 
                                         <td style="vertical-align:top; overflow:hidden;">
@@ -491,10 +499,11 @@
                                         <td style="width:180px;height:22px; vertical-align:top">
                                             <span class="ImageName">
                                                 <LogLabel [Text]="'Login Image'" [ObjectFieldName]="'LoginImageId'" [ObjectTableName]="'ObjectTableName'"
-                                                          [DataContext]="DataContext"></LogLabel> Size: (864X260 pixels)
+                                                          [DataContext]="DataContext"></LogLabel>
 
                                             </span>
-                                            
+                                            <span class="ImageSize">Size: (864X260 pixels)</span>
+
                                         </td>
 
                                         <td style="vertical-align:top; overflow:hidden;">
@@ -522,8 +531,9 @@
                                         <td style="width:180px;height:22px; vertical-align:top">
                                             <span class="ImageName">
                                                 <LogLabel [Text]="'Login Progress Image'" [ObjectFieldName]="'LoginProgressImageId'" [ObjectTableName]="'ObjectTableName'"
-                                                          [DataContext]="DataContext"></LogLabel> Size: (980X260 pixels)
+                                                          [DataContext]="DataContext"></LogLabel> 
                                             </span>
+                                            <span class="ImageSize">Size: (980X260 pixels)</span>
                                         </td>
 
                                         <td style="vertical-align:top; overflow:hidden;">
@@ -545,8 +555,9 @@
                                         <td style="width:180px;height:22px; vertical-align:top">
                                             <span class="ImageName">
                                                 <LogLabel [Text]="'Forget Password Image'" [ObjectFieldName]="'ForgetPasswordImageId'" [ObjectTableName]="'ObjectTableName'"
-                                                          [DataContext]="DataContext"></LogLabel> Size: (894X267 pixels)
+                                                          [DataContext]="DataContext"></LogLabel>  
                                             </span>
+                                            <span class="ImageSize">Size: (894X267 pixels)</span>
                                         </td>
 
                                         <td style="vertical-align:top; overflow:hidden;">
