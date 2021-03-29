@@ -17,7 +17,7 @@ export var PrivateResetPasswordComponent = (function (_super) {
         this.ForgetPasswordImage = "";
         this.Id = "";
         this.MainLogo = "";
-        this.ContactUsEmail = sessionStorage.getItem('ContactEmail');
+        this.ContactUsEmail = "mailto:" + sessionStorage.getItem('ContactEmail');
     }
     PrivateResetPasswordComponent.prototype.ngOnInit = function () {
         this.GetPrivateLabelsData();

@@ -20,7 +20,7 @@ export class PrivateResetPasswordComponent extends ResetPasswordComponent {
     public ForgetPasswordImage: string = "";
     public Id = "";
     public MainLogo: string = "";
-    public ContactUsEmail: string = sessionStorage.getItem('ContactEmail'); 
+    public ContactUsEmail: string = "mailto:"+sessionStorage.getItem('ContactEmail'); 
     constructor(
         private ss: LoginService) {
         super(ss);

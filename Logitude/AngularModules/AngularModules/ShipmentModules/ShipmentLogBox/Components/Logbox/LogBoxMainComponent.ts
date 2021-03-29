@@ -105,12 +105,12 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             let AgentName = SessionLocator.PrivateLableSettings.PrivateLabelShortName;
             this.LogoURL = "data:image/JPEG;base64," + SessionLocator.PrivateLableSettings.MainLogo;
             this.MainColor = SessionLocator.PrivateLableSettings.MainColor;
-            this.SecondaryColor = SessionLocator.PrivateLableSettings.SecondaryColor;
-            this.SelectedFilter = this.AgentShipmentsLabel;
+            this.SecondaryColor = SessionLocator.PrivateLableSettings.SecondaryColor; 
             this.RequestedDocsLable = "Action Required";
             this.RefTemplateWidth = this.ToggleIsExportShipments ? '150px' : '120px'; 
             this.setAgentLabelClass(AgentName);
-            this.AgentShipmentsLabel = this.getAgentShipmentsLabel(AgentName);  
+            this.AgentShipmentsLabel = this.getAgentShipmentsLabel(AgentName);
+            this.SelectedFilter = this.AgentShipmentsLabel;
         }
         else {
             this.RefTemplateWidth = this.ToggleIsExportShipments ? '250px' : '220px';
