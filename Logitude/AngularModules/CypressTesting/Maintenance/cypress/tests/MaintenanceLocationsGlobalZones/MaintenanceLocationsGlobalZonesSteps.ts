@@ -44,12 +44,12 @@ Then("the global zone should add successfully", () => {
 //#endregion
  
 //#region Search for the global zone by name
-When("search for {string} global zone", (globalZoneName) => {
-    MaintenanceActions.SearchGlobalZone(globalZoneName)
+When("search for global zone", () => {
+    MaintenanceActions.SearchGlobalZone()
 });
  
-Then("the {string} global zone should appear successfully", (globalZoneName) => {
-    MaintenanceActions.AssertSearchGlobalZone(globalZoneName) 
+Then("the global zone should appear successfully", () => {
+    MaintenanceActions.AssertSearchGlobalZone() 
 });
  
 //#endregion
@@ -70,7 +70,7 @@ Given("a {string} as globalZoneLocalName", (globalZoneLocalName) => {
     MaintenanceActions.FillGlobalZoneLocalName(globalZoneLocalName)
 });
  
-Given("the user change InactiveGlobalZone check box", () => {
+Given("the user activate global zone", () => {
     MaintenanceActions.ChangeInactiveCheckBoxValue(MaintenanceSelectors.InActiveGlobalZoneCheckBox)
 });
  
@@ -84,7 +84,6 @@ Then("the global zone should update successfully", () => {
  
 Then("following event should appear in events tab", (dataTable) => {
     let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
-    eventDetailsList = MaintenanceActions.GlobalZoneConversionEventsMapping(eventDetailsList)
     BaseActions.ValidateEventsTab(eventDetailsList, MaintenanceSelectors.GlobalZoneEventsTab);
 });
  

@@ -1,6 +1,6 @@
 @release @dev @all
 Feature: Create Global Zone, Inactivate and activate it from Maintenance
-    This scenario the user creates a Global Zone, Inactivates it,
+    The user creates a Global Zone, Inactivates it,
     selects it to edit and activates it from the Maintenance module.
 
     Scenario: Add GlobalZoneCode with lenght more than 8
@@ -10,16 +10,16 @@ Feature: Create Global Zone, Inactivate and activate it from Maintenance
 
     Scenario: Add global zone
         Given a global zone with the following details
-            | GlobalZoneCode      | GZCode                  |
-            | GlobalZoneName      | TestGlobalZoneName      |
-            | GlobalZoneLocalName | TestGlobalZoneLocalName |
-            | InactiveGlobalZone  | Yes                     |
+            | GlobalZoneCode      | random |
+            | GlobalZoneName      | random |
+            | GlobalZoneLocalName | random |
+            | InactiveGlobalZone  | Yes    |
         When add global zone
         Then the global zone should add successfully
 
     Scenario: Search for the global zone by name
-        When search for "TestGlobalZone" global zone
-        Then the "TestGlobalZone" global zone should appear successfully
+        When search for global zone
+        Then the global zone should appear successfully
 
     Scenario: Open the global zone
         When open global zone
@@ -27,9 +27,9 @@ Feature: Create Global Zone, Inactivate and activate it from Maintenance
 
     Scenario: Edit the global zone
         Given a "random" as globalZoneLocalName
-        Given the user change InactiveGlobalZone check box
+        And  the user activate global zone
         When edit global zone
         Then the global zone should update successfully
-        Then following event should appear in events tab
-            | Event               | Notes                |
-            | Global Zone Updated | Global Zone "status" |
+        And following event should appear in events tab
+            | Event               | Notes                 |
+            | Global Zone Updated | Global Zone Activated |

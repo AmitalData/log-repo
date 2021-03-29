@@ -36,6 +36,7 @@ import { ReceivableDetails } from "../../../Shipment/cypress/models/ReceivableDe
 //#region variables
 let CityName=null;
 let StateName=null;
+let GlobalZoneName=null;
 let inActiveCountry=false;
 let inActiveState=false;
 let inActiveCity = false;
@@ -1352,30 +1353,48 @@ export function FillGlobalZoneCode(GlobalZoneCode:string){
     cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneCode , GlobalZoneCode)
 }
 export function FillGlobalZoneDetails(globalZoneDetails:GlobalZoneDetails){
-    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneCode, globalZoneDetails.GlobalZoneCode)
-    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneEnglishName, globalZoneDetails.GlobalZoneName)
-    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneLocalName, globalZoneDetails.GlobalZoneLocalName)
+    var RandomGlobalZoneNumber=GetRandomGlobalZoneCodeNumber();
+    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneCode, globalZoneDetails.GlobalZoneCode.toLowerCase() == "random"?RandomGlobalZoneNumber:globalZoneDetails.GlobalZoneCode)
+    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneEnglishName, globalZoneDetails.GlobalZoneName.toLowerCase() == "random"?RandomGlobalZoneNumber:globalZoneDetails.GlobalZoneName)
+    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneLocalName, globalZoneDetails.GlobalZoneLocalName.toLowerCase() == "random"?RandomGlobalZoneNumber:globalZoneDetails.GlobalZoneName)
     FillCheckBoxProcess(MaintenanceSelectors.InActiveGlobalZoneCheckBox,globalZoneDetails.InactiveGlobalZone)
 }
+function GetRandomGlobalZoneCodeNumber(){
+    return gr.GenerateRandomNumberAndString(8);
+    }
 export function CreateGlobalZone() {
-    DefinePostGlobalZoneMockRequest()
-    DefineGetByFilterRequest()
+    DefinePostGlobalZoneRequest()
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
 }
 
-function DefinePostGlobalZoneMockRequest() {
-    cy.intercept(RestAPI.POST, Urls.GlobalZones, [true])
+function DefinePostGlobalZoneRequest() {
+    cy.DefineRequestWait(RestAPI.POST, Urls.GlobalZones, RequestAliases.PostGlobalZone)
 }
 
 export function AssertCreateGlobalZone() {
-    AssertMockPostGlobalZone();
-    AssertGetByFilters();
+    let intercept = cy.wait("@" + RequestAliases.PostGlobalZone);
+    intercept.then((interception) => {
+        if (interception.response.statusCode === 400) {
+            ReCreateGlobalZone();
+        }
+        else{
+            AssertPostGlobalZone(interception.response.statusCode, 200,interception.response.body.EnglishName) 
+        }        
+    }) 
 }
-
-export function AssertMockPostGlobalZone() {
-    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow)
+function ReCreateGlobalZone(){
+    let globalZoneCode=  GenerateRandomNumber(8);
+    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneCode , globalZoneCode)
+    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneEnglishName , globalZoneCode)
+    cy.FillLogTextBox(MaintenanceSelectors.GlobalZoneLocalName , globalZoneCode)
+    CreateGlobalZone();
+    AssertCreateGlobalZone();
 }
-export function SearchGlobalZone(GlobalZoneName: string) {
+export function AssertPostGlobalZone(responseStatusCode: number, expectedStatusCode: number,globalZoneName:string) {
+    assert.equal(responseStatusCode, expectedStatusCode)
+    GlobalZoneName=globalZoneName
+}
+export function SearchGlobalZone() {
     DefineGlobalZoneViewsGetByFiltersRequest(GlobalZoneName);
     cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, GlobalZoneName);
     AsserGlobalZoneViewsGetByFilters();
@@ -1386,7 +1405,7 @@ export function DefineGlobalZoneViewsGetByFiltersRequest(GlobalZoneName: string)
 export function AsserGlobalZoneViewsGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
 }
-export function AssertSearchGlobalZone(GlobalZoneName: string) {
+export function AssertSearchGlobalZone() {
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
         expect(text).to.contain(GlobalZoneName);
     });
@@ -1430,10 +1449,6 @@ export function AssertPutGlobalZone() {
         then((interception) => {
             inActiveGlobalZone= interception.response.body.InActive;
         });
-}
-export function GlobalZoneConversionEventsMapping(eventDetailsList: EventTypeDetails[]): EventTypeDetails[] {
-    ConversionEventsMapping(eventDetailsList,inActiveGlobalZone)
-    return eventDetailsList;
 }
 
 //#endregion
