@@ -22,6 +22,7 @@ export var PrivateLoginComponent = (function (_super) {
         this.MainLogo = "";
         this.SmallLogo = "";
         this.showSpinner = true;
+        this.IsDSV = false;
     }
     PrivateLoginComponent.prototype.ngOnInit = function () {
         this.get_cookie_data();
@@ -29,6 +30,7 @@ export var PrivateLoginComponent = (function (_super) {
         // Get Images from storage, then request from server to change
         this.GetImagesFromStorage();
         this.GetPrivateLabelsData(this.privateUrl);
+        this.IsDSV = window.sessionStorage.getItem("IsDSV") == "true";
     };
     PrivateLoginComponent.prototype.GetImagesFromStorage = function () {
         this.GetLoginPageImages();
