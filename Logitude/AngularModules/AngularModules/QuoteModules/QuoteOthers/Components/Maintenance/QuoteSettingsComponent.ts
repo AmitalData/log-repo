@@ -24,7 +24,7 @@ export class QuoteSettingsComponent extends BaseComponent {
     private MultiCurrencyToggleFeature: FeatureToggleList;
     constructor(private entityResourceService: EntityResourceService) {
         super();
-        this.MultiCurrencyToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "QMC" && d.TenantNumber == SessionLocator.Tenant)[0]
+        this.MultiCurrencyToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "QMC")[0]
 
         this.SaleCurrencySettings.push(new CodeNameClass("F", "Fixed"));
         this.SaleCurrencySettings.push(new CodeNameClass("S", "Same as cost currency"));

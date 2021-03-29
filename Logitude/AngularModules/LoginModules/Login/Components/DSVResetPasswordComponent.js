@@ -7,39 +7,26 @@ import { Component } from '@angular/core';
 import { LoginService } from '../LoginService';
 import { SessionInfo } from '../SessionInfo';
 import { ResetPasswordComponent } from './ResetPasswordComponent';
-import { HybridLabelsBrandingDataService } from '../HybridLabels/Services/HybridLabelsBrandingDataService';
-import { BrandingDataService } from '../HybridLabels/Services/BrandingDataService';
+import { BrandingDataService } from '../PrivateLabels/Services/BrandingDataService';
 export var DSVResetPasswordComponent = (function (_super) {
     __extends(DSVResetPasswordComponent, _super);
-    function DSVResetPasswordComponent(ss, hybridLabelsBrandingDataService) {
+    function DSVResetPasswordComponent(ss) {
         _super.call(this, ss);
         this.ss = ss;
-        this.hybridLabelsBrandingDataService = hybridLabelsBrandingDataService;
         this.MainColor = null;
         this.BackgroundImage = "";
         this.ForgetPasswordImage = "";
-        this.Id = "";
         this.MainLogo = "";
-        this.ContactUsEmail = "";
-        this.show = true;
+        this.ContactUsEmail = sessionStorage.getItem('ContactEmail');
     }
     DSVResetPasswordComponent.prototype.ngOnInit = function () {
         this.privateUrl = SessionInfo.GetLogitudeURL();
-        this.GetHybridLabelsData(this.privateUrl);
+        this.GetPrivateLabelsData();
     };
-    DSVResetPasswordComponent.prototype.GetHybridLabelsData = function (privateUrl) {
-        var _this = this;
-        this.hybridLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetHybridLabelsDataRequest(privateUrl)).subscribe(function (response) {
-            if (response.Result) {
-                //BrandingDataService.SetHybridLabelsDataRequest(response.Result, privateUrl);
-                _this.ContactUsEmail = response.Result.ContactUsEmail;
-                _this.MainColor = response.Result.MainColor;
-                _this.BackgroundImage = BrandingDataService.GetBackgroundImage();
-                _this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage();
-                _this.Id = response.Result.Id;
-                _this.MainLogo = BrandingDataService.GetMainLogo();
-            }
-        });
+    DSVResetPasswordComponent.prototype.GetPrivateLabelsData = function () {
+        this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
+        this.MainLogo = BrandingDataService.GetImage("MainLogo");
+        this.ForgetPasswordImage = BrandingDataService.GetImage("ForgetPasswordImage");
     };
     DSVResetPasswordComponent.decorators = [
         { type: Component, args: [{
@@ -52,7 +39,6 @@ export var DSVResetPasswordComponent = (function (_super) {
     /** @nocollapse */
     DSVResetPasswordComponent.ctorParameters = [
         { type: LoginService, },
-        { type: HybridLabelsBrandingDataService, },
     ];
     return DSVResetPasswordComponent;
 }(ResetPasswordComponent));

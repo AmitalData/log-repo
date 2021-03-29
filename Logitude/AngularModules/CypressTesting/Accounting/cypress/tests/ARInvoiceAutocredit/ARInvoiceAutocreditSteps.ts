@@ -14,6 +14,7 @@ import * as Assists from "../../../../Base/cypress/assists/Assists";
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
 let invoiceNumber: string;
+let invoiceAmount: string;
 let autoCreditInvoiceNumber: string;
 
 Given("the user logged in and navigates to shipments workspace", () => {
@@ -27,28 +28,10 @@ Given("a direct shipment with the following details", (dataTable) => {
     ShipmentActions.FillShipmentWizardsFields(shipmentDetails);
 });
 
-When("create shipment", () => {
-    ShipmentActions.CreateShipment(shipmentDetails.ShipmentLevel);
-});
-
-Then("the direct should create successfully", () => {
-    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
-        shipmentNumber = interception.response.body.ShipmentNumber;
-    })
-});
-
 Given("a receivable with the following details", (dataTable) => {
     let receivableDetailsList = Assists.CreateSet<ReceivableDetails>(dataTable);
     ShipmentActions.OpenShipment(shipmentNumber);
     ShipmentActions.FillReceivablesTab(receivableDetailsList);
-});
-
-When("add receivable", () => {
-    ShipmentActions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton);
-});
-
-Then("the receivable should add successfully", () => {
-    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });
 
 Given("an AR invoice with the following details", (dataTable) => {
@@ -57,26 +40,53 @@ Given("an AR invoice with the following details", (dataTable) => {
     AccountingActions.FillARInvoiceDetails(arInvoiceDetails);
 });
 
-When("create invoice", () => {
-    AccountingActions.CreateARInvoice();
+When("create shipment", () => {
+    ShipmentActions.CreateShipment(shipmentDetails.ShipmentLevel);
 });
 
-Then("the invoice should create successfully", () => {
-    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
+When("add receivable", () => {
+    ShipmentActions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton);
+});
+
+When("create invoice", () => {
+    AccountingActions.CreateARInvoice();
 });
 
 When("approve invoice", () => {
     AccountingActions.ARApproveInvoice();
 });
 
+When("approve auto credit invoice", () => {
+    AccountingActions.ApproveAutoCreditARInvoice();
+});
+
+When("auto credit invoice", () => {
+    AccountingActions.AutoCreditARInvoice();
+});
+
+When("back to the AR invoice", () => {
+    cy.Click(BaseSelectors.BackBottonBodyClass, AccountingSelectors.ContainsARInvoice);
+});
+
+Then("the shipment should create successfully", () => {
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
+        shipmentNumber = interception.response.body.ShipmentNumber;
+    })
+});
+
+Then("the receivable should add successfully", () => {
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+});
+
+Then("the invoice should create successfully", () => {
+    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
+});
+
 Then("the invoice should approve successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200).then((interception) => {
         invoiceNumber = interception.response.body.InvoiceNumber;
+        invoiceAmount = interception.response.body.AmountInInvoiceCurrency;
     });
-});
-
-When("approve auto credit invoice", () => {
-    AccountingActions.ApproveAutoCreditARInvoice();
 });
 
 Then("the auto credit invoice should approve successfully", () => {
@@ -85,20 +95,23 @@ Then("the auto credit invoice should approve successfully", () => {
     });
 });
 
-When("auto credit invoice", () => {
-    AccountingActions.AutoCreditARInvoice();
-});
-
-Then("new AR invoice with status Auto Credit should appear", () => {
+Then("new invoice with status Auto Credit should appear", () => {
     AccountingActions.AssertARInvoiceStatus(AccountingSelectors.AutoCredit);
-    AccountingActions.AssertAutoCreditByInvoiceNumber(invoiceNumber);
-});
-
-When("back to the AR invoice", () => {
-    cy.Click(BaseSelectors.BackBottonBodyClass, AccountingSelectors.ContainsARInvoice);
 });
 
 Then("the status should be Auto Credited", () => {
     AccountingActions.AssertARInvoiceStatus(AccountingSelectors.AutoCredited);
+});
+
+Then("the AR invoice number should appear next to the auto credit invoice title", () => {
+    AccountingActions.AssertAutoCreditByInvoiceNumber(invoiceNumber);
+});
+
+Then("the auto credit invoice number should appear next to the AR invoice title", () => {
     AccountingActions.AssertAutoCreditByInvoiceNumber(autoCreditInvoiceNumber);
+});
+
+Then("the auto credit invoice should have negative amount of the AR invoice", () => {
+    let expectedAutoCreditInvoiceAmount = (Number(invoiceAmount) / -1);
+    AccountingActions.AssertARInvoiceAmount(expectedAutoCreditInvoiceAmount);
 });

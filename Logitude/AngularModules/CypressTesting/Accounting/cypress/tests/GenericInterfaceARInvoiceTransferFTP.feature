@@ -1,4 +1,4 @@
-@release @all
+@release @all 
 Feature: Generic Interface AR Invoice Transfer to FTP
 
     The user disables the Accounting Transfer in settings, creates AR invoice,
@@ -18,6 +18,8 @@ Feature: Generic Interface AR Invoice Transfer to FTP
             | City        | Anchorage   |
             | Country     | US          |
             | State       | AK          |
+            | PhoneNumber | 98765443    |
+            | FaxNumber   | 98765443    |
         When create customer
         Then the customer should create successfully
 

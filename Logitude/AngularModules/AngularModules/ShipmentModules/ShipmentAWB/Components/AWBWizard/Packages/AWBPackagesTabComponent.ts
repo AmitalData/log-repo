@@ -58,7 +58,7 @@ export class AWBPackagesTabComponent extends BaseComponent {
         this.SetUIProperties();
 
         if (this.EntityPM.ShipmentLevelCode != 'H') {
-            var hasToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "AMC" && d.TenantNumber == SessionLocator.Tenant)[0]
+            var hasToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "AMC")[0]
             if (hasToggleFeature) {
                 this.IsMultipleCommoditiesVisible = true;
             }

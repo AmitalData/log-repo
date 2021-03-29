@@ -48,6 +48,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             user.UserRoles = userPm.UserRoles;
             user.AdditionalPackagesOnly = userPm.AdditionalPackagesOnly;
             user.LayoutDirection = userPm.LayoutDirection;
+            user.SignatureImageId = userPm.SignatureImageId;
             BuildSearchFields(userPm, user);
         }
 

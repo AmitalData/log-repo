@@ -20,6 +20,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 screen.NumberOfColumns = screenDetails.NumberOfColumns;
                 screen.NumberOfRows = screenDetails.NumberOfRows;
                 screen.Name = screenDetails.Name;
+
+
                 screenRepository.Update(screen);
                 return screen;
             }

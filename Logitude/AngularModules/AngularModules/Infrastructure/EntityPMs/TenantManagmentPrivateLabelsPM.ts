@@ -95,9 +95,9 @@ export class TenantManagmentPrivateLabelsPM {
     public set BackgroundImageId(newValue: string) { if (this.backgroundImageId != newValue) { this.backgroundImageId = newValue; this.MarkAsDirty("BackgroundImageId"); } }
        
 	 
-    private mainImageId: string;
-    public get MainImageId() { return this.mainImageId; }
-    public set MainImageId(newValue: string) { if (this.mainImageId != newValue) { this.mainImageId = newValue; this.MarkAsDirty("MainImageId"); } }
+    private loginImageId: string;
+    public get LoginImageId() { return this.loginImageId; }
+    public set LoginImageId(newValue: string) { if (this.loginImageId != newValue) { this.loginImageId = newValue; this.MarkAsDirty("LoginImageId"); } }
        
 	 
     private mainColor: string;
@@ -113,6 +113,16 @@ export class TenantManagmentPrivateLabelsPM {
     private forgetPasswordImageId: string;
     public get ForgetPasswordImageId() { return this.forgetPasswordImageId; }
     public set ForgetPasswordImageId(newValue: string) { if (this.forgetPasswordImageId != newValue) { this.forgetPasswordImageId = newValue; this.MarkAsDirty("ForgetPasswordImageId"); } }
+       
+	 
+    private secondaryColor: string;
+    public get SecondaryColor() { return this.secondaryColor; }
+    public set SecondaryColor(newValue: string) { if (this.secondaryColor != newValue) { this.secondaryColor = newValue; this.MarkAsDirty("SecondaryColor"); } }
+       
+	 
+    private hasLogboxAccess: boolean;
+    public get HasLogboxAccess() { return this.hasLogboxAccess; }
+    public set HasLogboxAccess(newValue: boolean) { if (this.hasLogboxAccess != newValue) { this.hasLogboxAccess = newValue; this.MarkAsDirty("HasLogboxAccess"); } }
        
 	 
 

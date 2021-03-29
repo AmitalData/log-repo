@@ -429,6 +429,42 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public DateTime? OnCarriageATA { get; set; }
         #endregion
 
+        #region PreForwarding
+        public string PreForwardingTransportMode { get; set; }
+        public string PreForwardingFromPortCode { get; set; }
+        public string PreForwardingFromPortName { get; set; }
+        public string PreForwardingFromPortCountryCode { get; set; }
+        public string PreForwardingFromPortCountryName { get; set; }
+        public string PreForwardingToPortCode { get; set; }
+        public string PreForwardingToPortName { get; set; }
+        public string PreForwardingToPortCountryCode { get; set; }
+        public string PreForwardingToPortCountryName { get; set; }
+        public string PreForwardingCarrierName { get; set; }
+        public string PreForwardingCarrierNumber { get; set; }
+        public DateTime? PreForwardingETD { get; set; }
+        public DateTime? PreForwardingETA { get; set; }
+        public DateTime? PreForwardingATD { get; set; }
+        public DateTime? PreForwardingATA { get; set; }
+        #endregion
+
+        #region OnForwarding
+        public string OnForwardingTransportMode { get; set; }
+        public string OnForwardingFromPortCode { get; set; }
+        public string OnForwardingFromPortName { get; set; }
+        public string OnForwardingFromPortCountryCode { get; set; }
+        public string OnForwardingFromPortCountryName { get; set; }
+        public string OnForwardingToPortCode { get; set; }
+        public string OnForwardingToPortName { get; set; }
+        public string OnForwardingToPortCountryCode { get; set; }
+        public string OnForwardingToPortCountryName { get; set; }
+        public string OnForwardingCarrierName { get; set; }
+        public string OnForwardingCarrierNumber { get; set; }
+        public DateTime? OnForwardingETD { get; set; }
+        public DateTime? OnForwardingETA { get; set; }
+        public DateTime? OnForwardingATD { get; set; }
+        public DateTime? OnForwardingATA { get; set; }
+        #endregion
+
         #region MainCarriage
         public string MainCarriageCarrierCode { get; set; }
         public string MainCarriageCarrierName { get; set; }
@@ -905,6 +941,42 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public DateTime? OnCarriageETA { get; set; }
         public DateTime? OnCarriageATD { get; set; }
         public DateTime? OnCarriageATA { get; set; }
+        #endregion
+
+        #region PreForwarding
+        public string PreForwardingTransportMode { get; set; }
+        public string PreForwardingFromPortCode { get; set; }
+        public string PreForwardingFromPortName { get; set; }
+        public string PreForwardingFromPortCountryCode { get; set; }
+        public string PreForwardingFromPortCountryName { get; set; }
+        public string PreForwardingToPortCode { get; set; }
+        public string PreForwardingToPortName { get; set; }
+        public string PreForwardingToPortCountryCode { get; set; }
+        public string PreForwardingToPortCountryName { get; set; }
+        public string PreForwardingCarrierName { get; set; }
+        public string PreForwardingCarrierNumber { get; set; }
+        public DateTime? PreForwardingETD { get; set; }
+        public DateTime? PreForwardingETA { get; set; }
+        public DateTime? PreForwardingATD { get; set; }
+        public DateTime? PreForwardingATA { get; set; }
+        #endregion
+
+        #region OnForwarding
+        public string OnForwardingTransportMode { get; set; }
+        public string OnForwardingFromPortCode { get; set; }
+        public string OnForwardingFromPortName { get; set; }
+        public string OnForwardingFromPortCountryCode { get; set; }
+        public string OnForwardingFromPortCountryName { get; set; }
+        public string OnForwardingToPortCode { get; set; }
+        public string OnForwardingToPortName { get; set; }
+        public string OnForwardingToPortCountryCode { get; set; }
+        public string OnForwardingToPortCountryName { get; set; }
+        public string OnForwardingCarrierName { get; set; }
+        public string OnForwardingCarrierNumber { get; set; }
+        public DateTime? OnForwardingETD { get; set; }
+        public DateTime? OnForwardingETA { get; set; }
+        public DateTime? OnForwardingATD { get; set; }
+        public DateTime? OnForwardingATA { get; set; }
         #endregion
 
         #region MainCarriage

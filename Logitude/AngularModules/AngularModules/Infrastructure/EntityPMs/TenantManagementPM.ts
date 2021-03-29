@@ -905,6 +905,11 @@ export class TenantManagementPM {
     public set LastMonthCreatedTariffs(newValue: number) { if (this.lastMonthCreatedTariffs != newValue) { this.lastMonthCreatedTariffs = newValue; this.MarkAsDirty("LastMonthCreatedTariffs"); } }
        
 	 
+    private scheduledTasksLimitPerReport: number;
+    public get ScheduledTasksLimitPerReport() { return this.scheduledTasksLimitPerReport; }
+    public set ScheduledTasksLimitPerReport(newValue: number) { if (this.scheduledTasksLimitPerReport != newValue) { this.scheduledTasksLimitPerReport = newValue; this.MarkAsDirty("ScheduledTasksLimitPerReport"); } }
+       
+	 
 
     public OldEntityPM: TenantManagementPM;
 		

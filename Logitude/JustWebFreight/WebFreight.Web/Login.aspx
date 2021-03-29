@@ -1996,7 +1996,7 @@
                 window.sessionStorage.setItem("LogoURL", privateLable.LogoURL);
                 window.sessionStorage.setItem("PrivateLabelUrl", privateLable.PrivateLabelUrl);
                 window.sessionStorage.setItem("PrivateLabelShortName", privateLable.PrivateLabelShortName);
-                window.sessionStorage.setItem("IsDSV", true);
+                window.sessionStorage.setItem("IsDSV", privateLable.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1);
             }
 
             var urlMenu = "";
@@ -2006,8 +2006,8 @@
                 document.location.href = "AngularLogin" + "/index.html" + ("?Menu=" + urlMenu);
             }
             else {
-                const dsvLocal = IsLocalRun() ? "?dsvlocal" : "";
-                document.location.href = "AngularLogin" + "/index.html" + dsvLocal;
+                const privateLableLocal = IsLocalRun() ? "?PLlocal" : "";
+                document.location.href = "AngularLogin" + "/index.html" + privateLableLocal;
             }
         }
 

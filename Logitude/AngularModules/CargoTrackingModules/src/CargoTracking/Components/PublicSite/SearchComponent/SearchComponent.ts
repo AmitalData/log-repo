@@ -33,7 +33,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         private formBuilder: FormBuilder,
         private location: Location,
         private searchService: CargoTrackingSearchService,
-        public dateline: DatePipe)
+        public DatePipe: DatePipe)
     {
         this.GetSearchTextFromURI();
         this.listenToRouterEvents();
@@ -319,7 +319,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         let status = name;
         if (shipment.FutureMilstoneDate){
             let date = shipment.FutureMilstoneDate;
-            status += ' on ' + this.dateline.transform(date, 'd-MMM-y, HH:MM');
+            status += ' on ' + this.DatePipe.transform(date, 'd-MMM-y, HH:mm');
         }
         return status;
     }
@@ -331,7 +331,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
 
         if (shipment.CurrentMilestoneDate){
             var date = shipment.CurrentMilestoneDate;
-            status += ' on ' + this.dateline.transform(date, 'd-MMM-y, HH:MM')
+            status += ' on ' + this.DatePipe.transform(date, 'd-MMM-y, HH:mm')
         }
         return status;
     }

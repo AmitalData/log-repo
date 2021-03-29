@@ -1,0 +1,9 @@
+﻿<Script DBType="Global" Module="Global">
+  <Sql Version="3">
+    <![CDATA[
+    
+         update TenantManagements set ScheduledTasksLimitPerReport=100 where ScheduledTasksLimitPerReport is null
+      
+    ]]>
+  </Sql>
+</Script>

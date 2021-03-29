@@ -305,9 +305,8 @@ namespace WebFreight.Web.DataProviders
         public string Incoterm { get; set; }
         public string Salesman { get; set; }
         public string SalesmanEmail { get; set; }
-        public string UserPhoneNumber { get; set; }    
-
-     
+        public string UserPhoneNumber { get; set; }   
+        public string UserMobileNumber { get; set; }
         public double? TotalPayables { get; set; }
         public string CustomsAgent { get; set; }
         public double? TotalPayablesForMainCarriageCarrier { get; set; }
@@ -322,7 +321,7 @@ namespace WebFreight.Web.DataProviders
         public string DeliveryFromAddress { get; set; }
 
         public DateTime? ETD_DateTime { get; set; }
-
+        public string ValueOfGoodsCurrencyCode { get; set; }
         public string ValueOfGoodsCurrency { get; set; }
         public double? ValueOfGoods { get; set; }
 

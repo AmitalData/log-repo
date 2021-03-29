@@ -6,9 +6,9 @@ import {PasswordChangeService} from '../PasswordChangeService';
 import {Tools} from '../Utilities/Tools';
 import {ResetPasswordComponent} from './ResetPasswordComponent'; 
 import { Router } from '@angular/router';
-import { HybridLabelsBrandingDataService } from '../HybridLabels/Services/HybridLabelsBrandingDataService';
-import { BrandingDataService } from '../HybridLabels/Services/BrandingDataService';
-import { ServiceResponse } from '../HybridLabels/DataContracts/ServiceResponse';
+import { PrivateLabelsBrandingDataService } from '../PrivateLabels/Services/PrivateLabelsBrandingDataService';
+import { BrandingDataService } from '../PrivateLabels/Services/BrandingDataService';
+import { ServiceResponse } from '../PrivateLabels/DataContracts/ServiceResponse';
 
 @Component({
     selector: 'DSVResetPasswordComponent',
@@ -22,37 +22,25 @@ export class DSVResetPasswordComponent extends ResetPasswordComponent {
     private privateUrl;
     public MainColor: string = null;
     public BackgroundImage: string = "";
-    public ForgetPasswordImage: string = "";
-    public Id = "";
+    public ForgetPasswordImage: string = ""; 
     public MainLogo: string = "";
-    public ContactUsEmail: string = ""; 
+    public ContactUsEmail: string = sessionStorage.getItem('ContactEmail');  
 
-    public show = true;
     constructor( 
-        private ss: LoginService,
-        private hybridLabelsBrandingDataService: HybridLabelsBrandingDataService) {
-        super(ss);
+        private ss: LoginService) {
+        super(ss); 
     }
 
     ngOnInit() { 
-        this.privateUrl = SessionInfo.GetLogitudeURL(); 
-        this.GetHybridLabelsData(this.privateUrl);
+        this.privateUrl = SessionInfo.GetLogitudeURL();  
+        this.GetPrivateLabelsData(); 
     }
 
 
-    GetHybridLabelsData(privateUrl: string) {
-        this.hybridLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetHybridLabelsDataRequest(privateUrl)).subscribe((response: ServiceResponse) => {
-            if (response.Result) {
-                //BrandingDataService.SetHybridLabelsDataRequest(response.Result, privateUrl);
-                this.ContactUsEmail = response.Result.ContactUsEmail;
-                this.MainColor = response.Result.MainColor;
-                this.BackgroundImage = BrandingDataService.GetBackgroundImage(); 
-                this.ForgetPasswordImage = BrandingDataService.GetForgetPasswordImage();
-                this.Id = response.Result.Id; 
-                this.MainLogo = BrandingDataService.GetMainLogo(); 
-            } 
-        });
-
-    } 
-
+    GetPrivateLabelsData() {
+        this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
+        this.MainLogo = BrandingDataService.GetImage("MainLogo");
+        this.ForgetPasswordImage = BrandingDataService.GetImage("ForgetPasswordImage")  
+     }
+          
 }

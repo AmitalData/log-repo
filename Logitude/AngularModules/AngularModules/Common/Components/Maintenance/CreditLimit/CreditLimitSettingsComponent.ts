@@ -60,7 +60,7 @@ export class CreditLimitSettingsComponent extends BaseComponent implements OnIni
 
     private CheckShipmentCreationWarningFeatureToggle() {
         this.IsShipmentCreationWarningHasFeatureToggle = false;
-        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SWC" && d.TenantNumber == SessionLocator.Tenant)[0];
+        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SWC")[0];
         if (featureToggle) {
             this.IsShipmentCreationWarningHasFeatureToggle = true;
         }

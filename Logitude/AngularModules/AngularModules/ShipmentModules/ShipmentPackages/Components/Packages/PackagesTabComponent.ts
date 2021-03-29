@@ -229,7 +229,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             if (!myResponse.HasError) {
                 var mySubType = myResponse.Result;
 
-                var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "HRS" && d.TenantNumber == SessionLocator.Tenant)[0];
+                var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "HRS")[0];
                 if (FeatureToggle && mySubType && mySubType.Code == "HORSE") {
                     this.HorseFieldIsVisible = true;
                 }
@@ -996,7 +996,11 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
             else {
                 this.GenerateButtonLabel = TextCodeTranslator.Translate("Shipment.O.GenerateFromOrderPackages").replace("%Number", count.toString());
-                this.IsGenerateButtonVisible = this.EntityPM.ShipmentOrderPackages.length > 0 ? true : false;
+                if (this.EntityPM.ShipmentTypeId == "FCL" || this.EntityPM.ShipmentTypeId == "FCLD"|| this.EntityPM.ShipmentTypeId == "FTL") {
+                    this.IsGenerateButtonVisible = this.EntityPM.ShipmentOrderPackages.length > 0 ? true : false;
+                } else {
+                    this.IsGenerateButtonVisible = true;
+                }
                 this.IsGenerateButtonEnabled = this.EntityPM.BookingNumberOfPackages > 0 ? true : false;
             }
         }

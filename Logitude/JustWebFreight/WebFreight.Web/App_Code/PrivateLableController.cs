@@ -107,6 +107,7 @@ namespace WebFreight.Web.App_Code
                         PrivateLableArgs.PrivateLabelName = privatelabel.PrivateLabelName;
                         PrivateLableArgs.PrivateLabelShortName = privatelabel.PrivateLabelShortName;
                         PrivateLableArgs.PrivateLabelUrl = privatelabel.PrivateLabelUrl;
+                        PrivateLableArgs.PrivateLabelDomain = privatelabel.PrivateLabelDomain;
                         PrivateLableArgs.MainLogo = privatelabel.MainLogo;
                         PrivateLableArgs.ContactUsEmail = privatelabel.ContactUsEmail;
                         PrivateLableArgs.EnablePrivateLable = true;
@@ -289,6 +290,7 @@ public class PrivateLableResult
     public string PrivateLabelName { get; set; }
     public string PrivateLabelShortName { get; set; }
     public string PrivateLabelUrl { get; set; }
+    public string PrivateLabelDomain { get; set; }
     public byte[] MainLogo { get; set; }
     public string ContactUsEmail { get; set; }
     public bool ReceiveAllStatuses { get; set; }

@@ -98,35 +98,28 @@ export class ShipmentDeliveryValidator {
         var ATD: number = DateTool.GetDateParts(this.entityPM.ATD).DateTicks;
         var ATA: number = DateTool.GetDateParts(this.entityPM.ATA).DateTicks;
 
-        var isMainCarriageExists: boolean = true;
-        var MainCarriageETD: number = DateTool.GetDateParts(this.ShipmentPM.MainCarriageETD).DateTicks;
         var MainCarriageETA: number = DateTool.GetDateParts(this.ShipmentPM.MainCarriageETA).DateTicks;
-        var MainCarriageATD: number = DateTool.GetDateParts(this.ShipmentPM.MainCarriageATD).DateTicks;
         var MainCarriageATA: number = DateTool.GetDateParts(this.ShipmentPM.MainCarriageATA).DateTicks;
 
         var isTransshipment1Exists: boolean = (this.ShipmentPM.Transshipment1FromPortId != null && this.ShipmentPM.Transshipment1ToPortId != null) ? true : false;
-        var Transshipment1ETD: number = isTransshipment1Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment1ETD).DateTicks : 0;
         var Transshipment1ETA: number = isTransshipment1Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment1ETA).DateTicks : 0;
-        var Transshipment1ATD: number = isTransshipment1Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment1ATD).DateTicks : 0;
         var Transshipment1ATA: number = isTransshipment1Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment1ATA).DateTicks : 0;
 
         var isTransshipment2Exists: boolean = (this.ShipmentPM.Transshipment2FromPortId != null && this.ShipmentPM.Transshipment2ToPortId != null) ? true : false;
-        var Transshipment2ETD: number = isTransshipment2Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment2ETD).DateTicks : 0;
         var Transshipment2ETA: number = isTransshipment2Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment2ETA).DateTicks : 0;
-        var Transshipment2ATD: number = isTransshipment2Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment2ATD).DateTicks : 0;
         var Transshipment2ATA: number = isTransshipment2Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment2ATA).DateTicks : 0;
 
         var isTransshipment3Exists: boolean = (this.ShipmentPM.Transshipment3FromPortId != null && this.ShipmentPM.Transshipment3ToPortId != null) ? true : false;
-        var Transshipment3ETD: number = isTransshipment3Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment3ETD).DateTicks : 0;
         var Transshipment3ETA: number = isTransshipment3Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment3ETA).DateTicks : 0;
-        var Transshipment3ATD: number = isTransshipment3Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment3ATD).DateTicks : 0;
         var Transshipment3ATA: number = isTransshipment3Exists ? DateTool.GetDateParts(this.ShipmentPM.Transshipment3ATA).DateTicks : 0;
 
         var isOnCarriageExists: boolean = (this.ShipmentPM.OnCarriageFromPortId != null && this.ShipmentPM.OnCarriageToPortId != null) ? true : false;
-        var OnCarriageETD: number = isOnCarriageExists ? DateTool.GetDateParts(this.ShipmentPM.OnCarriageETD).DateTicks : 0;
         var OnCarriageETA: number = isOnCarriageExists ? DateTool.GetDateParts(this.ShipmentPM.OnCarriageETA).DateTicks : 0;
-        var OnCarriageATD: number = isOnCarriageExists ? DateTool.GetDateParts(this.ShipmentPM.OnCarriageATD).DateTicks : 0;
         var OnCarriageATA: number = isOnCarriageExists ? DateTool.GetDateParts(this.ShipmentPM.OnCarriageATA).DateTicks : 0;
+
+        var isOnForwardingExists: boolean = (this.ShipmentPM.OnForwardingFromPortId != null && this.ShipmentPM.OnForwardingToPortId != null) ? true : false;
+        var OnForwardingETA: number = isOnForwardingExists ? DateTool.GetDateParts(this.ShipmentPM.OnForwardingETA).DateTicks : 0;
+        var OnForwardingATA: number = isOnForwardingExists ? DateTool.GetDateParts(this.ShipmentPM.OnForwardingATA).DateTicks : 0;
 
         var isWarehouseLegExists: boolean = (this.ShipmentPM.WarehouseLegWarehouseId != null && this.ShipmentPM.DirectionId == "I") ? true : false;
         var WarehouseLegEED: number = isWarehouseLegExists ? DateTool.GetDateParts(this.ShipmentPM.WarehouseLegExpectedEntryDate).DateTicks : 0;
@@ -143,23 +136,20 @@ export class ShipmentDeliveryValidator {
             this.errors.push("Actual departure must be less than Actual arrival");
         }
 
-        //if (RoutingHelper.CompairDateSeries(ETD, ETA, ">")) {
-        //    errors.push("Expected departure must be less than Expected arrival");
-        //}
-
-        //if (RoutingHelper.CompairDateSeries(ATD, ATA, ">")) {
-        //    errors.push("Actual departure must be less than Actual arrival");
-        //}
 
         // Previous
         if (isWarehouseLegExists) {
-            //if (RoutingHelper.IsDateSeriesSmallerNotEqual(ETD, WarehouseLegERD)) {
-            //    this.errors.push("Delivery expected departure must be bigger than or equal Warehouse expected release");
-            //}
+           
+        }
 
-            //if (RoutingHelper.IsDateSeriesSmallerNotEqual(ATD, WarehouseLegARD)) {
-            //    this.errors.push("Delivery actual departure must be bigger than or equal Warehouse actual release");
-            //}
+        else if (isOnForwardingExists) {
+            if (RoutingHelper.IsDateSeriesSmaller(ETD, OnForwardingETA)) {
+                this.errors.push("Expected departure must be bigger than On-Forwarding expected arrival");
+            }
+
+            if (RoutingHelper.IsDateSeriesSmaller(ATD, OnForwardingATA)) {
+                this.errors.push("Actual departure must be bigger than On-Forwarding actual arrival");
+            }
         }
 
         else if (isOnCarriageExists) {

@@ -381,5 +381,7 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public int LastWeekCreatedTariffs { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public int LastMonthCreatedTariffs { get; set; }
+
+        public int ScheduledTasksLimitPerReport { get; set; }
     }
 }

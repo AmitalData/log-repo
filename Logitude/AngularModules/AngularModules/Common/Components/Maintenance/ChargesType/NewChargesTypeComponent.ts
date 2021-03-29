@@ -60,7 +60,7 @@ export class NewChargesTypeComponent extends BaseComponent {
     }
 
     ReadChargeTypesRestrictedFeatureToggleFeature() {
-        this.IsChargeTypesRestrictedFeatureToggleOn = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CTR" && d.TenantNumber == SessionLocator.Tenant)[0]
+        this.IsChargeTypesRestrictedFeatureToggleOn = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CTR")[0]
             != null ? true : false;
     }
 

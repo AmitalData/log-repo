@@ -24,6 +24,7 @@ import { EditTabComponent } from './EditTabComponent';
 import { Subscription, TeardownLogic } from 'rxjs';//itzik
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
+import { HeaderScreenDataResult } from '../../Interface/IHeaderScreenService';
 
 
 @Component({    
@@ -131,6 +132,7 @@ export class EditComponent implements OnDestroy {
             }
     }
 
+    private QuerySection: string;
     private EntityFields: any[] = null;
     public Run(args: any) {
         this.EntityId = args['EntityId'];
@@ -138,6 +140,8 @@ export class EditComponent implements OnDestroy {
         this.EntityParentPM = args['EntityParentPM'];
         this.ObjectTableName = args['ObjectTableName'];
         this.PreSelectedTabCode = args['SelectedTabCode'];
+        this.QuerySection = !AppTool.IsNullOrEmpty(args['QuerySection']) ? args['QuerySection']:null ;
+
         this.BackButtonLabel = !AppTool.IsNullOrEmpty(args['BackButtonLabel']) ? args['BackButtonLabel'] : TextCodeTranslator.Translate("General.B.Back");  // "Back";
         this.ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
         this.ObjectTableId = this.ObjectTable.Id;
@@ -412,6 +416,7 @@ export class EditComponent implements OnDestroy {
         }
     }
     private BuildMenuButtons() {
+
         if (this.HasMenuButtons) {
             if (this.MenuButtonsViewContainerRef) {
                 this.MenuButtonsViewContainerRef.clear();
@@ -420,7 +425,7 @@ export class EditComponent implements OnDestroy {
 
                 SessionLocator.DynamicLoader.Load(myComponentPath, this.MenuButtonsViewContainerRef)
                     .then(cmpRef => {
-                        cmpRef.instance.Run({ EntityPM: this.EntityPM, ObjectTable: this.ObjectTable });
+                        cmpRef.instance.Run({ EntityPM: this.EntityPM, ObjectTable: this.ObjectTable, QuerySection : this.QuerySection});
                     });
             }
         }
@@ -445,30 +450,54 @@ export class EditComponent implements OnDestroy {
         }
     }
 
+
+
+
+
+
+
+
     public HeaderScreenHeight: number = 65;
     public HeaderScreenRowHeight: number = 25;
     public HeaderScreenColumns: HeaderScreenColumn[] = [];
     public SavedWidthOfHeader: number = 0;
     public BuildHeaderScreen() {
 
-        var myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code.indexOf("HeaderScreen") != -1)[0];
+        var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/MetaDataServices/HeaderScreenServices/" + this.GetObjectTableName() + "HeaderScreenService";
+        SessionLocator.DynamicLoader.GetInstance(myComponentPath, true).then((headerScreenService: any) => {
+            if (headerScreenService) {
+                let result: HeaderScreenDataResult  = headerScreenService.GetHeaderScreens({ ObjectTableId: this.ObjectTableId, EntityPM: this.EntityPM });
+                this.GenerateHeaderScreen(result.HeaderScreen, result.ObjectFields);
+            }
+            else {
+                this.BuildStandardHeaderScreen();
+            }
+
+        });
+
+    }
+
+    BuildStandardHeaderScreen() {
+
+        var myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code.indexOf("HeaderScreen") != -1 )[0];
+
         var myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === this.ObjectTableId);
 
         if (this.ObjectTableName == "Shipment") {
             if (this.EntityPM.ShipmentLevelCode == "C") {
-                this._entityResourceService.getEntityResourceByTableName("Master", 0).subscribe((response:any) => {
+                this._entityResourceService.getEntityResourceByTableName("Master", 0).subscribe((response: any) => {
 
 
                     const masterObjectTable = window.ObjectTables.filter(x => x.Name === "Master")[0];
                     const shipmentObjectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
 
-                    myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === masterObjectTable.Id && d.Code.indexOf("HeaderScreen") != -1)[0];
+                    myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === masterObjectTable.Id && d.Code.indexOf("HeaderScreen") != -1 && d.QuerySection == this.QuerySection)[0];
 
                     const masterFields = window.ObjectFields.filter(d => d.ObjectTableId === masterObjectTable.Id);
                     const shipmentFields = window.ObjectFields.filter(d => d.ObjectTableId === shipmentObjectTable.Id);
 
                     myObjectFields = [...masterFields, ...shipmentFields];
-                   
+
 
                     this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
                 });
@@ -533,7 +562,7 @@ export class EditComponent implements OnDestroy {
             }
         }
         else if (this.ObjectTableName == "APInvoice") {
-            this.GenerateAPInvoiceHeader(myHeaderScreen,myObjectFields);
+            this.GenerateAPInvoiceHeader(myHeaderScreen, myObjectFields);
 
 
         }
@@ -570,6 +599,21 @@ export class EditComponent implements OnDestroy {
             this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private GenerateAPInvoiceHeader(headerScreen:any, objectFields:any) {
 
 
@@ -741,15 +785,16 @@ export class EditComponent implements OnDestroy {
             }
         }
     }
-    private BuildTabsItemsSource() {
-        var allTabs: any[] = [];
-        var myTabsSorted: any[] = [];
-        this.TabsItemsSource = [];
 
-        allTabs = window.ObjectTableTabs.filter(d => d.ObjectTableId === this.ObjectTableId);
+
+
+    FillTabsItemsSource(allTabs: any[]) {
+
+        var myTabsSorted: any[] = [];
+
         allTabs = this.FilterTabs(allTabs);
         allTabs = allTabs.sort((a, b) => { return a.IndexOrder - b.IndexOrder });
-         for (var i = 0; i < allTabs.length; i++) {
+        for (var i = 0; i < allTabs.length; i++) {
             var tab = allTabs[i];
 
             if (tab.ControlPath != null) {
@@ -767,12 +812,6 @@ export class EditComponent implements OnDestroy {
                     }
                 }
 
-
-
-
-                //if (tab.ControlPath.indexOf("WarehouseConnectionsTabComponent") != -1) {
-                //    if (this.EntityPM && AppTool.IsNullOrEmpty(this.EntityPM.ShipmentId)) continue;
-                //}
             }
 
             if (FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
@@ -816,9 +855,6 @@ export class EditComponent implements OnDestroy {
                     myTabsSorted.push(tab);
             }
         }
-
-        //this.ObjectTableTabs = myTabsSorted;
-
         myTabsSorted.forEach(item => {
 
             var itemTab: TabItem = new TabItem(item);
@@ -841,6 +877,35 @@ export class EditComponent implements OnDestroy {
             this.TabsItemsSource.push(itemTab);
         });
     }
+    
+
+
+    private BuildTabsItemsSource() {
+
+        this.TabsItemsSource = [];
+        var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/MetaDataServices/TabsServices/" + this.GetObjectTableName() + "TabsService";
+        SessionLocator.DynamicLoader.GetInstance(myComponentPath, true).then((tabsService: any) => {
+            let allTabs = window.ObjectTableTabs.filter(d => d.ObjectTableId === this.ObjectTableId);
+            if (tabsService) {
+                allTabs = tabsService.GetTabs({ ObjectTableId: this.ObjectTableId, EntityPM: this.EntityPM });
+            }
+     
+            this.FillTabsItemsSource(allTabs);
+            this.SetSelectedTab();
+
+        });
+
+    }
+
+
+    private GetObjectTableName() {
+
+        if (this.ObjectTable.Name.indexOf('Customs.') > -1) {
+            return this.ObjectTable.Name.split('.')[1];
+        } 
+        else return this.ObjectTable.Name;
+    }
+
     private FilterTabs(allTabs: any[]) {
         switch (this.ObjectTableName) {
 
@@ -1934,7 +1999,7 @@ class HeaderScreenRow {
     public ObjectField: ObjectFieldPM;
     public HideField: boolean = false;
 }
-class TabItem {
+export class TabItem {
     public Code: string;
     public EntityPM: any;
     public TextCode: string;

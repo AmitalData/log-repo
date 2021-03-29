@@ -41,6 +41,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 entityChangesAutomation.ResultCode = "Set SLA Value";
                 string lastUpdate = GetLastAuomationUpdateDate(automationResultArgs.AutomationObjectTable, automationResultArgs.OtherAutomationObjectTable, automation);
                 ValidateAutomationResultClass validateResult = ValidateAutomation(automation, entityChange, automationFieldLists, lastUpdate, "");
+                entityChangesAutomation.ConditionsList = validateResult.ConditionsList;
                 entityChangesAutomation.type = validateResult.IsAutomationValid ? "SetSsucceed" : "SetFailed";
 
                 if (validateResult.IsAutomationValid)
@@ -49,7 +50,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 }
 
                 else
-                {
+                { 
                     entityChangesAutomation.DoneDate = TenantServerConfigration.GetCurrentDateTime(entityChange.Tenant);
                     automationResultArgs.MainEntityChangeService.EntityChangesAutomationsFailedList.Add(entityChangesAutomation);
                     entityChangesAutomation.ExecutionTime = (int)((DateTime.Now.Ticks - dateBefore.Ticks) / TimeSpan.TicksPerMillisecond);

@@ -16,7 +16,7 @@ import { QuickSearchDetails } from '../../../Base/cypress/models/QuickSearchDeta
 import { RestAPI } from '../../../Base/cypress/constants/RestAPI'
 import * as BaseActions from '../../../Base/cypress/actions/Actions';
 import { intersection } from 'cypress/types/lodash';
-
+import { InvoiceSettingsDetails } from "../../../Maintenance/cypress/models/InvoiceSettingsDetails";
 export function NavigatesToAccountingMenu() {
     cy.Click(BaseSelectors.AccountingMenu, null)
 }
@@ -216,10 +216,17 @@ export function SetAsSentARInvoice() {
 export function VoidARInvoice() {
     cy.Click(BaseSelectors.MoreList, null, true)
     cy.Click(AccountingSelectors.ARInvoiceVoidButton, null)
-    cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
+    if (InvoiceSettingsDetails.AllowVoidARI) {
+        CompleteVoidProcess();
+    }
+}
+function CompleteVoidProcess() {
+    DefinePutARInvoicesRequest()
     cy.Click(ShipmentSelectors.ConfirmWindowYes, null);
 }
-
+function DefinePutARInvoicesRequest(){
+    cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
+}
 export function CancelDraftARInvoice() {
     cy.Click(BaseSelectors.MoreList, null, true)
     cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
@@ -457,14 +464,14 @@ function ClickOnSaveOnConfirmWindow() {
 }
 
 export function CreateARInvoiceGeneratedFromRoutingLeg(vat:string){
-    ClickAndWaitToLoad(AccountingSelectors.CreateARInvoiceButton);
+    WaitToLoad(AccountingSelectors.CreateARInvoiceButton);
     cy.FillLogTextBox(AccountingSelectors.ARInvoiceVatNumber, vat)
-    ClickAndWaitToLoad(AccountingSelectors.OkCreateARInvoiceButton);
+    WaitToLoad(AccountingSelectors.OkCreateARInvoiceButton);
     cy.FillLogLov(AccountingSelectors.ARInvoiceVatType , vat ,true)
-    ClickAndWaitToLoad(AccountingSelectors.VatTypeApplyToAll);
+    WaitToLoad(AccountingSelectors.VatTypeApplyToAll);
 }
 
-function ClickAndWaitToLoad(ButtonSelector:string){
+function WaitToLoad(ButtonSelector:string){
     cy.DefineRequestWait(RestAPI.GET, AccountingURLs.VatTypePercentageCall, RequestAliases.GetVatTypePercentage)
     cy.Click(ButtonSelector, null);
     BaseAssertion.AssertStatusCode(RequestAliases.GetVatTypePercentage, 200);
@@ -475,8 +482,12 @@ export function AssertARInvoiceStatus(status: string) {
     cy.get(AccountingSelectors.ARInvoiceHeaderStatusName).should("have.text", status);
 }
 
+export function AssertARInvoiceAmount(expectedInvoiceAmount: number) {
+    cy.get(BaseSelectors.TabSummaryValue).eq(4).should("have.text", expectedInvoiceAmount.toFixed(2));
+}
+
 export function AssertAutoCreditByInvoiceNumber(invoiceNumber: string) {
     cy.get(BaseSelectors.RightBorderRadius).invoke("text").then((text) => {
-        expect(text.replace(/\s/g, "")).to.contain("ByInvoice" + invoiceNumber);
+        expect(text.replace(/\s/g, "")).to.equals("ByInvoice" + invoiceNumber);
     });
 }

@@ -1,4 +1,4 @@
-@release @dev
+@release @dev 
 Feature: Storage Calculations Chargeable Weight, Rounding and Receivable Correction
 
     The user sets up a warehouse with storage charges, creates a Direct Import Ocean FCL shipment,
@@ -10,11 +10,11 @@ Feature: Storage Calculations Chargeable Weight, Rounding and Receivable Correct
         Given the user logged in and navigate to warehouse workspace
         And open "Testwarehouse" warehouse
         And the following storage details for "CFS" type
-            | Currency | StorageFreeDays |
-            | USD      | 0               |
+            | Currency        | USD |
+            | StorageFreeDays | 0   |
         And the following "Ocean" weight details
-            | Measurement       | Rounding |
-            | Chargeable Weight | 1        |
+            | Measurement | Chargeable Weight |
+            | Rounding    | 1                 |
         And the following pricing defaults lines
             | StepFrom | NumberOfDays | StepTo | SalePrice |
             | 0        | 3            | 2      | 100       |

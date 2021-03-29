@@ -13,5 +13,7 @@
         public int Tenant { get; set; }
 
         public bool IsReadOnly { get; set; }
+
+        
     }
 }

@@ -101,6 +101,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                       ObjectTableName = a.ObjectTable.Name,
                                       Tenant = a.Tenant,
                                       UserTenant = tenant,
+
                                   }).ToList();
 
 

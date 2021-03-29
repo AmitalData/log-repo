@@ -24,10 +24,12 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public byte[] SmallLogo { get; set; }
         public int Tenant { get; set; }
         public string BackgroundImageId { get; set; }
-        public string MainImageId { get; set; }
+        public string LoginImageId { get; set; }
         public string MainColor { get; set; }
         public string LoginProgressImageId { get; set; }
         public string ForgetPasswordImageId { get; set; }
+        public string SecondaryColor { get; set; }
+        public bool HasLogboxAccess { get; set; }
 
     }
 }

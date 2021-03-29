@@ -55,7 +55,7 @@ Then("the shipment should create successfully", () => {
 //#endregion
 
 //#region Marked as (not)blocked for transfer
-When("the user marke the shipment {string} for transfer in {string} view", (MarkAs, AMANACView) => {
+When("the user click {string} in {string} view", (MarkAs, AMANACView) => {
     Actions.NavigatesToAMANACWorkspace();
     Actions.AMANACView(shipmentDetails.TransportMode, AMANACView);
     Actions.AMANACMarkeShipmentAs(MarkAs, shipmentDetails.ShipmentNumber);

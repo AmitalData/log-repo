@@ -909,7 +909,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                     if (itemComponent.ChargesGroupCode == "FRT") {
                         this.OnFreightAmountChanged();
                     }
-
+                    this.OnPercentForeignAmountChanged();
                     this.ComputeShipmentFields();
                 }
             });
@@ -923,6 +923,15 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         this.BuildSummaryData();
         this.BuildProfitData();
     }
+
+    OnPercentForeignAmountChanged() {
+        this.ItemsSource.Collection.filter(f => f.MeasurementCode == "PFCL").forEach(item => {
+            if (item.IsLineAttachted == false) {
+                item.SetQuantity();
+            }
+        });
+    }
+
     OnFreightAmountChanged() {
         this.ItemsSource.Collection.filter(f => f.ChargesGroupCode != "FRT" && f.MeasurementCode == "PRFR").forEach(item => {
             if (item.IsLineAttachted == false) {
@@ -1257,6 +1266,14 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
 
             activeLines.forEach(item => {
                 switch (item.MeasurementCode) {
+                    case "PFCL": {
+                        var quantity = ArrayTool.Sum(this.EntityPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "TotalAmountLocal");
+                        if (item.Quantity != quantity) {
+                            isDifferentOrders = true;
+                        }
+                        break;
+                    }
+
                     case "SCGW": {
                         if (item.Quantity != this.EntityPM.GrossWeightPerStorageDays) {
                             isDifferentOrders = true;
@@ -1825,6 +1842,11 @@ export class ShipmentReceivableItem extends BaseComponent {
 
                                 case "SCGW": {
                                     this.Quantity = this.ShipmentPM.GrossWeightPerStorageDays;
+                                    break;
+                                }
+
+                                case "PFCL": {
+                                    this.Quantity = ArrayTool.Sum(this.ShipmentPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "TotalAmountLocal");
                                     break;
                                 }
 
@@ -2452,6 +2474,12 @@ export class ShipmentReceivableItem extends BaseComponent {
                                 break;
                             }
 
+                            case "PFCL": {
+                                unitPrice = this.UnitPrice;
+                                quantity = item.PercentForeignChargesLocal;
+                                break;
+                            }
+
                             default: {
                                 if (this.fatherComponent.IsFCLEntity) {
                                     var list: PackageTypeList = AllPackageTypes.filter(f => f.MeasurementId == this.MeasurementId)[0];
@@ -2569,6 +2597,10 @@ export class ShipmentReceivableItem extends BaseComponent {
                 result = this.ShipmentPM.GrossWeightPerStorageDays; break;
             }
 
+            case "PFCL": {
+                result = ArrayTool.Sum(this.ShipmentPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "TotalAmountLocal"); break;
+            }
+
             default: {
                 if (!AppTool.IsNullOrEmpty(this.MeasurementId)) {
                     var allBCNTGrouped: ByPckageType[] = ShipmentTool.GetByPckageTypeGrouped(this.ShipmentPM);
@@ -2589,6 +2621,8 @@ export class ShipmentReceivableItem extends BaseComponent {
         if (this.ChargesGroupCode == "FRT") {
             this.fatherComponent.OnFreightAmountChanged();
         }
+
+        this.fatherComponent.OnPercentForeignAmountChanged();
     }
 
     StoragePricingClicked() {
@@ -2711,6 +2745,7 @@ export class InsideReceivableViewModel {
     get GrossWeightInKG() { return this.ShipmentPM.GrossWeightInKG; }
     get VolumeInCBM() { return this.ShipmentPM.VolumeInCBM; }
     get GrossWeightPerStorageDays() { return this.ShipmentPM.GrossWeightPerStorageDays; }
+    get PercentForeignChargesLocal() { return this.ShipmentPM.PercentForeignChargesLocal; }
 
     // Receivable Properties
     get ShipmentId() { return this.EntityPM.ShipmentId; }
@@ -2770,11 +2805,19 @@ export class InsideReceivableViewModel {
         var myQuantity = null;
 
         switch (this.MeasurementCode) {
+
             case "SCGW": {
                 if (this.ShipmentPM) {
                     myQuantity = this.ShipmentPM.GrossWeightPerStorageDays;
                 }
 
+                break;
+            }
+
+            case "PFCL": {
+                if (this.ShipmentPM) {
+                    myQuantity = this.ShipmentPM.PercentForeignChargesLocal;
+                }
                 break;
             }
 

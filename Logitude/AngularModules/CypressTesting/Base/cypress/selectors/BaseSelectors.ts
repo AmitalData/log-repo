@@ -5,15 +5,20 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly OperationsMenu = '#GeneralMHOperations';
     public static readonly AccountingMenu = '#GeneralMHAccounting';
     public static readonly CustomersMenu = '#GeneralMHCustomers';
+    public static readonly CRMMenu = "#GeneralMHCRM"
     public static readonly TicketsMenu = '#GeneralMHTicket';
     public static readonly MaintenanceMenu = "#GeneralMHMaintenance"
 	public static readonly TariffMenu = "#GeneralMHTariffModule";
     public static readonly ShippingLine = "#MaintenanceItemMTSL"
     //#endregion
+    //#region CRM
+    public static readonly CRMCustomers="#CRMCUS"
+    //#endregion
     //#region Maintenance
     public static readonly SystemSettings = "#CMS"
     public static readonly CustomsSettings = "#MaintenanceItemCISE"
     public static readonly Warehouse = "#MaintenanceItemMTWH"
+    public static readonly Vendor = "#MaintenanceItemMTVD"
     //#endregion
     //#region charge Types
     public static readonly ChargesTypeAccounting="#ChargesTypeTHAccounting"
@@ -40,6 +45,9 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly SaveWizard = "#SaveWizard";
     public static readonly Backbutton = '#EditBackbutton';
     public static readonly SaveButton = '#SaveBtn';
+    public static readonly ConfrimApproved = '#ConfrimApproved';
+    public static readonly SettingsButton = '#Settings';
+
     //#endregion
     //#region Contains
     public static readonly ContainsApplytoall = 'Apply to all';
@@ -74,6 +82,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ContainNo="No"
     public static readonly ContainSettings="Settings"
     public static readonly ContainWarehouse="Warehouse"
+    public static readonly ContainVendor="Vendor"
 
 
     //#endregion
@@ -83,6 +92,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly button = "button"
     public static readonly typeCheckbox = '[type="checkbox"]'
     public static readonly LogitudeWindow = ".LogitudeWindow";
+    public static readonly MessageWindow = ".MessageWindow"
     public static readonly LabelClass = ".Label"
     public static readonly ListItem='[class="Row ag-row tooltip"]'
     public static readonly DivListItem='div[class="Row ag-row tooltip"]'
@@ -91,10 +101,12 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly MouseoverTrigger='mouseover'
     public static readonly LogitudeScrollViewer='.LogitudeScrollViewer'
     public static readonly DeleteButton='button[id^=Delete]'
+    public static readonly Anchor="a"
     //#endregion
 
     public static readonly FirstElementInList = 'ul > li';
     public static readonly LastElement = ":last";
+    public static readonly FirstElement = ":first";
     public static readonly AddButton = "#Add";
     public static readonly SpanElement = "span";
     public static readonly DivElement = 'div';
@@ -106,8 +118,11 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly MTCPopup='#MTCPopup';
     public static readonly LogLOVFooterHyperLink = ".LogLOVFooter a";
     public static readonly DownArrowImage = "img[src='./Images/Buttons/downarrow.png']";
+    public static readonly RefreshImg = "img[src='./Images/Buttons/Refresh.png']";
     public static readonly Hyperlink = ".hyperlink";
-
+    public static readonly Title = ".Title";
+    public static readonly input = "input"
+    public static readonly SaveCloseButton="#SaveClose"
     //#region Should Condition 
     public static readonly BeEmpty = 'be.empty'
     public static readonly NotBeEmpty = 'not.be.empty'
@@ -160,7 +175,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ConfirmWindow="[class=ConfirmWindow]"
     public static readonly CurvedEditArea=".CurvedEditArea"
     public static readonly ListDataLoaded='div[id=ListDataLoaded]'
-    
+    public static readonly ErrorPopUp = ".ErrorPopUp";
    
 
     public static readonly ShortTitleDiv = ".ShortTitleDiv";
@@ -200,5 +215,8 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly WarehouseSaveCloseBtn ="#Warehouse-SaveClose"
 
     public static readonly RightBorderRadius = ".RightBorderRadius:last";
-    
+    public static readonly TabSummaryValue = ".LogitudeTabSummary:last .TabSummaryValue";
+    //#region  colors
+    public static readonly RedColor="rgb(255, 0, 0)"
+//#endregion
 }

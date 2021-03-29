@@ -25,10 +25,14 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             bool IsConditionValid = false;
 
             ValidateAutomationResultClass validateResult = new ValidateAutomationResultClass();
+            
+            validateResult.ConditionsList = new List<AutomationCondition>();
             List<AutomationCondition> automationConditionList = null;
+
             AutomatedBackup automatedBackup = GetAutomatedBackupClass(automation, entityChange, lastupdateautomation);
 
-            if (typeConditionValidate == "Delayed") automationConditionList = automatedBackup.DelayAautomationConditionLists;
+            if (typeConditionValidate == "Delayed")  
+                automationConditionList = automatedBackup.DelayAautomationConditionLists;
             else automationConditionList = automatedBackup.AautomationConditionLists;
 
             if (automationConditionList != null && automationConditionList.Count() > 0)
@@ -36,27 +40,51 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 int conditionAndCount = automationConditionList.Where(d => d.ConditionType == "And").Count();
                 int conditionOrCount = automationConditionList.Where(d => d.ConditionType == "Or").Count();
 
-                if (conditionOrCount == 0) validconditionOr = true;
+
+                 bool validAndList = true;
+                 bool validOrList = false;
+
+
+                if (conditionOrCount == 0) validOrList = true;
                 foreach (AutomationCondition automationCondition in automationConditionList.Where(d => d.ConditionType == "And"))
                 {
+                     
                     validconditionAnd = ValidateCondition(automationConditionFields, automationCondition, entityChange);
-                    if (!validconditionAnd) break;
-                }
-
-                if (validconditionAnd)
-                {
-                    foreach (AutomationCondition automationCondition in automationConditionList.Where(d => d.ConditionType == "Or"))
+                     
+                    validateResult.ConditionsList.Add(automationCondition);
+                     
+                    if (!validconditionAnd)
                     {
-                        validconditionOr = ValidateCondition(automationConditionFields, automationCondition, entityChange);
-                        if (validconditionOr) break;
+                        validAndList = false;
                     }
-                }
 
-                if (validconditionAnd && validconditionOr) IsConditionValid = true;
+                    //if (!validconditionAnd) break;
+                }
+                 
+                // if (validconditionAnd)
+                // {
+                foreach (AutomationCondition automationCondition in automationConditionList.Where(d => d.ConditionType == "Or"))
+                    { 
+
+                       validconditionOr = ValidateCondition(automationConditionFields, automationCondition, entityChange);
+                     
+                        validateResult.ConditionsList.Add(automationCondition);
+
+                    if (validconditionOr)
+                    {
+                        validOrList = true;
+                    }
+
+                    //if (validconditionOr) break;
+                }
+                // } 
+
+                if (validAndList && validOrList) IsConditionValid = true;
             }
 
-            else IsConditionValid = true;
+            else IsConditionValid = true; 
             validateResult.IsAutomationValid = IsConditionValid;
+             
 
             if (automatedBackup != null)
             {
@@ -65,6 +93,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 validateResult.Delaytime = automatedBackup.Delaytime;
                 validateResult.DelaytimeOp = automatedBackup.DelaytimeOp;
                 validateResult.SelectedDelaytimeFieldCode = automatedBackup.SelectedDelaytimeFieldCode;
+                validateResult.ConditionsList = automatedBackup.AautomationConditionLists;
             }
 
             return validateResult;
@@ -158,87 +187,144 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 
                 if (automationCondition.OperatorCode == "<=" || automationCondition.OperatorCode == "<=F" || automationCondition.OperatorCode == ">" || automationCondition.OperatorCode == ">F" || automationCondition.OperatorCode == ">=" || automationCondition.OperatorCode == ">=F" || automationCondition.OperatorCode == "<" || automationCondition.OperatorCode == "<F")
                 {
-                    if (string.IsNullOrEmpty(automationConditionvalue) || string.IsNullOrEmpty(automationConditionFieldValue)) return false;
+                    if (string.IsNullOrEmpty(automationConditionvalue) || string.IsNullOrEmpty(automationConditionFieldValue))
+                    {
+                        isValid = false;
+                    }
+                    SetConditionValidate(automationCondition, isValid);
+                    return isValid;
                 }
 
                 if (automationCondition.OperatorCode == "=" || automationCondition.OperatorCode == "=F")
                 {
-                    if (automationConditionFieldValue != automationConditionvalue) isValid = false;
+                    if (automationConditionFieldValue != automationConditionvalue)
+                    {
+                        isValid = false;
+                    }
+                    SetConditionValidate(automationCondition, isValid);
                     return isValid;
                 }
 
                 else if (automationCondition.OperatorCode == "<>" || automationCondition.OperatorCode == "<>F")
                 {
-                    if (automationConditionFieldValue == automationConditionvalue) isValid = false;
+                    if (automationConditionFieldValue == automationConditionvalue)
+                    {
+                        isValid = false; 
+                    }
+                    SetConditionValidate(automationCondition, isValid);
                     return isValid;
                 }
 
                 else if (automationCondition.OperatorCode == "CONTAINS" || automationCondition.OperatorCode == "CONTAINSF")
                 {
-                    if (!automationConditionFieldValue.Contains(automationConditionvalue)) isValid = false;
+                    if (!automationConditionFieldValue.Contains(automationConditionvalue))
+                    {
+                        isValid = false;
+                    }
+                    SetConditionValidate(automationCondition, isValid);
                     return isValid;
                 }
                 else if (automationCondition.OperatorCode == "!CONTAINS" || automationCondition.OperatorCode == "!CONTAINSF")
                 {
-                    if (!string.IsNullOrEmpty(automationConditionFieldValue) && automationConditionFieldValue.Contains(automationConditionvalue)) isValid = false;
+                    if (!string.IsNullOrEmpty(automationConditionFieldValue) && automationConditionFieldValue.Contains(automationConditionvalue))
+                    {
+                        isValid = false;
+                    }
+                    SetConditionValidate(automationCondition, isValid);
                     return isValid;
                 }
 
                 else if (automationCondition.OperatorCode == ">" || automationCondition.OperatorCode == ">F")
                 {
                     int reslutCompare = automationConditionFieldValue.CompareTo(automationConditionvalue);
-                    if (reslutCompare <= 0) isValid = false;
+                    if (reslutCompare <= 0)
+                    {
+                        isValid = false;
+                    }
+                    SetConditionValidate(automationCondition, isValid);
                     return isValid;
                 }
 
                 else if (automationCondition.OperatorCode == "<" || automationCondition.OperatorCode == "<F")
                 {
                     int reslutCompare = automationConditionFieldValue.CompareTo(automationConditionvalue);
-                    if (reslutCompare >= 0) isValid = false;
+                    if (reslutCompare >= 0)
+                    {
+                        isValid = false;
+                    }
+                    SetConditionValidate(automationCondition, isValid);
                     return isValid;
                 }
 
                 else if (automationCondition.OperatorCode == ">=" || automationCondition.OperatorCode == ">=F")
                 {
                     int reslutCompare = automationConditionFieldValue.CompareTo(automationConditionvalue);
-                    if (reslutCompare == -1) isValid = false;
+                    if (reslutCompare == -1)
+                    {
+                        isValid = false;
+                    }
+                    SetConditionValidate(automationCondition, isValid);
                     return isValid;
                 }
 
                 else if (automationCondition.OperatorCode == "<=" || automationCondition.OperatorCode == "<=F")
                 {
                     int reslutCompare = automationConditionFieldValue.CompareTo(automationConditionvalue);
-                    if (reslutCompare == 1) isValid = false;
+                    if (reslutCompare == 1)
+                    {
+                        isValid = false;
+                    }
+                    SetConditionValidate(automationCondition, isValid);
                     return isValid;
                 }
 
                 else if (automationCondition.OperatorCode == "CHANGEDTO")
                 {
-                    if (automationConditionFieldValue != automationConditionvalue || !automationConditionField.IsChange) isValid = false;
+                    if (automationConditionFieldValue != automationConditionvalue || !automationConditionField.IsChange)
+                    {
+                        isValid = false;
+                    }
+                    SetConditionValidate(automationCondition, isValid);
                     return isValid;
                 }
 
                 else if (automationCondition.OperatorCode == "CHANGED")
                 {
-                    if (!automationConditionField.IsChange) isValid = false;
+                    if (!automationConditionField.IsChange)
+                    {
+                        isValid = false;
+                    }
+                    SetConditionValidate(automationCondition, isValid);
                     return isValid;
                 }
 
                 else if (automationCondition.OperatorCode == "ISEMPTY")
                 {
-                    if (!string.IsNullOrEmpty(automationConditionFieldValue)) isValid = false;
+                    if (!string.IsNullOrEmpty(automationConditionFieldValue))
+                    {
+                        isValid = false;
+                    }
+                    SetConditionValidate(automationCondition, isValid);
                     return isValid;
                 }
                 else if (automationCondition.OperatorCode == "ISNOTEMPTY")
                 {
-                    if (string.IsNullOrEmpty(automationConditionFieldValue)) isValid = false;
+                    if (string.IsNullOrEmpty(automationConditionFieldValue))
+                    {
+                        isValid = false;
+                    }
+                    SetConditionValidate(automationCondition, isValid);
                     return isValid;
                 }
 
                 else if (automationCondition.OperatorCode == "EqualSystemVariable" && automationCondition.Value == "SystemUser")
                 {
                     string userId = GetSystemContactIdByTenant(entityChange.Tenant);
-                    if (userId != automationConditionFieldValue) isValid = false;
+                    if (userId != automationConditionFieldValue)
+                    {
+                        isValid = false;
+                    }
+                    SetConditionValidate(automationCondition, isValid);
 
                     return isValid;
                 }
@@ -246,10 +332,15 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             }
             else
             {
-                isValid = false;
+                isValid = false;  
             }
-
+            SetConditionValidate(automationCondition, isValid);
             return isValid;
+        }
+
+        private static void SetConditionValidate(AutomationCondition automationCondition, bool isValid)
+        {
+            automationCondition.IsValid = isValid;
         }
 
         public string GetSystemContactIdByTenant(int tenant)

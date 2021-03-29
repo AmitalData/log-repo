@@ -36,7 +36,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment PickUp Delivery Package&quot;"
-  Code="&quot;1a40&quot;"
+  Code="&quot;75b3&quot;"
   Name="&quot;ShipmentPickUpDeliveryPackage&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -2038,7 +2038,7 @@
   <Records />
   <DataContracts>
     <DataContract
-      Name="&quot;ShipmentPickUpDeliveryPackage&quot;"
+      Name="&quot;Package&quot;"
       Version="&quot;ApiV1&quot;">
       <DCField
         DCFieldName="&quot;Id&quot;"

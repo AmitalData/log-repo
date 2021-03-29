@@ -186,8 +186,11 @@
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_Quotes.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_Shipments.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantProfitCurrency.dxml" />
+    <None Include="DBOthers\QuoteModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateQuoteComputedFields.dxml" />
     <None Include="DBOthers\QuoteModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateQuotes.dxml" />
+    <None Include="DBOthers\QuoteModel\Triggers\Trigger_AutomaticLastUpdateDateQuoteComputedFields.dxml" />
     <None Include="DBOthers\QuoteModel\Triggers\Trigger_AutomaticLastUpdateDateQuotes.dxml" />
+    <None Include="DBScripts\CommonModel\202103161606_AddNewUOMPercentOForeignChargesLocalAmounts.sxml" />
     <None Include="DBScripts\GlobalModel\202102161503_UpdateTenantManagmentPrivatLabelDomain.sxml" />
     <None Include="DBScripts\InfrastructureModel\202101120950_ModifyDBMigrationLastScriptTrigger.sxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\dbo.usp_DoTheTableDeletionSet.dxml" />
@@ -308,6 +311,7 @@
     <None Include="DBScripts\QuoteModel\202102281440_SetDefaultQuoteExpirationDays.sxml" />
     <None Include="DBScripts\QuoteModel\UpdateAutomaticLastUpdateDateOnQuote.sxml" />
     <None Include="DBScripts\QuoteModel\UpdateAutomaticLastUpdateDateOnQuoteClosingReason.sxml" />
+    <None Include="DBScripts\QuoteModel\UpdateAutomaticLastUpdateDateOnQuoteComputedFields.sxml" />
     <None Include="DBScripts\QuoteModel\UpdateAutomaticLastUpdateDateOnQuoteStages.sxml" />
     <None Include="DBScripts\ScreenField Unique index removal.sxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\UpdateAllTenantsCustomersActualDataProcedure.dxml" />
@@ -465,9 +469,12 @@
     <None Include="DBScripts\ShipmentModel\202101100944_FillQuoteNumberOnShipmentBackward.sxml" />
     <None Include="DBScripts\ShipmentModel\202103070931_FillPreOnForwardingFieldsForHouses.sxml" />
     <None Include="DBScripts\ShipmentModel\202103071010_FillPreOnCarriageFieldsForMasters.sxml" />
+    <None Include="DBScripts\ShipmentModel\202103141040_AddPreOnCarriageEventTypesAndStatus.sxml" />
     <None Include="DBScripts\ShipmentModel\202103181700_AddShipmentNumberToSearchFieldInCustomsTransferHeaders.sxml" />
     <None Include="DBScripts\ShipmentModel\202101271225_AddNewSpecialHandlingCodes.sxml" />
     <None Include="DBScripts\ShipmentModel\202102241906_UpdateCustomerContactAndAddress.sxml" />
+    <None Include="DBScripts\ShipmentModel\202103211413_UpdateOnForwardingDepartedEventStatusWeight.sxml" />
+    <None Include="DBScripts\ShipmentModel\202122031108_UpdateFollowUpForwardingEvents.sxml" />
     <None Include="DBScripts\ShipmentModel\UpdateshipmentsCalculateDocumentsKPIFields.sxml" />
     <None Include="DBScripts\ShipmentModel\UpdateShipmentsCalculateSendDocumentField.sxml" />
     <None Include="DBTables\CommonDataModel\CardSearch.dxml" />

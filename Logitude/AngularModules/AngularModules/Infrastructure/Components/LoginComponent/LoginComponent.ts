@@ -177,7 +177,8 @@ export class LoginComponent implements OnInit {
         var url = window.location.href;
         if (url.indexOf('localhost') > -1 && !AppTool.IsNullOrEmpty(url.split('?')[1])) {
             this.isLocalPrivateLable = true;
-            window.sessionStorage.setItem('userdata', url.split('?')[1]);
+            let isDSV = url.indexOf('?D') > -1;
+            window.sessionStorage.setItem('userdata', url.split(isDSV ? '?D' : '?P')[1]);
             SessionLocator.IsExternalParams = false;
         }
         if (url && url.indexOf('localhost') > -1 && !this.isLocalPrivateLable) {
@@ -509,6 +510,7 @@ export class LoginComponent implements OnInit {
         });
 
     }
+    GlobalSettings: any;
     LoadClosedTablesToWindow(CurrentTenant: number) {
 
         this.IndexedDbService.InitializeIndexedDB().subscribe((response:any) => {
@@ -542,19 +544,9 @@ export class LoginComponent implements OnInit {
                 });
 
                 this.loginService.GetGlobalSetting().subscribe((myResult: any) => {
-
-                    // Accounting - Abdullah
-                    if (InfraSettings.TenantPM) {
-
-
-                        myResult.LayoutDirection = SessionInfo.LoggedUserPM.LayoutDirection ? SessionInfo.LoggedUserPM.LayoutDirection.toLowerCase() : (InfraSettings.TenantPM.LayoutDirection ? InfraSettings.TenantPM.LayoutDirection.toLowerCase() : InfraSettings.TenantPM.LayoutDirection);
-
-                    }
-
-                    //
-
-                    ObjectsLocator.UpdateGlobalSetting(myResult);
-
+                    this.GlobalSettings = myResult;
+                    ObjectsLocator.UpdateGlobalSetting(this.GlobalSettings);
+                    
                     CachedDataManager.CheckSystemMetadataLastUpdate().subscribe((response: any) => {
                         this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe((response: any) => {
                             if(ObjectsLocator.GlobalSetting.WorkEnvironment=="customs"){
@@ -883,8 +875,8 @@ export class LoginComponent implements OnInit {
 
         this.myInfrastructureDomainService.GetFeatureToggles().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                SessionLocator.FeatureToggles = myResponse.Result;
-                
+                SessionLocator.FeatureToggles = myResponse.Result.filter(d => d.TenantNumber == this.Tenant ||
+                                                                        (this.Tenant >= d.FromTenantNumber && this.Tenant <= d.ToTenantNumber));
                 //33
             }
             this.IncreaseProgressBar();
@@ -1014,13 +1006,21 @@ export class LoginComponent implements OnInit {
             }
 
           if (this.CompletedLoadsCount === this.TotalNumberOfLoads && this.generalTableResourcesIsLoaded === true) {
-                console.log("===============>Changing Page<==================");
+              console.log("===============>Changing Page<==================");
+              this.SetLayoutDirection();
+              
                 ServiceLocator.RulesValidator = new RulesValidator();
                 this.timerToken = setTimeout(() => this.ChangePage(), 1000);
             }
         }
 
         //console.log("login load count:" + this.CompletedLoadsCount);
+    }
+    private SetLayoutDirection() {
+        if (InfraSettings.TenantPM) {
+            this.GlobalSettings.LayoutDirection = SessionInfo.LoggedUserPM.LayoutDirection ? SessionInfo.LoggedUserPM.LayoutDirection.toLowerCase() : (InfraSettings.TenantPM.LayoutDirection ? InfraSettings.TenantPM.LayoutDirection.toLowerCase() : InfraSettings.TenantPM.LayoutDirection);
+        }
+        ObjectsLocator.SetLayoutDirection(this.GlobalSettings.LayoutDirection);
     }
     private ChangePage() {
         if (this.timerToken) {

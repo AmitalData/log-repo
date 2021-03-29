@@ -6,9 +6,10 @@ import { LoginComponent } from './LoginComponent';
 import { DynamicLoaderTSC } from '../Utilities/DynamicLoaderTSC';
 import { Tools } from '../Utilities/Tools';
 import { Router } from '@angular/router';
-import { HybridLabelsBrandingDataService } from '../HybridLabels/Services/HybridLabelsBrandingDataService';
-import { ServiceResponse } from '../HybridLabels/DataContracts/ServiceResponse';
-import { BrandingDataService } from '../HybridLabels/Services/BrandingDataService';
+import { PrivateLabelsBrandingDataService } from '../PrivateLabels/Services/PrivateLabelsBrandingDataService';
+import { ServiceResponse } from '../PrivateLabels/DataContracts/ServiceResponse';
+import { BrandingDataService } from '../PrivateLabels/Services/BrandingDataService';
+import { error } from 'core-js/fn/log';
 
 @Component({
     selector: 'DSVLoginComponent',
@@ -22,35 +23,45 @@ export class DSVLoginComponent extends LoginComponent implements OnInit {
     private privateUrl;
     public MainColor: string = null;
     public BackgroundImage: string = "";
-    public MainImage: string = "";
-    public MainLogo: string = "";
-    public LoginProcessImage: string = ""; 
+    public LoginImage: string = "";
+    public MainLogo: string = ""; 
     public showSpinner = true; 
+
 
     constructor(
         private ss: LoginService,
-        private hybridLabelsBrandingDataService: HybridLabelsBrandingDataService) {
+        private privateLabelsBrandingDataService: PrivateLabelsBrandingDataService) {
         super(ss); 
     }
-    ngOnInit() { 
-        this.get_cookie_data(); 
+
+    ngOnInit() {
+        this.get_cookie_data();
         this.privateUrl = SessionInfo.GetLogitudeURL();
-        this.GetHybridLabelsData(this.privateUrl);  
+        // Get Images from storage, then request from server to change if there is an update
+        this.GetImagesFromStorage();
+        this.GetPrivateLabelsData(this.privateUrl);
     }
-      
-    GetHybridLabelsData(privateUrl: string) {
-        this.hybridLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetHybridLabelsDataRequest(privateUrl)).subscribe((response: ServiceResponse) => {
+
+    GetImagesFromStorage() {
+        this.GetLoginPageImages();
+    }
+
+    private GetLoginPageImages() {
+        this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
+        this.MainLogo = BrandingDataService.GetImage("MainLogo");
+        this.LoginImage = BrandingDataService.GetImage("LoginImage");
+        this.LoginImage = BrandingDataService.GetImage("LoginImage");
+        this.showSpinner = false;
+    }
+
+    GetPrivateLabelsData(privateUrl: string) {
+        this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe((response: ServiceResponse) => {
             if (response.Result) {
-                this.Tenant = response.Result.Tenant;
-                BrandingDataService.SetHybridLabelsDataRequest(response.Result, privateUrl);
+                BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
                 this.MainColor = response.Result.MainColor;
-                this.BackgroundImage = BrandingDataService.GetBackgroundImage();
-                this.MainImage = BrandingDataService.GetMainImage();
-                this.MainLogo = BrandingDataService.GetMainLogo();
-                this.LoginProcessImage = BrandingDataService.GetLoginProgressImage();  
-                this.showSpinner = false; 
-            } 
-        }); 
+                this.GetLoginPageImages();
+            }})
+        this.showSpinner = false;
     } 
 
     private ClearLocation() {

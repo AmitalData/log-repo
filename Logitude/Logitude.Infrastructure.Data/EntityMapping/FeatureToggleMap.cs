@@ -37,11 +37,17 @@ namespace Logitude.Infrastructure.Data.EntityMapping
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
 
-            this.Property(t => t.TenantNumber).HasColumnName("TenantNumber").IsRequired();
+            this.Property(t => t.TenantNumber).HasColumnName("TenantNumber");
 
             this.Property(t => t.Inactive).HasColumnName("Inactive");
 
             this.Property(t => t.ToggleCode).HasColumnName("ToggleCode").IsRequired().HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.IsMultiTenant).HasColumnName("IsMultiTenant");
+
+            this.Property(t => t.FromTenantNumber).HasColumnName("FromTenantNumber");
+
+            this.Property(t => t.ToTenantNumber).HasColumnName("ToTenantNumber");
         }
     }
 }

@@ -315,10 +315,25 @@ export class ShipmentDomainService extends BaseService  {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
-    GetShipmentsQueriesCounts(tenant: number, transportModeId: string, directionId: string, SearchFilter: string, serviceContextUser: string, TypeCode: string = null) {
+    GetShipmentsQueriesCounts(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
+        let urlparameters = '/GetShipmentsQueriesCounts?';
+        const mykeys = Object.keys(shipmentsQueriesCountsArgs);
+        for (var i in mykeys) {
+            let propName = mykeys[i];
+            let propValue = shipmentsQueriesCountsArgs[propName];
+
+            if (urlparameters != "/GetShipmentsQueriesCounts?") {
+                urlparameters = urlparameters.concat('&');
+            }
+
+            propValue = encodeURIComponent(propValue);
+            urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+        }
+
+        const callUrl = this._apiUrl.concat(urlparameters);
 
         return defer(() => {
-            return this._httpClient.get(this._apiUrl + '/GetShipmentsQueriesCounts?tenant=' + tenant + '&transportModeId=' + transportModeId + '&directionId=' + directionId + '&SearchFilter=' + SearchFilter + '&serviceContextUser=' + serviceContextUser + '&TypeCode=' + TypeCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._httpClient.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
 
@@ -1045,4 +1060,14 @@ export class ExcelPackage {
     Description: string;
     IsRefrigerated: boolean;
     HasErrors: boolean;
+}
+
+export class ShipmentsQueriesCountsArgs {
+    Tenant: number;
+    TransportModeId: string;
+    DirectionId: string;
+    SearchFilter: string;
+    ServiceContextUser: string;
+    TypeCode: string = null;
+    ForwarderPartnerId: string;
 }

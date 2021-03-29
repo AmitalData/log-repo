@@ -53,7 +53,6 @@ Cypress.Commands.add("OpenChangePasswordPage", () => {
         cy.visit(resetURL);
     })
 })
-
 Cypress.Commands.add("RedirectToLogin", () => {
     let mode = Cypress.env("Mode")
     if (mode.toLowerCase() === "development") {

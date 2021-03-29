@@ -9,6 +9,7 @@ import * as Conditions from "../../../Shipment/cypress/actions/Conditions";
 import { PackagesDetails } from "../../../Shipment/cypress/models/PackagesDetails";
 import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import * as BaseAssertion from '../../../Base/cypress/actions/Assertion';
+import { EventTypeDetails } from "../../../Base/cypress/models/EventTypeDetails";
 
 //#region Navigate and open
 export function NavigatesToSQuotesWorkspace() {
@@ -140,9 +141,20 @@ export function FillExpectedOrderDetailsDimensions(packagesDetails: PackagesDeta
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
 }
 
-export function UpdateQuote() {
+export function OpenQuoteAction(action:string, note:string){
+    cy.Click(BaseSelectors.MenuButtons, null, true);
+    cy.Click(QuoteSelectors.QuotationActionsButton(action), null);
+    FillActionNote(note)
+}
+
+function FillActionNote(note:string){
+    cy.FillLogTextBox(QuoteSelectors.QuoteEventNote, note)
+    UpdateQuote(BaseSelectors.ConfrimApproved)
+}
+
+export function UpdateQuote(selector:string) {
     cy.DefineRequestWait(RestAPI.PUT, QuoteURLs.Quotes, RequestAliases.Quotes);
-    cy.Click(QuoteSelectors.QuoteSave, null);
+    cy.Click(selector, null);
 }
 //#endregion
 
@@ -192,4 +204,34 @@ function SentToCustomer() {
     cy.DefineRequestWait(RestAPI.POST, QuoteURLs.PostSendhtmlDocument, RequestAliases.SentToCustomer)
     cy.Click(QuoteSelectors.SendMessageButton, null)
 }
+//#endregion
+
+//#region Copy quote
+export function CopyQuote(action:string){
+    cy.DefineRequestWait(RestAPI.GET, QuoteURLs.GetQuoteSettings, RequestAliases.GetQuoteSettings);
+    cy.Click(BaseSelectors.MenuButtons, null, true);
+    cy.Click(QuoteSelectors.QuotationActionsButton(action), null);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetQuoteSettings, 200);
+    CreateQuote()
+}
+
+export function QuoteConversionEventsMapping(eventDetailsList: EventTypeDetails[] ,QuoteNumber :string): EventTypeDetails[]{
+    for (let i = 0; i < eventDetailsList.length; i++) {
+        eventDetailsList[i].Notes = eventDetailsList[i].Notes.replace(/\"OldQuoteNumber\"/gi, QuoteNumber);
+    }
+    return eventDetailsList;
+}
+
+export function ValidatePackageCells(expectedOrderDetails:PackagesDetails[]){
+    for(let i = 0 ; i<expectedOrderDetails.length;i++){
+        BaseAssertion.AssertElementContain(BaseSelectors.CellWithRowAndCol("1",i.toString()),expectedOrderDetails[i].Quantity.toString())
+        BaseAssertion.AssertElementContain(BaseSelectors.CellWithRowAndCol("2",i.toString()),Dimensions_L_W_H(expectedOrderDetails[i]))
+        BaseAssertion.AssertElementContain(BaseSelectors.CellWithRowAndCol("4",i.toString()),expectedOrderDetails[i].GrossWeight.toString())
+    }
+}
+
+function Dimensions_L_W_H(expectedOrderDetails:PackagesDetails){
+    return expectedOrderDetails.Length+"-"+expectedOrderDetails.Width+"-"+expectedOrderDetails.Height
+}
+
 //#endregion

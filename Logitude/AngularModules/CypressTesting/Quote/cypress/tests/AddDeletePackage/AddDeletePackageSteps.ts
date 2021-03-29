@@ -73,7 +73,7 @@ Given("the user delete the package", () => {
 });
 
 When("update quote", () => {
-  QuotesActions.UpdateQuote();
+  QuotesActions.UpdateQuote(QuoteSelectors.QuoteSave);
 });
 
 Then("the quote should update successfully", () => {

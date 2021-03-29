@@ -1,4 +1,21 @@
-﻿<div class="TabHolder">
+<style>
+    .ConditionsDetails {
+        position: absolute;
+        right: 60px;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+    }
+
+    .ConditionsLink {
+        position: relative;
+        left: 30px;
+    }
+
+</style>
+
+<div class="TabHolder">
     <table>
         <tr class="TabTitleRow">
             <td>Audit</td>
@@ -418,6 +435,7 @@
                                                                                                     </tr>
                                                                                                 </table>
                                                                                             </div>
+                                                                                             
 
                                                                                             <div class="SimpleGridViewBody">
                                                                                                 <table>
@@ -442,15 +460,18 @@
                                                                                                                                 <!--IsConditionTrue-->
                                                                                                                                 <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
 
+
+
                                                                                                                                     <div style="width:95px">
-                                                                                                                                        <img class="CenterCenter" style="width:20px;height:20px" *ngIf="item.IsConditionTrue" src="./Images/Icons/MiniGreenTick.png" />
+                                                                                                                                        <img class="ConditionsDetails" style="width:20px;height:20px" *ngIf="item.IsConditionTrue" src="./Images/Icons/MiniGreenTick.png" />
 
-                                                                                                                                        <img *ngIf="item.DoneDate && !item.IsConditionTrue" class="CenterCenter" style="width:14px;height:14px"  src="./Images/RedX.png" />
-                                                                                                                             
-
+                                                                                                                                        <img class="ConditionsDetails" *ngIf="item.DoneDate && !item.IsConditionTrue" style="width:14px;height:14px" src="./Images/RedX.png" />
 
                                                                                                                                     </div>
 
+
+                                                                                                                                    <!--CondithionsDetails-->
+                                                                                                                                    <a class="ConditionsLink" *ngIf="ShowConditionsDetailsLink" (click)="ShowCondithionsDetails(item)">Details</a>
 
                                                                                                                                 </td>
 
@@ -490,7 +511,7 @@
                                                                                                                                 </td>
                                                                                                                                 <td *ngIf="IsCustomerCareUser" class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px; position: relative;">
 
-                                                                                                                                    {{item.ExecutionTime}} ms 
+                                                                                                                                    {{item.ExecutionTime}} ms
 
                                                                                                                                 </td>
 

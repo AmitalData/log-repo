@@ -1,16 +1,19 @@
 import * as Actions from "../../actions/Actions";
+import * as Assists from "../../../../Base/cypress/assists/Assists";
+import * as AccountingActions from "../../../../Accounting/cypress/actions/Actions"
+import * as BaseActions from "../../../../Base/cypress/actions/Actions"
+import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
-import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
-import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
-import { ShipmentSelectors } from "../../selectors/Selectors";
 import { PackagesDetails } from "cypress/models/PackagesDetails";
-import * as BaseActions from "../../../../Base/cypress/actions/Actions"
-import * as AccountingActions from "../../../../Accounting/cypress/actions/Actions"
-import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors';
 import { WarehouseStorage } from "cypress/models/WarehouseStorage";
 import { ReceivableDetails } from "cypress/models/ReceivableDetails";
-import * as Assists from "../../../../Base/cypress/assists/Assists";
+import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
+import { ShipmentSelectors } from "../../selectors/Selectors";
+import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors';
+import { AccountingSelectors } from "../../../../Accounting/cypress/selectors/Selectors";
+import { ARInvoiceDetails } from "../../../../Accounting/cypress/models/ARInvoiceDetails";
+
 
 let shipmentDetails: ShipmentDetails;
 
@@ -25,18 +28,18 @@ Given("open warehouse with {string} warehouse", (warehouseName) => {
 });
 
 Given("fill with the following storage details for {string} Type", (type, dataTable) => {
-    let warehouseDetails = dataTable.hashes()[0] as WarehouseStorage;
+    let warehouseDetails = Assists.CreateInstance<WarehouseStorage>(dataTable, true);
     cy.FillLogLov(BaseSelectors.WarehouseTypeCode, type, true);
     BaseActions.FillWarehouseStorageDetails(warehouseDetails);
 });
 
 Given("{string} weight details as following", (transportMode, dataTable) => {
-    let warehouseDetails = dataTable.hashes()[0] as WarehouseStorage;
+    let warehouseDetails = Assists.CreateInstance<WarehouseStorage>(dataTable, true);
     BaseActions.FillWarehouseStorageWeightDetails(warehouseDetails, transportMode)
 });
 
 Given("pricing defaults lines as following", (dataTable) => {
-    let warehousePricingList = dataTable.hashes() as WarehouseStorage[];
+    let warehousePricingList = Assists.CreateSet<WarehouseStorage>(dataTable);
     BaseActions.FillWarehouseStoragePricing(warehousePricingList)
 
 });
@@ -79,7 +82,7 @@ Given("the user open the shipment and navigate to packages workspace", () => {
 });
 
 Given("a package with the following details", (dataTable) => {
-    let packageDetailsList = dataTable.hashes() as PackagesDetails[];
+    let packageDetailsList = Assists.CreateSet<PackagesDetails>(dataTable);
     Actions.FillPackageTab(shipmentDetails.TransportMode, packageDetailsList, shipmentDetails.ShipmentType);
 });
 
@@ -97,7 +100,7 @@ Given("the user in the shipment's rounting tab", () => {
     cy.Navigate(ShipmentSelectors.RoutingsTab);
 });
 
-Given("add new warehouse leg with {string} as Termina", (warehouseName) => {
+Given("a warehouse leg with {string} as terminal", (warehouseName) => {
     cy.Click(ShipmentSelectors.AddWarehouse, null);
     cy.FillLogLov(ShipmentSelectors.WarehouseLeg, warehouseName, true);
 });
@@ -112,11 +115,12 @@ When("calculate storage", () => {
 });
 
 Then("the Storage Fee should be {string}", (expectedStorageFeeValue) => {
-    BaseAssertion.AssertElementTextEqual(ShipmentSelectors.StorageFeeResult, expectedStorageFeeValue)
+    // BaseAssertion.AssertElementTextEqual(ShipmentSelectors.StorageFeeResult, expectedStorageFeeValue)
+    Actions.AssertStorageFee(expectedStorageFeeValue);
 });
 
 Then("Storage pricing should have weight {string} and Amount as following", (expectedWeight, dataTable) => {
-    let AmountList = dataTable.hashes() as WarehouseStorage[];
+    let AmountList = Assists.CreateSet<WarehouseStorage>(dataTable);
     Actions.ValidateStoragePricing(AmountList, expectedWeight);
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, BaseSelectors.ContainsOK);
 });
@@ -132,13 +136,19 @@ Then("a receivables line with the following details should appear", (dataTable) 
 });
 //#endregion 
 
-//#region  add 
-When("add new invoice with {string} vat type and number", (vat) => {
-    AccountingActions.CreateARInvoiceGeneratedFromRoutingLeg(vat);
-    AccountingActions.PostARApproveInvoice()
+//#region Create an ARInvoice
+Given("an ARInvoice with the following details", (dataTable) => {
+    const ARInvoiceData = Assists.CreateInstance<ARInvoiceDetails>(dataTable, true);
+    cy.Click(AccountingSelectors.CreateARInvoiceButton, null);
+    AccountingActions.FillARInvoiceDetails(ARInvoiceData)
 });
 
-Then("the invoice should add successfully", () => {
-    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200)
+When("create invoice", () => {
+    AccountingActions.CreateARInvoice()
+});
+
+Then("the invoice should create successfully", () => {
+    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
+    cy.BackButton(BaseSelectors.ContainsShipment + shipmentDetails.ShipmentNumber);
 });
 //#endregion

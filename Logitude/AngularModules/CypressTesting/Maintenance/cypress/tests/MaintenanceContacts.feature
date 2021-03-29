@@ -1,4 +1,4 @@
-@release @all
+@release @all @dev
 Feature: Contact Create, Search, Open, Edit, Save and Anonymize in Maintenance Module
     The user creates a contact, search for, edits, saves and anonymizes it from the Maintenance Module.
 
@@ -12,7 +12,7 @@ Feature: Contact Create, Search, Open, Edit, Save and Anonymize in Maintenance M
             | BusinessPhone       | 9999999999          |
             | Mobile              | 9999999999          |
             | Fax                 | 999999              |
-            | BirthdayDate        | Random              |
+            | BirthdayDate        | 1/1/2000            |
             | AnniversaryDate     | Today               |
             | BirthdayReminder    | Yes                 |
             | AnniversaryReminder | Yes                 |
@@ -20,7 +20,7 @@ Feature: Contact Create, Search, Open, Edit, Save and Anonymize in Maintenance M
         When create contact
         Then the contact should create successfully
 
-    Scenario: Search about the contact
+    Scenario: Search for the contact by email
         When search contact
         Then the contact should appear successfully
 

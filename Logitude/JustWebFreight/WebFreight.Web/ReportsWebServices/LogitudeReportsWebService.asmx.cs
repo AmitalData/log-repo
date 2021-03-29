@@ -1436,6 +1436,7 @@ namespace WebFreight.Web.ReportsWebServices
                 quotesRecored.OpenDate = a.OpenDate;
                 quotesRecored.DirectionTransportMode = a.DirectionName + " / " + a.TransportModeName;
                 quotesRecored.DeclineReason = a.QuoteClosingReasonName;
+                quotesRecored.EstimateProfit = a.EstimateProfit;
 
                 if (a.QuoteTypeCode == "A")
                 {
@@ -3448,6 +3449,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.InvoiceDate = a.InvoiceDate.Value;
                 invoicesRecored.InvoiceNumber = a.InvoiceNumber;
                 invoicesRecored.BillTo = a.VendorName;
+                invoicesRecored.BillToVatNumber = a.VATNumber;
                 invoicesRecored.OurRefNumber = a.MainEntityReference;
                 invoicesRecored.InvoiceStatus = a.StatusName;
                 invoicesRecored.Currency = a.InvoiceCurrencyCode;
@@ -8808,7 +8810,8 @@ namespace WebFreight.Web.ReportsWebServices
                         record.Routing = shipment.Routing;
                         record.ProfitInLocalCurrency = shipment.ProfitInLocalCurrency;
                         record.ProfitInProfitCurrency = shipment.ProfitInProfitCurrency;
-
+                        record.Consignee = shipment.ConsigneeName;
+                        record.Shipper = shipment.ShipperName;
                         if (!string.IsNullOrEmpty(shipment.CustomerReference1))
                         {
                             record.CustomerReference = shipment.CustomerReference1;

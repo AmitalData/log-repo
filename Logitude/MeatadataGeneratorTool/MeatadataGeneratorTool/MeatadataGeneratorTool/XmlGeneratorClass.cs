@@ -1353,6 +1353,12 @@ namespace MeatadataGeneratorTool
                     SetAttribute("RecordType", GetStringValue(f.RecordType), fieldElement, null);
                 }
 
+                if (!string.IsNullOrEmpty(f.AdditionalQuerySections))
+                {
+                    SetAttribute("AdditionalQuerySections", GetStringValue(f.AdditionalQuerySections), fieldElement, null);
+                }
+
+
 
                 if (!string.IsNullOrEmpty(f.HtmlListComponentUrl))
                 {
@@ -1509,6 +1515,7 @@ namespace MeatadataGeneratorTool
                 {
                     SetAttribute("Code", GetStringValue(f.Code), ScreenElement, null);
                 }
+              
 
                 SetAttribute("NumberOfColumns", "2", ScreenElement, null);
                 SetAttribute("NumberOfRows", "1", ScreenElement, null);

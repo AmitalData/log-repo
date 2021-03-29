@@ -2116,7 +2116,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 AutomationHelper automationHelper = new AutomationHelper();
                 List<string> automationDocumentTypeIds = automationHelper.GetAutomationDocumentTypeIds(tenant);
                 sameCountry = docType.CountryCode == countryCode;
-                if (((!docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers) || automationDocumentTypeIds.Contains(docType.Id)) && (string.IsNullOrEmpty(docType.CountryCode) || sameCountry))
+                if (((!docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers) || automationDocumentTypeIds.Contains(docType.Id)) && (string.IsNullOrEmpty(docType.CountryCode?.Trim()) || sameCountry))
                 {
                     DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(documentTypeTemplateRepository);
 
@@ -2212,7 +2212,7 @@ namespace WebFreight.Web.MetaDataUpdate
                                                   select doc).Any();
 
 
-                                if (((a.IsEnabledForCustomers && a.IsCopiedAtSignup) || automationDocumentTypeIds.Contains(docType.Id)) && (sameCountry || (string.IsNullOrEmpty(a.CountryCode) || a.CountryCode == countryCode)))
+                                if (((a.IsEnabledForCustomers && a.IsCopiedAtSignup) || automationDocumentTypeIds.Contains(docType.Id)) && (sameCountry || (string.IsNullOrEmpty(a.CountryCode?.Trim()) || a.CountryCode == countryCode)))
                                 {
                                     DocumentTypeTemplate newtemplate = new DocumentTypeTemplate()
                                     {
@@ -2528,7 +2528,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     {
                         updatedEventType.EnglishName = eventType.EnglishName;
                         updatedEventType.AddedManually = eventType.AddedManually;
-                        if (!updatedEventType.IsNotModified)
+                        if (!updatedEventType.IsStatusNotModified)
                             updatedEventType.EntityStatusId = currentTenantEntityStatu != null ? currentTenantEntityStatu.Id : null;
                         updatedEventType.FollowUpEnglishName = eventType.FollowUpEnglishName;
                         updatedEventType.FollowUpLocalName = eventType.FollowUpLocalName;

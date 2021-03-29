@@ -319,7 +319,7 @@ export function FillPackageTab(transportMode: string, packagesDetails: PackagesD
         }
 
         if(packagesDetails[i].ChargeableWeight) {
-            cy.FillLogTextBox(ShipmentSelectors.PackageChargeableWeight, packagesDetails[i].ChargeableWeight.toString())
+            cy.FillLogTextBox(ShipmentSelectors.PackageChargeableWeight, packagesDetails[i].ChargeableWeight.toString(), true)
         }
     }
 }
@@ -464,6 +464,15 @@ export function CalculateStorage() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetAll, 200)
 }
 
+export function AssertStorageFee(expectedStorageFeeValue: string) {
+    // cy.get(ShipmentSelectors.StorageFeeResult).invoke('text').then((text) => {
+    //     if (text.trim() != expectedStorageFeeValue) {
+    //         AssertStorageFee(expectedStorageFeeValue)
+    //     }
+    // })
+    BaseAssertion.AssertElementContain(ShipmentSelectors.StorageCalculationScreen, expectedStorageFeeValue)
+}
+
 export function ValidateStoragePricing(AmountList:WarehouseStorage[],expectedWeight:string){
     cy.get(BaseSelectors.Hyperlink).contains(ShipmentSelectors.ContainsStoragePricing).click();
     for (let i = 0; i < AmountList.length; i++) {
@@ -551,6 +560,7 @@ export function AMANACView(TransportMode: string, AMANACView: string) {
 
 export function AMANACMarkeShipmentAs(MarkAs: string, ShipmentNumber: string) {
     MarkAs = MarkAs.replace(/\s/g, "");
+    MarkAs = MarkAs.replace(/fortransfer/g, "");
     //SearchAShipmentInNullSearch(ShipmentNumber);
     cy.Click(ShipmentSelectors.AMANACMarkeShipmentAs(MarkAs, ShipmentNumber), null)
     cy.Click(BaseSelectors.Button, BaseSelectors.ContainsClose)
