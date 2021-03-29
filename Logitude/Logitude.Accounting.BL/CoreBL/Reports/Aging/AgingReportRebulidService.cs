@@ -400,7 +400,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     listperiodMs = (from a in listperiodMs
                                     group a by new { a.AccountId, a.OrderDate, a.OrderDateB4 } into g
 
-                                    select new PeriodM { 
+                                    select new PeriodM {
+                                        AccountId= g.Key.AccountId, OrderDate= g.Key.OrderDate, OrderDateB4= g.Key.OrderDateB4,
+
+
                                         Total = g.Sum(r => r.Total) ,
                                         TotalOpenTransactions =g.Sum(r=>r.TotalOpenTransactions) }
                                     ).ToList();
@@ -496,7 +499,7 @@ _Param.AgingForDate.Date, false, true, true, false);
             qOpenTransactionsFutureDueDate_InForeign =
                 (from rec in qTotalByMonthAcc_NOTMultiCurrencySooGet_ForeignAmount///GLAccount that is not multi Currency Get Foreign 
                  where
-             (rec.Year == graterThen_OpenTransactionsFutureDueDate.Year && rec.Month > graterThen_OpenTransactionsFutureDueDate.Month)
+             (rec.Year == graterThen_OpenTransactionsFutureDueDate.Year && rec.Month >= graterThen_OpenTransactionsFutureDueDate.Month)
     ||
     rec.Year > graterThen_OpenTransactionsFutureDueDate.Year
                  group rec by new { rec.AccountId, rec.CurrencyId } into groupByAccCurrr
@@ -521,7 +524,7 @@ _Param.AgingForDate.Date, false, true, true, false);
         {
             return (from rec in qTotalByMonthAcc_ISMultiCurrencySooGet_LocalAmount
                     where
-                    (rec.Year == graterThen_OpenTransactionsFutureDueDate.Year && rec.Month > graterThen_OpenTransactionsFutureDueDate.Month)
+                    (rec.Year == graterThen_OpenTransactionsFutureDueDate.Year && rec.Month >= graterThen_OpenTransactionsFutureDueDate.Month)
                     ||
                     rec.Year > graterThen_OpenTransactionsFutureDueDate.Year
                     group rec by new { rec.AccountId } into groupByAccCurrr
@@ -988,7 +991,7 @@ _Param.AgingForDate.Date, false, true, true, false);
         {
             var qFuture = (from rec in qGLAccountTotalByMonthsDTOAging
                            where
-                           (rec.Year == graterThen_OpenTransactionsFutureDueDate.Year && rec.Month > graterThen_OpenTransactionsFutureDueDate.Month)
+                           (rec.Year == graterThen_OpenTransactionsFutureDueDate.Year && rec.Month >= graterThen_OpenTransactionsFutureDueDate.Month)
                            ||
                            rec.Year > graterThen_OpenTransactionsFutureDueDate.Year
                            group rec by new { rec.AccountId } into groupByAccCurrr
@@ -1111,9 +1114,10 @@ _Param.AgingForDate.Date, false, true, true, false);
             }
             if (true/*ToCalcOpenTransactionsFutureDueDate()*/)
             {
-                var currMonth = AgingForDateLastMonth1st.AddMonths(+1);
-                listPeriods.Add(currMonth);
-                graterThen_OpenTransactionsFutureDueDate = listPeriods.OrderByDescending(d => d).First();
+                //var currMonth = AgingForDateLastMonth1st.AddMonths(+1);
+                //listPeriods.Add(currMonth);
+                //graterThen_OpenTransactionsFutureDueDate = listPeriods.OrderByDescending(d => d).First();
+                graterThen_OpenTransactionsFutureDueDate = AgingForDateLastMonth1st.AddMonths(+1);
             }
             lessThan = listPeriods.OrderBy(d => d).First();
 

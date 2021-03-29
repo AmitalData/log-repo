@@ -1,9 +1,14 @@
-<View DBType="Main" Name="usp_AccountingStreaming" Schema="dbo" Module="Accounting">
+<?xml version="1.0" encoding="utf-8"?>
+<Procedure  
+  DBType="Main" Name="usp_AccountingStreaming" Schema="dbo" Module="Accounting">
+  >
   <SqlScript>
     <![CDATA[
+    --- cccc
+--DROP PROCEDURE [dbo].[usp_AccountingStreaming] 
 -- =============================================
 -- Author:		itzik
--- Create date: 
+-- Create date: update at 20210325
 -- Description:	
 -- =============================================
 CREATE PROCEDURE [dbo].[usp_AccountingStreaming] 
@@ -12,7 +17,8 @@ CREATE PROCEDURE [dbo].[usp_AccountingStreaming]
 	@pTenant int ,
 	@pQMessageId varchar(15) , 
 	@tLedgerTransactionsType LedgerTransactionsType READONLY,
-	@tGLAccountTotalByMonthsType dbo.GLAccountTotalByMonthsType READONLY
+	@tGLAccountTotalByMonthsType dbo.GLAccountTotalByMonthsType READONLY,
+	@tGLAccountAgingDataType dbo.GLAccountAgingDataType READONLY
 AS
 BEGIN
 declare @myrowcount int 
@@ -24,6 +30,12 @@ print @myrowcount
 select @myrowcount =count(*) from @tGLAccountTotalByMonthsType 
 print N'tGLAccountTotalByMonthsType rows :'  
 print @myrowcount
+
+
+select @myrowcount =count(*) from @tGLAccountAgingDataType 
+print N'tGLAccountAgingDataType rows :'  
+print @myrowcount
+
 
 DECLARE @GLAccountStruct  table(
 [AccountId] VARCHAR(15) NOT NULL,
@@ -257,6 +269,30 @@ print N'affected rows :'
 print @myrowcount 
 
 
+
+
+print N'START GLAccountAgingDataType'
+
+
+update  GLAccountAgingDatas 
+set 
+GLAccountAgingDatas.PeriodPast = ISNULL ( GLAccountAgingDatas.PeriodPast, 0 )   + toUpdate.PeriodPast,
+GLAccountAgingDatas.PeriodFuture = ISNULL ( GLAccountAgingDatas.PeriodFuture, 0 )   + toUpdate.PeriodFuture,
+GLAccountAgingDatas.Period0 = ISNULL ( GLAccountAgingDatas.Period0 , 0 )   + toUpdate.Period0 ,
+GLAccountAgingDatas.Period1 = ISNULL ( GLAccountAgingDatas.Period1 , 0 )   + toUpdate.Period1 ,
+GLAccountAgingDatas.Period2 = ISNULL ( GLAccountAgingDatas.Period2 , 0 )   + toUpdate.Period2 ,
+GLAccountAgingDatas.Period3 = ISNULL ( GLAccountAgingDatas.Period3 , 0 )   + toUpdate.Period3 ,
+GLAccountAgingDatas.Period4 = ISNULL ( GLAccountAgingDatas.Period4 , 0 )   + toUpdate.Period4 ,
+GLAccountAgingDatas.Period5 = ISNULL ( GLAccountAgingDatas.Period5 , 0 )   + toUpdate.Period5 ,
+GLAccountAgingDatas.TotalOpenTransactions = ISNULL ( GLAccountAgingDatas.TotalOpenTransactions, 0 )   + toUpdate.TotalOpenTransactions
+from @tGLAccountAgingDataType toUpdate
+where  GLAccountAgingDatas.AccountId = toUpdate.AccountId and  GLAccountAgingDatas.Tenant = @pTenant 
+
+SELECT @myrowcount = @@ROWCOUNT
+print N'affected rows :'
+print @myrowcount 
+
+
 ---RAISERROR (52000,-1,-1 ,'The journal not in StatusCode 2 !! occure only OnApproveUpdating');   
 
 
@@ -284,9 +320,10 @@ print N'end'
 --END CATCH;
 
 
-END        
+END    
+    
     ]]>
   </SqlScript>
   <OracleScript>
   </OracleScript>
-</View>
+</Procedure>

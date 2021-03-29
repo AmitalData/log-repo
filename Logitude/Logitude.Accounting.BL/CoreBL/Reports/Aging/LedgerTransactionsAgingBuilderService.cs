@@ -20,10 +20,36 @@ namespace Logitude.Accounting.BL.CoreBL.Reports.Aging
 
         internal List<GLAccountAgingDataPM> GetAgingPMs(List<LedgerTransactionPM> myLedgerTransactionsWithCounters)
         {
-            int tenant =myLedgerTransactionsWithCounters.First().Tenant;
+            int tenant = myLedgerTransactionsWithCounters.First().Tenant;
+
+            var supplier_CustomerOnly = new List<string>() {
+"2",//AgingReportParam.Aging4AccountTypeCodeEnum.Customer2.ToString(),
+"3"//AgingReportParam.Aging4AccountTypeCodeEnum.Vendor3.ToString(),
+            };
+            var gLAccountRepository = new GLAccountRepository(this._AccountingContext as IAccountingContext);
+            var onlyCustomer2Vendor3Ledgers =
+                (
+                from l in myLedgerTransactionsWithCounters
+                join a in
+
+                gLAccountRepository
+                .GetAll(tenant)
+                .Where(a => supplier_CustomerOnly.Contains(a.AccountTypeCode))
+                on l.AccountId equals a.Id
+
+                select l
+                ).ToList();
+
+            var accountCustomer2Vendor3Ids = onlyCustomer2Vendor3Ledgers.Select(a => a.AccountId).ToList();
+
+            if (accountCustomer2Vendor3Ids.Count == 0)
+            {
+                return new List<GLAccountAgingDataPM>();
+            }
+
+
             List<DateTime> listPeriods;
             DateTime lessThan, graterThen_OpenTransactionsFutureDueDate;
-
             var listPeriodService = new ListPeriodService(new AgingReportRebulidParam()
             {
                 Tenant = tenant,
@@ -37,34 +63,17 @@ namespace Logitude.Accounting.BL.CoreBL.Reports.Aging
             listPeriodService.GetListPeriods(out listPeriods, out lessThan, out graterThen_OpenTransactionsFutureDueDate);
 
 
-            var supplier_CustomerOnly = new List<string>() {
-AgingReportParam.Aging4AccountTypeCodeEnum.Customer2.ToString(),
-AgingReportParam.Aging4AccountTypeCodeEnum.Vendor3.ToString(),
-            };
-            var gLAccountRepository = new GLAccountRepository(this._AccountingContext as IAccountingContext);
 
-            var qOnlyCustomer2Vendor3Ledgers =
-                (
-                from l in myLedgerTransactionsWithCounters
-                join a in
-                            
-                gLAccountRepository
-                .GetAll(tenant)
-                .Where(a => supplier_CustomerOnly.Contains(a.AccountTypeCode))
-                
-                on l.AccountId equals a.Id
 
-                select l
-                );
 
             var qGLAccountTotalByMonthsDTOAging =
                 (
-                from r in qOnlyCustomer2Vendor3Ledgers
-                group r by new
+                from ledger in onlyCustomer2Vendor3Ledgers
+                group ledger by new
                 {
-                    r.DueDate.Year,
-                    r.DueDate.Month,
-                    r.AccountId
+                    ledger.DueDate.Year,
+                    ledger.DueDate.Month,
+                    ledger.AccountId
                 }
                 into gbDateMonth
                 select new ReconciliationUpdateAgingM()
@@ -73,81 +82,195 @@ AgingReportParam.Aging4AccountTypeCodeEnum.Vendor3.ToString(),
                     Year = gbDateMonth.Key.Year,
                     Month = gbDateMonth.Key.Month,
                     Total = gbDateMonth.Sum(r => r.OpenAmount),
-                    TotalOpenTransactions = gbDateMonth.Count( r=>!r.IsReconciled)
+                    TotalOpenTransactions = gbDateMonth.Count(r => !r.IsReconciled)
                 });
 
             var onlyCustomer2Vendor3DTOAging = qGLAccountTotalByMonthsDTOAging.ToList();
 
-            var lessThanPeriods =
-                   (from rec in onlyCustomer2Vendor3DTOAging
-                    where
-                    (rec.Year == lessThan.Year && rec.Month < lessThan.Month)
-                    ||
-                    rec.Year < lessThan.Year
-                    group rec by new { rec.AccountId } into groupByAccCurrr
+            var myPeriodList = new List<PeriodM>();
+            foreach (string curAccId in accountCustomer2Vendor3Ids)
+            {
+                var currAccountAgingDtoS = onlyCustomer2Vendor3DTOAging.Where(r => r.AccountId == curAccId).ToList();
 
-                    select new PeriodM()
-                    {
-
-                        OrderDate = lessThan,
-                        OrderDateB4 = true,
-                        AccountId = groupByAccCurrr.Key.AccountId,
-
-                        Total = groupByAccCurrr.Sum(rec => rec.Total),
-                        TotalOpenTransactions = groupByAccCurrr.Sum(r => r.TotalOpenTransactions)
-                    })
-                    .ToList();
-
-            var mainPeriods =
-                           (from period in listPeriods
-
-                            join totalByMonth in onlyCustomer2Vendor3DTOAging
-                            on new { period.Year, period.Month }
-                            equals
-                            new { totalByMonth.Year, totalByMonth.Month }
-                            into JointotalByMonth
-                            from totalByMonth in JointotalByMonth.DefaultIfEmpty()
-
+                var less = (from rec in currAccountAgingDtoS
+                            where
+                              (rec.Year == lessThan.Year && rec.Month < lessThan.Month)
+                              ||
+                              rec.Year < lessThan.Year
+                            group rec by new { rec.AccountId } into groupByAccCurrr
 
                             select new PeriodM()
                             {
-                                OrderDate = period,
-                                Total = totalByMonth == null ? 0 : totalByMonth.Total,
-                                TotalOpenTransactions = totalByMonth == null ? 0 : totalByMonth.TotalOpenTransactions,
-                            })
-                            .ToList();
 
-            var futurePeriods = (from rec in qGLAccountTotalByMonthsDTOAging
-                           where
-                           (rec.Year == graterThen_OpenTransactionsFutureDueDate.Year && rec.Month > graterThen_OpenTransactionsFutureDueDate.Month)
-                           ||
-                           rec.Year > graterThen_OpenTransactionsFutureDueDate.Year
-                           group rec by new { rec.AccountId } into groupByAccCurrr
+                                OrderDate = lessThan,
+                                OrderDateB4 = true,
+                                AccountId = groupByAccCurrr.Key.AccountId,
+
+                                Total = groupByAccCurrr.Sum(rec => rec.Total),
+                                TotalOpenTransactions = groupByAccCurrr.Sum(r => r.TotalOpenTransactions)
+                            }).FirstOrDefault()
+                 ?? new PeriodM()
+                 {
+
+                     OrderDate = lessThan,
+                     OrderDateB4 = true,
+                     AccountId = curAccId,
+                 };
+                myPeriodList.Add(less);
+
+
+                var myPeriodMs = (
+                           from period in listPeriods
+
+                           join totalByMonth in currAccountAgingDtoS
+                           on new { period.Year, period.Month }
+                           equals
+                           new { totalByMonth.Year, totalByMonth.Month }
+                           into JointotalByMonth
+                           from totalByMonth in JointotalByMonth.DefaultIfEmpty()
+
 
                            select new PeriodM()
                            {
+                               OrderDate = period,
+                               AccountId = curAccId /*totalByMonth.AccountId*/,
 
-                               OrderDate = graterThen_OpenTransactionsFutureDueDate,
-                               OrderAfterOpenrECODueDate = true,
-                               AccountId = groupByAccCurrr.Key.AccountId,
-
-                               Total = groupByAccCurrr.Sum(rec => rec.Total),
-                               TotalOpenTransactions = groupByAccCurrr.Sum(r => r.TotalOpenTransactions)
-
+                               Total = totalByMonth == null ? 0 : totalByMonth.Total,
+                               TotalOpenTransactions = totalByMonth == null ? 0 : totalByMonth.TotalOpenTransactions,
                            })
+                            .ToList();
+                myPeriodList.AddRange(myPeriodMs);
+
+
+                var futurePeriod =
+                    (from rec in currAccountAgingDtoS
+                     where
+                     (rec.Year == graterThen_OpenTransactionsFutureDueDate.Year && rec.Month >= graterThen_OpenTransactionsFutureDueDate.Month)
+                           ||
+                     rec.Year > graterThen_OpenTransactionsFutureDueDate.Year
+                     group rec by new { rec.AccountId } into groupByAccCurrr
+
+                     select new PeriodM()
+                     {
+
+                         OrderDate = graterThen_OpenTransactionsFutureDueDate,
+                         OrderAfterOpenrECODueDate = true,
+                         AccountId = groupByAccCurrr.Key.AccountId,
+
+                         Total = groupByAccCurrr.Sum(rec => rec.Total),
+                         TotalOpenTransactions = groupByAccCurrr.Sum(r => r.TotalOpenTransactions)
+
+                     })
+             .FirstOrDefault() ?? new PeriodM()
+             {
+                 OrderDate = graterThen_OpenTransactionsFutureDueDate,
+                 OrderAfterOpenrECODueDate = true,
+                 AccountId = curAccId
+
+             };
+                myPeriodList.Add(futurePeriod);
+
+            }
+
+            ///List<PeriodM> myPeriodList = Bad(listPeriods, lessThan, graterThen_OpenTransactionsFutureDueDate, accountCustomer2Vendor3Ids, onlyCustomer2Vendor3DTOAging);
+            myPeriodList = myPeriodList.OrderBy(rec => rec.AccountId).ThenBy(rec => rec.OrderDate).ThenBy(rec => rec.CurrencyId)
+                .ToList();
+            ///myPeriodList = myPeriodList.OrderBy(rec => rec.AccountId).ThenBy(rec => rec.OrderDate).ThenBy(rec => rec.CurrencyId).ToList();
+
+            List<GLAccountAgingDataPM> gLAccountAgingDataPMs = AgingReportRebulidService.MapPeriod2AgingData(tenant, myPeriodList);
+            return gLAccountAgingDataPMs;
+        }
+
+        private static List<PeriodM> Bad(List<DateTime> listPeriods, DateTime lessThan, DateTime graterThen_OpenTransactionsFutureDueDate, List<string> accountCustomer2Vendor3Ids, List<ReconciliationUpdateAgingM> onlyCustomer2Vendor3DTOAging)
+        {
+            var lessThanPeriods =
+                   (
+                   from accId in accountCustomer2Vendor3Ids
+
+                       //from rec in onlyCustomer2Vendor3DTOAging
+                   join rec in onlyCustomer2Vendor3DTOAging
+                   on accId equals rec.AccountId into joinonlyCustomer2Vendor3DTOAging
+                   from rec in joinonlyCustomer2Vendor3DTOAging.DefaultIfEmpty()
+                   where
+                    (rec.Year == lessThan.Year && rec.Month < lessThan.Month)
+                    ||
+                    rec.Year < lessThan.Year
+                   group rec by new { rec.AccountId } into groupByAccCurrr
+
+                   select new PeriodM()
+                   {
+
+                       OrderDate = lessThan,
+                       OrderDateB4 = true,
+                       AccountId = groupByAccCurrr.Key.AccountId,
+
+                       Total = groupByAccCurrr.Sum(rec => rec.Total),
+                       TotalOpenTransactions = groupByAccCurrr.Sum(r => r.TotalOpenTransactions)
+                   })
+                    .ToList();
+
+            var cartesianAccIdPeriods = (from period in listPeriods
+                                         from accId in accountCustomer2Vendor3Ids
+                                         select new { AccountId = accId, period }
+                              );
+
+            var mainPeriods =
+                           (
+                           //from period in listPeriods
+                           from AccIdPeriod in cartesianAccIdPeriods
+                           join totalByMonth in onlyCustomer2Vendor3DTOAging
+                           on new { AccIdPeriod.AccountId, AccIdPeriod.period.Year, AccIdPeriod.period.Month }
+                           equals
+                           new { totalByMonth.AccountId, totalByMonth.Year, totalByMonth.Month }
+                           into JointotalByMonth
+                           from totalByMonth in JointotalByMonth.DefaultIfEmpty()
+
+
+                           select new PeriodM()
+                           {
+                               OrderDate = AccIdPeriod.period,
+                               AccountId = totalByMonth.AccountId,
+
+                               Total = totalByMonth == null ? 0 : totalByMonth.Total,
+                               TotalOpenTransactions = totalByMonth == null ? 0 : totalByMonth.TotalOpenTransactions,
+                           })
+                            .ToList();
+
+            var futurePeriods = (
+                //from rec in qGLAccountTotalByMonthsDTOAging
+                from accId in accountCustomer2Vendor3Ids
+
+
+                join rec in onlyCustomer2Vendor3DTOAging
+                on accId equals rec.AccountId into joinonlyCustomer2Vendor3DTOAging
+                from rec in joinonlyCustomer2Vendor3DTOAging.DefaultIfEmpty()
+
+                where
+                           (rec.Year == graterThen_OpenTransactionsFutureDueDate.Year && rec.Month > graterThen_OpenTransactionsFutureDueDate.Month)
+                           ||
+                           rec.Year > graterThen_OpenTransactionsFutureDueDate.Year
+                group rec by new { rec.AccountId } into groupByAccCurrr
+
+                select new PeriodM()
+                {
+
+                    OrderDate = graterThen_OpenTransactionsFutureDueDate,
+                    OrderAfterOpenrECODueDate = true,
+                    AccountId = groupByAccCurrr.Key.AccountId,
+
+                    Total = groupByAccCurrr.Sum(rec => rec.Total),
+                    TotalOpenTransactions = groupByAccCurrr.Sum(r => r.TotalOpenTransactions)
+
+                })
              .ToList();
             var myPeriodList =
                     lessThanPeriods
                     .Union(mainPeriods)
                     .Union(futurePeriods)
                     .ToList();
-            myPeriodList = myPeriodList.OrderBy(rec => rec.AccountId).ThenBy(rec => rec.OrderDate).ThenBy(rec => rec.CurrencyId)
-                .ToList();
-            myPeriodList = myPeriodList.OrderBy(rec => rec.AccountId).ThenBy(rec => rec.OrderDate).ThenBy(rec => rec.CurrencyId).ToList();
-
-            List<GLAccountAgingDataPM> gLAccountAgingDataPMs = AgingReportRebulidService.MapPeriod2AgingData(tenant, myPeriodList);
-            return gLAccountAgingDataPMs;
+            return myPeriodList;
         }
+
         private static PeriodM GetLessPeriodM(IEnumerable<ReconciliationUpdateAgingM> qGLAccountTotalByMonthsDTOAging, DateTime lessThan)
         {
             var qLessThanExclusiveBasicInLocal =
