@@ -6,6 +6,7 @@ export class MaintenanceSelectors extends RegexSelectors {
     public static readonly ContactsMaintenanceItem = "#MaintenanceItemMTCO";
     public static readonly VendorMaintenanceItem = "#MaintenanceItemMTVD"
     public static readonly VesselMaintenanceItem = "#MaintenanceItemMTVS"
+    public static readonly LocalSettingsMaintenanceItem = "#MaintenanceItemLOSE"
     public static readonly CustomerSettingsMaintenanceItem = "#MaintenanceItemCUSA"
     public static readonly InvoiceSettingsMaintenanceItem = "#MaintenanceItemINVS";
     public static readonly QuoteTemplatesMaintenanceItem = "#MaintenanceItemMTQT"

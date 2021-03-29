@@ -76,6 +76,7 @@ export class RequestAliases {
     public static readonly INTTRAWebServiceSendShippingInstructions = "INTTRAWebServiceSendShippingInstructions";
     //
     public static readonly PutShipment = "PutShipment";
+    public static readonly PutTenant = "PutTenant";
 
 
     //Maintenance
@@ -135,5 +136,6 @@ export class RequestAliases {
     public static readonly PasswordResetRequestPage="PasswordResetRequestPage"
     //Reset Password
     public static readonly ResetPassword="ResetPassword"
+
 
 }
