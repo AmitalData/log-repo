@@ -291,19 +291,15 @@ export class ShipmentHelperComponent implements OnDestroy {
             var airFreightCode = "AFT";
             var airFreightCharge = this.EntityPM.ShipmentPayables.filter(a => a.ChargesTypeCode == airFreightCode)[0];
             if (airFreightCharge != null) {
-                this.EntityPM.AWBChargeRate = airFreightCharge.UnitPrice;
-                this.EntityPM.AWBCurrencyId = airFreightCharge.CurrencyId;
-                this.ComputeAWBChargeAmount();
-               
+                this.SetAWBFreightChargeFields(airFreightCharge);
             }
         }
     }
-    private ComputeAWBChargeAmount() {
-        var chargeAmount = this.EntityPM.ChargeableWeight;
-        if (this.EntityPM.RateClassCode == "K") {
-            chargeAmount = this.EntityPM.ChargeableWeightInKG;
-        }
-        this.EntityPM.AWBChargeAmount = ShipmentTool.ComputeAWBChargeAmount(this.EntityPM.RateClassCode, this.EntityPM.AWBChargeRate, chargeAmount);
+
+    private SetAWBFreightChargeFields(airFreightCharge) {
+        this.EntityPM.AWBChargeRate = airFreightCharge.UnitPrice;
+        this.EntityPM.AWBCurrencyId = airFreightCharge.CurrencyId;
+        this.EntityPM.AWBChargeAmount = ShipmentTool.ComputeAWBChargeAmount(this.EntityPM);
     }
 
     AWBImportButtonClicked() {

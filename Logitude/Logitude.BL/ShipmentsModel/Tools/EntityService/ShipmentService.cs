@@ -3276,39 +3276,39 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 var airFreightCharge =entityPM.ShipmentPayables.Where(a => a.ChargesTypeCode == airFreightCode).FirstOrDefault();
                 if (airFreightCharge != null)
                 {
-                    entityPM.AWBChargeRate = airFreightCharge.UnitPrice;
-                    entityPM.AWBCurrencyId = airFreightCharge.CurrencyId;
-                    this.ComputeAWBChargeAmount();
+                    this.ComputeAWBChargeAmount(airFreightCharge);
                 }
             }
         }
-        private void ComputeAWBChargeAmount()
+        private void ComputeAWBChargeAmount(ShipmentPayablePM airFreightCharge)
         {
+            entityPM.AWBChargeRate = airFreightCharge.UnitPrice;
+            entityPM.AWBCurrencyId = airFreightCharge.CurrencyId;
+            entityPM.AWBChargeAmount =this.ComputeAWBChargeAmount(entityPM);
+        }
+        public double? ComputeAWBChargeAmount(ShipmentPM entityPM)
+        {
+            double? myResult = null;
+            var myRateClassCode = entityPM.RateClassCode;
+            var myChargeRate =  entityPM.AWBChargeRate;
             var chargeAmount = entityPM.ChargeableWeight;
+            var groupCode = this.GetRateClassGroupCode(myRateClassCode);
             if (entityPM.RateClassCode == "K")
             {
                 chargeAmount = entityPM.ChargeableWeightInKG;
             }
-            entityPM.AWBChargeAmount =this.ComputeAWBChargeAmount(entityPM.RateClassCode, entityPM.AWBChargeRate, chargeAmount);
-        }
-        public double? ComputeAWBChargeAmount(string myRateClassCode, double? myChargeRate, double?  myChargeableWeight)
-        {
-            double? myResult = null;
-
-            var groupCode = this.GetRateClassGroupCode(myRateClassCode);
-
+           
             if (groupCode == "M")
             {
                 myResult = myChargeRate;
             }
-
             else if (groupCode == "R")
             {
-                myResult = myChargeRate * myChargeableWeight;
+                myResult = myChargeRate * chargeAmount;
             }
-
             return myResult;
         }
+
         public string GetRateClassGroupCode(string rateClassCode)
         {
             var code = "";

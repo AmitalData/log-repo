@@ -1000,21 +1000,26 @@ export class ShipmentTool {
             entityPM.AWBChargesCodeCode = "PC";
         }
     }
-    public static ComputeAWBChargeAmount(myRateClassCode: string, myChargeRate: number, myChargeableWeight: number) {
+
+    public static ComputeAWBChargeAmount(entityPm: any, isShipmentCommodity = false) {
         var myResult: number = null;
-
+        var myRateClassCode = entityPm.RateClassCode;
+        var myChargeRate = isShipmentCommodity ? entityPm.ChargeRate : entityPm.AWBChargeRate;
+        var chargeAmount = entityPm.ChargeableWeight;
+        if (myRateClassCode== "K") {
+            chargeAmount = entityPm.ChargeableWeightInKG;
+        }
+        var myChargeableWeight = chargeAmount;
         var groupCode = this.GetRateClassGroupCode(myRateClassCode);
-
         if (groupCode == "M") {
             myResult = myChargeRate;
         }
-
         else if (groupCode == "R") {
             myResult = myChargeRate * myChargeableWeight;
         }
-
         return myResult;
     }
+
     public static ValidateAddedPackagesCount(entityPM: ShipmentPM): string {
         var myResult = "";
 

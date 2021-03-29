@@ -302,12 +302,7 @@ export class FreightChargesTabComponent extends BaseComponent {
         //}
     }
     private ComputeAWBChargeAmount() {
-        var chargeAmount = this.EntityPM.ChargeableWeight;
-        if (this.RateClassCode == "K") {
-            chargeAmount = this.EntityPM.ChargeableWeightInKG;
-        }
- 
-        this.AWBChargeAmount = ShipmentTool.ComputeAWBChargeAmount(this.EntityPM.RateClassCode, this.EntityPM.AWBChargeRate, chargeAmount);
+        this.AWBChargeAmount = ShipmentTool.ComputeAWBChargeAmount(this.EntityPM);
     }
     private ComputeAWBFrieghtAmount() {
         var computedAmount = this.AWBChargeAmount;
