@@ -452,16 +452,9 @@ namespace WebFreight.Web.WebServices
                                            select a).FirstOrDefault();
 
                     aMSBL_FromHouse = masterData != null ? masterData.AMSBL : null;
-                    myDataProvider.MasterPreCarriageCarrierNumber = masterData != null ? masterData.PreCarriageCarrierNumber : null;
-                    
-                    if(masterData != null && !string.IsNullOrEmpty(masterData.PreCarriageVesselId))
-                    {
-                        Vessel vessel = (from a in commonContext.Vessels
-                                         where a.Id == masterData.PreCarriageVesselId
-                                         select a).FirstOrDefault();
 
-                        myDataProvider.MasterPreCarriageVesselName = vessel != null ? vessel.EnglishName : null;
-                    }
+                    myDataProvider.MasterPreCarriageCarrierNumber = shipment.PreCarriageCarrierNumber;
+                    myDataProvider.MasterPreCarriageVesselName = shipment.PreCarriageVesselName;
                 }
                 else
                 {
