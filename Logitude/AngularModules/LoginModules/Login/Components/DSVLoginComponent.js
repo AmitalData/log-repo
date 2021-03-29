@@ -36,7 +36,6 @@ export var DSVLoginComponent = (function (_super) {
         this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
         this.MainLogo = BrandingDataService.GetImage("MainLogo");
         this.LoginImage = BrandingDataService.GetImage("LoginImage");
-        this.LoginImage = BrandingDataService.GetImage("LoginImage");
         this.showSpinner = false;
     };
     DSVLoginComponent.prototype.GetPrivateLabelsData = function (privateUrl) {
@@ -44,7 +43,7 @@ export var DSVLoginComponent = (function (_super) {
         this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe(function (response) {
             if (response.Result) {
                 BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
-                _this.MainColor = response.Result.MainColor;
+                //this.MainColor = response.Result.MainColor;
                 _this.GetLoginPageImages();
             }
         });

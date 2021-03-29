@@ -44,6 +44,12 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     public _UserLastSettingsPMService: UserLastSettingsPMService;
     public _UserLastSettingsExtendedPMService: UserLastSettingsExtendedPMService;
     RefTemplateWidth: string = '220px';
+    public IsLongAgentName: boolean = false;
+    public AgentLabelClass = {
+        "ShortName": true,
+        "LongName": false
+    }
+     
     constructor(private _entityListService: EntityListService) {
         this.myShipmentDomainService = new ShipmentDomainService();
         this.myUserPMService = new UserExtendedPMService();
@@ -96,16 +102,36 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         if (SessionLocator.PrivateLableSettings) {
             this.isPrivateLabel = true;
             this.IsDSV = SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
-            this.AgentShipmentsLabel = SessionLocator.PrivateLableSettings.PrivateLabelShortName + " Shipments";
+            let AgentName = SessionLocator.PrivateLableSettings.PrivateLabelShortName;
             this.LogoURL = "data:image/JPEG;base64," + SessionLocator.PrivateLableSettings.MainLogo;
             this.MainColor = SessionLocator.PrivateLableSettings.MainColor;
             this.SecondaryColor = SessionLocator.PrivateLableSettings.SecondaryColor;
             this.SelectedFilter = this.AgentShipmentsLabel;
             this.RequestedDocsLable = "Action Required";
-            this.RefTemplateWidth = this.ToggleIsExportShipments ? '150px' : '120px';
+            this.RefTemplateWidth = this.ToggleIsExportShipments ? '150px' : '120px'; 
+            this.setAgentLabelClass(AgentName);
+            this.AgentShipmentsLabel = this.getAgentShipmentsLabel(AgentName);  
         }
         else {
             this.RefTemplateWidth = this.ToggleIsExportShipments ? '250px' : '220px';
+        }
+    }
+
+    private getAgentShipmentsLabel(agentName: string) { 
+        let agentShipmentsLabel = "";  
+        if (agentName.length < 10) {
+            agentShipmentsLabel = agentName + '\n' + " Shipments"; 
+        } else {
+           
+            agentShipmentsLabel = agentName + " Shipments"; 
+        }
+        return agentShipmentsLabel;
+    }
+
+    private setAgentLabelClass(agentName: string) {
+        if (agentName.length > 7) {
+            this.AgentLabelClass.ShortName = false;
+            this.AgentLabelClass.LongName = true;
         }
     }
 

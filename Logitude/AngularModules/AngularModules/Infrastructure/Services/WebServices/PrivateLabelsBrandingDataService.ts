@@ -31,11 +31,11 @@ export class PrivateLabelsBrandingDataService {
      
         if (background && background.Id != null) {
             console.log("BackgroundImage: Exist in local storage => " + background);
-            this.BackgroundImageURL = "url(" + PrivateLabelsBrandingDataService.GetImageFromBytes(background.Data) + ")";
+          //  this.BackgroundImageURL = "url(" + PrivateLabelsBrandingDataService.GetImageFromBytes(background.Data) + ")";
         }
         else {
             console.log("BackgroundImage: Not Exist in local storage ");
-            this.BackgroundImageURL = this.DefaultBackground;
+            //this.BackgroundImageURL = this.DefaultBackground;
 
         }
         return this.BackgroundImageURL;
@@ -52,7 +52,7 @@ export class PrivateLabelsBrandingDataService {
         }
         else {
             console.log("MainLogo: Not Exist in local storage ");
-            this.MainLogoURL = this.DefaultMainLogo;
+           // this.MainLogoURL = this.DefaultMainLogo;
         }
         return this.MainLogoURL;
     }
@@ -65,11 +65,11 @@ export class PrivateLabelsBrandingDataService {
 
         if (loginProcess && loginProcess.Id != null) {
             console.log("loginProcess: Exist in local storage => " + loginProcess);
-            this.LoginProgressURL = "url(" + PrivateLabelsBrandingDataService.GetImageFromBytes(loginProcess.Data) + ")";
+           // this.LoginProgressURL = "url(" + PrivateLabelsBrandingDataService.GetImageFromBytes(loginProcess.Data) + ")";
         }
         else {
             console.log("loginProcess: Not Exist in local storage ");
-            this.LoginProgressURL = this.DefaultLoginProgress;
+            //this.LoginProgressURL = this.DefaultLoginProgress;
 
         }
         return this.LoginProgressURL;
