@@ -109,6 +109,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly FirstElement = ":first";
     public static readonly AddButton = "#Add";
     public static readonly SpanElement = "span";
+    public static readonly imgElement = "img";
     public static readonly DivElement = 'div';
     public static readonly TextElement = 'text';
     public static readonly FirstRecentEntityItem = ".RecentEntityItem:first";
