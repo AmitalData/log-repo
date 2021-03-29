@@ -1306,10 +1306,11 @@
     <TypeScriptCompile Include="Customs\EntityLists\DeclarationPendingList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\DeclarationRefernatDataList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\DeficitDecisionList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\DeliveryTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\DocumentRejectTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ExceptionReasonList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ExportDeclarationClosingDataList.ts" />
-    <TypeScriptCompile Include="Customs\EntityLists\ExportDeliveryDocumentMessageSenderCodeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\ExportDeliveryDocumentMessageList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ExporterRoleTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\FclLclCodeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\FullnessCodeList.ts" />
@@ -1332,6 +1333,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\SecurityClearenceTypeCodeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\SeizureFactorTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\SeizureMethodTypeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\SupplierPartyTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\TransactionNatureTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\TransferCargoMethodTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\TransportMeansTypeList.ts" />
@@ -1369,10 +1371,11 @@
     <TypeScriptCompile Include="Customs\EntityPMs\DeclarationPendingPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DeclarationRefernatDataPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DeficitDecisionPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\DeliveryTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DocumentRejectTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ExceptionReasonPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ExportDeclarationClosingDataPM.ts" />
-    <TypeScriptCompile Include="Customs\EntityPMs\ExportDeliveryDocumentMessageSenderCodePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\ExportDeliveryDocumentMessagePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ExporterRoleTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\Extended\InvoiceQueue.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\Extended\DeclarationRemarks.ts" />
@@ -1401,6 +1404,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\SupplierInvoiceItemsPricePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\SupplierInvoicePaymentPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\SupplierInvoiceUCRPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\SupplierPartyTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\TransactionNatureTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\TransferCargoMethodTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\TransportMeansTypePM.ts" />
@@ -1456,13 +1460,14 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationReferantDataListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeficitDecisionListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeficitsListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\DeliveryTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DocumentRejectTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ExceptionReasonListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationRefernatDataListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeficitDecisionListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ExceptionReasonListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ExportDeclarationClosingDataListService.ts" />
-    <TypeScriptCompile Include="Customs\Services\StandardLists\ExportDeliveryDocumentMessageSenderCodeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\ExportDeliveryDocumentMessageListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ExporterRoleTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\FclLclCodeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\FullnessCodeListService.ts" />
@@ -1494,6 +1499,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\SecurityClearenceTypeCodeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\SeizureFactorTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\SeizureMethodTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\SupplierPartyTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\TransactionNatureTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\TransferCargoMethodTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\TransportMeansTypeListService.ts" />

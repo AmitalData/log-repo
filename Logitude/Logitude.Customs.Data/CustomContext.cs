@@ -400,6 +400,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new DeliverySiteTypeMap());
 	
+            modelBuilder.Configurations.Add(new DeliveryTypeMap());
+	
             modelBuilder.Configurations.Add(new DemanderTypeMap());
 	
             modelBuilder.Configurations.Add(new DepositMap());
@@ -2246,6 +2248,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<DeliverySiteType> DeliverySiteTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DeliveryType> DeliveryTypes 
 	 {
 	      get; set;
 	 

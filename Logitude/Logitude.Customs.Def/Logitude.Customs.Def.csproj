@@ -76,6 +76,7 @@
     <Compile Include="EntityPMs\CustomsShipPM.cs" />
     <Compile Include="EntityPMs\Generated\CustomsShipPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationExportRecipientPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DeliveryTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DocumentRejectTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExceptionReasonPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExportDeclarationClosingDataPM.Generated.cs" />

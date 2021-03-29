@@ -183,6 +183,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<DeficitConnFileParagraphType> DeficitConnFileParagraphTypes { get; }
 		 IDbSet<DeficitDecision> DeficitDecisions { get; }
 		 IDbSet<DeliverySiteType> DeliverySiteTypes { get; }
+		 IDbSet<DeliveryType> DeliveryTypes { get; }
 		 IDbSet<DemanderType> DemanderTypes { get; }
 		 IDbSet<Deposit> Deposits { get; }
 		 IDbSet<DepositCondition> DepositConditions { get; }

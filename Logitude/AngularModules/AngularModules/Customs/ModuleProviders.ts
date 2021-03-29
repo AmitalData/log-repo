@@ -385,6 +385,7 @@ import { LoadingSiteTypeListService } from './Services/StandardLists/LoadingSite
 import { AmendCancellRequestInitiatorListService } from './Services/StandardLists/AmendCancellRequestInitiatorListService';
 import { ExportDeliveryDocumentMessageListService } from './Services/StandardLists/ExportDeliveryDocumentMessageListService';
 import { SupplierPartyTypeListService } from './Services/StandardLists/SupplierPartyTypeListService';
+import { DeliveryTypeListService } from './Services/StandardLists/DeliveryTypeListService';
 
 
 export class ModuleProviders {
@@ -648,6 +649,7 @@ export class ModuleProviders {
             case "AmendCancellRequestInitiatorListService": { myResult = new AmendCancellRequestInitiatorListService(); break; }
             case "ExportDeliveryDocumentMessageListService": { myResult = new ExportDeliveryDocumentMessageListService(); break; }
             case "SupplierPartyTypeListService": { myResult = new SupplierPartyTypeListService(); break; }
+            case "DeliveryTypeListService": { myResult = new DeliveryTypeListService(); break; }
 
              //#endregion                
 

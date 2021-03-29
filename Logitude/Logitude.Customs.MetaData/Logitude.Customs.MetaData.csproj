@@ -309,6 +309,7 @@
     <None Include="DBTables\DeficitConnFileParagraphType.dxml" />
     <None Include="DBTables\DeficitDecision.dxml" />
     <None Include="DBTables\DeliverySiteType.dxml" />
+    <None Include="DBTables\DeliveryType.dxml" />
     <None Include="DBTables\DemanderType.dxml" />
     <None Include="DBTables\Deposit.dxml" />
     <None Include="DBTables\DepositCondition.dxml" />
@@ -486,6 +487,7 @@
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
     <None Include="EntityFiles\AutonomyRegionType.lxml" />
+    <None Include="EntityFiles\DeliveryType.lxml" />
     <None Include="EntityFiles\SupplierPartyType.lxml" />
     <None Include="EntityFiles\ExportDeliveryDocumentMessage.lxml" />
     <None Include="EntityFiles\SecurityClearenceTypeCode.lxml" />
