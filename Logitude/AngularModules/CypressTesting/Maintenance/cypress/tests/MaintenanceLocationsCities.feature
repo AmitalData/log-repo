@@ -1,7 +1,7 @@
 @release @dev @all
 Feature: Create City, Inactivate and activate it from Maintenance
-    This scenario the user creates a City, selects it to edit, Inactivates it,
-    selects it to edit again and activates it from the Maintenance module.
+    This scenario the user creates a City, selects it to edit, 
+    selects it to edit again and Inactivates it from the Maintenance module.
 
     Scenario: Add CityCode with lenght more than 15
         Given the user logged in and navigate to "Cities" in maintenance menu
@@ -10,19 +10,18 @@ Feature: Create City, Inactivate and activate it from Maintenance
 
     Scenario: Add City
         Given a city with the following details
-            | CityCode      | CityCode          |
-            | CityName      | TesrCityName      |
-            | CityLocalName | TesrCityLocalName |
-            | Country       | US                |
-            | State         | AK                |
-            # | InactiveCity  | Yes               |
-            | Notes         | TestNote          |
+            | CityCode      | random   |
+            | CityName      | random   |
+            | CityLocalName | random   |
+            | Country       | US       |
+            | State         | AK       |
+            | Notes         | TestNote |
         When add city
         Then the city should add successfully
 
     Scenario: Search for the city by name
-        When search for "TestCity" city
-        Then the "TestCity" city should appear successfully
+        When search for city
+        Then the city should appear successfully
 
     Scenario: Open the city
         When open city
@@ -30,9 +29,9 @@ Feature: Create City, Inactivate and activate it from Maintenance
 
     Scenario: Edit the city
         Given a "random" as cityLocalName
-        And the user change InactiveCity check box
+        And the user inactivate the city
         When edit city
         Then the city should update successfully
         And following event should appear in events tab
-            | Event        | Notes         |
-            | City Updated | City "status" |
+            | Event        | Notes            |
+            | City Updated | City Inactivated |

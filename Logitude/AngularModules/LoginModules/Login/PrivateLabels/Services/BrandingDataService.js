@@ -62,9 +62,6 @@ export var BrandingDataService = (function () {
             if (StorageMainImage && StorageMainImage.Id != null && StorageMainImage.Id == BrandingData.MainLogoId) {
                 PrivateLabelsBrandingData.MainLogoURL = BrandingDataService.GetImageFromBytes(StorageMainImage.Data);
             }
-            else {
-                PrivateLabelsBrandingData.MainLogoURL = BrandingDataService.GetDefaultImage("MainLogo");
-            }
         }
     };
     BrandingDataService.SetSmallLogo = function (BrandingData) {
@@ -76,9 +73,6 @@ export var BrandingDataService = (function () {
             var StorageSmallLogo = BrandingDataService.GetImageFromStorage("SmallLogo");
             if (StorageSmallLogo && StorageSmallLogo.Id != null && StorageSmallLogo.Id == BrandingData.SmallLogoId) {
                 PrivateLabelsBrandingData.SmallLogoURL = BrandingDataService.GetImageFromBytes(StorageSmallLogo.Data);
-            }
-            else {
-                PrivateLabelsBrandingData.SmallLogoURL = BrandingDataService.GetDefaultImage("SmallLogo");
             }
         }
     };
@@ -93,9 +87,6 @@ export var BrandingDataService = (function () {
             if (StorageBackgroundImage && StorageBackgroundImage.Id != null && StorageBackgroundImage.Id == BrandingData.BackgroundImageId) {
                 PrivateLabelsBrandingData.BackgroundImageURL = "url(" + BrandingDataService.GetImageFromBytes(StorageBackgroundImage.Data) + ")";
             }
-            else {
-                PrivateLabelsBrandingData.BackgroundImageURL = BrandingDataService.GetDefaultImage("BackgroundImage");
-            }
         }
     };
     BrandingDataService.SetLoginImage = function (BrandingData) {
@@ -107,9 +98,6 @@ export var BrandingDataService = (function () {
             var StorageLoginImage = BrandingDataService.GetImageFromStorage("LoginImage");
             if (StorageLoginImage && StorageLoginImage.Id != null && StorageLoginImage.Id == BrandingData.LoginImageId) {
                 PrivateLabelsBrandingData.LoginImageURL = "url(" + BrandingDataService.GetImageFromBytes(StorageLoginImage.Data) + ")";
-            }
-            else {
-                PrivateLabelsBrandingData.LoginImageURL = BrandingDataService.GetDefaultImage("LoginImage");
             }
         }
     };
@@ -123,9 +111,6 @@ export var BrandingDataService = (function () {
             if (StorageForgetPasswordImage && StorageForgetPasswordImage.Id != null && StorageForgetPasswordImage.Id == BrandingData.ForgetPasswordImageId) {
                 PrivateLabelsBrandingData.ForgetPasswordImageURL = "url(" + BrandingDataService.GetImageFromBytes(StorageForgetPasswordImage.Data) + ")";
             }
-            else {
-                PrivateLabelsBrandingData.ForgetPasswordImageURL = BrandingDataService.GetDefaultImage("ForgetPasswordImage");
-            }
         }
     };
     BrandingDataService.SetLoginProgressImage = function (BrandingData) {
@@ -137,9 +122,6 @@ export var BrandingDataService = (function () {
             var StorageLoginProgressImage = BrandingDataService.GetImageFromStorage("LoginProgressImage");
             if (StorageLoginProgressImage && StorageLoginProgressImage.Id != null && StorageLoginProgressImage.Id == BrandingData.LoginProgressImageId) {
                 PrivateLabelsBrandingData.LoginProgressImageURL = "url(" + BrandingDataService.GetImageFromBytes(StorageLoginProgressImage.Data) + ")";
-            }
-            else {
-                PrivateLabelsBrandingData.LoginProgressImageURL = BrandingDataService.GetDefaultImage("LoginProgressImage");
             }
         }
     };
@@ -171,9 +153,9 @@ export var BrandingDataService = (function () {
                 imageURL = "url(" + BrandingDataService.GetImageFromBytes(image.Data) + ")";
             }
         }
-        else {
-            imageURL = BrandingDataService.DefaultImages.find(function (x) { return x.id === id; }).image;
-        }
+        //else {
+        //    imageURL = BrandingDataService.DefaultImages.find(x => x.id === id).image; 
+        // }
         return imageURL;
     };
     BrandingDataService.GetDefaultImage = function (imageId) {

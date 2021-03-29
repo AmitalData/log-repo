@@ -35,7 +35,7 @@ export class PrivateResetPasswordComponent extends ResetPasswordComponent {
         this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage"); 
         this.MainLogo = BrandingDataService.GetImage("MainLogo");   
         this.ForgetPasswordImage = BrandingDataService.GetImage("ForgetPasswordImage"); 
-        this.MainColor = BrandingDataService.MainColor; 
+        //this.MainColor = BrandingDataService.MainColor; 
      } 
   }
  

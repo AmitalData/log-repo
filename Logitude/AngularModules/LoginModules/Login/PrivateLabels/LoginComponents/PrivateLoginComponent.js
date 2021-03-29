@@ -45,8 +45,8 @@ export var PrivateLoginComponent = (function (_super) {
         this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe(function (response) {
             if (response.Result) {
                 BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
-                _this.MainColor = response.Result.MainColor;
-                BrandingDataService.MainColor = _this.MainColor;
+                //this.MainColor = response.Result.MainColor;
+                //BrandingDataService.MainColor = this.MainColor;
                 _this.GetLoginPageImages();
             }
         });

@@ -279,3 +279,7 @@ input:not(.DSVLoginButton) {
     justify-content: center;
     align-items: center;
 }
+
+.input {
+    margin-right:10px;
+}

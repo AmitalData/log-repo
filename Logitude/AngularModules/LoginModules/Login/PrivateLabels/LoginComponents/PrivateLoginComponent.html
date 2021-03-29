@@ -63,10 +63,10 @@
                                             <td style="width: 25%;">
                                                 <table>
                                                     <tr>
-                                                        <td *ngIf="IsShowFormLogin" style="width: 25%;">
+                                                        <td *ngIf="IsShowFormLogin" style="width: 30%;">
                                                             <div style="height:100%" *ngIf="!IsShowPasswordExpirationDateArea">
 
-                                                                <table *ngIf="!ShowTenantList" style="margin-left:50px;">
+                                                                <table *ngIf="!ShowTenantList" style="margin-left:45px;">
                                                                     <tr style="height: 20px;">
                                                                         <td>
                                                                             <div></div>
@@ -76,7 +76,7 @@
                                                                     <tr [style.height]="IsShowAreaCaptcha ?'50px':'70px'">
                                                                         <td>
                                                                             <label [ngStyle]="MainColor != null ? {'color': MainColor} : {}">E-mail</label>
-                                                                            <div>
+                                                                            <div class="input">
                                                                                 <input autocomplete="on" size="10" class="auto-style1" [(ngModel)]="Email" ngControl="emailF" required type="email" (blur)="onEmailBlur($event)" (keydown)="OnMouseDownEvt($event)" />
                                                                             </div>
                                                                         </td>
@@ -91,7 +91,7 @@
                                                                     <tr [style.height]="IsShowAreaCaptcha ?'50px':'70px'">
                                                                         <td class="column1">
                                                                             <label [ngStyle]="MainColor != null ? {'color': MainColor} : {}">password</label>
-                                                                            <div style="height:31px;width:280px;border:1px solid lightgray;border-radius:4px;" class="InputShow">
+                                                                            <div style="height:31px;width:280px;border:1px solid lightgray;border-radius:4px;" class="InputShow input">
                                                                                 <input [attr.type]="InputPasswordType" [ngStyle]="{'width':Password ? '250px' : '280px' }" style="border:0px" class="auto-style1" id="Password" [(ngModel)]="Password" required (keydown)="OnMouseDownEvt($event)" />
                                                                                 <img src="{{PasswordImage}}" [hidden]="!Password" id="ShowHidePasswordImageId" title="{{PasswordTitle}} Password" alt="Show Password" style="padding-left:2px;font-size:12px;vertical-align:central;font-family:Arial; cursor:pointer;text-decoration:none;float:right;margin-top:3px;margin-right:2px;" (click)="ShowHidePasswordClick()" />
                                                                             </div>
@@ -160,7 +160,7 @@
                                                                     </tr>
                                                                     <tr style="width:50px">
                                                                         <td>
-                                                                            <div style="float: right;width: 190px;" *ngIf="ShowLoadingIndicator"><img width="40" height="40" src="../../../Images/LoginScreen/indicator.gif" alt='loading' /></div>
+                                                                            <div style="float: right;width: 190px;" *ngIf="ShowLoadingIndicator"><img width="40" height="40" src="images/LoginScreen/indicator.gif" alt='loading' /></div>
                                                                         </td>
 
                                                                         <td></td>
@@ -201,7 +201,7 @@
                                                                     </tr>
                                                                     <tr>
                                                                         <td class="column1">
-                                                                            <div style="margin-top:5px"><input class="k-dropdown Ignore" id="cmbTenants" runat="server" style="display:normal;width:250px;margin-top:0px" /></div>
+                                                                            <div style="margin-top:5px"><input class="k-dropdown Ignore" id="cmbTenants" runat="server" style="display:normal;width:200px;margin-top:0px" /></div>
                                                                         </td>
                                                                     </tr>
                                                                     <tr style="height:30px;">
@@ -212,7 +212,7 @@
                                                                             <table>
                                                                                 <tr>
                                                                                     <td><button style="width:120px;height:35px;margin-left:0px;" class="DSVLoginButton" (click)="ContinueClicked()">Continue ></button></td>
-                                                                                    <td><a id="BackToLogin" style="margin-left:15px;margin-top:50px;color:#4B4A4A;font-size:12px;font-family:Arial;vertical-align:central;cursor:pointer;" (click)="BackToLoginClicked()">Back to login page</a></td>
+                                                                                    <td><a id="BackToLogin" style="margin-left:15px;margin-top:50px;color:#4B4A4A;font-size:12px;font-family:Arial;vertical-align:central;cursor:pointer;margin-right: 40px;" (click)="BackToLoginClicked()">Back to login page</a></td>
                                                                                     <td><div></div></td>
                                                                                 </tr>
                                                                             </table>

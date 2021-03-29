@@ -16,7 +16,7 @@ using System.Xml.Serialization;
 namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 {
    
-    public partial class ARPaymentCheque
+    public partial class GLAccountChequeDetails
     {
 
 	    
@@ -24,24 +24,12 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     
     public int Tenant { get; set; }
     
-    public Currency Currency { get; set; }
+    public decimal? TotalOpenChequesInLocalCur { get; set; }
     
-    public string ChequeNumber { get; set; }
+    public decimal? TotFutureOpenChequesInLocalCur { get; set; }
     
-    public DateTime ValueDate { get; set; }
+    public string DisplayNumber { get; set; }
     
-    public decimal LocalAmount { get; set; }
-    
-    public decimal ForeignAmount { get; set; }
-    
-    public string BankId { get; set; }
-    
-    public string BankBranch { get; set; }
-    
-    public string BankAccount { get; set; }
-    
-    public StatusCode StatusCode { get; set; }
-    
-    public string StatusName { get; set; }
+    public string LocalName { get; set; }
     }
 } 
