@@ -384,6 +384,7 @@ import { AmendmentFieldStatusTypeListService } from './Services/StandardLists/Am
 import { LoadingSiteTypeListService } from './Services/StandardLists/LoadingSiteTypeListService';
 import { AmendCancellRequestInitiatorListService } from './Services/StandardLists/AmendCancellRequestInitiatorListService';
 import { ExportDeliveryDocumentMessageListService } from './Services/StandardLists/ExportDeliveryDocumentMessageListService';
+import { SupplierPartyTypeListService } from './Services/StandardLists/SupplierPartyTypeListService';
 
 
 export class ModuleProviders {
@@ -646,6 +647,7 @@ export class ModuleProviders {
             case "SecurityClearenceTypeCodeListService": { myResult = new SecurityClearenceTypeCodeListService(); break; }
             case "AmendCancellRequestInitiatorListService": { myResult = new AmendCancellRequestInitiatorListService(); break; }
             case "ExportDeliveryDocumentMessageListService": { myResult = new ExportDeliveryDocumentMessageListService(); break; }
+            case "SupplierPartyTypeListService": { myResult = new SupplierPartyTypeListService(); break; }
 
              //#endregion                
 

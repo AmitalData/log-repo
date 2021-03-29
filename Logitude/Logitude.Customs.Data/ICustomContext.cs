@@ -325,6 +325,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<SupplierInvoiceModification> SupplierInvoiceModifications { get; }
 		 IDbSet<SupplierInvoicePayment> SupplierInvoicePayments { get; }
 		 IDbSet<SupplierInvoiceUCR> SupplierInvoiceUCRs { get; }
+		 IDbSet<SupplierPartyType> SupplierPartyTypes { get; }
 		 IDbSet<Tapag> Tapags { get; }
 		 IDbSet<TapagConnectionTable> TapagConnectionTables { get; }
 		 IDbSet<TapagType> TapagTypes { get; }

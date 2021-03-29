@@ -161,6 +161,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\PartyRelationshipTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ReleaseMessageTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SecurityClearenceTypeCodeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\SupplierPartyTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TransactionNatureTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DeclaraionDetails.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TransportMeansTypeDetails.Generated.cs" />
@@ -791,6 +792,7 @@
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceModificationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvoicePaymentDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceUCRDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SupplierPartyTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TapagConnectionTableDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TapagDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TapagTypeDataMapping.Generated.cs" />
@@ -949,6 +951,7 @@
     <Compile Include="EntityDataMappings\SupplierInvoiceModificationDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvoicePaymentDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvoiceUCRDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SupplierPartyTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TapagConnectionTableDataMapping.cs" />
     <Compile Include="EntityDataMappings\TapagDataMapping.cs" />
     <Compile Include="EntityDataMappings\TapagTypeDataMapping.cs" />
@@ -1002,6 +1005,7 @@
     <Compile Include="EntityQueryServices\Generated\SecurityClearenceTypeCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SupplierInvoiceUCRQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\SupplierInvoicePaymentQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\SupplierPartyTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TransportMeansTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\ModificationAndDiscountTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\SuppInvoiceItemsAbachStatementQueryService.cs" />
@@ -1517,6 +1521,7 @@
     <Compile Include="EntityUpdateServices\Generated\SupplierInvoiceItemsPriceUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SupplierInvoicePaymentUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SupplierInvoiceUCRUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SupplierPartyTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TransactionNatureTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TransportMeansTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\TransportMeansTypeUpdateService.cs" />

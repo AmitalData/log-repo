@@ -447,6 +447,7 @@
     <None Include="DBTables\SupplierInvoiceModification.dxml" />
     <None Include="DBTables\SupplierInvoicePayment.dxml" />
     <None Include="DBTables\SupplierInvoiceUCR.dxml" />
+    <None Include="DBTables\SupplierPartyType.dxml" />
     <None Include="DBTables\Tapag.dxml" />
     <None Include="DBTables\TapagConnectionTable.dxml" />
     <None Include="DBTables\TapagType.dxml" />
@@ -485,6 +486,7 @@
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
     <None Include="EntityFiles\AutonomyRegionType.lxml" />
+    <None Include="EntityFiles\SupplierPartyType.lxml" />
     <None Include="EntityFiles\ExportDeliveryDocumentMessage.lxml" />
     <None Include="EntityFiles\SecurityClearenceTypeCode.lxml" />
     <None Include="EntityFiles\TransportMeansType.lxml" />

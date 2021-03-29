@@ -684,6 +684,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new SupplierInvoiceUCRMap());
 	
+            modelBuilder.Configurations.Add(new SupplierPartyTypeMap());
+	
             modelBuilder.Configurations.Add(new TapagMap());
 	
             modelBuilder.Configurations.Add(new TapagConnectionTableMap());
@@ -3096,6 +3098,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<SupplierInvoiceUCR> SupplierInvoiceUCRs 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SupplierPartyType> SupplierPartyTypes 
 	 {
 	      get; set;
 	 

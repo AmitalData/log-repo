@@ -474,6 +474,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(SecurityClearenceTypeCodeTable, SecurityClearenceTypeCodeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(SecurityClearenceTypeCodeTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData SupplierPartyTypeTable = closedSystemTables.Where(d => d.id == "1609").FirstOrDefault();
+            ObjectTable SupplierPartyTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.SupplierPartyType", 0, false);
+            InsertClosedTableRecord(SupplierPartyTypeTable, SupplierPartyTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(SupplierPartyTypeTable);
+
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData ExportDeliveryDocumentMessageSenderCodeTable = closedSystemTables.Where(d => d.id == "23676").FirstOrDefault();
             ObjectTable ExportDeliveryDocumentMessageSenderCodeObjectTable = objectTableRepository.GetObjectTableByName("Customs.ExportDeliveryDocumentMessage", 0, false);
             InsertClosedTableRecord(ExportDeliveryDocumentMessageSenderCodeTable, ExportDeliveryDocumentMessageSenderCodeObjectTable, customsClosedTables, customsClosedTableRepository);

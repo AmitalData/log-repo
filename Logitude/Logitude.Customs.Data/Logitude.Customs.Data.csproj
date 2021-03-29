@@ -196,6 +196,7 @@
     <Compile Include="EntityKeys\SupplierInvoiceItemsPriceKeys.cs" />
     <Compile Include="EntityKeys\SupplierInvoicePaymentKeys.cs" />
     <Compile Include="EntityKeys\SupplierInvoiceUCRKeys.cs" />
+    <Compile Include="EntityKeys\SupplierPartyTypeKeys.cs" />
     <Compile Include="EntityKeys\TPGFileTypeKeys.cs" />
     <Compile Include="EntityKeys\TransactionNatureTypeKeys.cs" />
     <Compile Include="EntityKeys\TransferCargoMethodTypeKeys.cs" />
@@ -366,6 +367,7 @@
     <Compile Include="EntityListQueryServices\Generated\SupplierInvoiceItemsPriceListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierInvoicePaymentListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierInvoiceUCRListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SupplierPartyTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TPGFileTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TransactionNatureTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TransferCargoMethodTypeListQueryService.Generated.cs" />
@@ -402,6 +404,7 @@
     <Compile Include="EntityListQueryServices\SupplierInvoiceItemsPriceListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierInvoicePaymentListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierInvoiceUCRListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SupplierPartyTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TPGFileTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TransactionNatureTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TransferCargoMethodTypeListQueryService.cs" />
@@ -506,6 +509,7 @@
     <Compile Include="EntityLists\Generated\SupplierInvoiceItemsPriceList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SupplierInvoicePaymentList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SupplierInvoiceUCRList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SupplierPartyTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TPGFileTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TransactionNatureTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TransferCargoMethodTypeList.Generated.cs" />
@@ -609,6 +613,7 @@
     <Compile Include="EntityMapping\SupplierInvoiceItemsPriceMap.cs" />
     <Compile Include="EntityMapping\SupplierInvoicePaymentMap.cs" />
     <Compile Include="EntityMapping\SupplierInvoiceUCRMap.cs" />
+    <Compile Include="EntityMapping\SupplierPartyTypeMap.cs" />
     <Compile Include="EntityMapping\TPGFileTypeMap.cs" />
     <Compile Include="EntityMapping\TransactionNatureTypeMap.cs" />
     <Compile Include="EntityMapping\TransferCargoMethodTypeMap.cs" />
@@ -713,6 +718,7 @@
     <Compile Include="EntityPOCOs\SupplierInvoiceItemsPrice.cs" />
     <Compile Include="EntityPOCOs\SupplierInvoicePayment.cs" />
     <Compile Include="EntityPOCOs\SupplierInvoiceUCR.cs" />
+    <Compile Include="EntityPOCOs\SupplierPartyType.cs" />
     <Compile Include="EntityPOCOs\TPGFileType.cs" />
     <Compile Include="EntityPOCOs\TransactionNatureType.cs" />
     <Compile Include="EntityPOCOs\TransferCargoMethodType.cs" />
@@ -883,6 +889,7 @@
     <Compile Include="Repsitories\Generated\SupplierInvoiceItemsPriceRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SupplierInvoicePaymentRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SupplierInvoiceUCRRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\SupplierPartyTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TPGFileTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TransactionNatureTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TransferCargoMethodTypeRepository.Generated.cs" />
@@ -919,6 +926,7 @@
     <Compile Include="Repsitories\SupplierInvoiceItemsPriceRepository.cs" />
     <Compile Include="Repsitories\SupplierInvoicePaymentRepository.cs" />
     <Compile Include="Repsitories\SupplierInvoiceUCRRepository.cs" />
+    <Compile Include="Repsitories\SupplierPartyTypeRepository.cs" />
     <Compile Include="Repsitories\TPGFileTypeRepository.cs" />
     <Compile Include="Repsitories\TransactionNatureTypeRepository.cs" />
     <Compile Include="Repsitories\TransferCargoMethodTypeRepository.cs" />
