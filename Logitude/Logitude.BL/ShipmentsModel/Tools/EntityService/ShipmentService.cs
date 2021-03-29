@@ -563,10 +563,25 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void RemoveDeletedItemsFromEntityPM()
         {
-            this.entityPM.ShipmentPickUps = initializer.ShipmentPickUpsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
-            this.entityPM.ShipmentDeliveries = initializer.ShipmentDeliveriesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
-            this.entityPM.ShipmentPayables = initializer.ShipmentPayablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
-            this.entityPM.ShipmentReceivables = initializer.ShipmentReceivablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            if (initializer.ShipmentPickUpsChangeSet != null)
+            {
+                this.entityPM.ShipmentPickUps = initializer.ShipmentPickUpsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            }
+
+            if (initializer.ShipmentDeliveriesChangeSet != null)
+            {
+                this.entityPM.ShipmentDeliveries = initializer.ShipmentDeliveriesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            }
+
+            if (initializer.ShipmentPayablesChangeSet != null)
+            {
+                this.entityPM.ShipmentPayables = initializer.ShipmentPayablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            }
+
+            if (initializer.ShipmentReceivablesChangeSet != null)
+            {
+                this.entityPM.ShipmentReceivables = initializer.ShipmentReceivablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            }
         }
         private void UpdateMasterHouses()
         {
