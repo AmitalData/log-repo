@@ -375,7 +375,8 @@ export class EditComponent implements OnDestroy {
                 this.BuildShortTitle();
                 this.BuildHeaderScreen();
                 this.SetSelectedTab();
-                this.SetSplitComponentState();
+                this.SetSplitComponentState(); 
+                this.SetNextPreviousButtonsEnablity();
             }
         }
 
@@ -1311,11 +1312,11 @@ export class EditComponent implements OnDestroy {
                                     this.CurrentNavigatedIndex = this.CurrentNavigatedIndex - 1;
                                     this.LoadNextPreviousEntity();
                                 }
-
-                                if (this.nextPreviousTimerToken) {
-                                    clearTimeout(this.nextPreviousTimerToken);
-                                }
-                                this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
+                                this.SetNextPreviousButtonsEnablityAysnc();
+                                //if (this.nextPreviousTimerToken) {
+                                //    clearTimeout(this.nextPreviousTimerToken);
+                                //}
+                                //this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
                             }
 
                             this.EditComponentController.HaveSaved = true;
@@ -1366,18 +1367,20 @@ export class EditComponent implements OnDestroy {
                                 if (loadNextEntity) {
                                     this.CurrentNavigatedIndex = this.CurrentNavigatedIndex + 1;
                                     this.LoadNextPreviousEntity();
-                                    if (this.nextPreviousTimerToken) {
-                                        clearTimeout(this.nextPreviousTimerToken);
-                                    }
-                                    this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
+                                    this.SetNextPreviousButtonsEnablityAysnc();
+                                    //if (this.nextPreviousTimerToken) {
+                                    //    clearTimeout(this.nextPreviousTimerToken);
+                                    //}
+                                    //this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
                                 }
                                 if (loadPreviousEntity) {
                                     this.CurrentNavigatedIndex = this.CurrentNavigatedIndex - 1;
                                     this.LoadNextPreviousEntity();
-                                    if (this.nextPreviousTimerToken) {
-                                        clearTimeout(this.nextPreviousTimerToken);
-                                    }
-                                    this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
+                                    this.SetNextPreviousButtonsEnablityAysnc();
+                                    //if (this.nextPreviousTimerToken) {
+                                    //    clearTimeout(this.nextPreviousTimerToken);
+                                    //}
+                                    //this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
                                 }
 
                             }
@@ -1755,11 +1758,11 @@ export class EditComponent implements OnDestroy {
             this.CurrentNavigatedIndex = this.CurrentNavigatedIndex + 1;
             this.LoadNextPreviousEntity();
 
-
-            if (this.nextPreviousTimerToken) {
-                clearTimeout(this.nextPreviousTimerToken);
-            }
-            this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
+            this.SetNextPreviousButtonsEnablityAysnc();
+            //if (this.nextPreviousTimerToken) {
+            //    clearTimeout(this.nextPreviousTimerToken);
+            //}
+            //this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
         }
     }
 
@@ -1772,12 +1775,22 @@ export class EditComponent implements OnDestroy {
             this.CurrentNavigatedIndex = this.CurrentNavigatedIndex - 1;
             this.LoadNextPreviousEntity();
 
-
-            if (this.nextPreviousTimerToken) {
-                clearTimeout(this.nextPreviousTimerToken);
-            }
-            this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
+            this.SetNextPreviousButtonsEnablityAysnc();
+            //if (this.nextPreviousTimerToken) {
+            //    clearTimeout(this.nextPreviousTimerToken);
+            //}
+            //this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
         }
+    }
+    SetNextPreviousButtonsEnablityAysnc() {
+        let move2Sync: Boolean = true;
+        if (move2Sync) {
+            return;
+        }
+        if (this.nextPreviousTimerToken) {
+            clearTimeout(this.nextPreviousTimerToken);
+        }
+        this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
     }
 
     nextPreviousTimerToken: any;
