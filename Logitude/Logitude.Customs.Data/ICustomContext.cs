@@ -45,6 +45,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CargoSealIdentifier> CargoSealIdentifiers { get; }
 		 IDbSet<CargoSplitRequestStatus> CargoSplitRequestStatuses { get; }
 		 IDbSet<CargoStatus> CargoStatuses { get; }
+		 IDbSet<CargoType> CargoTypes { get; }
 		 IDbSet<CertificateExemptionType> CertificateExemptionTypes { get; }
 		 IDbSet<CertificatesStatus> CertificatesStatuses { get; }
 		 IDbSet<CheckEntityType> CheckEntityTypes { get; }

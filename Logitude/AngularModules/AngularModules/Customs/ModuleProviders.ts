@@ -243,6 +243,7 @@ import { ReleaseMessageTypeListService } from './Services/StandardLists/ReleaseM
 import { DocumentRejectTypeListService } from './Services/StandardLists/DocumentRejectTypeListService';
 import { FclLclCodeListService } from './Services/StandardLists/FclLclCodeListService';
 import { SecurityClearenceTypeCodeListService } from './Services/StandardLists/SecurityClearenceTypeCodeListService';
+import { CargoTypeListService } from './Services/StandardLists/CargoTypeListService';
 
 
 //#endregion
@@ -650,6 +651,7 @@ export class ModuleProviders {
             case "ExportDeliveryDocumentMessageListService": { myResult = new ExportDeliveryDocumentMessageListService(); break; }
             case "SupplierPartyTypeListService": { myResult = new SupplierPartyTypeListService(); break; }
             case "DeliveryTypeListService": { myResult = new DeliveryTypeListService(); break; }
+            case "CargoTypeListService": { myResult = new CargoTypeListService(); break; } 
 
              //#endregion                
 

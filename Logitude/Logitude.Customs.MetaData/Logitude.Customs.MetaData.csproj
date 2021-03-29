@@ -487,6 +487,7 @@
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
     <None Include="EntityFiles\AutonomyRegionType.lxml" />
+    <None Include="EntityFiles\CargoType.lxml" />
     <None Include="EntityFiles\DeliveryType.lxml" />
     <None Include="EntityFiles\SupplierPartyType.lxml" />
     <None Include="EntityFiles\ExportDeliveryDocumentMessage.lxml" />

@@ -1292,6 +1292,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\CancellationReasonRequestTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CancellationRequestStatusList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CargoSealIdentifierList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\CargoTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ClaimReasonTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ClassificationTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ContinuousRequestTypeList.ts" />
@@ -1350,6 +1351,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\CancellationRequestStatusPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CargoSealIdentifierPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CargoSealPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\CargoTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ClaimReasonTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ClaimsRelatedEntitiesRefundPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ClaimsRelatedEntitiesSeizurePM.ts" />
@@ -1438,6 +1440,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\CancellationReasonRequestTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CancellationRequestStatusListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CargoSealIdentifierListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\CargoTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ClaimReasonTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ClassificationTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ContinuousRequestTypeListService.ts" />

@@ -118,6 +118,7 @@
     <Compile Include="EntityKeys\CargoSealKeys.cs" />
     <Compile Include="EntityKeys\CargoSplitRequestStatusKeys.cs" />
     <Compile Include="EntityKeys\CargoStatusKeys.cs" />
+    <Compile Include="EntityKeys\CargoTypeKeys.cs" />
     <Compile Include="EntityKeys\ClaimReasonTypeKeys.cs" />
     <Compile Include="EntityKeys\ClaimsRelatedEntitiesRefundKeys.cs" />
     <Compile Include="EntityKeys\ClaimsRelatedEntitiesSeizureKeys.cs" />
@@ -223,6 +224,7 @@
     <Compile Include="EntityListQueryServices\CargoSealListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoSplitRequestStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CargoTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClaimReasonTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClaimsRelatedEntitiesRefundListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClaimsRelatedEntitiesSeizureListQueryService.cs" />
@@ -291,6 +293,7 @@
     <Compile Include="EntityListQueryServices\Generated\CargoSealListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CargoSplitRequestStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CargoStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CargoTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClaimReasonTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClaimsRelatedEntitiesRefundListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClaimsRelatedEntitiesSeizureListQueryService.Generated.cs" />
@@ -433,6 +436,7 @@
     <Compile Include="EntityLists\Generated\CargoSealList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CargoSplitRequestStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CargoStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CargoTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClaimReasonTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClaimsRelatedEntitiesRefundList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClaimsRelatedEntitiesSeizureList.Generated.cs" />
@@ -539,6 +543,7 @@
     <Compile Include="EntityMapping\CargoSealMap.cs" />
     <Compile Include="EntityMapping\CargoSplitRequestStatusMap.cs" />
     <Compile Include="EntityMapping\CargoStatusMap.cs" />
+    <Compile Include="EntityMapping\CargoTypeMap.cs" />
     <Compile Include="EntityMapping\ClaimReasonTypeMap.cs" />
     <Compile Include="EntityMapping\ClaimsRelatedEntitiesRefundMap.cs" />
     <Compile Include="EntityMapping\ClaimsRelatedEntitiesSeizureMap.cs" />
@@ -644,6 +649,7 @@
     <Compile Include="EntityPOCOs\CargoSealIdentifier.cs" />
     <Compile Include="EntityPOCOs\CargoSplitRequestStatus.cs" />
     <Compile Include="EntityPOCOs\CargoStatus.cs" />
+    <Compile Include="EntityPOCOs\CargoType.cs" />
     <Compile Include="EntityPOCOs\ClaimReasonType.cs" />
     <Compile Include="EntityPOCOs\ClaimsRelatedEntitiesRefund.cs" />
     <Compile Include="EntityPOCOs\ClaimsRelatedEntitiesSeizure.cs" />
@@ -750,6 +756,7 @@
     <Compile Include="Repsitories\CargoSealRepository.cs" />
     <Compile Include="Repsitories\CargoSplitRequestStatusRepository.cs" />
     <Compile Include="Repsitories\CargoStatusRepository.cs" />
+    <Compile Include="Repsitories\CargoTypeRepository.cs" />
     <Compile Include="Repsitories\ClaimReasonTypeRepository.cs" />
     <Compile Include="Repsitories\ClaimsRelatedEntitiesRefundRepository.cs" />
     <Compile Include="Repsitories\ClaimsRelatedEntitiesSeizureRepository.cs" />
@@ -818,6 +825,7 @@
     <Compile Include="Repsitories\Generated\CargoSealRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CargoSplitRequestStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CargoStatusRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CargoTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClaimReasonTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClaimsRelatedEntitiesRefundRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClaimsRelatedEntitiesSeizureRepository.Generated.cs" />

@@ -124,6 +124,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CargoStatusMap());
 	
+            modelBuilder.Configurations.Add(new CargoTypeMap());
+	
             modelBuilder.Configurations.Add(new CertificateExemptionTypeMap());
 	
             modelBuilder.Configurations.Add(new CertificatesStatusMap());
@@ -1420,6 +1422,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CargoStatus> CargoStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CargoType> CargoTypes 
 	 {
 	      get; set;
 	 

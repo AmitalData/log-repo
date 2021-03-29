@@ -148,6 +148,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\AmountTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CancellationReasonRequestTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CancellationRequestStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CargoTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ClaimReasonTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ClassificationTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomerRoleTypeDetails.Generated.cs" />
@@ -318,6 +319,7 @@
     <Compile Include="EntityDataMappings\CargoSealIdentifierDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoSplitRequestStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CargoTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CertificateExemptionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CertificatesStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\CheckEntityTypeDataMapping.cs" />
@@ -509,6 +511,7 @@
     <Compile Include="EntityDataMappings\Generated\CargoSealIdentifierDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoSplitRequestStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CargoTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CertificateExemptionTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CertificatesStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CheckEntityTypeDataMapping.Generated.cs" />
@@ -996,6 +999,7 @@
     <Compile Include="EntityQueryServices\Generated\AutonomyRegionTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CancellationReasonRequestTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CancellationRequestStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CargoTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeliveryTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DocumentRejectTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExportDeclarationClosingDataQueryService.Generated.cs" />
@@ -1505,6 +1509,7 @@
     <Compile Include="EntityUpdateServices\Generated\AmountTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CancellationReasonRequestTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CancellationRequestStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CargoTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClaimReasonTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClassificationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsShipUpdateService.Generated.cs" />
