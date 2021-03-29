@@ -23,23 +23,23 @@ using Logitude.Accounting.Data;
 
  namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 { 
-   public partial class ARPaymentChequeQueryService
+   public partial class LedgerTransactionQueryService
    {
    
 		IAccountingContext  context;
-		//ARPaymentChequeService service; 
+		//LedgerTransactionService service; 
 		
-		Logitude.Accounting.BL.EntityQueryServices.ARPaymentChequeQueryService query; 
+		Logitude.Accounting.BL.EntityQueryServices.LedgerTransactionQueryService query; 
 
-        public ARPaymentChequeQueryService(int tenant)
+        public LedgerTransactionQueryService(int tenant)
         {
 				    context = AccountingContext.GetContext(tenant); 
-			//service = new ARPaymentChequeService(context, tenant); 
-			query = new Logitude.Accounting.BL.EntityQueryServices.ARPaymentChequeQueryService(tenant);
+			//service = new LedgerTransactionService(context, tenant); 
+			query = new Logitude.Accounting.BL.EntityQueryServices.LedgerTransactionQueryService(tenant);
         }
 
 		
-		public ARPaymentCheque GetARPaymentChequeById(string Id,int Tenant)
+		public LedgerTransaction GetLedgerTransactionById(string Id,int Tenant)
         { 
 		    try
             {
@@ -47,9 +47,9 @@ using Logitude.Accounting.Data;
 				
 				var temp = query.GetSinglePM(Id,Tenant);				
 				 if (temp == null)
-                    throw new ApplicationException("ARPaymentCheque with Id " + Id + " doesn't exist");
+                    throw new ApplicationException("LedgerTransaction with Id " + Id + " doesn't exist");
 
-				return ARPaymentChequeDataMapping(temp,Tenant);
+				return LedgerTransactionDataMapping(temp,Tenant);
 			}
             catch (Exception ex)
             {
@@ -58,14 +58,13 @@ using Logitude.Accounting.Data;
             }
         }
 		
-		public ARPaymentCheque ARPaymentChequeDataMapping(ARPaymentChequePM MyEntityPM,int Tenant,string ComputingPartnerName = "")
+		public LedgerTransaction LedgerTransactionDataMapping(LedgerTransactionPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
 				   
-				   var temp = new ARPaymentCheque(); 
-				   temp.Id = MyEntityPM.Id;
-				   temp.Tenant = MyEntityPM.Tenant;			  
+				   var temp = new LedgerTransaction(); 
+				   temp.Id = MyEntityPM.Id;			  
 				   if(MyEntityPM.CurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService0 = new CurrencyQueryService(Tenant);
@@ -73,21 +72,12 @@ using Logitude.Accounting.Data;
 			       
 					   				   }
 				   
-				   temp.ChequeNumber = MyEntityPM.ChequeNumber;
-				   temp.ValueDate = MyEntityPM.ValueDate;
-				   temp.LocalAmount = MyEntityPM.LocalAmount;
-				   temp.ForeignAmount = MyEntityPM.ForeignAmount;
-				   temp.BankId = MyEntityPM.BankId;
-				   temp.BankBranch = MyEntityPM.BankBranch;
-				   temp.BankAccount = MyEntityPM.BankAccount;			  
-				   if(MyEntityPM.StatusCode != null)
-				   {
-					   StatusCodeQueryService StatusCodeService1 = new StatusCodeQueryService(Tenant);
-					   					   temp.StatusCode = StatusCodeService1.GetStatusCodeByCode(MyEntityPM.StatusCode,Tenant); 
-			       
-					   				   }
-				   
-				   temp.StatusName = MyEntityPM.StatusName;					
+				   temp.DueDate = MyEntityPM.DueDate;
+				   temp.LocalAmountCredit = MyEntityPM.LocalAmountCredit;
+				   temp.ForeignAmountCredit = MyEntityPM.ForeignAmountCredit;
+				   temp.Reference1 = MyEntityPM.Reference1;
+				   temp.Reference2 = MyEntityPM.Reference2;
+				   temp.Notes = MyEntityPM.Notes;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -97,12 +87,12 @@ using Logitude.Accounting.Data;
             }
         } 
 
-		public ARPaymentChequePM ARPaymentChequeDataMappingAndValidatin(ARPaymentCheque MyEntity,int Tenant,string ComputingPartnerName = "")
+		public LedgerTransactionPM LedgerTransactionDataMappingAndValidatin(LedgerTransaction MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
 				   
-					var temp = new ARPaymentChequePM();
+					var temp = new LedgerTransactionPM();
 												  
 					if (!string.IsNullOrEmpty(MyEntity.Id))
 					{
@@ -111,14 +101,13 @@ using Logitude.Accounting.Data;
 										   
 					if(temp == null)
 					{
-					    throw new ApplicationException("ARPaymentCheque with Id " + MyEntity.Id + " doesn't exist");
+					    throw new ApplicationException("LedgerTransaction with Id " + MyEntity.Id + " doesn't exist");
 						
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 						temp.Id = MyEntity.Id;
 					}
-					temp.Tenant = MyEntity.Tenant;
 					CurrencyQueryService CurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(MyEntity.Currency != null)
 					{
@@ -131,26 +120,12 @@ using Logitude.Accounting.Data;
 					}
 			
 					
-					temp.ChequeNumber = MyEntity.ChequeNumber;
-					temp.ValueDate = MyEntity.ValueDate;
-					temp.LocalAmount = MyEntity.LocalAmount;
-					temp.ForeignAmount = MyEntity.ForeignAmount;
-					temp.BankId = MyEntity.BankId;
-					temp.BankBranch = MyEntity.BankBranch;
-					temp.BankAccount = MyEntity.BankAccount;
-					StatusCodeQueryService StatusCodeStatusCodeService = new StatusCodeQueryService(Tenant);
-					if(MyEntity.StatusCode != null)
-					{
-						var myStatusCodePM = StatusCodeStatusCodeService.StatusCodeDataMappingAndValidatin(MyEntity.StatusCode,Tenant,ComputingPartnerName);
-												if(myStatusCodePM != null)
-						{
-							temp.StatusCode = myStatusCodePM.Code;
-						}
-						 
-					}
-			
-					
-					temp.StatusName = MyEntity.StatusName;					   
+					temp.DueDate = MyEntity.DueDate;
+					temp.LocalAmountCredit = MyEntity.LocalAmountCredit;
+					temp.ForeignAmountCredit = MyEntity.ForeignAmountCredit;
+					temp.Reference1 = MyEntity.Reference1;
+					temp.Reference2 = MyEntity.Reference2;
+					temp.Notes = MyEntity.Notes;					   
 					   return temp;
 		    }
             catch (Exception ex)
