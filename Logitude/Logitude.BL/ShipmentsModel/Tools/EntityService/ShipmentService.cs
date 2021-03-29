@@ -3164,7 +3164,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 if (entityPM.TransportModeId == "A")
                 {
                     this.ComputeAWBChargeRate();
-                    this.ComputeAWBChargeAmount();
+                  
                     if (string.IsNullOrEmpty(entityPM.RateClassCode))
                     {
                         entityPM.RateClassCode = "Q";
@@ -3278,6 +3278,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     entityPM.AWBChargeRate = airFreightCharge.UnitPrice;
                     entityPM.AWBCurrencyId = airFreightCharge.CurrencyId;
+                    this.ComputeAWBChargeAmount();
                 }
             }
         }

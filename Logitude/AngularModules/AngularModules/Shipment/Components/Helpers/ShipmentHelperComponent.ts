@@ -279,7 +279,7 @@ export class ShipmentHelperComponent implements OnDestroy {
         if (!this.isAWBButtonClicked) {
             this.isAWBButtonClicked = true;
             this.ComputeAWBChargeRate();
-            this.ComputeAWBChargeAmount();
+           
             if (this.entityArgs.EditComponent) {
                 this.entityArgs.EditComponent.SaveChanges();
             }
@@ -293,6 +293,7 @@ export class ShipmentHelperComponent implements OnDestroy {
             if (airFreightCharge != null) {
                 this.EntityPM.AWBChargeRate = airFreightCharge.UnitPrice;
                 this.EntityPM.AWBCurrencyId = airFreightCharge.CurrencyId;
+                this.ComputeAWBChargeAmount();
                
             }
         }
@@ -311,7 +312,6 @@ export class ShipmentHelperComponent implements OnDestroy {
             var isFullWizard: boolean = this.IsFullWizard();
             if (isFullWizard) {
                 this.ComputeAWBChargeRate();
-                this.ComputeAWBChargeAmount();
             }
             if (this.entityArgs.EditComponent) {
                 this.entityArgs.EditComponent.SaveChanges();
