@@ -53,8 +53,8 @@ export class PrivateLoginComponent extends LoginComponent implements OnInit {
         this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe((response: ServiceResponse) => {
             if (response.Result) { 
                 BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
-                this.MainColor = response.Result.MainColor;
-                BrandingDataService.MainColor = this.MainColor;
+                //this.MainColor = response.Result.MainColor;
+                //BrandingDataService.MainColor = this.MainColor;
                 this.GetLoginPageImages();  
             } })
         this.showSpinner = false;
@@ -68,7 +68,7 @@ export class PrivateLoginComponent extends LoginComponent implements OnInit {
 
     ForgotPasswordClicked() {
         this.ClearLocation();
-        Tools.DynamicLoader.Load("/Login/PrivateLabels/LoginComponents/PrivateChangePasswordComponent", SessionInfo.MainLocation)
+        Tools.DynamicLoader.Load("/Login/PrivateLabels/LoginComponents/PrivateResetPasswordComponent", SessionInfo.MainLocation)
             .then(cmpRef => {
             });
     }

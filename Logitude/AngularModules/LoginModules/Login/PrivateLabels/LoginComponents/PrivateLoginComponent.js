@@ -45,8 +45,8 @@ export var PrivateLoginComponent = (function (_super) {
         this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe(function (response) {
             if (response.Result) {
                 BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
-                _this.MainColor = response.Result.MainColor;
-                BrandingDataService.MainColor = _this.MainColor;
+                //this.MainColor = response.Result.MainColor;
+                //BrandingDataService.MainColor = this.MainColor;
                 _this.GetLoginPageImages();
             }
         });
@@ -59,7 +59,7 @@ export var PrivateLoginComponent = (function (_super) {
     };
     PrivateLoginComponent.prototype.ForgotPasswordClicked = function () {
         this.ClearLocation();
-        Tools.DynamicLoader.Load("/Login/PrivateLabels/LoginComponents/PrivateChangePasswordComponent", SessionInfo.MainLocation)
+        Tools.DynamicLoader.Load("/Login/PrivateLabels/LoginComponents/PrivateResetPasswordComponent", SessionInfo.MainLocation)
             .then(function (cmpRef) {
         });
     };
