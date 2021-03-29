@@ -144,6 +144,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
         private void UpdateShipment(bool mapComposition = false)
         {
             ShipmentService iShipmentService = new ShipmentService(initializer.ShipmentContext, iHousePM, initializer.LoggedContactEmail);
+            iShipmentService.SetChangeSet(iHousePM.ShipmentPackages, iHousePM.ShipmentOrderPackages, iHousePM.ShipmentPickUps, iHousePM.ShipmentDeliveries, iHousePM.ShipmentReceivables, iHousePM.ShipmentPayables, iHousePM.FollowUps, iHousePM.ShipmentAWBPrintOnlies, iHousePM.ShipmentConsoleShipments, iHousePM.ShipmentCarrierStatuses, iHousePM.AWBOCIPMs, iHousePM.ShipmentCommodities, iHousePM.ShipmentAssemblies, iHousePM.ShipmentStoragePricings);
             iShipmentService.Update(mapComposition);
         }
         private void UpdateMasterHouses(List<string> ids)
