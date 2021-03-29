@@ -33,6 +33,8 @@ import { QuoteSelectors } from "../../../Quote/cypress/selectors/Selectors";
 import { ShipmentSelectors } from "../../../Shipment/cypress/selectors/Selectors";
 import { ReceivableDetails } from "../../../Shipment/cypress/models/ReceivableDetails";
 //#region variables
+let CityName=null;
+let StateName=null;
 let inActiveCountry=false;
 let inActiveState=false;
 let inActiveCity=false;
@@ -74,6 +76,10 @@ export function OpenTabInMaintenanceMenu(maintenanceItemNameToSearch: string, ma
 
 export function OpenNewWizard(tabName: string) {
     cy.Click(MaintenanceSelectors.NewWizardButton(tabName), null);
+}
+function GenerateRandomNumber(NumberLength:number) {
+    let NewRandomCode = gr.GenerateRandomNumberAndString(NumberLength)   
+    return NewRandomCode;
 }
 //#endregion
 
@@ -335,7 +341,6 @@ function CheckError(interception) {
         throw new Error(interception.response.body.ErrorMessage);
     }
 }
-
 function GenerateNewRandomCode() {
     FillNewRandomCode();
     UpdateVessel();
@@ -996,48 +1001,65 @@ export function ValidateErrorPopUpMessage(Message: string) {
 
 //#region State
 export function FillStateDetails(stateDetails:StateDetails){
-    cy.FillLogTextBox(MaintenanceSelectors.StateCode , stateDetails.StateCode)
-    cy.FillLogTextBox(MaintenanceSelectors.StateEnglishName , stateDetails.StateName)
-    cy.FillLogTextBox(MaintenanceSelectors.StateLocalName , stateDetails.StateLocalName)
+    var RandomStateNumber=GetRandomStateCodeNumber();
+    cy.FillLogTextBox(MaintenanceSelectors.StateCode , stateDetails.StateCode.toLowerCase() == "random"?RandomStateNumber:stateDetails.StateCode)
+    cy.FillLogTextBox(MaintenanceSelectors.StateEnglishName , stateDetails.StateName.toLowerCase() == "random"?RandomStateNumber: stateDetails.StateName)
+    cy.FillLogTextBox(MaintenanceSelectors.StateLocalName , stateDetails.StateLocalName.toLowerCase() == "random"?RandomStateNumber:stateDetails.StateLocalName)
     cy.FillLogLov(MaintenanceSelectors.StateCountry , stateDetails.Country,true)
     FillCheckBoxProcess(MaintenanceSelectors.InActiveStateCheckBox,stateDetails.InactiveState)
     cy.FillLogTextBox(MaintenanceSelectors.StateNotes , stateDetails.Notes)
 }
-
+function GetRandomStateCodeNumber(){
+    return gr.GenerateRandomNumberAndString(10);
+    }
 export function CreateState() {
-    DefinePostStateMockRequest()
-    DefineGetByFilterRequest()
+    DefinePostStateRequest()
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
 }
 
-function DefinePostStateMockRequest() {
-    cy.intercept(RestAPI.POST, Urls.States, [true])
+function DefinePostStateRequest() {
+    cy.DefineRequestWait(RestAPI.POST, Urls.States, RequestAliases.PostState)
 }
 
 export function AssertCreateState() {
-    AssertMockPostState();
-    AssertGetByFilters();
+    let intercept = cy.wait("@" + RequestAliases.PostState);
+    intercept.then((interception) => {
+        if (interception.response.statusCode === 400) {
+            ReCreateState();
+        }
+        else{
+            AssertPostState(interception.response.statusCode, 200,interception.response.body.EnglishName) 
+        }        
+    }) 
+}
+function ReCreateState(){
+    let stateCode=  GenerateRandomNumber(10);
+    cy.FillLogTextBox(MaintenanceSelectors.StateCode , stateCode)
+    cy.FillLogTextBox(MaintenanceSelectors.StateEnglishName , stateCode)
+    cy.FillLogTextBox(MaintenanceSelectors.StateLocalName , stateCode)
+    CreateState();
+    AssertCreateState();
+}
+export function AssertPostState(responseStatusCode: number, expectedStatusCode: number,stateName:string) {
+    assert.equal(responseStatusCode, expectedStatusCode)
+    StateName=stateName
 }
 
-export function AssertMockPostState() {
-    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow)
-}
-
-export function SearchState(StateName: string) {
+export function SearchState() {
     DefineStateViewsGetByFiltersRequest(StateName);
     cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, StateName);
     AssertStateViewsGetByFilters();
 }
-
-export function AssertSearchState(StateName: string) {
+export function DefineStateViewsGetByFiltersRequest(StateName: string) {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(StateName + "&GetCount=false"), RequestAliases.GetFilterSearch);
+}
+export function AssertSearchState() {
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
         expect(text).to.contain(StateName);
     });
 }
 
-export function DefineStateViewsGetByFiltersRequest(StateName: string) {
-    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(StateName + "&GetCount=false"), RequestAliases.GetFilterSearch);
-}
+
 
 export function AssertStateViewsGetByFilters() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
@@ -1088,13 +1110,6 @@ export function AssertPutState() {
         });
 }
 
-export function StateConversionEventsMapping(eventDetailsList: EventTypeDetails[]): EventTypeDetails[] {
-    for (let i = 0; i < eventDetailsList.length; i++) {
-        ConversionEventsMapping(eventDetailsList,inActiveState)
-    return eventDetailsList;
-    }
-    return eventDetailsList;
-}
 //#endregion
 
 //#region Common 
@@ -1113,7 +1128,7 @@ export function ChangeInactiveCheckBoxValue(InActivateSelector:string) {
     })
 }
 
-function FillCheckBoxProcess(CheckBoxSelector: string, IsCheck: string) {
+export function FillCheckBoxProcess(CheckBoxSelector: string, IsCheck: string) {
     if (IsCheck) {
         if (IsCheck.toUpperCase() == constants.YES) {
             cy.get(CheckBoxSelector).check({ force: true })
@@ -1134,38 +1149,58 @@ function AssertGetByFilters() {
 //#endregion
 //#region city
 export function FillCityDetails(cityDetails:CityDetails){
-    cy.FillLogTextBox(MaintenanceSelectors.CityCode , cityDetails.CityCode)
-    cy.FillLogTextBox(MaintenanceSelectors.CityEnglishName , cityDetails.CityName)
-    cy.FillLogTextBox(MaintenanceSelectors.CityLocalName , cityDetails.CityLocalName)
+    var RandomCityNumber=GetRandomCityCodeNumber();
+    cy.FillLogTextBox(MaintenanceSelectors.CityCode , cityDetails.CityCode.toLowerCase() == "random"?RandomCityNumber:cityDetails.CityCode)
+    cy.FillLogTextBox(MaintenanceSelectors.CityEnglishName , cityDetails.CityName.toLowerCase() == "random"?RandomCityNumber:cityDetails.CityName)
+    cy.FillLogTextBox(MaintenanceSelectors.CityLocalName , cityDetails.CityLocalName.toLowerCase() == "random"?RandomCityNumber:cityDetails.CityLocalName)
     cy.FillLogLov(MaintenanceSelectors.CityCountry , cityDetails.Country,true)
     cy.FillLogLov(MaintenanceSelectors.CityState , cityDetails.Country,true)
     FillCheckBoxProcess(MaintenanceSelectors.InActiveCityCheckBox,cityDetails.InactiveCity)
     cy.FillLogTextBox(MaintenanceSelectors.CityNotes , cityDetails.Notes)
 }
+function GetRandomCityCodeNumber(){
+return gr.GenerateRandomNumberAndString(15);
+}
 export function CreateCity() {
-    DefinePostCityMockRequest()
-    DefineGetByFilterRequest()
+    DefinePostCityRequest()
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
 }
 
-function DefinePostCityMockRequest() {
-    cy.intercept(RestAPI.POST, Urls.CountryCities, [true])
+function DefinePostCityRequest() {
+    cy.DefineRequestWait(RestAPI.POST, Urls.CountryCities, RequestAliases.PostCity);
 }
-export function AssertCreateCity() {
-    AssertMockPostCity();
-    AssertGetByFilters();
+export function AssertCreateCity(){
+    let intercept = cy.wait("@" + RequestAliases.PostCity);
+    intercept.then((interception) => {
+        if (interception.response.statusCode === 400) {
+            ReCreateCity();
+        }
+        else{
+            AssertPostCity(interception.response.statusCode, 200,interception.response.body.EnglishName) 
+        }        
+    }) 
 }
-
-export function AssertMockPostCity() {
-    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow)
+function ReCreateCity(){
+    let cityCode=  GenerateRandomNumber(15);
+    cy.FillLogTextBox(MaintenanceSelectors.CityCode , cityCode)
+    cy.FillLogTextBox(MaintenanceSelectors.CityEnglishName , cityCode)
+    cy.FillLogTextBox(MaintenanceSelectors.CityLocalName , cityCode)
+    CreateCity();
+    AssertCreateCity();
 }
-export function SearchCity(CityName: string) {
+export function AssertPostCity(responseStatusCode: number, expectedStatusCode: number,cityName:string) {
+    assert.equal(responseStatusCode, expectedStatusCode)
+    CityName=cityName
+}
+export function SearchCity() {
     DefineCityViewsGetByFiltersRequest(CityName);
     cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, CityName);
-    AssertStateViewsGetByFilters();
+    AssertCitiesViewsGetByFilters();
 }
-
-export function AssertSearchCity(CityName: string) {
+export function AssertCitiesViewsGetByFilters() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
+}
+export function AssertSearchCity() {
     cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
         expect(text).to.contain(CityName);
     });
@@ -1208,10 +1243,6 @@ export function AssertPutCity() {
         then((interception) => {
            inActiveCity = interception.response.body.InActive;
         });
-}
-export function CityConversionEventsMapping(eventDetailsList: EventTypeDetails[]): EventTypeDetails[] {
-    ConversionEventsMapping(eventDetailsList,inActiveCity)
-    return eventDetailsList;
 }
 export function ConversionEventsMapping(eventDetailsList: EventTypeDetails[],inActiveField:boolean){
     for (let i = 0; i < eventDetailsList.length; i++) {

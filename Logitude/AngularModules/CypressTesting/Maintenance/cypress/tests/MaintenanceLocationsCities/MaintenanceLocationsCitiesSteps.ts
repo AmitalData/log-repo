@@ -43,12 +43,12 @@ Then("the city should add successfully", () => {
 //#endregion
 
 //#region Search for the City by name
-When("search for {string} city", (State) => {
-    MaintenanceActions.SearchCity(State)
+When("search for city", () => {
+    MaintenanceActions.SearchCity()
 });
 
-Then("the {string} city should appear successfully", (State) => {
-    MaintenanceActions.AssertSearchCity(State);
+Then("the city should appear successfully", () => {
+    MaintenanceActions.AssertSearchCity();
 });
 //#endregion
 
@@ -67,7 +67,7 @@ Given("a {string} as cityLocalName", (NewStateLocalName) => {
     MaintenanceActions.FillCityLocalName(NewStateLocalName)
 });
 
-Given("the user change InactiveCity check box", () => {
+Given("the user inactivate the city", () => {
     MaintenanceActions.ChangeInactiveCheckBoxValue(MaintenanceSelectors.InActiveCityCheckBox)
 });
 
@@ -81,7 +81,6 @@ Then("the city should update successfully", () => {
 
 Then("following event should appear in events tab", (dataTable) => {
     let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
-    eventDetailsList = MaintenanceActions.CityConversionEventsMapping(eventDetailsList)
     BaseActions.ValidateEventsTab(eventDetailsList, MaintenanceSelectors.CityEventTab);
 });
 //#endregion

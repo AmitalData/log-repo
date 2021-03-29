@@ -95,7 +95,9 @@ export class RequestAliases {
 
     public static readonly PostCountry="PostCountry"
     public static readonly PutCountry="PutCountry"
+    public static readonly PostState="PostState"
     public static readonly PutState="PutState"
+    public static readonly PostCity="PostCity"
     public static readonly PutCity="PutCity"
 
     public static readonly PostQuoteTemplate = "PostQuoteTemplate";
