@@ -29,6 +29,7 @@ import { EventTypeDetails } from "../../../Base/cypress/models/EventTypeDetails"
 import { StateDetails } from "../models/StateDetails";
 import { CityDetails } from "../models/CityDetails";
 import { CurrencyDetails } from "../models/CurrencyDetails";
+import { GlobalZoneDetails } from "../models/GlobalZoneDetails"
 import { QuoteSelectors } from "../../../Quote/cypress/selectors/Selectors";
 import { ShipmentSelectors } from "../../../Shipment/cypress/selectors/Selectors";
 import { ReceivableDetails } from "../../../Shipment/cypress/models/ReceivableDetails";
