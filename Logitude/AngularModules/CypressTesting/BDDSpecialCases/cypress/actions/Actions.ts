@@ -9,14 +9,14 @@ import { BDDSpecialCasesSelectors } from "../selectors/Selectors";
 import { Urls } from "../constants/URLs";
 
 
-export function FillLocalSettingsDetails(localSettingsDetails:LocalSettingsDetails){
+export function FillLocalSettingsDetails(localSettingsDetails: LocalSettingsDetails) {
   cy.get(BDDSpecialCasesSelectors.TimeZoneComboBox).find("img").click()
-  cy.get(BDDSpecialCasesSelectors.ComboBoxItem).find("span").contains(localSettingsDetails.TimeZone).click({force:true});
+  cy.get(BDDSpecialCasesSelectors.ComboBoxItem).find("span").contains(localSettingsDetails.TimeZone).click({ force: true });
   cy.get(BDDSpecialCasesSelectors.DateTimeFormatComboBox).find("img").click()
-  cy.get(BDDSpecialCasesSelectors.ComboBoxItem).find("span").contains(localSettingsDetails.DateTimeFormat).click({force:true});
+  cy.get(BDDSpecialCasesSelectors.ComboBoxItem).find("span").contains(localSettingsDetails.DateTimeFormat).click({ force: true });
 }
 
-export function UpdateLocalSettings(){
+export function UpdateLocalSettings() {
   DefinePutTenant()
   cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
 }
@@ -33,55 +33,58 @@ function AssertPutTenant() {
   BaseAssertion.AssertStatusCode(RequestAliases.PutTenant, 200);
 }
 
-export function ValidateDateFormat(dateFormat:string){
+export function ValidateDateFormat(dateFormat: string) {
   var todayDate = new Date
-  cy.get(BDDSpecialCasesSelectors.HAWBDate).should(BaseSelectors.HaveValue, FormateTheDate(todayDate ,dateFormat))
-
-  // cy.get(BDDSpecialCasesSelectors.HAWBDate).invoke('text').then((text) => {
-  //   assert.equal(text, FormateTheDate(todayDate ,dateFormat ));
-  // })
+  cy.get(BDDSpecialCasesSelectors.HAWBDate).should(BaseSelectors.HaveValue, FormateTheDate(todayDate, dateFormat))
 }
 
-function FormateTheDate(date: Date , format:string) {
+function FormateTheDate(date: Date, format: string) {
   var DateFormat
   var dd = date.getUTCDate().toString();
   var mm = (date.getUTCMonth() + 1).toString();
   var yyyy = date.getFullYear().toString();
 
-  if(Number(dd)<10){
+  if (Number(dd) < 10) {
     dd = "0" + dd;
   }
-  if(Number(mm)<10){
-    mm = "0" + mm ;
+  if (Number(mm) < 10) {
+    mm = "0" + mm;
   }
 
-  if(format == "MM/dd/yyyy"){
-    DateFormat = mm+'/'+dd+'/'+yyyy;
-  }else if(format == "dd/MM/yyyy"){
-    DateFormat = dd+'/'+mm+'/'+yyyy;
+  if (format == "MM/dd/yyyy") {
+    DateFormat = mm + '/' + dd + '/' + yyyy;
+  } else if (format == "dd/MM/yyyy") {
+    DateFormat = dd + '/' + mm + '/' + yyyy;
   }
-  
+
   return DateFormat;
 }
 
 export function ValidateTimeInEventsTab(expectedEvent: string, eventTabSelector: string) {
   cy.get(eventTabSelector).then(($eventTab) => {
-    cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetTraceEventsForEntity, RequestAliases.GetTraceEventsForEntity);
-    if ($eventTab.hasClass("SelectedMenuItem")) {
-      cy.Click(BaseSelectors.RefreshImg + BaseSelectors.LastElement, null, true);
-    } else {
-      cy.Click(eventTabSelector, null, true);
-    }
-    BaseAssertion.AssertStatusCode(RequestAliases.GetTraceEventsForEntity, 200);
-
+    OpenEventTab($eventTab,eventTabSelector)
     if (expectedEvent) {
-      cy.get(BaseSelectors.EventItemBox).contains(expectedEvent).eq(0).parents(BaseSelectors.EventItemBox).within(() => {
-        cy.get(BDDSpecialCasesSelectors.EventDateTime(expectedEvent)).invoke('text').then((text) => {
-          assert.equal(text, GetTimeZoneDateTime());
-        })
-      });
+      AssertEventTime(expectedEvent)
     }
 
+  });
+}
+
+function OpenEventTab($eventTab , eventTabSelector) {
+  cy.DefineRequestWait(RestAPI.GET, BaseURLs.GetTraceEventsForEntity, RequestAliases.GetTraceEventsForEntity);
+  if ($eventTab.hasClass("SelectedMenuItem")) {
+    cy.Click(BaseSelectors.RefreshImg + BaseSelectors.LastElement, null, true);
+  } else {
+    cy.Click(eventTabSelector, null, true);
+  }
+  BaseAssertion.AssertStatusCode(RequestAliases.GetTraceEventsForEntity, 200);
+}
+
+function AssertEventTime(expectedEvent: string) {
+  cy.get(BaseSelectors.EventItemBox).contains(expectedEvent).eq(0).parents(BaseSelectors.EventItemBox).within(() => {
+    cy.get(BDDSpecialCasesSelectors.EventDateTime(expectedEvent)).invoke('text').then((text) => {
+      assert.equal(text, GetTimeZoneDateTime());
+    })
   });
 }
 
@@ -96,20 +99,28 @@ function GetTimeZoneDateTime() {
   return TimeZone;
 }
 
-function HourFormat(x: string, AMPM: string) {
+function HourFormat(hour: string, AMPM: string) {
   if (AMPM.includes("AM")) {
-    if (Number(x) > 0 && Number(x) < 10) {
-      return "0" + x
-    }
-    if (Number(x) == 12) {
-      return "00"
-    }
-  } else if (AMPM.includes("PM")) {
-    if (Number(x) > 0 && Number(x) < 10) {
-      return (Number(x) + 12).toString();
-    }
-    if (Number(x) == 12) {
-      return "12"
-    }
+    return FormatAMTimes(hour)
+  } else {
+    return FormatPMTimes(hour)
+  }
+}
+
+function FormatPMTimes(hour: string) {
+  if (Number(hour) > 0 && Number(hour) < 10) {
+    return (Number(hour) + 12).toString();
+  }
+  if (Number(hour) == 12) {
+    return "12"
+  }
+}
+
+function FormatAMTimes(hour: string) {
+  if (Number(hour) > 0 && Number(hour) < 10) {
+    return "0" + hour
+  }
+  if (Number(hour) == 12) {
+    return "00"
   }
 }

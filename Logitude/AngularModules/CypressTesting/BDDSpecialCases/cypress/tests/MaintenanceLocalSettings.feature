@@ -22,12 +22,12 @@ Feature: Change Time Zone and Date Time Format from Maintenance
         When create shipment
         Then the direct should create successfully
 
-    Scenario: Date format
+    Scenario: Validate HAWB Date in "MM/dd/yyyy"
         Given open the direct shipment and navigate to General tab
         When fill "Today" as HAWB Date
         Then the date format should be "MM/dd/yyyy"
 
-    Scenario: Event time zone
+    Scenario: Validate Shipment Updated with time in "UTC-06:00" timezone
         Given the user update the shipment
         When navigate to event tab
         Then the "Shipment Updated" event should include the time of "UTC-06:00" timezone
@@ -40,13 +40,13 @@ Feature: Change Time Zone and Date Time Format from Maintenance
         When save local settings
         Then the local settings should update successfully
 
-    Scenario: Date format
+    Scenario: Validate HAWB Date in "dd/MM/yyyy"
         Given the user navigates to shipments workspace
         And open the direct shipment and navigate to General tab
         When fill "Today" as HAWB Date
         Then the date format should be "dd/MM/yyyy"
 
-    Scenario: Event time zone
+    Scenario: Validate Shipment Updated with time in "UTC+03:00" timezone
         Given the user update the shipment
         When navigate to event tab
         Then the "Shipment Updated" event should include the time of "UTC+03:00" timezone
