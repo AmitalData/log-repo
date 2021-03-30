@@ -39,10 +39,11 @@ export function AddEvent(){
     cy.DefineRequestWait(RestAPI.GET, URLs.ShipmentGetSingle, RequestAliases.ShipmentGetSingle);
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK)
 }
-export function AssertAddEvent(EventNote:string) {
+export function AssertAddEvent() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetTraceEvent, 200).then((interception) => {
         expect(interception.response.body.Notes,)
     })
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentGetSingle,200)
 }
 export function AssertExceptionResolved (EventNote:string){
     BaseAssertion.AssertStatusCode( RequestAliases.ShipmentRequest,200).then((interception) => {
