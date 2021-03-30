@@ -1,4 +1,4 @@
-@smoke @release @dev
+@smoke @release @stable 
 #cancel it's smoke and relese
 #reactivate is release
 Feature: Cancel and Reactivate Shipment

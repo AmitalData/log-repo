@@ -1,4 +1,4 @@
-@release @dev @all
+@release @stable @all
 Feature: Edit Currency Rate Vale in Settings
     The user edits the currency exchange rate and validates it in quote, receivable and invoice.
 
