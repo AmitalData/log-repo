@@ -1659,8 +1659,9 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
 
             else {
                 title = "New " + this.ComputeAddCustomerTitle();
+                var isAgentPartner: boolean = this.IsAgentPartner();
 
-                if (this.ShipmentCustomerTypeCode == "AGT") {
+                if (isAgentPartner) {
                     myComponentPath = "./CommonModules/CommonAgent/Components/NewEntity/NewAgentComponent";
                 }
 
@@ -1734,6 +1735,19 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                 }
             });
         });
+    }
+    IsAgentPartner(): boolean {
+        if (this.ShipmentCustomerTypeCode == "AGT") {
+            return true;
+        }
+
+        else if (this.ShipmentCustomerTypeCode == "FOR") {
+            return true;
+        }
+
+        else if (this.ShipmentCustomerTypeCode == "COL") {
+            return true;
+        }
     }
 
     private ComputeAddCustomerTitle(): string {
