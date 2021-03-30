@@ -107,10 +107,12 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.MainColor = SessionLocator.PrivateLableSettings.MainColor;
             this.SecondaryColor = SessionLocator.PrivateLableSettings.SecondaryColor;
             this.SelectedFilter = this.AgentShipmentsLabel;
+            this.setAgentLabelClass(AgentName);
+            this.AgentShipmentsLabel = this.getAgentShipmentsLabel(AgentName);
+            this.SelectedFilter = this.AgentShipmentsLabel;
             this.RequestedDocsLable = "Action Required";
             this.RefTemplateWidth = this.ToggleIsExportShipments ? '150px' : '120px'; 
-            this.setAgentLabelClass(AgentName);
-            this.AgentShipmentsLabel = this.getAgentShipmentsLabel(AgentName);  
+             
         }
         else {
             this.RefTemplateWidth = this.ToggleIsExportShipments ? '250px' : '220px';
@@ -119,7 +121,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     private getAgentShipmentsLabel(agentName: string) { 
         let agentShipmentsLabel = "";  
-        if (agentName.length < 10) {
+        if (agentName.length < 10 && this.AgentLabelClass.LongName) {
             agentShipmentsLabel = agentName + '\n' + " Shipments"; 
         } else {
            

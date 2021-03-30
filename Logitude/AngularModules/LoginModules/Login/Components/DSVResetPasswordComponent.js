@@ -17,7 +17,7 @@ export var DSVResetPasswordComponent = (function (_super) {
         this.BackgroundImage = "";
         this.ForgetPasswordImage = "";
         this.MainLogo = "";
-        this.ContactUsEmail = sessionStorage.getItem('ContactEmail');
+        this.ContactUsEmail = "mailto:" + sessionStorage.getItem('ContactEmail');
     }
     DSVResetPasswordComponent.prototype.ngOnInit = function () {
         this.privateUrl = SessionInfo.GetLogitudeURL();
