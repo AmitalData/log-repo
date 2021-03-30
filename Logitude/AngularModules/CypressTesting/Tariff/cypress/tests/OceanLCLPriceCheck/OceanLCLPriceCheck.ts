@@ -55,13 +55,16 @@ Given("the user in {string} surchage workspace", (SurchargeType) => {
 });
 
 Given("open surchage with {string} as seller", (SellerName) => {
+    var FiltetSellerName = Actions.FilterName(SellerName)
+    Actions.DefineViewsGetByFiltersRequest(FiltetSellerName);
     Actions.SearchASurcharge(SellerName);
-    cy.wait(3000)
+    Actions.AssertViewsGetByFilters();
     Actions.OpenTheFirstResult();
 });
 
 When("copy into new version if start date is not {string}", (startdate) => {
     let NowDate = BaseActions.GetTodayDate()
+    Actions.CheckIfVersionApproved();
     cy.get(BaseSelectors.PackageGrid("4")).find(BaseSelectors.SpanElement).invoke(BaseSelectors.TextElement).then((text) => {
         if(text.trim()==NowDate){
             cy.log("Use Same Tariff Line")

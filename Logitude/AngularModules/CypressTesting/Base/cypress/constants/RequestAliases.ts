@@ -44,6 +44,7 @@ export class RequestAliases {
     public static readonly GetRecentTariffs = 'GetRecentTariffs';
     public static readonly GetAllTariffVersionsForTariff = 'GetAllTariffVersionsForTariff';
     public static readonly GetTariffVersionLines = "GetTariffVersionLines";
+    public static readonly GetPrevTariffVersionLines = "GetPrevTariffVersionLines";
     public static readonly GetSingleTariff = "GetSingleTariff";
     public static readonly GetVatTypePercentage = 'GetVatTypePercentage';
     public static readonly PostAvailableTariffs = 'PostAvailableTariffs';
