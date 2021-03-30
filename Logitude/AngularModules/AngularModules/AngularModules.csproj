@@ -1296,6 +1296,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\ClaimReasonTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ClassificationTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ContinuousRequestTypeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\CoolingReportingMethodList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CourierCustomStatusList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CourierPendingReasonList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CustomerIdentificationTypeList.ts" />
@@ -1359,6 +1360,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\ClassificationTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ConsignmentPackDangerPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ContinuousRequestTypePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\CoolingReportingMethodPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CourierCustomStatusPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CourierPendingReasonPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CustomerIdentificationTypePM.ts" />
@@ -1446,6 +1448,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\ClaimReasonTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ClassificationTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ContinuousRequestTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\CoolingReportingMethodListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CourierCustomStatusListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CourierDeclarationListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CourierManifestStatusListService.ts" />

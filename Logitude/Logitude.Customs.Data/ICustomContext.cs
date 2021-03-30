@@ -96,6 +96,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ContinuousMessagesTypeCode> ContinuousMessagesTypeCodes { get; }
 		 IDbSet<ContinuousRequestType> ContinuousRequestTypes { get; }
 		 IDbSet<ConverterType> ConverterTypes { get; }
+		 IDbSet<CoolingReportingMethod> CoolingReportingMethods { get; }
 		 IDbSet<CountryGroup> CountryGroups { get; }
 		 IDbSet<CourierCustomStatus> CourierCustomStatuses { get; }
 		 IDbSet<CourierDeclaration> CourierDeclarations { get; }

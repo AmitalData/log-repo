@@ -224,6 +224,7 @@
     <None Include="DBTables\ContinuousMessagesTypeCode.dxml" />
     <None Include="DBTables\ContinuousRequestType.dxml" />
     <None Include="DBTables\ConverterType.dxml" />
+    <None Include="DBTables\CoolingReportingMethod.dxml" />
     <None Include="DBTables\CountryGroup.dxml" />
     <None Include="DBTables\CourierCustomStatus.dxml" />
     <None Include="DBTables\CourierDeclaration.dxml" />
@@ -494,6 +495,7 @@
     <None Include="EntityFiles\SupplierPartyType.lxml" />
     <None Include="EntityFiles\ExportDeliveryDocumentMessage.lxml" />
     <None Include="EntityFiles\SecurityClearenceTypeCode.lxml" />
+    <None Include="EntityFiles\CoolingReportingMethod.lxml" />
     <None Include="EntityFiles\TransportMeansType.lxml" />
     <None Include="EntityFiles\FullnessCode.lxml" />
     <None Include="EntityFiles\CancellationReasonRequestType.lxml" />

@@ -226,6 +226,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ConverterTypeMap());
 	
+            modelBuilder.Configurations.Add(new CoolingReportingMethodMap());
+	
             modelBuilder.Configurations.Add(new CountryGroupMap());
 	
             modelBuilder.Configurations.Add(new CourierCustomStatusMap());
@@ -1730,6 +1732,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ConverterType> ConverterTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CoolingReportingMethod> CoolingReportingMethods 
 	 {
 	      get; set;
 	 

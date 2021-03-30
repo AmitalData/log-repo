@@ -654,6 +654,7 @@ export class ModuleProviders {
             case "DeliveryTypeListService": { myResult = new DeliveryTypeListService(); break; }
             case "CargoTypeListService": { myResult = new CargoTypeListService(); break; }
             case "CustomerIdentificationTypeListService": { myResult = new CustomerIdentificationTypeListService(); break; } 
+            case "CoolingReportingMethodListService": { myResult = new CoolingReportingMethodListService(); break; } 
 
 
              //#endregion                
