@@ -46,7 +46,11 @@ namespace WebFreight.Web.AccountingModel
             ContainerAccessor.Container.RegisterType<IGLAccountWithholdingTaxQueryServiceExt, GLAccountWithholdingTaxQueryServiceExt>("GLAccountWithholdingTaxQueryServiceExt", new InjectionFactory(c => new GLAccountWithholdingTaxQueryServiceExt()));
             ContainerAccessor.Container.RegisterType<IPaymentChequeQueryServiceExt, PaymentChequeQueryServiceExt>("PaymentChequeQueryServiceExt", new InjectionFactory(c => new PaymentChequeQueryServiceExt()));
             ContainerAccessor.Container.RegisterType<IInterestTransactionQueryServiceExt, InterestTransactionQueryServiceExt>("InterestTransactionQueryServiceExt", new InjectionFactory(c => new InterestTransactionQueryServiceExt()));
+            ContainerAccessor.Container.RegisterType<IGLAccountCardsDataQueryServiceExt, GLAccountCardsDataQueryServiceExt>("GLAccountCardsDataQueryServiceExt", new InjectionFactory(c => new GLAccountCardsDataQueryServiceExt()));
+            ContainerAccessor.Container.RegisterType<IGLAccountCardsDataUpdateServiceExt, GLAccountCardsDataUpdateServiceExt>("GLAccountCardsDataUpdateServiceExt", new InjectionFactory(c => new GLAccountCardsDataUpdateServiceExt()));
+            ContainerAccessor.Container.RegisterType<IGLAccountCurrencyQueryServiceExt, GLAccountCurrencyQueryServiceExt>("GLAccountCurrencyQueryServiceExt", new InjectionFactory(c => new GLAccountCurrencyQueryServiceExt()));
 
+            
         }
     }
 }

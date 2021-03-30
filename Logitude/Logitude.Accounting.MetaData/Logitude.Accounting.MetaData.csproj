@@ -71,6 +71,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="DBOthers\Views\CardGLAccountDataView.dxml" />
+    <None Include="DBScripts\202103301145_UpdateGLAccountCardsData.sxml" />
     <None Include="DBScripts\202008241136_EventTypesConverteLocalNameToEnglishName.sxml" />
     <None Include="DBScripts\202009231117_UpdateActiveForInterestFieldOnGLAccount.sxml" />
     <None Include="DBScripts\202012251232_UpdateUserDefinedReportLocalName.sxml" />
@@ -174,6 +175,7 @@
     <None Include="EntityFiles\CalculatedChartsOfAccount.lxml" />
     <None Include="EntityFiles\CalculatedChartsOfAccountsLine.lxml" />
     <None Include="EntityFiles\CalculatedChartsLineType.lxml" />
+    <None Include="EntityFiles\GLAccountCardsData.lxml" />
     <None Include="EntityFiles\GLAccountCounter.lxml" />
     <None Include="EntityFiles\GLAccountInterestPeriod.lxml" />
     <None Include="EntityFiles\IntegrityCheckStatus.lxml">

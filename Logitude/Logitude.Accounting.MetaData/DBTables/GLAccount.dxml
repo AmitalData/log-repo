@@ -389,6 +389,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CardsDataId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="AccountTypeCode"
     ReferencedTable="GLAccountTypes"

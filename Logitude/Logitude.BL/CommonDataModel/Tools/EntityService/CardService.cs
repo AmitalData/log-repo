@@ -12,6 +12,13 @@ using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Helpers;
 using Logitude.BL.DataContracts;
+using Logitude.Accounting.Def.EntityUpdateServicesExt;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -140,7 +147,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
-
+            //UpdateGLaccountCardsDara();
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
 
             if (entityPM.DisconectFromContact)
@@ -152,8 +159,140 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
+        private GLAccountPM GetGLaccount(string accountId)
+        {
+            IGLAccountQueryServiceExt gLAccountQueryServiceExt = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            return gLAccountQueryServiceExt.GetSingleGLAccountPM(accountId, tenant);
+        }
+        GLAccountPM cardGLaccount;
+        public void UpdateGLaccountCardsDara(Card card)
+        {
+            this.Poco = card;
+            cardGLaccount = GetGLaccount(Poco.GLAccountId);
+            if (cardGLaccount != null)
+            {
+                if (CheckIfCardGLAccountHasDataRecord())
+                {
+                    UpdategLAccountCardsDataPM();
+                }
+                else
+                {
+                    CreateGLAccountCardsData();
+                }
+            }
+        }
+        private void UpdategLAccountCardsDataPM()
+        {
+            MapGLAccountCardsDataFields(gLAccountCardsDataPM);
+            gLAccountCardsDataPM.ChangeSetOp = ChangeSetOperation.Update;
+            IGLAccountCardsDataUpdateServiceExt IGLAccountCardsDataUpdateServiceExt = ContainerAccessor.Container.Resolve(typeof(IGLAccountCardsDataUpdateServiceExt), "GLAccountCardsDataUpdateServiceExt", new ParameterOverride("", 1)) as IGLAccountCardsDataUpdateServiceExt;
+            IGLAccountCardsDataUpdateServiceExt.Update(gLAccountCardsDataPM);
+
+        }
+        private void CreateGLAccountCardsData( )
+        {
+            GLAccountCardsDataPM gLAccountCardsDataPM = new GLAccountCardsDataPM();
+
+            MapGLAccountCardsDataFields(gLAccountCardsDataPM);
+            gLAccountCardsDataPM.ChangeSetOp = ChangeSetOperation.Insert;
+            IGLAccountCardsDataUpdateServiceExt IGLAccountCardsDataUpdateServiceExt = ContainerAccessor.Container.Resolve(typeof(IGLAccountCardsDataUpdateServiceExt), "GLAccountCardsDataUpdateServiceExt", new ParameterOverride("", 1)) as IGLAccountCardsDataUpdateServiceExt;
+            IGLAccountCardsDataUpdateServiceExt.Update(gLAccountCardsDataPM);
+            UpdateGLAccount(gLAccountCardsDataPM);
+        }
+        private GLAccountCardsDataPM MapGLAccountCardsDataFields(GLAccountCardsDataPM gLAccountCardsDataPM)
+        {
+            gLAccountCardsDataPM.CollectorUserId = Poco.CollectorId;
+            gLAccountCardsDataPM.CreditLimit = GetCustomerCreditLimitAmount();
+            gLAccountCardsDataPM.PaymentTermId = Poco.PaymentTermId;
+            gLAccountCardsDataPM.Tenant = Poco.Tenant;
+            gLAccountCardsDataPM.SalesmanUserId = Poco.SalesmanUserId;
+            gLAccountCardsDataPM.Phone = Poco.Phone;
+            gLAccountCardsDataPM.VatNumber = Poco.VatNumber;
+            gLAccountCardsDataPM.TotalOpenShipments = GetCustomerOpenFilesAmount();
+            return gLAccountCardsDataPM;
+        }
+
+        private double? GetCustomerCreditLimitAmount()
+        {
+            CustomerQuery customerQuery = new CustomerQuery(tenant);
+            CustomerPM customer = customerQuery.GetSinglePM(Poco.Id, tenant);
+            if (customer != null)
+            {
+                return customer.CreditLimitAmount;
+            }
+            else return null;
+        }
 
 
+        private void UpdateGLAccount(GLAccountCardsDataPM gLAccountCardsDataPM)
+        {
+            if (cardGLaccount.IsMultiCurrency == false)
+            {
+                IGLAccountCurrencyQueryServiceExt gLAccountCurrencyQueryServiceExt = ContainerAccessor.Container.Resolve(typeof(IGLAccountCurrencyQueryServiceExt), "GLAccountCurrencyQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountCurrencyQueryServiceExt;
+                GLAccountCurrencyPM gLAccountCurrencyPM = gLAccountCurrencyQueryServiceExt.GetEntityByGLAccountId(cardGLaccount.Id, cardGLaccount.Tenant);
+                if (gLAccountCurrencyPM != null)
+                {
+                    GLAccountPM mainAccount = GetGLaccount(gLAccountCurrencyPM.MainGLAccountId);
+                    SetGLAccountCardsData(mainAccount, gLAccountCardsDataPM);                   
+                }
+                else
+                {
+                    SetGLAccountCardsData(cardGLaccount, gLAccountCardsDataPM);                 
+                }
+            }
+           
+
+        }
+
+        private void SetGLAccountCardsData(GLAccountPM accountPM, GLAccountCardsDataPM gLAccountCardsDataPM)
+        {
+            IGLAccountUpdateServiceExt glaccountUpdate = ContainerAccessor.Container.Resolve(typeof(IGLAccountUpdateServiceExt), "GLAccountUpdateServiceExt", new ParameterOverride("", 1)) as IGLAccountUpdateServiceExt;
+            accountPM.CardsDataId = gLAccountCardsDataPM.Id;
+            accountPM.ChangeSetOp = ChangeSetOperation.Update;
+            glaccountUpdate.Update(accountPM);
+        }
+        private decimal? GetCustomerOpenFilesAmount()
+        {
+            CustomerOpenFilesAmountQuery customerOpenFilesAmount = new CustomerOpenFilesAmountQuery(tenant);
+            CustomerOpenFilesAmountPM customerOpenFilesAmountPM = customerOpenFilesAmount.GetSinglePMByCustomerId(Poco.Id, Poco.Tenant);
+            return customerOpenFilesAmountPM != null ? customerOpenFilesAmountPM.TotalOpenFilesAmount : (decimal)0.0;
+        }
+       
+        GLAccountCardsDataPM gLAccountCardsDataPM;
+        private bool CheckIfCardGLAccountHasDataRecord()
+        {
+           
+          
+            IGLAccountCardsDataQueryServiceExt GLAccountCardsDataQueryService = ContainerAccessor.Container.Resolve(typeof(IGLAccountCardsDataQueryServiceExt), "GLAccountCardsDataQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountCardsDataQueryServiceExt;
+            if (cardGLaccount != null)
+            {
+                if (cardGLaccount.IsMultiCurrency == false)
+                {
+                    IGLAccountCurrencyQueryServiceExt gLAccountCurrencyQueryServiceExt = ContainerAccessor.Container.Resolve(typeof(IGLAccountCurrencyQueryServiceExt), "GLAccountCurrencyQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountCurrencyQueryServiceExt;
+                    GLAccountCurrencyPM gLAccountCurrencyPM = gLAccountCurrencyQueryServiceExt.GetEntityByGLAccountId(cardGLaccount.Id, cardGLaccount.Tenant);
+                    if (gLAccountCurrencyPM != null)
+                    {
+                        GLAccountPM mainAccount = GetGLaccount(gLAccountCurrencyPM.MainGLAccountId);
+                        gLAccountCardsDataPM = GLAccountCardsDataQueryService.GetSingleGLAccountCardsData(mainAccount.CardsDataId, mainAccount.Tenant);
+                        if (gLAccountCardsDataPM != null) return true;
+                        else return false;
+                    }
+                    else
+                    {
+                        gLAccountCardsDataPM = GLAccountCardsDataQueryService.GetSingleGLAccountCardsData(cardGLaccount.CardsDataId, cardGLaccount.Tenant);
+                        if (gLAccountCardsDataPM != null) return true;
+                        else return false;
+                    }
+                }
+                else
+                {
+                    gLAccountCardsDataPM = GLAccountCardsDataQueryService.GetSingleGLAccountCardsData(cardGLaccount.CardsDataId, cardGLaccount.Tenant);
+                    if (gLAccountCardsDataPM != null) return true;
+                    else return false;
+                }
+            }
+            else return false;
+        }
         private void RunStoredProcedures()
         {
 

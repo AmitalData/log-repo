@@ -23,6 +23,8 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Logitude.Accounting.Def.EntityUpdateServicesExt;
+
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -32,6 +34,8 @@ using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Microsoft.Practices.Unity;
 using Logitude.BL.DataContracts;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -63,6 +67,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private CustomerForwarderByProductRepository customerForwarderByProductRepository;
         private CustomerMediatorByProductRepository customerMediatorByProductRepository;
         private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
+        private CardService cardService;
         ContactService contactService;
         HybridPartnerPM CurrentHybridPartner;
 
@@ -101,7 +106,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.customerMediatorByProductRepository = new CustomerMediatorByProductRepository(objectContext);
             this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
             this.contactService = new ContactService(objectContext, tenant);
-
+            cardService = new CardService(objectContext, tenant);
         }
         private void GetLoggedContact()
         {
@@ -371,6 +376,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.UpdateCardExternalCodeByCurrencyCollection();
 
             this.UpdateGLAccount(entityPM, entityPOCO);
+           
             //var tenantQuery = new TenantQuery(entityPM.Tenant);
             //var tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
             if (!entityPM.IsHybrid && !entityPM.IsLogBox)
@@ -456,7 +462,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
             cardRepository.SubmitChanges();
-
+            cardService.UpdateGLaccountCardsDara(entityCard);
             if (!entityPM.IsHybrid)
             {
                 ObjectTableRepository objecttableRepository = new ObjectTableRepository(entityPOCO.Tenant);
@@ -477,7 +483,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
             }
         }
-
+       
         private void UpdateGLAccount(CustomerPM entityPM, Customer entityPOCO)
         {
             if ((entityPOCO.Card != null && entityPOCO.Card.EnglishName != entityPM.EnglishName) || (entityPOCO.Card != null && entityPOCO.Card.LocalName != entityPM.LocalName))

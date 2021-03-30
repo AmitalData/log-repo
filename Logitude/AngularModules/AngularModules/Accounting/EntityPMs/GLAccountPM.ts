@@ -714,6 +714,11 @@ export class GLAccountPM {
     public set RelatedGLAccount(newValue: string) { if (this.relatedGLAccount != newValue) { this.relatedGLAccount = newValue; this.MarkAsDirty("RelatedGLAccount"); } }
        
 	 
+    private cardsDataId: string;
+    public get CardsDataId() { return this.cardsDataId; }
+    public set CardsDataId(newValue: string) { if (this.cardsDataId != newValue) { this.cardsDataId = newValue; this.MarkAsDirty("CardsDataId"); } }
+       
+	 
 
     public OldEntityPM: GLAccountPM;
 		

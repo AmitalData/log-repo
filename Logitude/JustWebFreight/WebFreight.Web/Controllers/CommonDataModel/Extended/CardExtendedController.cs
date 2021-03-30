@@ -40,6 +40,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     GLAccountPM glaccount = UpdateGLAccountFields(card);
                     SendHybridTask(glaccount);
                     UpdateCard(card);
+                    if(card.PartnerTypeId == "CS" || partnerTypeId =="VD")
+                    DeleteGLAccountCardData(glaccount);
                     CreateEvents(Id, eventTypeCode);
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, "Ok");
@@ -50,6 +52,19 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             }
         }
         string partnerObjectTableName;
+        private void DeleteGLAccountCardData(GLAccountPM gLAccount)
+        {
+            GLAccountCardsDataQueryService gLAccountCardsDataQueryService = new GLAccountCardsDataQueryService(gLAccount.Tenant);
+            GLAccountCardsDataPM gLAccountCardsDataPM = gLAccountCardsDataQueryService.GetSingle(glaccount.CardsDataId, false, false);
+            if (gLAccountCardsDataPM != null)
+            {
+                gLAccountCardsDataPM.ChangeSetOp = ChangeSetOperation.Delete;
+                IAccountingContext accountingContext = AccountingContext.GetContext(authToken.Tenant);
+                GLAccountCardsDataUpdateService gLAccountCardsDataUpdateService = new GLAccountCardsDataUpdateService(accountingContext);
+                gLAccountCardsDataUpdateService.Update(gLAccountCardsDataPM, true);
+            }
+
+        }
         private void CheckContactFeature(string partnerTypeId)
         {
 
