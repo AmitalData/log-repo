@@ -34,7 +34,7 @@ export class PrivateLoginComponent extends LoginComponent implements OnInit {
         this.privateUrl = SessionInfo.GetLogitudeURL();
         // Get Images from storage, then request from server to change
         this.GetImagesFromStorage();
-         this.GetPrivateLabelsData(this.privateUrl);
+        this.GetPrivateLabelsData(this.privateUrl);
     }
 
     GetImagesFromStorage() {
@@ -44,8 +44,7 @@ export class PrivateLoginComponent extends LoginComponent implements OnInit {
     private GetLoginPageImages() {
     this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage"); 
     this.MainLogo = BrandingDataService.GetImage("MainLogo"); 
-    this.LoginImage = BrandingDataService.GetImage("LoginImage"); 
-    this.LoginImage = BrandingDataService.GetImage("LoginImage"); 
+    this.LoginImage = BrandingDataService.GetImage("LoginImage");  
     this.showSpinner = false;
     }
 
