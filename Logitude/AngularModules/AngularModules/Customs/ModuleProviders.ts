@@ -388,6 +388,7 @@ import { ExportDeliveryDocumentMessageListService } from './Services/StandardLis
 import { SupplierPartyTypeListService } from './Services/StandardLists/SupplierPartyTypeListService';
 import { DeliveryTypeListService } from './Services/StandardLists/DeliveryTypeListService';
 import { CustomerIdentificationTypeListService } from './Services/StandardLists/CustomerIdentificationTypeListService';
+import { CoolingReportingMethodListService } from './Services/StandardLists/CoolingReportingMethodListService';
 
 
 export class ModuleProviders {
