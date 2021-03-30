@@ -2133,7 +2133,7 @@ export class ShipmentReceivableItem extends BaseComponent {
             var iAmount: number = null;
 
             if (this.EntityPM.Quantity != null && this.EntityPM.UnitPrice != null) {
-                if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR") {
+                if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR" || this.MeasurementCode == "PFCL") {
                     var price = this.EntityPM.UnitPrice / 100;
                     iAmount = this.EntityPM.Quantity * price;
                 }
@@ -2521,7 +2521,7 @@ export class ShipmentReceivableItem extends BaseComponent {
 
                         var totalAmount = quantity * unitPrice;
 
-                        if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR") {
+                        if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR" || this.MeasurementCode == "PFCL") {
                             totalAmount = quantity * unitPrice / 100;
                         }
 
@@ -2994,7 +2994,7 @@ export class InsideReceivableViewModel {
         if (this.Quantity != null && this.UnitPrice != null) {
             myResult = this.Quantity * this.UnitPrice;
 
-            if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR") {
+            if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR" || this.MeasurementCode == "PFCL") {
                 myResult = this.Quantity * this.UnitPrice / 100;
             }
         }

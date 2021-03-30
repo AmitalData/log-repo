@@ -2009,7 +2009,7 @@ export class QuoteChargeItem extends BaseComponent {
         var iAmount: number = null;
 
         if (!AppTool.IsNullOrEmpty(this.CostQuantity) && !AppTool.IsNullOrEmpty(this.CostUnitPrice)) {
-            if (this.CostMeasurementCode == "PRVL" || this.CostMeasurementCode == "PRFR") {
+            if (this.CostMeasurementCode == "PRVL" || this.CostMeasurementCode == "PRFR" || this.CostMeasurementCode == "PFCL") {
                 iAmount = this.CostQuantity * this.CostUnitPrice / 100;
             }
 
@@ -2328,7 +2328,7 @@ export class QuoteChargeItem extends BaseComponent {
         var totalAmount = null;
 
         if (!AppTool.IsNullOrEmpty(this.SaleUnitPrice) && !AppTool.IsNullOrEmpty(this.SaleQuantity)) {
-            if (this.SaleMeasurementCode == "PRVL" || this.SaleMeasurementCode == "PRFR") {
+            if (this.SaleMeasurementCode == "PRVL" || this.SaleMeasurementCode == "PRFR" || this.SaleMeasurementCode == "PFCL") {
                 totalAmount = this.SaleQuantity * this.SaleUnitPrice / 100;
             }
 
