@@ -16,7 +16,7 @@
     "video": false,
     "screenshotOnRunFailure": true,
     "screenshots": true,
-    "trashAssetsBeforeRuns": true,
+    "trashAssetsBeforeRuns": false,
     "reporter": "cypress-multi-reporters",
     "reporterOptions": {
         "reporterEnabled": "mochawesome",
