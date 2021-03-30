@@ -241,6 +241,7 @@
     <None Include="DBTables\CustomDocumentType.dxml" />
     <None Include="DBTables\CustomDocumentTypeMetaData.dxml" />
     <None Include="DBTables\CustomerActivityType.dxml" />
+    <None Include="DBTables\CustomerIdentificationType.dxml" />
     <None Include="DBTables\CustomerIdentifyType.dxml" />
     <None Include="DBTables\CustomerRoleType.dxml" />
     <None Include="DBTables\CustomerTypeGeneral.dxml" />
@@ -487,6 +488,7 @@
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
     <None Include="EntityFiles\AutonomyRegionType.lxml" />
+    <None Include="EntityFiles\CustomerIdentificationType.lxml" />
     <None Include="EntityFiles\CargoType.lxml" />
     <None Include="EntityFiles\DeliveryType.lxml" />
     <None Include="EntityFiles\SupplierPartyType.lxml" />

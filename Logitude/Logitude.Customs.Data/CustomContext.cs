@@ -262,6 +262,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CustomerActivityTypeMap());
 	
+            modelBuilder.Configurations.Add(new CustomerIdentificationTypeMap());
+	
             modelBuilder.Configurations.Add(new CustomerIdentifyTypeMap());
 	
             modelBuilder.Configurations.Add(new CustomerRoleTypeMap());
@@ -1836,6 +1838,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CustomerActivityType> CustomerActivityTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CustomerIdentificationType> CustomerIdentificationTypes 
 	 {
 	      get; set;
 	 

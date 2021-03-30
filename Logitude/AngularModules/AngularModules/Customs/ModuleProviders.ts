@@ -387,6 +387,7 @@ import { AmendCancellRequestInitiatorListService } from './Services/StandardList
 import { ExportDeliveryDocumentMessageListService } from './Services/StandardLists/ExportDeliveryDocumentMessageListService';
 import { SupplierPartyTypeListService } from './Services/StandardLists/SupplierPartyTypeListService';
 import { DeliveryTypeListService } from './Services/StandardLists/DeliveryTypeListService';
+import { CustomerIdentificationTypeListService } from './Services/StandardLists/CustomerIdentificationTypeListService';
 
 
 export class ModuleProviders {
@@ -651,7 +652,9 @@ export class ModuleProviders {
             case "ExportDeliveryDocumentMessageListService": { myResult = new ExportDeliveryDocumentMessageListService(); break; }
             case "SupplierPartyTypeListService": { myResult = new SupplierPartyTypeListService(); break; }
             case "DeliveryTypeListService": { myResult = new DeliveryTypeListService(); break; }
-            case "CargoTypeListService": { myResult = new CargoTypeListService(); break; } 
+            case "CargoTypeListService": { myResult = new CargoTypeListService(); break; }
+            case "CustomerIdentificationTypeListService": { myResult = new CustomerIdentificationTypeListService(); break; } 
+
 
              //#endregion                
 

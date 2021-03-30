@@ -114,6 +114,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CustomDocumentType> CustomDocumentTypes { get; }
 		 IDbSet<CustomDocumentTypeMetaData> CustomDocumentTypeMetaData { get; }
 		 IDbSet<CustomerActivityType> CustomerActivityTypes { get; }
+		 IDbSet<CustomerIdentificationType> CustomerIdentificationTypes { get; }
 		 IDbSet<CustomerIdentifyType> CustomerIdentifyTypes { get; }
 		 IDbSet<CustomerRoleType> CustomerRoleTypes { get; }
 		 IDbSet<CustomerTypeGeneral> CustomerTypeGenerals { get; }

@@ -484,6 +484,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(ExportDeliveryDocumentMessageSenderCodeTable, ExportDeliveryDocumentMessageSenderCodeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(ExportDeliveryDocumentMessageSenderCodeTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CustomerIdentificationTypeTable = closedSystemTables.Where(d => d.id == "93").FirstOrDefault();
+            ObjectTable CustomerIdentificationTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomerIdentificationType", 0, false);
+            InsertClosedTableRecord(CustomerIdentificationTypeTable, CustomerIdentificationTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(CustomerIdentificationTypeTable);
+
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData DeliveryTypeTable = closedSystemTables.Where(d => d.id == "23675").FirstOrDefault();
             ObjectTable DeliveryTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.DeliveryType", 0, false);
             InsertClosedTableRecord(DeliveryTypeTable, DeliveryTypeObjectTable, customsClosedTables, customsClosedTableRepository);
