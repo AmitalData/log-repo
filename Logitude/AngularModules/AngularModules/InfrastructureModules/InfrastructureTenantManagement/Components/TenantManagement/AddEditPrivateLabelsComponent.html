@@ -131,8 +131,9 @@
     .TabBody {
         overflow: auto;
     }
+
     .ImageSize {
-        font-size: 11px; 
+        font-size: 11px;
         top: 65px;
         position: relative;
         left: 10px;
@@ -143,6 +144,13 @@
         bottom: 65px;
         position: relative;
         left: 10px;
+    }
+
+    .SmallLogo {
+        position: relative;
+        right: 70px;
+        bottom: 60px;
+        font-size: 11px;
     }
 </style>
 
@@ -350,7 +358,7 @@
                                                     <td>
                                                         <LogLabel [Text]="'Main Logo'" [ObjectFieldName]="'MainLogo'" [ObjectTableName]="ObjectTableName"
                                                                   [DataContext]="DataContext"></LogLabel>
-                                                    </td> 
+                                                    </td>
                                                     <td>
 
                                                         <button [class.HyperlinkDisabled]="DemoMessageVisibility" style="width: 57px;" class="Button" (click)="OpenUpLoadMainLogo()">Upload</button>
@@ -359,14 +367,16 @@
                                                     </td>
 
                                                     <td>
-                                                        <table>
+                                                        <table style="position: relative; right: 80px;">
                                                             <tr>
+
                                                                 <td style="width:80px">
                                                                     <LogLabel [Text]="'Small Logo'" [ObjectFieldName]="'SmallLogo'" [ObjectTableName]="ObjectTableName"
                                                                               [DataContext]="DataContext"></LogLabel>
                                                                 </td>
+
                                                                 <td>
-                                                                    <button [class.HyperlinkDisabled]="DemoMessageVisibility" style="width: 57px;" class="Button" (click)="OpenUpLoadSmallLogo()">Upload</button>
+                                                                    <button [class.HyperlinkDisabled]="DemoMessageVisibility" style="width: 57px; left: 55px;" class="Button" (click)="OpenUpLoadSmallLogo()">Upload</button>
                                                                     <input [attr.id]="LogoSmallFileHtmlId" accept=".jpg,.jpeg,.JPG,.JPEG" type="file" (change)="UploadogoFileSmall($event)" style="display:none" class="upload" />
 
                                                                 </td>
@@ -374,6 +384,7 @@
                                                                 <td></td>
                                                             </tr>
                                                         </table>
+
                                                     </td>
 
                                                 </tr>
@@ -382,7 +393,7 @@
                                                 <tr class="FormFieldRow">
 
                                                     <!-- Image Display -->
-                                                    <td> 
+                                                    <td>
                                                         <span class="LogoImageSize"> Size: (239X85 pixels)  </span>
                                                     </td>
                                                     <td style="vertical-align:top">
@@ -413,9 +424,11 @@
                                                     <td style="vertical-align:top">
                                                         <table>
                                                             <tr>
-                                                                <td></td>
+                                                                <td>
+                                                                    <span class="SmallLogo"> Size: (239X85 pixels)  </span>
+                                                                </td>
                                                                 <td style="vertical-align:top">
-                                                                    <div style="width:150px;vertical-align:top; border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:5px">
+                                                                    <div style="width:150px;vertical-align:top; border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:5px;position: relative; right: 110px;">
                                                                         <table style="height:100%;width:100%; ">
 
                                                                             <tr>
@@ -482,7 +495,7 @@
 
                                         <td style="vertical-align:top; overflow:hidden;">
                                             <div style="width:160px;height:100px; overflow:hidden;">
-                                                <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'200px'"
+                                                <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'155px'"
                                                                 [HeightImage]="'95px'" [ImageId]="BackgroundImageId"
                                                                 [EntityId]="EntityId" [EntityName]="'ObjectTableName'" [Extension]="'png'"
                                                                 (UploadCompleted)="BackgroundImageUploadedCompleted($event)"
@@ -508,7 +521,7 @@
 
                                         <td style="vertical-align:top; overflow:hidden;">
                                             <div style="width:160px;height:100px; overflow:hidden;">
-                                                <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'200px'"
+                                                <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'155px'"
                                                                 [HeightImage]="'95px'" [ImageId]="LoginImageId"
                                                                 [EntityId]="EntityId" [EntityName]="'ObjectTableName'" [Extension]="'png'"
                                                                 (UploadCompleted)="LoginImageImageUploadedCompleted($event)"
@@ -531,14 +544,14 @@
                                         <td style="width:180px;height:22px; vertical-align:top">
                                             <span class="ImageName">
                                                 <LogLabel [Text]="'Login Progress Image'" [ObjectFieldName]="'LoginProgressImageId'" [ObjectTableName]="'ObjectTableName'"
-                                                          [DataContext]="DataContext"></LogLabel> 
+                                                          [DataContext]="DataContext"></LogLabel>
                                             </span>
                                             <span class="ImageSize">Size: (980X260 pixels)</span>
                                         </td>
 
                                         <td style="vertical-align:top; overflow:hidden;">
                                             <div style="width:160px;height:100px; overflow:hidden;">
-                                                <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'200px'"
+                                                <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'155px'"
                                                                 [HeightImage]="'95px'" [ImageId]="LoginProgressImageId"
                                                                 [EntityId]="EntityId" [EntityName]="'ObjectTableName'" [Extension]="'png'"
                                                                 (UploadCompleted)="LoginProgressImageUploadedCompleted($event)"
@@ -555,14 +568,14 @@
                                         <td style="width:180px;height:22px; vertical-align:top">
                                             <span class="ImageName">
                                                 <LogLabel [Text]="'Forget Password Image'" [ObjectFieldName]="'ForgetPasswordImageId'" [ObjectTableName]="'ObjectTableName'"
-                                                          [DataContext]="DataContext"></LogLabel>  
+                                                          [DataContext]="DataContext"></LogLabel>
                                             </span>
                                             <span class="ImageSize">Size: (894X267 pixels)</span>
                                         </td>
 
                                         <td style="vertical-align:top; overflow:hidden;">
                                             <div style="width:160px;height:100px; overflow:hidden;">
-                                                <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'200px'"
+                                                <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'155px'"
                                                                 [HeightImage]="'95px'" [ImageId]="ForgetPasswordImageId"
                                                                 [EntityId]="EntityId" [EntityName]="'ObjectTableName'" [Extension]="'png'"
                                                                 (UploadCompleted)="ForgetPasswordImageUploadedCompleted($event)"

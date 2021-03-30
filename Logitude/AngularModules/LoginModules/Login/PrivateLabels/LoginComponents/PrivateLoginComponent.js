@@ -39,7 +39,6 @@ export var PrivateLoginComponent = (function (_super) {
         this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
         this.MainLogo = BrandingDataService.GetImage("MainLogo");
         this.LoginImage = BrandingDataService.GetImage("LoginImage");
-        this.LoginImage = BrandingDataService.GetImage("LoginImage");
         this.showSpinner = false;
     };
     PrivateLoginComponent.prototype.GetPrivateLabelsData = function (privateUrl) {
