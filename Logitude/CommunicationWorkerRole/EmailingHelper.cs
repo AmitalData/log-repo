@@ -202,8 +202,8 @@ namespace CommunicationWorkerRole
 
 
                             #region Download Image
-                            string extension = "jpg";
-                            string originalImageName = imageName;
+                            string extension = (!string.IsNullOrEmpty(imageName) && imageName.Split('.').Length > 1) ? imageName.Split('.')[1] : "jpg";
+                            string originalImageName = !string.IsNullOrEmpty(imageName) ? imageName.Split('.')[0] : "";
 
                             if (!string.IsNullOrEmpty(fileName) && fileName.Contains("sharedlogtsitcslogo"))
                             {
@@ -212,18 +212,19 @@ namespace CommunicationWorkerRole
                             }
 
 
-                            string image = imageName + "." + extension;
+                            string image = originalImageName + "." + extension;
 
                             Logitude.Server.Tools.BlobFileInfo fileInfo = new Logitude.Server.Tools.BlobFileInfo()
                             {
                                 FileName = originalImageName,
-                                FolderName = "logos",
+                                FolderName = GetFolderName(originalImageName.ToLower()),
                                 Extension = extension,
                                 Tenant = tenant,
 
                             };
                             Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
                             byte[] datainByte = storageservice.Read(fileInfo);
+
 
                             #endregion
 
@@ -297,6 +298,12 @@ namespace CommunicationWorkerRole
 
 
            // }
+        }
+
+
+        private static string GetFolderName(string fileName)
+        {
+            return (fileName.Contains("logo") || fileName == "applestore" || fileName == "googleplay") ? "logos" : "images";
         }
 
         private static string getBetween(string strSource, string strStart, string strEnd)
