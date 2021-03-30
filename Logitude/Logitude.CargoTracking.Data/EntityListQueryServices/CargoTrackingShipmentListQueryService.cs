@@ -101,7 +101,10 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                ShipmentLevelCode = a.ShipmentLevelCode,
                                                                AssignedTruckerDate = a.AssignedTruckerDate,
                                                                AssignedTruckerDone = a.AssignedTruckerDone,
-                                                               GrossWeightUnitCode = a.GrossWeightUnitCode
+                                                               GrossWeightUnitCode = a.GrossWeightUnitCode,
+                                                               ArrivalDate = a.ArrivalDate,
+                                                               CustomsPaymentDate = a.CustomsPaymentDate,
+
                                                            });
             return query;
         }
@@ -296,7 +299,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             return shipments;
         }
 
-        private List<CargoTrackingShipmentList> GetShipmentsByIds(List<string> ShipmentIds, int tenant)
+        public List<CargoTrackingShipmentList> GetShipmentsByIds(List<string> ShipmentIds, int tenant)
         {
             CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(context);
             IQueryable<CargoTrackingShipment> shipments = repo.GetByShipmentIds(ShipmentIds, tenant);
