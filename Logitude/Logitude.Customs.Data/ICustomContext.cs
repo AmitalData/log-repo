@@ -241,6 +241,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ModificationAndDiscountType> ModificationAndDiscountTypes { get; }
 		 IDbSet<MorningMessageType> MorningMessageTypes { get; }
 		 IDbSet<NbcDeclarationType> NbcDeclarationTypes { get; }
+		 IDbSet<NDMessageActionCode> NDMessageActionCodes { get; }
 		 IDbSet<Notification> Notifications { get; }
 		 IDbSet<NotificationDefinition> NotificationDefinitions { get; }
 		 IDbSet<NotificationReply> NotificationReplies { get; }

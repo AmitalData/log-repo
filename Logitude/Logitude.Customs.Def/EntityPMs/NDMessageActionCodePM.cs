@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Logitude.Customs.Def.EntityPMs
 {
       [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
-    public partial class TransportMeansTypePM : EntityPM, IIIGClosedTable, IIIGClosedTableDummyTenant
+    public partial class NDMessageActionCodePM : EntityPM, IIIGClosedTable, IIIGClosedTableDummyTenant
     {
           [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
           [DataMember]

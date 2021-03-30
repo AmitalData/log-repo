@@ -516,6 +516,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new NbcDeclarationTypeMap());
 	
+            modelBuilder.Configurations.Add(new NDMessageActionCodeMap());
+	
             modelBuilder.Configurations.Add(new NotificationMap());
 	
             modelBuilder.Configurations.Add(new NotificationDefinitionMap());
@@ -2602,6 +2604,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<NbcDeclarationType> NbcDeclarationTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<NDMessageActionCode> NDMessageActionCodes 
 	 {
 	      get; set;
 	 

@@ -366,6 +366,7 @@
     <None Include="DBTables\ModificationAndDiscountType.dxml" />
     <None Include="DBTables\MorningMessageType.dxml" />
     <None Include="DBTables\NbcDeclarationType.dxml" />
+    <None Include="DBTables\NDMessageActionCode.dxml" />
     <None Include="DBTables\Notification.dxml" />
     <None Include="DBTables\NotificationDefinition.dxml" />
     <None Include="DBTables\NotificationReply.dxml" />
@@ -489,6 +490,7 @@
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
     <None Include="EntityFiles\AutonomyRegionType.lxml" />
+    <None Include="EntityFiles\NDMessageActionCode.lxml" />
     <None Include="EntityFiles\CustomerIdentificationType.lxml" />
     <None Include="EntityFiles\CargoType.lxml" />
     <None Include="EntityFiles\DeliveryType.lxml" />

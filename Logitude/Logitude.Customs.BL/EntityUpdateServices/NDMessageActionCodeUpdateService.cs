@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
-    public partial class TransportMeansTypeUpdateService : ICanUpdateClosedTable<TransportMeansTypePM>
+    public partial class NDMessageActionCodeUpdateService : ICanUpdateClosedTable<NDMessageActionCodePM>
     {
     }
 }

@@ -162,6 +162,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\FclLclCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\FullnessCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\LoadingSiteTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\NDMessageActionCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PartyRelationshipTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ReleaseMessageTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SecurityClearenceTypeCodeDetails.Generated.cs" />
@@ -712,6 +713,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="EntityDataMappings\Generated\NbcDeclarationTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\NDMessageActionCodeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\NotificationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\NotificationDefinitionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\NotificationReplyDataMapping.Generated.cs" />
@@ -871,6 +873,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="EntityDataMappings\NbcDeclarationTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\NDMessageActionCodeDataMapping.cs" />
     <Compile Include="EntityDataMappings\NotificationDataMapping.cs" />
     <Compile Include="EntityDataMappings\NotificationDefinitionDataMapping.cs" />
     <Compile Include="EntityDataMappings\NotificationReplyDataMapping.cs" />
@@ -1016,6 +1019,7 @@
     <Compile Include="EntityQueryServices\Generated\FclLclCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\FullnessCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\LoadingSiteTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\NDMessageActionCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ReferantTeamQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ReleaseMessageTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SecurityClearenceTypeCodeQueryService.Generated.cs" />
@@ -1533,6 +1537,7 @@
     <Compile Include="EntityUpdateServices\Generated\FullnessCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LoadingSiteTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\NbcDeclarationTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\NDMessageActionCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PartyRelationshipTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ReferantTeamUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ReleaseMessageTypeUpdateService.Generated.cs" />
@@ -1544,7 +1549,7 @@
     <Compile Include="EntityUpdateServices\Generated\SupplierPartyTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TransactionNatureTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TransportMeansTypeUpdateService.Generated.cs" />
-    <Compile Include="EntityUpdateServices\TransportMeansTypeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\NDMessageActionCodeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ModificationAndDiscountTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ReferantExceptionUpdateService.amital.cs" />
     <Compile Include="EntityUpdateServices\ReferantExceptionUpdateService.cs" />

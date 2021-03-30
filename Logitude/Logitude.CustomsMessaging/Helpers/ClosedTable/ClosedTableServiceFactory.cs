@@ -274,6 +274,25 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
                          );
                     }
                     break;
+                case "1998":
+                case "NDMessageActionCode":
+                    {
+                        closedTableService = new Update1998NDMessageActionCode(customContext, entitySystemTables,
+                          (mycustomContext) =>
+                          {
+                              return new
+                                  NDMessageActionCodeUpdateService(mycustomContext, new Dictionary<string, IContext>(), tenant);
+                          },
+                        (mycustomContext) =>
+                        {
+                            var qs = new NDMessageActionCodeQueryService(mycustomContext);
+                            return qs as ICanGetAllClosedTable<NDMessageActionCodePM>;
+                        }
+                        , tenant
+                        , false
+                        );
+                    }
+                    break;
                 default:
 
                     break;
