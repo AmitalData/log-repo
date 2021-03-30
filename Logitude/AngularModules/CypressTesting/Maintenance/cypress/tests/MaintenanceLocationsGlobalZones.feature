@@ -1,4 +1,4 @@
-@release @dev @all
+@release @stable @all
 Feature: Create Global Zone, Inactivate and activate it from Maintenance
     The user creates a Global Zone, Inactivates it,
     selects it to edit and activates it from the Maintenance module.

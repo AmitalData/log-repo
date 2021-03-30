@@ -1,4 +1,4 @@
-@release @dev
+@release @stable 
 Feature: Containers Delivery
 
     The user creates a Direct Import Ocean FCL shipment, adds a container, modifies the dates of the shipment,

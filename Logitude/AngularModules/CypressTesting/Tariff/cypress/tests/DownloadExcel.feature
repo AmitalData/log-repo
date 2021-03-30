@@ -1,4 +1,4 @@
-@release @dev @tests
+@release @stable 
 Feature: Download Excel Tariff test
     The authenticated user will create new Ocean LCL freight cost tariff.
     then download excel file .
