@@ -49,14 +49,14 @@
 													<td *ngIf="!NoEntity" style="width: 150px; min-width: 150px;">Entity</td>
 													<td [ngStyle]="{'min-width':NoEntity? '230px' : '200px','width':NoEntity? '230px' : '200px'}">Field</td>
 													<td style="width: 165px; min-width: 165px;">Operator</td>
-													<td style="width: 200px; min-width:200px">Value</td>
+													<td style="width: 215px; min-width:215px">Value</td>
 													<td style="width: 100%; min-width:100%">Met</td>
 												</tr>
 											</table>
 										</div>
 
-										<div [style.opacity]="IsDisabled?'0.5':'1'" [style.pointer-events]="IsDisabled?'none':'all'" style="opacity:0.5;" class="SimpleGridViewBody">
-											<table>
+										<div  class="SimpleGridViewBody">
+											<table style="opacity:0.5;" [style.opacity]="IsDisabled?'0.5':'1'" [style.pointer-events]="IsDisabled?'none':'all'">
 												<tr style="height: 1px;">
 													<td>
 														<table>
@@ -294,15 +294,15 @@
 																				</table>
 																			</td>
 
-
-																			<td style="width: 20px;">
-																				<div style="width:95px">
+																			<td class="GridViewCell" style="width:100%; min-width: 100%; max-width: 100%; position: relative;">
+																				<div style="width: 21px; vertical-align: middle;">
 																					<img class="CenterCenter" style="width:20px;height:20px" *ngIf="item.IsValid" src="./Images/Icons/MiniGreenTick.png" />
 
 																					<img *ngIf="!item.IsValid" class="CenterCenter" style="width:14px;height:14px" src="./Images/RedX.png" />
 
 																				</div>
 																			</td>
+ 
 
 																		</tr>
 																		<tr><td colspan="4"></td></tr>
