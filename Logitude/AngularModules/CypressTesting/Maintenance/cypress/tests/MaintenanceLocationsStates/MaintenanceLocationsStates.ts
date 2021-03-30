@@ -6,6 +6,7 @@ import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
 import { Constants } from "../../constants/Constants";
+import { constants } from "../../../../Base/cypress/constants/constants"
 
 //#region variable
 let stateDetails: StateDetails
@@ -43,12 +44,12 @@ Then("the state should add successfully", () => {
 //#endregion
 
 //#region Search for the State by name
-When("search for {string} state", (State) => {
-    MaintenanceActions.SearchState(State)
+When("search for state", () => {
+    MaintenanceActions.SearchState()
 });
 
-Then("the {string} state should appear successfully", (State) => {
-    MaintenanceActions.AssertSearchState(State);
+Then("the state should appear successfully", () => {
+    MaintenanceActions.AssertSearchState();
 });
 //#endregion
 
@@ -67,7 +68,7 @@ Given("a {string} as stateLocalName", (NewStateLocalName) => {
     MaintenanceActions.FillStateLocalName(NewStateLocalName)
 });
 
-Given("the user change Inactivestate check box", () => {
+Given("the user activate state", () => {
     MaintenanceActions.ChangeInactiveCheckBoxValue(MaintenanceSelectors.InActiveStateCheckBox)
 });
 
@@ -81,7 +82,6 @@ Then("the state should update successfully", () => {
 
 Then("following event should appear in events tab", (dataTable) => {
     let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
-    eventDetailsList = MaintenanceActions.StateConversionEventsMapping(eventDetailsList)
     BaseActions.ValidateEventsTab(eventDetailsList, MaintenanceSelectors.StateEventTab);
 });
 //#endregion

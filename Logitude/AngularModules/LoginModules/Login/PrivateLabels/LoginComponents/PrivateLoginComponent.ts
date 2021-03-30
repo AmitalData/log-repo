@@ -23,7 +23,7 @@ export class PrivateLoginComponent extends LoginComponent implements OnInit {
     public MainLogo: string = "";
     public SmallLogo: string = ""; 
     public showSpinner = true;
-
+    public IsDSV = false;
     constructor(
         private ss: LoginService,
         private privateLabelsBrandingDataService: PrivateLabelsBrandingDataService) {
@@ -35,6 +35,7 @@ export class PrivateLoginComponent extends LoginComponent implements OnInit {
         // Get Images from storage, then request from server to change
         this.GetImagesFromStorage();
         this.GetPrivateLabelsData(this.privateUrl);
+        this.IsDSV = window.sessionStorage.getItem("IsDSV") == "true";
     }
 
     GetImagesFromStorage() {
@@ -44,7 +45,8 @@ export class PrivateLoginComponent extends LoginComponent implements OnInit {
     private GetLoginPageImages() {
     this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage"); 
     this.MainLogo = BrandingDataService.GetImage("MainLogo"); 
-    this.LoginImage = BrandingDataService.GetImage("LoginImage");  
+    this.LoginImage = BrandingDataService.GetImage("LoginImage"); 
+    this.LoginImage = BrandingDataService.GetImage("LoginImage"); 
     this.showSpinner = false;
     }
 

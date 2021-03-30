@@ -76,6 +76,7 @@ export class RequestAliases {
     public static readonly INTTRAWebServiceSendShippingInstructions = "INTTRAWebServiceSendShippingInstructions";
     //
     public static readonly PutShipment = "PutShipment";
+    public static readonly PutTenant = "PutTenant";
 
 
     //Maintenance
@@ -95,7 +96,12 @@ export class RequestAliases {
 
     public static readonly PostCountry="PostCountry"
     public static readonly PutCountry="PutCountry"
+    public static readonly PostState="PostState"
     public static readonly PutState="PutState"
+    public static readonly PostGlobalZone="PostGlobalZone"
+    public static readonly PutGlobalZone="PutGlobalZone"
+
+    public static readonly PostCity="PostCity"
     public static readonly PutCity="PutCity"
 
     public static readonly PostQuoteTemplate = "PostQuoteTemplate";
@@ -130,5 +136,6 @@ export class RequestAliases {
     public static readonly PasswordResetRequestPage="PasswordResetRequestPage"
     //Reset Password
     public static readonly ResetPassword="ResetPassword"
+
 
 }

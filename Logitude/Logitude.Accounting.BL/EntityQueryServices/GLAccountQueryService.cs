@@ -577,11 +577,28 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             {
                 return null;
             }
-            return this.GetSingle(Ids.FirstOrDefault(), false,true);
+          
+            GLAccountPM account= this.GetSingle(Ids.FirstOrDefault(), false,true);
+            SetGLAccountMoreDataFields(account);
+            return account;
             //List<GLAccount> pocos = this.repository.GetByInternalNumber(internalNumber, tenant);
             //return pocos.Select(rec => this.GetEntityPM(rec)).ToList();
         }
+        private void SetGLAccountMoreDataFields(GLAccountPM gLAccount)
+        {
+            GLAccountMoreDataPM gLAccountMoreData = GetGLAccountMoreData(gLAccount);
+            if (gLAccountMoreData != null)
+            {
+                gLAccount.TotalOpenChequesInLocalCur = gLAccountMoreData.TotalOpenChequesInLocalCur;
+                gLAccount.TotFutureOpenChequesInLocalCur = gLAccountMoreData.TotFutureOpenChequesInLocalCur;
+            }
+        }
+        private GLAccountMoreDataPM GetGLAccountMoreData(GLAccountPM gLAccount)
+        {
+            GLAccountMoreDataQueryService gLAccountMoreDataQueryService = new GLAccountMoreDataQueryService(gLAccount.Tenant);
+            return gLAccountMoreDataQueryService.GetSinglePMByAccountId(gLAccount.Id, gLAccount.Tenant);
 
+        }
         public List<GLAccountPM> GetByDisplayNumber(string displayNumber, int tenant)
         {
             List<GLAccount> pocos = this.repository.GetByDisplayNumber(displayNumber, tenant);

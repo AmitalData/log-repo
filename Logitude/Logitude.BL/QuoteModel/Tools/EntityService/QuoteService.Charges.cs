@@ -827,7 +827,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             {
                 if (item.CostQuantity != null && item.CostUnitPrice != null)
                 {
-                    if (item.CostMeasurementCode == "PRVL" || item.CostMeasurementCode == "PRFR")
+                    if (item.CostMeasurementCode == "PRVL" || item.CostMeasurementCode == "PRFR" || item.CostMeasurementCode == "PFCL")
                     {
                         myTotalAmount = item.CostQuantity * item.CostUnitPrice / 100;
                     }
@@ -928,7 +928,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             {
                 if (item.SaleUnitPrice != null && item.SaleQuantity != null)
                 {
-                    if (item.SaleMeasurementCode == "PRVL" || item.SaleMeasurementCode == "PRFR")
+                    if (item.SaleMeasurementCode == "PRVL" || item.SaleMeasurementCode == "PRFR" || item.CostMeasurementCode == "PFCL")
                     {
                         myTotalAmount = item.SaleQuantity * item.SaleUnitPrice / 100;
                     }

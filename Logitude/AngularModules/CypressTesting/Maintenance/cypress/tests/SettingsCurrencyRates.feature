@@ -1,6 +1,6 @@
-@release @dev @all
-Feature: Change the currency rate value
-    bla bla
+@release @stable @all
+Feature: Edit Currency Rate Vale in Settings
+    The user edits the currency exchange rate and validates it in quote, receivable and invoice.
 
     Scenario: Edit exchange rate value
         Given the user logged in and open "Currencies Rates" from tenant settings

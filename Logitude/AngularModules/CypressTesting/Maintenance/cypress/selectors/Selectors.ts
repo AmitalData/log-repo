@@ -6,11 +6,13 @@ export class MaintenanceSelectors extends RegexSelectors {
     public static readonly ContactsMaintenanceItem = "#MaintenanceItemMTCO";
     public static readonly VendorMaintenanceItem = "#MaintenanceItemMTVD"
     public static readonly VesselMaintenanceItem = "#MaintenanceItemMTVS"
+    public static readonly LocalSettingsMaintenanceItem = "#MaintenanceItemLOSE"
     public static readonly CustomerSettingsMaintenanceItem = "#MaintenanceItemCUSA"
     public static readonly InvoiceSettingsMaintenanceItem = "#MaintenanceItemINVS";
     public static readonly QuoteTemplatesMaintenanceItem = "#MaintenanceItemMTQT"
     public static readonly MaintenanceItemCountry="#MaintenanceItemMTCN"
     public static readonly MaintenanceItemState="#MaintenanceItemMTST"
+    public static readonly MaintenanceItemGlobalZone = "#MaintenanceItemMTGZ"
     public static readonly MaintenanceItemCities="#MaintenanceItemMTCY"
     //#endregion
 
@@ -166,5 +168,14 @@ export class MaintenanceSelectors extends RegexSelectors {
     public static readonly RatesTableDate = "#date_RatesTable_ValueDate"
     public static readonly RatesTableRate = "#RatesTable_Rate"
     
+    //#endregion
+    
+    //#region  Global Zone
+    public static readonly GlobalZoneCode="#GlobalZone_Code"
+    public static readonly GlobalZoneEnglishName="#GlobalZone_EnglishName"
+    public static readonly GlobalZoneLocalName="#GlobalZone_LocalName"
+    public static readonly InActiveGlobalZoneCheckBox="#GlobalZone_InActive"
+    public static readonly GlobalZoneSaveButton="#GlobalZone-Save"
+    public static readonly GlobalZoneEventsTab="#GlobalZoneTHEvents"
     //#endregion
 }
