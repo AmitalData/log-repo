@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import {LoginService, LoginParameters} from '../LoginService';
-import {Headers} from '@angular/http';
-import {SessionInfo} from '../SessionInfo';
-import {PasswordChangeService} from '../PasswordChangeService';
-import {Tools} from '../Utilities/Tools'; 
-import {ChangePasswordComponent} from './ChangePasswordComponent';
+import {LoginService} from '../LoginService'; 
+import {PasswordChangeService} from '../PasswordChangeService'; 
+import {ChangePasswordComponent} from './ChangePasswordComponent'; 
+import { BrandingDataService } from '../PrivateLabels/Services/BrandingDataService'; 
 
 @Component({
     selector: 'DSVChangePasswordComponent',
@@ -13,8 +11,24 @@ import {ChangePasswordComponent} from './ChangePasswordComponent';
     styleUrls: ['ChangePasswordComponent.css']
 })
 export class DSVChangePasswordComponent extends ChangePasswordComponent {
-     
+
+    public BackgroundImage: string = "";
+    public ForgetPasswordImage: string = "";
+    public MainLogo: string = ""; 
+
     constructor(public ss: PasswordChangeService, public ll: LoginService) {
-        super(ss,ll);
-    }  
+        super(ss, ll);
+
+    }
+
+    ngOnInit() { 
+        this.GetPrivateLabelsData();
+    }
+
+
+    GetPrivateLabelsData() {
+        this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
+        this.MainLogo = BrandingDataService.GetImage("MainLogo");
+        this.ForgetPasswordImage = BrandingDataService.GetImage("ForgetPasswordImage");
+    }
 }

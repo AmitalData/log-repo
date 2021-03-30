@@ -73,17 +73,21 @@ Cypress.Commands.add("FillDate", (selector, value) => {
     }
 })
 
-Cypress.Commands.add("FillLogTextBox", (selector, value,ValidateInputDone = false) => {
+Cypress.Commands.add("FillLogTextBox", (selector, value, ValidateInputDone = false) => {
+    if (value) {
+       FillLogTextBoxProcess(selector, value, ValidateInputDone);
+    }
+})
 
-    if(ValidateInputDone){
+function FillLogTextBoxProcess(selector:string, value:string, ValidateInputDone:boolean) {
+    if (ValidateInputDone) {
         cy.get(selector).clear().type("{selectall}" + value)//.should('have.value', value)
     }
-    else{
+    else {
         cy.get(selector).clear().type("{selectall}" + value).should('have.value', value)
     }
+}
 
-})
-  
 
 Cypress.Commands.add("FillLogLov", (selector, value, fromCache, getByFilters = false) => {
     // if (!fromCache) {
@@ -94,9 +98,11 @@ Cypress.Commands.add("FillLogLov", (selector, value, fromCache, getByFilters = f
     // }
 
     // cy.get('body').find('SessionComponent').eq(0).as('Container')
-   
-    FillLogLovProcess(selector, value, fromCache, getByFilters);
- 
+
+   if(value){
+      FillLogLovProcess(selector, value, fromCache, getByFilters); 
+   }
+    
     //cy.get(selector).clear().type(value)
     //cy.wrap(selector).clear({ force: true })
     //cy.get(selector).type("{selectall}" + value)
@@ -184,3 +190,5 @@ Cypress.Commands.add("SelectQuickSearchFirstElement", (quickSearchDetails: Quick
             })
         })
 })
+
+

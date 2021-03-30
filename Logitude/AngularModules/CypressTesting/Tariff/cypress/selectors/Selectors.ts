@@ -83,6 +83,7 @@ export class TariffSelectors
     public static readonly ContainsCancel = "Cancel"
     public static readonly ContainsTariffs = "Tariffs"
     public static readonly ContainsActions = "Actions"
+    public static readonly ContainsDownloadExcel = "Download Excel"
     public static readonly ContainsNewShippingLine = "New Shipping Line"
     public static readonly ContainsTariffFailedError = "Create Tariff Failed"
     public static readonly ContainsUniqueSellerError = "Tariff surcharge seller should be unique"

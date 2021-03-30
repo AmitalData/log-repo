@@ -282,6 +282,7 @@ namespace WebFreight.Web.DataProviders
         public string ARInvoiceField10 { get; set; }
         public string MasterNumber { get; set; }
         public string SalesMan { get; set; }
+        public string BillToSalesMan { get; set; }
         public string CustomsDeclarationNumber { get; set; }
         public string Origin { get; set; }
         public string FinalDestination { get; set; }

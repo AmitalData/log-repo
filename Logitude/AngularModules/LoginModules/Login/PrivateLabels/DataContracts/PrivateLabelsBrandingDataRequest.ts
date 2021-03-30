@@ -3,7 +3,7 @@
 	{
         public PrivateLabelUrl :string
         public BackgroundImageId : string
-        public MainImageId : string
+        public LoginImageId : string
         public LoginProgressImageId : string
         public ForgetPasswordImageId: string
         public MainLogoId: string

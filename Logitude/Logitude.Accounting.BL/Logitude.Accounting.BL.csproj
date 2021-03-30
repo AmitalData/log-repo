@@ -103,8 +103,11 @@
     <Compile Include="APIDataContract\Category5.Generated.cs" />
     <Compile Include="APIDataContract\ChartOfAccount.Generated.cs" />
     <Compile Include="APIDataContract\ChartOfAccountsType.Generated.cs" />
+    <Compile Include="APIDataContract\Cheque.Generated.cs" />
     <Compile Include="APIDataContract\GLAccount.cs" />
     <Compile Include="APIDataContract\GLAccount.Generated.cs" />
+    <Compile Include="APIDataContract\GLAccountChequeDetails.cs" />
+    <Compile Include="APIDataContract\GLAccountChequeDetails.Generated.cs" />
     <Compile Include="APIDataContract\GLAccountMoreData.cs" />
     <Compile Include="APIDataContract\GLAccountMoreData.Generated.cs" />
     <Compile Include="APIDataContract\GLAccountTotalsByCurrency.cs" />
@@ -114,6 +117,7 @@
     <Compile Include="APIDataContract\JournalLine.Generated.cs" />
     <Compile Include="APIDataContract\JournalStatusType.Generated.cs" />
     <Compile Include="APIDataContract\JournalType.Generated.cs" />
+    <Compile Include="APIDataContract\LedgerTransaction.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\AccountingEntityQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\AutomaticReconcileMethodQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\AutomaticReconcileQueryService.Generated.cs" />
@@ -124,6 +128,7 @@
     <Compile Include="APIDataContract\QueryService\Category5QueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\ChartOfAccountQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\ChartOfAccountsTypeQueryService.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\GLAccountChequeDetailsQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\GLAccountMoreDataQueryService.cs" />
     <Compile Include="APIDataContract\QueryService\GLAccountMoreDataQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\GLAccountQueryService.cs" />

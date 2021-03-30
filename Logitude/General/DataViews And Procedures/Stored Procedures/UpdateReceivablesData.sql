@@ -947,7 +947,7 @@ BEGIN
 								BEGIN
 									set @Quantity = @HousePercentForeignChargesLocalAmount
 									set @UnitPrice = @MasterReceivableUnitPrice
-									set @Amount = @Quantity * @UnitPrice
+									set @Amount = @Quantity * @UnitPrice / 100
 									set @AmountLocal = @Amount * @MasterReceivableRate
 									set @AmountInProfitCurrency = @AmountLocal / @MasterReceivableProfitRate
 

@@ -33,6 +33,7 @@ export class ReportSchedulerDetails {
     public Recepients: ReportSchedulerRecepients;
     public ReportTemplateId: string;
     public ReportFilterItems: Array<QueryFilterItem>;
+    public MainCustomerFieldName: string;
 }
 
 export class ReportSchedulerRecepients {

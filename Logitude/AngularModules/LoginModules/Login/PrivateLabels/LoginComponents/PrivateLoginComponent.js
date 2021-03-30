@@ -18,32 +18,38 @@ export var PrivateLoginComponent = (function (_super) {
         this.privateLabelsBrandingDataService = privateLabelsBrandingDataService;
         this.MainColor = null;
         this.BackgroundImage = "";
-        this.MainImage = "";
+        this.LoginImage = "";
         this.MainLogo = "";
         this.SmallLogo = "";
         this.showSpinner = true;
+        this.IsDSV = false;
     }
     PrivateLoginComponent.prototype.ngOnInit = function () {
         this.get_cookie_data();
         this.privateUrl = SessionInfo.GetLogitudeURL();
+        // Get Images from storage, then request from server to change
+        this.GetImagesFromStorage();
         this.GetPrivateLabelsData(this.privateUrl);
+        this.IsDSV = window.sessionStorage.getItem("IsDSV") == "true";
+    };
+    PrivateLoginComponent.prototype.GetImagesFromStorage = function () {
+        this.GetLoginPageImages();
+    };
+    PrivateLoginComponent.prototype.GetLoginPageImages = function () {
+        this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
+        this.MainLogo = BrandingDataService.GetImage("MainLogo");
+        this.LoginImage = BrandingDataService.GetImage("LoginImage");
+        this.showSpinner = false;
     };
     PrivateLoginComponent.prototype.GetPrivateLabelsData = function (privateUrl) {
         var _this = this;
         this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe(function (response) {
             if (response.Result) {
-                _this.Tenant = response.Result.Tenant;
                 BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
-                _this.MainColor = response.Result.MainColor;
-                _this.BackgroundImage = BrandingDataService.GetBackgroundImage();
-                _this.MainImage = BrandingDataService.GetMainImage();
-                _this.MainLogo = BrandingDataService.GetMainLogo();
-                _this.SmallLogo = BrandingDataService.GetSmallLogo();
+                //this.MainColor = response.Result.MainColor;
+                //BrandingDataService.MainColor = this.MainColor;
+                _this.GetLoginPageImages();
             }
-        }, function (error) {
-            _this.BackgroundImage = BrandingDataService.DefaultBackground;
-            _this.MainImage = BrandingDataService.DefaultMainImage;
-            _this.MainLogo = BrandingDataService.DefaultMainLogo;
         });
         this.showSpinner = false;
     };

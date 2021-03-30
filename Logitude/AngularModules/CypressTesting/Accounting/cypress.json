@@ -11,7 +11,7 @@
     "env": {
         "Mode": "Development"
     },
-    "defaultCommandTimeout": 120000,
+    "defaultCommandTimeout": 300000,
     "responseTimeout": 180000,
     "requestTimeout": 180000,
     "video": false,
