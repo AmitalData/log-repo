@@ -612,11 +612,28 @@ export function Retransfer() {
     cy.Click(ShipmentSelectors.CloseCustomsTransmissions, null)
 }
 
-export function FormatDate(date: string): string {
-    var dateString = date == 'Today' ? new Date().toDateString() : date;
-    var currentDateArray = dateString.split(" ");
-    return currentDateArray[2] + " " + currentDateArray[1] + " " + currentDateArray[3];
+export function FormatDate(date: string): string{
+    var dateString = date == 'Today' ? new Date().toLocaleDateString("en-US", { timeZone: "Asia/Jerusalem"}) : date
+    var currentDateArray = dateString.split("/");
+    return currentDateArray[1] + " " + GetMonth(currentDateArray[0]) + " " + currentDateArray[2];
 }
+
+function GetMonth(monthNum: string) {
+    switch (monthNum) {
+      case "1": return "Jan"; 
+      case "2": return "Feb"; 
+      case "3": return "Mar"; 
+      case "4": return "Apr"; 
+      case "5": return "May"; 
+      case "6": return "June"; 
+      case "7": return "July"; 
+      case "8": return "Aug"; 
+      case "9": return "Sept"; 
+      case "10": return "Oct"; 
+      case "11": return "Nov"; 
+      case "12": return "Dec"; 
+    }
+  }
 //#endregion
 
 //#region Containers
