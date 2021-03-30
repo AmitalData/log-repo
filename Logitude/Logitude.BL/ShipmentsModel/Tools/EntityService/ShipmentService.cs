@@ -4115,6 +4115,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         this.initializer.IsUpdatingHouses = true;
                     }
+                    else if (entityPM.PreCarriageFromPortId != entityMasterData.PreCarriageFromPortId)
+                    {
+                        this.initializer.IsUpdatingHouses = true;
+                    }
+                    else if (entityPM.OnCarriageToPortId != entityMasterData.OnCarriageToPortId)
+                    {
+                        this.initializer.IsUpdatingHouses = true;
+                    }
                 }
             }
         }

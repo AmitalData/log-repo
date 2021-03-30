@@ -2643,6 +2643,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? OnForwardingETD_Original { get; set; }
         public DateTime? OnForwardingATA_Original { get; set; }
         public DateTime? OnForwardingETA_Original { get; set; }
+        public string OriginPreCarriageFromPortId { get; set; }
+        public string OriginOnCarriageToPortId { get; set; }
 
     }
 

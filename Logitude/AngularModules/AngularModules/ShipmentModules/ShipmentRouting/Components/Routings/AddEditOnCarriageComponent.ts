@@ -20,6 +20,7 @@ import {OnCarriageDateComponent} from './OnCarriageDateComponent';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {PackagesTabComponent, ShipmentPackageItem} from '../../../ShipmentPackages/Components/Packages/PackagesTabComponent';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({    
     templateUrl: './AddEditOnCarriageComponent.html',
@@ -39,6 +40,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public LegType: string;
     public IsOkButtonEnabled: boolean = true;
+    private SaveCompletedEvent: any = null;
     constructor() {
         super();
         this.InitServices();
@@ -765,56 +767,36 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
-        var errors: string[] = [];
-        var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+        this.ValidationErrorsList = this.Validate();
 
-        if (this.EntityPM.ShipmentLevelCode == "H") {
-            errors = this.ValidatePreForwarding(msg);
-        }
+        if (this.ValidationErrorsList.length == 0) {
+            this.AssignAdditionalTransportModeToPackages();
+            var isShowChangePortsWindow: boolean = this.CheckToShowChangePortsWindow();            
 
-        else {
-            errors = this.ValidatePreCarriage(msg);
-        }
-
-        this.ValidationErrorsList = errors;
-
-        if (errors.length == 0) {
-
-            if (this.EntityPM.ShipmentLevelCode == "H") {
-                if (this.OnForwardingAdditionalTransportModeCode) {
-                    this.EntityPM.ShipmentPackages.forEach(item => {
-
-                        if (AppTool.IsNullOrEmpty(item.DeliveryId)) {
-                            item.DeliveryTransportModeCode = this.OnForwardingAdditionalTransportModeCode;
-                        }
-
-                        if (AppTool.IsNullOrEmpty(item.EmptyContainerReturnId)) {
-                            item.ECRTransportModeCode = this.OnForwardingAdditionalTransportModeCode;
-                        }
-                    });
-                }
+            if (isShowChangePortsWindow) {
+                this.ShowConfirmChangePortsWindow();
             }
 
             else {
-                if (this.OnCarriageAdditionalTransportModeCode) {
-                    this.EntityPM.ShipmentPackages.forEach(item => {
-
-                        if (AppTool.IsNullOrEmpty(item.DeliveryId)) {
-                            item.DeliveryTransportModeCode = this.OnCarriageAdditionalTransportModeCode;
-                        }
-
-                        if (AppTool.IsNullOrEmpty(item.EmptyContainerReturnId)) {
-                            item.ECRTransportModeCode = this.OnCarriageAdditionalTransportModeCode;
-                        }
-                    });
-                }
+                this.CloseWindowOnOk();
             }
-
-            this.FatherComponent.BuildItemsCollection();
-            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
-    ValidatePreCarriage(msg: string): string[] {
+    private Validate(): string[] {
+        var errors: string[] = []; 
+        var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+
+        if (this.EntityPM.ShipmentLevelCode == "H") {
+            errors = this.ValidateOnForwarding(msg);
+        }
+
+        else {
+            errors = this.ValidateOnCarriage(msg);
+        }
+
+        return errors;
+    }
+    private ValidateOnCarriage(msg: string): string[] {
         var errors: string[] = [];
 
         if (AppTool.IsNullOrEmpty(this.OnCarriageTransportModeId)) {
@@ -852,7 +834,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
 
         return errors;
     }
-    ValidatePreForwarding(msg: string): string[] {
+    private ValidateOnForwarding(msg: string): string[] {
         var errors: string[] = [];
 
         if (AppTool.IsNullOrEmpty(this.OnForwardingTransportModeId)) {
@@ -868,12 +850,12 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         }
 
         if (!this.SplitOnForwarding) {
-            this.EntityPM.ShipmentPackages.forEach((item) => {
+            //this.EntityPM.ShipmentPackages.forEach((item) => {
                 //item.OnForwardingETD = null;
                 //item.OnForwardingATD = null;
                 //item.OnForwardingETA = null;
                 //item.OnForwardingATA = null;
-            });
+            //});
         }
 
         // Series Dates
@@ -890,6 +872,65 @@ export class AddEditOnCarriageComponent extends BaseComponent {
 
         return errors;
     }
+    private AssignAdditionalTransportModeToPackages() {
+        var transportMode = this.EntityPM.ShipmentLevelCode == "H" ? this.OnForwardingAdditionalTransportModeCode : this.OnCarriageAdditionalTransportModeCode;
+
+        if (!AppTool.IsNullOrEmpty(transportMode)) {
+            this.EntityPM.ShipmentPackages.forEach(item => {
+
+                if (AppTool.IsNullOrEmpty(item.DeliveryId)) {
+                    item.DeliveryTransportModeCode = transportMode;
+                }
+
+                if (AppTool.IsNullOrEmpty(item.EmptyContainerReturnId)) {
+                    item.ECRTransportModeCode = transportMode;
+                }
+            });
+        }
+    }
+    private CheckToShowChangePortsWindow(): boolean {
+        var isShowChangePortsWindow: boolean = false;
+        if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
+            if (this.EntityPM.OriginOnCarriageToPortId != this.EntityPM.OnCarriageToPortId) {
+                isShowChangePortsWindow = true;
+            }
+        }
+
+        return isShowChangePortsWindow;
+    }
+    private ShowConfirmChangePortsWindow() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Title = "Ports Changed";
+        confirmWindow.Show("Updating the Master shipment ports will update the house shipment accordingly");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.SaveMasterHousesPorts();
+            }
+        });
+    }
+    private SaveMasterHousesPorts() {
+        if (!this.SaveCompletedEvent) {
+            this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                AppTool.KillEventEmitter(this.SaveCompletedEvent);
+                this.SaveCompletedEvent = null;
+
+                if (isSaveSuccess) {
+                    this.CurrentSession.SessionEvent.emit("ReloadHouses");
+                    this.CloseWindowOnOk();
+                }
+
+                else {
+                    this.ValidationErrorsList = this.CurrentSession.CurrentEditComponent.ValidationErrorsList;
+                }
+            });
+
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
+        }
+    }
+    private CloseWindowOnOk() {
+        this.FatherComponent.BuildItemsCollection();
+        this.CurrentSession.CloseCurrentWindowEmit("OK");
+    }    
 
     EditContainer(itemComponent: OnCarriagePackageItem) {
         var tabComponent: PackagesTabComponent = new PackagesTabComponent(this.FatherComponent.entityArgs, new EntityResourceService());

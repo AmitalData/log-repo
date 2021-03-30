@@ -4881,6 +4881,23 @@ export class ShipmentPM {
     public get OnForwardingATA_Original() { return this.onForwardingATA_Original; }
     public set OnForwardingATA_Original(newValue: Date) { if (this.onForwardingATA_Original != newValue) { this.onForwardingATA_Original = newValue; this.MarkAsDirty("OnForwardingATA_Original"); } }
 
+    private originPreCarriageFromPortId: string;
+    public get OriginPreCarriageFromPortId() { return this.originPreCarriageFromPortId; }
+    public set OriginPreCarriageFromPortId(newValue: string) {
+        if (this.originPreCarriageFromPortId != newValue) {
+            this.originPreCarriageFromPortId = newValue;
+            this.MarkAsDirty("OriginPreCarriageFromPortId");
+        }
+    }
+
+    private originOnCarriageToPortId: string;
+    public get OriginOnCarriageToPortId() { return this.originOnCarriageToPortId; }
+    public set OriginOnCarriageToPortId(newValue: string) {
+        if (this.originOnCarriageToPortId != newValue) {
+            this.originOnCarriageToPortId = newValue;
+            this.MarkAsDirty("OriginOnCarriageToPortId");
+        }
+    }
 
     public OldEntityPM: ShipmentPM;
 

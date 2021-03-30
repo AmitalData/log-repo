@@ -1668,6 +1668,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
                     entityPM.OriginMainCarriageFromPortId = entityMasterData.MainCarriageFromPortId;
                     entityPM.OriginFinalDestinationPortId = entityMasterData.MainCarriageFinalDestinationPortId;
+                    entityPM.OriginPreCarriageFromPortId = entityMasterData.PreCarriageFromPortId;
+                    entityPM.OriginOnCarriageToPortId = entityMasterData.OnCarriageToPortId;
                 }
             }
         }
