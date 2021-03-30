@@ -23,7 +23,7 @@ export class PrivateLoginComponent extends LoginComponent implements OnInit {
     public MainLogo: string = "";
     public SmallLogo: string = ""; 
     public showSpinner = true;
-
+    public IsDSV = false;
     constructor(
         private ss: LoginService,
         private privateLabelsBrandingDataService: PrivateLabelsBrandingDataService) {
@@ -34,7 +34,8 @@ export class PrivateLoginComponent extends LoginComponent implements OnInit {
         this.privateUrl = SessionInfo.GetLogitudeURL();
         // Get Images from storage, then request from server to change
         this.GetImagesFromStorage();
-         this.GetPrivateLabelsData(this.privateUrl);
+        this.GetPrivateLabelsData(this.privateUrl);
+        this.IsDSV = window.sessionStorage.getItem("IsDSV") == "true";
     }
 
     GetImagesFromStorage() {
