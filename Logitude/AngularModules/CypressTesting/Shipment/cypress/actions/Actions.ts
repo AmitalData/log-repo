@@ -171,7 +171,11 @@ export function ValidateShipmentFields(IsCanceled: boolean) {
     if (IsCanceled) {
         BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentValueOfGoods, BaseSelectors.BeEmpty)
     } else {
-        BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentValueOfGoods, '123.00')
+        cy.get(ShipmentSelectors.ShipmentValueOfGoods).then(($shipmentValueOfGoods) => {
+            const shipmentValueOfGoods = $shipmentValueOfGoods.val()
+             expect(shipmentValueOfGoods).to.be.oneOf(['123.00','123'])
+    })
+        
     }
     CheckIfDisable(ShipmentSelectors.OrdersTab, ShipmentSelectors.ShipmentBookingNumberOfPackages, IsCanceled);
     CheckIfDisable(ShipmentSelectors.OrdersTab, ShipmentSelectors.ShipmentMainCarriageCarrierId, IsCanceled);
@@ -193,7 +197,11 @@ export function ValidatePackageDetails(tabSelector: string, partialSplitDetails:
         GetCellAssertion("3", partialSplitDetails.Volume.toString());
         GetCellAssertion("5", partialSplitDetails.GrossWeight.toString());
     }
-    BaseAssertion.AssertElementHaveValue(grossWeightSelector, partialSplitDetails.GrossWeight.toString())
+    cy.get(grossWeightSelector).then(($grossWeightSelector) => {
+        const grossWeight = $grossWeightSelector.val()
+         expect(grossWeight).to.be.oneOf([parseFloat(partialSplitDetails.GrossWeight.toString()).toString(), parseInt(partialSplitDetails.GrossWeight.toString()).toString()])
+    
+})
 }
 
 export function ValidateShipmentNumber(OldShipmentNumber: string) {
