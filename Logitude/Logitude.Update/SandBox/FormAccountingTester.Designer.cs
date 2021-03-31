@@ -32,11 +32,12 @@
             this.checkBoxDebugMode = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.textBoxLogger = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.mupsOpenReconcileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.loadFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tESTADHOKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -94,6 +95,16 @@
             this.splitContainer1.SplitterDistance = 68;
             this.splitContainer1.TabIndex = 4;
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(555, 30);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(65, 17);
+            this.checkBox1.TabIndex = 7;
+            this.checkBox1.Text = "LogSQL";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // textBoxLogger
             // 
             this.textBoxLogger.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -116,20 +127,11 @@
             // mupsOpenReconcileToolStripMenuItem
             // 
             this.mupsOpenReconcileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadFileToolStripMenuItem});
+            this.loadFileToolStripMenuItem,
+            this.tESTADHOKToolStripMenuItem});
             this.mupsOpenReconcileToolStripMenuItem.Name = "mupsOpenReconcileToolStripMenuItem";
             this.mupsOpenReconcileToolStripMenuItem.Size = new System.Drawing.Size(129, 20);
             this.mupsOpenReconcileToolStripMenuItem.Text = "MupsOpenReconcile";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(555, 30);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(65, 17);
-            this.checkBox1.TabIndex = 7;
-            this.checkBox1.Text = "LogSQL";
-            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // loadFileToolStripMenuItem
             // 
@@ -138,14 +140,21 @@
             this.loadFileToolStripMenuItem.Text = "LoadFile";
             this.loadFileToolStripMenuItem.Click += new System.EventHandler(this.loadFileToolStripMenuItem_Click);
             // 
-            // FormAccountingTesster
+            // tESTADHOKToolStripMenuItem
+            // 
+            this.tESTADHOKToolStripMenuItem.Name = "tESTADHOKToolStripMenuItem";
+            this.tESTADHOKToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tESTADHOKToolStripMenuItem.Text = "TESTADHOK";
+            this.tESTADHOKToolStripMenuItem.Click += new System.EventHandler(this.tESTADHOKToolStripMenuItem_Click);
+            // 
+            // FormAccountingTester
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
-            this.Name = "FormAccountingTesster";
+            this.Name = "FormAccountingTester";
             this.Text = "FormMumpsOpenReconcile";
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
@@ -170,5 +179,6 @@
         private System.Windows.Forms.ToolStripMenuItem mupsOpenReconcileToolStripMenuItem;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.ToolStripMenuItem loadFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tESTADHOKToolStripMenuItem;
     }
 }
