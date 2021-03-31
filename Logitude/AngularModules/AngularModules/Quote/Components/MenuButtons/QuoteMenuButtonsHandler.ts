@@ -249,12 +249,24 @@ export class QuoteMenuButtonsHandler {
 
                     if (button.EventCode == "ConvertQuoteTransportMode") {
                         if (buttonEnabled) {
-                            if (this.EntityPM.IsCancelled || this.EntityPM.IsClosed) {
-                                button.IsDisabled = true;
+                            var myDraftStage: QuoteStageList = this.allStages.filter(d => d.Code == "QTDR")[0];
+                            var myCreatedStage: QuoteStageList = this.allStages.filter(d => d.Code == "QTCR")[0];
+
+                            if (myDraftStage != null) {
+                                myDraftStageId = myDraftStage.Id;
                             }
-                            else {
+
+                            if (myCreatedStage != null) {
+                                myCreatedStageId = myCreatedStage.Id;
+                            }
+
+                            if (this.EntityPM.StageId == myDraftStageId || this.EntityPM.StageId == myCreatedStageId) {
                                 button.IsHidden = false;
                                 button.IsDisabled = false;
+                            }
+                            else {
+                                button.IsHidden = true;
+                                button.IsDisabled = true;
                             }
                         }
                         else {
@@ -427,19 +439,9 @@ export class QuoteMenuButtonsHandler {
                                 this.EntityPM.ConvertToFCL = true;
                                 break;
                             }
-                        case "Transport":
-                            {
-                         
-                                this.DoConvertQuoteTransportMode();
-                                break;
-                            }
                     }
 
                     this.Reload = true;
-
-                    if (type != "Transport") {
-                        this.entityArgs.EditComponent.SaveChanges();
-                    }
 
                     this.isButtonClicked = false;
                 }
@@ -448,9 +450,7 @@ export class QuoteMenuButtonsHandler {
     }
 
     private ConvertQuoteTransportModeClicked() {
-        var errors: string[] = [];
         this.Validate();
-
         if (this.isValid) {
             this.IsConvertQuoteTransportModeClicked = true;
             this.entityArgs.EditComponent.SaveChanges();
@@ -534,7 +534,7 @@ export class QuoteMenuButtonsHandler {
                     }
 
                     if (this.IsConvertQuoteTransportModeClicked) {
-                        this.DoConvertQuoteType("Transport");
+                        this.DoConvertQuoteTransportMode();
                     }
 
                     if (this.IsSetAsSentQuote) {

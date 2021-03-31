@@ -2537,11 +2537,15 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         }
     }
     private CloseWizardWindow() {
-        this.RejectChanges();
+        if (this.ConvertTransportMode) {
+            this.RejectChanges();
+        }
         this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
-        this.CurrentSession.StartBusyIndicatorSaving();
+        if (!this.ConvertTransportMode) {
+            this.CurrentSession.StartBusyIndicatorSaving();
+        }
 
         this.SetDataOnFinish();
 
@@ -2551,7 +2555,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         if (this.ValidationErrorsList.length == 0) {
             this.InitializeCopy_Charges();
             if (this.ConvertTransportMode) {
-                this.SubmitCreatingUpdateQuote();
+                this.ConvertQuoteTransportModeProcess();
             }
             else {
                 this.SubmitCreatingNewQuote();
@@ -2711,7 +2715,29 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         }
     }
 
-    private SubmitCreatingUpdateQuote() {
+    private ConvertQuoteTransportModeProcess() {
+        if (this.EntityPM.IsDirty) {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Width = 450;
+            confirmWindow.Height = 190;
+            confirmWindow.ShowCancelButton = false;
+            confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Ok");
+            confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");
+            confirmWindow.Title = "Convert Quote Transport Mode";
+            confirmWindow.Show("Changing the quote transport mode will result in deleting all the quote packages & charges.");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.CurrentSession.StartBusyIndicatorSaving();
+                    this.SubmitUpdateQuote();
+                }
+            });
+        }
+        else {
+            this.CloseWizardWindow();
+        }
+    }
+
+    private SubmitUpdateQuote() {
         var myService: QuotePMService = new QuotePMService();
         this.EntityPM.ConvertTransportMode = this.ConvertTransportMode;
         myService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
