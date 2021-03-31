@@ -153,11 +153,7 @@ export class AuditAutomationTabComponent implements OnInit, AfterViewInit {
                 if (entityChangeAutomationsSummary) {
                     this.ChangeFieldsList = entityChangeAutomationsSummary.ChangeFieldsList;
                     this.AutomationList = this.EntityAutomationList = entityChangeAutomationsSummary.EntityChangeAutomationList;
-                    if (this.AutomationList.length && !this.AutomationList[0].ConditionsList.length) {
-                        this.ShowConditionsDetailsLink = false;
-                    } else {
-                        this.ShowConditionsDetailsLink = true;
-                    }
+                     
 
                 }
             }
