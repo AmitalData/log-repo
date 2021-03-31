@@ -1322,6 +1322,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\HazardousSubstanceList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\LoadingSiteTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\NbcDeclarationTypeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\NDMessageActionCodeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\PartyRelationshipTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\PendingByKeywordList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\PendingErrorPlaceList.ts" />
@@ -1392,6 +1393,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\HazardousSubstancePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\LoadingSiteTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\NbcDeclarationTypePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\NDMessageActionCodePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\PartyRelationshipTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\PendingByKeywordPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\PendingErrorPlacePM.ts" />
@@ -1486,6 +1488,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\HazardousSubstanceListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\LoadingSiteTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\NbcDeclarationTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\NDMessageActionCodeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\PartyRelationshipTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\HazardousSubstanceListService_.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\HazardousSubstancesListService.ts" />

@@ -389,6 +389,7 @@ import { SupplierPartyTypeListService } from './Services/StandardLists/SupplierP
 import { DeliveryTypeListService } from './Services/StandardLists/DeliveryTypeListService';
 import { CustomerIdentificationTypeListService } from './Services/StandardLists/CustomerIdentificationTypeListService';
 import { CoolingReportingMethodListService } from './Services/StandardLists/CoolingReportingMethodListService';
+import { NDMessageActionCodeListService } from './Services/StandardLists/NDMessageActionCodeListService';
 
 
 export class ModuleProviders {
@@ -656,6 +657,7 @@ export class ModuleProviders {
             case "CargoTypeListService": { myResult = new CargoTypeListService(); break; }
             case "CustomerIdentificationTypeListService": { myResult = new CustomerIdentificationTypeListService(); break; } 
             case "CoolingReportingMethodListService": { myResult = new CoolingReportingMethodListService(); break; } 
+            case "NDMessageActionCodeListService": { myResult = new NDMessageActionCodeListService(); break; } 
 
 
              //#endregion                
