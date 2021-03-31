@@ -43,6 +43,8 @@ export class NewBIReport extends BaseComponent {
     public FactTables: CodeNameClass[] = [];
     public BIReportFolders: string[] = [];
     public SelectdBIReportFolder: string;
+    public ShowTypeCode: boolean = false;
+
     private ComponentRef;
     @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() TenantFieldChangeEvent = new EventEmitter();

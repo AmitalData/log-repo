@@ -210,7 +210,28 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='AssignedCustomsAgentExcReason' Type='nvarchar' Size='32'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
+"  <Column Name='DeliveryDone' Type='bit'>"+
+"    <Constraints Nullable='false' />"+
+"  </Column>"+
+"  <Column Name='DeliveryDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='DeliveryEstimationDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='DeliveryNotes' Type='nvarchar' Size='32'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='DeliveryExceptionReason' Type='nvarchar' Size='32'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
 "  <Column Name='GrossWeightUnitCode' Type='varchar' Size='3'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ForwardingShipmentNumber' Type='varchar' Size='100'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='ShipmentLevelCode' Type='varchar' Size='1'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Relation ForeignKeyColumn='EntityType' ReferencedTable='CargoTrackingHeaderEntityTypes' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+

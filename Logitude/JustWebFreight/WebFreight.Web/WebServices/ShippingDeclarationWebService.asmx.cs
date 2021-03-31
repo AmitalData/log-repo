@@ -183,6 +183,7 @@ namespace WebFreight.Web.WebServices
                     if (currency != null)
                     {
                         myDataProvider.ValueOfGoodsCurrency = currency.EnglishName;
+                        myDataProvider.ValueOfGoodsCurrencyCode = currency.Code;
                     }
                 }
 
@@ -304,6 +305,7 @@ namespace WebFreight.Web.WebServices
                     if (currency != null)
                     {
                         myDataProvider.ValueOfGoodsCurrency = currency.EnglishName;
+                        myDataProvider.ValueOfGoodsCurrencyCode = currency.Code;
                     }
                 }
                 if (salesmanData != null)
@@ -1104,6 +1106,7 @@ namespace WebFreight.Web.WebServices
                         myDataProvider.UserName = currentContact.EnglishName;
                         myDataProvider.UserEmail = currentContact.Email != null ? currentContact.Email : "";
                         myDataProvider.UserPhoneNumber = currentContact.BusinessPhone;
+                        myDataProvider.UserMobileNumber = currentContact.Mobile;
                     }
                 }
                 #endregion

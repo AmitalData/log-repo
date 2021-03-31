@@ -1,5 +1,7 @@
-﻿using Logitude.Accounting.BL.CoreBL.Reports;
+﻿using Logitude.Accounting.BL.CoreBL;
+using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
@@ -18,6 +20,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Xml.Serialization;
+using WebFreight.Web.AccountingModel.LedgerTransactionService;
 using WebFreight.Web.DataProviders;
 using WebFreight.Web.Security;
 
@@ -47,8 +50,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             this.FilterByRefDates(iQueryOperations);
             this.FilterByTypeAndBank(iQueryOperations);
             this.FilterByReconciled(iQueryOperations);
-        }
+          
 
+        }
+        
+        LedgerTransactionBalanceFilter LTBFilter;
         public byte[] GetData()
         {
             this.LoadDataProvider();
@@ -70,7 +76,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private void BuildReportHeader()
         {
 
-            if (this.ExternalReconciliationNumber ==null)
+            if (this.ExternalReconciliationNumber == null)
             {
                 iDataProvider.BankAccountId = this.BankAccountId;
                 iDataProvider.Type = this.Type;
@@ -83,13 +89,60 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             iDataProvider.ExternalReconciliationNumber = this.ExternalReconciliationNumber;
             iDataProvider.SortBy = this.SortBy;
 
+            SetBankPagesClosingBalance();
 
         }
+
+        private void SetBankPagesClosingBalance()
+        {
+            ExternalPagesBalanceService externalPagesBalanceService = new ExternalPagesBalanceService(tenant);
+            iDataProvider.BankPagesClosingBalance = externalPagesBalanceService.GetClosingBalanceByDate("BankAccount", BankAccountId, RefDateTo.Value);
+
+        }
+       private LedgerTransactionBalanceFilter CreateLedgerTransactionBalanceFilter(ExternalReconciliationPeriod period)
+        {
+            LedgerTransactionBalanceFilter ledgerTransactionBalanceFilter = new LedgerTransactionBalanceFilter();
+            ledgerTransactionBalanceFilter.GLAccountId = period.GLAccountId; 
+            ledgerTransactionBalanceFilter.From = RefDateFrom.Value;
+            ledgerTransactionBalanceFilter.To = RefDateTo.Value;
+            ledgerTransactionBalanceFilter.DateTypeCode = "3";
+            ledgerTransactionBalanceFilter.Tenant = tenant;
+          //  ledgerTransactionBalanceFilter.CurrencyId = GetTenantCurrency();
+            ledgerTransactionBalanceFilter.PageSize = 30;
+            return ledgerTransactionBalanceFilter;
+        }
+        List<TransactionBalance> transactionsbalance;
+        private List<TransactionBalance> FillTransactionBalancesList()
+        {
+             transactionsbalance = new List<TransactionBalance>();
+            foreach (ExternalReconciliationPeriod period in AllExternalReconciliationPeriod)
+            {
+                var exist = transactionsbalance.Where(d => d.BankAccountId == period.BankAccountId).Any();
+                if (!exist)
+                {
+                    LedgerTransactionBalanceFilter ledgerTransactionBalanceFilter = CreateLedgerTransactionBalanceFilter(period);
+                    TransactionsBalanceByFiltersService transactionsBalanceByFiltersService = new TransactionsBalanceByFiltersService();
+                    TransactionsBalanceByFiltersResult transactionsBalanceByFiltersResult = transactionsBalanceByFiltersService.GetTransactionsBalanceByFilters(tenant, null, ledgerTransactionBalanceFilter);
+                    TransactionBalance transactionBalance = new TransactionBalance()
+                    {
+                        BankAccountId = period.BankAccountId,
+                        GLAccountId = period.GLAccountId,
+                        TotalInLocalCurrency = transactionsBalanceByFiltersResult.ledgerTransactionBalanceService.Response.EndBalanceLocal
+                    };
+                    transactionsbalance.Add(transactionBalance);
+                }
+            }
+            return transactionsbalance;
+        }
+
+        List<BankAccountPM> AllBankAccounts;
+        List<ExternalReconciliationPeriod> AllExternalReconciliationPeriod;
         private void BuildSourceData()
         {
-            List<BankAccountPM> AllBankAccounts = GetAllBankAccountsByFilters();
-
-            List<ExternalReconciliationPeriod> AllExternalReconciliationPeriod = GetAllBankTransactionForTypeFilter(AllBankAccounts);
+            AllBankAccounts = GetAllBankAccountsByFilters();
+          
+            AllExternalReconciliationPeriod = GetAllBankTransactionForTypeFilter(AllBankAccounts);
+            transactionsbalance = FillTransactionBalancesList();
             if (AllBankAccounts==null)
             {
                 AllBankAccounts =  GetAllBankAccountsFromTransactions(AllExternalReconciliationPeriod);
@@ -106,13 +159,18 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                  TotalClosed = AllExternalReconciliationPeriod == null ? null : AllExternalReconciliationPeriod.Where(s => s.BankAccountId == a.Id && s.IsRecomncile == true).Sum(b => b.Amount),
                                                  TotalOpen = AllExternalReconciliationPeriod == null ? null : AllExternalReconciliationPeriod.Where(s => s.BankAccountId == a.Id && s.IsRecomncile == false).Sum(b => b.Amount),
                                                  ExternalReconciliationPeriods = AllExternalReconciliationPeriod == null ? null : AllExternalReconciliationPeriod.Where(s => s.BankAccountId == a.Id).ToList(),
-
+                                                 GlaccountTotalOpened = AllExternalReconciliationPeriod == null ? 0 : AllExternalReconciliationPeriod.Where(s => s.BankAccountId == a.Id && s.EnglishType == "GLAccount" && s.IsRecomncile == false).Sum(b => b.Amount),
+                                                 GlaccountTotalClosed = AllExternalReconciliationPeriod == null ? 0 : AllExternalReconciliationPeriod.Where(s => s.BankAccountId == a.Id && s.EnglishType == "GLAccount" && s.IsRecomncile == true).Sum(b => b.Amount),
+                                                 TransferTotalOpened = AllExternalReconciliationPeriod == null ? 0 : AllExternalReconciliationPeriod.Where(s => s.BankAccountId == a.Id && s.EnglishType == "Transfer" && s.IsRecomncile == false).Sum(b => b.Amount),
+                                                 TransferTotalClosed = AllExternalReconciliationPeriod == null ? 0 : AllExternalReconciliationPeriod.Where(s => s.BankAccountId == a.Id && s.EnglishType == "Transfer" && s.IsRecomncile == true).Sum(b => b.Amount),
+                                                 BankTotalOpened = AllExternalReconciliationPeriod == null ? 0 : AllExternalReconciliationPeriod.Where(s => s.BankAccountId == a.Id && s.EnglishType == "Bank" && s.IsRecomncile == false).Sum(b => b.Amount),
+                                                 BankTotalClosed = AllExternalReconciliationPeriod == null ? 0 : AllExternalReconciliationPeriod.Where(s => s.BankAccountId == a.Id && s.EnglishType == "Bank" && s.IsRecomncile == true).Sum(b => b.Amount),
+                                                 TotalInLocalCurrency = transactionsbalance.Where(d => d.BankAccountId == a.Id).FirstOrDefault() != null ? transactionsbalance.Where(d => d.BankAccountId == a.Id).FirstOrDefault().TotalInLocalCurrency : null,
                                              }).Where(s => s.ExternalReconciliationPeriods.Count > 0).ToList();
 
             }
-
+            
         }
-
 
         private List<BankAccountPM> GetAllBankAccountsByFilters()
         {
@@ -304,6 +362,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                               Ref1 = a.Reference,
                                                               Ref2 = null,
                                                               ExternalPageLineId = Ex.ExternalPageLineId,
+                                                              GLAccountId = BK.GLAccountId
 
                                                           }).ToList();
 
@@ -337,7 +396,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                               Ref1 = a.Reference1,
                                                               Ref2 = a.Reference2,
                                                               ExternalPageLineId = null,
-
+                                                              GLAccountId = BK.GLAccountId,
                                                           }).ToList();
 
 
@@ -362,7 +421,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             return ledgerTransactions;
 
         }
-
+       private string GetTenantCurrency()
+        {
+            TenantQuery tenantQuery = new TenantQuery(tenant);
+            TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
+            return tenantPM.CurrencyId;
+        }
         private IQueryable<LedgerTransaction> ApplyFiltersForLedgerTransactions(IQueryable<LedgerTransaction> ledgerTransactions, List<BankAccountPM> AllBankAccounts,bool IsTransfer)
         {
             if (ExternalReconciliationNumber == null)
@@ -564,4 +628,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
     }
 
+}
+
+class TransactionBalance
+{
+    public string BankAccountId { get; set; }
+    public string GLAccountId { get; set; }
+    public decimal? TotalInLocalCurrency { get; set; }
 }

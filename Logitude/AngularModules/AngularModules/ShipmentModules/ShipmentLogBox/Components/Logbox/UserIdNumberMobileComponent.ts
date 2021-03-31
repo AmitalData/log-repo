@@ -202,14 +202,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
 
     private userIdNumber;
     public get UserIdNumber() { return this.userIdNumber }
-    public set UserIdNumber(newValue: string) {
-        var id = String(newValue).trim();
-        if (id.length <= 9 && id.length >= 5) {
-            // Pad string with zeros up to 9 digits
-            newValue = id.length < 9 ? ("00000000" + id).slice(-9) : id;
-        }
-        this.userIdNumber = newValue;
-    }
+    public set UserIdNumber(newValue: string) { this.userIdNumber = newValue; }
 
     public BusyIndicatorText: string = null;
     public ShowBusyIndicator: boolean = false;
@@ -256,6 +249,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
             }
             else {
                 if (!AppTool.IsNullOrEmpty(this.UserIdNumber)) {
+                    this.UserIdNumber = this.PadStringWithZerosUpTo9Digits(this.UserIdNumber);
                     entity.UserIdNumberUpdateDate = new Date();
                     entity.IsUserIDNumberRequired = false;
                     entity.UserIdNumber = this.UserIdNumber;
@@ -299,6 +293,16 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                 const step = digit * ((i % 2) + 1);
                 return counter + (step > 9 ? step - 9 : step);
             }) % 10 === 0;
+    }
+
+    PadStringWithZerosUpTo9Digits(value) {
+        let userIdNumber = value;
+        let id = String(userIdNumber).trim();
+        if (id.length <= 9 && id.length >= 5) {
+            userIdNumber = id.length < 9 ? ("00000000" + id).slice(-9) : id;
+        }
+
+        return userIdNumber;
     }
 
 }

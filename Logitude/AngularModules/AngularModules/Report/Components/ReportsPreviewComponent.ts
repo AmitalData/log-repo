@@ -59,7 +59,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
 
-  IsHaveRunReportViewWorkerRoleToggleFeature: boolean = true;
+    IsHaveRunReportViewWorkerRoleToggleFeature: boolean = true;
     constructor(public _reportService: ReportService, private cd: ChangeDetectorRef) {
         var idIndex = this.CurrentSession.GetNewId("ReportsPreviewComponent");
         this.ComponentId = "ReportsPreview_" + idIndex;
@@ -104,6 +104,11 @@ export class ReportsPreviewComponent implements AfterViewInit {
     GetReportFilterItems() {
         var reportFilterItems: Array<QueryFilterItem> = this.ReportFilterConmponent.GetQueryFilterItems();
         return reportFilterItems;
+    }
+
+    GetReportFilterMainCustomerFieldName() {
+        const mainCustomerName = this.ReportFilterConmponent.GetMainCustomerFieldName();
+        return mainCustomerName;
     }
 
     IsPartnersChanged(SelectedTab) {

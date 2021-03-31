@@ -289,25 +289,33 @@
 
                             <!-- Chart of account type -->
                             <td style="width:120px">
-                                <LogLabel [ObjectFieldName]="'ChartOfAccountsTypeCode'"
-                                            [Text]="'GLAccount.F.ChartOfAccountsTypeCode' | TextCodeTranslationPipe"
-                                            [ObjectTableName]="'GLAccount0'" [DataContext]="DataContext">
-                                </LogLabel>
+                                <LogLabel [ObjectFieldName]="'ChartOfAccountId'"
+                                        [Text]="'GLAccount.F.ChartOfAccountsId' | TextCodeTranslationPipe"
+                                        [ObjectTableName]="'GLAccount'" [DataContext]="DataContext">
+                            </LogLabel>
+
+
                             </td>
-                            <td style="width:135px">
-                                <LogLov style="display: block;" float-start
-                                    [ObjectFieldName]="'ChartOfAccountsTypeCode'"
-                                    [ObjectTableName]="'GLAccount'"
-                                    [DataContext]="DataContext"
-                                    [QueryFilterItems]="ChartOfAccountTypeFilterItems"
-                                    [LookUpTableName]="'ChartOfAccountsType'"
-                                    [ForceShowAddLink]="true"
-                                    [HideAddLink]="true"
-                                    [HideColumns]="true">
-                                </LogLov>
+                            <td style="width:140px" [attr.colspan]="IsSalesmanRestricted?2:1">
+                                <div style="width:140px">
+                                    <LogLov style="display: block;" float-start
+                                            [ObjectFieldName]="'ChartOfAccountsId_Dummy'"
+                                            [ObjectTableName]="'GLAccount'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'ChartOfAccount'"
+                                            (SelectedItemChanged)="ChartOfAccount = $event"
+                                            [ForceShowAddLink]="true"
+                                            [SelectedValue]="ChartOfAccountsId_Dummy"
+                                            [DependencyFilter1Value]="null"
+                                            [DependencyFilter2Value]="ChartOfAccountsTypeCode || '3'"
+                                            [HideAddLink]="true"
+                                            [HideColumns]="true">
+                                    </LogLov>
+                                </div>
                             </td>
 
-                            <td style="width: 35px;" ></td>
+
+                            <td *ngIf="!IsSalesmanRestricted" style="width: 35px;" ></td>
 
 
                             <!-- NumberOfMonths -->
@@ -344,38 +352,27 @@
 
                             <!-- Chart of account -->
                             <td style="width:120px">
-                                <LogLabel [ObjectFieldName]="'ChartOfAccountId'"
-                                        [Text]="'GLAccount.F.ChartOfAccountsId' | TextCodeTranslationPipe"
-                                        [ObjectTableName]="'GLAccount'" [DataContext]="DataContext">
+                                <LogLabel float-start  [ObjectTableName]="'GLAccount'"
+                                [TextCode]="'General.Accounting.O.AgingMethod'" [DataContext]="DataContext">
                             </LogLabel>
                             </td>
                             <td style="width:135px">
-                                <LogLov style="display: block;" float-start
-                                        [ObjectFieldName]="'ChartOfAccountId'"
-                                        [ObjectTableName]="'GLAccount'"
-                                        [DataContext]="DataContext"
-                                        [LookUpTableName]="'ChartOfAccount'"
-                                        (SelectedItemChanged)="ChartOfAccount = $event"
-                                        [ForceShowAddLink]="true"
-                                        [SelectedValue]="ChartOfAccountsId"
-                                        [DependencyFilter1Value]="null"
-                                        [DependencyFilter2Value]="ChartOfAccountsTypeCode"
-                                        [HideAddLink]="true"
-                                        [HideColumns]="true">
-                                </LogLov>
+                                <ComboBox style="width:140px" float-start  [ItemsSource]="AgingMethodsList" [Binding]="Name"
+                                [SelectedItem]="SelectedAgingMethod"
+                                (SelectedItemChanged)="SelectedAgingMethod = $event"></ComboBox>
                             </td>
 
                             <td style="width: 35px;" ></td>
 
                             <!-- Aging methods -->
                             <td style="padding-right: 5px;" colspan="2" class="Label">
-                                <LogLabel float-start style="width: 130px;" [ObjectTableName]="'GLAccount'"
+                                <!-- <LogLabel float-start style="width: 130px;" [ObjectTableName]="'GLAccount'"
                                     [TextCode]="'General.Accounting.O.AgingMethod'" [DataContext]="DataContext">
                                 </LogLabel>
 
                                 <ComboBox float-start style="width: 163px;" [ItemsSource]="AgingMethodsList" [Binding]="Name"
                                     [SelectedItem]="SelectedAgingMethod"
-                                    (SelectedItemChanged)="SelectedAgingMethod = $event"></ComboBox>
+                                    (SelectedItemChanged)="SelectedAgingMethod = $event"></ComboBox> -->
                             </td>
 
                         </tr>

@@ -239,6 +239,12 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Helper\BluesnapTransactionUppdateOld.cs" />
+    <Compile Include="JournalsReapprovalTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="JournalsReapprovalTool.Designer.cs">
+      <DependentUpon>JournalsReapprovalTool.cs</DependentUpon>
+    </Compile>
     <Compile Include="PatchDistribution\PatchDistributionForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -306,6 +312,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JournalsReapprovalTool.resx">
+      <DependentUpon>JournalsReapprovalTool.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PatchDistribution\PatchDistributionForm.resx">
       <DependentUpon>PatchDistributionForm.cs</DependentUpon>

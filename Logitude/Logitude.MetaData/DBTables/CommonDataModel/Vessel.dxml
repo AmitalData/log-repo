@@ -90,6 +90,6 @@
     ReferencedTable="Countries"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-  <!--<UniqueConstraint
-   Columns="Tenant,Code" />-->
+  <UniqueConstraint Env="cloud"
+   Columns="Tenant,Code" />
 </Table>

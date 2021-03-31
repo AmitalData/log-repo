@@ -29,6 +29,7 @@ import { AuthService } from './auth.service';
 import { AuthGuardService } from 'src/Infrastructure/Services/auth-guard.service';
 import { Error401Component } from 'src/CargoTracking/Components/Errors/Error401Component';
 import { LoginServiceHelper } from 'src/Infrastructure/Utilities/LoginServiceHelper';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -81,6 +82,7 @@ export function getBaseUrl() {
         AuthGuardService,
         AuthService,
         LoginServiceHelper,
+        DatePipe,
         { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] }
     ],
     bootstrap: [AppComponent]

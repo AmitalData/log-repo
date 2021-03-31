@@ -243,6 +243,50 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return null;
         }
 
+        public Port GetAirlineSinglePortByCodeCountryCode(int tenant, string code, string countryCode, bool getFromCache)
+        {
+            if (!string.IsNullOrEmpty(code))
+            {
+                string entityName = "Port" + code + tenant;
+                Port entity;
+
+                if (getFromCache)
+                {
+                    if (CacheManager.CacheWrapper != null)
+                    {
+                        if (CacheManager.CacheWrapper.Get(entityName) == null)
+                        {
+                            entity = (from a in context.Ports.Include("Country")
+                                      where a.Tenant == tenant && a.Code == code && a.Country.Code == countryCode && a.IsAir
+                                      select a).FirstOrDefault();
+
+
+                            if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
+                            {
+                                CacheManager.CacheWrapper.Insert(entityName, entity, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            }
+
+                        }
+                        else
+                        {
+                            entity = (Port)CacheManager.CacheWrapper.Get(entityName);
+                        }
+                    }
+                    else
+                    {
+                        entity = (from record in context.Ports.Include("Country") where record.Code == code && record.Country.Code == countryCode && record.IsAir && record.Tenant == tenant select record).FirstOrDefault();
+                    }
+                }
+                else
+                {
+                    entity = (from record in context.Ports.Include("Country") where record.Code == code && record.Country.Code == countryCode && record.IsAir && record.Tenant == tenant select record).FirstOrDefault();
+                }
+                return entity;
+
+            }
+            return null;
+        }
+
         public Port GetOceanPortByCode(int myTenant, string myCode, bool getFromCache)
         {
             if (!string.IsNullOrEmpty(myCode))

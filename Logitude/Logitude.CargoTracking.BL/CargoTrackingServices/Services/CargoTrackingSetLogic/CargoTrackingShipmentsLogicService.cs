@@ -43,7 +43,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             SetCustomsPaymentMilestones(tableRow);
             SetClearanceMilestones(tableRow);
             SetDeliveredMilestones(tableRow);
-
+            SetDeliveryMilestones(tableRow);
             SetTruckerMilestoneFields(tableRow);
             SetCustomAgentFields(tableRow);
 
@@ -66,6 +66,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             tableRow.SetField("AssignedTruckerDone", !IsFieldNullOrEmpty(tableRow, "AssignedToTruckerDate"));
             //tableRow.SetField("AssignedTruckerEstimationDate", tableRow["AssignedTruckerEstimationDate"]);
             //tableRow.SetField("AssignedTruckerNotes", tableRow["AssignedTruckerNotes"]);
+        }
+        private static void SetDeliveryMilestones(DataRow tableRow)
+        {
+            tableRow.SetField("DeliveryEstimationDate", tableRow["FinalDeliveryETD"]);
+            tableRow.SetField("DeliveryDate", tableRow["FinalDeliveryATD"]);
+            SetDeliveryDone(tableRow);
+
         }
         private static void SetClearanceMilestones(DataRow tableRow)
         {
@@ -137,6 +144,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             {
                 tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Delivered);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["DeliveredDate"]);
+
+            }
+            else if (!IsFieldNullOrEmpty(tableRow, "DeliveryDone") && !tableRow["DeliveryDone"].Equals("False"))
+            {
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.DeliveryOut);
+                tableRow.SetField("CurrentMilestoneDate", tableRow["DeliveryDate"]);
 
             }
             else if (!IsFieldNullOrEmpty(tableRow, "AssignedTruckerDone") && !tableRow["AssignedTruckerDone"].Equals("False"))
@@ -223,6 +236,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
 
                 if (!tableRow["CustomFileId"].Equals(null) && !tableRow["CustomFileId"].Equals("") && tableRow["CustomFileId"].GetType().Name != "DBNull")
                 {
+                    tableRow.SetField("CustomsShipmentHeaderId", tableRow["CustomFileId"]);
                     tableRow.SetField("IsMainRecord", false);
                 }
                 else
@@ -230,8 +244,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                     tableRow.SetField("IsMainRecord", true);
 
                 }
+                tableRow.SetField("ForwardingShipmentNumber", DBNull.Value);
             }
-           
+
+
         }
 
 
@@ -349,6 +365,21 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             else
             {
                 tableRow.SetField("DeliveredDone", false);
+
+            }
+
+
+        }
+
+        private static void SetDeliveryDone(DataRow tableRow)
+        {
+            if (!IsFieldNullOrEmpty(tableRow, "DeliveryDate"))
+            {
+                tableRow.SetField("DeliveryDone", true);
+            }
+            else
+            {
+                tableRow.SetField("DeliveryDone", false);
 
             }
 

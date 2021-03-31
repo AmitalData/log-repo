@@ -76,7 +76,11 @@
     <field Id="&quot;cb603936-5a77-4b0f-a4e4-c15fad453a51&quot;" Code="&quot;[Houses ACCT Payables In Profit]&quot;" Name="&quot;Accounted Payables from houses only (Profit)&quot;" DataTypeCode="&quot;Decimal&quot;" IsRequired="false" MinLength="0" MaxLength="0" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="true" Category1="&quot;Charges&quot;" HideTree="false" CannotFilter="false" IsCustom="false" OriginalObjectFieldCode="&quot;Shipment.HousesACCTPayablesInProfit&quot;" DontDisplayInView="false" IsMultipleSelection="true" RecordType="&quot;Master&quot;" />
   </fields>
   <Indexes>
-    <Index Columns="[Source Tenant],[Shipment Create Date]" />
-    <Index Columns="[Source Tenant],[Shipment Create Date Time]" />
+      <Index Columns="[Source Tenant],[Shipment Create Date]" />
+      <Index Columns="[Source Tenant],[Shipment Create Date Time]" />
+      <Index Columns="[Source Tenant],[Invoice Date]" />
+      <Index Columns="[Source Tenant],[DirectHouse]" />
+
+      
   </Indexes>
 </entity>

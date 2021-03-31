@@ -810,20 +810,6 @@ namespace WebFreight.Web.MetaDataUpdate
             Dictionary<string, Measurement> currentTenantMeasurements = measurementsRepository.GetMeasurementsByTenant(tenant).ToDictionary(d => d.Code, a => a);
             Dictionary<string, EntityStatus> tenantZeroEntityStatus = TenantZeroEntityStatus;
             Dictionary<string, EntityStatus> currentTenantEntityStatus = entityStatusRepository.GetEntityStatusByTenant(tenant).ToDictionary(d => d.Code, a => a);
-            //Dictionary<string, EventType> tenantZeroEventTypes = null;
-            //if (true)
-            //{
-
-            //tenantZeroEventTypes = new Dictionary<string, EventType>();
-            //foreach (var d in eventTypeRepository.GetEventTypesByTenant(0).ToList())
-            //{
-            //tenantZeroEventTypes.Add(d.Code + d.ObjectTableId, d);
-            //}
-            //}
-            //else
-            //{
-            //tenantZeroEventTypes = eventTypeRepository.GetEventTypesByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
-            //}
 
             Dictionary<string, EventType> tenantZeroEventTypes;
 
@@ -2130,7 +2116,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 AutomationHelper automationHelper = new AutomationHelper();
                 List<string> automationDocumentTypeIds = automationHelper.GetAutomationDocumentTypeIds(tenant);
                 sameCountry = docType.CountryCode == countryCode;
-                if (((!docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers) || automationDocumentTypeIds.Contains(docType.Id)) && (string.IsNullOrEmpty(docType.CountryCode) || sameCountry))
+                if (((!docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers) || automationDocumentTypeIds.Contains(docType.Id)) && (string.IsNullOrEmpty(docType.CountryCode?.Trim()) || sameCountry))
                 {
                     DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(documentTypeTemplateRepository);
 
@@ -2226,7 +2212,7 @@ namespace WebFreight.Web.MetaDataUpdate
                                                   select doc).Any();
 
 
-                                if (((a.IsEnabledForCustomers && a.IsCopiedAtSignup) || automationDocumentTypeIds.Contains(docType.Id)) && (sameCountry || (string.IsNullOrEmpty(a.CountryCode) || a.CountryCode == countryCode)))
+                                if (((a.IsEnabledForCustomers && a.IsCopiedAtSignup) || automationDocumentTypeIds.Contains(docType.Id)) && (sameCountry || (string.IsNullOrEmpty(a.CountryCode?.Trim()) || a.CountryCode == countryCode)))
                                 {
                                     DocumentTypeTemplate newtemplate = new DocumentTypeTemplate()
                                     {
@@ -2538,12 +2524,12 @@ namespace WebFreight.Web.MetaDataUpdate
                 if (currentTenantEventTypes.Keys.Contains(eventType.Code + eventType.ObjectTableId))
                 {
                     EventType updatedEventType = currentTenantEventTypes[eventType.Code + eventType.ObjectTableId];
-
-                    if(updatedEventType.UpdateDate != eventType.UpdateDate)
+                    if((updatedEventType.UpdateDate != eventType.UpdateDate))
                     {
                         updatedEventType.EnglishName = eventType.EnglishName;
                         updatedEventType.AddedManually = eventType.AddedManually;
-                        updatedEventType.EntityStatusId = currentTenantEntityStatu != null ? currentTenantEntityStatu.Id : null;
+                        if (!updatedEventType.IsStatusNotModified)
+                            updatedEventType.EntityStatusId = currentTenantEntityStatu != null ? currentTenantEntityStatu.Id : null;
                         updatedEventType.FollowUpEnglishName = eventType.FollowUpEnglishName;
                         updatedEventType.FollowUpLocalName = eventType.FollowUpLocalName;
                         updatedEventType.InActive = eventType.InActive;

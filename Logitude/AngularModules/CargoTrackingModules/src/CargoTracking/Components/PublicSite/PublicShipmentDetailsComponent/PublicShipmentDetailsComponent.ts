@@ -216,9 +216,22 @@ export class PublicShipmentDetailsComponent implements OnInit
                 this.SetMilestonesFields(result);
 
             }
-
+            this.SetShipmentDetails();
 
         });
+    }
+    public ShipmentLabel: string;
+    public ShipmentReference: string;
+
+    SetShipmentDetails() {
+        if (this.Shipment.ShipmentLevelCode == ShipmentLevels.Direct) {
+            this.ShipmentLabel = "Master";
+            this.ShipmentReference = this.Shipment.Master;
+        }
+        else {
+            this.ShipmentLabel = "House";
+            this.ShipmentReference = this.Shipment.House;
+        }
     }
     SetCargoTrackingContainers(result: CargoTrackingShipmentWithMilestones){
          var Containers:string[] = [];
@@ -299,6 +312,10 @@ export class PublicShipmentDetailsComponent implements OnInit
 }
 
 
+ enum ShipmentLevels {
+    Direct = "D",
+    House = "H"
+}
 
 export class Milestone
 {

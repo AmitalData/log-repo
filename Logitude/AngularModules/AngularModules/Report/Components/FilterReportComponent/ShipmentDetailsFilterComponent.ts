@@ -81,6 +81,10 @@ export class ShipmentDetailsFilterComponent extends BaseComponent {
         return isValid;
     }
 
+    GetMainCustomerFieldName() {
+        return null;
+    }
+
     IsPartnersChanged() {
         return false;
     }

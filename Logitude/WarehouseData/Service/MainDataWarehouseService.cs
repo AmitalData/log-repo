@@ -137,6 +137,7 @@ namespace WarehouseData.Helper
 
             customFieldWarehouseService.BuildCustomObjectFieldsTable(connectionString, tableLists);
             RunSqlFunctions(connectionString);
+            if(!isIncrement)  ExecuteScript("Others", "AddAdditionalIndexesToDWTables", connectionString);
         }
 
 

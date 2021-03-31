@@ -170,6 +170,11 @@ export class EventTypePM {
     public set CustomField(newValue: string) { if (this.customField != newValue) { this.customField = newValue; this.MarkAsDirty("CustomField"); } }
        
 	 
+    private isStatusNotModified: boolean;
+    public get IsStatusNotModified() { return this.isStatusNotModified; }
+    public set IsStatusNotModified(newValue: boolean) { if (this.isStatusNotModified != newValue) { this.isStatusNotModified = newValue; this.MarkAsDirty("IsStatusNotModified"); } }
+       
+	 
 
     public OldEntityPM: EventTypePM;
 		

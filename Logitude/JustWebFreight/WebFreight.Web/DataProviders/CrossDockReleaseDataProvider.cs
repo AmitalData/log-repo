@@ -91,6 +91,7 @@ namespace WebFreight.Web.DataProviders
         public int StorageDays { get; set; }
         public string ProjectNumber { get; set; }
         public int? StorageFreeDays { get; set; }
+        public string MainCarriageTruckerNumber { get; set; }
 
     }
 

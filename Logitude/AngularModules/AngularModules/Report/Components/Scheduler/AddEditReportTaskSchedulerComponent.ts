@@ -321,16 +321,10 @@ export class AddEditReportTaskSchedulerComponent {
         }
     }
 
-    SaveButtonClicked(
-        reportFilterItems: Array<QueryFilterItem>,
-        reportTemplateId: string,
-        recepients: ReportSchedulerRecepients
-    ) {
-
-        
+    SaveButtonClicked(reportSchedulerDetails: ReportSchedulerDetails) {
         this.CurrentSession.StartBusyIndicatorSaving();
 
-        this.SetReportDetails(reportFilterItems, reportTemplateId, recepients);
+        this.SetReportDetails(reportSchedulerDetails);
         if (this.DataContext.IsNew) {
             this.DataContext.SchedulerDetails.ReportDetails.CreatedByUserId =
                 SessionLocator.LoggedUserId;
@@ -397,13 +391,11 @@ export class AddEditReportTaskSchedulerComponent {
         return this.parentComponent.SelectedTabLocation == 1;
     }
 
-    SetReportDetails(
-        reportFilterItems: Array<QueryFilterItem>,
-        reportTemplateId: string,
-        recepients: ReportSchedulerRecepients
-    ) {
-        this.DataContext.SchedulerDetails.ReportDetails.ReportFilterItems = reportFilterItems;
-        this.DataContext.SchedulerDetails.ReportDetails.ReportTemplateId = reportTemplateId;
+    SetReportDetails(reportSchedulerDetails: ReportSchedulerDetails) {
+        this.DataContext.SchedulerDetails.ReportDetails.MainCustomerFieldName = reportSchedulerDetails.MainCustomerFieldName;
+        this.DataContext.SchedulerDetails.ReportDetails.ReportFilterItems = reportSchedulerDetails.ReportFilterItems;
+        this.DataContext.SchedulerDetails.ReportDetails.ReportTemplateId = reportSchedulerDetails.ReportTemplateId;
+        const recepients = reportSchedulerDetails.Recepients;
         this.DataContext.SchedulerDetails.ReportDetails.Recepients.To = recepients.To
             ? recepients.To.toString().split(',').join(';')
             : '';
