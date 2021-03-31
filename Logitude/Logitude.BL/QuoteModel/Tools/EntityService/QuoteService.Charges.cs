@@ -19,7 +19,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         List<PackageType> AllPackageTypes = new List<PackageType>();
         public void GenerateDefaultCharges()
         {
-            if (isNewEntity || entityPM.ConvertToFCL || entityPM.ConvertToLCL || entityPM.ConvertTransportMode)
+            if (IsConvertingQuoteTypeOrTransportMode())
             {
                 if ((entityPM.QuoteCharges.Count() == 0 && !entityPM.IsHybrid))
                 {
@@ -496,6 +496,13 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 }
             }
         }
+
+        private bool IsConvertingQuoteTypeOrTransportMode()
+        {
+            var isConvertQuote = isNewEntity || entityPM.ConvertToFCL || entityPM.ConvertToLCL || entityPM.ConvertTransportMode;
+            return isConvertQuote;
+        }
+
         public void ComputeChargesAmounts()
         {
             if (isNewEntity)

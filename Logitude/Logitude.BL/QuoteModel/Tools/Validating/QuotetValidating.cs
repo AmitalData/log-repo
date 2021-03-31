@@ -70,8 +70,7 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
 
         private static void ValidateConvertQuote(QuotePM entityPM)
         {
-            var isConvertQuote = entityPM.ConvertToLCL || entityPM.ConvertToFCL || entityPM.ConvertTransportMode;
-            if (isConvertQuote)
+            if (IsConvertingQuoteTypeOrTransportMode(entityPM))
             {
                 IShipmentsContext MyContext = ShipmentsContext.GetContext(entityPM.Tenant);
                 bool existConnectedShipments = MyContext.Shipments.Where(p => p.Tenant == entityPM.Tenant && p.QuoteId == entityPM.Id).FirstOrDefault() != null;
@@ -88,7 +87,12 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                 }
             }
         }
-       
+        private static bool IsConvertingQuoteTypeOrTransportMode(QuotePM entityPM)
+        {
+            var isConvertQuote = entityPM.ConvertToLCL || entityPM.ConvertToFCL || entityPM.ConvertTransportMode;
+            return isConvertQuote;
+        }
+
         private static void ValidateAirlineRestriction(QuotePM entityPM)
         {
             if (entityPM.TransportModeId == "A")
