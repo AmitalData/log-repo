@@ -89,8 +89,16 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
         }
         private static bool IsConvertingQuoteTypeOrTransportMode(QuotePM entityPM)
         {
-            var isConvertQuote = entityPM.ConvertToLCL || entityPM.ConvertToFCL || entityPM.ConvertTransportMode;
-            return isConvertQuote;
+            if(entityPM.ConvertToLCL)
+                return true;
+
+            if (entityPM.ConvertToFCL)
+                return true;
+
+            if (entityPM.ConvertTransportMode)
+                return true;
+
+            return false;
         }
 
         private static void ValidateAirlineRestriction(QuotePM entityPM)

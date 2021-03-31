@@ -2543,27 +2543,22 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
-        if (!this.ConvertTransportMode) {
-            this.CurrentSession.StartBusyIndicatorSaving();
+        if (this.ConvertTransportMode) {
+            this.ConvertQuoteTransportModeProcess();
         }
+        else {
+            this.CurrentSession.StartBusyIndicatorSaving();
+            this.SetDataOnFinish();
+            var entityValidator: QuoteValidator = new QuoteValidator();
+            this.ValidationErrorsList = entityValidator.Validate(this.EntityPM);
 
-        this.SetDataOnFinish();
-
-        var entityValidator: QuoteValidator = new QuoteValidator();
-        this.ValidationErrorsList = entityValidator.Validate(this.EntityPM);
-
-        if (this.ValidationErrorsList.length == 0) {
-            this.InitializeCopy_Charges();
-            if (this.ConvertTransportMode) {
-                this.ConvertQuoteTransportModeProcess();
-            }
-            else {
+            if (this.ValidationErrorsList.length == 0) {
+                this.InitializeCopy_Charges();
                 this.SubmitCreatingNewQuote();
             }
-        }
-
-        else {
-            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            else {
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            }
         }
     }
     private SetDataOnFinish() {
@@ -3302,6 +3297,9 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         this.myCloner.AddField('ConvertTransportMode');
         this.myCloner.AddField('ExchangeRate');
         this.myCloner.AddField('EventNote');
+        this.myCloner.AddField('NumberOfContainers');
+        this.myCloner.AddField('ShipperMainAddressId');
+
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext);
     }

@@ -499,8 +499,16 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
         private bool IsConvertingQuoteTypeOrTransportMode()
         {
-            var isConvertQuote = isNewEntity || entityPM.ConvertToFCL || entityPM.ConvertToLCL || entityPM.ConvertTransportMode;
-            return isConvertQuote;
+            if (entityPM.ConvertToLCL)
+                return true;
+
+            if (entityPM.ConvertToFCL)
+                return true;
+
+            if (entityPM.ConvertTransportMode)
+                return true;
+
+            return false;
         }
 
         public void ComputeChargesAmounts()
