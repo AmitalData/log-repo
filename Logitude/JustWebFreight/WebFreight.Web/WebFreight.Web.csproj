@@ -2611,6 +2611,7 @@
     <Compile Include="Helpers\DataProviderHelpers\CrossDockReleaseShipmentService.cs" />
     <Compile Include="Helpers\DataProviderHelpers\ShipmentsEventsListDataProvider.cs" />
     <Compile Include="Helpers\AutomationDocumentHelper.cs" />
+    <Compile Include="Helpers\BaseDataProviderService.cs" />
     <Compile Include="Helpers\DocumentTypeTemplateDefultAttachmentService.cs" />
     <Compile Include="Helpers\PrivateLabelsBrandingDataService.cs" />
     <Compile Include="Helpers\UserViewLinkLimitationService.cs" />
