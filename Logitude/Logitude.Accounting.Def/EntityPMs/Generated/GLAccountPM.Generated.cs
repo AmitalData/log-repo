@@ -2816,6 +2816,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string paymentTermName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PaymentTermName  
+	   {
+	    
+	     get
+		{
+		   return paymentTermName;
+		 }
+		 set
+		 {
+		   if(paymentTermName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentTermName",OldValue=paymentTermName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   paymentTermName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

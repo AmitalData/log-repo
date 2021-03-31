@@ -714,6 +714,11 @@ export class GLAccountPM {
     public set RelatedGLAccount(newValue: string) { if (this.relatedGLAccount != newValue) { this.relatedGLAccount = newValue; this.MarkAsDirty("RelatedGLAccount"); } }
        
 	 
+    private paymentTermName: string;
+    public get PaymentTermName() { return this.paymentTermName; }
+    public set PaymentTermName(newValue: string) { if (this.paymentTermName != newValue) { this.paymentTermName = newValue; this.MarkAsDirty("PaymentTermName"); } }
+       
+	 
 
     public OldEntityPM: GLAccountPM;
 		

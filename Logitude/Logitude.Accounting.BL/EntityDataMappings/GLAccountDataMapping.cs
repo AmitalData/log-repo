@@ -265,6 +265,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     if (card != null)
                     {
                         entityPM.VatNumber = card.VatNumber;
+                        entityPM.PaymentTermId = card.PaymentTermId;
                     }
                 }
 
@@ -536,8 +537,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             bool IsCollectorIdSameOnAllCards = false;
             if (CardLists!=null && CardLists.Count > 0)
             {
-                       IsSalesmanUserIdSameOnAllCards = true;
-                       IsCollectorIdSameOnAllCards = true;
+                IsSalesmanUserIdSameOnAllCards = true;
+                IsCollectorIdSameOnAllCards = true;
                 string FirstSalesmanUserId = CardLists[0].SalesmanUserId;
                 string FirstCollectorId = CardLists[0].CollectorId;
                 bool IsAtLeasOneSalesmanUserIdValid = false;
@@ -553,7 +554,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     {
                         IsAtLeasOneCollectorIdValid = true;
                     }
-                    if (card.SalesmanUserId!= FirstSalesmanUserId || card.SalesmanUserId==null)
+                    if (card.SalesmanUserId != FirstSalesmanUserId || card.SalesmanUserId == null)
                     {
                         IsSalesmanUserIdSameOnAllCards = false;
                     }
@@ -561,21 +562,25 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     {
                         IsCollectorIdSameOnAllCards = false;
                     }
+                    if (card.PaymentTermId != null)
+                    {
+                        entityPM.PaymentTermId = card.PaymentTermId;
+                    }
 
                 }
 
                 if (IsSalesmanUserIdSameOnAllCards)
                 {
                     entityPM.SalesmanUserId = FirstSalesmanUserId;
-                       ContactPM SalesmanContact = contactQuery.GetSinglePMFromCache(entityPM.SalesmanUserId, entityPOCO.Tenant);
+                    ContactPM SalesmanContact = contactQuery.GetSinglePMFromCache(entityPM.SalesmanUserId, entityPOCO.Tenant);
                     if (SalesmanContact == null)
                         SalesmanContact = contactQuery.GetSinglePMFromCache(entityPM.SalesmanUserId, 0); // user is customer care, get it from tenant 0
                     if (SalesmanContact != null)
                         entityPM.SalesmanName = showLocals ? SalesmanContact.LocalName : SalesmanContact.EnglishName;
                 }
-                else if(IsAtLeasOneSalesmanUserIdValid)
+                else if (IsAtLeasOneSalesmanUserIdValid)
                 {
-                    entityPM.SalesmanName =   TranslateTextsClass.Translate("GLAccount.O.Multi", entityPM.Tenant, showLocals) ;
+                    entityPM.SalesmanName = TranslateTextsClass.Translate("GLAccount.O.Multi", entityPM.Tenant, showLocals);
 
                 }
 
@@ -593,14 +598,32 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     entityPM.CollectorName = TranslateTextsClass.Translate("GLAccount.O.Multi", entityPM.Tenant, showLocals);
                 }
 
+                SetPaymentTermName(entityPM, showLocals);
+
+                if (entityPM.ParentCurrencyId != null)
+                {
+                    SetVariblesFromParentCurrencyGLAccount(entityPM);
+                }
+
             }
- 
-         
-
-           
-
         }
 
+        private static void SetVariblesFromParentCurrencyGLAccount(GLAccountPM entityPM)
+        {
+            IAccountingContext context = AccountingContext.GetContext(entityPM.Tenant);
+            var gLAccountQueryService = new GLAccountQueryService(context);
+            GLAccountPM parent = gLAccountQueryService.GetSinglePM(entityPM.ParentCurrencyId, entityPM.Tenant);
+            entityPM.SalesmanName = parent.SalesmanName;
+            entityPM.CollectorName = parent.CollectorName;
+            entityPM.PaymentTermName = parent.PaymentTermName;
+        }
+
+        private static void SetPaymentTermName(GLAccountPM entityPM, bool showLocals)
+        {
+            Logitude.BL.CommonDataModel.APIDataContract.ApiV1.PaymentTermQueryService paymentTermQuery = new Logitude.BL.CommonDataModel.APIDataContract.ApiV1.PaymentTermQueryService(entityPM.Tenant);
+            Logitude.BL.CommonDataModel.APIDataContract.ApiV1.PaymentTerm paymentTerm = paymentTermQuery.GetPaymentTermById(entityPM.PaymentTermId, entityPM.Tenant);
+            entityPM.PaymentTermName = showLocals ? paymentTerm.LocalName : paymentTerm.EnglishName;
+        }
 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
         public bool SuppressFetchOpenReconcilation { get; internal set; }
