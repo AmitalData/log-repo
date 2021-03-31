@@ -968,6 +968,7 @@ function ConvertShipment(isDirectionConversion: boolean){
     cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.PutShipment);
     cy.Click(BaseSelectors.RedButton + ":last", null);
     if(isDirectionConversion){
+        cy.get(BaseSelectors.ConfirmWindow).should("be.visible")
         cy.Click(BaseSelectors.ConfirmWindowButton + ":last", null);
     }
 }
