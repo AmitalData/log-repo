@@ -35,8 +35,8 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         {
             base.SetOtherFields(mehesTableRow, curDbPM);
             var gov = mehesTableRow.MyNDMessageActionCode ?? new NDMessageActionCode();
-            //curDbPM.UsedByCustoms = gov.UsedByCustoms;
-
+            curDbPM.StartDate = gov.StartDate;
+            curDbPM.EndDate = gov.EndDate;
 
         }
     }

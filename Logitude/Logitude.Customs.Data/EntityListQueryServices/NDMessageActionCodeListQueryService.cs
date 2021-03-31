@@ -21,21 +21,24 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<NDMessageActionCodeList> GetIqueryableList(IQueryable<NDMessageActionCode> iQueryable)
         {
-		IQueryable<NDMessageActionCodeList> query = (from a in iQueryable
-                                            select new NDMessageActionCodeList()
-											{
-                     
-					                          SearchFields = a.SearchFields,
-					
-					                          Inactive = a.Inactive,
-					
-		                    	            });
+			IQueryable<NDMessageActionCodeList> query = (from a in iQueryable
+														 select new NDMessageActionCodeList()
+														 {
+
+															 Code = a.Code,
+															 EnglishName = a.EnglishName,
+															 LocalName = a.LocalName,
+															 SearchFields = a.SearchFields,
+															 Inactive = a.Inactive,
+															 EndDate = a.EndDate,
+															 StartDate = a.StartDate,
+														 }) ;
             return query;
 		}
 
 		private IQueryable<NDMessageActionCode> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<NDMessageActionCode> iQueryable)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
 			}
 

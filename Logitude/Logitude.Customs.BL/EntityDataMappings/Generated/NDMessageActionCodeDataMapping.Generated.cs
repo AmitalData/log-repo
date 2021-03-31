@@ -26,7 +26,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         EnglishName, 
 	         LocalName, 
 	         SearchFields, 
-	         Inactive,
+	         Inactive, 
+	         StartDate, 
+	         EndDate,
 	      }
 
 
@@ -37,7 +39,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         EnglishName, 
 	         LocalName, 
 	         SearchFields, 
-	         Inactive,
+	         Inactive, 
+	         StartDate, 
+	         EndDate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -64,6 +68,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
             {
 				entityPOCO.Inactive = entityPM.Inactive;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StartDate))
+            {
+				entityPOCO.StartDate = entityPM.StartDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EndDate))
+            {
+				entityPOCO.EndDate = entityPM.EndDate;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -97,6 +111,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Inactive = entityPOCO.Inactive;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StartDate))
+            {
+					entityPM.StartDate = entityPOCO.StartDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EndDate))
+            {
+					entityPM.EndDate = entityPOCO.EndDate;
+            }
+
 		}
 
 		public void PMToOldPM(NDMessageActionCodePM entityPM, NDMessageActionCodePM oldEntityPM)
@@ -121,6 +145,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
             {
                 oldEntityPM.Inactive = entityPM.Inactive;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StartDate))
+            {
+                oldEntityPM.StartDate = entityPM.StartDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EndDate))
+            {
+                oldEntityPM.EndDate = entityPM.EndDate;
             }
 			
 		}

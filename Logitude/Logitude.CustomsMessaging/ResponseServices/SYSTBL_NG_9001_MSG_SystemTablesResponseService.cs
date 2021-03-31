@@ -466,6 +466,7 @@ ID List :
                 case "1998":
                 case "NDMessageActionCode":
                     {
+
                         var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
                         Logitude.CustomsMessaging.Helpers.ClosedTable.
                                                     ManipulateCustomResponse.
@@ -479,12 +480,18 @@ ID List :
                                                     {
                                                         writeHighlight = true;
                                                     }
-                                                   /* if (dr["UsedByCustoms"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    if (dr["StartDate"].ToString() != null )
                                                     {
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyTransportMeansType.UsedByCustoms = true;
-                                                    }*/
-                                                    
+                                                        newExt.MyNDMessageActionCode.StartDate = DateTime.Parse(dr["StartDate"].ToString());
+
+                                                    }
+                                                    if (dr["StartDate"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyNDMessageActionCode.EndDate = DateTime.Parse(dr["EndDate"].ToString());
+                                                    }
+
                                                     extList.Add(newExt);
                                                 });
                         return extList;

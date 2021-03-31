@@ -13,6 +13,8 @@ export class NDMessageActionCodeList {
 	LocalName: string;
 	SearchFields: string;
 	Inactive: boolean;
+	StartDate: Date;
+	EndDate: Date;
 	
 }
  

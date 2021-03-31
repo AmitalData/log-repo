@@ -29,6 +29,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string SearchFields { get; set; }
         [Column("Inactive")]
 	    public bool Inactive { get; set; }
+        [Column("StartDate")]
+	    public DateTime? StartDate { get; set; }
+        [Column("EndDate")]
+	    public DateTime? EndDate { get; set; }
     }
 }
 	 

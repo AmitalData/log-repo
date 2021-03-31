@@ -49,6 +49,16 @@ export class NDMessageActionCodePM {
     public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
        
 	 
+    private startDate: Date;
+    public get StartDate() { return this.startDate; }
+    public set StartDate(newValue: Date) { if (this.startDate != newValue) { this.startDate = newValue; this.MarkAsDirty("StartDate"); } }
+       
+	 
+    private endDate: Date;
+    public get EndDate() { return this.endDate; }
+    public set EndDate(newValue: Date) { if (this.endDate != newValue) { this.endDate = newValue; this.MarkAsDirty("EndDate"); } }
+       
+	 
 
     public OldEntityPM: NDMessageActionCodePM;
 		

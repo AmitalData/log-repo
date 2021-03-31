@@ -39,4 +39,16 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="StartDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EndDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>
