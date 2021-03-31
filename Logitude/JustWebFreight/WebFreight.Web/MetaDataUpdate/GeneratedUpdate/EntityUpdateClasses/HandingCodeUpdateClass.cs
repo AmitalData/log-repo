@@ -77,20 +77,20 @@ using Logitude.CargoTracking.Data.EntityPOCOs;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
-   public class NDMessageActionCodeUpdateClass
+   public class HandingCodeUpdateClass
    {  		
-		public const string HashString = "7d25713d64c60688e8199858cf6ab9b5";
+		public const string HashString = "c6cc16ecc260f62a114352ac87a0585b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "Customs.NDMessageActionCode",
+	             				    ObjectTableName =  "Customs.HandingCode",
 			      				    IsNew =  false,
-			      				    DBTableName =  "Customs.NDMessageActionCodes",
-			      				    ObjectTableSingular =  "NDMessageActionCode",
-			      				    ObjectTablePlural =  "NDMessageActionCodes",
+			      				    DBTableName =  "Customs.HandingCodes",
+			      				    ObjectTableSingular =  "HandingCode",
+			      				    ObjectTablePlural =  "HandingCodes",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -119,9 +119,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "NDMessageActionCode",
-			      				    Code =  "NDA1",
-			      				    Name =  "Customs.NDMessageActionCode",
+			      				    DefaultText =  "HandingCode",
+			      				    Code =  "HCod",
+			      				    Name =  "Customs.HandingCode",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
 			      				    GenerateDomainService =  false,
@@ -135,7 +135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
-			      				    HashString =  NDMessageActionCodeUpdateClass.HashString,
+			      				    HashString =  HandingCodeUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -147,7 +147,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Code",
-					  						ObjectTableName =  "Customs.NDMessageActionCode",
+					  						ObjectTableName =  "Customs.HandingCode",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  2,
@@ -175,7 +175,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "NDMessageActionCodes",
+					  						ValidForQuerySection1 =  "HandingCodes",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -210,7 +210,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EnglishName",
-					  						ObjectTableName =  "Customs.NDMessageActionCode",
+					  						ObjectTableName =  "Customs.HandingCode",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  100,
@@ -238,7 +238,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "NDMessageActionCodes",
+					  						ValidForQuerySection1 =  "HandingCodes",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -273,7 +273,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LocalName",
-					  						ObjectTableName =  "Customs.NDMessageActionCode",
+					  						ObjectTableName =  "Customs.HandingCode",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  100,
@@ -301,7 +301,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "NDMessageActionCodes",
+					  						ValidForQuerySection1 =  "HandingCodes",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -336,7 +336,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						ObjectTableName =  "Customs.NDMessageActionCode",
+					  						ObjectTableName =  "Customs.HandingCode",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
@@ -363,7 +363,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "NDMessageActionCodes",
+					  						ValidForQuerySection1 =  "HandingCodes",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -396,7 +396,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Inactive",
-					  						ObjectTableName =  "Customs.NDMessageActionCode",
+					  						ObjectTableName =  "Customs.HandingCode",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -424,7 +424,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "NDMessageActionCodes",
+					  						ValidForQuerySection1 =  "HandingCodes",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -453,145 +453,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "StartDate",
-					  						ObjectTableName =  "Customs.NDMessageActionCode",
-					  						FieldsDataType =  "DateTime",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "StartDate",
-					  						ListPropertyPath =  "StartDate",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "NDMessageActionCodes",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "StartDate",
-					  						DefaultText =  "Start Date",
-					  						FullLocalDefaultText =  "תאריך התחלה",
-					  						ListFieldLable =  "StartDateListLable",
-					  						ListLableDefaultText =  "StartDate",
-					  						ListLocalDefaultText =  "תאריך התחלה",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "EndDate",
-					  						ObjectTableName =  "Customs.NDMessageActionCode",
-					  						FieldsDataType =  "DateTime",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "EndDate",
-					  						ListPropertyPath =  "EndDate",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "NDMessageActionCodes",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "EndDate",
-					  						DefaultText =  "End Date",
-					  						FullLocalDefaultText =  "תאריך סוף",
-					  						ListFieldLable =  "EndDateListLable",
-					  						ListLableDefaultText =  "End Date",
-					  						ListLocalDefaultText =  "תאריך סוף",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-	        QueryGroup NDMessageActionCodeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "NDA1", Name = "Customs.NDMessageActionCode" }, queryGroupRepository,tenantQueryGroups);
-						QueryGroup NDMessageActionCodeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "a3ab", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+	        QueryGroup HandingCodeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "HCod", Name = "Customs.HandingCode" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup HandingCodeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "a3ab", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
-	        ObjectTable NDMessageActionCodeObjectTable = objectTables.ContainsKey("Customs.NDMessageActionCode") ? objectTables["Customs.NDMessageActionCode"] : null;
-            if (NDMessageActionCodeObjectTable == null)
+	        ObjectTable HandingCodeObjectTable = objectTables.ContainsKey("Customs.HandingCode") ? objectTables["Customs.HandingCode"] : null;
+            if (HandingCodeObjectTable == null)
             {
                 IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-                NDMessageActionCodeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.NDMessageActionCode" && d.Tenant == 0).FirstOrDefault();
+                HandingCodeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.HandingCode" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
@@ -602,26 +478,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode NDMessageActionCodeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.NDMessageActionCode.Q.NDMessageActionCodeQuery", DefaultText = @"NDMessageActionCodes",LocalDefaultText = "קוד פעולה במסר התראת סבן", ObjectTableId = NDMessageActionCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature NDMessageActionCodeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NDMessageActionCodeS", ObjectTableId = NDMessageActionCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.NDMessageActionCode.Features.NDMessageActionCodes", NameTextCodeDefaultText = "NDMessageActionCodes", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,NDMessageActionCodeObjectTable, addedFeatures, addedTextCodes);
+			   TextCode HandingCodeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.HandingCode.Q.HandingCodeQuery", DefaultText = @"HandingCodes",LocalDefaultText = "HandingCode", ObjectTableId = HandingCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature HandingCodeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "HandingCodeS", ObjectTableId = HandingCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.HandingCode.Features.HandingCodes", NameTextCodeDefaultText = "HandingCodes", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,HandingCodeObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query NDMessageActionCodeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = NDMessageActionCodeTextCode_0.Id, NameTextCodeCode = NDMessageActionCodeTextCode_0.Code, ObjectTableName = "Customs.NDMessageActionCode", Code = "NDMessageActionCode",  QueryGroupCode = "NDA1", IndexOrder = 0, Tenant = 0, ObjectTableId = NDMessageActionCodeObjectTable.Id, QuerySection = "NDMessageActionCodes", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = NDMessageActionCodeFeature_0.Id,FeatureUniqeCode= NDMessageActionCodeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query HandingCodeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = HandingCodeTextCode_0.Id, NameTextCodeCode = HandingCodeTextCode_0.Code, ObjectTableName = "Customs.HandingCode", Code = "HandingCode",  QueryGroupCode = "HCod", IndexOrder = 0, Tenant = 0, ObjectTableId = HandingCodeObjectTable.Id, QuerySection = "HandingCodes", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = HandingCodeFeature_0.Id,FeatureUniqeCode= HandingCodeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn NDMessageActionCodeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NDMessageActionCodeQuery.Id,QueryCode = NDMessageActionCodeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.NDMessageActionCode.Code" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn HandingCodeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HandingCodeQuery.Id,QueryCode = HandingCodeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.HandingCode.Code" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn NDMessageActionCodeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NDMessageActionCodeQuery.Id,QueryCode = NDMessageActionCodeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.NDMessageActionCode.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn HandingCodeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HandingCodeQuery.Id,QueryCode = HandingCodeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.HandingCode.EnglishName" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn NDMessageActionCodeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NDMessageActionCodeQuery.Id,QueryCode = NDMessageActionCodeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.NDMessageActionCode.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn HandingCodeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HandingCodeQuery.Id,QueryCode = HandingCodeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.HandingCode.LocalName" , ColumnWidth = 250 }, addedQueryColumns);
 
-			 QueryColumn NDMessageActionCodeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NDMessageActionCodeQuery.Id,QueryCode = NDMessageActionCodeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.NDMessageActionCode.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
-
-			 QueryColumn NDMessageActionCodeQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NDMessageActionCodeQuery.Id,QueryCode = NDMessageActionCodeQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.NDMessageActionCode.StartDate" , ColumnWidth = 100 }, addedQueryColumns);
-
-			 QueryColumn NDMessageActionCodeQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NDMessageActionCodeQuery.Id,QueryCode = NDMessageActionCodeQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.NDMessageActionCode.EndDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn HandingCodeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HandingCodeQuery.Id,QueryCode = HandingCodeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.HandingCode.Inactive" , ColumnWidth = 250 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -633,15 +505,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
-		   ObjectTable NDMessageActionCodeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.NDMessageActionCode" && d.Tenant == 0).FirstOrDefault();
-		   //List<ObjectField> NDMessageActionCodeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.NDMessageActionCode").ToList();
+		   ObjectTable HandingCodeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.HandingCode" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> HandingCodeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.HandingCode").ToList();
 		       
 	      
 
-	         Screen NDMessageActionCodeCustomsNDMessageActionCodeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "NDMessageActionCode.HeaderScreen", Name = "Customs.NDMessageActionCodeHeaderScreen", ObjectTableId = NDMessageActionCodeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen HandingCodeCustomsHandingCodeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "HandingCode.HeaderScreen", Name = "Customs.HandingCodeHeaderScreen", ObjectTableId = HandingCodeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
-		    NDMessageActionCodeObjectTable.HeaderScreenId = NDMessageActionCodeCustomsNDMessageActionCodeHeaderScreenScreen0.Id;
-		    NDMessageActionCodeObjectTable.HeaderScreenCode = NDMessageActionCodeCustomsNDMessageActionCodeHeaderScreenScreen0.Code;
+		    HandingCodeObjectTable.HeaderScreenId = HandingCodeCustomsHandingCodeHeaderScreenScreen0.Id;
+		    HandingCodeObjectTable.HeaderScreenCode = HandingCodeCustomsHandingCodeHeaderScreenScreen0.Code;
 
 	   		  
 
@@ -658,7 +530,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable NDMessageActionCodeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.NDMessageActionCode" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable HandingCodeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.HandingCode" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -673,7 +545,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = NDMessageActionCodeObjectTable.Id,
+                ObjectTableId = HandingCodeObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -692,7 +564,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = NDMessageActionCodeObjectTable.Id,
+                ObjectTableId = HandingCodeObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 

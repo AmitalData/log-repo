@@ -340,6 +340,7 @@
     <None Include="DBTables\GuaranteeCertificateType.dxml" />
     <None Include="DBTables\GuaranteeCondition.dxml" />
     <None Include="DBTables\GuaranteeCustomerActivity.dxml" />
+    <None Include="DBTables\HandingCode.dxml" />
     <None Include="DBTables\HazardousSubstance.dxml" />
     <None Include="DBTables\ImporterDeclarationType.dxml" />
     <None Include="DBTables\ImporterDesposition.dxml" />
@@ -490,6 +491,7 @@
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
     <None Include="EntityFiles\AutonomyRegionType.lxml" />
+    <None Include="EntityFiles\HandingCode.lxml" />
     <None Include="EntityFiles\NDMessageActionCode.lxml" />
     <None Include="EntityFiles\CustomerIdentificationType.lxml" />
     <None Include="EntityFiles\CargoType.lxml" />

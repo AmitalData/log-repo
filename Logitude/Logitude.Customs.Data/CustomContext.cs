@@ -464,6 +464,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new GuaranteeCustomerActivityMap());
 	
+            modelBuilder.Configurations.Add(new HandingCodeMap());
+	
             modelBuilder.Configurations.Add(new HazardousSubstanceMap());
 	
             modelBuilder.Configurations.Add(new ImporterDeclarationTypeMap());
@@ -2448,6 +2450,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<GuaranteeCustomerActivity> GuaranteeCustomerActivities 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<HandingCode> HandingCodes 
 	 {
 	      get; set;
 	 

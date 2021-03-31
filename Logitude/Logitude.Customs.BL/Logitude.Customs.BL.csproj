@@ -161,6 +161,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\ExporterRoleTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\FclLclCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\FullnessCodeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\HandingCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\LoadingSiteTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\NDMessageActionCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PartyRelationshipTypeDetails.Generated.cs" />
@@ -685,6 +686,7 @@
     <Compile Include="EntityDataMappings\Generated\GuaranteeConditionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GuaranteeCustomerActivityDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GuaranteeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\HandingCodeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\HazardousSubstanceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ImporterDeclarationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ImporterDespositionDataMapping.Generated.cs" />
@@ -845,6 +847,7 @@
     <Compile Include="EntityDataMappings\GuaranteeConditionDataMapping.cs" />
     <Compile Include="EntityDataMappings\GuaranteeCustomerActivityDataMapping.cs" />
     <Compile Include="EntityDataMappings\GuaranteeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\HandingCodeDataMapping.cs" />
     <Compile Include="EntityDataMappings\HazardousSubstanceDataMapping.cs" />
     <Compile Include="EntityDataMappings\ImporterDeclarationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ImporterDespositionDataMapping.cs" />
@@ -1018,6 +1021,7 @@
     <Compile Include="EntityQueryServices\Generated\ExporterRoleTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\FclLclCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\FullnessCodeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\HandingCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\LoadingSiteTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\NDMessageActionCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ReferantTeamQueryService.Generated.cs" />
@@ -1535,6 +1539,7 @@
     <Compile Include="EntityUpdateServices\Generated\ExporterRoleTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\FclLclCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\FullnessCodeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\HandingCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LoadingSiteTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\NbcDeclarationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\NDMessageActionCodeUpdateService.Generated.cs" />

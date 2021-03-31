@@ -390,7 +390,7 @@ import { DeliveryTypeListService } from './Services/StandardLists/DeliveryTypeLi
 import { CustomerIdentificationTypeListService } from './Services/StandardLists/CustomerIdentificationTypeListService';
 import { CoolingReportingMethodListService } from './Services/StandardLists/CoolingReportingMethodListService';
 import { NDMessageActionCodeListService } from './Services/StandardLists/NDMessageActionCodeListService';
-
+import { HandingCodeListService } from './Services/StandardLists/HandingCodeListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -658,6 +658,7 @@ export class ModuleProviders {
             case "CustomerIdentificationTypeListService": { myResult = new CustomerIdentificationTypeListService(); break; } 
             case "CoolingReportingMethodListService": { myResult = new CoolingReportingMethodListService(); break; } 
             case "NDMessageActionCodeListService": { myResult = new NDMessageActionCodeListService(); break; } 
+            case "HandingCodeListService": { myResult = new HandingCodeListService(); break; } 
 
 
              //#endregion                
