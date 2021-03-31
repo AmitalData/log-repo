@@ -11,4 +11,5 @@ export interface ContactDetails {
     BirthdayReminder: string,
     AnniversaryReminder: string,
     Notes: string
+    AddContact:string;
 }

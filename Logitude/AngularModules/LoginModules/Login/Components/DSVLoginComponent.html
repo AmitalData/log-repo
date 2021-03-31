@@ -148,7 +148,7 @@
         position: absolute;
     }
 
-    .MainImage {
+    .LoginImage {
         background-position: center center;
         background-repeat: no-repeat;
         background-size: 100% 100%;
@@ -225,12 +225,12 @@
                                                 <table>
                                                     <!--[hidden]="ShowLoginBusyIndicator"-->
                                                     <tr>
-                                                        <td *ngIf="IsShowFormLogin" style="width: 25%;">
+                                                        <td *ngIf="IsShowFormLogin" style="width: 30%;">
                                                             <div style="height:100%" *ngIf="!IsShowPasswordExpirationDateArea">
 
 
 
-                                                                <table *ngIf="!ShowTenantList" style="margin-left:50px;">
+                                                                <table *ngIf="!ShowTenantList" style="margin-left:45px;">
                                                                     <tr style="height: 20px;">
                                                                         <td>
                                                                             <div></div>
@@ -241,7 +241,7 @@
                                                                         <td>
                                                                             <label [ngStyle]="MainColor != null ? {'color': MainColor} : {}">E-mail</label>
                                                                             <div>
-                                                                                <input autocomplete="on" size="10" class="auto-style1" [(ngModel)]="Email" ngControl="emailF" required type="email" (blur)="onEmailBlur($event)" (keydown)="OnMouseDownEvt($event)" />
+                                                                                <input autocomplete="on" size="10" style="margin-right: 10px" class="auto-style1" [(ngModel)]="Email" ngControl="emailF" required type="email" (blur)="onEmailBlur($event)" (keydown)="OnMouseDownEvt($event)" />
                                                                             </div>
                                                                         </td>
                                                                     </tr>
@@ -256,7 +256,7 @@
                                                                         <td class="column1">
                                                                             <label [ngStyle]="MainColor != null ? {'color': MainColor} : {}">password</label>
                                                                             <div style="height:31px;width:280px;border:1px solid lightgray;border-radius:4px;" class="InputShow">
-                                                                                <input [attr.type]="InputPasswordType" [ngStyle]="{'width':Password ? '250px' : '280px' }" style="border:0px" class="auto-style1" id="Password" [(ngModel)]="Password" required (keydown)="OnMouseDownEvt($event)" />
+                                                                                <input [attr.type]="InputPasswordType" [ngStyle]="{'width':Password ? '250px' : '280px' }" style="border:0px;margin-right: 10px" class="auto-style1" id="Password" [(ngModel)]="Password" required (keydown)="OnMouseDownEvt($event)" />
                                                                                 <img src="{{PasswordImage}}" [hidden]="!Password" id="ShowHidePasswordImageId" title="{{PasswordTitle}} Password" alt="Show Password" style="padding-left:2px;font-size:12px;vertical-align:central;font-family:Arial; cursor:pointer;text-decoration:none;float:right;margin-top:3px;margin-right:2px;" (click)="ShowHidePasswordClick()" />
                                                                             </div>
                                                                         </td>
@@ -380,7 +380,7 @@
                                                                             <table>
                                                                                 <tr>
                                                                                     <td><button style="width:120px;height:35px;margin-left:0px;" class="DSVLoginButton" (click)="ContinueClicked()">Continue ></button></td>
-                                                                                    <td><a id="BackToLogin" style="margin-left:15px;margin-top:50px;color:#4B4A4A;font-size:12px;font-family:Arial;vertical-align:central;cursor:pointer;" (click)="BackToLoginClicked()">Back to login page</a></td>
+                                                                                    <td><a id="BackToLogin" style="margin-left:15px;margin-top:50px;color:#4B4A4A;font-size:12px;font-family:Arial;vertical-align:central;cursor:pointer;margin-right: 40px;" (click)="BackToLoginClicked()">Back to login page</a></td>
                                                                                     <td><div></div></td>
                                                                                 </tr>
                                                                             </table>
@@ -591,8 +591,8 @@
                                                             </div>
                                                         </td>
 
-                                                        <!-- MainImage -->
-                                                        <td class="MainImage" [style.background-image]="this.MainImage">
+                                                        <!-- LoginImage -->
+                                                        <td class="LoginImage" [style.background-image]="this.LoginImage">
                                                             <div></div>
                                                         </td>
                                                     </tr>

@@ -39,10 +39,11 @@ export function AddEvent(){
     cy.DefineRequestWait(RestAPI.GET, URLs.ShipmentGetSingle, RequestAliases.ShipmentGetSingle);
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK)
 }
-export function AssertAddEvent(EventNote:string) {
+export function AssertAddEvent() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetTraceEvent, 200).then((interception) => {
         expect(interception.response.body.Notes,)
     })
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentGetSingle,200)
 }
 export function AssertExceptionResolved (EventNote:string){
     BaseAssertion.AssertStatusCode( RequestAliases.ShipmentRequest,200).then((interception) => {
@@ -170,7 +171,11 @@ export function ValidateShipmentFields(IsCanceled: boolean) {
     if (IsCanceled) {
         BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentValueOfGoods, BaseSelectors.BeEmpty)
     } else {
-        BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentValueOfGoods, '123.00')
+        cy.get(ShipmentSelectors.ShipmentValueOfGoods).then(($shipmentValueOfGoods) => {
+            const shipmentValueOfGoods = $shipmentValueOfGoods.val()
+             expect(shipmentValueOfGoods).to.be.oneOf(['123.00','123'])
+    })
+        
     }
     CheckIfDisable(ShipmentSelectors.OrdersTab, ShipmentSelectors.ShipmentBookingNumberOfPackages, IsCanceled);
     CheckIfDisable(ShipmentSelectors.OrdersTab, ShipmentSelectors.ShipmentMainCarriageCarrierId, IsCanceled);
@@ -192,7 +197,11 @@ export function ValidatePackageDetails(tabSelector: string, partialSplitDetails:
         GetCellAssertion("3", partialSplitDetails.Volume.toString());
         GetCellAssertion("5", partialSplitDetails.GrossWeight.toString());
     }
-    BaseAssertion.AssertElementHaveValue(grossWeightSelector, partialSplitDetails.GrossWeight.toString())
+    cy.get(grossWeightSelector).then(($grossWeightSelector) => {
+        const grossWeight = $grossWeightSelector.val()
+         expect(grossWeight).to.be.oneOf([parseFloat(partialSplitDetails.GrossWeight.toString()).toString(), parseInt(partialSplitDetails.GrossWeight.toString()).toString()])
+    
+})
 }
 
 export function ValidateShipmentNumber(OldShipmentNumber: string) {
@@ -611,11 +620,28 @@ export function Retransfer() {
     cy.Click(ShipmentSelectors.CloseCustomsTransmissions, null)
 }
 
-export function FormatDate(date: string): string {
-    var dateString = date == 'Today' ? new Date().toDateString() : date;
-    var currentDateArray = dateString.split(" ");
-    return currentDateArray[2] + " " + currentDateArray[1] + " " + currentDateArray[3];
+export function FormatDate(date: string): string{
+    var dateString = date == 'Today' ? new Date().toLocaleDateString("en-US", { timeZone: "Asia/Jerusalem"}) : date
+    var currentDateArray = dateString.split("/");
+    return currentDateArray[1] + " " + GetMonth(currentDateArray[0]) + " " + currentDateArray[2];
 }
+
+function GetMonth(monthNum: string) {
+    switch (monthNum) {
+      case "1": return "Jan"; 
+      case "2": return "Feb"; 
+      case "3": return "Mar"; 
+      case "4": return "Apr"; 
+      case "5": return "May"; 
+      case "6": return "June"; 
+      case "7": return "July"; 
+      case "8": return "Aug"; 
+      case "9": return "Sept"; 
+      case "10": return "Oct"; 
+      case "11": return "Nov"; 
+      case "12": return "Dec"; 
+    }
+  }
 //#endregion
 
 //#region Containers

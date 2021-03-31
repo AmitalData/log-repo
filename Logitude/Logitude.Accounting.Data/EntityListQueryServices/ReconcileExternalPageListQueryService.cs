@@ -19,7 +19,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
     public partial class ReconcileExternalPageListQueryService
     {
-	    public IQueryable<ReconcileExternalPageList> GetIqueryableList(IQueryable<ReconcileExternalPage> iQueryable)
+        const string approvedStatus = "2";
+
+        public IQueryable<ReconcileExternalPageList> GetIqueryableList(IQueryable<ReconcileExternalPage> iQueryable)
         {
 		IQueryable<ReconcileExternalPageList> query = (from a in iQueryable.Include("BankPageEntryType")
                                             select new ReconcileExternalPageList()
@@ -265,6 +267,18 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             
             return listQuery;
 
+        }
+
+
+        public List<ReconcileExternalPage> GetApprovedExternalPages(string objectTableId, string entityId, int tenant)
+        {
+            IQueryable<ReconcileExternalPage> pages = from page in context.ReconcileExternalPages
+                                                      where page.Tenant == tenant
+                                                      && page.EntityId == entityId
+                                                      && page.ObjectTableId == objectTableId
+                                                      && page.StatusCode == approvedStatus
+                                                      select page;
+            return pages.ToList();
         }
 
     }

@@ -265,7 +265,7 @@
                                             <td style="width: 20px;">
                                                 <div tabindex="0" class="ToggleButton IconToggleButton" title="Settings" style="width:20px; height:20px; border:none; background:none;">
                                                     <IconButton [Name]="'Settings'" [IsIconOnly]="true"></IconButton>
-                                                    <div class="ToggleButtonMenu" style="right:-50px">
+                                                    <div class="ToggleButtonMenu" style="right:-50px" attr.data-cy="{{'SettingsMenuButton'}}">
                                                         <!-- Please If you want to add a new button but this condition in that button *ngIf="IsLogBox == false"-->
                                                         <button *ngIf="IsCustomizationVisible" (click)="LanguageSettingsClicked()">Language Settings</button>
                                                         <button *ngIf="IsSignatureVisible" (click)="SignatureClicked()">Signature</button>
@@ -275,7 +275,7 @@
                                                         <button *ngIf="IsCustomizationVisible" (click)="TranslateLabelsClicked()">Translate Labels</button>
                                                         <button *ngIf="IsCustomizationVisible" (click)="TranslationClicked()">Translation</button>
                                                         <button *ngIf="IsCustomizationVisible" (click)="DefaultTranslationClicked()">Default Translation</button>
-                                                        <button *ngIf="IsCurrenciesRatesVisible" (click)="CurrenciesRatesClicked()">Currencies Rates</button>
+                                                        <button *ngIf="IsCurrenciesRatesVisible" (click)="CurrenciesRatesClicked()" attr.data-cy="{{'Setting_CurrenciesRates'}}">Currencies Rates</button>
                                                         <button *ngIf="IsDataBackupVisible" (click)="DataBackupClicked()">Data Backup</button>
                                                         <button *ngIf="IsDocumentsBackupVisible" (click)="DocumentsBackupClicked()">Documents Backup</button>
                                                         <button *ngIf="Tenant == 0" (click)="LoadSampleDataClicked()">Load Sample Data</button>

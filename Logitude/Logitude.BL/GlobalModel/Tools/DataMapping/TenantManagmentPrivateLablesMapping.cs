@@ -32,7 +32,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.SearchFields = entityPM.PrivateLabelName + "," + entityPM.PrivateLabelShortName + "," + entityPM.PrivateLabelUrl + "," + entityPM.ContactUsEmail;
             entityPOCO.MainColor = entityPM.MainColor;
             entityPOCO.BackgroundImageId = entityPM.BackgroundImageId;
-            entityPOCO.MainImageId = entityPM.MainImageId;
+            entityPOCO.LoginImageId = entityPM.LoginImageId;
             entityPOCO.LoginProgressImageId = entityPM.LoginProgressImageId;
             entityPOCO.ForgetPasswordImageId = entityPM.ForgetPasswordImageId; 
             entityPOCO.SecondaryColor = entityPM.SecondaryColor;

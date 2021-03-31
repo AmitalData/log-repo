@@ -96,8 +96,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="MainImageId"
-    OldNames="MainImage"
+    Name="LoginImageId"
+    OldNames="MainImageId,MainImage"
     Type="varchar"
     Size="15">
     <Constraints

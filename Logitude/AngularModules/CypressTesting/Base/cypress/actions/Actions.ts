@@ -127,7 +127,7 @@ export function SubstractDaysFromDate(Days: number) {
     var todayDate = new Date
     var pastDate = new Date
 
-    pastDate.setDate(todayDate.getDate() - 8);
+    pastDate.setDate(todayDate.getDate() - Days);
     return FormateTheDate(pastDate)
 }
 
@@ -169,11 +169,6 @@ export function GetDatepicker(dateString: string): Datepicker{
     return datepicker;
 }
 
-function FillCell(columnNumber: string, rowNumber: number, pricingCellselector: string, value: number) {
-    cy.get(BaseSelectors.CellWithRowAndCol(columnNumber, rowNumber.toString())).last().click({ force: true })
-    cy.FillLogTextBox(pricingCellselector, value.toString())
-}
-
 function GetRandomDay(month: number, year: number){
     let maxDay = 0;
     if(month == 2){
@@ -212,16 +207,19 @@ function NavigateToAccountTab(ExternalIDName: string, AccountingSelector: string
 
 function FormateTheDate(date: Date) {
     var DateFormat
-    var dd = date.getUTCDate();
-    var mm = date.getUTCMonth() + 1
-    var yyyy = date.getFullYear();
+    var dd = date.getUTCDate().toString();
+    var mm = (date.getUTCMonth() + 1).toString();
+    var yyyy = date.getFullYear().toString();
 
-    if(dd<10){
-        DateFormat = "0" + dd + '/' + "0" + mm + '/' + yyyy;
-        return DateFormat
+    if (Number(dd) < 10) {
+        dd = "0" + dd;
     }
-    DateFormat = "" + dd + '/' + "0" + mm + '/' + yyyy;
-    return DateFormat
+    if (Number(mm) < 10) {
+        mm = "0" + mm;
+    }
+
+    DateFormat = dd + '/' + mm + '/' + yyyy;
+    return DateFormat;
 }
 
 function FillCell(columnNumber: string, rowNumber: number, pricingCellselector: string, value: number) {

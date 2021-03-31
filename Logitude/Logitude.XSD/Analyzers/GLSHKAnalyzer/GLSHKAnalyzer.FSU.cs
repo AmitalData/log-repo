@@ -962,7 +962,7 @@ namespace Logitude.XSD.Analyzers.GLSHKAnalyzer
         private void CreateCarrierStatus(StatusParams statusParams)
         {
             PortRepository portRepository = new PortRepository(statusParams.CommonContext);
-            Port fromPort = portRepository.GetSinglePortByCode(statusParams.Tenant, statusParams.FromPortCode, true);
+            Port fromPort = portRepository.GetAirlinePortByCode(statusParams.Tenant, statusParams.FromPortCode, true);
 
             if (fromPort == null)
             {
@@ -973,7 +973,7 @@ namespace Logitude.XSD.Analyzers.GLSHKAnalyzer
                 }
             }
 
-            Port toPort = portRepository.GetSinglePortByCode(statusParams.Tenant, statusParams.ToPortCode, true);
+            Port toPort = portRepository.GetAirlinePortByCode(statusParams.Tenant, statusParams.ToPortCode, true);
             if (toPort == null)
             {
                 Port portZero = portRepository.GetPortsByNameOrCode(statusParams.ToPortCode, null, 0).Where(a => a.IsAir).FirstOrDefault();
@@ -983,7 +983,7 @@ namespace Logitude.XSD.Analyzers.GLSHKAnalyzer
                 }
             }
 
-            Port locationPort = portRepository.GetSinglePortByCode(statusParams.Tenant, statusParams.Location, true);
+            Port locationPort = portRepository.GetAirlinePortByCode(statusParams.Tenant, statusParams.Location, true);
             ShipmentCarrierStatusRepository reposioty = new ShipmentCarrierStatusRepository(statusParams.Tenant);
 
             string recordInfo = statusParams.Tenant.ToString() + (fromPort != null ? fromPort.Id : null) + (toPort != null ? toPort.Id : null) + statusParams.AirlineName + statusParams.Details + statusParams.StatusCode + statusParams.FlightNumber + statusParams.Partial + statusParams.Pieces + statusParams.Weight + statusParams.EntityId;
@@ -1032,7 +1032,7 @@ namespace Logitude.XSD.Analyzers.GLSHKAnalyzer
 
             Port newPort;
             Port port = portRepository.GetSinglePort(0, entityId);
-            newPort = portRepository.GetSinglePortByCodeCountryCode(tenant, port.Code, port.Country.Code, false);
+            newPort = portRepository.GetAirlineSinglePortByCodeCountryCode(tenant, port.Code, port.Country.Code, false);
             Country country = null;
 
             if (newPort == null)

@@ -100,6 +100,11 @@ export class ReportsPreviewComponent implements AfterViewInit {
         return reportFilterItems;
     }
 
+    GetReportFilterMainCustomerFieldName() {
+        const mainCustomerName = this.ReportFilterConmponent.GetMainCustomerFieldName();
+        return mainCustomerName;
+    }
+
     IsPartnersChanged(SelectedTab) {
         return this.ReportFilterConmponent.IsPartnersChanged(SelectedTab);
     }

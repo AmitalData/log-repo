@@ -6,7 +6,7 @@ import { ReportGroupList } from '../../EntityLists/ReportGroupList';
 import { ReportList } from '../../EntityLists/ReportList';
 import { ReportsTemplateListExtendedService } from '../../../Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { ReportSchedulerRecepients } from '../../../Infrastructure/DataContracts/SchedulerDetails';
+import { ReportSchedulerRecepients, ReportSchedulerDetails } from '../../../Infrastructure/DataContracts/SchedulerDetails';
 @Component({
     
     templateUrl: './AddEditReportSchedulerComponent.html',
@@ -207,10 +207,14 @@ export class AddEditReportSchedulerComponent implements OnInit {
     }
 
     SaveButtonClicked() {
-        var reportFilterItems = this.PageChild_PRREP.GetReportFilterItems();
-        var reportTemplateId = this.PageChild_PRREP.GetReportTemplateId();
-        var recepients = this.GetAllRecepients();
-        this.PageChild_RETASK.SaveButtonClicked(reportFilterItems, reportTemplateId, recepients);
+        const reportSchedulerDetails: ReportSchedulerDetails = {
+            ReportFilterItems: this.PageChild_PRREP.GetReportFilterItems(),
+            ReportTemplateId: this.PageChild_PRREP.GetReportTemplateId(),
+            Recepients: this.GetAllRecepients(),
+            MainCustomerFieldName: this.PageChild_PRREP.GetReportFilterMainCustomerFieldName(),
+            CreatedByUserId: SessionLocator.LoggedUserId
+        };
+        this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);
     }
 
     GetAllRecepients() {

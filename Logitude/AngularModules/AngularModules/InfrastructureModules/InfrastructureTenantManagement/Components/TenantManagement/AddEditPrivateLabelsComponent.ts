@@ -42,7 +42,7 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     private secondaryColorCode: string;
     wrongSecondaryColor: boolean = false;
     public BackgroundImageId: string;
-    public MainImageId: string;
+    public LoginImageId: string;
     public LoginProgressImageId: string;
     public ForgetPasswordImageId: string;
     public SelectedTabCode: string;
@@ -70,7 +70,7 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
 
     private InitializeImageIds() {
         this.BackgroundImageId = this.EntityPM.BackgroundImageId;
-        this.MainImageId = this.EntityPM.MainImageId;
+        this.LoginImageId = this.EntityPM.LoginImageId;
         this.LoginProgressImageId = this.EntityPM.LoginProgressImageId;
         this.ForgetPasswordImageId = this.EntityPM.ForgetPasswordImageId;
     }
@@ -83,9 +83,9 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
                 this.BackgroundImageId = null;
                 break;
             }
-            case "MainImage": {
-                this.EntityPM.MainImageId = null;
-                this.MainImageId = null;
+            case "LoginImage": {
+                this.EntityPM.LoginImageId = null;
+                this.LoginImageId = null;
                 break;
             }
             case "LoginProgressImage": {
@@ -299,9 +299,9 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
 
     } 
  
-   MainImageImageUploadedCompleted(imageId) {
-       this.MainImageId = imageId;
-       this.EntityPM.MainImageId = imageId;
+   LoginImageImageUploadedCompleted(imageId) {
+       this.LoginImageId = imageId;
+       this.EntityPM.LoginImageId = imageId;
 
     }
 
