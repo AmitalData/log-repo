@@ -200,7 +200,7 @@ Then("linked release status should be {string}", (status) => {
 
 //#region Edit release
 Given("the user open the created release", () => {
-    cy.Click(CrossdockSelectors.EntityNumberLink(CrossDockContext.ReleaseNumber), null)
+    cy.Click(CrossdockSelectors.EntityNumberLink(CrossDockContext.ReleaseNumber), null,true)
 });
 
 Given("fill the release with the following details", (dataTable) => {
