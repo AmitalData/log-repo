@@ -16,7 +16,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalPages
         public override decimal CalculateClosingBalance()
         {
             ReconcileExternalPage firstPage = externalPages.OrderBy(d => d.ToDate).FirstOrDefault();
-            return firstPage.CloseBalance;
+            return firstPage.StartBalance;
         }
     }
 }
