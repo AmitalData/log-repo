@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebFreight.Web.DataProviders
 {
-    public class CrossDockReleaseDataProvider
+    public class CrossDockReleaseDataProvider:BaseDataProvider
     {
         public string CustomerName { get; set; }
         public string CustomerRef1 { get; set; }
