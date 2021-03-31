@@ -167,6 +167,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\PartyRelationshipTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ReleaseMessageTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SecurityClearenceTypeCodeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\StuffingSiteTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SupplierPartyTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TransactionNatureTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DeclaraionDetails.cs" />
@@ -782,6 +783,7 @@
     <Compile Include="EntityDataMappings\Generated\SplitOrMergeReasonDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\StorageMessageTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\StorageStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\StuffingSiteTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SubCountryDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SuppInvoiceItemsAbachStatementDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvioceItemCertificatDataMapping.Generated.cs" />
@@ -943,6 +945,7 @@
     <Compile Include="EntityDataMappings\SplitOrMergeReasonDataMapping.cs" />
     <Compile Include="EntityDataMappings\StorageMessageTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\StorageStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\StuffingSiteTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\SubCountryDataMapping.cs" />
     <Compile Include="EntityDataMappings\SuppInvoiceItemsAbachStatementDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvioceItemCertificatDataMapping.cs" />
@@ -1027,6 +1030,7 @@
     <Compile Include="EntityQueryServices\Generated\ReferantTeamQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ReleaseMessageTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SecurityClearenceTypeCodeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\StuffingSiteTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SupplierInvoiceUCRQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\SupplierInvoicePaymentQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\SupplierPartyTypeQueryService.Generated.cs" />
@@ -1548,6 +1552,7 @@
     <Compile Include="EntityUpdateServices\Generated\ReferantTeamUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ReleaseMessageTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SecurityClearenceTypeCodeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\StuffingSiteTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SuppInvoiceItemsAbachStatementUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SupplierInvoiceItemsPriceUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SupplierInvoicePaymentUpdateService.Generated.cs" />

@@ -1338,6 +1338,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\SecurityClearenceTypeCodeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\SeizureFactorTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\SeizureMethodTypeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\StuffingSiteTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\SupplierPartyTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\TransactionNatureTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\TransferCargoMethodTypeList.ts" />
@@ -1410,6 +1411,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\SecurityClearenceTypeCodePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\SeizureFactorTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\SeizureMethodTypePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\StuffingSiteTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\SuppInvoiceItemAbachStatementPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\SupplierInvoiceItemsPricePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\SupplierInvoicePaymentPM.ts" />
@@ -1514,6 +1516,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\SecurityClearenceTypeCodeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\SeizureFactorTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\SeizureMethodTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\StuffingSiteTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\SupplierPartyTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\TransactionNatureTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\TransferCargoMethodTypeListService.ts" />

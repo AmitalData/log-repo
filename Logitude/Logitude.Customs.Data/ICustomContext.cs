@@ -309,6 +309,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<SplitOrMergeReason> SplitOrMergeReasons { get; }
 		 IDbSet<StorageMessageType> StorageMessageTypes { get; }
 		 IDbSet<StorageStatus> StorageStatuses { get; }
+		 IDbSet<StuffingSiteType> StuffingSiteTypes { get; }
 		 IDbSet<SubCountry> SubCountries { get; }
 		 IDbSet<SuppInvoiceItemsAbachStatement> SuppInvoiceItemsAbachStatement { get; }
 		 IDbSet<SupplierInvioceItemCertificat> SupplierInvioceItemCertificats { get; }

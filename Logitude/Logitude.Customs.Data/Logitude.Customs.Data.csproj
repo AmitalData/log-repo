@@ -198,6 +198,7 @@
     <Compile Include="EntityKeys\SeizureFactorTypeKeys.cs" />
     <Compile Include="EntityKeys\SeizureMethodTypeKeys.cs" />
     <Compile Include="EntityKeys\SplitOrMergeReasonKeys.cs" />
+    <Compile Include="EntityKeys\StuffingSiteTypeKeys.cs" />
     <Compile Include="EntityKeys\SuppInvoiceItemsAbachStatementKeys.cs" />
     <Compile Include="EntityKeys\SupplierInvoiceItemsPriceKeys.cs" />
     <Compile Include="EntityKeys\SupplierInvoicePaymentKeys.cs" />
@@ -379,6 +380,7 @@
     <Compile Include="EntityListQueryServices\Generated\SeizureFactorTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SeizureMethodTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SplitOrMergeReasonListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\StuffingSiteTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SuppInvoiceItemsAbachStatementListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierInvoiceItemsPriceListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierInvoicePaymentListQueryService.Generated.cs" />
@@ -418,6 +420,7 @@
     <Compile Include="EntityListQueryServices\SeizureFactorTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SeizureMethodTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SplitOrMergeReasonListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\StuffingSiteTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SuppInvoiceItemsAbachStatementListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierInvoiceItemsPriceListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierInvoicePaymentListQueryService.cs" />
@@ -529,6 +532,7 @@
     <Compile Include="EntityLists\Generated\SeizureFactorTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SeizureMethodTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SplitOrMergeReasonList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\StuffingSiteTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SuppInvoiceItemsAbachStatementList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SupplierInvoiceItemsPriceList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SupplierInvoicePaymentList.Generated.cs" />
@@ -639,6 +643,7 @@
     <Compile Include="EntityMapping\SeizureFactorTypeMap.cs" />
     <Compile Include="EntityMapping\SeizureMethodTypeMap.cs" />
     <Compile Include="EntityMapping\SplitOrMergeReasonMap.cs" />
+    <Compile Include="EntityMapping\StuffingSiteTypeMap.cs" />
     <Compile Include="EntityMapping\SuppInvoiceItemsAbachStatementMap.cs" />
     <Compile Include="EntityMapping\SupplierInvoiceItemsPriceMap.cs" />
     <Compile Include="EntityMapping\SupplierInvoicePaymentMap.cs" />
@@ -750,6 +755,7 @@
     <Compile Include="EntityPOCOs\SeizureFactorType.cs" />
     <Compile Include="EntityPOCOs\SeizureMethodType.cs" />
     <Compile Include="EntityPOCOs\SplitOrMergeReason.cs" />
+    <Compile Include="EntityPOCOs\StuffingSiteType.cs" />
     <Compile Include="EntityPOCOs\SuppInvoiceItemsAbachStatement.cs" />
     <Compile Include="EntityPOCOs\SupplierInvoiceItemsPrice.cs" />
     <Compile Include="EntityPOCOs\SupplierInvoicePayment.cs" />
@@ -931,6 +937,7 @@
     <Compile Include="Repsitories\Generated\SeizureFactorTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SeizureMethodTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SplitOrMergeReasonRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\StuffingSiteTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SuppInvoiceItemsAbachStatementRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SupplierInvoiceItemsPriceRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SupplierInvoicePaymentRepository.Generated.cs" />
@@ -970,6 +977,7 @@
     <Compile Include="Repsitories\SeizureFactorTypeRepository.cs" />
     <Compile Include="Repsitories\SeizureMethodTypeRepository.cs" />
     <Compile Include="Repsitories\SplitOrMergeReasonRepository.cs" />
+    <Compile Include="Repsitories\StuffingSiteTypeRepository.cs" />
     <Compile Include="Repsitories\SuppInvoiceItemsAbachStatementRepository.cs" />
     <Compile Include="Repsitories\SupplierInvoiceItemsPriceRepository.cs" />
     <Compile Include="Repsitories\SupplierInvoicePaymentRepository.cs" />

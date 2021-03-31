@@ -491,6 +491,7 @@
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
     <None Include="EntityFiles\AutonomyRegionType.lxml" />
+    <None Include="EntityFiles\StuffingSiteType.lxml" />
     <None Include="EntityFiles\HandingCode.lxml" />
     <None Include="EntityFiles\NDMessageActionCode.lxml" />
     <None Include="EntityFiles\CustomerIdentificationType.lxml" />
