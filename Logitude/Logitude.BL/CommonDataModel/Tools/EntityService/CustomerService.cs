@@ -462,7 +462,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
             cardRepository.SubmitChanges();
-            cardService.UpdateGLaccountCardsDara(entityCard);
+            cardService.CreateUpdateGLaccountCardsDara(entityCard);
             if (!entityPM.IsHybrid)
             {
                 ObjectTableRepository objecttableRepository = new ObjectTableRepository(entityPOCO.Tenant);

@@ -44,7 +44,7 @@ Declare GLAccountCards cursor
 	update glaccounts set CardsDataId = @GLAccountCardsDataId where Id= @Id
 	end
    
-   else if(@isMultiCurrency=0)
+   else if(@cardDataId is null and @isMultiCurrency=0)
    begin 
    set @singleAccountId = (select Id from GLAccountCurrencies where GLAccountId = @Id)
    if(@singleAccountId is null)
