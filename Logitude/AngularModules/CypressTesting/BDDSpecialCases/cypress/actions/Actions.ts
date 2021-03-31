@@ -83,9 +83,16 @@ function OpenEventTab($eventTab , eventTabSelector) {
 function AssertEventTime(expectedEvent: string) {
   cy.get(BaseSelectors.EventItemBox).contains(expectedEvent).eq(0).parents(BaseSelectors.EventItemBox).within(() => {
     cy.get(BDDSpecialCasesSelectors.EventDateTime(expectedEvent)).invoke('text').then((text) => {
-      assert.equal(text, GetTimeZoneDateTime());
+      // assert.equal(text, GetTimeZoneDateTime());
+      AssertTimeOneOf(text);
     })
   });
+}
+
+function AssertTimeOneOf(text:string){
+  var dateTimeNow = GetTimeZoneDateTime()
+  var dateTimeRange = DateTimeRange(dateTimeNow)
+  expect(text).to.be.oneOf(dateTimeRange)
 }
 
 function GetTimeZoneDateTime() {
@@ -123,4 +130,50 @@ function FormatAMTimes(hour: string) {
   if (Number(hour) == 12) {
     return "00"
   }
+}
+
+function DateTimeRange(time: string) {
+  var timelist = time.split(":")
+  var hour = Number(timelist[0])
+  var minutes = Number(timelist[1])
+  var dateTimeRange = []
+  for (let i = 0; i < 5; i++) {
+    if (minutes == 0) {
+      hour = subHour(hour)
+      minutes = 59
+    } else {
+      minutes = minutes - 1
+    }
+    dateTimeRange.push(timeformat(hour) + ":" + timeformat(minutes));
+  }
+  hour = Number(timelist[0])
+  minutes = Number(timelist[1])
+  dateTimeRange.push(timeformat(hour) + ":" + timeformat(minutes));
+  for (let i = 0; i < 5; i++) {
+    if (minutes == 59) {
+      hour = hour + 1
+      minutes = 0
+    } else {
+      minutes = minutes + 1
+    }
+    dateTimeRange.push(timeformat(hour) + ":" + timeformat(minutes));
+  }
+  return dateTimeRange
+}
+function subHour(hour:number){
+  if (hour == 0) {
+    hour = 23
+  } else {
+    hour = hour - 1
+  }
+  return hour
+}
+function timeformat(time:number){
+  if(time == 0 ){
+    return "00"
+  }
+  if(time<10 && time >0){
+    return  "0"+time
+  }
+  return time
 }
