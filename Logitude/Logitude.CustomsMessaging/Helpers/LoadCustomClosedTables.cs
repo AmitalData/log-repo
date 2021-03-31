@@ -545,7 +545,7 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             addedClosedTables.Add(customerActivityTypeTable);
 
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData StuffingSiteTypeTable = closedSystemTables.Where(d => d.id == "23792").FirstOrDefault();
-            ObjectTable StuffingSiteTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.StuffingSiteTypeTable", 0, false);
+            ObjectTable StuffingSiteTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.StuffingSiteType", 0, false);
             InsertClosedTableRecord(StuffingSiteTypeTable, StuffingSiteTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(StuffingSiteTypeTable);
 
