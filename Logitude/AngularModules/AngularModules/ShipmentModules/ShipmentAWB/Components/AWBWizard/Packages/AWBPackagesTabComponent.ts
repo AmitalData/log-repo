@@ -52,11 +52,11 @@ export class AWBPackagesTabComponent extends BaseComponent {
         this.ObjectTableName = this.Wizard.ObjectTableName;
         this.ShipmentLevelCode = this.Wizard.ShipmentLevelCode;
         this.SetLabels();
+        this.SetUIProperties();
         this.BuildData();
         this.Listen();
         this.Validate();
-        this.SetUIProperties();
-
+        
         if (this.EntityPM.ShipmentLevelCode != 'H') {
             var hasToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "AMC")[0]
             if (hasToggleFeature) {
@@ -951,7 +951,6 @@ export class AWBPackagesTabComponent extends BaseComponent {
         }
 
         if (this.IsMultipleCommodities) {
-
             baseCommodityPM.CommodityPackages = [];
 
             this.EntityPM.ShipmentPackages.forEach((item: ShipmentPackagePM) => {
@@ -1026,6 +1025,8 @@ export class AWBPackagesTabComponent extends BaseComponent {
             list.forEach(item => {
                 this.EntityPM.AddPackage(item);
             });
+
+            baseCommodityPM.CommodityPackages = [];
         }
     }
 
@@ -1069,6 +1070,7 @@ export class AWBPackagesTabComponent extends BaseComponent {
             })
         }
 
+        this.SetUIProperties();
         this.SetRebuildButton();
         this.SetGenerateButton();
     }
@@ -1287,18 +1289,62 @@ export class ShipmentCommodityItem extends BaseComponent {
     public IsNewEntity: boolean = false;
     public IsWindowMode: boolean = false;
     public ItemsSource: CommodityPackageItem[] = [];
+    public IsEditingEnabled: boolean = true;
     constructor(entityPM: ShipmentCommodityPM, isNew: boolean, public fatherComponent: AWBPackagesTabComponent) {
         super();
         this.EntityPM = entityPM;
         this.ShipmentPM = fatherComponent.EntityPM;
         this.IsNewEntity = isNew;
         this.SetUIProperties();
+        this.Validate();
         this.BuildItemsSource();
     }
 
-    IsEditingEnabled: boolean = false;
-    SetUIProperties() {
+    public ShowWarning_ChargeRate: boolean = false;
+    public ShowWarning_ChargeAmount: boolean = false;
+    public ShowWarning_CommodityNumber: boolean = false;
+    public ShowWarning_RateClassCode: boolean = false;
+    private Validate() {
+        var showWarning_ChargeRate = false;
+        var showWarning_ChargeAmount = false;
+        var showWarning_CommodityNumber = false;
+        var showWarning_RateClassCode = false;
 
+        if (!this.fatherComponent.Wizard.IsImportWizard && this.fatherComponent.Wizard.IsFWB) {
+            if (this.ShipmentPM.IsMultipleCommodities) {
+                if (!AppTool.IsNullOrEmpty(this.CommodityNumber)) {
+                    if (!FormatTool.Validate_CommodityNo(this.CommodityNumber)) {
+                        showWarning_CommodityNumber = true;
+                    }
+                }
+
+                if (AppTool.IsNullOrEmpty(this.RateClassCode)) {
+                    showWarning_RateClassCode = true;
+                }
+
+                if (!this.ShipmentPM.AsAgreedFreight) {
+                    var rateClassGroupCode = ShipmentTool.GetRateClassGroupCode(this.RateClassCode);
+
+                    if (rateClassGroupCode != "S") {
+                        if (AppTool.IsNullOrZero(this.ChargeRate)) {
+                            showWarning_ChargeRate = true;
+                        }
+
+                        if (AppTool.IsNullOrZero(this.ChargeAmount)) {
+                            showWarning_ChargeAmount = true;
+                        }
+                    }
+                }
+            }
+
+            this.ShowWarning_ChargeRate = showWarning_ChargeRate;
+            this.ShowWarning_ChargeAmount = showWarning_ChargeAmount;
+            this.ShowWarning_CommodityNumber = showWarning_CommodityNumber;
+            this.ShowWarning_RateClassCode = showWarning_RateClassCode;
+        }
+    }
+
+    SetUIProperties() {
         this.IsEditingEnabled = this.fatherComponent.IsEditingEnabled;
 
         var isFieldEnabled = false;
@@ -1342,8 +1388,9 @@ export class ShipmentCommodityItem extends BaseComponent {
     get CommodityNumber() { return this.EntityPM.CommodityNumber; }
     set CommodityNumber(value: string) {
         if (this.EntityPM.CommodityNumber != value) {
-            this.EntityPM.CommodityNumber = value;
+            this.EntityPM.CommodityNumber = value;            
             this.fatherComponent.FireWizardEvent();
+            this.Validate();
         }
     }
 
@@ -1352,8 +1399,9 @@ export class ShipmentCommodityItem extends BaseComponent {
         if (this.EntityPM.RateClassCode != value) {
             this.EntityPM.RateClassCode = value;
             this.ComputeAWBChargeAmount();
-            this.SetRateClassUIProperties();
+            this.SetRateClassUIProperties();            
             this.fatherComponent.FireWizardEvent();
+            this.Validate();
         }
     }
 
@@ -1370,8 +1418,9 @@ export class ShipmentCommodityItem extends BaseComponent {
     set ChargeRate(value: number) {
         if (this.EntityPM.ChargeRate != value) {
             this.EntityPM.ChargeRate = AppTool.Round(value, 3);
-            this.fatherComponent.FireWizardEvent();
             this.ComputeAWBChargeAmount();
+            this.fatherComponent.FireWizardEvent();            
+            this.Validate();
         }
     }
 
@@ -1384,6 +1433,7 @@ export class ShipmentCommodityItem extends BaseComponent {
         if (this.EntityPM.ChargeAmount != value) {
             this.EntityPM.ChargeAmount = AppTool.Round(value, 3);
             this.ComputeAWBFrieghtAmount();
+            this.Validate();
         }
     }
 
