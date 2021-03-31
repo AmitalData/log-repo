@@ -56,6 +56,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
             string fromport = args.OriginPortId;
             string toport = args.DestinationPortId;
+            string viaPort = args.ViaPortId;
             DateTime? BetweenDate = args.BetweenDate;
             double weight = args.Weight;
             string Weightcode = args.WeightCode;
@@ -420,6 +421,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                         tariffsSummary.LineId = SelectedLine.Id;
                     }
 
+                    tariffsSummary = GetViaPortIdAndCode(SelectedLine, tariffsSummary,tenant);
+
                     if (item.PriceIndex != 0)
                     {
                         if ((item.Price * (decimal)weight) < minprice)
@@ -654,6 +657,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
         private string fromport ;
         private string toport ;
+        private string viaPort;
         private DateTime? BetweenDate;
         private string currencyId ;
         private string typeCode ;
@@ -701,6 +705,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     tariffsSummary.ContainersPrices = new List<ContainersPrice>();
 
                     var price  = this.CalculateContainerPrice(args, trariff, tariffLine);
+                    tariffsSummary = GetViaPortIdAndCode(tariffLine, tariffsSummary, tenant);
 
                     tariffsSummary.Price = Math.Round((double)CalculateLocalAmount(price, currencyId, trariff.CurrencyId, tenant), 2).ToString("0.00");
                     tariffsSummary.ActualPrice = price;
@@ -911,6 +916,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
         {
             this.fromport = args.OriginPortId;
             this.toport = args.DestinationPortId;
+            this.viaPort = args.ViaPortId;
             this.BetweenDate = args.BetweenDate;
             this.currencyId = args.CurrencyId;
             this.typeCode = args.TariffType;
@@ -1349,6 +1355,20 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                   where a.Tenant == tenant && a.SellerId == sellerId
                                   select a).ToList();
             return query.Count();
+        }
+
+        private TariffSearchSummary GetViaPortIdAndCode(TariffLine tariffLine, TariffSearchSummary tariffSummary, int tenant)
+        {
+            if (tariffLine != null)
+            {
+                if (tariffLine.ViaPortId != null)
+                {
+                    PortPM viaPort = PortQuery.GetSinglePort(tenant, tariffLine.ViaPortId, true);
+                    tariffSummary.ViaPortId = tariffLine.ViaPortId;
+                    tariffSummary.ViaPortCode = viaPort != null ? viaPort.Code : "";
+                }
+            }
+            return tariffSummary;
         }
     }
 

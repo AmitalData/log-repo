@@ -380,6 +380,8 @@ export class TariffSearchSummary {
     Remarks: string;
     ImageId: string;
     SellerName: string;
+    ViaPortId: string;
+    ViaPortCode: string;
     CurrencyCode: string;
     CurrencyId: string;
     VersionId: string;
@@ -514,6 +516,7 @@ export class TariffSearchArgs {
 
     OriginPortId: string;
     DestinationPortId: string;
+    ViaPortId: string;
     Date: string;
     Weight : number;
     WeightCode: string;

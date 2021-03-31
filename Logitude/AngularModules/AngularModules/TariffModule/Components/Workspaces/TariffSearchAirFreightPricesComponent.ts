@@ -211,6 +211,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             if (args['TariffType']) {
                 this.TariffType = args['TariffType'];
             }
+            if (args['ViaPort']) {
+                this.viaPortId = args['ViaPort'];
+            }
             this.SetLabels();
             this.SetUIProperties();
             this.SetPortsDependencyFilterValue();
@@ -284,6 +287,17 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     set DestinationPortId(value: string) {
         if (this.destinationPortId != value) {
             this.destinationPortId = value;
+            this.SetUIProperties();
+        }
+    }
+
+    private viaPortId: string;
+    get ViaPortId() {
+        return this.viaPortId;
+    }
+    set ViaPortId(value: string) {
+        if (this.viaPortId != value) {
+            this.viaPortId = value;
             this.SetUIProperties();
         }
     }
@@ -660,6 +674,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             var tariffSearchArgs = new TariffSearchArgs();
             tariffSearchArgs.OriginPortId = this.OriginPortId;
             tariffSearchArgs.DestinationPortId = this.DestinationPortId;
+            tariffSearchArgs.ViaPortId = this.ViaPortId;
             tariffSearchArgs.Date = ServiceHelper.GetDateString(this.Date);
             tariffSearchArgs.Weight = this.Weight;
             tariffSearchArgs.WeightCode = this.WeightCode;
@@ -856,6 +871,10 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 var notes = null;
                 if (!AppTool.IsNullOrEmpty(item.AllIn)) {
                     notes = "Includes the following charges as all-in: " + item.AllIn;
+                }
+                if (this.FatherComponent.EntityPM.Transshipment1FromPortId == null && item.ViaPortId!= null) {
+                    this.FatherComponent.EntityPM.Transshipment1FromPortId = item.ViaPortId;
+                    this.FatherComponent.EntityPM.Transshipment1FromPortCode = item.ViaPortCode;
                 }
 
                 // FCL Shipment 

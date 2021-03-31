@@ -2355,6 +2355,144 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string viaPortId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ViaPortId  
+	   {
+	    
+	     get
+		{
+		   return viaPortId;
+		 }
+		 set
+		 {
+		   if(viaPortId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ViaPortId",OldValue=viaPortId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   viaPortId=value;
+		   }
+			
+		 }
+	   }
+	  private string viaPortText ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ViaPortText  
+	   {
+	    
+	     get
+		{
+		   return viaPortText;
+		 }
+		 set
+		 {
+		   if(viaPortText != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ViaPortText",OldValue=viaPortText,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   viaPortText=value;
+		   }
+			
+		 }
+	   }
+	  private string viaPortName ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ViaPortName  
+	   {
+	    
+	     get
+		{
+		   return viaPortName;
+		 }
+		 set
+		 {
+		   if(viaPortName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ViaPortName",OldValue=viaPortName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   viaPortName=value;
+		   }
+			
+		 }
+	   }
+	  private string viaPortCombinedCode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ViaPortCombinedCode  
+	   {
+	    
+	     get
+		{
+		   return viaPortCombinedCode;
+		 }
+		 set
+		 {
+		   if(viaPortCombinedCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ViaPortCombinedCode",OldValue=viaPortCombinedCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   viaPortCombinedCode=value;
+		   }
+			
+		 }
+	   }
+	  private string viaPortCode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ViaPortCode  
+	   {
+	    
+	     get
+		{
+		   return viaPortCode;
+		 }
+		 set
+		 {
+		   if(viaPortCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ViaPortCode",OldValue=viaPortCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   viaPortCode=value;
+		   }
+			
+		 }
+	   }
+	  private bool viaPortHasWrongTransMode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool ViaPortHasWrongTransMode  
+	   {
+	    
+	     get
+		{
+		   return viaPortHasWrongTransMode;
+		 }
+		 set
+		 {
+		   if(viaPortHasWrongTransMode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ViaPortHasWrongTransMode",OldValue=viaPortHasWrongTransMode,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   viaPortHasWrongTransMode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

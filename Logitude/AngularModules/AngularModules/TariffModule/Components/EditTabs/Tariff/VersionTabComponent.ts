@@ -702,6 +702,10 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
                         tariffLine.DestinationPortCode = item.DestinationPortCode;
                         tariffLine.DestinationPortCombinedCode = item.DestinationPortCombinedCode;
                         tariffLine.DestinationPortName = item.DestinationPortName;
+                        tariffLine.ViaPortId = item.ViaPortId;
+                        tariffLine.ViaPortCode = item.ViaPortCode;
+                        tariffLine.ViaPortCombinedCode = item.ViaPortCombinedCode;
+                        tariffLine.ViaPortName = item.ViaPortName;
                         tariffLine.MinPrice = item.MinPrice;
                         tariffLine.Step1Price = item.Step1Price;
                         tariffLine.Step2Price = item.Step2Price;

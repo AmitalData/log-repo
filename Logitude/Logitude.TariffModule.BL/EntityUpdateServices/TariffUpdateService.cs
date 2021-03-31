@@ -119,6 +119,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
             if (entityPM.IsApprovingDraftVersion)
             {
+          //      UpdateComposition(entityPM);
                 this.ApproveDraftVersion(entityPM);
                 entityPM.IsApprovingDraftVersion = false;
             }

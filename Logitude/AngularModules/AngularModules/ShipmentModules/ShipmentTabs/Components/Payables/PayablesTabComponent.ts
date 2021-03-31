@@ -254,6 +254,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                 VolumeUnit: this.EntityPM.VolumeUnitCode,
                 IsShipment: true,
                 FatherComponent: this,
+                ViaPort: this.EntityPM.Transshipment1FromPortId,
                 TariffType: tariffType
             };
             var logWindow = new LogitudeWindow();

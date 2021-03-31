@@ -44,6 +44,7 @@ namespace Logitude.TariffModule.BL.Helpers
         private PackageTypeRepository packageTypeRepository;
         private string fromPort;
         private string toPort;
+        private string viaPort;
         private DateTime? betweenDate;
         private double? weight;
         private string weightCode;
@@ -136,6 +137,7 @@ namespace Logitude.TariffModule.BL.Helpers
 
                 fromPort = shipment.FromPortId;
                 toPort = shipment.ToPortId;
+                viaPort = shipment.Transshipment1FromPortId;
                 weight = shipment.ChargeableWeight;
                 weightCode = shipment.ChargeableWeightUnitCode;
                 grossWeight = shipment.GrossWeight;
@@ -221,6 +223,7 @@ namespace Logitude.TariffModule.BL.Helpers
         {
             fromPort = args.OriginPortId;
             toPort = args.DestinationPortId;
+            viaPort = args.ViaPortId;
             betweenDate = args.BetweenDate;
             weight = args.Weight;
             weightCode = args.WeightCode;
@@ -287,7 +290,8 @@ namespace Logitude.TariffModule.BL.Helpers
         private List<TariffSearchSummary> GetTariffSearchSummary(IQueryable<TariffLine> iQueryable)
         {
             List<TariffSearchSummary> tariffSearchSummaries = new List<TariffSearchSummary>();            
-            iQueryable = iQueryable.Where(p => p.OriginPortId == fromPort && p.DestinationPortId == toPort && System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= System.Data.Entity.DbFunctions.TruncateTime(betweenDate) && (p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(betweenDate)) : true));            
+            iQueryable = iQueryable.Where(p => p.OriginPortId == fromPort && p.DestinationPortId == toPort && System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= System.Data.Entity.DbFunctions.TruncateTime(betweenDate)
+            && (p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(betweenDate)) : true) && (viaPort != null ? p.ViaPortId == viaPort : true));            
             List<string> tariffids = iQueryable.Select(p => p.TariffId).Distinct().ToList();
             TariffSettingRepository tariffSettingRepository = new TariffSettingRepository(tenant);
             List<TariffSetting> setting = tariffSettingRepository.GetAll(tenant).ToList();
@@ -647,12 +651,13 @@ namespace Logitude.TariffModule.BL.Helpers
                             SelectedLine = Temp.Where(p => (decimal?)(p.GetType().GetProperty("MinPrice").GetValue(p)) == item.Price).FirstOrDefault();
                         }
                     }
+
                     if (SelectedLine != null)
                     {
                         minprice = SelectedLine.MinPrice;
                         tariffsSummary.LineId = SelectedLine.Id;
                     }
-
+                    GetViaPortForPriceCheckSearch(SelectedLine);
                     this.CalculateTariffActualPrice(item, minprice);
                     this.CalculateTariffMinPrice(item, minprice);
                     tariffsSummary.TransitTime = SelectedLine.TransitTime;
@@ -1084,6 +1089,7 @@ namespace Logitude.TariffModule.BL.Helpers
                         tariffsSummary.CurrencyCode = code;
                         tariffsSummary.CurrencySign = sign;                        
                         tariffsSummary.CurrencyId = trariff.CurrencyId;
+                        GetViaPortForPriceCheckSearch(tariffLine);
                     }
 
                     tariffSearchSummaries.Add(tariffsSummary);
@@ -1099,7 +1105,8 @@ namespace Logitude.TariffModule.BL.Helpers
         private void Initialization(TariffSearchArgs args, IQueryable<TariffLine> iQueryable)
         {
             this.tariffSearchSummaries = new List<TariffSearchSummary>();
-            this.tariffLines_IQueryable = iQueryable.Where(p => p.OriginPortId ==  fromPort && p.DestinationPortId == toPort && System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= System.Data.Entity.DbFunctions.TruncateTime(betweenDate) && (p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(betweenDate)) : true));
+            this.tariffLines_IQueryable = iQueryable.Where(p => p.OriginPortId ==  fromPort && p.DestinationPortId == toPort && System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= System.Data.Entity.DbFunctions.TruncateTime(betweenDate)
+            && (p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(betweenDate)) : true) && (viaPort != null ? p.ViaPortId == viaPort:true));            
             this.tariffids = tariffLines_IQueryable.Select(p => p.TariffId).Distinct().ToList();
 
              this.tariffLinesContainersPrices = (from d in this.tariffContext.TariffLinesContainersPrices
@@ -1695,6 +1702,19 @@ namespace Logitude.TariffModule.BL.Helpers
                 datainByte = storageservice.Read(fileInfo);
             }
             return datainByte;
+        }
+
+        private void GetViaPortForPriceCheckSearch(TariffLine tariffLine)
+        {
+            if (tariffLine != null )
+            {
+               if (tariffLine.ViaPortId != null)
+               {
+                 PortPM viaPort = PortQuery.GetSinglePort(tenant, tariffLine.ViaPortId, true);
+                 this.tariffsSummary.ViaPortId = tariffLine.ViaPortId;
+                 this.tariffsSummary.ViaPortCode = viaPort != null ? viaPort.Code : "";
+               }
+            }
         }
     }
 

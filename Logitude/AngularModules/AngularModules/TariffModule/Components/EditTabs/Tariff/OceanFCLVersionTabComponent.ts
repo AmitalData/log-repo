@@ -653,6 +653,10 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
                         tariffLine.DestinationPortCode = item.DestinationPortCode;
                         tariffLine.DestinationPortCombinedCode = item.DestinationPortCombinedCode;
                         tariffLine.DestinationPortName = item.DestinationPortName;
+                        tariffLine.ViaPortId = item.ViaPortId;
+                        tariffLine.ViaPortCode = item.ViaPortCode;
+                        tariffLine.ViaPortCombinedCode = item.ViaPortCombinedCode;
+                        tariffLine.ViaPortName = item.ViaPortName;
                         tariffLine.Surcharge1Price = item.Surcharge1Price;
                         tariffLine.Surcharge2Price = item.Surcharge2Price;
                         tariffLine.Surcharge3Price = item.Surcharge3Price;

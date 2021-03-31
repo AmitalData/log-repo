@@ -21,6 +21,7 @@ export class AddEditTariffLineComponent  {
     public ValidationErrorsList: string[];
     public OriginDependencyFilterValue: string = "A";
     public DestinationDependencyFilterValue = "A";
+    public ViaDependencyFilterValue = "A";
     public IsAir: boolean = false;
 
     constructor() {
@@ -40,6 +41,7 @@ export class AddEditTariffLineComponent  {
         if (this.TariffType == "OLC" || this.TariffType == "OSC" || this.TariffType == "OFC" || this.TariffType == "OFS") {
             this.OriginDependencyFilterValue = "O";
             this.DestinationDependencyFilterValue = "O";
+            this.ViaDependencyFilterValue = "O";
         }
     }
     
@@ -55,6 +57,7 @@ export class AddEditTariffLineComponent  {
 
     get OriginPortText() { return this.EntityPM.OriginPortText; }
     get DestinationPortText() { return this.EntityPM.DestinationPortText; }
+    get ViaPortText() { return this.EntityPM.ViaPortText; }
     get MinPriceText() { return this.EntityPM.MinPriceText; }
     get Step1PriceText() { return this.EntityPM.Step1PriceText; }
     get Step2PriceText() { return this.EntityPM.Step2PriceText; }
@@ -180,6 +183,10 @@ export class AddEditTariffLineComponent  {
         this.myCloner.AddField('DestinationPortCode');
         this.myCloner.AddField('DestinationPortCombinedCode');
         this.myCloner.AddField('DestinationPortName');
+        this.myCloner.AddField('ViaPortId');
+        this.myCloner.AddField('ViaPortCode');
+        this.myCloner.AddField('ViaPortCombinedCode');
+        this.myCloner.AddField('ViaPortName');
         this.myCloner.AddField('StartDate');
         this.myCloner.AddField('ExpirationDate');
 
@@ -234,6 +241,7 @@ export class AddEditTariffLineComponent  {
             this.myCloner.AddField('Index');
             this.myCloner.AddField('OriginPortText');
             this.myCloner.AddField('DestinationPortText');
+            this.myCloner.AddField('ViaPortText');
             this.myCloner.AddField('CurrencyId');
             this.myCloner.AddField('CurrencyCode');
             this.myCloner.AddField('IsDifferentCurrenciesPerCharge');
