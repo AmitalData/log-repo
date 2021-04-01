@@ -75,6 +75,8 @@ namespace Logitude.TariffModule.Data.EntityLists
        [DataMember]
        public string TransportModeName  { get; set; }
        [DataMember]
+       public string SellerPartnerTypeId  { get; set; }
+       [DataMember]
        public DateTime? LastUsedDate  { get; set; }
        [DataMember]
        public string FreightChargeId  { get; set; }
