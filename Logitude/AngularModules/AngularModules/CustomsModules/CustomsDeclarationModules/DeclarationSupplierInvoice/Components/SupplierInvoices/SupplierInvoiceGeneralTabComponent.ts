@@ -2773,7 +2773,10 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     OnSelectedItemChanged(selectedRow: SupplierInvoiceItemLine) {
         console.log("OnSelectedItemChanged > ", selectedRow);
         selectedRow.entityPM.DocumentFilingId = this.DocumentFilingId;
-        DeclarationEventManager.DeclarationSplitDocumentItemSelection.emit(selectedRow.entityPM);
+        if (selectedRow.entityPM.OcrHeight != 0 && selectedRow.entityPM.OcrPageNumber != 0 && selectedRow.entityPM.OcrTop != 0) {
+            DeclarationEventManager.DeclarationSplitDocumentItemSelection.emit(selectedRow.entityPM);
+
+        }
 
         if (selectedRow) {
 

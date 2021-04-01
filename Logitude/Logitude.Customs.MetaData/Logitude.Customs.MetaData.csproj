@@ -109,6 +109,7 @@
     <None Include="DBScripts\Post\202005210125_BeforeUpdateDeleteAllMetadata.sxml" />
     <None Include="DBScripts\Post\202005270157_SetNullableForCDROPColumns_Global.sxml" />
     <None Include="DBScripts\Post\202005270158_SetNullableForCDROPColumns_Main.sxml" />
+    <None Include="DBScripts\Post\202103251635_AddFCLLCL.sxml" />
     <None Include="DBScripts\Post\202007031145_DeclarationCancellationAddOn.sxml" />
     <None Include="DBScripts\Post\202010111400_UpdateRequiredFields.sxml" />
     <None Include="DBScripts\Post\202012211428_SetDeclarationDirection2I.sxml" />

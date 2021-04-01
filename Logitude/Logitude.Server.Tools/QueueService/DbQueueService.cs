@@ -87,6 +87,10 @@ namespace Logitude.Server.Tools.QueueService
                     return null;
                 }
             }
+            if (delayTime!=null)
+            {
+                LogMessagingUtil.Instance.AppendLine($"Delay  {this.QueueCode} Queue {delayTime.GetValueOrDefault()}");
+            }
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
             {
                 string messageBody = DictionaryJsonConverter.FromDictionaryToJson(messageValues);
