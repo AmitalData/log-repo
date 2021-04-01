@@ -265,7 +265,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     if (card != null)
                     {
                         entityPM.VatNumber = card.VatNumber;
-                        entityPM.PaymentTermId = card.PaymentTermId;
                     }
                 }
 
@@ -562,7 +561,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     {
                         IsCollectorIdSameOnAllCards = false;
                     }
-                    if (card.PaymentTermId != null)
+                    if (card.PaymentTermId != null && entityPM.PaymentTermId == null)
                     {
                         entityPM.PaymentTermId = card.PaymentTermId;
                     }
