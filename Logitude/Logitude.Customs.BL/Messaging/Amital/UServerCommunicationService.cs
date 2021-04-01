@@ -41,10 +41,18 @@ namespace Logitude.Customs.BL.Messaging.Amital
             _TransmissionBodyModel = transmissionModel;
         }
 
-        
 
+        public UServerCommunicationServiceInfoM Send(bool? pImmediately = null, bool SuppressBuildCom = false)
+        {
+            return Send(
+                new UServerCommunicationServiceParam()
+                {
+                    SendImmediately = pImmediately,
+                    SuppressBuildCom = SuppressBuildCom
+                });
+        }
 
-        public UServerCommunicationServiceInfoM Send(bool? pImmediately = null,bool SuppressBuildCom= false)
+        public UServerCommunicationServiceInfoM Send(UServerCommunicationServiceParam uServerCommunicationServiceParam)
         {
             //if (UnifreightIIGCommonUtil.GetTenantSetting(GetTenant()) == null)
             //{
@@ -58,13 +66,13 @@ namespace Logitude.Customs.BL.Messaging.Amital
             }
 
             bool Immediately;
-            if (pImmediately == null)
+            if (uServerCommunicationServiceParam.SendImmediately == null)
             {
                 Immediately = false;//Environment.UserDomainName.Equals("ntdomain", StringComparison.OrdinalIgnoreCase);
             }
             else
             {
-                Immediately = pImmediately.Value;
+                Immediately = uServerCommunicationServiceParam.SendImmediately.Value;
             }
             //if (!(Environment.UserDomainName.Equals("NTDOMAIN", StringComparison.OrdinalIgnoreCase) ||
             //    Environment.MachineName.Equals("IIGTest", StringComparison.OrdinalIgnoreCase) ||
@@ -148,7 +156,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
                 _CommunicationsParams.Logs = response;
                 _CommunicationsParams.Status = "D";
             }
-            if (Immediately && SuppressBuildCom)
+            if (Immediately && uServerCommunicationServiceParam.SuppressBuildCom)
             {
 
             }
@@ -177,7 +185,9 @@ namespace Logitude.Customs.BL.Messaging.Amital
                             Communications.
                                 SendCommunicationLogMessageToQueue(
                                 SBQueueNames.SendDataToExternalServicesBQ.ToString(),
-                                myInfo.CommunicationLogId, _CommunicationsParams.Tenant);
+                                myInfo.CommunicationLogId, _CommunicationsParams.Tenant,
+                                null,
+                                uServerCommunicationServiceParam.UServerDelayTime);
                         }
                     };
                 }
@@ -186,7 +196,9 @@ namespace Logitude.Customs.BL.Messaging.Amital
                     Communications.
                             SendCommunicationLogMessageToQueue(
                             SBQueueNames.SendDataToExternalServicesBQ.ToString(),
-                            myInfo.CommunicationLogId, _CommunicationsParams.Tenant);
+                            myInfo.CommunicationLogId, _CommunicationsParams.Tenant,
+                            null,
+                            uServerCommunicationServiceParam.UServerDelayTime);
                 }
                 LogMessagingUtil.Instance.AppendLine("SendCommunicationLogMessageToQueue()")
                         .Append(onTransactionCompleted)
@@ -445,6 +457,13 @@ MoreParams:blockdata ~{1}~
         public string ImmediatelyResponse { get; set; }
 
         public GenericResponseObj GenericResponseObj { get; set; }
+    }
+
+    public class UServerCommunicationServiceParam
+    {
+        public bool? SendImmediately { get; set; }
+        public bool SuppressBuildCom { get; internal set; }
+        public TimeSpan UServerDelayTime { get; set; }
     }
 
 }

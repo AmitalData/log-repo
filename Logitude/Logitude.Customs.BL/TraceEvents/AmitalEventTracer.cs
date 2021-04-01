@@ -1,5 +1,6 @@
 ﻿
 using Logitude.AmitalMessaging.Infrastructure.FuStatus;
+using Logitude.Customs.BL.Messaging.Amital;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.Customs.Def.Messaging.Customs;
 ///using Logitude.Customs.BL.Messaging.Amital.FuStatus;
@@ -70,7 +71,17 @@ namespace Logitude.Customs.BL.TraceEvents
 
                 var myFUStatus = GetFUStatus(myAmitalEventTracer, iscustomUser:  iscustomUser);
                 var myUServerCommunicationService = new Logitude.Customs.BL.Messaging.Amital.UServerCommunicationService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
-                myUServerCommunicationService.Send();
+                //myUServerCommunicationService.Send();
+                myUServerCommunicationService.Send(
+                     new UServerCommunicationServiceParam()
+                     {
+                         SendImmediately = false,
+                         SuppressBuildCom = false,
+                         UServerDelayTime = myAmitalEventTracer.UServerDelayTime
+                     });
+
+
+                    
 
             }
             finally
