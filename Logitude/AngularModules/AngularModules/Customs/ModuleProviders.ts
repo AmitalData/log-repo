@@ -392,6 +392,7 @@ import { CoolingReportingMethodListService } from './Services/StandardLists/Cool
 import { NDMessageActionCodeListService } from './Services/StandardLists/NDMessageActionCodeListService';
 import { HandingCodeListService } from './Services/StandardLists/HandingCodeListService';
 import { StuffingSiteTypeListService } from './Services/StandardLists/StuffingSiteTypeListService';
+import { ContainerTypeListService } from './Services/StandardLists/ContainerTypeListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -402,6 +403,7 @@ export class ModuleProviders {
 
             //#region StandardList
             case "AddressContactStateListService": { myResult = new AddressContactStateListService(); break; }
+            case "ContainerTypeListService": { myResult = new ContainerTypeListService(); break; }
             case "StuffingSiteTypeListService": { myResult = new StuffingSiteTypeListService(); break; }
             case "AddressPurposeListService": { myResult = new AddressPurposeListService(); break; }
             case "AmendmentFieldReasonTypeListService": { myResult = new AmendmentFieldReasonTypeListService(); break; }

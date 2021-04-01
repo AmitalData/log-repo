@@ -221,6 +221,7 @@
     <None Include="DBTables\ConstraintStatus.dxml" />
     <None Include="DBTables\ConstraintType.dxml" />
     <None Include="DBTables\ContactRoleType.dxml" />
+    <None Include="DBTables\ContainerType.dxml" />
     <None Include="DBTables\ContinuousMessagesTypeCode.dxml" />
     <None Include="DBTables\ContinuousRequestType.dxml" />
     <None Include="DBTables\ConverterType.dxml" />
@@ -891,6 +892,7 @@
     <None Include="EntityFiles\VendorCommunication.lxml" />
     <None Include="EntityFiles\VendorStatus.lxml" />
     <None Include="EntityFiles\VendorTransactionType.lxml" />
+    <None Include="EntityFiles\ContainerType.lxml" />
     <None Include="EntityFiles\VendorType.lxml" />
     <None Include="packages.config" />
   </ItemGroup>

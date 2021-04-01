@@ -220,6 +220,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ContactRoleTypeMap());
 	
+            modelBuilder.Configurations.Add(new ContainerTypeMap());
+	
             modelBuilder.Configurations.Add(new ContinuousMessagesTypeCodeMap());
 	
             modelBuilder.Configurations.Add(new ContinuousRequestTypeMap());
@@ -1720,6 +1722,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ContactRoleType> ContactRoleTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ContainerType> ContainerTypes 
 	 {
 	      get; set;
 	 
