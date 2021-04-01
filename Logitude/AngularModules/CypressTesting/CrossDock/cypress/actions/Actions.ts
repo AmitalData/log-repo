@@ -117,7 +117,9 @@ export function NavigateToShipmentConnectedEntities() {
     cy.Navigate(CrossdockSelectors.ShipmentEntryConnectedEntities);
 }
 function NavigateToShipmentConnectedReleases() {
+    cy.DefineRequestWait(RestAPI.GET, URLs.GetMenuButtonGrouppms, RequestAliases.GetWarehouseMenuButtonGroups);
     cy.Click(CrossdockSelectors.EntityNumberLink(CrossDockContext.ReleaseNumber), null, true)
+    BaseAssertion.AssertStatusCode(RequestAliases.GetWarehouseMenuButtonGroups, 200);
     cy.Navigate(CrossdockSelectors.ShipmentEntryConnectedReleases);
 }
 
