@@ -143,7 +143,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 ObjectTableName = objecttableName,
                 IsAddedManually = false,
                 EventTypeCode = eventTypeCode,
-
+                Notes = "Internal number: " + glaccount.InternalNumber+ "\n Local name: " + glaccount.LocalName,
 
             });
         }
