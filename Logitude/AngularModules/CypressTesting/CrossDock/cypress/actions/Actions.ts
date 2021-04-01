@@ -111,7 +111,9 @@ export function ValidateEntryDisableFields() {
 }
 
 export function NavigateToShipmentConnectedEntities() {
-    cy.Click(CrossdockSelectors.EntityNumberLink(CrossDockContext.EntryNumber), null, true)
+    cy.DefineRequestWait(RestAPI.GET, URLs.GetMenuButtonGrouppms, RequestAliases.GetWarehouseMenuButtonGroups);
+    cy.Click(CrossdockSelectors.EntityNumberLink(CrossDockContext.EntryNumber), null, true);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetWarehouseMenuButtonGroups, 200);
     cy.Navigate(CrossdockSelectors.ShipmentEntryConnectedEntities);
 }
 function NavigateToShipmentConnectedReleases() {
