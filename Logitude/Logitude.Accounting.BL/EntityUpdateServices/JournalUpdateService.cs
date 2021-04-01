@@ -84,16 +84,27 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
            //JournalLineUpdateService journalLineUpdateService = new JournalLineUpdateService
            (MainContext, new Dictionary<string, IContext>(), Tenant);
             UpdatePrintNotesRelatedToJournal(entityPM);
+            bool supperssSaveOnUpdateMultiDueIsFaster = true;
+            JournalLineUpdateServicePriv.UpdateMulti(entityPM.JournalLines, entityPM.DeletedJournalLines, entityPM,
 
-            JournalLineUpdateServicePriv.UpdateMulti(entityPM.JournalLines, entityPM.DeletedJournalLines, entityPM, true);
+                !supperssSaveOnUpdateMultiDueIsFaster);
+            if (supperssSaveOnUpdateMultiDueIsFaster)
+            {
+                this.SubmitChanges();
+            }
             //GetIQueryableLedgerTransactionsByGLAccountIdsList
             //base.UpdateComposition(entityPM);
             //while insert do once insert JournalReconciles +  Update ledgerTrasaction to  InReconcileProgress !!!!
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 var journalReconcileUpdateService = new JournalReconcileUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-                journalReconcileUpdateService.UpdateMulti(entityPM.JournalReconciles, entityPM.DeletedJournalReconciles, entityPM, true);
-
+                journalReconcileUpdateService.UpdateMulti(entityPM.JournalReconciles, entityPM.DeletedJournalReconciles, entityPM,
+                    !supperssSaveOnUpdateMultiDueIsFaster);
+                if (supperssSaveOnUpdateMultiDueIsFaster)
+                {
+                    this.SubmitChanges();
+                }
+                
 
                 var listTransactionId = entityPM.JournalReconciles.Select(r => r.LedgerTransactionId).ToList();
                 if (listTransactionId.Count > 0)
@@ -105,7 +116,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 var journalReconcileUpdateService = new JournalExternalReconcileUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-                journalReconcileUpdateService.UpdateMulti(entityPM.JournalExternalReconciles, entityPM.DeletedJournalExternalReconciles, entityPM, true);
+                journalReconcileUpdateService.UpdateMulti(entityPM.JournalExternalReconciles, entityPM.DeletedJournalExternalReconciles, entityPM,
+                    !supperssSaveOnUpdateMultiDueIsFaster);
+                if (supperssSaveOnUpdateMultiDueIsFaster)
+                {
+                    this.SubmitChanges();
+                }
 
 
                 var listTransactionId = entityPM.JournalExternalReconciles.Select(r => r.LedgerTransactionId).ToList();
