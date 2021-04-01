@@ -270,6 +270,8 @@ namespace Logitude.Accounting.BL.Validators
 
             if (myJournalPM.JournalLines.Any(l => currDateTimeUtcNow.GetValueOrDefault().Date < l.AccountingDate.Date))
             {
+
+                errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_AccountingFutureDateForbidden, myJournalPM.Tenant));
                 valid = false;
             }
             if (myJournalPM.JournalLines.Any(l =>
@@ -615,7 +617,11 @@ namespace Logitude.Accounting.BL.Validators
                 return false;
         }
 
+
         private  void ValidateJournalReconciles(JournalPM myJournalPM, ValidationContext accountingValidationContextServiceProvider, MyList<string> errorsList, IExternalReconcileDataProvider myIExternalReconcileDataProvider)
+
+        private void ValidateJournalReconciles(JournalPM myJournalPM, ValidationContext accountingValidationContextServiceProvider, List<string> errorsList, IExternalReconcileDataProvider myIExternalReconcileDataProvider)
+
         {
             if (myJournalPM.JournalReconciles.Count == 0)
             {

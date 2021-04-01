@@ -20,11 +20,8 @@ namespace WebFreight.Web.DataProviders
         public bool IncludesTransferGlaccount { get; set; }
         public int? ExternalReconciliationNumber { get; set; }
         public decimal BankPagesClosingBalance { get; set; }
-
-        public List<BankDetails> BankDetails { get; set; }
-      
+         public List<BankDetails> BankDetails { get; set; }
     }
-
     public class ExternalReconciliationPeriod
     {
         public string EnglishType { get; set; }
