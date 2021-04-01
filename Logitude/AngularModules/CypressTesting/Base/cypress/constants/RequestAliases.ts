@@ -124,6 +124,7 @@ export class RequestAliases {
     public static readonly GetFilterSearch = "GetFilterSearch"
     public static readonly ContactsGetSingle = "ContactsGetSingle";
     public static readonly GetContactMenuButtonGroups = "GetContactMenuButtonGroups";
+    public static readonly GetWarehouseMenuButtonGroups = "GetWarehouseMenuButtonGroups";
     public static readonly ContactViewsGetByFilters = "ContactViewsGetByFilters";
     public static readonly GetCustomersQuickSearch = "GetCustomersQuickSearch"
     //#endregion
