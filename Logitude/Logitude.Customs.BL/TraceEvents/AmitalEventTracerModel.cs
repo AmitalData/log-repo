@@ -24,8 +24,8 @@ namespace Logitude.Customs.BL.TraceEvents
         public string newStatusId { get; set; }
         public bool manually { get; set; }
 
-        
 
+        public TimeSpan UServerDelayTime { get; set; }
 
         public FUStatus MyFUStatus { get; set; }
 
