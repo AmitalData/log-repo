@@ -47,6 +47,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly SaveButton = '#SaveBtn';
     public static readonly ConfrimApproved = '#ConfrimApproved';
     public static readonly SettingsButton = '#Settings';
+    public static readonly EditButton = '#Edit';
 
     //#endregion
     //#region Contains

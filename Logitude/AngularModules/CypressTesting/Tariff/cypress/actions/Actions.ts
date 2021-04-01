@@ -279,8 +279,9 @@ export function CopyIntoNewVersion(date:string) {
     cy.Click(TariffSelectors.ToggleButtonMenu, TariffSelectors.ContainsCopyIntoNewVersion);
     AssertForApproveOrCopyIntoNewVersion();
 
-    cy.get(BaseSelectors.PackageGrid("5")).click({force:true})
-    cy.FillDate(TariffSelectors.TarifflLineStartDate , date)
+    cy.Click(BaseSelectors.EditButton , null)
+    cy.FillDate(TariffSelectors.TariffLineStartDate , date)
+    cy.Click(BaseSelectors.RedButton+BaseSelectors.LastElement, "OK");
 
     TariffApprove()
 }
