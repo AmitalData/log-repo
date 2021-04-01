@@ -329,6 +329,7 @@ export function FillPackageTab(transportMode: string, packagesDetails: PackagesD
 
         if(packagesDetails[i].ChargeableWeight) {
             cy.FillLogTextBox(ShipmentSelectors.PackageChargeableWeight, packagesDetails[i].ChargeableWeight.toString(), true)
+            cy.FillLogTextBox(ShipmentSelectors.PackageChargeableWeight, packagesDetails[i].ChargeableWeight.toString(), true)
         }
     }
 }
@@ -479,7 +480,14 @@ export function AssertStorageFee(expectedStorageFeeValue: string) {
     //         AssertStorageFee(expectedStorageFeeValue)
     //     }
     // })
-    BaseAssertion.AssertElementContain(ShipmentSelectors.StorageCalculationScreen, expectedStorageFeeValue)
+    cy.get(ShipmentSelectors.StorageFeeResult).should("be.visible")
+    cy.get(ShipmentSelectors.StorageFeeResult).then(($StorageFee) => {
+        const StorageFee = $StorageFee.text().toString()
+         cy.log(StorageFee)
+         expect(StorageFee.replace(/\s/g, '')).to.be.eq(expectedStorageFeeValue)
+})
+cy.Click(BaseSelectors.RedButton+BaseSelectors.LastElement,BaseSelectors.ContainsOK);
+
 }
 
 export function ValidateStoragePricing(AmountList:WarehouseStorage[],expectedWeight:string){
@@ -488,7 +496,6 @@ export function ValidateStoragePricing(AmountList:WarehouseStorage[],expectedWei
         BaseAssertion.AssertElementTextEqual(BaseSelectors.CellWithRowAndCol(BaseSelectors.ColNo5, (i + 1).toString()),AmountList[i].Amount,BaseSelectors.td)
     }
     BaseAssertion.AssertElementContain(BaseSelectors.LogitudeScrollViewer,ShipmentSelectors.ContainsWeight+expectedWeight)
-    cy.Click(BaseSelectors.RedButton+BaseSelectors.LastElement,BaseSelectors.ContainsOK);
 }
 
 //#endregion
