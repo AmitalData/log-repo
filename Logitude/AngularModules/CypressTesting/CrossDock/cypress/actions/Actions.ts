@@ -250,7 +250,7 @@ function GetTodayDate(){
     var dateString =  new Date().toLocaleDateString("en-US", { timeZone: "Asia/Jerusalem"})  
     var currentDateArray = dateString.split("/");
     if(parseInt(currentDateArray[0]) > 0 && parseInt(currentDateArray[0]) < 10){
-    return currentDateArray[1] + "/" + "0" + currentDateArray[0] + "/" + currentDateArray[2];
+    return "0" + currentDateArray[1] + "/" + "0" + currentDateArray[0] + "/" + currentDateArray[2];
     }
    return currentDateArray[1] + "/" + currentDateArray[0] + "/" + currentDateArray[2];
 }
