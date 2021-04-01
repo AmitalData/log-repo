@@ -1255,6 +1255,17 @@ export class DateTool {
         myResult.setUTCMilliseconds(0);
         return myResult;
     }
+    public static GetCurrentDateAsUtcForAccountingValidation() {
+        var myResult: Date = new Date();
+        myResult.setUTCFullYear(myResult.getUTCFullYear());
+        myResult.setUTCMonth(myResult.getUTCMonth());
+        myResult.setUTCDate(myResult.getUTCDate());
+        myResult.setUTCHours(0);
+        myResult.setUTCMinutes(0);
+        myResult.setUTCSeconds(0);
+        myResult.setUTCMilliseconds(0);
+        return myResult;
+    }
     public static GetCurrentDateTimeAsUtc() {
         var myResult: Date = new Date();
         myResult.setUTCFullYear(myResult.getFullYear());
