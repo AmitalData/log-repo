@@ -483,7 +483,7 @@ export function AssertStorageFee(expectedStorageFeeValue: string) {
     cy.get(ShipmentSelectors.StorageFeeResult).then(($StorageFee) => {
         const StorageFee = $StorageFee.text().toString()
          cy.log(StorageFee)
-         expect(StorageFee.replace(/\" \"/gi, "")).to.be.eq(expectedStorageFeeValue)
+         expect(StorageFee.replace(/\s/g, '')).to.be.eq(expectedStorageFeeValue)
 })
 }
 
