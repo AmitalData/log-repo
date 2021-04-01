@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ContainerTypeUpdateClass
    {  		
-		public const string HashString = "867a9d75d5166076475c887798cc1445";
+		public const string HashString = "ca11c39abf1e16da85215af0d17f13cf";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -678,13 +678,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ContainerTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTypeTextCode_0.Id, NameTextCodeCode = ContainerTypeTextCode_0.Code, ObjectTableName = "Customs.ContainerType", Code = "ContainerType",  QueryGroupCode = "CT07", IndexOrder = 0, Tenant = 0, ObjectTableId = ContainerTypeObjectTable.Id, QuerySection = "Customs.ContainerType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerTypeFeature_0.Id,FeatureUniqeCode= ContainerTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ContainerTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerTypeQuery.Id,QueryCode = ContainerTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ContainerType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ContainerTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerTypeQuery.Id,QueryCode = ContainerTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ContainerType.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ContainerTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerTypeQuery.Id,QueryCode = ContainerTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ContainerType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ContainerTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerTypeQuery.Id,QueryCode = ContainerTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ContainerType.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ContainerTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerTypeQuery.Id,QueryCode = ContainerTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ContainerType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ContainerTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerTypeQuery.Id,QueryCode = ContainerTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ContainerType.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ContainerTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerTypeQuery.Id,QueryCode = ContainerTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ContainerType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ContainerTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerTypeQuery.Id,QueryCode = ContainerTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ContainerType.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ContainerTypeQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerTypeQuery.Id,QueryCode = ContainerTypeQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.ContainerType.IsIsoTankContainer" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ContainerTypeQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerTypeQuery.Id,QueryCode = ContainerTypeQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.ContainerType.IsNeedSeal" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ContainerTypeQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerTypeQuery.Id,QueryCode = ContainerTypeQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.ContainerType.IsAerial" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

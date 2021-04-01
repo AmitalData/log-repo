@@ -692,22 +692,37 @@
         QueryCode="&quot;ContainerType&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;Code&quot;"
-        ColumnWidth="130" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ContainerType&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;EnglishName&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;LocalName&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ContainerType&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;LocalName&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;EnglishName&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ContainerType&quot;"
         IndexOrder="3"
         ObjectFieldName="&quot;Inactive&quot;"
-        ColumnWidth="130" />
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ContainerType&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;IsIsoTankContainer&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ContainerType&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;IsNeedSeal&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ContainerType&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;IsAerial&quot;"
+        ColumnWidth="100" />
     </QueryColumns>
     <QueryFilters />
   </Query>
