@@ -328,7 +328,7 @@ export function FillPackageTab(transportMode: string, packagesDetails: PackagesD
         }
 
         if(packagesDetails[i].ChargeableWeight) {
-            cy.FillLogTextBox(ShipmentSelectors.PackageChargeableWeight, packagesDetails[i].ChargeableWeight.toString(), true)
+            cy.FillLogTextBox(ShipmentSelectors.PackageChargeableWeight, parseFloat(packagesDetails[i].ChargeableWeight.toString()).toString(), true)
         }
     }
 }
@@ -480,6 +480,7 @@ export function AssertStorageFee(expectedStorageFeeValue: string) {
     //     }
     // })
     cy.get(ShipmentSelectors.StorageFeeResult).should("be.visible")
+    cy.get("#Shipment_ChargeStorage").check({force:true})
     cy.get(ShipmentSelectors.StorageFeeResult).then(($StorageFee) => {
         const StorageFee = $StorageFee.text().toString()
          cy.log(StorageFee)
