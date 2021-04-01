@@ -479,10 +479,12 @@ export function AssertStorageFee(expectedStorageFeeValue: string) {
     //         AssertStorageFee(expectedStorageFeeValue)
     //     }
     // })
-    cy.get('[data-cy="StorageFee"]').should("be.visible")
-    //cy.get('[data-cy="StorageFee"]').should("be.visible")
-
-    BaseAssertion.AssertElementContain('[data-cy="StorageFee"]', expectedStorageFeeValue)
+    cy.get(ShipmentSelectors.StorageFeeResult).should("be.visible")
+    cy.get(ShipmentSelectors.StorageFeeResult).then(($StorageFee) => {
+        const StorageFee = $StorageFee.text().toString()
+         cy.log(StorageFee)
+         expect(StorageFee).to.be.eq(expectedStorageFeeValue)
+})
 }
 
 export function ValidateStoragePricing(AmountList:WarehouseStorage[],expectedWeight:string){
