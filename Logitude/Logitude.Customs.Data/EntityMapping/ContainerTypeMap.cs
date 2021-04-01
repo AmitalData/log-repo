@@ -32,6 +32,12 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
 
             this.Property(t => t.Inactive).HasColumnName("Inactive");
+
+            this.Property(t => t.IsIsoTankContainer).HasColumnName("IsIsoTankContainer");
+
+            this.Property(t => t.IsNeedSeal).HasColumnName("IsNeedSeal");
+
+            this.Property(t => t.IsAerial).HasColumnName("IsAerial");
         }
     }
 }

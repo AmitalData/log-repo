@@ -26,7 +26,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LocalName, 
 	         EnglishName, 
 	         SearchFields, 
-	         Inactive,
+	         Inactive, 
+	         IsIsoTankContainer, 
+	         IsNeedSeal, 
+	         IsAerial,
 	      }
 
 
@@ -37,7 +40,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LocalName, 
 	         EnglishName, 
 	         SearchFields, 
-	         Inactive,
+	         Inactive, 
+	         IsIsoTankContainer, 
+	         IsNeedSeal, 
+	         IsAerial,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -64,6 +70,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
             {
 				entityPOCO.Inactive = entityPM.Inactive;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsIsoTankContainer))
+            {
+				entityPOCO.IsIsoTankContainer = entityPM.IsIsoTankContainer;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsNeedSeal))
+            {
+				entityPOCO.IsNeedSeal = entityPM.IsNeedSeal;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsAerial))
+            {
+				entityPOCO.IsAerial = entityPM.IsAerial;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -97,6 +118,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Inactive = entityPOCO.Inactive;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsIsoTankContainer))
+            {
+					entityPM.IsIsoTankContainer = entityPOCO.IsIsoTankContainer;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsNeedSeal))
+            {
+					entityPM.IsNeedSeal = entityPOCO.IsNeedSeal;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsAerial))
+            {
+					entityPM.IsAerial = entityPOCO.IsAerial;
+            }
+
 		}
 
 		public void PMToOldPM(ContainerTypePM entityPM, ContainerTypePM oldEntityPM)
@@ -121,6 +157,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
             {
                 oldEntityPM.Inactive = entityPM.Inactive;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsIsoTankContainer))
+            {
+                oldEntityPM.IsIsoTankContainer = entityPM.IsIsoTankContainer;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsNeedSeal))
+            {
+                oldEntityPM.IsNeedSeal = entityPM.IsNeedSeal;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsAerial))
+            {
+                oldEntityPM.IsAerial = entityPM.IsAerial;
             }
 			
 		}

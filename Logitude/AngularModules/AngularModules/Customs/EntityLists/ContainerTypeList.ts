@@ -13,6 +13,9 @@ export class ContainerTypeList {
 	EnglishName: string;
 	SearchFields: string;
 	Inactive: boolean;
+	IsIsoTankContainer: boolean;
+	IsNeedSeal: boolean;
+	IsAerial: boolean;
 	
 }
  

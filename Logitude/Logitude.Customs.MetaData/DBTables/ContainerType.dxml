@@ -39,4 +39,22 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="IsIsoTankContainer"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsNeedSeal"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsAerial"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
 </Table>

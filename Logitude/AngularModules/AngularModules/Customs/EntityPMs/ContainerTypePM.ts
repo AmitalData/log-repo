@@ -49,6 +49,21 @@ export class ContainerTypePM {
     public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
        
 	 
+    private isIsoTankContainer: boolean;
+    public get IsIsoTankContainer() { return this.isIsoTankContainer; }
+    public set IsIsoTankContainer(newValue: boolean) { if (this.isIsoTankContainer != newValue) { this.isIsoTankContainer = newValue; this.MarkAsDirty("IsIsoTankContainer"); } }
+       
+	 
+    private isNeedSeal: boolean;
+    public get IsNeedSeal() { return this.isNeedSeal; }
+    public set IsNeedSeal(newValue: boolean) { if (this.isNeedSeal != newValue) { this.isNeedSeal = newValue; this.MarkAsDirty("IsNeedSeal"); } }
+       
+	 
+    private isAerial: boolean;
+    public get IsAerial() { return this.isAerial; }
+    public set IsAerial(newValue: boolean) { if (this.isAerial != newValue) { this.isAerial = newValue; this.MarkAsDirty("IsAerial"); } }
+       
+	 
 
     public OldEntityPM: ContainerTypePM;
 		

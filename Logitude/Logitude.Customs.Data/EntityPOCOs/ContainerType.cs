@@ -29,6 +29,12 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string SearchFields { get; set; }
         [Column("Inactive")]
 	    public bool Inactive { get; set; }
+        [Column("IsIsoTankContainer")]
+	    public bool IsIsoTankContainer { get; set; }
+        [Column("IsNeedSeal")]
+	    public bool IsNeedSeal { get; set; }
+        [Column("IsAerial")]
+	    public bool IsAerial { get; set; }
     }
 }
 	 

@@ -13,6 +13,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         public InternationalSiteP MyInternationalSite { get; set; }
         public ModificationAndDiscountType MyModificationAndDiscountType { get; set; }
         public NDMessageActionCode MyNDMessageActionCode { get; set; }
+        public ContainerType MyContainerType { get; set; }
 
 
         internal static SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt CreateNew(SYSTBL_NG_9001_MSG_SystemTablesResponseTableData item)
@@ -52,7 +53,12 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-
+    }
+    public class ContainerType
+    {
+        public Boolean IsIsoTankContainer { get; set; }
+        public Boolean IsNeedSeal { get; set; }
+        public Boolean IsAerial { get; set; }
 
     }
 }

@@ -135,6 +135,75 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isIsoTankContainer ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsIsoTankContainer  
+	   {
+	    
+	     get
+		{
+		   return isIsoTankContainer;
+		 }
+		 set
+		 {
+		   if(isIsoTankContainer != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsIsoTankContainer",OldValue=isIsoTankContainer,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isIsoTankContainer=value;
+		   }
+			
+		 }
+	   }
+	  private bool isNeedSeal ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsNeedSeal  
+	   {
+	    
+	     get
+		{
+		   return isNeedSeal;
+		 }
+		 set
+		 {
+		   if(isNeedSeal != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsNeedSeal",OldValue=isNeedSeal,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isNeedSeal=value;
+		   }
+			
+		 }
+	   }
+	  private bool isAerial ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsAerial  
+	   {
+	    
+	     get
+		{
+		   return isAerial;
+		 }
+		 set
+		 {
+		   if(isAerial != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAerial",OldValue=isAerial,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isAerial=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

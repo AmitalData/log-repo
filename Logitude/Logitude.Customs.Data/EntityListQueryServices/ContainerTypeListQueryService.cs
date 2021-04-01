@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -15,30 +15,32 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
-{ 
+{
 
     public partial class ContainerTypeListQueryService
     {
-	    private IQueryable<ContainerTypeList> GetIqueryableList(IQueryable<ContainerType> iQueryable)
+        private IQueryable<ContainerTypeList> GetIqueryableList(IQueryable<ContainerType> iQueryable)
         {
-		IQueryable<ContainerTypeList> query = (from a in iQueryable
-                                            select new ContainerTypeList()
-											{
-                     
-					                          SearchFields = a.SearchFields,
-					
-					                          Inactive = a.Inactive,
-					
-		                    	            });
+            IQueryable<ContainerTypeList> query = (from a in iQueryable
+                                                   select new ContainerTypeList()
+                                                   {
+                                                       EnglishName = a.EnglishName,
+                                                       Code = a.Code,
+                                                       LocalName = a.LocalName,
+                                                       IsAerial = a.IsAerial,
+                                                       IsIsoTankContainer = a.IsIsoTankContainer,
+                                                       IsNeedSeal = a.IsNeedSeal,
+                                                       SearchFields = a.SearchFields,
+                                                       Inactive = a.Inactive,
+                                                   });
             return query;
-		}
+        }
 
-		private IQueryable<ContainerType> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<ContainerType> iQueryable)
+        private IQueryable<ContainerType> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<ContainerType> iQueryable)
         {
-			throw new NotImplementedException();
-		}
-			}
+            return iQueryable;
+        }
+    }
 
 
 }
-	

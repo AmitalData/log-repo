@@ -105,6 +105,7 @@
     <Compile Include="EntityPMs\Generated\SupplierPartyTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TransactionNatureTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TransportMeansTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\ContainerTypePM.cs" />
     <Compile Include="EntityPMs\NDMessageActionCodePM.cs" />
     <Compile Include="EntityPMs\ModificationAndDiscountTypePM.cs" />
     <Compile Include="EntityPMs\PhysicalCheckPMRequest.cs" />

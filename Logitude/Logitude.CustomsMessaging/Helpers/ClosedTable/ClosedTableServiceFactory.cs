@@ -293,6 +293,25 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
                         );
                     }
                     break;
+                case "1366":
+                case "ContainerType":
+                    {
+                        closedTableService = new Update1366ContainerType(customContext, entitySystemTables,
+                          (mycustomContext) =>
+                          {
+                              return new
+                                  ContainerTypeUpdateService(mycustomContext, new Dictionary<string, IContext>(), tenant);
+                          },
+                        (mycustomContext) =>
+                        {
+                            var qs = new ContainerTypeQueryService(mycustomContext);
+                            return qs as ICanGetAllClosedTable<ContainerTypePM>;
+                        }
+                        , tenant
+                        , false
+                        );
+                    }
+                    break;
                 default:
 
                     break;

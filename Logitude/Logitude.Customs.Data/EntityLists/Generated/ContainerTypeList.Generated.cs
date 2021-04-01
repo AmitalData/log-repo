@@ -24,6 +24,12 @@ namespace Logitude.Customs.Data.EntityLists
        public string SearchFields  { get; set; }
        [DataMember]
        public bool Inactive  { get; set; }
+       [DataMember]
+       public bool IsIsoTankContainer  { get; set; }
+       [DataMember]
+       public bool IsNeedSeal  { get; set; }
+       [DataMember]
+       public bool IsAerial  { get; set; }
    }
 
 }

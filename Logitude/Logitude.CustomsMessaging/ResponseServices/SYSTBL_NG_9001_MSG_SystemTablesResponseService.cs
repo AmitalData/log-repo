@@ -498,6 +498,54 @@ ID List :
                         break;
 
                     }
+                case "1366":
+                case "ContainerType":
+                    {
+
+                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
+                        Logitude.CustomsMessaging.Helpers.ClosedTable.
+                                                    ManipulateCustomResponse.
+                                                DataSetToTableData(customResponse,
+                                                (newResponseTableData, dr) =>
+                                                {
+                                                    var newExt =
+                                                        SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
+                                                    newExt.MyContainerType = new Helpers.ClosedTable.ContainerType();
+                                                    if (!writeHighlight)
+                                                    {
+                                                        writeHighlight = true;
+                                                    }
+                                                    if (dr["IsIsoTankContainer"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        if (dr["IsIsoTankContainer"].ToString() == "true")
+                                                        {
+                                                            newExt.MyContainerType.IsIsoTankContainer = true;
+                                                        }
+                                                    }
+                                                    if (dr["IsNeedSeal"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        if (dr["IsNeedSeal"].ToString() == "true")
+                                                        {
+                                                            newExt.MyContainerType.IsNeedSeal = true;
+                                                        }
+                                                    }
+                                                    if (dr["IsAerial"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        if (dr["IsAerial"].ToString() == "true")
+                                                        {
+                                                            newExt.MyContainerType.IsAerial = true;
+                                                        }
+                                                    }
+
+                                                    extList.Add(newExt);
+                                                });
+                        return extList;
+                        break;
+
+                    }
                 default:
                     break;
             }
