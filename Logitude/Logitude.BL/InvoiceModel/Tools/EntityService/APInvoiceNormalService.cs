@@ -1513,21 +1513,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private double? CalculatePayableVatOpenAmount(ShipmentPayable shipmentPayable, double? amount)
         {
-            string payableVatTypeId = null;
+            string payableVatTypeId = this.GetPayableVatTypeId(shipmentPayable);
             double? vatAmount = null;
-            if (!string.IsNullOrEmpty(shipmentPayable.VendorId))
-            {
-                Card myCard = CardRepository.GetSingleCard(shipmentPayable.VendorId, tenant, false);
-                if (myCard != null)
-                    payableVatTypeId = myCard.VatTypeId;
-            }
-
-            if (string.IsNullOrEmpty(payableVatTypeId))
-                payableVatTypeId = shipmentPayable.VatTypeId;
-
             if (!string.IsNullOrEmpty(payableVatTypeId))
             {
-               
                 VatType lineVatType = initializer.AllVatTypes.Where(d => d.Id == payableVatTypeId).FirstOrDefault();
                 if (lineVatType != null)
                 {
@@ -1548,6 +1537,21 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
             return vatAmount;
         }
+        private string GetPayableVatTypeId(ShipmentPayable shipmentPayable)
+        {
+            string payableVatTypeId = null;
+            if (!string.IsNullOrEmpty(shipmentPayable.VendorId))
+            {
+                Card myCard = CardRepository.GetSingleCard(shipmentPayable.VendorId, tenant, false);
+                if (myCard != null)
+                    payableVatTypeId = myCard.VatTypeId;
+            }
+
+            if (string.IsNullOrEmpty(payableVatTypeId))
+                payableVatTypeId = shipmentPayable.VatTypeId;
+
+            return payableVatTypeId;
+        }
 
         private double?  CalculatePayablesVatAmountInMultiVat_OpenLine(string vatTypeId, double? amount)
         {
@@ -1556,7 +1560,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             List<VATTypesGroup> vatTypesGroup = allVATTypesGroup.Where(d => d.GroupVATTypeId == vatTypeId).ToList();
             foreach (VATTypesGroup itemGroup in vatTypesGroup)
             {
-                VatType vatType = initializer.AllVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
                 VatTypePercentagePM myPercentagePM = initializer.AllVatPercentages.Where(d => d.VatTypeId == itemGroup.SingleVATTypeId).FirstOrDefault();
                 if (myPercentagePM != null)
                 {

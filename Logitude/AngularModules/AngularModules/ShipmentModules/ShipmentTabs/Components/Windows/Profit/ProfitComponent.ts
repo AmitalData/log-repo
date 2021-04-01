@@ -262,7 +262,7 @@ export class ProfitComponent {
                 record.Profit = -1 * (item.PayableOpenedAmount + item.PayableAcountedAmount);
             }
 
-            if (this.IncludingVAT)
+            if (this.IncludingVAT && item.ReceivableAmountWithVat && item.PayableAmountWithVat)
                 record.Profit = (item.ReceivableAmountWithVat) - (item.PayableAmountWithVat);
 
             this.ProfitsCollection.push(record);
@@ -277,6 +277,14 @@ export class ProfitComponent {
             record.ReceivableAcountedAmount = this.Fixed(item.ReceivableAcountedAmount);
             record.ReceivableAmount = this.Fixed(item.ReceivableOpenedAmount + item.ReceivableAcountedAmount);
             record.ReceivableAmountWithVat = this.Fixed(item.ReceivableAmountWithVat);
+
+            if (this.IncludingVAT && item.ReceivableAmountWithVat) {
+                record.Profit =  item.ReceivableAmountWithVat;
+            }
+            else {
+                record.Profit =  item.ReceivableOpenedAmount + item.ReceivableAcountedAmount;
+            }
+
             record.Profit = this.IncludingVAT ? item.ReceivableAmountWithVat : item.ReceivableOpenedAmount + item.ReceivableAcountedAmount;
             this.ProfitsCollection.push(record);
         });
@@ -377,9 +385,10 @@ export class ProfitComponent {
                 record.Profit = -1 * (item.PayableOpenedAmount + item.PayableAcountedAmount);
             }
 
-            if (this.IncludingVAT)
+            if (this.IncludingVAT && item.ReceivableAmountWithVat && item.PayableAmountWithVat) {
                 record.Profit = (item.ReceivableAmountWithVat) - (item.PayableAmountWithVat);
-
+            }
+       
             this.ProfitsCollection.push(record);
         });
 
@@ -392,7 +401,14 @@ export class ProfitComponent {
             record.ReceivableAcountedAmount = this.Fixed(item.ReceivableAcountedAmount);
             record.ReceivableAmount = this.Fixed(item.ReceivableOpenedAmount + item.ReceivableAcountedAmount);
             record.ReceivableAmountWithVat = this.Fixed(item.ReceivableAmountWithVat);
-            record.Profit = this.IncludingVAT ? item.ReceivableAmountWithVat: item.ReceivableOpenedAmount + item.ReceivableAcountedAmount;
+
+            if (this.IncludingVAT && item.ReceivableAmountWithVat) {
+                record.Profit =  item.ReceivableAmountWithVat ;
+            }
+            else {
+                record.Profit = item.ReceivableOpenedAmount + item.ReceivableAcountedAmount;
+            }
+           
             this.ProfitsCollection.push(record);
         });
     }
@@ -440,22 +456,32 @@ export class ProfitComponent {
             this.ProfitsCollection.forEach(item => {
 
                 if (this.isPayablesExists) {
-                    if (item.PayableOpenedAmount != null) {
-                        myTotalPayables += item.PayableOpenedAmount;
+                    if (this.IncludingVAT) {
+                        myTotalPayables += (item.PayableAmountWithVat);
                     }
+                    else {
+                        if (item.PayableOpenedAmount != null) {
+                            myTotalPayables += item.PayableOpenedAmount;
+                        }
 
-                    if (item.PayableAcountedAmount != null) {
-                        myTotalPayables += item.PayableAcountedAmount;
+                        if (item.PayableAcountedAmount != null) {
+                            myTotalPayables += item.PayableAcountedAmount;
+                        }
                     }
                 }
 
                 if (this.isReceivablesExists) {
-                    if (item.ReceivableOpenedAmount != null) {
-                        myTotalReceivables += item.ReceivableOpenedAmount;
+                    if (this.IncludingVAT) {
+                        myTotalReceivables += (item.ReceivableAmountWithVat);
                     }
+                    else {
+                        if (item.ReceivableOpenedAmount != null) {
+                            myTotalReceivables += item.ReceivableOpenedAmount;
+                        }
 
-                    if (item.ReceivableAcountedAmount != null) {
-                        myTotalReceivables += item.ReceivableAcountedAmount;
+                        if (item.ReceivableAcountedAmount != null) {
+                            myTotalReceivables += item.ReceivableAcountedAmount;
+                        }
                     }
                 }
 

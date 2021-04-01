@@ -2199,20 +2199,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 shipmentReceivableRepository.SubmitChanges();
             }
         }
-        private void CalculateReceivableVatAmount(ShipmentReceivable itemPM)
+        private void CalculateReceivableVatAmount(ShipmentReceivable receivable)
         {
-            string receivableVatTypeId = null;
-            Shipment shipment = shipmentRepository.GetSingleShipment(itemPM.ShipmentId, itemPM.Tenant);
-            if (!string.IsNullOrEmpty(shipment.CustomerId))
-            {
-                Card myCard = CardRepository.GetSingleCard(shipment.CustomerId, tenant, false);
-                if (myCard != null)
-                    receivableVatTypeId = myCard.VatTypeId;
-            }
-
-            if (string.IsNullOrEmpty(receivableVatTypeId))
-                receivableVatTypeId = itemPM.VatTypeId;
-
+            string receivableVatTypeId = GetReceivableVatTypeId(receivable);
             if (!string.IsNullOrEmpty(receivableVatTypeId))
             {
                 this.InitializeVATs();
@@ -2223,16 +2212,33 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     if (vatTypePercentagePM != null)
                     {
                         var percentage = vatTypePercentagePM.Percentage;
-                        itemPM.VatAmountLocal = MethodHelper.Round(itemPM.TotalAmountLocal + (itemPM.TotalAmountLocal * percentage / 100), 2);
-                        itemPM.VatAmountProfit = MethodHelper.Round(itemPM.AmountInProfitCurrency + (itemPM.AmountInProfitCurrency * percentage / 100), 2);
+                        receivable.VatAmountLocal = MethodHelper.Round(receivable.TotalAmountLocal + (receivable.TotalAmountLocal * percentage / 100), 2);
+                        receivable.VatAmountProfit = MethodHelper.Round(receivable.AmountInProfitCurrency + (receivable.AmountInProfitCurrency * percentage / 100), 2);
                     }
                 }
                 else
                 {
-                    itemPM.VatAmountLocal = CalculateReceivableVatAmountInMultiVat_OpenLine(lineVatType.Id, itemPM.TotalAmountLocal);
-                    itemPM.VatAmountProfit = CalculateReceivableVatAmountInMultiVat_OpenLine(lineVatType.Id, itemPM.AmountInProfitCurrency);
+                    receivable.VatAmountLocal = CalculateReceivableVatAmountInMultiVat_OpenLine(lineVatType.Id, receivable.TotalAmountLocal);
+                    receivable.VatAmountProfit = CalculateReceivableVatAmountInMultiVat_OpenLine(lineVatType.Id, receivable.AmountInProfitCurrency);
                 }
             }
+        }
+
+        private string GetReceivableVatTypeId(ShipmentReceivable receivable)
+        {
+            string receivableVatTypeId = null;
+            Shipment shipment = shipmentRepository.GetSingleShipment(receivable.ShipmentId, receivable.Tenant);
+            if (!string.IsNullOrEmpty(shipment.CustomerId))
+            {
+                Card myCard = CardRepository.GetSingleCard(shipment.CustomerId, tenant, false);
+                if (myCard != null)
+                    receivableVatTypeId = myCard.VatTypeId;
+            }
+
+            if (string.IsNullOrEmpty(receivableVatTypeId))
+                receivableVatTypeId = receivable.VatTypeId;
+
+            return receivableVatTypeId;
         }
 
         private double? CalculateReceivableVatAmountInMultiVat_OpenLine(string vatTypeId, double? amount)
@@ -2242,7 +2248,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             List<VATTypesGroup> vatTypesGroup = allVATTypesGroup.Where(d => d.GroupVATTypeId == vatTypeId).ToList();
             foreach (VATTypesGroup itemGroup in vatTypesGroup)
             {
-                VatType vatType = this.allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
                 VatTypePercentagePM myPercentagePM = this.allVatPercentages.Where(d => d.VatTypeId == itemGroup.SingleVATTypeId).FirstOrDefault();
                 if (myPercentagePM != null)
                 {
@@ -2260,30 +2265,39 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 if (!lineVatType.IsMultiPercentage)
                 {
-                    myReceivable.VatAmountLocal = MethodHelper.Round(arinvoiceline.LocalCurrencyAmount + arinvoiceline.LocalCurrencyAmount * arinvoiceline.VatPercentage / 100, 2);
-                    myReceivable.VatAmountProfit = MethodHelper.Round(arinvoiceline.ProfitCurrencyAmount + arinvoiceline.ProfitCurrencyAmount * arinvoiceline.VatPercentage / 100, 2);
-                    if (arinvoiceline.IsRegionalTax)
-                    {
-                        myReceivable.VatAmountLocal = MethodHelper.Round((myReceivable.VatAmountLocal + myReceivable.VatAmountLocal * (entityPM.RegionalTaxPercentage / 100)), 2);
-                        myReceivable.VatAmountProfit = MethodHelper.Round((myReceivable.VatAmountProfit + myReceivable.VatAmountProfit * (entityPM.RegionalTaxPercentage / 100)), 2);
-                    }
+                    FillReceivableVatAmounts_SingleVat(myReceivable, arinvoiceline);
+                   
                 }
                 else
                 {
-                    List<VATTypesGroup> vatTypesGroup = allVatGroups.Where(d => d.GroupVATTypeId == arinvoiceline.VatTypeId).ToList();
-                    myReceivable.VatAmountLocal = arinvoiceline.LocalCurrencyAmount;
-                    myReceivable.VatAmountProfit = arinvoiceline.ProfitCurrencyAmount;
-                    foreach (VATTypesGroup itemGroup in vatTypesGroup)
-                    {
-                        VatType vatType = this.allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
-                        VatTypePercentagePM myPercentagePM = this.allVatPercentages.Where(d => d.VatTypeId == itemGroup.SingleVATTypeId).FirstOrDefault();
-                        if (myPercentagePM != null)
-                        {
-                            var vatTypePercentage = MethodHelper.GetValue(myPercentagePM.Percentage);
-                            myReceivable.VatAmountLocal = myReceivable.VatAmountLocal + MethodHelper.Round(arinvoiceline.LocalCurrencyAmount * vatTypePercentage / 100, 2);
-                            myReceivable.VatAmountProfit = myReceivable.VatAmountProfit + MethodHelper.Round(arinvoiceline.ProfitCurrencyAmount * vatTypePercentage / 100, 2);
-                        }
-                    }
+                    FillReceivableVatAmounts_MultiVat(myReceivable, arinvoiceline);
+                }
+            }
+        }
+        private void FillReceivableVatAmounts_SingleVat(ShipmentReceivable myReceivable, ARInvoiceLinePM arinvoiceline)
+        {
+            myReceivable.VatAmountLocal = MethodHelper.Round(arinvoiceline.LocalCurrencyAmount + arinvoiceline.LocalCurrencyAmount * arinvoiceline.VatPercentage / 100, 2);
+            myReceivable.VatAmountProfit = MethodHelper.Round(arinvoiceline.ProfitCurrencyAmount + arinvoiceline.ProfitCurrencyAmount * arinvoiceline.VatPercentage / 100, 2);
+            if (arinvoiceline.IsRegionalTax)
+            {
+                myReceivable.VatAmountLocal = MethodHelper.Round((myReceivable.VatAmountLocal + myReceivable.VatAmountLocal * (entityPM.RegionalTaxPercentage / 100)), 2);
+                myReceivable.VatAmountProfit = MethodHelper.Round((myReceivable.VatAmountProfit + myReceivable.VatAmountProfit * (entityPM.RegionalTaxPercentage / 100)), 2);
+            }
+        }
+        private void FillReceivableVatAmounts_MultiVat(ShipmentReceivable myReceivable, ARInvoiceLinePM arinvoiceline)
+        {
+            List<VATTypesGroup> vatTypesGroup = allVatGroups.Where(d => d.GroupVATTypeId == arinvoiceline.VatTypeId).ToList();
+            myReceivable.VatAmountLocal = arinvoiceline.LocalCurrencyAmount;
+            myReceivable.VatAmountProfit = arinvoiceline.ProfitCurrencyAmount;
+            foreach (VATTypesGroup itemGroup in vatTypesGroup)
+            {
+                VatType vatType = this.allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
+                VatTypePercentagePM myPercentagePM = this.allVatPercentages.Where(d => d.VatTypeId == itemGroup.SingleVATTypeId).FirstOrDefault();
+                if (myPercentagePM != null)
+                {
+                    var vatTypePercentage = MethodHelper.GetValue(myPercentagePM.Percentage);
+                    myReceivable.VatAmountLocal = myReceivable.VatAmountLocal + MethodHelper.Round(arinvoiceline.LocalCurrencyAmount * vatTypePercentage / 100, 2);
+                    myReceivable.VatAmountProfit = myReceivable.VatAmountProfit + MethodHelper.Round(arinvoiceline.ProfitCurrencyAmount * vatTypePercentage / 100, 2);
                 }
             }
         }
