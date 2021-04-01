@@ -1035,6 +1035,7 @@
     <Compile Include="Controllers\ShipmentsModel\DocumentApprovalController.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffVersionUploadedExcelViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffVersionUploadedExcelController.Generated.cs" />
+    <Compile Include="DataContracts\AccountingPartnerApiFilters.cs" />
     <Compile Include="DataContracts\CargoTrackingBrandingDataRequest.cs" />
     <Compile Include="DataContracts\CargoTrackingBrandingData.cs" />
     <Compile Include="DataContracts\CreateDocumentOutArgs.cs" />
