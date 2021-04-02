@@ -2187,8 +2187,9 @@ export class PartnerItem extends BaseComponent {
         else {
             var myPerspective: string = null;
             var myComponentPath: string = null;
+            var isAgentPartner: boolean = this.IsAgentPartner();
 
-            if (this.Code == "AGENT") {
+            if (isAgentPartner) {
                 myComponentPath = "./CommonModules/CommonAgent/Components/NewEntity/NewAgentComponent";
             }
 
@@ -2329,7 +2330,19 @@ export class PartnerItem extends BaseComponent {
             }
         }
     }
+    IsAgentPartner(): boolean {
+        if (this.Code == "AGENT") {
+            return true;
+        }
 
+        else if (this.Code == "COLOD") {
+            return true;
+        }
+
+        else if (this.Code == "FRTFR") {
+            return true;
+        }
+    }
     // Add|Edit Address
     AddAddressClicked() {
 

@@ -1,4 +1,4 @@
-@release @dev @all
+@release @stable @all
 Feature: Create State, Inactivate and activate it from Maintenance
     This scenario the user creates a State, Inactivates it,
     selects it to edit and activates it from the Maintenance module.
@@ -10,18 +10,18 @@ Feature: Create State, Inactivate and activate it from Maintenance
 
     Scenario: Add state
         Given a state with the following details
-            | StateCode      | StateCode          |
-            | StateName      | TestStateName      |
-            | StateLocalName | TestStateLocalName |
-            | Country        | United States      |
-            | InactiveState  | Yes                |
-            | Notes          | TestNote           |
+            | StateCode      | random        |
+            | StateName      | random        |
+            | StateLocalName | random        |
+            | Country        | United States |
+            | InactiveState  | Yes           |
+            | Notes          | TestNote      |
         When add state
         Then the state should add successfully
 
     Scenario: Search for the state by name
-        When search for "TestState" state
-        Then the "TestState" state should appear successfully
+        When search for state
+        Then the state should appear successfully
 
     Scenario: Open the state
         When open state
@@ -29,9 +29,9 @@ Feature: Create State, Inactivate and activate it from Maintenance
 
     Scenario: Edit the state
         Given a "random" as stateLocalName
-        Given the user change Inactivestate check box
+        And the user activate state
         When edit state
         Then the state should update successfully
-        Then following event should appear in events tab
-            | Event         | Notes          |
-            | State Updated | State "status" |
+        And following event should appear in events tab
+            | Event         | Notes           |
+            | State Updated | State Activated |

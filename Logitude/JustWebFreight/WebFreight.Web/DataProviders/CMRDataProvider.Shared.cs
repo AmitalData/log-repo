@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 namespace WebFreight.Web.DataProviders
 {
-    public class CMRDataProvider
+    public class CMRDataProvider:BaseDataProvider
     {
         public string ShipperName { get; set; }
         public string ConsigneeName { get; set; }

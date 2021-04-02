@@ -246,7 +246,7 @@ export class DocumentsFilingExtendedPMService {
     CreateDocumentsFiling(documentTypeId: string, entityId: string, childEntityId: string, childReference: string, objectTableId: string, directionCode: string, tenant: number, externalEntityName: string=null, externalEntityReference: string=null, entityNumber:string=null) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/GetCreateDocumentsFiling" + '?documentTypeId=' + documentTypeId + '&entityId=' + entityId + '&childEntityId=' + childEntityId + '&childReference=' + childReference + '&objectTableId=' + objectTableId + '&directionCode=' + directionCode + '&tenant=' + tenant + '&externalEntityName=' + externalEntityName + '&externalEntityReference=' + externalEntityReference + '&entityNumber=' + entityNumber, ServiceHelper.GetHttpHeaders() ).pipe(map(response => {
+        return this._http.get(this._apiUrl + "/GetCreateDocumentsFiling" + '?documentTypeId=' + documentTypeId + '&entityId=' + entityId + '&childEntityId=' + childEntityId + '&childReference=' + encodeURIComponent(childReference) + '&objectTableId=' + objectTableId + '&directionCode=' + directionCode + '&tenant=' + tenant + '&externalEntityName=' + externalEntityName + '&externalEntityReference=' + externalEntityReference + '&entityNumber=' + entityNumber, ServiceHelper.GetHttpHeaders() ).pipe(map(response => {
             var result :any = response;
 
             var entity: DocumentsFilingPM;

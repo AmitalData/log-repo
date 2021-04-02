@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteUpdateClass
    {  		
-		public const string HashString = "71a8d157ec3f2382e76e65bf092bbfad";
+		public const string HashString = "fbeb6ecd515c5bae0cc44e33f81806bb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -15918,6 +15918,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
             }, EventTypeRepository, tenantEventTypes);
 
 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "QCTM",
+                EnglishName =  " Convert Quote Transport Mode",
+                LocalName =  " Convert Quote Transport Mode",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = QuoteObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
@@ -15947,6 +15965,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
              			   Feature QuoteFeature_MB44 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REACTIVATE", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.Reactivate", NameTextCodeDefaultText = "Reactivate Quote", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteObjectTable);
              			   Feature QuoteFeature_MB45 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConvertQuotetoLCL", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.ConverttoLCL", NameTextCodeDefaultText = "Convert to LCL", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteObjectTable);
              			   Feature QuoteFeature_MB46 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConvertQuotetoFCL", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.ConverttoFCL", NameTextCodeDefaultText = "Convert to FCL", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteObjectTable);
+             			   Feature QuoteFeature_MB47 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConvertQuoteTransportMode", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.ConvertQuoteTransportMode", NameTextCodeDefaultText = "Convert Quote Transport Mode", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,QuoteObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -16236,6 +16255,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  QuoteFeature_MB46.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton QuoteMenuButton49 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "ConvertQuoteTransportMode",
+						Index = 15, 
+						IsActive = true,
+						LabelTextCodeCode = "Quote.B.ConvertQuoteTransportMode",
+						LabelTextCodeDefaultText = "Convert Quote Transport Mode",
+						Tenant = 0,
+						MenuButtonGroupId = QuoteMenuButtonGroup.Id,
+						ParentMenuButtonId = QuoteMenuButton4.Id,
+						ObjectTableId = QuoteObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  QuoteFeature_MB47.Id,
+						Style = null,
+						LocalDefaultText = "Convert Quote Transport Mode",
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  QuoteFeature_MB47.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

@@ -22,7 +22,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.SearchFields).HasMaxLength(500);
             this.Property(t => t.MainColor).HasMaxLength(100);
             this.Property(t => t.BackgroundImageId).HasMaxLength(15);
-            this.Property(t => t.MainImageId).HasMaxLength(15);
+            this.Property(t => t.LoginImageId).HasMaxLength(15);
             this.Property(t => t.LoginProgressImageId).HasMaxLength(15);
             this.Property(t => t.ForgetPasswordImageId).HasMaxLength(15);
             this.Property(t => t.SecondaryColor).HasMaxLength(100).IsUnicode(false);
@@ -43,7 +43,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.SmallLogo).HasColumnName("SmallLogo");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.BackgroundImageId).HasColumnName("BackgroundImageId");
-            this.Property(t => t.MainImageId).HasColumnName("MainImageId");
+            this.Property(t => t.LoginImageId).HasColumnName("LoginImageId");
             this.Property(t => t.MainColor).HasColumnName("MainColor");
             this.Property(t => t.LoginProgressImageId).HasColumnName("LoginProgressImageId");
             this.Property(t => t.ForgetPasswordImageId).HasColumnName("ForgetPasswordImageId");

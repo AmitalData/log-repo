@@ -1257,8 +1257,9 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                     if (this.AllowPercentage && (this.TextValue + "").indexOf('%') > -1){
                                         this.TextValue = val.toFixed(4);
                                     }
-                                    else{
-                                        this.TextValue = val.toFixed(this.DigitsAfterPoint);
+                                    else {
+                                       this.TextValue = AppTool.Round(val, this.DigitsAfterPoint).toString();
+                                       // this.TextValue = val.toFixed(this.DigitsAfterPoint);
                                        
                                     }
                                     if (this.TextValue.indexOf('.') > -1 && this.decimalSeparator != '.') {

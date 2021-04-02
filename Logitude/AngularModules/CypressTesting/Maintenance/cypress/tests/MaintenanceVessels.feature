@@ -1,4 +1,4 @@
-@release @all @dev
+@release @all @stable 
 Feature: Vessel Create, Search and Edit from Maintenance
 
     The user creates a vessel, searches for and edits it from the Maintenance Module.

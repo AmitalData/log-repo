@@ -21,10 +21,11 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
                 entityPoco.OpenDate = entityPM.OpenDate;
                 entityPoco.Tenant = entityPM.Tenant;
                 entityPoco.DirectionId = entityPM.DirectionId;
-                entityPoco.TransportModeId = entityPM.TransportModeId;
-                entityPoco.ShipmentTypeId = entityPM.ShipmentTypeId;
                 entityPoco.ProductCode = entityPM.ProductCode;
             }
+
+            entityPoco.TransportModeId = entityPM.TransportModeId;
+            entityPoco.ShipmentTypeId = entityPM.ShipmentTypeId;
 
             entityPoco.TotalPerContainer = entityPM.TotalPerContainer;  
             entityPoco.UpdateDate = entityPM.UpdateDate;
@@ -208,6 +209,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
 
             entityPM.ConvertToLCL = false;
             entityPM.ConvertToFCL = false;
+            entityPM.ConvertTransportMode = false;
         }
 
         private static void BuildSearchField(QuotePM entityPM, Quote entityPoco)

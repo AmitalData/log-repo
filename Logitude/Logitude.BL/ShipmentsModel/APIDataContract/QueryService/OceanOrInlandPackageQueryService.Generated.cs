@@ -86,7 +86,8 @@ using Simplog.Data.ShipmentsModel;
 					 temp.InsidePackages = InsidePackageService1.InsidePackageDataMapping(item.InsideShipmentPackages,Tenant,ComputingPartnerName);
 				}
 
-							 					
+							 
+				   temp.ContainerNumber = item.ContainerNumber;					
 					MyList.Add(temp);
 				}
 					
@@ -362,7 +363,15 @@ using Simplog.Data.ShipmentsModel;
 						
 					}
 
-								 					   
+								 
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(item.ContainerNumber))
+					{							//throw new ApplicationException("ContainerNumber Can't be update"); 
+							temp.ContainerNumber = item.ContainerNumber;
+
+										}  
+
+										   
 						MyList.Add(temp);
 					}
 						

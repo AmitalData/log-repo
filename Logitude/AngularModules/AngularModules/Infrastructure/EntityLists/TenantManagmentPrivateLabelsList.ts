@@ -20,7 +20,7 @@ export class TenantManagmentPrivateLabelsList {
 		SearchFields: string;
 		SmallLogo: string;
 		BackgroundImageId: string;
-		MainImageId: string;
+		LoginImageId: string;
 		MainColor: string;
 		LoginProgressImageId: string;
 		ForgetPasswordImageId: string;

@@ -2726,7 +2726,8 @@ export class ShipmentGenerator {
         if (!AppTool.IsNullOrEmpty(myQuantity) && !AppTool.IsNullOrEmpty(myUnitPrice)) {
             switch (myRecordPM.MeasurementCode) {
                 case "PRVL":
-                case "PRFR": {
+                case "PRFR":
+                case "PFCL":{
                     myComputedAmount = myQuantity * myUnitPrice / 100;
                     break;
                 }
@@ -3450,7 +3451,8 @@ export class ShipmentGenerator {
         if (!AppTool.IsNullOrEmpty(myQuantity) && !AppTool.IsNullOrEmpty(myUnitPrice)) {
             switch (myRecordPM.MeasurementCode) {
                 case "PRVL":
-                case "PRFR": {
+                case "PRFR":
+                case "PFCL":{
                     myComputedAmount = myQuantity * myUnitPrice / 100;
                     break;
                 }

@@ -119,17 +119,15 @@ When("calculate storage", () => {
     Actions.CalculateStorage();
 });
 
-Then("storage fee should be {string}", (expectedStorageFeeValue) => {
-    // BaseAssertion.AssertElementTextEqual(ShipmentSelectors.StorageFeeResult, expectedStorageFeeValue)
-    Actions.AssertStorageFee(expectedStorageFeeValue);
-});
-
 Then("storage pricing should have weight {string} with the following amounts", (expectedWeight, dataTable) => {
     let AmountsList = Assists.CreateSet<WarehouseStorage>(dataTable);
     Actions.ValidateStoragePricing(AmountsList, expectedWeight);
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, BaseSelectors.ContainsOK);
 });
-
+Then("storage fee should be {string}", (expectedStorageFeeValue) => {
+    // BaseAssertion.AssertElementTextEqual(ShipmentSelectors.StorageFeeResult, expectedStorageFeeValue)
+    Actions.AssertStorageFee(expectedStorageFeeValue);
+});
 Then("a receivables line with the following details should appear", (dataTable) => {
     cy.Click(ShipmentSelectors.ReceivablesTab, null);
     Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton);

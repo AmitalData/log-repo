@@ -19,7 +19,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         List<PackageType> AllPackageTypes = new List<PackageType>();
         public void GenerateDefaultCharges()
         {
-            if (isNewEntity || entityPM.ConvertToFCL || entityPM.ConvertToLCL)
+            if (IsConvertingQuoteTypeOrTransportMode())
             {
                 if ((entityPM.QuoteCharges.Count() == 0 && !entityPM.IsHybrid))
                 {
@@ -496,6 +496,21 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 }
             }
         }
+
+        private bool IsConvertingQuoteTypeOrTransportMode()
+        {
+            if (entityPM.ConvertToLCL)
+                return true;
+
+            if (entityPM.ConvertToFCL)
+                return true;
+
+            if (entityPM.ConvertTransportMode)
+                return true;
+
+            return false;
+        }
+
         public void ComputeChargesAmounts()
         {
             if (isNewEntity)
@@ -827,7 +842,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             {
                 if (item.CostQuantity != null && item.CostUnitPrice != null)
                 {
-                    if (item.CostMeasurementCode == "PRVL" || item.CostMeasurementCode == "PRFR")
+                    if (item.CostMeasurementCode == "PRVL" || item.CostMeasurementCode == "PRFR" || item.CostMeasurementCode == "PFCL")
                     {
                         myTotalAmount = item.CostQuantity * item.CostUnitPrice / 100;
                     }
@@ -928,7 +943,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             {
                 if (item.SaleUnitPrice != null && item.SaleQuantity != null)
                 {
-                    if (item.SaleMeasurementCode == "PRVL" || item.SaleMeasurementCode == "PRFR")
+                    if (item.SaleMeasurementCode == "PRVL" || item.SaleMeasurementCode == "PRFR" || item.CostMeasurementCode == "PFCL")
                     {
                         myTotalAmount = item.SaleQuantity * item.SaleUnitPrice / 100;
                     }
