@@ -134,7 +134,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             ContactRepository contactRep = new ContactRepository(authToken.Tenant);
             string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(authToken.Tenant);
             Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, authToken.Tenant);
-        
+
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
                 EntityId = id,
@@ -143,9 +143,13 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 ObjectTableName = objecttableName,
                 IsAddedManually = false,
                 EventTypeCode = eventTypeCode,
-                Notes = "Internal number: " + glaccount.InternalNumber+ "\n Local name: " + glaccount.LocalName,
-
+                Notes = SetNotesForDisconnectGLAccountEvent(),
             });
+        }
+
+        private string SetNotesForDisconnectGLAccountEvent()
+        {
+            return string.Concat("Internal number: ", glaccount.InternalNumber , "\n Local name: " , glaccount.LocalName);
         }
 
         public HttpResponseMessage GetAllConnectedPartnersByGLAccountId(string glAccountId)
