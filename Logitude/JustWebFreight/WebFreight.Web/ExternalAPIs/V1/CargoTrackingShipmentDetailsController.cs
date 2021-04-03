@@ -30,19 +30,25 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = GetAuthenticationToken();
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                CargoTrackingShipmentDetailsInstanceCreator Creator = new CargoTrackingShipmentDetailsInstanceCreator(authToken.Tenant);
-                CargoTrackingShipmentDetails cargoTrackingShipmentDetails = Creator.CreateCargoTrackingShipmentDetailsInstance(number);
-                if(cargoTrackingShipmentDetails != null)
-                    return Request.CreateResponse(HttpStatusCode.OK, cargoTrackingShipmentDetails);
+                CargoTrackingShipmentDetails cargoTrackingShipmentDetails = CreateCargoTrackingShipmentDetailsInstance(number, authToken.Tenant);
+                if (cargoTrackingShipmentDetails != null)
+                    return CreateSuccessfulResponse(cargoTrackingShipmentDetails);
                 else
                     return Request.CreateResponse(HttpStatusCode.OK, "More Than one Shipment Found");
+
             }
             catch (Exception ex)
             {
-                return CreateResponse(ex, null);
+                return CreateFailedResponse(ex);
             }
         }
 
+        private static CargoTrackingShipmentDetails CreateCargoTrackingShipmentDetailsInstance(string number, int tenant)
+        {
+            CargoTrackingShipmentDetailsInstanceCreator Creator = new CargoTrackingShipmentDetailsInstanceCreator(tenant);
+            CargoTrackingShipmentDetails cargoTrackingShipmentDetails = Creator.CreateCargoTrackingShipmentDetailsInstance(number);
+            return cargoTrackingShipmentDetails;
+        }
 
         private AuthenticationToken GetAuthenticationToken()
         {
@@ -52,6 +58,16 @@ namespace WebFreight.Web.ExternalAPIs.V1
             return authToken;
         }
 
+        private HttpResponseMessage CreateSuccessfulResponse(CargoTrackingShipmentDetails cargoTrackingShipmentDetails)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, cargoTrackingShipmentDetails);
+        }
+        private HttpResponseMessage CreateFailedResponse(Exception exception)
+        {
+            var apiExceptionResult = ApiExceptionHandler.HandleException(exception);
+            return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+
+        }
         private HttpResponseMessage CreateResponse(Exception exception, string message)
         {
             if (exception == null && message != null)
