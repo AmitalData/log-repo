@@ -29,7 +29,7 @@ Feature: Edit Currency Rate Vale in Settings
         Given the user open the quote and navigate to Charges
         Given the user open Add Charges window
         When fill Cost Currency with "EUR"
-        Then cost Exchange Rate should equal to "3.80000"
+        Then cost Exchange Rate should equal to "3.8"
 
     Scenario: Create direct export air shipment
         Given the user navigates to shipments workspace
@@ -51,16 +51,16 @@ Feature: Edit Currency Rate Vale in Settings
             | Quantity    | 5    |
             | UnitPrice   | 10   |
         When fill "EUR" as receivable Currency
-        Then the Receivable Exchange Rate should equal to "3.80000"
+        Then the Receivable Exchange Rate should equal to "3.8"
 
     Scenario: ARInvoice cost currency
         Given the user add new invoicee
         When fill "EUR" as Invoice Currency
-        Then the Invoice Exchange Rate should equal to "3.80000"
+        Then the Invoice Exchange Rate should equal to "3.8"
 
     Scenario: ARInvoice cost currency old date
         When fill "25/06/2019" as Invoice Date
-        Then the Invoice Exchange Rate should equal to "4.00000"
+        Then the Invoice Exchange Rate should equal to "4"
 
 
 
