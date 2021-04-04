@@ -1,4 +1,4 @@
-@smoke @stable
+@smoke @dev
 Feature: Shipment Master House Connection
     The user creates a Master Export Air shipment, creates a House Export Air shipment from withing the Master shipment,
     disconnects the House from the Master, creates a House Export Air shipment from outside the Master,
