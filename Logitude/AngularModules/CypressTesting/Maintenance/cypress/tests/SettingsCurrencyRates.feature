@@ -1,5 +1,5 @@
 @release @dev @all
-Feature: Edit Currency Rate Vale in Settings
+Feature: Edit Currency Rate Value in Settings
     The user edits the currency exchange rate and validates it in quote, receivable and invoice.
 
     Scenario: Edit exchange rate value

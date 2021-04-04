@@ -1,6 +1,6 @@
 @release @stable @all
 Feature: Create State, Inactivate and activate it from Maintenance
-    This scenario the user creates a State, Inactivates it,
+    The user creates a State, Inactivates it,
     selects it to edit and activates it from the Maintenance module.
 
     Scenario: Add StateCode with lenght more than 10
