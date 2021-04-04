@@ -76,7 +76,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                      GLAccountCurrencyId = a.GLAccount == null ? null : a.GLAccount.CurrencyId,
 
                                                      ChequeCounter = a.ChequeCounter,
-
+                                                     TransferGLAcccountId = a.TransferGLAcccountId,
                                                      TransferGLAcccountNumber = a.TransferGLAcccount == null ? null : a.TransferGLAcccount.DisplayNumber,
                                                      TransferGLAcccountEnglishName = a.TransferGLAcccount == null ? null : a.TransferGLAcccount.EnglishName,
                                                      TransferGLAcccountLocalName = a.TransferGLAcccount == null ? null : a.TransferGLAcccount.LocalName,
