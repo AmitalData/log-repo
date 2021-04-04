@@ -30,12 +30,12 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = GetAuthenticationToken();
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                CargoTrackingShipmentDetails cargoTrackingShipmentDetails = CreateCargoTrackingShipmentDetailsInstance(number, authToken.Tenant);
-                if (cargoTrackingShipmentDetails != null)
-                    return CreateSuccessfulResponse(cargoTrackingShipmentDetails);
-                else
-                    return Request.CreateResponse(HttpStatusCode.OK, "More Than one Shipment Found");
+                CargoTrackingShipmentDetailsResult cargoTrackingShipmentDetailsResult = CreateCargoTrackingShipmentDetailsResultInstance(number, authToken.Tenant);
 
+                if (cargoTrackingShipmentDetailsResult.HasMoreThanOneShipmentWithSameHouse)
+                    return CreateResponseWithStringMessage("More Than one Shipment Found");
+                else
+                    return CreateSuccessfulResponse(cargoTrackingShipmentDetailsResult.CargoTrackingShipmentDetails);
             }
             catch (Exception ex)
             {
@@ -43,10 +43,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
         }
 
-        private static CargoTrackingShipmentDetails CreateCargoTrackingShipmentDetailsInstance(string number, int tenant)
+        private static CargoTrackingShipmentDetailsResult CreateCargoTrackingShipmentDetailsResultInstance(string number, int tenant)
         {
             CargoTrackingShipmentDetailsInstanceCreator Creator = new CargoTrackingShipmentDetailsInstanceCreator(tenant);
-            CargoTrackingShipmentDetails cargoTrackingShipmentDetails = Creator.CreateCargoTrackingShipmentDetailsInstance(number);
+            CargoTrackingShipmentDetailsResult cargoTrackingShipmentDetails = Creator.CreateCargoTrackingShipmentDetailsResultInstance(number);
             return cargoTrackingShipmentDetails;
         }
 
@@ -68,17 +68,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
             return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
 
         }
-        private HttpResponseMessage CreateResponse(Exception exception, string message)
+        private HttpResponseMessage CreateResponseWithStringMessage(string message)
         {
-            if (exception == null && message != null)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, message);
-            }
-            else
-            {
-                var apiExceptionResult = ApiExceptionHandler.HandleException(exception);
-                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
-            }
+            if ( message == null) { return null; }
+            return Request.CreateResponse(HttpStatusCode.OK, message);
         }
 
     }

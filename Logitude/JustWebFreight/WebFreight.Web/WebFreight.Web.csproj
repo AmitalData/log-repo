@@ -2586,6 +2586,7 @@
     <Compile Include="Helpers\APIHelpers\CargoTrackingShipmentDetailsInstanceCreator.cs" />
     <Compile Include="Helpers\APIHelpers\APIReceivablePayableHelper.cs" />
     <Compile Include="Helpers\APIHelpers\APITransshipmentHelper.cs" />
+    <Compile Include="Helpers\APIHelpers\CargoTrackingShipmentDetailsResult.cs" />
     <Compile Include="Helpers\APIHelpers\ConsolidationServiceBatch.cs" />
     <Compile Include="Helpers\APIHelpers\GenerateTariffsHelper.cs" />
     <Compile Include="Helpers\APIHelpers\ImageLibraryControllerHelper.cs" />

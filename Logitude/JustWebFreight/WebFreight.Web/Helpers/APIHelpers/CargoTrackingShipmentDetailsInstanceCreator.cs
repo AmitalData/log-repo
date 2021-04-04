@@ -27,6 +27,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
         ICargoTrackingContext MyContext;
         Dictionary<string, string> mileStoneCodes;
 
+
         public CargoTrackingShipmentDetailsInstanceCreator(int tenant)
         {
             this.tenant = tenant;
@@ -35,10 +36,18 @@ namespace WebFreight.Web.Helpers.APIHelpers
             MyContext = CargoTrackingContext.GetContext(tenant);
         }
 
-        public CargoTrackingShipmentDetails CreateCargoTrackingShipmentDetailsInstance(string houseNumber)
+        public CargoTrackingShipmentDetailsResult CreateCargoTrackingShipmentDetailsResultInstance(string houseNumber)
+        {
+            CargoTrackingShipmentDetailsResult cargoTrackingShipmentDetailsResult = new CargoTrackingShipmentDetailsResult();
+            CargoTrackingShipmentDetails cargoTrackingShipmentDetails = CreateCargoTrackingShipmentDetailsInstance(houseNumber);
+            if(cargoTrackingShipmentDetails == null) { cargoTrackingShipmentDetailsResult.HasMoreThanOneShipmentWithSameHouse = true; }
+            cargoTrackingShipmentDetailsResult.CargoTrackingShipmentDetails = cargoTrackingShipmentDetails;
+            return cargoTrackingShipmentDetailsResult;
+        }
+        private CargoTrackingShipmentDetails CreateCargoTrackingShipmentDetailsInstance(string houseNumber)
         {
             string shipmentId = query.GetShipmentIdIfOneShipmentHaveHouseNumber(houseNumber, tenant);
-            if (string.IsNullOrEmpty(shipmentId)) { return null;}
+            if (string.IsNullOrEmpty(shipmentId)) { return null; }
 
             return CreateMappedCargoTrackingShipmentDetailsInstance(shipmentId);
         }
@@ -82,10 +91,10 @@ namespace WebFreight.Web.Helpers.APIHelpers
         }
         private string GetTotalChargesInNIS(string paymentRequestXML)
         {
-            if (string.IsNullOrEmpty(paymentRequestXML)) { return " "; }
+            if (string.IsNullOrEmpty(paymentRequestXML)) { return null; }
 
             var paymentRequest = LogitudeXmlSerializer.DeserializeObject<RequestPayment>(paymentRequestXML);
-            if (paymentRequest == null) { return " "; }
+            if (paymentRequest == null) { return null; }
             return paymentRequest.TotalChargesInNIS;
         }
         private LastMileDetails GetCardConnectedToShipment(ShipmentPM shipment)
@@ -117,6 +126,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
             BuildMileStoneCodesDictionary();
             List<Milestone> allMilestones = GetAllShipmentMilestones(cargoTrackingShipment);
             if (allMilestones == null) { return null; }
+            allMilestones.OrderBy(m => m.Id);
             return FillMilestoneDatasList(cargoTrackingShipment, allMilestones);
         }
 
@@ -154,7 +164,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 CreateMappedMilestoneDataInstance(CargoTrackingMilestoneList, milestone);
             }
 
-            return milestoneDatas.OrderBy(s => s.EstimationDate != null ? s.EstimationDate : s.Date).ToList();
+            return milestoneDatas;
         }
         private void AddNewMilestoneDataToMilestoneDatas(CargoTrackingShipmentList cargoTrackingShipment)
         {
