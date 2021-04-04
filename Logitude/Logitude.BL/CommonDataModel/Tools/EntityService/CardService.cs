@@ -157,6 +157,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 CardContactRepository.Remove(cardContact);
                 CardContactRepository.SubmitChanges();
             }
+            if(entityPM.PartnerTypeId=="CS" || entityPM.PartnerTypeId == "VD")
+            {
+                CreateUpdateGLaccountCardsDara(Poco);
+            }
+
         }
 
         private GLAccountPM GetGLaccount(string accountId)
