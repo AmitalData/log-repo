@@ -39,6 +39,7 @@ namespace Logitude.TariffModule.BL.Helpers
         private AirlineQuery airlineQuery;
         private ShippingLineRepository shippingLineRepository;
         private ShippingLineQuery shippingLineQuery;
+        private CardRepository cardQuery;
         private TariffRepository tariffRepository;
         private ITariffModuleContext tariffContext;
         private PackageTypeRepository packageTypeRepository;
@@ -99,6 +100,7 @@ namespace Logitude.TariffModule.BL.Helpers
             this.commonContext = CommonDataContext.GetContext(tenant);
             this.airlineRepository = new AirlineRepository(commonContext);
             this.shippingLineRepository = new ShippingLineRepository(commonContext);
+            this.cardQuery = new CardRepository(commonContext);
             this.airlineQuery = new AirlineQuery(airlineRepository);
             this.shippingLineQuery = new ShippingLineQuery(shippingLineRepository);
             this.tariffContext = TariffModuleContext.GetContext(tenant);
@@ -113,6 +115,7 @@ namespace Logitude.TariffModule.BL.Helpers
             this.commonContext = CommonDataContext.GetContext(tenant);
             this.airlineRepository = new AirlineRepository(commonContext);
             this.shippingLineRepository = new ShippingLineRepository(commonContext);
+            this.cardQuery = new CardRepository(commonContext);
             this.airlineQuery = new AirlineQuery(airlineRepository);
             this.shippingLineQuery = new ShippingLineQuery(shippingLineRepository);
             this.tariffContext = TariffModuleContext.GetContext(tenant);
@@ -671,7 +674,7 @@ namespace Logitude.TariffModule.BL.Helpers
                     string sellerName = "";
                     string documentId = null;
                     AirlinePM airline = null;
-                    ShippingLinePM shippingLine = null;
+                    Card partnerCard = null;
                     if (tariffType == "AFC")
                     {
                         airline = airlineQuery.GetSinglePM(result.SellerId, tenant);
@@ -680,9 +683,9 @@ namespace Logitude.TariffModule.BL.Helpers
                     }
                     else if (tariffType == "OLC")
                     {
-                        shippingLine = shippingLineQuery.GetSinglePM(result.SellerId, tenant);
-                        sellerName = shippingLine != null && shippingLine.Card != null ? shippingLine.Card.EnglishName : "";
-                        documentId = shippingLine.ImageDetailId;
+                        partnerCard = cardQuery.GetSingleCard(result.SellerId, tenant);
+                        sellerName = partnerCard != null ? partnerCard.EnglishName : "";
+                        documentId = partnerCard.ImageDetailId;
                     }
                     tariffsSummary.SurchargesPrice = "0.00";
                     if (CurrentSurcharge != null)
@@ -997,8 +1000,8 @@ namespace Logitude.TariffModule.BL.Helpers
                     tariffsSummary.ActualPrice = price;
                     tariffsSummary.LineId = tariffLine.Id;
 
-                    ShippingLinePM shippingLine = shippingLineQuery.GetSinglePM(trariff.SellerId, tenant);
-                    this.sellerName = shippingLine != null && shippingLine.Card != null ? shippingLine.Card.EnglishName : "";
+                    Card partnerCard = cardQuery.GetSingleCard(trariff.SellerId, tenant);
+                    this.sellerName = partnerCard != null ? partnerCard.EnglishName : "";
 
                     this.FillAllInList(tariffLine);
                     this.FillSurchargeData(args, trariff, tariffLine);
@@ -1049,7 +1052,7 @@ namespace Logitude.TariffModule.BL.Helpers
                     tariffsSummary.UnitOfMesurmentId = airChrageType.MeasurementId;
                     tariffsSummary.UnitOfMesurmentCode = usedMeasurements.Where(p => p.Id == airChrageType.MeasurementId).Select(p => p.Code).FirstOrDefault();
                     tariffsSummary.SellerId = trariff.SellerId;
-                    documentId = shippingLine.ImageDetailId;
+                    documentId = partnerCard.ImageDetailId;
                     byte[] filedata = this.DownloadFile(documentId, "images");
                     string resultImage = "";
                     if (filedata != null)
