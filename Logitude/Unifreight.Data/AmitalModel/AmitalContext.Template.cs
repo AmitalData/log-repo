@@ -1,6 +1,6 @@
 ﻿//OpenAccess please define!!! 
 //logitude please undefine!!!  
-//#define reserveword
+///#define reserveword
 
 
 using Simplog.Server.Infrastructure;
@@ -5592,6 +5592,92 @@ namespace Unifreight.Data.AmitalModel
 
             #endregion
 
+            #region GDMQUEST
+
+            modelBuilder.Entity<GDMQUEST>()
+                .HasKey(p => new { p.COMID, p.PROCESSTYPE })
+                .ToTable("GDMQUESTS", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GDMQUEST>()
+                .Property(p => p.COMID)
+                    .HasColumnName(@"COM_ID")
+                    .IsRequired()
+                    .HasMaxLength(30)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GDMQUEST>()
+                .Property(p => p.PROCESSTYPE)
+                    .HasColumnName(@"PROCESS_TYPE")
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GDMQUEST>()
+                .Property(p => p.STATUS)
+                    .HasColumnType("decimal")
+                    .HasPrecision(20, 0);
+            modelBuilder.Entity<GDMQUEST>()
+                .Property(p => p.CURRENTSTAGE)
+                    .HasColumnType("decimal")
+                    .HasPrecision(20, 0);
+            modelBuilder.Entity<GDMQUEST>()
+                .Property(p => p.STARTDATE)
+                    .HasColumnName(@"START_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<GDMQUEST>()
+                .Property(p => p.ENDDATE)
+                    .HasColumnName(@"END_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<GDMQUEST>()
+                .Property(p => p.PRIORITY)
+                    .HasColumnType("int16");
+            modelBuilder.Entity<GDMQUEST>()
+                .Property(p => p.CANCELREQUEST)
+                    .HasColumnName(@"CANCEL_REQUEST")
+                    .HasColumnType("int16");
+            modelBuilder.Entity<GDMQUEST>()
+                .Property(p => p.ERRORCODE)
+                    .HasColumnName(@"ERROR_CODE")
+                    .HasColumnType("int");
+            modelBuilder.Entity<GDMQUEST>()
+                .Property(p => p.JOBNAME)
+                    .HasColumnName(@"JOB_NAME")
+                    .HasMaxLength(16)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GDMQUEST>()
+                .Property(p => p.MOREDATA)
+                    .HasColumnName(@"MORE_DATA")
+                    .HasColumnType("clob");
+            modelBuilder.Entity<GDMQUEST>()
+                .Property(p => p.REMARK)
+                    .HasColumnType("clob");
+
+            #endregion
+
+            #region GITITEMCR
+
+            modelBuilder.Entity<GITITEMCR>()
+                .HasKey(p => new { p.COUNTER, p.REQCERT })
+                .ToTable("GITITEMCR", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GITITEMCR>()
+                .Property(p => p.COUNTER)
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("decimal")
+                    .HasPrecision(20, 0);
+            modelBuilder.Entity<GITITEMCR>()
+                .Property(p => p.REQCERT)
+                    .HasColumnName(@"REQ_CERT")
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GITITEMCR>()
+                .Property(p => p.REMARKS)
+                    .HasColumnType("clob");
+
+            #endregion
 
             #region GDMLOCK
 
@@ -6019,5 +6105,9 @@ namespace Unifreight.Data.AmitalModel
         public virtual DbSet<CFIMSVFLINE> CFIMSVFLINEs { get; set; }
 
         public virtual DbSet<GDMLOCK> GDMLOCKs { get; set; }
+
+        public virtual DbSet<GDMQUEST> GDMQUESTs { get; set; }
+        public virtual DbSet<GITITEMCR> GITITEMCRs { get; set; }
+
     }
 }
