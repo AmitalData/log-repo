@@ -1017,7 +1017,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 //_NextDueDoneAt = DateTime.UtcNow.Date.AddDays(1);//tomorrow at 00:00
                 _NextDueDoneAt = DateTime.UtcNow.Date;//today already done - do next day =tomorrow at 00:00 ///
             }
-            public Action LogDoneItemInMemoryAction { get; set; }
+            public Action<int> LogDoneItemInMemoryAction { get; set; }
             public Action SetLastActivate { get; set; }
 
             public void WorkUntilQEmptyQueueDB(TimeSpan? timeSpan = null,string selectedQueue=null)
@@ -1068,7 +1068,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     SetLastActivate?.Invoke();
                     if (ProcessMessage_Db(queueservice, response, selectedQueue))
                     {
-                        LogDoneItemInMemoryAction?.Invoke();
+                        LogDoneItemInMemoryAction?.Invoke(1);
                     }
                     Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }
