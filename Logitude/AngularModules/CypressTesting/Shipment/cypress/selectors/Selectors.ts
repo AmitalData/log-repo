@@ -314,6 +314,8 @@ public static readonly WarehouseOKBtn="#WarehouseOKBtn"
   public static readonly PickUpDeliveryETDDate ="#date_ShipmentPickUpDelivery_ETD"
   public static readonly PickUpDeliveryETDTime="#time_ShipmentPickUpDelivery_ETD"
   //#endregion
+  public static readonly ComponentBusyIndicator="#EditComponentBusyIndicator_0"
+
 
 
 }

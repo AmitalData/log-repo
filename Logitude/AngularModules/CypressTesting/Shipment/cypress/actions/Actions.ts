@@ -17,6 +17,7 @@ import * as BaseActions from '../../../Base/cypress/actions/Actions';
 import { EventDetails } from '../models/EventDetails';
 import { EventTypeDetails } from '../models/EventTypeDetails';
 import { WarehouseStorage } from 'cypress/models/WarehouseStorage';
+import { ShipmentContext } from '../models/ShipmentContext';
 
 export function NavigatesToEventsTab() {
     cy.DefineRequestWait(RestAPI.GET, URLs.TraceEventsDomain, RequestAliases.GetTraceEvent);
@@ -348,9 +349,45 @@ export function AddInsidePackage(packagesDetails: PackagesDetails[]) {
 //#endregion
 
 //#region House Shipment Tab
-export function FillHouseInShipmentsTab(Shipper: string) {
+export function CreateNewAttachedHouse(Shipper:string){
+    cy.Click(ShipmentSelectors.NewAttachedHouse,null);
+    FillHouseInShipmentsTab(Shipper);
+    CreateShipment("House");
+}
+
+function FillHouseInShipmentsTab(Shipper: string) {
     cy.FillLogLov(ShipmentSelectors.ShipmentCustomer, Shipper, true)
 }
+
+export function CheckBusyIndicator(){
+    cy.get(ShipmentSelectors.ComponentBusyIndicator).should(BaseSelectors.NotExist);
+}
+
+export function CheckHouseCheckBox(){
+    cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
+    cy.get(ShipmentSelectors.HouseCheckBox(ShipmentContext.HouseNumber)).find("input").then($InActiveStatesCheckBox => {
+        if (!($InActiveStatesCheckBox.is(':checked'))) {
+            cy.get(ShipmentSelectors.HouseCheckBox(ShipmentContext.HouseNumber)).find("input").check({ force: true })
+        }
+    })
+}
+
+export function UncheckHouseCheckBox(){
+    cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
+    cy.get(ShipmentSelectors.HouseCheckBox(ShipmentContext.HouseNumber)).find("input").then($InActiveStatesCheckBox => {
+        if ($InActiveStatesCheckBox.is(':checked')) {
+            cy.get(ShipmentSelectors.HouseCheckBox(ShipmentContext.HouseNumber)).find("input").uncheck({ force: true })
+        }
+    })
+}
+
+export function ValidateCheckHouseCheckBox(){
+    cy.get(ShipmentSelectors.HouseCheckBox(ShipmentContext.HouseNumber)).find("input").then($InActiveStatesCheckBox => {
+       var CheckBoxStatus = $InActiveStatesCheckBox.is(':checked')
+       assert.equal(CheckBoxStatus , true);
+    })
+}
+
 //#endregion
 
 //#region Receivables Tab
