@@ -343,6 +343,12 @@ export class QuoteUtilities {
             newChargePM.ContainerType3MarkUpValue = item.ContainerType3MarkUpValue;
             newChargePM.ContainerType4MarkUpValue = item.ContainerType4MarkUpValue;
             newChargePM.ContainerType5MarkUpValue = item.ContainerType5MarkUpValue;
+            newChargePM.MarkUpText = item.MarkUpText;
+            newChargePM.ContainerType1MarkUpText = item.ContainerType1MarkUpText;
+            newChargePM.ContainerType2MarkUpText = item.ContainerType2MarkUpText;
+            newChargePM.ContainerType3MarkUpText = item.ContainerType3MarkUpText;
+            newChargePM.ContainerType4MarkUpText = item.ContainerType4MarkUpText;
+            newChargePM.ContainerType5MarkUpText = item.ContainerType5MarkUpText;
             newChargePM.MarkUpTypeCode = "F";
             newChargePM.ContainerType1MarkUpTypeCode = "F";
             newChargePM.ContainerType2MarkUpTypeCode = "F";
@@ -378,6 +384,12 @@ export class QuoteUtilities {
                 newChargePM.ContainerType3MarkUpValue = item.ContainerType3MarkUpValue;
                 newChargePM.ContainerType4MarkUpValue = item.ContainerType4MarkUpValue;
                 newChargePM.ContainerType5MarkUpValue = item.ContainerType5MarkUpValue;
+                newChargePM.MarkUpText = item.MarkUpText;
+                newChargePM.ContainerType1MarkUpText = item.ContainerType1MarkUpText;
+                newChargePM.ContainerType2MarkUpText = item.ContainerType2MarkUpText;
+                newChargePM.ContainerType3MarkUpText = item.ContainerType3MarkUpText;
+                newChargePM.ContainerType4MarkUpText = item.ContainerType4MarkUpText;
+                newChargePM.ContainerType5MarkUpText = item.ContainerType5MarkUpText;
                 newChargePM.MarkUpTypeCode = item.MarkUpTypeCode;
                 newChargePM.ContainerType1MarkUpTypeCode = item.ContainerType1MarkUpTypeCode;
                 newChargePM.ContainerType2MarkUpTypeCode = item.ContainerType2MarkUpTypeCode;
