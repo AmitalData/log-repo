@@ -83,7 +83,6 @@ function OpenEventTab($eventTab , eventTabSelector) {
 function AssertEventTime(expectedEvent: string) {
   cy.get(BaseSelectors.EventItemBox).contains(expectedEvent).eq(0).parents(BaseSelectors.EventItemBox).within(() => {
     cy.get(BDDSpecialCasesSelectors.EventDateTime(expectedEvent)).invoke('text').then((text) => {
-      // assert.equal(text, GetTimeZoneDateTime());
       AssertTimeOneOf(text);
     })
   });
@@ -97,9 +96,6 @@ function AssertTimeOneOf(text:string){
 
 function GetTimeZoneDateTime() {
   var TimeZone = LocalSettingsDetails.UpdateTime
-  var TimeList = TimeZone.split(",")
-  TimeZone = TimeList[1]
-  TimeZone = TimeZone.replace(" ", "");
   var DateTimeList = TimeZone.split(":")
   DateTimeList[0] = HourFormat(DateTimeList[0], DateTimeList[2])
   TimeZone = DateTimeList[0] + ":" + DateTimeList[1]
@@ -115,7 +111,7 @@ function HourFormat(hour: string, AMPM: string) {
 }
 
 function FormatPMTimes(hour: string) {
-  if (Number(hour) > 0 && Number(hour) < 10) {
+  if (Number(hour) > 0 && Number(hour) < 12) {
     return (Number(hour) + 12).toString();
   }
   if (Number(hour) == 12) {
@@ -130,6 +126,7 @@ function FormatAMTimes(hour: string) {
   if (Number(hour) == 12) {
     return "00"
   }
+  return hour ;
 }
 
 function DateTimeRange(time: string) {

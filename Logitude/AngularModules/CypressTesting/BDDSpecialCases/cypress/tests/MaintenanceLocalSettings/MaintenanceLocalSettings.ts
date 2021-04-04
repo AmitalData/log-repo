@@ -82,7 +82,7 @@ Given("the user update the shipment", () => {
     ShipmentActions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
     localSettingsDetails = MapTimeZoneToCountry(localSettingsDetails);
-    LocalSettingsDetails.UpdateTime = new Date().toLocaleString("en-US", { timeZone: localSettingsDetails.TimeZoneRegion })
+    LocalSettingsDetails.UpdateTime = new Date().toLocaleTimeString("en-US", { timeZone: localSettingsDetails.TimeZoneRegion })
 });
 
 When("navigate to event tab", () => {
