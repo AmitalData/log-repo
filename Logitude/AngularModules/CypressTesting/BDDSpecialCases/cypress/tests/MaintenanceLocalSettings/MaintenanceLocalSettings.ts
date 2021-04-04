@@ -63,12 +63,12 @@ Then("the direct should create successfully", () => {
 //#endregion
 
 //#region Date format
-Given("open the direct shipment and navigate to General tab", () => {
+Given("open the direct shipment and navigate to general tab", () => {
     ShipmentActions.OpenShipment(shipmentDetails.ShipmentNumber)
     cy.Navigate(ShipmentSelectors.GeneralTab)
 });
 
-When("fill {string} as HAWB Date", (date) => {
+When("fill {string} as HAWB date", (date) => {
     cy.FillDate(BDDSpecialCasesSelectors.HAWBDate,date);
 });
 
