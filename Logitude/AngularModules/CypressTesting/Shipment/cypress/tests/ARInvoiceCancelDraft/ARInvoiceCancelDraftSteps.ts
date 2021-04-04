@@ -66,6 +66,7 @@ When("create invoice", () => {
 });
 Then("the invoice should create successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
+    BaseAssertion.AssertElementNotExist(BaseSelectors.BusyIndicatorControlInner)
 });
 
 When("cancel draft", () => {
