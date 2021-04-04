@@ -431,7 +431,8 @@ using Simplog.Data.ShipmentsModel;
 				   
 				   temp.BookingConfirmationNumber = MyEntityPM.BookingConfirmationNumber;
 				   temp.EstimatedFinalArrivalDate = MyEntityPM.EstimatedFinalArrivalDate;
-				   temp.ActualFinalArrivalDate = MyEntityPM.ActualFinalArrivalDate;					
+				   temp.ActualFinalArrivalDate = MyEntityPM.ActualFinalArrivalDate;
+				   temp.HouseNo = MyEntityPM.House;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -1387,6 +1388,12 @@ using Simplog.Data.ShipmentsModel;
 							temp.ActualFinalArrivalDate = MyEntity.ActualFinalArrivalDate;
 
 										}  
+
+					
+                    							//throw new ApplicationException("HouseNo Can't be update"); 
+							temp.House = MyEntity.HouseNo;
+
+					 
 
 										   
 					return temp;
