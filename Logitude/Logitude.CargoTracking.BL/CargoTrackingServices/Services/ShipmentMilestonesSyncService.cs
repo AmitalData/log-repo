@@ -34,7 +34,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         }
         private string BuildScriptForUpdatingCustomsShipmentMilstones()
         {
-            string buildCustomsUpdatedFields = this.BuildCustomsUpdatedFields();
+            string buildCustomsUpdatedFields = BuildCustomsUpdatedFields();
 
             var sql = string.Concat(
                         $"update CustomShipment ",
@@ -43,6 +43,31 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                         $"join CargoTrackingShipments ForwardingShipment on ForwardingShipment.CustomsShipmentHeaderId = CustomShipment.EntityId");
             return sql;
         }
+        private string BuildScriptForUpdatingForwardingShipmentMilstones()
+        {
+            string fieldsSetScript = BuildForwardingUpdatedFields();
+
+            var sql = $"update ForwardingShipment " +
+                        $"set	{fieldsSetScript} " +
+                        $"from	 CargoTrackingShipments ForwardingShipment " +
+                        $"join	CargoTrackingShipments CustomShipment on ForwardingShipment.CustomsShipmentHeaderId = CustomShipment.EntityId";
+            return sql;
+        }
+
+        private string BuildForwardingUpdatedFields()
+        {
+            List<string> fieldsAssignments = new List<string>();
+
+            foreach (var field in customsMilstonesFields)
+                fieldsAssignments.Add(CreateSetForwardingFieldFromCustomScript(field));
+
+            foreach (var field in forwardingMilstonesFields)
+                fieldsAssignments.Add(GetFieldFromCustomsIfForwardingIsEmpty(field));
+
+            var fieldsSetScript = string.Join(", ", fieldsAssignments);
+            return fieldsSetScript;
+        }
+
         private string BuildScriptToSetCurrentMistones()
         {
             var lastForwardingMilstoneOrderNumber = 5;
@@ -61,26 +86,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 , "join CargoTrackingShipments ForwardingShipment on ForwardingShipment.CustomsShipmentHeaderId = CustomShipment.EntityId");
 
             return sql;
-        }
-        private string BuildScriptForUpdatingForwardingShipmentMilstones()
-        {
-			List<string> fieldsAssignments = new List<string>();
-
-            // Copy Customs milstones to forwarding
-            foreach (var field in customsMilstonesFields)
-				fieldsAssignments.Add(CreateSetForwardingFieldFromCustomScript(field));
-
-            // set default forwarding fields from customs when forwarding is null
-            foreach (var field in forwardingMilstonesFields)
-                fieldsAssignments.Add(GetFieldFromCustomsIfForwardingIsEmpty(field));
-
-            var fieldsSetScript = string.Join(", ", fieldsAssignments);
-
-            var sql = $"update ForwardingShipment " +
-						$"set	{fieldsSetScript} " +
-						$"from	 CargoTrackingShipments ForwardingShipment " +
-                        $"join	CargoTrackingShipments CustomShipment on ForwardingShipment.CustomsShipmentHeaderId = CustomShipment.EntityId";
-			return sql;
         }
 
         private void ExcuteSqlScript(CargoTrackingArgs cargoArgs, string sql)
@@ -141,8 +146,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             foreach (var field in forwardingMilstonesFields)
                 fieldsAssignments.Add(CreateSetCustomsFieldScript(field));
 
-
-            // set default custom fields from forwarding when forwarding is null
             foreach (var field in customsMilstonesFields)
                 fieldsAssignments.Add(GetFieldFromForwardingIfCustomsIsEmpty(field));
 
