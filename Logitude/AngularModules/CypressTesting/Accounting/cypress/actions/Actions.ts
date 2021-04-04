@@ -230,7 +230,7 @@ function DefinePutARInvoicesRequest(){
 export function CancelDraftARInvoice() {
     cy.Click(BaseSelectors.MoreList, null, true)
     cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
-    cy.Click(AccountingSelectors.ARInvoiceCancelDraftButton, null)
+    cy.Click(AccountingSelectors.ARInvoiceCancelDraftButton, null,true)
     cy.Click(ShipmentSelectors.ConfirmWindowYes, null)
 }
 
