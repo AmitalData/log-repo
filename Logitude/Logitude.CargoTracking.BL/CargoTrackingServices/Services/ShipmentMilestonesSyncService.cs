@@ -23,6 +23,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
             sql = BuildScriptForUpdatingForwardingShipmentMilstones();
             ExcuteSqlScript(cargoArgs, sql);
+
+            sql = BuildScriptToSetCurrentMistones();
+            ExcuteSqlScript(cargoArgs, sql);
         }
         private void FillMilstonesFieldsList()
         {
@@ -38,6 +41,25 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                         $"set	{buildCustomsUpdatedFields} ",
                         $"from	 CargoTrackingShipments CustomShipment ",
                         $"join CargoTrackingShipments ForwardingShipment on ForwardingShipment.CustomsShipmentHeaderId = CustomShipment.EntityId");
+            return sql;
+        }
+        private string BuildScriptToSetCurrentMistones()
+        {
+            var lastForwardingMilstoneOrderNumber = 5;
+            var sql = string.Concat(
+
+                "update  ForwardingShipment"
+                , $"set     ForwardingShipment.CurrentMilestoneCode = iif(ForwardingShipment.CurrentMilestoneCode > {lastForwardingMilstoneOrderNumber}, CustomShipment.CurrentMilestoneCode, ForwardingShipment.CurrentMilestoneCode),"
+                , $"        ForwardingShipment.CurrentMilestoneDate = iif(ForwardingShipment.CurrentMilestoneCode > {lastForwardingMilstoneOrderNumber}, CustomShipment.CurrentMilestoneDate, ForwardingShipment.CurrentMilestoneDate)"
+                , "from CargoTrackingShipments ForwardingShipment"
+                , "join CargoTrackingShipments CustomShipment on ForwardingShipment.CustomsShipmentHeaderId = CustomShipment.EntityId"
+                , Environment.NewLine
+                , "update  CustomShipment"
+                , $"set     CustomShipment.CurrentMilestoneCode = iif(CustomShipment.CurrentMilestoneCode <= {lastForwardingMilstoneOrderNumber}, ForwardingShipment.CurrentMilestoneCode, CustomShipment.CurrentMilestoneCode),"
+                , $"        CustomShipment.CurrentMilestoneDate = iif(CustomShipment.CurrentMilestoneCode <= {lastForwardingMilstoneOrderNumber}, ForwardingShipment.CurrentMilestoneDate, CustomShipment.CurrentMilestoneDate)"
+                , "from CargoTrackingShipments CustomShipment"
+                , "join CargoTrackingShipments ForwardingShipment on ForwardingShipment.CustomsShipmentHeaderId = CustomShipment.EntityId");
+
             return sql;
         }
         private string BuildScriptForUpdatingForwardingShipmentMilstones()
