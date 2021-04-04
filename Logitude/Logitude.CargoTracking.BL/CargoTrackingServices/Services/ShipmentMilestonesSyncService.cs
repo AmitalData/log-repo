@@ -54,20 +54,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             return sql;
         }
 
-        private string BuildForwardingUpdatedFields()
-        {
-            List<string> fieldsAssignments = new List<string>();
-
-            foreach (var field in customsMilstonesFields)
-                fieldsAssignments.Add(CreateSetForwardingFieldFromCustomScript(field));
-
-            foreach (var field in forwardingMilstonesFields)
-                fieldsAssignments.Add(GetFieldFromCustomsIfForwardingIsEmpty(field));
-
-            var fieldsSetScript = string.Join(", ", fieldsAssignments);
-            return fieldsSetScript;
-        }
-
         private string BuildScriptToSetCurrentMistones()
         {
             var lastForwardingMilstoneOrderNumber = 5;
@@ -87,11 +73,23 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
             return sql;
         }
+        private string BuildForwardingUpdatedFields()
+        {
+            List<string> fieldsAssignments = new List<string>();
+
+            AppendForwardingFieldAssignmentScript(fieldsAssignments);
+
+            AppendForwardingAssignmentFromForwardingWhenCustomsIsEmpty(fieldsAssignments);
+
+            var fieldsSetScript = ConvertListOfStringsToCommaSeperatedString(fieldsAssignments);
+            return fieldsSetScript;
+        }
 
         private void ExcuteSqlScript(CargoTrackingArgs cargoArgs, string sql)
         {
             ServiceHelper.ExecuteSql(sql, cargoArgs.DestinationConnectionString);
         }
+     
 
 
         private void FillForwardingMilstonesFieldsList()
@@ -140,39 +138,63 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         }
 
         private string BuildCustomsUpdatedFields()
-		{
+        {
             List<string> fieldsAssignments = new List<string>();
 
-            foreach (var field in forwardingMilstonesFields)
-                fieldsAssignments.Add(CreateSetCustomsFieldScript(field));
+            AppendCustomsFieldAssignmentScript(fieldsAssignments);
 
+            AppendCustomsAssignmentFromForwardingWhenCustomsIsEmpty(fieldsAssignments);
+
+            return ConvertListOfStringsToCommaSeperatedString(fieldsAssignments);
+        }
+
+        private string ConvertListOfStringsToCommaSeperatedString(List<string> listOfStrings)
+        {
+            return string.Join(", ", listOfStrings);
+        }
+
+        private void AppendCustomsAssignmentFromForwardingWhenCustomsIsEmpty(List<string> fieldsAssignments)
+        {
             foreach (var field in customsMilstonesFields)
-                fieldsAssignments.Add(GetFieldFromForwardingIfCustomsIsEmpty(field));
+                fieldsAssignments.Add(BuildCustomsAssignmentFromForwardingWhenCustomsIsEmpty(field));
+        }
 
-            var fieldsSetScript = string.Join(", ", fieldsAssignments);
-            return fieldsSetScript;
-		}
+        private void AppendCustomsFieldAssignmentScript(List<string> fieldsAssignments)
+        {
+            foreach (var field in forwardingMilstonesFields)
+                fieldsAssignments.Add(BuildCustomsFieldAssignmentScript(field));
+        }
+        private void AppendForwardingAssignmentFromForwardingWhenCustomsIsEmpty(List<string> fieldsAssignments)
+        {
+            foreach (var field in forwardingMilstonesFields)
+                fieldsAssignments.Add(BuildForwardingAssignmentFromForwardingWhenCustomsIsEmpty(field));
+        }
 
-        private string CreateSetForwardingFieldFromCustomScript(string fieldName)
+        private void AppendForwardingFieldAssignmentScript(List<string> fieldsAssignments)
+        {
+            foreach (var field in customsMilstonesFields)
+                fieldsAssignments.Add(BuildForwardingFieldAssignmentScript(field));
+        }
+
+
+        private string BuildForwardingFieldAssignmentScript(string fieldName)
         {
 			return $"ForwardingShipment.{fieldName} = iif(CustomShipment.{fieldName} is not null, CustomShipment.{fieldName}, ForwardingShipment.{fieldName})";
         }
-        private string GetFieldFromCustomsIfForwardingIsEmpty(string fieldName)
+        private string BuildForwardingAssignmentFromForwardingWhenCustomsIsEmpty(string fieldName)
         {
             return $"ForwardingShipment.{fieldName} = iif(ForwardingShipment.{fieldName} is null,CustomShipment.{fieldName},ForwardingShipment.{fieldName})";
         }
-        private string GetFieldFromForwardingIfCustomsIsEmpty(string fieldName)
+        private string BuildCustomsAssignmentFromForwardingWhenCustomsIsEmpty(string fieldName)
         {
             return $"CustomShipment.{fieldName} = iif(CustomShipment.{fieldName} is null,ForwardingShipment.{fieldName},CustomShipment.{fieldName})";
         }
-        private string CreateSetCustomsFieldScript(string fieldName)
+        private string BuildCustomsFieldAssignmentScript(string fieldName)
 		{
-			string fromShipment = "ForwardingShipment";
-			string toShipment = "CustomShipment";
-			return $"{toShipment}.{fieldName} = iif({fromShipment}.{fieldName} is not null, {fromShipment}.{fieldName}, {toShipment}.{fieldName})";
+			return $"CustomShipment.{fieldName} = iif(ForwardingShipment.{fieldName} is not null, ForwardingShipment.{fieldName}, CustomShipment.{fieldName})";
 		}
+
+        
 
     }
 }
-
-
