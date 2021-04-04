@@ -3,7 +3,7 @@ Feature: Download Excel Tariff test
     The authenticated user will create new Ocean LCL freight cost tariff.
     then download excel file .
 
-    Scenario: Login and create new ocean FCL freight cost
+    Scenario: Create new ocean FCL freight cost
         Given the user logged in and navigate to tariff workspace
         And an "Ocean LCL" freight cost with the following details
             | Name      | TestOceanFCLFreightCost |

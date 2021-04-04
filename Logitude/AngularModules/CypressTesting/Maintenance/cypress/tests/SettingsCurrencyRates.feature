@@ -25,11 +25,11 @@ Feature: Edit Currency Rate Vale in Settings
         When create quote
         Then the quote should create successfully
 
-    Scenario: Quote cost currency
-        Given the user open the quote and navigate to Charges
-        Given the user open Add Charges window
-        When fill Cost Currency with "EUR"
-        Then cost Exchange Rate should equal to "3.8"
+    Scenario: Check quote cost currency
+        Given the user open the quote and navigate to charges
+        And the user open Add charges window
+        When fill cost currency with "EUR"
+        Then cost exchange rate should equal "3.8"
 
     Scenario: Create direct export air shipment
         Given the user navigates to shipments workspace
@@ -43,24 +43,24 @@ Feature: Edit Currency Rate Vale in Settings
         When create shipment
         Then the direct should create successfully
 
-    Scenario: Receivable cost currency
+    Scenario: Check receivable cost currency
         Given the user open the direct shipment
-        Given a receivable with the following details
+        And a receivable with the following details
             | ChargesType | AFT  |
             | UOM         | GRWT |
             | Quantity    | 5    |
             | UnitPrice   | 10   |
-        When fill "EUR" as receivable Currency
-        Then the Receivable Exchange Rate should equal to "3.8"
+        When fill "EUR" as receivable currency
+        Then the receivable exchange Rate should equal "3.8"
 
-    Scenario: ARInvoice cost currency
-        Given the user add new invoicee
-        When fill "EUR" as Invoice Currency
-        Then the Invoice Exchange Rate should equal to "3.8"
+    Scenario: Cehck ARInvoice cost currency
+        Given the user add a new ARInvoice
+        When fill "EUR" as invoice currency
+        Then the invoice exchange rate should equal "3.8"
 
-    Scenario: ARInvoice cost currency old date
-        When fill "25/06/2019" as Invoice Date
-        Then the Invoice Exchange Rate should equal to "4"
+    Scenario: Check ARInvoice cost currency in old date
+        When fill "25/06/2019" as ARInvoice date
+        Then the invoice exchange rate should equal "4"
 
 
 

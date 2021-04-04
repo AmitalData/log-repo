@@ -63,21 +63,21 @@ Then("the quote should create successfully", () => {
 });
 //#endregion
 
-//#region Quote cost currency
-Given("the user open the quote and navigate to Charges", () => {
+//#region Check quote cost currency
+Given("the user open the quote and navigate to charges", () => {
     QuotesActions.OpenQuote(quoteDetails.QuoteNumber);
     cy.Navigate(QuoteSelectors.QuoteCharges)
 });
 
-Given("the user open Add Charges window", () => {
+Given("the user open Add charges window", () => {
     cy.Click(QuoteSelectors.QuoteAddCharges, null)
 });
 
-When("fill Cost Currency with {string}", (currency) => {
+When("fill cost currency with {string}", (currency) => {
     cy.FillLogLov(QuoteSelectors.QuoteChargeCostCurrency, currency, true)
 });
 
-Then("cost Exchange Rate should equal to {string}", (expectedValue) => {
+Then("cost exchange rate should equal {string}", (expectedValue) => {
     MaintenanceActions.ValidateQuoteCostRate(expectedValue);
 });
 //#endregion
@@ -104,7 +104,7 @@ Then("the direct should create successfully", () => {
 });
 //#endregion
 
-//#region Receivable cost currency
+//#region Check receivable cost currency
 Given("the user open the direct shipment", () => {
     ShipmentActions.OpenShipment(shipmentDetails.ShipmentNumber)
 });
@@ -114,36 +114,30 @@ Given("a receivable with the following details", (dataTable) => {
     MaintenanceActions.FillReceivableFields(receivableData);
 });
 
-When("fill {string} as receivable Currency", (currency) => {
+When("fill {string} as receivable currency", (currency) => {
     cy.FillLogLov(ShipmentSelectors.ReceivableCurrency, currency, true)
 });
 
-Then("the Receivable Exchange Rate should equal to {string}", (expectedValue) => {
+Then("the receivable exchange Rate should equal {string}", (expectedValue) => {
     MaintenanceActions.ValidateReceivableCostRate(expectedValue)
 });
 //#endregion
 
-//#region ARInvoice cost currency
-Given("the user add new invoicee", () => {
+//#region Cehck ARInvoice cost currency & currency in old date
+Given("the user add a new ARInvoice", () => {
     cy.Click(AccountingSelectors.CreateARInvoiceButton, null);
 });
 
-When("fill {string} as Invoice Currency", (currency) => {
+When("fill {string} as invoice currency", (currency) => {
     cy.FillLogLov(AccountingSelectors.ARInvoiceInvoiceCurrency, currency, true)
 });
 
-Then("the Invoice Exchange Rate should equal to {string}", (expectedValue) => {
-    cy.get(AccountingSelectors.ARInvoiceExchangeRate).should(BaseSelectors.HaveValue, expectedValue)
-});
-//#endregion
-
-//#region ARInvoice cost currency old date
-When("fill {string} as Invoice Date", (date) => {
+When("fill {string} as ARInvoice date", (date) => {
     cy.FillDate(AccountingSelectors.ARInvoiceInvoiceDate, date)
     cy.FillLogLov(AccountingSelectors.ARInvoiceInvoiceCurrency, "EUR", true)
 });
 
-Then("the Invoice Exchange Rate should equal to {string}", (expectedValue) => {
+Then("the invoice exchange rate should equal {string}", (expectedValue) => {
     cy.get(AccountingSelectors.ARInvoiceExchangeRate).should(BaseSelectors.HaveValue, expectedValue)
 });
 //#endregion
