@@ -222,9 +222,11 @@
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMFILING.NO.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMFLDRTR.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMLOCK.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMQUEST.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMREF.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GGGQ.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GITITEM.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GITITEMCR.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GNDADR.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GNDCARD.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GRTRATE.cs" />
