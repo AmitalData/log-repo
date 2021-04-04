@@ -59,17 +59,17 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             var lastForwardingMilstoneOrderNumber = 5;
             var sql = string.Concat(
 
-                "update  ForwardingShipment"
-                , $"set     ForwardingShipment.CurrentMilestoneCode = iif(ForwardingShipment.CurrentMilestoneCode > {lastForwardingMilstoneOrderNumber}, CustomShipment.CurrentMilestoneCode, ForwardingShipment.CurrentMilestoneCode),"
-                , $"        ForwardingShipment.CurrentMilestoneDate = iif(ForwardingShipment.CurrentMilestoneCode > {lastForwardingMilstoneOrderNumber}, CustomShipment.CurrentMilestoneDate, ForwardingShipment.CurrentMilestoneDate)"
-                , "from CargoTrackingShipments ForwardingShipment"
-                , "join CargoTrackingShipments CustomShipment on ForwardingShipment.CustomsShipmentHeaderId = CustomShipment.EntityId"
+                "update  ForwardingShipment "
+                , $" set     ForwardingShipment.CurrentMilestoneCode = iif(ForwardingShipment.CurrentMilestoneCode > {lastForwardingMilstoneOrderNumber}, CustomShipment.CurrentMilestoneCode, ForwardingShipment.CurrentMilestoneCode), "
+                , $"        ForwardingShipment.CurrentMilestoneDate = iif(ForwardingShipment.CurrentMilestoneCode > {lastForwardingMilstoneOrderNumber}, CustomShipment.CurrentMilestoneDate, ForwardingShipment.CurrentMilestoneDate) "
+                , " from CargoTrackingShipments ForwardingShipment"
+                , " join CargoTrackingShipments CustomShipment on ForwardingShipment.CustomsShipmentHeaderId = CustomShipment.EntityId"
                 , Environment.NewLine
-                , "update  CustomShipment"
-                , $"set     CustomShipment.CurrentMilestoneCode = iif(CustomShipment.CurrentMilestoneCode <= {lastForwardingMilstoneOrderNumber}, ForwardingShipment.CurrentMilestoneCode, CustomShipment.CurrentMilestoneCode),"
-                , $"        CustomShipment.CurrentMilestoneDate = iif(CustomShipment.CurrentMilestoneCode <= {lastForwardingMilstoneOrderNumber}, ForwardingShipment.CurrentMilestoneDate, CustomShipment.CurrentMilestoneDate)"
-                , "from CargoTrackingShipments CustomShipment"
-                , "join CargoTrackingShipments ForwardingShipment on ForwardingShipment.CustomsShipmentHeaderId = CustomShipment.EntityId");
+                , " update  CustomShipment"
+                , $" set     CustomShipment.CurrentMilestoneCode = iif(CustomShipment.CurrentMilestoneCode <= {lastForwardingMilstoneOrderNumber}, ForwardingShipment.CurrentMilestoneCode, CustomShipment.CurrentMilestoneCode), "
+                , $"        CustomShipment.CurrentMilestoneDate = iif(CustomShipment.CurrentMilestoneCode <= {lastForwardingMilstoneOrderNumber}, ForwardingShipment.CurrentMilestoneDate, CustomShipment.CurrentMilestoneDate) "
+                , " from CargoTrackingShipments CustomShipment "
+                , " join CargoTrackingShipments ForwardingShipment on ForwardingShipment.CustomsShipmentHeaderId = CustomShipment.EntityId");
 
             return sql;
         }
@@ -179,19 +179,19 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         private string BuildForwardingFieldAssignmentScript(string fieldName)
         {
-			return $"ForwardingShipment.{fieldName} = iif(CustomShipment.{fieldName} is not null, CustomShipment.{fieldName}, ForwardingShipment.{fieldName})";
+			return $"ForwardingShipment.{fieldName} = iif(CustomShipment.{fieldName} is not null, CustomShipment.{fieldName}, ForwardingShipment.{fieldName})" + Environment.NewLine;
         }
         private string BuildForwardingAssignmentFromForwardingWhenCustomsIsEmpty(string fieldName)
         {
-            return $"ForwardingShipment.{fieldName} = iif(ForwardingShipment.{fieldName} is null,CustomShipment.{fieldName},ForwardingShipment.{fieldName})";
+            return $"ForwardingShipment.{fieldName} = iif(ForwardingShipment.{fieldName} is null,CustomShipment.{fieldName},ForwardingShipment.{fieldName})" + Environment.NewLine;
         }
         private string BuildCustomsAssignmentFromForwardingWhenCustomsIsEmpty(string fieldName)
         {
-            return $"CustomShipment.{fieldName} = iif(CustomShipment.{fieldName} is null,ForwardingShipment.{fieldName},CustomShipment.{fieldName})";
+            return $"CustomShipment.{fieldName} = iif(CustomShipment.{fieldName} is null,ForwardingShipment.{fieldName},CustomShipment.{fieldName})" + Environment.NewLine;
         }
         private string BuildCustomsFieldAssignmentScript(string fieldName)
 		{
-			return $"CustomShipment.{fieldName} = iif(ForwardingShipment.{fieldName} is not null, ForwardingShipment.{fieldName}, CustomShipment.{fieldName})";
+			return $"CustomShipment.{fieldName} = iif(ForwardingShipment.{fieldName} is not null, ForwardingShipment.{fieldName}, CustomShipment.{fieldName})" + Environment.NewLine;
 		}
 
         
