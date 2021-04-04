@@ -246,8 +246,7 @@ export function ApproveAutoCreditARInvoice() {
 //#endregion
 
 //#region Add Two Shipment Lines And Edit Amount
-export function AddTwoShipmentLinesAndEditAmount(shipmentNumbers: string[], VATType: string, payableDetails: PayableDetails) {
-    const amount = CalculateAmount(payableDetails.Quantity, payableDetails.UnitPrice);
+export function AddShipmentLines(shipmentNumbers: string[]) {
     for (let i = 0; i < shipmentNumbers.length; i++) {
         var quickSearchDetails = {
             Selector: ShipmentSelectors.ShipmentSearchBar,
@@ -258,17 +257,22 @@ export function AddTwoShipmentLinesAndEditAmount(shipmentNumbers: string[], VATT
             RequestAliase: RequestAliases.QuickSearchDataLoaded + shipmentNumbers[i]
         } as QuickSearchDetails;
         cy.SelectQuickSearchFirstElement(quickSearchDetails);
-
+    }
+}
+export function EditAmountsINMultipleShipmentAPInvoice(shipmentNumbers: string[],VATType: string,payableDetails: PayableDetails){
+    const amount = CalculateAmount(payableDetails.Quantity, payableDetails.UnitPrice);
+    for (let i = 0; i < shipmentNumbers.length; i++) {
         cy.Click(AccountingSelectors.EditShipmentLineIcon(shipmentNumbers[i]), null, true)
         cy.FillLogTextBox(AccountingSelectors.APInvoiceLineForiegnCurrencyAmount, amount.toString());
         cy.FillLogLov(AccountingSelectors.APInvoiceVatType, VATType, true);
         cy.Click(BaseSelectors.Button, BaseSelectors.ContainsApplytoall);
-        cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.APInvoicesGetSingle, RequestAliases.APInvoicesRequest);
+        cy.DefineRequestWait(RestAPI.GET, AccountingURLs.APInvoicesGetSingle, RequestAliases.APInvoicesRequest);
         cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
         BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
-    }
+    
     const totalAmount = amount * shipmentNumbers.length;
     cy.FillLogTextBox(AccountingSelectors.APInvoiceAmountInInvoiceCurrency, totalAmount.toString());
+}
 }
 //#endregion
 
