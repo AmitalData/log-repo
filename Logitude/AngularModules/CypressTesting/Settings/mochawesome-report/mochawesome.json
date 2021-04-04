@@ -1,0 +1,220 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 7,
+    "passes": 7,
+    "pending": 0,
+    "failures": 0,
+    "start": "2021-04-04T12:41:04.921Z",
+    "end": "2021-04-04T12:43:21.266Z",
+    "duration": 136345,
+    "testsRegistered": 7,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "3bf56fd8-ee1c-4391-9ef0-c7f3509eeef3",
+      "title": "",
+      "fullFile": "cypress\\tests\\SettingsCurrencyRates.feature",
+      "file": "cypress\\tests\\SettingsCurrencyRates.feature",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "41012174-6dc1-407f-b462-12c3c7bf1e38",
+          "title": "Edit Currency Rate Value in Settings",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Edit exchange rate value",
+              "fullTitle": "Edit Currency Rate Value in Settings Edit exchange rate value",
+              "timedOut": null,
+              "duration": 49313,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "25571854-930a-4699-8f09-606466f02bbb",
+              "parentUUID": "41012174-6dc1-407f-b462-12c3c7bf1e38",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Create export air quote",
+              "fullTitle": "Edit Currency Rate Value in Settings Create export air quote",
+              "timedOut": null,
+              "duration": 14625,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "1ac39f04-6560-4895-9b54-9dad7a516e9a",
+              "parentUUID": "41012174-6dc1-407f-b462-12c3c7bf1e38",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Check quote cost currency",
+              "fullTitle": "Edit Currency Rate Value in Settings Check quote cost currency",
+              "timedOut": null,
+              "duration": 11784,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "4b9b064b-42d4-4941-bd19-90be8d24a010",
+              "parentUUID": "41012174-6dc1-407f-b462-12c3c7bf1e38",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Create direct export air shipment",
+              "fullTitle": "Edit Currency Rate Value in Settings Create direct export air shipment",
+              "timedOut": null,
+              "duration": 26027,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "7da84328-aeeb-4e58-b42f-0ff285f3286b",
+              "parentUUID": "41012174-6dc1-407f-b462-12c3c7bf1e38",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Check receivable cost currency",
+              "fullTitle": "Edit Currency Rate Value in Settings Check receivable cost currency",
+              "timedOut": null,
+              "duration": 22406,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "03bb4626-fe9f-43f7-a2e3-e49f82951bf7",
+              "parentUUID": "41012174-6dc1-407f-b462-12c3c7bf1e38",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Cehck ARInvoice cost currency",
+              "fullTitle": "Edit Currency Rate Value in Settings Cehck ARInvoice cost currency",
+              "timedOut": null,
+              "duration": 4941,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "9d535438-b9de-424e-be33-b118bf2903e0",
+              "parentUUID": "41012174-6dc1-407f-b462-12c3c7bf1e38",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Check ARInvoice cost currency in old date",
+              "fullTitle": "Edit Currency Rate Value in Settings Check ARInvoice cost currency in old date",
+              "timedOut": null,
+              "duration": 1527,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "67a8197e-488c-47b1-99ab-21aeb72f9cce",
+              "parentUUID": "41012174-6dc1-407f-b462-12c3c7bf1e38",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "25571854-930a-4699-8f09-606466f02bbb",
+            "1ac39f04-6560-4895-9b54-9dad7a516e9a",
+            "4b9b064b-42d4-4941-bd19-90be8d24a010",
+            "7da84328-aeeb-4e58-b42f-0ff285f3286b",
+            "03bb4626-fe9f-43f7-a2e3-e49f82951bf7",
+            "9d535438-b9de-424e-be33-b118bf2903e0",
+            "67a8197e-488c-47b1-99ab-21aeb72f9cce"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 130623,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false
+      },
+      "version": "4.1.0"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "./mochawesome-report",
+        "quite": true,
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "4.0.1"
+    }
+  }
+}

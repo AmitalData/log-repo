@@ -39,9 +39,6 @@ export class Urls {
     public static readonly GlobalZones = "**/globalzones"
     public static readonly GlobalZonesGetSingle = "**/globalzones/getsingle?**"
     
-    public static readonly CurrencyRate = "**/ratestables"
-    public static readonly GetCurrenciesExchangeRateValue = "**/GetCurrenciesExchangeRateByValueDate?**"
-    public static readonly ratestableviewsGetByFilter = "**/ratestableviews/getbyfilters?**"
 
 
 
