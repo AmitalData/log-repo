@@ -101,6 +101,11 @@
     <Compile Include="PartnersTester.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\AccountingPartnerProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\ActivityProxy\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -243,6 +248,37 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Service References\AccountingPartnerProxy\AccountingPartnerWcfService.wsdl" />
+    <None Include="Service References\AccountingPartnerProxy\AccountingPartnerWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AccountingPartnerProxy\AccountingPartnerWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AccountingPartnerProxy\AccountingPartnerWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AccountingPartnerProxy\AccountingPartnerWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AccountingPartnerProxy\AccountingPartnerWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AccountingPartnerProxy\AccountingPartnerWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AccountingPartnerProxy\AccountingPartnerWcfService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AccountingPartnerProxy\AccountingPartnerWcfService7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AccountingPartnerProxy\HypredTest.AccountingPartnerProxy.AccountingPartnerPM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AccountingPartnerProxy\HypredTest.AccountingPartnerProxy.GetAccountingPartnerPMResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ActivityProxy\ActivityWcfService.wsdl" />
     <None Include="Service References\ActivityProxy\ActivityWcfService.xsd">
       <SubType>Designer</SubType>
@@ -868,6 +904,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HTMLPage1.html" />
+    <None Include="Service References\AccountingPartnerProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\AccountingPartnerProxy\configuration.svcinfo" />
+    <None Include="Service References\AccountingPartnerProxy\configuration91.svcinfo" />
+    <None Include="Service References\AccountingPartnerProxy\AccountingPartnerWcfService.disco" />
     <None Include="Service References\WarehouseProxy\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -1031,6 +1074,7 @@
     <None Include="Service References\LoginProxy\LoginWcfService.disco" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\AccountingPartnerProxy\" />
     <WCFMetadataStorage Include="Service References\ActivityProxy\" />
     <WCFMetadataStorage Include="Service References\AgentProxy\" />
     <WCFMetadataStorage Include="Service References\AirlineProxy\" />
