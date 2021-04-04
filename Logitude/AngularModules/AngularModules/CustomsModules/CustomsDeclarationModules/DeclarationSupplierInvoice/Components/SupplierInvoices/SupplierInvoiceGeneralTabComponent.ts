@@ -634,6 +634,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             ExtraPayments160.TypeName = "הוצאות נוספות"
             this.AdjustmentsList.Insert(new ModificationItemModel(ExtraPayments160, this, "160"));
         }
+        this.ExportModificationCurrency = this.EntityPM.InvoiceCurrencyTypeCode;
+        this.EntityPM.IsDirty = false;
     }
 
     GetInsuranceAsModificationItemModel() {
@@ -653,12 +655,11 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         if (this.EntityPM.SupplierInvoiceFreightAmounts.length != 0) {
             if (this.EntityPM.TotalFreightInFreightCurrency > 0) {
                 supplierInvoiceModificationPM.Amount = this.EntityPM.SupplierInvoiceFreightAmounts[0].Amount;
-                this.TotalFreightInFreightCurrency = this.EntityPM.SupplierInvoiceFreightAmounts[0].Amount;
             }
             supplierInvoiceModificationPM.CurrencyTypeCode = this.EntityPM.SupplierInvoiceFreightAmounts[0].CurrencyTypeCode;
             supplierInvoiceModificationPM.CurrencyTypeName = this.EntityPM.SupplierInvoiceFreightAmounts[0].CurrencyTypeName;
-            this.FreightCurrencyTypeCode = this.EntityPM.SupplierInvoiceFreightAmounts[0].CurrencyTypeCode;
         }
+        supplierInvoiceModificationPM.IsDirty = false;
         supplierInvoiceModificationPM.TypeName = "הובלה";
         return supplierInvoiceModificationPM;
     }
@@ -688,6 +689,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         item.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
         item.Tenant = SessionLocator.Tenant;
         item.ModificationCounterKey = modificationCounter;
+        item.IsDirty = false;
         this.EntityPM.AddSupplierInvoiceModification(item);
         this.AdjustmentsList.Insert(new ModificationItemModel(item, this, code));
     }
@@ -1201,6 +1203,13 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     totalExportModificationInInvoiceCurrency: number;
     public get TotalExportModificationInInvoiceCurrency() { return this.totalExportModificationInInvoiceCurrency; }
     public set TotalExportModificationInInvoiceCurrency(newValue: number) { this.totalExportModificationInInvoiceCurrency = newValue; }
+
+    exportModificationCurrency: string;
+    public get ExportModificationCurrency() { return this.exportModificationCurrency; }
+    public set ExportModificationCurrency(newValue: string) {
+        this.exportModificationCurrency = newValue;
+        this.CalculateExportModificationAmount();
+    }
 
     public get InsurancePercentage() { return this.EntityPM.InsruancePercentage; }
     public set InsurancePercentage(newValue: number) {
@@ -2267,7 +2276,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     public filters: ApiQueryFilters = null;
     BuildFreightAmountsList() {
-        this.AmountList.Clear();
+            this.AmountList.Clear();
 
         for (var i = 0; i < this.EntityPM.SupplierInvoiceFreightAmounts.length; i++) {
 
@@ -2406,7 +2415,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         }
 
     }
-
+    
     CalculateExportModificationAmount() {
         this.TotalExportModificationInInvoiceCurrency = 0;
         this.AdjustmentsList.Collection.forEach((entityPM) => {
@@ -2416,7 +2425,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             var rate: number = 0;
             var total: number = 0;
             if (this.ExchangeRates) {// this is a bug in errorslog filter of undefined, solution: if no exchange rate try to load them if not it will not be calculated----mohammad.
-                ratePM = this.ExchangeRates.filter(d => d.CurrencyTypeCode == this.InvoiceCurrencyTypeCode)[0];//.ExchangeRate;
+                ratePM = this.ExchangeRates.filter(d => d.CurrencyTypeCode == this.ExportModificationCurrency)[0];//.ExchangeRate;
                 //firstRatePM = this.ExchangeRates.filter(d => d.CurrencyTypeCode == firstInvoice.InvoiceCurrencyTypeCode)[0];//.FirstExchangeRate;
             }
             else {
@@ -3953,9 +3962,8 @@ export class ModificationItemModel extends BaseComponent {
         super();
         this.EntityPM = modificationPM;
         this.code = code;
-        this.TypeCode = code;
         this.isValid = true;
-        this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForCurrencyAndDate(this.parent.EntityPM.InvoiceCurrencyTypeCode, this.parent.declarationPM.TaxationDateTime).subscribe((response: any) => {
+        this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForCurrencyAndDate(this.parent.ExportModificationCurrency, this.parent.declarationPM.TaxationDateTime).subscribe((response: any) => {
             if (response) {
                 if (response.Result) {
                     var rate = response.Result[0];
@@ -3968,6 +3976,13 @@ export class ModificationItemModel extends BaseComponent {
         if (this.EntityPM.Amount != null) {
             this.parent.CalculateExportModificationAmount();
         }
+        if (this.code == "144") {
+            if (this.parent.EntityPM.SupplierInvoiceFreightAmounts[0] == null) {
+                this.setSupplierInvoiceFreightAmountPM();
+
+            }
+            parent.AmountList.Insert(new SupplierInvoiceFreightAmountLine(this.parent.EntityPM.SupplierInvoiceFreightAmounts[0], parent));
+        }
     }
 
     setSupplierInvoiceFreightAmountPM() {
@@ -3976,8 +3991,8 @@ export class ModificationItemModel extends BaseComponent {
         item.InvoiceCounterKey = this.parent.EntityPM.InvoiceCounterKey;
         item.Tenant = this.parent.EntityPM.Tenant;
         item.ChangeSetOp = "Insert";
+        this.parent.EntityPM.AddSupplierInvoiceFreightAmount(item);
         this.parent.EntityPM.IsDirty = false;
-        this.parent.EntityPM.SupplierInvoiceFreightAmounts.push(item);
     }
 
     //#region Properties
@@ -4009,6 +4024,7 @@ export class ModificationItemModel extends BaseComponent {
                 }
 
             }
+            this.EntityPM.IsDirty = false;
 
         }
     }
@@ -4016,17 +4032,16 @@ export class ModificationItemModel extends BaseComponent {
     currencyType: CurrencyTypePM;
     get CurrencyType() { return this.currencyType; }
     set CurrencyType(value: CurrencyTypePM) {
-        if (this.currencyType != value && value != null ) {
+        if (this.currencyType != value ) {
             this.currencyType = value;
             if (this.code == "67") {
                 this.parent.InsruanceCurrencyTypeCode = value.Code;
             }
             if (this.code == "144") {
-                if (this.parent.EntityPM.SupplierInvoiceFreightAmounts[0] == null) {
-                    this.setSupplierInvoiceFreightAmountPM();
+                this.parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.DeclarationId == this.parent.EntityPM.DeclarationId).CurrencyTypeCode = value.Code;
+                this.parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.DeclarationId == this.parent.EntityPM.DeclarationId).IsDirty = true;
+                this.parent.FreightCurrencyTypeCode = value.Code;
 
-                }
-                this.parent.EntityPM.SupplierInvoiceFreightAmounts[0].CurrencyTypeCode = value.Code;
             }
             this.parent.CalculateExportModificationAmount();
         }
@@ -4078,6 +4093,7 @@ export class ModificationItemModel extends BaseComponent {
                 this.parent.TotalFreightInFreightCurrency = value;
                 if (this.parent.EntityPM.SupplierInvoiceFreightAmounts[0] != null) {
                     this.parent.EntityPM.SupplierInvoiceFreightAmounts[0].Amount = value;
+                    this.parent.AmountList.Collection[0].Amount = value;
                 }
             }
         }
@@ -4212,7 +4228,6 @@ export class SupplierInvoiceFreightAmountLine extends BaseComponent {
                 }
                 else {
                     this.entityPM.CurrencyTypeCode = newValue;
-
                     if (this.Parent.AmountList.Length == 1) {
                         this.Parent.EntityPM.AddSupplierInvoiceFreightAmount(this.entityPM);
                     }
@@ -4226,7 +4241,6 @@ export class SupplierInvoiceFreightAmountLine extends BaseComponent {
             }
 
         }
-
 
         if (this.Parent.EntityPM.SupplierInvoiceFreightAmounts.length == 1) {
 
