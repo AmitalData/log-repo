@@ -381,7 +381,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.UIProperties.SetEnabled("GrossWeight", this.ObjectTableName, isTotalsFieldEnabled);
         this.UIProperties.SetEnabled("ChargeableWeight", this.ObjectTableName, isTotalsFieldEnabled);
         this.UIProperties.SetEnabled("IsDangerous", this.ObjectTableName, isTotalsFieldEnabled);
-        this.UIProperties.SetEnabled("AWBCommodityItemNumber", this.ObjectTableName, isTotalsFieldEnabled);
+        this.UIProperties.SetEnabled("AWBCommodityItemNumber", this.ObjectTableName, isTotalsFieldEnabled && !this.EntityPM.IsMultipleCommodities);
         this.SetUIProperties_DimFactor();
         this.SetUIProperties_DimensionsUnitCode();
     }
