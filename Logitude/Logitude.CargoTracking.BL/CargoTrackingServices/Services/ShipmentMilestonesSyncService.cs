@@ -44,10 +44,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         {
 			List<string> fieldsAssignments = new List<string>();
 
+            // Copy Customs milstones to forwarding
             foreach (var field in customsMilstonesFields)
-				fieldsAssignments.Add(CreateSetForwardingFieldScript(field));
+				fieldsAssignments.Add(CreateSetForwardingFieldFromCustomScript(field));
 
-			var fieldsSetScript = string.Join(", ", fieldsAssignments);
+            // set default forwarding fields from customs when forwarding is null
+            foreach (var field in forwardingMilstonesFields)
+                fieldsAssignments.Add(GetFieldFromCustomsIfForwardingIsEmpty(field));
+
+            var fieldsSetScript = string.Join(", ", fieldsAssignments);
 
             var sql = $"update ForwardingShipment " +
 						$"set	{fieldsSetScript} " +
@@ -114,17 +119,28 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             foreach (var field in forwardingMilstonesFields)
                 fieldsAssignments.Add(CreateSetCustomsFieldScript(field));
 
+
+            // set default custom fields from forwarding when forwarding is null
+            foreach (var field in customsMilstonesFields)
+                fieldsAssignments.Add(GetFieldFromForwardingIfCustomsIsEmpty(field));
+
             var fieldsSetScript = string.Join(", ", fieldsAssignments);
             return fieldsSetScript;
 		}
 
-        private string CreateSetForwardingFieldScript(string fieldName)
+        private string CreateSetForwardingFieldFromCustomScript(string fieldName)
         {
-			string fromShipment = "CustomShipment";
-			string toShipment = "ForwardingShipment";
-			return $"{toShipment}.{fieldName} = iif({fromShipment}.{fieldName} is not null, {fromShipment}.{fieldName}, {toShipment}.{fieldName})";
+			return $"ForwardingShipment.{fieldName} = iif(CustomShipment.{fieldName} is not null, CustomShipment.{fieldName}, ForwardingShipment.{fieldName})";
         }
-		private string CreateSetCustomsFieldScript(string fieldName)
+        private string GetFieldFromCustomsIfForwardingIsEmpty(string fieldName)
+        {
+            return $"ForwardingShipment.{fieldName} = iif(ForwardingShipment.{fieldName} is null,CustomShipment.{fieldName},ForwardingShipment.{fieldName})";
+        }
+        private string GetFieldFromForwardingIfCustomsIsEmpty(string fieldName)
+        {
+            return $"CustomShipment.{fieldName} = iif(CustomShipment.{fieldName} is null,ForwardingShipment.{fieldName},CustomShipment.{fieldName})";
+        }
+        private string CreateSetCustomsFieldScript(string fieldName)
 		{
 			string fromShipment = "ForwardingShipment";
 			string toShipment = "CustomShipment";
