@@ -2,6 +2,7 @@
   <Sql Version="3">
     <![CDATA[
 
+
 declare @isMultiCurrency bit
 declare @cardDataId varchar(15)
 declare @Id varchar(15)
@@ -16,12 +17,13 @@ Declare @tenant int
 declare @singleAccountId varchar(15)
 declare @creditLimitAmount decimal(18,2)
 declare @cardId varchar(15)
+declare @mainGLACcountId varchar(15)
 declare @cards table (Id varchar(15),paymentTermId varchar(15),  SalesmanUserId varchar(15), vatnumber varchar(15) , collectorId varchar(15),Phone varchar(40), creditLimit decimal(18,2),glaccountid varchar(15) )
 
 Declare GLAccountCards cursor 
 
     for
-    select IsMultiCurrency, CardsDataId, GLAccounts.Id, GLAccounts.Tenant from GLAccounts join cards on GLAccounts.Id = Cards.GLAccountId where cards.PartnerTypeId='CS' or cards.PartnerTypeId ='VD'
+    select IsMultiCurrency, CardsDataId, GLAccounts.Id, GLAccounts.Tenant from GLAccounts join cards on GLAccounts.Id = Cards.GLAccountId where cards.PartnerTypeId='CS' or cards.PartnerTypeId ='VD' 
     OPEN GLAccountCards FETCH NEXT FROM GLAccountCards  into @isMultiCurrency , @cardDataId, @Id, @tenant
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
@@ -56,6 +58,12 @@ Declare GLAccountCards cursor
 
 	update glaccounts set CardsDataId = @GLAccountCardsDataId where Id= @Id
    end
+   else
+   begin 
+   set @mainGLACcountId =(select MainGLAccountId from GLAccountCurrencies where GLAccountId = @Id)
+   set @cardDataId =(select CardsDataId from GLAccounts where Id=@mainGLACcountId)
+   update GLAccounts set CardsDataId =@cardDataId where Id=@Id
+   end
    end
    delete from @cards
     FETCH NEXT FROM GLAccountCards INTO   @isMultiCurrency , @cardDataId, @Id,@tenant
@@ -63,6 +71,7 @@ Declare GLAccountCards cursor
 	CLOSE GLAccountCards
 	DEALLOCATE GLAccountCards
 	
+    
     
    
     ]]>       

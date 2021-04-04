@@ -55,15 +55,31 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         private void DeleteGLAccountCardData(GLAccountPM gLAccount)
         {
             GLAccountCardsDataQueryService gLAccountCardsDataQueryService = new GLAccountCardsDataQueryService(gLAccount.Tenant);
+            if (glaccount.IsMultiCurrency==false)
+            {
+                glaccount = GetParentAccountForGLaccountCurrency(glaccount);
+            }
             GLAccountCardsDataPM gLAccountCardsDataPM = gLAccountCardsDataQueryService.GetSingle(glaccount.CardsDataId, false, false);
             if (gLAccountCardsDataPM != null)
             {
                 gLAccountCardsDataPM.ChangeSetOp = ChangeSetOperation.Delete;
                 IAccountingContext accountingContext = AccountingContext.GetContext(authToken.Tenant);
-                GLAccountCardsDataUpdateService gLAccountCardsDataUpdateService = new GLAccountCardsDataUpdateService(accountingContext);
+                GLAccountCardsDataUpdateService gLAccountCardsDataUpdateService = new GLAccountCardsDataUpdateService(accountingContext, new Dictionary<string, IContext>(), authToken.Tenant);
                 gLAccountCardsDataUpdateService.Update(gLAccountCardsDataPM, true);
             }
 
+        }
+
+        private GLAccountPM GetParentAccountForGLaccountCurrency(GLAccountPM account)
+        {
+            GLAccountCurrencyQueryService gLAccountCurrencyQueryService = new GLAccountCurrencyQueryService(account.Tenant);
+            GLAccountCurrencyPM gLAccountCurrency = gLAccountCurrencyQueryService.GetEntityByGLAccountId(account.Id, account.Tenant);
+            if (gLAccountCurrency != null)
+            {
+                glaccount = GetGLAccountById(gLAccountCurrency.MainGLAccountId);
+                return glaccount;
+            }
+            else return account;
         }
         private void CheckContactFeature(string partnerTypeId)
         {
