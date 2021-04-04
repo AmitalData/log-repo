@@ -617,9 +617,6 @@ namespace Logitude.Accounting.BL.Validators
                 return false;
         }
 
-
-        private  void ValidateJournalReconciles(JournalPM myJournalPM, ValidationContext accountingValidationContextServiceProvider, MyList<string> errorsList, IExternalReconcileDataProvider myIExternalReconcileDataProvider)
-
         private void ValidateJournalReconciles(JournalPM myJournalPM, ValidationContext accountingValidationContextServiceProvider, List<string> errorsList, IExternalReconcileDataProvider myIExternalReconcileDataProvider)
 
         {
