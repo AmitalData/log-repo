@@ -122,7 +122,7 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
                 ForeignAmount = item.ForeignAmount,
                 CurrencyId = DepositPM.DepositCurrencyId,
                 DocumentDate = DepositPM.AccountingDate,
-                AccountingDate = DepositPM.AccountingDate,
+                AccountingDate = DepositPM.DepositDate,
                 Reference1 = DepositPM.DepositNumber.ToString(),
                 Reference2 = cheque.ChequeNumber,
                 ExchangeRate = cheque.LocalAmount / cheque.ForeignAmount
@@ -209,7 +209,7 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
                 CreatedByUserId = DepositPM.CreatedByUserId,
                 UpdateDate = GetCurrentDateTime(),
                 UpdatedByUserId = DepositPM.UpdatedByUserId,
-                AccountingDate = DepositPM.AccountingDate,
+                AccountingDate = DepositPM.DepositDate,
                 TypeCode = "0", //Manual
                 StatusCode = "2", // Approved
                 AccountingEntityId = DepositPM.Id,
@@ -259,7 +259,7 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
                 ForeignAmount = depositLine.ForeignAmount,
                 CurrencyId = DepositPM.DepositCurrencyId,
                 DocumentDate = DepositPM.AccountingDate,
-                AccountingDate = DepositPM.AccountingDate,
+                AccountingDate = DepositPM.DepositDate,
                 ExchangeRate = cheque.LocalAmount / cheque.ForeignAmount,
 
                 CreditAccountId = CashbookPM.AccountId

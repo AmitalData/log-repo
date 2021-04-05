@@ -163,6 +163,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public DateTime? EstimatedFinalArrivalDate { get; set; }
     
     public DateTime? ActualFinalArrivalDate { get; set; }
+    
+    public string HouseNo { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

@@ -37,6 +37,10 @@ export class StatementByInvoiceDateFilterComponent extends BaseComponent   {
         this.RunReportTitle = "Preview";
     }
 
+    GetMainCustomerFieldName() {
+        return null;
+    }
+
     IsPartnersChanged() {
         return false;
     }

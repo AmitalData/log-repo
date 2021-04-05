@@ -421,6 +421,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.UpdateShipmentStoragePricingsCollection();
                     this.InitializeBookingData();
 
+                    this.RemoveDeletedItemsFromEntityPM();
+
                     if (entityPM.WarehouseStorageFreeDays != entityPoco.WarehouseStorageFreeDays)
                     {
                         calculatePayables = true;
@@ -500,7 +502,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
                     this.UpdateShipmentFollowUpsCollection();
 
-
                     ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext);
 
                     this.ComputeAgentComputed(entityPM, entityPoco);
@@ -560,6 +561,28 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
+        private void RemoveDeletedItemsFromEntityPM()
+        {
+            if (initializer.ShipmentPickUpsChangeSet != null)
+            {
+                this.entityPM.ShipmentPickUps = initializer.ShipmentPickUpsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            }
+
+            if (initializer.ShipmentDeliveriesChangeSet != null)
+            {
+                this.entityPM.ShipmentDeliveries = initializer.ShipmentDeliveriesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            }
+
+            if (initializer.ShipmentPayablesChangeSet != null)
+            {
+                this.entityPM.ShipmentPayables = initializer.ShipmentPayablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            }
+
+            if (initializer.ShipmentReceivablesChangeSet != null)
+            {
+                this.entityPM.ShipmentReceivables = initializer.ShipmentReceivablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            }
+        }
         private void UpdateMasterHouses()
         {
             MasterHousesBehaviour MasterHousesBehaviour = new MasterHousesBehaviour(this.initializer, this.allHouses, this.isNewEntity);
@@ -1178,7 +1201,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             return (!string.IsNullOrEmpty(CurrentTenant.PrivateLabelId));
         }
 
-
         private bool IsImporterTenantHasExportFeatureForExportShipments(int ImporterTenant, ShipmentPM entityPM)
         {
             if ((entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R") && !FeatureToggleHelper.HasFeatureToggle("LEX", ImporterTenant, entityPM.Tenant))
@@ -1457,7 +1479,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
-                }
+                }                             
             }
         }
         private void UpdateShipmentDeliveriesCollection()
@@ -1488,7 +1510,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
-                }
+                }                         
             }
         }
         private void UpdateShipmentPayablesCollection()
@@ -1519,7 +1541,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
-                }
+                }                             
             }
         }
         private void UpdateShipmentReceivablesCollection()
@@ -1552,7 +1574,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
-                }
+                }                
             }
         }
         private void UpdateShipmentAWBPrintOnliesCollection()
@@ -1616,8 +1638,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
-
-
         private void UpdateShipmentFollowUpsCollection(string changeSet = "Update")
         {
             if (initializer.ShipmentFollowUpsChangeSet != null)
@@ -1738,7 +1758,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             }
         }
-
         private void UpdateShipmentCarrierStatusesCollection()
         {
             if (initializer.ShipmentCarrierStatusesChangeSet != null)
@@ -1894,7 +1913,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
-
         private void BuildShipmentExternalUpdate()
         {
             if (!string.IsNullOrEmpty(entityPM.AgentSharedManifestRef))
@@ -5338,7 +5356,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 shipmentPayableRepository.Remove(itemPoco);
                 calculateProfit = true;
-                calculatePayables = true;
+                calculatePayables = true;                
             }
         }
         private void CreateChildPayable(ShipmentPayablePM childPayablePM, string parentId)

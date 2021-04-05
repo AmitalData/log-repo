@@ -216,7 +216,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     _AccountingContext = AccountingContext.GetContext(_Tenant);
                     logger = (_AccountingContext as DbContextBase).CreateLogger();
 
-
+                    bool supperssSaveOnUpdateMultiDueIsFaster = true;
                     //if (_ExecAsSP)
                     //{
                     this.Exec_usp_AccountingStreaming(myLedgerTransactionsWithCounters, allGLAccountTotalByMonths.ToList(), gLAccountAgingDataPMs);
@@ -232,7 +232,12 @@ namespace Logitude.Accounting.BL.CoreBL
                         var myReconciliationUpdateService = new ReconciliationUpdateService(_AccountingContext, new Dictionary<string, IContext>(), _JournalPM.Tenant);
                         myReconciliationUpdateService.SuppressResetDraftOpenReconciliation = true;
 
-                        myReconciliationUpdateService.UpdateMulti(myCreateAutoReconcileWhileStreamingService.ReconciliationList, new List<ReconciliationPM>(), _JournalPM, true);
+                        myReconciliationUpdateService.UpdateMulti(myCreateAutoReconcileWhileStreamingService.ReconciliationList, new List<ReconciliationPM>(), _JournalPM, !supperssSaveOnUpdateMultiDueIsFaster);
+                        if (supperssSaveOnUpdateMultiDueIsFaster)
+                        {
+                            _AccountingContext.SaveChanges();
+                        }
+
                         var toUpdateInReconcileProgressToFalse = true;// i think its not happened - have to test b4 
                         if (toUpdateInReconcileProgressToFalse)
                         {
@@ -256,8 +261,11 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             var myExternalReconciliationUpdateService = new ExternalReconciliationUpdateService(_AccountingContext, new Dictionary<string, IContext>(), _JournalPM.Tenant);
 
-                            myExternalReconciliationUpdateService.UpdateMulti(myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList, new List<ExternalReconciliationPM>(), _JournalPM, true);
-
+                            myExternalReconciliationUpdateService.UpdateMulti(myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList, new List<ExternalReconciliationPM>(), _JournalPM, !supperssSaveOnUpdateMultiDueIsFaster);
+                            if (supperssSaveOnUpdateMultiDueIsFaster)
+                            {
+                                _AccountingContext.SaveChanges();
+                            }
                             var toUpdateInReconcileProgressToFalse = true;// next sprint
                             if (toUpdateInReconcileProgressToFalse)
                             {
@@ -1050,7 +1058,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 //_NextDueDoneAt = DateTime.UtcNow.Date.AddDays(1);//tomorrow at 00:00
                 _NextDueDoneAt = DateTime.UtcNow.Date;//today already done - do next day =tomorrow at 00:00 ///
             }
-            public Action LogDoneItemInMemoryAction { get; set; }
+            public Action<int> LogDoneItemInMemoryAction { get; set; }
             public Action SetLastActivate { get; set; }
 
             public void WorkUntilQEmptyQueueDB(TimeSpan? timeSpan = null, string selectedQueue = null)
@@ -1101,7 +1109,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     SetLastActivate?.Invoke();
                     if (ProcessMessage_Db(queueservice, response, selectedQueue))
                     {
-                        LogDoneItemInMemoryAction?.Invoke();
+                        LogDoneItemInMemoryAction?.Invoke(1);
                     }
                     Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }

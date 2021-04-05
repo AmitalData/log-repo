@@ -92,24 +92,21 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
                 bankDepositDP.BankAccountNumber = bankDepositPM.BankAccountNumber == null ? "" : bankDepositPM.BankAccountNumber;
                 bankDepositDP.DepositDate = bankDepositPM.DepositDate;
                 bankDepositDP.DepositDate = bankDepositPM.DepositDate;
-                bankDepositDP.CreatedByUserName = bankDepositPM.CreatedByUserName;
                 bankDepositDP.LocalDepositAmount = bankDepositPM.LocalDepositAmount;
                 bankDepositDP.ForeignAmount = bankDepositPM.ForeignAmount;
                 bankDepositDP.CurrencyCode = bankDepositPM.DepositCurrencyCode;
 
+                SetCreatedByUserName(tenant, bankDepositDP, bankDepositPM);
+
                 // BankAccount mapping
                 BankAccountPM bankAccount = bankAccountQuery.GetByAccountNumber(bankDepositPM.BankAccountNumber, tenant);
-                if(bankAccount != null)
+                if (bankAccount != null)
                 {
                     bankDepositDP.BankAccountBranchNo = bankAccount.BranchNumber == null ? "" : bankAccount.BranchNumber;
                     bankDepositDP.BankAccountBranchAddress = bankAccount.BranchAddress == null ? "" : bankAccount.BranchAddress;
                     bankDepositDP.BankAccountLocalName = bankAccount.LocalName == null ? "" : bankAccount.LocalName;
                 }
-                else
-                {
-                    //no connected bank account
 
-                }
 
                 // map lines
                 List<BankDepositLine> lines = bankDepositPM.BankDepositLines.Select(d => new BankDepositLine()
@@ -134,6 +131,17 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
             return bankDepositDP;
         }
 
+        private static void SetCreatedByUserName(int tenant, BankDepositDataProvider bankDepositDP, BankDepositPM bankDepositPM)
+        {
+            UserQuery userQuery = new UserQuery(tenant);
+            UserPM userPM = userQuery.GetSinglePM(bankDepositPM.CreatedByUserId, tenant);
+            if (userPM != null)
+            {
+                bool showLocals = !userPM.DontShowLocalLabels;
+                bankDepositDP.CreatedByUserName = showLocals ? userPM.LocalName == null ? userPM.EnglishName : userPM.LocalName : userPM.EnglishName;
+            }
+        }
+
         private ContactPM GetLoggedContact(int tenant)
         {
             //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
@@ -142,8 +150,6 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
             ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
             return loggedcontact;
         }
-
-
 
     }
 }

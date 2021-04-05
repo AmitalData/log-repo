@@ -173,6 +173,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public string GrossWeightUnitCode { get; set; }
         [Column("ForwardingShipmentNumber")]
 	    public string ForwardingShipmentNumber { get; set; }
+        [Column("ShipmentLevelCode")]
+	    public string ShipmentLevelCode { get; set; }
     }
 }
 	 

@@ -10,7 +10,9 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
-
+import { FullAccountingSettingPM } from '../../../../Accounting/EntityPMs/FullAccountingSettingPM';
+import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
+import { TenantPM } from '../../../../Common/EntityPMs/TenantPM';
 @Component({
 
     templateUrl: './AgingFilterComponent.html',
@@ -25,12 +27,15 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
     IsSalesmanRestricted: boolean = false ;
     public SalesmanFilterItems: ApiQueryFilters;
     public ChartOfAccountTypeFilterItems: ApiQueryFilters;
+    private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
+    public TenantPM: TenantPM = SessionLocator.TenantPM;
+    private CurrentSession = SessionLocator.SelectedSession;
 
     entityResourceService: EntityResourceService = new EntityResourceService();
     public isRTL: boolean = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
     public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
-    constructor()
+    constructor(public entityListService: EntityListService)
     {
         super();
 
@@ -53,10 +58,17 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
 
     private SetMonthFilterDefaults()
     {
-        var newDate = new Date();
-        var currentMonth = newDate.getMonth() + 1;
-        //this.NumberOfMonths = currentMonth - 6; // 6 backward
-        this.NumberOfMonths = 6;
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.entityListService.getSingle(this.TenantPM.Id.toString(), "FullAccountingSetting").then((res: any) => {
+            this.CurrentSession.StopBusyIndicator();
+            res.subscribe(myResponse => {
+                if (myResponse != null) {
+                    var result = myResponse.Result;
+                    this.FullAccountingSetting = result;
+                    this.NumberOfMonths = this.FullAccountingSetting.NumberOfAgingMonths;
+                }
+            })
+        });
     }
 
     private InitFilters()

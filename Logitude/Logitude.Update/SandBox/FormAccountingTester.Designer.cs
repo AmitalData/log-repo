@@ -39,6 +39,7 @@
             this.loadFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adHookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.agingFixRepoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tESTADHOKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -129,7 +130,8 @@
             // mupsOpenReconcileToolStripMenuItem
             // 
             this.mupsOpenReconcileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadFileToolStripMenuItem});
+            this.loadFileToolStripMenuItem,
+            this.tESTADHOKToolStripMenuItem});
             this.mupsOpenReconcileToolStripMenuItem.Name = "mupsOpenReconcileToolStripMenuItem";
             this.mupsOpenReconcileToolStripMenuItem.Size = new System.Drawing.Size(129, 20);
             this.mupsOpenReconcileToolStripMenuItem.Text = "MupsOpenReconcile";
@@ -155,6 +157,14 @@
             this.agingFixRepoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.agingFixRepoToolStripMenuItem.Text = "AgingFixRepo";
             this.agingFixRepoToolStripMenuItem.Click += new System.EventHandler(this.agingFixRepoToolStripMenuItem_Click);
+            // 
+            // FormAccountingTester
+            // tESTADHOKToolStripMenuItem
+            // 
+            this.tESTADHOKToolStripMenuItem.Name = "tESTADHOKToolStripMenuItem";
+            this.tESTADHOKToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tESTADHOKToolStripMenuItem.Text = "TESTADHOK";
+            this.tESTADHOKToolStripMenuItem.Click += new System.EventHandler(this.tESTADHOKToolStripMenuItem_Click);
             // 
             // FormAccountingTester
             // 
@@ -190,5 +200,6 @@
         private System.Windows.Forms.ToolStripMenuItem loadFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem adHookToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem agingFixRepoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tESTADHOKToolStripMenuItem;
     }
 }

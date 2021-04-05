@@ -56,8 +56,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                SecurityUtility.CheckContactFeature("DWObjectField", "READ", authToken.Tenant);
                 DWObjectFieldQuery dWObjectFieldQuery = new DWObjectFieldQuery(authToken.Tenant);
                 DWObjectFieldPM dWObjectFieldPM = dWObjectFieldQuery.GetSinglePM(id, authToken.Tenant);
                 
@@ -88,8 +86,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("DWObjectField", "NEW", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("DWObjectField", entityPM.Tenant, authToken.Tenant);
                 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
                         DWObjectFieldService service = new DWObjectFieldService(MyContext, entityPM.Tenant);
@@ -136,8 +132,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("DWObjectField", "UPDATE", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("DWObjectField", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "DWObjectField" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "DWObjectFieldPM" + entityPM.Id + entityPM.Tenant;

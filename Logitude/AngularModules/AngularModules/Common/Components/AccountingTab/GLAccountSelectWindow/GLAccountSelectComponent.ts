@@ -179,6 +179,7 @@ export class GLAccountSelectComponent extends BaseComponent implements OnInit
     onRowSelected($event)
     {
         var glaccount = $event.rowData;
+        this.chartOfAccountTypeCode = glaccount.ChartOfAccountsTypeCode;
         var glaccountId = $event.rowData["Id"];
 
         if (glaccountId) {

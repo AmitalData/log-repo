@@ -99,7 +99,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                AssignedCustomsAgentNotes= a.AssignedCustomsAgentNotes,
                                                                AssignedTruckerDate = a.AssignedTruckerDate,
                                                                AssignedTruckerDone = a.AssignedTruckerDone,
-                                                               GrossWeightUnitCode = a.GrossWeightUnitCode
+                                                               GrossWeightUnitCode = a.GrossWeightUnitCode,
+                                                               ShipmentLevelCode = a.ShipmentLevelCode,
                                                            });
             
             return query;
@@ -247,8 +248,9 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
                    DeliveryExceptionReason = poco.DeliveryExceptionReason,
 
-                   GrossWeightUnitCode = poco.GrossWeightUnitCode
+                   GrossWeightUnitCode = poco.GrossWeightUnitCode,
                    
+                    ShipmentLevelCode = poco.ShipmentLevelCode,
                 };
             if(list != null)
             {
@@ -461,7 +463,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         }
         private Milestone GetMostRecentNotEstimatedMilestone(List<Milestone> milestones)
         {
-            return milestones.Where(s => s.IsEstimation == false).OrderByDescending(s => s.Date).ThenByDescending(s => s.Id).FirstOrDefault();
+            return milestones.Where(s => s.IsEstimation == false && s.Date != null).OrderByDescending(s => s.Date).ThenByDescending(s => s.Id).FirstOrDefault();
         }
         
         public List<Milestone> BuildShipmentMilstones(CargoTrackingShipmentList shipment)
@@ -651,7 +653,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         private static Milestone GetMostRecentEstimatedMilestone(List<Milestone> milestones)
         {
             return milestones.Where(s => s.IsEstimation == true && s.EstimationDate != null)
-                                                        .OrderByDescending(s => s.Date).ThenByDescending(s => s.Id)
+                                                        .OrderBy(s => s.Date).ThenByDescending(s => s.Id)
                                                         .FirstOrDefault();
         }
 

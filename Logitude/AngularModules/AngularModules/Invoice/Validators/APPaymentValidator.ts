@@ -18,7 +18,7 @@ export class APPaymentValidator {
             validationResults.push(msg.replace("%FieldName", "Register Date"));
         }
 
-        else if (DateTool.GetDateParts(entityPm.RegisterDate).DateTicks > DateTool.GetCurrentDateAsUtc().valueOf()) {
+        else if (DateTool.GetDateParts(entityPm.RegisterDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation().valueOf()) {
             validationResults.push(TextCodeTranslator.Translate("APPayment.M.CantSetFutureDatePayment"));
         }
 

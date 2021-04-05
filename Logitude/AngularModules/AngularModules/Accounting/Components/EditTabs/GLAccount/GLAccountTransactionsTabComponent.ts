@@ -483,7 +483,12 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         this.filterAgrs.PageIndex = skip;
         this.filterAgrs.GetAll = false;
         this.filterAgrs.GetCount = true;
-
+        if (sortingCol) {
+            this.filterAgrs.SortBy = sortingCol;
+        }
+        if (sortingDir) {
+            this.filterAgrs.SortDirection = sortingDir;
+        }
         this.filterAgrs.addAdditionalFilter("GLAccountId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
  
         this.filterAgrs.addAdditionalFilter("IncludeRelatedCurrenciesAccount", this.splittedByCurrencyCheckBox == null ? false : this.splittedByCurrencyCheckBox, null, null, "Equals", false, false, false, "boolean");

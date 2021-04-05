@@ -349,7 +349,7 @@ namespace WebFreight.Web.Helpers
 
             if (string.IsNullOrEmpty(calculatedFileName)) calculatedFileName = documentFileNameParameter.DocumentType.Name;
 
-            if (documentFileNameParameter.DocumentTypeCopy != null && documentFileNameParameter.DocumentType.Name != documentFileNameParameter.DocumentTypeCopy.Name)
+            if (documentFileNameParameter.DocumentTypeCopy != null && documentFileNameParameter.DocumentType.Name != documentFileNameParameter.DocumentTypeCopy.Name && string.IsNullOrEmpty(documentFileNameParameter.DocumentType.FileName))
             {
                 calculatedFileName += "_" + documentFileNameParameter.DocumentTypeCopy.Name;
             }

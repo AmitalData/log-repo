@@ -399,11 +399,6 @@ export class CargoTrackingShipmentPM {
     public set AssignedCustomsAgentExcReason(newValue: string) { if (this.assignedCustomsAgentExcReason != newValue) { this.assignedCustomsAgentExcReason = newValue; this.MarkAsDirty("AssignedCustomsAgentExcReason"); } }
        
 	 
-    private grossWeightUnitCode: string;
-    public get GrossWeightUnitCode() { return this.grossWeightUnitCode; }
-    public set GrossWeightUnitCode(newValue: string) { if (this.grossWeightUnitCode != newValue) { this.grossWeightUnitCode = newValue; this.MarkAsDirty("GrossWeightUnitCode"); } }
-       
-	 
     private deliveryDone: boolean;
     public get DeliveryDone() { return this.deliveryDone; }
     public set DeliveryDone(newValue: boolean) { if (this.deliveryDone != newValue) { this.deliveryDone = newValue; this.MarkAsDirty("DeliveryDone"); } }
@@ -429,9 +424,19 @@ export class CargoTrackingShipmentPM {
     public set DeliveryExceptionReason(newValue: string) { if (this.deliveryExceptionReason != newValue) { this.deliveryExceptionReason = newValue; this.MarkAsDirty("DeliveryExceptionReason"); } }
        
 	 
+    private grossWeightUnitCode: string;
+    public get GrossWeightUnitCode() { return this.grossWeightUnitCode; }
+    public set GrossWeightUnitCode(newValue: string) { if (this.grossWeightUnitCode != newValue) { this.grossWeightUnitCode = newValue; this.MarkAsDirty("GrossWeightUnitCode"); } }
+       
+	 
     private forwardingShipmentNumber: string;
     public get ForwardingShipmentNumber() { return this.forwardingShipmentNumber; }
     public set ForwardingShipmentNumber(newValue: string) { if (this.forwardingShipmentNumber != newValue) { this.forwardingShipmentNumber = newValue; this.MarkAsDirty("ForwardingShipmentNumber"); } }
+       
+	 
+    private shipmentLevelCode: string;
+    public get ShipmentLevelCode() { return this.shipmentLevelCode; }
+    public set ShipmentLevelCode(newValue: string) { if (this.shipmentLevelCode != newValue) { this.shipmentLevelCode = newValue; this.MarkAsDirty("ShipmentLevelCode"); } }
        
 	 
 
@@ -462,4 +467,4 @@ export class CargoTrackingShipmentPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

@@ -162,7 +162,8 @@ namespace CommunicationWorkerRole.Services
         private ReportSchedulerRecepients GetReportPermittedContacts(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails)
         {
             List<ContactList> allPermittedContacts = GetAllPermittedContacts(reportTask.Tenant, null);
-            string gLAccountId = GetFilterFieldValueByName(schedulerDetails.ReportDetails.ReportFilterItems, "GLAccountId");
+            string mainCustomerFieldName = string.IsNullOrEmpty(schedulerDetails.ReportDetails.MainCustomerFieldName) ? "GLAccountId" : schedulerDetails.ReportDetails.MainCustomerFieldName;
+            string gLAccountId = GetFilterFieldValueByName(schedulerDetails.ReportDetails.ReportFilterItems, mainCustomerFieldName);
             List<ContactList> allPermittedCards = GetAllPermittedContacts(reportTask.Tenant, gLAccountId);
             allPermittedContacts = allPermittedContacts.Concat(allPermittedCards).ToList();
             ReportSchedulerRecepients recepients =  RemoveNonPermittedContacts(schedulerDetails.ReportDetails.Recepients, allPermittedContacts);

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="e13930ec-a8ea-4452-b34f-df2b1a6671fa" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:9996/WcfApi/AccountingPartnerWcfService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="AccountingPartnerWcfService.xsd" MetadataType="Schema" ID="2069c9c4-8ff3-4c2c-b134-b81da29bde28" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AccountingPartnerWcfService.svc?xsd=xsd5" />
+    <MetadataFile FileName="AccountingPartnerWcfService1.xsd" MetadataType="Schema" ID="8c08183c-7e6d-4de4-86bb-5b85e8bc06a7" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AccountingPartnerWcfService.svc?xsd=xsd4" />
+    <MetadataFile FileName="AccountingPartnerWcfService.wsdl" MetadataType="Wsdl" ID="6a19d186-51f8-42da-927d-0d2a76104064" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AccountingPartnerWcfService.svc?wsdl" />
+    <MetadataFile FileName="AccountingPartnerWcfService2.xsd" MetadataType="Schema" ID="2e4fd5bc-8dbe-4888-805b-49a94385fabf" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AccountingPartnerWcfService.svc?xsd=xsd6" />
+    <MetadataFile FileName="AccountingPartnerWcfService3.xsd" MetadataType="Schema" ID="d888b31b-c2ab-430f-ba52-4f851fffe949" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AccountingPartnerWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="AccountingPartnerWcfService4.xsd" MetadataType="Schema" ID="72ef9ecb-7207-4ac8-80bb-b7b59bf2c1bc" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AccountingPartnerWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="AccountingPartnerWcfService5.xsd" MetadataType="Schema" ID="695a945c-421b-4405-b673-097ba863cbc4" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AccountingPartnerWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="AccountingPartnerWcfService6.xsd" MetadataType="Schema" ID="07576c17-ce57-49d8-a6cb-20c3bbdaf12d" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AccountingPartnerWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="AccountingPartnerWcfService7.xsd" MetadataType="Schema" ID="b201eee9-e785-480a-97a0-da376c5bae8a" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AccountingPartnerWcfService.svc?xsd=xsd7" />
+    <MetadataFile FileName="AccountingPartnerWcfService.disco" MetadataType="Disco" ID="5696714f-df15-4672-9d88-fb5a009fe0ff" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AccountingPartnerWcfService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
