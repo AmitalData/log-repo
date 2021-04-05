@@ -404,9 +404,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     this.initializer.HandleComposition();
 
-                    //this.UpdateShipmentOrderPackagesCollection();
                     this.UpdateShipmentPackagesCollection();
-
                     this.UpdateShipmentPickUpsCollection();
                     this.UpdateShipmentDeliveriesCollection();
                     this.UpdateShipmentPayablesCollection();
@@ -3186,101 +3184,101 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         entityPM.RateClassCode = "Q";
                     }
 
-                    if (entityPM.ShipmentCommodities.Count == 0)
-                    {
-                        entityPM.ShipmentCommodities.Add(new ShipmentCommodityPM()
-                        {
-                            Id = IdCounter.GetNumber("ShipmentCommodity", tenant).ToString(),
-                            Tenant = tenant,
-                            ShipmentId = entityPM.Id,
-                            ChargeableWeight = entityPM.ChargeableWeight,
-                            ChargeAmount = entityPM.AWBChargeAmount,
-                            ChargeRate = entityPM.AWBChargeRate,
-                            CommodityNumber = entityPM.AWBCommodityItemNumber,
-                            GrossWeight = entityPM.GrossWeight,
-                            DescriptionOfGoods = entityPM.DescriptionOfGoods,
-                            NumberOfPackages = entityPM.NumberOfPackages,
-                            RateClassCode = entityPM.RateClassCode,
-                            Volume = entityPM.Volume,
-                            VolumetricWeight = entityPM.VolumetricWeight,
-                            IsFirstLine = true,
-                        });
-                    }
+                    //if (entityPM.ShipmentCommodities.Count == 0)
+                    //{
+                    //    entityPM.ShipmentCommodities.Add(new ShipmentCommodityPM()
+                    //    {
+                    //        Id = IdCounter.GetNumber("ShipmentCommodity", tenant).ToString(),
+                    //        Tenant = tenant,
+                    //        ShipmentId = entityPM.Id,
+                    //        ChargeableWeight = entityPM.ChargeableWeight,
+                    //        ChargeAmount = entityPM.AWBChargeAmount,
+                    //        ChargeRate = entityPM.AWBChargeRate,
+                    //        CommodityNumber = entityPM.AWBCommodityItemNumber,
+                    //        GrossWeight = entityPM.GrossWeight,
+                    //        DescriptionOfGoods = entityPM.DescriptionOfGoods,
+                    //        NumberOfPackages = entityPM.NumberOfPackages,
+                    //        RateClassCode = entityPM.RateClassCode,
+                    //        Volume = entityPM.Volume,
+                    //        VolumetricWeight = entityPM.VolumetricWeight,
+                    //        IsFirstLine = true,
+                    //    });
+                    //}
 
-                    else
-                    {
-                        ShipmentCommodityPM myShipmentCommodity = entityPM.ShipmentCommodities.OrderBy(d => d.Id).FirstOrDefault();
+                    //else
+                    //{
+                    //    ShipmentCommodityPM myShipmentCommodity = entityPM.ShipmentCommodities.OrderBy(d => d.Id).FirstOrDefault();
 
-                        if (myShipmentCommodity != null)
-                        {
-                            bool isUpdatingSingleCommodity = false;
+                    //    if (myShipmentCommodity != null)
+                    //    {
+                    //        bool isUpdatingSingleCommodity = false;
 
-                            if (myShipmentCommodity.ChargeableWeight != entityPM.ChargeableWeight)
-                            {
-                                myShipmentCommodity.ChargeableWeight = entityPM.ChargeableWeight;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.ChargeableWeight != entityPM.ChargeableWeight)
+                    //        {
+                    //            myShipmentCommodity.ChargeableWeight = entityPM.ChargeableWeight;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.ChargeAmount != entityPM.AWBChargeAmount)
-                            {
-                                myShipmentCommodity.ChargeAmount = entityPM.AWBChargeAmount;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.ChargeAmount != entityPM.AWBChargeAmount)
+                    //        {
+                    //            myShipmentCommodity.ChargeAmount = entityPM.AWBChargeAmount;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.ChargeRate != entityPM.AWBChargeRate)
-                            {
-                                myShipmentCommodity.ChargeRate = entityPM.AWBChargeRate;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.ChargeRate != entityPM.AWBChargeRate)
+                    //        {
+                    //            myShipmentCommodity.ChargeRate = entityPM.AWBChargeRate;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.CommodityNumber != entityPM.AWBCommodityItemNumber)
-                            {
-                                myShipmentCommodity.CommodityNumber = entityPM.AWBCommodityItemNumber;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.CommodityNumber != entityPM.AWBCommodityItemNumber)
+                    //        {
+                    //            myShipmentCommodity.CommodityNumber = entityPM.AWBCommodityItemNumber;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.GrossWeight != entityPM.GrossWeight)
-                            {
-                                myShipmentCommodity.GrossWeight = entityPM.GrossWeight;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.GrossWeight != entityPM.GrossWeight)
+                    //        {
+                    //            myShipmentCommodity.GrossWeight = entityPM.GrossWeight;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.DescriptionOfGoods != entityPM.DescriptionOfGoods)
-                            {
-                                myShipmentCommodity.DescriptionOfGoods = entityPM.DescriptionOfGoods;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.DescriptionOfGoods != entityPM.DescriptionOfGoods)
+                    //        {
+                    //            myShipmentCommodity.DescriptionOfGoods = entityPM.DescriptionOfGoods;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.NumberOfPackages != entityPM.NumberOfPackages)
-                            {
-                                myShipmentCommodity.NumberOfPackages = entityPM.NumberOfPackages;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.NumberOfPackages != entityPM.NumberOfPackages)
+                    //        {
+                    //            myShipmentCommodity.NumberOfPackages = entityPM.NumberOfPackages;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.RateClassCode != entityPM.RateClassCode)
-                            {
-                                myShipmentCommodity.RateClassCode = entityPM.RateClassCode;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.RateClassCode != entityPM.RateClassCode)
+                    //        {
+                    //            myShipmentCommodity.RateClassCode = entityPM.RateClassCode;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.Volume != entityPM.Volume)
-                            {
-                                myShipmentCommodity.Volume = entityPM.Volume;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.Volume != entityPM.Volume)
+                    //        {
+                    //            myShipmentCommodity.Volume = entityPM.Volume;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.VolumetricWeight != entityPM.VolumetricWeight)
-                            {
-                                myShipmentCommodity.VolumetricWeight = entityPM.VolumetricWeight;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.VolumetricWeight != entityPM.VolumetricWeight)
+                    //        {
+                    //            myShipmentCommodity.VolumetricWeight = entityPM.VolumetricWeight;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (isUpdatingSingleCommodity)
-                            {
-                                this.UpdateShipmentCommodity(myShipmentCommodity);
-                            }
-                        }
-                    }
+                    //        if (isUpdatingSingleCommodity)
+                    //        {
+                    //            this.UpdateShipmentCommodity(myShipmentCommodity);
+                    //        }
+                    //    }
+                    //}
                 }
             }
         }
@@ -5826,10 +5824,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 List<ShipmentPackage> list = shipmentPackageRepository.GetShipmentPackagesByCommodityId(entityPM.Id, itemPoco.Id, itemPoco.Tenant).ToList();
                 if (list != null)
                 {
-                    foreach (ShipmentPackage package in list)
-                    {
-                        shipmentPackageRepository.Remove(package);
-                    }
+                    //foreach (ShipmentPackage package in list)
+                    //{
+                    //    shipmentPackageRepository.Remove(package);
+                    //}
                 }
 
                 shipmentCommodityRepository.Remove(itemPoco);
