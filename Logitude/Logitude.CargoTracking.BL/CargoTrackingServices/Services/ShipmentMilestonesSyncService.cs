@@ -60,14 +60,14 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             var sql = string.Concat(
 
                 "update  ForwardingShipment "
-                , $" set     ForwardingShipment.CurrentMilestoneCode = iif(ForwardingShipment.CurrentMilestoneCode > {lastForwardingMilstoneOrderNumber}, CustomShipment.CurrentMilestoneCode, ForwardingShipment.CurrentMilestoneCode), "
-                , $"        ForwardingShipment.CurrentMilestoneDate = iif(ForwardingShipment.CurrentMilestoneCode > {lastForwardingMilstoneOrderNumber}, CustomShipment.CurrentMilestoneDate, ForwardingShipment.CurrentMilestoneDate) "
+                , $" set		ForwardingShipment.CurrentMilestoneCode = iif(cast(ForwardingShipment.CurrentMilestoneCode as int) > cast(CustomShipment.CurrentMilestoneCode as int), ForwardingShipment.CurrentMilestoneCode ,CustomShipment.CurrentMilestoneCode), "
+                , $" ForwardingShipment.CurrentMilestoneDate = iif(cast(ForwardingShipment.CurrentMilestoneDate as int) > cast(CustomShipment.CurrentMilestoneDate as int), ForwardingShipment.CurrentMilestoneDate ,CustomShipment.CurrentMilestoneDate) "
                 , " from CargoTrackingShipments ForwardingShipment"
                 , " join CargoTrackingShipments CustomShipment on ForwardingShipment.CustomsShipmentHeaderId = CustomShipment.EntityId"
                 , Environment.NewLine
                 , " update  CustomShipment"
-                , $" set     CustomShipment.CurrentMilestoneCode = iif(CustomShipment.CurrentMilestoneCode <= {lastForwardingMilstoneOrderNumber}, ForwardingShipment.CurrentMilestoneCode, CustomShipment.CurrentMilestoneCode), "
-                , $"        CustomShipment.CurrentMilestoneDate = iif(CustomShipment.CurrentMilestoneCode <= {lastForwardingMilstoneOrderNumber}, ForwardingShipment.CurrentMilestoneDate, CustomShipment.CurrentMilestoneDate) "
+                , $" set     CustomShipment.CurrentMilestoneCode = ForwardingShipment.CurrentMilestoneCode, "
+                , $" CustomShipment.CurrentMilestoneDate = ForwardingShipment.CurrentMilestoneDate "
                 , " from CargoTrackingShipments CustomShipment "
                 , " join CargoTrackingShipments ForwardingShipment on ForwardingShipment.CustomsShipmentHeaderId = CustomShipment.EntityId");
 
