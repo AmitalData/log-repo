@@ -4046,6 +4046,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return returnShipment;
         }
 
+        public string GetShipmentIdIfOneShipmentHaveHouseNumber(string house, int tenant)
+        {
+            if (string.IsNullOrEmpty(house)) { return null; }
+
+            List<Shipment> shipments = repository.GetAllShipmentsByHouseNumber(house, tenant);
+
+            if (shipments.Count == 0) { throw new Exception("There is no Shipment found with house " + house);}
+
+            if (shipments.Count == 1) { return shipments[0].Id;}
+            return null;
+        }
+      
+
         public ShipmentPM GetSinglePM(string id, int tenant)
         {
             if (!string.IsNullOrEmpty(id))
