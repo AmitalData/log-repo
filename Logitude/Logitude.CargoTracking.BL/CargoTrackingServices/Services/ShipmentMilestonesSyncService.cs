@@ -179,19 +179,39 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         private string BuildForwardingFieldAssignmentScript(string fieldName)
         {
-			return $"ForwardingShipment.{fieldName} = iif(CustomShipment.{fieldName} is not null, CustomShipment.{fieldName}, ForwardingShipment.{fieldName})" + Environment.NewLine;
+            var compareOperator = "is not null";
+
+            if (fieldName.Contains("Done"))
+                compareOperator = " = 1";
+
+            return $"ForwardingShipment.{fieldName} = iif(CustomShipment.{fieldName} {compareOperator}, CustomShipment.{fieldName}, ForwardingShipment.{fieldName})" + Environment.NewLine;
         }
         private string BuildForwardingAssignmentFromForwardingWhenCustomsIsEmpty(string fieldName)
         {
-            return $"ForwardingShipment.{fieldName} = iif(ForwardingShipment.{fieldName} is null,CustomShipment.{fieldName},ForwardingShipment.{fieldName})" + Environment.NewLine;
+            var compareOperator = "is null";
+
+            if (fieldName.Contains("Done"))
+                compareOperator = " = 0";
+
+            return $"ForwardingShipment.{fieldName} = iif(ForwardingShipment.{fieldName} {compareOperator},CustomShipment.{fieldName},ForwardingShipment.{fieldName})" + Environment.NewLine;
         }
         private string BuildCustomsAssignmentFromForwardingWhenCustomsIsEmpty(string fieldName)
         {
-            return $"CustomShipment.{fieldName} = iif(CustomShipment.{fieldName} is null,ForwardingShipment.{fieldName},CustomShipment.{fieldName})" + Environment.NewLine;
+            var compareOperator = "is null";
+
+            if (fieldName.Contains("Done"))
+                compareOperator = " = 0";
+
+            return $"CustomShipment.{fieldName} = iif(CustomShipment.{fieldName} {compareOperator},ForwardingShipment.{fieldName},CustomShipment.{fieldName})" + Environment.NewLine;
         }
         private string BuildCustomsFieldAssignmentScript(string fieldName)
 		{
-			return $"CustomShipment.{fieldName} = iif(ForwardingShipment.{fieldName} is not null, ForwardingShipment.{fieldName}, CustomShipment.{fieldName})" + Environment.NewLine;
+            var compareOperator = "is not null";
+
+            if (fieldName.Contains("Done"))
+                compareOperator = " = 1";
+
+            return $"CustomShipment.{fieldName} = iif(ForwardingShipment.{fieldName} {compareOperator}, ForwardingShipment.{fieldName}, CustomShipment.{fieldName})" + Environment.NewLine;
 		}
 
         
