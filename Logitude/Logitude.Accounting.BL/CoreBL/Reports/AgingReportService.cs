@@ -181,6 +181,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                          ForeignAmountCredit = (decimal)rec.ForeignAmountCredit,
                          ForeignAmountDebit = (decimal)rec.ForeignAmountDebit,
+
+                         TotalOpenTransactions=0,// relvant only to  ReconcileOpenBalanceMethod
                          CHANGE_TYPE = ""
                      });
                     //if (!_TryGetAllThenAggregate)

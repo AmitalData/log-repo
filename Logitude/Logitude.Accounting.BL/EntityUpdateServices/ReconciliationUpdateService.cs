@@ -422,11 +422,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             ledgerTransactionUpdateService._CancelledAction = this._CancelledAction;
             ledgerTransactionUpdateService.UpdateMulti(LedgerTransactionPMsUpdated, new List<LedgerTransactionPM>(), entityPM, false);
 
+            bool getNewContextWhileStreamingLedger = true;
+            if (getNewContextWhileStreamingLedger)
+            {
+                var newContextWhileStreamingLedger = AccountingContext.GetContext(entityPM.Tenant);
+                var reconciliationUpdateAgingService = new ReconciliationUpdateAgingService(newContextWhileStreamingLedger);
+                var deltaGLAccountAgingDataPM = reconciliationUpdateAgingService.GetDelta(this._CancelledAction, entityPM);
+                reconciliationUpdateAgingService.UpdateDelta(deltaGLAccountAgingDataPM, false);
 
-            var reconciliationUpdateAgingService = new ReconciliationUpdateAgingService(this.MainContext as IAccountingContext);
-            var deltaGLAccountAgingDataPM =reconciliationUpdateAgingService.GetDelta(this._CancelledAction, entityPM);
-            reconciliationUpdateAgingService.UpdateDelta(deltaGLAccountAgingDataPM,false);
-            
+            }
+
 
 
         }
