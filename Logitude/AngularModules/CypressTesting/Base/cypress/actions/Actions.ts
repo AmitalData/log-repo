@@ -236,6 +236,7 @@ export function ValidateEventsTab(expectedEventDetailsList: EventTypeDetails[] ,
             cy.Click(eventTabSelector, null,true);
         }
         BaseAssertion.AssertStatusCode(RequestAliases.GetTraceEventsForEntity, 200);
+        cy.Click(BaseSelectors.RefreshImg+BaseSelectors.LastElement, null,true);
         for (let i = 0; i < expectedEventDetailsList.length; i++) {
             let expectedEvent = expectedEventDetailsList[i].Event;
             let expectedNotes = expectedEventDetailsList[i].Notes;
