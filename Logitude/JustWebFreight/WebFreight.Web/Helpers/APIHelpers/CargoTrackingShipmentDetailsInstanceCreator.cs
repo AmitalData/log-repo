@@ -87,7 +87,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
         private string GetCarrierPrefixAWB(ShipmentPM shipment, CargoTrackingShipmentList cargoTrackingShipment)
         {
             if (string.IsNullOrEmpty(shipment.AirlinePrefix)) { return cargoTrackingShipment.Master; }
-            return String.Concat(shipment.AirlinePrefix, " - ", cargoTrackingShipment.Master);
+            return String.Concat(shipment.AirlinePrefix, "-", cargoTrackingShipment.Master);
         }
         private string GetTotalChargesInNIS(string paymentRequestXML)
         {
@@ -209,8 +209,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 Code = getMilestoneCode(milestone.Id.ToString()),
                 Date = milestone.Date?.ToString("dd/MM/yyyy"),
                 Time = milestone.Date?.ToString("HH:mm"),
-                EstimationDate = milestone.IsEstimation == true ? milestone.EstimationDate?.ToString("dd/MM/yyyy") : null,
-                EstimationTime = milestone.IsEstimation == true ? milestone.EstimationDate?.ToString("HH:mm") : null,
+                EstimationDate = milestone.Date == null ? milestone.EstimationDate?.ToString("dd/MM/yyyy") : null,
+                EstimationTime = milestone.Date == null ? milestone.EstimationDate?.ToString("HH:mm") : null,
                 Remarks = milestone.Notes,
             };
         }
