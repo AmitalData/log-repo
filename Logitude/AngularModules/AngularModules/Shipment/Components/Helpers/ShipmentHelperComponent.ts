@@ -278,26 +278,57 @@ export class ShipmentHelperComponent implements OnDestroy {
     AWBButtonClicked() {
         if (!this.isAWBButtonClicked) {
             this.isAWBButtonClicked = true;
-
+            this.ComputeAWBChargeRate();
+           
             if (this.entityArgs.EditComponent) {
                 this.entityArgs.EditComponent.SaveChanges();
             }
         }
+    }
+
+    ComputeAWBChargeRate() {
+        if (!this.EntityPM.IsMultipleCommodities && AppTool.IsNullOrZero(this.EntityPM.AWBChargeRate)) {
+            var airFreightCode = "AFT";
+            var airFreightCharge = this.EntityPM.ShipmentPayables.filter(a => a.ChargesTypeCode == airFreightCode)[0];
+            if (airFreightCharge != null && this.ValidateCurrencyOfShipmentAWBPrintOnlies(airFreightCharge)) {
+                this.SetAWBFreightChargeFields(airFreightCharge);
+            }
+        }
+    }
+
+    private SetAWBFreightChargeFields(airFreightCharge) {
+        this.EntityPM.AWBChargeRate = airFreightCharge.UnitPrice;
+        this.EntityPM.AWBCurrencyId = airFreightCharge.CurrencyId;
+        this.EntityPM.AWBChargeAmount = ShipmentTool.ComputeAWBChargeAmount(this.EntityPM);
+    }
+
+    private ValidateCurrencyOfShipmentAWBPrintOnlies(airFreightCharge) {
+        var isValid = true;
+        if(this.EntityPM.ShipmentAWBPrintOnlies != null) {
+            this.EntityPM.ShipmentAWBPrintOnlies.forEach(item => {
+                if (item.CurrencyId != airFreightCharge.CurrencyId) {
+                    isValid = false;
+                }
+            });
+        }
+        return isValid;
     }
 
     AWBImportButtonClicked() {
         if (!this.isAWBImportButtonClicked) {
             this.isAWBImportButtonClicked = true;
-
+            var isFullWizard: boolean = this.IsFullWizard();
+            if (isFullWizard) {
+                this.ComputeAWBChargeRate();
+            }
             if (this.entityArgs.EditComponent) {
                 this.entityArgs.EditComponent.SaveChanges();
             }
         }
     }
+
     ImportWizard() {
-
-        var isFullWizard: boolean = ShipmentTool.IsFullAWBWizard(this.EntityPM.DirectionId);
-
+        var isFullWizard: boolean = this.IsFullWizard();
         if (isFullWizard) {
             var myAWBWizardArgs: AWBWizardArgs = new AWBWizardArgs();
             myAWBWizardArgs.EntityPM = this.EntityPM;
@@ -329,6 +360,11 @@ export class ShipmentHelperComponent implements OnDestroy {
                 this.CurrentSession.FireEvent("AWBWizardClosed");
             });
         }
+    }
+
+    IsFullWizard(): boolean {
+        var isFullWizard: boolean = ShipmentTool.IsFullAWBWizard(this.EntityPM.DirectionId);
+        return isFullWizard;
     }
 
     // Send To Custom 

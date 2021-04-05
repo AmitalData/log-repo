@@ -3179,6 +3179,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 if (entityPM.TransportModeId == "A")
                 {
+                    this.ComputeAWBChargeRate();
+                  
                     if (string.IsNullOrEmpty(entityPM.RateClassCode))
                     {
                         entityPM.RateClassCode = "Q";
@@ -3282,6 +3284,101 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
+        private void ComputeAWBChargeRate()
+        {
+            if (entityPM.AWBChargeRate == null)
+            {
+                var airFreightCode = "AFT";
+                var airFreightCharge =entityPM.ShipmentPayables.Where(a => a.ChargesTypeCode == airFreightCode).FirstOrDefault();
+                if (airFreightCharge != null && ValidateCurrencyOfShipmentAWBPrintOnlies(airFreightCharge))
+                {
+                    this.ComputeAWBChargeAmount(airFreightCharge);
+                }
+            }
+        }
+        private bool ValidateCurrencyOfShipmentAWBPrintOnlies(ShipmentPayablePM airFreightCharge)
+        {
+            var isValid = true;
+            if (entityPM.ShipmentAWBPrintOnlies != null)
+            {
+                foreach (var item in entityPM.ShipmentAWBPrintOnlies)
+                {
+                    if (item.CurrencyId != airFreightCharge.CurrencyId)
+                    {
+                        isValid = false;
+                    }
+                }
+            }
+            return isValid;
+        }
+
+        private void ComputeAWBChargeAmount(ShipmentPayablePM airFreightCharge)
+        {
+            entityPM.AWBChargeRate = airFreightCharge.UnitPrice;
+            entityPM.AWBCurrencyId = airFreightCharge.CurrencyId;
+            entityPM.AWBChargeAmount =this.ComputeAWBChargeAmount(entityPM);
+        }
+        public double? ComputeAWBChargeAmount(ShipmentPM entityPM)
+        {
+            double? myResult = null;
+            var myRateClassCode = entityPM.RateClassCode;
+            var myChargeRate =  entityPM.AWBChargeRate;
+            var chargeAmount = entityPM.ChargeableWeight;
+            var groupCode = this.GetRateClassGroupCode(myRateClassCode);
+            if (entityPM.RateClassCode == "K")
+            {
+                chargeAmount = entityPM.ChargeableWeightInKG;
+            }
+           
+            if (groupCode == "M")
+            {
+                myResult = myChargeRate;
+            }
+            else if (groupCode == "R")
+            {
+                myResult = myChargeRate * chargeAmount;
+            }
+            return myResult;
+        }
+
+        public string GetRateClassGroupCode(string rateClassCode)
+        {
+            var code = "";
+            switch (rateClassCode)
+            {
+                case "M":
+                case "B":
+                    {
+                        code = "M";
+                        break;
+                    }
+
+                case "R":
+                case "X":
+                case "Y":
+                    {
+                        code = "S";
+                        break;
+                    }
+
+                case "C":
+                case "E":
+                case "K":
+                case "N":
+                case "P":
+                case "Q":
+                case "U":
+                case "S":
+                    {
+                        code = "R";
+                        break;
+                    }
+
+                default: { break; }
+            }
+            return code;
+        }
+
         private void InitializeHouseField()
         {
             if (string.IsNullOrEmpty(entityPM.House))

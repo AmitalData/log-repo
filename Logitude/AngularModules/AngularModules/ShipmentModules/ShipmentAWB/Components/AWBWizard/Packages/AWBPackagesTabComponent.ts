@@ -527,7 +527,7 @@ export class AWBPackagesTabComponent extends BaseComponent {
     }
 
     private ComputeAWBChargeAmount() {
-        this.AWBChargeAmount = ShipmentTool.ComputeAWBChargeAmount(this.EntityPM.RateClassCode, this.EntityPM.AWBChargeRate, this.EntityPM.ChargeableWeight);
+        this.AWBChargeAmount = ShipmentTool.ComputeAWBChargeAmount(this.EntityPM);
     }
     private ComputeAWBFrieghtAmount() {
         var computedAmount = this.AWBChargeAmount;
@@ -1463,7 +1463,7 @@ export class ShipmentCommodityItem extends BaseComponent {
     }
 
     private ComputeAWBChargeAmount() {
-        this.ChargeAmount = ShipmentTool.ComputeAWBChargeAmount(this.RateClassCode, this.ChargeRate, this.ChargeableWeight);
+        this.ChargeAmount = ShipmentTool.ComputeAWBChargeAmount(this.EntityPM, true);
     }
 
     get ChargeAmount() { return this.EntityPM.ChargeAmount; }

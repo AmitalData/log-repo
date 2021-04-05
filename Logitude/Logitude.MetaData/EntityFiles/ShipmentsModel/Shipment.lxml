@@ -98648,7 +98648,7 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Shipment.M.AllAWBPrintOnliesMustMatchShipmentAWBCurrency&quot;"
-      DefaultText="&quot;All AWB Print Shipment Onlies must match the Shipment AWB Currency&quot;"
+      DefaultText="&quot;All AWB Print Shipment Onlies (from the AWB wizard) must match the Shipment AWB Currency &quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
