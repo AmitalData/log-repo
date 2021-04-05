@@ -92,9 +92,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 #endif
 
         }
-
-        public void CustomPOCOToPM(GLAccountPM entityPM, GLAccount entityPOCO)
+        bool showLocals;
+        GLAccountPM entityPM;
+        public void CustomPOCOToPM(GLAccountPM EntityPM, GLAccount entityPOCO)
         {
+            entityPM = EntityPM;
             this.CustomMappedPMProperties.Add(PMPropertyNames.AccountTypeName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.CurrencyName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.CurrencyCode);
@@ -129,7 +131,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             // GET logged contact, RTL
             ContactQuery contactQuery = new ContactQuery(entityPOCO.Tenant);
             ContactPM contact = GetLoggedContact(entityPOCO.Tenant)?? new ContactPM();
-            bool showLocals = !contact.DontShowLocal;
+            showLocals = !contact.DontShowLocal;
 
             if(entityPOCO.CreatedByUserId != null)
             {
@@ -535,21 +537,18 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             bool IsSalesmanUserIdSameOnAllCards = false;
             bool IsCollectorIdSameOnAllCards = false;
             bool IsPaymentTermIdSameOnAllCards = false;
-
+         
             if (CardLists!=null && CardLists.Count > 0)
             {
                 IsSalesmanUserIdSameOnAllCards = true;
                 IsCollectorIdSameOnAllCards = true;
                 IsPaymentTermIdSameOnAllCards = true;
-
-                string FirstSalesmanUserId = CardLists[0].SalesmanUserId;
-                string FirstCollectorId = CardLists[0].CollectorId;
-                string FirstPaymentTermId = CardLists[0].PaymentTermId;
-
                 bool IsAtLeasOneSalesmanUserIdValid = false;
                 bool IsAtLeasOneCollectorIdValid = false;
                 bool IsAtLeastOnePaymentTermIdValid = false;
-
+                string FirstSalesmanUserId = CardLists[0].SalesmanUserId;
+                string FirstCollectorId = CardLists[0].CollectorId;
+                string FirstPaymentTermId = CardLists[0].PaymentTermId;
                 foreach (CardList card in CardLists)
                 {
                     if (card.SalesmanUserId != null)
@@ -560,10 +559,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     {
                         IsAtLeasOneCollectorIdValid = true;
                     }
-                    if (card.PaymentTermId != null)
-                    {
-                        IsAtLeastOnePaymentTermIdValid = true;
-                    }
+                    //if (card.PaymentTermId != null)
+                    //{
+                    //    IsAtLeastOnePaymentTermIdValid = true;
+                    //}
 
                     if (card.SalesmanUserId != FirstSalesmanUserId || card.SalesmanUserId == null)
                     {
@@ -576,6 +575,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     if (card.PaymentTermId != FirstPaymentTermId && card.PaymentTermId != null)
                     {
                         IsPaymentTermIdSameOnAllCards = false;
+                        entityPM.PaymentTermId = card.PaymentTermId;
+                        SetPaymentTermName(entityPM, showLocals);
                     }
                 }
 
@@ -613,20 +614,25 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     entityPM.PaymentTermId = FirstPaymentTermId;
                     SetPaymentTermName(entityPM, showLocals);
                 }
-                else if (IsAtLeastOnePaymentTermIdValid)
+                SetPaymentTermToMulti(CardLists, FirstPaymentTermId);
+            }
+          
+            if (entityPM.ParentCurrencyId != null)
+            {
+                SetVariblesFromParentCurrencyGLAccount(entityPM);
+            }
+        }
+        private  void SetPaymentTermToMulti(List<CardList> CardLists, string FirstPaymentTermId)
+        {
+            if (CardLists.Count > 1)
+            {
+                CardList card = CardLists.Where(d => d.PaymentTermId != null && d.PaymentTermId != FirstPaymentTermId && FirstPaymentTermId != null).FirstOrDefault();
+                if (card != null)
                 {
                     entityPM.PaymentTermName = TranslateTextsClass.Translate("GLAccount.O.Multi", entityPM.Tenant, showLocals);
                 }
-
-
-                if (entityPM.ParentCurrencyId != null)
-                {
-                    SetVariblesFromParentCurrencyGLAccount(entityPM);
-                }
-
             }
         }
-
         private static void SetVariblesFromParentCurrencyGLAccount(GLAccountPM entityPM)
         {
             GLAccountPM parent = GetParentCurrencyGLAccount(entityPM);
