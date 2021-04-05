@@ -643,6 +643,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     }
 
                     shipmentPM.OriginPreCarriageFromPortId = masterData.PreCarriageFromPortId;
+                    shipmentPM.OriginPreCarriageToPortId = masterData.PreCarriageToPortId;
                     shipmentPM.PreCarriageFromPortId = masterData.PreCarriageFromPortId;
                     shipmentPM.PreCarriageToPortId = masterData.PreCarriageToPortId;
                     shipmentPM.PreCarriageCarrierId = masterData.PreCarriageCarrierId;
@@ -715,6 +716,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.OnCarriageFromPortId = masterData.OnCarriageFromPortId;
                     shipmentPM.OnCarriageToPortId = masterData.OnCarriageToPortId;
                     shipmentPM.OriginOnCarriageToPortId = masterData.OnCarriageToPortId;
+                    shipmentPM.OriginOnCarriageFromPortId = masterData.OnCarriageFromPortId;
                     shipmentPM.OnCarriageCarrierId = masterData.OnCarriageCarrierId;
                     shipmentPM.OnCarriageCarrierNumber = masterData.OnCarriageCarrierNumber;
                     shipmentPM.OnCarriageATA = masterData.OnCarriageATA;

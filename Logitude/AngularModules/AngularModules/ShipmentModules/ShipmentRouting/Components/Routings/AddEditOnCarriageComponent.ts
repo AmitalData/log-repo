@@ -891,8 +891,16 @@ export class AddEditOnCarriageComponent extends BaseComponent {
     private CheckToShowChangePortsWindow(): boolean {
         var isShowChangePortsWindow: boolean = false;
         if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
-            if (this.EntityPM.OriginOnCarriageToPortId != this.EntityPM.OnCarriageToPortId) {
-                isShowChangePortsWindow = true;
+            if (this.EntityPM.ShipmentConsoleShipments.filter(d => !AppTool.IsNullOrEmpty(d.OnForwardingFromPortId) && !AppTool.IsNullOrEmpty(d.OnForwardingToPortId)).length > 0) {
+                if (this.EntityPM.OriginOnCarriageToPortId != this.EntityPM.OnCarriageToPortId) {
+                    isShowChangePortsWindow = true;
+                }
+            }
+
+            else {
+                if (this.EntityPM.OriginOnCarriageFromPortId != this.EntityPM.OnCarriageFromPortId) {
+                    isShowChangePortsWindow = true;
+                }
             }
         }
 

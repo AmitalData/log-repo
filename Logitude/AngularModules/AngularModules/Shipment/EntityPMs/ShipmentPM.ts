@@ -4890,12 +4890,30 @@ export class ShipmentPM {
         }
     }
 
+    private originPreCarriageToPortId: string;
+    public get OriginPreCarriageToPortId() { return this.originPreCarriageToPortId; }
+    public set OriginPreCarriageToPortId(newValue: string) {
+        if (this.originPreCarriageToPortId != newValue) {
+            this.originPreCarriageToPortId = newValue;
+            this.MarkAsDirty("OriginPreCarriageToPortId");
+        }
+    }
+
     private originOnCarriageToPortId: string;
     public get OriginOnCarriageToPortId() { return this.originOnCarriageToPortId; }
     public set OriginOnCarriageToPortId(newValue: string) {
         if (this.originOnCarriageToPortId != newValue) {
             this.originOnCarriageToPortId = newValue;
             this.MarkAsDirty("OriginOnCarriageToPortId");
+        }
+    }
+
+    private originOnCarriageFromPortId: string;
+    public get OriginOnCarriageFromPortId() { return this.originOnCarriageFromPortId; }
+    public set OriginOnCarriageFromPortId(newValue: string) {
+        if (this.originOnCarriageFromPortId != newValue) {
+            this.originOnCarriageFromPortId = newValue;
+            this.MarkAsDirty("OriginOnCarriageFromPortId");
         }
     }
 

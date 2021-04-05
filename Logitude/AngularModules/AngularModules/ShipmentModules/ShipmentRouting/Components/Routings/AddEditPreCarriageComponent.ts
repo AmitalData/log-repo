@@ -697,8 +697,16 @@ export class AddEditPreCarriageComponent extends BaseComponent {
     private CheckToShowChangePortsWindow(): boolean {
         var isShowChangePortsWindow: boolean = false;
         if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
-            if (this.EntityPM.OriginPreCarriageFromPortId != this.EntityPM.PreCarriageFromPortId) {
-                isShowChangePortsWindow = true;
+            if (this.EntityPM.ShipmentConsoleShipments.filter(d => !AppTool.IsNullOrEmpty(d.PreForwardingFromPortId) && !AppTool.IsNullOrEmpty(d.PreForwardingToPortId)).length > 0) {
+                if (this.EntityPM.OriginPreCarriageFromPortId != this.EntityPM.PreCarriageFromPortId) {
+                    isShowChangePortsWindow = true;
+                }
+            }
+
+            else {
+                if (this.EntityPM.OriginPreCarriageToPortId != this.EntityPM.PreCarriageToPortId) {
+                    isShowChangePortsWindow = true;
+                }
             }
         }
 

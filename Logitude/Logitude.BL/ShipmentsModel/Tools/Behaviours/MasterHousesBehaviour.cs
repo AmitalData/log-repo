@@ -97,7 +97,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
         {
             if (!string.IsNullOrEmpty(this.initializer.EntityPM.PreCarriageFromPortId))
             {
-                if (iHousePM.PreForwardingToPortId != this.initializer.EntityPM.PreCarriageFromPortId)
+                if (iHousePM.PreForwardingToPortId != null && iHousePM.PreForwardingToPortId != this.initializer.EntityPM.PreCarriageFromPortId)
                 {
                     iHousePM.PreForwardingToPortId = this.initializer.EntityPM.PreCarriageFromPortId;
                 }
@@ -117,7 +117,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
         {
             if (!string.IsNullOrEmpty(this.initializer.EntityPM.OnCarriageToPortId))
             {
-                if (iHousePM.OnForwardingFromPortId != this.initializer.EntityPM.OnCarriageToPortId)
+                if (iHousePM.OnForwardingFromPortId != null && iHousePM.OnForwardingFromPortId != this.initializer.EntityPM.OnCarriageToPortId)
                 {
                     iHousePM.OnForwardingFromPortId = this.initializer.EntityPM.OnCarriageToPortId;
                 }
