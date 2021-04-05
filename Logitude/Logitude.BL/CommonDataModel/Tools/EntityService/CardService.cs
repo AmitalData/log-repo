@@ -33,6 +33,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private ICommonDataContext objectContext;
         private CardRepository entityRepository;
         private ContactRepository contactRepository;
+        GLAccountCardDataService gLAccountCardDataService;
         public CardService(ICommonDataContext objectContext, CardPM entityPM)
         {
             this.entityPM = entityPM;
@@ -41,6 +42,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityRepository = new CardRepository(objectContext);
             this.addressRepository = new AddressRepository(objectContext);
             this.contactRepository = new ContactRepository(objectContext);
+
             this.GetLoggedContact();
         }
         public CardService(ICommonDataContext objectContext,int tenant)
@@ -134,7 +136,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             this.isNewEntity = false;
             this.Poco = entityRepository.GetSingleCard(entityPM.Id , tenant);
-
+          
             this.Initialize();
 
             CardValidating.Validate(entityPM);
@@ -157,171 +159,28 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 CardContactRepository.Remove(cardContact);
                 CardContactRepository.SubmitChanges();
             }
-            if(entityPM.PartnerTypeId=="CS" || entityPM.PartnerTypeId == "VD")
+            if(entityPM.PartnerTypeId== PartnerTypes.Customer || entityPM.PartnerTypeId == PartnerTypes.Vendor)
             {
-                CreateUpdateGLaccountCardsDara(Poco);
+                HandleGLAccountCardData(Poco);              
             }
 
         }
 
-        private GLAccountPM GetGLaccount(string accountId)
+        public void HandleGLAccountCardData(Card card)
         {
-            IGLAccountQueryServiceExt gLAccountQueryServiceExt = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
-            return gLAccountQueryServiceExt.GetSingleGLAccountPM(accountId, tenant);
-        }
-        GLAccountPM cardGLaccount;
-        public void CreateUpdateGLaccountCardsDara(Card card)
-        {
-            this.Poco = card;
-            cardGLaccount = GetGLaccount(Poco.GLAccountId);
-            if (cardGLaccount != null)
+            gLAccountCardDataService = new GLAccountCardDataService(card, tenant);
+            if (gLAccountCardDataService.cardGLaccount != null && Poco.GLAccountId!= null)
             {
-                if (CheckIfGLAccountHasCardDataRecord())
+                bool GlAccountCardDataExists = CheckIfGlAccountCardDataExists();
+            }
+        }
+        private bool CheckIfGlAccountCardDataExists()
+        {
+                if (gLAccountCardDataService.gLAccountCardsDataPM == null)
                 {
-                    UpdategLAccountCardsDataPM();
+                    return false;
                 }
-                else
-                {
-                    GLAccountCardsDataPM gLAccountCardsDataPM=  CreateGLAccountCardsData();
-                    UpdateGLAccount(gLAccountCardsDataPM);
-                }
-            }
-        }
-        private void UpdategLAccountCardsDataPM()
-        {
-            MapGLAccountCardsDataFields(gLAccountCardsDataPM);
-            gLAccountCardsDataPM.ChangeSetOp = ChangeSetOperation.Update;
-            UpdateChanges(gLAccountCardsDataPM);
-        }
-        private GLAccountCardsDataPM CreateGLAccountCardsData( )
-        {
-            GLAccountCardsDataPM gLAccountCardsDataPM = new GLAccountCardsDataPM();
-
-            MapGLAccountCardsDataFields(gLAccountCardsDataPM);
-            gLAccountCardsDataPM.ChangeSetOp = ChangeSetOperation.Insert;
-            UpdateChanges(gLAccountCardsDataPM);          
-            return gLAccountCardsDataPM;
-        }
-        private void UpdateChanges(GLAccountCardsDataPM gLAccountCardsDataPM)
-        {
-            IGLAccountCardsDataUpdateServiceExt IGLAccountCardsDataUpdateServiceExt = ContainerAccessor.Container.Resolve(typeof(IGLAccountCardsDataUpdateServiceExt), "GLAccountCardsDataUpdateServiceExt", new ParameterOverride("", 1)) as IGLAccountCardsDataUpdateServiceExt;
-            IGLAccountCardsDataUpdateServiceExt.Update(gLAccountCardsDataPM);
-        }
-        private GLAccountCardsDataPM MapGLAccountCardsDataFields(GLAccountCardsDataPM gLAccountCardsDataPM)
-        {
-            gLAccountCardsDataPM.CollectorUserId = Poco.CollectorId;
-            gLAccountCardsDataPM.CreditLimit = GetCustomerCreditLimitAmount();
-            gLAccountCardsDataPM.PaymentTermId = Poco.PaymentTermId;
-            gLAccountCardsDataPM.Tenant = Poco.Tenant;
-            gLAccountCardsDataPM.SalesmanUserId = Poco.SalesmanUserId;
-            gLAccountCardsDataPM.Phone = Poco.Phone;
-            gLAccountCardsDataPM.VatNumber = Poco.VatNumber;
-            gLAccountCardsDataPM.TotalOpenShipments = GetCustomerOpenFilesAmount();
-            return gLAccountCardsDataPM;
-        }
-        private CustomerPM GetCustomer()
-        {
-            CustomerQuery customerQuery = new CustomerQuery(tenant);
-            return customerQuery.GetSinglePM(Poco.Id, tenant);
-        }
-        private double? GetCustomerCreditLimitAmount()
-        {
-            CustomerPM customer = GetCustomer();         
-            if (customer != null)
-            {
-                return customer.CreditLimitAmount;
-            }
-            else return null;
-        }
-
-
-        private void UpdateGLAccount(GLAccountCardsDataPM gLAccountCardsDataPM)
-        {
-            if (cardGLaccount.IsMultiCurrency == false)
-            {
-                SetGLAccountCardsDataForSingleCurrencyGLAccount(gLAccountCardsDataPM);             
-            }
-            else
-            {
-                SetGLAccountForMultiCurrencyGLAccount(gLAccountCardsDataPM);               
-            }
-
-        }
-        private void SetGLAccountForMultiCurrencyGLAccount(GLAccountCardsDataPM gLAccountCardsDataPM)
-        {
-            SetGLAccountCardsData(cardGLaccount, gLAccountCardsDataPM);
-        }
-        private void SetGLAccountCardsDataForSingleCurrencyGLAccount(GLAccountCardsDataPM gLAccountCardsDataPM)
-        {
-            GLAccountCurrencyPM gLAccountCurrencyPM = GetGLAccountCurrency();
-            if (gLAccountCurrencyPM != null)
-            {
-                GLAccountPM mainAccount = GetGLaccount(gLAccountCurrencyPM.MainGLAccountId);
-                SetGLAccountCardsData(mainAccount, gLAccountCardsDataPM);
-            }
-            else
-            {
-                SetGLAccountCardsData(cardGLaccount, gLAccountCardsDataPM);
-            }
-        }
-
-        private void SetGLAccountCardsData(GLAccountPM accountPM, GLAccountCardsDataPM gLAccountCardsDataPM)
-        {
-            IGLAccountUpdateServiceExt glaccountUpdate = ContainerAccessor.Container.Resolve(typeof(IGLAccountUpdateServiceExt), "GLAccountUpdateServiceExt", new ParameterOverride("", 1)) as IGLAccountUpdateServiceExt;
-            accountPM.CardsDataId = gLAccountCardsDataPM.Id;
-            accountPM.ChangeSetOp = ChangeSetOperation.Update;
-            glaccountUpdate.Update(accountPM);
-        }
-        private decimal? GetCustomerOpenFilesAmount()
-        {
-            CustomerOpenFilesAmountQuery customerOpenFilesAmount = new CustomerOpenFilesAmountQuery(tenant);
-            CustomerOpenFilesAmountPM customerOpenFilesAmountPM = customerOpenFilesAmount.GetSinglePMByCustomerId(Poco.Id, Poco.Tenant);
-            return customerOpenFilesAmountPM != null ? customerOpenFilesAmountPM.TotalOpenFilesAmount : (decimal)0.0;
-        }
-       
-        GLAccountCardsDataPM gLAccountCardsDataPM;
-        private bool CheckIfGLAccountHasCardDataRecord()
-        {      
-                if (cardGLaccount.IsMultiCurrency == false)
-                {
-                    gLAccountCardsDataPM= GetGLAccountCardsDataForSingkeCurrencyGLAccount();                  
-                }
-                else
-                {
-                    gLAccountCardsDataPM = GetGLAccountCardsDataForMultiCurrencyGLAccount();               
-                }
-                if (gLAccountCardsDataPM != null) return true;
-                else return false;
-        }
-
-       private  GLAccountCardsDataPM GetGLAccountCardsDataForSingkeCurrencyGLAccount()
-        {
-            GLAccountCurrencyPM gLAccountCurrencyPM = GetGLAccountCurrency();
-            if (gLAccountCurrencyPM != null)
-            {
-                GLAccountPM mainAccount = GetGLaccount(gLAccountCurrencyPM.MainGLAccountId);
-
-                gLAccountCardsDataPM = GetGLAccountCardsData(mainAccount);
-            }
-            else
-            {
-                gLAccountCardsDataPM = GetGLAccountCardsData(cardGLaccount);
-            }
-            return gLAccountCardsDataPM;
-        }
-        private GLAccountCardsDataPM GetGLAccountCardsDataForMultiCurrencyGLAccount()
-        {
-          return  GetGLAccountCardsData(cardGLaccount);
-        }
-        private GLAccountCardsDataPM GetGLAccountCardsData(GLAccountPM gLAccount)
-        {
-         IGLAccountCardsDataQueryServiceExt GLAccountCardsDataQueryService = ContainerAccessor.Container.Resolve(typeof(IGLAccountCardsDataQueryServiceExt), "GLAccountCardsDataQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountCardsDataQueryServiceExt;
-            return GLAccountCardsDataQueryService.GetSingleGLAccountCardsData(gLAccount.CardsDataId, gLAccount.Tenant);
-        }
-        private GLAccountCurrencyPM GetGLAccountCurrency()
-        {
-            IGLAccountCurrencyQueryServiceExt gLAccountCurrencyQueryServiceExt = ContainerAccessor.Container.Resolve(typeof(IGLAccountCurrencyQueryServiceExt), "GLAccountCurrencyQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountCurrencyQueryServiceExt;
-            return gLAccountCurrencyQueryServiceExt.GetEntityByGLAccountId(cardGLaccount.Id, cardGLaccount.Tenant);
+                else return true;            
         }
         private void RunStoredProcedures()
         {
@@ -404,4 +263,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
     }
+
+    public static class PartnerTypes
+    {
+
+        public static string Customer = "CS";
+        public static string Vendor = "VD";
+     
 }
+}
+

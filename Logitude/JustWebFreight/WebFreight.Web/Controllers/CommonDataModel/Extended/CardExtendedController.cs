@@ -27,6 +27,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
     public class CardExtendedController : ApiController
     {
         AuthenticationToken authToken;
+        GLAccountCardsDataQueryService gLAccountCardsDataQueryService;
         public HttpResponseMessage GetDisconnectGLAccountFromCard(string Id, string partnerTypeId,string eventTypeCode)
         {
             try
@@ -52,34 +53,69 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             }
         }
         string partnerObjectTableName;
+         
         private void DeleteGLAccountCardData(GLAccountPM gLAccount)
         {
-            GLAccountCardsDataQueryService gLAccountCardsDataQueryService = new GLAccountCardsDataQueryService(gLAccount.Tenant);
-            if (glaccount.IsMultiCurrency==false)
+             gLAccountCardsDataQueryService = new GLAccountCardsDataQueryService(gLAccount.Tenant);
+            GLAccountCardsDataPM gLAccountCardsDataPM;
+            if (glaccount.IsMultiCurrency == true)
             {
-                glaccount = GetParentAccountForGLaccountCurrency(glaccount);
+                gLAccountCardsDataPM = GetSingleGLAccountCardsData(glaccount.CardsDataId);
             }
-            GLAccountCardsDataPM gLAccountCardsDataPM = gLAccountCardsDataQueryService.GetSingle(glaccount.CardsDataId, false, false);
+           else
+            {
+                gLAccountCardsDataPM = GetGLAccountCardsDataForSingleCurrencyGLAccount();
+            }
+          
             if (gLAccountCardsDataPM != null)
             {
-                gLAccountCardsDataPM.ChangeSetOp = ChangeSetOperation.Delete;
-                IAccountingContext accountingContext = AccountingContext.GetContext(authToken.Tenant);
-                GLAccountCardsDataUpdateService gLAccountCardsDataUpdateService = new GLAccountCardsDataUpdateService(accountingContext, new Dictionary<string, IContext>(), authToken.Tenant);
-                gLAccountCardsDataUpdateService.Update(gLAccountCardsDataPM, true);
+                UpdateGLAccountCardsData(gLAccountCardsDataPM);
+                UpdateGLAccount();
             }
 
         }
-
-        private GLAccountPM GetParentAccountForGLaccountCurrency(GLAccountPM account)
+        private void UpdateGLAccount()
         {
-            GLAccountCurrencyQueryService gLAccountCurrencyQueryService = new GLAccountCurrencyQueryService(account.Tenant);
-            GLAccountCurrencyPM gLAccountCurrency = gLAccountCurrencyQueryService.GetEntityByGLAccountId(account.Id, account.Tenant);
+            glaccount.CardsDataId = null;
+            IAccountingContext accountingContext = AccountingContext.GetContext(authToken.Tenant);
+            GLAccountUpdateService gLAccountCardsDataUpdateService = new GLAccountUpdateService(accountingContext, new Dictionary<string, IContext>(), authToken.Tenant);
+            gLAccountCardsDataUpdateService.Update(glaccount, true);
+        }
+        private void UpdateGLAccountCardsData(GLAccountCardsDataPM gLAccountCardsDataPM)
+        {
+            gLAccountCardsDataPM.ChangeSetOp = ChangeSetOperation.Delete;
+            IAccountingContext accountingContext = AccountingContext.GetContext(authToken.Tenant);
+            GLAccountCardsDataUpdateService gLAccountCardsDataUpdateService = new GLAccountCardsDataUpdateService(accountingContext, new Dictionary<string, IContext>(), authToken.Tenant);
+            gLAccountCardsDataUpdateService.Update(gLAccountCardsDataPM, true);
+        }
+        private GLAccountCardsDataPM GetGLAccountCardsDataForSingleCurrencyGLAccount()
+        {
+            GLAccountPM glacountToDeleteCardDataFrom;
+            glacountToDeleteCardDataFrom = GetMainForSingleCurrencyGLAccount(glaccount);
+            if (glacountToDeleteCardDataFrom != null)
+                glaccount = glacountToDeleteCardDataFrom;
+            return GetSingleGLAccountCardsData(glaccount.CardsDataId);
+        }
+        private GLAccountCardsDataPM GetSingleGLAccountCardsData(string id)
+        {
+            return gLAccountCardsDataQueryService.GetSingle(id, false, false);
+        }
+        private GLAccountPM GetMainForSingleCurrencyGLAccount(GLAccountPM account)
+        {
+
+            GLAccountCurrencyPM gLAccountCurrency = GetSingleGLAccountCurrency(account); 
             if (gLAccountCurrency != null)
             {
                 glaccount = GetGLAccountById(gLAccountCurrency.MainGLAccountId);
                 return glaccount;
             }
-            else return account;
+            else return null;
+           
+        }
+        private GLAccountCurrencyPM GetSingleGLAccountCurrency(GLAccountPM account)
+        {
+            GLAccountCurrencyQueryService gLAccountCurrencyQueryService = new GLAccountCurrencyQueryService(account.Tenant);
+            return gLAccountCurrencyQueryService.GetEntityByGLAccountId(account.Id, account.Tenant);
         }
         private void CheckContactFeature(string partnerTypeId)
         {
