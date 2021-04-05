@@ -33,16 +33,17 @@ function AssertPutTenant() {
   BaseAssertion.AssertStatusCode(RequestAliases.PutTenant, 200);
 }
 
-export function ValidateDateFormat(dateFormat: string) {
-  var todayDate = new Date
+export function ValidateDateFormat(dateFormat: string , timeZoneRegion:string) {
+  var todayDate = new Date().toLocaleDateString("en-US", { timeZone: timeZoneRegion })
   cy.get(BDDSpecialCasesSelectors.HAWBDate).should(BaseSelectors.HaveValue, FormateTheDate(todayDate, dateFormat))
 }
 
-function FormateTheDate(date: Date, format: string) {
+function FormateTheDate(date: string, format: string) {
   var DateFormat
-  var dd = date.getUTCDate().toString();
-  var mm = (date.getUTCMonth() + 1).toString();
-  var yyyy = date.getFullYear().toString();
+  var Datelist = date.split("/");
+  var dd = Datelist[1];
+  var mm = Datelist[0]
+  var yyyy = Datelist[2]
 
   if (Number(dd) < 10) {
     dd = "0" + dd;
