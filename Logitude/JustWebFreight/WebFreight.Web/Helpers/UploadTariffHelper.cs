@@ -1940,12 +1940,14 @@ namespace WebFreight.Web.Helpers
                         {
                             newExcelLine.FromPort = port;
                             newExcelLine.ToPort = excelLine.ToPort;
+                            newExcelLine.ViaPort = excelLine.ViaPort;
                         }
 
                         else
                         {
                             newExcelLine.FromPort = excelLine.FromPort;
                             newExcelLine.ToPort = port;
+                            newExcelLine.ViaPort = excelLine.ViaPort;
                         }
 
                         routs.Add(newExcelLine);
