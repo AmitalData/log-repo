@@ -23,7 +23,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
         {
             BankAccountCustomDataMapping bankAccountCustomDataMapping = new BankAccountCustomDataMapping();
             bankAccountCustomDataMapping.PMToPOCO(entityPM, entityPOCO, this.CustomMappedPOCOProperties);
-            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
             BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert);
             entityPOCO.SearchFields = entityPM.SearchFields;
         }
@@ -34,7 +33,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             bankAccountCustomDataMapping.POCOToPM(entityPM, entityPOCO, this.CustomMappedPMProperties);
         }
 
-        private void BuildSearchFields(BankAccountPM entityPM, BankAccount entityPOCO, bool p)
+        private void BuildSearchFields(BankAccountPM entityPM, BankAccount entityPOCO, bool isInsert)
         {
             string searchFields = "";
             if (!string.IsNullOrEmpty(entityPM.LocalName))
@@ -55,31 +54,31 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             }
 
 
-            if (!string.IsNullOrEmpty(entityPM.GLAccountNumber))
-            {
-                MethodHelper.AddToSearchFields(ref searchFields, entityPM.GLAccountNumber);
-            }
-            else
+            if (entityPM.GLAccountId != entityPOCO.GLAccountId || isInsert)
             {
                 MethodHelper.AddToSearchFields(ref searchFields, GetGLAccountById(entityPM.GLAccountId, entityPM.Tenant)?.DisplayNumber);
             }
-
-            if (!string.IsNullOrEmpty(entityPM.TransferGLAcccountNumber))
-            {
-                MethodHelper.AddToSearchFields(ref searchFields, entityPM.TransferGLAcccountNumber);
-            }
             else
+            {
+                MethodHelper.AddToSearchFields(ref searchFields, entityPM.GLAccountNumber);
+            }
+
+            if (entityPM.TransferGLAcccountId != entityPOCO.TransferGLAcccountId || isInsert)
             {
                 MethodHelper.AddToSearchFields(ref searchFields, GetGLAccountById(entityPM.TransferGLAcccountId, entityPM.Tenant)?.DisplayNumber);
             }
-
-            if (!string.IsNullOrEmpty(entityPM.DeferedGLAccountNumber)) 
+            else
             {
-                MethodHelper.AddToSearchFields(ref searchFields, entityPM.DeferedGLAccountNumber); 
+                MethodHelper.AddToSearchFields(ref searchFields, entityPM.TransferGLAcccountNumber);
+            }
+
+            if (entityPM.DeferredGLAccountId != entityPOCO.DeferredGLAccountId || isInsert) 
+            {
+                MethodHelper.AddToSearchFields(ref searchFields, GetGLAccountById(entityPM.DeferredGLAccountId, entityPM.Tenant)?.DisplayNumber);
             }
             else
-            { 
-                MethodHelper.AddToSearchFields(ref searchFields, GetGLAccountById(entityPM.DeferredGLAccountId, entityPM.Tenant)?.DisplayNumber);
+            {
+                MethodHelper.AddToSearchFields(ref searchFields, entityPM.DeferedGLAccountNumber);
             }
 
 
