@@ -38,6 +38,8 @@
             this.mupsOpenReconcileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tESTADHOKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.adHookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.agingFixRepoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -117,7 +119,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mupsOpenReconcileToolStripMenuItem});
+            this.mupsOpenReconcileToolStripMenuItem,
+            this.adHookToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
@@ -136,16 +139,31 @@
             // loadFileToolStripMenuItem
             // 
             this.loadFileToolStripMenuItem.Name = "loadFileToolStripMenuItem";
-            this.loadFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadFileToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.loadFileToolStripMenuItem.Text = "LoadFile";
             this.loadFileToolStripMenuItem.Click += new System.EventHandler(this.loadFileToolStripMenuItem_Click);
             // 
             // tESTADHOKToolStripMenuItem
             // 
             this.tESTADHOKToolStripMenuItem.Name = "tESTADHOKToolStripMenuItem";
-            this.tESTADHOKToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tESTADHOKToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.tESTADHOKToolStripMenuItem.Text = "TESTADHOK";
             this.tESTADHOKToolStripMenuItem.Click += new System.EventHandler(this.tESTADHOKToolStripMenuItem_Click);
+            // 
+            // adHookToolStripMenuItem
+            // 
+            this.adHookToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.agingFixRepoToolStripMenuItem});
+            this.adHookToolStripMenuItem.Name = "adHookToolStripMenuItem";
+            this.adHookToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
+            this.adHookToolStripMenuItem.Text = "AdHook";
+            // 
+            // agingFixRepoToolStripMenuItem
+            // 
+            this.agingFixRepoToolStripMenuItem.Name = "agingFixRepoToolStripMenuItem";
+            this.agingFixRepoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.agingFixRepoToolStripMenuItem.Text = "AgingFixRepo";
+            this.agingFixRepoToolStripMenuItem.Click += new System.EventHandler(this.agingFixRepoToolStripMenuItem_Click);
             // 
             // FormAccountingTester
             // 
@@ -179,6 +197,8 @@
         private System.Windows.Forms.ToolStripMenuItem mupsOpenReconcileToolStripMenuItem;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.ToolStripMenuItem loadFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem adHookToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem agingFixRepoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tESTADHOKToolStripMenuItem;
     }
 }

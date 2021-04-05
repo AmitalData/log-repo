@@ -343,7 +343,7 @@ namespace Logitude.Accounting.Data.Repositories
 
 
         public string GLAccountCurrencyId { get; set; }
-
+        public int TotalOpenTransactions { get;  set; }
     }
 
     public class CurrencySumOpenAmount

@@ -1,5 +1,6 @@
 ﻿using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.BL.CoreBL.BuildTenant.MumpsOpenReconcile;
+using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
@@ -8,6 +9,7 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Update.PatchDistribution;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,6 +32,7 @@ namespace Logitude.Update.SandBox
             TraceListener debugListener = new MyTraceListener(this.textBoxLogger);
             Debug.Listeners.Add(debugListener);
             LoggedContactResolver.RegisterLoggedContactUtil();
+
         }
 
         private void loadFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -123,6 +126,16 @@ namespace Logitude.Update.SandBox
             return;
             List<string> Last_journalBufferKeys = new List<string>();
             JournalApproveService.WorkWithoutQueue(95, "1-5818664", ref Last_journalBufferKeys);
+        }
+
+        private void agingFixRepoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            int tenant = 1;
+            string reconcileId = "1-100";
+
+            var agingReportRebulidTesterService = new AgingReportRebulidTesterService();
+            agingReportRebulidTesterService.RebulidReconcile(tenant, reconcileId);
         }
     }
 }
