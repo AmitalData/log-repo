@@ -37,9 +37,9 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.mupsOpenReconcileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tESTADHOKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adHookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.agingFixRepoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tESTADHOKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -139,9 +139,16 @@
             // loadFileToolStripMenuItem
             // 
             this.loadFileToolStripMenuItem.Name = "loadFileToolStripMenuItem";
-            this.loadFileToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.loadFileToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.loadFileToolStripMenuItem.Text = "LoadFile";
             this.loadFileToolStripMenuItem.Click += new System.EventHandler(this.loadFileToolStripMenuItem_Click);
+            // 
+            // tESTADHOKToolStripMenuItem
+            // 
+            this.tESTADHOKToolStripMenuItem.Name = "tESTADHOKToolStripMenuItem";
+            this.tESTADHOKToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.tESTADHOKToolStripMenuItem.Text = "TESTADHOK";
+            this.tESTADHOKToolStripMenuItem.Click += new System.EventHandler(this.tESTADHOKToolStripMenuItem_Click);
             // 
             // adHookToolStripMenuItem
             // 
@@ -157,14 +164,6 @@
             this.agingFixRepoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.agingFixRepoToolStripMenuItem.Text = "AgingFixRepo";
             this.agingFixRepoToolStripMenuItem.Click += new System.EventHandler(this.agingFixRepoToolStripMenuItem_Click);
-            // 
-            // FormAccountingTester
-            // tESTADHOKToolStripMenuItem
-            // 
-            this.tESTADHOKToolStripMenuItem.Name = "tESTADHOKToolStripMenuItem";
-            this.tESTADHOKToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.tESTADHOKToolStripMenuItem.Text = "TESTADHOK";
-            this.tESTADHOKToolStripMenuItem.Click += new System.EventHandler(this.tESTADHOKToolStripMenuItem_Click);
             // 
             // FormAccountingTester
             // 
