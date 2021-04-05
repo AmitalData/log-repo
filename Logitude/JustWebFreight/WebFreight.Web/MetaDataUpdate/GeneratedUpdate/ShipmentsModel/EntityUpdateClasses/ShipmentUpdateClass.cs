@@ -79,10 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-
-
-		public const string HashString = "a598f9a0289761622c9c3ae6ace249af";
-
+		public const string HashString = "9da9bee8ca2c585faca3bbbd541b9310";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -47307,7 +47304,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code =  "ONFA",
+                Code =  "ORFA",
                 EnglishName =  "On Forwarding Arrived",
                 LocalName =  "On Forwarding Arrived",
                 IsManualEntry =  false,

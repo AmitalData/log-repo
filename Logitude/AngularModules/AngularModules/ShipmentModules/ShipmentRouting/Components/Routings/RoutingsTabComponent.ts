@@ -152,7 +152,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             this.IsAddPreCarriageDisabled = true;
             this.IsAddOnCarriageDisabled = true;
 
-            if (this.EntityPM.PreForwardingFromPortId == null && this.EntityPM.PreForwardingToPortId == null) {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.PreForwardingFromPortId) && AppTool.IsNullOrEmpty(this.EntityPM.PreForwardingToPortId)) {
                 this.IsAddPreForwardingDisabled = false;
             }
 
@@ -160,7 +160,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 this.IsAddPreForwardingDisabled = true;
             }
 
-            if (this.EntityPM.OnForwardingFromPortId == null && this.EntityPM.OnForwardingToPortId == null) {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.OnForwardingFromPortId) && AppTool.IsNullOrEmpty(this.EntityPM.OnForwardingToPortId)) {
                 this.IsAddOnForwardingDisabled = false;
             }
 
@@ -173,7 +173,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             this.IsAddPreForwardingDisabled = true;
             this.IsAddOnForwardingDisabled = true;
 
-            if (this.EntityPM.PreCarriageFromPortId == null && this.EntityPM.PreCarriageToPortId == null) {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.PreCarriageFromPortId) && AppTool.IsNullOrEmpty(this.EntityPM.PreCarriageToPortId)) {
                 this.IsAddPreCarriageDisabled = false;
             }
 
@@ -181,7 +181,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 this.IsAddPreCarriageDisabled = true;
             }
 
-            if (this.EntityPM.OnCarriageFromPortId == null && this.EntityPM.OnCarriageToPortId == null) {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.OnCarriageFromPortId) && AppTool.IsNullOrEmpty(this.EntityPM.OnCarriageToPortId)) {
                 this.IsAddOnCarriageDisabled = false;
             }
 
