@@ -1828,7 +1828,6 @@ export class EditComponent implements OnDestroy {
     }
     LoadNextPreviousEntity_AfterCloseEditControl(selectedTab:any) {
         this.CurrentSession.RemoveEditComponent(this);
-        
         this.ngOnDestroy();
         var args: any = {};
         args.EntityId = this.NavigationIds[this.CurrentNavigatedIndex];
