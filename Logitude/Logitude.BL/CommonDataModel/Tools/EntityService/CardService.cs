@@ -159,7 +159,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 CardContactRepository.Remove(cardContact);
                 CardContactRepository.SubmitChanges();
             }
-            if(entityPM.PartnerTypeId== PartnerTypes.Customer || entityPM.PartnerTypeId == PartnerTypes.Vendor)
+            if((entityPM.PartnerTypeId== PartnerTypes.Customer || entityPM.PartnerTypeId == PartnerTypes.Vendor) && entityPM.GLAccountId !=null)
             {
                 HandleGLAccountCardData(Poco);              
             }
@@ -169,10 +169,16 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         public void HandleGLAccountCardData(Card card)
         {
             gLAccountCardDataService = new GLAccountCardDataService(card, tenant);
-            if (gLAccountCardDataService.cardGLaccount != null && Poco.GLAccountId!= null)
+            if (gLAccountCardDataService.cardGLaccount != null && card.GLAccountId!= null)
             {
                 bool GlAccountCardDataExists = CheckIfGlAccountCardDataExists();
+                if (GlAccountCardDataExists)
+                {
+                    gLAccountCardDataService.UpdateGLaccountCardsDara();
+                }
+                else { gLAccountCardDataService.CreateGLaccountCardsDara(); }
             }
+           
         }
         private bool CheckIfGlAccountCardDataExists()
         {

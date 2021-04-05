@@ -77,6 +77,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         private void UpdateGLAccount()
         {
             glaccount.CardsDataId = null;
+            glaccount.ChangeSetOp = ChangeSetOperation.Update;
             IAccountingContext accountingContext = AccountingContext.GetContext(authToken.Tenant);
             GLAccountUpdateService gLAccountCardsDataUpdateService = new GLAccountUpdateService(accountingContext, new Dictionary<string, IContext>(), authToken.Tenant);
             gLAccountCardsDataUpdateService.Update(glaccount, true);

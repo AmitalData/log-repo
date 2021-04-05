@@ -126,7 +126,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void SetGLAccountCardsData(GLAccountPM accountPM, GLAccountCardsDataPM gLAccountCardsDataPM)
         {
-            accountPM.CardsDataId = gLAccountCardsDataPM.Id;        
+            accountPM.CardsDataId = gLAccountCardsDataPM.Id;
+            cardGLaccount.CardsDataId = gLAccountCardsDataPM.Id;
         }
         private decimal? GetTotalOpenFilesAmount()
         {
