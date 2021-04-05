@@ -3744,6 +3744,8 @@ export class ShipmentGenerator {
 
     // Receivable/Payables VAT Amounts
     public CalculateReceivableVatAmount(shipmentReceivable: ShipmentReceivablePM) {
+        shipmentReceivable.VatAmountLocal = AppTool.Round(shipmentReceivable.TotalAmountLocal, 2);
+        shipmentReceivable.VatAmountProfit = AppTool.Round(shipmentReceivable.AmountInProfitCurrency, 2);
         if (!AppTool.IsNullOrEmpty(this.EntityPM.CustomerId)) {
             this.CalculateVatAmountFromCustomer(shipmentReceivable, this.EntityPM.CustomerId);
         }
@@ -3752,6 +3754,8 @@ export class ShipmentGenerator {
         }
     }
     public CalculatePayableVatAmount(shipmentPayable: ShipmentPayablePM) {
+        shipmentPayable.VatAmountLocal = AppTool.Round(shipmentPayable.ExpectedAmountLocal, 2);
+        shipmentPayable.VatAmountProfit = AppTool.Round(shipmentPayable.ExpectedAmountInProfitCurrency, 2);
         if (!AppTool.IsNullOrEmpty(shipmentPayable.VendorId)) {
             this.CalculateVatAmountFromVendor(shipmentPayable);
         }
@@ -3762,8 +3766,6 @@ export class ShipmentGenerator {
     private CalculateVatAmountFromVendor(shipmentPayable: ShipmentPayablePM) {
         var payableVatTypeId = null;
         var vendorId = shipmentPayable.VendorId;
-        shipmentPayable.VatAmountLocal = AppTool.Round(shipmentPayable.ExpectedAmountLocal, 2);
-        shipmentPayable.VatAmountProfit = AppTool.Round(shipmentPayable.ExpectedAmountInProfitCurrency, 2);
         this.cardListService.getSingle(vendorId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 payableVatTypeId = myResponse.Result.VatTypeId;
@@ -3807,8 +3809,6 @@ export class ShipmentGenerator {
     }
     private CalculateVatAmountFromCustomer(shipmentReceivable: ShipmentReceivablePM, customerId: string) {
         var receivableVatTypeId = null;
-        shipmentReceivable.VatAmountLocal = AppTool.Round(shipmentReceivable.TotalAmountLocal, 2);
-        shipmentReceivable.VatAmountProfit = AppTool.Round(shipmentReceivable.AmountInProfitCurrency, 2);
         this.cardListService.getSingle(customerId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 receivableVatTypeId = myResponse.Result.VatTypeId;
@@ -3855,27 +3855,36 @@ export class ShipmentGenerator {
         var myVatGroups = SessionLocator.AllVatTypesGroups.filter(f => f.GroupVATTypeId == vatTypeId);
         var vatAmountLocal = AppTool.Round(shipmentPayable.ExpectedAmountLocal, 2);
         var vatAmountProfit = AppTool.Round(shipmentPayable.ExpectedAmountInProfitCurrency, 2);
+        var vatAmountLocal_Total = vatAmountLocal;
+        var vatAmountProfit_Total = vatAmountProfit;
         myVatGroups.forEach(itemGroup => {
             var myPercentagePM = this.VatTypePercentages.filter(d => d.VatTypeId == itemGroup.SingleVATTypeId)[0];
             if (myPercentagePM != null) {
                 var vatTypePercentage = myPercentagePM.Percentage;
-                shipmentPayable.VatAmountLocal = vatAmountLocal + (shipmentPayable.ExpectedAmountLocal * vatTypePercentage / 100);
-                shipmentPayable.VatAmountProfit = vatAmountProfit + (shipmentPayable.ExpectedAmountInProfitCurrency * vatTypePercentage / 100);
+                vatAmountLocal_Total = vatAmountLocal_Total + (vatAmountLocal * vatTypePercentage / 100);
+                vatAmountProfit_Total = vatAmountProfit_Total + (vatAmountProfit * vatTypePercentage / 100);
             }
         });
+
+        shipmentPayable.VatAmountLocal = AppTool.Round(vatAmountLocal_Total, 2);
+        shipmentPayable.VatAmountProfit = AppTool.Round(vatAmountProfit_Total, 2);
     }
     private CalculateReceivableVatAmountInMultiVat_OpenLine(vatTypeId: string, shipmentReceivable: ShipmentReceivablePM) {
         var myVatGroups = SessionLocator.AllVatTypesGroups.filter(f => f.GroupVATTypeId == vatTypeId);
         var vatAmountLocal = AppTool.Round(shipmentReceivable.TotalAmountLocal, 2);
         var vatAmountProfit = AppTool.Round(shipmentReceivable.AmountInProfitCurrency, 2);
+        var vatAmountLocal_Total = vatAmountLocal;
+        var vatAmountProfit_Total = vatAmountProfit;
         myVatGroups.forEach(itemGroup => {
             var myPercentagePM = this.VatTypePercentages.filter(d => d.VatTypeId == itemGroup.SingleVATTypeId)[0];
             if (myPercentagePM != null) {
                 var vatTypePercentage = myPercentagePM.Percentage;
-                shipmentReceivable.VatAmountLocal = vatAmountLocal + AppTool.Round((shipmentReceivable.TotalAmountLocal * vatTypePercentage / 100), 2);
-                shipmentReceivable.VatAmountProfit = vatAmountProfit + AppTool.Round((shipmentReceivable.AmountInProfitCurrency * vatTypePercentage / 100), 2);
+                vatAmountLocal_Total = vatAmountLocal_Total + (vatAmountLocal * vatTypePercentage / 100);
+                vatAmountProfit_Total = vatAmountProfit_Total  + (vatAmountProfit * vatTypePercentage / 100);
             }
         });
+        shipmentReceivable.VatAmountLocal = AppTool.Round(vatAmountLocal_Total, 2);
+        shipmentReceivable.VatAmountProfit = AppTool.Round(vatAmountProfit_Total, 2);
     }
 }
 
