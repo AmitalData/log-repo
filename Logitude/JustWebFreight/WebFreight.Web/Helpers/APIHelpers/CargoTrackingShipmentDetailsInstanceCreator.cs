@@ -159,7 +159,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
         {
             AddNewMilestoneDataToMilestoneDatas(cargoTrackingShipment);
             List<CargoTrackingMilestoneList> CargoTrackingMilestoneList = GetCargoTrackingMilestoneList();
-            foreach (Milestone milestone in allMilestones)
+            foreach (Milestone milestone in allMilestones.OrderBy(m => m.Id))
             {
                 CreateMappedMilestoneDataInstance(CargoTrackingMilestoneList, milestone);
             }
@@ -209,8 +209,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 Code = getMilestoneCode(milestone.Id.ToString()),
                 Date = milestone.Date?.ToString("dd/MM/yyyy"),
                 Time = milestone.Date?.ToString("HH:mm"),
-                EstimationDate = milestone.EstimationDate?.ToString("dd/MM/yyyy"),
-                EstimationTime = milestone.EstimationDate?.ToString("HH:mm"),
+                EstimationDate = milestone.IsEstimation == true ? milestone.EstimationDate?.ToString("dd/MM/yyyy") : null,
+                EstimationTime = milestone.IsEstimation == true ? milestone.EstimationDate?.ToString("HH:mm") : null,
                 Remarks = milestone.Notes,
             };
         }

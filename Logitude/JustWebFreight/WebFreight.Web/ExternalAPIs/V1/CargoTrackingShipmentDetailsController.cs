@@ -70,7 +70,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
         }
         private HttpResponseMessage CreateResponseWithStringMessage(string message)
         {
-            if ( message == null) { return null; }
+            if ( message == null) { return Request.CreateResponse(HttpStatusCode.OK, "Successful response");}
             return Request.CreateResponse(HttpStatusCode.OK, message);
         }
 
