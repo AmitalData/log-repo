@@ -12,10 +12,10 @@ namespace Logitude.Customs.Data.EntityLists
    [DataContract]
    public partial class CourierPendingReasonList
    {
-   
-       [Key]
-       [DataMember]
+          [DataMember]
        public string Id  { get; set; }
+
+       [Key]
        [DataMember]
        public string Code  { get; set; }
        [DataMember]
