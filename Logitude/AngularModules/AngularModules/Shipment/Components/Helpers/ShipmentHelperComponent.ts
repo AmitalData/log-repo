@@ -290,7 +290,7 @@ export class ShipmentHelperComponent implements OnDestroy {
         if (!this.EntityPM.IsMultipleCommodities && AppTool.IsNullOrZero(this.EntityPM.AWBChargeRate)) {
             var airFreightCode = "AFT";
             var airFreightCharge = this.EntityPM.ShipmentPayables.filter(a => a.ChargesTypeCode == airFreightCode)[0];
-            if (airFreightCharge != null) {
+            if (airFreightCharge != null && this.ValidateCurrencyOfShipmentAWBPrintOnlies(airFreightCharge)) {
                 this.SetAWBFreightChargeFields(airFreightCharge);
             }
         }
@@ -300,6 +300,18 @@ export class ShipmentHelperComponent implements OnDestroy {
         this.EntityPM.AWBChargeRate = airFreightCharge.UnitPrice;
         this.EntityPM.AWBCurrencyId = airFreightCharge.CurrencyId;
         this.EntityPM.AWBChargeAmount = ShipmentTool.ComputeAWBChargeAmount(this.EntityPM);
+    }
+
+    private ValidateCurrencyOfShipmentAWBPrintOnlies(airFreightCharge) {
+        var isValid = true;
+        if(this.EntityPM.ShipmentAWBPrintOnlies != null) {
+            this.EntityPM.ShipmentAWBPrintOnlies.forEach(item => {
+                if (item.CurrencyId != airFreightCharge.CurrencyId) {
+                    isValid = false;
+                }
+            });
+        }
+        return isValid;
     }
 
     AWBImportButtonClicked() {

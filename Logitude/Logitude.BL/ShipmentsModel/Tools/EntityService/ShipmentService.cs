@@ -3274,12 +3274,28 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 var airFreightCode = "AFT";
                 var airFreightCharge =entityPM.ShipmentPayables.Where(a => a.ChargesTypeCode == airFreightCode).FirstOrDefault();
-                if (airFreightCharge != null)
+                if (airFreightCharge != null && ValidateCurrencyOfShipmentAWBPrintOnlies(airFreightCharge))
                 {
                     this.ComputeAWBChargeAmount(airFreightCharge);
                 }
             }
         }
+        private bool ValidateCurrencyOfShipmentAWBPrintOnlies(ShipmentPayablePM airFreightCharge)
+        {
+            var isValid = true;
+            if (entityPM.ShipmentAWBPrintOnlies != null)
+            {
+                foreach (var item in entityPM.ShipmentAWBPrintOnlies)
+                {
+                    if (item.CurrencyId != airFreightCharge.CurrencyId)
+                    {
+                        isValid = false;
+                    }
+                }
+            }
+            return isValid;
+        }
+
         private void ComputeAWBChargeAmount(ShipmentPayablePM airFreightCharge)
         {
             entityPM.AWBChargeRate = airFreightCharge.UnitPrice;
