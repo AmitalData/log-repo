@@ -1035,11 +1035,8 @@
     <Compile Include="Controllers\ShipmentsModel\DocumentApprovalController.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffVersionUploadedExcelViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffVersionUploadedExcelController.Generated.cs" />
-
     <Compile Include="Controllers\WebDomainControllers\PotentialAddressController.cs" />
-
     <Compile Include="DataContracts\AccountingPartnerApiFilters.cs" />
-
     <Compile Include="DataContracts\CargoTrackingBrandingDataRequest.cs" />
     <Compile Include="DataContracts\CargoTrackingBrandingData.cs" />
     <Compile Include="DataContracts\CreateDocumentOutArgs.cs" />
@@ -3445,7 +3442,6 @@
     <Content Include="Monitoring\SignupLeadMonitoringPage.aspx" />
     <Content Include="Monitoring\StorageBackup.aspx" />
     <Content Include="QuickbooksOnlineAuth2.aspx" />
-    <Content Include="QuickbooksOnline.aspx" />
     <EmbeddedResource Include="Properties\webfreight.web.dll.licenses" />
     <Content Include="ReportsWebServices\APInvoiceWebService.asmx" />
     <None Include="Properties\PublishProfiles\sendgrid.pubxml" />
@@ -4953,7 +4949,6 @@
     <Content Include="WebServices\PerformanceLogService.asmx" />
     <Content Include="WebServices\QueueMessagesWebService.asmx" />
     <Content Include="WebServices\QuickbooksIntegrationWebService.asmx" />
-    <Content Include="WebServices\QuickBooksTransferWebService.asmx" />
     <Content Include="WebServices\QuoteTemplateWebService.asmx" />
     <Content Include="WebServices\SharedLogisticsUpdateWebService.asmx" />
     <Content Include="WebServices\ShipmentToCustomsWebService.asmx" />
@@ -5666,12 +5661,6 @@
     </Compile>
     <Compile Include="QuickbooksOnlineAuth2.aspx.designer.cs">
       <DependentUpon>QuickbooksOnlineAuth2.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="QuickbooksOnline.aspx.cs">
-      <DependentUpon>QuickbooksOnline.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="QuickbooksOnline.aspx.designer.cs">
-      <DependentUpon>QuickbooksOnline.aspx</DependentUpon>
     </Compile>
     <Compile Include="QuoteModel\DomainServices\QuotesDomainService.QuoteClosingReason.cs" />
     <Compile Include="QuoteModel\DomainServices\QuotesDomainService.QuoteDocumentVersion.cs" />
@@ -6845,10 +6834,6 @@
     </Compile>
     <Compile Include="WebServices\QuickbooksIntegrationWebService.asmx.cs">
       <DependentUpon>QuickbooksIntegrationWebService.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="WebServices\QuickBooksTransferWebService.asmx.cs">
-      <DependentUpon>QuickBooksTransferWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebServices\QuoteTemplateWebService.asmx.cs">

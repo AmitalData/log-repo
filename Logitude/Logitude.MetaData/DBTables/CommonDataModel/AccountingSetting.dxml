@@ -19,20 +19,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="QBOAccessToken"
-    Type="nvarchar"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="QBOAccessTokenSecret"
-    Type="nvarchar"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="AccountingSystemCode"
     Type="varchar"
     Size="4">
