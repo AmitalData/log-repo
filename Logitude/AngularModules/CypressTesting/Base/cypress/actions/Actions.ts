@@ -132,11 +132,11 @@ export function SubstractDaysFromDate(Days: number) {
 }
 
 export function AddDaysToTodayDate(days: number) {
-    var todayDate = new Date();
-    var futureDate = new Date();
+    var todayDate = new Date().toLocaleDateString("en-US", { timeZone: "Asia/Jerusalem"})
+    var todayDateList = todayDate.split("/")
 
-    futureDate.setDate(todayDate.getDate() + days);
-    return FormateTheDate(futureDate)
+    todayDateList[1] = (Number(todayDateList[1]) + days).toString();
+    return FormateTheDateString(todayDateList)
 }
 
 export function GetDatepicker(dateString: string): Datepicker{
@@ -203,6 +203,23 @@ function NavigateToAccountTab(ExternalIDName: string, AccountingSelector: string
         cy.DefineRequestWait(RestAPI.GET, AccountingURLs.EntityResourceAccountingPeriod, RequestAliases.EntityResourceAccountingPeriod)
         BaseAssertion.AssertStatusCode(RequestAliases.EntityResourceAccountingPeriod, 200)
     }
+}
+
+function FormateTheDateString(dateList: string[]) {
+    var DateFormat
+    var dd = dateList[1].toString();
+    var mm = dateList[0].toString();
+    var yyyy = dateList[2].toString();
+
+    if (Number(dd) < 10) {
+        dd = "0" + dd;
+    }
+    if (Number(mm) < 10) {
+        mm = "0" + mm;
+    }
+
+    DateFormat = dd + '/' + mm + '/' + yyyy;
+    return DateFormat;
 }
 
 function FormateTheDate(date: Date) {
