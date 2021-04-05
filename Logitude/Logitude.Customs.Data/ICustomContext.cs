@@ -202,6 +202,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ExportDeclarationClosingData> ExportDeclarationClosingDatas { get; }
 		 IDbSet<ExportDeliveryDocumentMessage> ExportDeliveryDocumentMessages { get; }
 		 IDbSet<ExporterRoleType> ExporterRoleTypes { get; }
+		 IDbSet<ExportStorge> ExportStorges { get; }
 		 IDbSet<FacilitationType> FacilitationTypes { get; }
 		 IDbSet<FaultInspectionType> FaultInspectionTypes { get; }
 		 IDbSet<FclLclCode> FclLclCodes { get; }
