@@ -382,6 +382,9 @@ export class TariffSearchSummary {
     SellerName: string;
     ViaPortId: string;
     ViaPortCode: string;
+    ViaPortName: string;
+    ViaPortCountryCode: string;
+    ViaPortCountryName: string;
     CurrencyCode: string;
     CurrencyId: string;
     VersionId: string;

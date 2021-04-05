@@ -1366,6 +1366,9 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     PortPM viaPort = PortQuery.GetSinglePort(tenant, tariffLine.ViaPortId, true);
                     tariffSummary.ViaPortId = tariffLine.ViaPortId;
                     tariffSummary.ViaPortCode = viaPort != null ? viaPort.Code : "";
+                    tariffSummary.ViaPortName = viaPort != null ? viaPort.EnglishName : "";
+                    this.tariffsSummary.ViaPortCountryCode = viaPort != null ? viaPort.CountryCode : "";
+                    this.tariffsSummary.ViaPortCountryName = viaPort != null ? viaPort.CountryName : "";
                 }
             }
             return tariffSummary;
