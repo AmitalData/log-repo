@@ -129,7 +129,7 @@ namespace Unifreight.Data.AmitalModel
             }
             //else
             //{
-            //    if (LogitudeSettings.GetLogitudeCustomsSettingsMInject== null)
+            //    if (LogitudeSettings.GetLogitudeCustomsSettingsMInject == null)
             //    {
             //        throw new Exception("LogitudeSettings.GetdbConnectionInfoFromTenantInject is null ,Please Init ");
             //    }
@@ -137,25 +137,25 @@ namespace Unifreight.Data.AmitalModel
             //    dbConnectionInfo = myFuncGetConn(tenantSeed).UnfConnectionString;
             //    return GetContextByDBInfo(dbConnectionInfo, tenantSeed);
             //}
-            
 
 
-            
+
+
         }
-        //public static AmitalContext GetContextByDBInfo(string dbConnectionInfo, int tenantSeed)
-        //{
-        //    OracleConnectionStringBuilder oraCSB = DbContextBaseUtil.GetOracleConStrBuilder(dbConnectionInfo);
-        //    OracleConnection myConnection = new OracleConnection(oraCSB.ConnectionString);
-        //    //config.Workarounds.DisableQuoting = true;
+        public static AmitalContext GetContextByDBInfo(string dbConnectionInfo, int tenantSeed)
+        {
+            OracleConnectionStringBuilder oraCSB = DbContextBaseUtil.GetOracleConStrBuilder(dbConnectionInfo);
+            OracleConnection myConnection = new OracleConnection(oraCSB.ConnectionString);
+            //config.Workarounds.DisableQuoting = true;
 
-        //    //DbConnection con = new Devart.Data.Oracle.OracleConnection("Data Source=srv64bit;User Id=devart;Password=devart;");
+            //DbConnection con = new Devart.Data.Oracle.OracleConnection("Data Source=srv64bit;User Id=devart;Password=devart;");
 
 
-        //    var context = new AmitalContext(myConnection,tenantSeed);
-        //    return context;
-        //}
+            var context = Create( tenantSeed, myConnection);
+            return context;
+        }
 
-    
+
 #if false
         public bool DisableQuoting
         {
@@ -170,15 +170,15 @@ namespace Unifreight.Data.AmitalModel
         }
         
 #endif
-        
-        
+
+
         //Dictionary<string, System.Collections.IList> CacheWrapper = new Dictionary<string, System.Collections.IList>();
         //protected override void Dispose(bool disposing)
         //{
         //    foreach (var item in CacheWrapper)
         //    {
         //        item.Value.Clear();
-                
+
         //    }
         //    CacheWrapper.Clear(); 
 
