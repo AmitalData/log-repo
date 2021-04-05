@@ -641,27 +641,25 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     GetInsuranceAsModificationItemModel() {
         var item = new SupplierInvoiceModificationPM(this.EntityPM);
         item.TypeName = "ביטוח";
-        this.insuranceAmountEnabled = true;
         item.Amount = this.EntityPM.InsuranceAmount;
-        this.InsuranceAmount = this.EntityPM.InsuranceAmount;
         item.CurrencyTypeCode = this.EntityPM.InsruanceCurrencyTypeCode;
-        this.InsruanceCurrencyTypeCode = this.EntityPM.InsruanceCurrencyTypeCode;
         item.CurrencyTypeName = this.EntityPM.InsruanceCurrencyTypeCodeName;
+        item.IsDirty = false;
         return item;
     }
 
     GetFreightAsModificationItemModel() {
-        var supplierInvoiceModificationPM = new SupplierInvoiceModificationPM(this.EntityPM);
+        var item = new SupplierInvoiceModificationPM(this.EntityPM);
         if (this.EntityPM.SupplierInvoiceFreightAmounts.length != 0) {
             if (this.EntityPM.TotalFreightInFreightCurrency > 0) {
-                supplierInvoiceModificationPM.Amount = this.EntityPM.SupplierInvoiceFreightAmounts[0].Amount;
+                item.Amount = this.EntityPM.SupplierInvoiceFreightAmounts[0].Amount;
             }
-            supplierInvoiceModificationPM.CurrencyTypeCode = this.EntityPM.SupplierInvoiceFreightAmounts[0].CurrencyTypeCode;
-            supplierInvoiceModificationPM.CurrencyTypeName = this.EntityPM.SupplierInvoiceFreightAmounts[0].CurrencyTypeName;
+            item.CurrencyTypeCode = this.EntityPM.SupplierInvoiceFreightAmounts[0].CurrencyTypeCode;
+            item.CurrencyTypeName = this.EntityPM.SupplierInvoiceFreightAmounts[0].CurrencyTypeName;
         }
-        supplierInvoiceModificationPM.IsDirty = false;
-        supplierInvoiceModificationPM.TypeName = "הובלה";
-        return supplierInvoiceModificationPM;
+        item.IsDirty = false;
+        item.TypeName = "הובלה";
+        return item;
     }
 
     FindModificationByCode(code: string) {
@@ -1565,36 +1563,91 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
         var _CustomsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
         _CustomsSettingExtendedListService.GetDefault("ISRAEL", "NGG_INS_IMPORT", "NON", this.declarationPM.CustomerCode, SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
-            let obj = response.Result;
-            var firstInvoice: SupplierInvoicePM = this.Parent.Get1SupplierInvoice();
+            if (response != null) {
+                let obj = response.Result;
+                var firstInvoice: SupplierInvoicePM = this.Parent.Get1SupplierInvoice();
 
-            if (obj) {
-                let DefaultValue = obj['DefaultValue'];
-                if (!AppTool.IsNullOrEmpty(DefaultValue) && DefaultValue == "Y" && this.IncotermCode == 'CIF' && this.IsFirstInvoice()) {
-                    this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
-                    this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
-                    this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
-                    return;
+                if (obj) {
+                    let DefaultValue = obj['DefaultValue'];
+                    if (!AppTool.IsNullOrEmpty(DefaultValue) && DefaultValue == "Y" && this.IncotermCode == 'CIF' && this.IsFirstInvoice()) {
+                        this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
+                        this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
+                        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
+                        return;
 
+                    }
                 }
-            }
 
 
-            if (this.EntityPM != null && this.EntityPM.IncotermCode != null) {
-                //#region for insurance
-                if (!this.IsFirstInvoice()) {
+                if (this.EntityPM != null && this.EntityPM.IncotermCode != null) {
+                    //#region for insurance
+                    if (!this.IsFirstInvoice()) {
 
-                    this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
-                    this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
-                    this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
-                }
-                else {
+                        this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+                        this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+                        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+                    }
+                    else {
 
-                    if (this.EntityPM.IncotermCode.startsWith("D") || this.EntityPM.IncotermCode == "CIF" || this.EntityPM.IncotermCode == "CIP") {
+                        if (this.EntityPM.IncotermCode.startsWith("D") || this.EntityPM.IncotermCode == "CIF" || this.EntityPM.IncotermCode == "CIP") {
 
-                        if (this.incotermChanged) {
-                            if (this.InsuranceAmount == null && this.InsurancePercentage == null && this.InsruanceCurrencyTypeCode == null) {
+                            if (this.incotermChanged) {
+                                if (this.InsuranceAmount == null && this.InsurancePercentage == null && this.InsruanceCurrencyTypeCode == null) {
 
+                                    if (this.InsuranceAmount != null) {
+                                        this.InsuranceAmount = null;
+                                    }
+                                    if (this.InsruanceCurrencyTypeCode != null) {
+                                        this.InsruanceCurrencyTypeCode = null;
+                                    }
+
+                                    if (this.InsurancePercentage != null) {
+                                        this.InsurancePercentage = null;
+                                    }
+
+                                    this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+                                    this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+                                    this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+                                }
+                                else {
+
+                                    this.timerToken = setTimeout(() => {
+                                        var confirm = new ConfirmWindow();
+                                        confirm.Cancel = true;
+                                        confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                                        confirm.ShowNoButton = true;
+                                        confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DeleteAmounts"));
+                                        confirm.WindowClosed.subscribe((event: any) => {
+                                            if (confirm.Yes) {
+                                                if (this.InsuranceAmount != null) {
+                                                    this.InsuranceAmount = null;
+                                                }
+                                                if (this.InsruanceCurrencyTypeCode != null) {
+                                                    this.InsruanceCurrencyTypeCode = null;
+                                                }
+
+                                                if (this.InsurancePercentage != null) {
+                                                    this.InsurancePercentage = null;
+                                                }
+
+                                                this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+                                                this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+                                                this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+                                            }
+
+                                            else {
+                                                this.allowToDelete = false;
+                                                this.IncotermCode = this.oldIncoterm;
+                                            }
+
+
+                                        });
+                                    }, 200);
+
+                                }
+                            }
+
+                            else {
                                 if (this.InsuranceAmount != null) {
                                     this.InsuranceAmount = null;
                                 }
@@ -1606,150 +1659,96 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                                     this.InsurancePercentage = null;
                                 }
 
+
                                 this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
                                 this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
                                 this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
                             }
+                        }
+                        else if (this.EntityPM.IncotermCode == "CPT" || this.EntityPM.IncotermCode == "CFR") {
+                            this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
+                            if (this.InsurancePercentage == null) {
+
+                                this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
+                                this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
+
+                                if (this.InsruanceCurrencyTypeCode != null || this.InsuranceAmount != null) {
+                                    this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+                                }
+                            }
                             else {
 
-                                this.timerToken = setTimeout(() => {
-                                    var confirm = new ConfirmWindow();
-                                    confirm.Cancel = true;
-                                    confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                                    confirm.ShowNoButton = true;
-                                    confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DeleteAmounts"));
-                                    confirm.WindowClosed.subscribe((event: any) => {
-                                        if (confirm.Yes) {
-                                            if (this.InsuranceAmount != null) {
-                                                this.InsuranceAmount = null;
-                                            }
-                                            if (this.InsruanceCurrencyTypeCode != null) {
-                                                this.InsruanceCurrencyTypeCode = null;
-                                            }
-
-                                            if (this.InsurancePercentage != null) {
-                                                this.InsurancePercentage = null;
-                                            }
-
-                                            this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
-                                            this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
-                                            this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
-                                        }
-
-                                        else {
-                                            this.allowToDelete = false;
-                                            this.IncotermCode = this.oldIncoterm;
-                                        }
-
-
-                                    });
-                                }, 200);
+                                this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+                                this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
 
                             }
                         }
+                        else if (this.EntityPM.IncotermCode.startsWith("E") || this.EntityPM.IncotermCode.startsWith("F")) {
 
+                            this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
+                            if (this.InsurancePercentage == null) {
+
+                                this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
+                                this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
+
+
+                                if (this.InsruanceCurrencyTypeCode != null || this.InsuranceAmount != null) {
+                                    this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+                                }
+                            }
+                            else {
+                                this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+                                this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+
+                            }
+                        }
                         else {
-                            if (this.InsuranceAmount != null) {
-                                this.InsuranceAmount = null;
-                            }
-                            if (this.InsruanceCurrencyTypeCode != null) {
-                                this.InsruanceCurrencyTypeCode = null;
-                            }
-
                             if (this.InsurancePercentage != null) {
-                                this.InsurancePercentage = null;
+                                this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+                                this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
                             }
-
-
-                            this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
-                            this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
-                            this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
-                        }
-                    }
-                    else if (this.EntityPM.IncotermCode == "CPT" || this.EntityPM.IncotermCode == "CFR") {
-                        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
-                        if (this.InsurancePercentage == null) {
-
-                            this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
-                            this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
-
-                            if (this.InsruanceCurrencyTypeCode != null || this.InsuranceAmount != null) {
+                            else if (this.InsruanceCurrencyTypeCode != null || this.InsuranceAmount != null) {
                                 this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
                             }
-                        }
-                        else {
-
-                            this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
-                            this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
-
-                        }
-                    }
-                    else if (this.EntityPM.IncotermCode.startsWith("E") || this.EntityPM.IncotermCode.startsWith("F")) {
-
-                        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
-                        if (this.InsurancePercentage == null) {
-
-                            this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
-                            this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
-
-
-                            if (this.InsruanceCurrencyTypeCode != null || this.InsuranceAmount != null) {
-                                this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+                            else {
+                                this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
+                                this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
+                                this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
                             }
                         }
-                        else {
-                            this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
-                            this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+                    }
 
-                        }
-                    }
-                    else {
-                        if (this.InsurancePercentage != null) {
-                            this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
-                            this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
-                        }
-                        else if (this.InsruanceCurrencyTypeCode != null || this.InsuranceAmount != null) {
-                            this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
-                        }
-                        else {
-                            this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
-                            this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
-                            this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
-                        }
-                    }
                 }
-
-            }
-            else {
-                if (!this.IsFirstInvoice()) {
-                    this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
-                    this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
-                    this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
-                }
-                else if (!(this.EntityPM.SequenceNumeric != 1 && this.EntityPM.SequenceNumeric != null) || (this.isNewEntity && this.declarationPM.SupplierInvoices.length > 0)) {
-                    this.AddAmountEnabled = true;
-                    this.FreightAmountGridEnabled = true;
-                    this.UIProperties.SetEnabled("FreightCurrencyTypeCode", "Customs.SupplierInvoice", true);
-
-                    if (this.InsurancePercentage == null) {
-                        this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
-                        this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
-                        if (this.InsruanceCurrencyTypeCode != null || this.InsuranceAmount != null) {
-                            this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
-                        }
-                        else {
-                            this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
-                        }
-                    }
-                    else {
+                else {
+                    if (!this.IsFirstInvoice()) {
+                        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
                         this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
                         this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
                     }
+                    else if (!(this.EntityPM.SequenceNumeric != 1 && this.EntityPM.SequenceNumeric != null) || (this.isNewEntity && this.declarationPM.SupplierInvoices.length > 0)) {
+                        this.AddAmountEnabled = true;
+                        this.FreightAmountGridEnabled = true;
+                        this.UIProperties.SetEnabled("FreightCurrencyTypeCode", "Customs.SupplierInvoice", true);
+
+                        if (this.InsurancePercentage == null) {
+                            this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
+                            this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
+                            if (this.InsruanceCurrencyTypeCode != null || this.InsuranceAmount != null) {
+                                this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+                            }
+                            else {
+                                this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
+                            }
+                        }
+                        else {
+                            this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+                            this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+                        }
+                    }
                 }
+
+
             }
-
-
-
         });
     }
 
@@ -2276,7 +2275,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     public filters: ApiQueryFilters = null;
     BuildFreightAmountsList() {
+        if (this.AmountList != null) {
             this.AmountList.Clear();
+        }
 
         for (var i = 0; i < this.EntityPM.SupplierInvoiceFreightAmounts.length; i++) {
 
