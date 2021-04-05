@@ -28,6 +28,7 @@ Given("the user open {string} in maintenance menu", (maintenanceItemName) => {
 
 Given("local settings with the following details", (dataTable) => {
     localSettingsDetails = Assists.CreateInstance<LocalSettingsDetails>(dataTable, true);
+    localSettingsDetails = MapTimeZoneToCountry(localSettingsDetails);
     Actions.FillLocalSettingsDetails(localSettingsDetails);
 });
 
@@ -73,7 +74,7 @@ When("fill {string} as HAWB date", (date) => {
 });
 
 Then("the date format should be {string}", (dateFormat) => {
-    Actions.ValidateDateFormat(dateFormat);
+    Actions.ValidateDateFormat(dateFormat , localSettingsDetails.TimeZoneRegion);
 });
 //#endregion
 
@@ -81,7 +82,6 @@ Then("the date format should be {string}", (dateFormat) => {
 Given("the user update the shipment", () => {
     ShipmentActions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
-    localSettingsDetails = MapTimeZoneToCountry(localSettingsDetails);
     LocalSettingsDetails.UpdateTime = new Date().toLocaleTimeString("en-US", { timeZone: localSettingsDetails.TimeZoneRegion })
 });
 
