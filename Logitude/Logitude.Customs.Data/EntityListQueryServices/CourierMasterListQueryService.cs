@@ -10,9 +10,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
-using Logitude.Customs.Data.EntityMapping;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
 {
@@ -37,7 +37,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 
 );
-       
+
 
 
             IQueryable<CourierMasterList> query = (from a in iQueryable.Include("CustomsAirline").Include("MAWBType").Include("OriginPort").Include("GatewayPort").Include("Card")
@@ -85,7 +85,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        EstimatedArrivalColor =
                                                        a.EstimatedArrivalDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(a.EstimatedArrivalDate.Value) == today ? "Blue" :
                                                        (System.Data.Entity.DbFunctions.TruncateTime(a.EstimatedArrivalDate.Value) < today ? "Red" : "Black")) : "Black",
-                                                       OpenDeclarations=a.OpenDeclarations,
+                                                       OpenDeclarations = a.OpenDeclarations,
                                                    });
 
             return query;
@@ -129,23 +129,22 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             public int IsSuspendedDeclarations { get; set; }
         }
 
-        public List<CourierMasterList> AddCalcFields(List<CourierMasterList> entityLists, string courierPendingReasonPM_900_Id, string courierPendingReasonPM_902_Id)
+        public List<CourierMasterList> AddCalcFields(List<CourierMasterList> entityLists)
         {
-
             var today = DateTime.Now.Date;
             var ids = entityLists.Select(x => x.Id).ToList();
             var qJoin =
 (from p in context.CourierDeclarations
-join dec in context.Declarations
-                    on p.DeclarationId equals dec.Id
-                    into DecJoin
-from myDeclarations in DecJoin
-join sts1 in context.DeclarationCourierStatuses
-                    on myDeclarations.Id equals sts1.DeclarationId
-                    into DeclarationCourierStatusesJoin
-from myDeclarationCourierStatuses in DeclarationCourierStatusesJoin
-where ids.Contains(p.CourierMasterId)
-select new { p.CourierMasterId, myDeclarations, myDeclarationCourierStatuses });//.ToList();
+ join dec in context.Declarations
+                     on p.DeclarationId equals dec.Id
+                     into DecJoin
+ from myDeclarations in DecJoin
+ join sts1 in context.DeclarationCourierStatuses
+                     on myDeclarations.Id equals sts1.DeclarationId
+                     into DeclarationCourierStatusesJoin
+ from myDeclarationCourierStatuses in DeclarationCourierStatusesJoin
+ where ids.Contains(p.CourierMasterId)
+ select new { p.CourierMasterId, myDeclarations, myDeclarationCourierStatuses });//.ToList();
 
             var qJoinList = qJoin.ToList();
 
@@ -158,17 +157,17 @@ select new { p.CourierMasterId, myDeclarations, myDeclarationCourierStatuses });
                       CourierMasterId = g.Key,
                       IsClosedForFollowUp0 = g.Count(r => r.myDeclarationCourierStatuses.IsClosedForFollowUp == false),
                       P900 = g.Count(
-                          r => r.myDeclarationCourierStatuses.CourierPendingReasonList != null && r.myDeclarationCourierStatuses.CourierPendingReasonList.Contains(courierPendingReasonPM_900_Id)),
+                          r => r.myDeclarationCourierStatuses.CourierPendingReasonList != null && r.myDeclarationCourierStatuses.CourierPendingReasonList.Contains("900")),
                       IsCourierMissingClassification = g.Count(r => r.myDeclarationCourierStatuses.IsCourierMissingClassification == true),
                       IsMissingImporterId = g.Count(
-                          r => (r.myDeclarationCourierStatuses.CourierPendingReasonList != null && r.myDeclarationCourierStatuses.CourierPendingReasonList.Contains(courierPendingReasonPM_902_Id))
+                          r => (r.myDeclarationCourierStatuses.CourierPendingReasonList != null && r.myDeclarationCourierStatuses.CourierPendingReasonList.Contains("902"))
                           && r.myDeclarationCourierStatuses.IsClosedForFollowUp == false),
                       IsPendingCustoms = g.Count(r => r.myDeclarations.CourierCustomStatusCode == "2" && r.myDeclarationCourierStatuses.IsClosedForFollowUp == false),
                       IsSuspendedDeclarations = g.Count(r => r.myDeclarationCourierStatuses.IsClosedForFollowUp == false && r.myDeclarations.CourierCustomStatusCode == "2")
                   }
                   ).ToList();
 
- 
+
 
             entityLists = entityLists.Select(a => new CourierMasterList()
             {
@@ -185,7 +184,7 @@ select new { p.CourierMasterId, myDeclarations, myDeclarationCourierStatuses });
                 IsOpen = a.IsOpen,
                 IsCancelled = a.IsCancelled,
                 EstimatedArrivalDate = a.EstimatedArrivalDate,
-                 GatewayPortName = a.GatewayPortName,
+                GatewayPortName = a.GatewayPortName,
                 OriginPortName = a.OriginPortName,
                 CreateDateTime = a.CreateDateTime,
                 CreatedByUserName = a.CreatedByUserName,
@@ -216,7 +215,7 @@ select new { p.CourierMasterId, myDeclarations, myDeclarationCourierStatuses });
                 CalcPendingCustoms = qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id) != null ? qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).IsPendingCustoms : 0,
                 CalcSuspendedDeclarations = qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id) != null ? qMyJoin.FirstOrDefault(c => c.CourierMasterId == a.Id).IsSuspendedDeclarations : 0,
             }).ToList();
- 
+
             return entityLists;
         }
     }

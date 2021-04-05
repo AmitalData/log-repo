@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CourierPendingReasonUpdateClass
    {  		
-		public const string HashString = "2baf658eb90539aac81f5d4d7fb6f455";
+		public const string HashString = "53665bb472edfccabba2dc83b298eef4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -100,7 +100,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsNewWizard =  true,
 			      				    LookUp1 =  "Code",
 			      				    LookUp2 =  "LocalName",
-			      				    KeyPropertyPath =  "Id",
+			      				    KeyPropertyPath =  "Code",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  true,
@@ -111,7 +111,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  true,
 			      				    EnableEditFromLOV =  false,
-			      				    SortingByObjectField =  "Id",
+			      				    SortingByObjectField =  "Code",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
