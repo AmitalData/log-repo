@@ -452,7 +452,6 @@
     <Compile Include="MessagesTransmissionLogWorkerRole.cs" />
     <Compile Include="MobileNotificationWorkerRole.cs" />
     <Compile Include="QuckbooksOnlineWorkerRole.cs" />
-    <Compile Include="QuickBooksWorkerRole.cs" />
     <Compile Include="QuoteAutomaticallyClosing.cs" />
     <Compile Include="ReportExecutionLogWorkerRole.cs" />
     <Compile Include="ResharedAgentDocumentWR.cs" />

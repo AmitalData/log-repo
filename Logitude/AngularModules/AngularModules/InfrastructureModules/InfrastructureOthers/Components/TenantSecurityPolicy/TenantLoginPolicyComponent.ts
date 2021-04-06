@@ -52,11 +52,10 @@ export class TenantLoginPolicyComponent extends BaseComponent {
 
         var type1: EnabledForType = new EnabledForType("ALL", "All Users");
         this.EnabledForTypesList.push(type1);
-        if (this.IsHaveAdvancedLoginPolicyFeature()) {
+       
         var type2: EnabledForType = new EnabledForType("SPCF", "Specific Users");
             this.EnabledForTypesList.push(type2);
 
-        }
 
         this.LoginPolicyLists = [];
         this.FillLoginPolicyLists();

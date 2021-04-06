@@ -6,7 +6,7 @@ export class RegexSelectors {
     public static readonly ShipmentEventTab= "li[id^='ShipmentTHEvents_']"
     public static readonly Shipment_GrossWeight= "input[id^='Shipment_GrossWeight_']"
     public static readonly ShipmentNumberInTitle= "div[data-cy^='ShipmentNumber']"
-
+    public static readonly RoutingDeliveryLeg='[data-cy^="Routing_Delivery"]'
     public static DirectionRadio(direction: string): string {
         return "input[id^='DirectionRadio_'][id$='" + ShipmentMapping.GetDirectionCode(direction) + "']";
     }
@@ -32,7 +32,7 @@ export class RegexSelectors {
     }
 
     public static AMANACMarkeShipmentAs(MarkAs: string, ShipmentNumber: string): string{
-        return "button[data-cy^=Mark" + MarkAs + "_" + ShipmentNumber + "]";
+        return "button[data-cy^=" + MarkAs + "_" + ShipmentNumber + "]";
     }
 
     public static AMANACShipmentNumber(ShipmentNumber: string): string{
@@ -113,5 +113,9 @@ export class RegexSelectors {
 
     public static PartnerBoxItem(partnerType: string): string{
         return "[data-cy='BoxItem_" + partnerType + "']";
+    }
+
+    public static HouseCheckBox(houseNumber: string): string{
+        return "[data-cy='CheckBox_" + houseNumber + "']";
     }
 }

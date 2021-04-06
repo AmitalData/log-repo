@@ -29,7 +29,7 @@
   <Column
     Name="Password"
     Type="varchar"
-    Size="60">
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>

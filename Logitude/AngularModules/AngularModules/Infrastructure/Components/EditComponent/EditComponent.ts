@@ -24,8 +24,7 @@ import { EditTabComponent } from './EditTabComponent';
 import { Subscription, TeardownLogic } from 'rxjs';//itzik
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
-import { IObjectTableTabsBuilder } from '../../../Infrastructure/Interface/IObjectTableTabsBuilder';
-import { ObjectTableTabBuilderService } from '../../Utilities/ObjectTableTabBuilderService';
+import { HeaderScreenDataResult } from '../../Interface/IHeaderScreenService';
 
 
 @Component({    
@@ -451,31 +450,54 @@ export class EditComponent implements OnDestroy {
         }
     }
 
+
+
+
+
+
+
+
     public HeaderScreenHeight: number = 65;
     public HeaderScreenRowHeight: number = 25;
     public HeaderScreenColumns: HeaderScreenColumn[] = [];
     public SavedWidthOfHeader: number = 0;
     public BuildHeaderScreen() {
 
-        var myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code.indexOf("HeaderScreen") != -1 &&  d.QuerySection == this.QuerySection)[0];
+        var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/MetaDataServices/HeaderScreenServices/" + this.GetObjectTableName() + "HeaderScreenService";
+        SessionLocator.DynamicLoader.GetInstance(myComponentPath, true).then((headerScreenService: any) => {
+            if (headerScreenService) {
+                let result: HeaderScreenDataResult  = headerScreenService.GetHeaderScreens({ ObjectTableId: this.ObjectTableId, EntityPM: this.EntityPM });
+                this.GenerateHeaderScreen(result.HeaderScreen, result.ObjectFields);
+            }
+            else {
+                this.BuildStandardHeaderScreen();
+            }
+
+        });
+
+    }
+
+    BuildStandardHeaderScreen() {
+
+        var myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code.indexOf("HeaderScreen") != -1 )[0];
 
         var myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === this.ObjectTableId);
 
         if (this.ObjectTableName == "Shipment") {
             if (this.EntityPM.ShipmentLevelCode == "C") {
-                this._entityResourceService.getEntityResourceByTableName("Master", 0).subscribe((response:any) => {
+                this._entityResourceService.getEntityResourceByTableName("Master", 0).subscribe((response: any) => {
 
 
                     const masterObjectTable = window.ObjectTables.filter(x => x.Name === "Master")[0];
                     const shipmentObjectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
 
-                    myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === masterObjectTable.Id && d.Code.indexOf("HeaderScreen") != -1 && d.QuerySection == this.QuerySection )[0];
+                    myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === masterObjectTable.Id && d.Code.indexOf("HeaderScreen") != -1 && d.QuerySection == this.QuerySection)[0];
 
                     const masterFields = window.ObjectFields.filter(d => d.ObjectTableId === masterObjectTable.Id);
                     const shipmentFields = window.ObjectFields.filter(d => d.ObjectTableId === shipmentObjectTable.Id);
 
                     myObjectFields = [...masterFields, ...shipmentFields];
-                   
+
 
                     this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
                 });
@@ -540,7 +562,7 @@ export class EditComponent implements OnDestroy {
             }
         }
         else if (this.ObjectTableName == "APInvoice") {
-            this.GenerateAPInvoiceHeader(myHeaderScreen,myObjectFields);
+            this.GenerateAPInvoiceHeader(myHeaderScreen, myObjectFields);
 
 
         }
@@ -577,6 +599,21 @@ export class EditComponent implements OnDestroy {
             this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private GenerateAPInvoiceHeader(headerScreen:any, objectFields:any) {
 
 
@@ -750,127 +787,125 @@ export class EditComponent implements OnDestroy {
     }
 
 
-    BuildObjectTableTabByQuerySection() {
-        let objectTableTabs: TabItem[] =[];
-        let objectTableTabsBuilder: IObjectTableTabsBuilder = ObjectTableTabBuilderService.GetInstance(this.QuerySection);
-        if (objectTableTabsBuilder) {
-            objectTableTabs = objectTableTabsBuilder.BuildTabs({
-                ObjectTableId: this.ObjectTableId,
-                ObjectTableName: this.ObjectTableName,
-                QuerySection: this.QuerySection,
-                EntityPM: this.EntityPM,
-            });
 
+    FillTabsItemsSource(allTabs: any[]) {
+
+        var myTabsSorted: any[] = [];
+
+        allTabs = this.FilterTabs(allTabs);
+        allTabs = allTabs.sort((a, b) => { return a.IndexOrder - b.IndexOrder });
+        for (var i = 0; i < allTabs.length; i++) {
+            var tab = allTabs[i];
+
+            if (tab.ControlPath != null) {
+                if (tab.ControlPath.indexOf("ExternalDocumentsControl") != -1) {
+                    if (!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "DOCSIN")) {
+                        continue;
+                    }
+                }
+
+                if (tab.ControlPath.indexOf("EventsControl") != -1) {
+                    var eventsTabCode = tab.ObjectTableName + ".Tab.Events";
+                    var eventsTabFeature = FeatureLocator.Features.filter(f => (f.Code == "EVENTS" || f.Code == eventsTabCode) && f.ObjectTableId == tab.ObjectTableId)[0];
+                    if (eventsTabFeature = null) {
+                        continue;
+                    }
+                }
+
+            }
+
+            if (FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
+
+                if (this.ObjectTableName == "GLAccount") {
+
+                    switch (tab.Code) {
+
+                        case "GAAD":
+                            {
+                                if (this.EntityPM.AccountTypeCode == "2" || this.EntityPM.AccountTypeCode == "3")
+                                    myTabsSorted.push(tab);
+                                break;
+                            }
+                        case "GLTX":
+                            {
+                                if (this.EntityPM.AccountTypeCode == "3")
+                                    myTabsSorted.push(tab);
+                                break;
+                            }
+                        case "GAOV":
+                            {
+                                if (this.EntityPM.AccountTypeCode == "2")  // 2- Customer GLAccount
+                                    myTabsSorted.push(tab);
+                                break;
+                            }
+                        case "GAIT":
+                            {
+                                if (this.EntityPM.AccountTypeCode == "2")  // 2- Customer GLAccount
+                                    myTabsSorted.push(tab);
+                                break;
+                            }
+                        default:
+                            {
+                                myTabsSorted.push(tab);
+                                break;
+                            }
+                    }
+                }
+                else
+                    myTabsSorted.push(tab);
+            }
         }
-        return objectTableTabs;
-    }
+        myTabsSorted.forEach(item => {
 
+            var itemTab: TabItem = new TabItem(item);
+            itemTab.IsDisabled = this.EditComponentController.IsDisabled(itemTab.Code)
+            if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                if (item.ControlPath.indexOf("Doc") > -1) {
+                    switch (this.ObjectTableName) {
+                        case "ARInvoice":
+                        case "APInvoice":
+                        case "ARPayment":
+                        case "APPayment":
+                            {
+                                itemTab.IsDisabled = true;
+                                break;
+                            }
+                    }
+                }
+            }
+
+            this.TabsItemsSource.push(itemTab);
+        });
+    }
+    
 
 
     private BuildTabsItemsSource() {
 
         this.TabsItemsSource = [];
-
-        if (!AppTool.IsNullOrEmpty(this.QuerySection)) {
-            this.TabsItemsSource = this.BuildObjectTableTabByQuerySection();
-        }
-
-        else {
-
-            var allTabs: any[] = [];
-            var myTabsSorted: any[] = [];
-
-            allTabs = window.ObjectTableTabs.filter(d => d.ObjectTableId === this.ObjectTableId);
-            allTabs = this.FilterTabs(allTabs);
-            allTabs = allTabs.sort((a, b) => { return a.IndexOrder - b.IndexOrder });
-            for (var i = 0; i < allTabs.length; i++) {
-                var tab = allTabs[i];
-
-                if (tab.ControlPath != null) {
-                    if (tab.ControlPath.indexOf("ExternalDocumentsControl") != -1) {
-                        if (!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "DOCSIN")) {
-                            continue;
-                        }
-                    }
-
-                    if (tab.ControlPath.indexOf("EventsControl") != -1) {
-                        var eventsTabCode = tab.ObjectTableName + ".Tab.Events";
-                        var eventsTabFeature = FeatureLocator.Features.filter(f => (f.Code == "EVENTS" || f.Code == eventsTabCode) && f.ObjectTableId == tab.ObjectTableId)[0];
-                        if (eventsTabFeature = null) {
-                            continue;
-                        }
-                    }
-
-                }
-
-                if (FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
-
-                    if (this.ObjectTableName == "GLAccount") {
-
-                        switch (tab.Code) {
-
-                            case "GAAD":
-                                {
-                                    if (this.EntityPM.AccountTypeCode == "2" || this.EntityPM.AccountTypeCode == "3")
-                                        myTabsSorted.push(tab);
-                                    break;
-                                }
-                            case "GLTX":
-                                {
-                                    if (this.EntityPM.AccountTypeCode == "3")
-                                        myTabsSorted.push(tab);
-                                    break;
-                                }
-                            case "GAOV":
-                                {
-                                    if (this.EntityPM.AccountTypeCode == "2")  // 2- Customer GLAccount
-                                        myTabsSorted.push(tab);
-                                    break;
-                                }
-                            case "GAIT":
-                                {
-                                    if (this.EntityPM.AccountTypeCode == "2")  // 2- Customer GLAccount
-                                        myTabsSorted.push(tab);
-                                    break;
-                                }
-                            default:
-                                {
-                                    myTabsSorted.push(tab);
-                                    break;
-                                }
-                        }
-                    }
-                    else
-                        myTabsSorted.push(tab);
-                }
+        var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/MetaDataServices/TabsServices/" + this.GetObjectTableName() + "TabsService";
+        SessionLocator.DynamicLoader.GetInstance(myComponentPath, true).then((tabsService: any) => {
+            let allTabs = window.ObjectTableTabs.filter(d => d.ObjectTableId === this.ObjectTableId);
+            if (tabsService) {
+                allTabs = tabsService.GetTabs({ ObjectTableId: this.ObjectTableId, EntityPM: this.EntityPM });
             }
-            myTabsSorted.forEach(item => {
+     
+            this.FillTabsItemsSource(allTabs);
+            if (this.TabControlBodyViewContainerRef)
+                this.SetSelectedTab();
 
-                var itemTab: TabItem = new TabItem(item);
-                itemTab.IsDisabled = this.EditComponentController.IsDisabled(itemTab.Code)
-                if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                    if (item.ControlPath.indexOf("Doc") > -1) {
-                        switch (this.ObjectTableName) {
-                            case "ARInvoice":
-                            case "APInvoice":
-                            case "ARPayment":
-                            case "APPayment":
-                                {
-                                    itemTab.IsDisabled = true;
-                                    break;
-                                }
-                        }
-                    }
-                }
-
-                this.TabsItemsSource.push(itemTab);
-            });
-        }
+        });
 
     }
 
 
+    private GetObjectTableName() {
 
+        if (this.ObjectTable.Name.indexOf('Customs.') > -1) {
+            return this.ObjectTable.Name.split('.')[1];
+        } 
+        else return this.ObjectTable.Name;
+    }
 
     private FilterTabs(allTabs: any[]) {
         switch (this.ObjectTableName) {

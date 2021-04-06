@@ -95,6 +95,11 @@ export class SystemDataPM {
     public set Supportemail(newValue: string) { if (this.supportemail != newValue) { this.supportemail = newValue; this.MarkAsDirty("Supportemail"); } }
        
 	 
+    private userSignatureImage: string;
+    public get UserSignatureImage() { return this.userSignatureImage; }
+    public set UserSignatureImage(newValue: string) { if (this.userSignatureImage != newValue) { this.userSignatureImage = newValue; this.MarkAsDirty("UserSignatureImage"); } }
+       
+	 
 
     public OldEntityPM: SystemDataPM;
 		

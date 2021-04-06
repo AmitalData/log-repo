@@ -46,10 +46,12 @@ namespace RestClientApplication
             apiCombo.Items.Add("APInvoiceCancellation");
             apiCombo.Items.Add("GLAccountMoreData");
             apiCombo.Items.Add("Rates Update");
+            apiCombo.Items.Add("CargoTrackingShipmentDetails");
             this.BuildOperationComboBox();
             this.actionCombo.Items.Add("Accept");
             this.actionCombo.Items.Add("Decline");
             this.actionCombo.Items.Add("Cancel");
+
         }
 
         private void BuildOperationComboBox()
@@ -1067,6 +1069,17 @@ namespace RestClientApplication
                                             </RateUpdate>
                                             </RatesUpdate>";
                         apiName = "RatesUpdate";
+                        break;
+                    }
+                #endregion
+
+                #region CargoTrackingShipmentDetails
+                case 18:
+                    {
+                        lblParameter.Text = "House:";
+                        lblParameter.Visible = true;
+                        txtParameter.Visible = true;
+                        apiName = "CargoTrackingShipmentDetails";
                         break;
                     }
                     #endregion

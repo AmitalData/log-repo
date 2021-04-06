@@ -954,7 +954,7 @@
     Type="int"
     DefaultValue="100">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="Id"

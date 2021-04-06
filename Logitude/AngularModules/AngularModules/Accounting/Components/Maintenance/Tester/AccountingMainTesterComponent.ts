@@ -167,6 +167,13 @@ export class AccountingMainTesterComponent extends BaseComponent {
 
     }
 
+    RebuildFIXGLAccountAgingData_Click() {
+        let opr = "RebuildFIXGLAccountAgingData_Click";
+        let obj = { /*MyTenant: SessionLocator.Tenant,*/ Aging4AccountTypeCode: 'Customer2', MyGLAccId: "1-152", Aging4AccountTypeCode_Options: 'Customer2;Vendor3',};
+        this.StrandartOp(opr, obj, () => { });
+
+    }
+
 
     CardIndexNew_Click() {
         let myLedgerTransactionBalanceFilter =
@@ -272,6 +279,9 @@ export class AccountingMainTesterComponent extends BaseComponent {
         this.StrandartOp(opr, obj, () => { });
 
     }
+    
+
+    
     _ButtonReverseDueDate_Click() {
         let opr = "_ButtonReverseDueDate_Click";
         let obj = { MyTenant: SessionLocator.Tenant, MyGLAccId: "1-131321" };

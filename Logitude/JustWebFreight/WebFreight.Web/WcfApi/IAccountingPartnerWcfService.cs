@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using WebFreight.Web.DataContracts;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -15,5 +16,8 @@ namespace WebFreight.Web.WcfApi
     {
         [OperationContract]
         Response Upsert(AccountingPartnerPM entityPM, bool batch);
+
+        [OperationContract]
+        AccountingPartnerPM GetAccountingPartnerPM(AccountingPartnerApiFilters filters, int tenant, ref Response response);
     }
 }

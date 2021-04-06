@@ -1018,6 +1018,11 @@ export class QuotePM {
     public set ConvertToLCL(newValue: boolean) { if (this.convertToLCL != newValue) { this.convertToLCL = newValue; this.MarkAsDirty("ConvertToLCL"); } }
        
 	 
+    private convertTransportMode: boolean;
+    public get ConvertTransportMode() { return this.convertTransportMode; }
+    public set ConvertTransportMode(newValue: boolean) { if (this.convertTransportMode != newValue) { this.convertTransportMode = newValue; this.MarkAsDirty("ConvertTransportMode"); } }
+       
+	 
     private isQuoteDataExternal: boolean;
     public get IsQuoteDataExternal() { return this.isQuoteDataExternal; }
     public set IsQuoteDataExternal(newValue: boolean) { if (this.isQuoteDataExternal != newValue) { this.isQuoteDataExternal = newValue; this.MarkAsDirty("IsQuoteDataExternal"); } }

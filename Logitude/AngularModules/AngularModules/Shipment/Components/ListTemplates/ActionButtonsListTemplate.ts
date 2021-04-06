@@ -14,7 +14,7 @@ import {DocumentsFilingExtendedPMService} from '../../../Common/Services/Extende
                     <td>
                         <div style="height:30px;">
                             <button class="RedButton" (click)="CancelButtonClicked()" [style.width.px]="Width1" style="float: right;margin:4px;">Cancel</button>
-                            <button class="Button" (click)="ConnectButtonClicked()" [style.width.px]="Width" style="float: right;margin:4px;">{{ConnectBtn}}</button>
+                            <button *ngIf="IsDSV" class="Button" (click)="ConnectButtonClicked()" [style.width.px]="Width" style="float: right;margin:4px;">{{ConnectBtn}}</button>
                             <button class="Button" (click)="EditButtonClicked()" [style.width.px]="Width1" style="float: right;margin:4px;">Edit</button>
                         </div>
                     </td>
@@ -41,11 +41,13 @@ export class ActionButtonsListTemplate {
     public _ShipmentPMService: ShipmentPMService;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsDSV:boolean = false;
     constructor(private CD: ChangeDetectorRef) {
         this._ShipmentPMService = new ShipmentPMService();
         if (SessionLocator.PrivateLableSettings) {
             this._documentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
             this.Width = 80;
+            this.IsDSV = SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1; 
             this.ConnectBtn = SessionLocator.PrivateLableSettings.PrivateLabelShortName + " Connect";
         }
     }

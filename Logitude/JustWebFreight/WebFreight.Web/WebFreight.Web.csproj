@@ -1036,6 +1036,7 @@
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffVersionUploadedExcelViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffVersionUploadedExcelController.Generated.cs" />
     <Compile Include="Controllers\WebDomainControllers\PotentialAddressController.cs" />
+    <Compile Include="DataContracts\AccountingPartnerApiFilters.cs" />
     <Compile Include="DataContracts\CargoTrackingBrandingDataRequest.cs" />
     <Compile Include="DataContracts\CargoTrackingBrandingData.cs" />
     <Compile Include="DataContracts\CreateDocumentOutArgs.cs" />
@@ -1056,6 +1057,11 @@
     <Compile Include="DataProviders\UserDefinedReportDataProvider.cs" />
     <Compile Include="ExternalAPIs\RatesUpdateController.cs" />
     <Compile Include="ExternalAPIs\ShipmentNumbersController.cs" />
+
+    <Compile Include="ExternalAPIs\V1\GLAccountChequeDetailsController.cs" />
+
+    <Compile Include="ExternalAPIs\V1\CargoTrackingShipmentDetailsController.cs" />
+
     <Compile Include="FileNotFound.aspx.cs">
       <DependentUpon>FileNotFound.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2582,10 +2588,13 @@
     </Compile>
     <Compile Include="Helpers\AdvancedDateResolver.cs" />
     <Compile Include="Helpers\APIHelpers\ApiExceptionFilter.cs" />
+    <Compile Include="Helpers\APIHelpers\CargoTrackingShipmentDetailsInstanceCreator.cs" />
     <Compile Include="Helpers\APIHelpers\APIReceivablePayableHelper.cs" />
     <Compile Include="Helpers\APIHelpers\APITransshipmentHelper.cs" />
+    <Compile Include="Helpers\APIHelpers\CargoTrackingShipmentDetailsResult.cs" />
     <Compile Include="Helpers\APIHelpers\ConsolidationServiceBatch.cs" />
     <Compile Include="Helpers\APIHelpers\GenerateTariffsHelper.cs" />
+    <Compile Include="Helpers\APIHelpers\GLAccountChequeDetailsInstanceCreator.cs" />
     <Compile Include="Helpers\APIHelpers\ImageLibraryControllerHelper.cs" />
     <Compile Include="Helpers\APIHelpers\PartnersUploadHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TariffGeneratorFromExcel.cs" />
@@ -2609,6 +2618,7 @@
     <Compile Include="Helpers\DataProviderHelpers\CrossDockReleaseShipmentService.cs" />
     <Compile Include="Helpers\DataProviderHelpers\ShipmentsEventsListDataProvider.cs" />
     <Compile Include="Helpers\AutomationDocumentHelper.cs" />
+    <Compile Include="Helpers\BaseDataProviderService.cs" />
     <Compile Include="Helpers\DocumentTypeTemplateDefultAttachmentService.cs" />
     <Compile Include="Helpers\PrivateLabelsBrandingDataService.cs" />
     <Compile Include="Helpers\UserViewLinkLimitationService.cs" />
@@ -3016,6 +3026,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\FeatureToggleUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\FreightPaymentMethodUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\FullAccountingSettingUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountAgingDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountCounterUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GatepassRequestUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GatepassReturnCodeUpdateClass.cs" />
@@ -3438,7 +3449,6 @@
     <Content Include="Monitoring\SignupLeadMonitoringPage.aspx" />
     <Content Include="Monitoring\StorageBackup.aspx" />
     <Content Include="QuickbooksOnlineAuth2.aspx" />
-    <Content Include="QuickbooksOnline.aspx" />
     <EmbeddedResource Include="Properties\webfreight.web.dll.licenses" />
     <Content Include="ReportsWebServices\APInvoiceWebService.asmx" />
     <None Include="Properties\PublishProfiles\sendgrid.pubxml" />
@@ -4946,7 +4956,6 @@
     <Content Include="WebServices\PerformanceLogService.asmx" />
     <Content Include="WebServices\QueueMessagesWebService.asmx" />
     <Content Include="WebServices\QuickbooksIntegrationWebService.asmx" />
-    <Content Include="WebServices\QuickBooksTransferWebService.asmx" />
     <Content Include="WebServices\QuoteTemplateWebService.asmx" />
     <Content Include="WebServices\SharedLogisticsUpdateWebService.asmx" />
     <Content Include="WebServices\ShipmentToCustomsWebService.asmx" />
@@ -5659,12 +5668,6 @@
     </Compile>
     <Compile Include="QuickbooksOnlineAuth2.aspx.designer.cs">
       <DependentUpon>QuickbooksOnlineAuth2.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="QuickbooksOnline.aspx.cs">
-      <DependentUpon>QuickbooksOnline.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="QuickbooksOnline.aspx.designer.cs">
-      <DependentUpon>QuickbooksOnline.aspx</DependentUpon>
     </Compile>
     <Compile Include="QuoteModel\DomainServices\QuotesDomainService.QuoteClosingReason.cs" />
     <Compile Include="QuoteModel\DomainServices\QuotesDomainService.QuoteDocumentVersion.cs" />
@@ -6838,10 +6841,6 @@
     </Compile>
     <Compile Include="WebServices\QuickbooksIntegrationWebService.asmx.cs">
       <DependentUpon>QuickbooksIntegrationWebService.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="WebServices\QuickBooksTransferWebService.asmx.cs">
-      <DependentUpon>QuickBooksTransferWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebServices\QuoteTemplateWebService.asmx.cs">

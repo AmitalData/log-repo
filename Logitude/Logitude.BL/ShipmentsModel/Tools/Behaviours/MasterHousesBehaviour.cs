@@ -95,7 +95,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
         }
         private void MapMasterHouseFromPortFields()
         {
-            if (iHousePM.FromPortId != this.initializer.EntityPM.MainCarriageFromPortId)
+            if (!string.IsNullOrEmpty(this.initializer.EntityPM.PreCarriageFromPortId))
+            {
+                if (iHousePM.PreForwardingToPortId != null && iHousePM.PreForwardingToPortId != this.initializer.EntityPM.PreCarriageFromPortId)
+                {
+                    iHousePM.PreForwardingToPortId = this.initializer.EntityPM.PreCarriageFromPortId;
+                }
+            }
+
+            else if (iHousePM.FromPortId != this.initializer.EntityPM.MainCarriageFromPortId)
             {
                 iHousePM.FromPortId = this.initializer.EntityPM.MainCarriageFromPortId;
 
@@ -107,7 +115,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
         }
         private void MapMasterHouseToPortFields()
         {
-            if (iHousePM.ToPortId != this.initializer.EntityPM.MainCarriageFinalDestinationPortId)
+            if (!string.IsNullOrEmpty(this.initializer.EntityPM.OnCarriageToPortId))
+            {
+                if (iHousePM.OnForwardingFromPortId != null && iHousePM.OnForwardingFromPortId != this.initializer.EntityPM.OnCarriageToPortId)
+                {
+                    iHousePM.OnForwardingFromPortId = this.initializer.EntityPM.OnCarriageToPortId;
+                }
+            }
+
+            else if (iHousePM.ToPortId != this.initializer.EntityPM.MainCarriageFinalDestinationPortId)
             {
                 iHousePM.ToPortId = this.initializer.EntityPM.MainCarriageFinalDestinationPortId;
 
@@ -144,6 +160,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
         private void UpdateShipment(bool mapComposition = false)
         {
             ShipmentService iShipmentService = new ShipmentService(initializer.ShipmentContext, iHousePM, initializer.LoggedContactEmail);
+            iShipmentService.SetChangeSet(iHousePM.ShipmentPackages, iHousePM.ShipmentOrderPackages, iHousePM.ShipmentPickUps, iHousePM.ShipmentDeliveries, iHousePM.ShipmentReceivables, iHousePM.ShipmentPayables, iHousePM.FollowUps, iHousePM.ShipmentAWBPrintOnlies, iHousePM.ShipmentConsoleShipments, iHousePM.ShipmentCarrierStatuses, iHousePM.AWBOCIPMs, iHousePM.ShipmentCommodities, iHousePM.ShipmentAssemblies, iHousePM.ShipmentStoragePricings);
             iShipmentService.Update(mapComposition);
         }
         private void UpdateMasterHouses(List<string> ids)

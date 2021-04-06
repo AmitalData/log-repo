@@ -235,6 +235,7 @@
     <Compile Include="CommonDataModel\APIDataContract\DocumentsFiling.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\GLAccount.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Incoterm.Generated.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\LastMileDetails.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Measurement.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\PaymentTerm.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\PODBlobInfo.cs" />
@@ -252,7 +253,9 @@
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomerQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomFieldQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\DocumentsFilingQueryService.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\LastMileDetailsQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\PaymentTermQueryService.Generated.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\ShipmentCardQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\UserQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\VatTypeQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\VendorQueryService.cs" />

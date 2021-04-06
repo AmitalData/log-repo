@@ -1181,7 +1181,7 @@ namespace WebFreight.Web
         private List<string> GetLogboxAccessiblePrivateLabelTenantsIds(string url)
         {
             List<string> logboxAccessiblePrivateLabelTenantsIds = new List<string>();
-            if (url.Contains("system.logbox.co.il") || url.Contains("localhost"))
+            if (url.Contains("system.logbox.co.il") || url.Contains("test.logitudeworld.com") || url.Contains("localhost"))
             {
                 TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(0);
                 logboxAccessiblePrivateLabelTenantsIds = query.GetLogboxAccessibleTenantManagmentPrivateLabelsIds();
@@ -1668,15 +1668,11 @@ namespace WebFreight.Web
                         string ipstring = securityPolicy.AllowedIPs;
                         string[] authenticatedIPs = ipstring.Split(',');
                         bool isIpAuthenticated = false;
-                        string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-                        if (string.IsNullOrEmpty(currentIP))
-                        {
-                            currentIP = HttpContext.Current.Request.UserHostAddress;
-                        }
-                        if (!authenticatedIPs.Contains(currentIP))
+                       
+                        if (!authenticatedIPs.Contains(ipAddress))
                         {
                             if (Environment.CommandLine.ToLower().Contains("iisexpress.exe") &&
-                                currentIP == "::1") ///localhost !!!
+                                ipAddress == "::1") ///localhost !!!
                             {
                                 isIpAuthenticated = true;//iisexpress
                             }

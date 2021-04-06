@@ -1,4 +1,4 @@
-@release @dev
+@release @dev 
 Feature: Air Freight Cost Tariff Version History
     The authenticated user will create new air freight cost tariff,
     add new tariff lines in draft version tab, then approve it,

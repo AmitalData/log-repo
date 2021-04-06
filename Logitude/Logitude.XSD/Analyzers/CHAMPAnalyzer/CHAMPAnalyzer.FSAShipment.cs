@@ -834,7 +834,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
 
             if (!string.IsNullOrEmpty(iStatusArgs.FromPortCode))
             {
-                Port iPort = this.myPortRepository.GetSinglePortByCode(this.myTenant, iStatusArgs.FromPortCode, true);
+                Port iPort = this.myPortRepository.GetAirlinePortByCode(this.myTenant, iStatusArgs.FromPortCode, true);
                 if (iPort == null)
                 {
                     Port portZero = this.myPortRepository.GetPortsByNameOrCode(iStatusArgs.FromPortCode, null, 0).Where(a => a.IsAir).FirstOrDefault();
@@ -853,7 +853,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
 
             if (!string.IsNullOrEmpty(iStatusArgs.ToPortCode))
             {
-                Port iPort = this.myPortRepository.GetSinglePortByCode(this.myTenant, iStatusArgs.ToPortCode, true);
+                Port iPort = this.myPortRepository.GetAirlinePortByCode(this.myTenant, iStatusArgs.ToPortCode, true);
                 if (iPort == null)
                 {
                     Port portZero = this.myPortRepository.GetPortsByNameOrCode(iStatusArgs.ToPortCode, null, 0).Where(a => a.IsAir).FirstOrDefault();
@@ -872,7 +872,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
 
             if (!string.IsNullOrEmpty(iStatusArgs.LocationPortCode))
             {
-                Port iPort = this.myPortRepository.GetSinglePortByCode(this.myTenant, iStatusArgs.LocationPortCode, true);
+                Port iPort = this.myPortRepository.GetAirlinePortByCode(this.myTenant, iStatusArgs.LocationPortCode, true);
                 if (iPort == null)
                 {
                     Port portZero = this.myPortRepository.GetPortsByNameOrCode(iStatusArgs.LocationPortCode, null, 0).Where(a => a.IsAir).FirstOrDefault();

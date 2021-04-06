@@ -381,7 +381,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.UIProperties.SetEnabled("GrossWeight", this.ObjectTableName, isTotalsFieldEnabled);
         this.UIProperties.SetEnabled("ChargeableWeight", this.ObjectTableName, isTotalsFieldEnabled);
         this.UIProperties.SetEnabled("IsDangerous", this.ObjectTableName, isTotalsFieldEnabled);
-        this.UIProperties.SetEnabled("AWBCommodityItemNumber", this.ObjectTableName, isTotalsFieldEnabled);
+        this.UIProperties.SetEnabled("AWBCommodityItemNumber", this.ObjectTableName, isTotalsFieldEnabled && !this.EntityPM.IsMultipleCommodities);
         this.SetUIProperties_DimFactor();
         this.SetUIProperties_DimensionsUnitCode();
     }
@@ -996,7 +996,11 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
             else {
                 this.GenerateButtonLabel = TextCodeTranslator.Translate("Shipment.O.GenerateFromOrderPackages").replace("%Number", count.toString());
-                this.IsGenerateButtonVisible = this.EntityPM.ShipmentOrderPackages.length > 0 ? true : false;
+                if (this.EntityPM.ShipmentTypeId == "FCL" || this.EntityPM.ShipmentTypeId == "FCLD"|| this.EntityPM.ShipmentTypeId == "FTL") {
+                    this.IsGenerateButtonVisible = this.EntityPM.ShipmentOrderPackages.length > 0 ? true : false;
+                } else {
+                    this.IsGenerateButtonVisible = true;
+                }
                 this.IsGenerateButtonEnabled = this.EntityPM.BookingNumberOfPackages > 0 ? true : false;
             }
         }

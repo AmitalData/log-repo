@@ -97,8 +97,12 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                         return Aging_Click(tenant, _TextBoxParam);
                     }
                     break;
-
-
+                case "RebuildFIXGLAccountAgingData_Click":
+                    {
+                        return RebuildFIXGLAccountAgingData_Click(tenant, _TextBoxParam);
+                    }
+                    break;
+                
                 case "CardIndexNew_Click":
                     {
                         return CardIndexNew_Click(tenant, _TextBoxParam);
@@ -129,6 +133,65 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                     };
                     break;
             }
+        }
+
+        private GateWayTesterResult RebuildFIXGLAccountAgingData_Click(int tenant, string textBoxParam)
+        {
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+                dynamic myAgingReportParam = LogitudeXmlSerializer.JsonConvertDeserializeObject(textBoxParam);
+                string aging4AccountTypeCode = myAgingReportParam.Aging4AccountTypeCode;//: 'Customer2', 
+                string MyGLAccId = myAgingReportParam.MyGLAccId;
+                //using (
+                var agingReportRebulidService = new AgingReportRebulidService(new AgingReportRebulidParam()
+                {
+                    Tenant = tenant,
+
+                    NumberOfmonthsbackwards = 6,
+                    AgingForDate = DateTime.Now.Date,
+                    VendorCustomerId = MyGLAccId,
+                    Aging4AccountTypeCode = aging4AccountTypeCode == "Vendor3" ? AgingReportParam.Aging4AccountTypeCodeEnum.Vendor3 : AgingReportParam.Aging4AccountTypeCodeEnum.Customer2,
+
+
+
+
+                });
+                var stopwatch = Stopwatch.StartNew();
+                
+                agingReportRebulidService.RunReport();
+                LogMessagingUtil.Instance.AppendLine($"RunReport took:{stopwatch.Elapsed}");
+                LogMessagingUtil.Instance.AppendLine($"Account.count {agingReportRebulidService.MyPeriodList.Count()}");
+                stopwatch.Restart();
+                agingReportRebulidService.RebuildGLAccountAgingData();
+                LogMessagingUtil.Instance.AppendLine($"update diff took:{stopwatch.Elapsed}");
+
+
+
+                //var xmlMyPeriodList = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<PeriodMExtended>>(agingReport.MyPeriodExtendedList);
+
+                //gateWayTesterResult.Log = xmlMyPeriodList;
+
+
+                //gateWayTesterResult.JsonOut = xml;
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+                gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
+                gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
         }
 
         private GateWayTesterResult Aging_Click(int tenant, string textBoxParam)

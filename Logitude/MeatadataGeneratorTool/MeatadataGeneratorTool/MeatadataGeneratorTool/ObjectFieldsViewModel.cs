@@ -1090,17 +1090,17 @@ namespace MeatadataGeneratorTool
 
 
 
-        private string entityType;
-        public string EntityType
+        private string additionalQuerySections;
+        public string AdditionalQuerySections
         {
             get
             {
-                return entityType;
+                return additionalQuerySections;
             }
             set
             {
-                entityType = value;
-                FirePropertyChanged("EntityType");
+                additionalQuerySections = value;
+                FirePropertyChanged("AdditionalQuerySections");
             }
         }
 

@@ -1,6 +1,15 @@
-﻿using Logitude.Accounting.BL.CoreBL.BuildTenant.MumpsOpenReconcile;
+﻿using Logitude.Accounting.BL.CoreBL;
+using Logitude.Accounting.BL.CoreBL.BuildTenant.MumpsOpenReconcile;
+using Logitude.Accounting.BL.CoreBL.Reports;
+using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.Resolvers;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Update.PatchDistribution;
+using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,6 +31,7 @@ namespace Logitude.Update.SandBox
             InitializeComponent();
             TraceListener debugListener = new MyTraceListener(this.textBoxLogger);
             Debug.Listeners.Add(debugListener);
+            LoggedContactResolver.RegisterLoggedContactUtil();
 
         }
 
@@ -95,6 +105,37 @@ namespace Logitude.Update.SandBox
             }
 
             return list100;
+        }
+
+        private void tESTADHOKToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            string json1 = "{'Id':null,'Tenant':'4','InternalNumber':'020700004','AccountTypeCode':'3','DisplayNumber':'020700004','ExternalDisplayNumber':'020700004','EncodeBase64NVARCHARFieldsBy':'windows-1255','LocalName':'4/fx+CD26fjp6iD55eXp9Q==','EnglishName':'Dachser Spedition Ag - swiss','IsMultiCurrency':false,'Inactive':null,'ChartOfAccountsId':'bla','ChartOfAccountsTypeCode':'4','CurrencyCode':'NIS','CurrencyId':null,'RevenueExpenseType':'3','IsControlAccount':0,'ChartOfAccountType':'4','ChartOfAccountsCode':'0207','ParentAccountByCurrency':null,'ReconcileMethodCode':'0','utomaticReconcileId':null,'PreviousLocalName':null,'PreviousLocalNameChangeDate':null,'PreviousEnglishName':null,'PreviousEnglishNameChangeDate':null,'PreviousNo':null,'PreviousNoChangeDate':null,'PreviousChartOfAccountId':null,'PreviousChartOfAccountChangeDate':null,'BalanceInLocCurrencyId':null,'RevaluationEnable':null,'SearchFields':null,'IsVATExempt':false}";
+
+
+            json1 = "{'Id':null,'Tenant':'4','InternalNumber':'020702161','AccountTypeCode':'3','DisplayNumber':'020702161','ExternalDisplayNumber':'020702161','EncodeBase64NVARCHARFieldsBy':'windows-1255','LocalName':'4uzl4ewg4Ozs6eDw8SDs5eLp8ejp9 / Eg9OjkIODsIOjpIOPp','EnglishName':'Global Alliance Logistics Pte Ltd\','IsMultiCurrency':false,'Inactive':null,'ChartOfAccountsId':'bla','ChartOfAccountsTypeCode':'4','CurrencyCode':'NIS','CurrencyId':null,'RevenueExpenseType':'3','IsControlAccount':0,'ChartOfAccountType':'4','ChartOfAccountsCode':'0207','ParentAccountByCurrency':null,'ReconcileMethodCode':'0','utomaticReconcileId':null,'PreviousLocalName':null,'PreviousLocalNameChangeDate':null,'PreviousEnglishName':null,'PreviousEnglishNameChangeDate':null,'PreviousNo':null,'PreviousNoChangeDate':null,'PreviousChartOfAccountId':null,'PreviousChartOfAccountChangeDate':null,'BalanceInLocCurrencyId':null,'RevaluationEnable':null,'SearchFields':null,'IsVATExempt':false}";
+
+
+            GLAccountPM entityPM
+            = LogitudeXmlSerializer.JsonConvertDeserializeTObject<GLAccountPM>(json1);
+            var MyContext = AccountingContext.GetContext(entityPM.Tenant);
+            GLAccountUpdateService service = new GLAccountUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+            entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+            service.Update(entityPM, true);
+
+            return;
+            List<string> Last_journalBufferKeys = new List<string>();
+            JournalApproveService.WorkWithoutQueue(95, "1-5818664", ref Last_journalBufferKeys);
+        }
+
+        private void agingFixRepoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            int tenant = 1;
+            string reconcileId = "1-100";
+
+            var agingReportRebulidTesterService = new AgingReportRebulidTesterService();
+            agingReportRebulidTesterService.RebulidReconcile(tenant, reconcileId);
         }
     }
 }

@@ -404,9 +404,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     this.initializer.HandleComposition();
 
-                    //this.UpdateShipmentOrderPackagesCollection();
                     this.UpdateShipmentPackagesCollection();
-
                     this.UpdateShipmentPickUpsCollection();
                     this.UpdateShipmentDeliveriesCollection();
                     this.UpdateShipmentPayablesCollection();
@@ -420,6 +418,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.UpdateShipmentAssembliesCollection();
                     this.UpdateShipmentStoragePricingsCollection();
                     this.InitializeBookingData();
+
+                    this.RemoveDeletedItemsFromEntityPM();
 
                     if (entityPM.WarehouseStorageFreeDays != entityPoco.WarehouseStorageFreeDays)
                     {
@@ -500,7 +500,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
                     this.UpdateShipmentFollowUpsCollection();
 
-
                     ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext);
 
                     this.ComputeAgentComputed(entityPM, entityPoco);
@@ -560,6 +559,28 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
+        private void RemoveDeletedItemsFromEntityPM()
+        {
+            if (initializer.ShipmentPickUpsChangeSet != null)
+            {
+                this.entityPM.ShipmentPickUps = initializer.ShipmentPickUpsChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            }
+
+            if (initializer.ShipmentDeliveriesChangeSet != null)
+            {
+                this.entityPM.ShipmentDeliveries = initializer.ShipmentDeliveriesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            }
+
+            if (initializer.ShipmentPayablesChangeSet != null)
+            {
+                this.entityPM.ShipmentPayables = initializer.ShipmentPayablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            }
+
+            if (initializer.ShipmentReceivablesChangeSet != null)
+            {
+                this.entityPM.ShipmentReceivables = initializer.ShipmentReceivablesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            }
+        }
         private void UpdateMasterHouses()
         {
             MasterHousesBehaviour MasterHousesBehaviour = new MasterHousesBehaviour(this.initializer, this.allHouses, this.isNewEntity);
@@ -1178,7 +1199,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             return (!string.IsNullOrEmpty(CurrentTenant.PrivateLabelId));
         }
 
-
         private bool IsImporterTenantHasExportFeatureForExportShipments(int ImporterTenant, ShipmentPM entityPM)
         {
             if ((entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R") && !FeatureToggleHelper.HasFeatureToggle("LEX", ImporterTenant, entityPM.Tenant))
@@ -1457,7 +1477,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
-                }
+                }                             
             }
         }
         private void UpdateShipmentDeliveriesCollection()
@@ -1488,7 +1508,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
-                }
+                }                         
             }
         }
         private void UpdateShipmentPayablesCollection()
@@ -1519,7 +1539,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
-                }
+                }                             
             }
         }
         private void UpdateShipmentReceivablesCollection()
@@ -1552,7 +1572,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                         default: { break; }
                     }
-                }
+                }                
             }
         }
         private void UpdateShipmentAWBPrintOnliesCollection()
@@ -1616,8 +1636,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
-
-
         private void UpdateShipmentFollowUpsCollection(string changeSet = "Update")
         {
             if (initializer.ShipmentFollowUpsChangeSet != null)
@@ -1738,7 +1756,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             }
         }
-
         private void UpdateShipmentCarrierStatusesCollection()
         {
             if (initializer.ShipmentCarrierStatusesChangeSet != null)
@@ -1894,7 +1911,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
-
         private void BuildShipmentExternalUpdate()
         {
             if (!string.IsNullOrEmpty(entityPM.AgentSharedManifestRef))
@@ -3163,109 +3179,206 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 if (entityPM.TransportModeId == "A")
                 {
+                    this.ComputeAWBChargeRate();
+                  
                     if (string.IsNullOrEmpty(entityPM.RateClassCode))
                     {
                         entityPM.RateClassCode = "Q";
                     }
 
-                    if (entityPM.ShipmentCommodities.Count == 0)
-                    {
-                        entityPM.ShipmentCommodities.Add(new ShipmentCommodityPM()
-                        {
-                            Id = IdCounter.GetNumber("ShipmentCommodity", tenant).ToString(),
-                            Tenant = tenant,
-                            ShipmentId = entityPM.Id,
-                            ChargeableWeight = entityPM.ChargeableWeight,
-                            ChargeAmount = entityPM.AWBChargeAmount,
-                            ChargeRate = entityPM.AWBChargeRate,
-                            CommodityNumber = entityPM.AWBCommodityItemNumber,
-                            GrossWeight = entityPM.GrossWeight,
-                            DescriptionOfGoods = entityPM.DescriptionOfGoods,
-                            NumberOfPackages = entityPM.NumberOfPackages,
-                            RateClassCode = entityPM.RateClassCode,
-                            Volume = entityPM.Volume,
-                            VolumetricWeight = entityPM.VolumetricWeight,
-                            IsFirstLine = true,
-                        });
-                    }
+                    //if (entityPM.ShipmentCommodities.Count == 0)
+                    //{
+                    //    entityPM.ShipmentCommodities.Add(new ShipmentCommodityPM()
+                    //    {
+                    //        Id = IdCounter.GetNumber("ShipmentCommodity", tenant).ToString(),
+                    //        Tenant = tenant,
+                    //        ShipmentId = entityPM.Id,
+                    //        ChargeableWeight = entityPM.ChargeableWeight,
+                    //        ChargeAmount = entityPM.AWBChargeAmount,
+                    //        ChargeRate = entityPM.AWBChargeRate,
+                    //        CommodityNumber = entityPM.AWBCommodityItemNumber,
+                    //        GrossWeight = entityPM.GrossWeight,
+                    //        DescriptionOfGoods = entityPM.DescriptionOfGoods,
+                    //        NumberOfPackages = entityPM.NumberOfPackages,
+                    //        RateClassCode = entityPM.RateClassCode,
+                    //        Volume = entityPM.Volume,
+                    //        VolumetricWeight = entityPM.VolumetricWeight,
+                    //        IsFirstLine = true,
+                    //    });
+                    //}
 
-                    else
-                    {
-                        ShipmentCommodityPM myShipmentCommodity = entityPM.ShipmentCommodities.OrderBy(d => d.Id).FirstOrDefault();
+                    //else
+                    //{
+                    //    ShipmentCommodityPM myShipmentCommodity = entityPM.ShipmentCommodities.OrderBy(d => d.Id).FirstOrDefault();
 
-                        if (myShipmentCommodity != null)
-                        {
-                            bool isUpdatingSingleCommodity = false;
+                    //    if (myShipmentCommodity != null)
+                    //    {
+                    //        bool isUpdatingSingleCommodity = false;
 
-                            if (myShipmentCommodity.ChargeableWeight != entityPM.ChargeableWeight)
-                            {
-                                myShipmentCommodity.ChargeableWeight = entityPM.ChargeableWeight;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.ChargeableWeight != entityPM.ChargeableWeight)
+                    //        {
+                    //            myShipmentCommodity.ChargeableWeight = entityPM.ChargeableWeight;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.ChargeAmount != entityPM.AWBChargeAmount)
-                            {
-                                myShipmentCommodity.ChargeAmount = entityPM.AWBChargeAmount;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.ChargeAmount != entityPM.AWBChargeAmount)
+                    //        {
+                    //            myShipmentCommodity.ChargeAmount = entityPM.AWBChargeAmount;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.ChargeRate != entityPM.AWBChargeRate)
-                            {
-                                myShipmentCommodity.ChargeRate = entityPM.AWBChargeRate;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.ChargeRate != entityPM.AWBChargeRate)
+                    //        {
+                    //            myShipmentCommodity.ChargeRate = entityPM.AWBChargeRate;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.CommodityNumber != entityPM.AWBCommodityItemNumber)
-                            {
-                                myShipmentCommodity.CommodityNumber = entityPM.AWBCommodityItemNumber;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.CommodityNumber != entityPM.AWBCommodityItemNumber)
+                    //        {
+                    //            myShipmentCommodity.CommodityNumber = entityPM.AWBCommodityItemNumber;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.GrossWeight != entityPM.GrossWeight)
-                            {
-                                myShipmentCommodity.GrossWeight = entityPM.GrossWeight;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.GrossWeight != entityPM.GrossWeight)
+                    //        {
+                    //            myShipmentCommodity.GrossWeight = entityPM.GrossWeight;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.DescriptionOfGoods != entityPM.DescriptionOfGoods)
-                            {
-                                myShipmentCommodity.DescriptionOfGoods = entityPM.DescriptionOfGoods;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.DescriptionOfGoods != entityPM.DescriptionOfGoods)
+                    //        {
+                    //            myShipmentCommodity.DescriptionOfGoods = entityPM.DescriptionOfGoods;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.NumberOfPackages != entityPM.NumberOfPackages)
-                            {
-                                myShipmentCommodity.NumberOfPackages = entityPM.NumberOfPackages;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.NumberOfPackages != entityPM.NumberOfPackages)
+                    //        {
+                    //            myShipmentCommodity.NumberOfPackages = entityPM.NumberOfPackages;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.RateClassCode != entityPM.RateClassCode)
-                            {
-                                myShipmentCommodity.RateClassCode = entityPM.RateClassCode;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.RateClassCode != entityPM.RateClassCode)
+                    //        {
+                    //            myShipmentCommodity.RateClassCode = entityPM.RateClassCode;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.Volume != entityPM.Volume)
-                            {
-                                myShipmentCommodity.Volume = entityPM.Volume;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.Volume != entityPM.Volume)
+                    //        {
+                    //            myShipmentCommodity.Volume = entityPM.Volume;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.VolumetricWeight != entityPM.VolumetricWeight)
-                            {
-                                myShipmentCommodity.VolumetricWeight = entityPM.VolumetricWeight;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.VolumetricWeight != entityPM.VolumetricWeight)
+                    //        {
+                    //            myShipmentCommodity.VolumetricWeight = entityPM.VolumetricWeight;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (isUpdatingSingleCommodity)
-                            {
-                                this.UpdateShipmentCommodity(myShipmentCommodity);
-                            }
-                        }
-                    }
+                    //        if (isUpdatingSingleCommodity)
+                    //        {
+                    //            this.UpdateShipmentCommodity(myShipmentCommodity);
+                    //        }
+                    //    }
+                    //}
                 }
             }
         }
+        private void ComputeAWBChargeRate()
+        {
+            if (entityPM.AWBChargeRate == null)
+            {
+                var airFreightCode = "AFT";
+                var airFreightCharge =entityPM.ShipmentPayables.Where(a => a.ChargesTypeCode == airFreightCode).FirstOrDefault();
+                if (airFreightCharge != null && ValidateCurrencyOfShipmentAWBPrintOnlies(airFreightCharge))
+                {
+                    this.ComputeAWBChargeAmount(airFreightCharge);
+                }
+            }
+        }
+        private bool ValidateCurrencyOfShipmentAWBPrintOnlies(ShipmentPayablePM airFreightCharge)
+        {
+            var isValid = true;
+            if (entityPM.ShipmentAWBPrintOnlies != null)
+            {
+                foreach (var item in entityPM.ShipmentAWBPrintOnlies)
+                {
+                    if (item.CurrencyId != airFreightCharge.CurrencyId)
+                    {
+                        isValid = false;
+                    }
+                }
+            }
+            return isValid;
+        }
+
+        private void ComputeAWBChargeAmount(ShipmentPayablePM airFreightCharge)
+        {
+            entityPM.AWBChargeRate = airFreightCharge.UnitPrice;
+            entityPM.AWBCurrencyId = airFreightCharge.CurrencyId;
+            entityPM.AWBChargeAmount =this.ComputeAWBChargeAmount(entityPM);
+        }
+        public double? ComputeAWBChargeAmount(ShipmentPM entityPM)
+        {
+            double? myResult = null;
+            var myRateClassCode = entityPM.RateClassCode;
+            var myChargeRate =  entityPM.AWBChargeRate;
+            var chargeAmount = entityPM.ChargeableWeight;
+            var groupCode = this.GetRateClassGroupCode(myRateClassCode);
+            if (entityPM.RateClassCode == "K")
+            {
+                chargeAmount = entityPM.ChargeableWeightInKG;
+            }
+           
+            if (groupCode == "M")
+            {
+                myResult = myChargeRate;
+            }
+            else if (groupCode == "R")
+            {
+                myResult = myChargeRate * chargeAmount;
+            }
+            return myResult;
+        }
+
+        public string GetRateClassGroupCode(string rateClassCode)
+        {
+            var code = "";
+            switch (rateClassCode)
+            {
+                case "M":
+                case "B":
+                    {
+                        code = "M";
+                        break;
+                    }
+
+                case "R":
+                case "X":
+                case "Y":
+                    {
+                        code = "S";
+                        break;
+                    }
+
+                case "C":
+                case "E":
+                case "K":
+                case "N":
+                case "P":
+                case "Q":
+                case "U":
+                case "S":
+                    {
+                        code = "R";
+                        break;
+                    }
+
+                default: { break; }
+            }
+            return code;
+        }
+
         private void InitializeHouseField()
         {
             if (string.IsNullOrEmpty(entityPM.House))
@@ -4112,6 +4225,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         this.initializer.IsUpdatingHouses = true;
                     }
                     else if (entityPM.MainCarriageFinalDestinationPortId != entityMasterData.MainCarriageFinalDestinationPortId)
+                    {
+                        this.initializer.IsUpdatingHouses = true;
+                    }
+                    else if (entityPM.PreCarriageFromPortId != entityMasterData.PreCarriageFromPortId)
+                    {
+                        this.initializer.IsUpdatingHouses = true;
+                    }
+                    else if (entityPM.OnCarriageToPortId != entityMasterData.OnCarriageToPortId)
                     {
                         this.initializer.IsUpdatingHouses = true;
                     }
@@ -5338,7 +5459,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 shipmentPayableRepository.Remove(itemPoco);
                 calculateProfit = true;
-                calculatePayables = true;
+                calculatePayables = true;                
             }
         }
         private void CreateChildPayable(ShipmentPayablePM childPayablePM, string parentId)
@@ -5808,10 +5929,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 List<ShipmentPackage> list = shipmentPackageRepository.GetShipmentPackagesByCommodityId(entityPM.Id, itemPoco.Id, itemPoco.Tenant).ToList();
                 if (list != null)
                 {
-                    foreach (ShipmentPackage package in list)
-                    {
-                        shipmentPackageRepository.Remove(package);
-                    }
+                    //foreach (ShipmentPackage package in list)
+                    //{
+                    //    shipmentPackageRepository.Remove(package);
+                    //}
                 }
 
                 shipmentCommodityRepository.Remove(itemPoco);

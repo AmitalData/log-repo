@@ -49,9 +49,6 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string StorageServiceMode { get; set; }
         public bool IsUpgradingChamp { get; set; }
         public string HtmlVersion { get; set; }
-        public string QBOConsumerKey { get; set; }
-        public string QBOAppToken { get; set; }
-        public string QBOConsumerSecretKey { get; set; }
         public string AndroidAppLink { get; set; }
         public string IOSAppLink { get; set; }
         public double AndroidPodAppMinimumVersion { get; set; }

@@ -24,7 +24,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool IsReadOnly { get; set; }
         public string Name { get; set; }
 
-        public string QuerySection { get; set; }
 
         
         //[Include]

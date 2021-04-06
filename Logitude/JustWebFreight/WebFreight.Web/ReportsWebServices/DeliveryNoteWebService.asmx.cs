@@ -202,6 +202,7 @@ namespace WebFreight.Web.ReportsWebServices
             dataProvider.CustomsClearancePointName = shipment.CustomClearancePointName;
             dataProvider.ValueOfGoods = shipment.ValueOfGoods;
             dataProvider.MainCarriageCarrierNumber = shipment.MainCarriageCarrierNumber;
+            dataProvider.CarrierCode = shipment.MainCarriageCarrierCode;
 
             MapBranchData();
 
@@ -329,7 +330,7 @@ namespace WebFreight.Web.ReportsWebServices
         {
             if (!string.IsNullOrEmpty(shipment.ShipperId))
             {
-                dataProvider.ClientReferenceNumber = shipment.ShipperReference1 != null ? shipment.ShipperReference1 : "";
+                dataProvider.ClientReferenceNumber = shipment.CustomerReference1 != null ? shipment.CustomerReference1 : "";
                 dataProvider.ShipperReference2 = shipment.ShipperReference2;
 
                 Card card = CardRepository.GetSingleCard(shipment.ShipperId, tenant, true);
@@ -589,6 +590,7 @@ namespace WebFreight.Web.ReportsWebServices
                 dataProvider.TruckNumber = childEntity.TruckNumber;
                 dataProvider.TruckerNumber = childEntity.CarrierNumber;
                 dataProvider.SpecialInstructions = childEntity.Notes != null ? childEntity.Notes : "";
+                dataProvider.PickupDeliveryNumber = childEntity.PickUpDeliveryNumber;
 
                 this.MapChildEntityFrom();
                 this.MapChildEntityTo();
@@ -856,6 +858,29 @@ namespace WebFreight.Web.ReportsWebServices
                 dataProvider.DeliveryTime = String.Format("{0:hh:mm}", childEntity.ETA);
                 dataProvider.DeliveryTime_DateTime_New = childEntity.ETA;
             }
+
+            dataProvider.PickupDeliveryDeparture = this.GetActualOrExpectedDeparture();
+            dataProvider.PickupDeliveryArrival = this.GetActualOrExpectedArrival();           
+        }
+        private DateTime? GetActualOrExpectedDeparture()
+        {
+            DateTime? myDate = childEntity.ATD;
+            if (myDate == null)
+            {
+                myDate = childEntity.ETD;
+            }
+
+            return myDate;
+        } 
+        private DateTime? GetActualOrExpectedArrival()
+        {
+            DateTime? myDate = childEntity.ATA;
+            if (myDate == null)
+            {
+                myDate = childEntity.ETA;
+            }
+
+            return myDate;
         }
         private void MapChildEntityCarrier()
         {

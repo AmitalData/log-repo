@@ -55,7 +55,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     OriginalCashbookLines: ObservableCollection = new ObservableCollection([]);
     CashbookLines: ObservableCollection = new ObservableCollection([]);
     SelectedCashbookLines: ObservableCollection = new ObservableCollection([]);
-    public IsFirstTimeToFillOriginalCashbookLines: boolean = true;
+    public IsOriginalCashbookLinesNeedeToFill: boolean = true;
 
     BankDepositLines: ObservableCollection = new ObservableCollection([]);
     public isRTL: boolean = false;
@@ -399,6 +399,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     }
 
     private GetCashbookLinesAccordingToFilter(newValue: string) {
+        this.IsOriginalCashbookLinesNeedeToFill = true;
         if (this.GetNumberOfSelectedLines() > 0) {
             this.ShowConfirmMessageToToggleBetweenCashAndPostdated(newValue);
         }
@@ -549,9 +550,9 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                 this.NoCashBookRows = true;
             }
 
-            if (this.IsFirstTimeToFillOriginalCashbookLines) {
+            if (this.IsOriginalCashbookLinesNeedeToFill || this.OriginalCashbookLines.Length == 0) {
                 this.OriginalCashbookLines = this.CashbookLines;
-                this.IsFirstTimeToFillOriginalCashbookLines = false;
+                this.IsOriginalCashbookLinesNeedeToFill = false;
             }
 
             this.SetSelectedCashbookLines();

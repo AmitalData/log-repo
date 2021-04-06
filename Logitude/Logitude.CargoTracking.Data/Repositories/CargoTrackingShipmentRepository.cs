@@ -68,6 +68,14 @@ namespace Logitude.CargoTracking.Data.Repositories
 
             return shipment;
         }
+
+        public CargoTrackingShipment GetCargoTrackingShipmentByEntityId(string entityId,int tenant)
+        {
+            return (from a in context.CargoTrackingShipments
+                    where a.Tenant == tenant
+                    && a.EntityId == entityId
+                    select a).FirstOrDefault();
+        }
     }
 
 }

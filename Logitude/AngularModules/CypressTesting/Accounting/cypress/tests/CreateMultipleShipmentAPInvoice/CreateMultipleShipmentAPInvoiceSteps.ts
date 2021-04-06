@@ -135,7 +135,8 @@ Then("the invoice should create successfully", () => {
 
 //#region Add and edit shipment lines
 Given("the user add and edit shipment lines", () => {
-  AccountingActions.AddTwoShipmentLinesAndEditAmount(shipmentNumbers, apInvoiceDetails.VATType, payableDetails);
+  AccountingActions.AddShipmentLines(shipmentNumbers);
+  AccountingActions.EditAmountsINMultipleShipmentAPInvoice(shipmentNumbers, apInvoiceDetails.VATType, payableDetails);
   AccountingActions.SaveAPInvoice();
 });
 

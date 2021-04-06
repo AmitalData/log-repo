@@ -33,8 +33,6 @@ export class AccountingSettingList {
 		ARPaymentTransferStartDate: Date;
 		AllowPositiveAmountsInTheCreditNote: boolean;
 		QBOrealMeID: string;
-		QBOAccessToken: string;
-		QBOAccessTokenSecret: string;
 		TransferToDropboxActivated: boolean;
 		EnableMultiPercentageVATTypes: boolean;
 		NotifyPastDateOnInvoiceEdit: boolean;
