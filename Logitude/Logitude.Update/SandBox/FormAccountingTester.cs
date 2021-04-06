@@ -20,6 +20,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Windows.Forms;
 
 namespace Logitude.Update.SandBox
@@ -136,6 +137,33 @@ namespace Logitude.Update.SandBox
 
             var agingReportRebulidTesterService = new AgingReportRebulidTesterService();
             agingReportRebulidTesterService.RebulidReconcile(tenant, reconcileId);
+        }
+
+        private void loadBigJournalFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int tenant = int.Parse(_TBTenant.Text);
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+
+            openFileDialog1.InitialDirectory = "c:\\";
+            openFileDialog1.Filter = "All files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 2;
+            openFileDialog1.RestoreDirectory = true;
+
+            if (openFileDialog1.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+            
+            string jsonText = File.ReadAllText(openFileDialog1.FileName);
+            JournalPM entityPM = LogitudeXmlSerializer.JsonConvertDeserializeTObject<JournalPM>(jsonText);
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            {
+                IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
+                JournalUpdateService service = new JournalUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                service.Update(entityPM, true);
+                scope.Complete();
+            }
         }
     }
 }
