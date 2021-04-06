@@ -171,6 +171,10 @@ namespace Logitude.Server.Tools
         private int threadID;
         public void LogDoneItemInMemory()
         {
+            LogDoneItemInMemory(500);
+        }
+        public void LogDoneItemInMemory(int sleepInMS)
+        {
             try
             {
                 threadID = AppDomain.GetCurrentThreadId();
@@ -212,7 +216,8 @@ namespace Logitude.Server.Tools
                 if (tId != -1)
                 {
                     CPUtimeStart = tx[tId].TotalProcessorTime.Milliseconds;
-                    Thread.Sleep(500);
+                    //Thread.Sleep(500);
+                    Thread.Sleep(sleepInMS);
                     CPUtimeEnd = tx[tId].TotalProcessorTime.Milliseconds;
 
                     if ((CPUtimeEnd > CPUtimeStart) | (CPUtimeEnd == CPUtimeStart))

@@ -36,8 +36,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.APInvoiceTransferStartDate = entityPM.APInvoiceTransferStartDate;
             poco.ARInvoiceTransferStartDate = entityPM.ARInvoiceTransferStartDate;
             poco.AllowPositiveAmountsInTheCreditNote = entityPM.AllowPositiveAmountsInTheCreditNote;
-            poco.QBOAccessToken = entityPM.QBOAccessToken;
-            poco.QBOAccessTokenSecret = entityPM.QBOAccessTokenSecret;
             poco.QBOrealMeID = entityPM.QBOrealMeID;
             poco.IsSingleTaxPerInvoice = entityPM.IsSingleTaxPerInvoice;
             poco.IsARPaymentsTransferEnabled = entityPM.IsARPaymentsTransferEnabled;

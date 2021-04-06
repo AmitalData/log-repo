@@ -95,6 +95,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      GLAccountDisplayNumber = a.Card.GLAccountDisplayNumber,
                                  },
                                  BillToId = a.Card.BillToId,
+                                 ImageDetailId = a.Card.ImageDetailId,
                              }).FirstOrDefault();
 
             CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
@@ -185,6 +186,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      GLAccountDisplayNumber = a.Card.GLAccountDisplayNumber,
                                  },
                                  BillToId = a.Card.BillToId,
+                                 ImageDetailId = a.Card.ImageDetailId,
                              }).FirstOrDefault();
 
             CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
@@ -268,6 +270,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  PrimaryContactId = a.Card.PrimaryContactId,
                                              },
                                              BillToId = a.Card.BillToId,
+                                             ImageDetailId = a.Card.ImageDetailId,
                                          };
             return agents;
         }
@@ -335,6 +338,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  PrimaryContactId = a.Card.PrimaryContactId,
                              },
                              BillToId = a.Card.BillToId,
+                             ImageDetailId = a.Card.ImageDetailId,
 
                          }).AsQueryable();
 

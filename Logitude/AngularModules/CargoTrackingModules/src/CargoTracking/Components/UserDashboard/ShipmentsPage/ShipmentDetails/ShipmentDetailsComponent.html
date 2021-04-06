@@ -1,12 +1,11 @@
 <div *ngIf="isLoading"> <br>  Loading...</div>
 
 <div *ngIf="!isLoading" class="shipment-details-container">
-    <!-- <h1>Shipment Details</h1> -->
-
     <div style="padding: 16px 76px 0px 90px;background: RGB(242,244,247);color: var(--MainColor);">
         <a href="javascript:;" (click)="BackLinkClicked()">Back to shipments</a>
     </div>
 
+    <!-- Shipment Header -->
     <div style="order: 0;" *ngIf="Shipment" class="shipment-header hide-mobile">
 
         <!-- icon -->
@@ -16,7 +15,7 @@
                     <img class="path " [attr.src]="GetModeIcon()" alt=" " />
                 </div>
             </div>
-        </div> 
+        </div>
 
         <!-- References -->
         <div>
@@ -45,6 +44,7 @@
 
     </div>
 
+    <!-- Milestones -->
     <div style="order: 2;" #SliderWrapper  class="slider-wrapper" (wheel)="onMousewheel($event)" (pan)="logPan($event)">
 
         <div class="pager hide-mobile" [class.dim]="sliderMarginLeft==0" (click)="MoveSlider('right')">
@@ -57,8 +57,8 @@
                 <div class="card empty mobile-only">
 
                 </div>
-                <div class="card" 
-                    *ngFor="let card of SliderCards" 
+                <div class="card"
+                    *ngFor="let card of SliderCards"
                     [class.active]="card.IsActive"
                     [class.dim]="card.IsDimmed"
                     [class.warning]="card.HasWarning">
@@ -70,7 +70,7 @@
             </div>
         </div>
 
-        <div class="pager hide-mobile" (click)="MoveSlider('left')" 
+        <div class="pager hide-mobile" (click)="MoveSlider('left')"
         [class.dim]="((sliderMarginCardCount+sliderVisibleCardsCount)>=SliderCards.length) || (sliderVisibleCardsCount >= SliderCards.length)"
         >
             <img src="./assets/images/icons/right-arrow@2x.png"  alt="" />
@@ -135,7 +135,7 @@
                     <div class="title">declaration status</div>
                     <div class="description">Lorem Ipsum dolar</div>
                 </div>
-            
+
             </div>
         </div>
 
@@ -189,7 +189,7 @@
                         Medu2134541
                     </div>
                 </div>
-            
+
             </div>
         </div>
 
@@ -230,7 +230,7 @@
         </div>
 
     </panel>
-    
+
     <panel style="order: 5;"  [Title]="'Customs Data'"
             [Name]="'CustomsDataPanel'"
             [HaveDetailsSection]="true"
@@ -271,8 +271,8 @@
                     <div class="title">total taxes</div>
                     <div class="description">585,100 ₪</div>
                 </div>
-                
-            
+
+
             </div>
         </div>
 
@@ -284,7 +284,7 @@
                 <th style="width: 400px;">type</th>
                 <th style="width: 200px;" class="hide-mobile">calculation base</th>
                 <th style="width: 200px;">tax amount</th>
-                <th style="width: 200px;" class="hide-mobile">pay amount</th> 
+                <th style="width: 200px;" class="hide-mobile">pay amount</th>
                 <th style="width: 200px;" class="hide-mobile">rejected amount</th>
             </tr>
             <tr>
@@ -323,22 +323,5 @@
     </panel>
 
 </div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 <br>
 <br>

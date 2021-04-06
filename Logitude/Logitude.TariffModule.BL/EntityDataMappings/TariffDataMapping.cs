@@ -37,6 +37,12 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
                     entityPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
                 }
             }
+            Card seller = CardRepository.GetSingleCard(entityPM.SellerId, entityPM.Tenant, true);
+            if (seller != null)
+            {
+                entityPM.SellerPartnerTypeId = seller.PartnerTypeId;
+                entityPOCO.SellerPartnerTypeId = seller.PartnerTypeId;
+            }
 
             entityPOCO.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
             entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;

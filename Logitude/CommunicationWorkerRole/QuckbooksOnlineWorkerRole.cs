@@ -6,11 +6,9 @@ using Intuit.Ipp.QueryFilter;
 using Intuit.Ipp.Security;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools;
-using Logitude.BL.InvoiceModel.Tools.DataMapping;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
@@ -23,7 +21,6 @@ using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
-using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure.Azure;
@@ -31,24 +28,18 @@ using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Transactions;
-using System.Xml;
 using System.Xml.Serialization;
 
 namespace CommunicationWorkerRole
 {
     class QuckbooksOnlineWorkerRole : WorkerEntryPoint
     {
-
-
-        CloudQueue quickbooksonlinequeue;
         DbQueueService queueservice;
         private string queueName;
         ICommonDataContext Commoncontext;
@@ -61,7 +52,7 @@ namespace CommunicationWorkerRole
         public override void Run()
         {
             while (IsRunning)
-           {
+            {
                 if (!General.IsUpdating())
                 {
                     int tenant = 0;
@@ -72,57 +63,50 @@ namespace CommunicationWorkerRole
                         LastActivity = DateTime.UtcNow;
                         if (response.MessageId != null)
                         {
-
                             string communicationLogId = response.MessageValues["QuickbooksOnline"].ToString();
                             type = response.MessageValues["type"].ToString();
                             int.TryParse(response.MessageValues["Tenant"].ToString(), out tenant);
-                  
-                                if (!response.MessageValues.ContainsKey("OldTransferStatusCode"))
+
+                            if (!response.MessageValues.ContainsKey("OldTransferStatusCode"))
+                            {
+                                OldTransferStatusCode = null;
+                            }
+                            else
+                            {
+                                OldTransferStatusCode = response.MessageValues["OldTransferStatusCode"];
+                            }
+
+                            Commoncontext = CommonDataContext.GetContext(tenant);
+                            Invoicecontext = InvoiceContext.GetContext(tenant);
+                            CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(Commoncontext);
+                            CommunicationLog cl = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
+                            if (cl != null)
+                            {
+                                if (cl.CommunicationStatusTypeCode == "T")
                                 {
-                                    OldTransferStatusCode = null;
+                                    queueservice.Complete();
                                 }
                                 else
-                                    OldTransferStatusCode = response.MessageValues["OldTransferStatusCode"];
-                                Commoncontext = CommonDataContext.GetContext(tenant);
-                                Invoicecontext = InvoiceContext.GetContext(tenant);
-                                CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(Commoncontext);
-                                CommunicationLog cl = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
-                                if (cl != null)
                                 {
-                                    if (cl.CommunicationStatusTypeCode == "T")
-                                    {
-                                        queueservice.Complete();
-                                    }
-                                    else
-                                    {
-                                        SendCommunicationLog(communicationLogId, tenant, cl, communicationLogRep);
-                                        queueservice.Complete();
-
-                                        LogDoneItemInMemory();
-
-                                    }
+                                    SendCommunicationLog(communicationLogId, tenant, cl, communicationLogRep);
+                                    queueservice.Complete();
+                                    LogDoneItemInMemory();
                                 }
-                            
+                            }
                         }
                     }
                     catch (Exception exc)
                     {
                         ExceptionHandler.HandleException(exc, DateTime.Now, tenant, "", "WorkerRole", "", null);
 
-                    }                    
+                    }
                 }
                 else
                 {
                     Thread.Sleep(60000);
-
                 }
-
             }
         }
-
-    
-
-
 
         public override bool OnStart()
         {
@@ -131,22 +115,16 @@ namespace CommunicationWorkerRole
             DoneItemsInRange = new Dictionary<DateTime, int>();
             queueName = "QBO";
             ConnectClient();
-            //quickbooksonlinequeue = StorageAcountDetails.QueueClient.GetQueueReference("QBO");
-            //quickbooksonlinequeue.CreateIfNotExists();
-            //quickbooksonlinequeue.Clear();
             return base.OnStart();
-
-
         }
        
         public void ConnectClient()
         {
             try
             {
-
                 queueservice = new DbQueueService(queueName, 0);
-                //queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } });
             }
+
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Connect client method", null, null);
@@ -154,7 +132,6 @@ namespace CommunicationWorkerRole
         }
         private void SetNextTryDateTime(CommunicationLog cl)
         {
-            string newLog = null;
             DateTime date = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
             DateTime dateUtc = DateTime.UtcNow;
             switch (cl.Retries)
@@ -214,118 +191,115 @@ namespace CommunicationWorkerRole
                         break;
                     }
             }
+
             cl.Logs += Environment.NewLine + "Retry #" + cl.Retries + " Next Retry: " + cl.NextTryDateTimeUTC.ToString();
         }
 
         public void SendWaitingCommunicationLog(CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, int tenant)
         {
-            try {
-            CommunicationAttachmentRepository communicationAttachmentRep = new CommunicationAttachmentRepository(waitingCommLog.Tenant);
-
-            List<CommunicationAttachment> attachmentsList = communicationAttachmentRep.GetCommunicationAttachmentsForCommLog(waitingCommLog.Id, waitingCommLog.Tenant).ToList();
-
-            string xmlfile = "";
-            if (waitingCommLog != null)
+            try
             {
-                byte[] datainByte = null;
-                string filename;
-                if (waitingCommLog.Document != null)
+                CommunicationAttachmentRepository communicationAttachmentRep = new CommunicationAttachmentRepository(waitingCommLog.Tenant);
+                List<CommunicationAttachment> attachmentsList = communicationAttachmentRep.GetCommunicationAttachmentsForCommLog(waitingCommLog.Id, waitingCommLog.Tenant).ToList();
+
+                string xmlfile = "";
+                if (waitingCommLog != null)
                 {
-                    filename = waitingCommLog.DocumentId + "." + waitingCommLog.Document.Extension;
-
-                    CloudBlobContainer blobContainer = StorageAcountDetails.GetCurrentContainer(waitingCommLog.Tenant);
-                    var blobfile = blobContainer.GetBlockBlobReference(StorageAcountDetails.GetBlobNameByLocation(filename, waitingCommLog.Document.Folder));
-
-                    Logitude.Server.Tools.BlobFileInfo fileInfo = new Logitude.Server.Tools.BlobFileInfo()
+                    byte[] datainByte = null;
+                    string filename;
+                    if (waitingCommLog.Document != null)
                     {
-                        FileName = waitingCommLog.Document.Id,
-                        FolderName = waitingCommLog.Document.Folder,
-                        Extension = waitingCommLog.Document.Extension,
-                        Tenant = waitingCommLog.Document.Tenant,
-                        FileSize = waitingCommLog.Document.FileSize,
-                    };
-                    Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
-                    datainByte = storageservice.Read(fileInfo);
-                    if (datainByte != null && waitingCommLog.CommunicationLogTypeCode == "T")
-                    {
-                        Encoding encoding = Encoding.UTF8;
-                        xmlfile = encoding.GetString(datainByte);
+                        filename = waitingCommLog.DocumentId + "." + waitingCommLog.Document.Extension;
+                        CloudBlobContainer blobContainer = StorageAcountDetails.GetCurrentContainer(waitingCommLog.Tenant);
+                        var blobfile = blobContainer.GetBlockBlobReference(StorageAcountDetails.GetBlobNameByLocation(filename, waitingCommLog.Document.Folder));
 
+                        Logitude.Server.Tools.BlobFileInfo fileInfo = new Logitude.Server.Tools.BlobFileInfo()
+                        {
+                            FileName = waitingCommLog.Document.Id,
+                            FolderName = waitingCommLog.Document.Folder,
+                            Extension = waitingCommLog.Document.Extension,
+                            Tenant = waitingCommLog.Document.Tenant,
+                            FileSize = waitingCommLog.Document.FileSize,
+                        };
+
+                        Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
+                        datainByte = storageservice.Read(fileInfo);
+                        if (datainByte != null && waitingCommLog.CommunicationLogTypeCode == "T")
+                        {
+                            Encoding encoding = Encoding.UTF8;
+                            xmlfile = encoding.GetString(datainByte);
+                        }
                     }
 
-
-                }
-
-
-                switch (waitingCommLog.CommunicationLogTypeCode)
-                {
-                    case "T":
-                        {
-                            if (!string.IsNullOrEmpty(xmlfile))
+                    switch (waitingCommLog.CommunicationLogTypeCode)
+                    {
+                        case "T":
                             {
-                                if (waitingCommLog.InOut == "O")
+                                if (!string.IsNullOrEmpty(xmlfile))
                                 {
-                                    string myTarget = "";
-                                    if (!string.IsNullOrEmpty(waitingCommLog.To))
+                                    if (waitingCommLog.InOut == "O")
                                     {
-                                        myTarget = waitingCommLog.To;
-                                    }
+                                        string myTarget = "";
+                                        if (!string.IsNullOrEmpty(waitingCommLog.To))
+                                        {
+                                            myTarget = waitingCommLog.To;
+                                        }
 
-                                    switch (myTarget.ToUpper())
-                                    {
-                                        case "QBO":
-                                            {
-                                                SendCommunicationLogToQuickBooksOnline(waitingCommLog, datainByte, communicationLogRep,tenant);
-                                                break;
-                                            }
+                                        switch (myTarget.ToUpper())
+                                        {
+                                            case "QBO":
+                                                {
+                                                    SendCommunicationLogToQuickBooksOnline(waitingCommLog, datainByte, communicationLogRep, tenant);
+                                                    break;
+                                                }
 
-                                        default:
-                                            {
-                                                throw new Exception("Sending to unknow!");
-                                            }
+                                            default:
+                                                {
+                                                    throw new Exception("Sending to unknow!");
+                                                }
+                                        }
                                     }
                                 }
-                            }
 
-                            break;
-                        }
+                                break;
+                            }
+                    }
                 }
-            }
             }
 
             catch (Exception exc)
             {
-
                 ExceptionHandler.HandleException(exc, DateTime.Now, tenant, "", "WorkerRole", "", null);
 
-                //Change number of retries
                 if (waitingCommLog.Retries >= 5)
                 {
                     this.StopCommunicationLog(exc, waitingCommLog, communicationLogRep);
-
                 }
+
                 else
                 {
                     waitingCommLog.Retries++;
                     waitingCommLog.ExceptionMessage = exc.Message;
+                    
                     if (exc.InnerException != null)
                     {
                         waitingCommLog.ExceptionMessage = waitingCommLog.ExceptionMessage + Environment.NewLine + exc.InnerException;
                     }
+
                     if (exc.StackTrace != null)
                     {
                         waitingCommLog.ExceptionMessage = waitingCommLog.ExceptionMessage + Environment.NewLine + "Stack trace: " + exc.StackTrace;
                     }
+
                     SetNextTryDateTime(waitingCommLog);
+                    
                     if (Commoncontext != null)
                     {
                         communicationLogRep.Update(waitingCommLog);
                         communicationLogRep.SubmitChanges();
                     }
                 }
-                
-                }            
-            
+            }
         }
 
         private void StopCommunicationLog(Exception exc,CommunicationLog cl, CommunicationLogRepository communicationLogRep)
@@ -339,12 +313,9 @@ namespace CommunicationWorkerRole
             communicationLogRep.Update(cl);
             communicationLogRep.SubmitChanges();
             queueservice.CompleteAsFailed();
-
         }
         private void SendCommunicationLog(string communicationLogId, int tenant, CommunicationLog cl, CommunicationLogRepository communicationLogRep)
         {
-
-
             try
             {
                 if (cl.Retries < 5)
@@ -361,7 +332,6 @@ namespace CommunicationWorkerRole
                         sb.AppendLine("Failed To Send , Check your Translations");
                         SendingFail(cl, tenant, sb.ToString(), null, APInvoiceId);
                     }
-
                 }
             }
 
@@ -369,24 +339,26 @@ namespace CommunicationWorkerRole
             {
                 ExceptionHandler.HandleException(exc, DateTime.Now, tenant, "", "WorkerRole", "", null);
 
-                //Change number of retries
                 if (cl.Retries >= 5)
                 {
-                    this.StopCommunicationLog(exc, cl, communicationLogRep);
-                    
+                    this.StopCommunicationLog(exc, cl, communicationLogRep);                    
                 }
+
                 else
                 {
                     cl.Retries++;
                     cl.ExceptionMessage = exc.Message;
+                    
                     if (exc.InnerException != null)
                     {
                         cl.ExceptionMessage = cl.ExceptionMessage + Environment.NewLine + exc.InnerException;
                     }
+                    
                     if (exc.StackTrace != null)
                     {
                         cl.ExceptionMessage = cl.ExceptionMessage + Environment.NewLine + "Stack trace: " + exc.StackTrace;
                     }
+                    
                     SetNextTryDateTime(cl);
                     if (Commoncontext != null)
                     {
@@ -399,9 +371,6 @@ namespace CommunicationWorkerRole
 
         private void SendingFail(CommunicationLog waitingCommLog, int tenant, string message, string QBOId, string Id)
         {
-
-
-
             CommunicationLogRepository commLogrepository = new CommunicationLogRepository(Commoncontext);
             waitingCommLog.CommunicationStatusTypeCode = "F";
             waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
@@ -442,8 +411,10 @@ namespace CommunicationWorkerRole
                     payment.TransferError = null;
                     payment.TransferStatusCode = "ET";
                     payment.IsTransferStarted = false;
+                    
                     if (QBOId != null)
                         payment.ExternalAccountingEntityId = QBOId;
+
                     repository.Update(payment);
                     repository.SubmitChanges();
                 }
@@ -457,8 +428,10 @@ namespace CommunicationWorkerRole
                 {
                     payment.TransferError = null;
                     payment.TransferStatusCode = "ET";
+
                     if (QBOId != null)
                         payment.ExternalAccountingEntityId = QBOId;
+
                     repository.Update(payment);
                     repository.SubmitChanges();
                 }
@@ -473,8 +446,10 @@ namespace CommunicationWorkerRole
                     invoice.TransferError = null;
                     invoice.TransferStatusCode = "ET";
                     invoice.IsTransferStarted = false;
+
                     if (QBOId != null)
                         invoice.ExternalAccountingEntityId = QBOId;
+
                     repository.Update(invoice);
                     repository.SubmitChanges();
                 }
@@ -483,7 +458,6 @@ namespace CommunicationWorkerRole
             queueservice.Complete();
             QBOIDSuccess = null;
         }
-
 
         private void ARPaymentUpdate(string ARPaymentId,Payment payment, CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, int tenant, DataService service)
         {
@@ -497,19 +471,19 @@ namespace CommunicationWorkerRole
                 Payment final = service.Update(myResult[0]) as Payment;
                 SendingSuccessfully(waitingCommLog, tenant, final.Id,null,null);                
             }
+
             else
             {
                 throw new Exception("Failed to Send");
             }
-
         }
-
 
         private void APPaymentUpdate(string APPaymentId, BillPayment payment, CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, int tenant, DataService service)
         {
             ServiceContext serviceContext = GetServiceContext(tenant + "");
             QueryService<BillPayment> APPaymentQueryService = new QueryService<BillPayment>(serviceContext);
             List<BillPayment> myResult = APPaymentQueryService.ExecuteIdsQuery("Select * from BillPayment where Id='" + APPaymentId + "'").ToList();
+            
             if (myResult.Count > 0)
             {
                 myResult[0].AnyIntuitObject = payment.AnyIntuitObject;
@@ -517,14 +491,12 @@ namespace CommunicationWorkerRole
                 BillPayment final = service.Update(myResult[0]) as BillPayment;
                 SendingSuccessfully(waitingCommLog, tenant, final.Id, null,null);
             }
+
             else
             {
                 throw new Exception("Failed to Send");
             }
-
         }
-
-
 
         private void ARInvoiceVoid(string ARInvoiceId, CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, int tenant, DataService service)
         {
@@ -535,18 +507,17 @@ namespace CommunicationWorkerRole
             if (myResult.Count > 0)
             {
                 Invoice final = service.Void(myResult[0]) as Invoice;
-                if(final==null)
+
+                if (final == null)
                     throw new Exception("Failed to Void");
 
-                SendingSuccessfully(waitingCommLog, tenant, final.Id, null,null);
-
+                SendingSuccessfully(waitingCommLog, tenant, final.Id, null, null);
             }
+
             else
             {
-                SendingFail(waitingCommLog, tenant, "This Invoice doesn't exist on quickbooks online to be voided .", null,null);
-
+                SendingFail(waitingCommLog, tenant, "This Invoice doesn't exist on quickbooks online to be voided .", null, null);
             }
-
         }
 
         private void ARPaymentVoid(string ARPaymentId, CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, int tenant, DataService service)
@@ -562,18 +533,13 @@ namespace CommunicationWorkerRole
                     throw new Exception("Failed to Void");
 
                 SendingSuccessfully(waitingCommLog, tenant, final.Id, null,null);
-
             }
+
             else
             {
                 SendingFail(waitingCommLog, tenant, "This Invoice doesn't exist on quickbooks online to be voided .", null,null);
-
             }
-
         }
-
-
-
 
         private void SendCommunicationLogToQuickBooksOnline(CommunicationLog waitingCommLog, byte[] xmlfile, CommunicationLogRepository communicationLogRep,int tenant)
         {
@@ -588,19 +554,25 @@ namespace CommunicationWorkerRole
                     string ErrorMessage = "";
                     ARInvoiceHelper ARservice = new ARInvoiceHelper();
                     List<Intuit.Ipp.Data.Customer> customer = ARservice.GetQuickBooksOnlineCustomersByText("Select * from Customer where Id='" + final.CustomerRef.Value + "'", tenant + "");
+
                     if (customer.Count != 0)
+                    {
                         ExternalTableIdCustomerCurrencyRef = customer[0].CurrencyRef.Value;
+                    }
+
                     else
                     {
                         ErrorMessage = "The Customer Reference doesn't exists in your Quickbooks online company ";
-
                     }
+
                     if(final.CurrencyRef!=null)
+
                     if (ExternalTableIdCustomerCurrencyRef != final.CurrencyRef.Value)
                     {
                         if(final.CurrencyRef.Value!=null)
                         ErrorMessage = "The Currencies are different on your Customer External Currency  and System External Currency ";
-                    }                   
+                    } 
+                    
                     if (!String.IsNullOrEmpty(ErrorMessage))
                     {
                         SendingFail(waitingCommLog, tenant, ErrorMessage,null,null);
@@ -627,8 +599,7 @@ namespace CommunicationWorkerRole
                 }
 
                 else if (type == "MEMO")
-                {
-                     
+                {                     
                     MemoryStream memorystream = new MemoryStream(xmlfile);
                     XmlSerializer xmlSerializer = new XmlSerializer(typeof(CreditMemo));
                     CreditMemo final = (CreditMemo)xmlSerializer.Deserialize(memorystream);
@@ -636,13 +607,14 @@ namespace CommunicationWorkerRole
                     string ErrorMessage = "";
                     ARInvoiceHelper APService = new ARInvoiceHelper();
                     List<Intuit.Ipp.Data.Customer> customer = APService.GetQuickBooksOnlineCustomersByText("Select * from Customer where Id='" + final.CustomerRef.Value + "'", tenant + "");
+                    
                     if (customer.Count != 0)
                         ExternalTableIdCustomerCurrencyRef = customer[0].CurrencyRef.Value;
                     else
                     {
                         ErrorMessage = "The Customer Reference doesn't exists in your Quickbooks online company ";
-
                     }
+
                     if (final.CurrencyRef != null)
                         if (ExternalTableIdCustomerCurrencyRef != final.CurrencyRef.Value)
                     {
@@ -672,14 +644,10 @@ namespace CommunicationWorkerRole
                             SendingSuccessfully(waitingCommLog, tenant,null, "The Credit Note number already exists in your Quickbooks online Credit Notes", null);
                         }
                     }
-
-
-
                 }
 
                 else if (type == "APInvoice")
                 {
-
                     MemoryStream memorystream = new MemoryStream(xmlfile);
                     XmlSerializer xmlSerializer = new XmlSerializer(typeof(Bill));
                     Bill final = (Bill)xmlSerializer.Deserialize(memorystream);
@@ -926,15 +894,14 @@ namespace CommunicationWorkerRole
             }
             catch (Exception exc)
             {
-
                 ExceptionHandler.HandleException(exc, DateTime.Now, tenant, "", "WorkerRole", "", null);
 
                 //Change number of retries
                 if (waitingCommLog.Retries >= 5)
                 {
                     this.StopCommunicationLog(exc, waitingCommLog, communicationLogRep);
-
                 }
+
                 else
                 {
                     waitingCommLog.Retries++;
@@ -953,20 +920,15 @@ namespace CommunicationWorkerRole
                         communicationLogRep.Update(waitingCommLog);
                         communicationLogRep.SubmitChanges();
                     }
-                }
-                
+                }                
             }
-
         }
 
         private void SendingSuccessfully(CommunicationLog waitingCommLog,int tenant,string QBOId,string Exception,string Id){
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
-
                 if(String.IsNullOrEmpty(QBOId) && String.IsNullOrEmpty(QBOIDSuccess))
-
                 {
-
                     throw new Exception("Failed to Send !");
                 }
 
@@ -988,6 +950,7 @@ namespace CommunicationWorkerRole
                     invoice.TransferError = null;
                     invoice.TransferStatusCode = "TR";
                     invoice.IsTransferStarted = false;
+                    
                     if (QBOId != null)
                         invoice.ExternalAccountingEntityId = QBOId;
 
@@ -999,11 +962,8 @@ namespace CommunicationWorkerRole
                     if (WasErrorInTransfer)
                     {
                         APInvoicePaymentRepository aPInvoicePaymentRepository = new APInvoicePaymentRepository(tenant);
-
                         List<APPayment> aRPayments = aPInvoicePaymentRepository.GetAPInvoicePaymentTransferedByInvoiceId(waitingCommLog.EntityId, tenant).ToList();
-
                         APPaymentRepository paymentRepository = new APPaymentRepository(tenant);
-
 
                         foreach (APPayment payment in aRPayments)
                         {
@@ -1012,11 +972,7 @@ namespace CommunicationWorkerRole
                             APPaymentPM paymentPM = PaymentQuery.GetSinglePM(payment.Id, tenant);
                             service.APPaymentQuickbooksValidating(paymentPM, true, false, payment, this.Invoicecontext, this.Commoncontext, false, true);
                         }
-
                     }
-
-
-
                 }
 
                 else if (type == "ARPayment" || type == "ARPaymentVoid")
@@ -1026,10 +982,12 @@ namespace CommunicationWorkerRole
                     payment.TransferError = null;
                     payment.TransferStatusCode = "TR";
                     payment.IsTransferStarted = false;
+                    
                     if (QBOId != null)
                         payment.ExternalAccountingEntityId = QBOId;
                     else if (QBOIDSuccess != null)
                         payment.ExternalAccountingEntityId = QBOIDSuccess;
+
                     repository.Update(payment);
                     repository.SubmitChanges();
                 }
@@ -1040,14 +998,15 @@ namespace CommunicationWorkerRole
                     APPayment payment = repository.GetSingleAPPayment(waitingCommLog.EntityId, tenant);
                     payment.TransferError = null;
                     payment.TransferStatusCode = "TR";
+                    
                     if (QBOId != null)
                         payment.ExternalAccountingEntityId = QBOId;
                     else if (QBOIDSuccess != null)
                         payment.ExternalAccountingEntityId = QBOIDSuccess;
+
                     repository.Update(payment);
                     repository.SubmitChanges();
                 }
-
 
                 else
                 {
@@ -1057,6 +1016,7 @@ namespace CommunicationWorkerRole
                     bool WasErrorInTransfer = OldTransferStatusCode == "ET" ? true : false;
                     invoice.TransferStatusCode = "TR";
                     invoice.IsTransferStarted = false;
+                    
                     if (QBOId != null)
                         invoice.ExternalAccountingEntityId = QBOId;
                     else if (QBOIDSuccess != null)
@@ -1067,11 +1027,8 @@ namespace CommunicationWorkerRole
                     if (WasErrorInTransfer)
                     {
                         ARInvoicePaymentRepository aRInvoicePaymentRepository = new ARInvoicePaymentRepository(tenant);
-
                         List<ARPayment> aRPayments = aRInvoicePaymentRepository.GetARInvoicePaymentTransferedByInvoiceId(waitingCommLog.EntityId, tenant).ToList();
-
                         ARPaymentRepository paymentRepository = new ARPaymentRepository(tenant);
-
 
                         foreach (ARPayment payment in aRPayments)
                         {
@@ -1081,18 +1038,14 @@ namespace CommunicationWorkerRole
                             service.ARPaymentQuickbooksValidating(paymentPM, true, false, payment, this.Invoicecontext, this.Commoncontext, false, false, paymentPM.SetReSendQBO, true);
                         }
                     }
-
                 }
-
 
                 QBOIDSuccess = null;
                 scope.Complete();
-            }
-          
+            }          
         }
 
-
-        private Boolean checkInvoiceExisitance(string invoiceNumber,CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, int tenant)
+        private Boolean checkInvoiceExisitance(string invoiceNumber, CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, int tenant)
         {
             try
             {
@@ -1105,15 +1058,13 @@ namespace CommunicationWorkerRole
                     {
                         QBOIDSuccess = myResult[0].Id;
                         return false;
-
                     }
+
                     return true;
                 }
 
-
                 else if (type == "MEMO")
                 {
-
                     ServiceContext serviceContext = GetServiceContext(tenant + "");
                     QueryService<CreditMemo> invoiceQueryService = new QueryService<CreditMemo>(serviceContext);
                     List<CreditMemo> myResult = invoiceQueryService.ExecuteIdsQuery("Select * from CreditMemo where DocNumber='" + invoiceNumber + "'").ToList();
@@ -1121,12 +1072,9 @@ namespace CommunicationWorkerRole
                     {
                         QBOIDSuccess = myResult[0].Id;
                         return false;
-
                     }
 
                     return true;
-
-
                 }
 
                 else if (type == "APInvoice")
@@ -1138,11 +1086,9 @@ namespace CommunicationWorkerRole
                     {
                         QBOIDSuccess = myResult[0].Id;
                         return false;
-
                     }
 
                     return true;
-
                 }
 
                 else if (type == "VendorCredit")
@@ -1154,23 +1100,20 @@ namespace CommunicationWorkerRole
                     {
                         QBOIDSuccess = myResult[0].Id;
                         return false;
-
                     }
 
                     return true;
 
                 }
 
-
                 else
                     return true;
-
             }
 
-            catch (Exception exc) {
+            catch (Exception exc)
+            {
                 ExceptionHandler.HandleException(exc, DateTime.Now, tenant, "", "WorkerRole", "", null);
 
-                //Change number of retries
                 if (waitingCommLog.Retries >= 5)
                 {
                     this.StopCommunicationLog(exc, waitingCommLog, communicationLogRep);
@@ -1184,11 +1127,14 @@ namespace CommunicationWorkerRole
                     {
                         waitingCommLog.ExceptionMessage = waitingCommLog.ExceptionMessage + Environment.NewLine + exc.InnerException;
                     }
+
                     if (exc.StackTrace != null)
                     {
                         waitingCommLog.ExceptionMessage = waitingCommLog.ExceptionMessage + Environment.NewLine + "Stack trace: " + exc.StackTrace;
                     }
+
                     SetNextTryDateTime(waitingCommLog);
+
                     if (Commoncontext != null)
                     {
                         communicationLogRep.Update(waitingCommLog);
@@ -1196,28 +1142,22 @@ namespace CommunicationWorkerRole
                     }
                 }
                 throw;
-                }
-
-
-
+            }
         }
-
 
         public  string GetAccessToken(string tenant, AccountingSettingPM entityPM, Setting mySetting)
         {
-
             var oauth2Client = new OAuth2Client(mySetting.QBOClientID,
                     mySetting.QBOClientSecret,
                     "https://developer.intuit.com/v2/OAuth2Playground/RedirectUrl",
-                    "production"); // environment is “sandbox” or “production”
+                    "production");
 
             var previousRefreshToken = entityPM.RefreshToken;
             var tokenResp = oauth2Client.RefreshTokenAsync(previousRefreshToken);
             tokenResp.Wait();
             var data = tokenResp.Result;
 
-            if (!String.IsNullOrEmpty(data.Error) || String.IsNullOrEmpty(data.RefreshToken) ||
-                  String.IsNullOrEmpty(data.AccessToken))
+            if (!String.IsNullOrEmpty(data.Error) || String.IsNullOrEmpty(data.RefreshToken) || String.IsNullOrEmpty(data.AccessToken))
             {
                 throw new Exception("Refresh token failed - " + data.Error);
             }
@@ -1239,7 +1179,6 @@ namespace CommunicationWorkerRole
             return data.AccessToken;
         }
 
-
         private  ServiceContext GetServiceContextAuth2(String tenant, AccountingSettingPM entityPM, Setting mySetting)
         {
             OAuth2RequestValidator oauthValidator = new OAuth2RequestValidator(GetAccessToken(tenant, entityPM, mySetting));
@@ -1247,11 +1186,9 @@ namespace CommunicationWorkerRole
             serviceContext.IppConfiguration.BaseUrl.Qbo = "https://quickbooks.api.intuit.com/";
 
             return serviceContext;
-
         }
 
-
-        public  ServiceContext GetServiceContext(String tenant)
+        public ServiceContext GetServiceContext(String tenant)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
@@ -1260,28 +1197,12 @@ namespace CommunicationWorkerRole
             {
                 SettingRepository mySettingRepository = new SettingRepository();
                 mySetting = mySettingRepository.GetSingleSetting("1");
-
                 scope.Complete();
             }
 
             AccountingSettingQuery query = new AccountingSettingQuery(int.Parse(tenant));
             AccountingSettingPM entityPM = query.GetSingleAccountingSettingPMById(int.Parse(tenant));
-
-            if (entityPM.QBOOAuth == 2 && mySetting.QBOOAuthDefault == 2)
-            {
-                return GetServiceContextAuth2(tenant, entityPM, mySetting);
-            }
-
-            else
-            {
-                OAuthRequestValidator oauthValidator = new OAuthRequestValidator(entityPM.QBOAccessToken, entityPM.QBOAccessTokenSecret, mySetting.QBOConsumerKey, mySetting.QBOConsumerSecretKey);
-                ServiceContext context = new ServiceContext(mySetting.QBOAppToken, entityPM.QBOrealMeID, IntuitServicesType.QBO, oauthValidator);
-
-
-
-                return context;
-            }
+            return GetServiceContextAuth2(tenant, entityPM, mySetting);
         }
-
     }
 }

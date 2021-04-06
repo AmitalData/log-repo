@@ -435,17 +435,7 @@ export class ShipmentPMService {
         ShipmentPMInitService.InitValues(entityPM, true);
 
         return entityPM;
-    }
-    //handleError(error: Response) {
-
-    //    var apiException = error.json();
-    //    var response: ServiceResponse;
-    //    response = new ServiceResponse();
-    //    response.HasError = true;
-    //    response.ErrorsArray.push(apiException.ShortErrorMessage);
-
-    //    return of(response);
-    //}
+    }    
     clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};
@@ -870,21 +860,21 @@ export class ShipmentPMService {
 
         entityPM.ShipmentCommodities = new Array<ShipmentCommodityPM>();
 
-        for (var item in jsonPM.ShipmentCommodities) {
-           
-            var itemJson = jsonPM.ShipmentCommodities[item];
+        for (var pack in jsonPM.ShipmentCommodities) {
+
+            var itemJson = jsonPM.ShipmentCommodities[pack];
             if (mapParent && (itemJson.ChangeSetOp == "Delete" || itemJson.ChangeSetOp == 3)) {
                 continue;
             }
+
             var itemPM: ShipmentCommodityPM;
-            if (mapParent) {
+            if (mapParent) { // get mapping
                 itemPM = new ShipmentCommodityPM(entityPM);
             }
 
-            else {
+            else {// update mapping             
                 itemPM = new ShipmentCommodityPM(null);
             }
-
             itemPM.DisableMarkAsDirty = true;
             var pmKeys = Object.keys(itemJson);
             for (var key in pmKeys) {
@@ -896,7 +886,8 @@ export class ShipmentPMService {
                 var property = pmKeys[key];
                 itemPM[property] = itemJson[property];
             }
-           
+
+
             if (mapParent) {
 
                 itemPM.UniqueKey = Guid.newGuid();
@@ -904,10 +895,10 @@ export class ShipmentPMService {
                 itemJson.ChangeSetOp = "None";
                 itemPM.OldEntityPM = this.clone(itemPM);
 
-                this.MapShipmentCommodityPackage(itemPM, itemJson, mapParent);
+                this.MapShipmentCommodityPackages(itemPM, itemJson, mapParent);
                 itemPM.OldEntityPM.CommodityPackages = [];
-                for (var k3 in itemPM.CommodityPackages) {
-                    var clonedInside = this.clone(itemPM.CommodityPackages[k3]);
+                for (var k2 in itemPM.CommodityPackages) {
+                    var clonedInside = this.clone(itemPM.CommodityPackages[k2]);
                     itemPM.OldEntityPM.CommodityPackages.push(clonedInside);
                 }
             }
@@ -923,7 +914,7 @@ export class ShipmentPMService {
                     itemPM.ChangeSetOp = "Insert";
                 }
 
-                this.MapShipmentCommodityPackage(itemPM, itemJson, mapParent);
+                this.MapShipmentCommodityPackages(itemPM, itemJson, mapParent);
                 itemPM.EntityParentPM = null;
                 itemPM.OldEntityPM = null;
             }
@@ -934,15 +925,36 @@ export class ShipmentPMService {
         }
 
         if (oldCollection) {
-            for (var item in oldCollection) {
-                if (entityPM.ShipmentCommodities.filter(p => p.UniqueKey === oldCollection[item].UniqueKey).length === 0) {
-                    if (oldCollection[item]) {
-                        oldCollection[item].ChangeSetOp = "Delete";
-                        entityPM.ShipmentCommodities.push(oldCollection[item]);
+
+            for (var pack in oldCollection) {
+                if (entityPM.ShipmentCommodities.filter(p => p.UniqueKey === oldCollection[pack].UniqueKey).length === 0) {
+                    if (oldCollection[pack]) {
+                        var oldpackageJson = oldCollection[pack];
+                        var deletedPM: ShipmentCommodityPM = new ShipmentCommodityPM(null);
+                        deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldpackageJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldpackageJson[property];
+                        }
+
+                        deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+
+                        this.MapShipmentCommodityPackages(deletedPM, oldpackageJson, mapParent);
+
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ShipmentCommodities.push(deletedPM);
                     }
                 }
             }
-        }
+        } 
     }
     MapShipmentOrderPackages(entityPM: ShipmentPM, jsonPM: any, mapParent: boolean = true) {
         var oldCollection: ShipmentOrderPackagePM[] = [];
@@ -2359,7 +2371,7 @@ export class ShipmentPMService {
             }
         }
     }
-    MapShipmentCommodityPackage(entityPM: ShipmentCommodityPM, jsonPM: any, mapParent: boolean = true) {
+    MapShipmentCommodityPackages(entityPM: ShipmentCommodityPM, jsonPM: any, mapParent: boolean = true) {
 
         var oldCollection: CommodityPackagePM[] = [];
         if (entityPM.OldEntityPM && !mapParent) {
@@ -2369,25 +2381,22 @@ export class ShipmentPMService {
         entityPM.CommodityPackages = new Array<CommodityPackagePM>();
 
         for (var pack in jsonPM.CommodityPackages) {
-
             var itemJson = jsonPM.CommodityPackages[pack];
             if (mapParent && (itemJson.ChangeSetOp == "Delete" || itemJson.ChangeSetOp == 3)) {
                 continue;
             }
 
-
             var itemPM: CommodityPackagePM;
-            if (mapParent) { // get mapping
+            if (mapParent) { 
                 itemPM = new CommodityPackagePM(entityPM);
             }
 
-            else {// update mapping             
+            else {           
                 itemPM = new CommodityPackagePM(null);
             }
 
             var pmKeys = Object.keys(itemJson);
             for (var key in pmKeys) {
-
                 if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties") {
                     continue;
                 }
@@ -2395,7 +2404,6 @@ export class ShipmentPMService {
                 var property = pmKeys[key];
                 itemPM[property] = itemJson[property];
             }
-
 
             if (mapParent) {
                 itemPM.UniqueKey = Guid.newGuid();

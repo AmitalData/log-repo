@@ -33,7 +33,16 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from record in context.PaymentTerms where record.Tenant == tenant select record);
         }
-        
+
+        public PaymentTerm GetSinglePaymentTerm(string id)
+        {
+
+            return (from record in context.PaymentTerms where record.Id == id select record).FirstOrDefault();
+             
+        }
+
+
+
         public IQueryable<PaymentTerm> GetPaymenTermsByTenant(int tenant)
         {
             return (from record in context.PaymentTerms where record.Tenant == tenant select record);

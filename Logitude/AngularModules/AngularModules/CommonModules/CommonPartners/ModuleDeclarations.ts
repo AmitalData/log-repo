@@ -41,6 +41,7 @@ import { AddEditTariffTranslationComponent } from './Components/EditTabs/TariffT
 import { AddEditPartnerAddressComponent } from './Components/AddEdit/AddEditPartnerAddressComponent';
 import { UploadPartnersComponent } from './Components/Maintenance/UploadPartnersComponent';
 import { StorageDefaultsComponents } from './Components/EditTabs/Warehouse/StorageDefaultsComponents';
+import { ShippingAgentGeneralTabComponent } from './Components/EditTabs/ShippingAgent/ShippingAgentGeneralTabComponent';
 
 export const Components =
     [
@@ -86,7 +87,8 @@ export const Components =
         AddEditTariffTranslationComponent,
         AddEditPartnerAddressComponent,
         UploadPartnersComponent,
-        StorageDefaultsComponents
+        StorageDefaultsComponents,
+        ShippingAgentGeneralTabComponent,
     ];
 
 export class ModuleDeclarations {
@@ -138,6 +140,7 @@ export class ModuleDeclarations {
             case "AddEditPartnerAddressComponent": { myResult = AddEditPartnerAddressComponent; break; }
             case "UploadPartnersComponent": { myResult = UploadPartnersComponent; break; }
             case "StorageDefaultsComponents": { myResult = StorageDefaultsComponents; break; }
+            case "ShippingAgentGeneralTabComponent": { myResult = ShippingAgentGeneralTabComponent; break; }
         }
 
         return myResult;

@@ -212,10 +212,10 @@
                                                                 {{item.CostUnitPrice | NumbersPipe:'N3'}}
                                                             </td>
 
-                                                            <td *ngIf="item.CostMeasurementCode == 'PRVL' || item.CostMeasurementCode =='PRFR'" style="width:2px;">
+                                                            <td *ngIf="item.CostMeasurementCode == 'PRVL' || item.CostMeasurementCode =='PRFR' || item.CostMeasurementCode =='PFCL'" style="width:2px;">
                                                                 <div></div>
                                                             </td>
-                                                            <td *ngIf="item.CostMeasurementCode == 'PRVL' || item.CostMeasurementCode =='PRFR'" style="text-align:right; width:5px;">%</td>
+                                                            <td *ngIf="item.CostMeasurementCode == 'PRVL' || item.CostMeasurementCode =='PRFR' || item.CostMeasurementCode =='PFCL'" style="text-align:right; width:5px;">%</td>
                                                         </tr>
                                                     </table>
                                                 </div>
@@ -373,7 +373,7 @@
                                                             </td>
 
                                                             <td [ngStyle]="{color: item.SaleUnitPriceColor}" style="width: 1px;">{{item.SaleUnitPrice | NumbersPipe:'N3'}}</td>
-                                                            <td [ngStyle]="{color: item.SaleUnitPriceColor}" style="width: 1px; padding-left: 5px;" *ngIf="item.SaleMeasurementCode == 'PRVL' || item.SaleMeasurementCode =='PRFR'">%</td>
+                                                            <td [ngStyle]="{color: item.SaleUnitPriceColor}" style="width: 1px; padding-left: 5px;" *ngIf="item.SaleMeasurementCode == 'PRVL' || item.SaleMeasurementCode =='PRFR' || item.SaleMeasurementCode =='PFCL'">%</td>
                                                         </tr>
                                                     </table>
                                                 </div>

@@ -17,7 +17,7 @@ export var PrivateResetPasswordComponent = (function (_super) {
         this.ForgetPasswordImage = "";
         this.Id = "";
         this.MainLogo = "";
-        this.ContactUsEmail = sessionStorage.getItem('ContactEmail');
+        this.ContactUsEmail = "mailto:" + sessionStorage.getItem('ContactEmail');
     }
     PrivateResetPasswordComponent.prototype.ngOnInit = function () {
         this.GetPrivateLabelsData();
@@ -26,7 +26,7 @@ export var PrivateResetPasswordComponent = (function (_super) {
         this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
         this.MainLogo = BrandingDataService.GetImage("MainLogo");
         this.ForgetPasswordImage = BrandingDataService.GetImage("ForgetPasswordImage");
-        this.MainColor = BrandingDataService.MainColor;
+        //this.MainColor = BrandingDataService.MainColor; 
     };
     PrivateResetPasswordComponent.decorators = [
         { type: Component, args: [{

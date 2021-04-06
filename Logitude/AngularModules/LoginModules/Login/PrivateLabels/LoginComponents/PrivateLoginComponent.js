@@ -22,6 +22,7 @@ export var PrivateLoginComponent = (function (_super) {
         this.MainLogo = "";
         this.SmallLogo = "";
         this.showSpinner = true;
+        this.IsDSV = false;
     }
     PrivateLoginComponent.prototype.ngOnInit = function () {
         this.get_cookie_data();
@@ -29,6 +30,7 @@ export var PrivateLoginComponent = (function (_super) {
         // Get Images from storage, then request from server to change
         this.GetImagesFromStorage();
         this.GetPrivateLabelsData(this.privateUrl);
+        this.IsDSV = window.sessionStorage.getItem("IsDSV") == "true";
     };
     PrivateLoginComponent.prototype.GetImagesFromStorage = function () {
         this.GetLoginPageImages();
@@ -37,7 +39,6 @@ export var PrivateLoginComponent = (function (_super) {
         this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
         this.MainLogo = BrandingDataService.GetImage("MainLogo");
         this.LoginImage = BrandingDataService.GetImage("LoginImage");
-        this.LoginImage = BrandingDataService.GetImage("LoginImage");
         this.showSpinner = false;
     };
     PrivateLoginComponent.prototype.GetPrivateLabelsData = function (privateUrl) {
@@ -45,8 +46,8 @@ export var PrivateLoginComponent = (function (_super) {
         this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe(function (response) {
             if (response.Result) {
                 BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
-                _this.MainColor = response.Result.MainColor;
-                BrandingDataService.MainColor = _this.MainColor;
+                //this.MainColor = response.Result.MainColor;
+                //BrandingDataService.MainColor = this.MainColor;
                 _this.GetLoginPageImages();
             }
         });
@@ -59,7 +60,7 @@ export var PrivateLoginComponent = (function (_super) {
     };
     PrivateLoginComponent.prototype.ForgotPasswordClicked = function () {
         this.ClearLocation();
-        Tools.DynamicLoader.Load("/Login/PrivateLabels/LoginComponents/PrivateChangePasswordComponent", SessionInfo.MainLocation)
+        Tools.DynamicLoader.Load("/Login/PrivateLabels/LoginComponents/PrivateResetPasswordComponent", SessionInfo.MainLocation)
             .then(function (cmpRef) {
         });
     };

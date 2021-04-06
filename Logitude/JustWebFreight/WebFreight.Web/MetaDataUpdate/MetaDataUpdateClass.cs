@@ -63204,7 +63204,7 @@ namespace WebFreight.Web.MetaDataUpdate
             // Shared Exceptions
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.AllAWBPrintReceivablesMustMatchShipmentAWBCurrency", DefaultText = "All AWB Print Shipment Receivables must match the Shipment AWB Currency", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.AllAWBPrintPayablesMustMatchShipmentAWBCurrency", DefaultText = "All AWB Print Shipment Payables must match the Shipment AWB Currency", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.AllAWBPrintOnliesMustMatchShipmentAWBCurrency", DefaultText = "All AWB Print Shipment Onlies must match the Shipment AWB Currency", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.AllAWBPrintOnliesMustMatchShipmentAWBCurrency", DefaultText = "All AWB Print Shipment Onlies (from the AWB wizard) must match the Shipment AWB Currency ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             #endregion
 
             #region Queries

@@ -896,34 +896,34 @@ on record.JournalId equals j.Id
 
 
             //// // when take from reconcile from 2018/10 the reconcile set the open amount  into FOreignAmount ALWAYS !!!
-            var qTotalByMonthAcc = 
+            var qTotalByMonthAcc =
                  (from groupByAccountCurrency in myGroup
                   select new GLAccountTotalByMonthsDTOAging()
-                                    {
-                                        Tenant = tenant,
-                                        AccountId = groupByAccountCurrency.Key.MainGLAccountId,
-                                        GLAccountCurrencyId= groupByAccountCurrency.Key.AccountId,
-                                        CurrencyId = groupByAccountCurrency.Key.CurrencyId,
+                  {
+                      Tenant = tenant,
+                      AccountId = groupByAccountCurrency.Key.MainGLAccountId,
+                      GLAccountCurrencyId = groupByAccountCurrency.Key.AccountId,
+                      CurrencyId = groupByAccountCurrency.Key.CurrencyId,
 
-                                        Year = groupByAccountCurrency.Key.Year,
-                                        Month = groupByAccountCurrency.Key.Month,
+                      Year = groupByAccountCurrency.Key.Year,
+                      Month = groupByAccountCurrency.Key.Month,
 
-                                        LocalAmountCredit = 0,//groupByAccountCurrency.Sum(x => x.OpenAmount),
-                                        LocalAmountDebit = 0 , //0,//groupByAccountCurrency.Sum(x => x.LocalAmountDebit),
+                      LocalAmountCredit = 0,//groupByAccountCurrency.Sum(x => x.OpenAmount),
+                      LocalAmountDebit = 0, //0,//groupByAccountCurrency.Sum(x => x.LocalAmountDebit),
 
                       ///accountingCurrencyId != groupByAccountCurrency.Key.CurrencyId ? 0 : groupByAccountCurrency.Sum(x => x.LedgerTransaction.OpenAmount),
 #if supress_OpenCreditAndDebit
                       ForeignAmountCredit = 0,
                       ForeignAmountDebit = groupByAccountCurrency.Sum(x => x.LedgerTransaction.OpenAmount),
 #else
-                      ForeignAmountCredit = -1*((decimal?)(groupByAccountCurrency.Where(r => r.LedgerTransaction.LocalAmountCredit != 0).Sum(x => x.LedgerTransaction.OpenAmount)) ?? 0),
+                      ForeignAmountCredit = -1 * ((decimal?)(groupByAccountCurrency.Where(r => r.LedgerTransaction.LocalAmountCredit != 0).Sum(x => x.LedgerTransaction.OpenAmount)) ?? 0),
                       ForeignAmountDebit = (decimal?)(groupByAccountCurrency.Where(r => r.LedgerTransaction.LocalAmountCredit == 0).Sum(x => x.LedgerTransaction.OpenAmount)) ?? 0,
 #endif
 
-
+                      TotalOpenTransactions = groupByAccountCurrency.Count(),
 
                       CHANGE_TYPE = ""
-                                    });
+                  }); ;
 
 #if NotOnlyInForeign_B4_201810
 

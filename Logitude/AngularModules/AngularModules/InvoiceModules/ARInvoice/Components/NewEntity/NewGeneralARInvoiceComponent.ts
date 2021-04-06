@@ -755,7 +755,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
 
         else {
             var date1 = new Date(this.InvoiceDate.toString());
-            var date2 = DateTool.GetCurrentDateAsUtc();
+            var date2 = DateTool.GetCurrentDateAsUtcForAccountingValidation();
 
             if (date1.valueOf() > date2.valueOf()) {
                 this.errors.push(TextCodeTranslator.Translate("ARInvoice.M.CantIssueInvoiceWithFutureDate"));

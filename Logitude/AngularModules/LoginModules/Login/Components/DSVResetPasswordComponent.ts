@@ -24,7 +24,7 @@ export class DSVResetPasswordComponent extends ResetPasswordComponent {
     public BackgroundImage: string = "";
     public ForgetPasswordImage: string = ""; 
     public MainLogo: string = "";
-    public ContactUsEmail: string = sessionStorage.getItem('ContactEmail');  
+    public ContactUsEmail: string = "mailto:" +sessionStorage.getItem('ContactEmail');  
 
     constructor( 
         private ss: LoginService) {

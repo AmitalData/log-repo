@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 namespace WebFreight.Web.DataProviders
 {
-    public class AWBDataProvider
+    public class AWBDataProvider: BaseDataProvider
     {
         public string BranchSignature { get; set; }
         public string MainCarriageCarrierPrefix { get; set; }        

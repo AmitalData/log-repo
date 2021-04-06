@@ -23,7 +23,7 @@ export class PrivateLoginComponent extends LoginComponent implements OnInit {
     public MainLogo: string = "";
     public SmallLogo: string = ""; 
     public showSpinner = true;
-
+    public IsDSV = false;
     constructor(
         private ss: LoginService,
         private privateLabelsBrandingDataService: PrivateLabelsBrandingDataService) {
@@ -34,7 +34,8 @@ export class PrivateLoginComponent extends LoginComponent implements OnInit {
         this.privateUrl = SessionInfo.GetLogitudeURL();
         // Get Images from storage, then request from server to change
         this.GetImagesFromStorage();
-         this.GetPrivateLabelsData(this.privateUrl);
+        this.GetPrivateLabelsData(this.privateUrl);
+        this.IsDSV = window.sessionStorage.getItem("IsDSV") == "true";
     }
 
     GetImagesFromStorage() {
@@ -44,8 +45,7 @@ export class PrivateLoginComponent extends LoginComponent implements OnInit {
     private GetLoginPageImages() {
     this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage"); 
     this.MainLogo = BrandingDataService.GetImage("MainLogo"); 
-    this.LoginImage = BrandingDataService.GetImage("LoginImage"); 
-    this.LoginImage = BrandingDataService.GetImage("LoginImage"); 
+    this.LoginImage = BrandingDataService.GetImage("LoginImage");  
     this.showSpinner = false;
     }
 
@@ -53,8 +53,8 @@ export class PrivateLoginComponent extends LoginComponent implements OnInit {
         this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe((response: ServiceResponse) => {
             if (response.Result) { 
                 BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
-                this.MainColor = response.Result.MainColor;
-                BrandingDataService.MainColor = this.MainColor;
+                //this.MainColor = response.Result.MainColor;
+                //BrandingDataService.MainColor = this.MainColor;
                 this.GetLoginPageImages();  
             } })
         this.showSpinner = false;
@@ -68,7 +68,7 @@ export class PrivateLoginComponent extends LoginComponent implements OnInit {
 
     ForgotPasswordClicked() {
         this.ClearLocation();
-        Tools.DynamicLoader.Load("/Login/PrivateLabels/LoginComponents/PrivateChangePasswordComponent", SessionInfo.MainLocation)
+        Tools.DynamicLoader.Load("/Login/PrivateLabels/LoginComponents/PrivateResetPasswordComponent", SessionInfo.MainLocation)
             .then(cmpRef => {
             });
     }

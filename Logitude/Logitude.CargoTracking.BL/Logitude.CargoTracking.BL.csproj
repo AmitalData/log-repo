@@ -52,6 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APIDataContract\CargoTrackingShipment.Generated.cs" />
+    <Compile Include="APIDataContract\CargoTrackingShipmentDetails.cs" />
+    <Compile Include="APIDataContract\MilestoneData.cs" />
+    <Compile Include="APIDataContract\QueryService\CargoTrackingShipmentQueryService.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\TransportModeQueryService.Generated.cs" />
+    <Compile Include="APIDataContract\TransportMode.Generated.cs" />
     <Compile Include="CargoTrackingServices\DBTablesCopy\Generated\CargoTrackingCardDxml.Generated.cs" />
     <Compile Include="CargoTrackingServices\DBTablesCopy\Generated\CargoTrackingCountryDxml.Generated.cs" />
     <Compile Include="CargoTrackingServices\DBTablesCopy\Generated\CargoTrackingHeaderEntityTypeDxml.Generated.cs" />
@@ -128,6 +134,8 @@
     <Compile Include="EntityDataMappings\Generated\CargoTrackingTransportModeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoTrackingWatermarkDataMapping.Generated.cs" />
     <Compile Include="EntityQueryServices\CargoTrackingIncrementalStatQueryService.cs" />
+    <Compile Include="EntityQueryServices\CargoTrackingShipmentQueryService.cs" />
+    <Compile Include="EntityQueryServices\CargoTrackingTransportModeQueryService.cs" />
     <Compile Include="EntityQueryServices\CargoTrackingWatermarkQueryService.cs" />
     <Compile Include="EntityQueryServices\CargoTrackingShipmentSearchQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoTrackingCardQueryService.Generated.cs" />
@@ -157,10 +165,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="APIDataContract\" />
     <Folder Include="Utils\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
+      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
+      <Name>Logitude.BL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.CargoTracking.Data\Logitude.CargoTracking.Data.csproj">
       <Project>{7281a115-2213-41a3-a39a-22476f5a8db8}</Project>
       <Name>Logitude.CargoTracking.Data</Name>

@@ -34,7 +34,7 @@ export class APInvoiceValidator {
 
         var allVatTypes: VatTypeList[] = VatTypesValidator.GetAllVatTypes();
 
-        if (DateTool.GetDateParts(this.EntityPM.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtc().valueOf()) {
+        if (DateTool.GetDateParts(this.EntityPM.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation().valueOf()) {
             this.Errors.push(TextCodeTranslator.Translate("APInvoice.M.CantReceiveFutureDateInvoice"));
         }   
 

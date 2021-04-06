@@ -1672,10 +1672,10 @@ export class AWBWizardComponent implements AfterViewInit{
                                 if (AppTool.IsNullOrZero(item.ChargeRate)) {
                                     screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("ShipmentCommodity.F.ChargeRate")));
                                 }
-                            }
 
-                            if (AppTool.IsNullOrZero(item.ChargeAmount)) {
-                                screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("ShipmentCommodity.F.AWBChargeAmount")));
+                                if (AppTool.IsNullOrZero(item.ChargeAmount)) {
+                                    screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("ShipmentCommodity.F.ChargeAmount")));
+                                }
                             }
                         }
                     });

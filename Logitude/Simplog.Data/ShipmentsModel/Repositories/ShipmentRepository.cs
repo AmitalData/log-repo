@@ -915,5 +915,12 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                                               select shipment).Distinct();
             return shipments;
         }
+
+        public List<Shipment> GetAllShipmentsByHouseNumber(string house, int tenant)
+        {
+            return (from a in context.Shipments
+                    where a.House == house && a.Tenant == tenant
+                    select a).ToList();
+        }
     }
 }

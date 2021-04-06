@@ -5,9 +5,16 @@
     }
 
     .removeLink {
-        margin-left: 59px;
+        margin-left: 40px;
     }
-     
+
+    .ImageSize {
+        font-size: 11px;
+        top: 65px;
+        position: relative;
+        left: 10px;
+    }
+
 </style>
 <div class="TabHolder">
     <table>
@@ -261,12 +268,14 @@
                                             <LogLabel [Text]="'Signature Image'" [ObjectFieldName]="'SignatureImageId'" [ObjectTableName]="'ObjectTableName'"
                                                       [DataContext]="DataContext"></LogLabel>
                                         </span>
+                                        <span class="ImageSize">Size: (100X100 pixels)</span>
                                     </td> 
 
                                     <td style="vertical-align:top">
-                                        <div style="width:160px;height:100px">
-                                            <ImageComponent [KeepOriginalSize]="true" [ImageResizeHeight]="83"
-                                                            [HeightImage]="'95px'" [ImageId]="SignatureImageId"
+                                        <div style="width:120px;height:120px">
+                                            <ImageComponent [KeepOriginalSize]="false" [WidthImage]="'100px'"
+                                                            [ImageResizeHeight]="'100'" [ImageResizeWidth]="'100'"
+                                                            [HeightImage]="'100px'" [ImageId]="SignatureImageId"
                                                             [EntityId]="EntityId" [EntityName]="'ObjectTableName'" [Extension]="'png'"
                                                             (UploadCompleted)="SignatureUploadedCompleted($event)"
                                                             style="height:72px;width:72px">

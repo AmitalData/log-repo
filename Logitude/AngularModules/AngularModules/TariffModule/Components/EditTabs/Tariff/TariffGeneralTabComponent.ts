@@ -113,11 +113,13 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
 
     BuildQueryFilters() {
         var EntityType: string = "IsAir";
-        if (this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "OFS") {
+        if (this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "OFS") {
             EntityType = "IsOcean";
             this.SellerDependancy = "SL";
+        }else if (this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OLC") {
+            EntityType = "IsOcean";
+            this.SellerDependancy = "SL,AG,SG";
         }
-
         this.MeasurementsQueryFilters = new ApiQueryFilters();
 
         if (this.EntityPM.TypeCode == "OFS") {

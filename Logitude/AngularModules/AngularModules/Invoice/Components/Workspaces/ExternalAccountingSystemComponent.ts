@@ -68,20 +68,12 @@ export class ExternalAccountingSystemComponent extends BaseComponent {
     public isQBO: boolean = false;
     public isLogedInQBO: boolean = false;
     SetQuickBookProperties() {
-        if (this.EntityPM.QBOAccessToken != null) {
-            this.isLogedInQBO = true;
-        }
-
-        else {
-            this.isLogedInQBO = false;
-        }
+        this.isLogedInQBO = false;
     }
 
     private IsQuickBooksWindowOpened: boolean = false;
     DissConnectQBO() {        
         this.EntityPM.QBOrealMeID = null;
-        this.EntityPM.QBOAccessToken = null;
-        this.EntityPM.QBOAccessTokenSecret = null;
 
         this.CurrentSession.StartBusyIndicator("Disconnecting..");
 
@@ -140,14 +132,6 @@ export class ExternalAccountingSystemComponent extends BaseComponent {
             if (this.EntityPM.QBOrealMeID) {
                 this.EntityPM.QBOrealMeID = null;
             }
-
-            if (this.EntityPM.QBOAccessToken) {
-                this.EntityPM.QBOAccessToken = null;
-            }
-
-            if (this.EntityPM.QBOAccessTokenSecret) {
-                this.EntityPM.QBOAccessTokenSecret = null;
-            }
         }
 
         if (this.IsQuickBooksWindowOpened && this.AccountingSystemCode == "QBO") {
@@ -162,14 +146,6 @@ export class ExternalAccountingSystemComponent extends BaseComponent {
 
                     if (this.EntityPM.QBOrealMeID != loadedEntity.QBOrealMeID) {
                         this.EntityPM.QBOrealMeID = loadedEntity.QBOrealMeID;
-                    }
-
-                    if (this.EntityPM.QBOAccessToken != loadedEntity.QBOAccessToken) {
-                        this.EntityPM.QBOAccessToken = loadedEntity.QBOAccessToken;
-                    }
-
-                    if (this.EntityPM.QBOAccessTokenSecret != loadedEntity.QBOAccessTokenSecret) {
-                        this.EntityPM.QBOAccessTokenSecret = loadedEntity.QBOAccessTokenSecret;
                     }
 
                     this.SaveChanges();

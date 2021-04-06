@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WebFreight.Web.DataProviders
 {
-    public class ShipmentProfitDataProvider
+    public class ShipmentProfitDataProvider:BaseDataProvider
     {
         public DateTime IssueDate { get; set; }
 

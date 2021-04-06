@@ -15,21 +15,23 @@ import {PortListService} from '../../../../Common/Services/StandardLists/PortLis
 import {VesselListService} from '../../../../Common/Services/StandardLists/VesselListService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 
-@Component({    
+@Component({
     templateUrl: './AddEditPreCarriageComponent.html',
 })
 
 export class AddEditPreCarriageComponent extends BaseComponent {
     public EntityPM: ShipmentPM;
     public ObjectTableName: string;
-    public DataContext = this;   
+    public DataContext = this;
     public ValidationErrorsList: string[] = [];
     public FatherComponent: RoutingsTabComponent;
     public IsConnectedHouse: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public LegType: string;
     public IsOkButtonEnabled: boolean = true;
+    private SaveCompletedEvent: any = null;
     constructor() {
         super();
         this.InitServices();
@@ -86,7 +88,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
 
         else {
             this.SetUIProperties_Carriage();
-        }        
+        }
     }
     SetUIProperties_Carriage() {
         var isTransportFieldEnabled = false;
@@ -327,7 +329,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
             this.EntityPM.PreCarriageCarrierId = value;
             this.SetUIProperties();
 
-            if (AppTool.IsNullOrEmpty(value)) {                
+            if (AppTool.IsNullOrEmpty(value)) {
                 this.EntityPM.PreCarriageCarrierCode = null;
                 this.EntityPM.PreCarriageCarrierName = null;
                 this.EntityPM.PreCarriageCarrierWebSite = null;
@@ -608,7 +610,22 @@ export class AddEditPreCarriageComponent extends BaseComponent {
         this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
-        var errors: string[] = []; 
+        this.ValidationErrorsList = this.Validate();
+
+        if (this.ValidationErrorsList.length == 0) {
+            var isShowChangePortsWindow: boolean = this.CheckToShowChangePortsWindow();            
+
+            if (isShowChangePortsWindow) {
+                this.ShowConfirmChangePortsWindow();                
+            }
+
+            else {
+                this.CloseWindowOnOk();
+            }            
+        }
+    }
+    private Validate(): string[] {
+        var errors: string[] = [];
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
         if (this.EntityPM.ShipmentLevelCode == "H") {
@@ -619,14 +636,9 @@ export class AddEditPreCarriageComponent extends BaseComponent {
             errors = this.ValidatePreCarriage(msg);
         }
 
-        this.ValidationErrorsList = errors;
-
-        if (errors.length == 0) {
-            this.FatherComponent.BuildItemsCollection();
-            this.CurrentSession.CloseCurrentWindowEmit("OK");
-        }
+        return errors;
     }
-    ValidatePreCarriage(msg: string): string[] {
+    private ValidatePreCarriage(msg: string): string[] {
         var errors: string[] = [];
 
         if (AppTool.IsNullOrEmpty(this.PreCarriageTransportModeId)) {
@@ -654,7 +666,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
 
         return errors;
     }
-    ValidatePreForwarding(msg: string): string[] {
+    private ValidatePreForwarding(msg: string): string[] {
         var errors: string[] = [];
 
         if (AppTool.IsNullOrEmpty(this.PreForwardingTransportModeId)) {
@@ -682,6 +694,57 @@ export class AddEditPreCarriageComponent extends BaseComponent {
 
         return errors;
     }
+    private CheckToShowChangePortsWindow(): boolean {
+        var isShowChangePortsWindow: boolean = false;
+        if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
+            if (this.EntityPM.ShipmentConsoleShipments.filter(d => !AppTool.IsNullOrEmpty(d.PreForwardingFromPortId) && !AppTool.IsNullOrEmpty(d.PreForwardingToPortId)).length > 0) {
+                if (this.EntityPM.OriginPreCarriageFromPortId != this.EntityPM.PreCarriageFromPortId) {
+                    isShowChangePortsWindow = true;
+                }
+            }
+
+            else {
+                if (this.EntityPM.OriginPreCarriageToPortId != this.EntityPM.PreCarriageToPortId) {
+                    isShowChangePortsWindow = true;
+                }
+            }
+        }
+
+        return isShowChangePortsWindow;
+    }
+    private ShowConfirmChangePortsWindow() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Title = "Ports Changed";
+        confirmWindow.Show("Updating the Master shipment ports will update the house shipment accordingly");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.SaveMasterHousesPorts();                
+            }
+        });
+    }
+    private SaveMasterHousesPorts() {
+        if (!this.SaveCompletedEvent) {
+            this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                AppTool.KillEventEmitter(this.SaveCompletedEvent);
+                this.SaveCompletedEvent = null;
+
+                if (isSaveSuccess) {
+                    this.CurrentSession.SessionEvent.emit("ReloadHouses");
+                    this.CloseWindowOnOk();
+                }
+
+                else {
+                    this.ValidationErrorsList = this.CurrentSession.CurrentEditComponent.ValidationErrorsList;
+                }
+            });
+
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
+        }
+    }
+    private CloseWindowOnOk() {
+        this.FatherComponent.BuildItemsCollection();
+        this.CurrentSession.CloseCurrentWindowEmit("OK");
+    }    
 
     private myCloner: Cloner;
     private entityCloner: Cloner;

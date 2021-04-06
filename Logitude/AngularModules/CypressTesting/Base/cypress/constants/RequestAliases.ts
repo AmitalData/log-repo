@@ -44,6 +44,7 @@ export class RequestAliases {
     public static readonly GetRecentTariffs = 'GetRecentTariffs';
     public static readonly GetAllTariffVersionsForTariff = 'GetAllTariffVersionsForTariff';
     public static readonly GetTariffVersionLines = "GetTariffVersionLines";
+    public static readonly GetPrevTariffVersionLines = "GetPrevTariffVersionLines";
     public static readonly GetSingleTariff = "GetSingleTariff";
     public static readonly GetVatTypePercentage = 'GetVatTypePercentage';
     public static readonly PostAvailableTariffs = 'PostAvailableTariffs';
@@ -76,6 +77,7 @@ export class RequestAliases {
     public static readonly INTTRAWebServiceSendShippingInstructions = "INTTRAWebServiceSendShippingInstructions";
     //
     public static readonly PutShipment = "PutShipment";
+    public static readonly PutTenant = "PutTenant";
 
 
     //Maintenance
@@ -95,7 +97,12 @@ export class RequestAliases {
 
     public static readonly PostCountry="PostCountry"
     public static readonly PutCountry="PutCountry"
+    public static readonly PostState="PostState"
     public static readonly PutState="PutState"
+    public static readonly PostGlobalZone="PostGlobalZone"
+    public static readonly PutGlobalZone="PutGlobalZone"
+
+    public static readonly PostCity="PostCity"
     public static readonly PutCity="PutCity"
 
     public static readonly PostQuoteTemplate = "PostQuoteTemplate";
@@ -117,6 +124,7 @@ export class RequestAliases {
     public static readonly GetFilterSearch = "GetFilterSearch"
     public static readonly ContactsGetSingle = "ContactsGetSingle";
     public static readonly GetContactMenuButtonGroups = "GetContactMenuButtonGroups";
+    public static readonly GetWarehouseMenuButtonGroups = "GetWarehouseMenuButtonGroups";
     public static readonly ContactViewsGetByFilters = "ContactViewsGetByFilters";
     public static readonly GetCustomersQuickSearch = "GetCustomersQuickSearch"
     //#endregion
@@ -130,5 +138,6 @@ export class RequestAliases {
     public static readonly PasswordResetRequestPage="PasswordResetRequestPage"
     //Reset Password
     public static readonly ResetPassword="ResetPassword"
+
 
 }

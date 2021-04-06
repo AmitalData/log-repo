@@ -432,6 +432,11 @@ export class AgentPM {
     public set BillToId(newValue: string) { if (this.billToId != newValue) { this.billToId = newValue; this.MarkAsDirty("BillToId"); } }
        
 	 
+    private imageDetailId: string;
+    public get ImageDetailId() { return this.imageDetailId; }
+    public set ImageDetailId(newValue: string) { if (this.imageDetailId != newValue) { this.imageDetailId = newValue; this.MarkAsDirty("ImageDetailId"); } }
+       
+	 
 
     public OldEntityPM: AgentPM;
 		

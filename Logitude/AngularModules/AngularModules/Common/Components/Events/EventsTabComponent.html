@@ -135,7 +135,7 @@
                                                             <tr>
                                                                 <td [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" style="width: 70px;" class="Label">Log Date:</td>
                                                                 <td [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" style="width: 85px;" class="Value">{{item.LogDateTime | DateTimeToDatePipe}}</td>
-                                                                <td [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" style="width: 60px;" class="Value">{{item.LogDateTime | DateTimeToTimePipe}}</td>
+                                                                <td [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" style="width: 60px;" class="Value" attr.data-cy="{{'Time_' + item.Name}}">{{item.LogDateTime | DateTimeToTimePipe}}</td>
                                                                 <td [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" style="width: 50px;" class="Label">{{item.LableUser}}:</td>
                                                                 <td [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" style="width: 150px; max-width: 150px;" class="Value TextTrimming">{{item.User}}</td>
                                                                 <td [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" style="width: 90px;" class="Label" *ngIf="IsCustomerCare">Customer Care:</td>

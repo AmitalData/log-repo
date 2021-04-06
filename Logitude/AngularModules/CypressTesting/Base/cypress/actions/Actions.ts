@@ -132,11 +132,11 @@ export function SubstractDaysFromDate(Days: number) {
 }
 
 export function AddDaysToTodayDate(days: number) {
-    var todayDate = new Date();
-    var futureDate = new Date();
+    var todayDate = new Date().toLocaleDateString("en-US", { timeZone: "Asia/Jerusalem"})
+    var todayDateList = todayDate.split("/")
 
-    futureDate.setDate(todayDate.getDate() + days);
-    return FormateTheDate(futureDate)
+    todayDateList[1] = (Number(todayDateList[1]) + days).toString();
+    return FormateTheDateString(todayDateList)
 }
 
 export function GetDatepicker(dateString: string): Datepicker{
@@ -205,18 +205,38 @@ function NavigateToAccountTab(ExternalIDName: string, AccountingSelector: string
     }
 }
 
+function FormateTheDateString(dateList: string[]) {
+    var DateFormat
+    var dd = dateList[1].toString();
+    var mm = dateList[0].toString();
+    var yyyy = dateList[2].toString();
+
+    if (Number(dd) < 10) {
+        dd = "0" + dd;
+    }
+    if (Number(mm) < 10) {
+        mm = "0" + mm;
+    }
+
+    DateFormat = dd + '/' + mm + '/' + yyyy;
+    return DateFormat;
+}
+
 function FormateTheDate(date: Date) {
     var DateFormat
-    var dd = date.getUTCDate();
-    var mm = date.getUTCMonth() + 1
-    var yyyy = date.getFullYear();
+    var dd = date.getUTCDate().toString();
+    var mm = (date.getUTCMonth() + 1).toString();
+    var yyyy = date.getFullYear().toString();
 
-    if(dd<10){
-        DateFormat = "0" + dd + '/' + "0" + mm + '/' + yyyy;
-        return DateFormat
+    if (Number(dd) < 10) {
+        dd = "0" + dd;
     }
-    DateFormat = "" + dd + '/' + "0" + mm + '/' + yyyy;
-    return DateFormat
+    if (Number(mm) < 10) {
+        mm = "0" + mm;
+    }
+
+    DateFormat = dd + '/' + mm + '/' + yyyy;
+    return DateFormat;
 }
 
 function FillCell(columnNumber: string, rowNumber: number, pricingCellselector: string, value: number) {
@@ -233,6 +253,7 @@ export function ValidateEventsTab(expectedEventDetailsList: EventTypeDetails[] ,
             cy.Click(eventTabSelector, null,true);
         }
         BaseAssertion.AssertStatusCode(RequestAliases.GetTraceEventsForEntity, 200);
+        cy.Click(BaseSelectors.RefreshImg+BaseSelectors.LastElement, null,true);
         for (let i = 0; i < expectedEventDetailsList.length; i++) {
             let expectedEvent = expectedEventDetailsList[i].Event;
             let expectedNotes = expectedEventDetailsList[i].Notes;
