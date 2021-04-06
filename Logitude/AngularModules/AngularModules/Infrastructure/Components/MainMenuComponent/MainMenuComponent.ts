@@ -36,6 +36,15 @@ export class MainMenuComponent {
     constructor() {
         this.MainMenuItems = new Array<MainMenuItem>();
         this.MainMenuItems = this.GetMainMenuItemsFromWindow();
+        if (SessionLocator.Tenant == 1321) {
+            var tasksListItem = new MainMenuItem("General.MH.TasksList", AppTool.GetMainMenuIconCode("General.MH.Depositions"));
+            tasksListItem.IndexOfOrder = 31;
+            tasksListItem.ObjectTableId = null;
+            tasksListItem.HtmlView = null;
+            tasksListItem.ObjectTableName = null;
+            tasksListItem.QuerySection = null;
+            this.MainMenuItems.push(tasksListItem);
+        }
         // Layout Direction
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         var defaultStatus: string = LastFilterClass.GetFilterValue("Simplog.Infrastructure.Views.MenuView", "Sidebar");
