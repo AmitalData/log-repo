@@ -291,6 +291,7 @@ export class ShipmentList {
 		PreCarriageETD: Date;
 		PreForwardingETD: Date;
 		IsException: boolean;
+
 		SalesmanUserName: string;
 		CreatedByUserName: string;
 		AirlinePrefix: string;
@@ -458,4 +459,4 @@ export class ShipmentList {
 		PreForwardingFromPortId: string;
 		OnForwardingToPortId: string;
 	
-}
+}

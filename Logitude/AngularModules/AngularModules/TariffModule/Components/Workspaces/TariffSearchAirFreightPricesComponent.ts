@@ -1112,6 +1112,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 shipmentPayable.VendorId = newRecord.SellerId;
                 shipmentPayable.VendorName = newRecord.SellerName;
                 shipmentPayable.MinAmount = newRecord.IsDifferentCurrency ? newRecord.ActualMinPrice : newRecord.MinPrice;
+                this.Generator.CalculatePayableVatAmount(shipmentPayable);
+
                 this.TariffList_Shipment.push(shipmentPayable);
             }
         });
