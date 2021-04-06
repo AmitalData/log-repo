@@ -29,13 +29,13 @@ import { AuthService } from './auth.service';
 import { AuthGuardService } from 'src/Infrastructure/Services/auth-guard.service';
 import { Error401Component } from 'src/CargoTracking/Components/Errors/Error401Component';
 import { LoginServiceHelper } from 'src/Infrastructure/Utilities/LoginServiceHelper';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
 }
-  
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -43,11 +43,11 @@ export function getBaseUrl() {
         SearchComponent,
         BusyIndicator,
         HomeComponent,
-        
+
         // Dashboard
         UserDashboardComponent,
         ShipmentsListComponent,
-        FavoritesPageComponent, 
+        FavoritesPageComponent,
         ShipmentDetailsComponent,
 
         // Infra
@@ -62,10 +62,11 @@ export function getBaseUrl() {
         //Erros
         Error401Component
 
-        
+
     ],
     imports: [
         BrowserModule,
+        CommonModule,
         HttpClientModule,
         AppRoutingModule,
         ReactiveFormsModule,

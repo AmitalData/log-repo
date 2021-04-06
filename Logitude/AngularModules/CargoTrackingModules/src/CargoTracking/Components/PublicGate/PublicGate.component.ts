@@ -31,21 +31,21 @@ export class PublicGateComponent
     {
 
         this.GetDataFromURL();
-        
+
     }
 
 
     private getcargoTrackingData()
     {
         this.cargoTrackingDataExtendedService.get(this._Tenant).subscribe((response: ServiceResponse) =>
-        { 
- 
+        {
+
             CargoTrackingBrandingData.MainColor = response.Result.MainColor;
             if(CargoTrackingBrandingData.MainColor) {
 
                 CargoTrackingBrandingData.MainColor = this.ConvertHexaToRGBA(CargoTrackingBrandingData.MainColor);
-    
-                document.documentElement.style.setProperty('--BGColor', CargoTrackingBrandingData.MainColor);
+
+                // document.documentElement.style.setProperty('--BGColor', CargoTrackingBrandingData.MainColor);
                 document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
                 document.documentElement.style.setProperty('--CircleImageColor', CargoTrackingBrandingData.MainColor);
                 document.documentElement.style.setProperty('--TitleColor', CargoTrackingBrandingData.MainColor);
@@ -80,10 +80,10 @@ export class PublicGateComponent
 
                 if (Number.isNaN(this._Tenant) || !this._Tenant || this._Tenant==null){
                     this._Tenant=1;
-                    this.back();  
+                    this.back();
                 }
                 // else{
-                //     this._Tenant=1; 
+                //     this._Tenant=1;
                 // }
                 this.getcargoTrackingData();
             }
