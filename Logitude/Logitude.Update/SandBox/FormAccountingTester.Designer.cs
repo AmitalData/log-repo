@@ -40,6 +40,8 @@
             this.tESTADHOKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adHookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.agingFixRepoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.miscToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadBigJournalFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -53,7 +55,7 @@
             this._TBTenant.Name = "_TBTenant";
             this._TBTenant.Size = new System.Drawing.Size(72, 20);
             this._TBTenant.TabIndex = 1;
-            this._TBTenant.Text = "3";
+            this._TBTenant.Text = "4";
             // 
             // checkBoxDebugMode
             // 
@@ -120,7 +122,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mupsOpenReconcileToolStripMenuItem,
-            this.adHookToolStripMenuItem});
+            this.miscToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
@@ -165,6 +167,21 @@
             this.agingFixRepoToolStripMenuItem.Text = "AgingFixRepo";
             this.agingFixRepoToolStripMenuItem.Click += new System.EventHandler(this.agingFixRepoToolStripMenuItem_Click);
             // 
+            // miscToolStripMenuItem
+            // 
+            this.miscToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadBigJournalFileToolStripMenuItem});
+            this.miscToolStripMenuItem.Name = "miscToolStripMenuItem";
+            this.miscToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.miscToolStripMenuItem.Text = "Misc";
+            // 
+            // loadBigJournalFileToolStripMenuItem
+            // 
+            this.loadBigJournalFileToolStripMenuItem.Name = "loadBigJournalFileToolStripMenuItem";
+            this.loadBigJournalFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadBigJournalFileToolStripMenuItem.Text = "LoadBigJournalFile";
+            this.loadBigJournalFileToolStripMenuItem.Click += new System.EventHandler(this.loadBigJournalFileToolStripMenuItem_Click);
+            // 
             // FormAccountingTester
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -200,5 +217,7 @@
         private System.Windows.Forms.ToolStripMenuItem adHookToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem agingFixRepoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tESTADHOKToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem miscToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadBigJournalFileToolStripMenuItem;
     }
 }
