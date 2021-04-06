@@ -792,7 +792,28 @@ export class LoginComponent implements OnInit {
                 else {
                     this.loginService.GetTenantTextCode().subscribe((myResult:any) => {
                         if (myResult) {
-                            window.TextCodes = window.TextCodes.concat(myResult);
+                            window.TextCodes = window.TextCodes.concat(myResult); 
+
+                            let additionalTextCodes = [
+                                {
+                                    Code: "General.MH.TasksList",
+                                    DefaultText: "Tasks List",
+                                    DefaultTextPlural: null,
+                                    //Id: "1-14354289542",
+                                    InActive: false,
+                                    IsSpellChecked: false,
+                                    LocalDefaultText: null,
+                                    ObjectTableId: "1-1",
+                                    ObjectTableName: "General",
+                                    SpellCheckDate: null,
+                                    SpellCheckedByUserId: null,
+                                    SpellCheckedByUserName: null,
+                                    Tenant: 0,
+                                    TextCodeTypeCode: "MH"
+                                }
+                            ];
+
+                            window.TextCodes = window.TextCodes.concat(additionalTextCodes);
                             this.IncreaseProgressBar();
                             //25
                         }

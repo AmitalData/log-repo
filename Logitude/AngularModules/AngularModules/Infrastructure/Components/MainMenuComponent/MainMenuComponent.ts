@@ -306,7 +306,10 @@ export class MainMenuComponent {
                         myComponentPath = "./CommonModules/CommonFilingInbox/Components/FilingInboxWorkspaceComponent";
                         break;
                     }
-
+                    case "General.MH.TasksList": {
+                        myComponentPath = "./TasksList/Components/TasksListComponent";
+                        break;
+                    }
                     case "General.MH.Quotes": {
                         ServiceLocator.SendTotangoUserActivity("Quote", "List View");
                         myComponentPath = "./Quote/Components/Workspaces/QuotesComponent";
