@@ -481,6 +481,7 @@
     <Compile Include="EntityDataMappings\ExportDeclarationClosingDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\ExportDeliveryDocumentMessageDataMapping.cs" />
     <Compile Include="EntityDataMappings\ExporterRoleTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ExportStorgeCargoDataMapping.cs" />
     <Compile Include="EntityDataMappings\ExportStorgeDataMapping.cs" />
     <Compile Include="EntityDataMappings\FacilitationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\FaultInspectionTypeDataMapping.cs" />
@@ -677,6 +678,7 @@
     <Compile Include="EntityDataMappings\Generated\ExportDeclarationClosingDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ExportDeliveryDocumentMessageDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ExporterRoleTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ExportStorgeCargoDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ExportStorgeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FacilitationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FaultInspectionTypeDataMapping.Generated.cs" />
@@ -1028,6 +1030,7 @@
     <Compile Include="EntityQueryServices\Generated\ExportDeclarationClosingDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExportDeliveryDocumentMessageQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExporterRoleTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ExportStorgeCargoQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExportStorgeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\FclLclCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\FullnessCodeQueryService.Generated.cs" />
@@ -1551,6 +1554,7 @@
     <Compile Include="EntityUpdateServices\Generated\ExportDeclarationClosingDataUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ExportDeliveryDocumentMessageUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ExporterRoleTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ExportStorgeCargoUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ExportStorgeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\FclLclCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\FullnessCodeUpdateService.Generated.cs" />

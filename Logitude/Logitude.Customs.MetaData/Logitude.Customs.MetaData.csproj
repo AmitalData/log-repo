@@ -329,6 +329,7 @@
     <None Include="DBTables\ExportDeliveryDocumentMessage.dxml" />
     <None Include="DBTables\ExporterRoleType.dxml" />
     <None Include="DBTables\ExportStorge.dxml" />
+    <None Include="DBTables\ExportStorgeCargo.dxml" />
     <None Include="DBTables\FacilitationType.dxml" />
     <None Include="DBTables\FaultInspectionType.dxml" />
     <None Include="DBTables\FclLclCode.dxml" />
@@ -495,6 +496,7 @@
     <None Include="EntityFiles\AmendmentType.lxml" />
     <None Include="EntityFiles\AutonomyRegionType.lxml" />
     <None Include="EntityFiles\ExportStorge.lxml" />
+    <None Include="EntityFiles\ExportStorgeCargo.lxml" />
     <None Include="EntityFiles\StuffingSiteType.lxml" />
     <None Include="EntityFiles\HandingCode.lxml" />
     <None Include="EntityFiles\NDMessageActionCode.lxml" />
