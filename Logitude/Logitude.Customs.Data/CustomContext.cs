@@ -869,6 +869,10 @@ namespace Logitude.Customs.Data
 				
 			modelBuilder.Entity<DepositCondition>().Property(x => x.DepositAmount).HasPrecision(16, 2);
 				
+			modelBuilder.Entity<ExportStorge>().Property(x => x.TransactionQuantity).HasPrecision(8, 0);
+				
+			modelBuilder.Entity<ExportStorge>().Property(x => x.CargoRows).HasPrecision(4, 0);
+				
 			modelBuilder.Entity<GuaranteeCondition>().Property(x => x.GuaranteeAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<PaymentOrder>().Property(x => x.TotalSumToPay).HasPrecision(18, 2);

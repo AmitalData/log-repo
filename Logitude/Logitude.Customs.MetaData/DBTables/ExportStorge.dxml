@@ -186,7 +186,198 @@
   <Column
     Name="LoadingSite"
     Type="varchar"
+    Size="17">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ForwarderReference"
+    Type="varchar"
     Size="10">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TransactionQuantity"
+    Type="decimal"
+    Precision="8"
+    Scale="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ExportDocument"
+    Type="varchar"
+    Size="8">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MessageContent"
+    Type="nvarchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="BookingNumber"
+    Type="varchar"
+    Size="16">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LogisticDeliveryTypeID"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CargoRows"
+    Type="decimal"
+    Precision="4"
+    Scale="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ExporterIdentificationType"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FinalDestinationInternatID"
+    Type="varchar"
+    Size="17">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FirstDestinationInternatID"
+    Type="varchar"
+    Size="17">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OriginAbroadSite"
+    Type="varchar"
+    Size="17">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExpectedPortArrivalDate"
+    Type="nvarchar"
+    Size="14">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DraggedOrSupportedNumber"
+    Type="nvarchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TruckOrTrainNumber"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DriverId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShipCode"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShipName"
+    Type="nvarchar"
+    Size="24">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TransportCompany"
+    Type="varchar"
+    Size="9">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShipAgent"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShippingCompanyCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SecurityClearence"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TransferCargoMethodType"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="StorageOrDockID"
+    Type="nvarchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExporterName"
+    Type="nvarchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExporterFileNumber"
+    Type="varchar"
+    Size="16">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PassportCountry"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExporterNumber"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -232,7 +423,72 @@
     ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="LoadingSite"
-    ReferencedTable="LoadingSiteTypes"
+    ReferencedTable="InternationalSites"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="LogisticDeliveryTypeID"
+    ReferencedTable="DeliveryTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ExporterIdentificationType"
+    ReferencedTable="CustomerIdentificationTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="FinalDestinationInternatID"
+    ReferencedTable="InternationalSites"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="FirstDestinationInternatID"
+    ReferencedTable="InternationalSites"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="OriginAbroadSite"
+    ReferencedTable="InternationalSites"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="TruckOrTrainNumber"
+    ReferencedTable="Truckers"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DriverId"
+    ReferencedTable="Truckers"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipCode"
+    ReferencedTable="CustomsShips"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ShipAgent"
+    ReferencedTable="ShippingAgents"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShippingCompanyCode"
+    ReferencedTable="ShippingLines"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="SecurityClearence"
+    ReferencedTable="SecurityClearenceTypeCodes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="TransferCargoMethodType"
+    ReferencedTable="TransportMeansTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="PassportCountry"
+    ReferencedTable="CustomsCountries"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>

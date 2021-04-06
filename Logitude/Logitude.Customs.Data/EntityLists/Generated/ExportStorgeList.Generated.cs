@@ -70,6 +70,54 @@ namespace Logitude.Customs.Data.EntityLists
        public string StuffingSiteType  { get; set; }
        [DataMember]
        public string LoadingSite  { get; set; }
+       [DataMember]
+       public string ForwarderReference  { get; set; }
+       [DataMember]
+       public decimal TransactionQuantity  { get; set; }
+       [DataMember]
+       public string ExportDocument  { get; set; }
+       [DataMember]
+       public string MessageContent  { get; set; }
+       [DataMember]
+       public string BookingNumber  { get; set; }
+       [DataMember]
+       public string LogisticDeliveryTypeID  { get; set; }
+       [DataMember]
+       public decimal CargoRows  { get; set; }
+       [DataMember]
+       public string ExporterIdentificationType  { get; set; }
+       [DataMember]
+       public string FinalDestinationInternatID  { get; set; }
+       [DataMember]
+       public string FirstDestinationInternatID  { get; set; }
+       [DataMember]
+       public string OriginAbroadSite  { get; set; }
+       [DataMember]
+       public string ExpectedPortArrivalDate  { get; set; }
+       [DataMember]
+       public string DraggedOrSupportedNumber  { get; set; }
+       [DataMember]
+       public string TruckOrTrainNumber  { get; set; }
+       [DataMember]
+       public string DriverId  { get; set; }
+       [DataMember]
+       public string ShipCode  { get; set; }
+       [DataMember]
+       public string ShipName  { get; set; }
+       [DataMember]
+       public string TransportCompany  { get; set; }
+       [DataMember]
+       public string ShipAgent  { get; set; }
+       [DataMember]
+       public string ShippingCompanyCode  { get; set; }
+       [DataMember]
+       public string SecurityClearence  { get; set; }
+       [DataMember]
+       public string TransferCargoMethodType  { get; set; }
+       [DataMember]
+       public string StorageOrDockID  { get; set; }
+       [DataMember]
+       public string ExporterName  { get; set; }
    }
 
 }

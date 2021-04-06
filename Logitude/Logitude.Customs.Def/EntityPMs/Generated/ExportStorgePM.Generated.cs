@@ -710,6 +710,627 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string forwarderReference ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ForwarderReference  
+	   {
+	    
+	     get
+		{
+		   return forwarderReference;
+		 }
+		 set
+		 {
+		   if(forwarderReference != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForwarderReference",OldValue=forwarderReference,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   forwarderReference=value;
+		   }
+			
+		 }
+	   }
+	  private decimal transactionQuantity ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal TransactionQuantity  
+	   {
+	    
+	     get
+		{
+		   return transactionQuantity;
+		 }
+		 set
+		 {
+		   if(transactionQuantity != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransactionQuantity",OldValue=transactionQuantity,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   transactionQuantity=value;
+		   }
+			
+		 }
+	   }
+	  private string exportDocument ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportDocument  
+	   {
+	    
+	     get
+		{
+		   return exportDocument;
+		 }
+		 set
+		 {
+		   if(exportDocument != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportDocument",OldValue=exportDocument,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportDocument=value;
+		   }
+			
+		 }
+	   }
+	  private string messageContent ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MessageContent  
+	   {
+	    
+	     get
+		{
+		   return messageContent;
+		 }
+		 set
+		 {
+		   if(messageContent != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MessageContent",OldValue=messageContent,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   messageContent=value;
+		   }
+			
+		 }
+	   }
+	  private string bookingNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BookingNumber  
+	   {
+	    
+	     get
+		{
+		   return bookingNumber;
+		 }
+		 set
+		 {
+		   if(bookingNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BookingNumber",OldValue=bookingNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   bookingNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string logisticDeliveryTypeID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LogisticDeliveryTypeID  
+	   {
+	    
+	     get
+		{
+		   return logisticDeliveryTypeID;
+		 }
+		 set
+		 {
+		   if(logisticDeliveryTypeID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LogisticDeliveryTypeID",OldValue=logisticDeliveryTypeID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   logisticDeliveryTypeID=value;
+		   }
+			
+		 }
+	   }
+	  private decimal cargoRows ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal CargoRows  
+	   {
+	    
+	     get
+		{
+		   return cargoRows;
+		 }
+		 set
+		 {
+		   if(cargoRows != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CargoRows",OldValue=cargoRows,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   cargoRows=value;
+		   }
+			
+		 }
+	   }
+	  private string exporterIdentificationType ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExporterIdentificationType  
+	   {
+	    
+	     get
+		{
+		   return exporterIdentificationType;
+		 }
+		 set
+		 {
+		   if(exporterIdentificationType != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExporterIdentificationType",OldValue=exporterIdentificationType,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exporterIdentificationType=value;
+		   }
+			
+		 }
+	   }
+	  private string finalDestinationInternatID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FinalDestinationInternatID  
+	   {
+	    
+	     get
+		{
+		   return finalDestinationInternatID;
+		 }
+		 set
+		 {
+		   if(finalDestinationInternatID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FinalDestinationInternatID",OldValue=finalDestinationInternatID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   finalDestinationInternatID=value;
+		   }
+			
+		 }
+	   }
+	  private string firstDestinationInternatID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FirstDestinationInternatID  
+	   {
+	    
+	     get
+		{
+		   return firstDestinationInternatID;
+		 }
+		 set
+		 {
+		   if(firstDestinationInternatID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FirstDestinationInternatID",OldValue=firstDestinationInternatID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   firstDestinationInternatID=value;
+		   }
+			
+		 }
+	   }
+	  private string originAbroadSite ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OriginAbroadSite  
+	   {
+	    
+	     get
+		{
+		   return originAbroadSite;
+		 }
+		 set
+		 {
+		   if(originAbroadSite != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginAbroadSite",OldValue=originAbroadSite,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   originAbroadSite=value;
+		   }
+			
+		 }
+	   }
+	  private string expectedPortArrivalDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExpectedPortArrivalDate  
+	   {
+	    
+	     get
+		{
+		   return expectedPortArrivalDate;
+		 }
+		 set
+		 {
+		   if(expectedPortArrivalDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExpectedPortArrivalDate",OldValue=expectedPortArrivalDate,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   expectedPortArrivalDate=value;
+		   }
+			
+		 }
+	   }
+	  private string draggedOrSupportedNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DraggedOrSupportedNumber  
+	   {
+	    
+	     get
+		{
+		   return draggedOrSupportedNumber;
+		 }
+		 set
+		 {
+		   if(draggedOrSupportedNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DraggedOrSupportedNumber",OldValue=draggedOrSupportedNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   draggedOrSupportedNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string truckOrTrainNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TruckOrTrainNumber  
+	   {
+	    
+	     get
+		{
+		   return truckOrTrainNumber;
+		 }
+		 set
+		 {
+		   if(truckOrTrainNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TruckOrTrainNumber",OldValue=truckOrTrainNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   truckOrTrainNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string driverId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DriverId  
+	   {
+	    
+	     get
+		{
+		   return driverId;
+		 }
+		 set
+		 {
+		   if(driverId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DriverId",OldValue=driverId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   driverId=value;
+		   }
+			
+		 }
+	   }
+	  private string shipCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShipCode  
+	   {
+	    
+	     get
+		{
+		   return shipCode;
+		 }
+		 set
+		 {
+		   if(shipCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipCode",OldValue=shipCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shipCode=value;
+		   }
+			
+		 }
+	   }
+	  private string shipName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShipName  
+	   {
+	    
+	     get
+		{
+		   return shipName;
+		 }
+		 set
+		 {
+		   if(shipName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipName",OldValue=shipName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shipName=value;
+		   }
+			
+		 }
+	   }
+	  private string transportCompany ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TransportCompany  
+	   {
+	    
+	     get
+		{
+		   return transportCompany;
+		 }
+		 set
+		 {
+		   if(transportCompany != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransportCompany",OldValue=transportCompany,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   transportCompany=value;
+		   }
+			
+		 }
+	   }
+	  private string shipAgent ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShipAgent  
+	   {
+	    
+	     get
+		{
+		   return shipAgent;
+		 }
+		 set
+		 {
+		   if(shipAgent != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipAgent",OldValue=shipAgent,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shipAgent=value;
+		   }
+			
+		 }
+	   }
+	  private string shippingCompanyCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShippingCompanyCode  
+	   {
+	    
+	     get
+		{
+		   return shippingCompanyCode;
+		 }
+		 set
+		 {
+		   if(shippingCompanyCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShippingCompanyCode",OldValue=shippingCompanyCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shippingCompanyCode=value;
+		   }
+			
+		 }
+	   }
+	  private string securityClearence ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SecurityClearence  
+	   {
+	    
+	     get
+		{
+		   return securityClearence;
+		 }
+		 set
+		 {
+		   if(securityClearence != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SecurityClearence",OldValue=securityClearence,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   securityClearence=value;
+		   }
+			
+		 }
+	   }
+	  private string transferCargoMethodType ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TransferCargoMethodType  
+	   {
+	    
+	     get
+		{
+		   return transferCargoMethodType;
+		 }
+		 set
+		 {
+		   if(transferCargoMethodType != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransferCargoMethodType",OldValue=transferCargoMethodType,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   transferCargoMethodType=value;
+		   }
+			
+		 }
+	   }
+	  private string storageOrDockID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StorageOrDockID  
+	   {
+	    
+	     get
+		{
+		   return storageOrDockID;
+		 }
+		 set
+		 {
+		   if(storageOrDockID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StorageOrDockID",OldValue=storageOrDockID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   storageOrDockID=value;
+		   }
+			
+		 }
+	   }
+	  private string exporterName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExporterName  
+	   {
+	    
+	     get
+		{
+		   return exporterName;
+		 }
+		 set
+		 {
+		   if(exporterName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExporterName",OldValue=exporterName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exporterName=value;
+		   }
+			
+		 }
+	   }
+	  private string exporterFileNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExporterFileNumber  
+	   {
+	    
+	     get
+		{
+		   return exporterFileNumber;
+		 }
+		 set
+		 {
+		   if(exporterFileNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExporterFileNumber",OldValue=exporterFileNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exporterFileNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string passportCountry ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PassportCountry  
+	   {
+	    
+	     get
+		{
+		   return passportCountry;
+		 }
+		 set
+		 {
+		   if(passportCountry != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PassportCountry",OldValue=passportCountry,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   passportCountry=value;
+		   }
+			
+		 }
+	   }
+	  private string exporterNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExporterNumber  
+	   {
+	    
+	     get
+		{
+		   return exporterNumber;
+		 }
+		 set
+		 {
+		   if(exporterNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExporterNumber",OldValue=exporterNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exporterNumber=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

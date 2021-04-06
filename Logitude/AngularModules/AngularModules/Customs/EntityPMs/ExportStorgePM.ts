@@ -174,6 +174,141 @@ export class ExportStorgePM {
     public set LoadingSite(newValue: string) { if (this.loadingSite != newValue) { this.loadingSite = newValue; this.MarkAsDirty("LoadingSite"); } }
        
 	 
+    private forwarderReference: string;
+    public get ForwarderReference() { return this.forwarderReference; }
+    public set ForwarderReference(newValue: string) { if (this.forwarderReference != newValue) { this.forwarderReference = newValue; this.MarkAsDirty("ForwarderReference"); } }
+       
+	 
+    private transactionQuantity: number;
+    public get TransactionQuantity() { return this.transactionQuantity; }
+    public set TransactionQuantity(newValue: number) { if (this.transactionQuantity != newValue) { this.transactionQuantity = newValue; this.MarkAsDirty("TransactionQuantity"); } }
+       
+	 
+    private exportDocument: string;
+    public get ExportDocument() { return this.exportDocument; }
+    public set ExportDocument(newValue: string) { if (this.exportDocument != newValue) { this.exportDocument = newValue; this.MarkAsDirty("ExportDocument"); } }
+       
+	 
+    private messageContent: string;
+    public get MessageContent() { return this.messageContent; }
+    public set MessageContent(newValue: string) { if (this.messageContent != newValue) { this.messageContent = newValue; this.MarkAsDirty("MessageContent"); } }
+       
+	 
+    private bookingNumber: string;
+    public get BookingNumber() { return this.bookingNumber; }
+    public set BookingNumber(newValue: string) { if (this.bookingNumber != newValue) { this.bookingNumber = newValue; this.MarkAsDirty("BookingNumber"); } }
+       
+	 
+    private logisticDeliveryTypeID: string;
+    public get LogisticDeliveryTypeID() { return this.logisticDeliveryTypeID; }
+    public set LogisticDeliveryTypeID(newValue: string) { if (this.logisticDeliveryTypeID != newValue) { this.logisticDeliveryTypeID = newValue; this.MarkAsDirty("LogisticDeliveryTypeID"); } }
+       
+	 
+    private cargoRows: number;
+    public get CargoRows() { return this.cargoRows; }
+    public set CargoRows(newValue: number) { if (this.cargoRows != newValue) { this.cargoRows = newValue; this.MarkAsDirty("CargoRows"); } }
+       
+	 
+    private exporterIdentificationType: string;
+    public get ExporterIdentificationType() { return this.exporterIdentificationType; }
+    public set ExporterIdentificationType(newValue: string) { if (this.exporterIdentificationType != newValue) { this.exporterIdentificationType = newValue; this.MarkAsDirty("ExporterIdentificationType"); } }
+       
+	 
+    private finalDestinationInternatID: string;
+    public get FinalDestinationInternatID() { return this.finalDestinationInternatID; }
+    public set FinalDestinationInternatID(newValue: string) { if (this.finalDestinationInternatID != newValue) { this.finalDestinationInternatID = newValue; this.MarkAsDirty("FinalDestinationInternatID"); } }
+       
+	 
+    private firstDestinationInternatID: string;
+    public get FirstDestinationInternatID() { return this.firstDestinationInternatID; }
+    public set FirstDestinationInternatID(newValue: string) { if (this.firstDestinationInternatID != newValue) { this.firstDestinationInternatID = newValue; this.MarkAsDirty("FirstDestinationInternatID"); } }
+       
+	 
+    private originAbroadSite: string;
+    public get OriginAbroadSite() { return this.originAbroadSite; }
+    public set OriginAbroadSite(newValue: string) { if (this.originAbroadSite != newValue) { this.originAbroadSite = newValue; this.MarkAsDirty("OriginAbroadSite"); } }
+       
+	 
+    private expectedPortArrivalDate: string;
+    public get ExpectedPortArrivalDate() { return this.expectedPortArrivalDate; }
+    public set ExpectedPortArrivalDate(newValue: string) { if (this.expectedPortArrivalDate != newValue) { this.expectedPortArrivalDate = newValue; this.MarkAsDirty("ExpectedPortArrivalDate"); } }
+       
+	 
+    private draggedOrSupportedNumber: string;
+    public get DraggedOrSupportedNumber() { return this.draggedOrSupportedNumber; }
+    public set DraggedOrSupportedNumber(newValue: string) { if (this.draggedOrSupportedNumber != newValue) { this.draggedOrSupportedNumber = newValue; this.MarkAsDirty("DraggedOrSupportedNumber"); } }
+       
+	 
+    private truckOrTrainNumber: string;
+    public get TruckOrTrainNumber() { return this.truckOrTrainNumber; }
+    public set TruckOrTrainNumber(newValue: string) { if (this.truckOrTrainNumber != newValue) { this.truckOrTrainNumber = newValue; this.MarkAsDirty("TruckOrTrainNumber"); } }
+       
+	 
+    private driverId: string;
+    public get DriverId() { return this.driverId; }
+    public set DriverId(newValue: string) { if (this.driverId != newValue) { this.driverId = newValue; this.MarkAsDirty("DriverId"); } }
+       
+	 
+    private shipCode: string;
+    public get ShipCode() { return this.shipCode; }
+    public set ShipCode(newValue: string) { if (this.shipCode != newValue) { this.shipCode = newValue; this.MarkAsDirty("ShipCode"); } }
+       
+	 
+    private shipName: string;
+    public get ShipName() { return this.shipName; }
+    public set ShipName(newValue: string) { if (this.shipName != newValue) { this.shipName = newValue; this.MarkAsDirty("ShipName"); } }
+       
+	 
+    private transportCompany: string;
+    public get TransportCompany() { return this.transportCompany; }
+    public set TransportCompany(newValue: string) { if (this.transportCompany != newValue) { this.transportCompany = newValue; this.MarkAsDirty("TransportCompany"); } }
+       
+	 
+    private shipAgent: string;
+    public get ShipAgent() { return this.shipAgent; }
+    public set ShipAgent(newValue: string) { if (this.shipAgent != newValue) { this.shipAgent = newValue; this.MarkAsDirty("ShipAgent"); } }
+       
+	 
+    private shippingCompanyCode: string;
+    public get ShippingCompanyCode() { return this.shippingCompanyCode; }
+    public set ShippingCompanyCode(newValue: string) { if (this.shippingCompanyCode != newValue) { this.shippingCompanyCode = newValue; this.MarkAsDirty("ShippingCompanyCode"); } }
+       
+	 
+    private securityClearence: string;
+    public get SecurityClearence() { return this.securityClearence; }
+    public set SecurityClearence(newValue: string) { if (this.securityClearence != newValue) { this.securityClearence = newValue; this.MarkAsDirty("SecurityClearence"); } }
+       
+	 
+    private transferCargoMethodType: string;
+    public get TransferCargoMethodType() { return this.transferCargoMethodType; }
+    public set TransferCargoMethodType(newValue: string) { if (this.transferCargoMethodType != newValue) { this.transferCargoMethodType = newValue; this.MarkAsDirty("TransferCargoMethodType"); } }
+       
+	 
+    private storageOrDockID: string;
+    public get StorageOrDockID() { return this.storageOrDockID; }
+    public set StorageOrDockID(newValue: string) { if (this.storageOrDockID != newValue) { this.storageOrDockID = newValue; this.MarkAsDirty("StorageOrDockID"); } }
+       
+	 
+    private exporterName: string;
+    public get ExporterName() { return this.exporterName; }
+    public set ExporterName(newValue: string) { if (this.exporterName != newValue) { this.exporterName = newValue; this.MarkAsDirty("ExporterName"); } }
+       
+	 
+    private exporterFileNumber: string;
+    public get ExporterFileNumber() { return this.exporterFileNumber; }
+    public set ExporterFileNumber(newValue: string) { if (this.exporterFileNumber != newValue) { this.exporterFileNumber = newValue; this.MarkAsDirty("ExporterFileNumber"); } }
+       
+	 
+    private passportCountry: string;
+    public get PassportCountry() { return this.passportCountry; }
+    public set PassportCountry(newValue: string) { if (this.passportCountry != newValue) { this.passportCountry = newValue; this.MarkAsDirty("PassportCountry"); } }
+       
+	 
+    private exporterNumber: string;
+    public get ExporterNumber() { return this.exporterNumber; }
+    public set ExporterNumber(newValue: string) { if (this.exporterNumber != newValue) { this.exporterNumber = newValue; this.MarkAsDirty("ExporterNumber"); } }
+       
+	 
 
     public OldEntityPM: ExportStorgePM;
 		

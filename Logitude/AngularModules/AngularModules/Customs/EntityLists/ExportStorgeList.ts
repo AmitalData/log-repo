@@ -36,6 +36,30 @@ export class ExportStorgeList {
 	ReceivingSite: string;
 	StuffingSiteType: string;
 	LoadingSite: string;
+	ForwarderReference: string;
+	TransactionQuantity: number;
+	ExportDocument: string;
+	MessageContent: string;
+	BookingNumber: string;
+	LogisticDeliveryTypeID: string;
+	CargoRows: number;
+	ExporterIdentificationType: string;
+	FinalDestinationInternatID: string;
+	FirstDestinationInternatID: string;
+	OriginAbroadSite: string;
+	ExpectedPortArrivalDate: string;
+	DraggedOrSupportedNumber: string;
+	TruckOrTrainNumber: string;
+	DriverId: string;
+	ShipCode: string;
+	ShipName: string;
+	TransportCompany: string;
+	ShipAgent: string;
+	ShippingCompanyCode: string;
+	SecurityClearence: string;
+	TransferCargoMethodType: string;
+	StorageOrDockID: string;
+	ExporterName: string;
 	
 }
  
