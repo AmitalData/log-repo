@@ -60,7 +60,7 @@
                 <span class="filter-close-btn">×</span>
             </li>
 
-            <li *ngFor="let customer of SelectedCustomers" (click)="customer.IsSelected=false">
+            <li *ngFor="let customer of SelectedCustomers" (click)="UnselectCustomer(customer)">
                 {{customer.Name}}
                 <span class="filter-close-btn">×</span>
             </li>

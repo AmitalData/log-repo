@@ -182,7 +182,7 @@ export class ShipmentsListComponent implements AfterViewInit
         var SecurityKey = item.SecurityKey;
         SessionInfo.ShipmentsFilters = this.BuildShipmentFilters();
 
-        this.router.navigate(['Cargo-Tracking', 'shipment', SecurityKey]);
+        this.router.navigate(['cargo-tracking', 'shipment', SecurityKey]);
 
     }
 
@@ -418,6 +418,13 @@ export class ShipmentsListComponent implements AfterViewInit
 
     public get SelectedCustomers() : any[] {
         return this.InvitedCustomers.filter(customer=>customer.IsSelected) || [];
+    }
+
+    UnselectCustomer(customer)
+    {
+        customer.IsSelected=false;
+        this.LoadScreenData();
+
     }
 
 }

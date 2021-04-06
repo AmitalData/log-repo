@@ -39,8 +39,8 @@ export class ShipmentDataSource extends DataSource<any | undefined>  {
 
     ReloadData(filters)
     {
-        this.InitComponent();
         this.ShipmentsFilters = filters;
+        this.InitComponent();
         this.FetchPage(0);
 
         this.ChangeDetector.detectChanges();

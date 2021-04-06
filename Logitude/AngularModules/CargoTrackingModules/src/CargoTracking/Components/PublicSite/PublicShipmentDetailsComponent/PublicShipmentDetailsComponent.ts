@@ -320,6 +320,7 @@ export class PublicShipmentDetailsComponent implements OnInit
 export class Milestone
 {
 
+    public Id: number;
     public Code: string;
     public Name: string;
     public Notes: string;
