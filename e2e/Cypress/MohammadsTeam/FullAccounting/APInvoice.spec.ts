@@ -67,9 +67,9 @@ let R: CreateRandom= new CreateRandom();
 		   
 		   
 		    cy.get('input[id=APInvoiceLine_VatTypeId]').clear();
-      cy.get('input[id=ARInvoiceLine_VatTypeId]').type('Zero');
+      cy.get('input[APInvoiceLine_VatTypeId]').type('Zero');
 
-      cy.get('ul[id=mydatalist_ARInvoiceLine_VatTypeId]').contains('Zero').then(a => {
+      cy.get('ul[id=mydatalist_APInvoiceLine_VatTypeId]').contains('Zero').then(a => {
           a[0].click();
 		  
 		  
