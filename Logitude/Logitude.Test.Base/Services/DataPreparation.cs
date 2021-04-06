@@ -135,7 +135,7 @@ namespace Logitude.Test.Base.Services
                 GlobalZoneId = GetGlobalZoneId("AS")
             };
 
-            ApiResponse<State> response = APICaller.CallPost<State>(country, Urls.CountriesController, UserTenant.Token);
+            ApiResponse<Country> response = APICaller.CallPost<Country>(country, Urls.CountriesController, UserTenant.Token);
             return response.Data?.Id;
         }
 
