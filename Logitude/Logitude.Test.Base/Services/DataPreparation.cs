@@ -28,6 +28,7 @@ namespace Logitude.Test.Base.Services
                 StateAKId = GetStateId("AK"),
                 CountryUSId = GetCountryId("US"),
                 CountryGBId = GetCountryId("GB"),
+                CountryTSId = GetCountryId("TS"),
                 CityAnchorageId = GetCityId("Anchorage", "US", "AK"),
                 CityManchesterId = GetCityId("Manchester", "GB")
             };
@@ -109,7 +110,13 @@ namespace Logitude.Test.Base.Services
         private static string GetCountryId(string code)
         {
             ApiQueryFilters apiQueryFilters = BuildApiQueryFilters(code, null);
-            return GetCountryIdFromUserTenant(apiQueryFilters);
+            string UserTenantCountryId = GetCountryIdFromUserTenant(apiQueryFilters);
+            if (string.IsNullOrEmpty(UserTenantCountryId))
+            {
+                UserTenantCountryId = CreateCountryForUserTenant(code);
+            }
+
+            return UserTenantCountryId;
         }
 
         private static string GetCountryIdFromUserTenant(ApiQueryFilters apiQueryFilters)
@@ -117,6 +124,33 @@ namespace Logitude.Test.Base.Services
             ApiResponse<IEnumerable<Country>> response = APICaller.CallGetByFilters<IEnumerable<Country>>(Urls.CountryViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault()?.Id;
         }
+
+        private static string CreateCountryForUserTenant(string code)
+        {
+            Country country = new Country
+            {
+                Tenant = UserTenant.Tenant,
+                Code = code,
+                EnglishName = "Test",
+                GlobalZoneId = GetGlobalZoneId("AS")
+            };
+
+            ApiResponse<State> response = APICaller.CallPost<State>(country, Urls.CountriesController, UserTenant.Token);
+            return response.Data?.Id;
+        }
+
+        private static string GetGlobalZoneId(string code)
+        {
+            ApiQueryFilters apiQueryFilters = BuildApiQueryFilters(code, null);
+            return GetGetGlobalZoneIdFromUserTenant(apiQueryFilters);
+        }
+
+        private static string GetGetGlobalZoneIdFromUserTenant(ApiQueryFilters apiQueryFilters)
+        {
+            ApiResponse<IEnumerable<GlobalZone>> response = APICaller.CallGetByFilters<IEnumerable<GlobalZone>>(Urls.GlobalZoneViewsGetByFilters, UserTenant.Token, apiQueryFilters);
+            return response.Data?.FirstOrDefault()?.Id;
+        }
+
         #endregion
 
         #region States
