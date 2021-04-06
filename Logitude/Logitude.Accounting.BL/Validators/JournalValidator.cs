@@ -271,7 +271,6 @@ namespace Logitude.Accounting.BL.Validators
             if (myJournalPM.JournalLines.Any(l => currDateTimeUtcNow.GetValueOrDefault().Date < l.AccountingDate.Date))
             {
 
-                errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_AccountingFutureDateForbidden, myJournalPM.Tenant));
                 valid = false;
             }
             if (myJournalPM.JournalLines.Any(l =>
