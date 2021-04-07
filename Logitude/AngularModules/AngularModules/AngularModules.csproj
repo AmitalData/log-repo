@@ -306,6 +306,9 @@
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationsConditionsViewDetailsComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityPackageComponent.html" />
+    <Content Include="TasksApp\Components\TasksAppComponent.html" />
+    <Content Include="TasksApp\Scripts\tasks-app.js" />
+    <Content Include="_Resources\css\PrimeWebComponent.css" />
     <Content Include="_Resources\js\UnifreightJSBridge.js" />
     <TypeScriptCompile Include="Abstractions\Services\BaseService.ts" />
     <TypeScriptCompile Include="Accounting\Components\Maintenance\Tester\AccountingMainTesterComponent.ts" />
@@ -7595,6 +7598,9 @@
     <TypeScriptCompile Include="TariffModule\Services\StandardPMs\TariffPMService.ts" />
     <TypeScriptCompile Include="TariffModule\Tools.ts" />
     <TypeScriptCompile Include="TariffModule\Validators\TariffValidator.ts" />
+    <TypeScriptCompile Include="TasksApp\Components\TasksAppComponent.ts" />
+    <TypeScriptCompile Include="TasksApp\ModuleDeclarations.ts" />
+    <TypeScriptCompile Include="TasksApp\ModuleTasksApp.ts" />
     <TypeScriptCompile Include="test.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\Connections\ConnectToParentComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\Helpers\TMProjectHelperComponent.ts" />
