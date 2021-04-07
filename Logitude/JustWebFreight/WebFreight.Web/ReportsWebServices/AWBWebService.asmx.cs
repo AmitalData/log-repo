@@ -1981,12 +1981,12 @@ namespace WebFreight.Web.ReportsWebServices
         private void FillAllAWBSpecialHandlingCodes(AWBDataProvider myDataProvider, ShipmentPM shipmentPM)
         {
             string specialHandlingCodesText = "";
-            var allSpecialHandlingCodes = GetSpecialHandlingCodes(shipmentPM);
-            var specialHandlingDistinctCodes = allSpecialHandlingCodes.Distinct().ToList();
+            var allShipmentSpecialHandlingCodes = GetSpecialHandlingCodes(shipmentPM);
+            var shipmentSpecialHandlingDistinctCodes = allShipmentSpecialHandlingCodes.Distinct().ToList();
            
-            if (specialHandlingDistinctCodes != null && specialHandlingDistinctCodes.Count > 0)
+            if (shipmentSpecialHandlingDistinctCodes != null && shipmentSpecialHandlingDistinctCodes.Count > 0)
             {
-                foreach (string item in specialHandlingDistinctCodes)
+                foreach (string item in shipmentSpecialHandlingDistinctCodes)
                 {
                     if (string.IsNullOrEmpty(specialHandlingCodesText))
                     {
