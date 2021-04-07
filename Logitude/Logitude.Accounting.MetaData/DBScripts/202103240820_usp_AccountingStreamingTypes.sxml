@@ -2,10 +2,13 @@
   <Sql Version="4">
     <![CDATA[
 
+IF OBJECT_ID('[dbo].[usp_AccountingStreaming]', 'P') IS NOT NULL
+drop PROCEDURE [dbo].[usp_AccountingStreaming]
+--go
 
-drop procedure usp_AccountingStreaming
 
 /****** Object:  UserDefinedTableType [dbo].[LedgerTransactionsType]    Script Date: 1/16/2019 6:30:02 AM ******/
+IF type_id('[dbo].[LedgerTransactionsType]') IS NOT NULL
 DROP TYPE [dbo].[LedgerTransactionsType]
 --go
 
@@ -43,7 +46,7 @@ CREATE TYPE [dbo].[LedgerTransactionsType] AS TABLE(
 --go
 
 
-
+IF type_id('[dbo].[GLAccountTotalByMonthsType]') IS NOT NULL
 DROP TYPE [dbo].[GLAccountTotalByMonthsType]
 
 CREATE TYPE [dbo].[GLAccountTotalByMonthsType] AS TABLE(
