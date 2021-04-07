@@ -1,4 +1,4 @@
-@smoke @release @stable 
+@smoke @release @stable @leen
 Feature: AR Invoice Approve, Set as Sent and Void
 The user creates a Direct Export Air shipment, creates receivable, 
 creates AR Invoice, approve AR Invoice, set AR Invoice as sent and voids the AR Invoice.
