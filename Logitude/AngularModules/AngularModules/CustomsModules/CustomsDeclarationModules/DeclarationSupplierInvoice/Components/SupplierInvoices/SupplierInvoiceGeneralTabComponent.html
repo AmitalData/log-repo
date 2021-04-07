@@ -939,7 +939,18 @@
                                                                 </log-cell-template>
                                                             </ng-template>
                                                         </log-column>
+                                                        <log-column [width]="'22'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'">
+                                                            <ng-template let-item>
+                                                                <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                                    <div *ngIf="item.DeleteButton" style="width: 18px; float: left; height:20px; padding-top: 2px;">
+                                                                        <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteButtonClicked(item)" [IsEnabled]="!IsDisplayOnly"></IconButton>
+                                                                    </div>
 
+
+
+                                                                </log-cell-template>
+                                                            </ng-template>
+                                                        </log-column>
 
                                                     </logitude-edit-grid>
                                                 </div>

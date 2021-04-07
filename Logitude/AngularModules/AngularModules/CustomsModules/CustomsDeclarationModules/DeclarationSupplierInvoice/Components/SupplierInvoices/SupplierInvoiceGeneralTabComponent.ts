@@ -210,7 +210,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     SelectedRow: SupplierInvoiceItemLine;
     BuildItemsList() {
         this.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
-        this.ItemsSource.Clear();
+        if (this.ItemsSource != null) {
+            this.ItemsSource.Clear();
+        }
         this.ParentItems = [];
         this.ChildrenItems = [];
         var TempItemSource: SupplierInvoiceItemLine[] = [];
@@ -260,7 +262,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         if (this.EntityPM.IsAccumalated) {
             //    this.CurrentSession.AccumulatedFilterChangedEvent.emit({ filter: this.AccumulatedFilterSelectedValue, ParentCount: this.ParentItems.length, childrenCount: this.ChildrenItems.length });
         }
-        this.ItemsSource.InsertCollection(TempItemSource);
+        if (this.ItemsSource != null) {
+            this.ItemsSource.InsertCollection(TempItemSource);
+        }
         this.CurrentSession.StopBusyIndicator();
 
         this.originalItemSource.InsertCollection(TempItemSource);
@@ -651,7 +655,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     GetFreightAsModificationItemModel() {
         var item = new SupplierInvoiceModificationPM(this.EntityPM);
         if (this.EntityPM.SupplierInvoiceFreightAmounts.length != 0) {
-            if (this.EntityPM.TotalFreightInFreightCurrency > 0) {
+            if (this.EntityPM.SupplierInvoiceFreightAmounts[0].Amount > 0) {
                 item.Amount = this.EntityPM.SupplierInvoiceFreightAmounts[0].Amount;
             }
             item.CurrencyTypeCode = this.EntityPM.SupplierInvoiceFreightAmounts[0].CurrencyTypeCode;
@@ -683,6 +687,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     AddModification(code: string, modificationCounter: number, typeName: string) {
         var item = new SupplierInvoiceModificationPM(this.EntityPM);
         item.TypeName = typeName;
+        item.TypeCode = code;
         item.DeclarationId = this.EntityPM.DeclarationId;
         item.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
         item.Tenant = SessionLocator.Tenant;
@@ -1526,36 +1531,35 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     GetFreightTotals() {
         this.supplierInvoiceService.GetTotalForeignCurrencyForInvoice(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey).subscribe((response: any) => {
+            if (response != null) {
+                this.Parent.TotalForeignCurrency = response.Result;
+                //for (let item of items)// this.entitypm(d=> d. SupplierInvoiceItemViewModel item in InvoiceItemsObslist.Where(d => d.entityPM.CounterKey == 0))
+                //{
+                //    if (item.ItemPrice != null)
+                //        this.TotalForeignCurrency = (TotalForeignCurrency != null ? TotalForeignCurrency : 0) + item.ItemPrice;
+                //}
+                if (isNaN(this.Parent.TotalForeignCurrency)) this.Parent.TotalForeignCurrency = 0;
+                var amount: number = this.InvoiceAmount;
 
+                if (isNaN(this.InvoiceAmount)) amount = 0;
+                this.Parent.Difference = this.Parent.TotalForeignCurrency - amount;
 
-
-            this.Parent.TotalForeignCurrency = response.Result;
-            //for (let item of items)// this.entitypm(d=> d. SupplierInvoiceItemViewModel item in InvoiceItemsObslist.Where(d => d.entityPM.CounterKey == 0))
-            //{
-            //    if (item.ItemPrice != null)
-            //        this.TotalForeignCurrency = (TotalForeignCurrency != null ? TotalForeignCurrency : 0) + item.ItemPrice;
-            //}
-            if (isNaN(this.Parent.TotalForeignCurrency)) this.Parent.TotalForeignCurrency = 0;
-            var amount: number = this.InvoiceAmount;
-
-            if (isNaN(this.InvoiceAmount)) amount = 0;
-            this.Parent.Difference = this.Parent.TotalForeignCurrency - amount;
-
-            if (this.Parent.TotalForeignCurrency != 0) {
-                if (this.Parent.Difference != null) {
-                    if (this.Parent.Difference != 0) {
-                        this.Parent.DifferenceColor = FontTool.Red; //red
-                    }
-                    else {
-                        this.Parent.DifferenceColor = FontTool.Green; //green
+                if (this.Parent.TotalForeignCurrency != 0) {
+                    if (this.Parent.Difference != null) {
+                        if (this.Parent.Difference != 0) {
+                            this.Parent.DifferenceColor = FontTool.Red; //red
+                        }
+                        else {
+                            this.Parent.DifferenceColor = FontTool.Green; //green
+                        }
                     }
                 }
+                else {
+                    this.Parent.DifferenceColor = FontTool.Black;
+                }
             }
-            else {
-                this.Parent.DifferenceColor = FontTool.Black;
-            }
-
         });
+
     }
 
     private timerToken: any;
@@ -2277,31 +2281,31 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     BuildFreightAmountsList() {
         if (this.AmountList != null) {
             this.AmountList.Clear();
+
+            for (var i = 0; i < this.EntityPM.SupplierInvoiceFreightAmounts.length; i++) {
+
+                this.AmountList.Insert(new SupplierInvoiceFreightAmountLine(this.EntityPM.SupplierInvoiceFreightAmounts[i], this));
+
+            }
+
+            if (this.EntityPM.SupplierInvoiceFreightAmounts.length == 0) {
+                this.FreightCurrencyTypeCode = null;
+
+            }
+
+            if (this.EntityPM.SupplierInvoiceFreightAmounts.length == 0) {
+                var item: SupplierInvoiceFreightAmountPM = new SupplierInvoiceFreightAmountPM(this.EntityPM);
+                item.DeclarationId = this.EntityPM.DeclarationId;
+                item.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
+                item.Tenant = this.EntityPM.Tenant;
+                item.ChangeSetOp = "Insert";
+                this.EntityPM.IsDirty = false;
+                this.AmountList.Insert(new SupplierInvoiceFreightAmountLine(item, this), false);
+
+            }
+
+            this.CopyAmountList();
         }
-
-        for (var i = 0; i < this.EntityPM.SupplierInvoiceFreightAmounts.length; i++) {
-
-            this.AmountList.Insert(new SupplierInvoiceFreightAmountLine(this.EntityPM.SupplierInvoiceFreightAmounts[i], this));
-
-        }
-
-        if (this.EntityPM.SupplierInvoiceFreightAmounts.length == 0) {
-            this.FreightCurrencyTypeCode = null;
-
-        }
-
-        if (this.EntityPM.SupplierInvoiceFreightAmounts.length == 0) {
-            var item: SupplierInvoiceFreightAmountPM = new SupplierInvoiceFreightAmountPM(this.EntityPM);
-            item.DeclarationId = this.EntityPM.DeclarationId;
-            item.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
-            item.Tenant = this.EntityPM.Tenant;
-            item.ChangeSetOp = "Insert";
-            this.EntityPM.IsDirty = false;
-            this.AmountList.Insert(new SupplierInvoiceFreightAmountLine(item, this), false);
-
-        }
-
-        this.CopyAmountList();
     }
 
     LoadCurrenciesExchangeRates(recalculateTotals: boolean) {
@@ -2416,7 +2420,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         }
 
     }
-    
+
     CalculateExportModificationAmount() {
         this.TotalExportModificationInInvoiceCurrency = 0;
         this.AdjustmentsList.Collection.forEach((entityPM) => {
@@ -3976,13 +3980,7 @@ export class ModificationItemModel extends BaseComponent {
         });
         if (this.EntityPM.Amount != null) {
             this.parent.CalculateExportModificationAmount();
-        }
-        if (this.code == "144") {
-            if (this.parent.EntityPM.SupplierInvoiceFreightAmounts[0] == null) {
-                this.setSupplierInvoiceFreightAmountPM();
-
-            }
-            parent.AmountList.Insert(new SupplierInvoiceFreightAmountLine(this.parent.EntityPM.SupplierInvoiceFreightAmounts[0], parent));
+            this.DeleteButton = true;
         }
     }
 
@@ -3996,6 +3994,39 @@ export class ModificationItemModel extends BaseComponent {
         this.parent.EntityPM.IsDirty = false;
     }
 
+    setSupplierInvoiceFreightAmountPMWithCode(code: string) {
+        if (code != null) {
+            var item: SupplierInvoiceFreightAmountPM = new SupplierInvoiceFreightAmountPM(this.parent.EntityPM);
+            item.DeclarationId = this.parent.EntityPM.DeclarationId;
+            item.InvoiceCounterKey = this.parent.EntityPM.InvoiceCounterKey;
+            item.Tenant = this.parent.EntityPM.Tenant;
+            item.CurrencyTypeCode = code;
+            item.ChangeSetOp = "Insert";
+            item.Amount = this.Amount;
+            this.parent.EntityPM.AddSupplierInvoiceFreightAmount(item);
+            this.parent.AmountList.Insert(new SupplierInvoiceFreightAmountLine(item, this.parent));
+        }
+    }
+
+    deletSupplierInvoiceFreightAmountPMWithCode(code: string) {
+        if (code != null) {
+            var OldCurrency = this.parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.DeclarationId == this.parent.EntityPM.DeclarationId).CurrencyTypeCode;
+            var OldPM = this.parent.EntityPM.SupplierInvoiceFreightAmounts.filter(item => item.CurrencyTypeCode == code);
+            if (OldPM[0] != null) {
+                this.parent.EntityPM.RemoveSupplierInvoiceFreightAmount(OldPM[0]);
+                this.parent.AmountList.Clear();
+            }
+        }
+    }
+
+    AddFreightToLists() {
+        if (this.parent.EntityPM.SupplierInvoiceFreightAmounts[0] == null) {
+            this.setSupplierInvoiceFreightAmountPM();
+            if (this.parent.AmountList.Length == 0) {
+                this.parent.AmountList.Insert(new SupplierInvoiceFreightAmountLine(this.parent.EntityPM.SupplierInvoiceFreightAmounts[0], this.parent));
+            }
+        }
+    }
     //#region Properties
     get TypeCode() { return this.EntityPM.TypeCode; }
     set TypeCode(value: string) {
@@ -4033,26 +4064,32 @@ export class ModificationItemModel extends BaseComponent {
     currencyType: CurrencyTypePM;
     get CurrencyType() { return this.currencyType; }
     set CurrencyType(value: CurrencyTypePM) {
-        if (this.currencyType != value ) {
+        if (this.currencyType != value && !AppTool.IsNullOrEmpty(value)) {
+            this.DeleteButton = true;
             this.currencyType = value;
             if (this.code == "67") {
                 this.parent.InsruanceCurrencyTypeCode = value.Code;
             }
             if (this.code == "144") {
-                this.parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.DeclarationId == this.parent.EntityPM.DeclarationId).CurrencyTypeCode = value.Code;
-                this.parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.DeclarationId == this.parent.EntityPM.DeclarationId).IsDirty = true;
+                this.AddFreightToLists();
+                var OldCurrency = this.parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.DeclarationId == this.parent.EntityPM.DeclarationId).CurrencyTypeCode;
+                if (OldCurrency != null && OldCurrency != value.Code) {
+                    this.deletSupplierInvoiceFreightAmountPMWithCode(OldCurrency);
+                    this.setSupplierInvoiceFreightAmountPMWithCode(value.Code);
+                }
+                if (OldCurrency == null) {
+                    this.parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.DeclarationId == this.parent.EntityPM.DeclarationId).CurrencyTypeCode = value.Code;
+                }
                 this.parent.FreightCurrencyTypeCode = value.Code;
-
+                this.CurrencyTypeCode = value.Code;
+                this.CurrencyTypeName = value.LocalName;
             }
             this.parent.CalculateExportModificationAmount();
         }
-        if (!AppTool.IsNullOrEmpty(value)) {
-            this.CurrencyTypeName = value.LocalName;
-
-
-        } else {
+        if (AppTool.IsNullOrEmpty(value)) {
             this.CurrencyTypeName = null;
             this.CurrencyTypeCode = null;
+            this.parent.FreightCurrencyTypeCode = null;
         }
     }
 
@@ -4081,22 +4118,26 @@ export class ModificationItemModel extends BaseComponent {
 
     get Amount() { return this.EntityPM.Amount; }
     set Amount(value: number) {
-        if (this.EntityPM.Amount != value) {
+        if (this.EntityPM.Amount != value && !AppTool.IsNullOrEmpty(value)) {
+            this.DeleteButton = true;
             this.EntityPM.Amount = value;
             this.parent.CalculateExportModificationAmount();
             if (this.code == "67") {
                 this.parent.InsuranceAmount = value;
             }
             if (this.code == "144") {
-                if (this.parent.EntityPM.SupplierInvoiceFreightAmounts[0] == null) {
-                    this.setSupplierInvoiceFreightAmountPM();
-                }
+                this.AddFreightToLists();
+                this.parent.EntityPM.TotalFreightInFreightCurrency = value;
                 this.parent.TotalFreightInFreightCurrency = value;
+                this.parent.EntityPM.IsDirty = true;
                 if (this.parent.EntityPM.SupplierInvoiceFreightAmounts[0] != null) {
                     this.parent.EntityPM.SupplierInvoiceFreightAmounts[0].Amount = value;
                     this.parent.AmountList.Collection[0].Amount = value;
                 }
             }
+        }
+        if (AppTool.IsNullOrEmpty(value)) {
+            this.EntityPM.Amount = null;
         }
 
     }
@@ -4158,6 +4199,27 @@ export class ModificationItemModel extends BaseComponent {
             });
         }
 
+    }
+
+    public DeleteButton = false;
+    DeleteButtonClicked(item: ModificationItemModel) {
+        if (item != null) {
+            this.Amount = null;
+            this.CurrencyType = null;
+            switch (item.code) {
+                case "67":
+                    this.parent.InsuranceAmount = null;
+                    this.parent.InsruanceCurrencyTypeCode = null;
+                    break;
+                case "144":
+                    this.parent.EntityPM.FreightCurrencyTypeCode = null;
+                    this.parent.EntityPM.TotalFreightInFreightCurrency = null;
+                    var SupplierInvoiceFreightAmount = this.parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.DeclarationId == this.parent.EntityPM.DeclarationId);
+                    this.deletSupplierInvoiceFreightAmountPMWithCode(SupplierInvoiceFreightAmount.CurrencyTypeCode);
+                    break;
+            }
+            this.DeleteButton = false;
+        }
     }
 }
 
