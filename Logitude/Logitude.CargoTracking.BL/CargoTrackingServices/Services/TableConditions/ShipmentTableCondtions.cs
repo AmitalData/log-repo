@@ -78,8 +78,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "com.FinalDeliveryETD as FinalDeliveryETD,com.FinalDeliveryATD as FinalDeliveryATD" +
                 ",com.FirstPickupATD as FirstPickupATD, Mas.MainCarriageATD as MainCarriageATD, Mas.Master as Master " +
                 ",  Mas.MainCarriageETD  as MainCarriageETD , Mas.MainCarriageATA  as MainCarriageATA " +
-                ", Mas.MainCarriageETA  as MainCarriageETA,min(P.ShipmentNumber) as ForwardingShipmentNumber " 
-                
+                ", Mas.MainCarriageETA  as MainCarriageETA,min(P.ShipmentNumber) as ForwardingShipmentNumber " + ", min(P.ShipmentLevelCode) as ForwardingShipmentLevelCode "
+
 
                 + "FROM dbo. " + table.DBTableName +
                 " P Left Outer JOIN dbo.ShipmentComputedFields com on com.Id = P.Id " +
