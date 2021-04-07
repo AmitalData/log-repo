@@ -398,12 +398,13 @@ namespace Logitude.TariffModule.BL.Helpers
                     if (initialPropIndex == 0)
                     {
                         items = items.Concat((from item in iQueryable
+                                              where item.TariffId == itemStep.Id
                                               group iQueryable by new
                                               {
                                                   item.TariffId,
                                                   item.MinPrice,
                                                   item.Version,
-                                              } into g
+                                              } into g  
                                               select new TariffResult()
                                               {
                                                   Price = g.Min(p => g.Key.MinPrice),
@@ -414,9 +415,10 @@ namespace Logitude.TariffModule.BL.Helpers
                                               })).ToList();
                     }
 
-                    if (initialPropIndex == 1)
+                    else  if (initialPropIndex == 1)
                     {
                         items = items.Concat((from item in iQueryable
+                                              where item.TariffId == itemStep.Id
                                               group iQueryable by new
                                               {
                                                   item.TariffId,
@@ -435,6 +437,7 @@ namespace Logitude.TariffModule.BL.Helpers
                     else if (initialPropIndex == 2)
                     {
                         items = items.Concat((from item in iQueryable
+                                              where item.TariffId == itemStep.Id
                                               group iQueryable by new
                                               {
                                                   item.TariffId,
@@ -453,6 +456,7 @@ namespace Logitude.TariffModule.BL.Helpers
                     else if (initialPropIndex == 3)
                     {
                         items = items.Concat((from item in iQueryable
+                                              where item.TariffId == itemStep.Id
                                               group iQueryable by new
                                               {
                                                   item.TariffId,
@@ -471,6 +475,7 @@ namespace Logitude.TariffModule.BL.Helpers
                     else if (initialPropIndex == 4)
                     {
                         items = items.Concat((from item in iQueryable
+                                              where item.TariffId == itemStep.Id
                                               group iQueryable by new
                                               {
                                                   item.TariffId,
@@ -489,6 +494,7 @@ namespace Logitude.TariffModule.BL.Helpers
                     else if (initialPropIndex == 5)
                     {
                         items = items.Concat((from item in iQueryable
+                                              where item.TariffId == itemStep.Id
                                               group iQueryable by new
                                               {
                                                   item.TariffId,
@@ -507,6 +513,7 @@ namespace Logitude.TariffModule.BL.Helpers
                     else if (initialPropIndex == 6)
                     {
                         items = items.Concat((from item in iQueryable
+                                              where item.TariffId == itemStep.Id
                                               group iQueryable by new
                                               {
                                                   item.TariffId,
@@ -525,6 +532,7 @@ namespace Logitude.TariffModule.BL.Helpers
                     else if (initialPropIndex == 7)
                     {
                         items = items.Concat((from item in iQueryable
+                                              where item.TariffId == itemStep.Id
                                               group iQueryable by new
                                               {
                                                   item.TariffId,
@@ -543,6 +551,7 @@ namespace Logitude.TariffModule.BL.Helpers
                     else if (initialPropIndex == 8)
                     {
                         items = items.Concat((from item in iQueryable
+                                              where item.TariffId == itemStep.Id
                                               group iQueryable by new
                                               {
                                                   item.TariffId,
@@ -629,11 +638,9 @@ namespace Logitude.TariffModule.BL.Helpers
 
             foreach (Tariff result in TariffList)
             {
-                List<TariffResult> resultItems = items.Where(x => x.tariffid == result.Id && TariffVersionList.Where(a => a.Version == x.TariffVersion && a.TariffId == result.Id).FirstOrDefault() != null).ToList();           
+                List<TariffResult> resultItems = items.Where(x => x.tariffid == result.Id && TariffVersionList.Where(a => a.Version == x.TariffVersion && a.TariffId == result.Id).FirstOrDefault() != null).ToList();
                 foreach (TariffResult item in resultItems)
                 {
-
-
                     if (item != null)
                     {
                         List<TariffLine> selectedLines = new List<TariffLine>();
@@ -700,15 +707,7 @@ namespace Logitude.TariffModule.BL.Helpers
                             {
                                 if (SurchargeTariffLinesFiltered.ContainsKey(CurrentSurcharge.Id))
                                 {
-                                    TariffLine ChargesfilteredLines = null;
-                                    if (tariffSelectedLine.ViaPortId != null)
-                                    {
-                                         ChargesfilteredLines = SurchargeTariffLinesFiltered[CurrentSurcharge.Id].OrderByDescending(d => d.Version).Where(d => d.ViaPortId == tariffSelectedLine.ViaPortId).FirstOrDefault();
-                                    }
-                                    else
-                                    {
-                                         ChargesfilteredLines = SurchargeTariffLinesFiltered[CurrentSurcharge.Id].OrderByDescending(d => d.Version).FirstOrDefault();
-                                    }
+                                    TariffLine ChargesfilteredLines = SurchargeTariffLinesFiltered[CurrentSurcharge.Id].OrderByDescending(d => d.Version).FirstOrDefault();
 
                                     if (ChargesfilteredLines != null)
                                     {
@@ -1170,13 +1169,7 @@ namespace Logitude.TariffModule.BL.Helpers
             {
                 if (surchargeTariffLinesFiltered.ContainsKey(CurrentSurcharge.Id))
                 {
-                    TariffLine ChargesfilteredLines = null;
-                    if (tariffLine.ViaPortId != null) {
-                         ChargesfilteredLines = surchargeTariffLinesFiltered[CurrentSurcharge.Id].OrderByDescending(d => d.Version).Where(d => d.ViaPortId == tariffLine.ViaPortId).FirstOrDefault();
-                    }else
-                    {
-                        ChargesfilteredLines = surchargeTariffLinesFiltered[CurrentSurcharge.Id].OrderByDescending(d => d.Version).FirstOrDefault();
-                    }
+                    TariffLine ChargesfilteredLines =  ChargesfilteredLines = surchargeTariffLinesFiltered[CurrentSurcharge.Id].OrderByDescending(d => d.Version).FirstOrDefault();
 
                     if (ChargesfilteredLines != null)
                     {
@@ -1278,7 +1271,7 @@ namespace Logitude.TariffModule.BL.Helpers
             foreach (KeyValuePair<string, List<TariffLine>> entry in surchargeTariffLines)
             {
                 List<TariffLine> filteredLines = new List<TariffLine>();
-                filteredLines = entry.Value.ToList().Where(p => p.OriginPortId ==  fromPort && p.DestinationPortId == toPort && (viaPort != null ? p.ViaPortId == viaPort : true)).ToList();
+                filteredLines = entry.Value.ToList().Where(p => p.OriginPortId ==  fromPort && p.DestinationPortId == toPort ).ToList();
                 if (filteredLines.Count() == 0)
                 {
                     filteredLines = entry.Value.ToList().Where(p => p.OriginPortId ==  fromPort && p.IsToAllOtherPorts == true).ToList();

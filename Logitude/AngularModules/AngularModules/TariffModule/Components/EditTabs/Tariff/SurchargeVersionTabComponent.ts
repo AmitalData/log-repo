@@ -47,7 +47,6 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public SelectedVersionNumber: number;
     public OriginDependencyFilterValue: string = "A";
     public DestinationDependencyFilterValue = "A";
-    public ViaDependencyFilterValue = "A";
     public IsAir: boolean = false;
     public selectedRow: any;
     public changeScrollPosition: EventEmitter<any> = new EventEmitter();
@@ -75,7 +74,6 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         if (this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
             this.OriginDependencyFilterValue = "O";
             this.DestinationDependencyFilterValue = "O";
-            this.ViaDependencyFilterValue = "O";
         }
     }
 
@@ -464,7 +462,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         }
 
         this.compareTariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
-            var line = lines.sort((a, b) => a.Index - b.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId && item.ViaPortId == a.ViaPortId  )[0];
+            var line = lines.sort((a, b) => a.Index - b.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
             if (line == null) {
                 this.DeletedTariffsLines.push(new AirSurchargeTariffLineData(item, this));// Deleted 
             }
@@ -619,7 +617,6 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                             var deletedItem: TariffLineExpirationDatePM = new TariffLineExpirationDatePM();
                             deletedItem.OriginPortId = item.EntityPM.OriginPortId;
                             deletedItem.DestinationPortId = item.EntityPM.DestinationPortId;
-                            deletedItem.ViaPortId = item.EntityPM.ViaPortId;
                             deletedItem.ExpirationDate = item.EntityPM.ExpirationDate;
                             
                             this.deletedLinesExpirationDates.push(deletedItem);
@@ -709,9 +706,6 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             tariffLine.DestinationPortId = item.DestinationPortId;
             tariffLine.DestinationPortCode = item.DestinationPortCode;
             tariffLine.DestinationPortName = item.DestinationPortName;
-            tariffLine.ViaPortId = item.ViaPortId;
-            tariffLine.ViaPortCode = item.ViaPortCode;
-            tariffLine.ViaPortName = item.ViaPortName;
             tariffLine.Surcharge1Price = item.Surcharge1Price;
             tariffLine.Surcharge2Price = item.Surcharge2Price;
             tariffLine.Surcharge3Price = item.Surcharge3Price;

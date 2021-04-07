@@ -616,7 +616,6 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
                             var deletedItem: TariffLineExpirationDatePM = new TariffLineExpirationDatePM();
                             deletedItem.OriginPortId = item.EntityPM.OriginPortId;
                             deletedItem.DestinationPortId = item.EntityPM.DestinationPortId;
-                            deletedItem.ViaPortId = item.EntityPM.ViaPortId;
                             deletedItem.ExpirationDate = item.EntityPM.ExpirationDate;
 
                             this.deletedLinesExpirationDates.push(deletedItem);
@@ -708,10 +707,6 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
             tariffLine.DestinationPortCode = item.DestinationPortCode;
             tariffLine.DestinationPortCombinedCode = item.DestinationPortCombinedCode;
             tariffLine.DestinationPortName = item.DestinationPortName;
-            tariffLine.ViaPortId = item.ViaPortId;
-            tariffLine.ViaPortCode = item.ViaPortCode;
-            tariffLine.ViaPortCombinedCode = item.ViaPortCombinedCode;
-            tariffLine.ViaPortName = item.ViaPortName;
             tariffLine.Surcharge1Price = item.Surcharge1Price;
             tariffLine.Surcharge2Price = item.Surcharge2Price;
             tariffLine.Surcharge3Price = item.Surcharge3Price;
@@ -1327,75 +1322,6 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
 
     get DestinationPortColor() {
         if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
-            return FontTool.Black;
-        }
-
-        else {
-            return FontTool.Red;
-        }
-    }
-
-    // Via Port
-    get ViaPortId() {
-        return this.EntityPM.ViaPortId;
-    }
-    set ViaPortId(value: string) {
-        if (this.EntityPM.ViaPortId != value) {
-            this.EntityPM.ViaPortId = value;
-            this.EntityPM.LineEdited = true;
-
-            if (this.IsFromAllOtherPorts) {
-                this.EntityPM.IsFromAllOtherPorts = false;
-            }
-            this.SetUIProperties_From();
-            this.CheckIfLineHasError();
-        }
-    }
-
-    get ViaPortCode() {
-        return this.EntityPM.ViaPortCode;
-    }
-    set ViaPortCode(value: string) {
-        if (this.EntityPM.ViaPortCode != value) {
-            this.EntityPM.ViaPortCode = value;
-        }
-    }
-
-    get ViaPortCombinedCode() {
-        return this.EntityPM.ViaPortCombinedCode;
-    }
-    set ViaPortCombinedCode(value: string) {
-        if (this.EntityPM.ViaPortCombinedCode != value) {
-            this.EntityPM.ViaPortCombinedCode = value;
-        }
-    }
-
-    viaPort: PortList;
-    get ViaPort() { return this.viaPort; }
-    set ViaPort(value: PortList) {
-        if (this.viaPort != value) {
-            this.viaPort = value;
-        }
-        if (!AppTool.IsNullOrEmpty(value)) {
-            this.ViaPortCode = value.Code;
-            this.ViaPortCombinedCode = value.CombinedCode;
-        } else {
-            this.ViaPortCode = null;
-        }
-    }
-
-    get ViaPortValue() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.ViaPortCombinedCode)) {
-            return this.EntityPM.ViaPortCombinedCode;
-        }
-
-        else {
-            return this.EntityPM.ViaPortText;
-        }
-    }
-
-    get ViaPortColor() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.ViaPortId)) {
             return FontTool.Black;
         }
 

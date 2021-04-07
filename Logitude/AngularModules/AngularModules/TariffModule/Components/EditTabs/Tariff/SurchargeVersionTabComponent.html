@@ -227,31 +227,6 @@
                             </ng-template>
                         </log-column>
 
-                        <!-- ViaPortId -->
-                        <log-column [header]="'TariffLine.F.ViaPortId' | TextCodeTranslationPipe" [width]="'70'">
-                            <ng-template let-item>
-                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
-                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                        <span  [ngStyle]="{color: item.ViaPortColor}">{{item.ViaPortValue}}</span>
-                                    </div>
-
-                                    <div *ngIf="logcelltemplate.IsEditMode">
-                                        <LogLov [ObjectFieldName]="'ViaPortId'"
-                                                [ObjectTableName]="'TarifflLine'"
-                                                [DataContext]="item"
-                                                [LookUpTableName]="'Port'"
-                                                [HideColumns]="true"
-                                                (SelectedItemChanged)="item.ViaPort = $event"
-                                                [DisplayMemberPath]="GetDisplayMemberPath()"
-                                                [FocusOnMe]="true"
-                                                [SelectedValue]="item.ViaPortId"
-                                                [DependencyFilter1Value]="ViaDependencyFilterValue">
-                                        </LogLov>
-                                    </div>
-                                </log-cell-template>
-                            </ng-template>
-                        </log-column>
-
                         <!-- Currency -->
                         <log-column [header]="'TariffLine.F.CurrencyId' | TextCodeTranslationPipe" [width]="'70'">
                             <ng-template let-item>
@@ -894,9 +869,6 @@
                                                     <div style="height: 100%; width: 100%;" *ngIf="item.IsToAllOtherPorts">
                                                         <img src="./Images/Icons/A-icon.png" width="16" height="16" title="To All Other Ports" />
                                                     </div>
-                                                </td>
-                                                <td class="CellDisabled" style="width: 70px; min-width:70px; max-width:70px; text-align: left;">
-                                                    {{item.ViaPortValue}}
                                                 </td>
                                                 <td class="CellDisabled" style="width: 70px; min-width:70px; max-width:70px; text-align: left;">
                                                     <span *ngIf="!item.IsDifferentCurrenciesPerCharge">{{item.CurrencyCode}}</span>

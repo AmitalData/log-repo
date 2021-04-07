@@ -111,7 +111,7 @@
                         </tr>
 
                         <!-- Via  -->
-                        <tr class="FormFieldRow">
+                        <tr *ngIf="IsViaFieldVisible" class="FormFieldRow">
                             <td style="width:100px;">
                                 <LogLabel [ObjectFieldName]="'ViaPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                             </td>

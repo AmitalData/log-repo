@@ -48,6 +48,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
     public selectedRow: any;
     public changeScrollPosition: EventEmitter<any> = new EventEmitter();
     public darkerColler: string = "#f8ca12";
+    public IsViaFieldVisible: boolean = true;
 
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
@@ -63,6 +64,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
 
         else if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
             this.IsDownloadExcelTemplateVisible = false;
+            this.IsViaFieldVisible = false;
             this.GetAllChargesTypes();
         }
         

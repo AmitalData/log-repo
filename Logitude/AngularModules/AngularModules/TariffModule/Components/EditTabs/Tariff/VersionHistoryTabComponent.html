@@ -75,7 +75,7 @@
 
 
                                     <!-- ViaPortId -->
-                                    <log-column [header]="'TariffLine.F.ViaPortId' | TextCodeTranslationPipe" [width]="'70'">
+                                    <log-column *ngIf="IsViaFieldVisible" [header]="'TariffLine.F.ViaPortId' | TextCodeTranslationPipe" [width]="'70'">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
@@ -262,7 +262,7 @@
                                     </log-column>
 
                                     <!-- ViaPortId -->
-                                    <log-column [header]="'TariffLine.F.ViaPortId' | TextCodeTranslationPipe" [width]="'70'">
+                                    <log-column  *ngIf="IsViaFieldVisible"  [header]="'TariffLine.F.ViaPortId' | TextCodeTranslationPipe" [width]="'70'">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
@@ -568,7 +568,7 @@
                                     </log-column>
 
                                     <!-- ViaPortId -->
-                                    <log-column [header]="'TariffLine.F.ViaPortId' | TextCodeTranslationPipe" [width]="'70'">
+                                    <log-column  *ngIf="IsViaFieldVisible"  [header]="'TariffLine.F.ViaPortId' | TextCodeTranslationPipe" [width]="'70'">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
@@ -708,7 +708,7 @@
                                     </log-column>
 
                                     <!-- ViaPortId -->
-                                    <log-column [header]="'TariffLine.F.ViaPortId' | TextCodeTranslationPipe" [width]="'70'">
+                                    <log-column  *ngIf="IsViaFieldVisible"  [header]="'TariffLine.F.ViaPortId' | TextCodeTranslationPipe" [width]="'70'">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">

@@ -22,18 +22,26 @@ export class AddEditTariffLineComponent  {
     public OriginDependencyFilterValue: string = "A";
     public DestinationDependencyFilterValue = "A";
     public ViaDependencyFilterValue = "A";
+    public IsViaFieldVisible: boolean = true;
     public IsAir: boolean = false;
 
     constructor() {
         
     }
-    
+
+    SetViaFieldVisiblity() {
+        if (this.TariffType == "OFS" || this.TariffType == "OSC" || this.TariffType == "ASC") {
+            this.IsViaFieldVisible = false;
+        }
+    }
+
     SetWindowArgs(args) {
         this.DataContext = args['DataContext'];
         this.EntityPM = args['EntityPM'];
         this.TariffType = args['TariffType'];
         this.SetOriginDependencyFilterValue();
         this.GetTariffType();
+        this.SetViaFieldVisiblity();
         this.Clone();
     }
 
