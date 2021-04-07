@@ -224,12 +224,24 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             bool IsPublic = true;
             if (PrivateRefrencesList.Contains(coulmnName))
                 IsPublic = false;
+            IsPublic = SetIsPublicForMasterColumn(TableRow, coulmnName, IsPublic);
+            TableRow.SetField("IsPublic", IsPublic);
+
+        }
+
+        private static bool SetIsPublicForMasterColumn(DataRow TableRow, string coulmnName, bool IsPublic)
+        {
             if (coulmnName == "Master" && TableRow["ShipmentLevelCode"].Equals("H"))
             {
                 IsPublic = false;
             }
-            TableRow.SetField("IsPublic", IsPublic);
 
+            if (coulmnName == "Master" && TableRow["ForwardingShipmentLevelCode"].Equals("H"))
+            {
+                IsPublic = false;
+            }
+
+            return IsPublic;
         }
 
         private static string GetReferenceTypeFromCoulmnName(string CoulmnName)
