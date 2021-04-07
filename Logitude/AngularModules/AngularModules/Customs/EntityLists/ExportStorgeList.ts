@@ -60,6 +60,7 @@ export class ExportStorgeList {
 	TransferCargoMethodType: string;
 	StorageOrDockID: string;
 	ExporterName: string;
+	VesselAndVoyage: string;
 	
 }
  

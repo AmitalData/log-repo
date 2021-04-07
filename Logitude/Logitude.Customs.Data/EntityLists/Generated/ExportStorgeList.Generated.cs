@@ -118,6 +118,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string StorageOrDockID  { get; set; }
        [DataMember]
        public string ExporterName  { get; set; }
+       [DataMember]
+       public string VesselAndVoyage  { get; set; }
    }
 
 }

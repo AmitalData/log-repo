@@ -393,6 +393,7 @@ import { NDMessageActionCodeListService } from './Services/StandardLists/NDMessa
 import { HandingCodeListService } from './Services/StandardLists/HandingCodeListService';
 import { StuffingSiteTypeListService } from './Services/StandardLists/StuffingSiteTypeListService';
 import { ContainerTypeListService } from './Services/StandardLists/ContainerTypeListService';
+import { ExportStorgeListService } from './Services/StandardLists/ExportStorgeListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -663,6 +664,7 @@ export class ModuleProviders {
             case "CoolingReportingMethodListService": { myResult = new CoolingReportingMethodListService(); break; } 
             case "NDMessageActionCodeListService": { myResult = new NDMessageActionCodeListService(); break; } 
             case "HandingCodeListService": { myResult = new HandingCodeListService(); break; } 
+            case "ExportStorgeListService": { myResult = new ExportStorgeListService(); break; } 
 
 
              //#endregion                

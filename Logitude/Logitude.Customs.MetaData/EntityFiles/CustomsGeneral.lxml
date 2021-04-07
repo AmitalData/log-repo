@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CustomsGeneral&quot;"
-  Code="&quot;4a53&quot;"
+  Code="&quot;790d&quot;"
   Name="&quot;CustomsGeneral&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -52,6 +52,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;6f7b&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -5216,7 +5217,12 @@
       LocalDefaultText="&quot;מסך רפרנט&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
-
+    <TextCode
+      Code="&quot;General.MH.ExportStorage&quot;"
+      DefaultText="&quot;Storages&quot;"
+      LocalDefaultText="&quot;אחסנות&quot;"
+      TextCodeTypeCode="&quot;MH&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
