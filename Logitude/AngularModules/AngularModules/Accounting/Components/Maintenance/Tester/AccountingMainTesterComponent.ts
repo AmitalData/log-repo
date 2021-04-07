@@ -172,6 +172,14 @@ export class AccountingMainTesterComponent extends BaseComponent {
         let obj = { /*MyTenant: SessionLocator.Tenant,*/ Aging4AccountTypeCode: 'Customer2', MyGLAccId: "1-152", Aging4AccountTypeCode_Options: 'Customer2;Vendor3',};
         this.StrandartOp(opr, obj, () => { });
 
+        this.StrandartOp(opr, obj, () => {
+            let resObj = JSON.parse(this.JsonOut);
+            if (Array.isArray(resObj)) {
+                this.JsonList = resObj;
+            }
+        });
+
+
     }
 
 

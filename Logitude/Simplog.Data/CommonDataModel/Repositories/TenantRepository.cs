@@ -34,6 +34,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return this.context.Tenants.Include("Address").Include("PaymentTerm").Include("OtherChargesCurrency").Include("QuoteSaleCurrency").Include("AgentCard").Include("Currency").Include("ProfitCurrency").Include("FreightCurrency").Include("PasswordPolicy").Include("Address.Country");
         }
 
+        public List<int> GetAccountingActivatedTenants()
+        {
+            return this.context.Tenants.Where(r => r.AccountingActivated).Select(r=>r.Id).ToList();
+        }
+
         public static Tenant GetSingleTenant(int id,bool getFromCache)
         {
             string entityName = "Tenant" + id ;

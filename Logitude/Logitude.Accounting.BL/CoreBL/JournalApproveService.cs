@@ -1122,13 +1122,17 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         if (DateTime.UtcNow.Date > _NextDueDoneAt.Date)// _NextDueDoneAt DateTime.UtcNow.TimeOfDay < TimeSpan.FromHours(6) ) 
                         {
-                            if (DateTime.Now < new DateTime(2021, 06, 01))
+                            if (DateTime.Now < new DateTime(2022, 06, 01))
                             {
                                 CreateBatchAccountingIntegrityCheck();
                             }
                             _NextDueDoneAt = DateTime.UtcNow.Date;
                             var myDueLocalBalanceService = new DueLocalBalanceService();
                             myDueLocalBalanceService.RunAllTenants();
+
+                            var dailyRebuildAgingService = new DailyRebuildAgingService();
+                            dailyRebuildAgingService.RunAllAgingTenants();
+
                         }
                     }
                     catch (Exception)
