@@ -81,7 +81,7 @@ export class TermsOfUseStartupComponent implements OnInit {
 
 
         var termsofUseSignaturePM = new TermsofUseSignaturePM();
-        termsofUseSignaturePM.TermsofUseVersion = this.Version;
+        termsofUseSignaturePM.TermsofUseId = this.Version;
         termsofUseSignaturePM.ContactId = SessionInfo.LoggedUserId;
         termsofUseSignaturePM.Tenant = SessionInfo.LoggedUserTenant;
         termsofUseSignaturePM.SignedDatetime = DateTool.GetCurrentDateAsUtc();

@@ -10,8 +10,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
     public class TermsofUsePM
     {
         [Key]
-        public int Version { get; set; }
+        public int Id { get; set; }
         public DateTime Date { get; set; }
+        public int VersionNumber { get; set; }
+        public int Tenant { get; set; }
 
     }
 }

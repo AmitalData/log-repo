@@ -7,8 +7,10 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
     public class TermsofUse
     {
         [Key]
-        public int Version { get; set; }
+        public int Id { get; set; }
         public DateTime Date { get; set; }
+        public int VersionNumber { get; set; }
+        public int Tenant { get; set; }
 
         //public List<TermsofUseSignature> TermsofUseSignatures { get; set; }
     }

@@ -106,7 +106,7 @@ class TermsofUseSignaturePMViewModel {
     TermsofUseVersion: number;
     constructor(item: TermsofUseSignaturePM) {
         this.SignedDatetime = item.SignedDatetime;
-        this.TermsofUseVersion = item.TermsofUseVersion;
+        this.TermsofUseVersion = item.TermsofUseId;
     }
 
 }

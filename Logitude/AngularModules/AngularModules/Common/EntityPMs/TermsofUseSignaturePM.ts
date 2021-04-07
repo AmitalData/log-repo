@@ -45,9 +45,9 @@ export class TermsofUseSignaturePM {
     public set ContactId(newValue: string) { if (this.contactId != newValue) { this.contactId = newValue; this.MarkAsDirty("ContactId"); } }
        
 	 
-    private termsofUseVersion: number;
-    public get TermsofUseVersion() { return this.termsofUseVersion; }
-    public set TermsofUseVersion(newValue: number) { if (this.termsofUseVersion != newValue) { this.termsofUseVersion = newValue; this.MarkAsDirty("TermsofUseVersion"); } }
+    private termsofUseId: number;
+    public get TermsofUseId() { return this.termsofUseId; }
+    public set TermsofUseId(newValue: number) { if (this.termsofUseId != newValue) { this.termsofUseId = newValue; this.MarkAsDirty("TermsofUseId"); } }
        
 	 
 

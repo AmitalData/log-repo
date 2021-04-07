@@ -34,8 +34,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     if (termofuse == null) result.IsTermOfUse = false;
                     else
                     {
-                        result.Version = termofuse.Version;
-                        TermsofUseSignaturePM termsofUseSignaturePM = termsofUseSignatureQuery.GetTermsofUseSignatureByContactIdAndVersion(termofuse.Version, userId , authToken.Tenant);
+                        result.Version = termofuse.VersionNumber;
+                        TermsofUseSignaturePM termsofUseSignaturePM = termsofUseSignatureQuery.GetTermsofUseSignatureByContactIdAndVersion(termofuse.VersionNumber, userId , authToken.Tenant);
                         if (termsofUseSignaturePM != null)
                         {
                             result.IsTermOfUse = false;

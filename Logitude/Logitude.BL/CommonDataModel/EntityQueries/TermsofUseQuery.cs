@@ -34,12 +34,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public TermsofUsePM GetSinglePM(DateTime toUdate, int version)
         {
             TermsofUsePM termsofUses = (from a in repository.context.TermsofUses
-                                        where a.Version == version
+                                        where a.VersionNumber == version
                                         && a.Date == toUdate
                                         select new TermsofUsePM()
                                         {
+                                            Id = a.Id,
                                             Date = a.Date,
-                                            Version = a.Version,
+                                            VersionNumber = a.VersionNumber,
+                                            Tenant = a.Tenant,
                                         }).FirstOrDefault();
             return termsofUses;
         }
@@ -47,12 +49,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public TermsofUsePM GetSinglePMByVersion(int version)
         {
             TermsofUsePM termsofUses = (from a in repository.context.TermsofUses
-                                        where a.Version == version
+                                        where a.VersionNumber == version
 
                                         select new TermsofUsePM()
                                         {
+                                            Id = a.Id,
                                             Date = a.Date,
-                                            Version = a.Version,
+                                            VersionNumber = a.VersionNumber,
+                                            Tenant = a.Tenant,
+
                                         }).FirstOrDefault();
             return termsofUses;
         }
@@ -63,19 +68,25 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                                                    select new TermsofUsePM()
                                                    {
+                                                       Id = a.Id,
                                                        Date = a.Date,
-                                                       Version = a.Version,
+                                                       VersionNumber = a.VersionNumber,
+                                                       Tenant = a.Tenant,
+
                                                    };
             return termsofUses;
         }
 
         public TermsofUsePM GetTermsofUseDeflut()
         {
-            TermsofUsePM termsofUses = (from a in repository.context.TermsofUses.OrderByDescending(d=>d.Version)
+            TermsofUsePM termsofUses = (from a in repository.context.TermsofUses.OrderByDescending(d=>d.VersionNumber)
                                         select new TermsofUsePM()
                                         {
+                                            Id = a.Id,
                                             Date = a.Date,
-                                            Version = a.Version,
+                                            VersionNumber = a.VersionNumber,
+                                            Tenant = a.Tenant,
+
                                         }).FirstOrDefault();
 
 

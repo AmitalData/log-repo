@@ -5,8 +5,8 @@
   DBType="Main"
   Module="Common">
   <Column
-    Name="Version"
-    ShortName="Version_"
+    Name="Id"
+    OldNames="Version"
     Type="int">
     <Constraints
       PrimaryKey="true"
@@ -16,6 +16,23 @@
     Name="Date"
     ShortName="Date_"
     Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+
+    <Column
+    Name="VersionNumber"
+    ShortName="VersionNumber"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+
+      <Column
+    Name="Tenant"
+    ShortName="Tenant"
+  DefaultValue="0" 
+  Type="int">
     <Constraints
       Nullable="false" />
   </Column>

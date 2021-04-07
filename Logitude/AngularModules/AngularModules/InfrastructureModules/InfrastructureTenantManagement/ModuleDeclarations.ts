@@ -8,6 +8,7 @@ import {AddEditLicenceComponent} from './Components/TenantManagement/AddEditLice
 import {AddEditPrivateLabelsComponent} from './Components/TenantManagement/AddEditPrivateLabelsComponent';
 import {PrivateLabelLoadComponent} from './Components/TenantManagement/PrivateLabelLoadComponent';
 import { CargoTrackingBrandingComponent } from './Components/TenantManagement/CargoTrackingBrandingComponent';
+import { TenantManagementTermsofUseTabComponent } from './Components/TenantManagement/TenantManagementTermsofUseTabComponent';
 
 export const Components =
     [
@@ -21,6 +22,7 @@ export const Components =
         AddEditPrivateLabelsComponent,
         PrivateLabelLoadComponent,
         CargoTrackingBrandingComponent,
+        TenantManagementTermsofUseTabComponent,
     ];
 
 export class ModuleDeclarations {
@@ -38,7 +40,9 @@ export class ModuleDeclarations {
             case "AddEditLicenceComponent": { myResult = AddEditLicenceComponent; break; }
             case "AddEditPrivateLabelsComponent": { myResult = AddEditPrivateLabelsComponent; break; }
             case "PrivateLabelLoadComponent": { myResult = PrivateLabelLoadComponent; break; }
-            case "CargoTrackingBrandingComponent": { myResult = CargoTrackingBrandingComponent; break; }    
+            case "CargoTrackingBrandingComponent": { myResult = CargoTrackingBrandingComponent; break; }
+            case "TenantManagementTermsofUseTabComponent": { myResult = TenantManagementTermsofUseTabComponent; break; }
+
         }
 
         return myResult;

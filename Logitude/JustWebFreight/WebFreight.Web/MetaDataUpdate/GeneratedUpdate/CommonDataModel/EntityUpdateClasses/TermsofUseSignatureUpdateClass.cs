@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class TermsofUseSignatureUpdateClass
    {  		
-		public const string HashString = "358a4665a24cd48085b06a9994fa4353";
+		public const string HashString = "33a6d87482bf23234b9fdb5f32a1ff5b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "TermsofUseSignature",
 			      				    IsNew =  false,
 			      				    DBTableName =  "TermsofUseSignatures",
-			      				    OldDBTableName =  "TermsofUseSignatures",
 			      				    ObjectTableSingular =  "TermsofUseSignature",
 			      				    ObjectTablePlural =  "Terms of Use Signatures",
 			      				    HasCustomFilter =  false,
@@ -119,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "TermsofUseSignature",
-			      				    Code =  "8dd9",
+			      				    Code =  "8d46",
 			      				    Name =  "TermsofUseSignature",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,
@@ -129,6 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "TermsofUseSignature,TermsofUseSignatures,,Id,",
 			      				    HashString =  TermsofUseSignatureUpdateClass.HashString,
 			                    
@@ -142,7 +142,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ContactId",
-					  						OldFieldName =  "ContactId",
 					  						ObjectTableName =  "TermsofUseSignature",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Contact",
@@ -193,6 +192,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ContactId",
@@ -205,7 +205,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "SignedDatetime",
-					  						OldFieldName =  "SignedDatetime",
 					  						ObjectTableName =  "TermsofUseSignature",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -257,6 +256,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "SignedDatetime",
@@ -268,8 +268,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "TermsofUseVersion",
-					  						OldFieldName =  "TermsofUseVersion",
+					 						FieldName =  "TermsofUseId",
 					  						ObjectTableName =  "TermsofUseSignature",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -288,8 +287,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "TermsofUseVersion",
-					  						ListPropertyPath =  "TermsofUseVersion",
+					  						PMPropertyPath =  "TermsofUseId",
+					  						ListPropertyPath =  "TermsofUseId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -310,10 +309,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "TermsofUseVersion",
-					  						DefaultText =  "Terms of Use Version",
-					  						ShortFieldLable =  "TermsofUseVersion",
-					  						ShortFieldLableDefaultText =  "Terms of Use Version",
+					  						FullFieldLable =  "TermsofUseId",
+					  						DefaultText =  "Terms of Use Version Id",
+					  						ShortFieldLable =  "TermsofUseId",
+					  						ShortFieldLableDefaultText =  "Terms of Use Version Id",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -321,6 +320,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "TermsofUseVersion",
@@ -335,7 +335,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable TermsofUseSignatureObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TermsofUseSignature" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> TermsofUseSignatureObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TermsofUseSignature").ToList();
+		       
+	      
+
+	         Screen TermsofUseSignatureTermsofUseSignatureHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TermsofUseSignature.HeaderScreen", Name = "TermsofUseSignatureHeaderScreen", ObjectTableId = TermsofUseSignatureObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    TermsofUseSignatureObjectTable.HeaderScreenId = TermsofUseSignatureTermsofUseSignatureHeaderScreenScreen0.Id;
+		    TermsofUseSignatureObjectTable.HeaderScreenCode = TermsofUseSignatureTermsofUseSignatureHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

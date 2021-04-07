@@ -42,7 +42,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                               SignedDatetime = a.SignedDatetime,
                                                               Tenant = a.Tenant,
                                                               ContactId = a.ContactId,
-                                                              TermsofUseVersion = a.TermsofUseVersion,
+                                                              TermsofUseId = a.TermsofUseId,
                                                           }).FirstOrDefault();
             return termsofUseSignatures;
         }
@@ -57,7 +57,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                           SignedDatetime = a.SignedDatetime,
                                                                           Tenant = a.Tenant,
                                                                           ContactId = a.ContactId,
-                                                                          TermsofUseVersion = a.TermsofUseVersion,
+                                                                          TermsofUseId = a.TermsofUseId,
                                                                       });
             return termsofUseSignatures;
         }
@@ -72,7 +72,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             SignedDatetime = a.SignedDatetime,
                                                             Tenant = a.Tenant,
                                                             ContactId = a.ContactId,
-                                                            TermsofUseVersion = a.TermsofUseVersion,
+                                                            TermsofUseId = a.TermsofUseId,
                                                         }
                                            );
             return result;
@@ -87,23 +87,23 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              Tenant = entity.Tenant,
                                                              SignedDatetime = entity.SignedDatetime,
                                                              ContactId = entity.ContactId,
-                                                             TermsofUseVersion = entity.TermsofUseVersion,
+                                                             TermsofUseId = entity.TermsofUseId,
                                                          };
             return result;
         }
 
-        public TermsofUseSignaturePM GetTermsofUseSignatureByContactIdAndVersion(int version, string userId ,int  tenant)
+        public TermsofUseSignaturePM GetTermsofUseSignatureByContactIdAndVersion(int versionId, string userId ,int  tenant)
         {
             TermsofUseSignaturePM termsofUseSignatures = (from a in repository.context.TermsofUseSignatures
                                                           where a.ContactId == userId && a.Tenant == tenant
-                                                          && a.TermsofUseVersion == version
+                                                          && a.TermsofUseId == versionId
                                                           select new TermsofUseSignaturePM()
                                                           {
                                                               Id = a.Id,
                                                               SignedDatetime = a.SignedDatetime,
                                                               Tenant = a.Tenant,
                                                               ContactId = a.ContactId,
-                                                              TermsofUseVersion = a.TermsofUseVersion,
+                                                              TermsofUseId = a.TermsofUseId,
                                                           }).FirstOrDefault();
 
             return termsofUseSignatures;
