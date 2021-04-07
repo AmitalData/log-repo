@@ -1837,7 +1837,6 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region 1
             string myCodesText = "";
-
             List<string> mySpecialHandlingCodes = this.GetSpecialHandlingCodes(shipmentPM);
             if (mySpecialHandlingCodes.Count > 0)
             {
@@ -1854,53 +1853,6 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
             }
-            #endregion
-
-            #region 2
-            //string myReferenceText = "";
-
-            //string myReferenceField = "";
-            //myReferenceField = shipmentPM.ReferenceNumber;
-            //if (!string.IsNullOrEmpty(myReferenceField))
-            //{
-            //    if (string.IsNullOrEmpty(myReferenceText))
-            //    {
-            //        myReferenceText = myReferenceField;
-            //    }
-
-            //    else
-            //    {
-            //        myReferenceText += " " + myReferenceField;
-            //    }
-            //}
-
-            //myReferenceField = shipmentPM.SupplementaryShipmentInformation1;
-            //if (!string.IsNullOrEmpty(myReferenceField))
-            //{
-            //    if (string.IsNullOrEmpty(myReferenceText))
-            //    {
-            //        myReferenceText = myReferenceField;
-            //    }
-
-            //    else
-            //    {
-            //        myReferenceText += " " + myReferenceField;
-            //    }
-            //}
-
-            //myReferenceField = shipmentPM.SupplementaryShipmentInformation2;
-            //if (!string.IsNullOrEmpty(myReferenceField))
-            //{
-            //    if (string.IsNullOrEmpty(myReferenceText))
-            //    {
-            //        myReferenceText = myReferenceField;
-            //    }
-
-            //    else
-            //    {
-            //        myReferenceText += " " + myReferenceField;
-            //    }
-            //}
             #endregion
 
             #region 3
@@ -1970,21 +1922,6 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
-            //if (!string.IsNullOrEmpty(shipmentPM.MainHarmonize))
-            //{
-            //    string myMainHarmonize = "HCC Code " + shipmentPM.MainHarmonize;
-
-            //    if (string.IsNullOrEmpty(myHandlingInformation))
-            //    {
-            //        myHandlingInformation = myMainHarmonize;
-            //    }
-
-            //    else
-            //    {
-            //        myHandlingInformation += Environment.NewLine + myMainHarmonize;
-            //    }
-            //}
-
             List<string> myHandlingInformationList0_3 = new List<string>();
             List<string> myHandlingInformationList3_X = new List<string>();
 
@@ -2038,6 +1975,32 @@ namespace WebFreight.Web.ReportsWebServices
             myDataProvider.SupplementaryInformation1 = string.IsNullOrEmpty(shipmentPM.SupplementaryShipmentInformation1) ? "" : shipmentPM.SupplementaryShipmentInformation1;
             myDataProvider.SupplementaryInformation2 = string.IsNullOrEmpty(shipmentPM.SupplementaryShipmentInformation2) ? "" : shipmentPM.SupplementaryShipmentInformation2;
             myDataProvider.HouseReferenceNumber = string.IsNullOrEmpty(shipmentPM.MasterShipmentNumber) ? "" : shipmentPM.MasterShipmentNumber;
+            this.FillAllAWBSpecialHandlingCodes(myDataProvider, shipmentPM);
+        }
+
+        private void FillAllAWBSpecialHandlingCodes(AWBDataProvider myDataProvider, ShipmentPM shipmentPM)
+        {
+            string specialHandlingCodesText = "";
+            var allSpecialHandlingCodes = GetSpecialHandlingCodes(shipmentPM);
+            var specialHandlingDistinctCodes = allSpecialHandlingCodes.Distinct().ToList();
+           
+            if (specialHandlingDistinctCodes != null && specialHandlingDistinctCodes.Count > 0)
+            {
+                foreach (string item in specialHandlingDistinctCodes)
+                {
+                    if (string.IsNullOrEmpty(specialHandlingCodesText))
+                    {
+                        specialHandlingCodesText = item;
+                    }
+
+                    else
+                    {
+                        specialHandlingCodesText += "/ " + item;
+                    }
+                }
+            }
+
+            myDataProvider.SpecialHandlingCodes = specialHandlingCodesText;
         }
 
         private List<string> GetSpecialHandlingCodes(ShipmentPM entityPM)
