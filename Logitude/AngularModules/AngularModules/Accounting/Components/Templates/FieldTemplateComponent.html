@@ -115,13 +115,13 @@
                                                 <a href="javascript:;" (click)="OpenGLAccount(Entity.ParentAccountId)">{{Entity.ParentAccountName}} </a>({{'GLAccounts.O.Parent' | TextCodeTranslationPipe}})
                                             </div>
 
-                                            <div *ngIf="numberOfChildren == 1">
-                                                <a href="javascript:;" (click)="OpenGLAccount(ChildrenGLAccounts[0].Id)">{{ChildrenGLAccounts[0].LocalName}}</a>({{'GLAccounts.O.Child' | TextCodeTranslationPipe}})
+                                            <div *ngIf="Entity.GLAccountChildren.length == 1">
+                                                <a href="javascript:;" (click)="OpenGLAccount(Entity.GLAccountChildren[0].Id)">{{Entity.GLAccountChildren[0].LocalName}}</a>({{'GLAccounts.O.Child' | TextCodeTranslationPipe}})
                                             </div>
 
-                                            <LogToolTip [bottom]="5" [Scrollable]="true" [float]="isRTL ? 'right' : 'left'" *ngIf="numberOfChildren > 1 " [direction]="showLocal?'bottomleft':'bottomright'" [name]="'OpenShipments'"
+                                            <LogToolTip [bottom]="5" [Scrollable]="true" [float]="isRTL ? 'right' : 'left'" *ngIf="Entity.GLAccountChildren.length > 1 " [direction]="showLocal?'bottomleft':'bottomright'" [name]="'OpenShipments'"
                                                         [mode]="'Info'">
-                                                <div *ngFor="let item of ChildrenGLAccounts">
+                                                <div *ngFor="let item of Entity.GLAccountChildren">
                                                     <a href="javascript:;" (click)="OpenGLAccount(item.Id)">{{item.LocalName}}</a>({{'GLAccounts.O.Child' | TextCodeTranslationPipe}})
                                                 </div>
                                             </LogToolTip>
