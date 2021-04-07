@@ -218,7 +218,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                     if (currentDeclarationCourierStatusPM != null)
                     {
                         CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(_context);
-                        CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(declarationPendingCode, _MyDeclarationPM.Tenant);
+                        CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(declarationPendingCode, false, false);
+
+                        //  CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(declarationPendingCode, _MyDeclarationPM.Tenant);
                         if (courierPendingReasonPM == null)
                         {
                             LogMessagingUtil.Instance.AppendLine("לא קיים קוד Pending = " + declarationPendingCode + " בטבלת סיבות Pending");

@@ -19,9 +19,7 @@ namespace Logitude.Customs.Def.EntityPMs
    public partial class CourierPendingReasonPM : EntityPM
    {
    	  private string id ;
-	  
-       [Key]
-	  
+	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -44,7 +42,9 @@ namespace Logitude.Customs.Def.EntityPMs
 		 }
 	   }
 	  private string code ;
-	  	  
+	  
+       [Key]
+	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]

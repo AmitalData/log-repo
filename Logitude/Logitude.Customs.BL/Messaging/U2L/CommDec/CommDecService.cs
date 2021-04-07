@@ -580,14 +580,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 }
             }
         }
-
  
         private void UpdateDeclarationPending(string declarationPendingCode)
         {
             if (currentDeclarationCourierStatusPM != null)
             {
                 CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(_context);
-                CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(declarationPendingCode, _MyDeclarationPM.Tenant);
+                CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(declarationPendingCode, false, false);
                 if (courierPendingReasonPM == null)
                 {
                     LogMessagingUtil.Instance.AppendLine("לא קיים קוד Pending = " + declarationPendingCode + " בטבלת סיבות Pending");
@@ -597,12 +596,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 DeclarationPendingPM _declarationPendingPM = null;
                 if (currentDeclarationCourierStatusPM.DeclarationPendings != null && currentDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
                 {
-                    _declarationPendingPM = currentDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == currentDeclarationCourierStatusPM.DeclarationId && r.CourierPendingReasonCode == courierPendingReasonPM.Id).FirstOrDefault();
+                    _declarationPendingPM = currentDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == currentDeclarationCourierStatusPM.DeclarationId && r.CourierPendingReasonCode == declarationPendingCode).FirstOrDefault();
                 }
                 if (_declarationPendingPM == null)
                 {
                     _declarationPendingPM = new DeclarationPendingPM();
-                    _declarationPendingPM.CourierPendingReasonCode = courierPendingReasonPM.Id;
+                    _declarationPendingPM.CourierPendingReasonCode = declarationPendingCode;
                     _declarationPendingPM.Status = "A";
                     _declarationPendingPM.ChangeSetOp = ChangeSetOperation.Insert;
                     currentDeclarationCourierStatusPM.DeclarationPendings.Add(_declarationPendingPM);
@@ -624,6 +623,48 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 }
             }
         }
+        //private void UpdateDeclarationPending(string declarationPendingCode)
+        //{
+        //    if (currentDeclarationCourierStatusPM != null)
+        //    {
+        //        CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(_context);
+        //        CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(declarationPendingCode, _MyDeclarationPM.Tenant);
+        //        if (courierPendingReasonPM == null)
+        //        {
+        //            LogMessagingUtil.Instance.AppendLine("לא קיים קוד Pending = " + declarationPendingCode + " בטבלת סיבות Pending");
+        //            return;
+        //        }
+        //        LogMessagingUtil.Instance.AppendLine("Pending - " + declarationPendingCode);
+        //        DeclarationPendingPM _declarationPendingPM = null;
+        //        if (currentDeclarationCourierStatusPM.DeclarationPendings != null && currentDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
+        //        {
+        //            _declarationPendingPM = currentDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == currentDeclarationCourierStatusPM.DeclarationId && r.CourierPendingReasonCode == courierPendingReasonPM.Id).FirstOrDefault();
+        //        }
+        //        if (_declarationPendingPM == null)
+        //        {
+        //            _declarationPendingPM = new DeclarationPendingPM();
+        //            _declarationPendingPM.CourierPendingReasonCode = courierPendingReasonPM.Id;
+        //            _declarationPendingPM.Status = "A";
+        //            _declarationPendingPM.ChangeSetOp = ChangeSetOperation.Insert;
+        //            currentDeclarationCourierStatusPM.DeclarationPendings.Add(_declarationPendingPM);
+        //        }
+        //        else if (_declarationPendingPM.Status != "A")
+        //        {
+        //            _declarationPendingPM.ChangeSetOp = ChangeSetOperation.Update;
+        //            _declarationPendingPM.Status = "A";
+        //        }
+        //        if (_declarationPendingPM.ChangeSetOp != ChangeSetOperation.None)
+        //        {
+        //            LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code To " + declarationPendingCode);
+        //            if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+        //        }
+        //        if (currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+        //        {
+        //            DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+        //            declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+        //        }
+        //    }
+        //}
 
         private void CalcProcedureCurrentCode()
         {
