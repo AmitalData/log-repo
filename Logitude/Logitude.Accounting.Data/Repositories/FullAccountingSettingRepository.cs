@@ -29,7 +29,17 @@ namespace Logitude.Accounting.Data.Repositories
                                      select a).FirstOrDefault();
             return myFullAccountingSetting;
         }
-   }
+
+        public List<int> GetNumberOfAgingMonthTenants()
+        {
+            var q = (
+                from a in context.FullAccountingSettings
+                where a.NumberOfAgingMonths.GetValueOrDefault() > 0
+                select a.Tenant
+                );
+            return q.ToList();
+        }
+    }
 
 }
    
