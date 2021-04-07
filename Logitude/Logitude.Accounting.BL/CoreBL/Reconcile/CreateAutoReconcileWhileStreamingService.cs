@@ -41,9 +41,14 @@ namespace Logitude.Accounting.BL.CoreBL
             var theReconcileAgainstLTranIdList = _JournalPM.JournalReconciles.Select(r => r.LedgerTransactionId).ToList();
             List<LedgerTransactionPM> myOldTransToReconcile = GetLedgerTransactionToReconcile(theReconcileAgainstLTranIdList);
 
+
             if (myOldTransToReconcile.Any(r => r.IsReconciled))
             {
-                throw new Exception("Please call Helpdesk support,JournalReconciles already Is Reconciled ");
+                if (!_JournalPM.IsVoided.GetValueOrDefault())//while voiding -old transaction IsReconciled change after !!
+                {
+                    throw new Exception("Please call Helpdesk support,JournalReconciles already Is Reconciled ");
+                }
+
             }
 
 
