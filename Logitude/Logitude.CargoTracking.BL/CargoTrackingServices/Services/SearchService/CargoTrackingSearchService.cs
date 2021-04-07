@@ -227,8 +227,19 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             {
                 IsPublic = false;
             }
+
+            if(coulmnName == "ContainersNumbers")
+            {
+                IsPublic = SetIsPublicForContainerColumn(TableRow);
+            }
             TableRow.SetField("IsPublic", IsPublic);
 
+        }
+
+        private static bool SetIsPublicForContainerColumn(DataRow tableRow)
+        {
+            if (tableRow["ShipmentTypeId"].Equals("LCLD")){ return false;}
+            return true;
         }
 
         private static string GetReferenceTypeFromCoulmnName(string CoulmnName)
