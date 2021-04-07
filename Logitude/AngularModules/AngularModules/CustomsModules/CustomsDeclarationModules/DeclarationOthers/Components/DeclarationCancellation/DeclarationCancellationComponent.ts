@@ -139,7 +139,7 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
 
             if (!AppTool.IsNullOrEmpty(response.Result) && response.Result == false) {
                 //  SessionLocator.SelectedSession.CurrentEditComponent.StopBusyIndicator();
-                this.ValidationErrorsList.push("חובה לצרף מסמך אחד לפחות. ");
+                this.ValidationErrorsList.push("חובה לצרף מכתב בקשה לביטול הצהרה. ");
             }
                     this.FillErrors();
                     if (this.ValidationErrorsList.length > 0) {
