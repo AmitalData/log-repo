@@ -83,7 +83,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
 
                 CourierPendingReasonQueryService courierPendingReasonQueryService = new CourierPendingReasonQueryService(customContext);
-                CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(courierPendingReasonCode, tenant);
+                CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQueryService.GetSingle(courierPendingReasonCode, false, false);
+
+                //CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(courierPendingReasonCode, tenant);
                 courierPendingReasonPM.ChangeSetOp = ChangeSetOperation.Update;
                 courierPendingReasonPM.UnifreightStatusCode = null;
 

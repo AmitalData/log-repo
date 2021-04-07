@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string code)
         {
 		  try
             {
@@ -64,7 +64,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CourierPendingReasonQueryService courierPendingReasonQuery = new CourierPendingReasonQueryService(MyContext);
 				courierPendingReasonQuery.InitializeSettings();
-                CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQuery.GetSingle(id,true,false);
+                CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQuery.GetSingle(code,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             
