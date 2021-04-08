@@ -440,6 +440,20 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 
                                 myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
                             }
+                            else
+                            {
+                                myDocumentId.DocumentVersion = myDocumentId.DocumentVersion + 1;
+                                myDocumentId.DocumentStatusCode = null;
+                                myDocumentId.CustomRecievedDate = null;
+                                myDocumentId.CustomsDocId = null;
+                                myDocumentId.ForceRemoveCustomsDocId = true;
+                                myDocumentId.ChangeSetOp = ChangeSetOperation.Update;
+
+                                var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+
+                                myCustomsDocumentUpdateService.Update(myDocumentId, true);
+
+                            }
                         }
                     }
                 }
