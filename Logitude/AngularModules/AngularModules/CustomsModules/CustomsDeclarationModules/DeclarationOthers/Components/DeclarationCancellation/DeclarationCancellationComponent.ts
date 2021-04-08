@@ -40,6 +40,13 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
          }
     }
 
+    get IsClaimable() { return this.EntityPM.IsClaimable; }
+    set IsClaimable(value: boolean) {
+        if (this.EntityPM.IsClaimable != value) {
+            this.EntityPM.IsClaimable = value;
+        }
+    }
+
 
     get CancelRequestReasonCode() { return this.EntityPM.CancelRequestReasonCode; }
     set CancelRequestReasonCode(value: string) {
@@ -286,6 +293,7 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
         this.UIProperties.SetEnabled("CancelRequestApproveDate", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("CancelRequestRejectionReason", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("CancelRequestNumber", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("IsClaimable", this.ObjectTableName, false);
 
         if (this.CancelRequestStatusCode == "5" || this.CancelRequestStatusCode == "2") {
             this.UIProperties.SetEnabled("CancelRequestReasonExplanation", this.ObjectTableName, false);
