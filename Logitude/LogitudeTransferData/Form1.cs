@@ -1,4 +1,5 @@
 ﻿using Confluent.Kafka;
+using LogitudeTransferData.Constants;
 using LogitudeTransferData.Models;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -60,7 +61,7 @@ namespace LogitudeTransferData
                         if (cTUser.Email != null)
                         {
                             var serializedUser = JsonConvert.SerializeObject(cTUser, Formatting.Indented);
-                            var deliveryReport = producer.ProduceAsync(topic, new Message<long, string> { Key = DateTime.UtcNow.Ticks, Value = serializedUser });
+                            var deliveryReport = producer.ProduceAsync(topic, new Message<long, string> { Key = MessageType.User, Value = serializedUser });
                         }
                     }
                 }

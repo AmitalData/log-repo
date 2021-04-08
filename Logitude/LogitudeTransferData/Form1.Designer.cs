@@ -36,38 +36,41 @@ namespace LogitudeTransferData
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(170, 174);
+            this.button1.Location = new System.Drawing.Point(73, 54);
+            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(116, 30);
+            this.button1.Size = new System.Drawing.Size(99, 24);
             this.button1.TabIndex = 0;
-            this.button1.Text = "Transfer";
+            this.button1.Text = "Transfer Users";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(100, 121);
+            this.label1.Location = new System.Drawing.Point(13, 11);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(51, 17);
+            this.label1.Size = new System.Drawing.Size(41, 13);
             this.label1.TabIndex = 1;
             this.label1.Text = "Tenant";
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(170, 121);
+            this.textBox1.Location = new System.Drawing.Point(73, 11);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(122, 24);
+            this.textBox1.Size = new System.Drawing.Size(105, 20);
             this.textBox1.TabIndex = 2;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(208, 97);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
