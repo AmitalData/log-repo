@@ -18,6 +18,7 @@ namespace CommunicationWorkerRole
     {
         DbQueueService queueservice;
         string queueName = "CreateTaskCollaborationTool";
+        string URL = "https://localhost:44362/api/Task/PostExternal";
 
         public override void Run()
         {
@@ -37,7 +38,7 @@ namespace CommunicationWorkerRole
                             using (var client = new HttpClient())
                             {
                                 var serializedObject = JsonConvert.SerializeObject(collaborationToolTask);
-                                var result = client.PostAsync("https://localhost:44362/api/Task/PostExternal", new StringContent(serializedObject, Encoding.UTF8, "application/json"));
+                                var result = client.PostAsync(URL, new StringContent(serializedObject, Encoding.UTF8, "application/json"));
                                 result.Wait();
                             }
                         }
