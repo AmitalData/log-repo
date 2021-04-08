@@ -1,5 +1,7 @@
 ﻿using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +10,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace CommunicationWorkerRole
 {
@@ -26,27 +29,23 @@ namespace CommunicationWorkerRole
                     {
                         queueservice = new DbQueueService(queueName, 1);
                         var response = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
-                        LastActivity = DateTime.UtcNow;
 
                         if(response.MessageId != null)
                         {
                             CollaborationToolTask collaborationToolTask = GenerateCollaborationToolTaskModel(response);
 
-                            //{ "EntityNumber":"SHIP0001","AssigneeId":"1-796","OwnerId":"1-796","Tenant":"1","TaskType":"TestType","EndDate":"2021-04-09"}
-
-
                             using (var client = new HttpClient())
                             {
-                    //            var result = client.PostAsync("", collaborationToolTask);
+                                var serializedObject = JsonConvert.SerializeObject(collaborationToolTask);
+                                var result = client.PostAsync("https://localhost:44362/api/Task/PostExternal", new StringContent(serializedObject, Encoding.UTF8, "application/json"));
+                                result.Wait();
                             }
-
-                            // call  create task
                         }
                     }
                     catch (Exception ex)
                     {
                         ConnectClient();
-                        ExceptionHandler.HandleException(ex, DateTime.Now, 1, null, "AgentsSharedLogistics worker role start", null, null);
+                        ExceptionHandler.HandleException(ex, DateTime.Now, 1, null, "CreateTaskCollaborationTool worker role start", null, null);
                         Thread.Sleep(10000);
                     }
                 }
@@ -85,30 +84,31 @@ namespace CommunicationWorkerRole
         #region Private methods
         private CollaborationToolTask GenerateCollaborationToolTaskModel(QueueResponse response)
         {
+            int tenant = int.Parse(response.MessageValues["Tenant"].ToString());
             return new CollaborationToolTask()
             {
-                Tenant = int.Parse(response.MessageValues["Tenant"].ToString()),
+                Tenant = tenant,
                 Title = "New task from Logitude",
-                Description = string.Empty,
                 StartDate = DateTime.UtcNow,
                 EndDate = DateTime.Parse(response.MessageValues["EndDate"]),
-               // AssigneeEmail = GetUserEmailFromId(),
+                AssigneeEmail = GetUserEmailFromId(tenant, response.MessageValues["AssigneeId"].ToString()),
                 PriorityCode = "M",
-              //  OwnerEmail = GetUserEmailFromId(),
+                OwnerEmail = GetUserEmailFromId(tenant, response.MessageValues["OwnerId"].ToString()),
                 StatusCode = "NEW",
                 EntityNumber = response.MessageValues["EntityNumber"].ToString(),
-                UserEntryFields = string.Empty,
-                Reminder = false,
                 TaskTypeName = response.MessageValues["TaskType"].ToString(),
                 CreatedDate = DateTime.UtcNow,
-              //  CreatedByUserEmail = GetUserEmailFromId()
+                CreatedByUserEmail = GetUserEmailFromId(tenant, response.MessageValues["OwnerId"].ToString())
             };
         }
 
-        //private string GetUserEmailFromId()
-        //{
-            
-        //}
+        private string GetUserEmailFromId(int tenant, string userId)
+        {
+            ContactRepository contactRep = new ContactRepository(tenant);
+            Contact contact = contactRep.GetSingleContact(userId, tenant);
+
+            return contact.Email;
+        }
         #endregion
 
     }
@@ -118,7 +118,6 @@ public class CollaborationToolTask
 {
     public int Tenant { get; set; }
     public string Title { get; set; }
-    public string Description { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public string AssigneeEmail { get; set; }
@@ -126,8 +125,6 @@ public class CollaborationToolTask
     public string OwnerEmail { get; set; }
     public string StatusCode { get; set; }
     public string EntityNumber { get; set; }
-    public string UserEntryFields { get; set; }
-    public bool Reminder { get; set; }
     public string TaskTypeName { get; set; }
     public DateTime CreatedDate { get; set; }
     public string CreatedByUserEmail { get; set; }
