@@ -843,6 +843,7 @@
     <Content Include="DataViews And Procedures\Stored Procedures\UpdateShipmentProfit.sql" />
     <Content Include="DataViews And Procedures\Stored Procedures\UpdateShipmentProfitFunction.sql" />
     <Content Include="DataViews And Procedures\Stored Procedures\UpdateShipmentRegistryDate.sql" />
+    <Content Include="Report Execution Logs\categorytype.sql" />
     <Content Include="Usefull Scripts\Detect Data Problems\Wrong Receivables Percentage Amounts.sql" />
     <Content Include="Usefull Scripts\Detect Data Problems\[Islam] shipments related with tenant zero issue.sql" />
     <Content Include="Usefull Scripts\Fill Data\BIReport\[Abed] UpdateBIReportFactTablePackageFeaturesAndRole.sql" />
