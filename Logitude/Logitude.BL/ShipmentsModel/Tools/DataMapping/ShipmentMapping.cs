@@ -2564,9 +2564,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             AddFieldChangedProperties(changeTrackingPM, "IsAccrualsApproved", changeTrackingPM.IsAccrualsApproved, pm.IsAccrualsApproved, "bool", notifyPropertyChangeValuesList);
 
+            AddFieldChangedProperties(changeTrackingPM, "FirstPickupATD", changeTrackingPM.FirstPickupATD, pm.FirstPickupATD, "FirstPickupATD", notifyPropertyChangeValuesList);
 
 
-            
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field1, pm.Field1, "Field1", notifyPropertyChangeValuesList);
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field2, pm.Field2, "Field2", notifyPropertyChangeValuesList);
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field3, pm.Field3, "Field3", notifyPropertyChangeValuesList);
