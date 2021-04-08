@@ -191,10 +191,6 @@ namespace Logitude.Accounting.BL.Validators
                 {
                     return null;
                 }
-                if (myGLAccountPM.CurrencyId == tPM.CurrencyId)
-                {
-                    return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.RecoCurrencyErr", myGLAccountPM.Tenant, showLocals));
-                }
             }
             if (myGLAccountPM.IsControlAccount.GetValueOrDefault())
             {
