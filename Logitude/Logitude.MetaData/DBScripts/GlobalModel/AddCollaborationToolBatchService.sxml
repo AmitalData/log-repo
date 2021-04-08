@@ -1,0 +1,31 @@
+﻿<Script DBType="Global">
+  <Sql Version="1">
+    <![CDATA[
+     
+INSERT INTO [dbo].[BatchServicesDefinitions]
+           ([Code]
+           ,[ClassName]
+           ,[Parameter1]
+           ,[Parameter2]
+           ,[QueueDefinitionCode])
+     VALUES
+           ('CollaborationToolTaskWR'
+           ,'CollaborationToolTaskWR'
+           ,NULL
+           ,NULL
+           ,'CreateTaskCollaborationTool')
+
+INSERT INTO [dbo].[BatchServicesDefinitionMods]
+           ([Code]
+           ,[InActive]
+           ,[NumberOfThreads])
+     VALUES
+           ('CollaborationToolTaskWR'
+           ,0
+           ,1)
+
+
+
+    ]]>
+  </Sql>
+</Script>
