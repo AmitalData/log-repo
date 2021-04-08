@@ -1,0 +1,220 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 7,
+    "passes": 7,
+    "pending": 0,
+    "failures": 0,
+    "start": "2021-04-08T07:14:23.427Z",
+    "end": "2021-04-08T07:16:16.825Z",
+    "duration": 113398,
+    "testsRegistered": 7,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "5befbbbe-ded9-4e88-81ab-7dc44edcbd9a",
+      "title": "",
+      "fullFile": "cypress\\tests\\MaintenanceLocalSettings.feature",
+      "file": "cypress\\tests\\MaintenanceLocalSettings.feature",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "dd18c7e8-8eec-44f0-98ff-e6fe1f7d6eea",
+          "title": "Change Time Zone and Date Time Format from Maintenance",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Change time zone and date time format",
+              "fullTitle": "Change Time Zone and Date Time Format from Maintenance Change time zone and date time format",
+              "timedOut": null,
+              "duration": 33072,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "86b60096-faa6-4839-84a4-686435640217",
+              "parentUUID": "dd18c7e8-8eec-44f0-98ff-e6fe1f7d6eea",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Create direct export air shipment",
+              "fullTitle": "Change Time Zone and Date Time Format from Maintenance Create direct export air shipment",
+              "timedOut": null,
+              "duration": 21932,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "2aeb13cc-a6ad-4143-ad63-b7a225588d39",
+              "parentUUID": "dd18c7e8-8eec-44f0-98ff-e6fe1f7d6eea",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Validate HAWB Date in \"MM/dd/yyyy\"",
+              "fullTitle": "Change Time Zone and Date Time Format from Maintenance Validate HAWB Date in \"MM/dd/yyyy\"",
+              "timedOut": null,
+              "duration": 6097,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "e0654b01-7fe7-4f30-a399-8b836050307c",
+              "parentUUID": "dd18c7e8-8eec-44f0-98ff-e6fe1f7d6eea",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Validate Shipment Updated with time in \"UTC-06:00\" timezone",
+              "fullTitle": "Change Time Zone and Date Time Format from Maintenance Validate Shipment Updated with time in \"UTC-06:00\" timezone",
+              "timedOut": null,
+              "duration": 13268,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "55571583-6ca3-4098-86fe-18190d800a82",
+              "parentUUID": "dd18c7e8-8eec-44f0-98ff-e6fe1f7d6eea",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Change time zone and date time format To local timezone",
+              "fullTitle": "Change Time Zone and Date Time Format from Maintenance Change time zone and date time format To local timezone",
+              "timedOut": null,
+              "duration": 8116,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "4fe41f23-a8bb-49d8-89cf-1266ea2df70c",
+              "parentUUID": "dd18c7e8-8eec-44f0-98ff-e6fe1f7d6eea",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Validate HAWB Date in \"dd/MM/yyyy\"",
+              "fullTitle": "Change Time Zone and Date Time Format from Maintenance Validate HAWB Date in \"dd/MM/yyyy\"",
+              "timedOut": null,
+              "duration": 9268,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "5c2942e7-7bef-42bf-a587-6025b50a293d",
+              "parentUUID": "dd18c7e8-8eec-44f0-98ff-e6fe1f7d6eea",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Validate Shipment Updated with time in \"UTC+03:00\" timezone",
+              "fullTitle": "Change Time Zone and Date Time Format from Maintenance Validate Shipment Updated with time in \"UTC+03:00\" timezone",
+              "timedOut": null,
+              "duration": 17248,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const state = window.testState;\nreturn cy\n  .then(() => state.onStartScenario(scenario, indexedSteps))\n  .then(() =>\n    resolveAndRunBeforeHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() =>\n    indexedSteps.forEach((step) =>\n      stepTest.call(this, state, step, rowData)\n    )\n  )\n  .then(() =>\n    resolveAndRunAfterHooks.call(this, scenario.tags, state.feature.name)\n  )\n  .then(() => state.onFinishScenario(scenario));",
+              "err": {},
+              "uuid": "ba636eee-f337-4715-98cf-ed7a47661c6b",
+              "parentUUID": "dd18c7e8-8eec-44f0-98ff-e6fe1f7d6eea",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "86b60096-faa6-4839-84a4-686435640217",
+            "2aeb13cc-a6ad-4143-ad63-b7a225588d39",
+            "e0654b01-7fe7-4f30-a399-8b836050307c",
+            "55571583-6ca3-4098-86fe-18190d800a82",
+            "4fe41f23-a8bb-49d8-89cf-1266ea2df70c",
+            "5c2942e7-7bef-42bf-a587-6025b50a293d",
+            "ba636eee-f337-4715-98cf-ed7a47661c6b"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 109001,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false
+      },
+      "version": "4.1.0"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "./mochawesome-report",
+        "quite": true,
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "4.0.1"
+    }
+  }
+}
