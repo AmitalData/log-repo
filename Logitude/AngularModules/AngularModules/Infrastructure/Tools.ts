@@ -569,7 +569,7 @@ export class AppTool {
             case "lcld":
             case "ltl":
                 {
-                    myResult = 3.3;
+                    myResult = 3.0;
                     break;
                 }
             case "ftl":
