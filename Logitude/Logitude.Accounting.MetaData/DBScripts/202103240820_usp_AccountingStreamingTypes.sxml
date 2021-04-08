@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main"  Pre="true"  Module="Accounting" >
-  <Sql Version="4">
+  <Sql Version="5">
     <![CDATA[
 
 IF OBJECT_ID('[dbo].[usp_AccountingStreaming]', 'P') IS NOT NULL
