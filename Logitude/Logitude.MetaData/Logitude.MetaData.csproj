@@ -284,6 +284,7 @@
     <None Include="DBScripts\GlobalModel\202010151325_InsertDocumentApprovalQueue.sxml" />
     <None Include="DBScripts\GlobalModel\202012291502_AddWarmCargoTrackingForBatchServicesDefinitions.sxml" />
     <None Include="DBScripts\GlobalModel\202012311128_UpdateWarmCargoTrackingForBatchServicesDefinitionsToInActive.sxml" />
+    <None Include="DBScripts\GlobalModel\AddCollaborationToolBatchService.sxml" />
     <None Include="DBScripts\InfrastructureModel\GetDateFormateFunction.sxml" />
     <None Include="DBScripts\InfrastructureModel\DropChangeCurrencyFunctions.sxml" />
     <None Include="DBScripts\InfrastructureModel\GetLastRateFunction.sxml" />
