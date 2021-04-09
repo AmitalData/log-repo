@@ -6035,12 +6035,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 this.entityPM.FirstPickupETA = myFirstPickup.ETA;
                 this.entityPM.FirstPickupETD = myFirstPickup.ETD;
+                this.entityPM.FirstPickupATD = myFirstPickup.ATD;
             }
 
             else
             {
                 this.entityPM.FirstPickupETA = null;
                 this.entityPM.FirstPickupETD = null;
+                this.entityPM.FirstPickupATD = null;
             }
 
             if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")

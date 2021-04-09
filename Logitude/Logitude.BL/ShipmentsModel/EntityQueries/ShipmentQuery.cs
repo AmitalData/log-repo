@@ -3726,7 +3726,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.ExpectedArrivalNoticeSentDate = entityComputedFields.ExpectedArrivalNoticeSent;
                 shipmentPM.ArrivalNoticeSentDate = entityComputedFields.ArrivalNoticeSent;
                 shipmentPM.T1ReceivedDate = entityComputedFields.T1Received;
-
+                shipmentPM.FirstPickupATD = entityComputedFields.FirstPickupATD;
             }
         }
 
