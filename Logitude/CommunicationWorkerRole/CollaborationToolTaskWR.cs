@@ -1,16 +1,14 @@
 ﻿using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
-using Simplog.Data.CommonDataModel.Repositories;
+using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Configuration;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace CommunicationWorkerRole
 {
@@ -18,7 +16,7 @@ namespace CommunicationWorkerRole
     {
         DbQueueService queueservice;
         string queueName = "CreateTaskCollaborationTool";
-        string URL = "https://localhost:44362/api/Task/PostExternal";
+        string URL = ConfigurationManager.AppSettings["CT_URL"];
 
         public override void Run()
         {
