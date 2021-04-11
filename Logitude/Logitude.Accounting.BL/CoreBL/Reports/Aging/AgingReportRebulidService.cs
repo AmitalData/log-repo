@@ -244,9 +244,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 var orderLessThanExclusive = lessThan; ;//.AddMonths(-1);
                 var myorderLessThanExclusive = new DateTime(orderLessThanExclusive.Year, orderLessThanExclusive.Month, 1);
                 var listLessThanExclusivePeriods = new List<DateTime>() { orderLessThanExclusive };
-
+                listPeriods.Add(graterThen_OpenTransactionsFutureDueDate);
                 List<PeriodM> dummiesPeriodsList = BuildDummiesPeriod(listPeriods, myorderLessThanExclusive, listLessThanExclusivePeriods);
-
+                
 
                 //var dummiesWithoutDBRecord=  dummiesPeriodsList.Where(dummy => dbList.Any(db => db.AccountId != dummy.AccountId));
                 var DBAndDummies = //dummiesWithoutDBRecord.Union(dbList);
@@ -330,7 +330,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         
 
-        internal void RebuildGLAccountAgingData()
+        public List<GLAccountAgingDataPM> RebuildGLAccountAgingData()
         {
             using (var tran = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
             {
@@ -378,6 +378,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 us.UpdateMulti(notEqualPMs, new List<GLAccountAgingDataPM>(), new EntityPM(), false);
                 _AccountingContext.SaveChanges();
                 tran.Complete();
+
+                return notEqualPMs;
             }
 
 

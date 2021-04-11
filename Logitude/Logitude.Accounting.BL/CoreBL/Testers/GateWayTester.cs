@@ -1,5 +1,6 @@
 ﻿using Logitude.Accounting.BL.CoreBL.BuildTenant;
 using Logitude.Accounting.BL.CoreBL.Reports;
+using Logitude.Accounting.BL.CoreBL.Reports.Aging;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
@@ -146,31 +147,17 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                 string aging4AccountTypeCode = myAgingReportParam.Aging4AccountTypeCode;//: 'Customer2', 
                 string MyGLAccId = myAgingReportParam.MyGLAccId;
                 //using (
-                var agingReportRebulidService = new AgingReportRebulidService(new AgingReportRebulidParam()
-                {
-                    Tenant = tenant,
 
-                    NumberOfmonthsbackwards = 6,
-                    AgingForDate = DateTime.Now.Date,
-                    VendorCustomerId = MyGLAccId,
-                    Aging4AccountTypeCode = aging4AccountTypeCode == "Vendor3" ? AgingReportParam.Aging4AccountTypeCodeEnum.Vendor3 : AgingReportParam.Aging4AccountTypeCodeEnum.Customer2,
+                var dailyRebuildAgingService = new DailyRebuildAgingService();
+                var diff= dailyRebuildAgingService.RebuildAging4AccountTypeCode(tenant, aging4AccountTypeCode, MyGLAccId);
 
 
 
-
-                });
-                var stopwatch = Stopwatch.StartNew();
-                
-                agingReportRebulidService.RunReport();
-                LogMessagingUtil.Instance.AppendLine($"RunReport took:{stopwatch.Elapsed}");
-                LogMessagingUtil.Instance.AppendLine($"Account.count {agingReportRebulidService.MyPeriodList.Count()}");
-                stopwatch.Restart();
-                agingReportRebulidService.RebuildGLAccountAgingData();
-                LogMessagingUtil.Instance.AppendLine($"update diff took:{stopwatch.Elapsed}");
+                string xml = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<GLAccountAgingDataPM>>(diff);
 
 
 
-                //var xmlMyPeriodList = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<PeriodMExtended>>(agingReport.MyPeriodExtendedList);
+                gateWayTesterResult.JsonOut = xml;
 
                 //gateWayTesterResult.Log = xmlMyPeriodList;
 
@@ -193,6 +180,8 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             }
             return gateWayTesterResult;
         }
+
+     
 
         private GateWayTesterResult Aging_Click(int tenant, string textBoxParam)
         {

@@ -2816,7 +2816,40 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<GLAccountPM> gLAccountChildren;
+	 
+		     
+	   [Include]
+	   [Association("", "","")]
+	   [DataMember]
+	   public virtual List<GLAccountPM> GLAccountChildren  
+	   {
+	        get
+             {
+                 if (gLAccountChildren == null)
+                 {
+                     gLAccountChildren = new List<GLAccountPM>();
+                 }
+                 return gLAccountChildren;
+              }
+             set { gLAccountChildren = value; }
+	    }
+		   
+	   private List<GLAccountPM>  deletedGLAccountChildren;
+	   public virtual List<GLAccountPM> DeletedGLAccountChildren  
+	   {
+	        get
+             {
+                 if ( deletedGLAccountChildren == null)
+                 {
+                      deletedGLAccountChildren = new List<GLAccountPM>();
+                 }
+                 return  deletedGLAccountChildren;
+              }
+             set {  deletedGLAccountChildren = value; }
+	    }
+	     }
    
 }
 	 

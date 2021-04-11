@@ -3829,7 +3829,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.WarehouseLegLastFreeDate = shipment.WarehouseLegLastFreeDate;
             shipmentPM.LastSharedEventId = shipment.LastSharedEventId;
             shipmentPM.LastSharedEventDate = shipment.LastSharedEventDate;
-            shipmentPM.IsAccrualsApproved = shipment.IsAccrualsApproved;
+            shipmentPM.IsAccrualsApproved = shipment.IsAccrualsApproved; 
+            shipmentPM.LastUpdateDate = shipment.LastUpdateDate;
 
             if (masterData != null)
             {
@@ -3922,6 +3923,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.ExpectedArrivalNoticeSentDate = entityComputedFields.ExpectedArrivalNoticeSent;
                 shipmentPM.ArrivalNoticeSentDate = entityComputedFields.ArrivalNoticeSent;
                 shipmentPM.T1ReceivedDate = entityComputedFields.T1Received;
+                shipmentPM.FirstPickupATD = entityComputedFields.FirstPickupATD;
             }
         }
 

@@ -796,10 +796,9 @@ export class LoginComponent implements OnInit {
 
                             let additionalTextCodes = [
                                 {
-                                    Code: "General.MH.TasksList",
-                                    DefaultText: "Tasks List",
+                                    Code: "General.MH.TasksApp",
+                                    DefaultText: "Tasks App",
                                     DefaultTextPlural: null,
-                                    //Id: "1-14354289542",
                                     InActive: false,
                                     IsSpellChecked: false,
                                     LocalDefaultText: null,
