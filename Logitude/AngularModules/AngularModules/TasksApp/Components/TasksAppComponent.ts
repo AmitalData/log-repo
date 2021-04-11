@@ -10,7 +10,8 @@ export class TasksAppComponent extends BaseComponent implements OnInit {
     public _ShipmentPMService: ShipmentPMService;
     myUser: User;
     constructor() {
-        super();
+        super(); 
+        this._ShipmentPMService = new ShipmentPMService();
     }
     ngOnInit() {
         var user = new User();
