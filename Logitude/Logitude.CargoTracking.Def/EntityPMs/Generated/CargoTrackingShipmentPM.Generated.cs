@@ -1929,6 +1929,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private string shipmentTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShipmentTypeCode  
+	   {
+	    
+	     get
+		{
+		   return shipmentTypeCode;
+		 }
+		 set
+		 {
+		   if(shipmentTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentTypeCode",OldValue=shipmentTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shipmentTypeCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
