@@ -1,6 +1,7 @@
 ﻿using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
+using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools;
@@ -19,15 +20,24 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
     {
        public GLAccountCardsDataPM gLAccountCardsDataPM;
        public   GLAccountPM cardGLaccount;
-        Card card;
+        //Card card;
+        string cardId;
         int tenant;
-        public GLAccountCardDataService(Card Card, int Tenant)
+        List<CardList> connectedCards;
+        public GLAccountCardDataService(string  CardId,string glAccountId, int Tenant)
         {
             tenant = Tenant;
-            card = Card;
-            cardGLaccount = GetGLaccount(card.GLAccountId);
+            cardId = CardId;
+            cardGLaccount = GetGLaccount(glAccountId);
+            connectedCards = GetGLAccountConnectedCards();
             gLAccountCardsDataPM = GetGLAccountCardsDataPM();
           
+        }
+        private List<CardList> GetGLAccountConnectedCards()
+        {
+            CardQuery cardQuery = new CardQuery(tenant);
+            List<CardList> connectCards = cardQuery.GetCardPMsByGLAccountId(cardGLaccount.Id, tenant);
+            return connectCards;
         }
         private GLAccountPM GetGLaccount(string accountId)
         {
@@ -42,11 +52,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             GLAccountCardsDataPM gLAccountCardsDataPM = CreateGLAccountCardsData();
             UpdateGLAccount(gLAccountCardsDataPM);
         }
-        public void UpdateGLaccountCardsDara()
-        {
-            UpdategLAccountCardsDataPM();
-        }
-        private void UpdategLAccountCardsDataPM()
+     
+        public void UpdateGLaccountCardsData()
         {
             MapGLAccountCardsDataFields(gLAccountCardsDataPM);
             gLAccountCardsDataPM.ChangeSetOp = ChangeSetOperation.Update;
@@ -68,20 +75,50 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
         private GLAccountCardsDataPM MapGLAccountCardsDataFields(GLAccountCardsDataPM gLAccountCardsDataPM)
         {
-            gLAccountCardsDataPM.CollectorUserId = card.CollectorId;
+            gLAccountCardsDataPM.CollectorUserId = SetCollectorId(); 
             gLAccountCardsDataPM.CreditLimit = GetCustomerCreditLimitAmount();
-            gLAccountCardsDataPM.PaymentTermId = card.PaymentTermId;
-            gLAccountCardsDataPM.Tenant = card.Tenant;
-            gLAccountCardsDataPM.SalesmanUserId = card.SalesmanUserId;
-            gLAccountCardsDataPM.Phone = card.Phone;
-            gLAccountCardsDataPM.VatNumber = card.VatNumber;
+            gLAccountCardsDataPM.PaymentTermId = SetPaymentTerm();
+            gLAccountCardsDataPM.Tenant = tenant;
+            gLAccountCardsDataPM.SalesmanUserId = SetSalesmanUserId();
+            gLAccountCardsDataPM.Phone = SetPhone(); 
+            gLAccountCardsDataPM.VatNumber = SetVatNumber();
             gLAccountCardsDataPM.TotalOpenShipments = GetTotalOpenFilesAmount();
             return gLAccountCardsDataPM;
+        }
+        private string SetCollectorId()
+        {
+            var cardWithCollector = connectedCards.Where(d => d.CollectorId != null).FirstOrDefault();
+            if (cardWithCollector == null) return null;
+            else return cardWithCollector.CollectorId;
+        }
+        private string SetPaymentTerm()
+        {
+            var cardWithPaymentTerm = connectedCards.Where(d => d.PaymentTermId != null).FirstOrDefault();
+            if (cardWithPaymentTerm == null) return null;
+            else return cardWithPaymentTerm.PaymentTermId;
+        }
+        private string SetSalesmanUserId()
+        {
+            var cardWithSalesman = connectedCards.Where(d => d.SalesmanUserId != null).FirstOrDefault();
+            if (cardWithSalesman == null) return null;
+            else return cardWithSalesman.SalesmanUserId;
+        }
+        private string SetVatNumber()
+        {
+            var cardWithVatNumber = connectedCards.Where(d => d.VatNumber != null).FirstOrDefault();
+            if (cardWithVatNumber == null) return null;
+            else return cardWithVatNumber.VatNumber;
+        }
+        private string SetPhone()
+        {
+            var cardWithPhone = connectedCards.Where(d => d.BusinessPhone != null).FirstOrDefault();
+            if (cardWithPhone == null) return null;
+            else return cardWithPhone.BusinessPhone;
         }
         private CustomerPM GetCustomer()
         {
             CustomerQuery customerQuery = new CustomerQuery(tenant);
-            return customerQuery.GetSinglePM(card.Id, tenant);
+            return customerQuery.GetSinglePM(cardId, tenant);
         }
         private double? GetCustomerCreditLimitAmount()
         {
@@ -113,22 +150,39 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
         private void SetGLAccountForMultiCurrencyGLAccount(GLAccountCardsDataPM gLAccountCardsDataPM)
         {
+            UpdateSplitByCurrencyAccounts(cardGLaccount, gLAccountCardsDataPM);
             SetGLAccountCardsData(cardGLaccount, gLAccountCardsDataPM);
             SaveGLAccountChanges(cardGLaccount);
         }
         private void SetGLAccountCardsDataForSingleCurrencyGLAccount(GLAccountCardsDataPM gLAccountCardsDataPM)
         {
             GLAccountPM glaccount = GetGlAccountAccordingToCurrencyDiversity();
+            if(glaccount != cardGLaccount)
+            {
+                UpdateSplitByCurrencyAccounts(glaccount, gLAccountCardsDataPM);
+            }
             SetGLAccountCardsData(glaccount, gLAccountCardsDataPM);
           
             SaveGLAccountChanges(glaccount);
         }
+        private void UpdateSplitByCurrencyAccounts(GLAccountPM accountPM, GLAccountCardsDataPM gLAccountCardsDataPM)
+        {
+            IGLAccountQueryServiceExt gLAccountQueryServiceExt = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            List<GLAccountPM> gLAccounts = gLAccountQueryServiceExt.GetSplittedByCurrencyGLAccounts(accountPM.Id, accountPM.Tenant).ToList();
+            foreach (GLAccountPM gLAccount in gLAccounts)
+            {
+                SetGLAccountCardsData(gLAccount, gLAccountCardsDataPM);
 
+                SaveGLAccountChanges(gLAccount);
+            }
+        }
         private void SetGLAccountCardsData(GLAccountPM accountPM, GLAccountCardsDataPM gLAccountCardsDataPM)
         {
             accountPM.CardsDataId = gLAccountCardsDataPM.Id;
             cardGLaccount.CardsDataId = gLAccountCardsDataPM.Id;
+
         }
+     
         private decimal? GetTotalOpenFilesAmount()
         {
             CustomerOpenFilesAmountPM customerOpenFilesAmountPM = GetCustomerOpenFilesAmount();
@@ -145,7 +199,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private CustomerOpenFilesAmountPM GetCustomerOpenFilesAmount()
         {
             CustomerOpenFilesAmountQuery customerOpenFilesAmount = new CustomerOpenFilesAmountQuery(tenant);
-            return customerOpenFilesAmount.GetSinglePMByCustomerId(card.Id, card.Tenant);
+            return customerOpenFilesAmount.GetSinglePMByCustomerId(cardId, tenant);
         }
 
         private GLAccountCardsDataPM GetGLAccountCardsDataPM()

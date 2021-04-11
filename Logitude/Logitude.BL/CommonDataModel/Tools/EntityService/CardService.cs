@@ -161,24 +161,26 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
             if((entityPM.PartnerTypeId== PartnerTypes.Customer || entityPM.PartnerTypeId == PartnerTypes.Vendor) && entityPM.GLAccountId !=null)
             {
-                HandleGLAccountCardData(Poco);              
+                HandleGLAccountCardData(entityPM.Id,entityPM.GLAccountId,entityPM.Tenant);              
             }
 
         }
 
-        public void HandleGLAccountCardData(Card card)
+        public void HandleGLAccountCardData(string cardId,string glaccountId, int tenant)
         {
-            gLAccountCardDataService = new GLAccountCardDataService(card, tenant);
-            if (gLAccountCardDataService.cardGLaccount != null && card.GLAccountId!= null)
+            if (glaccountId != null)
             {
-                bool GlAccountCardDataExists = CheckIfGlAccountCardDataExists();
-                if (GlAccountCardDataExists)
+                gLAccountCardDataService = new GLAccountCardDataService(cardId, glaccountId, tenant);
+                if (gLAccountCardDataService.cardGLaccount != null)
                 {
-                    gLAccountCardDataService.UpdateGLaccountCardsDara();
+                    bool GlAccountCardDataExists = CheckIfGlAccountCardDataExists();
+                    if (GlAccountCardDataExists)
+                    {
+                        gLAccountCardDataService.UpdateGLaccountCardsData();
+                    }
+                    else { gLAccountCardDataService.CreateGLaccountCardsDara(); }
                 }
-                else { gLAccountCardDataService.CreateGLaccountCardsDara(); }
             }
-           
         }
         private bool CheckIfGlAccountCardDataExists()
         {

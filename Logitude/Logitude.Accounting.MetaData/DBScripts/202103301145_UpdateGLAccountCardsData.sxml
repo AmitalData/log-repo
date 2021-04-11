@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Accounting"  TargetTableName="GLAccountCardsDatas">
-  <Sql Version="3">
+  <Sql Version="4">
     <![CDATA[
 
 
@@ -7,7 +7,7 @@ declare @isMultiCurrency bit
 declare @cardDataId varchar(15)
 declare @Id varchar(15)
 declare @SalesmanUserId varchar(15)
-declare @phone varchar(15)
+declare @phone varchar(40)
 declare @TotalOpenShipments varchar(15)
 declare @GLAccountCardsDataId varchar(15)  
 declare @paymentTermId varchar(15)
@@ -23,18 +23,20 @@ declare @cards table (Id varchar(15),paymentTermId varchar(15),  SalesmanUserId 
 Declare GLAccountCards cursor 
 
     for
-    select IsMultiCurrency, CardsDataId, GLAccounts.Id, GLAccounts.Tenant from GLAccounts join cards on GLAccounts.Id = Cards.GLAccountId where cards.PartnerTypeId='CS' or cards.PartnerTypeId ='VD' 
+    select IsMultiCurrency, CardsDataId, GLAccounts.Id, GLAccounts.Tenant from GLAccounts join cards on GLAccounts.Id = Cards.GLAccountId where cards.PartnerTypeId='CS' or cards.PartnerTypeId ='VD'  order by IsMultiCurrency desc
     OPEN GLAccountCards FETCH NEXT FROM GLAccountCards  into @isMultiCurrency , @cardDataId, @Id, @tenant
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
-      insert into @cards (Id,PaymentTermId,SalesmanUserId,VatNumber,collectorId,Phone,glaccountid) select top 1 cards.Id, PaymentTermId, cards.SalesmanUserId,VatNumber,cards.CollectorId,Phone,GLAccountId from Cards  where GLAccountId = @Id
-	   set @paymentTermId = (select  paymentTermId   from @cards) 
-	   set @vatnumber = (select  VatNumber   from @cards ) 
-		set @collector = (select  collectorId   from @cards ) 
-		set @SalesmanUserId = (select   SalesmanUserId   from @cards ) 
-		set @phone = (select  Phone   from @cards ) 	  
-	   set @cardId = (select  Id   from @cards) 
-		set @creditLimitAmount = (select CreditLimitAmount   from Customers where Id = @cardId ) 
+      insert into @cards (Id,paymentTermId,SalesmanUserId,VatNumber,collectorId,Phone,glaccountid) select Id, PaymentTermId, SalesmanUserId,VatNumber,CollectorId,Phone,GLAccountId from Cards  where GLAccountId = @Id
+	select * from @cards
+	select  paymentTermId  top1 from @cards where paymentTermId is not null
+	set @paymentTermId = (select    top 1  percent paymenttermId from @cards where paymentTermId is not null) 
+	   set @vatnumber = (select top 1  percent VatNumber  from @cards where vatnumber is not null ) 
+		set @collector = (select top 1  percent collectorId   from @cards where collectorId is not null) 
+		set @SalesmanUserId = (select top 1  percent  SalesmanUserId   from @cards where SalesmanUserId is not null) 
+		set @phone = (select   top 1  percent Phone from @cards where Phone is not null) 	  
+	   set @cardId = (select top 1  Id   from @cards) 
+		set @creditLimitAmount = (select CreditLimitAmount top1  from Customers where Id = @cardId and CreditLimitAmount is not null) 
 		set @TotalOpenShipments = (select TotalOpenFilesAmount from CustomerOpenFilesAmounts where CustomerId = @cardId)
 
 	if( @cardDataId is null and @isMultiCurrency=1)
@@ -70,7 +72,6 @@ Declare GLAccountCards cursor
 	END
 	CLOSE GLAccountCards
 	DEALLOCATE GLAccountCards
-	
     
     
    

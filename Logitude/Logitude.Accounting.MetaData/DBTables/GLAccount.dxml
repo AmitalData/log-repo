@@ -491,6 +491,11 @@
     ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CardsDataId"
+    ReferencedTable="GLAccountCardsDatas"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,InternalNumber" />
   <Index

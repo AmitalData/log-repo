@@ -207,7 +207,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             cardRepository.Update(entityCard);
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
-            cardService.HandleGLAccountCardData(entityCard);
+            cardService.HandleGLAccountCardData(entityCard.Id, entityCard.GLAccountId, entityCard.Tenant);
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms != "oracle")
             {
