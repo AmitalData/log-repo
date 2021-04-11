@@ -11,6 +11,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Logitude.Accounting.Data.Utilities;
+using Logitude.Accounting.Data.Enums;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 {
@@ -1207,7 +1208,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             IQueryable<LedgerTransactionList> ledgerTransactions = GetFilteredList(queryOperations, tenant);
 
             IQueryable<LedgerTransactionList> accountOpenTransaction = GetTransactionsForNormalAccount(tenant, accountId, ledgerTransactions);
-            IQueryable<LedgerTransactionList> transferAccountOpenTransaction = GetTransactionsForTransferAccount(tenant, transferAccountId, ledgerTransactions);
+            IQueryable<LedgerTransactionList> transferAccountOpenTransaction = GetTransactionsForTransferAccount(tenant, accountId, ledgerTransactions);
 
             IQueryable<LedgerTransactionList> resultedList = accountOpenTransaction.Union(transferAccountOpenTransaction).OrderByDescending(d=>d.DocumentDate);
             return resultedList;
@@ -1228,12 +1229,82 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             DateTime today = GetCurrentDate(tenant);
             return from a in transactions
                    where a.Tenant == tenant
-                   && a.AccountId == transferAccountId
-                    && (a.SourceTypeCode == "5" || a.SourceTypeCode == "9")
-                  && a.DueDate < today
-                  && a.IsExternalReconcile == false
-                  && Math.Abs(a.OpenAmount) == Math.Abs(a.LocalAmountCredit + a.LocalAmountDebit)
+                       && a.AccountId == transferAccountId
+                        && (a.SourceTypeCode == "5" || a.SourceTypeCode == "9")
+                      && a.DueDate < today
+                      && a.IsExternalReconcile == false
+                      && Math.Abs(a.OpenAmount) == Math.Abs(a.LocalAmountCredit + a.LocalAmountDebit)
                    select a;
+        }
+        public IQueryable<LedgerTransactionList> GetFilteredTransactions(LedgerTransactionsFilter filter)
+        {
+            IQueryable<LedgerTransactionList> tenantTransactions = GetTenantTransactions(filter.Tenant);
+
+            if (filter.AllowedSourceTypes != null && filter.AllowedSourceTypes.Count() > 0)
+                tenantTransactions = FilterTransactionsBySourceTypes(tenantTransactions, filter.AllowedSourceTypes);
+
+            if (filter.GetFullAmountTransactions)
+                tenantTransactions = tenantTransactions.Where(transaction => Math.Abs(transaction.OpenAmount) == Math.Abs(transaction.LocalAmountCredit + transaction.LocalAmountDebit));
+
+            if (filter.GetDueDatedTransactions)
+                tenantTransactions = GetDueDatedTransactions(filter, tenantTransactions);
+
+            if(!string.IsNullOrWhiteSpace(filter.AccountId))
+                tenantTransactions = FilterTransactionsByAccount(tenantTransactions, filter.AccountId);
+
+            if (filter.AccountsIds != null && filter.AccountsIds.Count() > 0)
+                tenantTransactions.Where(transaction => filter.AccountsIds.Contains(transaction.AccountId));
+
+                return tenantTransactions;
+        }
+
+        public IQueryable<LedgerTransactionList> GetExternalReconciliationsTransactions(int tenant, int? reconciliationNumber)
+        {
+            ExternalReconciliationLineRepository lineRepository = new ExternalReconciliationLineRepository(tenant);
+            var lines = lineRepository.GetAll(tenant);
+
+            var ledgerTransactions = (from line in lines.Include("LedgerTransaction")
+                                      where line.ExternalReconciliation.ReconciliationNumber == reconciliationNumber
+                                            && line.LedgerTransactionId != null
+                                      select line.LedgerTransaction);
+
+            IQueryable<LedgerTransactionList> ledgerTransactionsLists = GetIqueryableList(ledgerTransactions);
+
+            return ledgerTransactionsLists;
+        }
+
+        private IQueryable<LedgerTransactionList> FilterTransactionsByAccount(IQueryable<LedgerTransactionList> tenantTransactions, string accountId)
+        {
+            tenantTransactions = tenantTransactions.Where(transaction => transaction.AccountId == accountId);
+            return tenantTransactions;
+        }
+
+        private IQueryable<LedgerTransactionList> GetDueDatedTransactions(LedgerTransactionsFilter filter, IQueryable<LedgerTransactionList> tenantTransactions)
+        {
+            DateTime today = GetCurrentDate(filter.Tenant);
+            tenantTransactions = tenantTransactions.Where(transaction => transaction.DueDate < today);
+            return tenantTransactions;
+        }
+
+        private IQueryable<LedgerTransactionList> FilterTransactionsBySourceTypes(IQueryable<LedgerTransactionList> tenantTransactions, string[] allowedTypes)
+        {
+            tenantTransactions = tenantTransactions.Where(transaction => allowedTypes.Contains(transaction.SourceTypeCode));
+            return tenantTransactions;
+        }
+
+        private IQueryable<LedgerTransactionList> GetTenantTransactions(int tenant)
+        {
+            var transactions = GetTransactionsQuery(tenant);
+            var tenantTransactionsLists = GetIqueryableList(transactions);
+            return tenantTransactionsLists;
+        }
+
+        private IQueryable<LedgerTransaction> GetTransactionsQuery(int tenant)
+        {
+            var transactionsRepository = new LedgerTransactionRepository(tenant);
+            IQueryable<LedgerTransaction> transactionsQuery = transactionsRepository.GetAll(tenant);
+
+            return transactionsQuery;
         }
 
         private static IQueryable<LedgerTransactionList> GetTransactionsForNormalAccount(int tenant, string accountId, IQueryable<LedgerTransactionList> transactions)
@@ -1539,6 +1610,16 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public List<string> YearTransferLedgerTransactionIds { get; set; }
         public decimal? OpenBalanceForYearInLocalCurrency { get; set; }
 
+    }
+
+    public class LedgerTransactionsFilter
+    {
+        public int Tenant { get; set; }
+        public string[] AllowedSourceTypes { get; set; }
+        public string AccountId { get; set; }
+        public List<string> AccountsIds { get; set; }
+        public bool GetFullAmountTransactions { get; set; }
+        public bool GetDueDatedTransactions { get; set; }
     }
 
 }
