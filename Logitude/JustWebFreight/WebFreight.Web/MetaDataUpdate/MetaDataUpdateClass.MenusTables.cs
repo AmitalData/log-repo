@@ -186,7 +186,7 @@ namespace WebFreight.Web.MetaDataUpdate
          
 
             #region Report Execuation Log
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "RELO", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 0, CategoryTypeCode = "RXL", TextCode = "General.MH.ReportExecutionLogs", Icon = "DocumentTypes.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "ReportExecutionLog").FirstOrDefault().Id, FeatureId = ReportExecutionLogFeature.Id, FeatureUniqeCode = ReportExecutionLogFeature.FeatureUniqeCode  }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "RELO", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 0, CategoryTypeCode = "Oth", TextCode = "General.MH.ReportExecutionLogs", Icon = "DocumentTypes.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "ReportExecutionLog").FirstOrDefault().Id, FeatureId = ReportExecutionLogFeature.Id, FeatureUniqeCode = ReportExecutionLogFeature.FeatureUniqeCode  }, MenusTablesRepository, tenantMenusTables);
             #endregion
 
 
