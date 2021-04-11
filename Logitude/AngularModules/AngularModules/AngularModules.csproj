@@ -303,6 +303,7 @@
     <Content Include="Infrastructure\Components\LoginComponent\CustomLoginComponents\HybridLabels\Components\HybridLoginProcessComponent.css" />
     <Content Include="Infrastructure\Components\LoginComponent\CustomLoginComponents\HybridLabels\Components\HybridLoginProcessComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationConditionsDetailsComponent.html" />
+    <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\CreateTaskResultComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationsConditionsViewDetailsComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityPackageComponent.html" />
@@ -1769,6 +1770,7 @@
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\AdvancedDatePickerResolverComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeCustomComponents\LastSuccessfulLoginComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationConditionsDetailsComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\CreateTaskResultComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\FTPAutomationDetailsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\SendDocumentResultComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\SendInterfaceResultComponent.ts" />
@@ -1787,6 +1789,7 @@
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomatedBackup.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationArgs.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationCondition.ts" />
+    <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationCreateTask.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationEventTypeArgs.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationFollowUp.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationQueuedTask.ts" />
