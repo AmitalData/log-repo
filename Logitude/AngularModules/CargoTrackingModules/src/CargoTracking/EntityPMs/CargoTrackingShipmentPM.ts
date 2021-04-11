@@ -439,6 +439,11 @@ export class CargoTrackingShipmentPM {
     public set ForwardingShipmentNumber(newValue: string) { if (this.forwardingShipmentNumber != newValue) { this.forwardingShipmentNumber = newValue; this.MarkAsDirty("ForwardingShipmentNumber"); } }
        
 	 
+    private shipmentTypeCode: string;
+    public get ShipmentTypeCode() { return this.shipmentTypeCode; }
+    public set ShipmentTypeCode(newValue: string) { if (this.shipmentTypeCode != newValue) { this.shipmentTypeCode = newValue; this.MarkAsDirty("ShipmentTypeCode"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		
