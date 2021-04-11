@@ -489,5 +489,8 @@ namespace WebFreight.Web.DataProviders
         public string DeliveryAddress_New { get; set; }
 
         public string AWBCommodityItemNumber { get; set; }
+        public string FirstPickupLoadNumber { get; set; }
+        public string LastDeliveryLoadNumber { get; set; }
+        public string MainCarriageLoadNumber { get; set; }
     }
 }
