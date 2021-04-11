@@ -145,5 +145,7 @@ export class ARInvoiceList {
 		RegionalTaxPercentage: number;
 		PaidDate: Date;
 		PartnerId: string;
+		PartnerName: string;
+		ShipmentsNumbers: string;
 	
 }

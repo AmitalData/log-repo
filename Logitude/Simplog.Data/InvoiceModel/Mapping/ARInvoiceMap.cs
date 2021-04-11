@@ -84,6 +84,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.DocumentFilingId).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.BillToGLAccountId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.IsFromInterestBatchInvoice);
+            this.Property(t => t.ShipmentsNumbers).HasMaxLength(1000).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ARInvoices");
@@ -195,6 +196,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.RegionalTaxId).HasColumnName("RegionalTaxId");
             this.Property(t => t.RegionalTaxPercentage).HasColumnName("RegionalTaxPercentage");
             this.Property(t => t.PaidDate).HasColumnName("PaidDate");
+            this.Property(t => t.ShipmentsNumbers).HasColumnName("ShipmentsNumbers");
 
             // Relationships
             this.HasOptional(t => t.BillToAddress).WithMany().HasForeignKey(d => d.BillToAddressId);
