@@ -110,6 +110,48 @@
                             </td>
                         </tr>
 
+                        <!-- Via  -->
+                        <tr *ngIf="IsViaFieldVisible" class="FormFieldRow">
+                            <td style="width:100px;">
+                                <LogLabel [ObjectFieldName]="'ViaPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+
+                            <td style="width:230px;">
+                                <LogLov [ObjectFieldName]="'ViaPortId'"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [LookUpTableName]="'Port'"
+                                        [DataContext]="DataContext"
+                                        (SelectedItemChanged)="DataContext.ViaPort = $event"
+                                        [DisplayMemberPath]="GetDisplayMemberPath()"
+                                        [SelectedValue]="DataContext.ViaPortId"
+                                        [DependencyFilter1Value]="ViaDependencyFilterValue">
+                                </LogLov>
+                            </td>
+
+                            <td *ngIf="TariffType == 'AFC' || TariffType == 'OLC' || TariffType == 'OFC'">
+                                <div class="MediaFill">
+                                    <table *ngIf="!DataContext.ViaPortId">
+                                        <tr>
+                                            <td style="color:red; padding-left: 10px;">
+                                                {{ViaPortText}}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+
+                            <td *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS'">
+                                <table>
+                                    <tr>
+                                        <td style="color:red; padding-left: 10px;">
+                                            <span *ngIf="!DataContext.ViaPortId">{{ViaPortText}}</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+
                         <!-- Currency -->
                         <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS'">
                             <td>
@@ -275,7 +317,7 @@
                                             <div></div>
                                         </td>
                                     </tr>
-                                    
+
                                     <!-- Step7Price -->
                                     <tr *ngIf="DataContext.FatherComponent.Step7PriceVisibility" class="FormFieldRow">
                                         <td>
