@@ -250,7 +250,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public void //JustDoIt(string DocumentsFilingId, int tenant)
             JustDoIt(object documentsFilingPM)
         {
-            DateTime stopLogAt = new DateTime(2020, 01, 01);
+            DateTime stopLogAt = new DateTime(2022, 01, 01);
             DeclarationPM declarationPM;
             Debug.WriteLine("CreateUD2LTService");
             string logData = "";
