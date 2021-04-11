@@ -4081,9 +4081,9 @@ export class ModificationItemModel extends BaseComponent {
                     this.parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.DeclarationId == this.parent.EntityPM.DeclarationId).CurrencyTypeCode = value.Code;
                 }
                 this.parent.FreightCurrencyTypeCode = value.Code;
-                this.CurrencyTypeCode = value.Code;
-                this.CurrencyTypeName = value.LocalName;
             }
+            this.CurrencyTypeCode = value.Code;
+            this.CurrencyTypeName = value.LocalName;
             this.parent.CalculateExportModificationAmount();
         }
         if (AppTool.IsNullOrEmpty(value)) {
