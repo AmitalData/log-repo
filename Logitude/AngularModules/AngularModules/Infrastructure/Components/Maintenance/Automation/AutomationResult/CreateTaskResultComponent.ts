@@ -128,8 +128,8 @@ export class CreateTaskResultComponent extends BaseComponent implements OnInit {
     set EndDate(newValue: any) {
         if (newValue != this.endDate) {
             this.endDate = newValue; 
-            if (this.automationCreateTask.EndDate != newValue) {
-                this.automationCreateTask.EndDate = newValue;
+            if (this.automationCreateTask.EndDateValue != newValue) {
+                this.automationCreateTask.EndDateValue = newValue;
             } 
 
         }
@@ -141,8 +141,8 @@ export class CreateTaskResultComponent extends BaseComponent implements OnInit {
     set EndDateFieldType(newValue: string) {
         if (newValue != this.endDateFieldType) {
             this.endDateFieldType = newValue;
-            if (this.automationCreateTask.EndDateFieldType != newValue) {
-                this.automationCreateTask.EndDateFieldType = newValue;
+            if (this.automationCreateTask.EndDateTypeValue != newValue) {
+                this.automationCreateTask.EndDateTypeValue = newValue;
             }
 
         }
@@ -172,7 +172,8 @@ export class CreateTaskResultComponent extends BaseComponent implements OnInit {
                 this.ComputedCurrentDate();  
                 break;
             }
-            default: { 
+            default: {
+                this.EndDate = value;
                 this.ShowSpecificDate = false;
                 this.ShowCurrentDate = false;
                 this.EndDateFieldType = "Field";
@@ -228,9 +229,8 @@ export class CreateTaskResultComponent extends BaseComponent implements OnInit {
             this.AssigneeId = this.automationCreateTask.AssigneeId;
             this.OwnerId = this.automationCreateTask.OwnerId;
             this.TaskType = this.automationCreateTask.TaskType;
-            this.EndDate = this.automationCreateTask.EndDate;
-            this.EndDateFieldType = this.automationCreateTask.EndDateFieldType;
-            this.SelectedDueDateField = this.automationCreateTask.SelectedDueDateField;
+            this.EndDate = this.automationCreateTask.EndDateValue;
+            this.EndDateFieldType = this.automationCreateTask.EndDateTypeValue; 
             this.SetDefultDate(this.EndDate); 
 
         }
@@ -238,7 +238,8 @@ export class CreateTaskResultComponent extends BaseComponent implements OnInit {
     }
 
     SetDefultDate(Date) {
-        if (Date && this.EndDateFieldType == "CalculateDate") { 
+        if (Date && this.EndDateFieldType == "CalculateDate") {
+            this.SelectedDueDateField = "@CurrentDate";
             let DateList = this.EndDate.split("@"); 
                 this.SelectedCurrentDateOperator = DateList[1];
                 this.NumberOfDays = DateList[2]; 
