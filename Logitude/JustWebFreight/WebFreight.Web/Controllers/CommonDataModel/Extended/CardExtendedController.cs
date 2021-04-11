@@ -95,8 +95,9 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
           
             if (gLAccountCardsDataPM != null)
             {
-                UpdateGLAccountCardsData(gLAccountCardsDataPM);
                 ApplyChangesOnGLAccounts();
+                UpdateGLAccountCardsData(gLAccountCardsDataPM);
+              
             }
 
         }

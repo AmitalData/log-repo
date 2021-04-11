@@ -1,7 +1,6 @@
 ﻿<Script DBType="Main" Module="Accounting"  TargetTableName="GLAccountCardsDatas">
-  <Sql Version="4">
+  <Sql Version="5">
     <![CDATA[
-
 
 declare @isMultiCurrency bit
 declare @cardDataId varchar(15)
@@ -35,7 +34,7 @@ Declare GLAccountCards cursor
 		set @collector = (select top 1  percent collectorId   from @cards where collectorId is not null) 
 		set @SalesmanUserId = (select top 1  percent  SalesmanUserId   from @cards where SalesmanUserId is not null) 
 		set @phone = (select   top 1  percent Phone from @cards where Phone is not null) 	  
-	   set @cardId = (select top 1  Id   from @cards) 
+	   set @cardId = (select top 1 Id   from @cards) 
 		set @creditLimitAmount = (select CreditLimitAmount top1  from Customers where Id = @cardId and CreditLimitAmount is not null) 
 		set @TotalOpenShipments = (select TotalOpenFilesAmount from CustomerOpenFilesAmounts where CustomerId = @cardId)
 
@@ -44,7 +43,7 @@ Declare GLAccountCards cursor
 	EXECUTE usp_GetNextTableIdValue @GLAccountCardsDataId OUTPUT,'GLAccountCardsDatas'
  
 	  insert into GLAccountCardsDatas (Id,PaymentTermId,SalesmanUserId,CollectorUserId,VatNumber,Phone,Tenant,CreditLimit,TotalOpenShipments) values (@GLAccountCardsDataId,@paymentTermId,@SalesmanUserId,@collector,@vatnumber,@phone,@tenant,@creditLimitAmount,@TotalOpenShipments)
-
+	  update glaccounts set CardsDataId= @GLAccountCardsDataId where Id in (select glaccountid from GLAccountCurrencies where MainGLAccountId=@Id)
 	update glaccounts set CardsDataId = @GLAccountCardsDataId where Id= @Id
 	end
    
