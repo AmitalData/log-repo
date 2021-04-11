@@ -237,6 +237,8 @@
     <Compile Include="Counters\TenantCounter.cs" />
     <Compile Include="DeleteOldRecentActivitiesRecords.cs" />
     <Compile Include="EntityChanges\AutomationObjectFieldService.cs" />
+    <Compile Include="EntityChanges\AutomationResultExternalServices\TaskAutomationEndDateService.cs" />
+    <Compile Include="EntityChanges\AutomationResult\AutomationCreateTaskService.cs" />
     <Compile Include="EntityChanges\AutomationResult\AutomationEmailResultService.cs" />
     <Compile Include="EntityChanges\AutomationResult\AutomationFollowUpResultService.cs" />
     <Compile Include="EntityChanges\AutomationResult\AutomationQueuedTaskResultService.cs" />
