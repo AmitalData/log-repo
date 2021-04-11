@@ -528,13 +528,14 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 
         public string GetPropertyValueFromObject(string propertyName, object entity)
         {
-            string propertyValue = string.Empty;
+            string result = string.Empty;
             PropertyInfo propertyInfo = entity.GetType().GetProperty(propertyName);
             if (propertyInfo != null)
             {
-                propertyValue = propertyInfo.GetValue(entity).ToString();
+                object propertyValue = propertyInfo.GetValue(entity);
+                result = propertyValue != null ? propertyValue.ToString() : null;
             }
-            return propertyValue;
+            return result;
         }
 
 

@@ -48,8 +48,8 @@ export class CreateTaskResultComponent extends BaseComponent implements OnInit {
         // Date -> Date
         // CurrentDate -> -,+ CalculateDate CurrentDate-@1
 
-        this.DueDateFieldList.push(new CodeNameClass("Date", "Date"));
-        this.DueDateFieldList.push(new CodeNameClass("@CurrentDate", "@Current Date"));
+        this.DueDateFieldList.push(new CodeNameClass("DATE", "Date"));
+        this.DueDateFieldList.push(new CodeNameClass("CALCULATEDATE", "@Current Date"));
     }
  
     FillCurrentDateOperator() {
@@ -157,26 +157,26 @@ export class CreateTaskResultComponent extends BaseComponent implements OnInit {
 
         this.EndDate = null; 
         switch (value.Code) {
-            case "Date": {
+            case "DATE": {
                 this.ShowSpecificDate = true;
                 this.ShowCurrentDate = false;
-                this.EndDateFieldType = "Date"; 
+                this.EndDateFieldType = value.Code;
                 break;
             }
-            case "@CurrentDate": {
+            case "CALCULATEDATE": {
                 this.ShowSpecificDate = false;
                 this.ShowCurrentDate = true;
                 this.SelectedCurrentDateOperator = this.CurrentDateOperator[0];
                 this.NumberOfDays = 0;
-                this.EndDateFieldType = "CalculateDate";
+                this.EndDateFieldType = value.Code;
                 this.ComputedCurrentDate();  
                 break;
             }
             default: {
-                this.EndDate = value;
+                this.EndDate = value.Code;
                 this.ShowSpecificDate = false;
                 this.ShowCurrentDate = false;
-                this.EndDateFieldType = "Field";
+                this.EndDateFieldType = "FIELD";
                 break;
             } 
         }
@@ -187,7 +187,8 @@ export class CreateTaskResultComponent extends BaseComponent implements OnInit {
 
     ComputedCurrentDate() { 
         // CurrendDate@-@1
-        this.EndDate = "CurrentDate@" + this.SelectedCurrentDateOperator.Code + "@" + this.NumberOfDays; 
+        this.EndDate = "CurrentDate*" + this.SelectedCurrentDateOperator.Code + "*" + this.NumberOfDays;
+
 
     }
 
@@ -230,19 +231,32 @@ export class CreateTaskResultComponent extends BaseComponent implements OnInit {
             this.OwnerId = this.automationCreateTask.OwnerId;
             this.TaskType = this.automationCreateTask.TaskType;
             this.EndDate = this.automationCreateTask.EndDateValue;
-            this.EndDateFieldType = this.automationCreateTask.EndDateTypeValue; 
-            this.SetDefultDate(this.EndDate); 
+            this.EndDateFieldType = this.automationCreateTask.EndDateTypeValue;
+            if (this.EndDateFieldType == "DATE") this.ShowSpecificDate = true;
+            this.SetEndDateFieldType();
+            this.SetCalculateDateParts(); 
 
         }
 
     }
 
-    SetDefultDate(Date) {
-        if (Date && this.EndDateFieldType == "CalculateDate") {
-            this.SelectedDueDateField = "@CurrentDate";
-            let DateList = this.EndDate.split("@"); 
-                this.SelectedCurrentDateOperator = DateList[1];
-                this.NumberOfDays = DateList[2]; 
+    SetEndDateFieldType() {
+        if (this.automationCreateTask.EndDateTypeValue == "FIELD") {
+            this.SelectedDueDateField = this.DueDateFieldList.filter(d => d.Code == this.automationCreateTask.EndDateValue)[0];
+
+        } else {
+            this.SelectedDueDateField = this.DueDateFieldList.filter(d => d.Code == this.automationCreateTask.EndDateTypeValue)[0];
+        }
+    }
+
+    SetCalculateDateParts() {
+        if (this.EndDate && this.EndDateFieldType == "CALCULATEDATE") { 
+            let calculateDateParts = this.EndDate.split("*"); 
+            this.NumberOfDays = calculateDateParts[2];
+            this.SelectedCurrentDateOperator = this.CurrentDateOperator.filter(d => d.Code == calculateDateParts[1])[0];
+
+            this.ShowSpecificDate = false;
+            this.ShowCurrentDate = true;
         }
     }
 }

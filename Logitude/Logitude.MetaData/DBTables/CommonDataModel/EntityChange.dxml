@@ -205,8 +205,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="CreateTaskSsucceedXml"
-    ShortName="CreateTaskAutomationSsucceedXml"
+    Name="CreateTaskAutomationSsucceedXml"
+    ShortName="CreateTaskSsucceedXml"
     Type="nvarchar"
     Size="-1">
     <Constraints

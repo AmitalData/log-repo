@@ -26,7 +26,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             this.entityChange = automationResultArgs.EntityChange;
             this.entityPM = automationResultArgs.EntityPM;
             this.tenant = this.entityChange.Tenant;
-
+            mainEntityChangeService = automationResultArgs.MainEntityChangeService;
             createTaskAutomations = automationResultArgs.AutomationLists.Where(d => d.ResultCode == "CREATETASK").ToList();
             if (createTaskAutomations.Count > 0)
             {

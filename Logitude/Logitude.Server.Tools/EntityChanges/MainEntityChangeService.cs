@@ -67,7 +67,7 @@ namespace Logitude.Server.Tools.EntityChanges
             result.Add(new AutomationSendInterfaceResultService());
             result.Add(new AutomationEmailResultService());
             result.Add(new AutomationSendDocumentResultService());
-
+            result.Add(new AutomationCreateTaskService());
             return result;
         }
 
@@ -131,7 +131,7 @@ namespace Logitude.Server.Tools.EntityChanges
             entityChange.QueuedTaskAutomationFailedXml = EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "QUEUE").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "QUEUE").ToList()) : "";
             entityChange.SendInterfaceAutomationFailedXml = EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "SENDINTERFACE").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "SENDINTERFACE").ToList()) : "";
             entityChange.SendDocumentAutomationFailedXml = EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "SENDDOCUMENT").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "SENDDOCUMENT").ToList()) : "";
-            entityChange.CreateTaskAutomationFailedXml = EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "CREATETASK").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "CREATETASK").ToList()) : "";
+            entityChange.CreateTaskAutomationFailedXml = EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "Create Task").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "Create Task").ToList()) : "";
 
 
             entityChange.SetAutomationSsucceedXml = EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "Set Fields Value").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "Set Fields Value").ToList()) : "";
@@ -140,7 +140,7 @@ namespace Logitude.Server.Tools.EntityChanges
             entityChange.QueuedTaskAutomationSsucceedXml = EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "QUEUE").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "QUEUE").ToList()) : "";
             entityChange.SendInterfaceAutomationSsucceedXml = EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "SENDINTERFACE").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "SENDINTERFACE").ToList()) : "";
             entityChange.SendDocumentAutomationSsucceedXml = EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "SENDDOCUMENT").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "SENDDOCUMENT").ToList()) : "";
-            entityChange.CreateTaskAutomationSsucceedXml = EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "CREATETASK").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "CREATETASK").ToList()) : "";
+            entityChange.CreateTaskAutomationSsucceedXml = EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "Create Task").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "Create Task").ToList()) : "";
 
         }
 

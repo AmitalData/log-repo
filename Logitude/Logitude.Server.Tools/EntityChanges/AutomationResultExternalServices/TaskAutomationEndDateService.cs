@@ -22,21 +22,22 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResultExternalServices
         {
             if (string.IsNullOrEmpty(endDateValue)) return null;
 
-            if (endDateTypeValue == "Field")
+            if (endDateTypeValue == "FIELD")
             {
                 var result = GetPropertyValueFromObject(endDateValue, entityPM);
                 return !string.IsNullOrEmpty(result) ? (DateTime?)DateTime.Parse(result) : null;
             }
 
-            if (endDateTypeValue == "CalcateDate")
+            if (endDateTypeValue == "CALCULATEDATE")
             {
-                return TenantServerConfigration.GetCurrentDateTime(tenant).AddDays(GetNumberOfDays(endDateValue));
+                int numberOfDays = CalculateNumberOfDays(endDateValue);
+                return TenantServerConfigration.GetCurrentDateTime(tenant).AddDays(numberOfDays);
             }
 
             return DateTime.Parse(endDateValue);
         }
 
-        private static int GetNumberOfDays(string endDateValue)
+        private static int CalculateNumberOfDays(string endDateValue)
         {
             int numberOfDays = 0;
             var endDatePartValues = endDateValue.Split('*');
