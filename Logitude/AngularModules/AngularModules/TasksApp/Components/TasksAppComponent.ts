@@ -8,11 +8,15 @@ import { ShipmentPMService } from "../../Shipment/Services/StandardPMs/ShipmentP
 export class TasksAppComponent extends BaseComponent implements OnInit {
     private CurrentSession = SessionLocator.SelectedSession;
     public _ShipmentPMService: ShipmentPMService;
+    myUser: User;
     constructor() {
         super();
     }
     ngOnInit() {
-
+        var user = new User();
+        user.Email = SessionLocator.LoggedUserPM.Email;
+        user.Tenant = SessionLocator.Tenant;
+        this.myUser = user;
     }
 
     openShipmentEditScreen(event) {
@@ -40,4 +44,13 @@ export class TasksAppComponent extends BaseComponent implements OnInit {
             }
         });
     }
+}
+
+export class User {
+    Id: number;
+    Tenant: number;
+    FirstName: string;
+    LastName: string;
+    Email: string;
+    Password: string;
 }
