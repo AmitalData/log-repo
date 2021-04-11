@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main"  Pre="true"  Module="Accounting" >
-  <Sql Version="4">
+  <Sql Version="5">
     <![CDATA[
 
 IF OBJECT_ID('[dbo].[usp_AccountingStreaming]', 'P') IS NOT NULL
@@ -77,6 +77,10 @@ CREATE TYPE [dbo].[GLAccountTotalByMonthsType] AS TABLE(
 
 
 /****** Object:  UserDefinedTableType [dbo].[GLAccountAgingDataType]    Script Date: 25/03/2021 15:34:51 ******/
+
+IF type_id('[dbo].[GLAccountAgingDataType]') IS NOT NULL
+DROP TYPE [dbo].[GLAccountAgingDataType]
+
 CREATE TYPE [dbo].[GLAccountAgingDataType] AS TABLE(
 	[AccountId] [varchar](15) NOT NULL,
 	[Tenant] [int] NOT NULL,

@@ -37,13 +37,13 @@ export class MainMenuComponent {
         this.MainMenuItems = new Array<MainMenuItem>();
         this.MainMenuItems = this.GetMainMenuItemsFromWindow();
         if (SessionLocator.Tenant == 1321) {
-            var tasksListItem = new MainMenuItem("General.MH.TasksList", AppTool.GetMainMenuIconCode("General.MH.Depositions"));
-            tasksListItem.IndexOfOrder = 31;
-            tasksListItem.ObjectTableId = null;
-            tasksListItem.HtmlView = null;
-            tasksListItem.ObjectTableName = null;
-            tasksListItem.QuerySection = null;
-            this.MainMenuItems.push(tasksListItem);
+            var tasksAppItem = new MainMenuItem("General.MH.TasksApp", AppTool.GetMainMenuIconCode("General.MH.Depositions"));
+            tasksAppItem.IndexOfOrder = 100;
+            tasksAppItem.ObjectTableId = null;
+            tasksAppItem.HtmlView = null;
+            tasksAppItem.ObjectTableName = null;
+            tasksAppItem.QuerySection = null;
+            this.MainMenuItems.push(tasksAppItem);
         }
         // Layout Direction
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
@@ -306,8 +306,8 @@ export class MainMenuComponent {
                         myComponentPath = "./CommonModules/CommonFilingInbox/Components/FilingInboxWorkspaceComponent";
                         break;
                     }
-                    case "General.MH.TasksList": {
-                        myComponentPath = "./TasksList/Components/TasksListComponent";
+                    case "General.MH.TasksApp": {
+                        myComponentPath = "./TasksApp/Components/TasksAppComponent";
                         break;
                     }
                     case "General.MH.Quotes": {

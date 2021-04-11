@@ -206,6 +206,8 @@ import { AccountingPartnerPMService } from './Services/StandardPMs/AccountingPar
 import { UserLastSettingsPMService } from './Services/StandardPMs/UserLastSettingsPMService';
 import { UserLastSettingsExtendedPMService } from './Services/ExtendedPMs/UserLastSettingsExtendedPMService';
 import { AddressTypeListService } from './Services/StandardLists/AddressTypeListService';
+import { ReportExecutionLogListService } from './Services/StandardLists/ReportExecutionLogListService';
+import { ReportExecutionLogPMService } from './Services/StandardPMs/ReportExecutionLogPMService';
 
 
 export class ModuleProviders {
@@ -416,7 +418,8 @@ export class ModuleProviders {
             case "HorseListService": { myResult = new HorseListService(); break; }
             case "HorsePMService": { myResult = new HorsePMService(); break; }
             case "LogitudeGridExportToExcelExtendedPMService": { myResult = new LogitudeGridExportToExcelExtendedPMService(); break; }
-
+            case "ReportExecutionLogListService": { myResult = new ReportExecutionLogListService(); break; }
+            case "ReportExecutionLogPMService": { myResult = new ReportExecutionLogPMService(); break; }
         }
 
         return myResult;
