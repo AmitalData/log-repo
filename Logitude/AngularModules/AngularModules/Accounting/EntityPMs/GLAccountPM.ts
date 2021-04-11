@@ -714,6 +714,20 @@ export class GLAccountPM {
     public set RelatedGLAccount(newValue: string) { if (this.relatedGLAccount != newValue) { this.relatedGLAccount = newValue; this.MarkAsDirty("RelatedGLAccount"); } }
        
 	 
+     
+	private gLAccountChildren: GLAccountPM[];
+    get  GLAccountChildren() {
+        if (this.gLAccountChildren == null) {
+            this.gLAccountChildren = [];
+        }
+
+        return this.gLAccountChildren;
+    }
+    set  GLAccountChildren(newValue: GLAccountPM[]) {
+        if (this.gLAccountChildren != newValue) {
+            this.gLAccountChildren = newValue;
+        }
+    }
 
     public OldEntityPM: GLAccountPM;
 		
