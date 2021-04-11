@@ -1,4 +1,4 @@
-﻿import {NewAgentComponent} from './Components/NewEntity/NewAgentComponent';
+import {NewAgentComponent} from './Components/NewEntity/NewAgentComponent';
 import {AgentGeneralTabComponent} from './Components/EditTabs/AgentGeneralTabComponent';
 import {AgentSharedLogisticsTabComponent} from './Components/EditTabs/AgentSharedLogisticsTabComponent';
 import { AgentShareInvitaionComponent } from './Components/EditTabs/AgentShareInvitaionComponent';

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WebFreight.Web.DataProviders
 {
-    public class DeliveryNoteDataProvider
+    public class DeliveryNoteDataProvider:BaseDataProvider
     {
         public DeliveryNoteDataProvider()
         {

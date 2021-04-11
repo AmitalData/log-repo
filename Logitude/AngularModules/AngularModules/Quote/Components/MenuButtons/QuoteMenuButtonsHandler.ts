@@ -245,9 +245,35 @@ export class QuoteMenuButtonsHandler {
                         else {
                             button.IsHidden = true;
                         }  
-                    } 
-                }
+                    }
 
+                    if (button.EventCode == "ConvertQuoteTransportMode") {
+                        if (buttonEnabled) {
+                            var myDraftStage: QuoteStageList = this.allStages.filter(d => d.Code == "QTDR")[0];
+                            var myCreatedStage: QuoteStageList = this.allStages.filter(d => d.Code == "QTCR")[0];
+
+                            if (myDraftStage != null) {
+                                myDraftStageId = myDraftStage.Id;
+                            }
+
+                            if (myCreatedStage != null) {
+                                myCreatedStageId = myCreatedStage.Id;
+                            }
+
+                            if (this.EntityPM.StageId == myDraftStageId || this.EntityPM.StageId == myCreatedStageId) {
+                                button.IsHidden = false;
+                                button.IsDisabled = false;
+                            }
+                            else {
+                                button.IsHidden = true;
+                                button.IsDisabled = true;
+                            }
+                        }
+                        else {
+                            button.IsHidden = true;
+                        }
+                    }
+                }
                 return menuButtons;
             }
         }
@@ -325,6 +351,11 @@ export class QuoteMenuButtonsHandler {
                         break;
                     }
 
+                case "ConvertQuoteTransportMode": {
+                    this.ConvertQuoteTransportModeClicked();
+                    break;
+                }
+
                 default: {
                     this.isButtonClicked = false;
                     break;
@@ -335,6 +366,7 @@ export class QuoteMenuButtonsHandler {
 
     private IsConvertToLCLClicked: boolean = false;
     private IsConvertToFCLClicked: boolean = false;
+    private IsConvertQuoteTransportModeClicked: boolean = false;
     private ConvertQuoteToLCLClicked() {
         var errors: string[] = [];
         this.Validate();
@@ -373,6 +405,11 @@ export class QuoteMenuButtonsHandler {
                     windowTitle = "Convert Quote From LCL To FCL";
                     break;
                 }
+            case "Transport":
+                {
+                    windowTitle = "Convert Quote Transport Mode";
+                    break;
+                }
         }
 
         var logWindow = new LogitudeWindow();
@@ -405,10 +442,36 @@ export class QuoteMenuButtonsHandler {
                     }
 
                     this.Reload = true;
-                    this.entityArgs.EditComponent.SaveChanges();
+
                     this.isButtonClicked = false;
                 }
             });
+        });
+    }
+
+    private ConvertQuoteTransportModeClicked() {
+        this.Validate();
+        if (this.isValid) {
+            this.IsConvertQuoteTransportModeClicked = true;
+            this.entityArgs.EditComponent.SaveChanges();
+        }
+    }
+
+    private DoConvertQuoteTransportMode() {
+        var args = new NewQuoteComponentArgs();
+        args.Quote = this.EntityPM;
+        args.ConvertTransportMode = true;
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 960;
+        logWindow.Height = 570;
+        logWindow.WindowArgs = args;
+        logWindow.Title = "Convert Quote Transport Mode";
+        logWindow.Show('./Quote/Components/NewEntity/NewQuoteComponent');
+        logWindow.WindowClosed.subscribe(s => {
+            if (s) {
+                this.StopFlags();
+                this.entityArgs.EditComponent.ReloadEntityPM();
+            }
         });
     }
 
@@ -429,6 +492,7 @@ export class QuoteMenuButtonsHandler {
         this.IsConvertToLCLClicked = false;
         this.IsConvertToFCLClicked = false;
         this.IsSetAsSentQuote = false;
+        this.IsConvertQuoteTransportModeClicked = false;
     }
     Validate() {
         var validator = new QuoteValidator();
@@ -467,6 +531,10 @@ export class QuoteMenuButtonsHandler {
 
                     if (this.IsConvertToFCLClicked) {
                         this.DoConvertQuoteType("ToFCL");
+                    }
+
+                    if (this.IsConvertQuoteTransportModeClicked) {
+                        this.DoConvertQuoteTransportMode();
                     }
 
                     if (this.IsSetAsSentQuote) {

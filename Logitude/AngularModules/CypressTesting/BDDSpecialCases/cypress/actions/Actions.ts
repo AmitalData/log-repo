@@ -10,10 +10,10 @@ import { Urls } from "../constants/URLs";
 
 
 export function FillLocalSettingsDetails(localSettingsDetails: LocalSettingsDetails) {
-  cy.get(BDDSpecialCasesSelectors.TimeZoneComboBox).find("img").click()
-  cy.get(BDDSpecialCasesSelectors.ComboBoxItem).find("span").contains(localSettingsDetails.TimeZone).click({ force: true });
-  cy.get(BDDSpecialCasesSelectors.DateTimeFormatComboBox).find("img").click()
-  cy.get(BDDSpecialCasesSelectors.ComboBoxItem).find("span").contains(localSettingsDetails.DateTimeFormat).click({ force: true });
+  cy.get(BDDSpecialCasesSelectors.TimeZoneComboBox).find("img").click({force:true})
+  cy.get(BDDSpecialCasesSelectors.ComboBoxItem).find("span").contains(localSettingsDetails.TimeZone).type('{enter}');
+  cy.get(BDDSpecialCasesSelectors.DateTimeFormatComboBox).find("img").click({force:true})
+  cy.get(BDDSpecialCasesSelectors.ComboBoxItem).find("span").contains(localSettingsDetails.DateTimeFormat).type('{enter}');
 }
 
 export function UpdateLocalSettings() {
@@ -33,16 +33,17 @@ function AssertPutTenant() {
   BaseAssertion.AssertStatusCode(RequestAliases.PutTenant, 200);
 }
 
-export function ValidateDateFormat(dateFormat: string) {
-  var todayDate = new Date
+export function ValidateDateFormat(dateFormat: string , timeZoneRegion:string) {
+  var todayDate = new Date().toLocaleDateString("en-US", { timeZone: timeZoneRegion })
   cy.get(BDDSpecialCasesSelectors.HAWBDate).should(BaseSelectors.HaveValue, FormateTheDate(todayDate, dateFormat))
 }
 
-function FormateTheDate(date: Date, format: string) {
+function FormateTheDate(date: string, format: string) {
   var DateFormat
-  var dd = date.getUTCDate().toString();
-  var mm = (date.getUTCMonth() + 1).toString();
-  var yyyy = date.getFullYear().toString();
+  var Datelist = date.split("/");
+  var dd = Datelist[1];
+  var mm = Datelist[0]
+  var yyyy = Datelist[2]
 
   if (Number(dd) < 10) {
     dd = "0" + dd;
@@ -83,16 +84,19 @@ function OpenEventTab($eventTab , eventTabSelector) {
 function AssertEventTime(expectedEvent: string) {
   cy.get(BaseSelectors.EventItemBox).contains(expectedEvent).eq(0).parents(BaseSelectors.EventItemBox).within(() => {
     cy.get(BDDSpecialCasesSelectors.EventDateTime(expectedEvent)).invoke('text').then((text) => {
-      assert.equal(text, GetTimeZoneDateTime());
+      AssertTimeOneOf(text);
     })
   });
 }
 
+function AssertTimeOneOf(text:string){
+  var dateTimeNow = GetTimeZoneDateTime()
+  var dateTimeRange = DateTimeRange(dateTimeNow)
+  expect(text).to.be.oneOf(dateTimeRange)
+}
+
 function GetTimeZoneDateTime() {
   var TimeZone = LocalSettingsDetails.UpdateTime
-  var TimeList = TimeZone.split(",")
-  TimeZone = TimeList[1]
-  TimeZone = TimeZone.replace(" ", "");
   var DateTimeList = TimeZone.split(":")
   DateTimeList[0] = HourFormat(DateTimeList[0], DateTimeList[2])
   TimeZone = DateTimeList[0] + ":" + DateTimeList[1]
@@ -108,7 +112,7 @@ function HourFormat(hour: string, AMPM: string) {
 }
 
 function FormatPMTimes(hour: string) {
-  if (Number(hour) > 0 && Number(hour) < 10) {
+  if (Number(hour) > 0 && Number(hour) < 12) {
     return (Number(hour) + 12).toString();
   }
   if (Number(hour) == 12) {
@@ -123,4 +127,51 @@ function FormatAMTimes(hour: string) {
   if (Number(hour) == 12) {
     return "00"
   }
+  return hour ;
+}
+
+function DateTimeRange(time: string) {
+  var timelist = time.split(":")
+  var hour = Number(timelist[0])
+  var minutes = Number(timelist[1])
+  var dateTimeRange = []
+  for (let i = 0; i < 5; i++) {
+    if (minutes == 0) {
+      hour = subHour(hour)
+      minutes = 59
+    } else {
+      minutes = minutes - 1
+    }
+    dateTimeRange.push(timeformat(hour) + ":" + timeformat(minutes));
+  }
+  hour = Number(timelist[0])
+  minutes = Number(timelist[1])
+  dateTimeRange.push(timeformat(hour) + ":" + timeformat(minutes));
+  for (let i = 0; i < 5; i++) {
+    if (minutes == 59) {
+      hour = hour + 1
+      minutes = 0
+    } else {
+      minutes = minutes + 1
+    }
+    dateTimeRange.push(timeformat(hour) + ":" + timeformat(minutes));
+  }
+  return dateTimeRange
+}
+function subHour(hour:number){
+  if (hour == 0) {
+    hour = 23
+  } else {
+    hour = hour - 1
+  }
+  return hour
+}
+function timeformat(time:number){
+  if(time == 0 ){
+    return "00"
+  }
+  if(time<10 && time >0){
+    return  "0"+time
+  }
+  return time
 }

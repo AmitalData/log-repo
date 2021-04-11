@@ -404,7 +404,7 @@
                                                             <!-- Buttons -->
                                                             <td class="GridViewCell" style="width: 25px; min-width: 25px; max-width: 25px;">
                                                                 <div>
-                                                                    <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event" [IsEnabled]="IsEditingEnabled"></CheckBox>
+                                                                    <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event" [IsEnabled]="IsEditingEnabled" attr.data-cy="{{'CheckBox_' + item.House}}"></CheckBox>
                                                                 </div>
                                                             </td>
 
@@ -506,7 +506,7 @@
                                                             <td class="GridViewCell" style="width: 25px; min-width: 25px; max-width: 25px;">
                                                                 <img src="./Images/Info.png" class="CenterCenter" title="Not Matched" *ngIf="!item.IsMatched" />
                                                                 <div>
-                                                                    <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event" *ngIf="item.IsMatched" [IsEnabled]="IsEditingEnabled"></CheckBox>
+                                                                    <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event" *ngIf="item.IsMatched" [IsEnabled]="IsEditingEnabled" attr.data-cy="{{'CheckBox_' + item.House}}"></CheckBox>
                                                                 </div>
                                                             </td>
 

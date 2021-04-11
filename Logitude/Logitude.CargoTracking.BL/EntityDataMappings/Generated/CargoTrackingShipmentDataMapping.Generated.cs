@@ -874,8 +874,9 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AssignedTruckerEstimationDate))
-            {
-					entityPM.AssignedTruckerEstimationDate = entityPOCO.AssignedTruckerEstimationDate;
+			{
+				entityPM.AssignedTruckerEstimationDate = entityPOCO.AssignedTruckerEstimationDate;
+
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AssignedTruckerNotes))

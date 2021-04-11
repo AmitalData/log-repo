@@ -845,124 +845,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="PreCarriageTransportModeId"
-    Type="char"
-    Size="1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PreCarriageFromPortId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PreCarriageToPortId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PreCarriageATD"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PreCarriageATA"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PreCarriageETD"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PreCarriageETA"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PreCarriageCarrierNumber"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PreCarriageCarrierId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="OnCarriageTransportModeId"
-    Type="char"
-    Size="1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="OnCarriageFromPortId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="OnCarriageToPortId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="OnCarriageATD"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="OnCarriageATA"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="OnCarriageETD"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="OnCarriageETA"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="OnCarriageCarrierNumber"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="OnCarriageCarrierId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="FreightPrepaidCollectId"
     Type="varchar"
     Size="1">
@@ -1443,20 +1325,6 @@
   <Column
     Name="StatusDate"
     Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="OnCarriageVesselId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PreCarriageVesselId"
-    Type="varchar"
-    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -2641,14 +2509,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="OnCarriageAdditionalTransportModeCode"
-    ShortName="OnCarriageAddTransportModeCode"
-    Type="varchar"
-    Size="4">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="INTTRAContractNumber"
     Type="varchar"
     Size="35">
@@ -2706,12 +2566,6 @@
     Type="datetime">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="SplitOnCarriage"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Column
     Name="EstimatedFinalArrivalDate"
@@ -3567,46 +3421,6 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="PreCarriageTransportModeId"
-    ReferencedTable="TransportModes"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="PreCarriageFromPortId"
-    ReferencedTable="Ports"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="PreCarriageToPortId"
-    ReferencedTable="Ports"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="PreCarriageCarrierId"
-    ReferencedTable="Cards"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="OnCarriageTransportModeId"
-    ReferencedTable="TransportModes"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="OnCarriageFromPortId"
-    ReferencedTable="Ports"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="OnCarriageToPortId"
-    ReferencedTable="Ports"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="OnCarriageCarrierId"
-    ReferencedTable="Cards"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
     ForeignKeyColumn="FreightPrepaidCollectId"
     ReferencedTable="PrepaidCollects"
     ReferencedColumn="Id"
@@ -3729,16 +3543,6 @@
   <Relation
     ForeignKeyColumn="MoveTypeId"
     ReferencedTable="MoveTypes"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="OnCarriageVesselId"
-    ReferencedTable="Vessels"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="PreCarriageVesselId"
-    ReferencedTable="Vessels"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -3910,11 +3714,6 @@
     ForeignKeyColumn="EmergencyContactId"
     ReferencedTable="Contacts"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="OnCarriageAdditionalTransportModeCode"
-    ReferencedTable="PickUpDeliveryTransportModes"
-    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="INTTRADocumentTypeCode"

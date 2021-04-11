@@ -169,7 +169,7 @@ export class UserDashboardComponent implements AfterViewInit
         {
             if (response.Result) {
                 ServiceHelper.SetCargoTrackingDate(response.Result, this.baseURL);
-                
+
                 this.IsBrandingDataLoaded = true;
             }
             else {
@@ -194,11 +194,11 @@ export class UserDashboardComponent implements AfterViewInit
     get BackGroundImg()
     {
         return CargoTrackingBrandingData.BackgroundURL;
-    } 
+    }
     get ShipmentHeaderImage(){
         return CargoTrackingBrandingData.ShipmentHeaderURL;
     }
-    
+
 
 
 }

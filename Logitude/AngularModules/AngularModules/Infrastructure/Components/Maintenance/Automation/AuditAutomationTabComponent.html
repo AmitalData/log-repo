@@ -13,6 +13,7 @@
         left: 30px;
     }
 
+
 </style>
 
 <div class="TabHolder">
@@ -463,7 +464,7 @@
 
 
                                                                                                                                     <div style="width:95px">
-                                                                                                                                        <img class="ConditionsDetails" style="width:20px;height:20px" *ngIf="item.IsConditionTrue" src="./Images/Icons/MiniGreenTick.png" />
+                                                                                                                                        <img class="ConditionsDetails trueCondition" style="width:20px;height:20px" *ngIf="item.IsConditionTrue" src="./Images/Icons/MiniGreenTick.png" />
 
                                                                                                                                         <img class="ConditionsDetails" *ngIf="item.DoneDate && !item.IsConditionTrue" style="width:14px;height:14px" src="./Images/RedX.png" />
 
@@ -471,7 +472,7 @@
 
 
                                                                                                                                     <!--CondithionsDetails-->
-                                                                                                                                    <a class="ConditionsLink" *ngIf="ShowConditionsDetailsLink" (click)="ShowCondithionsDetails(item)">Details</a>
+                                                                                                                                    <a class="ConditionsLink" *ngIf="ShowConditionsDetailsLink && !item.IsConditionTrue" (click)="ShowCondithionsDetails(item)">Details</a>
 
                                                                                                                                 </td>
 

@@ -62,9 +62,24 @@ let R: CreateRandom= new CreateRandom();
                 a[0].click();
             })
            cy.get('input[id=APInvoiceLine_LocalDescription]').should("have.value",'Air Freight')
+		   
+		   
+		   
+		   
+		    cy.get('input[id=APInvoiceLine_VatTypeId]').clear();
+            cy.get('input[id=APInvoiceLine_VatTypeId]').type('Zero');
+
+      cy.get('ul[id=mydatalist_APInvoiceLine_VatTypeId]').contains('Zero').then(a => {
+          a[0].click();
+        })
+
+		  
+		  
+		  
+		  
            //cy.get('input[id= APInvoiceLine_VatTypeId]').should("have.value",'Air Freight')
           
-            cy.get('input[id=APInvoiceLine_VatPercentage]').should("have.value", '0.000')
+            //cy.get('input[id=APInvoiceLine_VatPercentage]').should("have.value", '0.000')
             cy.get('input[id=APInvoiceLine_InvoiceCurrencyAmount]').type('10000')
            
 
@@ -75,10 +90,12 @@ let R: CreateRandom= new CreateRandom();
 
         
       
-    });
+    
       
  
-});
+})
+
+})
 
 
 

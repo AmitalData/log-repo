@@ -48,6 +48,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             GLAccountCurrencyQueryService gLAccountCurrencyQueryService = new GLAccountCurrencyQueryService  (context);
             entityPM.GLAccountCurrencies = gLAccountCurrencyQueryService.GetMulti(gLAccountKeys, true);
 
+            entityPM.GLAccountChildren = this.GetChildAccounts(entityPM.Id,entityPM.Tenant);
+
             if (entityPM.GLAccountWithholdingTaxes.Count > 0)
             {
                 entityPM.TaxWithholdingLastLine = gLAccountWithholdingTaxQueryService.GetMaxLineNumber(entityPM.Id, entityPM.Tenant);

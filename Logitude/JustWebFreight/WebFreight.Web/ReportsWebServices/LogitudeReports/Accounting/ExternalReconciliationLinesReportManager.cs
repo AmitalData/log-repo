@@ -465,9 +465,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             {
                 
 
-                 reconcileExternalPageLines = (from line in accountingContext.ReconcileExternalPageLines
+                 reconcileExternalPageLines = (from line in accountingContext.ReconcileExternalPageLines join page in  accountingContext.ReconcileExternalPages
+                                               on line.ReconcileExternalPageId equals page.Id
                                                   where line.Tenant == tenant
                                                         && line.ReferenceDate !=null
+                                                        && page.StatusCode != "3"
                                                         && DbFunctions.TruncateTime(line.ReferenceDate) >= DbFunctions.TruncateTime(RefDateFrom)
                                                         && DbFunctions.TruncateTime(line.ReferenceDate) <= DbFunctions.TruncateTime(RefDateTo)
                                                          

@@ -359,6 +359,7 @@
     <Compile Include="ArtemusAnalyzerWorkerRole.cs" />
     <Compile Include="AutoSignUpMailWorkerRole.cs" />
     <Compile Include="AutoSignUpWorkerRole.cs" />
+    <Compile Include="CollaborationToolTaskWR.cs" />
     <Compile Include="Services\QuoteSchedulerTaskService.cs" />
     <Compile Include="WarmCargoTracking.cs" />
     <Compile Include="BatchTaskExecutionWR.cs" />
@@ -452,7 +453,6 @@
     <Compile Include="MessagesTransmissionLogWorkerRole.cs" />
     <Compile Include="MobileNotificationWorkerRole.cs" />
     <Compile Include="QuckbooksOnlineWorkerRole.cs" />
-    <Compile Include="QuickBooksWorkerRole.cs" />
     <Compile Include="QuoteAutomaticallyClosing.cs" />
     <Compile Include="ReportExecutionLogWorkerRole.cs" />
     <Compile Include="ResharedAgentDocumentWR.cs" />

@@ -155,16 +155,6 @@ export class AccountingSettingPM {
     public set QBOrealMeID(newValue: string) { if (this.qBOrealMeID != newValue) { this.qBOrealMeID = newValue; this.MarkAsDirty("QBOrealMeID"); } }
        
 	 
-    private qBOAccessToken: string;
-    public get QBOAccessToken() { return this.qBOAccessToken; }
-    public set QBOAccessToken(newValue: string) { if (this.qBOAccessToken != newValue) { this.qBOAccessToken = newValue; this.MarkAsDirty("QBOAccessToken"); } }
-       
-	 
-    private qBOAccessTokenSecret: string;
-    public get QBOAccessTokenSecret() { return this.qBOAccessTokenSecret; }
-    public set QBOAccessTokenSecret(newValue: string) { if (this.qBOAccessTokenSecret != newValue) { this.qBOAccessTokenSecret = newValue; this.MarkAsDirty("QBOAccessTokenSecret"); } }
-       
-	 
     private vatNumber: string;
     public get VatNumber() { return this.vatNumber; }
     public set VatNumber(newValue: string) { if (this.vatNumber != newValue) { this.vatNumber = newValue; this.MarkAsDirty("VatNumber"); } }

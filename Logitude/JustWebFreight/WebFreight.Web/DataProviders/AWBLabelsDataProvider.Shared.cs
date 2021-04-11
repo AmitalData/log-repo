@@ -1,6 +1,6 @@
 namespace WebFreight.Web.DataProviders
 {
-    public class AWBLabelsDataProvider
+    public class AWBLabelsDataProvider:BaseDataProvider
     {
         public string MainCarriageCarrierCode { get; set; }
         public string MainCarriageFromPortCode { get; set; }

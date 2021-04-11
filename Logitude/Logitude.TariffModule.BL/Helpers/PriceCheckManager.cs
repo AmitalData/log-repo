@@ -39,6 +39,7 @@ namespace Logitude.TariffModule.BL.Helpers
         private AirlineQuery airlineQuery;
         private ShippingLineRepository shippingLineRepository;
         private ShippingLineQuery shippingLineQuery;
+        private CardRepository cardQuery;
         private TariffRepository tariffRepository;
         private ITariffModuleContext tariffContext;
         private PackageTypeRepository packageTypeRepository;
@@ -53,6 +54,8 @@ namespace Logitude.TariffModule.BL.Helpers
         private string volumeCode;
         private string currencyId;
         private string tariffType;
+        private string tarrifSellerName;
+        private string documentId;
         private int quantity1;
         private int quantity2;
         private int quantity3;
@@ -77,7 +80,6 @@ namespace Logitude.TariffModule.BL.Helpers
         private TariffSearchSummary tariffsSummary;
         private decimal? Sum;
         private decimal? Sum_WithoutAllIn;
-        private string sellerName;
         private SurchargeSummary SurchargeItem;
         private Tariff CurrentSurcharge;
         private string freightTariffId;
@@ -99,6 +101,7 @@ namespace Logitude.TariffModule.BL.Helpers
             this.commonContext = CommonDataContext.GetContext(tenant);
             this.airlineRepository = new AirlineRepository(commonContext);
             this.shippingLineRepository = new ShippingLineRepository(commonContext);
+            this.cardQuery = new CardRepository(commonContext);
             this.airlineQuery = new AirlineQuery(airlineRepository);
             this.shippingLineQuery = new ShippingLineQuery(shippingLineRepository);
             this.tariffContext = TariffModuleContext.GetContext(tenant);
@@ -113,6 +116,7 @@ namespace Logitude.TariffModule.BL.Helpers
             this.commonContext = CommonDataContext.GetContext(tenant);
             this.airlineRepository = new AirlineRepository(commonContext);
             this.shippingLineRepository = new ShippingLineRepository(commonContext);
+            this.cardQuery = new CardRepository(commonContext);
             this.airlineQuery = new AirlineQuery(airlineRepository);
             this.shippingLineQuery = new ShippingLineQuery(shippingLineRepository);
             this.tariffContext = TariffModuleContext.GetContext(tenant);
@@ -668,22 +672,8 @@ namespace Logitude.TariffModule.BL.Helpers
                     }
                     this.CurrentSurcharge = SurchargeTariffList.Where(p => p.SellerId == result.SellerId).FirstOrDefault();
 
-                    string sellerName = "";
-                    string documentId = null;
-                    AirlinePM airline = null;
-                    ShippingLinePM shippingLine = null;
-                    if (tariffType == "AFC")
-                    {
-                        airline = airlineQuery.GetSinglePM(result.SellerId, tenant);
-                        sellerName = airline != null && airline.Card != null ? airline.Card.EnglishName : "";
-                        documentId = airline.ImageDetailId;
-                    }
-                    else if (tariffType == "OLC")
-                    {
-                        shippingLine = shippingLineQuery.GetSinglePM(result.SellerId, tenant);
-                        sellerName = shippingLine != null && shippingLine.Card != null ? shippingLine.Card.EnglishName : "";
-                        documentId = shippingLine.ImageDetailId;
-                    }
+                    GetSellerInformation(result.SellerId,tenant);
+
                     tariffsSummary.SurchargesPrice = "0.00";
                     if (CurrentSurcharge != null)
                     {
@@ -802,7 +792,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                                 SurchargeItem.VersionId = ChargesfilteredLines.Version + "";
                                                 SurchargeItem.LineId = ChargesfilteredLines.Id;
                                                 SurchargeItem.SellerId = CurrentSurcharge.SellerId;
-                                                SurchargeItem.SellerName = sellerName;
+                                                SurchargeItem.SellerName = tarrifSellerName;
                                                 SurchargeItem.MinPrice = minPriceSurcharge;
                                                 SurchargeItem.ActualMinPrice = actualMinimumPrice;
                                                 SurchargeItem.IsDifferentCurrency = ChargesfilteredLines.IsDifferentCurrenciesPerCharge;
@@ -824,7 +814,7 @@ namespace Logitude.TariffModule.BL.Helpers
                         }
                     }
 
-                    tariffsSummary.SellerName = sellerName;
+                    tariffsSummary.SellerName = tarrifSellerName;
                     tariffsSummary.UpdateDate = result.UpdateDate;
                     tariffsSummary.LastUsedDate = result.LastUsedDate;
                     tariffsSummary.EffictiveDate = result.ExpirationDate;
@@ -997,15 +987,12 @@ namespace Logitude.TariffModule.BL.Helpers
                     tariffsSummary.ActualPrice = price;
                     tariffsSummary.LineId = tariffLine.Id;
 
-                    ShippingLinePM shippingLine = shippingLineQuery.GetSinglePM(trariff.SellerId, tenant);
-                    this.sellerName = shippingLine != null && shippingLine.Card != null ? shippingLine.Card.EnglishName : "";
+                    GetSellerInformation(trariff.SellerId, tenant);
 
                     this.FillAllInList(tariffLine);
                     this.FillSurchargeData(args, trariff, tariffLine);
 
-                    string documentId = null;
-
-                    tariffsSummary.SellerName = sellerName;
+                    tariffsSummary.SellerName = tarrifSellerName;
                     tariffsSummary.EffictiveDate = trariff.ExpirationDate;
 
                     if (trariff.StartDate != null)
@@ -1049,7 +1036,6 @@ namespace Logitude.TariffModule.BL.Helpers
                     tariffsSummary.UnitOfMesurmentId = airChrageType.MeasurementId;
                     tariffsSummary.UnitOfMesurmentCode = usedMeasurements.Where(p => p.Id == airChrageType.MeasurementId).Select(p => p.Code).FirstOrDefault();
                     tariffsSummary.SellerId = trariff.SellerId;
-                    documentId = shippingLine.ImageDetailId;
                     byte[] filedata = this.DownloadFile(documentId, "images");
                     string resultImage = "";
                     if (filedata != null)
@@ -1212,7 +1198,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                         SurchargeItem.TariffNumber = CurrentSurcharge.TariffNumber;
                                         SurchargeItem.VersionId = ChargesfilteredLines.Version + "";
                                         SurchargeItem.SellerId = CurrentSurcharge.SellerId;
-                                        SurchargeItem.SellerName = sellerName;
+                                        SurchargeItem.SellerName = tarrifSellerName;
                                         SurchargeItem.LineId = ChargesfilteredLines.Id;
                                         SurchargeItem.CurrencySign = AssignSignCode(currencies, currencyId, SurchargeItem.UnitOfMesurmentCode);
                                         surchargesList.Add(SurchargeItem);
@@ -1695,6 +1681,15 @@ namespace Logitude.TariffModule.BL.Helpers
                 datainByte = storageservice.Read(fileInfo);
             }
             return datainByte;
+        }
+        private void GetSellerInformation(string id, int tenant)
+        {
+            Card seller = cardQuery.GetSingleCard(id, tenant);
+            if (seller != null)
+            {
+                tarrifSellerName = seller.EnglishName;
+                documentId = seller.ImageDetailId;
+            }
         }
     }
 

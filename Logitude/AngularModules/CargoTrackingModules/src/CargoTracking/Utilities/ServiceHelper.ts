@@ -30,26 +30,26 @@ export  class ServiceHelper{
         var InvertedLogoId:string = this.GetImageIdFromStorage("InvertedLogoImg");
         var BrowserIconId:string = this.GetImageIdFromStorage("BrowserIconImg");
         var ShipmentHeaderImageId:string = this.GetImageIdFromStorage("ShipmentHeaderImage");
-        
+
         var BrandingDataRequest:CargoTrackingBrandingDataRequest = new CargoTrackingBrandingDataRequest();
         BrandingDataRequest.BackgroundId = BackgroundId;
         BrandingDataRequest.ComapnylogoId = CompanyLogoId;
         BrandingDataRequest.InvertedLogoId = InvertedLogoId;
         BrandingDataRequest.BrowserIconId = BrowserIconId;
         BrandingDataRequest.ShipmentHeaderImageId = ShipmentHeaderImageId;
-        
+
         BrandingDataRequest.Domain = baseUrl;
         return BrandingDataRequest;
     }
 
-     
+
     public static SetCargoTrackingDate(brandingData:any,baseUrl:string){
 
         CargoTrackingBrandingData.Tenant = brandingData.Tenant;
         CargoTrackingBrandingData.MainColor = brandingData.MainColor || "#000000";
         CargoTrackingBrandingData.SecondaryColor = brandingData.SecondaryColor || "#002664";
 
-        document.documentElement.style.setProperty('--BGColor', CargoTrackingBrandingData.MainColor || 'RGB(250,251,252)');
+        // document.documentElement.style.setProperty('--BGColor', CargoTrackingBrandingData.MainColor || 'RGB(250,251,252)');
         document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
         document.documentElement.style.setProperty('--busyIndicatorColor', CargoTrackingBrandingData.MainColor);
         document.documentElement.style.setProperty('--secondaryColor', CargoTrackingBrandingData.SecondaryColor);
@@ -72,7 +72,7 @@ export  class ServiceHelper{
         this.SetShipmentHeaderImage(BrandingData);
         this.SetInvertedLogo(BrandingData);
     }
-    
+
     private static SetBackgroundImg(BrandingData:any,baseUrl:string)
     {
         if(BrandingData.BackgroundBytes){

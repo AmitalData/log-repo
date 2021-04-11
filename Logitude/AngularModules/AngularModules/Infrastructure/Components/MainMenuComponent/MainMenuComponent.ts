@@ -36,6 +36,15 @@ export class MainMenuComponent {
     constructor() {
         this.MainMenuItems = new Array<MainMenuItem>();
         this.MainMenuItems = this.GetMainMenuItemsFromWindow();
+        if (SessionLocator.Tenant == 1321) {
+            var tasksAppItem = new MainMenuItem("General.MH.TasksApp", AppTool.GetMainMenuIconCode("General.MH.Depositions"));
+            tasksAppItem.IndexOfOrder = 100;
+            tasksAppItem.ObjectTableId = null;
+            tasksAppItem.HtmlView = null;
+            tasksAppItem.ObjectTableName = null;
+            tasksAppItem.QuerySection = null;
+            this.MainMenuItems.push(tasksAppItem);
+        }
         // Layout Direction
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         var defaultStatus: string = LastFilterClass.GetFilterValue("Simplog.Infrastructure.Views.MenuView", "Sidebar");
@@ -297,7 +306,10 @@ export class MainMenuComponent {
                         myComponentPath = "./CommonModules/CommonFilingInbox/Components/FilingInboxWorkspaceComponent";
                         break;
                     }
-
+                    case "General.MH.TasksApp": {
+                        myComponentPath = "./TasksApp/Components/TasksAppComponent";
+                        break;
+                    }
                     case "General.MH.Quotes": {
                         ServiceLocator.SendTotangoUserActivity("Quote", "List View");
                         myComponentPath = "./Quote/Components/Workspaces/QuotesComponent";

@@ -10,6 +10,7 @@ export class URLs
     public static readonly DocumentsFilingExtended = '**/DocumentsFilingExtended/**';
     public static readonly TraceEventsDomain = "**/TraceEventsDomain/GetTraceEventsForEntity?**"
     public static readonly ContainerFollowUpViewsGetbyfilters = "**/ContainerFollowUpViews/getbyfilters?**"
+    public static readonly GetMenuButtonGrouppms = "**/getmenubuttongrouppms?**"
 
     //INTTRA
     public static readonly FTPDetails = "**/ftpdetails";

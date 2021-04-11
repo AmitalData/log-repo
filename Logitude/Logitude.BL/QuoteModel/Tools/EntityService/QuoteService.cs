@@ -641,67 +641,79 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
             InitializeExpirationValues();
             InitializeAutomaticallyClose();
-
-            if (entityPM.ConvertToLCL || entityPM.ConvertToFCL)
-            {
-                entityPM.NumberOfPackages = null;
-                entityPM.PackageType1Id = null;
-                entityPM.PackageType1Quantity = null;
-                entityPM.PackageType2Id = null;
-                entityPM.PackageType2Quantity = null;
-                entityPM.PackageType3Id = null;
-                entityPM.PackageType3Quantity = null;
-                entityPM.PackageType4Id = null;
-                entityPM.PackageType4Quantity = null;
-                entityPM.PackageType5Id = null;
-                entityPM.PackageType5Quantity = null;
-                entityPM.TEU = null;
-                entityPM.NumberOfContainers = null;
-                entityPM.GrossWeight = null;
-                entityPM.ChargeableWeight = null;
-                entityPM.VolumetricWeight = null;
-                entityPM.Volume = null;
-                entityPM.EstimateProfit = null;
-                entityPM.EstimatedProfitInLocal = null;
-                entityPM.EstimatedProfitInProfit = null;
-                entityPM.EstimateProfitInSaleCurrency = null;
-
-                foreach (QuotePackagePM pm in entityPM.QuotePackages)
-                {
-                    this.DeleteQuotePackage(pm);
-                }
-
-                foreach (QuoteChargePM pm in entityPM.QuoteCharges)
-                {
-                    this.DeleteQuoteChargeUp(pm);
-                }
-
-                entityPM.QuotePackages.Clear();
-                entityPM.QuoteCharges.Clear();
-                
-                if (entityPM.ConvertToFCL)
-                {
-                    this.isLCLQuote = false;
-                    entityPM.ShipmentTypeId = "FCLD";
-                }
-
-                else
-                {
-                    this.isLCLQuote = true;
-                    entityPM.ShipmentTypeId = "LCLD";
-                }
-
-                this.GenerateDefaultCharges();
-            }
-
+            InitializeQuoteConversionProcess();
+           
             this.ComputeExpectedProfit();
             this.ComputeProfit();
             this.FillDefaultSubType();
         }
 
+        private void InitializeQuoteConversionProcess()
+        {
+            if (entityPM.ConvertToLCL || entityPM.ConvertToFCL)
+            {
+                DeletePackagesAndCharges();
+
+                if (entityPM.ConvertToFCL)
+                {
+                    this.isLCLQuote = false;
+                    entityPM.ShipmentTypeId = "FCLD";
+                }
+                else 
+                {
+                    this.isLCLQuote = true;
+                    entityPM.ShipmentTypeId = "LCLD";
+                }
+                this.GenerateDefaultCharges();
+            }
+
+            if (entityPM.ConvertTransportMode)
+            {
+                DeletePackagesAndCharges();
+                this.GenerateDefaultCharges();
+            }
+        }
+
+        private void DeletePackagesAndCharges()
+        {
+            entityPM.NumberOfPackages = null;
+            entityPM.PackageType1Id = null;
+            entityPM.PackageType1Quantity = null;
+            entityPM.PackageType2Id = null;
+            entityPM.PackageType2Quantity = null;
+            entityPM.PackageType3Id = null;
+            entityPM.PackageType3Quantity = null;
+            entityPM.PackageType4Id = null;
+            entityPM.PackageType4Quantity = null;
+            entityPM.PackageType5Id = null;
+            entityPM.PackageType5Quantity = null;
+            entityPM.TEU = null;
+            entityPM.NumberOfContainers = null;
+            entityPM.GrossWeight = null;
+            entityPM.ChargeableWeight = null;
+            entityPM.VolumetricWeight = null;
+            entityPM.Volume = null;
+            entityPM.EstimateProfit = null;
+            entityPM.EstimatedProfitInLocal = null;
+            entityPM.EstimatedProfitInProfit = null;
+            entityPM.EstimateProfitInSaleCurrency = null;
+
+            foreach (QuotePackagePM pm in entityPM.QuotePackages)
+            {
+                this.DeleteQuotePackage(pm);
+            }
+
+            foreach (QuoteChargePM pm in entityPM.QuoteCharges)
+            {
+                this.DeleteQuoteChargeUp(pm);
+            }
+
+            entityPM.QuotePackages.Clear();
+            entityPM.QuoteCharges.Clear();
+        }
         private void FillDefaultSubType()
         {
-            if (string.IsNullOrEmpty(entityPM.ShipmentSubTypeId) || entityPM.ConvertToFCL || entityPM.ConvertToLCL)
+            if (string.IsNullOrEmpty(entityPM.ShipmentSubTypeId) || entityPM.ConvertToFCL || entityPM.ConvertToLCL || entityPM.ConvertTransportMode)
             {
                 string code = null;
                 if (entityPM.TransportModeId == "A")

@@ -479,12 +479,12 @@ h1{
         padding: 4px 17px;
         background: var(--MainColor);
         display: inline-block;
-        margin: 0 10px;
         border-radius: 3px;
         font-weight: 600;
         font-size: 13px;
         box-shadow: 0px 2px 4px -1px #00000066;
         padding-right: 30px;
+        margin: 0 10px 7px 0;
     }
     .selected-filters ul > li:first-child{
         margin-left: 0 ;
@@ -492,6 +492,11 @@ h1{
 
     .selected-filters ul > li:hover{
         opacity: 0.8;
+    }
+
+    .selected-filters ul > li:active
+    {
+        transform: scale(0.98);
     }
 
     .selected-filters ul > li.clear{
@@ -638,6 +643,7 @@ h1{
                 padding-right: 20px;
                 min-height: 30px;
                 max-height: 250px;
+                overflow: auto;
             }
         .checkbox-filteritem{
             width: 100%;
@@ -787,8 +793,15 @@ h1{
 
 
 
-  .direction-icon{
+.direction-icon{
     position: relative;
     bottom: -30px;
     transform: rotate(45deg);
+}
+
+.filter-close-btn{
+    font-size: 24px;
+    font-weight: 400;
+    position: absolute;
+    padding-left: 9px;
 }

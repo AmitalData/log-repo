@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Web;
+using WebFreight.Web.DataProviders;
 
 namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
 {
-    public class PaymentChequeDataProvider
+    public class PaymentChequeDataProvider:BaseDataProvider
     {
 
 

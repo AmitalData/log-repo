@@ -265,53 +265,56 @@ namespace Logitude.XSD.INTTRA.BL
                             this.MoveType_Name = myTranslatedCode;
                         }
 
-                        switch (this.MoveType_Name.ToLower())
+                        if (this.MasterData != null)
                         {
-                            case "doortodoor":
-                                {
-                                    if (this.Shipment.PreCarriageFromPortId == null || this.Shipment.PreCarriageToPortId == null)
+                            switch (this.MoveType_Name.ToLower())
+                            {
+                                case "doortodoor":
                                     {
-                                        this.Errors.Add("Pre Carriage is required");
+                                        if (this.MasterData.PreCarriageFromPortId == null || this.MasterData.PreCarriageToPortId == null)
+                                        {
+                                            this.Errors.Add("Pre Carriage is required");
+                                        }
+
+                                        if (this.MasterData.OnCarriageFromPortId == null || this.MasterData.OnCarriageToPortId == null)
+                                        {
+                                            this.Errors.Add("On Carriage is required");
+                                        }
+
+                                        break;
                                     }
 
-                                    if (this.Shipment.OnCarriageFromPortId == null || this.Shipment.OnCarriageToPortId == null)
+                                case "doortoport":
                                     {
-                                        this.Errors.Add("On Carriage is required");
+                                        if (this.MasterData.PreCarriageFromPortId == null || this.MasterData.PreCarriageToPortId == null)
+                                        {
+                                            this.Errors.Add("Pre Carriage is required");
+                                        }
+
+                                        break;
                                     }
 
-                                    break;
-                                }
-
-                            case "doortoport":
-                                {
-                                    if (this.Shipment.PreCarriageFromPortId == null || this.Shipment.PreCarriageToPortId == null)
+                                case "porttodoor":
                                     {
-                                        this.Errors.Add("Pre Carriage is required");
+                                        if (this.MasterData.OnCarriageFromPortId == null || this.MasterData.OnCarriageToPortId == null)
+                                        {
+                                            this.Errors.Add("On Carriage is required");
+                                        }
+
+                                        break;
                                     }
 
-                                    break;
-                                }
-
-                            case "porttodoor":
-                                {
-                                    if (this.Shipment.OnCarriageFromPortId == null || this.Shipment.OnCarriageToPortId == null)
+                                case "porttoport":
                                     {
-                                        this.Errors.Add("On Carriage is required");
+                                        break;
                                     }
 
-                                    break;
-                                }
-
-                            case "porttoport":
-                                {
-                                    break;
-                                }
-
-                            default:
-                                {
-                                    this.Errors.Add("Illegal value in move type");
-                                    break;
-                                }
+                                default:
+                                    {
+                                        this.Errors.Add("Illegal value in move type");
+                                        break;
+                                    }
+                            }
                         }
                     }
                 }
@@ -1266,9 +1269,9 @@ namespace Logitude.XSD.INTTRA.BL
             });
 
             #region PlaceOfReceipt
-            if (this.Shipment.PreCarriageFromPortId != null)
+            if (this.MasterData != null && this.MasterData.PreCarriageFromPortId != null)
             {
-                Port PreCarriagePort = (from d in CommonContext.Ports where d.Id == this.Shipment.PreCarriageFromPortId select d).FirstOrDefault();
+                Port PreCarriagePort = (from d in CommonContext.Ports where d.Id == this.MasterData.PreCarriageFromPortId select d).FirstOrDefault();
                 Country PreCarriageCountry = (from d in CommonContext.Countries where d.Id == PreCarriagePort.CountryId select d).FirstOrDefault();
 
                 locations.Add(new INTTRA_Out.Location()
@@ -1307,9 +1310,9 @@ namespace Logitude.XSD.INTTRA.BL
             #endregion
 
             #region PlaceOfDelivery
-            if (this.Shipment.OnCarriageToPortId != null)
+            if (this.MasterData != null && this.MasterData.OnCarriageToPortId != null)
             {
-                Port OnCarriagePort = (from d in CommonContext.Ports where d.Id == this.Shipment.OnCarriageToPortId select d).FirstOrDefault();
+                Port OnCarriagePort = (from d in CommonContext.Ports where d.Id == this.MasterData.OnCarriageToPortId select d).FirstOrDefault();
                 Country OnCarriageCountry = (from d in CommonContext.Countries where d.Id == OnCarriagePort.CountryId select d).FirstOrDefault();
 
                 locations.Add(new INTTRA_Out.Location()
@@ -1476,7 +1479,7 @@ namespace Logitude.XSD.INTTRA.BL
             #endregion
 
             #region Carrier
-            if (this.MasterData.MainCarriageCarrierId != null)
+            if (this.MasterData != null && this.MasterData.MainCarriageCarrierId != null)
             {
                 Card myCard = (from d in CommonContext.Cards where d.Id == this.MasterData.MainCarriageCarrierId select d).FirstOrDefault();
                 if (myCard != null)

@@ -17,6 +17,7 @@ import * as BaseActions from '../../../Base/cypress/actions/Actions';
 import { EventDetails } from '../models/EventDetails';
 import { EventTypeDetails } from '../models/EventTypeDetails';
 import { WarehouseStorage } from 'cypress/models/WarehouseStorage';
+import { ShipmentContext } from '../models/ShipmentContext';
 
 export function NavigatesToEventsTab() {
     cy.DefineRequestWait(RestAPI.GET, URLs.TraceEventsDomain, RequestAliases.GetTraceEvent);
@@ -329,6 +330,7 @@ export function FillPackageTab(transportMode: string, packagesDetails: PackagesD
 
         if(packagesDetails[i].ChargeableWeight) {
             cy.FillLogTextBox(ShipmentSelectors.PackageChargeableWeight, packagesDetails[i].ChargeableWeight.toString(), true)
+            cy.FillLogTextBox(ShipmentSelectors.PackageChargeableWeight, packagesDetails[i].ChargeableWeight.toString(), true)
         }
     }
 }
@@ -347,9 +349,45 @@ export function AddInsidePackage(packagesDetails: PackagesDetails[]) {
 //#endregion
 
 //#region House Shipment Tab
-export function FillHouseInShipmentsTab(Shipper: string) {
+export function CreateNewAttachedHouse(Shipper:string){
+    cy.Click(ShipmentSelectors.NewAttachedHouse,null);
+    FillHouseInShipmentsTab(Shipper);
+    CreateShipment("House");
+}
+
+function FillHouseInShipmentsTab(Shipper: string) {
     cy.FillLogLov(ShipmentSelectors.ShipmentCustomer, Shipper, true)
 }
+
+export function CheckBusyIndicator(){
+    cy.get(ShipmentSelectors.ComponentBusyIndicator).should(BaseSelectors.NotExist);
+}
+
+export function CheckHouseCheckBox(){
+    cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
+    cy.get(ShipmentSelectors.HouseCheckBox(ShipmentContext.HouseNumber)).find("input").then($InActiveStatesCheckBox => {
+        if (!($InActiveStatesCheckBox.is(':checked'))) {
+            cy.get(ShipmentSelectors.HouseCheckBox(ShipmentContext.HouseNumber)).find("input").check({ force: true })
+        }
+    })
+}
+
+export function UncheckHouseCheckBox(){
+    cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
+    cy.get(ShipmentSelectors.HouseCheckBox(ShipmentContext.HouseNumber)).find("input").then($InActiveStatesCheckBox => {
+        if ($InActiveStatesCheckBox.is(':checked')) {
+            cy.get(ShipmentSelectors.HouseCheckBox(ShipmentContext.HouseNumber)).find("input").uncheck({ force: true })
+        }
+    })
+}
+
+export function ValidateCheckHouseCheckBox(){
+    cy.get(ShipmentSelectors.HouseCheckBox(ShipmentContext.HouseNumber)).find("input").then($InActiveStatesCheckBox => {
+       var CheckBoxStatus = $InActiveStatesCheckBox.is(':checked')
+       assert.equal(CheckBoxStatus , true);
+    })
+}
+
 //#endregion
 
 //#region Receivables Tab
@@ -479,7 +517,14 @@ export function AssertStorageFee(expectedStorageFeeValue: string) {
     //         AssertStorageFee(expectedStorageFeeValue)
     //     }
     // })
-    BaseAssertion.AssertElementContain(ShipmentSelectors.StorageCalculationScreen, expectedStorageFeeValue)
+    cy.get(ShipmentSelectors.StorageFeeResult).should("be.visible")
+    cy.get(ShipmentSelectors.StorageFeeResult).then(($StorageFee) => {
+        const StorageFee = $StorageFee.text().toString()
+         cy.log(StorageFee)
+         expect(StorageFee.replace(/\s/g, '')).to.be.eq(expectedStorageFeeValue)
+})
+cy.Click(BaseSelectors.RedButton+BaseSelectors.LastElement,BaseSelectors.ContainsOK);
+
 }
 
 export function ValidateStoragePricing(AmountList:WarehouseStorage[],expectedWeight:string){
@@ -488,7 +533,6 @@ export function ValidateStoragePricing(AmountList:WarehouseStorage[],expectedWei
         BaseAssertion.AssertElementTextEqual(BaseSelectors.CellWithRowAndCol(BaseSelectors.ColNo5, (i + 1).toString()),AmountList[i].Amount,BaseSelectors.td)
     }
     BaseAssertion.AssertElementContain(BaseSelectors.LogitudeScrollViewer,ShipmentSelectors.ContainsWeight+expectedWeight)
-    cy.Click(BaseSelectors.RedButton+BaseSelectors.LastElement,BaseSelectors.ContainsOK);
 }
 
 //#endregion
@@ -505,9 +549,10 @@ export function FillPayablesTab(payableDetails: PayableDetails) {
 
     if (payableDetails.Vendor) {
         cy.FillLogLov(ShipmentSelectors.ShipmentPayableVendor, payableDetails.Vendor, true)
-        cy.DefineRequestWait(RestAPI.GET, '**/cardviews/**', 'cardviews')
+        BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentPayableVendor,payableDetails.Vendor)
+      //  cy.DefineRequestWait(RestAPI.GET, '**/cardviews/**', 'cardviews')
         cy.Click(ShipmentSelectors.AddPayableOkButton, null)
-        BaseAssertion.AssertStatusCode('cardviews', 200)
+       // BaseAssertion.AssertStatusCode('cardviews', 200)
     } else {
         cy.Click(ShipmentSelectors.AddPayableOkButton, null)
     }
@@ -968,6 +1013,7 @@ function ConvertShipment(isDirectionConversion: boolean){
     cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.PutShipment);
     cy.Click(BaseSelectors.RedButton + ":last", null);
     if(isDirectionConversion){
+        cy.get(BaseSelectors.ConfirmWindow).should("be.visible")
         cy.Click(BaseSelectors.ConfirmWindowButton + ":last", null);
     }
 }

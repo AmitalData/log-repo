@@ -898,7 +898,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 InsertGLAccountMoreData(entityPM);
+
                 InsertGLAccountRecocileData(entityPM);
+
+                InsertGLAccountAgingData(entityPM);
+
             }
 
             var gLAccountWithholdingTaxUpdateService = new GLAccountWithholdingTaxUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
@@ -2040,6 +2044,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }, false);
         }
 
+        private void InsertGLAccountAgingData(GLAccountPM entityPM)
+        {
+            var myGLAccountAgingDataPMUpdateService = new GLAccountAgingDataUpdateService(this.MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+            myGLAccountAgingDataPMUpdateService.Update(new GLAccountAgingDataPM()
+            {
+                AccountId = entityPM.Id,
+                Tenant = entityPM.Tenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+            }, false);
+        }
         
             
         private void InterestPeriodUpdate(List<GLAccountInterestPeriodPM> GLAccountInterestPeriods, List<GLAccountInterestPeriodPM> DeletedGLAccountInterestPeriods, int Tenant)

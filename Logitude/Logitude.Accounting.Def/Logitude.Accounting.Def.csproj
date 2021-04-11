@@ -99,6 +99,7 @@
     <Compile Include="EntityPMs\Generated\ExternalReconciliationLinePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExternalReconciliationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FullAccountingSettingPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\GLAccountAgingDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountCounterPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountCurrencyPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountInterestPeriodPM.Generated.cs" />
@@ -158,6 +159,7 @@
     <Compile Include="EntityPMs\Generated\UserDefinedReportPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\VatReportStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\WithholdingTaxDeductionTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\GLAccountAgingDataPM.cs" />
     <Compile Include="EntityPMs\GLAccountCurrencyPM.cs" />
     <Compile Include="EntityPMs\GLAccountPM.cs" />
     <Compile Include="EntityPMs\GLAccountTotalByMonthPM.cs" />

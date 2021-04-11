@@ -36,7 +36,7 @@ namespace Logitude.BL.Validators
                         }
                         if (shipmentPM.ShipmentAWBPrintOnlies.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete && d.CurrencyId != shipmentPM.AWBCurrencyId).Any())
                         {
-                            str = TextCodesTranslator.TranslateText("Shipment.M.AllAWBPrintOnliesMustMatchShipmentAWBCurrency", shipmentPM.Tenant);
+                            str = TextCodesTranslator.TranslateText("Shipment.M.AllAWBPrintOnliesMustMatchShipmentAWBCurrency", shipmentPM.Tenant) + shipmentPM.AWBCurrencyCode;
                         }
 
                     }

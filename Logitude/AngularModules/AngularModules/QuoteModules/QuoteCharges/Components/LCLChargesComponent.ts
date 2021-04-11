@@ -2438,12 +2438,12 @@ export class QuoteChargeItem extends BaseComponent {
 
             if (!AppTool.IsNullOrEmpty(value)) {
                 if (value.indexOf("-") > -1 || value.indexOf("+") > -1 || value.indexOf("%") > -1) {
-                    var myMarkUpValueInput = value.replace("-", "").replace("+", "").replace("%", "");
-
+                    var myMarkUpValueInput =  value.replace("-", "").replace("+", "").replace("%", "");
+                    var markUpActualValue = this.GetmarkUpActualValue(value);
                     if (!AppTool.IsNullOrEmpty(myMarkUpValueInput)) {
-
                         if (myMarkUpValueInput.indexOf(',') > -1) {
                             myMarkUpValue = +(myMarkUpValueInput.replace(/,/g, '.'));
+                            markUpActualValue = +(myMarkUpValueInput.replace(/,/g, '.'));
                         }
                         else {
                             myMarkUpValue = +myMarkUpValueInput;
@@ -2487,14 +2487,27 @@ export class QuoteChargeItem extends BaseComponent {
 
                     if (!AppTool.IsNullOrEmpty(myCostPrice)) {
                         myMarkUpValue = mySalePrice - myCostPrice;
+                        markUpActualValue = myMarkUpValue;
                     }
                 }
             }
 
             this.SaleUnitPrice = mySalePrice;
             this.MarkUpTypeCode = myMarkUpCode;
-            this.MarkUpValue = AppTool.Round(myMarkUpValue, 3);
+            this.MarkUpValue = AppTool.Round(markUpActualValue, 3);
         }
+    }
+
+    private GetmarkUpActualValue(saleUnitPrice) {
+        var markUpActualValue = 0;
+        if (!AppTool.IsNullOrEmpty(saleUnitPrice)) {
+            saleUnitPrice = saleUnitPrice.replace("+", "").replace("%", "")
+            markUpActualValue = +(saleUnitPrice);
+            if (saleUnitPrice.indexOf(',') > -1) {
+                markUpActualValue = +(saleUnitPrice.replace(/,/g, '.'));
+            }
+        }
+        return markUpActualValue;
     }
 
     // Markup
