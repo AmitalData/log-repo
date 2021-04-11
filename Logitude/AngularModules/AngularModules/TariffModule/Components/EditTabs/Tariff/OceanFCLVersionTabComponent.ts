@@ -357,7 +357,7 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
         this.ItemsCollection.forEach((item: OceanFCLFreightTariffLineData) => {
             item.IsNewEntity = false;
 
-            var line = this.compareTariffLines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
+            var line = this.compareTariffLines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId && a.ViaPortId == item.ViaPortId)[0];
             if (line) {
                 item.ComparedEntity = line;
                 item.SetCellsComparingText();
@@ -378,7 +378,7 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
         }
 
         this.compareTariffLines.sort(p => p.Index).forEach(item => {
-            var line = lines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
+            var line = lines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId && a.ViaPortId == item.ViaPortId)[0];
             if (line == null) {
                 this.DeletedTariffsLines.push(new OceanFCLFreightTariffLineData(item, this));// Deleted 
             }

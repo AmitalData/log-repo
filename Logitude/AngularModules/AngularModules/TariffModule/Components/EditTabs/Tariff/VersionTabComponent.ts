@@ -385,7 +385,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
         this.ItemsCollection.forEach((item: AirCostTariffLineData) => {
             item.IsNewEntity = false;
 
-            var line = this.compareTariffLines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
+            var line = this.compareTariffLines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId && a.ViaPortId == item.ViaPortId )[0];
             if (line) {
                 item.ComparedEntity = line;
                 item.SetCellsComparingText();
@@ -406,7 +406,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
         }
 
         this.compareTariffLines.sort(p => p.Index).forEach(item => {
-            var line = lines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
+            var line = lines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId && a.ViaPortId == item.ViaPortId)[0];
             if (line == null) {
                 this.DeletedTariffsLines.push(new AirCostTariffLineData(item, this));// Deleted 
             }
