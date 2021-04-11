@@ -504,20 +504,20 @@ namespace WebFreight.Web.WcfApi
                         if (salesManSettings != null && salesManSettings.UpdateDirection == "NOUP")
                         {
                             entityPM.SalesmanUserId = entity.SalesmanUserId;
-                            entityPM.CustomerSalesmanByProducts = new List<CustomerSalesmanByProductPM>();
+                            //entityPM.CustomerSalesmanByProducts = new List<CustomerSalesmanByProductPM>();
                         }
-                        else
+                        //else
+                        //{
+                        CustomerSalesmanByProductQuery customerSalesmanByProductQuery = new CustomerSalesmanByProductQuery(customerSalesmanByProductRepository);
+                        List<CustomerSalesmanByProductPM> CustomerSalesmanByProducts = customerSalesmanByProductQuery.GetCustomerSalesmanByProductPMs(entity.Tenant, entity.Id);
+                        foreach (CustomerSalesmanByProductPM salesman in CustomerSalesmanByProducts)
                         {
-                            CustomerSalesmanByProductQuery customerSalesmanByProductQuery = new CustomerSalesmanByProductQuery(customerSalesmanByProductRepository);
-                            List<CustomerSalesmanByProductPM> CustomerSalesmanByProducts = customerSalesmanByProductQuery.GetCustomerSalesmanByProductPMs(entity.Tenant, entity.Id);
-                            foreach (CustomerSalesmanByProductPM salesman in CustomerSalesmanByProducts)
-                            {
-                                salesman.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
-                                entityPM.CustomerSalesmanByProducts.Add(salesman);
+                            salesman.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
+                            entityPM.CustomerSalesmanByProducts.Add(salesman);
 
 
-                            }
                         }
+                        //}
 
 
 
