@@ -29,7 +29,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             validateResult.ConditionsList = new List<AutomationCondition>();
             List<AutomationCondition> automationConditionList = null;
 
-            AutomatedBackup automatedBackup = GetAutomatedBackupClass(automation, entityChange, lastupdateautomation);
+            AutomatedBackup automatedBackup = validateResult.AutomatedBackup = GetAutomatedBackupClass(automation, entityChange, lastupdateautomation);
 
             if (typeConditionValidate == "Delayed")  
                 automationConditionList = automatedBackup.DelayAautomationConditionLists;
@@ -526,6 +526,16 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
         }
 
 
+        public string GetPropertyValueFromObject(string propertyName, object entity)
+        {
+            string propertyValue = string.Empty;
+            PropertyInfo propertyInfo = entity.GetType().GetProperty(propertyName);
+            if (propertyInfo != null)
+            {
+                propertyValue = propertyInfo.GetValue(entity).ToString();
+            }
+            return propertyValue;
+        }
 
 
     }
