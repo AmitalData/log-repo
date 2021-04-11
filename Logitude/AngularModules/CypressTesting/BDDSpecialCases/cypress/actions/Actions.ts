@@ -10,10 +10,10 @@ import { Urls } from "../constants/URLs";
 
 
 export function FillLocalSettingsDetails(localSettingsDetails: LocalSettingsDetails) {
-  cy.get(BDDSpecialCasesSelectors.TimeZoneComboBox).find("img").click()
-  cy.get(BDDSpecialCasesSelectors.ComboBoxItem).find("span").contains(localSettingsDetails.TimeZone).click({ force: true });
-  cy.get(BDDSpecialCasesSelectors.DateTimeFormatComboBox).find("img").click()
-  cy.get(BDDSpecialCasesSelectors.ComboBoxItem).find("span").contains(localSettingsDetails.DateTimeFormat).click({ force: true });
+  cy.get(BDDSpecialCasesSelectors.TimeZoneComboBox).find("img").click({force:true})
+  cy.get(BDDSpecialCasesSelectors.ComboBoxItem).find("span").contains(localSettingsDetails.TimeZone).type('{enter}');
+  cy.get(BDDSpecialCasesSelectors.DateTimeFormatComboBox).find("img").click({force:true})
+  cy.get(BDDSpecialCasesSelectors.ComboBoxItem).find("span").contains(localSettingsDetails.DateTimeFormat).type('{enter}');
 }
 
 export function UpdateLocalSettings() {

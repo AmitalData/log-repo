@@ -1,0 +1,89 @@
+﻿using Logitude.Server.Tools.EntityChanges.AutomationResultExternalServices;
+using Logitude.Server.Tools.QueueService;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Logitude.Server.Tools.EntityChanges.AutomationResult
+{
+    public class AutomationCreateTaskService : GeneralAutomationResultService, IAutomationResultService
+    {
+        private AutomationResultArgs automationResultArgs { get; set; }
+        private int tenant;
+        private EntityChange entityChange;
+        private object entityPM;
+        private MainEntityChangeService mainEntityChangeService { get; set; }
+        private List<Automation> createTaskAutomations = new List<Automation>();
+
+        public void Run(AutomationResultArgs automationResultArgs)
+        {
+            this.automationResultArgs = automationResultArgs;
+            this.entityChange = automationResultArgs.EntityChange;
+            this.entityPM = automationResultArgs.EntityPM;
+            this.tenant = this.entityChange.Tenant;
+
+            createTaskAutomations = automationResultArgs.AutomationLists.Where(d => d.ResultCode == "CREATETASK").ToList();
+            if (createTaskAutomations.Count > 0)
+            {
+                ApplyCreateTaskAutomations();
+            }
+        }
+
+        public void ApplyCreateTaskAutomations()
+        {
+            foreach (Automation automation in createTaskAutomations)
+            {
+                DateTime automationStartProcessingDate = DateTime.Now;
+                ValidateAutomationResultClass validateAutomationResult = GetValidateAutomationResult(automation);
+                if (validateAutomationResult.IsAutomationValid)
+                {
+                    CreateTaskCollaborationTool(validateAutomationResult.AutomatedBackup.AutomationCreateTask);
+                    entityChange.HasExecutedRecord = true;
+                }
+
+                EntityChangeAutomation entityChangesAutomation = GetEntityChangeAutomation(automation, validateAutomationResult, automationStartProcessingDate);
+                mainEntityChangeService.AddEntityChangesAutomation(entityChangesAutomation);
+            }
+        }
+
+   
+        private void CreateTaskCollaborationTool(AutomationCreateTask automationCreateTask)
+        {
+            IQueueService queueservice = new DbQueueService();
+            string entityNumber = GetPropertyValueFromObject("ShipmentNumber", entityPM);
+            DateTime? taskEndDate = new TaskAutomationEndDateService(tenant).GetDate(automationCreateTask.EndDateValue, automationCreateTask.EndDateTypeValue, entityPM);
+            queueservice.InitializeQueue("CreateTaskCollaborationTool", tenant);
+            queueservice.Send(new Dictionary<string, string>() { { "AssigneeId", automationCreateTask.AssigneeId }, { "Tenant", tenant.ToString() }, { "TaskType", automationCreateTask.TaskType }, { "OwnerId", automationCreateTask.OwnerId }, { "EndDate", taskEndDate != null ? taskEndDate.ToString() : null }, { "EntityNumber", entityNumber } }, tenant, null, null, null, null);
+        }
+
+
+        private EntityChangeAutomation GetEntityChangeAutomation(Automation automation, ValidateAutomationResultClass validateResult, DateTime automationStartProcessingDate)
+        {
+            EntityChangeAutomation entityChangesAutomation = CreateEntityChangeAutomation(automation);
+            entityChangesAutomation.ResultCode = "Create Task";
+            entityChangesAutomation.ConditionsList = validateResult.ConditionsList;
+            entityChangesAutomation.type = validateResult.IsAutomationValid ? "CreateTaskSsucceed" : "CreateTaskFailed";
+            entityChangesAutomation.ExecutionTime = (int)((DateTime.Now.Ticks - automationStartProcessingDate.Ticks) / TimeSpan.TicksPerMillisecond);
+            entityChangesAutomation.IsConditionTrue = validateResult.IsAutomationValid ? true : false;
+            entityChangesAutomation.DoneDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            return entityChangesAutomation;
+        }
+
+
+        private ValidateAutomationResultClass GetValidateAutomationResult(Automation automation)
+        {
+            string lastAuomationUpdateDate = GetLastAuomationUpdateDate(automationResultArgs.AutomationObjectTable, automationResultArgs.OtherAutomationObjectTable, automation);
+            ValidateAutomationResultClass validateAutomationResult = ValidateAutomation(automation, entityChange, automationResultArgs.AutomationFieldLists, lastAuomationUpdateDate, "");
+            return validateAutomationResult;
+        }
+
+
+    }
+
+
+}

@@ -83,6 +83,31 @@ export class AccountingMainTesterComponent extends BaseComponent {
             );
 
     }
+
+    SendGLaccount_Click() {
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this.SetGLAccountExample();
+            this.ErrorMess = "Set GLAccount json";
+            return;
+        }
+        let j = '';
+
+        let parseobj = JSON.parse(this._TextBoxParam);
+        let _http = ServiceHelper.HttpClient;
+        let _apiUrl = ServiceHelper.GetLogitudeURL() + 'api/GLAccounts';
+        _http.post(_apiUrl, JSON.stringify(parseobj), ServiceHelper.GetHttpFullHeaders())
+            //ajax.post(
+            //    ServiceHelper.GetLogitudeURL() + 'api/journals',
+            //    this._TextBoxParam,
+            //    ServiceHelper.GetHttpFullHeaders()
+            //)
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+
+            );
+    }
     JournalSend_Click() {
         if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
             this.SetJournalExample();
@@ -678,4 +703,10 @@ Line4
         this._TextBoxParam = JSON.stringify(journal);
 
     }
+    SetGLAccountExample() {
+        let defaultGLaccountPM = '{"AutomaticReconcile": null,"Category1": null,"Category2": null,"Category3": null,"Category4": null,"Category5": null,"ChartOfAccount": null,"ChartOfAccountsType": null,"ControlAccount": null,"Currency": null,"GLAccountType": 1,"PreviousChartOfAccount": null,"ReconcileMethod": null,"RevenueExpense": null,"Id": "","Tenant": 1,"InternalNumber": "1000","AccountTypeCode": "1","DisplayNumber": "Customers","LocalName": "יהי טוב","EnglishName": "Customer xx","SearchFields": "לקוחות","IsMultiCurrency": true,"CurrencyId": null,"RevenueExpenseType": "1","IsControlAccount": false,"ChartOfAccountsId": "1-105","Inactive": false,"ChartOfAccountsTypeCode": "3","ReconcileMethodCode": "0","ControlAccountId": null,"AutomaticReconcileId": null,"PreviousEnglishName": null,"PreviousEnglishNameChangeDate": "2016-11-23T07:00:35.407","PreviousLocalName": null,"PreviousLocalNameChangeDate": "2016-11-23T07:00:35.407","PreviousNumber": null,"PreviousNumberChangeDate": "2016-11-23T07:00:35.407","PreviousChartOfAccountsId": null,"PreviousChartOfAccountsChangeDate": "2016-11-23T07:00:35.407","CustomerGLAccountId": null,"BalanceInLocalCurrency": null,"RevaluationEnabled": null,"ParentAccountId": null,"Category1Id": null,"Category2Id": null,"Category3Id": null,"Category4Id": null,"Category5Id": null,"IsVATExempt": null}';
+        this._TextBoxParam = defaultGLaccountPM;
+    }
+
+
 }
