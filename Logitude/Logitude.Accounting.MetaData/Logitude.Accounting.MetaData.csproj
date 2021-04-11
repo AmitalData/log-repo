@@ -60,11 +60,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="AutoGenerators\AccountingClassesGenerator1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AccountingClassesGenerator.tt</DependentUpon>
-    </Compile>
     <Compile Include="AutoGenerators\ContextGenerator.cs">
       <DependentUpon>ContextGenerator.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -81,13 +76,10 @@
     <None Include="DBScripts\202011101133_AvailableForScheduling.sxml" />
     <None Include="DBScripts\202102070900_UpdateNullableGLAccountFutureFields.sxml" />
     <None Include="DBScripts\202101141620_ UpdateStatusCodeFieldOnTaxReportLine.sxml" />
-
     <None Include="DBScripts\202103311233_BankAccountSearchFields.sxml" />
     <None Include="DBScripts\Post\202103160820_ RebuildGLAccountRecocileDatas.sxml" />
-
     <None Include="DBScripts\202103180820_ InsertGLAccountAgingDatas.sxml" />
     <None Include="DBScripts\202103240820_usp_AccountingStreamingTypes.sxml" />
-
     <None Include="DBTables\AccountingCompanyType.dxml" />
     <None Include="DBTables\AccountingEntity.dxml" />
     <None Include="DBTables\AccountingIntegrityCheck.dxml" />
