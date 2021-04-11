@@ -71,6 +71,8 @@ let R: CreateRandom= new CreateRandom();
 
       cy.get('ul[id=mydatalist_APInvoiceLine_VatTypeId]').contains('Zero').then(a => {
           a[0].click();
+        })
+
 		  
 		  
 		  
@@ -88,10 +90,12 @@ let R: CreateRandom= new CreateRandom();
 
         
       
-    });
+    
       
  
-});
+})
+
+})
 
 
 

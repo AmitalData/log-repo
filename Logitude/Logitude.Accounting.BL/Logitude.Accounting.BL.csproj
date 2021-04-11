@@ -297,6 +297,7 @@
     <Compile Include="CoreBL\Reconcile\LedgerTransactionsSorter.cs" />
     <Compile Include="CoreBL\Reconcile\MultipleARPaymentReconciliationSplitter.cs" />
     <Compile Include="CoreBL\Reports\Aging\AgingReportRebulidService.cs" />
+    <Compile Include="CoreBL\Reports\Aging\DailyRebuildAgingService.cs" />
     <Compile Include="CoreBL\Reports\Aging\LedgerTransactionsAgingBuilderService.cs" />
     <Compile Include="CoreBL\Reports\BalanceGroupByCollectorService.cs" />
     <Compile Include="CoreBL\Reports\CardIndexReportService.cs" />

@@ -549,9 +549,10 @@ export function FillPayablesTab(payableDetails: PayableDetails) {
 
     if (payableDetails.Vendor) {
         cy.FillLogLov(ShipmentSelectors.ShipmentPayableVendor, payableDetails.Vendor, true)
-        cy.DefineRequestWait(RestAPI.GET, '**/cardviews/**', 'cardviews')
+        BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentPayableVendor,payableDetails.Vendor)
+      //  cy.DefineRequestWait(RestAPI.GET, '**/cardviews/**', 'cardviews')
         cy.Click(ShipmentSelectors.AddPayableOkButton, null)
-        BaseAssertion.AssertStatusCode('cardviews', 200)
+       // BaseAssertion.AssertStatusCode('cardviews', 200)
     } else {
         cy.Click(ShipmentSelectors.AddPayableOkButton, null)
     }
