@@ -77,7 +77,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<ExportStorge> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<ExportStorge> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
 			}
 

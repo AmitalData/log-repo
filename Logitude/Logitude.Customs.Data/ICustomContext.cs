@@ -203,7 +203,6 @@ namespace Logitude.Customs.Data
 		 IDbSet<ExportDeliveryDocumentMessage> ExportDeliveryDocumentMessages { get; }
 		 IDbSet<ExporterRoleType> ExporterRoleTypes { get; }
 		 IDbSet<ExportStorge> ExportStorges { get; }
-		 IDbSet<ExportStorgeCargo> ExportStorgeCargos { get; }
 		 IDbSet<FacilitationType> FacilitationTypes { get; }
 		 IDbSet<FaultInspectionType> FaultInspectionTypes { get; }
 		 IDbSet<FclLclCode> FclLclCodes { get; }
@@ -375,4 +374,4 @@ namespace Logitude.Customs.Data
          int SaveChanges();
 
     }
-}
+}

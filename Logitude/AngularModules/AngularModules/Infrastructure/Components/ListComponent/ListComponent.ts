@@ -652,6 +652,9 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.IsReferantObjectTable = true;
         }
 
+        if (this.ObjectTableName == "Customs.ExportStorge") {
+            this.LayoutDirection = "ltr";
+        }
     }
 
     private ReloadAllListEvent: any = null;
@@ -849,7 +852,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
 
 
-
+      
 
 
         if (this.ObjectTable.HasFiltersMenu || this.HasActionBar()) {

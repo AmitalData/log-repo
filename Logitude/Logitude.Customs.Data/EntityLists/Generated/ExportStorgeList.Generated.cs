@@ -120,6 +120,54 @@ namespace Logitude.Customs.Data.EntityLists
        public string ExporterName  { get; set; }
        [DataMember]
        public string VesselAndVoyage  { get; set; }
+       [DataMember]
+       public DateTime OpenDate  { get; set; }
+       [DataMember]
+       public string DriverName  { get; set; }
+       [DataMember]
+       public string Customs  { get; set; }
+       [DataMember]
+       public string CargoTypeCode  { get; set; }
+       [DataMember]
+       public string Manifest  { get; set; }
+       [DataMember]
+       public string SecondCargoID  { get; set; }
+       [DataMember]
+       public string ThirdCargoID  { get; set; }
+       [DataMember]
+       public string CargoDescription  { get; set; }
+       [DataMember]
+       public string CargoType  { get; set; }
+       [DataMember]
+       public string HandlingCode  { get; set; }
+       [DataMember]
+       public decimal DangerousGoodsIndication  { get; set; }
+       [DataMember]
+       public decimal CodeBreaksIndication  { get; set; }
+       [DataMember]
+       public decimal DamageCode  { get; set; }
+       [DataMember]
+       public string ForeignCurrencyType  { get; set; }
+       [DataMember]
+       public decimal ForeignCurrencyAmoun  { get; set; }
+       [DataMember]
+       public decimal GoodsValueNIS  { get; set; }
+       [DataMember]
+       public string PackageType  { get; set; }
+       [DataMember]
+       public decimal Quantity  { get; set; }
+       [DataMember]
+       public string MarksNumbers  { get; set; }
+       [DataMember]
+       public decimal WeightInPortMandatory  { get; set; }
+       [DataMember]
+       public decimal Weight  { get; set; }
+       [DataMember]
+       public decimal VolumeSize  { get; set; }
+       [DataMember]
+       public string LicensePlateNumber  { get; set; }
+       [DataMember]
+       public string ContainerNumber  { get; set; }
    }
 
 }

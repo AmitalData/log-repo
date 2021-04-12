@@ -109,11 +109,6 @@ export class ExportStorgePM {
     public set IsOpenStoarge(newValue: boolean) { if (this.isOpenStoarge != newValue) { this.isOpenStoarge = newValue; this.MarkAsDirty("IsOpenStoarge"); } }
        
 	 
-    private isConnectedToDeclaration: boolean;
-    public get IsConnectedToDeclaration() { return this.isConnectedToDeclaration; }
-    public set IsConnectedToDeclaration(newValue: boolean) { if (this.isConnectedToDeclaration != newValue) { this.isConnectedToDeclaration = newValue; this.MarkAsDirty("IsConnectedToDeclaration"); } }
-       
-	 
     private operationCode: string;
     public get OperationCode() { return this.operationCode; }
     public set OperationCode(newValue: string) { if (this.operationCode != newValue) { this.operationCode = newValue; this.MarkAsDirty("OperationCode"); } }
@@ -307,6 +302,251 @@ export class ExportStorgePM {
     private exporterNumber: string;
     public get ExporterNumber() { return this.exporterNumber; }
     public set ExporterNumber(newValue: string) { if (this.exporterNumber != newValue) { this.exporterNumber = newValue; this.MarkAsDirty("ExporterNumber"); } }
+       
+	 
+    private openDate: Date;
+    public get OpenDate() { return this.openDate; }
+    public set OpenDate(newValue: Date) { if (this.openDate != newValue) { this.openDate = newValue; this.MarkAsDirty("OpenDate"); } }
+       
+	 
+    private cargoTypeCode: string;
+    public get CargoTypeCode() { return this.cargoTypeCode; }
+    public set CargoTypeCode(newValue: string) { if (this.cargoTypeCode != newValue) { this.cargoTypeCode = newValue; this.MarkAsDirty("CargoTypeCode"); } }
+       
+	 
+    private manifest: string;
+    public get Manifest() { return this.manifest; }
+    public set Manifest(newValue: string) { if (this.manifest != newValue) { this.manifest = newValue; this.MarkAsDirty("Manifest"); } }
+       
+	 
+    private secondCargoID: string;
+    public get SecondCargoID() { return this.secondCargoID; }
+    public set SecondCargoID(newValue: string) { if (this.secondCargoID != newValue) { this.secondCargoID = newValue; this.MarkAsDirty("SecondCargoID"); } }
+       
+	 
+    private thirdCargoID: string;
+    public get ThirdCargoID() { return this.thirdCargoID; }
+    public set ThirdCargoID(newValue: string) { if (this.thirdCargoID != newValue) { this.thirdCargoID = newValue; this.MarkAsDirty("ThirdCargoID"); } }
+       
+	 
+    private cargoDescription: string;
+    public get CargoDescription() { return this.cargoDescription; }
+    public set CargoDescription(newValue: string) { if (this.cargoDescription != newValue) { this.cargoDescription = newValue; this.MarkAsDirty("CargoDescription"); } }
+       
+	 
+    private cargoType: string;
+    public get CargoType() { return this.cargoType; }
+    public set CargoType(newValue: string) { if (this.cargoType != newValue) { this.cargoType = newValue; this.MarkAsDirty("CargoType"); } }
+       
+	 
+    private handlingCode: string;
+    public get HandlingCode() { return this.handlingCode; }
+    public set HandlingCode(newValue: string) { if (this.handlingCode != newValue) { this.handlingCode = newValue; this.MarkAsDirty("HandlingCode"); } }
+       
+	 
+    private dangerousGoodsIndication: number;
+    public get DangerousGoodsIndication() { return this.dangerousGoodsIndication; }
+    public set DangerousGoodsIndication(newValue: number) { if (this.dangerousGoodsIndication != newValue) { this.dangerousGoodsIndication = newValue; this.MarkAsDirty("DangerousGoodsIndication"); } }
+       
+	 
+    private codeBreaksIndication: number;
+    public get CodeBreaksIndication() { return this.codeBreaksIndication; }
+    public set CodeBreaksIndication(newValue: number) { if (this.codeBreaksIndication != newValue) { this.codeBreaksIndication = newValue; this.MarkAsDirty("CodeBreaksIndication"); } }
+       
+	 
+    private damageCode: number;
+    public get DamageCode() { return this.damageCode; }
+    public set DamageCode(newValue: number) { if (this.damageCode != newValue) { this.damageCode = newValue; this.MarkAsDirty("DamageCode"); } }
+       
+	 
+    private foreignCurrencyType: string;
+    public get ForeignCurrencyType() { return this.foreignCurrencyType; }
+    public set ForeignCurrencyType(newValue: string) { if (this.foreignCurrencyType != newValue) { this.foreignCurrencyType = newValue; this.MarkAsDirty("ForeignCurrencyType"); } }
+       
+	 
+    private foreignCurrencyAmoun: number;
+    public get ForeignCurrencyAmoun() { return this.foreignCurrencyAmoun; }
+    public set ForeignCurrencyAmoun(newValue: number) { if (this.foreignCurrencyAmoun != newValue) { this.foreignCurrencyAmoun = newValue; this.MarkAsDirty("ForeignCurrencyAmoun"); } }
+       
+	 
+    private goodsValueNIS: number;
+    public get GoodsValueNIS() { return this.goodsValueNIS; }
+    public set GoodsValueNIS(newValue: number) { if (this.goodsValueNIS != newValue) { this.goodsValueNIS = newValue; this.MarkAsDirty("GoodsValueNIS"); } }
+       
+	 
+    private packageType: string;
+    public get PackageType() { return this.packageType; }
+    public set PackageType(newValue: string) { if (this.packageType != newValue) { this.packageType = newValue; this.MarkAsDirty("PackageType"); } }
+       
+	 
+    private quantity: number;
+    public get Quantity() { return this.quantity; }
+    public set Quantity(newValue: number) { if (this.quantity != newValue) { this.quantity = newValue; this.MarkAsDirty("Quantity"); } }
+       
+	 
+    private marksNumbers: string;
+    public get MarksNumbers() { return this.marksNumbers; }
+    public set MarksNumbers(newValue: string) { if (this.marksNumbers != newValue) { this.marksNumbers = newValue; this.MarkAsDirty("MarksNumbers"); } }
+       
+	 
+    private weightInPortMandatory: number;
+    public get WeightInPortMandatory() { return this.weightInPortMandatory; }
+    public set WeightInPortMandatory(newValue: number) { if (this.weightInPortMandatory != newValue) { this.weightInPortMandatory = newValue; this.MarkAsDirty("WeightInPortMandatory"); } }
+       
+	 
+    private weight: number;
+    public get Weight() { return this.weight; }
+    public set Weight(newValue: number) { if (this.weight != newValue) { this.weight = newValue; this.MarkAsDirty("Weight"); } }
+       
+	 
+    private volumeSize: number;
+    public get VolumeSize() { return this.volumeSize; }
+    public set VolumeSize(newValue: number) { if (this.volumeSize != newValue) { this.volumeSize = newValue; this.MarkAsDirty("VolumeSize"); } }
+       
+	 
+    private licensePlateNumber: string;
+    public get LicensePlateNumber() { return this.licensePlateNumber; }
+    public set LicensePlateNumber(newValue: string) { if (this.licensePlateNumber != newValue) { this.licensePlateNumber = newValue; this.MarkAsDirty("LicensePlateNumber"); } }
+       
+	 
+    private customsItem: string;
+    public get CustomsItem() { return this.customsItem; }
+    public set CustomsItem(newValue: string) { if (this.customsItem != newValue) { this.customsItem = newValue; this.MarkAsDirty("CustomsItem"); } }
+       
+	 
+    private riskLevel: string;
+    public get RiskLevel() { return this.riskLevel; }
+    public set RiskLevel(newValue: string) { if (this.riskLevel != newValue) { this.riskLevel = newValue; this.MarkAsDirty("RiskLevel"); } }
+       
+	 
+    private dangerousSubstancename: string;
+    public get DangerousSubstancename() { return this.dangerousSubstancename; }
+    public set DangerousSubstancename(newValue: string) { if (this.dangerousSubstancename != newValue) { this.dangerousSubstancename = newValue; this.MarkAsDirty("DangerousSubstancename"); } }
+       
+	 
+    private weightVerificationNumber: string;
+    public get WeightVerificationNumber() { return this.weightVerificationNumber; }
+    public set WeightVerificationNumber(newValue: string) { if (this.weightVerificationNumber != newValue) { this.weightVerificationNumber = newValue; this.MarkAsDirty("WeightVerificationNumber"); } }
+       
+	 
+    private exporterReportedWeightID: number;
+    public get ExporterReportedWeightID() { return this.exporterReportedWeightID; }
+    public set ExporterReportedWeightID(newValue: number) { if (this.exporterReportedWeightID != newValue) { this.exporterReportedWeightID = newValue; this.MarkAsDirty("ExporterReportedWeightID"); } }
+       
+	 
+    private exporterReportedWeightName: string;
+    public get ExporterReportedWeightName() { return this.exporterReportedWeightName; }
+    public set ExporterReportedWeightName(newValue: string) { if (this.exporterReportedWeightName != newValue) { this.exporterReportedWeightName = newValue; this.MarkAsDirty("ExporterReportedWeightName"); } }
+       
+	 
+    private containerNumber: string;
+    public get ContainerNumber() { return this.containerNumber; }
+    public set ContainerNumber(newValue: string) { if (this.containerNumber != newValue) { this.containerNumber = newValue; this.MarkAsDirty("ContainerNumber"); } }
+       
+	 
+    private coolingActivated: number;
+    public get CoolingActivated() { return this.coolingActivated; }
+    public set CoolingActivated(newValue: number) { if (this.coolingActivated != newValue) { this.coolingActivated = newValue; this.MarkAsDirty("CoolingActivated"); } }
+       
+	 
+    private requiredTemperature: number;
+    public get RequiredTemperature() { return this.requiredTemperature; }
+    public set RequiredTemperature(newValue: number) { if (this.requiredTemperature != newValue) { this.requiredTemperature = newValue; this.MarkAsDirty("RequiredTemperature"); } }
+       
+	 
+    private pharmaGroceryIndication: string;
+    public get PharmaGroceryIndication() { return this.pharmaGroceryIndication; }
+    public set PharmaGroceryIndication(newValue: string) { if (this.pharmaGroceryIndication != newValue) { this.pharmaGroceryIndication = newValue; this.MarkAsDirty("PharmaGroceryIndication"); } }
+       
+	 
+    private leftException: number;
+    public get LeftException() { return this.leftException; }
+    public set LeftException(newValue: number) { if (this.leftException != newValue) { this.leftException = newValue; this.MarkAsDirty("LeftException"); } }
+       
+	 
+    private rightException: number;
+    public get RightException() { return this.rightException; }
+    public set RightException(newValue: number) { if (this.rightException != newValue) { this.rightException = newValue; this.MarkAsDirty("RightException"); } }
+       
+	 
+    private frontException: number;
+    public get FrontException() { return this.frontException; }
+    public set FrontException(newValue: number) { if (this.frontException != newValue) { this.frontException = newValue; this.MarkAsDirty("FrontException"); } }
+       
+	 
+    private backException: number;
+    public get BackException() { return this.backException; }
+    public set BackException(newValue: number) { if (this.backException != newValue) { this.backException = newValue; this.MarkAsDirty("BackException"); } }
+       
+	 
+    private heightException: number;
+    public get HeightException() { return this.heightException; }
+    public set HeightException(newValue: number) { if (this.heightException != newValue) { this.heightException = newValue; this.MarkAsDirty("HeightException"); } }
+       
+	 
+    private containerLineCode: string;
+    public get ContainerLineCode() { return this.containerLineCode; }
+    public set ContainerLineCode(newValue: string) { if (this.containerLineCode != newValue) { this.containerLineCode = newValue; this.MarkAsDirty("ContainerLineCode"); } }
+       
+	 
+    private ventValue: number;
+    public get VentValue() { return this.ventValue; }
+    public set VentValue(newValue: number) { if (this.ventValue != newValue) { this.ventValue = newValue; this.MarkAsDirty("VentValue"); } }
+       
+	 
+    private humidityPercentage: number;
+    public get HumidityPercentage() { return this.humidityPercentage; }
+    public set HumidityPercentage(newValue: number) { if (this.humidityPercentage != newValue) { this.humidityPercentage = newValue; this.MarkAsDirty("HumidityPercentage"); } }
+       
+	 
+    private co2Percentage: number;
+    public get Co2Percentage() { return this.co2Percentage; }
+    public set Co2Percentage(newValue: number) { if (this.co2Percentage != newValue) { this.co2Percentage = newValue; this.MarkAsDirty("Co2Percentage"); } }
+       
+	 
+    private o2Percentage: number;
+    public get O2Percentage() { return this.o2Percentage; }
+    public set O2Percentage(newValue: number) { if (this.o2Percentage != newValue) { this.o2Percentage = newValue; this.MarkAsDirty("O2Percentage"); } }
+       
+	 
+    private sealNumber: string;
+    public get SealNumber() { return this.sealNumber; }
+    public set SealNumber(newValue: string) { if (this.sealNumber != newValue) { this.sealNumber = newValue; this.MarkAsDirty("SealNumber"); } }
+       
+	 
+    private sealType: string;
+    public get SealType() { return this.sealType; }
+    public set SealType(newValue: string) { if (this.sealType != newValue) { this.sealType = newValue; this.MarkAsDirty("SealType"); } }
+       
+	 
+    private coolingReportingMethod: string;
+    public get CoolingReportingMethod() { return this.coolingReportingMethod; }
+    public set CoolingReportingMethod(newValue: string) { if (this.coolingReportingMethod != newValue) { this.coolingReportingMethod = newValue; this.MarkAsDirty("CoolingReportingMethod"); } }
+       
+	 
+    private fullnessCode: string;
+    public get FullnessCode() { return this.fullnessCode; }
+    public set FullnessCode(newValue: string) { if (this.fullnessCode != newValue) { this.fullnessCode = newValue; this.MarkAsDirty("FullnessCode"); } }
+       
+	 
+    private ownershipCode: string;
+    public get OwnershipCode() { return this.ownershipCode; }
+    public set OwnershipCode(newValue: string) { if (this.ownershipCode != newValue) { this.ownershipCode = newValue; this.MarkAsDirty("OwnershipCode"); } }
+       
+	 
+    private containerTypeWCO: string;
+    public get ContainerTypeWCO() { return this.containerTypeWCO; }
+    public set ContainerTypeWCO(newValue: string) { if (this.containerTypeWCO != newValue) { this.containerTypeWCO = newValue; this.MarkAsDirty("ContainerTypeWCO"); } }
+       
+	 
+    private uNNumber: string;
+    public get UNNumber() { return this.uNNumber; }
+    public set UNNumber(newValue: string) { if (this.uNNumber != newValue) { this.uNNumber = newValue; this.MarkAsDirty("UNNumber"); } }
+       
+	 
+    private riskGroup: string;
+    public get RiskGroup() { return this.riskGroup; }
+    public set RiskGroup(newValue: string) { if (this.riskGroup != newValue) { this.riskGroup = newValue; this.MarkAsDirty("RiskGroup"); } }
        
 	 
 
