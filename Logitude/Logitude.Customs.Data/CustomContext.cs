@@ -442,8 +442,6 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ExportStorgeMap());
 	
-            modelBuilder.Configurations.Add(new ExportStorgeCargoMap());
-	
             modelBuilder.Configurations.Add(new FacilitationTypeMap());
 	
             modelBuilder.Configurations.Add(new FaultInspectionTypeMap());
@@ -877,47 +875,47 @@ namespace Logitude.Customs.Data
 				
 			modelBuilder.Entity<ExportStorge>().Property(x => x.CargoRows).HasPrecision(4, 0);
 				
-			modelBuilder.Entity<ExportStorgeCargo>().Property(x => x.DangerousGoodsIndication).HasPrecision(1, 0);
+			modelBuilder.Entity<ExportStorge>().Property(x => x.DangerousGoodsIndication).HasPrecision(1, 0);
 				
-			modelBuilder.Entity<ExportStorgeCargo>().Property(x => x.CodeBreaksIndication).HasPrecision(1, 0);
+			modelBuilder.Entity<ExportStorge>().Property(x => x.CodeBreaksIndication).HasPrecision(1, 0);
 				
-			modelBuilder.Entity<ExportStorgeCargo>().Property(x => x.DamageCode).HasPrecision(1, 0);
+			modelBuilder.Entity<ExportStorge>().Property(x => x.DamageCode).HasPrecision(1, 0);
 				
-			modelBuilder.Entity<ExportStorgeCargo>().Property(x => x.ForeignCurrencyAmoun).HasPrecision(14, 2);
+			modelBuilder.Entity<ExportStorge>().Property(x => x.ForeignCurrencyAmoun).HasPrecision(14, 2);
 				
-			modelBuilder.Entity<ExportStorgeCargo>().Property(x => x.GoodsValueNIS).HasPrecision(14, 2);
+			modelBuilder.Entity<ExportStorge>().Property(x => x.GoodsValueNIS).HasPrecision(14, 2);
 				
-			modelBuilder.Entity<ExportStorgeCargo>().Property(x => x.Quantity).HasPrecision(8, 0);
+			modelBuilder.Entity<ExportStorge>().Property(x => x.Quantity).HasPrecision(8, 0);
 				
-			modelBuilder.Entity<ExportStorgeCargo>().Property(x => x.WeightInPortMandatory).HasPrecision(1, 0);
+			modelBuilder.Entity<ExportStorge>().Property(x => x.WeightInPortMandatory).HasPrecision(1, 0);
 				
-			modelBuilder.Entity<ExportStorgeCargo>().Property(x => x.Weight).HasPrecision(11, 3);
+			modelBuilder.Entity<ExportStorge>().Property(x => x.Weight).HasPrecision(11, 3);
 				
-			modelBuilder.Entity<ExportStorgeCargo>().Property(x => x.VolumeSize).HasPrecision(8, 0);
+			modelBuilder.Entity<ExportStorge>().Property(x => x.VolumeSize).HasPrecision(8, 0);
 				
-			modelBuilder.Entity<ExportStorgeCargo>().Property(x => x.ExporterReportedWeightID).HasPrecision(9, 0);
+			modelBuilder.Entity<ExportStorge>().Property(x => x.ExporterReportedWeightID).HasPrecision(9, 0);
 				
-			modelBuilder.Entity<ExportStorgeCargo>().Property(x => x.CoolingActivated).HasPrecision(1, 0);
+			modelBuilder.Entity<ExportStorge>().Property(x => x.CoolingActivated).HasPrecision(1, 0);
 				
-			modelBuilder.Entity<ExportStorgeCargo>().Property(x => x.RequiredTemperature).HasPrecision(3, 1);
+			modelBuilder.Entity<ExportStorge>().Property(x => x.RequiredTemperature).HasPrecision(3, 1);
 				
-			modelBuilder.Entity<ExportStorgeCargo>().Property(x => x.LeftException).HasPrecision(4, 0);
+			modelBuilder.Entity<ExportStorge>().Property(x => x.LeftException).HasPrecision(4, 0);
 				
-			modelBuilder.Entity<ExportStorgeCargo>().Property(x => x.RightException).HasPrecision(4, 0);
+			modelBuilder.Entity<ExportStorge>().Property(x => x.RightException).HasPrecision(4, 0);
 				
-			modelBuilder.Entity<ExportStorgeCargo>().Property(x => x.FrontException).HasPrecision(4, 0);
+			modelBuilder.Entity<ExportStorge>().Property(x => x.FrontException).HasPrecision(4, 0);
 				
-			modelBuilder.Entity<ExportStorgeCargo>().Property(x => x.BackException).HasPrecision(4, 0);
+			modelBuilder.Entity<ExportStorge>().Property(x => x.BackException).HasPrecision(4, 0);
 				
-			modelBuilder.Entity<ExportStorgeCargo>().Property(x => x.HeightException).HasPrecision(4, 0);
+			modelBuilder.Entity<ExportStorge>().Property(x => x.HeightException).HasPrecision(4, 0);
 				
-			modelBuilder.Entity<ExportStorgeCargo>().Property(x => x.VentValue).HasPrecision(3, 0);
+			modelBuilder.Entity<ExportStorge>().Property(x => x.VentValue).HasPrecision(3, 0);
 				
-			modelBuilder.Entity<ExportStorgeCargo>().Property(x => x.HumidityPercentage).HasPrecision(3, 0);
+			modelBuilder.Entity<ExportStorge>().Property(x => x.HumidityPercentage).HasPrecision(3, 0);
 				
-			modelBuilder.Entity<ExportStorgeCargo>().Property(x => x.Co2Percentage).HasPrecision(2, 0);
+			modelBuilder.Entity<ExportStorge>().Property(x => x.Co2Percentage).HasPrecision(2, 0);
 				
-			modelBuilder.Entity<ExportStorgeCargo>().Property(x => x.O2Percentage).HasPrecision(2, 0);
+			modelBuilder.Entity<ExportStorge>().Property(x => x.O2Percentage).HasPrecision(2, 0);
 				
 			modelBuilder.Entity<GuaranteeCondition>().Property(x => x.GuaranteeAmount).HasPrecision(16, 2);
 				
@@ -2440,12 +2438,6 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ExportStorge> ExportStorges 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<ExportStorgeCargo> ExportStorgeCargos 
 	 {
 	      get; set;
 	 

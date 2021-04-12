@@ -1316,7 +1316,6 @@
     <TypeScriptCompile Include="Customs\EntityLists\ExportDeclarationClosingDataList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ExportDeliveryDocumentMessageList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ExporterRoleTypeList.ts" />
-    <TypeScriptCompile Include="Customs\EntityLists\ExportStorgeCargoList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ExportStorgeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\FclLclCodeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\FullnessCodeList.ts" />
@@ -1391,7 +1390,6 @@
     <TypeScriptCompile Include="Customs\EntityPMs\ExportDeliveryDocumentMessagePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ExporterRoleTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ExportReferencePM.ts" />
-    <TypeScriptCompile Include="Customs\EntityPMs\ExportStorgeCargoPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ExportStorgePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\Extended\InvoiceQueue.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\Extended\DeclarationRemarks.ts" />
@@ -1492,7 +1490,6 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\ExportDeclarationClosingDataListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ExportDeliveryDocumentMessageListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ExporterRoleTypeListService.ts" />
-    <TypeScriptCompile Include="Customs\Services\StandardLists\ExportStorgeCargoListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ExportStorgeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\FclLclCodeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\FullnessCodeListService.ts" />
@@ -1550,7 +1547,6 @@
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationReferantDataPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\ExceptionReasonPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\ExportDeclarationClosingDataPMService.ts" />
-    <TypeScriptCompile Include="Customs\Services\StandardPMs\ExportStorgeCargoPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\ExportStorgePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\GatepassRequestPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\GatepassRequestsPMService.ts" />

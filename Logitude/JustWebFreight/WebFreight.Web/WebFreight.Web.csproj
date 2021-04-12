@@ -1002,7 +1002,6 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ExportDeclarationClosingDataViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ExportDeliveryDocumentMessageViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ExportReferenceViewsController.Generated.cs" />
-    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ExportStorgeCargoViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ExportStorgeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\FclLclCodeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\FullnessCodeViewsController.Generated.cs" />
@@ -1013,7 +1012,6 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SupplierPartyTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\TransportMeansTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ExportDeclarationClosingDataController.Generated.cs" />
-    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ExportStorgeCargoController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ExportStorgeController.Generated.cs" />
     <Compile Include="Controllers\Integration\IntegrationTestController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\CarrierAreaExtendedController.cs" />
@@ -3046,7 +3044,6 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ExportDeliveryDocumentMessageUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ExporterRoleTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ExportReferenceUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ExportStorgeCargoUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ExportStorgeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ExternalPageAdditionalDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ExceptionReasonUpdateClass.cs" />

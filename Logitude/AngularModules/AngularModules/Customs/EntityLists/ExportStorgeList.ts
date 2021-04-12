@@ -61,6 +61,30 @@ export class ExportStorgeList {
 	StorageOrDockID: string;
 	ExporterName: string;
 	VesselAndVoyage: string;
+	OpenDate: Date;
+	DriverName: string;
+	Customs: string;
+	CargoTypeCode: string;
+	Manifest: string;
+	SecondCargoID: string;
+	ThirdCargoID: string;
+	CargoDescription: string;
+	CargoType: string;
+	HandlingCode: string;
+	DangerousGoodsIndication: number;
+	CodeBreaksIndication: number;
+	DamageCode: number;
+	ForeignCurrencyType: string;
+	ForeignCurrencyAmoun: number;
+	GoodsValueNIS: number;
+	PackageType: string;
+	Quantity: number;
+	MarksNumbers: string;
+	WeightInPortMandatory: number;
+	Weight: number;
+	VolumeSize: number;
+	LicensePlateNumber: string;
+	ContainerNumber: string;
 	
 }
  
