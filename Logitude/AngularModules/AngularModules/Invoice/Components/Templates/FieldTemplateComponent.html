@@ -11,9 +11,9 @@
                             <div class="MediaFill">
                                 <!-- Shipment Number -->
                                 <div *ngIf="FieldName == 'ShipmentsNumbers'">
-                                    <span *ngIf="IsHeaderScreenTemplate && !Entity.IsConsolidationInvoice" class="hyperlink" (click)="ViewEntityClicked('SHI')">{{FieldValue}}</span>
-                                    <span *ngIf="IsHeaderScreenTemplate && Entity.IsConsolidationInvoice">{{FieldValue}}</span>
-                                    <span *ngIf="!IsHeaderScreenTemplate">{{FieldValue}}</span>
+                                    <span *ngIf="IsHeaderScreenTemplate && !Entity.IsConsolidationInvoice" class="hyperlink" (click)="ViewEntityClicked('SHI')">{{Entity[FieldName]}}</span>
+                                    <span *ngIf="IsHeaderScreenTemplate && Entity.IsConsolidationInvoice">{{Entity[FieldName]}}</span>
+                                    <span *ngIf="!IsHeaderScreenTemplate">{{Entity[FieldName]}}</span>
                                 </div>
 
                                 <div *ngIf="FieldName == 'MainEntityReference' && !IsHeaderScreenTemplate">
@@ -173,9 +173,9 @@
                             <div class="MediaFill">
                                 <!-- Shipment Number -->
                                 <div *ngIf="FieldName == 'ShipmentsNumbers'">
-                                    <span *ngIf="IsHeaderScreenTemplate && !Entity.IsMultipleEntities" class="hyperlink" (click)="ViewEntityClicked('SHI')">{{FieldValue}}</span>
-                                    <span *ngIf="IsHeaderScreenTemplate && Entity.IsMultipleEntities">{{FieldValue}}</span>
-                                    <span *ngIf="!IsHeaderScreenTemplate">{{FieldValue}}</span>
+                                    <span *ngIf="IsHeaderScreenTemplate && !Entity.IsMultipleEntities" class="hyperlink" (click)="ViewEntityClicked('SHI')">{{Entity[FieldName]}}</span>
+                                    <span *ngIf="IsHeaderScreenTemplate && Entity.IsMultipleEntities">{{Entity[FieldName]}}</span>
+                                    <span *ngIf="!IsHeaderScreenTemplate">{{Entity[FieldName]}}</span>
                                 </div>
 
                                 <div *ngIf="FieldName == 'MainEntityReference' && !IsHeaderScreenTemplate">

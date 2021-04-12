@@ -46,6 +46,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours.ARInvoiceBehaviours
                 this.AddNumberToShipmentsNumbersField(ref shipmentsNumbersField, constituentShipmentNumber);
             }
 
+            this.TrimShipmentsNumbersTo1000(shipmentsNumbersField);
+
             return shipmentsNumbersField;
         }
         private string GetConstituentShipmentNumber(ConstituentPM constituent)
@@ -67,6 +69,16 @@ namespace Logitude.BL.InvoiceModel.Tools.Behaviours.ARInvoiceBehaviours
                 if (!shipmentsNumbersField.Contains(shipmentNumber))
                 {
                     shipmentsNumbersField = string.IsNullOrEmpty(shipmentsNumbersField) ? shipmentNumber : shipmentsNumbersField + ", " + shipmentNumber;
+                }
+            }
+        }
+        private void TrimShipmentsNumbersTo1000(string shipmentsNumbersField)
+        {
+            if(!string.IsNullOrEmpty(shipmentsNumbersField))
+            {
+                if (shipmentsNumbersField.Length > 1000)
+                {
+                    shipmentsNumbersField = shipmentsNumbersField.Substring(0, 1000);
                 }
             }
         }

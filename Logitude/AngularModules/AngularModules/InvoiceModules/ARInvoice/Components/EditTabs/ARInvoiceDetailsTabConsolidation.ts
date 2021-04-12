@@ -1082,8 +1082,6 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
         }
     }
 
-
-
     get IsInvoiceNumberManuallySet() { return this.EntityPM.IsInvoiceNumberManuallySet; }
     set IsInvoiceNumberManuallySet(value: boolean) {
         if (this.EntityPM.IsInvoiceNumberManuallySet != value) {
@@ -1233,6 +1231,22 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
         this.IsInvoiceNumberComboBoxEnabled = false;
         this.CurrentSession.CurrentEditComponent.SaveChanges(msg);
     }
+
+    ComputeShipmentsNumbers() {
+        var shipmentsNumbers: string = "";
+
+        this.ItemsSource.filter(f => f.IsConnected).forEach(item => {
+            if (AppTool.IsNullOrEmpty(shipmentsNumbers)) {
+                shipmentsNumbers = item.MainEntityReference;
+            }
+
+            else {
+                shipmentsNumbers = shipmentsNumbers + ", " + item.MainEntityReference;
+            }
+        });
+
+        this.EntityPM.ShipmentsNumbers = shipmentsNumbers;         
+    }
 }
 export class SubInvoiceLine {
     public entityList: ARInvoiceList;
@@ -1328,6 +1342,7 @@ export class SubInvoiceLine {
                 }
             }
 
+            this.fatherComponent.ComputeShipmentsNumbers();
             this.fatherComponent.ComputeTotals();
             this.fatherComponent.SetUIProperties_Connected();
 
