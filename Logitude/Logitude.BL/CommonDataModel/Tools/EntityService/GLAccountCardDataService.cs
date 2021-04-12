@@ -29,14 +29,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             tenant = Tenant;
             cardId = CardId;
             cardGLaccount = GetGLaccount(glAccountId);
-            connectedCards = GetGLAccountConnectedCards();
             gLAccountCardsDataPM = GetGLAccountCardsDataPM();
           
         }
-        private List<CardList> GetGLAccountConnectedCards()
+        private List<CardList> GetGLAccountConnectedCards(GLAccountPM gLAccount)
         {
             CardQuery cardQuery = new CardQuery(tenant);
-            List<CardList> connectCards = cardQuery.GetCardPMsByGLAccountId(cardGLaccount.Id, tenant);
+            List<CardList> connectCards = cardQuery.GetCardPMsByGLAccountId(gLAccount.Id, tenant);
             return connectCards;
         }
         private GLAccountPM GetGLaccount(string accountId)
@@ -219,11 +218,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
 
            GLAccountPM glaccount = GetGlAccountAccordingToCurrencyDiversity();
+            connectedCards = GetGLAccountConnectedCards(glaccount);
            gLAccountCardsDataPM = GetGLAccountCardsData(glaccount);
             return gLAccountCardsDataPM;
         }
         private GLAccountCardsDataPM GetGLAccountCardsDataForMultiCurrencyGLAccount()
         {
+            connectedCards = GetGLAccountConnectedCards(cardGLaccount);
             return GetGLAccountCardsData(cardGLaccount);
         }
         private GLAccountCardsDataPM GetGLAccountCardsData(GLAccountPM gLAccount)
