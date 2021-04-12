@@ -121,29 +121,35 @@ namespace TestTenantConfiguration
             return contactPM;
         }
 
-        private void Validation_LostFocus(object sender, EventArgs e)
+        private void TenantEmailTextBox_LostFocus(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(TenantEmailTextBox.Text))
             {
                 this.TenantEmailValidation.Text = "Please Fill The Email!";
             }
-            else
-            {
-                this.TenantEmailValidation.Text = "";
-            }
-            if (string.IsNullOrEmpty(TenantCompanyTextBox.Text))
-            {
-                this.TenantCompanyValidation.Text = "Please Fill The Company Name";
-            }
             //else if (GetContactEmailOnly(TenantEmailTextBox.Text) != null)
             //{
             //    this.TenantEmailValidation.Text = "This Email Already Exist!";
             //}
+            else if (!((TenantEmailTextBox.Text).Contains("@") && (TenantEmailTextBox.Text).Contains(".com")))
+            {
+                this.TenantEmailValidation.Text = "This Email Format is incorrect!";
+            }
             else
             {
-                
-                this.TenantCompanyValidation.Text = "";
+                this.TenantEmailValidation.Text = "";
+            }
+        }
 
+        private void TenantCompanyTextBox_LostFocus(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(TenantCompanyTextBox.Text))
+            {
+                this.TenantCompanyValidation.Text = "Please Fill The Company Name";
+            }
+            else
+            {
+                this.TenantCompanyValidation.Text = "";
             }
         }
 
@@ -155,14 +161,14 @@ namespace TestTenantConfiguration
             CreateAgent();
             CreateAddress();
             CreateRatesTables();
-            UpdateTenant();    // work
+            UpdateTenant();
 
-            ResetPassword();  //work  //contactpasswords  change it from 1 to 0 
+            ResetPassword();
 
             CreateTranslationsInComputingPartners();
-            UpdateQuoteDomain();   //does not exist
-            UpdateCustomsInterfaceSettings();
-            UpdateTenantmanagements(); //work 
+            UpdateQuoteSettings();
+            UpdateAMANACTab();
+            UpdateTrialStatus();
         }
 
         #region Create Tenant 
@@ -404,11 +410,11 @@ namespace TestTenantConfiguration
         {
             ComputingPartnerTranslationPM entityPM = new ComputingPartnerTranslationPM
             {
-                ComputingPartnerId = GetComputingPartnerIdByName("INTTRA"), //get it from ComputingPartners table by name V //change it to inttra
+                ComputingPartnerId = GetComputingPartnerIdByName("INTTRA"),
                 ComputingPartnerName = "INTTRA",
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant),
                 CreatedByUserId = GetUserId(this.TenantEmail),
-                ObjectTableId = GetObjectTableIdByName("PackageType"), //get it from ObjectTables table by name V
+                ObjectTableId = GetObjectTableIdByName("PackageType"),
                 ObjectTableName = "PackageType",
                 OurCode = "40GP",
                 PartnerCode = "CCCC",
@@ -442,7 +448,7 @@ namespace TestTenantConfiguration
         #endregion
 
         #region Quote Domain
-        private void UpdateQuoteDomain()
+        private void UpdateQuoteSettings()
         {
             QuoteSettingPM entityPM = CreateQuoteDomainInstnace();
             IQuotesContext objectContext = QuotesContext.GetContext(entityPM.Tenant);
@@ -483,13 +489,14 @@ namespace TestTenantConfiguration
                 AutomaticallyCloseDays = 30,
                 IsMultiCurrency = false,
                 QuoteExpirationDays = 30,
-                Tenant =this.Tenant
+                Tenant = this.Tenant
             };
             return entityPM;
         }
         #endregion
 
-        private void UpdateCustomsInterfaceSettings()
+        #region AMANAC Tab
+        private void UpdateAMANACTab()
         {
             string loggedContactId = GetContactIdByEmail(this.TenantEmail);
             CustomsInterfaceSettingPM customsInterfaceSettingPM = CreateCustomsInterfaceSettingsInstance();
@@ -512,7 +519,10 @@ namespace TestTenantConfiguration
             };
             return customsInterfaceSettingPM;
         }
-        private void UpdateTenantmanagements()
+        #endregion
+
+        #region Trial
+        private void UpdateTrialStatus()
         {
             TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(this.Tenant);
             TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(this.Tenant);
@@ -526,5 +536,6 @@ namespace TestTenantConfiguration
             entityRepository.Update(entityPoco);
             entityRepository.SubmitChanges();
         }
+        #endregion
     }
 }

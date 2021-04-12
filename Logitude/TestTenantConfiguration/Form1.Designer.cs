@@ -86,7 +86,7 @@ namespace TestTenantConfiguration
             this.TenantEmailTextBox.Size = new System.Drawing.Size(313, 34);
             this.TenantEmailTextBox.TabIndex = 3;
             this.TenantEmailTextBox.TextChanged += new System.EventHandler(this.TenantEmailTextBox_TextChanged);
-            this.TenantEmailTextBox.LostFocus += new System.EventHandler(this.Validation_LostFocus);
+            this.TenantEmailTextBox.LostFocus += new System.EventHandler(this.TenantEmailTextBox_LostFocus);
             // 
             // TenantCompanyTextBox
             // 
@@ -96,7 +96,7 @@ namespace TestTenantConfiguration
             this.TenantCompanyTextBox.Size = new System.Drawing.Size(313, 34);
             this.TenantCompanyTextBox.TabIndex = 4;
             this.TenantCompanyTextBox.TextChanged += new System.EventHandler(this.TenantCompanyTextBox_TextChanged);
-            this.TenantCompanyTextBox.LostFocus += new System.EventHandler(this.Validation_LostFocus);
+            this.TenantCompanyTextBox.LostFocus += new System.EventHandler(this.TenantCompanyTextBox_LostFocus);
             // 
             // label4
             // 
@@ -114,9 +114,8 @@ namespace TestTenantConfiguration
             this.OldPassword.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OldPassword.Location = new System.Drawing.Point(37, 394);
             this.OldPassword.Name = "OldPassword";
-            this.OldPassword.Size = new System.Drawing.Size(119, 19);
+            this.OldPassword.Size = new System.Drawing.Size(0, 19);
             this.OldPassword.TabIndex = 7;
-            this.OldPassword.Text = "Old Password";
             // 
             // NewPasswordText
             // 
