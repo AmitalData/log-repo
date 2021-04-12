@@ -70,6 +70,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                          StuffingSiteType = a.StuffingSiteType,
 					
 					                          LoadingSite = a.LoadingSite,
+											  OpenDate=a.OpenDate,
 					
 		                    	            });
             return query;

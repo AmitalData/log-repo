@@ -654,6 +654,9 @@ export class ListComponent implements OnInit, AfterViewInit {
 
         if (this.ObjectTableName == "Customs.ExportStorge") {
             this.LayoutDirection = "ltr";
+            ObjectsLocator.GlobalSetting.LayoutDirection = 'ltr';
+        } else {
+            ObjectsLocator.GlobalSetting.LayoutDirection = 'rtl';
         }
     }
 
