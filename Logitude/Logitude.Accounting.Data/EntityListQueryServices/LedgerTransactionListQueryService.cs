@@ -1258,6 +1258,22 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 return tenantTransactions;
         }
 
+        public IQueryable<LedgerTransactionList> GetExternalTransactionsOfAccounts(int tenant, List<string> accountsIds)
+        {
+            
+            DateTime today = GetCurrentDate(tenant);
+            var transactions =
+                from transaction in context.LedgerTransactions
+                join journal in context.Journals on transaction.JournalId equals journal.Id
+
+                where transaction.Tenant == tenant
+                     && accountsIds.Contains(transaction.AccountId)
+                     && transaction.DueDate < today
+                     && journal.AccountingEntityCode == AccountingEntityValues.Journal
+                     && journal.ExternalSystem != null
+                select transaction;
+            return GetIqueryableList(transactions);
+        }
         public IQueryable<LedgerTransactionList> GetExternalReconciliationsTransactions(int tenant, int? reconciliationNumber)
         {
             ExternalReconciliationLineRepository lineRepository = new ExternalReconciliationLineRepository(tenant);

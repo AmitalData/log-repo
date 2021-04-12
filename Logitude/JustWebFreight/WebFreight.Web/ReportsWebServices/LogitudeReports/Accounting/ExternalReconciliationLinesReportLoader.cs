@@ -254,57 +254,40 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private List<ExternalReconciliationPeriod> GetExternalReconciliationsPeriods(List<BankAccountPM> bankAccounts)
         {
-            if (ExternalReconciliationNumber == null)
-                return GetExternalReconcilePeriodsOfBankAccount(bankAccounts);
-            else
+            if (ExternalReconciliationNumber != null)
                 return GetExternalReconcilePeriodsByReconcileNumber(bankAccounts);
+            else
+                return GetExternalReconcilePeriodsOfAllBankAccount(bankAccounts);
         }
 
-        private List<ExternalReconciliationPeriod> GetExternalReconcilePeriodsOfBankAccount(List<BankAccountPM> bankAccounts)
+        private List<ExternalReconciliationPeriod> GetExternalReconcilePeriodsOfAllBankAccount(List<BankAccountPM> bankAccounts)
         {
-            IQueryable<ReconcileExternalPageLine> reconcileExternalPageLines = null;
-            IQueryable<LedgerTransactionList> ledgerTransactions = null;
-            IQueryable<LedgerTransactionList> transferledgerTransactions = null;
-
-            switch (Type)
+            if (Type == "bank")
             {
-                case "bank":
-                    {
-                        reconcileExternalPageLines = GetExternalPagesLines();
-
-                        break;
-                    }
-                case "glAccount":
-                    {
-                        ledgerTransactions = GetFilteredLedgerTransactions(bankAccounts);
-                        if (IncludesTransferGlaccount == true)
-                        {
-                            transferledgerTransactions = GetFilteredLedgerTransactions(bankAccounts, true);
-                        }
-                        break;
-                    }
-                default:
-                    {
-                        reconcileExternalPageLines = GetExternalPagesLines();
-                        ledgerTransactions = GetFilteredLedgerTransactions(bankAccounts);
-                        if (IncludesTransferGlaccount == true)
-                        {
-                            transferledgerTransactions = GetFilteredLedgerTransactions(bankAccounts, true);
-                        }
-                        break;
-                    }
-
+                var reconcileExternalPageLines = GetExternalPagesLines();
+                return BuildExternalReconciliationPeriods(reconcileExternalPageLines);
             }
-
-            var periods = BuildExternalReconciliationPeriods(reconcileExternalPageLines, ledgerTransactions, transferledgerTransactions);
-            return periods;
+            else if (Type == "glAccount")
+            {
+                var ledgerTransactions = GetNormalTransactionsOfBanksGLAccounts(bankAccounts);
+                IQueryable<LedgerTransactionList> transferledgerTransactions = IncludesTransferGlaccount ? GetTransferTransactionsOfBanksGLAccounts(bankAccounts) : null;
+                return BuildExternalReconciliationPeriods(null, ledgerTransactions, transferledgerTransactions);
+            }
+            else
+            {
+                var reconcileExternalPageLines = GetExternalPagesLines();
+                var ledgerTransactions = GetNormalTransactionsOfBanksGLAccounts(bankAccounts);
+                IQueryable<LedgerTransactionList> transferledgerTransactions = IncludesTransferGlaccount ? GetTransferTransactionsOfBanksGLAccounts(bankAccounts) : null;
+                
+                return BuildExternalReconciliationPeriods(reconcileExternalPageLines, ledgerTransactions, transferledgerTransactions);
+            }
         }
 
         private List<ExternalReconciliationPeriod> GetExternalReconcilePeriodsByReconcileNumber(List<BankAccountPM> bankAccounts)
         {
             var reconcileExternalPageLines = GetExternalPagesLines();
-            var ledgerTransactions = GetFilteredLedgerTransactions(bankAccounts);
-            var transferledgerTransactions = GetFilteredLedgerTransactions(bankAccounts, true);
+            var ledgerTransactions = GetNormalTransactionsOfReconciliation(bankAccounts);
+            var transferledgerTransactions = GetTransferTransactionsOfReconciliation(bankAccounts);
 
             var periods = BuildExternalReconciliationPeriods(reconcileExternalPageLines, ledgerTransactions, transferledgerTransactions);
             return periods;
@@ -427,38 +410,58 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             return periods;
         }
 
-        private IQueryable<LedgerTransactionList> GetFilteredLedgerTransactions(List<BankAccountPM> bankAccounts, bool isTransfer = false)
+        private IQueryable<LedgerTransactionList> GetNormalTransactionsOfBanksGLAccounts(List<BankAccountPM> bankAccounts)
         {
-            if (ExternalReconciliationNumber != null)
-                return GetFilteredLedgerTransactionsOfReconciliation(bankAccounts, isTransfer);
-            else
-                return GetLedgerTransactionsOfBanksGLAccounts(bankAccounts, isTransfer);
-        }
-
-        private IQueryable<LedgerTransactionList> GetLedgerTransactionsOfBanksGLAccounts(List<BankAccountPM> bankAccounts, bool isTransfer)
-        {
-            IQueryable<LedgerTransactionList> ledgerTransactions;
-            LedgerTransactionsFilter transactionsFilter = BuildLedgerTransactionsFilter(bankAccounts, isTransfer);
+            LedgerTransactionsFilter transactionsFilter = BuildNormalTransactionsFilter(bankAccounts);
             IQueryable<LedgerTransactionList> transactionsQuery = GetFilteredTransactions(transactionsFilter);
 
-            // filter by ref date 
-            transactionsQuery = transactionsQuery.Where(transaction => DbFunctions.TruncateTime(transaction.DocumentDate) >= DbFunctions.TruncateTime(RefDateFrom) && DbFunctions.TruncateTime(transaction.DocumentDate) <= DbFunctions.TruncateTime(RefDateTo));
+            transactionsQuery = FilterTransactionQueryByRefDatePeriod(transactionsQuery);
 
             return transactionsQuery;
         }
 
-        private IQueryable<LedgerTransactionList> GetFilteredLedgerTransactionsOfReconciliation(List<BankAccountPM> bankAccounts, bool isTransfer)
+        private IQueryable<LedgerTransactionList> FilterTransactionQueryByRefDatePeriod(IQueryable<LedgerTransactionList> transactionsQuery)
+        {
+            transactionsQuery = transactionsQuery.Where(transaction => DbFunctions.TruncateTime(transaction.DocumentDate) >= DbFunctions.TruncateTime(RefDateFrom) && DbFunctions.TruncateTime(transaction.DocumentDate) <= DbFunctions.TruncateTime(RefDateTo));
+            return transactionsQuery;
+        }
+
+        private IQueryable<LedgerTransactionList> GetTransferTransactionsOfBanksGLAccounts(List<BankAccountPM> bankAccounts)
+        {
+            LedgerTransactionsFilter transactionsFilter = BuildTransferTransactionsFilter(bankAccounts);
+            IQueryable<LedgerTransactionList> transactionsQuery = GetFilteredTransactions(transactionsFilter);
+            IQueryable<LedgerTransactionList> externalTransactions = GetTransferAccountsExternalTransactions(bankAccounts);
+
+            var transferTransactions = externalTransactions.Union(transactionsQuery);
+
+            transferTransactions = FilterTransactionQueryByRefDatePeriod(transferTransactions);
+
+            return transferTransactions;
+        }
+
+        private IQueryable<LedgerTransactionList> GetTransferAccountsExternalTransactions(List<BankAccountPM> bankAccounts)
+        {
+            List<string> transferAccountsIds = bankAccounts.Select(a => a.TransferGLAcccountId).ToList();
+            LedgerTransactionListQueryService transactionListQuery = new LedgerTransactionListQueryService(accountingContext);
+            var externalTransactions = transactionListQuery.GetExternalTransactionsOfAccounts(tenant, transferAccountsIds);
+            return externalTransactions;
+        }
+
+        private IQueryable<LedgerTransactionList> GetNormalTransactionsOfReconciliation(List<BankAccountPM> bankAccounts)
         {
             IQueryable<LedgerTransactionList> ledgerTransactions = GetExternalReconciliationTransactions();
 
-            //// reconcile status
-            //if (IsExternalReconciled == "close")
-            //    ledgerTransactions = ledgerTransactions.Where(s => s.IsExternalReconcile == true);
-            //else if (IsExternalReconciled == "open")
-            //    ledgerTransactions = ledgerTransactions.Where(s => s.IsExternalReconcile == false);
+            List<string> accountIds = bankAccounts.Select(a => a.GLAccountId).ToList();
+            ledgerTransactions = ledgerTransactions.Where(transaction => accountIds.Contains(transaction.AccountId));
 
-            // account ids
-            List<string> accountIds = bankAccounts.Select(a => isTransfer ? a.TransferGLAcccountId : a.GLAccountId).ToList();
+            return ledgerTransactions;
+        }
+
+        private IQueryable<LedgerTransactionList> GetTransferTransactionsOfReconciliation(List<BankAccountPM> bankAccounts)
+        {
+            IQueryable<LedgerTransactionList> ledgerTransactions = GetExternalReconciliationTransactions();
+
+            List<string> accountIds = bankAccounts.Select(a => a.TransferGLAcccountId).ToList();
             ledgerTransactions = ledgerTransactions.Where(transaction => accountIds.Contains(transaction.AccountId));
 
             return ledgerTransactions;
@@ -478,19 +481,23 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             return transactionsQuery;
         }
 
-        private LedgerTransactionsFilter BuildLedgerTransactionsFilter(List<BankAccountPM> AllBankAccounts, bool IsTransfer)
+        private LedgerTransactionsFilter BuildNormalTransactionsFilter(List<BankAccountPM> AllBankAccounts)
         {
-            List<string> transferGLAccountsIds = AllBankAccounts.Select(a => a.TransferGLAcccountId).ToList();
-            List<string> bankGLAccountIds = AllBankAccounts.Select(a => a.GLAccountId).ToList();
-
-            LedgerTransactionsFilter transferTransactionsFilter = new LedgerTransactionsFilter()
+            return new LedgerTransactionsFilter()
             {
                 Tenant = tenant,
-                AccountsIds = IsTransfer ? transferGLAccountsIds : bankGLAccountIds,
+                AccountsIds = AllBankAccounts.Select(a => a.GLAccountId).ToList(),
+            };
+        }
+        private LedgerTransactionsFilter BuildTransferTransactionsFilter(List<BankAccountPM> AllBankAccounts)
+        {
+            return new LedgerTransactionsFilter()
+            {
+                Tenant = tenant,
+                AccountsIds = AllBankAccounts.Select(a => a.TransferGLAcccountId).ToList(),
                 GetDueDatedTransactions = true,
                 AllowedSourceTypes = new string[] { AccountingEntityValues.APPayment, AccountingEntityValues.PaymentCheque }
             };
-            return transferTransactionsFilter;
         }
 
         private string GetTenantCurrency()
