@@ -103,9 +103,17 @@
       <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
       <Name>Logitude.BL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
+      <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
+      <Name>Logitude.Server.Tools</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
+      <Project>{6D7FFAD2-35B6-4133-8700-CF73E58D0C85}</Project>
+      <Name>Simplog.Global.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
       <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>

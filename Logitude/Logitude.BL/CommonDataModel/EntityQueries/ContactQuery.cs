@@ -1985,5 +1985,46 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return id;
         }
 
+
+        public ContactPM GetSingleByEmailWithoutTenant(string email)
+        {
+            email = email.ToLower();
+            ContactPM contact = (from a in repository.context.Contacts
+                                 where a.Email == email
+                                 select new ContactPM()
+                                 {
+                                     Anniversary = a.Anniversary,
+                                     Birthday = a.Birthday,
+                                     BusinessPhone = a.BusinessPhone,
+                                     Email = a.Email,
+                                     SearchFields = a.SearchFields,
+                                     EnglishName = a.EnglishName,
+                                     FacebookId = a.FacebookId,
+                                     Fax = a.Fax,
+                                     Id = a.Id,
+                                     InActive = a.InActive,
+                                     LocalName = a.LocalName,
+                                     ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                                     Mobile = a.Mobile,
+                                     Notes = a.Notes,
+                                     Tenant = a.Tenant,
+                                     Signature = a.Signature,
+                                     SignatureHtml = a.SignatureHtml,
+                                     DontShowLocal = a.DontShowLocalLabels,
+                                     DisplayGettingStarted = a.DisplayGettingStarted,
+                                     BirthdayReminder = a.BirthdayReminder,
+                                     AnniversaryReminder = a.AnniversaryReminder,
+                                     ImageDetailId = a.ImageDetailId,
+                                     DoneDate = a.DoneDate,
+                                     BirthDayOfYear = a.BirthDayOfYear,
+                                     ContactDoneMethodCode = a.ContactDoneMethod != null ? a.ContactDoneMethod.Code : null,
+                                     Position = a.Position,
+                                     ExternalId = a.ExternalId,
+                                     IndexColor = a.IndexColor,
+                                     CompanyName = a.CompanyName,
+                                     CreateDate = a.CreateDate,
+                                 }).FirstOrDefault();
+            return contact;
+        }
     }
 }
