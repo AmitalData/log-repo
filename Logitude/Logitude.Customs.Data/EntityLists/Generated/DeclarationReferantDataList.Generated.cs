@@ -156,6 +156,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string FclLclName  { get; set; }
        [DataMember]
        public string TeamName  { get; set; }
+       [DataMember]
+       public string CancelRequestStatusCode  { get; set; }
    }
 
 }
