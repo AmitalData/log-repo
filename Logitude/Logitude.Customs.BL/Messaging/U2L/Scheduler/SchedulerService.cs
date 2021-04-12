@@ -249,6 +249,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                         DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                         declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
                     }
+                    LogMessagingUtil.Instance.AppendLine("ImporterId= " + _MyDeclarationPM.ImporterId + "  ImporterCode=" + _MyDeclarationPM.ImporterCode);
 
                     if (_MyDeclarationPM.ImporterId != null || _MyDeclarationPM.ImporterCode != null)
                     {
@@ -258,6 +259,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                         var feature = features.Features.FirstOrDefault(x => x.Code == "SendDeclaration902");
                         if (feature != null)
                         {
+                            LogMessagingUtil.Instance.AppendLine("Feature = " + "פעיל");
                             SendGenericRequest();
                         }
                     }
