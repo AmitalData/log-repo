@@ -3,11 +3,11 @@ Feature: Region Create, Edit and Inactivate in Maintenance Module
     The user creates a region, edits and inactivates it from the Maintenance Module.
 
     Scenario: Add region
-        Given a region with the following details
-            | GlobalZoneCode      | random |
-            | GlobalZoneName      | random |
-            | GlobalZoneLocalName | random |
-            | InactiveGlobalZone  | Yes    |
+        Given the user logged in and navigate to "Regions" in maintenance menu
+        And a region with the following details
+            | RegionName      | random |
+            | RegionLocalName | random |
+            | InactiveRegion  | Yes    |
         When add region
         Then the region should add successfully
 

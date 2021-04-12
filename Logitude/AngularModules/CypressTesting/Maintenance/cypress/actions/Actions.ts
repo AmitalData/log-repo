@@ -34,16 +34,19 @@ import {CommodityDetails} from "../models/CommodityDetails"
 import { QuoteSelectors } from "../../../Quote/cypress/selectors/Selectors";
 import { ShipmentSelectors } from "../../../Shipment/cypress/selectors/Selectors";
 import { ReceivableDetails } from "../../../Shipment/cypress/models/ReceivableDetails";
+import { RegionDetails } from "../models/RegionDetails";
 //#region variables
 let CityName=null;
 let StateName=null;
 let GlobalZoneName=null;
 let CommodityName=null;
+let RegionName=null;
 let inActiveCountry=false;
 let inActiveState=false;
 let inActiveCity = false;
 let inActiveGlobalZone = false;
 let inActiveCommodity=false;
+let inActiveRegion=false;
 //#endregion
 //#region General Actions
 export function OpenMaintenanceMenu() {
@@ -1467,4 +1470,102 @@ function GetRandomCommodityCodeNumber(){
                 inActiveCommodity= interception.response.body.InActive;
             });
     }
+//#endregion
+//#region Region
+export function FillRegionDetails(regionDetails:RegionDetails){
+    var RandomRegionName=GetRandomRegionName();
+    cy.FillLogTextBox(MaintenanceSelectors.RegionName, regionDetails.RegionName.toLowerCase() == "random"?RandomRegionName: regionDetails.RegionName)
+    cy.FillLogTextBox(MaintenanceSelectors.RegionLocalName, regionDetails.RegionLocalName.toLowerCase() == "random"?RandomRegionName: regionDetails.RegionLocalName)
+    FillCheckBoxProcess(MaintenanceSelectors.InActiveRegionCheckBox,regionDetails.InactiveRegion)
+}
+function GetRandomRegionName(){
+    return gr.GenerateRandomNumberAndString(15);
+    }
+export function CreateRegion() {
+    DefinePostRegionRequest()
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
+}
+
+function DefinePostRegionRequest() {
+    cy.DefineRequestWait(RestAPI.POST, Urls.Regions, RequestAliases.PostRegions)
+}
+
+export function AssertCreateRegion() {
+    let intercept = cy.wait("@" + RequestAliases.PostRegions);
+    intercept.then((interception) => {
+        if (interception.response.statusCode === 400) {
+            ReCreateRegion();
+        }
+        else{
+            AssertPostRegion(interception.response.statusCode, 200,interception.request.body.name) 
+        }        
+    }) 
+}
+function ReCreateRegion(){
+    var RandomRegionName=GetRandomCommodityCodeNumber();
+    cy.FillLogTextBox(MaintenanceSelectors.RegionName, RandomRegionName)
+    cy.FillLogTextBox(MaintenanceSelectors.RegionLocalName, RandomRegionName)
+    CreateRegion();
+    AssertCreateRegion();
+}
+export function AssertPostRegion(responseStatusCode: number, expectedStatusCode: number,regionName:string) {
+    assert.equal(responseStatusCode, expectedStatusCode)
+    RegionName=regionName
+}
+export function SearchRegion() {
+    DefineRegionViewsGetByFiltersRequest(RegionName);
+    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, RegionName);
+    AssertRegionViewsGetByFilters();
+}
+export function DefineRegionViewsGetByFiltersRequest(CommodityName: string) {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(CommodityName + "&GetCount=false"), RequestAliases.GetFilterSearch);
+}
+export function AssertRegionViewsGetByFilters() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
+}
+export function AssertSearchRegion() {
+    cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
+        expect(text).to.contain(RegionName);
+    });
+}
+export function OpenRegion() {
+    DefineRegionsGetSingleRequest();
+    cy.get(BaseSelectors.RowClass).eq(0).click();
+}
+function DefineRegionsGetSingleRequest() {
+    cy.DefineRequestWait(RestAPI.GET, Urls.RegionsGetSingle, RequestAliases.GetSignle);
+}
+export function AssertOpenRegion() {
+    AssertRegionsGetSingle();
+    BaseAssertion.AssertElementExist(MaintenanceSelectors.GeneralEditScreen)
+}
+
+function AssertRegionsGetSingle() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetSignle, 200);
+}
+export function FillRegionLocalName(Name: string) {
+    let NameToFill = Name.toLowerCase() == "random" ? (gr.GenerateRandomNumberAndString(15)) : Name; 
+    if (Name) {
+        cy.FillLogTextBox(MaintenanceSelectors.RegionLocalName, NameToFill)
+    }
+}
+export function EditRegion() {
+    DefinePutRegionRequest();
+    cy.Click(MaintenanceSelectors.RegionSaveButton, null);
+}
+
+function DefinePutRegionRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.Regions, RequestAliases.PutRegions);
+}
+
+export function AssertEditRegion() {
+    AssertPutRegion();
+}
+
+export function AssertPutRegion() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PutRegions, 200).
+        then((interception) => {
+            inActiveRegion= interception.response.body.inActive;
+        });
+}
 //#endregion
