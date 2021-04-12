@@ -370,7 +370,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                               Amount = a.CreditAmount != 0 ? a.CreditAmount * -1 : a.DebitAmount,
                                                               ReferenceDate = a.ReferenceDate,
                                                               EntitySource = null,
-                                                              EntityType = a.ReconcileExternalPage.PageNo.ToString(),
+                                                              EntityType = a.ReconcileExternalPage == null ? null : (a.ReconcileExternalPage.PageNo == null ? null : a.ReconcileExternalPage.PageNo.ToString()),
                                                               IsRecomncile = a.IsReconciled,
                                                               LocalBoolean = a.IsReconciled == true ? "כן" : "לא",
                                                               EnglishBoolean = a.IsReconciled == true ? "True" : "False",
@@ -416,7 +416,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                               LocalBoolean = a.IsExternalReconcile == true ? "כן" : "לא",
                                                               EnglishBoolean = a.IsExternalReconcile == true ? "True" : "False",
                                                               Note = a.Notes,
-                                                              ReconcileNumber = Ex.ReconciliationId == null ? null : Ex.ExternalReconciliation.ReconciliationNumber,
+                                                              ReconcileNumber = Ex != null && Ex.ExternalReconciliation != null ? Ex.ExternalReconciliation.ReconciliationNumber : null,
                                                               Ref1 = a.Reference1,
                                                               Ref2 = a.Reference2,
                                                               ExternalPageLineId = null,
@@ -596,7 +596,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             RefDateTo = valueGetter.GetFilterValue<DateTime>("REFToDate");
             IsExternalReconciled = valueGetter.GetFilterValue<string>("IsExternalReconciled");
             IncludesTransferGlaccount = valueGetter.GetFilterValue<bool>("IncludesTransferGlaccount");
-            ExternalReconciliationNumber = valueGetter.GetFilterValue<int>("ExternalReconciliationNumber");
+            ExternalReconciliationNumber = valueGetter.GetFilterValue<int?>("ExternalReconciliationNumber");
             SortBy = valueGetter.GetFilterValue<string>("SortBy");
             ObjectTableId = valueGetter.GetFilterValue<string>("ObjectTableId");
 
