@@ -16,7 +16,6 @@ export class MaintenanceSelectors extends RegexSelectors {
     public static readonly MaintenanceItemCities="#MaintenanceItemMTCY"
     public static readonly MaintenanceItemCommodities="#MaintenanceItemMTCM"
     public static readonly MaintenanceItemRegions="#MaintenanceItemMTRG"
-   public static readonly MaintenanceItemSpecialServicesTypes = "#MaintenanceItemMTSS"
     //#endregion
 
     public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";
@@ -188,7 +187,5 @@ export class MaintenanceSelectors extends RegexSelectors {
        public static readonly RegionSaveButton="#Region-Save"
        public static readonly RegionEventsTab="#RegionTHEvents"
        //#endregion
-       //#region Special Services Types
        
-       //#endregion
     }
