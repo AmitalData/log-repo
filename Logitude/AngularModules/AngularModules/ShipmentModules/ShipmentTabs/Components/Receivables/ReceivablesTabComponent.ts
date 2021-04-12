@@ -32,6 +32,8 @@ import {ObservableCollection} from '../../../../Infrastructure/Utilities/Observa
 import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
 import {QuotePMService} from '../../../../Quote/Services/StandardPMs/QuotePMService';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
+import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
 
 @Component({
     
@@ -59,6 +61,9 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
     public IsEditExchangeRateVisible: boolean = false;
     private myDomainService: ShipmentDomainService;
     private CurrentSession = SessionLocator.SelectedSession;
+    public CommonDomainService: CommonDomainService;
+    public CardListService: CardListService;
+
     constructor(private entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -71,6 +76,8 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
         this.ItemsSource = new ObservableCollection([]);
         this.myDomainService = new ShipmentDomainService();
+        this.CommonDomainService = new CommonDomainService();
+        this.CardListService = new CardListService();
         this.Listen();
         this.Initialize();
         this.SetEditEnabled();
@@ -1670,7 +1677,6 @@ export class ShipmentReceivableItem extends BaseComponent {
             this.EntityPM.IATACodeId = list.IATACodeId;
             //this.EntityPM.IsBackToBack = list.IsBackToBack;
             this.EntityPM.IsExpense = list.IsExpense;
-
             this.SetPrepaidCollectId();
 
             if (!AppTool.IsNullOrEmpty(list.ReceivablesDefaultCurrencyId)) {
@@ -2079,6 +2085,8 @@ export class ShipmentReceivableItem extends BaseComponent {
             });
 
             this.ComputeInsideReceivablesData();
+            var Generator = new ShipmentGenerator(this.fatherComponent.EntityPM, this.fatherComponent.AllRates);
+            Generator.CalculateReceivableVatAmount(this.EntityPM);
         }
     }
 
@@ -2086,6 +2094,8 @@ export class ShipmentReceivableItem extends BaseComponent {
     set AmountInProfitCurrency(newVaule: number) {
         if (this.EntityPM.AmountInProfitCurrency != newVaule) {
             this.EntityPM.AmountInProfitCurrency = AppTool.Round(newVaule, 2);
+            var Generator = new ShipmentGenerator(this.fatherComponent.EntityPM, this.fatherComponent.AllRates);
+            Generator.CalculateReceivableVatAmount(this.EntityPM);
         }
     }
 
@@ -2133,7 +2143,7 @@ export class ShipmentReceivableItem extends BaseComponent {
             var iAmount: number = null;
 
             if (this.EntityPM.Quantity != null && this.EntityPM.UnitPrice != null) {
-                if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR") {
+                if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR" || this.MeasurementCode == "PFCL") {
                     var price = this.EntityPM.UnitPrice / 100;
                     iAmount = this.EntityPM.Quantity * price;
                 }
@@ -2521,7 +2531,7 @@ export class ShipmentReceivableItem extends BaseComponent {
 
                         var totalAmount = quantity * unitPrice;
 
-                        if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR") {
+                        if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR" || this.MeasurementCode == "PFCL") {
                             totalAmount = quantity * unitPrice / 100;
                         }
 
@@ -2994,7 +3004,7 @@ export class InsideReceivableViewModel {
         if (this.Quantity != null && this.UnitPrice != null) {
             myResult = this.Quantity * this.UnitPrice;
 
-            if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR") {
+            if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR" || this.MeasurementCode == "PFCL") {
                 myResult = this.Quantity * this.UnitPrice / 100;
             }
         }

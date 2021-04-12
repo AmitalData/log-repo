@@ -40,7 +40,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;שורת המחאה&quot;"
   DefaultText="&quot;Cheque Line&quot;"
-  Code="&quot;3735&quot;"
+  Code="&quot;d544&quot;"
   Name="&quot;ARPaymentCheque Query Group&quot;"
   GenerateDomainService="true"
   ClientModuleName="&quot;Accounting&quot;"
@@ -54,6 +54,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;2283&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -1704,7 +1705,7 @@
   <Records />
   <DataContracts>
     <DataContract
-      Name="&quot;ARPaymentCheque&quot;"
+      Name="&quot;Cheque&quot;"
       Version="&quot;ApiV1&quot;">
       <DCField
         DCFieldName="&quot;Id&quot;"
@@ -1719,7 +1720,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Tenant&quot;"
         FieldName="&quot;Tenant&quot;"
@@ -1733,7 +1735,23 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;Currency&quot;"
+        FieldName="&quot;CurrencyId&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Currency&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="true"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ChequeNumber&quot;"
         FieldName="&quot;ChequeNumber&quot;"
@@ -1747,21 +1765,23 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ValueDate&quot;"
         FieldName="&quot;ValueDate&quot;"
         IsKey="false"
         IsManualMapping="false"
         IsMulti="false"
-        FieldsDataType="&quot;Date&quot;"
+        FieldsDataType="&quot;DateTime&quot;"
         IsNullable="false"
         IsSpecialField="false"
         IsCustomType="false"
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;LocalAmount&quot;"
         FieldName="&quot;LocalAmount&quot;"
@@ -1775,7 +1795,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ForeignAmount&quot;"
         FieldName="&quot;ForeignAmount&quot;"
@@ -1789,21 +1810,23 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
-        DCFieldName="&quot;BankName&quot;"
-        FieldName="&quot;BankName&quot;"
+        DCFieldName="&quot;BankId&quot;"
+        FieldName="&quot;BankId&quot;"
         IsKey="false"
         IsManualMapping="false"
         IsMulti="false"
-        FieldsDataType="&quot;nText&quot;"
+        FieldsDataType="&quot;Text&quot;"
         IsNullable="false"
         IsSpecialField="false"
         IsCustomType="false"
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;BankBranch&quot;"
         FieldName="&quot;BankBranch&quot;"
@@ -1817,7 +1840,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;BankAccount&quot;"
         FieldName="&quot;BankAccount&quot;"
@@ -1831,7 +1855,38 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;StatusCode&quot;"
+        FieldName="&quot;StatusCode&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;StatusName&quot;"
+        FieldName="&quot;StatusName&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;nText&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes />

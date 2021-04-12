@@ -891,7 +891,8 @@ export class EditComponent implements OnDestroy {
             }
      
             this.FillTabsItemsSource(allTabs);
-            this.SetSelectedTab();
+            if (this.TabControlBodyViewContainerRef)
+                this.SetSelectedTab();
 
         });
 

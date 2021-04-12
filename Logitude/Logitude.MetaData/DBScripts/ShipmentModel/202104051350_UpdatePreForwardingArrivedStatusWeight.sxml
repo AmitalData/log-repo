@@ -1,0 +1,10 @@
+﻿<Script DBType="Main" Module="Shipment" >
+  <Sql Version="1">
+    <![CDATA[
+
+    update EntityStatus set StatusWeight = 57 where Code = 'PRFA'
+    update ObjectTableLastUpdates set LastUpdateDate = GETDATE() where ObjectTableId = (select id from ObjectTables where Name = 'EntityStatus')
+
+    ]]>
+  </Sql>
+</Script>

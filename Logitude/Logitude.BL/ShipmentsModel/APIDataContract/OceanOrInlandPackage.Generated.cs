@@ -75,6 +75,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public string Notes { get; set; }
     
     public List<InsidePackage> InsidePackages { get; set; }
+    
+    public string ContainerNumber { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

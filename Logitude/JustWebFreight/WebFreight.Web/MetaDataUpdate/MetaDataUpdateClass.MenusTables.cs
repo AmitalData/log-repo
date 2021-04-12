@@ -139,6 +139,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature HorseFeature = tenantFeatures.Where(d => d.Code == "Horse.M.Horses" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature UserDefinedReportFeature = tenantFeatures.Where(d => d.Code == "UserDefinedReportFeature" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature DailyCurrenciesRatesFeature = tenantFeatures.Where(d => d.Code == "DailyCurrenciesRates" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature ReportExecutionLogFeature = tenantFeatures.Where(d => d.Code == "REPORTEXECUTIONLOGS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
 
             #endregion
 
@@ -182,6 +183,12 @@ namespace WebFreight.Web.MetaDataUpdate
             #endregion
 
             #region Maintenance Menus
+         
+
+            #region Report Execuation Log
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "RELO", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 0, CategoryTypeCode = "Oth", TextCode = "General.MH.ReportExecutionLogs", Icon = "DocumentTypes.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "ReportExecutionLog").FirstOrDefault().Id, FeatureId = ReportExecutionLogFeature.Id, FeatureUniqeCode = ReportExecutionLogFeature.FeatureUniqeCode  }, MenusTablesRepository, tenantMenusTables);
+            #endregion
+
 
             #region Partners
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTCL", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 0, CategoryTypeCode = "Par", TextCode = "General.MC.Partners.ShippersAndConsignees", Icon = "Customer.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customer").FirstOrDefault().Id, FeatureId = shipperAndConsigneeFeature.Id, FeatureUniqeCode = shipperAndConsigneeFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);

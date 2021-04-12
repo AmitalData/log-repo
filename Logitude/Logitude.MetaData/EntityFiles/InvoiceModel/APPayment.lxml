@@ -8061,7 +8061,7 @@
     ControlPath="&quot;Simplog.InvoiceLib.Views.Tabs.APPaymentsTabs.APPaymentDocsOutTabControl&quot;"
     TextCode="&quot;APPayment.TH.DocsOut&quot;"
     IsPackagable="true"
-    IndexOrder="1"
+    IndexOrder="0"
     HtmlComponentURL="&quot;./InvoiceModules/APPayment/Components/EditTabs/APPaymentDocsOutTabComponent&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
@@ -8073,7 +8073,7 @@
     ControlPath="&quot;Simplog.InvoiceLib.Views.Tabs.APPaymentsTabs.APPaymentsDocsInTabControl&quot;"
     TextCode="&quot;APPayment.TH.DocsIn&quot;"
     IsPackagable="true"
-    IndexOrder="2"
+    IndexOrder="1"
     HtmlComponentURL="&quot;./InvoiceModules/APPayment/Components/EditTabs/APPaymentDocsInTabComponent&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
@@ -8085,7 +8085,7 @@
     ControlPath="&quot;Simplog.InvoiceLib.Views.Tabs.APPaymentsTabs.APPaymentTransferTabControl&quot;"
     TextCode="&quot;APPayment.TH.TransferDetails&quot;"
     IsPackagable="true"
-    IndexOrder="3"
+    IndexOrder="2"
     HtmlComponentURL="&quot;./InvoiceModules/APPayment/Components/EditTabs/APPaymentTransferTabComponent&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
@@ -8097,8 +8097,19 @@
     ControlPath="&quot;CancelationDetailsControl&quot;"
     TextCode="&quot;APPayment.TH.CancelationDetails&quot;"
     IsPackagable="true"
-    IndexOrder="4"
+    IndexOrder="3"
     HtmlComponentURL="&quot;./InvoiceModules/APPayment/Components/EditTabs/APPaymentCancelationDetailsComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Communication&quot;"
+    TabLocalName="&quot;תקשורת&quot;"
+    ObjectTableName="&quot;APPayment&quot;"
+    Code="&quot;APPM&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.Views.Communications.CommunicationsControl&quot;"
+    TextCode="&quot;APPayment.TH.Communications&quot;"
+    IsPackagable="true"
+    IndexOrder="4"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab

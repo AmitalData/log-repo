@@ -53,10 +53,9 @@ When("add exception", () => {
     ShipmentActions.AddEvent()
 });
 Then("the exception should add successfully", () => {
-    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentGetSingle, 200);
+    ShipmentActions.AssertAddEvent()
 });
 Then("the exception should appear in events tab", () => {
-    ShipmentActions.AssertAddEvent(EventNote)
     ShipmentActions.AssertEventAppearInEventTab(EventType)
 });
 Then("has exception should change to yes", () => {

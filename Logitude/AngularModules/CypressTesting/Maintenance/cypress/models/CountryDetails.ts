@@ -1,5 +1,5 @@
 export class CountryDetails {
-     CountryCode: string;
+    CountryCode: string;
     CountryName: string;
     CountryLocalName: string;
     CountryGlobalZone: string;
@@ -8,6 +8,5 @@ export class CountryDetails {
     NorthAmerica: string;
     IsStateRequired: string;
     HasCities: string;
-    Notes:string;
-    public static inActive:boolean
+    Notes: string;
 }

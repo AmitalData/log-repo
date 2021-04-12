@@ -160,6 +160,7 @@ namespace Logitude.Test.Base.Hooks
             LocationsData.PortMANId = locationsVariables.PortMANId;
             LocationsData.CountryUSId = locationsVariables.CountryUSId;
             LocationsData.CountryGBId = locationsVariables.CountryGBId;
+            LocationsData.CountryTSId = locationsVariables.CountryTSId;
             LocationsData.StateAKId = locationsVariables.StateAKId;
             LocationsData.CityAnchorageId = locationsVariables.CityAnchorageId;
             LocationsData.CityManchesterId = locationsVariables.CityManchesterId;

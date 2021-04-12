@@ -43,6 +43,18 @@
     .MenuFilters .MenuFiltersName {
         font-size: 13px;
     }
+
+    .ShortName {
+        font-size: 13px;
+    }
+
+    .LongName {
+        white-space: initial;
+        font-size: 11px;
+        position: relative;
+        bottom: 13px;
+        white-space: pre-line;
+    }
 </style>
 
 <table style="overflow-x:auto;overflow-y:hidden;">
@@ -242,7 +254,7 @@
                                                         <div style="margin-bottom:10px;margin-top:20px;border-right:1px solid #cccccc;">
                                                             <div class="MenuFilters" (click)="MenuFiltersClicked(AgentShipmentsLabel)" [class.Selected]="SelectedFilter == AgentShipmentsLabel">
                                                                 <div class="MenuFiltersCount">{{AgentShipmentsCount}}</div>
-                                                                <div class="MenuFiltersName">{{AgentShipmentsLabel}}</div>
+                                                                <div [ngClass] = "AgentLabelClass">{{AgentShipmentsLabel}}</div>
                                                             </div>
                                                         </div>
                                                     </td>

@@ -333,6 +333,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="SellerPartnerTypeId"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="LastUsedDate"
     Type="datetime">
     <Constraints

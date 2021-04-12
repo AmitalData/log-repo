@@ -102,7 +102,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                             PrivateLabelShortName = entityPM.PrivateLabelShortName,
                             MainColor = entityPM.MainColor,
                             BackgroundImageId = entityPM.BackgroundImageId,
-                            MainImageId = entityPM.MainImageId,
+                            LoginImageId = entityPM.LoginImageId,
                             LoginProgressImageId = entityPM.LoginProgressImageId,
                             ForgetPasswordImageId = entityPM.ForgetPasswordImageId,
                             SecondaryColor = entityPM.SecondaryColor,
@@ -160,7 +160,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                         Poco.SmallLogo = entityPM.SmallLogo;
                         Poco.MainColor = entityPM.MainColor;
                         Poco.BackgroundImageId = entityPM.BackgroundImageId;
-                        Poco.MainImageId = entityPM.MainImageId;
+                        Poco.LoginImageId = entityPM.LoginImageId;
                         Poco.LoginProgressImageId = entityPM.LoginProgressImageId;
                         Poco.ForgetPasswordImageId = entityPM.ForgetPasswordImageId;
                         Poco.SecondaryColor = entityPM.SecondaryColor;

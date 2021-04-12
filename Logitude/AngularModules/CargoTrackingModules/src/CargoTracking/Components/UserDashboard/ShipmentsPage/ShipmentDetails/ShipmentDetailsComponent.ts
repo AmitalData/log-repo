@@ -1,9 +1,11 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, HostListener } from '@angular/core';
+import { Component,
+     ViewChild, ElementRef, AfterViewInit, HostListener } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
 import { CargoTrackingShipmentList } from 'src/CargoTracking/EntityLists/CargoTrackingShipmentList';
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
+import { CargoTrackingShipmentWithMilestones, Milestone } from 'src/CargoTracking/Components/PublicSite/PublicShipmentDetailsComponent/PublicShipmentDetailsComponent';
 
 
 @Component({
@@ -21,7 +23,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     isLoading: boolean = false;
     showMoreReferences: boolean = false;
     SecurityKey: string = "";
-    Shipment: CargoTrackingShipmentList = null;
+    Shipment: CargoTrackingShipmentWithMilestones = null;
     SearchText: string = "";
     CustomersReferences = [
         '5689974987646132',
@@ -103,6 +105,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
             setTimeout(() =>
             {
                 this.InitSlider();
+                this.BuildSliderCards();
+
             }, 200);
 
         });
@@ -114,24 +118,75 @@ export class ShipmentDetailsComponent implements AfterViewInit
         this.SecurityKey = _id;
         return _id;
     }
-    SliderCards: any[] = [
-        { Code: "", Date: new Date(2020, 11, 2), Title: "Order file printed", Description: "Lorem ipsum dolor sit amet, consectetur", IsActive: false, HasWarning: false, IsDimmed: false },
-        { Code: "US-NYC", Date: new Date(2020, 11, 14), Title: "Order file printed", Description: "Lorem ipsum dolor sit amet, consectetur", IsActive: false, HasWarning: false, IsDimmed: false },
-        { Code: "", Date: new Date(2020, 11, 18), Title: "Order file printed", Description: "Lorem ipsum dolor sit amet, consectetur", IsActive: false, HasWarning: false, IsDimmed: false },
-        { Code: "", Date: new Date(2020, 11, 20), Title: "Order file printed", Description: "Lorem ipsum dolor sit amet, consectetur", IsActive: false, HasWarning: false, IsDimmed: false },
-        { Code: "US-BOS", Date: new Date(2020, 11, 24), Title: "Boat ETA - Qalqilya", Description: "Lorem ipsum dolor sit amet, consectetur", IsActive: false, HasWarning: false, IsDimmed: false },
-        { Code: "", Date: new Date(2020, 11, 26), Title: "Boat ETD - Haifa", Description: "Lorem ipsum dolor sit amet, consectetur", IsActive: false, HasWarning: true, IsDimmed: false },
-        { Code: "", Date: new Date(2020, 11, 29), Title: "Shipping Certificate", Description: "Lorem ipsum dolor sit amet, consectetur", IsActive: true, HasWarning: true, IsDimmed: false },
-        { Code: "", Date: new Date(2020, 11, 30), Title: "Order file printed", Description: "Lorem ipsum dolor sit amet, consectetur", IsActive: false, HasWarning: false, IsDimmed: true },
-    ];
+    SliderCards: MilestoneCard[] = [];
+
+    // [
+    //     { Code: "", Date: new Date(2020, 11, 2), Title: "Order file printed", Description: "Lorem ipsum dolor sit amet, consectetur", IsActive: false, HasWarning: false, IsDimmed: false },
+    //     { Code: "US-NYC", Date: new Date(2020, 11, 14), Title: "Order file printed", Description: "Lorem ipsum dolor sit amet, consectetur", IsActive: false, HasWarning: false, IsDimmed: false },
+    //     { Code: "", Date: new Date(2020, 11, 18), Title: "Order file printed", Description: "Lorem ipsum dolor sit amet, consectetur", IsActive: false, HasWarning: false, IsDimmed: false },
+    //     { Code: "", Date: new Date(2020, 11, 20), Title: "Order file printed", Description: "Lorem ipsum dolor sit amet, consectetur", IsActive: false, HasWarning: false, IsDimmed: false },
+    //     { Code: "US-BOS", Date: new Date(2020, 11, 24), Title: "Boat ETA - Qalqilya", Description: "Lorem ipsum dolor sit amet, consectetur", IsActive: false, HasWarning: false, IsDimmed: false },
+    //     { Code: "", Date: new Date(2020, 11, 26), Title: "Boat ETD - Haifa", Description: "Lorem ipsum dolor sit amet, consectetur", IsActive: false, HasWarning: true, IsDimmed: false },
+    //     { Code: "", Date: new Date(2020, 11, 29), Title: "Shipping Certificate", Description: "Lorem ipsum dolor sit amet, consectetur", IsActive: true, HasWarning: true, IsDimmed: false },
+    //     { Code: "", Date: new Date(2020, 11, 30), Title: "Order file printed", Description: "Lorem ipsum dolor sit amet, consectetur", IsActive: false, HasWarning: false, IsDimmed: true },
+    // ];
     sliderMarginLeft: number = 0;
     sliderMarginCardCount: number = 0;
     sliderCardWidth: number = 200;
     sliderVisibleCardsCount: number = 5;
     sliderVisibleCardsWidth: number = 0;
 
+    BuildSliderCards(){
+        // this.Shipment.Milestones.forEach((milstone:Milestone) => {
+        //     var newCard = new MilestoneCard();
+        //     newCard.Code = milstone.Code;
+        //     newCard.Date = milstone.EstimationDate || milstone.Date;
+        //     newCard.Title = milstone.Name;
+        //     newCard.Description = milstone.Notes;
+        //     newCard.IsDimmed = milstone.IsEstimation;
+        //     newCard.IsActive = milstone.Code == this.Shipment.ShipmentList.CurrentMilestoneCode;
+        //     this.SliderCards.push(newCard);
+        // });
+
+        this.SliderCards = this.Shipment.Milestones
+        .filter(milstone=>{
+            var date = milstone.EstimationDate || milstone.Date;
+            if(date)
+                return true;
+            return false;
+        })
+        .sort((a, b) => {
+            if (a.Id > b.Id) return 1;
+            if (a.Id < b.Id) return -1;
+             return 0;
+            })
+        .map((milstone:Milestone) => {
+            var newCard = new MilestoneCard();
+            newCard.Date =  milstone.Done ? milstone.Date : (milstone.EstimationDate || milstone.Date);
+            newCard.Code = 'No. '+milstone.Id;
+            newCard.Title = milstone.Name;
+            newCard.Description = milstone.Notes || 'This milestone does not have descriptions';
+            newCard.IsDimmed = milstone.IsEstimation && !milstone.Done;
+            newCard.IsActive = milstone.Id + '' == this.Shipment.ShipmentList.CurrentMilestoneCode;
+            newCard.HasWarning = newCard.IsActive;
+            return newCard;
+        });
+        // .sort((a, b) => {
+        //     if (a.Date > b.Date) return 1;
+        //     if (a.Date < b.Date) return -1;
+        //      return 0;
+        //     });
+    }
+
     MoveSlider(dir)
     {
+
+        if(dir == 'right' && this.sliderMarginLeft==0)
+        return;
+
+        if(dir == 'left' && ((this.sliderMarginCardCount+this.sliderVisibleCardsCount)>=this.SliderCards.length) || (this.sliderVisibleCardsCount >= this.SliderCards.length))
+            return;
+
         var margin = this.sliderMarginLeft;
 
         // inc\dec
@@ -156,11 +211,12 @@ export class ShipmentDetailsComponent implements AfterViewInit
         if (screenwidth < 470)
             this.sliderMarginLeft - 55;
 
+
     }
     GetModeIcon()
     {
         var iconPath = "";
-        switch (this.Shipment.TransportModeId) {
+        switch (this.Shipment.ShipmentList.TransportModeId) {
             case 'A':
                 iconPath = "./assets/images/misc/plane.svg";
                 break;
@@ -200,4 +256,16 @@ export class ShipmentDetailsComponent implements AfterViewInit
     {
         this.router.navigate(['cargo-tracking', 'shipments']);
     }
+}
+
+
+export class MilestoneCard
+{
+    Code: string;
+    Date: Date;
+    Title: string;
+    Description: string;
+    IsActive: boolean;
+    HasWarning: boolean;
+    IsDimmed: boolean;
 }

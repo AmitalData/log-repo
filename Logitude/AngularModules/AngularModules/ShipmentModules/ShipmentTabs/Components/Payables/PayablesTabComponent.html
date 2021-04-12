@@ -183,7 +183,7 @@
                                                                                         {{insideItem.UnitPrice | NumbersPipe:'N3'}}
                                                                                     </td>
 
-                                                                                    <td *ngIf="insideItem.MeasurementCode == 'PRVL' || insideItem.MeasurementCode =='PRFR'" style="width:1px; padding-left: 2px;">
+                                                                                    <td *ngIf="insideItem.MeasurementCode == 'PRVL' || insideItem.MeasurementCode =='PRFR' || insideItem.MeasurementCode =='PFCL'" style="width:1px; padding-left: 2px;">
                                                                                         %
                                                                                     </td>
                                                                                 </tr>
@@ -371,7 +371,7 @@
                                                                 {{item.UnitPrice | NumbersPipe:'N3'}}
                                                             </td>
 
-                                                            <td *ngIf="item.MeasurementCode == 'PRVL' || item.MeasurementCode =='PRFR'" style="width:1px; padding-left: 2px;">
+                                                            <td *ngIf="item.MeasurementCode == 'PRVL' || item.MeasurementCode =='PRFR'  || item.MeasurementCode =='PFCL'" style="width:1px; padding-left: 2px;">
                                                                 %
                                                             </td>
                                                         </tr>

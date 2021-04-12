@@ -6,10 +6,14 @@ export class MaintenanceSelectors extends RegexSelectors {
     public static readonly ContactsMaintenanceItem = "#MaintenanceItemMTCO";
     public static readonly VendorMaintenanceItem = "#MaintenanceItemMTVD"
     public static readonly VesselMaintenanceItem = "#MaintenanceItemMTVS"
+    public static readonly LocalSettingsMaintenanceItem = "#MaintenanceItemLOSE"
     public static readonly CustomerSettingsMaintenanceItem = "#MaintenanceItemCUSA"
     public static readonly InvoiceSettingsMaintenanceItem = "#MaintenanceItemINVS";
     public static readonly QuoteTemplatesMaintenanceItem = "#MaintenanceItemMTQT"
     public static readonly MaintenanceItemCountry="#MaintenanceItemMTCN"
+    public static readonly MaintenanceItemState="#MaintenanceItemMTST"
+    public static readonly MaintenanceItemGlobalZone = "#MaintenanceItemMTGZ"
+    public static readonly MaintenanceItemCities="#MaintenanceItemMTCY"
     //#endregion
 
     public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";
@@ -133,5 +137,38 @@ export class MaintenanceSelectors extends RegexSelectors {
     public static readonly CountryNotes="#Country_Notes";
     public static readonly CountrySaveButton="#Country-Save"
     public static readonly CountryEventsTab = "#CountryTHEvents"
+    //#endregion
+
+    //#region State
+    public static readonly StateCode = "#State_Code";
+    public static readonly StateEnglishName = "#State_EnglishName";
+    public static readonly StateLocalName = "#State_LocalName";
+    public static readonly StateCountry = "#State_CountryId";
+    public static readonly InActiveStateCheckBox = "#State_InActive";
+    public static readonly StateNotes = "#State_Notes";
+    public static readonly StateEventTab = "#StateTHEvents";
+    public static readonly StateSaveButton="#State-Save"
+    //#endregion
+
+    //#region City
+    public static readonly CityCode = "#CountryCity_Code"
+    public static readonly CityEnglishName = "#CountryCity_EnglishName"
+    public static readonly CityLocalName = "#CountryCity_LocalName"
+    public static readonly CityCountry = "#CountryCity_CountryId"
+    public static readonly CityState = "#CountryCity_StateId";
+    public static readonly InActiveCityCheckBox = "#CountryCity_InActive"
+    public static readonly CityNotes = "#CountryCity_Notes"
+    public static readonly CityEventTab = "#CountryCityTHEvents"
+    public static readonly CitySaveButton="#CountryCity-Save"
+    //#endregion
+
+    
+    //#region  Global Zone
+    public static readonly GlobalZoneCode="#GlobalZone_Code"
+    public static readonly GlobalZoneEnglishName="#GlobalZone_EnglishName"
+    public static readonly GlobalZoneLocalName="#GlobalZone_LocalName"
+    public static readonly InActiveGlobalZoneCheckBox="#GlobalZone_InActive"
+    public static readonly GlobalZoneSaveButton="#GlobalZone-Save"
+    public static readonly GlobalZoneEventsTab="#GlobalZoneTHEvents"
     //#endregion
 }

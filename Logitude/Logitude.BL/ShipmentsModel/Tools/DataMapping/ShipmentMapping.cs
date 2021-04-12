@@ -602,16 +602,79 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
                 myRoutingField = fromPort.Code + " , " + toPort.Code;
 
-                if (entityPoco.PreCarriageFromPortId != null)
+                string preCrriageFromPortCode = null;
+                string onCarriageToPortCode = null;
+
+                if (entityMasterData != null)
                 {
-                    PortPM precarriageFromPort = PortQuery.GetSinglePort(entityPoco.Tenant, entityPoco.PreCarriageFromPortId, true);
-                    myRoutingField = precarriageFromPort.Code + " , " + myRoutingField;
+                    if (entityMasterData.PreCarriageFromPortId != null)
+                    {
+                        PortPM precarriageFromPort = PortQuery.GetSinglePort(entityPoco.Tenant, entityMasterData.PreCarriageFromPortId, true);
+                        preCrriageFromPortCode = precarriageFromPort.Code;
+                    }
+
+                    if (entityMasterData.OnCarriageToPortId != null)
+                    {
+                        PortPM oncarriageToPort = PortQuery.GetSinglePort(entityPoco.Tenant, entityMasterData.OnCarriageToPortId, true);
+                        onCarriageToPortCode = oncarriageToPort.Code;
+                    }
                 }
 
-                if (entityPoco.OnCarriageToPortId != null)
+                if (entityPM.ShipmentLevelCode == "H")
                 {
-                    PortPM oncarriageToPort = PortQuery.GetSinglePort(entityPoco.Tenant, entityPoco.OnCarriageToPortId, true);
-                    myRoutingField = myRoutingField + " , " + oncarriageToPort.Code;
+                    string preForwardingFromPortCode = null;
+                    string onForwardingToPortCode = null;
+
+                    if (entityPoco.PreForwardingFromPortId != null)
+                    {
+                        PortPM preForwardingFromPort = PortQuery.GetSinglePort(entityPoco.Tenant, entityPoco.PreForwardingFromPortId, true);
+                        preForwardingFromPortCode = preForwardingFromPort.Code;
+                    }
+
+                    if (entityPoco.OnForwardingToPortId != null)
+                    {
+                        PortPM onForwardingToPort = PortQuery.GetSinglePort(entityPoco.Tenant, entityPoco.OnForwardingToPortId, true);
+                        onForwardingToPortCode = onForwardingToPort.Code;
+                    }
+
+                    if (!string.IsNullOrEmpty(preForwardingFromPortCode))
+                    {
+                        if (!string.IsNullOrEmpty(preCrriageFromPortCode))
+                        {
+                            myRoutingField = preForwardingFromPortCode + " , " + preCrriageFromPortCode + " , " + myRoutingField;
+                        }
+
+                        else
+                        {
+                            myRoutingField = preForwardingFromPortCode + " , " + myRoutingField;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(onForwardingToPortCode))
+                    {
+                        if (!string.IsNullOrEmpty(onCarriageToPortCode))
+                        {
+                            myRoutingField = myRoutingField + " , " + onCarriageToPortCode + " , " + onForwardingToPortCode;
+                        }
+
+                        else
+                        {
+                            myRoutingField = myRoutingField + " , " + onForwardingToPortCode;
+                        }
+                    }
+                }
+
+                else
+                {
+                    if (preCrriageFromPortCode != null)
+                    {
+                        myRoutingField = preCrriageFromPortCode + " , " + myRoutingField;
+                    }
+
+                    if (onCarriageToPortCode != null)
+                    {
+                        myRoutingField = myRoutingField + " , " + onCarriageToPortCode;
+                    }
                 }
             }
 
@@ -1605,6 +1668,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
                     entityPM.OriginMainCarriageFromPortId = entityMasterData.MainCarriageFromPortId;
                     entityPM.OriginFinalDestinationPortId = entityMasterData.MainCarriageFinalDestinationPortId;
+                    entityPM.OriginPreCarriageFromPortId = entityMasterData.PreCarriageFromPortId;
+                    entityPM.OriginOnCarriageToPortId = entityMasterData.OnCarriageToPortId;
                 }
             }
         }
@@ -2563,7 +2628,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddFieldChangedProperties(changeTrackingPM, "ExpectedArrivalNoticeSentDate", changeTrackingPM.ExpectedArrivalNoticeSentDate, pm.ExpectedArrivalNoticeSentDate, "ExpectedArrivalNoticeSentDate", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "ArrivalNoticeSentDate", changeTrackingPM.ArrivalNoticeSentDate, pm.ArrivalNoticeSentDate, "ArrivalNoticeSentDate", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "T1ReceivedDate", changeTrackingPM.T1ReceivedDate, pm.T1ReceivedDate, "T1ReceivedDate", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "LastUpdateDate", changeTrackingPM.LastUpdateDate, pm.LastUpdateDate, "LastUpdateDate", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "IsAccrualsApproved", changeTrackingPM.IsAccrualsApproved, pm.IsAccrualsApproved, "bool", notifyPropertyChangeValuesList);            
+
+            AddFieldChangedProperties(changeTrackingPM, "FirstPickupATD", changeTrackingPM.FirstPickupATD, pm.FirstPickupATD, "FirstPickupATD", notifyPropertyChangeValuesList);
+
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field1, pm.Field1, "Field1", notifyPropertyChangeValuesList);
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field2, pm.Field2, "Field2", notifyPropertyChangeValuesList);
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field3, pm.Field3, "Field3", notifyPropertyChangeValuesList);

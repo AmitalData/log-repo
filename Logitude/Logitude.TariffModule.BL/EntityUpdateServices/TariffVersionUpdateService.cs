@@ -94,6 +94,20 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                         iUniqueKey += "," + "To All Other Ports";
                     }
                 }
+                if (!string.IsNullOrEmpty(line.ViaPortCode))
+                {
+                    line.ViaPortCode = line.ViaPortCode.Trim().ToUpper();
+
+                    if (iUniqueKey == null)
+                    {
+                        iUniqueKey = line.ViaPortCode;
+                    }
+
+                    else
+                    {
+                        iUniqueKey += "," + line.ViaPortCode;
+                    }
+                }
 
                 if (line.ErrorText == "Line is a duplicate")
                 {

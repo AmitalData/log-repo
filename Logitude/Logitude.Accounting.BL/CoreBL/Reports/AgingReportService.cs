@@ -181,6 +181,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                          ForeignAmountCredit = (decimal)rec.ForeignAmountCredit,
                          ForeignAmountDebit = (decimal)rec.ForeignAmountDebit,
+
+                         TotalOpenTransactions=0,// relvant only to  ReconcileOpenBalanceMethod
                          CHANGE_TYPE = ""
                      });
                     //if (!_TryGetAllThenAggregate)
@@ -224,7 +226,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      Total = (totalByMonth.LocalAmountDebit - totalByMonth.LocalAmountCredit),
                      OpenCredit = totalByMonth.LocalAmountCredit,
                      OpenDebit = totalByMonth.LocalAmountDebit,
-
+                     TotalOpenTransactions =totalByMonth.TotalOpenTransactions,
                  });
 
 
@@ -245,6 +247,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          Total = ((decimal)totalByMonth.ForeignAmountDebit - (decimal)totalByMonth.ForeignAmountCredit),
                          OpenCredit = (decimal?)totalByMonth.ForeignAmountCredit ?? 0,
                          OpenDebit = (decimal?)totalByMonth.ForeignAmountDebit ?? 0,
+                         TotalOpenTransactions = totalByMonth.TotalOpenTransactions,
                      });
                 if (_TESTIT)
                 {
@@ -269,6 +272,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          Total = groupByAccCurrr.Sum(rec => rec.LocalAmountDebit - rec.LocalAmountCredit),
                          OpenCredit = groupByAccCurrr.Sum(rec => rec.LocalAmountCredit),
                          OpenDebit = groupByAccCurrr.Sum(rec => rec.LocalAmountDebit),
+                         TotalOpenTransactions = groupByAccCurrr.Sum(rec => rec.TotalOpenTransactions),
+                         
 
                      });
 
@@ -290,7 +295,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          CurrencyId = groupByAccCurrr.Key.CurrencyId,///GLAccount that is not multi Currency Get Foreign 
                          Total = groupByAccCurrr.Sum(rec => (decimal)rec.ForeignAmountDebit - (decimal)rec.ForeignAmountCredit),
                          OpenCredit = groupByAccCurrr.Sum(rec => rec.ForeignAmountCredit),
-                         OpenDebit = groupByAccCurrr.Sum(rec => rec.ForeignAmountDebit)
+                         OpenDebit = groupByAccCurrr.Sum(rec => rec.ForeignAmountDebit),
+                         TotalOpenTransactions = groupByAccCurrr.Sum(r=>r.TotalOpenTransactions),
                      });
                 var qOpenTransactionsFutureDueDate_InLocal= Enumerable.Empty<PeriodM>().AsQueryable();
                 var qOpenTransactionsFutureDueDate_InForeign = Enumerable.Empty<PeriodM>().AsQueryable();
@@ -341,6 +347,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      Total = left_TotDB.Total,
                      OpenCredit = left_TotDB.OpenCredit,
                      OpenDebit = left_TotDB.OpenDebit,
+                     TotalOpenTransactions = left_TotDB.TotalOpenTransactions,
 
                  }).ToList();
 
@@ -364,7 +371,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      AccountId = (accRelatedCurrency != null) ? accRelatedCurrency.ParentAccountId : left_TotDB.AccountId,
 
                      CurrencyId = left_TotDB.CurrencyId,
-                     Total = left_TotDB.Total
+                     Total = left_TotDB.Total,
+                     TotalOpenTransactions = left_TotDB.TotalOpenTransactions,
                  }).ToList();
 
 
@@ -460,6 +468,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                       Total = groupby.Sum(rec => rec.Total),
                                       OpenCredit = groupby.Sum(rec => rec.OpenCredit),
                                       OpenDebit = groupby.Sum(rec => rec.OpenDebit),
+                                      TotalOpenTransactions = groupby.Sum(rec => rec.TotalOpenTransactions),
+                                      
 
                                   }
                  ).ToList();
@@ -657,6 +667,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         ),
                         OpenCredit = r.OpenCredit,
                         OpenDebit = r.OpenDebit,
+                         TotalOpenTransactions = r.TotalOpenTransactions,
 
 
                         BalanceInLocalCurrency = r.BalanceInLocalCurrency,
@@ -819,7 +830,9 @@ _Param.AgingForDate.Date, false, true, true,false);
                      CurrencyId = groupByAccCurrr.Key.CurrencyId,///GLAccount that is not multi Currency Get Foreign 
                              Total = groupByAccCurrr.Sum(rec => (decimal)rec.ForeignAmountDebit - (decimal)rec.ForeignAmountCredit),
                      OpenCredit = groupByAccCurrr.Sum(rec => rec.ForeignAmountCredit),
-                     OpenDebit = groupByAccCurrr.Sum(rec => rec.ForeignAmountDebit)
+                     OpenDebit = groupByAccCurrr.Sum(rec => rec.ForeignAmountDebit),
+                     
+                     TotalOpenTransactions = groupByAccCurrr.Sum(rec => rec.TotalOpenTransactions),
                  });
             return qOpenTransactionsFutureDueDate_InForeign;
         }
@@ -843,6 +856,8 @@ _Param.AgingForDate.Date, false, true, true,false);
                         Total = groupByAccCurrr.Sum(rec => rec.LocalAmountDebit - rec.LocalAmountCredit),
                         OpenCredit = groupByAccCurrr.Sum(rec => rec.LocalAmountCredit),
                         OpenDebit = groupByAccCurrr.Sum(rec => rec.LocalAmountDebit),
+                        
+                        TotalOpenTransactions = groupByAccCurrr.Sum(rec => rec.TotalOpenTransactions),
 
                     });
         }
@@ -946,7 +961,7 @@ _Param.AgingForDate.Date, false, true, true,false);
                               Total = g.Sum(r => r.Total),
                               OpenCredit = g.Sum(r => r.OpenCredit),
                               OpenDebit = g.Sum(r => r.OpenDebit),
-
+                              TotalOpenTransactions = g.Sum(r => r.TotalOpenTransactions),
 
                           })
                          .ToList();
@@ -969,13 +984,13 @@ _Param.AgingForDate.Date, false, true, true,false);
                 var bad = periodAcc.Where(p => !reportListAcc.Any(p2 => p2 == p));
                 bad = reportListAcc.Where(p => !periodAcc.Any(p2 => p2 == p));
             }
-            
+
             List<PeriodMExtended> namedPeriods = (from line in reportList
 
                                                       //join account in periodMExtendeds
                                                       //  on line.AccountId equals account.AccountId into accJoin
                                                       //from account in accJoin.DefaultIfEmpty()
-                                                        
+
 
                                                   let account = periodMExtendeds.First(account => account.AccountId == line.AccountId)
                                                   let splitAccount = periodMExtendeds.FirstOrDefault(account => account.AccountId == line.SplitAccountId)
@@ -1011,6 +1026,7 @@ _Param.AgingForDate.Date, false, true, true,false);
                                                       TotalOpenCheques = account.TotalOpenCheques,
                                                       OpenCredit = line.OpenCredit,
                                                       OpenDebit = line.OpenDebit,
+                                                      TotalOpenTransactions = line.TotalOpenTransactions,
                                                       CreditStatusAmount = account.CreditStatusAmount,
                                                       GLAccountStandardInterestRate = account.GLAccountStandardInterestRate,
                                                       CustomerVatNumber = account.CustomerVatNumber,
@@ -1597,36 +1613,7 @@ _Param.AgingForDate.Date, false, true, true,false);
 
 
 
-        private static IEnumerable<PeriodM> NewMethod(List<DateTime> listPeriods, List<string> acountListId, IQueryable<Data.EntityPOCOs.GLAccountTotalByMonth> qTotalByMonthAcc, string AccountingCurrencyId)
-        {
-            var cartesianProductPeriodAccount =
-                (from period in listPeriods
-                 from AccountId in acountListId
-                 orderby period, AccountId
-                 select new { AccountId = AccountId, period, CurrencyId = AccountingCurrencyId }
-                                    ).ToList();
-            var qPeriod =
-                (from periodAccount in cartesianProductPeriodAccount
-                 join totalByMonth in qTotalByMonthAcc
-                 on new { periodAccount.period.Year, periodAccount.period.Month, periodAccount.AccountId, periodAccount.CurrencyId }
-                 equals
-                 new { totalByMonth.Year, totalByMonth.Month, totalByMonth.AccountId, totalByMonth.CurrencyId }
-                 into JoinR
-                 from totalByMonthJoinR in JoinR.DefaultIfEmpty()
-
-                 select new PeriodM()
-                 {
-
-
-                     OrderDate = periodAccount.period,
-                     AccountId = totalByMonthJoinR == null ? periodAccount.AccountId : totalByMonthJoinR.AccountId,
-                     CurrencyId = totalByMonthJoinR == null ? "" : totalByMonthJoinR.CurrencyId,
-                     Total = totalByMonthJoinR == null ? 0 : (totalByMonthJoinR.LocalAmountDebit - totalByMonthJoinR.LocalAmountCredit),
-
-                 });
-            return qPeriod;
-        }
-
+       
 
         /*
 Period	Acc	Currency	Total
@@ -1796,6 +1783,7 @@ Period	Acc	Currency	Total
         }
 
         public string SplitAccountId { get;  set; }
+        public int TotalOpenTransactions { get; set; }
     }
     public class PeriodMExtended: PeriodM
     {
@@ -1992,7 +1980,6 @@ TRUE= כאשר מבקשים עם ריכוז לפי כרטיס אב (פיצול �
         }
 
         public bool BuildPivot { get; set; }
-
     }
 
 

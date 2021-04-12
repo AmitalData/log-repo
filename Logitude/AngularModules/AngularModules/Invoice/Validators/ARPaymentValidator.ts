@@ -22,7 +22,7 @@ export class ARPaymentValidator {
       validationResults.push(msg.replace("%FieldName", "Register Date"));
     }
 
-    else if (DateTool.GetDateParts(entityPm.RegisterDate).DateTicks > DateTool.GetCurrentDateAsUtc().valueOf()) {
+    else if (DateTool.GetDateParts(entityPm.RegisterDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation().valueOf()) {
       validationResults.push(TextCodeTranslator.Translate("ARPayment.M.CantSetFutureDatePayment"));
     }
 
@@ -153,7 +153,7 @@ export class ARPaymentValidator {
             errors.push(msg.replace("%FieldName", "Register Date"));
         }
 
-        else if (DateTool.GetDateParts(entityPm.RegisterDate).DateTicks > DateTool.GetCurrentDateAsUtc().valueOf()) {
+        else if (DateTool.GetDateParts(entityPm.RegisterDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation().valueOf()) {
             errors.push(TextCodeTranslator.Translate("ARPayment.M.CantSetFutureDatePayment"));
         }
 

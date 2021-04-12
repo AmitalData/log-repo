@@ -138,6 +138,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PreCarriage = '#PreCarriage';
   public static readonly AddWarehouse = '#Add-WarehouseLeg';
   public static readonly EditWarehouseLeg = '#Edit-WarehouseLeg';
+  public static readonly EditWarehouseLegPickups="#Edit-WarehouseLeg_Pickups"
   public static readonly EditRoutingMainCarriage = '#Edit-MainCarriage';
   public static readonly ShipmentMainCarriageCarrierId = '#Shipment_MainCarriageCarrierId';
   public static readonly ShipmentBookingNumberOfPackages = '#Shipment_BookingNumberOfPackages';
@@ -169,7 +170,17 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly OnCarriageOKBtn = '#OnCarriageOKBtn';
   public static readonly MainCarrigeVessel = 'input[id^=Shipment_MainCarriageVesselId_]';
   public static readonly MainCarrigeVoyageNo = 'input[id^=Shipment_MainCarriageCarrierNumber_]';
+//Warehouse
+public static readonly ShipmentWarehouseLegExpectedEntryDate="#date_Shipment_WarehouseLegExpectedEntryDate"
+public static readonly ShipmentWarehouseLegActualEntryDate="#date_Shipment_WarehouseLegActualEntryDate"
+public static readonly  ShipmentWarehouseLegExpectedEntryTime="#time_Shipment_WarehouseLegExpectedEntryDate"
+public static readonly ShipmentWarehouseLegActualEntryTime="#time_Shipment_WarehouseLegActualEntryDate"
 
+public static readonly ShipmentWarehouseLegExpectedReleaseDate="#date_Shipment_WarehouseLegExpectedReleaseDate"
+public static readonly ShipmentWarehouseLegActualReleaseDate="#date_Shipment_WarehouseLegActualReleaseDate"
+public static readonly ShipmentWarehouseLegExpectedReleaseTime="#time_Shipment_WarehouseLegExpectedReleaseDate"
+public static readonly ShipmentWarehouseLegActualReleaseTime="#time_Shipment_WarehouseLegActualReleaseDate"
+public static readonly WarehouseOKBtn="#WarehouseOKBtn"
   //#endregion
   //#region Receivable tab fields
   public static readonly AddNewReceivableLine = '#AddReceivable button';
@@ -297,4 +308,14 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentEventsRefreshButton = "[data-cy='EventsRefresh_Shipment'] button";
   public static readonly PartnerName = "[data-cy='PartnerName']";
   //#endregion
+  //#region Delivery Leg
+  public static readonly EditDelivery="#Edit-Delivery"
+  public static readonly DeliveryToPartnerName="#ShipmentPickUpDelivery_ToPartnerCardId"
+  public static readonly PickUpDeliveryETDDate ="#date_ShipmentPickUpDelivery_ETD"
+  public static readonly PickUpDeliveryETDTime="#time_ShipmentPickUpDelivery_ETD"
+  //#endregion
+  public static readonly ComponentBusyIndicator="#EditComponentBusyIndicator_0"
+
+
+
 }

@@ -143,7 +143,7 @@ export function FillExpectedOrderDetailsDimensions(packagesDetails: PackagesDeta
 
 export function OpenQuoteAction(action:string, note:string){
     cy.Click(BaseSelectors.MenuButtons, null, true);
-    cy.Click(QuoteSelectors.QuotationActionsButton(action), null);
+    cy.Click(QuoteSelectors.QuotationActionsButton(action), null,true);
     FillActionNote(note)
 }
 

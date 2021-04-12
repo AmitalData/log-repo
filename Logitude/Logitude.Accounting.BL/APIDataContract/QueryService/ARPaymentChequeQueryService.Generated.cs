@@ -65,14 +65,29 @@ using Logitude.Accounting.Data;
 				   
 				   var temp = new ARPaymentCheque(); 
 				   temp.Id = MyEntityPM.Id;
-				   temp.Tenant = MyEntityPM.Tenant;
+				   temp.Tenant = MyEntityPM.Tenant;			  
+				   if(MyEntityPM.CurrencyId != null)
+				   {
+					   CurrencyQueryService CurrencyService0 = new CurrencyQueryService(Tenant);
+					   					   temp.Currency = CurrencyService0.GetCurrencyById(MyEntityPM.CurrencyId,Tenant); 
+			       
+					   				   }
+				   
 				   temp.ChequeNumber = MyEntityPM.ChequeNumber;
 				   temp.ValueDate = MyEntityPM.ValueDate;
 				   temp.LocalAmount = MyEntityPM.LocalAmount;
 				   temp.ForeignAmount = MyEntityPM.ForeignAmount;
-				   temp.BankName = MyEntityPM.BankName;
+				   temp.BankId = MyEntityPM.BankId;
 				   temp.BankBranch = MyEntityPM.BankBranch;
-				   temp.BankAccount = MyEntityPM.BankAccount;					
+				   temp.BankAccount = MyEntityPM.BankAccount;			  
+				   if(MyEntityPM.StatusCode != null)
+				   {
+					   StatusCodeQueryService StatusCodeService1 = new StatusCodeQueryService(Tenant);
+					   					   temp.StatusCode = StatusCodeService1.GetStatusCodeByCode(MyEntityPM.StatusCode,Tenant); 
+			       
+					   				   }
+				   
+				   temp.StatusName = MyEntityPM.StatusName;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -104,13 +119,38 @@ using Logitude.Accounting.Data;
 						temp.Id = MyEntity.Id;
 					}
 					temp.Tenant = MyEntity.Tenant;
+					CurrencyQueryService CurrencyCurrencyService = new CurrencyQueryService(Tenant);
+					if(MyEntity.Currency != null)
+					{
+						var myCurrencyPM = CurrencyCurrencyService.CurrencyDataMappingAndValidatin(MyEntity.Currency,Tenant,ComputingPartnerName);
+												if(myCurrencyPM != null)
+						{
+							temp.CurrencyId = myCurrencyPM.Id;
+						}
+						 
+					}
+			
+					
 					temp.ChequeNumber = MyEntity.ChequeNumber;
 					temp.ValueDate = MyEntity.ValueDate;
 					temp.LocalAmount = MyEntity.LocalAmount;
 					temp.ForeignAmount = MyEntity.ForeignAmount;
-					temp.BankName = MyEntity.BankName;
+					temp.BankId = MyEntity.BankId;
 					temp.BankBranch = MyEntity.BankBranch;
-					temp.BankAccount = MyEntity.BankAccount;					   
+					temp.BankAccount = MyEntity.BankAccount;
+					StatusCodeQueryService StatusCodeStatusCodeService = new StatusCodeQueryService(Tenant);
+					if(MyEntity.StatusCode != null)
+					{
+						var myStatusCodePM = StatusCodeStatusCodeService.StatusCodeDataMappingAndValidatin(MyEntity.StatusCode,Tenant,ComputingPartnerName);
+												if(myStatusCodePM != null)
+						{
+							temp.StatusCode = myStatusCodePM.Code;
+						}
+						 
+					}
+			
+					
+					temp.StatusName = MyEntity.StatusName;					   
 					   return temp;
 		    }
             catch (Exception ex)

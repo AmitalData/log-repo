@@ -22,11 +22,6 @@ Feature: Create multiple shipment AP Invoice
     When create customer
     Then the customer should create successfully
 
-  Scenario: Update Accounting System
-    Given accounting System as "None"
-    When change the accounting system
-    Then the accounting system should update successfully
-
   Scenario: Create first direct export air shipment
     Given the user in shipments workspace
     And a direct shipment with the following details

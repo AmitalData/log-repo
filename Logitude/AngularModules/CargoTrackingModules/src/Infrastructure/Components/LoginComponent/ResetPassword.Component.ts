@@ -52,8 +52,8 @@ export class ResetPasswordComponent implements OnInit {
                 this.Tenant = response.Result.Tenant;
                 ServiceHelper.SetCargoTrackingDate(response.Result,baseUrl);
                 this.LogoImgSrc = this.loginServiceHelper.GetLoginLogoImg();
-                this.MainColor = response.Result.MainColor != null ? ServiceHelper.ConvertHexaToRGBA(response.Result.MainColor) : null;
-                this.SecondaryColor = response.Result.SecondaryColor != null ? ServiceHelper.ConvertHexaToRGBA(response.Result.SecondaryColor) : null;
+                this.MainColor = response.Result.MainColor;
+                this.SecondaryColor = response.Result.SecondaryColor;
             }
             else{
                 this.GoToError401();
@@ -67,7 +67,7 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     private initComponent() {
-        document.body.style.background = "#fff";
+        // document.body.style.background = "#fff";
     }
 
     private captchaCode: string = "";

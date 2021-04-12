@@ -1,4 +1,4 @@
-@release @all @dev 
+@release @all @stable 
 Feature:  Select Phone and Fax Fields as Mandatory for Potential and Active Customers, and Address 1 as Mandatory for Active Customers from Maintenance
 
     The user enables phone, fax and address 1 fields to be mandatory when creating an active customer 

@@ -1,4 +1,4 @@
-@release @all @dev
+@release @all @stable 
 Feature: Vendor Create, Search and Edit from Maintenance
     The user creates a vendor, searches for and edits it from the Maintenance Module.
 
@@ -15,6 +15,7 @@ Feature: Vendor Create, Search and Edit from Maintenance
             | Phone       | 9999999999              |
             | Fax         | 999999                  |
         And a vendor contact with the following details
+            | AddContact    | Yes         |
             | EnglishName   | TestContact |
             | Position      | Developer   |
             | BusinessPhone | 8888888888  |

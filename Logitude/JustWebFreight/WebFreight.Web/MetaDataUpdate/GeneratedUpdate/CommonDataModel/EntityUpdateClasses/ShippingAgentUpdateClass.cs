@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ShippingAgentUpdateClass
    {  		
-		public const string HashString = "861780032a9738619ff02f380f881027";
+		public const string HashString = "9c58b5b7d1d7c9a2bd4698ba234feb04";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3008,7 +3008,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SAGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShippingAgentGeneralFeature_TH0.Id,FeatureUniqeCode = ShippingAgentGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ShippingAgentObjectTable.Id, TabNameTextCodeId = ShippingAgentGeneralTextCode_TH0.Id, TabNameTextCodeCode = ShippingAgentGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SAGC",HtmlComponentName = "ShippingAgentGeneralTabComponent",HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/ShippingAgent/ShippingAgentGeneralTabComponent", FeatureId = ShippingAgentGeneralFeature_TH0.Id,FeatureUniqeCode = ShippingAgentGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ShippingAgentObjectTable.Id, TabNameTextCodeId = ShippingAgentGeneralTextCode_TH0.Id, TabNameTextCodeCode = ShippingAgentGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "SABL",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ShippingAgentBillingFeature_TH1.Id,FeatureUniqeCode = ShippingAgentBillingFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = ShippingAgentObjectTable.Id, TabNameTextCodeId = ShippingAgentBillingTextCode_TH1.Id, TabNameTextCodeCode = ShippingAgentBillingTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    

@@ -386,6 +386,19 @@ namespace Logitude.BL.QuoteModel.Tools.TraceEvents
                     Notes = entityPM.EventNote,
                 });
             }
+
+            if (entityPM.ConvertTransportMode)
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = tenant,
+                    EventTypeCode = "QCTM",
+                    UserId = loggedContactId,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "Quote",
+                    Notes = entityPM.EventNote,
+                });
+            }
         }
 
         public static void DeleteQuoteTraceEvent(QuotePM quotePM, string traceEventId, int tenant, bool external)

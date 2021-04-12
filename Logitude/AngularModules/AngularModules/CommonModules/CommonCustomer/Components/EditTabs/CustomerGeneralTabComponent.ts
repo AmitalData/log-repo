@@ -32,6 +32,7 @@ declare var UploadLogoFile, HideImage, SetImage, ArrayBufferToBase64: any;
 import {CustomerFieldsUpdateSettingListService} from '../../../../Common/Services/StandardLists/CustomerFieldsUpdateSettingListService';
 import {CustomerFieldsUpdateSettingList} from '../../../../Common/EntityLists/CustomerFieldsUpdateSettingList';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({    
     templateUrl: './CustomerGeneralTabComponent.html',
@@ -63,6 +64,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     private groupByPipe: GroupByPipe;
+    public IsAmitalCloudEnvironment: boolean = false;
     constructor(public entityArgs: EntityArgs, public _imageLibraryService: ImageLibraryService, private CD: ChangeDetectorRef, private entityPMService: EntityPMService) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -129,6 +131,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
             this.RankSource2();
             this.RankSource3();
             this.SetMoreButtonsVisibility();
+            this.CheckAmitalCloudEnviroment();
         }
 
         else {
@@ -1180,6 +1183,14 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
             this.IsMoreButtonVisible_Mediator = true;
         }
     }
+
+    CheckAmitalCloudEnviroment() {
+        var amitalEnvironment = "amitalstorage"
+        if (ObjectsLocator.GlobalSetting.DeploymentStage == amitalEnvironment) {
+            this.IsAmitalCloudEnvironment = true;
+        }
+    }
+
     MoreButtonClicked(field: string) {
 
         var windowTitle: string = null;

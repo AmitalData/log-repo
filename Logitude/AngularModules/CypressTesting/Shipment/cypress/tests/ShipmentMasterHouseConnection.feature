@@ -1,4 +1,4 @@
-@smoke
+@smoke @dev
 Feature: Shipment Master House Connection
     The user creates a Master Export Air shipment, creates a House Export Air shipment from withing the Master shipment,
     disconnects the House from the Master, creates a House Export Air shipment from outside the Master,
@@ -14,12 +14,13 @@ Feature: Shipment Master House Connection
             | MainCarriageFromPort | LHR       |
             | MainCarriageToPort   | MIA       |
         When create shipment
-        Then the master should create successfully
+        Then the master should create successfully 
 
     Scenario: Create house export air shipment inside the master
         Given the user in the master's Shipment tab
         When create house with "TestShipperExport" as Shipper
-        Then the house should create and connect successfully
+        Then the house should create successfully
+        And the house should connect successfully
 
     Scenario: Disconnect the house shipment
         When disconnect shipment

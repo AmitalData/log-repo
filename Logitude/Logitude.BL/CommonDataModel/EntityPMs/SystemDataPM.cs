@@ -28,5 +28,12 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string AddressId { get; set; }
         public string VatNumber { get; set; }
         public string Supportemail { get; set; }
+        public string UserSignatureImage { get; set; }
+
+
+        
+
+
+
     }
 }

@@ -35,10 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-
-
-  Code="&quot;3029&quot;"
-
+  Code="&quot;7055&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5074,6 +5071,11 @@
       LocalDefaultText="&quot;תאריך חיבור אחרון&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MH.ReportExecutionLogs&quot;"
+      DefaultText="&quot;Report Execution Logs&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -7065,7 +7067,6 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-
     <Feature
       Code="&quot;ChangeLocalProfitCurrency&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
@@ -7075,7 +7076,6 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-
     <Feature
       Code="&quot;DailyCurrenciesRates&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
@@ -7085,6 +7085,14 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-
+    <Feature
+      Code="&quot;REPORTEXECUTIONLOGS&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.REPORTEXECUTIONLOGS&quot;"
+      FeatureDefaultText="&quot;Report Execution Logs&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>

@@ -27,7 +27,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
 
         public string BackgroundImageId { get; set; }
           
-        public string MainImageId { get; set; }
+        public string LoginImageId { get; set; }
         public string MainColor { get; set; }
         public string LoginProgressImageId { get; set; }
         public string ForgetPasswordImageId { get; set; }
