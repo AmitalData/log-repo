@@ -28,11 +28,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             var shipmentMasterFields =
                  "Mas.MainCarriageATD as MainCarriageATD, Mas.Master as Master " +
                 ", Mas.MainCarriageETD  as MainCarriageETD , Mas.MainCarriageATA  as MainCarriageATA " +
-                ", Mas.MainCarriageETA  as MainCarriageETA";
+                ", Mas.MainCarriageETA  as MainCarriageETA ";
 
 
             var groupSelect = "Min(P.Id) as ForwardingIdForCustom" +
-                            ", min(P.ShipmentNumber) as ForwardingShipmentNumber ";
+                            ", min(P.ShipmentNumber) as ForwardingShipmentNumber " + 
+                            ", min(P.ShipmentLevelCode) as ForwardingShipmentLevelCode ";
 
             var selectScript = $"SELECT {shipmentFields}, {shipmentComputedFields}, {shipmentMasterFields}, {groupSelect} ";
 
@@ -120,7 +121,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                  "Mas.MainCarriageATD as MainCarriageATD, Mas.Master as Master " +
                 ",  Mas.MainCarriageETD  as MainCarriageETD , Mas.MainCarriageATA  as MainCarriageATA " +
                 ", Mas.MainCarriageETA  as MainCarriageETA," +
-                "min(P.ShipmentNumber) as ForwardingShipmentNumber ";
+                "min(P.ShipmentNumber) as ForwardingShipmentNumber , " + 
+                " min(P.ShipmentLevelCode) as ForwardingShipmentLevelCode ";
 
 
             var selectScript = $"Select {shipmentFields} , {shipmentComputedFields} , {shipmentMasterFields} ";
