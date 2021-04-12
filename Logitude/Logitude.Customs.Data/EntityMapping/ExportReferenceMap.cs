@@ -1,0 +1,38 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class ExportReferenceMap : EntityTypeConfiguration<ExportReference>
+    {
+	    string dbms;
+        public ExportReferenceMap()
+        { 
+			  this.ToTable("ExportReferences", "Customs");
+		
+		    this.HasKey(t => new { t.Id });
+	 
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
+
+            this.Property(t => t.StorageNo).HasColumnName("StorageNo").IsRequired();
+
+            this.Property(t => t.RefType).HasColumnName("RefType").HasMaxLength(100).IsUnicode(true);
+
+            this.Property(t => t.RefValue).HasColumnName("RefValue").HasMaxLength(100).IsUnicode(false);
+        }
+    }
+}
+	 

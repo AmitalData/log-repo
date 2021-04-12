@@ -328,6 +328,7 @@
     <None Include="DBTables\ExportDeclarationClosingData.dxml" />
     <None Include="DBTables\ExportDeliveryDocumentMessage.dxml" />
     <None Include="DBTables\ExporterRoleType.dxml" />
+    <None Include="DBTables\ExportReference.dxml" />
     <None Include="DBTables\ExportStorge.dxml" />
     <None Include="DBTables\ExportStorgeCargo.dxml" />
     <None Include="DBTables\FacilitationType.dxml" />

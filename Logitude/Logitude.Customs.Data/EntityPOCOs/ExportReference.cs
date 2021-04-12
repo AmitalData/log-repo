@@ -1,0 +1,37 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class ExportReference
+    {
+	 string dbms;
+
+        [Key]
+        [ForeignKey("ExportStorge")]
+        [Column("Id")]
+	    public string Id { get; set; }
+	      
+        public virtual ExportStorge ExportStorge { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [Column("StorageNo")]
+	    public int StorageNo { get; set; }
+        [Column("RefType")]
+	    public string RefType { get; set; }
+        [Column("RefValue")]
+	    public string RefValue { get; set; }
+    }
+}
+	 

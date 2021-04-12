@@ -1390,6 +1390,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\ExportDeclarationClosingDataPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ExportDeliveryDocumentMessagePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ExporterRoleTypePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\ExportReferencePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ExportStorgeCargoPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ExportStorgePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\Extended\InvoiceQueue.ts" />

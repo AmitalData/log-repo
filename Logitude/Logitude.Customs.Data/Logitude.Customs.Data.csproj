@@ -168,6 +168,7 @@
     <Compile Include="EntityKeys\ExportDeclarationClosingDataKeys.cs" />
     <Compile Include="EntityKeys\ExportDeliveryDocumentMessageKeys.cs" />
     <Compile Include="EntityKeys\ExporterRoleTypeKeys.cs" />
+    <Compile Include="EntityKeys\ExportReferenceKeys.cs" />
     <Compile Include="EntityKeys\ExportStorgeCargoKeys.cs" />
     <Compile Include="EntityKeys\ExportStorgeKeys.cs" />
     <Compile Include="EntityKeys\FclLclCodeKeys.cs" />
@@ -282,6 +283,7 @@
     <Compile Include="EntityListQueryServices\ExportDeclarationClosingDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ExportDeliveryDocumentMessageListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ExporterRoleTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ExportReferenceListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ExportStorgeCargoListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ExportStorgeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\FclLclCodeListQueryService.cs" />
@@ -356,6 +358,7 @@
     <Compile Include="EntityListQueryServices\Generated\ExportDeclarationClosingDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ExportDeliveryDocumentMessageListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ExporterRoleTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ExportReferenceListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ExportStorgeCargoListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ExportStorgeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\FclLclCodeListQueryService.Generated.cs" />
@@ -510,6 +513,7 @@
     <Compile Include="EntityLists\Generated\ExportDeclarationClosingDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ExportDeliveryDocumentMessageList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ExporterRoleTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ExportReferenceList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ExportStorgeCargoList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ExportStorgeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\FclLclCodeList.Generated.cs" />
@@ -625,6 +629,7 @@
     <Compile Include="EntityMapping\ExportDeclarationClosingDataMap.cs" />
     <Compile Include="EntityMapping\ExportDeliveryDocumentMessageMap.cs" />
     <Compile Include="EntityMapping\ExporterRoleTypeMap.cs" />
+    <Compile Include="EntityMapping\ExportReferenceMap.cs" />
     <Compile Include="EntityMapping\ExportStorgeCargoMap.cs" />
     <Compile Include="EntityMapping\ExportStorgeMap.cs" />
     <Compile Include="EntityMapping\FclLclCodeMap.cs" />
@@ -739,6 +744,7 @@
     <Compile Include="EntityPOCOs\ExportDeclarationClosingData.cs" />
     <Compile Include="EntityPOCOs\ExportDeliveryDocumentMessage.cs" />
     <Compile Include="EntityPOCOs\ExporterRoleType.cs" />
+    <Compile Include="EntityPOCOs\ExportReference.cs" />
     <Compile Include="EntityPOCOs\ExportStorge.cs" />
     <Compile Include="EntityPOCOs\ExportStorgeCargo.cs" />
     <Compile Include="EntityPOCOs\FclLclCode.cs" />
@@ -854,6 +860,7 @@
     <Compile Include="Repsitories\ExportDeclarationClosingDataRepository.cs" />
     <Compile Include="Repsitories\ExportDeliveryDocumentMessageRepository.cs" />
     <Compile Include="Repsitories\ExporterRoleTypeRepository.cs" />
+    <Compile Include="Repsitories\ExportReferenceRepository.cs" />
     <Compile Include="Repsitories\ExportStorgeCargoRepository.cs" />
     <Compile Include="Repsitories\ExportStorgeRepository.cs" />
     <Compile Include="Repsitories\FclLclCodeRepository.cs" />
@@ -928,6 +935,7 @@
     <Compile Include="Repsitories\Generated\ExportDeclarationClosingDataRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ExportDeliveryDocumentMessageRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ExporterRoleTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\ExportReferenceRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ExportStorgeCargoRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ExportStorgeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\FclLclCodeRepository.Generated.cs" />

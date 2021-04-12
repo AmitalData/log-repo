@@ -438,6 +438,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ExporterRoleTypeMap());
 	
+            modelBuilder.Configurations.Add(new ExportReferenceMap());
+	
             modelBuilder.Configurations.Add(new ExportStorgeMap());
 	
             modelBuilder.Configurations.Add(new ExportStorgeCargoMap());
@@ -2426,6 +2428,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ExporterRoleType> ExporterRoleTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ExportReference> ExportReferences 
 	 {
 	      get; set;
 	 
