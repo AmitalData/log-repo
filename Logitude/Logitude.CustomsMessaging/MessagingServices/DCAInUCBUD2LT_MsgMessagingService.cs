@@ -20,9 +20,11 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,7 +50,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
         UniCourierBatchSendUCBUD2LT_MsgResponseService, RequestHeader>
 
     {
-
         public override string MainInterfaceCode
         {
             get { return "UCBUD2LT"; }
@@ -246,11 +247,21 @@ namespace Logitude.CustomsMessaging.MessagingServices
     public class CreateUD2LTService : ICreateUD2LTService
     {
         private DocumentsFilingPM _DocumentsFilingPM;
-
+        
         public void //JustDoIt(string DocumentsFilingId, int tenant)
             JustDoIt(object documentsFilingPM)
         {
-            DateTime stopLogAt = new DateTime(2022, 01, 01);
+            DateTime stopLogAt = DateTime.MinValue; //new DateTime(2022, 01, 01);
+            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20220412HD367591.LogUntilDateyyyyMMdd"];
+            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+            {
+                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+                                                    "yyyyMMdd",
+                                                    CultureInfo.InvariantCulture,
+                                                    DateTimeStyles.None);
+            }
+
+            
             DeclarationPM declarationPM;
             Debug.WriteLine("CreateUD2LTService");
             string logData = "";
@@ -321,7 +332,19 @@ namespace Logitude.CustomsMessaging.MessagingServices
                                 Debug.WriteLine("def.DEFDATA.Contains(declarationPM.CustomerId)");
                                 shouldCreateDCAComm = true;
                             }
+                            else
+                            {
+                                LogitudeSettings.HandleLogMe("default CGG_DEC_DOC_CLT does not contains declarationPM.CustomerId " + declarationPM.CustomerId + logData, false, "CreateUD2LTService", stopLogAt);
+                            }
                         }
+                        else
+                        {
+                            LogitudeSettings.HandleLogMe("default CGG_DEC_DOC_CLT is empty " + logData, false, "CreateUD2LTService", stopLogAt);
+                        }
+                    }
+                    else
+                    {
+                        LogitudeSettings.HandleLogMe("Not Diamond Declaration " + logData, false, "CreateUD2LTService", stopLogAt);
                     }
 
                 }
@@ -332,7 +355,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     return;
                 }
 
-                if (TicketalreadyExistforthisDocument())
+                if (TicketalreadyExistforthisDocument(declarationPM))
                 {
                     LogitudeSettings.HandleLogMe("TicketalreadyExistforthisDocument()" + logData, false, "CreateUD2LTService", stopLogAt);
                     Debug.WriteLine("TicketalreadyExistforthisDocument");
@@ -419,7 +442,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
 
-        private bool TicketalreadyExistforthisDocument()
+        private bool TicketalreadyExistforthisDocument(DeclarationPM declarationPM)
         {
             CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(_DocumentsFilingPM.Tenant);
             List<CustomsDocumentsTicketPM> myCustomsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketsByDocumentsFilingId(_DocumentsFilingPM.Id, _DocumentsFilingPM.Tenant);
@@ -432,7 +455,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     List<CustomsDocumentPointerPM> myCustomsDocumentPointerPMList = myCustomsDocumentPointerQueryService.GetPointersForMultipleTickets(ticketdIds, _DocumentsFilingPM.Tenant);
                     if (myCustomsDocumentPointerPMList != null && myCustomsDocumentPointerPMList.Count() > 0)
                     {
-                        var myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(o => o.ParentEntityCode == "Declaration" && o.ParentEntityId == _DocumentsFilingPM.Id);
+                        var myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(o => o.ParentEntityCode == "Declaration" && o.ParentEntityId == declarationPM.Id);
                         if (myCustomsDocumentPointerPMListforDec != null && myCustomsDocumentPointerPMListforDec.Count() > 0)
                         {
                             return true;
@@ -440,6 +463,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     }
                 }
             }
+            
             return false;
         }
 
