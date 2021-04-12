@@ -43,10 +43,28 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
     
         if (!AppTool.IsNullOrEmpty(args)) {
             this.paymentPM = args.EntityPM;
+            this.AddChequeRecord();
         }
     }
 
+    AddChequeRecord() {
+        var cheque: ARPaymentChequeReplicaPM = new ARPaymentChequeReplicaPM(this.paymentPM);
 
+        cheque.PaymentId = this.paymentPM.Id,
+            cheque.Tenant = this.paymentPM.Tenant;
+        cheque.LineNumber = 1;
+        cheque.BankId = this.paymentPM.Bank;
+        cheque.BankBranch = this.paymentPM.BankBranch;
+        cheque.BankAccount = this.paymentPM.Account;
+        cheque.ValueDate = this.paymentPM.ValueDate;
+        cheque.ChequeNumber = this.paymentPM.ChequeOrPaymentRef;
+        cheque.ForeignAmount = this.paymentPM.AmountInPaymentCurrency;
+        if (!this.paymentPM.ARPaymentChequeReplicas.includes(cheque)) {
+            this.paymentPM.AddARPaymentChequeReplicaPM(cheque);
+            this.ItemsSource.Insert(new PaymentChequeLine(cheque, this));
+
+        }
+    }
   
 
     BuildChequesList() {
@@ -196,6 +214,14 @@ export class PaymentChequeLine extends BaseComponent {
         }
     }
 
+    get ForeignAmount() { return this.entityPM.ForeignAmount; }
+    set ForeignAmount(value: number) {
+        if (this.entityPM.ForeignAmount != value) {
+            this.entityPM.ForeignAmount = value;
+
+        }
+    }
+
 
     get ValueDate() { return this.entityPM.ValueDate; }
     set ValueDate(value: Date) {
@@ -233,6 +259,14 @@ export class PaymentChequeLine extends BaseComponent {
     set BankNumber(value: string) {
         if (this.entityPM.BankNumber != value) {
             this.entityPM.BankNumber = value;
+
+        }
+    }
+
+    get BankId() { return this.entityPM.BankId; }
+    set BankId(value: string) {
+        if (this.entityPM.BankId != value) {
+            this.entityPM.BankId = value;
 
         }
     }

@@ -41,29 +41,26 @@
 
 
 
-
-                                <log-column [header]="'ARPaymentCheque.F.LineNumber' | TextCodeTranslationPipe" [binding]="'LineNumber'" [width]="'100'" [Editable]="true" [Alignment]="'right'">
+                                <log-column [header]="'ARPaymentCheque.F.LineNumber' | TextCodeTranslationPipe" [width]="'75'" [Alignment]="'right'">
                                     <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                        <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                            <div style="text-align:right" class="TextTrimming">
                                                 <span>{{item.LineNumber}}</span>
                                             </div>
-                                           
                                         </log-cell-template>
                                     </ng-template>
-
-
                                 </log-column>
 
-                                <log-column [header]="'ARPaymentCheque.F.LocalAmount' | TextCodeTranslationPipe" [binding]="'LocalAmount'" [width]="'100'" [Editable]="true" [Alignment]="'right'">
+
+                                <log-column [header]="'ARPaymentCheque.F.ForeignAmount' | TextCodeTranslationPipe" [binding]="'ForeignAmount'" [width]="'100'" [Editable]="true" [Alignment]="'right'">
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate>
                                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
-                                                <span>{{item.LocalAmount}}</span>
+                                                <span>{{item.ForeignAmount}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'LocalAmount'" [DataContext]="item"
-                                                            [Text]="item.LocalAmount" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'ForeignAmount'" [DataContext]="item"
+                                                            [Text]="item.ForeignAmount" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
 
                                             </div>
                                         </log-cell-template>
@@ -114,11 +111,11 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate>
                                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
-                                                <span>{{item.Bank}}</span>
+                                                <span>{{item.BankId}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Bank'" [DataContext]="item"
-                                                            [Text]="item.Bank" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'BankId'" [DataContext]="item"
+                                                            [Text]="item.BankId" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
 
 
                                             </div>
