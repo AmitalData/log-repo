@@ -303,13 +303,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             this.shipmentPM = shipmentPM;
             this.tenant = shipmentPM.Tenant;
             this.todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-            this.storageDays = this.ComputeStorageDaye();
-            this.readyToCalculateStorage = this.CheckIfReadyToCalculateStorage();
             this.storageShipmentReceivable = shipmentPM.ShipmentReceivables.Where(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && string.IsNullOrEmpty(d.ARInvoiceId)).FirstOrDefault();
         }
 
         public void StartCalculations()
         {
+            this.storageDays = this.ComputeStorageDaye();
+            this.readyToCalculateStorage = this.CheckIfReadyToCalculateStorage();
+
             if (readyToCalculateStorage)
             {
                 double? amount = this.ComputeReceivableAmount();
