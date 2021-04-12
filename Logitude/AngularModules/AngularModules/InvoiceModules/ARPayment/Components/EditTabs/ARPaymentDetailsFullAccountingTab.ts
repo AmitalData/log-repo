@@ -2071,6 +2071,22 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         return this.PaymenyAmount - this.paymentReconciledAmountTotal - this.amount2reconcileTotal;
     }
 
+    AddChequesButtonClicked() {
+     
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 1000;
+            logWindow.Height = 600;
+          
+            logWindow.ShowCloseButton = false;
+            logWindow.WindowArgs = windowArgs;
+        
+        logWindow.Show('./InvoiceModules/ARPayment/Components/Other/ARPaymentMultiChequesComponent');
+        }
+    
+
 }
 
 
