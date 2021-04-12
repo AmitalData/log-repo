@@ -86,6 +86,14 @@ namespace Logitude.Accounting.BL.EntityQueryServiceExt
 
 
         }
+        public IQueryable<GLAccountPM> GetSplittedByCurrencyGLAccounts(string accountId, int tenant)
+        {
+            EntityQueryServices.GLAccountQueryService query = new EntityQueryServices.GLAccountQueryService(tenant);
+            IQueryable<GLAccountPM> gLAccounts = query.GetSplittedByCurrencyGLAccounts(accountId, tenant);
 
+            return gLAccounts;
+
+
+        }
     }
 }
