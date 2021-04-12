@@ -124,7 +124,7 @@ export class UserDashboardComponent implements AfterViewInit
     {
         var loggedEmail = sessionStorage.getItem("LoggedUserEmail");
         if (!loggedEmail)
-            this.router.navigate(["Cargo-Tracking", "login"]);
+            this.router.navigate(["cargo-tracking", "login"]);
     }
 
     isNavOpened = false;
@@ -141,9 +141,9 @@ export class UserDashboardComponent implements AfterViewInit
         sessionStorage.clear();
         if (this.tenant)
 
-            this.router.navigate(["Cargo-Tracking/login"]);//,{ queryParams: {tenant: this.tenant}}
+            this.router.navigate(["cargo-tracking/login"]);//,{ queryParams: {tenant: this.tenant}}
         else
-            this.router.navigate(["Cargo-Tracking/login"]);
+            this.router.navigate(["cargo-tracking/login"]);
     }
 
 
@@ -169,7 +169,7 @@ export class UserDashboardComponent implements AfterViewInit
         {
             if (response.Result) {
                 ServiceHelper.SetCargoTrackingDate(response.Result, this.baseURL);
-                
+
                 this.IsBrandingDataLoaded = true;
             }
             else {
@@ -194,11 +194,11 @@ export class UserDashboardComponent implements AfterViewInit
     get BackGroundImg()
     {
         return CargoTrackingBrandingData.BackgroundURL;
-    } 
+    }
     get ShipmentHeaderImage(){
         return CargoTrackingBrandingData.ShipmentHeaderURL;
     }
-    
+
 
 
 }
