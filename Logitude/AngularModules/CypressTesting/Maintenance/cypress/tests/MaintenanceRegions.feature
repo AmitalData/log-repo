@@ -1,4 +1,4 @@
-@release @dev @all
+@release @dev @all 
 Feature: Region Create, Edit and Inactivate in Maintenance Module
     The user creates a region, edits and inactivates it from the Maintenance Module.
 
@@ -7,7 +7,7 @@ Feature: Region Create, Edit and Inactivate in Maintenance Module
         And a region with the following details
             | RegionName      | random |
             | RegionLocalName | random |
-            | InactiveRegion  | Yes    |
+            | InactiveRegion  | No     |
         When add region
         Then the region should add successfully
 
@@ -21,9 +21,9 @@ Feature: Region Create, Edit and Inactivate in Maintenance Module
 
     Scenario: Edit the region
         Given a "newRegionLocalName" as regionLocalName
-        And  the user activate region
+        And  the user inactivate region
         When edit region
         Then the region should update successfully
         And following event should appear in events tab
-            | Event          | Notes            |
-            | Region Updated | Region Activated |
+            | Event          | Notes              |
+            | Region Updated | Region Inactivated |

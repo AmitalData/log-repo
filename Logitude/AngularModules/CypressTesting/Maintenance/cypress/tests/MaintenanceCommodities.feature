@@ -1,4 +1,4 @@
-@release @dev @all
+@release @dev @all 
 Feature: Commodity Create, Edit and Inactivate in Maintenance Module
     The user creates a commodity, edits and inactivates it from the Maintenance Module.
 
@@ -11,7 +11,7 @@ Feature: Commodity Create, Edit and Inactivate in Maintenance Module
         Given a commodity with the following details
             | CommodityCode     | random |
             | CommodityName     | random |
-            | InactiveCommodity | Yes    |
+            | InactiveCommodity | No     |
         When add commodity
         Then the commodity should add successfully
 
@@ -25,9 +25,9 @@ Feature: Commodity Create, Edit and Inactivate in Maintenance Module
 
     Scenario: Edit the commodity
         Given a "Newcommodity" as commodityName
-        And  the user activate commodity
+        And  the user inactivate commodity
         When edit commodity
         Then the commodity should update successfully
         And following event should appear in events tab
-            | Event             | Notes               |
-            | Commodity Updated | Commodity Activated |
+            | Event             | Notes                 |
+            | Commodity Updated | Commodity Inactivated |

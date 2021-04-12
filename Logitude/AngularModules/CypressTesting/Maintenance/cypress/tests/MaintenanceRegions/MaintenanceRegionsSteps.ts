@@ -59,7 +59,7 @@ Given("a {string} as regionLocalName", (commoditylName) => {
     MaintenanceActions.FillRegionLocalName(commoditylName)
 });
  
-Given("the user activate region", () => {
+Given("the user inactivate region", () => {
     MaintenanceActions.ChangeInactiveCheckBoxValue(MaintenanceSelectors.InActiveRegionCheckBox)
 });
  

@@ -70,7 +70,7 @@ Given("a {string} as commodityName", (commoditylName) => {
     MaintenanceActions.FillCommodityName(commoditylName)
 });
  
-Given("the user activate commodity", () => {
+Given("the user inactivate commodity", () => {
     MaintenanceActions.ChangeInactiveCheckBoxValue(MaintenanceSelectors.InActiveCommodityCheckBox)
 });
  

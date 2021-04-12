@@ -1147,7 +1147,16 @@ export function FillCheckBoxProcess(CheckBoxSelector: string, IsCheck: string) {
         }
     }
 }
-
+export function FillInputCheckBoxProcess(CheckBoxSelector: string, IsCheck: string) {
+    if (IsCheck) {
+        if (IsCheck.toUpperCase() == constants.YES) {
+            cy.get(CheckBoxSelector).check({ force: true })
+        }
+        else {
+            cy.get(CheckBoxSelector).uncheck({ force: true })
+        }
+    }
+}
 function DefineGetByFilterRequest() {
     cy.DefineRequestWait(RestAPI.GET, Urls.GetByFilter, RequestAliases.GetByFilter);
 }
@@ -1377,7 +1386,7 @@ export function FillCommodityDetails(commodityDetails:CommodityDetails){
     var RandomCommodityNumber=GetRandomCommodityCodeNumber();
     cy.FillLogTextBox(MaintenanceSelectors.CommodityCode, commodityDetails.CommodityCode.toLowerCase() == "random"?RandomCommodityNumber:commodityDetails.CommodityCode)
     cy.FillLogTextBox(MaintenanceSelectors.CommodityName, commodityDetails.CommodityName.toLowerCase() == "random"?RandomCommodityNumber:commodityDetails.CommodityName)
-    FillCheckBoxProcess(MaintenanceSelectors.InActiveCommodityCheckBox,commodityDetails.InactiveCommodity)
+    FillInputCheckBoxProcess(MaintenanceSelectors.InActiveCommodityCheckBox,commodityDetails.InactiveCommodity)
 }
 function GetRandomCommodityCodeNumber(){
     return gr.GenerateRandomNumberAndString(15);
@@ -1476,7 +1485,7 @@ export function FillRegionDetails(regionDetails:RegionDetails){
     var RandomRegionName=GetRandomRegionName();
     cy.FillLogTextBox(MaintenanceSelectors.RegionName, regionDetails.RegionName.toLowerCase() == "random"?RandomRegionName: regionDetails.RegionName)
     cy.FillLogTextBox(MaintenanceSelectors.RegionLocalName, regionDetails.RegionLocalName.toLowerCase() == "random"?RandomRegionName: regionDetails.RegionLocalName)
-    FillCheckBoxProcess(MaintenanceSelectors.InActiveRegionCheckBox,regionDetails.InactiveRegion)
+    FillInputCheckBoxProcess(MaintenanceSelectors.InActiveRegionCheckBox,regionDetails.InactiveRegion)
 }
 function GetRandomRegionName(){
     return gr.GenerateRandomNumberAndString(15);
