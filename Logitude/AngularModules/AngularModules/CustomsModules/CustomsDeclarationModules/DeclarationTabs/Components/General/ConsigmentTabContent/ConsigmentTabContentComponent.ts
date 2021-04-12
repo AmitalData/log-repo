@@ -29,7 +29,9 @@ import { MessageWindow } from '../../../../../../Controls/Windows/MessageWindow'
 import { LogitudeWindow } from '../../../../../../Controls/Windows/LogitudeWindow';
 import { WindowArgs } from '../../../../../../Infrastructure/DataContracts/WindowArgs';
 import { CustomsRequiredFieldExtendedListService } from '../../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
- import { Dictionary } from '../../../../../../Infrastructure/GenericTypes/Dictionary';
+import { Dictionary } from '../../../../../../Infrastructure/GenericTypes/Dictionary';
+import { DeclarationCourierStatusList } from '../../../../../../Customs/EntityLists/DeclarationCourierStatusList';
+import { DeclarationCourierStatusListService } from '../../../../../../Customs/Services/StandardLists/DeclarationCourierStatusListService';
 
 @Component({
     selector: 'ConsigmentTabContent',
@@ -52,6 +54,7 @@ export class ConsigmentTabContentComponent
     public ParentIsDisplayOnly: boolean = false;
     ShowExcludeConsignmentBoolean: boolean = false;
     IsCourierDeclaration: boolean = false;
+    _DeclarationCourierStatus: DeclarationCourierStatusList;
 
     public LoadingPortFilterItems: ApiQueryFilters;//38388
 
@@ -240,9 +243,31 @@ export class ConsigmentTabContentComponent
         this.BuildSitesList();
         this.InitLOVFilters();//38388
         this.CheckRequrierdFieldsForSend();
+        this.GetDeclarationCourierStatusData();
 
   
         console.log("Tabs Args: ", args);
+    }
+
+    GetDeclarationCourierStatusData() {
+        if (this.IsCourierDeclaration) {
+            let myDeclarationCourierStatusListService: DeclarationCourierStatusListService = new DeclarationCourierStatusListService();
+
+            let filters = new ApiQueryFilters();
+
+            filters.addAdditionalFilter("DeclarationId", this.declarationPM.Id, null, null, "Equals", false, false, false, "string");
+            filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
+            filters.PageSize = 1;
+            myDeclarationCourierStatusListService.getByFilters(filters)
+                .subscribe((serviceResponse1: ServiceResponse) => {
+                    let mappedDeclarationCourierStatusList: Array<DeclarationCourierStatusList> = serviceResponse1.Result;
+                    if (mappedDeclarationCourierStatusList != null && mappedDeclarationCourierStatusList.length > 0) {
+                        this._DeclarationCourierStatus = mappedDeclarationCourierStatusList[0];
+                    }
+
+                });
+
+        }
     }
 
     SetDateVisibilty() {
@@ -306,6 +331,10 @@ export class ConsigmentTabContentComponent
         }
     }
     //#region Properties
+
+    
+    public get CrateNumber() { return this._DeclarationCourierStatus.CrateNumber; }
+    public set CrateNumber(newValue: string) { this._DeclarationCourierStatus.CrateNumber = newValue; }
 
     couriersVatId: string;
     public get CouriersVatId() { return this.couriersVatId; }
