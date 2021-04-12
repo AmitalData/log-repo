@@ -22,7 +22,7 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 { 
-   public partial class ExportReferenceUpdateService:EntityUpdateService<ExportReference,ExportReferencePM,Customs.ExportStorgePM>
+   public partial class ExportReferenceUpdateService:EntityUpdateService<ExportReference,ExportReferencePM,ExportStorgePM>
    {
    
         ExportReferenceRepository entityRepository;

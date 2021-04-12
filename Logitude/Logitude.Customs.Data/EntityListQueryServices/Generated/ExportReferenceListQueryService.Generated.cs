@@ -104,7 +104,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                             }
                         default:
                             {
-                                query2 = query2.OrderBy(d => d.Id);
+                                query2 = query2.OrderBy(d => d.StorageNo);
                                 break;
                             }
                     }
@@ -113,7 +113,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             }
 		    else
             {
-                query2 = query2.OrderBy(d => d.Id);
+                query2 = query2.OrderBy(d => d.StorageNo);
             }
 			if(!queryOperations.GetAll)
 			{

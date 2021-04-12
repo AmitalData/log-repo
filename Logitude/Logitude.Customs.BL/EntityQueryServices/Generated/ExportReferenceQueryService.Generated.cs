@@ -17,7 +17,7 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Customs.BL.EntityQueryServices
 { 
-   public partial class ExportReferenceQueryService: EntityQueryService<ExportReference,ExportReferenceKeys,ExportReferencePM,Customs.ExportStorgePM,Customs.ExportStorgeKeys>
+   public partial class ExportReferenceQueryService: EntityQueryService<ExportReference,ExportReferenceKeys,ExportReferencePM,ExportStorgePM,ExportStorgeKeys>
    {
    
         ExportReferenceRepository repository;

@@ -86,6 +86,7 @@
     <Compile Include="EntityPMs\Generated\ExportDeclarationClosingDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExportDeliveryDocumentMessagePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExporterRoleTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ExportReferencePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExportStorgeCargoPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExportStorgePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FclLclCodePM.Generated.cs" />
