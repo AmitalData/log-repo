@@ -1,4 +1,4 @@
-@release @dev 
+@release @FeatureToggle @NewDev
 Feature: Create New Freight Cost Tariff
     The authenticated user will create new air, ocean LCL, and ocean FCL freight cost tariff.
 
