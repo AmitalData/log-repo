@@ -1205,10 +1205,15 @@ namespace WebFreight.Web.Helpers
             text = FixSpaces(text);
             return (text+ " בלבד");
         }
-        public string ConvertNumbersToFrenchNewVersion(double number,string localCurrencyName)
+        public string ConvertNumbersToFrenchNewVersion(double number,string localCurrencyName, string localCurrencyCode)
         {
-            string currencyNameOfDecimalPart = "centimes";
+            string currencyNameOfDecimalPart = "";
+            if (localCurrencyCode == "MAD")
+            {
+                currencyNameOfDecimalPart = "centimes";
+            }
             return HandleUnsignedNumberInFrenchWords(number,localCurrencyName, currencyNameOfDecimalPart);
+            
         }
 
         private string FixSpaces(string s)
