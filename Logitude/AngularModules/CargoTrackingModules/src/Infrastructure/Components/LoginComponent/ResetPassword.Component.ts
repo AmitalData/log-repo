@@ -67,7 +67,7 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     private initComponent() {
-        document.body.style.background = "#fff";
+        // document.body.style.background = "#fff";
     }
 
     private captchaCode: string = "";
@@ -153,8 +153,8 @@ export class ResetPasswordComponent implements OnInit {
         //this.Tenant = this.route.snapshot.queryParams?.tenant;
         if(this.Tenant)
 
-            this.router.navigate(["Cargo-Tracking/login"]);//,{ queryParams: {tenant: this.Tenant}}
+            this.router.navigate(["cargo-tracking/login"]);//,{ queryParams: {tenant: this.Tenant}}
         else
-            this.router.navigate(["Cargo-Tracking/login"]);
+            this.router.navigate(["cargo-tracking/login"]);
     }
 }

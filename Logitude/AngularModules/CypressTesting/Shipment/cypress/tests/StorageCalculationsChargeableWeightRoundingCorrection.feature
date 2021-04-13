@@ -1,4 +1,4 @@
-@release @dev 
+@release  @FeatureToggle 
 Feature: Storage Calculations Chargeable Weight, Rounding and Receivable Correction
 
     The user sets up a warehouse with storage charges, creates a Direct Import Ocean FCL shipment,
@@ -48,11 +48,11 @@ Feature: Storage Calculations Chargeable Weight, Rounding and Receivable Correct
         And a warehouse leg with "Testwarehouse" as terminal
         And "Today" as actual entry and expected release after "5" days
         When calculate storage
-        Then storage fee should be "1,400.00"
-        And storage pricing should have weight "2" with the following amounts
+        Then storage pricing should have weight "2" with the following amounts
             | Amount |
             | 600.00 |
             | 800.00 |
+        And storage fee should be "1,400.00"
         And a receivables line with the following details should appear
             | ChargesType    | Amount    |
             | Import Storage | 1,400.000 |
@@ -74,11 +74,11 @@ Feature: Storage Calculations Chargeable Weight, Rounding and Receivable Correct
         Given the user in the shipment's rounting tab
         And edit the expected release date to be after "6" days
         When calculate storage
-        Then storage fee should be "1,800.00"
-        And storage pricing should have weight "2" with the following amounts
+        Then storage pricing should have weight "2" with the following amounts
             | Amount   |
             | 600.00   |
             | 1,200.00 |
+        And storage fee should be "1,800.00"
         And a second receivables line with the following details should appear
             | ChargesType    | Amount  |
             | Import Storage | 400.000 |

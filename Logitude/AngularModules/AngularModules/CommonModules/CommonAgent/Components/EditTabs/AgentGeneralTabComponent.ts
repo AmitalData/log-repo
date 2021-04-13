@@ -19,11 +19,18 @@ export class AgentGeneralTabComponent extends BaseComponent implements OnInit, O
     public ControlColumnWidth: number = 200;
     public DataContext: AgentGeneralTabComponent = this;
     private ScreenCode: string = "Agent.AdditionalFields";
+    public ImageId: string = "";
+    public EntityId: string = "";
+    public EntityName: string = "";
+
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.TenantPM = SessionLocator.TenantPM;
+        this.EntityName = "Agent";
+        this.ImageId = this.EntityPM.ImageDetailId;
+        this.EntityId = this.EntityPM.Id;
         this.RunComponent();       
     }
 
@@ -96,6 +103,11 @@ export class AgentGeneralTabComponent extends BaseComponent implements OnInit, O
         }
 
         this.UIProperties.SetVisibility("RegulatedAgentCode", this.ObjectTableName, this.isRAFieldsVisibile);
+    }
+
+    ImageUploadedCompleted(code) {
+        this.ImageId = code;
+        this.EntityPM.ImageDetailId = code;
     }
 
     // Properties 

@@ -162,13 +162,6 @@ export class MaintenanceSelectors extends RegexSelectors {
     public static readonly CitySaveButton="#CountryCity-Save"
     //#endregion
 
-    //#region Currency 
-
-    public static readonly SettingButton = "img[src='./Images/Icons/Settings.png']"
-    public static readonly RatesTableDate = "#date_RatesTable_ValueDate"
-    public static readonly RatesTableRate = "#RatesTable_Rate"
-    
-    //#endregion
     
     //#region  Global Zone
     public static readonly GlobalZoneCode="#GlobalZone_Code"

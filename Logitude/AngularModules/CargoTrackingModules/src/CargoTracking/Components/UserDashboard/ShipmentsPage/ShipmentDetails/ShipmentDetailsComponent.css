@@ -87,7 +87,7 @@ h1 {
     /* float: left; */
 }
 .slider .cards {
-    width: 2500px;
+    width: 3000px;
     height: 160px;
     transition: margin-left 1s;
     text-align: left;

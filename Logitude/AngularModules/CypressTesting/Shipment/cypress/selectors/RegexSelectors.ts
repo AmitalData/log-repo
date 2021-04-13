@@ -114,4 +114,8 @@ export class RegexSelectors {
     public static PartnerBoxItem(partnerType: string): string{
         return "[data-cy='BoxItem_" + partnerType + "']";
     }
+
+    public static HouseCheckBox(houseNumber: string): string{
+        return "[data-cy='CheckBox_" + houseNumber + "']";
+    }
 }

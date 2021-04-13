@@ -1,5 +1,6 @@
 ﻿using Logitude.Accounting.BL.CoreBL.BuildTenant;
 using Logitude.Accounting.BL.CoreBL.Reports;
+using Logitude.Accounting.BL.CoreBL.Reports.Aging;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
@@ -97,8 +98,12 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                         return Aging_Click(tenant, _TextBoxParam);
                     }
                     break;
-
-
+                case "RebuildFIXGLAccountAgingData_Click":
+                    {
+                        return RebuildFIXGLAccountAgingData_Click(tenant, _TextBoxParam);
+                    }
+                    break;
+                
                 case "CardIndexNew_Click":
                     {
                         return CardIndexNew_Click(tenant, _TextBoxParam);
@@ -130,6 +135,53 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                     break;
             }
         }
+
+        private GateWayTesterResult RebuildFIXGLAccountAgingData_Click(int tenant, string textBoxParam)
+        {
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+                dynamic myAgingReportParam = LogitudeXmlSerializer.JsonConvertDeserializeObject(textBoxParam);
+                string aging4AccountTypeCode = myAgingReportParam.Aging4AccountTypeCode;//: 'Customer2', 
+                string MyGLAccId = myAgingReportParam.MyGLAccId;
+                //using (
+
+                var dailyRebuildAgingService = new DailyRebuildAgingService();
+                var diff= dailyRebuildAgingService.RebuildAging4AccountTypeCode(tenant, aging4AccountTypeCode, MyGLAccId);
+
+
+
+                string xml = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<GLAccountAgingDataPM>>(diff);
+
+
+
+                gateWayTesterResult.JsonOut = xml;
+
+                //gateWayTesterResult.Log = xmlMyPeriodList;
+
+
+                //gateWayTesterResult.JsonOut = xml;
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+                gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
+                gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+
+     
 
         private GateWayTesterResult Aging_Click(int tenant, string textBoxParam)
         {

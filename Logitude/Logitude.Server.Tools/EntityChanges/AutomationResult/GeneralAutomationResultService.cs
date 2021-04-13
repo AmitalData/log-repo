@@ -29,7 +29,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             validateResult.ConditionsList = new List<AutomationCondition>();
             List<AutomationCondition> automationConditionList = null;
 
-            AutomatedBackup automatedBackup = GetAutomatedBackupClass(automation, entityChange, lastupdateautomation);
+            AutomatedBackup automatedBackup = validateResult.AutomatedBackup = GetAutomatedBackupClass(automation, entityChange, lastupdateautomation);
 
             if (typeConditionValidate == "Delayed")  
                 automationConditionList = automatedBackup.DelayAautomationConditionLists;
@@ -92,9 +92,20 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
                 validateResult.DelaytimeIndicator = automatedBackup.DelaytimeIndicator;
                 validateResult.Delaytime = automatedBackup.Delaytime;
                 validateResult.DelaytimeOp = automatedBackup.DelaytimeOp;
-                validateResult.SelectedDelaytimeFieldCode = automatedBackup.SelectedDelaytimeFieldCode;
-                validateResult.ConditionsList = automatedBackup.AautomationConditionLists;
+                validateResult.SelectedDelaytimeFieldCode = automatedBackup.SelectedDelaytimeFieldCode; 
             }
+
+            //if(validateResult.ConditionsList.Count() == 0 && typeConditionValidate == "Delayed")
+            //{
+             //   validateResult.ConditionsList = automatedBackup.AautomationConditionLists;
+             //   List<AutomationCondition> delayAutomationConditionsList = null;
+             //   delayAutomationConditionsList = validateResult.ConditionsList;
+             //   foreach (AutomationCondition automationCondition in delayAutomationConditionsList)
+             //   {
+              //       automationCondition.IsValid = true;  
+              //    }
+              //     validateResult.ConditionsList = delayAutomationConditionsList;
+              //  }
 
             return validateResult;
         }
@@ -515,6 +526,17 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
         }
 
 
+        public string GetPropertyValueFromObject(string propertyName, object entity)
+        {
+            string result = string.Empty;
+            PropertyInfo propertyInfo = entity.GetType().GetProperty(propertyName);
+            if (propertyInfo != null)
+            {
+                object propertyValue = propertyInfo.GetValue(entity);
+                result = propertyValue != null ? propertyValue.ToString() : null;
+            }
+            return result;
+        }
 
 
     }

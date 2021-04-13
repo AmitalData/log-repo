@@ -28,6 +28,7 @@ Given("the user open {string} in maintenance menu", (maintenanceItemName) => {
 
 Given("local settings with the following details", (dataTable) => {
     localSettingsDetails = Assists.CreateInstance<LocalSettingsDetails>(dataTable, true);
+    localSettingsDetails = MapTimeZoneToCountry(localSettingsDetails);
     Actions.FillLocalSettingsDetails(localSettingsDetails);
 });
 
@@ -63,17 +64,17 @@ Then("the direct should create successfully", () => {
 //#endregion
 
 //#region Date format
-Given("open the direct shipment and navigate to General tab", () => {
+Given("open the direct shipment and navigate to general tab", () => {
     ShipmentActions.OpenShipment(shipmentDetails.ShipmentNumber)
     cy.Navigate(ShipmentSelectors.GeneralTab)
 });
 
-When("fill {string} as HAWB Date", (date) => {
+When("fill {string} as HAWB date", (date) => {
     cy.FillDate(BDDSpecialCasesSelectors.HAWBDate,date);
 });
 
 Then("the date format should be {string}", (dateFormat) => {
-    Actions.ValidateDateFormat(dateFormat);
+    Actions.ValidateDateFormat(dateFormat , localSettingsDetails.TimeZoneRegion);
 });
 //#endregion
 
@@ -81,8 +82,7 @@ Then("the date format should be {string}", (dateFormat) => {
 Given("the user update the shipment", () => {
     ShipmentActions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
-    localSettingsDetails = MapTimeZoneToCountry(localSettingsDetails);
-    LocalSettingsDetails.UpdateTime = new Date().toLocaleString("en-US", { timeZone: localSettingsDetails.TimeZoneRegion })
+    LocalSettingsDetails.UpdateTime = new Date().toLocaleTimeString("en-US", { timeZone: localSettingsDetails.TimeZoneRegion })
 });
 
 When("navigate to event tab", () => {

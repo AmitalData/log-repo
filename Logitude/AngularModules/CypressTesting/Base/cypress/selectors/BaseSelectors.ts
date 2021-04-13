@@ -47,6 +47,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly SaveButton = '#SaveBtn';
     public static readonly ConfrimApproved = '#ConfrimApproved';
     public static readonly SettingsButton = '#Settings';
+    public static readonly EditButton = '#Edit';
 
     //#endregion
     //#region Contains
@@ -193,7 +194,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ComboBox = ".ComboBox";
     public static readonly ToggleIconImage = "img[src='Images/ToggleIcon.png']";
     public static readonly SelectedComboboxItem = ".ComboBoxDropdown li[class='SelectedComboboxItem']";
-
+    public static readonly BusyIndicatorControlInner=".BusyIndicatorControlInner"
     //#region Warehouse
     public static readonly WarehouseStoragePricingStepFrom ="#WarehouseStoragePricing_StepFrom"
     public static readonly WarehouseStoragePricingDays ="#WarehouseStoragePricing_Days"

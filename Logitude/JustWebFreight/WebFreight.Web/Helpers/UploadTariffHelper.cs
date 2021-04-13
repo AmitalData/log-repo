@@ -237,49 +237,54 @@ namespace WebFreight.Web.Helpers
                 toPortCode = Regex.Replace(toPortCode, @"\*+", "");
                 myLine.ToPort = toPortCode;
 
-                if (StepLength > 2 && rowDataLength > 2)
-                {
-                    myLine.MinPrice = rowData[2];
-                }
+                /*Via Port*/
+                string viaPortCode = rowData[2];
+                viaPortCode = Regex.Replace(viaPortCode, @"\*+", "");
+                myLine.ViaPort = viaPortCode;
 
                 if (StepLength > 3 && rowDataLength > 3)
                 {
-                    myLine.Price1 = rowData[3];
+                    myLine.MinPrice = rowData[3];
                 }
 
                 if (StepLength > 4 && rowDataLength > 4)
                 {
-                    myLine.Price2 = rowData[4];
+                    myLine.Price1 = rowData[4];
                 }
 
                 if (StepLength > 5 && rowDataLength > 5)
                 {
-                    myLine.Price3 = rowData[5];
+                    myLine.Price2 = rowData[5];
                 }
 
                 if (StepLength > 6 && rowDataLength > 6)
                 {
-                    myLine.Price4 = rowData[6];
+                    myLine.Price3 = rowData[6];
                 }
 
                 if (StepLength > 7 && rowDataLength > 7)
                 {
-                    myLine.Price5 = rowData[7];
+                    myLine.Price4 = rowData[7];
                 }
 
                 if (StepLength > 8 && rowDataLength > 8)
                 {
-                    myLine.Price6 = rowData[8];
+                    myLine.Price5 = rowData[8];
                 }
 
                 if (StepLength > 9 && rowDataLength > 9)
                 {
-                    myLine.Price7 = rowData[9];
+                    myLine.Price6 = rowData[9];
                 }
 
                 if (StepLength > 10 && rowDataLength > 10)
                 {
-                    myLine.Price8 = rowData[10];
+                    myLine.Price7 = rowData[10];
+                }
+
+                if (StepLength > 11 && rowDataLength > 11)
+                {
+                    myLine.Price8 = rowData[11];
                 }
 
                 if (!string.IsNullOrEmpty(transitTimecolumn))
@@ -334,29 +339,34 @@ namespace WebFreight.Web.Helpers
                 toPortCode = Regex.Replace(toPortCode, @"\*+", "");
                 myLine.ToPort = toPortCode;
 
-                if (rowData.Length > 2)
-                {
-                    myLine.Price1 = rowData[2];
-                }
+                /*Via Port*/
+                string viaPortCode = rowData[2];
+                viaPortCode = Regex.Replace(viaPortCode, @"\*+", "");
+                myLine.ViaPort = viaPortCode;
 
                 if (rowData.Length > 3)
                 {
-                    myLine.Price2 = rowData[3];
+                    myLine.Price1 = rowData[3];
                 }
 
                 if (rowData.Length > 4)
                 {
-                    myLine.Price3 = rowData[4];
+                    myLine.Price2 = rowData[4];
                 }
 
                 if (rowData.Length > 5)
                 {
-                    myLine.Price4 = rowData[5];
+                    myLine.Price3 = rowData[5];
                 }
 
                 if (rowData.Length > 6)
                 {
-                    myLine.Price5 = rowData[6];
+                    myLine.Price4 = rowData[6];
+                }
+
+                if (rowData.Length > 7)
+                {
+                    myLine.Price5 = rowData[7];
                 }
 
                 if (!string.IsNullOrEmpty(transitTimecolumn))
@@ -474,6 +484,29 @@ namespace WebFreight.Web.Helpers
             else
             {
                 tariffLine.DestinationPortText = this.TrimTo_20(excelSheetLine.ToPort);
+            }
+
+            //Via Port
+            Port viaPort = this.GetPortDetails(excelSheetLine.ViaPort, tenant);
+            if (viaPort != null)
+            {
+                if ((viaPort.IsAir && tariffType == "AFC") || (viaPort.IsOcean && tariffType == "OLC"))
+                {
+                    tariffLine.ViaPortId = viaPort.Id;
+                    tariffLine.ViaPortCode = viaPort.Code;
+                    tariffLine.ViaPortCombinedCode = viaPort.CombinedCode;
+                    tariffLine.ViaPortName = viaPort.EnglishName;
+                }
+
+                else
+                {
+                    tariffLine.ViaPortHasWrongTransMode = true;
+                    tariffLine.ViaPortText = excelSheetLine.ViaPort;
+                }
+            }
+            else
+            {
+                tariffLine.ViaPortText = this.TrimTo_20(excelSheetLine.ViaPort);
             }
 
             if (excelSheetLine != null)
@@ -740,6 +773,29 @@ namespace WebFreight.Web.Helpers
                 tariffLine.DestinationPortText = this.TrimTo_20(excelSheetLine.ToPort);
             }
 
+            //Via Port
+            Port viaPort = this.GetPortDetails(excelSheetLine.ViaPort, tenant);
+            if (viaPort != null)
+            {
+                if (viaPort.IsOcean)
+                {
+                    tariffLine.ViaPortId = viaPort.Id;
+                    tariffLine.ViaPortCode = viaPort.Code;
+                    tariffLine.ViaPortCombinedCode = viaPort.CombinedCode;
+                    tariffLine.ViaPortName = viaPort.EnglishName;
+                }
+
+                else
+                {
+                    tariffLine.ViaPortHasWrongTransMode = true;
+                    tariffLine.ViaPortText = excelSheetLine.ViaPort;
+                }
+            }
+            else
+            {
+                tariffLine.ViaPortText = this.TrimTo_20(excelSheetLine.ViaPort);
+            }
+
             if (excelSheetLine != null)
             {
                 //Price 1
@@ -958,6 +1014,36 @@ namespace WebFreight.Web.Helpers
                 else
                 {
                     errorText = errorText + ", Missing Destination Port";
+                }
+            }
+
+            if (!string.IsNullOrEmpty(item.ViaPortText) && string.IsNullOrEmpty(item.ViaPortId))
+            {
+                error = true;
+
+                if (item.ViaPortHasWrongTransMode)
+                {
+                    if (string.IsNullOrEmpty(errorText))
+                    {
+                        errorText = "Port Not Found";
+                    }
+
+                    else
+                    {
+                        errorText = errorText + ", Port Not Found";
+                    }
+                }
+                else
+                {
+                    if (string.IsNullOrEmpty(errorText))
+                    {
+                        errorText = "Port with code " + item.ViaPortText + " not found";
+                    }
+
+                    else
+                    {
+                        errorText = errorText + ", Port with code " + item.ViaPortText + " not found";
+                    }
                 }
             }
 
@@ -1333,6 +1419,36 @@ namespace WebFreight.Web.Helpers
                 else
                 {
                     errorText = errorText + ", Missing Destination Port";
+                }
+            }
+
+            if (!string.IsNullOrEmpty(item.ViaPortText ) && string.IsNullOrEmpty(item.ViaPortId))
+            {
+                error = true;
+
+                if (item.ViaPortHasWrongTransMode)
+                {
+                    if (string.IsNullOrEmpty(errorText))
+                    {
+                        errorText = "Port Not Found";
+                    }
+
+                    else
+                    {
+                        errorText = errorText + ", Port Not Found";
+                    }
+                }
+                else
+                {
+                    if (string.IsNullOrEmpty(errorText))
+                    {
+                        errorText = "Port with code " + item.ViaPortText + " not found";
+                    }
+
+                    else
+                    {
+                        errorText = errorText + ", Port with code " + item.ViaPortText + " not found";
+                    }
                 }
             }
 
@@ -1824,12 +1940,14 @@ namespace WebFreight.Web.Helpers
                         {
                             newExcelLine.FromPort = port;
                             newExcelLine.ToPort = excelLine.ToPort;
+                            newExcelLine.ViaPort = excelLine.ViaPort;
                         }
 
                         else
                         {
                             newExcelLine.FromPort = excelLine.FromPort;
                             newExcelLine.ToPort = port;
+                            newExcelLine.ViaPort = excelLine.ViaPort;
                         }
 
                         routs.Add(newExcelLine);
@@ -1857,6 +1975,7 @@ namespace WebFreight.Web.Helpers
     {
         public string FromPort { get; set; }
         public string ToPort { get; set; }
+        public string ViaPort { get; set; }
         public string MinPrice { get; set; }
         public string Price1 { get; set; }
         public string Price2 { get; set; }

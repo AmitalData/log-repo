@@ -44,6 +44,7 @@ export class RequestAliases {
     public static readonly GetRecentTariffs = 'GetRecentTariffs';
     public static readonly GetAllTariffVersionsForTariff = 'GetAllTariffVersionsForTariff';
     public static readonly GetTariffVersionLines = "GetTariffVersionLines";
+    public static readonly GetPrevTariffVersionLines = "GetPrevTariffVersionLines";
     public static readonly GetSingleTariff = "GetSingleTariff";
     public static readonly GetVatTypePercentage = 'GetVatTypePercentage';
     public static readonly PostAvailableTariffs = 'PostAvailableTariffs';
@@ -123,6 +124,7 @@ export class RequestAliases {
     public static readonly GetFilterSearch = "GetFilterSearch"
     public static readonly ContactsGetSingle = "ContactsGetSingle";
     public static readonly GetContactMenuButtonGroups = "GetContactMenuButtonGroups";
+    public static readonly GetWarehouseMenuButtonGroups = "GetWarehouseMenuButtonGroups";
     public static readonly ContactViewsGetByFilters = "ContactViewsGetByFilters";
     public static readonly GetCustomersQuickSearch = "GetCustomersQuickSearch"
     //#endregion

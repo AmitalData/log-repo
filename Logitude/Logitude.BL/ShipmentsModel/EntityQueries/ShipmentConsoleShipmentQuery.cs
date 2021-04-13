@@ -70,6 +70,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     GrossWeightPerStorageDays = item.GrossWeightPerStorageDays,
                     House = item.House,
                     DescriptionOfGoods = item.DescriptionOfGoods,
+                    PreForwardingFromPortId = item.PreForwardingFromPortId,
+                    PreForwardingToPortId = item.PreForwardingToPortId,
+                    OnForwardingFromPortId = item.OnForwardingFromPortId,
+                    OnForwardingToPortId = item.OnForwardingToPortId,
                 };
 
                 if (consoleShipmentPM.IsFCL)

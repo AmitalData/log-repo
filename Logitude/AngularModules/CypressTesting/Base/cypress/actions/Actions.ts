@@ -39,14 +39,20 @@ export function FillWarehouseStorageWeightDetails(warehouseDetails : WarehouseSt
 }
 
 export function FillWarehouseStoragePricing(warehousePricingList: WarehouseStorage[]) {
-
-    cy.get(BaseSelectors.DeleteButton).its('length').then(deleteButtons => {
-        for(let i = 0; i < deleteButtons; i++){
-            cy.get(BaseSelectors.DeleteButton).first().click();
-            cy.Click(BaseSelectors.RedButton+BaseSelectors.LastElement,BaseSelectors.ContainYes)
+    cy.get("body").then($body => {
+        if ($body.find(BaseSelectors.DeleteButton).length > 0) {  
+            DeletePricingDefaults()
         }
     });
-
+    AddPricingDefaults(warehousePricingList);
+}
+function DeletePricingDefaults(){
+    for (let i = 0; i < BaseSelectors.DeleteButton.length; i++) {
+        cy.get(BaseSelectors.DeleteButton).first().click();
+        cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, BaseSelectors.ContainYes)
+    }
+}	
+function AddPricingDefaults(warehousePricingList: WarehouseStorage[]){
     for (let i = 0; i < warehousePricingList.length; i++) {
         cy.Click(BaseSelectors.AddButton, null)
         FillCell(BaseSelectors.StepFromColumn, i, BaseSelectors.WarehouseStoragePricingStepFrom, warehousePricingList[i].StepFrom)
@@ -132,11 +138,11 @@ export function SubstractDaysFromDate(Days: number) {
 }
 
 export function AddDaysToTodayDate(days: number) {
-    var todayDate = new Date();
-    var futureDate = new Date();
+    var todayDate = new Date().toLocaleDateString("en-US", { timeZone: "Asia/Jerusalem"})
+    var todayDateList = todayDate.split("/")
 
-    futureDate.setDate(todayDate.getDate() + days);
-    return FormateTheDate(futureDate)
+    todayDateList[1] = (Number(todayDateList[1]) + days).toString();
+    return FormateTheDateString(todayDateList)
 }
 
 export function GetDatepicker(dateString: string): Datepicker{
@@ -205,6 +211,23 @@ function NavigateToAccountTab(ExternalIDName: string, AccountingSelector: string
     }
 }
 
+function FormateTheDateString(dateList: string[]) {
+    var DateFormat
+    var dd = dateList[1].toString();
+    var mm = dateList[0].toString();
+    var yyyy = dateList[2].toString();
+
+    if (Number(dd) < 10) {
+        dd = "0" + dd;
+    }
+    if (Number(mm) < 10) {
+        mm = "0" + mm;
+    }
+
+    DateFormat = dd + '/' + mm + '/' + yyyy;
+    return DateFormat;
+}
+
 function FormateTheDate(date: Date) {
     var DateFormat
     var dd = date.getUTCDate().toString();
@@ -236,6 +259,7 @@ export function ValidateEventsTab(expectedEventDetailsList: EventTypeDetails[] ,
             cy.Click(eventTabSelector, null,true);
         }
         BaseAssertion.AssertStatusCode(RequestAliases.GetTraceEventsForEntity, 200);
+        cy.Click(BaseSelectors.RefreshImg+BaseSelectors.LastElement, null,true);
         for (let i = 0; i < expectedEventDetailsList.length; i++) {
             let expectedEvent = expectedEventDetailsList[i].Event;
             let expectedNotes = expectedEventDetailsList[i].Notes;

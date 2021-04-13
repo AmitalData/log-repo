@@ -283,5 +283,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string GLAccountNumber { get; set; }
         [DataMember]
         public string BillToId { get; set; }
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ImageDetailId { get; set; }
     }
 }

@@ -5,6 +5,8 @@
         public static string ShipmentController = "Shipment";
         public static string DirectController = "Direct";
         public static string AddressController = "Addresses";
+        public static string StatesController = "States";
+        public static string CountriesController = "Countries";
         public static string AuthenticationController = "Authentication";
         public static string UserViewsGetByFilters = "UserViews/GetByFilters";
         public static string ContactViewsGetByFilters = "ContactViews/GetByFilters";
@@ -18,8 +20,9 @@
         public static string PortViewsGetByFilters = "PortViews/GetByFilters";
         public static string PortViewsGetTenantImportByFilters = "PortViews/GetTenantImportByFilters";
         public static string CountryViewsGetByFilters = "CountryViews/GetByFilters";
+        public static string GlobalZoneViewsGetByFilters = "GlobalZoneViews/GetByFilters";
         public static string StateViewsGetByFilters = "StateViews/GetByFilters";
-        public static string StatesController = "States";
+
 
         #region Shipment Prepare Data URls
         public static string VesselsController = "Vessels";

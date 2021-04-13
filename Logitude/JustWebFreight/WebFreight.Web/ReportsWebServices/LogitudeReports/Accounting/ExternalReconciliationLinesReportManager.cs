@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.BL.CoreBL.Reports;
+﻿using Logitude.Accounting.BL.CoreBL;
+using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityPOCOs;
@@ -75,7 +76,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private void BuildReportHeader()
         {
 
-            if (this.ExternalReconciliationNumber ==null)
+            if (this.ExternalReconciliationNumber == null)
             {
                 iDataProvider.BankAccountId = this.BankAccountId;
                 iDataProvider.Type = this.Type;
@@ -87,7 +88,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             }
             iDataProvider.ExternalReconciliationNumber = this.ExternalReconciliationNumber;
             iDataProvider.SortBy = this.SortBy;
-        
+
+            SetBankPagesClosingBalance();
+
+        }
+
+        private void SetBankPagesClosingBalance()
+        {
+            ExternalPagesBalanceService externalPagesBalanceService = new ExternalPagesBalanceService(tenant);
+            iDataProvider.BankPagesClosingBalance = externalPagesBalanceService.GetClosingBalanceByDate("BankAccount", BankAccountId, RefDateTo.Value);
 
         }
        private LedgerTransactionBalanceFilter CreateLedgerTransactionBalanceFilter(ExternalReconciliationPeriod period)
@@ -456,9 +465,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             {
                 
 
-                 reconcileExternalPageLines = (from line in accountingContext.ReconcileExternalPageLines
+                 reconcileExternalPageLines = (from line in accountingContext.ReconcileExternalPageLines join page in  accountingContext.ReconcileExternalPages
+                                               on line.ReconcileExternalPageId equals page.Id
                                                   where line.Tenant == tenant
                                                         && line.ReferenceDate !=null
+                                                        && page.StatusCode != "3"
                                                         && DbFunctions.TruncateTime(line.ReferenceDate) >= DbFunctions.TruncateTime(RefDateFrom)
                                                         && DbFunctions.TruncateTime(line.ReferenceDate) <= DbFunctions.TruncateTime(RefDateTo)
                                                          

@@ -1668,15 +1668,11 @@ namespace WebFreight.Web
                         string ipstring = securityPolicy.AllowedIPs;
                         string[] authenticatedIPs = ipstring.Split(',');
                         bool isIpAuthenticated = false;
-                        string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-                        if (string.IsNullOrEmpty(currentIP))
-                        {
-                            currentIP = HttpContext.Current.Request.UserHostAddress;
-                        }
-                        if (!authenticatedIPs.Contains(currentIP))
+                       
+                        if (!authenticatedIPs.Contains(ipAddress))
                         {
                             if (Environment.CommandLine.ToLower().Contains("iisexpress.exe") &&
-                                currentIP == "::1") ///localhost !!!
+                                ipAddress == "::1") ///localhost !!!
                             {
                                 isIpAuthenticated = true;//iisexpress
                             }

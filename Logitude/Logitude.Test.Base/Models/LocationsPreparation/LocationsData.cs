@@ -14,6 +14,7 @@
         public static string StateAKId { get; set; }
         public static string CountryUSId { get; set; }
         public static string CountryGBId { get; set; }
+        public static string CountryTSId { get; set; }
         public static string CityAnchorageId { get; set; }
         public static string CityManchesterId { get; set; }
         //public static string GlobalZoneEUId { get; set; }

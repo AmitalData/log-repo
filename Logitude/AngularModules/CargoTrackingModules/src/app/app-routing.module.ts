@@ -15,44 +15,44 @@ import { ChangePasswordComponent } from 'src/Infrastructure/Components/LoginComp
 import { AuthGuardService as AuthGuard  } from 'src/Infrastructure/Services/auth-guard.service';
 
 const routes: Routes = [
-    
 
-      
-    { 
-        path: 'Cargo-Tracking', 
+
+
+    {
+        path: 'cargo-tracking',
         component: UserDashboardComponent,
         canActivate: [AuthGuard],
         children: [
-            { path: "", redirectTo: "shipments", pathMatch: "full" }, 
-            { path: "shipments", component: ShipmentsListComponent }, 
-            { path: "shipment/:SecurityKey", component: ShipmentDetailsComponent }, 
-            { path: "favorites", component: FavoritesPageComponent  }, 
-            {path: '**', redirectTo: 'Cargo-Tracking', pathMatch: 'full' }, 
-           
+            { path: "", redirectTo: "shipments", pathMatch: "full" },
+            { path: "shipments", component: ShipmentsListComponent },
+            { path: "shipment/:SecurityKey", component: ShipmentDetailsComponent },
+            { path: "favorites", component: FavoritesPageComponent  },
+            {path: '**', redirectTo: 'cargo-tracking', pathMatch: 'full' },
+
         ]
     },
     {
         path: 'public-tracking/search',
         component: HomeComponent,
-        children: [ 
-            { path: "", component: SearchComponent }, 
+        children: [
+            { path: "", component: SearchComponent },
             { path: "shipment/:SecurityKey", component: PublicShipmentDetailsComponent },
             { path: "shipment", redirectTo: 'public-tracking/search' },
             { path: ":searchKey", component: SearchComponent },
-            {path: '**', redirectTo: 'public-tracking/search', pathMatch: 'full' }, 
+            {path: '**', redirectTo: 'public-tracking/search', pathMatch: 'full' },
         ]
     },
-    
- 
 
-    { path: 'Cargo-Tracking/login', component: LoginComponent },
-    { path: 'Cargo-Tracking/resetpassword', component: ResetPasswordComponent },
-    { path: 'Cargo-Tracking/changepassword', component: ChangePasswordComponent },
+
+
+    { path: 'cargo-tracking/login', component: LoginComponent },
+    { path: 'cargo-tracking/resetpassword', component: ResetPasswordComponent },
+    { path: 'cargo-tracking/changepassword', component: ChangePasswordComponent },
     { path: 'Error401', component: Error401Component },
     { path: '', redirectTo: 'public-tracking/search', pathMatch: 'full' },
     { path: '**', redirectTo: 'public-tracking/search', pathMatch: 'full' },
- 
-]; 
+
+];
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)], //,  { useHash: true}

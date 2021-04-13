@@ -170,7 +170,7 @@ export class AddFollowupComponent extends BaseComponent {
                     }
 
                     case "onforwardingarrival": {
-                        myResult = "ONFA";
+                        myResult = "ORFA";
                         break;
                     }
 

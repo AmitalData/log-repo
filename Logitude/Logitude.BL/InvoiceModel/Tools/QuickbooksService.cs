@@ -25,7 +25,6 @@ namespace Logitude.BL.InvoiceModel.Tools
 
         public static string GetAccessToken(string tenant, AccountingSettingPM entityPM, Setting mySetting)
         {
-
             var oauth2Client = new OAuth2Client(mySetting.QBOClientID,
                     mySetting.QBOClientSecret,
                     "https://developer.intuit.com/v2/OAuth2Playground/RedirectUrl",
@@ -59,7 +58,6 @@ namespace Logitude.BL.InvoiceModel.Tools
             return data.AccessToken;
         }
 
-
         private static ServiceContext GetServiceContextAuth2(String tenant, AccountingSettingPM entityPM, Setting mySetting)
         {
             OAuth2RequestValidator oauthValidator = new OAuth2RequestValidator(QuickbooksService.GetAccessToken(tenant, entityPM, mySetting));
@@ -67,9 +65,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             serviceContext.IppConfiguration.BaseUrl.Qbo = "https://quickbooks.api.intuit.com/";
 
             return serviceContext;
-
         }
-
 
         public static ServiceContext GetServiceContext(String tenant)
         {
@@ -86,24 +82,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
             AccountingSettingQuery query = new AccountingSettingQuery(int.Parse(tenant));
             AccountingSettingPM entityPM = query.GetSingleAccountingSettingPMById(int.Parse(tenant));
-
-            if (entityPM.QBOOAuth == 2 && mySetting.QBOOAuthDefault==2)
-            {
-                return QuickbooksService.GetServiceContextAuth2(tenant, entityPM, mySetting);
-            }
-
-            else
-            {
-                OAuthRequestValidator oauthValidator = new OAuthRequestValidator(entityPM.QBOAccessToken, entityPM.QBOAccessTokenSecret, mySetting.QBOConsumerKey, mySetting.QBOConsumerSecretKey);
-                ServiceContext context = new ServiceContext(mySetting.QBOAppToken, entityPM.QBOrealMeID, IntuitServicesType.QBO, oauthValidator);
-
-
-
-                return context;
-            }
+            return GetServiceContextAuth2(tenant, entityPM, mySetting);            
         }
-
-
-
     }
 }

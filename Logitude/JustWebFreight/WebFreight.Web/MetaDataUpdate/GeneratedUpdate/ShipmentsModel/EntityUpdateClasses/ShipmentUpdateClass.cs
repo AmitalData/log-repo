@@ -79,10 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-
-
-		public const string HashString = "a598f9a0289761622c9c3ae6ace249af";
-
+		public const string HashString = "6fb93572720a801a8b7bd68cd2910347";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -540,7 +537,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
@@ -36769,7 +36766,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
@@ -47307,7 +47304,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code =  "ONFA",
+                Code =  "ORFA",
                 EnglishName =  "On Forwarding Arrived",
                 LocalName =  "On Forwarding Arrived",
                 IsManualEntry =  false,
@@ -47891,7 +47888,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   TextCode ShipmentTextCode_ShipmentSAWBTotalOtherChargesDueCarrier = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.AWB.TotalOtherChargesDueCarrier", DefaultText = "Total Other Charges Due Carrier",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ShipmentTextCode_ShipmentMAllAWBPrintOnliesMustMatchShipmentAWBCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.AllAWBPrintOnliesMustMatchShipmentAWBCurrency", DefaultText = "All AWB Print Shipment Onlies must match the Shipment AWB Currency",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ShipmentTextCode_ShipmentMAllAWBPrintOnliesMustMatchShipmentAWBCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.AllAWBPrintOnliesMustMatchShipmentAWBCurrency", DefaultText = "All AWB Print Shipment Onlies (from the AWB wizard) must match the Shipment AWB Currency ",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentSAWBWeightCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.AWB.WeightCharge", DefaultText = "Weight Charge",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

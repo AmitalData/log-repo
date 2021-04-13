@@ -1,4 +1,4 @@
-@release @dev 
+@release  @FeatureToggle 
 Feature: Storage Calculations Gross Weight without Rounding
 
     The user sets up a warehouse with storage charges, creates a Direct Import Air shipment,
@@ -47,11 +47,11 @@ Feature: Storage Calculations Gross Weight without Rounding
         And a warehouse leg with "Testwarehouse" as terminal
         And fill "Today" as actual release and "8" days ago date as actual entry
         When calculate storage
-        Then the Storage Fee should be "5,700.00"
-        And Storage pricing should have weight "9.5" and Amount as following
+        Then Storage pricing should have weight "9.5" and Amount as following
             | Amount   |
             | 1,900.00 |
             | 3,800.00 |
+        And the Storage Fee should be "5,700.00"
         And a receivables line with the following details should appear
             | ChargesType    | Amount    |
             | Import Storage | 5,700.000 |

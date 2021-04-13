@@ -211,6 +211,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             if (args['TariffType']) {
                 this.TariffType = args['TariffType'];
             }
+            if (args['ViaPort']) {
+                this.viaPortId = args['ViaPort'];
+            }
             this.SetLabels();
             this.SetUIProperties();
             this.SetPortsDependencyFilterValue();
@@ -284,6 +287,17 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     set DestinationPortId(value: string) {
         if (this.destinationPortId != value) {
             this.destinationPortId = value;
+            this.SetUIProperties();
+        }
+    }
+
+    private viaPortId: string;
+    get ViaPortId() {
+        return this.viaPortId;
+    }
+    set ViaPortId(value: string) {
+        if (this.viaPortId != value) {
+            this.viaPortId = value;
             this.SetUIProperties();
         }
     }
@@ -660,6 +674,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             var tariffSearchArgs = new TariffSearchArgs();
             tariffSearchArgs.OriginPortId = this.OriginPortId;
             tariffSearchArgs.DestinationPortId = this.DestinationPortId;
+            tariffSearchArgs.ViaPortId = this.ViaPortId;
             tariffSearchArgs.Date = ServiceHelper.GetDateString(this.Date);
             tariffSearchArgs.Weight = this.Weight;
             tariffSearchArgs.WeightCode = this.WeightCode;
@@ -857,6 +872,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 if (!AppTool.IsNullOrEmpty(item.AllIn)) {
                     notes = "Includes the following charges as all-in: " + item.AllIn;
                 }
+                if (this.FatherComponent.EntityPM.Transshipment1FromPortId == null && item.ViaPortId != null) {
+                    this.MapShipmentPortsByViaPort(item);
+                }
 
                 // FCL Shipment 
                 if (this.TariffType == "OFC") {
@@ -974,6 +992,24 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                      }
             }
         }
+    }
+
+    MapShipmentPortsByViaPort(item: TariffSearchSummary) {
+        this.FatherComponent.EntityPM.Transshipment1FromPortId = item.ViaPortId;
+        this.FatherComponent.EntityPM.Transshipment1FromPortCode = item.ViaPortCode;
+        this.FatherComponent.EntityPM.Transshipment1FromPortName = item.ViaPortName;
+        this.FatherComponent.EntityPM.Transshipment1FromPortCountryCode = item.ViaPortCountryCode;
+        this.FatherComponent.EntityPM.Transshipment1FromPortCountryName = item.ViaPortCountryName;
+        this.FatherComponent.EntityPM.Transshipment1ToPortId = this.FatherComponent.EntityPM.mainCarriageToPortId;
+        this.FatherComponent.EntityPM.Transshipment1ToPortCode = this.FatherComponent.EntityPM.mainCarriageToPortCode;
+        this.FatherComponent.EntityPM.Transshipment1ToPortName = this.FatherComponent.EntityPM.mainCarriageToPortName;
+        this.FatherComponent.EntityPM.Transshipment1ToPortCountryCode = this.FatherComponent.EntityPM.MainCarriageToPortCountryCode;
+        this.FatherComponent.EntityPM.Transshipment1ToPortCountryName = this.FatherComponent.EntityPM.MainCarriageToPortCountryName;
+        this.FatherComponent.EntityPM.MainCarriageToPortId = item.ViaPortId;
+        this.FatherComponent.EntityPM.MainCarriageToPortCode = item.ViaPortCode;
+        this.FatherComponent.EntityPM.MainCarriageToPortName = item.ViaPortName;
+        this.FatherComponent.EntityPM.MainCarriageToPortCountryCode = item.ViaPortCountryCode;
+        this.FatherComponent.EntityPM.MainCarriageToPortCountryName = item.ViaPortCountryName;
     }
 
     OverrideTariffPayablesOfShipment(): any {
@@ -1112,6 +1148,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 shipmentPayable.VendorId = newRecord.SellerId;
                 shipmentPayable.VendorName = newRecord.SellerName;
                 shipmentPayable.MinAmount = newRecord.IsDifferentCurrency ? newRecord.ActualMinPrice : newRecord.MinPrice;
+                this.Generator.CalculatePayableVatAmount(shipmentPayable);
+
                 this.TariffList_Shipment.push(shipmentPayable);
             }
         });

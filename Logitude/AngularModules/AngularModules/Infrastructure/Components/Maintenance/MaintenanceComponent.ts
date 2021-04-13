@@ -50,6 +50,10 @@ export class MaintenanceComponent {
         this.PagesMenu.push(new Menu("PRS", TextCodeTranslator.Translate("General.MC.PersonalSettings.PersonalSettings")));
         this.PagesMenu.push(new Menu("CMS", TextCodeTranslator.Translate("General.MC.SystemSettings.SystemSettings")));
 
+        if (FeatureLocator.HasFeaturePermession("General", "REPORTEXECUTIONLOGS")) {
+            this.PagesMenu.push(new Menu("RELO", TextCodeTranslator.Translate("General.MH.ReportExecutionLogs")));
+        }
+
 
         if (SessionLocator.Tenant == 0) {
             this.PagesMenu.push(new Menu("MNG", TextCodeTranslator.Translate("General.MC.Management.Management")));

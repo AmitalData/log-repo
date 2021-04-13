@@ -229,8 +229,11 @@ export function SearchASurcharge(sellerName: string) {
 
 export function OpenTheFirstResult(){
     DefineRequestGetTariff()
+    DefineRequestGetTariffVersionLines();
     cy.Click(BaseSelectors.GridFitstRow(),null,true)
+
     BaseAssertion.AssertStatusCode(RequestAliases.GetTariff, 200);
+    AssertGetTariffVersionLines();
 }
 
 export function PriceCheckSearch() {
@@ -271,15 +274,55 @@ function DefineDownloadRequest(){
 }
 
 export function CopyIntoNewVersion(date:string) {
-    DefineRequestsForApproveOrCopyTariffVersion()
+    DefineRequestsForApproveOrCopyIntoNewVersion();
     cy.Click(TariffSelectors.TariffActionsMenu, TariffSelectors.ContainsActions);
     cy.Click(TariffSelectors.ToggleButtonMenu, TariffSelectors.ContainsCopyIntoNewVersion);
-    AssertApproveOrCopyTariffVersion()
+    AssertForApproveOrCopyIntoNewVersion();
 
-    cy.get(BaseSelectors.PackageGrid("5")).click({force:true})
-    cy.FillDate(TariffSelectors.TarifflLineStartDate , date)
+    cy.Click(BaseSelectors.EditButton , null)
+    cy.FillDate(TariffSelectors.TariffLineStartDate , date)
+    cy.Click(BaseSelectors.RedButton+BaseSelectors.LastElement, "OK");
 
-    ApproveTariffVersion()
+    TariffApprove()
+}
+
+export function CheckIfVersionApproved() {
+    var btnStatus = Cypress.$("#Add" + BaseSelectors.LastElement).is(":disabled");
+    if (btnStatus == false) {
+        TariffApprove()
+    }
+}
+
+export function TariffApprove() {
+    DefineRequestsForApproveOrCopyIntoNewVersion()
+    cy.Click(BaseSelectors.GreenButton, TariffSelectors.ContainsApproveVersion);
+    AssertForApproveOrCopyIntoNewVersion()
+}
+
+function DefineRequestsForApproveOrCopyIntoNewVersion(){
+    DefineRequestGetTariffVersionLinesByVersionNumber();
+    DefineRequestPutTariff();
+    DefineRequestGetAllVersionsForTariff();
+}
+
+function AssertForApproveOrCopyIntoNewVersion(){
+    AssertPutTariff();
+    AssertGetAllVersionsForTariff();
+    AssertGetTariffVersionLines();
+}
+
+function DefineRequestGetTariffVersionLinesByVersionNumber() {
+    cy.get(".Selected .InnerChild").eq(1).invoke('text').then((text) => {
+        var version = GetTariffVersion(text)
+        cy.DefineRequestWait(RestAPI.GET, Urls.GetTariffVersionLinesByVersion(version), RequestAliases.GetTariffVersionLines);
+    })
+}
+
+function GetTariffVersion(text:string){
+    text = text.replace("Version", "")
+    text = text.replace("[Draft]", "")
+    text = text.trim()
+    return text ;
 }
 
 export function SetTariffNumberFromTitle(titleSelector:string) {
@@ -292,14 +335,12 @@ function DefineRequestsForApproveOrCopyTariffVersion() {
     DefineRequestPutTariff();
     DefineRequestGetAllVersionsForTariff();
     DefineRequestGetTariffVersionLines();
-    // DefineRequestGetSingleTariff();
 }
 
 function AssertApproveOrCopyTariffVersion() {
     AssertPutTariff();
     AssertGetAllVersionsForTariff();
     AssertGetTariffVersionLines();
-    // AssertGetSingleTariff();
 }
 
 function GetCellAssertion(cellNumber: string, ValueToCompare: string) {
@@ -644,4 +685,17 @@ function AssertGetCarrierViews() {
 
 function ValidateShippingLine() {
     BaseAssertion.AssertStatusCode(RequestAliases.PostShippingline, 200)
+}
+
+export function FilterName(SellerName){
+    SellerName = SellerName.replace(";","%3B")
+    SellerName = SellerName.replace(/ /gi,"%20")
+    return SellerName;
+}
+
+export function DefineViewsGetByFiltersRequest(tariffName: string) {
+    cy.DefineRequestWait(RestAPI.GET, Urls.GetFilterSearch(tariffName), RequestAliases.GetFilterSearch);
+}
+export function AssertViewsGetByFilters() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetFilterSearch, 200);
 }

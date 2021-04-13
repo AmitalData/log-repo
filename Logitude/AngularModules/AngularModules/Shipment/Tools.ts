@@ -28,6 +28,11 @@ import {ServiceResponse} from '../Infrastructure/DataContracts/ServiceResponse';
 import {ShipmentPickUpPM} from './EntityPMs/ShipmentPickUpPM';
 import {ShipmentDeliveryPM} from './EntityPMs/ShipmentDeliveryPM';
 import { ShipmentStoragePricingPM } from './EntityPMs/ShipmentStoragePricingPM';
+import { CardListService } from '../Common/Services/StandardLists/CardListService';
+import { CommonDomainService } from '../Common/Services/CommonDomainService';
+import { VatTypeListService } from '../Common/Services/StandardLists/VatTypeListService';
+import { VatTypeList } from '../Common/EntityLists/VatTypeList';
+import { VatTypePercentagePM } from '../Common/EntityPMs/VatTypePercentagePM';
 
 export class ShipmentTool {
     private static CurrentSession = SessionLocator.SelectedSession;
@@ -1000,21 +1005,26 @@ export class ShipmentTool {
             entityPM.AWBChargesCodeCode = "PC";
         }
     }
-    public static ComputeAWBChargeAmount(myRateClassCode: string, myChargeRate: number, myChargeableWeight: number) {
+
+    public static ComputeAWBChargeAmount(entityPm: any, isShipmentCommodity = false) {
         var myResult: number = null;
-
+        var myRateClassCode = entityPm.RateClassCode;
+        var myChargeRate = isShipmentCommodity ? entityPm.ChargeRate : entityPm.AWBChargeRate;
+        var chargeAmount = entityPm.ChargeableWeight;
+        if (myRateClassCode== "K") {
+            chargeAmount = entityPm.ChargeableWeightInKG;
+        }
+        var myChargeableWeight = chargeAmount;
         var groupCode = this.GetRateClassGroupCode(myRateClassCode);
-
         if (groupCode == "M") {
             myResult = myChargeRate;
         }
-
         else if (groupCode == "R") {
             myResult = myChargeRate * myChargeableWeight;
         }
-
         return myResult;
     }
+
     public static ValidateAddedPackagesCount(entityPM: ShipmentPM): string {
         var myResult = "";
 
@@ -2229,6 +2239,11 @@ export class ShipmentGenerator {
     private BCNTGrouped: ByPckageType[] = [];
     private myCurrencyListService: CurrencyListService;
     private myChargesTypeListService: ChargesTypeListService;
+    private cardListService: CardListService;
+    private commonDomainService: CommonDomainService;
+    private AllVatTypes: VatTypeList[] = [];
+    private VatTypePercentages: VatTypePercentagePM[] = [];
+
     constructor(entityPM: ShipmentPM, allRates: LastRate[]) {
         this.EntityPM = entityPM;
         this.AllRates = allRates;
@@ -2236,10 +2251,32 @@ export class ShipmentGenerator {
         this.myCurrencyListService = new CurrencyListService();
         this.myChargesTypeListService = new ChargesTypeListService();
         this.BCNTGrouped = ShipmentTool.GetByPckageTypeGrouped(this.EntityPM);
-
+        this.cardListService = new CardListService();
+        this.commonDomainService = new CommonDomainService();
         if (this.AllRates == null) {
             this.AllRates = [];
         }
+        this.GetAllVatTypes();
+        this.GetAllVatTypePercentagesByDate();
+    }
+
+    GetAllVatTypes() {
+        var myVatTypeListService = new VatTypeListService();
+        myVatTypeListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.AllVatTypes = myResponse.Result;
+            }
+        });
+    }
+
+    GetAllVatTypePercentagesByDate() {
+        var todayDate = DateTool.GetCurrentDateAsUtc();
+        var myCommonDomainService = new CommonDomainService();
+        myCommonDomainService.GetVatTypePercentagePMByDate(todayDate).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.VatTypePercentages = myResponse.Result;
+            }
+        });
     }
 
     // Payables
@@ -2439,7 +2476,7 @@ export class ShipmentGenerator {
         if (this.EntityPM && this.BaseQuote) {
 
             this.IsAdhoc = this.BaseQuote.QuoteTypeCode == "A" ? true : false;
-            this.IsRoutingRate = !this.IsAdhoc;            
+            this.IsRoutingRate = !this.IsAdhoc;
 
             var rate: number = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
             var quoteProfitInLocalCurrency: number = null;
@@ -2458,7 +2495,7 @@ export class ShipmentGenerator {
 
             else {
                 this.GeneratePayablesFromQuote_FCL();
-            }            
+            }
         }
     }
     public GeneratePayablesFromOriginShipment(originShipment: ShipmentPM) {
@@ -2482,7 +2519,7 @@ export class ShipmentGenerator {
                         case "PRVL":
                         case "PRFR":
                         case "GWTN":
-                        case "CWKG": 
+                        case "CWKG":
                         case "GWKG":
                         case "VCBM":
                         case "SCGW":
@@ -2509,7 +2546,7 @@ export class ShipmentGenerator {
                         }
                     }
                 });
-            }            
+            }
         }
     }
     private GeneratePayablesFromQuote_LCL() {
@@ -2551,7 +2588,7 @@ export class ShipmentGenerator {
                     case "PRVL":
                     case "PRFR":
                     case "GWTN":
-                    case "CWKG": 
+                    case "CWKG":
                     case "GWKG":
                     case "VCBM":
                     case "SCGW":
@@ -2599,7 +2636,7 @@ export class ShipmentGenerator {
                         newRecord.MeasurementId = itemGrouped.MeasurementId;
                         newRecord.MeasurementCode = itemGrouped.MeasurementCode;
                         newRecord.MeasurementShortName = itemGrouped.MeasurementShortName;
- 
+
                         this.myChargesTypeListService.getSingleFromCache(item.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
                             if (!myResponse.HasError) {
                                 var chargesType: ChargesTypeList = myResponse.Result;
@@ -2673,7 +2710,7 @@ export class ShipmentGenerator {
                         break;
                     }
             }
-        }); 
+        });
     }
     private ComputePayableQuoteAmounts_LCL(myRecordPM: ShipmentPayablePM, item: QuoteChargePM) {
 
@@ -2774,6 +2811,7 @@ export class ShipmentGenerator {
         myRecordPM.AccountedAmountInLocalCurrency = 0;
         myRecordPM.AccountedAmountInProfitCurrency = 0;
         myRecordPM.ShipmentPayableLineStatusCode = (myQuantity != null && myUnitPrice != null) ? "OAMT" : "EMPT";
+        this.CalculatePayableVatAmount(myRecordPM);
 
         if (myRecordPM.MeasurementCode == "PFCL") {
             myQuantity = ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal");
@@ -2801,6 +2839,7 @@ export class ShipmentGenerator {
         itemPM.AccountedAmountInLocalCurrency = 0;
         itemPM.AccountedAmountInProfitCurrency = 0;
         itemPM.ShipmentPayableLineStatusCode = (itemPM.Quantity != null && itemPM.UnitPrice != null) ? "OAMT" : "EMPT";
+        this.CalculatePayableVatAmount(itemPM);
     }
     private CreateNewPayableFromQuoteCharge(item: QuoteChargePM) {
         var myRecordPM = new ShipmentPayablePM(null);
@@ -2921,7 +2960,8 @@ export class ShipmentGenerator {
                 myRecordPM.IsChargeBySteps = OriginItemPM.IsChargeBySteps;
                 myRecordPM.QuoteCostMinAmount = OriginItemPM.QuoteCostMinAmount;
                 myRecordPM.QuoteCostMaxAmount = OriginItemPM.QuoteCostMaxAmount;
-
+                myRecordPM.VatAmountLocal = OriginItemPM.VatAmountLocal;
+                myRecordPM.VatAmountProfit = OriginItemPM.VatAmountProfit;
                 //if (OriginItemPM.IsFromQuote) {
                 //    myRecordPM.VatTypeId = OriginItemPM.VatTypeId;
                 //}
@@ -3071,7 +3111,7 @@ export class ShipmentGenerator {
 
                             this.EntityPM.ShipmentReceivables.filter(f => f.MeasurementCode == "PRFR").forEach(item => {
                                 item.Quantity = ArrayTool.Sum(this.EntityPM.ShipmentReceivables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentReceivableParentId)), "TotalAmount");
-                               
+
                             });
                         }
 
@@ -3118,7 +3158,7 @@ export class ShipmentGenerator {
                                             }
                                         }
 
-                                        
+
                                         this.GetCurrencyCode(newReceivable);
                                         newReceivable.ProfitCurrencyExchangeRate = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
                                         newReceivable.Rate = this.GetCurrencyRate(newReceivable.CurrencyId);
@@ -3169,7 +3209,7 @@ export class ShipmentGenerator {
         if (this.EntityPM && this.BaseQuote) {
 
             this.IsAdhoc = this.BaseQuote.QuoteTypeCode == "A" ? true : false;
-            this.IsRoutingRate = !this.IsAdhoc; 
+            this.IsRoutingRate = !this.IsAdhoc;
 
             var rate: number = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
             var quoteProfitInLocalCurrency: number = null;
@@ -3189,7 +3229,7 @@ export class ShipmentGenerator {
             else {
                 this.GenerateReceivablesFromQuote_FCL();
             }
-        }        
+        }
     }
     public GenerateReceivablesFromOriginShipment(originShipment: ShipmentPM) {
         this.OriginShipment = originShipment;
@@ -3212,7 +3252,7 @@ export class ShipmentGenerator {
                         case "PRVL":
                         case "PRFR":
                         case "GWTN":
-                        case "CWKG": 
+                        case "CWKG":
                         case "GWKG":
                         case "VCBM":
                         case "SCGW":
@@ -3282,7 +3322,7 @@ export class ShipmentGenerator {
                     case "PRVL":
                     case "PRFR":
                     case "GWTN":
-                    case "CWKG": 
+                    case "CWKG":
                     case "GWKG":
                     case "VCBM":
                     case "SCGW":
@@ -3375,7 +3415,7 @@ export class ShipmentGenerator {
                 case "FIXD":
                 case "PRVL":
                 case "GWTN":
-                case "CWKG": 
+                case "CWKG":
                 case "GWKG":
                 case "VCBM":
                 case "SCGW":
@@ -3499,8 +3539,9 @@ export class ShipmentGenerator {
                 }
             }
         }
-        
+
         myRecordPM.ShipmentReceivableLineStatusCode = (myQuantity != null && myUnitPrice != null) ? "OAMT" : "EMPT";
+        this.CalculateReceivableVatAmount(myRecordPM);
     }
     private ComputeReceivableQuoteAmounts_FCL(itemPM: ShipmentReceivablePM, quantity: number) {
         if (itemPM.ProfitCurrencyExchangeRate == 0) {
@@ -3516,7 +3557,8 @@ export class ShipmentGenerator {
         itemPM.TotalAmount = AppTool.Round(amount, 2);
         itemPM.TotalAmountLocal = AppTool.Round(amountInLocal, 2);
         itemPM.AmountInProfitCurrency = AppTool.Round(amountInProfit, 2);
-        itemPM.ShipmentReceivableLineStatusCode = (itemPM.Quantity != null && itemPM.UnitPrice != null) ? "OAMT" : "EMPT";  
+        itemPM.ShipmentReceivableLineStatusCode = (itemPM.Quantity != null && itemPM.UnitPrice != null) ? "OAMT" : "EMPT";
+        this.CalculateReceivableVatAmount(itemPM);
     }
     private CreateNewReceivableFromQuoteCharge(QuoteCharge: QuoteChargePM) {
         var myRecordPM = new ShipmentReceivablePM(null);
@@ -3564,7 +3606,7 @@ export class ShipmentGenerator {
                     myRecordPM.DueTypeCode = chargesType.DueTypeCode;
                     myRecordPM.DueTypeName = chargesType.DueTypeName;
                     myRecordPM.IATACodeId = chargesType.IATACodeId;
-                    myRecordPM.PrepaidCollectId = chargesType.ChargesGroupCode == "FRT" ? this.EntityPM.FreightPrepaidCollectId : this.EntityPM.OtherPrepaidCollectId;                    
+                    myRecordPM.PrepaidCollectId = chargesType.ChargesGroupCode == "FRT" ? this.EntityPM.FreightPrepaidCollectId : this.EntityPM.OtherPrepaidCollectId;
                     myRecordPM.ViewOrder = chargesType.ViewOrder;
                     myRecordPM.IsExpense = chargesType.IsExpense;
 
@@ -3638,7 +3680,8 @@ export class ShipmentGenerator {
             myRecordPM.IsChargeBySteps = OriginItemPM.IsChargeBySteps;
             myRecordPM.QuoteSaleMinAmount = OriginItemPM.QuoteSaleMinAmount;
             myRecordPM.QuoteSaleMaxAmount = OriginItemPM.QuoteSaleMaxAmount;
-
+            myRecordPM.VatAmountProfit = OriginItemPM.VatAmountProfit;
+            myRecordPM.VatAmountLocal = OriginItemPM.VatAmountLocal;
             //if (OriginItemPM.IsFromQuote) {
             //    myRecordPM.VatTypeId = OriginItemPM.VatTypeId;
             //}
@@ -3701,7 +3744,7 @@ export class ShipmentGenerator {
         newRecord.IsExpense = item.IsExpense;
         newRecord.IsBackToBack = item.IsBackToBack;
 
-       
+
         switch (item.MeasurementCode) {
             case "GRWT": { newRecord.Quantity = this.EntityPM.GrossWeight; break; }
             case "CHWT": { newRecord.Quantity = this.EntityPM.ChargeableWeight; break; }
@@ -3738,7 +3781,153 @@ export class ShipmentGenerator {
 
         return newRecord;
     }
+
+    // Receivable/Payables VAT Amounts
+    public CalculateReceivableVatAmount(shipmentReceivable: ShipmentReceivablePM) {
+        shipmentReceivable.VatAmountLocal = AppTool.Round(shipmentReceivable.TotalAmountLocal, 2);
+        shipmentReceivable.VatAmountProfit = AppTool.Round(shipmentReceivable.AmountInProfitCurrency, 2);
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.CustomerId)) {
+            this.CalculateVatAmountFromCustomer(shipmentReceivable, this.EntityPM.CustomerId);
+        }
+        else {
+            this.CalculateVatAmountFromReceivableLineVatType(shipmentReceivable, shipmentReceivable.VatTypeId); 
+        }
+    }
+    public CalculatePayableVatAmount(shipmentPayable: ShipmentPayablePM) {
+        shipmentPayable.VatAmountLocal = AppTool.Round(shipmentPayable.ExpectedAmountLocal, 2);
+        shipmentPayable.VatAmountProfit = AppTool.Round(shipmentPayable.ExpectedAmountInProfitCurrency, 2);
+        if (!AppTool.IsNullOrEmpty(shipmentPayable.VendorId)) {
+            this.CalculateVatAmountFromVendor(shipmentPayable);
+        }
+        else {
+            this.CalculateVatAmountFromPayableLineVatType(shipmentPayable, shipmentPayable.VatTypeId);
+        }
+    }
+    private CalculateVatAmountFromVendor(shipmentPayable: ShipmentPayablePM) {
+        var payableVatTypeId = null;
+        var vendorId = shipmentPayable.VendorId;
+        this.cardListService.getSingle(vendorId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                payableVatTypeId = myResponse.Result.VatTypeId;
+                if (AppTool.IsNullOrEmpty(payableVatTypeId)) {
+                    payableVatTypeId = shipmentPayable.VatTypeId;
+                }
+                if (!AppTool.IsNullOrEmpty(payableVatTypeId)) {
+                    this.CalculateVatAmountFromPayableLineVatType(shipmentPayable, payableVatTypeId);
+                }
+            }
+        });
+    }
+    private CalculateVatAmountFromPayableLineVatType(shipmentPayable: ShipmentPayablePM, vatTypeId: string) {
+        var payableVatTypeId = vatTypeId;
+        var vatAmountLocal = AppTool.Round(shipmentPayable.ExpectedAmountLocal, 2);
+        var vatAmountProfit = AppTool.Round(shipmentPayable.ExpectedAmountInProfitCurrency, 2);
+        if (!AppTool.IsNullOrEmpty(payableVatTypeId)) {
+            var percentage: number = null;
+            var loadingDate = shipmentPayable.CreateDate;
+            if (loadingDate == null) {
+                loadingDate = DateTool.GetCurrentDateAsUtc();
+            }
+            this.commonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    var lineVatType = this.AllVatTypes.filter(d => d.Id == payableVatTypeId)[0];
+                    if (!lineVatType.IsMultiPercentage) {
+                        var vatTypePercentagesList = myResponse.Result;
+                        var vatTypePercentagePM = vatTypePercentagesList.filter(d => d.VatTypeId == payableVatTypeId)[0];
+                        if (vatTypePercentagePM != null) {
+                            percentage = vatTypePercentagePM.Percentage;
+                            shipmentPayable.VatAmountLocal = vatAmountLocal + AppTool.Round((shipmentPayable.ExpectedAmountLocal * percentage / 100), 2);
+                            shipmentPayable.VatAmountProfit = vatAmountProfit + AppTool.Round((shipmentPayable.ExpectedAmountInProfitCurrency * percentage / 100), 2);
+                        }
+                    }
+                    else {
+                        this.CalculatePayablesVatAmountInMultiVat_OpenLine(payableVatTypeId, shipmentPayable);
+                    }
+                }
+            });
+        }
+    }
+    private CalculateVatAmountFromCustomer(shipmentReceivable: ShipmentReceivablePM, customerId: string) {
+        var receivableVatTypeId = null;
+        this.cardListService.getSingle(customerId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                receivableVatTypeId = myResponse.Result.VatTypeId;
+                if (AppTool.IsNullOrEmpty(receivableVatTypeId)) {
+                    receivableVatTypeId = shipmentReceivable.VatTypeId;
+                }
+                if (!AppTool.IsNullOrEmpty(receivableVatTypeId)) {
+                    this.CalculateVatAmountFromReceivableLineVatType(shipmentReceivable, receivableVatTypeId);
+                }
+            }
+        });
+    }
+    private CalculateVatAmountFromReceivableLineVatType(shipmentReceivable: ShipmentReceivablePM, vatTypeId: string) {
+        var receivableVatTypeId = vatTypeId;
+        var vatAmountLocal = AppTool.Round(shipmentReceivable.TotalAmountLocal, 2);
+        var vatAmountProfit = AppTool.Round(shipmentReceivable.AmountInProfitCurrency, 2);
+        if (!AppTool.IsNullOrEmpty(receivableVatTypeId)) {
+            var percentage: number = null;
+            var loadingDate = shipmentReceivable.CreateDate;
+            if (loadingDate == null) {
+                loadingDate = DateTool.GetCurrentDateAsUtc();
+            }
+            this.commonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    var lineVatType = this.AllVatTypes.filter(d => d.Id == receivableVatTypeId)[0];
+                    if (!lineVatType.IsMultiPercentage) {
+                        var vatTypePercentagesList = myResponse.Result;
+                        var vatTypePercentagePM = vatTypePercentagesList.filter(d => d.VatTypeId == receivableVatTypeId)[0];
+                        if (vatTypePercentagePM != null) {
+                            percentage = vatTypePercentagePM.Percentage;
+                            shipmentReceivable.VatAmountLocal = vatAmountLocal + AppTool.Round((shipmentReceivable.TotalAmountLocal * percentage / 100), 2);
+                            shipmentReceivable.VatAmountProfit = vatAmountProfit + AppTool.Round((shipmentReceivable.AmountInProfitCurrency * percentage / 100), 2);
+                        }
+                    }
+                    else {
+                        this.CalculateReceivableVatAmountInMultiVat_OpenLine(receivableVatTypeId, shipmentReceivable);
+                    }
+                }
+            });
+        }
+    }
+    // Multi Vat
+    private CalculatePayablesVatAmountInMultiVat_OpenLine(vatTypeId: string, shipmentPayable: ShipmentPayablePM) {
+        var myVatGroups = SessionLocator.AllVatTypesGroups.filter(f => f.GroupVATTypeId == vatTypeId);
+        var vatAmountLocal = AppTool.Round(shipmentPayable.ExpectedAmountLocal, 2);
+        var vatAmountProfit = AppTool.Round(shipmentPayable.ExpectedAmountInProfitCurrency, 2);
+        var vatAmountLocal_Total = vatAmountLocal;
+        var vatAmountProfit_Total = vatAmountProfit;
+        myVatGroups.forEach(itemGroup => {
+            var myPercentagePM = this.VatTypePercentages.filter(d => d.VatTypeId == itemGroup.SingleVATTypeId)[0];
+            if (myPercentagePM != null) {
+                var vatTypePercentage = myPercentagePM.Percentage;
+                vatAmountLocal_Total = vatAmountLocal_Total + (vatAmountLocal * vatTypePercentage / 100);
+                vatAmountProfit_Total = vatAmountProfit_Total + (vatAmountProfit * vatTypePercentage / 100);
+            }
+        });
+
+        shipmentPayable.VatAmountLocal = AppTool.Round(vatAmountLocal_Total, 2);
+        shipmentPayable.VatAmountProfit = AppTool.Round(vatAmountProfit_Total, 2);
+    }
+    private CalculateReceivableVatAmountInMultiVat_OpenLine(vatTypeId: string, shipmentReceivable: ShipmentReceivablePM) {
+        var myVatGroups = SessionLocator.AllVatTypesGroups.filter(f => f.GroupVATTypeId == vatTypeId);
+        var vatAmountLocal = AppTool.Round(shipmentReceivable.TotalAmountLocal, 2);
+        var vatAmountProfit = AppTool.Round(shipmentReceivable.AmountInProfitCurrency, 2);
+        var vatAmountLocal_Total = vatAmountLocal;
+        var vatAmountProfit_Total = vatAmountProfit;
+        myVatGroups.forEach(itemGroup => {
+            var myPercentagePM = this.VatTypePercentages.filter(d => d.VatTypeId == itemGroup.SingleVATTypeId)[0];
+            if (myPercentagePM != null) {
+                var vatTypePercentage = myPercentagePM.Percentage;
+                vatAmountLocal_Total = vatAmountLocal_Total + (vatAmountLocal * vatTypePercentage / 100);
+                vatAmountProfit_Total = vatAmountProfit_Total  + (vatAmountProfit * vatTypePercentage / 100);
+            }
+        });
+        shipmentReceivable.VatAmountLocal = AppTool.Round(vatAmountLocal_Total, 2);
+        shipmentReceivable.VatAmountProfit = AppTool.Round(vatAmountProfit_Total, 2);
+    }
 }
+
 export class AWBHelper {
     public static ValidateAWBCCS(shipmentPM: ShipmentPM) {
         var myResult = new AWBCCSValidator();

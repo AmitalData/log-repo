@@ -1116,7 +1116,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 VatNumber = card.VatNumber,
                                                 PaymentTermId = card.PaymentTermId,
                                                 PartnerTypeId = card.PartnerTypeId,
-                                                PartnerTypeName = card.PartnerType == null ? null : card.PartnerType.Name,
+                                                PartnerTypeName = card.PartnerType == null ? null : (card.PartnerType.Id == "CS" && card.Customer != null && card.Customer.IsCustomer == true ? card.PartnerType.Name : "Shipper/Consignee"),
                                                 PaymentTermName = card.PaymentTerm == null ? null : card.PaymentTerm.EnglishName,
                                                 WebSite = card.Website,
                                                 InvoiceCurrencyId = card.InvoiceCurrencyId,
@@ -2195,6 +2195,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              CityName = a.CityName,
                                              GLAccountId = a.GLAccountId,
                                              PartnerTypeId = a.PartnerTypeId,
+                                             BusinessPhone = a.Phone,
+                                             SalesmanUserId = a.SalesmanUserId,
+                                             CollectorId = a.CollectorId,
+                                             PaymentTermId = a.PaymentTermId,
                                          };
 
 

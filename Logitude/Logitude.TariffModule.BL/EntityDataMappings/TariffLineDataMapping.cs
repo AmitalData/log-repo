@@ -37,7 +37,7 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 
             Port fromPort = portRepository.GetSinglePort(entityPOCO.OriginPortId, entityPOCO.Tenant);
             Port toPort = portRepository.GetSinglePort(entityPOCO.DestinationPortId, entityPOCO.Tenant);
-
+            Port viaPort = portRepository.GetSinglePort(entityPOCO.ViaPortId, entityPOCO.Tenant);
             if (fromPort != null)
             {
                 entityPM.OriginPortCode = fromPort.Code;
@@ -49,6 +49,12 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
                 entityPM.DestinationPortCode = toPort.Code;
                 entityPM.DestinationPortCombinedCode = toPort.CombinedCode;
                 entityPM.DestinationPortName = toPort.EnglishName;
+            }
+            if (viaPort != null)
+            {
+                entityPM.ViaPortCode = viaPort.Code;
+                entityPM.ViaPortCombinedCode = viaPort.CombinedCode;
+                entityPM.ViaPortName = viaPort.EnglishName;
             }
             if (!string.IsNullOrEmpty(entityPOCO.CurrencyId))
             {

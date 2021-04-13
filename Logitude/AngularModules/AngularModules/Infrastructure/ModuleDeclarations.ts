@@ -189,9 +189,9 @@ import { SendDocumentResultComponent } from './Components/Maintenance/Automation
 import { PrivateLabelLoginProcessComponent } from './Components/LoginComponent/PrivateLabelComponents/PrivateLabelLoginProcessComponent';
 import { AutomationsConditionsViewDetailsComponent } from './Components/Maintenance/Automation/AutomationsConditionsViewDetailsComponent';
 import { AutomationConditionsDetailsComponent } from './Components/Maintenance/Automation/AutomationConditionsDetailsComponent';
+import { CreateTaskResultComponent } from './Components/Maintenance/Automation/AutomationResult/CreateTaskResultComponent';
  
  
-
 
 
 
@@ -312,7 +312,8 @@ export const ControlsComponents =
         FTPAutomationDetailsComponent,
         SendDocumentResultComponent,
         AuditAutomationTabComponent,
-        AutomationsConditionsViewDetailsComponent
+        AutomationsConditionsViewDetailsComponent,
+        CreateTaskResultComponent,
     ];
 export const Components =
     [
@@ -500,10 +501,10 @@ export class ModuleDeclarations {
             case 'FTBSchedulerTemplateComponent': { myResult = FTBSchedulerTemplateComponent; break; }
             case 'SendInterfaceResultComponent': { myResult = SendInterfaceResultComponent; break; }
             case 'FTPAutomationDetailsComponent': { myResult = FTPAutomationDetailsComponent; break; }
-            case 'SendDocumentResultComponent': { myResult = SendDocumentResultComponent; break; }
-
-            case 'PrivateLabelLoginProcessComponent': { myResult = PrivateLabelLoginProcessComponent; break; }
-                
+            case 'SendDocumentResultComponent': { myResult = SendDocumentResultComponent; break; } 
+            case 'PrivateLabelLoginProcessComponent': { myResult = PrivateLabelLoginProcessComponent; break; } 
+            case 'CreateTaskResultComponent': { myResult = CreateTaskResultComponent; break; }
+                 
                  
 
                  

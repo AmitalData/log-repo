@@ -46,9 +46,7 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
 
                 if(exist)
                 {
-                    string msg = TranslateTextsClass.Translate("General.M.EntityAlreadyExists", entityPM.Tenant);
-                    msg = msg.Replace("%Entity", "Role");
-                    throw new Exception(msg);
+                    throw new Exception("A Role with name " + entityPM.Name + " already exists");
                 }
             }
         }

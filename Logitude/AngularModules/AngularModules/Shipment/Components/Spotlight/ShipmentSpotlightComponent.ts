@@ -87,6 +87,10 @@ export class ShipmentSpotlightComponent {
             }
         }
 
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.PreForwardingFromPortId) && !AppTool.IsNullOrEmpty(this.EntityPM.PreForwardingToPortId)) {
+            this.ItemsCollection.push(new LegItem(this, "Pre Forwarding"));
+        }
+
         //Pre Carriage
         if (!AppTool.IsNullOrEmpty(this.EntityPM.PreCarriageFromPortId) && !AppTool.IsNullOrEmpty(this.EntityPM.PreCarriageToPortId)) {
             this.ItemsCollection.push(new LegItem(this, "Pre Carriage"));
@@ -113,6 +117,10 @@ export class ShipmentSpotlightComponent {
         //On Carriage
         if (!AppTool.IsNullOrEmpty(this.EntityPM.OnCarriageFromPortId) && !AppTool.IsNullOrEmpty(this.EntityPM.OnCarriageToPortId)) {
             this.ItemsCollection.push(new LegItem(this, "On Carriage"));
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.OnForwardingFromPortId) && !AppTool.IsNullOrEmpty(this.EntityPM.OnForwardingToPortId)) {
+            this.ItemsCollection.push(new LegItem(this, "On Forwarding"));
         }
 
         // Warehouse Leg
@@ -159,6 +167,12 @@ export class ShipmentSpotlightComponent {
                 break;
             }
 
+            case "Pre Forwarding": {
+                entity.LegImgSrc = "./Images/SpotLightLegs/leg-opened.png";
+                entity.IsOpenedLeg = true;
+                break;
+            }
+
             case "Pre Carriage": {
                 entity.LegImgSrc = "./Images/SpotLightLegs/leg-opened.png";
                 entity.IsOpenedLeg = true;
@@ -196,6 +210,12 @@ export class ShipmentSpotlightComponent {
             }
 
             case "On Carriage": {
+                entity.LegImgSrc = "./Images/SpotLightLegs/leg-opened.png";
+                entity.IsOpenedLeg = true;
+                break;
+            }
+
+            case "On Forwarding": {
                 entity.LegImgSrc = "./Images/SpotLightLegs/leg-opened.png";
                 entity.IsOpenedLeg = true;
                 break;
@@ -383,6 +403,14 @@ export class LegItem {
                 break;
             }
 
+            case "Pre Forwarding":
+            case "On Forwarding": {
+                isHouseNotConnectedVisibile = false;
+                isHouseConnectedVisibile = false;
+                isHouseVisible = true;
+                break;
+            }
+
             default:
                 {
                     if (this.EntityPM.ShipmentLevelCode == "H") {
@@ -454,6 +482,11 @@ export class LegItem {
                 break;
             }
 
+            case "Pre Forwarding": {
+                this.LegImgSrc = "./Images/SpotLightLegs/leg-closed.png";
+                break;
+            }
+
             case "Pre Carriage": {
                 this.LegImgSrc = "./Images/SpotLightLegs/leg-closed.png";
                 break;
@@ -480,6 +513,11 @@ export class LegItem {
             }
 
             case "On Carriage": {
+                this.LegImgSrc = "./Images/SpotLightLegs/leg-closed.png";
+                break;
+            }
+
+            case "On Forwarding": {
                 this.LegImgSrc = "./Images/SpotLightLegs/leg-closed.png";
                 break;
             }
@@ -524,12 +562,14 @@ export class LegItem {
                 break;
             }
 
+            case "Pre Forwarding":
             case "Pre Carriage":
             case "Main Carriage":
             case "Transshipment1":
             case "Transshipment2":
             case "Transshipment3":
             case "On Carriage":
+            case "On Forwarding":
             case "WarehouseLeg": {
                 this.LegImgSrc = "./Images/SpotLightLegs/leg-closed-hover.png";
                 break;
@@ -565,12 +605,14 @@ export class LegItem {
                 break;
             }
 
+            case "Pre Forwarding":
             case "Pre Carriage":
             case "Main Carriage":
             case "Transshipment1":
             case "Transshipment2":
             case "Transshipment3":
             case "On Carriage":
+            case "On Forwarding":
             case "WarehouseLeg": {
                 this.LegImgSrc = "./Images/SpotLightLegs/leg-closed.png";
                 break;
@@ -592,12 +634,14 @@ export class LegItem {
         switch (this.LegName) {
             case "Pick Up": { return this.pickUp.CarrierName; }
             case "Delivery": { return this.delivery.CarrierName; }
+            case "Pre Forwarding": { return this.EntityPM.PreForwardingCarrierName; }
             case "Pre Carriage": { return this.EntityPM.PreCarriageCarrierName; }
             case "Main Carriage": { return this.EntityPM.MainCarriageCarrierName; }
             case "Transshipment1": { return this.EntityPM.Transshipment1CarrierName; }
             case "Transshipment2": { return this.EntityPM.Transshipment2CarrierName; }
             case "Transshipment3": { return this.EntityPM.Transshipment3CarrierName; }
             case "On Carriage": { return this.EntityPM.OnCarriageCarrierName; }
+            case "On Forwarding": { return this.EntityPM.OnForwardingCarrierName; }
             case "WarehouseLeg": { return this.EntityPM.WarehouseLegTerminalName; }
             default: { return null; }
         }
@@ -607,12 +651,14 @@ export class LegItem {
         switch (this.LegName) {
             case "Pick Up": { return this.pickUp.CarrierNumber; }
             case "Delivery": { return this.delivery.CarrierNumber; }
+            case "Pre Forwarding": { return this.EntityPM.PreForwardingCarrierNumber; }
             case "Pre Carriage": { return this.EntityPM.PreCarriageCarrierNumber; }
             case "Main Carriage": { return this.IsInlandDomestic ? this.EntityPM.TruckNumber : this.EntityPM.MainCarriageCarrierNumber; }
             case "Transshipment1": { return this.EntityPM.Transshipment1CarrierNumber; }
             case "Transshipment2": { return this.EntityPM.Transshipment2CarrierNumber; }
             case "Transshipment3": { return this.EntityPM.Transshipment3CarrierNumber; }
             case "On Carriage": { return this.EntityPM.OnCarriageCarrierNumber; }
+            case "On Forwarding": { return this.EntityPM.OnForwardingCarrierNumber; }
             default: { return null; }
         }
     }
@@ -646,12 +692,14 @@ export class LegItem {
                     return this.EntityPM.WarehouseLegAddressCountryCode;
                 }
 
+            case "Pre Forwarding": { return this.EntityPM.PreForwardingFromPortCountryCode; }
             case "Pre Carriage": { return this.EntityPM.PreCarriageFromPortCountryCode; }
             case "Main Carriage": { return this.IsInlandDomestic ? this.EntityPM.FromPartnerCountryCode : this.EntityPM.MainCarriageFromPortCountryCode; }
             case "Transshipment1": { return this.EntityPM.Transshipment1FromPortCountryCode; }
             case "Transshipment2": { return this.EntityPM.Transshipment2FromPortCountryCode; }
             case "Transshipment3": { return this.EntityPM.Transshipment3FromPortCountryCode; }
             case "On Carriage": { return this.EntityPM.OnCarriageFromPortCountryCode; }
+            case "On Forwarding": { return this.EntityPM.OnForwardingFromPortCountryCode; }
             default: { return null; }
         }
     }
@@ -685,12 +733,14 @@ export class LegItem {
                     return this.EntityPM.WarehouseLegAddressCountryName;
                 }
 
+            case "Pre Forwarding": { return this.EntityPM.PreForwardingFromPortCountryName; }
             case "Pre Carriage": { return this.EntityPM.PreCarriageFromPortCountryName; }
             case "Main Carriage": { return this.IsInlandDomestic ? this.EntityPM.FromPartnerCountryName : this.EntityPM.MainCarriageFromPortCountryName; }
             case "Transshipment1": { return this.EntityPM.Transshipment1FromPortCountryName; }
             case "Transshipment2": { return this.EntityPM.Transshipment2FromPortCountryName; }
             case "Transshipment3": { return this.EntityPM.Transshipment3FromPortCountryName; }
             case "On Carriage": { return this.EntityPM.OnCarriageFromPortCountryName; }
+            case "On Forwarding": { return this.EntityPM.OnForwardingFromPortCountryName; }
             default: { return null; }
         }
     }
@@ -732,12 +782,14 @@ export class LegItem {
                     return this.EntityPM.WarehouseLegAddressCountryCode;
                 }
 
+            case "Pre Forwarding": { return this.EntityPM.PreForwardingFromPortCode; }
             case "Pre Carriage": { return this.EntityPM.PreCarriageFromPortCode; }
             case "Main Carriage": { return this.EntityPM.MainCarriageFromPortCode; }
             case "Transshipment1": { return this.EntityPM.Transshipment1FromPortCode; }
             case "Transshipment2": { return this.EntityPM.Transshipment2FromPortCode; }
             case "Transshipment3": { return this.EntityPM.Transshipment3FromPortCode; }
             case "On Carriage": { return this.EntityPM.OnCarriageFromPortCode; }
+            case "On Forwarding": { return this.EntityPM.OnForwardingFromPortCode; }
             default: { return null; }
         }
     }
@@ -771,12 +823,14 @@ export class LegItem {
                     return this.EntityPM.WarehouseLegAddressCountryName;
                 }
 
+            case "Pre Forwarding": { return this.EntityPM.PreForwardingFromPortName; }
             case "Pre Carriage": { return this.EntityPM.PreCarriageFromPortName; }
             case "Main Carriage": { return this.IsInlandDomestic ? this.EntityPM.FromPartnerCity : this.EntityPM.MainCarriageFromPortName; }
             case "Transshipment1": { return this.EntityPM.Transshipment1FromPortName; }
             case "Transshipment2": { return this.EntityPM.Transshipment2FromPortName; }
             case "Transshipment3": { return this.EntityPM.Transshipment3FromPortName; }
             case "On Carriage": { return this.EntityPM.OnCarriageFromPortName; }
+            case "On Forwarding": { return this.EntityPM.OnForwardingFromPortName; }
             default: { return null; }
         }
     }
@@ -805,12 +859,14 @@ export class LegItem {
                     }
                 }
 
+            case "Pre Forwarding": { return this.EntityPM.PreForwardingToPortCountryCode; }
             case "Pre Carriage": { return this.EntityPM.PreCarriageToPortCountryCode; }
             case "Main Carriage": { return this.IsInlandDomestic ? this.EntityPM.ToPartnerCountryCode : this.EntityPM.MainCarriageToPortCountryCode; }
             case "Transshipment1": { return this.EntityPM.Transshipment1ToPortCountryCode; }
             case "Transshipment2": { return this.EntityPM.Transshipment2ToPortCountryCode; }
             case "Transshipment3": { return this.EntityPM.Transshipment3ToPortCountryCode; }
             case "On Carriage": { return this.EntityPM.OnCarriageToPortCountryCode; }
+            case "On Forwarding": { return this.EntityPM.OnForwardingToPortCountryCode; }
             default: { return null; }
         }
     }
@@ -839,12 +895,14 @@ export class LegItem {
                     }
                 }
 
+            case "Pre Forwarding": { return this.EntityPM.PreForwardingToPortCountryName; }
             case "Pre Carriage": { return this.EntityPM.PreCarriageToPortCountryName; }
             case "Main Carriage": { return this.IsInlandDomestic ? this.EntityPM.ToPartnerCountryName : this.EntityPM.MainCarriageToPortCountryName; }
             case "Transshipment1": { return this.EntityPM.Transshipment1ToPortCountryName; }
             case "Transshipment2": { return this.EntityPM.Transshipment2ToPortCountryName; }
             case "Transshipment3": { return this.EntityPM.Transshipment3ToPortCountryName; }
             case "On Carriage": { return this.EntityPM.OnCarriageToPortCountryName; }
+            case "On Forwarding": { return this.EntityPM.OnForwardingToPortCountryName; }
             default: { return null; }
         }
     }
@@ -881,12 +939,14 @@ export class LegItem {
                     }
                 }
 
+            case "Pre Forwarding": { return this.EntityPM.PreForwardingToPortCode; }
             case "Pre Carriage": { return this.EntityPM.PreCarriageToPortCode; }
             case "Main Carriage": { return this.EntityPM.MainCarriageToPortCode; }
             case "Transshipment1": { return this.EntityPM.Transshipment1ToPortCode; }
             case "Transshipment2": { return this.EntityPM.Transshipment2ToPortCode; }
             case "Transshipment3": { return this.EntityPM.Transshipment3ToPortCode; }
             case "On Carriage": { return this.EntityPM.OnCarriageToPortCode; }
+            case "On Forwarding": { return this.EntityPM.OnForwardingToPortCode; }
             default: { return null; }
         }
     }
@@ -915,12 +975,14 @@ export class LegItem {
                     }
                 }
 
+            case "Pre Forwarding": { return this.EntityPM.PreForwardingToPortName; }
             case "Pre Carriage": { return this.EntityPM.PreCarriageToPortName; }
             case "Main Carriage": { return this.IsInlandDomestic ? this.EntityPM.ToPartnerCity : this.EntityPM.MainCarriageToPortName; }
             case "Transshipment1": { return this.EntityPM.Transshipment1ToPortName; }
             case "Transshipment2": { return this.EntityPM.Transshipment2ToPortName; }
             case "Transshipment3": { return this.EntityPM.Transshipment3ToPortName; }
             case "On Carriage": { return this.EntityPM.OnCarriageToPortName; }
+            case "On Forwarding": { return this.EntityPM.OnForwardingToPortName; }
             default: { return null; }
         }
     }
@@ -929,12 +991,14 @@ export class LegItem {
         switch (this.LegName) {
             case "Pick Up": { return this.pickUp.ATD; }
             case "Delivery": { return this.delivery.ATD; }
+            case "Pre Forwarding": { return this.EntityPM.PreForwardingATD; }
             case "Pre Carriage": { return this.EntityPM.PreCarriageATD; }
             case "Main Carriage": { return this.EntityPM.MainCarriageATD; }
             case "Transshipment1": { return this.EntityPM.Transshipment1ATD; }
             case "Transshipment2": { return this.EntityPM.Transshipment2ATD; }
             case "Transshipment3": { return this.EntityPM.Transshipment3ATD; }
             case "On Carriage": { return this.EntityPM.OnCarriageATD; }
+            case "On Forwarding": { return this.EntityPM.OnForwardingATD; }
             case "WarehouseLeg": { return this.EntityPM.WarehouseLegActualEntryDate; }
             default: { return null; }
         }
@@ -958,6 +1022,13 @@ export class LegItem {
                     var followUpLegName: string = this.LegName.replace(" ", "") + "Departure";
                     this.SetActualMethod(followUpLegName + this.delivery.PickUpDeliveryNumber);
                     this.SetActualMethod(followUpLegName + this.delivery.PickUpDeliveryNumber + this.delivery.PickUpDeliveryNumber);
+                    break;
+                }
+
+            case "Pre Forwarding":
+                {
+                    this.EntityPM.PreForwardingATD = newValue;
+                    this.SetActualMethod("PreForwardingDeparture");
                     break;
                 }
 
@@ -1003,6 +1074,12 @@ export class LegItem {
                     break;
                 }
 
+            case "On Forwarding":
+                {
+                    this.EntityPM.OnForwardingATD = newValue;
+                    this.SetActualMethod("OnForwardingDeparture");
+                    break;
+                }
 
             case "WarehouseLeg": 
                 {
@@ -1021,12 +1098,14 @@ export class LegItem {
         switch (this.LegName) {
             case "Pick Up": { return this.pickUp.ETD; }
             case "Delivery": { return this.delivery.ETD; }
+            case "Pre Forwarding": { return this.EntityPM.PreForwardingETD; }
             case "Pre Carriage": { return this.EntityPM.PreCarriageETD; }
             case "Main Carriage": { return this.EntityPM.MainCarriageETD; }
             case "Transshipment1": { return this.EntityPM.Transshipment1ETD; }
             case "Transshipment2": { return this.EntityPM.Transshipment2ETD; }
             case "Transshipment3": { return this.EntityPM.Transshipment3ETD; }
             case "On Carriage": { return this.EntityPM.OnCarriageETD; }
+            case "On Forwarding": { return this.EntityPM.OnForwardingETD; }
             case "WarehouseLeg": { return this.EntityPM.WarehouseLegExpectedEntryDate; }
             default: { return null; }
         }
@@ -1035,12 +1114,14 @@ export class LegItem {
         switch (this.LegName) {
             case "Pick Up": { this.pickUp.ETD = newValue; break; }
             case "Delivery": { this.delivery.ETD = newValue; break; }
+            case "Pre Forwarding": { this.EntityPM.PreForwardingETD = newValue; break; }
             case "Pre Carriage": { this.EntityPM.PreCarriageETD = newValue; break; }
             case "Main Carriage": { this.EntityPM.MainCarriageETD = newValue; break; }
             case "Transshipment1": { this.EntityPM.Transshipment1ETD = newValue; break; }
             case "Transshipment2": { this.EntityPM.Transshipment2ETD = newValue; break; }
             case "Transshipment3": { this.EntityPM.Transshipment3ETD = newValue; break; }
             case "On Carriage": { this.EntityPM.OnCarriageETD = newValue; break; }
+            case "On Forwarding": { this.EntityPM.OnForwardingETD = newValue; break; }
             case "WarehouseLeg": { this.EntityPM.WarehouseLegExpectedEntryDate = newValue; break; }
             default: { break; }
         }
@@ -1052,12 +1133,14 @@ export class LegItem {
         switch (this.LegName) {
             case "Pick Up": { return this.pickUp.ATA; }
             case "Delivery": { return this.delivery.ATA; }
+            case "Pre Forwarding": { return this.EntityPM.PreForwardingATA; }
             case "Pre Carriage": { return this.EntityPM.PreCarriageATA; }
             case "Main Carriage": { return this.EntityPM.MainCarriageATA; }
             case "Transshipment1": { return this.EntityPM.Transshipment1ATA; }
             case "Transshipment2": { return this.EntityPM.Transshipment2ATA; }
             case "Transshipment3": { return this.EntityPM.Transshipment3ATA; }
             case "On Carriage": { return this.EntityPM.OnCarriageATA; }
+            case "On Forwarding": { return this.EntityPM.OnForwardingATA; }
             case "WarehouseLeg": { return this.EntityPM.WarehouseLegActualReleaseDate; }
             default: { return null; }
         }
@@ -1079,6 +1162,13 @@ export class LegItem {
                     var followUpLegName: string = this.LegName.replace(" ", "") + "Arrival";
                     this.SetActualMethod(followUpLegName + this.delivery.PickUpDeliveryNumber);
                     this.SetActualMethod(followUpLegName + this.delivery.PickUpDeliveryNumber + this.delivery.PickUpDeliveryNumber);
+                    break;
+                }
+
+            case "Pre Forwarding":
+                {
+                    this.EntityPM.PreForwardingATA = newValue;
+                    this.SetActualMethod("PreForwardingArrival");
                     break;
                 }
 
@@ -1124,6 +1214,13 @@ export class LegItem {
                     break;
                 }
 
+            case "On Forwarding":
+                {
+                    this.EntityPM.OnForwardingATA = newValue;
+                    this.SetActualMethod("OnForwardingArrival");
+                    break;
+                }
+
             case "WarehouseLeg":
                 {
                     this.EntityPM.WarehouseLegActualReleaseDate = newValue;
@@ -1141,12 +1238,14 @@ export class LegItem {
         switch (this.LegName) {
             case "Pick Up": { return this.pickUp.ETA; }
             case "Delivery": { return this.delivery.ETA; }
+            case "Pre Forwarding": { return this.EntityPM.PreForwardingETA; }
             case "Pre Carriage": { return this.EntityPM.PreCarriageETA; }
             case "Main Carriage": { return this.EntityPM.MainCarriageETA; }
             case "Transshipment1": { return this.EntityPM.Transshipment1ETA; }
             case "Transshipment2": { return this.EntityPM.Transshipment2ETA; }
             case "Transshipment3": { return this.EntityPM.Transshipment3ETA; }
             case "On Carriage": { return this.EntityPM.OnCarriageETA; }
+            case "On Forwarding": { return this.EntityPM.OnForwardingETA; }
             case "WarehouseLeg": { return this.EntityPM.WarehouseLegExpectedReleaseDate; }
             default: { return null; }
         }
@@ -1155,12 +1254,14 @@ export class LegItem {
         switch (this.LegName) {
             case "Pick Up": { this.pickUp.ETA = newValue; break; }
             case "Delivery": { this.delivery.ETA = newValue; break; }
+            case "Pre Forwarding": { this.EntityPM.PreForwardingETA = newValue; break; }
             case "Pre Carriage": { this.EntityPM.PreCarriageETA = newValue; break; }
             case "Main Carriage": { this.EntityPM.MainCarriageETA = newValue; break; }
             case "Transshipment1": { this.EntityPM.Transshipment1ETA = newValue; break; }
             case "Transshipment2": { this.EntityPM.Transshipment2ETA = newValue; break; }
             case "Transshipment3": { this.EntityPM.Transshipment3ETA = newValue; break; }
             case "On Carriage": { this.EntityPM.OnCarriageETA = newValue; break; }
+            case "On Forwarding": { this.EntityPM.OnForwardingETA = newValue; break; }
             case "WarehouseLeg": { this.EntityPM.WarehouseLegExpectedReleaseDate = newValue; break; }
             default: { break; }
         }
