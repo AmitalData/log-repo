@@ -1,9 +1,10 @@
 export class AutomationCreateTask {
  
     public AssigneeId: string;
-    public OwnerId: string;
+    public OwnerValue: string;
     public TaskType: string; 
     public EndDateTypeValue: string; 
-    public EndDateValue: any; 
+    public EndDateValue: any;
+    public OwnerFieldType: string;
 }
 

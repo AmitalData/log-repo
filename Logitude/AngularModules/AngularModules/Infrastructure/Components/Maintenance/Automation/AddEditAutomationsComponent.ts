@@ -1137,11 +1137,11 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
     MapAutomationCreateTask() {
         this.AutomationCreateTask.AssigneeId = this.AutomatedBackupClass.AutomationCreateTask.AssigneeId;
-        this.AutomationCreateTask.OwnerId = this.AutomatedBackupClass.AutomationCreateTask.OwnerId;
+        this.AutomationCreateTask.OwnerValue = this.AutomatedBackupClass.AutomationCreateTask.OwnerValue;
         this.AutomationCreateTask.TaskType = this.AutomatedBackupClass.AutomationCreateTask.TaskType;
         this.AutomationCreateTask.EndDateValue = this.AutomatedBackupClass.AutomationCreateTask.EndDateValue;
         this.AutomationCreateTask.EndDateTypeValue = this.AutomatedBackupClass.AutomationCreateTask.EndDateTypeValue;
-         
+        this.AutomationCreateTask.OwnerFieldType = this.AutomatedBackupClass.AutomationCreateTask.OwnerFieldType;
     }
 
     MapAutomationSendDocument() {
@@ -2134,10 +2134,11 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
             if (this.AutomatedBackupClass.AutomationCreateTask) {
                 if (this.AutomatedBackupClass.AutomationCreateTask.AssigneeId != this.AutomationCreateTask.AssigneeId) isChange = true;
-                if (this.AutomatedBackupClass.AutomationCreateTask.OwnerId != this.AutomationCreateTask.OwnerId) isChange = true;
+                if (this.AutomatedBackupClass.AutomationCreateTask.OwnerValue != this.AutomationCreateTask.OwnerValue) isChange = true;
                 if (this.AutomatedBackupClass.AutomationCreateTask.TaskType != this.AutomationCreateTask.TaskType) isChange = true;
                 if (this.AutomatedBackupClass.AutomationCreateTask.EndDateValue != this.AutomationCreateTask.EndDateValue) isChange = true;
                 if (this.AutomatedBackupClass.AutomationCreateTask.EndDateTypeValue != this.AutomationCreateTask.EndDateTypeValue) isChange = true;
+                if (this.AutomatedBackupClass.AutomationCreateTask.OwnerFieldType != this.AutomationCreateTask.OwnerFieldType) isChange = true;
             } else isChange = true;
         }
         return isChange;

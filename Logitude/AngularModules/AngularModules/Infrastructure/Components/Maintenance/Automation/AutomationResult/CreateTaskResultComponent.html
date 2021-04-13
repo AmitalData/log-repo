@@ -13,7 +13,7 @@
 	}
 </style>
  
-<div style="height:85px;width:100%;margin-top:5px;  vertical-align:top">
+<div style="height:180px;width:100%;margin-top:5px;  vertical-align:top">
 	<table style="border :none;vertical-align:top;">
 
 		<tr style="height: 25px">
@@ -52,7 +52,7 @@
 												<table>
 													<tr>
 														<td class="CellStretched" style="width:80px;vertical-align:central">
-															<p style="font-size:12px;color:#6E7172">End Date</p>
+															<p style="font-size:12px;color:#6E7172">Due Date</p>
 														</td>
 														<td style="width:200px;">
 															<ComboBox [ItemsSource]="DueDateFieldList" [SelectedItem]="SelectedDueDateField" (SelectedItemChanged)="SelectedItemChanged($event)" [Binding]="'Name'"></ComboBox>
@@ -121,31 +121,26 @@
 
 						<td style="width:10px">
 							<div> </div>
-						</td>
+						</td> 
 
 						<td style="width:120px">
-							<p style="font-size:11px;margin-top:1px;color:#6E7172">Owner</p>
+							<p style="font-size:11px;margin-top:1px;color:#6E7172">Task Type</p>
 						</td>
 
-						<td style="width: 200px"> 
-								<LogLov [ObjectFieldName]="'OwnerId'"
-										[SelectedValue]="OwnerId"
-										[SelectedValuePath]="'OwnerId'" 
-										[DataContext]="DataContext"
-										[LookUpTableName]="'Contact'"
-										(SelectedItemChanged)="SelectedOwnerChange($event)"
-										[HideColumns]="true"
-										[AutoCompleteSearchWindow]="false">
-								</LogLov> 
-						</td>
-						 
+						<td style="width:200px">
+							<div style="text-align:left;width:200px;">
+								<LogTextBox [IsFreeText]="true" [ObjectFieldName]="'TaskType'" [Text]="TaskType" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+
+							</div>
+						</td> 
+
 						<td>
 							<div>
 								<table>
 									<tr>
 										<td style="width:20px">
 											<div style="width:20px"> </div>
-										</td> 
+										</td>
 									</tr>
 								</table>
 							</div>
@@ -171,17 +166,35 @@
 							<div> </div>
 						</td>
 						<td style="width:120px">
-							<p style="font-size:11px;margin-top:1px;color:#6E7172">Task Type</p>
+							<p style="font-size:11px;margin-top:1px;color:#6E7172">Owner</p>
 						</td>
 
-						<td style="width:200px">
-							<div style="text-align:left;width:200px;"> 
-								<LogTextBox  [IsFreeText]="true"   [ObjectFieldName]="'TaskType'" [Text]="TaskType" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-
+						<td style="text-align:left;width:240px;">
+							<div style="text-align:left;width:270px;">
+								<ComboBox style="width:270px;" (SelectedItemChanged)="OwnerObjectFieldComboBoxChanged($event)" [ItemsSource]="OwnerObjectFieldLists" [SelectedItem]="OwnerObjectFieldSelected" [Binding]="'FullNameTextCodeDefaultText'"></ComboBox>
 							</div>
 						</td>
+						<td style="width:20px">
+							<div style="width:30px"></div>
+						</td>
+
+						<td *ngIf="automationCreateTask && automationCreateTask.OwnerFieldType=='Specific'" style="text-align:left;width:168px;">
+							<div class="FormFieldRow" style="text-align:left;width:200px;">
+
+								<LogLov style="width:200px;margin-top:-3px"
+										[ObjectFieldName]="'OwnerValue'"
+										[SelectedValue]="OwnerValue"
+										[DataContext]="DataContext"
+										[HideColumns]="true"
+										[HideLastColumn]="true"
+										(SelectedItemChanged)="OwnerValueChange($event)"
+										[LookUpTableName]="'User'">
+								</LogLov>
+							</div>
+						</td>
+
 						<td style="width:8px"> </td>
-						 
+
 						<td>
 							<div> </div>
 						</td>

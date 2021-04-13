@@ -57,11 +57,36 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             IQueueService queueservice = new DbQueueService();
             string entityNumber = GetPropertyValueFromObject("ShipmentNumber", entityPM);
             DateTime? taskEndDate = new TaskAutomationEndDateService(tenant).GetDate(automationCreateTask.EndDateValue, automationCreateTask.EndDateTypeValue, entityPM);
+            string OnwerId = GetOwnerId(automationCreateTask, automationResultArgs.AutomationFieldLists);
             queueservice.InitializeQueue("CreateTaskCollaborationTool", tenant);
-            queueservice.Send(new Dictionary<string, string>() { { "AssigneeId", automationCreateTask.AssigneeId }, { "Tenant", tenant.ToString() }, { "TaskType", automationCreateTask.TaskType }, { "OwnerId", automationCreateTask.OwnerId }, { "EndDate", taskEndDate != null ? taskEndDate.ToString() : null }, { "EntityNumber", entityNumber } }, tenant, null, null, null, null);
+            queueservice.Send(new Dictionary<string, string>() { { "AssigneeId", automationCreateTask.AssigneeId }, { "Tenant", tenant.ToString() }, { "TaskType", automationCreateTask.TaskType }, { "OwnerId", OnwerId }, { "EndDate", taskEndDate != null ? taskEndDate.ToString() : null }, { "EntityNumber", entityNumber } }, tenant, null, null, null, null);
         }
 
+        private string GetOwnerId(AutomationCreateTask automationCreateTask, List<Field> automationConditionFields)
+        {
 
+            string ownerId = automationCreateTask.OwnerValue;
+            if (automationCreateTask != null)
+            {
+                #region Fill Data  
+                //ownerId
+                if (automationCreateTask.OwnerFieldType == "Field")
+                {
+
+                   ownerId = GetPropertyValueFromObject(ownerId, entityPM); 
+ 
+                }
+
+                if (string.IsNullOrEmpty(ownerId)) ownerId = entityChange.CreateByUserId;
+
+                #endregion
+
+            }
+
+
+            return ownerId;
+        }
+         
         private EntityChangeAutomation GetEntityChangeAutomation(Automation automation, ValidateAutomationResultClass validateResult, DateTime automationStartProcessingDate)
         {
             EntityChangeAutomation entityChangesAutomation = CreateEntityChangeAutomation(automation);
