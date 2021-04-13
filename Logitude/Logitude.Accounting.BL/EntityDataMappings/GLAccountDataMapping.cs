@@ -575,6 +575,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     if (card.PaymentTermId != FirstPaymentTermId && card.PaymentTermId != null)
                     {
                         IsPaymentTermIdSameOnAllCards = false;
+                        FirstPaymentTermId = card.PaymentTermId;
                         entityPM.PaymentTermId = card.PaymentTermId;
                         SetPaymentTermName(entityPM, showLocals);
                     }
@@ -637,14 +638,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
         {
             GLAccountPM parent = GetParentCurrencyGLAccount(entityPM);
 
-            if (entityPM.SalesmanName == null)
-                entityPM.SalesmanName = parent.SalesmanName;
-
-            if (entityPM.CollectorName == null)
-                entityPM.CollectorName = parent.CollectorName;
-
-            if (entityPM.PaymentTermName == null)
-                entityPM.PaymentTermName = parent.PaymentTermName;
+            entityPM.SalesmanName = parent.SalesmanName;
+            entityPM.CollectorName = parent.CollectorName;
+            entityPM.PaymentTermName = parent.PaymentTermName;
         }
 
         private static GLAccountPM GetParentCurrencyGLAccount(GLAccountPM entityPM)
@@ -660,7 +656,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             Logitude.BL.CommonDataModel.APIDataContract.ApiV1.PaymentTermQueryService paymentTermQuery = new Logitude.BL.CommonDataModel.APIDataContract.ApiV1.PaymentTermQueryService(entityPM.Tenant);
             Logitude.BL.CommonDataModel.APIDataContract.ApiV1.PaymentTerm paymentTerm = paymentTermQuery.GetPaymentTermById(entityPM.PaymentTermId, entityPM.Tenant);
             if (paymentTerm != null)
-                entityPM.PaymentTermName = showLocals ? paymentTerm.LocalName : paymentTerm.EnglishName;
+                entityPM.PaymentTermName = showLocals ? paymentTerm.LocalName == null ? paymentTerm.EnglishName: paymentTerm.LocalName : paymentTerm.EnglishName;
         }
 
    
