@@ -120,7 +120,6 @@ export class ShipmentDetailsComponent implements AfterViewInit
  
     SetRoutingVariables() {
        this.GetCargoTrackingPortById(this.Shipment.ShipmentList.FromPortId);
-       this.GetCargoTrackingPortById(this.Shipment.ShipmentList.ToPortId);
     }
 
     GetCargoTrackingPortById(id: string) {
@@ -139,6 +138,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
         else
             this.toPortCode = code;
+       this.GetCargoTrackingPortById(this.Shipment.ShipmentList.ToPortId);
+
     }
 
     SetCustomsBrokerReference() {
