@@ -270,14 +270,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             else if (Type == "glAccount")
             {
                 var ledgerTransactions = GetNormalTransactionsOfBanksGLAccounts(bankAccounts);
-                IQueryable<LedgerTransactionList> transferledgerTransactions = IncludesTransferGlaccount ? GetTransferTransactionsOfBanksGLAccounts(bankAccounts) : null;
+                List<LedgerTransactionList> transferledgerTransactions = IncludesTransferGlaccount ? GetTransferTransactionsOfBanksGLAccounts(bankAccounts) : null;
                 return BuildExternalReconciliationPeriods(null, ledgerTransactions, transferledgerTransactions);
             }
             else
             {
                 var reconcileExternalPageLines = GetExternalPagesLines();
                 var ledgerTransactions = GetNormalTransactionsOfBanksGLAccounts(bankAccounts);
-                IQueryable<LedgerTransactionList> transferledgerTransactions = IncludesTransferGlaccount ? GetTransferTransactionsOfBanksGLAccounts(bankAccounts) : null;
+                List<LedgerTransactionList> transferledgerTransactions = IncludesTransferGlaccount ? GetTransferTransactionsOfBanksGLAccounts(bankAccounts) : null;
                 
                 return BuildExternalReconciliationPeriods(reconcileExternalPageLines, ledgerTransactions, transferledgerTransactions);
             }
@@ -289,11 +289,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             var ledgerTransactions = GetNormalTransactionsOfReconciliation(bankAccounts);
             var transferledgerTransactions = GetTransferTransactionsOfReconciliation(bankAccounts);
 
-            var periods = BuildExternalReconciliationPeriods(reconcileExternalPageLines, ledgerTransactions, transferledgerTransactions);
+            var periods = BuildExternalReconciliationPeriods(reconcileExternalPageLines, ledgerTransactions, transferledgerTransactions.ToList());
             return periods;
         }
 
-        public List<ExternalReconciliationPeriod> BuildExternalReconciliationPeriods(IQueryable<ReconcileExternalPageLine> reconcileExternalPageLines = null, IQueryable<LedgerTransactionList> ledgerTransactions = null, IQueryable<LedgerTransactionList> TransferledgerTransactions = null)
+        public List<ExternalReconciliationPeriod> BuildExternalReconciliationPeriods(IQueryable<ReconcileExternalPageLine> reconcileExternalPageLines = null,
+            IQueryable<LedgerTransactionList> ledgerTransactions = null,
+            List<LedgerTransactionList> TransferledgerTransactions = null)
         {
 
             List<ExternalReconciliationPeriod> periodsResult = null;
@@ -304,7 +306,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             }
             if (ledgerTransactions != null)
             {
-                periodsResult = periodsResult.Union(MappinLedgerTransactionToPeriods(ledgerTransactions)).ToList();
+                periodsResult = periodsResult.Union(MappinLedgerTransactionToPeriods(ledgerTransactions.ToList())).ToList();
 
             }
             if (TransferledgerTransactions != null)
@@ -370,17 +372,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             return periods;
         }
 
-        private List<ExternalReconciliationPeriod> MappinLedgerTransactionToPeriods(IQueryable<LedgerTransactionList> ledgerTransactions, bool IsTransfer = false)
+        private List<ExternalReconciliationPeriod> MappinLedgerTransactionToPeriods(List<LedgerTransactionList> ledgerTransactions, bool IsTransfer = false)
         {
             
 
             IQueryable<ExternalReconciliationLine> ExternalReconciliationLines = (from a in accountingContext.ExternalReconciliationLines.Include("ExternalReconciliation") 
                                                                                   where a.ExternalReconciliation.IsCancelled == false 
                                                                                   select a);
-
-            var x = ledgerTransactions.ToList();
             
-            List<ExternalReconciliationPeriod> periods = (from a in x
+            List<ExternalReconciliationPeriod> periods = (from a in ledgerTransactions
                                                           join BK in accountingContext.BankAccounts on a.AccountId equals IsTransfer == true ? BK.TransferGLAcccountId : BK.GLAccountId
                                                           join Ex in ExternalReconciliationLines on a.Id equals Ex.LedgerTransactionId into LedgerTransactionJoinExternalReconciliation
                                                           from Ex in LedgerTransactionJoinExternalReconciliation.DefaultIfEmpty()
@@ -426,15 +426,19 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             return transactionsQuery;
         }
 
-        private IQueryable<LedgerTransactionList> GetTransferTransactionsOfBanksGLAccounts(List<BankAccountPM> bankAccounts)
+        private List<LedgerTransactionList> GetTransferTransactionsOfBanksGLAccounts(List<BankAccountPM> bankAccounts)
         {
             LedgerTransactionsFilter transactionsFilter = BuildTransferTransactionsFilter(bankAccounts);
             IQueryable<LedgerTransactionList> transactionsQuery = GetFilteredTransactions(transactionsFilter);
             IQueryable<LedgerTransactionList> externalTransactions = GetTransferAccountsExternalTransactions(bankAccounts);
 
-            var transferTransactions = externalTransactions.Union(transactionsQuery);
+            transactionsQuery = FilterTransactionQueryByRefDatePeriod(transactionsQuery);
+            externalTransactions = FilterTransactionQueryByRefDatePeriod(externalTransactions);
 
-            transferTransactions = FilterTransactionQueryByRefDatePeriod(transferTransactions);
+            var transferTransactions = new List<LedgerTransactionList>();
+            transferTransactions.AddRange(transactionsQuery);
+            transferTransactions.AddRange(externalTransactions);
+
 
             return transferTransactions;
         }
