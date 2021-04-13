@@ -1208,7 +1208,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             IQueryable<LedgerTransactionList> ledgerTransactions = GetFilteredList(queryOperations, tenant);
 
             IQueryable<LedgerTransactionList> accountOpenTransaction = GetTransactionsForNormalAccount(tenant, accountId, ledgerTransactions);
-            IQueryable<LedgerTransactionList> transferAccountOpenTransaction = GetTransactionsForTransferAccount(tenant, accountId, ledgerTransactions);
+            IQueryable<LedgerTransactionList> transferAccountOpenTransaction = GetTransactionsForTransferAccount(tenant, transferAccountId, ledgerTransactions);
 
             IQueryable<LedgerTransactionList> resultedList = accountOpenTransaction.Union(transferAccountOpenTransaction).OrderByDescending(d=>d.DocumentDate);
             return resultedList;
