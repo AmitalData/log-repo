@@ -62,7 +62,11 @@ export class UserDashboardComponent implements AfterViewInit
         this.SetDefaultBackgroundColor();
         this.GetBrandingData();
         this.GetLoggedUserIfNotSet();
-        this.Authenticate();
+        //this.Authenticate();
+        this.LoggedUserData();
+    }
+    LoggedUserData() {
+        SessionInfo.Token = sessionStorage.getItem("Token");
     }
 
 
@@ -122,8 +126,8 @@ export class UserDashboardComponent implements AfterViewInit
 
     private Authenticate()
     {
-        var loggedEmail = sessionStorage.getItem("LoggedUserEmail");
-        if (!loggedEmail)
+        let token = sessionStorage.getItem("Token");
+        if (!token)
             this.router.navigate(["cargo-tracking", "login"]);
     }
 
