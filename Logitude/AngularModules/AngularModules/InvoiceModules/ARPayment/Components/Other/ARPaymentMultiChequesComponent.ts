@@ -26,147 +26,169 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
     public paymentPM: ARPaymentPM;
     public ItemsSource: ObservableCollection;
     public ValidationErrorsList: string[] = [];
-   
+    public OriginalItemPM: ARPaymentPM;
+    public ClonedItemPM: ARPaymentPM;
     FIELD_IS_REQUIERD: string;
     IsDisplayOnly: boolean;
     IsHeaderVisible: boolean = false;
     IsFromCustomsAnswers: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public ChequesCounter: number;
+    public TotalAmount: number;
+
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-     
+       
     }
    
     SetWindowArgs(args: any) {
     
         if (!AppTool.IsNullOrEmpty(args)) {
             this.paymentPM = args.EntityPM;
-            this.AddChequeRecord();
-        }
-    }
-
-    AddChequeRecord() {
-        var cheque: ARPaymentChequeReplicaPM = new ARPaymentChequeReplicaPM(this.paymentPM);
-
-        cheque.PaymentId = this.paymentPM.Id,
-            cheque.Tenant = this.paymentPM.Tenant;
-        cheque.LineNumber = 1;
-        cheque.BankId = this.paymentPM.Bank;
-        cheque.BankBranch = this.paymentPM.BankBranch;
-        cheque.BankAccount = this.paymentPM.Account;
-        cheque.ValueDate = this.paymentPM.ValueDate;
-        cheque.ChequeNumber = this.paymentPM.ChequeOrPaymentRef;
-        cheque.ForeignAmount = this.paymentPM.AmountInPaymentCurrency;
-        if (!this.paymentPM.ARPaymentChequeReplicas.includes(cheque)) {
-            this.paymentPM.AddARPaymentChequeReplicaPM(cheque);
-            this.ItemsSource.Insert(new PaymentChequeLine(cheque, this));
+            this.OriginalItemPM = args.EntityPM;
+            this.ClonedItemPM = this.CloneEntity(args.EntityPM);
+            this.FillItemSource();
+            this.AddFirstChequeRecord();
+            this.CalculateTotal();
+            this.UpdateChequeCounter();
 
         }
     }
-  
-
-    BuildChequesList() {
+    UpdateChequeCounter() {
+        this.ChequesCounter = this.paymentPM.ARPaymentChequeReplicas.length;
+    }
+    FillItemSource() {
         this.ItemsSource.Clear();
-    }
-
-    Add() {
-
-        var counter: number = 0;
-
-
-        if (this.paymentPM.ARPaymentChequeReplicas.length > 0) {
-
-            var items = this.paymentPM.ARPaymentChequeReplicas.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 });
-            if (items.length == 0) counter = 0;
-            else {
-                counter = items[this.paymentPM.ARPaymentChequeReplicas.length - 1].LineNumber;
-            }
-
-
+        for (let item of this.paymentPM.ARPaymentChequeReplicas) {
+            this.ItemsSource.Insert(new PaymentChequeLine(item, this));
         }
+      
 
-        counter += 1;
-        var cheque: ARPaymentChequeReplicaPM = new ARPaymentChequeReplicaPM(this.paymentPM);
-
-        cheque.PaymentId = this.paymentPM.Id,
+    }
+    AddFirstChequeRecord() {
+        if (this.paymentPM.ARPaymentChequeReplicas.length == 0) {
+            var cheque: ARPaymentChequeReplicaPM = new ARPaymentChequeReplicaPM(this.paymentPM);
+            cheque.PaymentId = this.paymentPM.Id,
             cheque.Tenant = this.paymentPM.Tenant;
-        cheque.LineNumber = counter;
+            cheque.LineNumber = 1;
+            cheque.BankId = this.paymentPM.Bank;
+            cheque.BankBranch = this.paymentPM.BankBranch;
+            cheque.BankAccount = this.paymentPM.Account;
+            cheque.ValueDate = this.paymentPM.ValueDate;
+            cheque.ChequeNumber = this.paymentPM.ChequeOrPaymentRef;
+            cheque.ForeignAmount = this.paymentPM.AmountInPaymentCurrency;
+            this.UpdatePaymentChequeList(cheque);          
+        }
+    }
+  
+    UpdatePaymentChequeList(cheque: ARPaymentChequeReplicaPM) {
         if (!this.paymentPM.ARPaymentChequeReplicas.includes(cheque)) {
             this.paymentPM.AddARPaymentChequeReplicaPM(cheque);
             this.ItemsSource.Insert(new PaymentChequeLine(cheque, this));
-
         }
     }
+    AddNewCheque() {
+        if (this.CheckRequiredFileds()) {
+            var latestLineNumber: number = 0;
+            latestLineNumber = this.GetLatestChequeLineNumber()
+            latestLineNumber += 1;
+            var cheque: ARPaymentChequeReplicaPM = new ARPaymentChequeReplicaPM(this.paymentPM);
+            cheque.PaymentId = this.paymentPM.Id,
+                cheque.Tenant = this.paymentPM.Tenant;
+            cheque.LineNumber = latestLineNumber;
+            this.UpdatePaymentChequeList(cheque);
+            this.CalculateTotal();
+            this.ChequesCounter = latestLineNumber;
+        }
+    }
+    GetLatestChequeLineNumber() {
+       var counter: number = 0;
+    if (this.paymentPM.ARPaymentChequeReplicas.length > 0) {
 
+        var items = this.paymentPM.ARPaymentChequeReplicas.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 });
+        if (items.length == 0) counter = 0;
+        else {
+            counter = items[this.paymentPM.ARPaymentChequeReplicas.length - 1].LineNumber;
+        }
+       
+        return counter;
+    }
+}
+    CalculateTotal() {
+        this.TotalAmount = 0;
+        for (let cheque of this.ItemsSource.Collection) {
+            if (!AppTool.IsNullOrEmpty(cheque.ForeignAmount))
+            this.TotalAmount += cheque.ForeignAmount;
+        }
+         
+    }
 
-
-    //RejectChanges() {
-    //    this.MapEntitytoEntity(this.ClonedItemPM, this.OriginalItemPM, true);
-    //}
-
-    //MapEntitytoEntity(srcEntity: any, targetEntity: any, takeKeysFromTarget: boolean = false) {
-    //    var keys;
-    //    keys = Object.keys(takeKeysFromTarget ? targetEntity : srcEntity);
-    //    for (var key in keys) {
-    //        var property = keys[key];
-    //        targetEntity[property] = srcEntity[property];
-    //    }
-    //}
     CancelButtonClicked() {
-
-
-        //if (this.paymentPM.IsDirty ) {
-        //    var confirm = new ConfirmWindow();
-
-        //    confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
-
-        //    confirm.ShowNoButton = true;
-        //    confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.Cancel"));
-        //    confirm.WindowClosed.subscribe((event: any) => {
-        //        if (confirm.Yes) {
-        //            confirm.Close();
-        //            this.OkButtonClicked();
-
-
-
-        //        }
-        //        else {
-                   
-        //            this.CurrentSession.CloseCurrentWindow();
-        //        }
-
-        //    });
-
-        //}
-        //else {
-            this.CurrentSession.CloseCurrentWindowEmit('cancel');
-        //}
-
-
-
+        this.RejectChanges();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
-    isValid: boolean;
-    inValid: boolean;
-    hasRequest: boolean;
-    notMandatoryIsNotEmpty: boolean = false;
-    OkButtonClicked() {
-        this.ValidationErrorsList = [];
-        var errors: string[] = [];
-        this.isValid = true;
-        this.inValid = false;
-        this.CurrentSession.CloseCurrentWindowEmit('ok');
-        for (let item of this.paymentPM.ARPaymentChequeReplicas) {
-        
+    CloneEntity(entityToClone: ARPaymentPM) {
+       var clonedEntity: ARPaymentPM = new ARPaymentPM();
+        this.MapEntitytoEntity(entityToClone, clonedEntity);
+        clonedEntity.ARPaymentChequeReplicas = [];
+        entityToClone.ARPaymentChequeReplicas.forEach((itemMod) => {
+            var clonedItemMod = new ARPaymentChequeReplicaPM(itemMod.EntityParentPM);
+            this.MapEntitytoEntity(itemMod, clonedItemMod);
+            clonedEntity.ARPaymentChequeReplicas.push(clonedItemMod);
+        });
 
+        return clonedEntity;
+    }
+    RejectChanges() {
+        this.MapEntitytoEntity(this.ClonedItemPM, this.OriginalItemPM, true);
+    }
+
+    MapEntitytoEntity(srcEntity: any, targetEntity: any, takeKeysFromTarget: boolean = false) {
+        var keys;
+        keys = Object.keys(takeKeysFromTarget ? targetEntity : srcEntity);
+        for (var key in keys) {
+            var property = keys[key];
+            targetEntity[property] = srcEntity[property];
         }
-
-
-  
     }
-
+    CheckRequiredFileds() {
+        this.ValidationErrorsList = [];
+        for (let cheque of this.paymentPM.ARPaymentChequeReplicas) {
+            this.ValidateChequeFields(cheque);
+        }
+        if (this.ValidationErrorsList.length == 0) {
+            return true;
+        } 
+        
+    }
+    OkButtonClicked() {       
+        if (this.CheckRequiredFileds()) {      
+            this.CurrentSession.CloseCurrentWindowEmit('ok');
+        } 
+    }
+    private ValidateChequeFields(cheque: ARPaymentChequeReplicaPM) {
+        if (AppTool.IsNullOrEmpty(cheque.ChequeNumber)) {
+            this.ValidationErrorsList.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.S.Details.ChequeRef")));
+        }
+        if (AppTool.IsNullOrEmpty(cheque.BankId)) {
+            this.ValidationErrorsList.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.Bank")));
+        }
+        if (AppTool.IsNullOrEmpty(cheque.BankAccount)) {
+            this.ValidationErrorsList.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.Account")));
+        }
+        if (AppTool.IsNullOrEmpty(cheque.BankBranch)) {
+            this.ValidationErrorsList.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.BankBranch")));
+        }
+        if (AppTool.IsNullOrEmpty(cheque.ValueDate)) {
+            this.ValidationErrorsList.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.ValueDate")));
+        }
+        if (AppTool.IsNullOrEmpty(cheque.ForeignAmount)) {
+            this.ValidationErrorsList.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("ARPaymentCheque.F.ForeignAmount")));
+        }
+    }
     public SelectedRow: any = null;
     OnRowSelected(itemComponent: any) {
         this.SelectedRow = itemComponent;
@@ -175,14 +197,14 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
     OnRowEnded($event) {
         console.log("this.ItemsSource.Length : " + this.ItemsSource.Length);
         if (($event) == this.ItemsSource.Length) {
-            this.Add();
+            this.AddNewCheque();
 
         }
     }
 
     OnFocus() {
         if (this.ItemsSource.Length == 0) {
-            this.Add();
+            this.AddNewCheque();
         }
     }
 
@@ -198,14 +220,11 @@ export class PaymentChequeLine extends BaseComponent {
     constructor(EntityPM: ARPaymentChequeReplicaPM, Parent: ARPaymentMultiChequesComponent) {
         super();
         this.entityPM = EntityPM;
-
         this.parent = Parent;
 
     }
 
-    //#region properties
-
-
+  
     get LineNumber() { return this.entityPM.LineNumber; }
     set LineNumber(value: number) {
         if (this.entityPM.LineNumber != value) {
@@ -218,7 +237,7 @@ export class PaymentChequeLine extends BaseComponent {
     set ForeignAmount(value: number) {
         if (this.entityPM.ForeignAmount != value) {
             this.entityPM.ForeignAmount = value;
-
+            this.parent.CalculateTotal();
         }
     }
 
@@ -273,12 +292,12 @@ export class PaymentChequeLine extends BaseComponent {
 
 
     DeleteButtonClicked() {
-
+    
         this.parent.ItemsSource.Remove(this);
         if (this.parent.paymentPM.ARPaymentChequeReplicas.includes(this.entityPM)) {
             this.parent.paymentPM.RemoveARPaymentChequeReplicaPM(this.entityPM);
         }
-
+        this.parent.CalculateTotal();
     }
 
 

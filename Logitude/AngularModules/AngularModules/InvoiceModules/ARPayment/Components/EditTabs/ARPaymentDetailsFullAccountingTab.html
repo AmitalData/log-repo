@@ -606,7 +606,7 @@
                                                     </div>
                                                 </td>
 
-                                                <td>
+                                                <td *ngIf="isFullAccounting && AccountingPaymentMethodCode == 'CH'">
                                                     <div>
                                                         <IconButton [Name]="'Add'" [IsSmall]="true"   (click)="AddChequesButtonClicked()" ></IconButton>
                                                     </div>

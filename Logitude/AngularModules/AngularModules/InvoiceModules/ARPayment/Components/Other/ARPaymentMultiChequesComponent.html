@@ -12,12 +12,12 @@
 
       
         <td style="width:85px; padding-right: 15px;" colspan="6">
-            <div *ngIf="IsHeaderVisible" style="color: #3b95d5;">{{'ARPayment.S.Details.Cheque'  | TextCodeTranslationPipe}}</div>
+            <div style="color: #3b95d5;font-size:16px">{{'Accounting.General.O.Cheques'  | TextCodeTranslationPipe}}({{ChequesCounter}})</div>
         </td>
       
 
         <td style="width: 25px;height: 20px;padding: 5px;padding-bottom: 0px;">
-            <div><IconButton [IsEnabled]="!IsDisplayOnly" [IsSmall]="true" [Name]="'Add'" (click)="Add()" style="float:left;"></IconButton></div>
+            <div><IconButton [IsEnabled]="!IsDisplayOnly" [IsSmall]="true" [Name]="'Add'" (click)="AddNewCheque()" style="float:left;"></IconButton></div>
         </td>
     </tr>
 
@@ -26,7 +26,7 @@
         <td colspan="7">
             <table>
                 <tr>
-                    <td style="width:10px"></td>
+                
                     <td colspan="5" style="padding-right:10px">
 
                         <div class="CellContent" style="bottom: 5px;padding:5px">
@@ -59,7 +59,7 @@
                                                 <span>{{item.ForeignAmount}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'ForeignAmount'" [DataContext]="item"
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'ForeignAmount'" [DataContext]="item" [InputType]="'decimal'"
                                                             [Text]="item.ForeignAmount" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
 
                                             </div>
@@ -75,7 +75,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate>
                                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
-                                                <span>{{item.ValueDate}}</span>
+                                                <span>{{item.ValueDate | DateTimeToDatePipe}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogDatePicker [FocusOnMe]="'true'"
@@ -192,6 +192,9 @@
         <td colspan="7" style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
+                    <td style="width:85px; padding-right: 15px;" colspan="6">
+                        <div class="footer-title" style="color: #3b95d5;font-size:14px" >  {{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}: {{TotalAmount | NumbersPipe:'N2'}} </div>
+                    </td>
                     <td>
                         <div></div>
                     </td>

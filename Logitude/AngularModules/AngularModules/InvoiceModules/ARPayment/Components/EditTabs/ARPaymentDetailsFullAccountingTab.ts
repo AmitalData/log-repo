@@ -45,6 +45,7 @@ import { GLAccountPMService } from '../../../../Accounting/Services/StandardPMs/
 import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList';
 import { LineModel } from '../../../../Accounting/Components/Others/ReconcileComponent';
 import { GLAccountPM } from '../../../../Accounting/EntityPMs/GLAccountPM';
+import { ARPaymentValidator } from '../../../../Invoice/Validators/ARPaymentValidator';
 
 @Component({
 
@@ -77,7 +78,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 	public ARPaymentChequeStatusColor = "black";
 	BankFieldsVisibile: boolean;
 	isMultipleCheques: boolean = false;
-	public OpenAmountCurrency: string;
+    public OpenAmountCurrency: string;
+    ARPaymentValidator: ARPaymentValidator;
 	public InvoiceAmountCurrency: string = TextCodeTranslator.Translate("Accounting.O.ARP.InvoiceAmount") + " (" + SessionLocator.TenantPM.CurrencyCode + ")";
 	public PaymenyAmount: number;
 	get TextStore()
@@ -117,8 +119,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 		this.originalPaymentOpenAmount = this.EntityPM.OpenAmount;
 		this.paymentAmountTotal = this.EntityPM.AmountInPaymentCurrency;
 		this.PaymentCurrencySign = this.EntityPM.PaymentCurrencySign;
-		this.TransactionsList = new ObservableCollection([]);
-
+        this.TransactionsList = new ObservableCollection([]);
+        this.ARPaymentValidator = new ARPaymentValidator();
 		//#region old
 		this.ItemsSource = new ObservableCollection([]);
 		this.EnableNegativeOffsetARPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetARPayments;
@@ -2071,22 +2073,30 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         return this.PaymenyAmount - this.paymentReconciledAmountTotal - this.amount2reconcileTotal;
     }
 
+    ValidateChequeFields() {
+        var errors: string[];
+        errors = this.ARPaymentValidator.Validate(this.EntityPM);
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;       
+        return errors;
+    }
     AddChequesButtonClicked() {
-     
+     var errors:string[] =   this.ValidateChequeFields();
+        if (errors.length > 0) {
+            return;
+        }
+        this.ShowMultiChequeScreen();      
+    }
+    
+    ShowMultiChequeScreen() {
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
-
-            var logWindow = new LogitudeWindow();
-            logWindow.Width = 1000;
-            logWindow.Height = 600;
-          
-            logWindow.ShowCloseButton = false;
-            logWindow.WindowArgs = windowArgs;
-        
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1000;
+        logWindow.Height = 600;
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
         logWindow.Show('./InvoiceModules/ARPayment/Components/Other/ARPaymentMultiChequesComponent');
-        }
-    
-
+    }
 }
 
 
