@@ -50,7 +50,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         bool IsCashPayment { get { return paymentPM.AccountingPaymentMethodCode == "CA"; } }
         bool IsChequePayment { get { return paymentPM.AccountingPaymentMethodCode == "CH"; } }
 
-
+        JournalPM journal;
         public FullAccountingARPaymentApproveService(ARPaymentPM paymentPM, int tenant, bool isNewEntity)
         {
             this.paymentPM = paymentPM;
@@ -340,15 +340,15 @@ namespace Logitude.BL.InvoiceModel.CoreBL
 
         private JournalPM CreateNewPaymentJournal()
         {
-            JournalPM journal = GetNewJournalForPayment();
+             journal = GetNewJournalForPayment();
             int counter = 0;
 
-            CreateCreditLine(journal, ref counter);
-            CreateDebitLines(journal, counter);
+            CreateCreditLines( ref counter);
+            CreateDebitLines(counter);
 
-            CreateAutomaticReconcileForJournal(journal);
+            CreateAutomaticReconcileForJournal();
 
-            SubmitJournal(journal);
+            SubmitJournal();
             return journal;
         }
 
@@ -364,12 +364,12 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             return journal;
         }
 
-        private void SubmitJournal(JournalPM journal)
+        private void SubmitJournal()
         {
             IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
             journalUpdate.Update(journal);
         }
-        private void CreateAutomaticReconcileForJournal(JournalPM journal)
+        private void CreateAutomaticReconcileForJournal()
         {
 
             if (paymentPM.PaymentInvoices.Any())
@@ -397,7 +397,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             }
         }
 
-        private int CreateDebitLines(JournalPM journal, int counter)
+        private int CreateDebitLines(int counter)
         {
             if (paymentPM.AccountingPaymentMethodCode == "CH")
                 counter = CreateDebitLinesForEachCheque(journal, counter);
@@ -469,7 +469,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         private int CreateDebitLinesForEachCheque(JournalPM journal, int counter)
         {
             if (paymentPM.ARPaymentChequeReplicas.Count > 0)
-                CreateDebitLineForEachReplica(journal, ref counter);
+                CreateJournalLineForEachReplica(ref counter,"2");
             else
                 CreateDebitLineForARPaymentCheque(newlyAddedCheque, journal, ref counter);
             return counter;
@@ -505,7 +505,19 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         }
 
 
-        private JournalLinePM CreateCreditLine(JournalPM journal, ref int counter)
+        private void CreateCreditLines( ref int counter)
+        {
+            if (paymentPM.AccountingPaymentMethodCode == "CH")
+            {
+                CreateJournalLineForEachReplica(ref counter, "1");
+            }
+            else
+            {
+                CreateCreditJournalLineForNonChequePaymnet(ref counter);
+            }
+           
+        }
+        private void CreateCreditJournalLineForNonChequePaymnet(ref int counter)
         {
             GLAccountPM paymentGLAccount = GetPaymentGLAccount();
 
@@ -532,10 +544,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             };
             journal.JournalLines.Add(creditLine);
 
-
-            return creditLine;
         }
-
         private string GetChequeReference(ARPaymentPM paymentPM)
         {
             string reference;
@@ -617,36 +626,40 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             };
         }
 
-        private void CreateDebitLineForEachReplica(JournalPM journal, ref int counter)
+        private void CreateJournalLineForEachReplica( ref int counter, string actionCode)
         {
             foreach (ARPaymentChequeReplicaPM cheque in paymentPM.ARPaymentChequeReplicas)
             {
-                var journalLine = new JournalLinePM
-                {
-                    Tenant = tenant,
-                    JournalId = journal.Id,
-                    Line = ++counter,
-                    ActionCode = "2",
-                    ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit,
-                    DocumentDate = paymentPM.RegisterDate.Value,
-                    AccountingDate = paymentPM.RegisterDate.Value,
-                    DueDate = cheque.ValueDate,
-                    LocalAmount = cheque.LocalAmount,
-                    CurrencyId = paymentPM.PaymentCurrencyId,
-                    ForeignAmount = cheque.ForeignAmount,
-                    ExchangeRate = (decimal)paymentPM.PaymentCurrencyExchangeRate,
-                    Reference1 = paymentPM.PaymentNo,
-                    Reference2 = cheque.ChequeNumber,
-                    DebitAccountId = PaymentCashbook.AccountId,
-                    CreditAccountId = paymentGLAccount != null ? paymentGLAccount.Id : null,
-                    ChangeSetOp = ChangeSetOperation.Insert,
-                    Notes = paymentPM.PrintNotes
-                };
+                JournalLinePM journalLine= MapPaymentChequeJournalLineFields(cheque, actionCode,ref counter);
                 journal.JournalLines.Add(journalLine);
             }
         }
 
-
+        private JournalLinePM MapPaymentChequeJournalLineFields(ARPaymentChequeReplicaPM cheque, string actionCode,ref int counter)
+        {
+            var journalLine = new JournalLinePM
+            {
+                Tenant = tenant,
+                JournalId = journal.Id,
+                Line = ++counter,
+                ActionCode = actionCode,
+                ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit,
+                DocumentDate = paymentPM.RegisterDate.Value,
+                AccountingDate = paymentPM.RegisterDate.Value,
+                DueDate = cheque.ValueDate,
+                LocalAmount = cheque.LocalAmount,
+                CurrencyId = paymentPM.PaymentCurrencyId,
+                ForeignAmount = cheque.ForeignAmount,
+                ExchangeRate = (decimal)paymentPM.PaymentCurrencyExchangeRate,
+                Reference1 = paymentPM.PaymentNo,
+                Reference2 = cheque.ChequeNumber,
+                DebitAccountId = PaymentCashbook.AccountId,
+                CreditAccountId = paymentGLAccount != null ? paymentGLAccount.Id : null,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                Notes = paymentPM.PrintNotes
+            };
+            return journalLine;
+        }
 
 
         private void GetPaymentRelatedEntities()
