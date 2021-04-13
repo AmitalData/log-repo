@@ -2,7 +2,9 @@
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent'; 
 import { CodeNameClass } from '../../../../DataContracts/CodeNameClass';
 import { AutomationCreateTask } from '../../../../DataContracts/AutomationCreateTask';
-
+import { ObjectFieldPM } from '../../../../EntityPMs/ObjectFieldPM';
+import { EntityResourceService } from '../../../../Services/EntityResourceService';
+declare var window: any;
 @Component({
     selector: 'CreateTaskResult',
     templateUrl: './CreateTaskResultComponent.html',
@@ -15,8 +17,15 @@ export class CreateTaskResultComponent extends BaseComponent implements OnInit {
     ShowSpecificDate = false;
     ShowCurrentDate = false;
     public CurrentDateOperator: CodeNameClass[] = [];
-      
+
+    ContactObjectFieldLists: ObjectFieldPM[] = [];
+    ObjectFieldsLists: ObjectFieldPM[] = [];
+    ObjectTableId: string = '1-4'; // Shipment
+    OwnerObjectFieldSelected: ObjectFieldPM;
+    AssigneeObjectFieldSelected: ObjectFieldPM;
+
     DataContext: any;
+    entityResourceService: EntityResourceService = new EntityResourceService();
 
     constructor() {
         super();
@@ -26,15 +35,38 @@ export class CreateTaskResultComponent extends BaseComponent implements OnInit {
 
     ngOnInit() {
 
-
     }
+     
 
     InitializeCreateTaskComponent() {
            
         this.FillDueDateFieldList(); 
-        this.FillCurrentDateOperator(); 
+        this.FillCurrentDateOperator();
+        this.FillObjectField();
 
     }
+
+    FillObjectField() {
+         
+        this.ContactObjectFieldLists = []; 
+        this.ObjectFieldsLists = [];
+
+        this.ObjectFieldsLists = window.ObjectFields.filter(f => f.ObjectTableId == this.ObjectTableId);
+        this.ObjectFieldsLists.forEach((objectField) => {
+              
+            if (objectField.FieldName == "CreatedByUserId" || objectField.FieldName == "SalesmanUserId" || objectField.FieldName == "UpdatedByUserId" || objectField.FieldName == "AccountManagerUserId") {
+                this.ContactObjectFieldLists.push(objectField);
+            }
+               
+        });
+         
+        var specifiOwnerObjectField: ObjectFieldPM = new ObjectFieldPM();
+        specifiOwnerObjectField.FullNameTextCodeDefaultText = "Specific";
+        specifiOwnerObjectField.FieldCode = "Specific";
+        specifiOwnerObjectField.FieldName = "Specific";
+        this.ContactObjectFieldLists.push(specifiOwnerObjectField); 
+           
+    } 
 
     FillDueDateFieldList() {
 
@@ -57,6 +89,55 @@ export class CreateTaskResultComponent extends BaseComponent implements OnInit {
         this.CurrentDateOperator.push(new CodeNameClass("-", "-"));
         
     }
+
+
+
+    //Owner
+    OwnerObjectFieldComboBoxChanged(item: any) {
+        this.OwnerValue = "";
+        if (item) {
+            this.automationCreateTask.OwnerFieldType = item.FieldName == "Specific" ? "Specific" : "Field";
+        }
+
+        this.OwnerValue = item.FieldName;
+
+        this.OwnerObjectFieldSelected = item;
+    }
+
+    OwnerValueChange(item: any) {
+        if (item) {
+            this.OwnerValue = item.Id;
+            this.automationCreateTask.OwnerFieldType = "Specific";
+        }
+
+        else this.OwnerValue = "";
+    }
+
+
+
+    //Assignee
+    AssigneeObjectFieldComboBoxChanged(item: any) {
+        this.AssigneeValue = "";
+        if (item) {
+            this.automationCreateTask.AssigneeFieldType = item.FieldName == "Specific" ? "Specific" : "Field";
+        }
+
+        this.AssigneeValue = item.FieldName;
+
+        this.AssigneeObjectFieldSelected = item;
+    }
+
+    AssigneeValueChange(item: any) {
+        if (item) {
+            this.AssigneeValue = item.Id;
+            this.automationCreateTask.AssigneeFieldType = "Specific";
+        }
+
+        else this.AssigneeValue = "";
+    }
+
+
+
     private selectedDueDateField: any;
     get SelectedDueDateField() { return this.selectedDueDateField; }
     set SelectedDueDateField(value: any) {
@@ -86,13 +167,13 @@ export class CreateTaskResultComponent extends BaseComponent implements OnInit {
 
 
  
-    private assigneeId: string;
-    get AssigneeId() { return this.assigneeId; }
-    set AssigneeId(newValue: string) {
-        if (newValue != this.assigneeId) {
-            this.assigneeId = newValue;
-            if (this.automationCreateTask.AssigneeId != newValue) {
-                this.automationCreateTask.AssigneeId = newValue; 
+    private assigneeValue: string;
+    get AssigneeValue() { return this.assigneeValue; }
+    set AssigneeValue(newValue: string) {
+        if (newValue != this.assigneeValue) {
+            this.assigneeValue = newValue;
+            if (this.automationCreateTask.AssigneeValue != newValue) {
+                this.automationCreateTask.AssigneeValue = newValue; 
             }
 
         }
@@ -111,13 +192,39 @@ export class CreateTaskResultComponent extends BaseComponent implements OnInit {
     } 
 
 
-    private ownerId: string;
-    get OwnerId() { return this.ownerId; }
-    set OwnerId(newValue: string) {
-        if (newValue != this.ownerId) {
-            this.ownerId = newValue;
-            if (this.automationCreateTask.OwnerId != newValue) {
-                this.automationCreateTask.OwnerId = newValue;
+    private ownerValue: string;
+    get OwnerValue() { return this.ownerValue; }
+    set OwnerValue(newValue: string) {
+        if (newValue != this.ownerValue) {
+            this.ownerValue = newValue;
+            if (this.automationCreateTask.OwnerValue != newValue) {
+                this.automationCreateTask.OwnerValue = newValue;
+            }
+
+        }
+    }
+
+     
+
+    private ownerFieldType: string;
+    get OwnerFieldType() { return this.ownerFieldType; }
+    set OwnerFieldType(newValue: string) {
+        if (newValue != this.ownerFieldType) {
+            this.ownerFieldType = newValue;
+            if (this.automationCreateTask.OwnerFieldType != newValue) {
+                this.automationCreateTask.OwnerFieldType = newValue;
+            }
+
+        }
+    }
+
+    private assigneeFieldType: string;
+    get AssigneeFieldType() { return this.assigneeFieldType; }
+    set AssigneeFieldType(newValue: string) {
+        if (newValue != this.assigneeFieldType) {
+            this.assigneeFieldType = newValue;
+            if (this.automationCreateTask.AssigneeFieldType != newValue) {
+                this.automationCreateTask.AssigneeFieldType = newValue;
             }
 
         }
@@ -151,9 +258,9 @@ export class CreateTaskResultComponent extends BaseComponent implements OnInit {
     NumberOfDays: number;
     SelectedDateField: any;
     SelectedItemChanged(value) {
-        // EndDateFieldType -> MainCarriageETD || MainCarriageATD || MainCarriageETA || MainCarriageATA -> Field
-        // Date -> Date
-        // CurrentDate -> -,+ CalculateDate CurrentDate-@1
+        // EndDateFieldType -> MainCarriageETD || MainCarriageATD || MainCarriageETA || MainCarriageATA -> FIELD
+        // DATE -> Date
+        // CALCULATEDATE -> -,+ CalculateDate CurrentDate-@1
 
         this.EndDate = null; 
         switch (value.Code) {
@@ -186,7 +293,7 @@ export class CreateTaskResultComponent extends BaseComponent implements OnInit {
     }
 
     ComputedCurrentDate() { 
-        // CurrendDate@-@1
+        // CurrendDate*-*1
         this.EndDate = "CurrentDate*" + this.SelectedCurrentDateOperator.Code + "*" + this.NumberOfDays;
 
 
@@ -204,15 +311,15 @@ export class CreateTaskResultComponent extends BaseComponent implements OnInit {
 
     SelectedOwnerChange(value) { 
 
-        let newOwnerIdValue;
-        if (value) newOwnerIdValue = value.Id;
-        this.OwnerId = newOwnerIdValue; 
+        let newOwnerValueValue;
+        if (value) newOwnerValueValue = value.Id;
+        this.OwnerValue = newOwnerValueValue; 
     }
 
     SelectedAssigneeChange(value) {  
         let newAssigneeIdValue;
         if (value) newAssigneeIdValue = value.Id;
-        this.AssigneeId = newAssigneeIdValue; 
+        this.AssigneeValue = newAssigneeIdValue; 
 
     } 
 
@@ -226,20 +333,58 @@ export class CreateTaskResultComponent extends BaseComponent implements OnInit {
 
     SetSelectedDelfultData() {
 
-        if (this.automationCreateTask) {  
-            this.AssigneeId = this.automationCreateTask.AssigneeId;
-            this.OwnerId = this.automationCreateTask.OwnerId;
+        if (this.automationCreateTask) {   
             this.TaskType = this.automationCreateTask.TaskType;
             this.EndDate = this.automationCreateTask.EndDateValue;
             this.EndDateFieldType = this.automationCreateTask.EndDateTypeValue;
+             
+            this.OwnerValue = this.automationCreateTask.OwnerValue;
+            this.OwnerFieldType = this.automationCreateTask.OwnerFieldType;
+            this.AssigneeFieldType = this.automationCreateTask.AssigneeFieldType;  
+            this.AssigneeValue = this.automationCreateTask.AssigneeValue; 
+
+            this.SetSelectedOwner();
+            this.SetSelectedAssignee();
+             
             if (this.EndDateFieldType == "DATE") this.ShowSpecificDate = true;
+
             this.SetEndDateFieldType();
             this.SetCalculateDateParts(); 
+          
+        }
 
+    }
+    SetSelectedAssignee() {
+
+        if (this.ContactObjectFieldLists) {
+
+            if (this.automationCreateTask.AssigneeFieldType == "Specific") {
+                this.AssigneeObjectFieldSelected = this.ContactObjectFieldLists.filter(d => d.FieldCode == "Specific")[0];
+
+            }
+
+            else {
+                this.AssigneeObjectFieldSelected = this.ContactObjectFieldLists.filter(d => d.FieldName == this.AssigneeValue)[0];
+            }
         }
 
     }
 
+    SetSelectedOwner() {
+
+        if (this.ContactObjectFieldLists) {
+
+            if (this.automationCreateTask.OwnerFieldType == "Specific") {
+                this.OwnerObjectFieldSelected = this.ContactObjectFieldLists.filter(d => d.FieldCode == "Specific")[0];
+
+            }
+
+            else {
+                this.OwnerObjectFieldSelected = this.ContactObjectFieldLists.filter(d => d.FieldName == this.OwnerValue)[0];
+            }
+        }
+
+    }
     SetEndDateFieldType() {
         if (this.automationCreateTask.EndDateTypeValue == "FIELD") {
             this.SelectedDueDateField = this.DueDateFieldList.filter(d => d.Code == this.automationCreateTask.EndDateValue)[0];

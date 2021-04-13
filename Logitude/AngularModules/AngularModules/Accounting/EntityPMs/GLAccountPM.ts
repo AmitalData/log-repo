@@ -735,6 +735,12 @@ export class GLAccountPM {
        
 	 
 
+    private paymentTermName: string;
+    public get PaymentTermName() { return this.paymentTermName; }
+    public set PaymentTermName(newValue: string) { if (this.paymentTermName != newValue) { this.paymentTermName = newValue; this.MarkAsDirty("PaymentTermName"); } }
+       
+	 
+
     public OldEntityPM: GLAccountPM;
 		
     public IsDirty: boolean;

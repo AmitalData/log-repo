@@ -11,10 +11,16 @@ namespace Simplog.Data.Helpers
     public class AutomationCreateTask
     {
         [DataMember]
-        public string AssigneeId { get; set; }
+        public string AssigneeValue { get; set; }
+        [DataMember]
+        public string AssigneeFieldType { get; set; }
+
 
         [DataMember]
-        public string OwnerId { get; set; }
+        public string OwnerValue { get; set; }
+
+        [DataMember]
+        public string OwnerFieldType { get; set; }
 
 
         [DataMember]

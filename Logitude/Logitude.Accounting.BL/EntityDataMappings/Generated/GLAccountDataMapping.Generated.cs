@@ -204,6 +204,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CreditAllotmentPercentage, 
 	         RelatedGLAccount, 
 	         CardsDataId,
+	         PaymentTermName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -57,10 +57,59 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             IQueueService queueservice = new DbQueueService();
             string entityNumber = GetPropertyValueFromObject("ShipmentNumber", entityPM);
             DateTime? taskEndDate = new TaskAutomationEndDateService(tenant).GetDate(automationCreateTask.EndDateValue, automationCreateTask.EndDateTypeValue, entityPM);
+            string OnwerId = GetOwnerId(automationCreateTask);
+            string AssigneeId = GetAssigneeId(automationCreateTask);
             queueservice.InitializeQueue("CreateTaskCollaborationTool", tenant);
-            queueservice.Send(new Dictionary<string, string>() { { "AssigneeId", automationCreateTask.AssigneeId }, { "Tenant", tenant.ToString() }, { "TaskType", automationCreateTask.TaskType }, { "OwnerId", automationCreateTask.OwnerId }, { "EndDate", taskEndDate != null ? taskEndDate.ToString() : null }, { "EntityNumber", entityNumber } }, tenant, null, null, null, null);
+            queueservice.Send(new Dictionary<string, string>() { { "AssigneeId", AssigneeId }, { "Tenant", tenant.ToString() }, { "TaskType", automationCreateTask.TaskType }, { "OwnerId", OnwerId }, { "EndDate", taskEndDate != null ? taskEndDate.ToString() : null }, { "EntityNumber", entityNumber } }, tenant, null, null, null, null);
         }
 
+        private string GetAssigneeId(AutomationCreateTask automationCreateTask)
+        {
+
+            string assigneeId = automationCreateTask.AssigneeValue;
+            if (automationCreateTask != null)
+            {
+                #region Fill Data  
+                //AssigneeId
+                if (automationCreateTask.AssigneeFieldType == "Field")
+                {
+
+                    assigneeId = GetPropertyValueFromObject(assigneeId, entityPM); 
+ 
+                }
+
+                if (string.IsNullOrEmpty(assigneeId)) assigneeId = entityChange.CreateByUserId;
+
+                #endregion
+
+            }
+             
+            return assigneeId;
+        }
+
+        private string GetOwnerId(AutomationCreateTask automationCreateTask)
+        {
+
+            string ownerId = automationCreateTask.OwnerValue;
+            if (automationCreateTask != null)
+            {
+                #region Fill Data  
+                //OwnerId
+                if (automationCreateTask.OwnerFieldType == "Field")
+                {
+
+                    ownerId = GetPropertyValueFromObject(ownerId, entityPM);
+
+                }
+
+                if (string.IsNullOrEmpty(ownerId)) ownerId = entityChange.CreateByUserId;
+
+                #endregion
+
+            }
+
+            return ownerId;
+        }
 
         private EntityChangeAutomation GetEntityChangeAutomation(Automation automation, ValidateAutomationResultClass validateResult, DateTime automationStartProcessingDate)
         {

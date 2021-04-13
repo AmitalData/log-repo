@@ -6,6 +6,8 @@ import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/Ca
 import { CargoTrackingShipmentList } from 'src/CargoTracking/EntityLists/CargoTrackingShipmentList';
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 import { CargoTrackingShipmentWithMilestones, Milestone } from 'src/CargoTracking/Components/PublicSite/PublicShipmentDetailsComponent/PublicShipmentDetailsComponent';
+import { CargoTrackingPortService } from '../../../../Services/Others/CargoTrackingPortService';
+import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoTrackingShipmentService';
 
 
 @Component({
@@ -24,31 +26,37 @@ export class ShipmentDetailsComponent implements AfterViewInit
     showMoreReferences: boolean = false;
     SecurityKey: string = "";
     Shipment: CargoTrackingShipmentWithMilestones = null;
+    public ShipmentWithMilestones: CargoTrackingShipmentWithMilestones;
+    public toPortCode: string;
+    public fromPortCode: string;
+    isFromPortCodeFilled: boolean = false;
     SearchText: string = "";
-    CustomersReferences = [
-        '5689974987646132',
-        '5689974987646132',
-        '5689974987646132',
-        '5689974987646132',
-        '5689974987646132',
-        '5689974987646132',
-        '5689974987646132',
-    ]
+    ShipmentReferences: string[] = [];
+    CustomsBrokerReference: string;
+  
     get tenant()
     {
         return CargoTrackingBrandingData.Tenant;
     }
     constructor(private router: Router,
         private route: ActivatedRoute,
-        private searchService: CargoTrackingSearchService)
+        private searchService: CargoTrackingSearchService,
+        private cargoTrackingPortService: CargoTrackingPortService,
+        private cargoTrackingShipmentService: CargoTrackingShipmentService
+  )
     {
 
         this.GetIdFromURI();
+        this.LoadShipment();
 
     }
     ngAfterViewInit(): void
     {
-        this.LoadShipment();
+        setTimeout(() => {
+            this.InitSlider();
+            this.BuildSliderCards();
+
+        }, 200);
 
     }
     @HostListener('window:resize', ['$event'])
@@ -98,19 +106,52 @@ export class ShipmentDetailsComponent implements AfterViewInit
         this.isLoading = true;
         this.searchService.getShipment(this.SecurityKey, this.tenant).subscribe((result: any) =>
         {
-            this.isLoading = false;
             console.log("[getShipment]", result);
-            this.Shipment = result;
-
-            setTimeout(() =>
-            {
-                this.InitSlider();
-                this.BuildSliderCards();
-
-            }, 200);
+            this.ShipmentWithMilestones = result;
+            if (this.ShipmentWithMilestones) {
+                this.Shipment = result;
+                this.ShipmentReferences = result.ShipmentList.CustomerReference ? result.ShipmentList.CustomerReference.split(',') : null;
+                this.SetRoutingVariables();
+                this.SetCustomsBrokerReference();
+            }
 
         });
     }
+ 
+    SetRoutingVariables() {
+       this.GetCargoTrackingPortById(this.Shipment.ShipmentList.FromPortId);
+    }
+
+    GetCargoTrackingPortById(id: string) {
+        this.cargoTrackingPortService.get(id).subscribe((result: any) => {
+            var code = result.Code;
+            this.SetFromPortCodeORToPortCode(code);
+        })
+    }
+
+    private SetFromPortCodeORToPortCode(code: any) {
+
+        if (!this.isFromPortCodeFilled) {
+            this.fromPortCode = code;
+            this.isFromPortCodeFilled = true;
+        }
+
+        else
+            this.toPortCode = code;
+       this.GetCargoTrackingPortById(this.Shipment.ShipmentList.ToPortId);
+
+    }
+
+    SetCustomsBrokerReference() {
+        this.cargoTrackingShipmentService.get(this.Shipment.ShipmentList.EntityId).subscribe((result: any) => {
+            if (result) {
+                this.CustomsBrokerReference = result.CustomFileNumber;
+                this.isLoading = false;
+            }
+        });
+    }
+
+
     private GetIdFromURI()
     {
 

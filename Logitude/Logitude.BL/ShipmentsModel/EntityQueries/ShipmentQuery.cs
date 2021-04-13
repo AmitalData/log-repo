@@ -13499,6 +13499,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             return masterNumber;
         }
+
+        public ShipmentPM GetShipmentForCargoTrackingByEntityId(string id, int tenant)
+        {
+            Shipment shipment = repository.GetSingleShipmentwithOutIncludes(id, tenant);
+            ShipmentPM shipmentPM = new ShipmentPM()
+            {
+                Id = shipment.Id,
+                CustomFileNumber = shipment.CustomFileNumber,
+            };
+
+            return shipmentPM;
+        }
     }
 
     public class DeparturesArrivalsDataItem
