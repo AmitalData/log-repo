@@ -28,7 +28,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public IQueryable<ReportExecutionLog> GetReportExecutionLogs(int tenant)
         {
-            return (from record in context.ReportExecutionLogs where record.Tenant == tenant select record);
+            return (from record in context.ReportExecutionLogs select record);
         }
 
         public ReportExecutionLog GetSingleReportExecutionLog(string id, int tenant)

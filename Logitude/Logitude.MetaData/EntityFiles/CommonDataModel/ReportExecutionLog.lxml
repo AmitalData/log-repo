@@ -148,13 +148,14 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
-    DisplayOnly="false"
+    CanFilter="true"
+    DisplayOnly="true"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -192,7 +193,7 @@
     NoMetaDataField="true"
     GenerateInList="true"
     IsFixedLength="false"
-    EnableAutoFill="true"
+    EnableAutoFill="false"
     IncludeInSearchField="false"
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
@@ -733,7 +734,7 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
@@ -806,13 +807,14 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -958,6 +960,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -1098,58 +1101,63 @@
       <QueryColumn
         QueryCode="&quot;All Report Execution Logs&quot;"
         IndexOrder="0"
-        ObjectFieldName="&quot;CreateDate&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;Tenant&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;All Report Execution Logs&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;StatusCode&quot;"
-        ColumnWidth="50" />
+        ObjectFieldName="&quot;CreateDate&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;All Report Execution Logs&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;ExceptionMessage&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;StatusCode&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;All Report Execution Logs&quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;DoneDate&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;ExceptionMessage&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;All Report Execution Logs&quot;"
         IndexOrder="4"
-        ObjectFieldName="&quot;ReportFilterXML&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;DoneDate&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;All Report Execution Logs&quot;"
         IndexOrder="5"
-        ObjectFieldName="&quot;ReportTemplateId&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;ReportFilterXML&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;All Report Execution Logs&quot;"
         IndexOrder="6"
         ObjectFieldName="&quot;ReportId&quot;"
-        ColumnWidth="130" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;All Report Execution Logs&quot;"
         IndexOrder="7"
-        ObjectFieldName="&quot;RetryNumber&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;ReportTemplateId&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;All Report Execution Logs&quot;"
         IndexOrder="8"
-        ObjectFieldName="&quot;StartDate&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;RetryNumber&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;All Report Execution Logs&quot;"
         IndexOrder="9"
-        ObjectFieldName="&quot;ExecutedByServerName&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;StartDate&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;All Report Execution Logs&quot;"
         IndexOrder="10"
         ObjectFieldName="&quot;DisablePreview&quot;"
-        ColumnWidth="130" />
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;All Report Execution Logs&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;ExecutedByServerName&quot;"
+        ColumnWidth="100" />
     </QueryColumns>
     <QueryFilters />
   </Query>
@@ -1170,58 +1178,63 @@
       <QueryColumn
         QueryCode="&quot;Today Report Execution Log&quot;"
         IndexOrder="0"
-        ObjectFieldName="&quot;CreateDate&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;Tenant&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Today Report Execution Log&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;StatusCode&quot;"
-        ColumnWidth="50" />
+        ObjectFieldName="&quot;CreateDate&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Today Report Execution Log&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;ExceptionMessage&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;StatusCode&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Today Report Execution Log&quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;DoneDate&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;ExceptionMessage&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Today Report Execution Log&quot;"
         IndexOrder="4"
-        ObjectFieldName="&quot;ReportFilterXML&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;DoneDate&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Today Report Execution Log&quot;"
         IndexOrder="5"
-        ObjectFieldName="&quot;ReportTemplateId&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;ReportFilterXML&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Today Report Execution Log&quot;"
         IndexOrder="6"
         ObjectFieldName="&quot;ReportId&quot;"
-        ColumnWidth="130" />
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Today Report Execution Log&quot;"
         IndexOrder="7"
-        ObjectFieldName="&quot;RetryNumber&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;ReportTemplateId&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Today Report Execution Log&quot;"
         IndexOrder="8"
-        ObjectFieldName="&quot;StartDate&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;RetryNumber&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Today Report Execution Log&quot;"
         IndexOrder="9"
-        ObjectFieldName="&quot;ExecutedByServerName&quot;"
-        ColumnWidth="130" />
+        ObjectFieldName="&quot;StartDate&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Today Report Execution Log&quot;"
         IndexOrder="10"
         ObjectFieldName="&quot;DisablePreview&quot;"
-        ColumnWidth="130" />
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Today Report Execution Log&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;ExecutedByServerName&quot;"
+        ColumnWidth="100" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
