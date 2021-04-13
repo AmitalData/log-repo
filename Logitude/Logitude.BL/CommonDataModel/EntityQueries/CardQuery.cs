@@ -2194,6 +2194,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              CityName = a.CityName,
                                              GLAccountId = a.GLAccountId,
                                              PartnerTypeId = a.PartnerTypeId,
+                                             BusinessPhone = a.Phone,
+                                             SalesmanUserId = a.SalesmanUserId,
+                                             CollectorId = a.CollectorId,
+                                             PaymentTermId = a.PaymentTermId,
                                          };
 
 

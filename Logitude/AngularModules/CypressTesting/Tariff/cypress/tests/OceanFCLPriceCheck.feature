@@ -1,4 +1,4 @@
-@release @dev
+@release @FeatureToggle @NewDev
 Feature: Ocean FCL Price Check
     The authenticated user will create new ocean FCL freight cost tariff,
     add tariff line in draft version tab, then approve it,

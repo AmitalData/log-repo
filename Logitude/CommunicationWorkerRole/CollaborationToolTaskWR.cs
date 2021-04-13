@@ -38,6 +38,16 @@ namespace CommunicationWorkerRole
                                 var serializedObject = JsonConvert.SerializeObject(collaborationToolTask);
                                 var result = client.PostAsync(URL, new StringContent(serializedObject, Encoding.UTF8, "application/json"));
                                 result.Wait();
+                                if (result.Result.StatusCode == System.Net.HttpStatusCode.Created)
+                                {
+                                    //var temp = result.Result.Content.ReadAsStringAsync().Result; 
+                                    queueservice.Complete();
+                                }
+                                else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                                {
+                                    //var xx = result.Result.Content.ReadAsStringAsync().Result;
+                                    queueservice.CompleteAsFailed();
+                                }
                             }
                         }
                     }
