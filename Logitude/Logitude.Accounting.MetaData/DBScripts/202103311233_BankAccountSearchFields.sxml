@@ -1,12 +1,6 @@
 ﻿<Script DBType="Main" Module="Accounting">
   <Sql Version="1">
     <![CDATA[
-Update BankAccounts
-set SearchFields = concat(bankaccount.SearchFields , ',' , glaccount.DisplayNumber , ',' , def.DisplayNumber , ',' , trans.DisplayNumber)
-from  BankAccounts bankaccount
-join  GLAccounts glaccount on bankaccount.GLAccountId = glaccount.id
-left outer join	 GLAccounts def on bankaccount.DeferredGLAccountId = def.id
-left outer join	 GLAccounts trans on bankaccount.TransferGLAcccountId = trans.id
 
     ]]>       
   </Sql>
