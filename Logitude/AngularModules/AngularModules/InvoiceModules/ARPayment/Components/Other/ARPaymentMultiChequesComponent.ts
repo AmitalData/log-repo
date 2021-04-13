@@ -35,7 +35,7 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public ChequesCounter: number;
     public TotalAmount: number;
-
+    
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -53,7 +53,7 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
             this.AddFirstChequeRecord();
             this.CalculateTotal();
             this.UpdateChequeCounter();
-
+            this.IsDisplayOnly = this.paymentPM.StatusCode == "AD" ? true : false;
         }
     }
     UpdateChequeCounter() {
@@ -90,17 +90,19 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
         }
     }
     AddNewCheque() {
-        if (this.CheckRequiredFileds()) {
-            var latestLineNumber: number = 0;
-            latestLineNumber = this.GetLatestChequeLineNumber()
-            latestLineNumber += 1;
-            var cheque: ARPaymentChequeReplicaPM = new ARPaymentChequeReplicaPM(this.paymentPM);
-            cheque.PaymentId = this.paymentPM.Id,
-                cheque.Tenant = this.paymentPM.Tenant;
-            cheque.LineNumber = latestLineNumber;
-            this.UpdatePaymentChequeList(cheque);
-            this.CalculateTotal();
-            this.ChequesCounter = latestLineNumber;
+        if (!this.IsDisplayOnly) {
+            if (this.CheckRequiredFileds()) {
+                var latestLineNumber: number = 0;
+                latestLineNumber = this.GetLatestChequeLineNumber()
+                latestLineNumber += 1;
+                var cheque: ARPaymentChequeReplicaPM = new ARPaymentChequeReplicaPM(this.paymentPM);
+                cheque.PaymentId = this.paymentPM.Id,
+                    cheque.Tenant = this.paymentPM.Tenant;
+                cheque.LineNumber = latestLineNumber;
+                this.UpdatePaymentChequeList(cheque);
+                this.CalculateTotal();
+                this.ChequesCounter = latestLineNumber;
+            }
         }
     }
     GetLatestChequeLineNumber() {
@@ -290,6 +292,13 @@ export class PaymentChequeLine extends BaseComponent {
         }
     }
 
+    get StatusName() { return this.entityPM.StatusName; }
+    set StatusName(value: string) {
+        if (this.entityPM.StatusName != value) {
+            this.entityPM.StatusName = value;
+
+        }
+    }
 
     DeleteButtonClicked() {
     

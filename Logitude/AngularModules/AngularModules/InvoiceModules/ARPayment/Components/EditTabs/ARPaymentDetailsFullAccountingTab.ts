@@ -1582,9 +1582,14 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 	}
 	get PaymentMethodDetailsLabel()
 	{
-		var result = "";
-		if (this.AccountingPaymentMethodCode == "CH") {
-			result = TextCodeTranslator.Translate("ARPayment.S.Details.Cheque");
+        var result = "";
+        if (this.AccountingPaymentMethodCode == "CH") {
+            if (!this.isMultipleCheques) {
+                result = TextCodeTranslator.Translate("ARPayment.S.Details.Cheque");
+            }
+            else {
+                result = TextCodeTranslator.Translate("Accounting.General.O.Cheques") + " (" + this.EntityPM.ARPaymentChequeReplicas.length + ")" ;
+            }
 		}
 
 		else if (this.AccountingPaymentMethodCode == "FS") {
@@ -2095,7 +2100,18 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         logWindow.Height = 600;
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.UpdateChequesSection($event));
         logWindow.Show('./InvoiceModules/ARPayment/Components/Other/ARPaymentMultiChequesComponent');
+    }
+    UpdateChequesSection(event:any) {
+        if (event == 'ok') {
+            if (this.EntityPM.ARPaymentChequeReplicas.length > 1) {
+                this.isMultipleCheques = true;
+            }
+        }
+    }
+    DisplayChequesButtonClicked() {
+        this.ShowMultiChequeScreen();      
     }
 }
 

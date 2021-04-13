@@ -95,7 +95,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
 
                 SetARPaymentFieldsForFirstReplica();
 
-                ValidateIfAllReplicasHaveSameValueDate();
+              //  ValidateIfAllReplicasHaveSameValueDate();
             }
             else
             {
@@ -164,7 +164,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             if (!exist)
             {
                 var arPaymentcheque = InitializeARPaymentChequeFromReplica(arpaymentPM, chequeReplica);
-                arPaymentcheque.LineNumber = LineNumberCounter++;
+               // arPaymentcheque.LineNumber = LineNumberCounter++;
                 SubmitARPaymentCheque(arPaymentcheque);
                 return arPaymentcheque;
             }
@@ -258,7 +258,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 BankAccount = chequeReplica.BankAccount,
                 BankId = chequeReplica.BankId,
                 CurrencyId = arpaymentPM.PaymentCurrencyId,
-                LocalAmount = (decimal)chequeReplica.LocalAmount,
+                LocalAmount = (chequeReplica.ForeignAmount * (decimal) arpaymentPM.PaymentCurrencyExchangeRate),
                 ForeignAmount = (decimal)chequeReplica.ForeignAmount,
                 ChangeSetOp = ChangeSetOperation.Insert,
                 StatusCode = "1", // In Cashbook  
