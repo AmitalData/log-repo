@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "e0a47c778821fb085ecfb51f7f149685";
+		public const string HashString = "71436615a76c1f0f0dbbf35aca2a78b7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -539,7 +539,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 		   Feature GeneralFeature_SCHEDULERS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SCHEDULERS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Schedulers", NameTextCodeDefaultText = @"Schedulers" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
-		   Feature GeneralFeature_TariffModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TariffModule", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.TariffModule", NameTextCodeDefaultText = @"Tariffs" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+		   Feature GeneralFeature_TariffModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TariffModule", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.TariffModule", NameTextCodeDefaultText = @"Tariffs", ToggleCode = "tar" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 		   Feature GeneralFeature_CREATETENANT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CREATETENANT", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CREATETENANT", NameTextCodeDefaultText = @"Create Tenant" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 

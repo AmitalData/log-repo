@@ -101771,6 +101771,7 @@
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      IsBusinessUnitEnabled="false"
+      ToggleCode="&quot;CPH&quot;"/>
   </AdditionalFeatures>
 </entity>
