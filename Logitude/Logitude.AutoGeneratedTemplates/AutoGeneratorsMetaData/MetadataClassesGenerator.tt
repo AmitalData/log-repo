@@ -467,7 +467,7 @@ foreach(XElement featureElement in AdditionalFeatures.Elements("Feature")){
 					var IsBusinessUnitEnabled = featureElement.Attributes().Where(a => a.Name == "IsBusinessUnitEnabled").FirstOrDefault().Value;
 					var IsOld = featureElement.Attributes().Where(a => a.Name == "IsOld").FirstOrDefault().Value;
 					var IsCoreFeature = featureElement.Attributes().Where(a => a.Name == "IsCoreFeature").FirstOrDefault().Value;
-					var ToggleCode = (featureElement.Attributes().Where(a => a.Name == "ToggleCode").FirstOrDefault()!= null?featureElement.Attributes().Where(a => a.Name == "ToggleCode").FirstOrDefault().Value.ToLower():"null");
+					var ToggleCode = (featureElement.Attributes().Where(a => a.Name == "ToggleCode").FirstOrDefault()!= null?featureElement.Attributes().Where(a => a.Name == "ToggleCode").FirstOrDefault().Value:"null");
                 
 					var toggleCodeString ="";
 					if(ToggleCode != "null"){
