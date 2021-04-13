@@ -851,7 +851,7 @@ namespace WebFreight.Web.Helpers
                     }
                 case "ERLR":
                     {
-                        ExternalReconciliationLinesReportManager ExternalReconciliationManager = new ExternalReconciliationLinesReportManager(filters, reportFliter.tenant);
+                        ExternalReconciliationLinesReportLoader ExternalReconciliationManager = new ExternalReconciliationLinesReportLoader(filters, reportFliter.tenant);
                         dataProvider = ExternalReconciliationManager.GetData();
                         break;
                     }
