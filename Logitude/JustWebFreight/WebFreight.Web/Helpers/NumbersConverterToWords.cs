@@ -1205,6 +1205,10 @@ namespace WebFreight.Web.Helpers
             text = FixSpaces(text);
             return (text+ " בלבד");
         }
+        public string ConvertNumbersToFrenchNewVersion(double number,string localCurrencyName)
+        {
+            return HandleNumberToBeConvertedInFranchWords(number,localCurrencyName, "centimes");
+        }
 
         private string FixSpaces(string s)
         {
@@ -1266,5 +1270,155 @@ namespace WebFreight.Web.Helpers
             else
                 return (s1.LastIndexOf(s2, int.Parse(n)) + 1);
         }
+
+        private  string[] unitsMapInFranch = new[] { "zéro", "un", "deux", "trois", "quatre", "cinq", "six", "sept", "huit", "neuf", "dix", "onze", "douze", "treize", "quatorze", "quinze", "seize", "dix-sept", "dix-huit", "dix-neuf" };
+        private  string[] tensMapInFranch = new[] { "zéro", "dix", "vingt", "trente", "quarante", "cinquante", "soixante", "soixante", "quatre-vingt", "quatre-vingt" };
+        private  string HandleNumberToBeConvertedInFranchWords(double number, string currencyName, string currencyDecimalName)
+        {
+            string amountInWords = "";
+            if (number == 0)
+                return "zéro";
+            if (number == 1)
+                return "un";
+            if (number < 0)
+                return "moins " + ConvertIntegerDigitsNumberIntoFranchWords(Math.Abs(number));
+            double decimalDigits = number - (int)number;
+            double intgerNumberWithoutDecimals = (int)number;
+            if (decimalDigits != 0)
+            {
+                string numberAsString = number.ToString();
+                string decimalPartOfTheNumber = numberAsString.Split('.')[1];
+                double valueOfDecimalPartOfTheNumber = Convert.ToDouble(decimalPartOfTheNumber);
+                bool checkIfDecimalDigitIsNotAnyTensValue = valueOfDecimalPartOfTheNumber >= 1 && valueOfDecimalPartOfTheNumber <= 9 && !decimalPartOfTheNumber.StartsWith("0");
+                valueOfDecimalPartOfTheNumber = checkIfDecimalDigitIsNotAnyTensValue ? valueOfDecimalPartOfTheNumber * 10 : valueOfDecimalPartOfTheNumber;
+                amountInWords += ConvertIntegerDigitsNumberIntoFranchWords(intgerNumberWithoutDecimals);
+                if (!String.IsNullOrEmpty(currencyName))
+                {
+                    amountInWords += (" " + currencyName + ConvertDecimalDigitsIntoFranchWords(valueOfDecimalPartOfTheNumber, true) + " " + currencyDecimalName);
+                }
+                else
+                {
+                    amountInWords += (" virgule" + ConvertDecimalDigitsIntoFranchWords(valueOfDecimalPartOfTheNumber, false));
+                }
+            }
+            else
+            {
+                amountInWords += ConvertIntegerDigitsNumberIntoFranchWords(number) + " " + currencyName;
+            }
+            return amountInWords;
+        }
+        private  string ConvertIntegerDigitsNumberIntoFranchWords(double number)
+        {
+            string amountInWords = "";
+            if ((number / 1000000000) > 0 && number >= 1000000000)
+            {
+                amountInWords += ConvertIntegerDigitsNumberIntoFranchWords(number / 1000000000) + " milliard ";
+                number %= 1000000000;
+            }
+            if ((number / 1000000) > 0 && number >= 1000000)
+            {
+                amountInWords += ConvertIntegerDigitsNumberIntoFranchWords(number / 1000000) + " million ";
+                number %= 1000000;
+            }
+            if ((number / 1000) > 0 && number >= 1000)
+            {
+                amountInWords += ConvertIntegerDigitsNumberIntoFranchWords(number / 1000) + " mille ";
+                number %= 1000;
+            }
+            if ((number / 100) > 0 && number >= 100)
+            {
+                amountInWords += ConvertIntegerDigitsNumberIntoFranchWords(number / 100) + " cent ";
+                number %= 100;
+            }
+            if (number > 0)
+            {
+                amountInWords += CalculateTheFranchWordsForTheRangeFromOneToHundred(number);
+            }
+            return amountInWords;
+        }
+        private  string ConvertDecimalDigitsIntoFranchWords(double number, bool hasDecimalCurreny)
+        {
+            string amountInWords = "";
+            List<int> splitedNumbers = new List<int>();
+            int integerValueOfNumber = (int)number;
+            if (hasDecimalCurreny)
+            {  
+              amountInWords += " " + ConvertIntegerDigitsNumberIntoFranchWords(number);
+            }
+            else
+            {
+                while (integerValueOfNumber > 0)
+                {
+                    int mod = integerValueOfNumber % 10;
+                    splitedNumbers.Add(mod);
+                    integerValueOfNumber = integerValueOfNumber / 10;
+                }
+                splitedNumbers.Reverse();
+                foreach (int i in splitedNumbers)
+                {
+                    amountInWords += " " + unitsMapInFranch[i];
+                }
+            }
+            return amountInWords;
+        }
+        private  string CalculateTheFranchWordsForTheRangeFromOneToHundred(double number)
+        {
+            string amountInWords = "";
+            if (number < 20)
+            {
+                amountInWords = ((int)number != 1) ? unitsMapInFranch[(int)number] : "";
+            }
+            else if (number < 70)
+            {
+                amountInWords += tensMapInFranch[(int)number / 10];
+                if (number % 10 != 0)
+                    amountInWords += (number % 10) > 0 && (number % 10) != 1 ? "-" + unitsMapInFranch[(int)number % 10] : "-et-" + unitsMapInFranch[(int)number % 10];
+            }
+            else if (number < 80)
+            {
+                amountInWords += tensMapInFranch[(int)number / 10];
+                number = number % 10 + 10;
+                if (number == 11)
+                {
+                    amountInWords += "-et";
+                }
+                amountInWords += "-" + unitsMapInFranch[(int)number];
+            }
+            else
+            {
+                amountInWords += CalculateTheFranchWordsForTheRangeOfEightyAndMore(ref number);
+            }
+            return amountInWords;
+        }
+        private  string CalculateTheFranchWordsForTheRangeOfEightyAndMore(ref double number)
+        {
+            string amountInWords = "";
+            if (number < 90)
+            {
+                if (number == 80)
+                    amountInWords += "quatre-vingts";
+                else
+                {
+                    amountInWords += tensMapInFranch[(int)number / 10];
+                    if (number == 0)
+                    {
+                        amountInWords += "s";
+                    }
+                    else
+                    {
+                        number = number % 10;
+                        amountInWords += "-" + unitsMapInFranch[(int)number];
+                    }
+                }
+            }
+            else
+            {
+                amountInWords += tensMapInFranch[(int)number / 10];
+                number = number % 10 + 10;
+                amountInWords += "-" + unitsMapInFranch[(int)number];
+            }
+            return amountInWords;
+        }
+
     }
 }
