@@ -187,7 +187,9 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         DeliveryExceptionReason, 
 	         GrossWeightUnitCode, 
 	         ForwardingShipmentNumber, 
-	         ShipmentTypeCode,
+	         ShipmentTypeCode, 
+	         CustomerEnglishName, 
+	         CustomerLocalName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

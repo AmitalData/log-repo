@@ -16,85 +16,82 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         private IQueryable<CargoTrackingShipmentList> GetIqueryableList(IQueryable<CargoTrackingShipment> iQueryable)
         {
             IQueryable<CargoTrackingPortList> ports = GetPorts();
-            IQueryable<CargoTrackingShipmentList> query = (from a in iQueryable
-                                                           join fp in ports on a.FromPortId equals fp.Id
-                                                           join tp in ports on a.ToPortId equals tp.Id
-                                                           join m in context.CargoTrackingMilestones on a.CurrentMilestoneCode equals m.Code into lm
-                                                           from m in lm.DefaultIfEmpty()
-                                                           join t in context.CargoTrackingTransportModes on a.TransportModeId equals t.Id
+            IQueryable<CargoTrackingShipmentList> query = (from shipment in iQueryable
+                                                           join fromPort in ports on shipment.FromPortId equals fromPort.Id
+                                                           join toPort in ports on shipment.ToPortId equals toPort.Id
+                                                           join customer in context.CargoTrackingCards on shipment.CustomerId equals customer.Id
+                                                           join shipper in context.CargoTrackingCards on shipment.ShipperId equals shipper.Id
+                                                           
+                                                           join milestone in context.CargoTrackingMilestones on shipment.CurrentMilestoneCode equals milestone.Code into lm
+                                                           from milestone in lm.DefaultIfEmpty()
+                                                           
+                                                           join transportMode in context.CargoTrackingTransportModes on shipment.TransportModeId equals transportMode.Id
+
                                                            select new CargoTrackingShipmentList()
                                                            {
 
-                                                               Id = a.Id,
+                                                               Id = shipment.Id,
+                                                               Tenant = shipment.Tenant,
+                                                               EntityId = shipment.EntityId,
+                                                               SecurityKey = shipment.SecurityKey,
+                                                               ForwardingShipmentHeaderId = shipment.ForwardingShipmentHeaderId,
+                                                               CustomsShipmentHeaderId = shipment.CustomsShipmentHeaderId,
+                                                               EntityType = shipment.EntityType,
+                                                               CurrentMilestoneCode = shipment.CurrentMilestoneCode,
+                                                               CurrentMilestoneName = milestone.EnglishName,
+                                                               CurrentMilestoneDate = shipment.CurrentMilestoneDate,
+                                                               CustomerId = shipment.CustomerId,
+                                                               TransportModeId = shipment.TransportModeId,
+                                                               Master = shipment.Master,
+                                                               House = shipment.House,
+                                                               ShipmentNumber = shipment.ShipmentNumber,
+                                                               FromPortId = shipment.FromPortId,
+                                                               ToPortId = shipment.ToPortId,
+                                                               ShipperId = shipment.ShipperId,
+                                                               DeliveredDate = shipment.DeliveredDate,
+                                                               ConsigneeId = shipment.ConsigneeId,
+                                                               GrossWeight = shipment.GrossWeight,
+                                                               Volume = shipment.Volume,
+                                                               PickupDone = shipment.PickupDone,
+                                                               ClearanceDone = shipment.ClearanceDone,
+                                                               PickupDate = shipment.PickupDate,
+                                                               PickupEstimationDate = shipment.PickupEstimationDate,
+                                                               FromWarehouseEstimationDate = shipment.FromWarehouseEstimationDate,
+                                                               ToWarehouseEstimationDate = shipment.ToWarehouseEstimationDate,
+                                                               DepartureEstimationDate = shipment.DepartureEstimationDate,
+                                                               ArrivalEstimationDate = shipment.ArrivalEstimationDate,
+                                                               DeliveredEstimationDate = shipment.DeliveredEstimationDate,
+                                                               ClearanceDate = shipment.ClearanceDate,
+                                                               CreateDate = shipment.CreateDate,
+                                                               DirectionId = shipment.DirectionId,
+                                                               CustomerReference = shipment.CustomerReference,
+                                                               AssignedCustomsAgentDate = shipment.AssignedCustomsAgentDate,
+                                                               AssignedCustomsAgentDone = shipment.AssignedCustomsAgentDone,
+                                                               AssignedCustomsAgentEstDate = shipment.AssignedCustomsAgentEstDate,
+                                                               AssignedCustomsAgentExcReason = shipment.AssignedCustomsAgentExcReason,
+                                                               AssignedCustomsAgentNotes= shipment.AssignedCustomsAgentNotes,
+                                                               ShipmentLevelCode = shipment.ShipmentLevelCode,
+                                                               AssignedTruckerDate = shipment.AssignedTruckerDate,
+                                                               AssignedTruckerDone = shipment.AssignedTruckerDone,
+                                                               GrossWeightUnitCode = shipment.GrossWeightUnitCode,
+                                                               ArrivalDate = shipment.ArrivalDate,
+                                                               CustomsPaymentDate = shipment.CustomsPaymentDate,
 
-                                                               Tenant = a.Tenant,
+                                                               // port fields
+                                                               ToPortCountryCode = toPort.CountryCode,
+                                                               FromPortCountryCode = fromPort.CountryCode,
+                                                               FromPortName = fromPort.EnglishName,
+                                                               ToPortName = toPort.EnglishName,
 
-                                                               EntityId = a.EntityId,
+                                                               // transport mode
+                                                               TransportModeName = transportMode.Name,
 
-                                                               SecurityKey = a.SecurityKey,
+                                                               // card
+                                                               CustomerEnglishName = customer.EnglishName,
+                                                               CustomerLocalName = customer.LocalName,
+                                                               ShipperName = shipper.LocalName,
 
-                                                               ForwardingShipmentHeaderId = a.ForwardingShipmentHeaderId,
-                                                               ToPortCountryCode = tp.CountryCode,
-                                                               CustomsShipmentHeaderId = a.CustomsShipmentHeaderId,
-                                                               FromPortCountryCode = fp.CountryCode,
-                                                               EntityType = a.EntityType,
-                                                               FromPortName = fp.EnglishName,
-                                                               ToPortName = tp.EnglishName,
-                                                               CurrentMilestoneCode = a.CurrentMilestoneCode,
-                                                               CurrentMilestoneName = m.EnglishName,
-                                                               CurrentMilestoneDate = a.CurrentMilestoneDate,
 
-                                                               CustomerId = a.CustomerId,
-                                                               TransportModeName = t.Name,
-                                                               TransportModeId = a.TransportModeId,
-
-                                                               Master = a.Master,
-
-                                                               House = a.House,
-
-                                                               ShipmentNumber = a.ShipmentNumber,
-
-                                                               FromPortId = a.FromPortId,
-
-                                                               ToPortId = a.ToPortId,
-
-                                                               ShipperId = a.ShipperId,
-                                                               DeliveredDate = a.DeliveredDate,
-                                                               ConsigneeId = a.ConsigneeId,
-
-                                                               GrossWeight = a.GrossWeight,
-
-                                                               Volume = a.Volume,
-
-                                                               PickupDone = a.PickupDone,
-
-                                                               ClearanceDone = a.ClearanceDone,
-
-                                                               PickupDate = a.PickupDate,
-                                                               PickupEstimationDate = a.PickupEstimationDate,
-                                                               FromWarehouseEstimationDate = a.FromWarehouseEstimationDate,
-                                                               ToWarehouseEstimationDate = a.ToWarehouseEstimationDate,
-                                                               DepartureEstimationDate = a.DepartureEstimationDate,
-                                                               ArrivalEstimationDate = a.ArrivalEstimationDate,
-                                                               DeliveredEstimationDate = a.DeliveredEstimationDate,
-
-                                                               ClearanceDate = a.ClearanceDate,
-                                                               CreateDate = a.CreateDate,
-                                                               DirectionId = a.DirectionId,
-
-                                                               CustomerReference = a.CustomerReference,
-                                                               AssignedCustomsAgentDate = a.AssignedCustomsAgentDate,
-                                                               AssignedCustomsAgentDone = a.AssignedCustomsAgentDone,
-                                                               AssignedCustomsAgentEstDate = a.AssignedCustomsAgentEstDate,
-                                                               AssignedCustomsAgentExcReason = a.AssignedCustomsAgentExcReason,
-                                                               AssignedCustomsAgentNotes= a.AssignedCustomsAgentNotes,
-
-                                                               ShipmentLevelCode = a.ShipmentLevelCode,
-                                                               AssignedTruckerDate = a.AssignedTruckerDate,
-                                                               AssignedTruckerDone = a.AssignedTruckerDone,
-                                                               GrossWeightUnitCode = a.GrossWeightUnitCode,
-                                                               ArrivalDate = a.ArrivalDate,
-                                                               CustomsPaymentDate = a.CustomsPaymentDate,
 
                                                            });
             return query;
@@ -110,148 +107,6 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                         EnglishName = p.EnglishName,
                         CountryCode = c.Code,
                     });
-        }
-        public CargoTrackingShipmentList GetEntityList(CargoTrackingShipment poco)
-        {
-            CargoTrackingShipmentList list = null;
-            if (poco != null)
-                list = new CargoTrackingShipmentList()
-                {
-
-                    Id = poco.Id,
-
-                    Tenant = poco.Tenant,
-
-                    EntityId = poco.EntityId,
-
-                    ForwardingShipmentHeaderId = poco.ForwardingShipmentHeaderId,
-
-                    CustomsShipmentHeaderId = poco.CustomsShipmentHeaderId,
-
-                    EntityType = poco.EntityType,
-
-                    CurrentMilestoneCode = poco.CurrentMilestoneCode,
-
-                    CurrentMilestoneDate = poco.CurrentMilestoneDate,
-
-                    CustomerId = poco.CustomerId,
-
-                    TransportModeId = poco.TransportModeId,
-
-                    Master = poco.Master,
-
-                    House = poco.House,
-
-                    ShipmentNumber = poco.ShipmentNumber,
-
-                    FromPortId = poco.FromPortId,
-
-                    ToPortId = poco.ToPortId,
-
-                    SecurityKey = poco.SecurityKey,
-
-                    ShipperId = poco.ShipperId,
-
-                    ConsigneeId = poco.ConsigneeId,
-
-                    GrossWeight = poco.GrossWeight,
-
-                    Volume = poco.Volume,
-
-                    PickupDone = poco.PickupDone,
-
-                    ClearanceDone = poco.ClearanceDone,
-
-                    PickupDate = poco.PickupDate,
-
-                    ClearanceDate = poco.ClearanceDate,
-
-                    PickupEstimationDate = poco.PickupEstimationDate,
-
-                    FromWarehouseDate = poco.FromWarehouseDate,
-
-                    FromWarehouseDone = poco.FromWarehouseDone,
-
-                    FromWarehouseEstimationDate = poco.FromWarehouseEstimationDate,
-
-                    FromWarehouseNotes = poco.FromWarehouseNotes,
-
-                    DepartureDate = poco.DepartureDate,
-
-                    DepartureDone = poco.DepartureDone,
-
-                    DepartureEstimationDate = poco.DepartureEstimationDate,
-
-                    ArrivalEstimationDate = poco.ArrivalEstimationDate,
-
-                    ArrivalDate = poco.ArrivalDate,
-
-                    ArrivalDone = poco.ArrivalDone,
-
-                    ToWarehouseDate = poco.ToWarehouseDate,
-
-                    ToWarehouseDone = poco.ToWarehouseDone,
-
-                    ToWarehouseEstimationDate = poco.ToWarehouseEstimationDate,
-
-                    ToWarehouseNotes = poco.ToWarehouseNotes,
-
-                    CustomsPaymentDate = poco.CustomsPaymentDate,
-
-                    CustomsPaymentDone = poco.CustomsPaymentDone,
-
-                    CustomsClearanceDate = poco.CustomsClearanceDate,
-
-                    DeliveredDate = poco.DeliveredDate,
-
-                    DeliveredDone = poco.DeliveredDone,
-
-                    DeclarationDate = poco.DeclarationDate,
-
-                    DeliveredEstimationDate = poco.DeliveredEstimationDate,
-
-                    CreateDate = poco.CreateDate,
-
-                    ConsigneeName = poco.ConsigneeName,
-
-                    ContainersNumbers= poco.ContainersNumbers,
-
-                    PackagesQuantity = poco.PackagesQuantity,
-
-                    CustomerReference = poco.CustomerReference,
-                    ShipmentLevelCode = poco.ShipmentLevelCode,
-
-                    AssignedTruckerDate = poco.AssignedTruckerDate,
-                    AssignedTruckerDone  = poco.AssignedTruckerDone,
-                    AssignedTruckerEstimationDate = poco.AssignedTruckerEstimationDate,
-                    AssignedTruckerNotes = poco.AssignedTruckerNotes,
-
-                    AssignedCustomsAgentDate = poco.AssignedCustomsAgentDate,
-                    AssignedCustomsAgentDone = poco.AssignedCustomsAgentDone,
-                    AssignedCustomsAgentEstDate = poco.AssignedCustomsAgentEstDate,
-                    AssignedCustomsAgentExcReason = poco.AssignedCustomsAgentExcReason,
-                    AssignedCustomsAgentNotes = poco.AssignedCustomsAgentNotes,
-
-
-                    DeliveryDone = poco.DeliveryDone,
-
-                    DeliveryDate = poco.DeliveryDate,
-
-                    DeliveryEstimationDate= poco.DeliveryEstimationDate,
-
-                    DeliveryNotes= poco.DeliveryNotes,
-
-                    DeliveryExceptionReason = poco.DeliveryExceptionReason,
-
-                    GrossWeightUnitCode = poco.GrossWeightUnitCode
-
-                };
-            if(list != null)
-            {
-                list=   FillShipmentListExtraFileds(list);
-
-            }
-            return list;
         }
         private CargoTrackingShipmentList FillShipmentListExtraFileds(CargoTrackingShipmentList list)
         {
@@ -725,11 +580,13 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         public CargoTrackingShipmentList GetShipment(string SecurityKey, int tenant)
         {
             CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(tenant);
-            CargoTrackingShipment shipment = repo.GetBySecurityKey(SecurityKey, tenant);
 
-            CargoTrackingShipmentList shipmentList = GetEntityList(shipment);
+            IQueryable<CargoTrackingShipment> shipments = (from shipment in context.CargoTrackingShipments
+                                                           where shipment.Tenant == tenant && shipment.SecurityKey == SecurityKey
+                                                           select shipment);
 
-            return shipmentList;
+            var shipmentsLists = GetIqueryableList(shipments);
+            return shipmentsLists.FirstOrDefault();
         }
 
         public List<string> GetShipmentPublicReferences(string SecurityKey, int tenant)
@@ -751,8 +608,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         private CargoTrackingShipment GetShipmentBySecurityKey(string SecurityKey, int tenant)
         {
             CargoTrackingShipmentRepository repo = new CargoTrackingShipmentRepository(tenant);
-            CargoTrackingShipment shipment = repo.GetBySecurityKey(SecurityKey, tenant);
-            return shipment;
+            var shipmets = repo.GetBySecurityKey(SecurityKey, tenant);
+            return shipmets.FirstOrDefault();
         }
     }
 

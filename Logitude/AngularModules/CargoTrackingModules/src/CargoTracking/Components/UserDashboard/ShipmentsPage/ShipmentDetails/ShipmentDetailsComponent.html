@@ -94,46 +94,68 @@
             [Name]="'Overview'">
 
         <div body>
-            <div class="data-cards">
+            <div class="data-cards" *ngIf="Shipment&& Shipment.ShipmentList">
                 <div>
                     <div class="title">Incoterms</div>
                     <div class="description">Dolar sit</div>
                 </div>
+
+                <!-- ETD/ATD -->
                 <div>
-                    <div class="title">Atd</div>
-                    <div class="description">{{'2020/02/19' | date:'dd/MM/yyyy'}}</div>
+                    <div class="title">
+                        <span *ngIf="Shipment.ShipmentList.DepartureDate">atd</span>
+                        <span *ngIf="Shipment.ShipmentList.DepartureEstimationDate && !Shipment.ShipmentList.DepartureDate">etd</span>
+                    </div>
+                    <div class="description">
+                        <span *ngIf="Shipment.ShipmentList.DepartureDate">{{Shipment.ShipmentList.DepartureDate | date:'dd/MM/yyyy'}}</span>
+                        <span *ngIf="Shipment.ShipmentList.DepartureEstimationDate && !Shipment.ShipmentList.DepartureDate">{{Shipment.ShipmentList.DepartureEstimationDate | date:'dd/MM/yyyy'}}
+                            <span style="color: rgb(59, 59, 59); font-size: 12px;">(Expected)</span>
+                        </span>
+                    </div>
                 </div>
+
+                <!-- ETA/ATA -->
                 <div>
-                    <div class="title">eta</div>
-                    <div class="description">{{'2020/02/19' | date:'dd/MM/yyyy'}}</div>
+                    <div class="title">
+                        <span *ngIf="Shipment.ShipmentList.DepartureDate">ata</span>
+                        <span *ngIf="Shipment.ShipmentList.DepartureEstimationDate && !Shipment.ShipmentList.DepartureDate">eta</span>
+                    </div>
+                    <div class="description">
+                        <span *ngIf="Shipment.ShipmentList.ArrivalDate">{{Shipment.ShipmentList.ArrivalDate | date:'dd/MM/yyyy'}}</span>
+                        <span *ngIf="Shipment.ShipmentList.ArrivalEstimationDate && !Shipment.ShipmentList.ArrivalDate">{{Shipment.ShipmentList.ArrivalEstimationDate | date:'dd/MM/yyyy'}}
+                            <span style="color: rgb(59, 59, 59); font-size: 12px;">(Expected)</span>
+                        </span>
+                    </div>
                 </div>
+
+
                 <div>
                     <div class="title">customer</div>
-                    <div class="description">Lorem dolar</div>
+                    <div class="description">{{Shipment.ShipmentList.CustomerEnglishName}}</div>
                 </div>
                 <div>
                     <div class="title">shipper</div>
-                    <div class="description">Sit Amet dol</div>
+                    <div class="description">{{Shipment.ShipmentList.ShipperName}}</div>
                 </div>
                 <div>
                     <div class="title">quantity</div>
-                    <div class="description">400 units</div>
+                    <div class="description">{{Shipment.ShipmentList.PackagesQuantity || 0}} units</div>
                 </div>
                 <div>
                     <div class="title">weight</div>
-                    <div class="description">3 Tons</div>
+                    <div class="description">{{Shipment.ShipmentList.GrossWeight }} {{Shipment.ShipmentList.GrossWeightUnitCode||''}}</div>
                 </div>
                 <div>
                     <div class="title">total value nis</div>
-                    <div class="description">500 ₪</div>
+                    <div class="description"></div>
                 </div>
                 <div>
                     <div class="title">total taxes</div>
-                    <div class="description">1,600 ₪</div>
+                    <div class="description"></div>
                 </div>
                 <div>
                     <div class="title">declaration status</div>
-                    <div class="description">Lorem Ipsum dolar</div>
+                    <div class="description"></div>
                 </div>
 
             </div>
