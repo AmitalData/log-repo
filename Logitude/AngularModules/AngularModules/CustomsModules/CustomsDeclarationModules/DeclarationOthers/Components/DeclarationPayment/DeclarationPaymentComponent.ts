@@ -2132,7 +2132,12 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         params.TestCase = this._TestCase;
         let splitRequest = true;
         if (splitRequest) {
-            this.CheckCustomFileCreditThenSendPayment(params);
+            if (this.DeclarationPM.IsCourierDeclaration) {
+                this.OnlySendPayment(params);
+            }
+            else {
+                this.CheckCustomFileCreditThenSendPayment(params);
+            }
             return;
         }
 
@@ -2325,6 +2330,39 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             });
 
     }
+
+    OnlySendPayment(params: CustomFileCreditRequestParams) {
+        var myCustomMessageProgressHelper = new CustomMessageProgressHelper();
+        myCustomMessageProgressHelper.BasicResponse = true;
+        myCustomMessageProgressHelper.StartProgress(params.PBId, 5, true);
+
+        if (AmitalGatewayUtil.Instance.IsDeclarationInUse(this.DeclarationPM.CustomFileNo, this.DeclarationPM.IsConvertedDeclaration, this.DeclarationPM.IsConnectedToUnifreight)) {
+            SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.UnifreightInstSentMehes"));
+
+            var myStoreViewUnifreightInstructionController = new UnifreightController(
+                this.DeclarationPM,
+                "Logitude.Customs.ViewModels.DeclarationPayment.DeclarationPaymentTabViewModel.MyStoreViewUnifreightInstructionController");
+            myStoreViewUnifreightInstructionController.GetPromise()
+                //myStoreViewUnifreightInstructionController.UnifreightCallbackCompleted += (sender, e) => {
+                .then((e) => {
+                    if (e.UnifreightResponseStatus) {
+                        this.Send2755(params);
+                    }
+                    else {
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+
+                    }
+                });
+            SessionLocator.SelectedSession.StartBusyIndicator("");
+            myStoreViewUnifreightInstructionController.SendRequestInstructionToUnifreightAsync("PAYHAND_SEND");
+
+
+        } else {
+            this.Send2755(params);
+        }
+
+    }
+
     private Send2755(params: CustomFileCreditRequestParams) {
         let myShowProgressBarParams = new ShowProgressBarParams();
         myShowProgressBarParams.OnCloseCustomMessageProgressComponentMethod =
