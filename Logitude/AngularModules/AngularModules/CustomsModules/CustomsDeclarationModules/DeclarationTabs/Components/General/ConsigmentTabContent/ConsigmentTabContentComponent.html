@@ -449,31 +449,7 @@
                                                 <td><div></div></td>
 
                                             </tr>
-                                            <!-- CrateNumber -->
-                                            <tr *ngIf="IsCourierDeclaration">
-
-                                                <td style="width: 135px;">
-                                                    <LogLabel [ObjectFieldName]="'CrateNumber'" [ObjectTableName]="'Customs.DeclarationCourierStatus'"
-                                                              [DataContext]="DataContext"></LogLabel>
-                                                </td>
-                                                <td style="width: 125px; ">
-                                                    <LogTextBox [ObjectFieldName]="'CrateNumber'" [ObjectTableName]="'Customs.DeclarationCourierStatus'"
-                                                                [HideColumns]="true"
-                                                                [InputType]="'text'"
-                                                                [DataContext]="DataContext"></LogTextBox>
-                                                </td>
-                                                <!--
-                <td class="HeaderScreenValue">
-        <div class="TextTrimming" style="width: 100%; position: relative;">
-            {{_DeclarationCourierStatus.CrateNumber}}
-        </div>
-    </td>
-                -->
-                                                <td></td>
-
-                                                <td><div></div></td>
-
-                                            </tr>
+                                           
                                             <!-- CrateNumber -->
                                             <tr *ngIf="IsCourierDeclaration">
                                                 <!--
