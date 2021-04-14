@@ -2108,7 +2108,19 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             if (this.EntityPM.ARPaymentChequeReplicas.length > 1) {
                 this.isMultipleCheques = true;
             }
+            else if (this.EntityPM.ARPaymentChequeReplicas.length == 0) {
+                this.SetChequeFieldsToNull();
+            }
         }
+    }
+    SetChequeFieldsToNull() {
+        this.Bank = null;
+        this.Account = null;
+        this.AmountInPaymentCurrency = null;
+        this.ValueDate = null;
+        this.BankBranch = null;
+        this.ChequeOrPaymentRef = null;
+
     }
     DisplayChequesButtonClicked() {
         this.ShowMultiChequeScreen();      
