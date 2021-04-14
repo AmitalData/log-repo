@@ -133,7 +133,7 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  PhysicalCheck=  d.PhysicalCheck ,
                                                                  FclLcl=a.FclLcl,
                                                                  Actions="",
-                                                                 CancelRequestStatusCode=d.CancelRequestStatusCode
+                                                                 CancelRequestStatusCode=d.CancelRequestStatusCode,
                                                                  IsExceptionReasonsListNull = string.IsNullOrEmpty( a.ExceptionReasonsList)
 
 
