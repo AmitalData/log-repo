@@ -1207,11 +1207,7 @@ namespace WebFreight.Web.Helpers
         }
         public string ConvertNumbersToFrenchNewVersion(double number,string localCurrencyName, string localCurrencyCode)
         {
-            string currencyNameOfDecimalPart = "";
-            if (localCurrencyCode == "MAD")
-            {
-                currencyNameOfDecimalPart = "centimes";
-            }
+            string currencyNameOfDecimalPart = "centimes";
             return HandleUnsignedNumberInFrenchWords(number,localCurrencyName, currencyNameOfDecimalPart);
             
         }
