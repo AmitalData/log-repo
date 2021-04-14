@@ -47,5 +47,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public DateTime? DoneDate { get; set; }
         public bool HasExecutedRecord { get; set; }
         public int ExecutionTime { get; set; }
+
+        public string CreateTaskAutomationFailedXml { get; set; }
+        public string CreateTaskAutomationSsucceedXml { get; set; }
     }
 }

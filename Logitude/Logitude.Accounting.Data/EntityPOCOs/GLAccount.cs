@@ -190,6 +190,11 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public bool ReportingAsAnotherDocument { get; set; }
         [Column("CreditAllotmentPercentage")]
 	    public decimal? CreditAllotmentPercentage { get; set; }
+        [ForeignKey("GLAccountCardsData")]
+        [Column("CardsDataId")]
+	    public string CardsDataId { get; set; }
+	      
+        public virtual GLAccountCardsData GLAccountCardsData { get; set; }
     }
 }
 	 

@@ -73,6 +73,19 @@
                                         </ng-template>
                                     </log-column>
 
+
+                                    <!-- ViaPortId -->
+                                    <log-column *ngIf="IsViaFieldVisible" [header]="'TariffLine.F.ViaPortId' | TextCodeTranslationPipe" [width]="'70'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                    <span *ngIf="EntityPM.TypeCode == 'AFC'">{{item.ViaPortCode}}</span>
+                                                    <span *ngIf="EntityPM.TypeCode == 'OLC'">{{item.ViaPortCombinedCode}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
                                     <!-- ExpirationDate -->
                                     <log-column [header]="'TariffLine.F.ExpirationDate' | TextCodeTranslationPipe" [width]="'120'">
                                         <ng-template let-item>
@@ -88,7 +101,7 @@
                                     <log-column [header]="'TariffLine.F.MinPrice' | TextCodeTranslationPipe" [width]="'70'">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
-                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;"  [ngStyle]="{background: (chargeableWeightInKG < 0 && item.myTariffLine.Id == this.LineIdFromPriceCheck) ? darkerColler:item.CellColor}">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;" [ngStyle]="{background: (chargeableWeightInKG < 0 && item.myTariffLine.Id == this.LineIdFromPriceCheck) ? darkerColler:item.CellColor}">
                                                     <span>{{item.MinPrice | NumbersPipe:'N3'}}</span>
                                                 </div>
                                             </log-cell-template>
@@ -110,7 +123,7 @@
                                     <log-column *ngIf="Step2PriceVisibility" [header]="Step2PriceLabel" [width]="'70'">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
-                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;"  [ngStyle]="{background: (chargeableWeightInKG > 45 && chargeableWeightInKG < 100 && item.myTariffLine.Id == this.LineIdFromPriceCheck) ? darkerColler:item.CellColor}">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;" [ngStyle]="{background: (chargeableWeightInKG > 45 && chargeableWeightInKG < 100 && item.myTariffLine.Id == this.LineIdFromPriceCheck) ? darkerColler:item.CellColor}">
                                                     <span>{{item.Step2Price | NumbersPipe:'N3'}}</span>
                                                 </div>
                                             </log-cell-template>
@@ -121,7 +134,7 @@
                                     <log-column *ngIf="Step3PriceVisibility" [header]="Step3PriceLabel" [width]="'70'">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
-                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;"  [ngStyle]="{background: (chargeableWeightInKG > 100  && chargeableWeightInKG < 250 && item.myTariffLine.Id == this.LineIdFromPriceCheck) ? darkerColler:item.CellColor}">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;" [ngStyle]="{background: (chargeableWeightInKG > 100  && chargeableWeightInKG < 250 && item.myTariffLine.Id == this.LineIdFromPriceCheck) ? darkerColler:item.CellColor}">
                                                     <span>{{item.Step3Price | NumbersPipe:'N3'}}</span>
                                                 </div>
                                             </log-cell-template>
@@ -217,11 +230,11 @@
 
                             <!-- Air Surcharges Cost-->
                             <div *ngIf="EntityPM.TypeCode == 'ASC' || EntityPM.TypeCode == 'OSC'" class="MediaFill">
-                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="VersionLinesSource" [SelectedRow]="selectedRow" [ChangeScrollPosition]="changeScrollPosition"> 
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="VersionLinesSource" [SelectedRow]="selectedRow" [ChangeScrollPosition]="changeScrollPosition">
                                     <!-- OriginPortId -->
                                     <log-column [header]="'TariffLine.F.OriginPortId' | TextCodeTranslationPipe" [width]="'70'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                     <span *ngIf="EntityPM.TypeCode == 'ASC'">{{item.OriginPortCode}}</span>
                                                     <span *ngIf="EntityPM.TypeCode == 'OSC'">{{item.OriginPortCombinedCode}}</span>
@@ -236,7 +249,7 @@
                                     <!-- DestinationPortId -->
                                     <log-column [header]="'TariffLine.F.DestinationPortId' | TextCodeTranslationPipe" [width]="'70'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                     <span *ngIf="EntityPM.TypeCode == 'ASC'">{{item.DestinationPortCode}}</span>
                                                     <span *ngIf="EntityPM.TypeCode == 'OSC'">{{item.DestinationPortCombinedCode}}</span>
@@ -248,10 +261,22 @@
                                         </ng-template>
                                     </log-column>
 
+                                    <!-- ViaPortId -->
+                                    <log-column  *ngIf="IsViaFieldVisible"  [header]="'TariffLine.F.ViaPortId' | TextCodeTranslationPipe" [width]="'70'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                    <span *ngIf="EntityPM.TypeCode == 'ASC'">{{item.ViaPortCode}}</span>
+                                                    <span *ngIf="EntityPM.TypeCode == 'OSC'">{{item.ViaPortCombinedCode}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
                                     <!-- Currency -->
                                     <log-column [header]="'TariffLine.F.CurrencyId' | TextCodeTranslationPipe" [width]="'70'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                     <span *ngIf="!item.IsDifferentCurrenciesPerCharge">{{item.CurrencyCode}}</span>
                                                     <span *ngIf="item.IsDifferentCurrenciesPerCharge">Multi</span>
@@ -263,7 +288,7 @@
                                     <!-- StartDate -->
                                     <log-column [header]="'TariffLine.F.StartDate' | TextCodeTranslationPipe" [width]="'120'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                     <span>{{item.StartDate | DateTimePipe:'SD'}}</span>
                                                 </div>
@@ -274,7 +299,7 @@
                                     <!-- ExpirationDate -->
                                     <log-column [header]="'TariffLine.F.ExpirationDate' | TextCodeTranslationPipe" [width]="'120'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                     <span>{{item.ExpirationDate | DateTimePipe:'SD'}}</span>
                                                 </div>
@@ -285,7 +310,7 @@
                                     <!-- Surcharge1MinPrice -->
                                     <log-column *ngIf="Surcharge1MinPriceVisibility" [header]="Surcharge1MinPriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     <span>{{item.Surcharge1MinPrice | NumbersPipe:'N3'}}</span>
                                                 </div>
@@ -296,7 +321,7 @@
                                     <!-- Surcharge1Price -->
                                     <log-column *ngIf="Surcharge1PriceVisibility" [header]="Surcharge1PriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     <span>{{item.Surcharge1Price | NumbersPipe:'N3'}}</span>
                                                 </div>
@@ -307,7 +332,7 @@
                                     <!-- Surcharge2MinPrice -->
                                     <log-column *ngIf="Surcharge2MinPriceVisibility" [header]="Surcharge2MinPriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     <span>{{item.Surcharge2MinPrice | NumbersPipe:'N3'}}</span>
                                                 </div>
@@ -318,7 +343,7 @@
                                     <!-- Surcharge2Price -->
                                     <log-column *ngIf="Surcharge2PriceVisibility" [header]="Surcharge2PriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     <span>{{item.Surcharge2Price | NumbersPipe:'N3'}}</span>
                                                 </div>
@@ -329,7 +354,7 @@
                                     <!-- Surcharge3MinPrice -->
                                     <log-column *ngIf="Surcharge3MinPriceVisibility" [header]="Surcharge3MinPriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     <span>{{item.Surcharge3MinPrice | NumbersPipe:'N3'}}</span>
                                                 </div>
@@ -340,7 +365,7 @@
                                     <!-- Surcharge3Price -->
                                     <log-column *ngIf="Surcharge3PriceVisibility" [header]="Surcharge3PriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     <span>{{item.Surcharge3Price | NumbersPipe:'N3'}}</span>
                                                 </div>
@@ -351,7 +376,7 @@
                                     <!-- Surcharge4MinPrice -->
                                     <log-column *ngIf="Surcharge4MinPriceVisibility" [header]="Surcharge4MinPriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     <span>{{item.Surcharge4MinPrice | NumbersPipe:'N3'}}</span>
                                                 </div>
@@ -362,7 +387,7 @@
                                     <!-- Surcharge4Price -->
                                     <log-column *ngIf="Surcharge4PriceVisibility" [header]="Surcharge4PriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     <span>{{item.Surcharge4Price | NumbersPipe:'N3'}}</span>
                                                 </div>
@@ -373,7 +398,7 @@
                                     <!-- Surcharge5MinPrice -->
                                     <log-column *ngIf="Surcharge5MinPriceVisibility" [header]="Surcharge5MinPriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     <span>{{item.Surcharge5MinPrice | NumbersPipe:'N3'}}</span>
                                                 </div>
@@ -384,7 +409,7 @@
                                     <!-- Surcharge5Price -->
                                     <log-column *ngIf="Surcharge5PriceVisibility" [header]="Surcharge5PriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     <span>{{item.Surcharge5Price | NumbersPipe:'N3'}}</span>
                                                 </div>
@@ -395,7 +420,7 @@
                                     <!-- Surcharge6MinPrice -->
                                     <log-column *ngIf="Surcharge6MinPriceVisibility" [header]="Surcharge6MinPriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     <span>{{item.Surcharge6MinPrice | NumbersPipe:'N3'}}</span>
                                                 </div>
@@ -406,7 +431,7 @@
                                     <!-- Surcharge6Price -->
                                     <log-column *ngIf="Surcharge6PriceVisibility" [header]="Surcharge6PriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     <span>{{item.Surcharge6Price | NumbersPipe:'N3'}}</span>
                                                 </div>
@@ -417,7 +442,7 @@
                                     <!-- Surcharge7MinPrice -->
                                     <log-column *ngIf="Surcharge7MinPriceVisibility" [header]="Surcharge7MinPriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     <span>{{item.Surcharge7MinPrice | NumbersPipe:'N3'}}</span>
                                                 </div>
@@ -428,7 +453,7 @@
                                     <!-- Surcharge7Price -->
                                     <log-column *ngIf="Surcharge7PriceVisibility" [header]="Surcharge7PriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     <span>{{item.Surcharge7Price | NumbersPipe:'N3'}}</span>
                                                 </div>
@@ -439,7 +464,7 @@
                                     <!-- Surcharge8MinPrice -->
                                     <log-column *ngIf="Surcharge8MinPriceVisibility" [header]="Surcharge8MinPriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     <span>{{item.Surcharge8MinPrice | NumbersPipe:'N3'}}</span>
                                                 </div>
@@ -450,7 +475,7 @@
                                     <!-- Surcharge8Price -->
                                     <log-column *ngIf="Surcharge8PriceVisibility" [header]="Surcharge8PriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     <span>{{item.Surcharge8Price | NumbersPipe:'N3'}}</span>
                                                 </div>
@@ -461,7 +486,7 @@
                                     <!-- Surcharge9MinPrice -->
                                     <log-column *ngIf="Surcharge9MinPriceVisibility" [header]="Surcharge9MinPriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     <span>{{item.Surcharge9MinPrice | NumbersPipe:'N3'}}</span>
                                                 </div>
@@ -472,7 +497,7 @@
                                     <!-- Surcharge9Price -->
                                     <log-column *ngIf="Surcharge9PriceVisibility" [header]="Surcharge9PriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     <span>{{item.Surcharge9Price | NumbersPipe:'N3'}}</span>
                                                 </div>
@@ -483,7 +508,7 @@
                                     <!-- Surcharge10MinPrice -->
                                     <log-column *ngIf="Surcharge10MinPriceVisibility" [header]="Surcharge10MinPriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     <span>{{item.Surcharge10MinPrice | NumbersPipe:'N3'}}</span>
                                                 </div>
@@ -494,7 +519,7 @@
                                     <!-- Surcharge10Price -->
                                     <log-column *ngIf="Surcharge10PriceVisibility" [header]="Surcharge10PriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     <span>{{item.Surcharge10Price | NumbersPipe:'N3'}}</span>
                                                 </div>
@@ -505,7 +530,7 @@
                                     <!-- Notes -->
                                     <log-column [width]="'40'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div style="height: 100%; width: 100%; left:5px;">
                                                     <img class="CenterCenter" *ngIf="!item.Notes" src="./Images/Notes_notexists.png" style="display: block;" />
                                                     <img class="CenterCenter" *ngIf="item.Notes" src="./Images/Notes_exists.png" style="display: block;" [title]="item.Notes" />
@@ -537,6 +562,17 @@
                                             <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                     <span>{{item.DestinationPortCombinedCode}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <!-- ViaPortId -->
+                                    <log-column  *ngIf="IsViaFieldVisible"  [header]="'TariffLine.F.ViaPortId' | TextCodeTranslationPipe" [width]="'70'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                    <span>{{item.ViaPortCombinedCode}}</span>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
@@ -646,7 +682,7 @@
                                     <!-- OriginPortId -->
                                     <log-column [header]="'TariffLine.F.OriginPortId' | TextCodeTranslationPipe" [width]="'70'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                     <span>{{item.OriginPortCombinedCode}}</span>
                                                     <div style="height: 100%; width: 100%;" *ngIf="item.IsFromAllOtherPorts">
@@ -660,7 +696,7 @@
                                     <!-- DestinationPortId -->
                                     <log-column [header]="'TariffLine.F.DestinationPortId' | TextCodeTranslationPipe" [width]="'70'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                     <span>{{item.DestinationPortCombinedCode}}</span>
                                                     <div style="height: 100%; width: 100%;" *ngIf="item.IsToAllOtherPorts">
@@ -671,10 +707,21 @@
                                         </ng-template>
                                     </log-column>
 
+                                    <!-- ViaPortId -->
+                                    <log-column  *ngIf="IsViaFieldVisible"  [header]="'TariffLine.F.ViaPortId' | TextCodeTranslationPipe" [width]="'70'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                    <span>{{item.ViaPortCombinedCode}}</span>              
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
                                     <!-- Currency -->
                                     <log-column [header]="'TariffLine.F.CurrencyId' | TextCodeTranslationPipe" [width]="'70'">
-                                        <ng-template let-item> 
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                     <span *ngIf="!item.IsDifferentCurrenciesPerCharge">{{item.CurrencyCode}}</span>
                                                     <span *ngIf="item.IsDifferentCurrenciesPerCharge">Multi</span>
@@ -686,7 +733,7 @@
                                     <!-- StartDate -->
                                     <log-column [header]="'TariffLine.F.StartDate' | TextCodeTranslationPipe" [width]="'120'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                     <span>{{item.StartDate | DateTimePipe:'SD'}}</span>
                                                 </div>
@@ -697,7 +744,7 @@
                                     <!-- ExpirationDate -->
                                     <log-column [header]="'TariffLine.F.ExpirationDate' | TextCodeTranslationPipe" [width]="'120'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                     <span>{{item.ExpirationDate | DateTimePipe:'SD'}}</span>
                                                 </div>
@@ -708,7 +755,7 @@
                                     <!-- Surcharge1Price -->
                                     <log-column *ngIf="Surcharge1PriceVisibility" [Alignment]="'center'" [header]="Surcharge1PriceLabel_FCL" [width]="'180'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     {{item.Surcharge1PriceValue}}
                                                 </div>
@@ -719,7 +766,7 @@
                                     <!-- Surcharge2Price -->
                                     <log-column *ngIf="Surcharge2PriceVisibility" [Alignment]="'center'" [header]="Surcharge2PriceLabel_FCL" [width]="'180'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     {{item.Surcharge2PriceValue}}
                                                 </div>
@@ -730,7 +777,7 @@
                                     <!-- Surcharge3Price -->
                                     <log-column *ngIf="Surcharge3PriceVisibility" [Alignment]="'center'" [header]="Surcharge3PriceLabel_FCL" [width]="'180'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     {{item.Surcharge3PriceValue}}
                                                 </div>
@@ -741,7 +788,7 @@
                                     <!-- Surcharge4Price -->
                                     <log-column *ngIf="Surcharge4PriceVisibility" [Alignment]="'center'" [header]="Surcharge4PriceLabel_FCL" [width]="'180'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     {{item.Surcharge4PriceValue}}
                                                 </div>
@@ -752,7 +799,7 @@
                                     <!-- Surcharge5Price -->
                                     <log-column *ngIf="Surcharge5PriceVisibility" [Alignment]="'center'" [header]="Surcharge5PriceLabel_FCL" [width]="'180'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     {{item.Surcharge5PriceValue}}
                                                 </div>
@@ -763,7 +810,7 @@
                                     <!-- Surcharge6Price -->
                                     <log-column *ngIf="Surcharge6PriceVisibility" [Alignment]="'center'" [header]="Surcharge6PriceLabel_FCL" [width]="'180'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     {{item.Surcharge6PriceValue}}
                                                 </div>
@@ -774,7 +821,7 @@
                                     <!-- Surcharge7Price -->
                                     <log-column *ngIf="Surcharge7PriceVisibility" [Alignment]="'center'" [header]="Surcharge7PriceLabel_FCL" [width]="'180'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     {{item.Surcharge7PriceValue}}
                                                 </div>
@@ -785,7 +832,7 @@
                                     <!-- Surcharge8Price -->
                                     <log-column *ngIf="Surcharge8PriceVisibility" [Alignment]="'center'" [header]="Surcharge8PriceLabel_FCL" [width]="'180'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     {{item.Surcharge8PriceValue}}
                                                 </div>
@@ -796,7 +843,7 @@
                                     <!-- Surcharge9Price -->
                                     <log-column *ngIf="Surcharge9PriceVisibility" [Alignment]="'center'" [header]="Surcharge9PriceLabel_FCL" [width]="'180'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     {{item.Surcharge9PriceValue}}
                                                 </div>
@@ -807,7 +854,7 @@
                                     <!-- Surcharge10Price -->
                                     <log-column *ngIf="Surcharge10PriceVisibility" [Alignment]="'center'" [header]="Surcharge10PriceLabel_FCL" [width]="'180'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                     {{item.Surcharge10PriceValue}}
                                                 </div>
@@ -818,7 +865,7 @@
                                     <!-- Notes -->
                                     <log-column [width]="'40'">
                                         <ng-template let-item>
-                                            <log-cell-template    #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                                 <div style="height: 100%; width: 100%; left:5px;">
                                                     <img class="CenterCenter" *ngIf="!item.Notes" src="./Images/Notes_notexists.png" style="display: block;" />
                                                     <img class="CenterCenter" *ngIf="item.Notes" src="./Images/Notes_exists.png" style="display: block;" [title]="item.Notes" />
@@ -830,7 +877,7 @@
                                     <!-- Tools Button -->
                                     <log-column [width]="'80'" [Editable]="true" [Alignment]="'right'">
                                         <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true"    #logcelltemplate >
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 <div style="width: 100%; height: 100%; position: relative;">
                                                     <div class="LeftCenter" style="height: 20px;">
                                                         <table>

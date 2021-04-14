@@ -931,21 +931,18 @@ namespace CommunicationWorkerRole
 				//EntityId = invoice.Id,
 				//ObjectTableId = arObjectTable.Id,
 				//EntityNumber = invoice.InvoiceNumber,
-				EntityId = invoice.MainEntityId,
+				EntityId = string.IsNullOrEmpty(invoice.MainEntityId) ? invoice.Id : invoice.MainEntityId,
 				//ObjectTableId = entityObjectTable.Id,
-				EntityNumber = invoice.MainEntityReference,
+				EntityNumber = string.IsNullOrEmpty(invoice.MainEntityReference) ? invoice.InvoiceNumber : invoice.MainEntityReference,
 
 				ChildEntityId = invoice.Id,
 				ChildObjectTableId = arObjectTable.Id,
 				ChildEntityReference = invoice.InvoiceNumber,
 
 			};
-			if (!invoice.IsConsolidationInvoice)
-			{
-				extDocPM.ObjectTableId = entityObjectTable.Id;
-			}
+			extDocPM.ObjectTableId = !invoice.IsConsolidationInvoice ? entityObjectTable.Id : arObjectTable.Id;
 
-			documentsService.Create(extDocPM, fileData, systemUser.Id, false);
+            documentsService.Create(extDocPM, fileData, systemUser.Id, false);
 
 		}
 
