@@ -79,7 +79,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "09de458f1b8093a8e6546c823337a87b";
+
+		public const string HashString = "32a8fdb2472f2228aad6726d2e739c63";
+
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -44954,7 +44956,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 		   Feature ShipmentFeature_Shipment_Action_AccrualsApprovement = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Action.AccrualsApprovement", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Shipment.Action.AccrualsApprovement", NameTextCodeDefaultText = @"Accruals Approvement" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShipmentObjectTable);
 
-		   Feature ShipmentFeature_CHILDPICKUPDELIVERY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHILDPICKUPDELIVERY", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.CHILDPICKUPDELIVERY", NameTextCodeDefaultText = @"Add Child Pick Up / Delivery" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShipmentObjectTable);
+		   Feature ShipmentFeature_CHILDPICKUPDELIVERY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHILDPICKUPDELIVERY", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.CHILDPICKUPDELIVERY", NameTextCodeDefaultText = @"Add Child Pick Up / Delivery", ToggleCode = "CPH" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShipmentObjectTable);
 
    
 	    

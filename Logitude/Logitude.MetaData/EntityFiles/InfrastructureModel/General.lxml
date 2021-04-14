@@ -6715,7 +6715,8 @@
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      IsBusinessUnitEnabled="false" 
+      ToggleCode="&quot;TAR&quot;"/>
     <Feature
       Code="&quot;CREATETENANT&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
