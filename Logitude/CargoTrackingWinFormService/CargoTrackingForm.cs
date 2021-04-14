@@ -27,7 +27,7 @@ namespace CargoTrackingWinFormService.Forms
     {
  
 
-        private string FromLocalConectionstring = "2021R1_Main,sa,Saas256,.";
+        private string FromLocalConectionstring = "Logitude2-5_Main,sa,Saas256,.";
         private string FromTestConectionstring = "LogitudeMain-Test2,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com";
         private string FromCloudConectionstring = "Main,CloudApp,London2020!,amitaldata.cloudapp.net";
         private string ToLocalConectionstring = "CargoTracking,sa,Saas256,.";
@@ -392,7 +392,7 @@ namespace CargoTrackingWinFormService.Forms
                 catch (Exception e)
                 {
                     MessageBox.Show(e.Message + Environment.NewLine + e.StackTrace);
-                    Application.Exit();
+                    //Application.Exit();
                     break;
                 }
                 
