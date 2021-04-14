@@ -925,11 +925,11 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                     }
 
-                    if (masterData != null)
+                    if (shipment.ShipmentLevelCode == "H")
                     {
-                        if (!string.IsNullOrEmpty(masterData.PreCarriageFromPortId) && string.IsNullOrEmpty(masterData.PreCarriageToPortId))
+                        if (!string.IsNullOrEmpty(shipment.PreForwardingFromPortId) && string.IsNullOrEmpty(shipment.PreForwardingToPortId))
                         {
-                            Port port = portRepository.GetSinglePort(tenant, masterData.PreCarriageFromPortId);
+                            Port port = portRepository.GetSinglePort(tenant, shipment.PreForwardingFromPortId);
                             if (port != null)
                             {
                                 provider.OriginLocation = port.EnglishName + " - " + port.Code;
@@ -943,9 +943,9 @@ namespace WebFreight.Web.ReportsWebServices
                             }
                         }
 
-                        if (!string.IsNullOrEmpty(masterData.OnCarriageFromPortId) && string.IsNullOrEmpty(masterData.OnCarriageToPortId))
+                        if (!string.IsNullOrEmpty(shipment.OnForwardingFromPortId) && string.IsNullOrEmpty(shipment.OnForwardingToPortId))
                         {
-                            Port port = portRepository.GetSinglePort(tenant, masterData.OnCarriageToPortId);
+                            Port port = portRepository.GetSinglePort(tenant, shipment.OnForwardingToPortId);
                             if (port != null)
                             {
                                 provider.DestinationLocation = port.EnglishName + " - " + port.Code;
@@ -959,6 +959,44 @@ namespace WebFreight.Web.ReportsWebServices
                             }
                         }
                     }
+
+                    else
+                    {
+                        if (masterData != null)
+                        {
+                            if (!string.IsNullOrEmpty(masterData.PreCarriageFromPortId) && string.IsNullOrEmpty(masterData.PreCarriageToPortId))
+                            {
+                                Port port = portRepository.GetSinglePort(tenant, masterData.PreCarriageFromPortId);
+                                if (port != null)
+                                {
+                                    provider.OriginLocation = port.EnglishName + " - " + port.Code;
+
+                                    Country country = countryRepository.GetSingleCountry(port.CountryId, tenant);
+                                    if (country != null)
+                                    {
+                                        provider.OriginCountryCode = country.Code;
+                                        provider.OriginCountryName = country.EnglishName;
+                                    }
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(masterData.OnCarriageFromPortId) && string.IsNullOrEmpty(masterData.OnCarriageToPortId))
+                            {
+                                Port port = portRepository.GetSinglePort(tenant, masterData.OnCarriageToPortId);
+                                if (port != null)
+                                {
+                                    provider.DestinationLocation = port.EnglishName + " - " + port.Code;
+
+                                    Country country = countryRepository.GetSingleCountry(port.CountryId, tenant);
+                                    if (country != null)
+                                    {
+                                        provider.DestinationCountryCode = country.Code;
+                                        provider.DestinationCountryName = country.EnglishName;
+                                    }
+                                }
+                            }
+                        }
+                    }                    
                 }
                 #endregion
 

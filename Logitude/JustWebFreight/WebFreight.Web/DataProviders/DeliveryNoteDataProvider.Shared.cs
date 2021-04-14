@@ -152,6 +152,7 @@ namespace WebFreight.Web.DataProviders
         public string Reference3 { get; set; }
         public string Reference4 { get; set; }
         public string OnCarriageCarrier { get; set; }
+        public string OnForwardingCarrier { get; set; }
         public string FreightLocation { get; set; }
         public DateTime? LastFreeDate { get; set; }
         public string CustomerContactName { get; set; }

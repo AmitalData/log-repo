@@ -553,7 +553,7 @@ namespace WebFreight.Web.DataProviders
         public string TrailerNumber { get; set; }
         public int WarehouseFreeDays { get; set; }
         public string PreCarriageVessel { get; set; }
-
+        public string PreForwardingVessel { get; set; }
         public int? StorageFreeDays { get; set; }
         public int? StorageDays { get; set; }
         public List<StoragePricing> ShipmentStoragePricings { get; set; }
