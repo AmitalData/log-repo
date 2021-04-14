@@ -39,10 +39,12 @@ using System.IO;
 using System.Xml;
 using Logitude.Server.Tools;
 using System.Xml.Serialization;
+using System.Text;
+using ICSharpCode.SharpZipLib.BZip2;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
-    public class ShipmentQuery
+    public class ShipmentQuery : ShipmentCloudCustomDataDeserializer
     {
 
         ShipmentRepository repository;
@@ -13500,14 +13502,27 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return masterNumber;
         }
 
-        public ShipmentPM GetShipmentForCargoTrackingByEntityId(string id, int tenant)
+        public ShipmentPM GetShipmentPMForCargoTrackingByEntityId(string id, int tenant)
         {
-            Shipment shipment = repository.GetSingleShipmentwithOutIncludes(id, tenant);
+            Shipment shipment = repository.GetShipmentForCargoTracking(id, tenant);
+
             ShipmentPM shipmentPM = new ShipmentPM()
             {
                 Id = shipment.Id,
                 CustomFileNumber = shipment.CustomFileNumber,
+
+                IncotermName = shipment.Incoterm?.Name,
+                IncotermCode = shipment.Incoterm?.Code,
             };
+
+
+            if (shipment.ShipmentAdditionalCloudData != null)
+            {
+                ShipmentCloudCustomDataDeserializer deserializer = new ShipmentCloudCustomDataDeserializer();
+                var cloudCustomData = deserializer.BuildCustomDataFromXML(shipment.ShipmentAdditionalCloudData);
+                shipmentPM.TotalTax = cloudCustomData.TotalTax;
+            }
+           
 
             return shipmentPM;
         }
@@ -13546,4 +13561,5 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public string TypeCode { get; set; }
         public string ForwarderPartnerId { get; set; }
     }
+
 }

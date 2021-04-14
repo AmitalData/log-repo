@@ -55,7 +55,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(authToken.Tenant);
-                ShipmentPM shipmentPM = shipmentQuery.GetShipmentForCargoTrackingByEntityId(id, authToken.Tenant);
+                ShipmentPM shipmentPM = shipmentQuery.GetShipmentPMForCargoTrackingByEntityId(id, authToken.Tenant);
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 

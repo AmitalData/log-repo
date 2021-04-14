@@ -33,7 +33,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
     SearchText: string = "";
     ShipmentReferences: string[] = [];
     CustomsBrokerReference: string;
-  
+    ShipmentPM: any;
+
     get tenant()
     {
         return CargoTrackingBrandingData.Tenant;
@@ -112,12 +113,12 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 this.Shipment = result;
                 this.ShipmentReferences = result.ShipmentList.CustomerReference ? result.ShipmentList.CustomerReference.split(',') : null;
                 this.SetRoutingVariables();
-                this.SetCustomsBrokerReference();
+                this.GetShipmentPM();
             }
 
         });
     }
- 
+
     SetRoutingVariables() {
        this.GetCargoTrackingPortById(this.Shipment.ShipmentList.FromPortId);
     }
@@ -142,9 +143,11 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
     }
 
-    SetCustomsBrokerReference() {
+
+    GetShipmentPM() {
         this.cargoTrackingShipmentService.get(this.Shipment.ShipmentList.EntityId).subscribe((result: any) => {
             if (result) {
+                this.ShipmentPM = result;
                 this.CustomsBrokerReference = result.CustomFileNumber;
                 this.isLoading = false;
             }

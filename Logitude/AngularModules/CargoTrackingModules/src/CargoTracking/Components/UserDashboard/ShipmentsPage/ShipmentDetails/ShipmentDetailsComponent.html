@@ -24,7 +24,7 @@
                 <li *ngFor="let ref of ShipmentReferences, let i = index">{{ref}}</li>
             </ul>
             <ul *ngIf="!showMoreReferences">
-                <li *ngFor="let ref of ShipmentReferences.slice(0,2), let i = index">{{ref}}</li>
+                <li *ngFor="let ref of ShipmentReferences?.slice(0,2), let i = index">{{ref}}</li>
             </ul>
         </div>
 
@@ -97,7 +97,7 @@
             <div class="data-cards" *ngIf="Shipment&& Shipment.ShipmentList">
                 <div>
                     <div class="title">Incoterms</div>
-                    <div class="description">Dolar sit</div>
+                    <div class="description">{{ShipmentPM?.IncotermName}}</div>
                 </div>
 
                 <!-- ETD/ATD -->
@@ -151,7 +151,7 @@
                 </div>
                 <div>
                     <div class="title">total taxes</div>
-                    <div class="description"></div>
+                    <div class="description">{{ShipmentPM?.TotalTax}}</div>
                 </div>
                 <div>
                     <div class="title">declaration status</div>
