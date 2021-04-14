@@ -79,6 +79,7 @@ export class DeclarationReferantDataList {
 	ForwarderName: string;
 	FclLclName: string;
 	TeamName: string;
+	IsExceptionReasonsListNull: boolean;
 	
 }
  
