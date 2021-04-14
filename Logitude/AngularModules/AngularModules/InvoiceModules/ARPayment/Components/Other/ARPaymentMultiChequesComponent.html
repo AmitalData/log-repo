@@ -41,10 +41,10 @@
 
 
 
-                                <log-column [header]="'ARPaymentCheque.F.LineNumber' | TextCodeTranslationPipe" [width]="'75'">
+                                <log-column [header]="'ARPaymentCheque.F.LineNumber' | TextCodeTranslationPipe" [width]="'60'">
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                            <div style="text-align:right" class="TextTrimming">
+                                            <div style="text-align:left" class="TextTrimming">
                                                 <span>{{item.LineNumber}}</span>
                                             </div>
                                         </log-cell-template>
@@ -52,7 +52,7 @@
                                 </log-column>
 
 
-                                <log-column [header]="'ARPaymentCheque.F.ForeignAmount' | TextCodeTranslationPipe" [binding]="'ForeignAmount'" [width]="'100'" [Editable]="true" [Alignment]="'right'">
+                                <log-column [header]="'ARPayment.F.AmountInPaymentCurrency' | TextCodeTranslationPipe" [binding]="'ForeignAmount'" [width]="'130'" [Editable]="true" [Alignment]="'right'">
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate>
                                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
@@ -71,10 +71,10 @@
 
 
 
-                                <log-column [header]="'ARPayment.F.ValueDate' | TextCodeTranslationPipe" [binding]="'ValueDate'" [width]="'95'" [Editable]="true" [Alignment]="'right'">
+                                <log-column [header]="'ARPayment.F.ValueDate' | TextCodeTranslationPipe" [binding]="'ValueDate'" [width]="'95'" [Editable]="true" >
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <div class="TextTrimming" style="text-align:left" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.ValueDate | DateTimeToDatePipe}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
@@ -93,7 +93,7 @@
                                 <log-column [header]="'ARPaymentCheque.F.ChequeNumber' | TextCodeTranslationPipe" [binding]="'ChequeNumber'" [width]="'100'" [Editable]="true" >
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <div class="TextTrimming" style="text-align:left" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.ChequeNumber}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
@@ -107,10 +107,10 @@
 
 
                                 </log-column>
-                                <log-column [header]="'ARPaymentCheque.F.BankId' | TextCodeTranslationPipe" [binding]="'Bank'" [width]="'130'" [Editable]="true" >
+                                <log-column [header]="'ARPaymentCheque.F.BankId' | TextCodeTranslationPipe" [binding]="'Bank'" [width]="'80'" [Editable]="true" >
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <div class="TextTrimming" style="text-align:left" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.BankId}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
@@ -127,7 +127,7 @@
                                 <log-column [header]="'ARPaymentCheque.F.BankBranch' | TextCodeTranslationPipe" [binding]="'BankBranch'" [width]="'130'" [Editable]="true" >
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <div class="TextTrimming" style="text-align:left" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.BankBranch}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
@@ -144,7 +144,7 @@
                                 <log-column [header]="'ARPaymentCheque.F.BankAccount' | TextCodeTranslationPipe" [binding]="'BankAccount'" [width]="'130'" [Editable]="true" >
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <div class="TextTrimming" style="text-align:left" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.BankAccount}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
@@ -158,10 +158,10 @@
 
 
                                 </log-column>
-                                <log-column [header]="'ARPaymentCheque.F.StatusCode' | TextCodeTranslationPipe" [binding]="'StatusCode'" [width]="'100'"  >
+                                <log-column [header]="'ARPaymentCheque.F.StatusCode' | TextCodeTranslationPipe" [binding]="'StatusCode'" [width]="'130'"  >
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate>
-                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <div class="TextTrimming" style="text-align:left" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.StatusName}}</span>
                                             </div>
                                             

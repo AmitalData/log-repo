@@ -106,18 +106,19 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
         }
     }
     GetLatestChequeLineNumber() {
-       var counter: number = 0;
-    if (this.paymentPM.ARPaymentChequeReplicas.length > 0) {
+        var counter: number = 0;
+        if (this.paymentPM.ARPaymentChequeReplicas.length > 0) {
 
-        var items = this.paymentPM.ARPaymentChequeReplicas.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 });
-        if (items.length == 0) counter = 0;
-        else {
-            counter = items[this.paymentPM.ARPaymentChequeReplicas.length - 1].LineNumber;
+            var items = this.paymentPM.ARPaymentChequeReplicas.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 });
+            if (items.length == 0) counter = 0;
+            else {
+                counter = items[this.paymentPM.ARPaymentChequeReplicas.length - 1].LineNumber;
+            }
         }
-       
         return counter;
+
     }
-}
+
     CalculateTotal() {
         this.TotalAmount = 0;
         for (let cheque of this.ItemsSource.Collection) {
@@ -307,6 +308,7 @@ export class PaymentChequeLine extends BaseComponent {
             this.parent.paymentPM.RemoveARPaymentChequeReplicaPM(this.entityPM);
         }
         this.parent.CalculateTotal();
+        --this.parent.ChequesCounter;
     }
 
 
