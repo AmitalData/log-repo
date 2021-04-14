@@ -134,6 +134,9 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  FclLcl=a.FclLcl,
                                                                  Actions="",
                                                                  CancelRequestStatusCode=d.CancelRequestStatusCode
+                                                                 IsExceptionReasonsListNull = string.IsNullOrEmpty( a.ExceptionReasonsList)
+
+
                                                                  
                                                               }) ;
                                                                 
@@ -182,6 +185,8 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                                     RequestedCustomsDocId=d.RequestedCustomsDocId,
                                                                                     IsCancelled= d.IsCancelled,
                                                                                     IsClose= d.IsClose,
+                                                                                    IsExceptionReasonsListNull = string.IsNullOrEmpty(a.ExceptionReasonsList)
+
                                                                                 });
 
             if (refId.Count>0)
@@ -227,6 +232,8 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                 FilesRejectedByClassification = groupBy1.Count(x => x.ClassificationStatus == "X" && x.IsClosedForFollowUp != "1"),
                                 FilesRejectedByClassification_A = groupBy1.Count(x => x.ClassificationStatus == "X" && x.IsAvailabilityDateNull == false && x.IsClosedForFollowUp != "1"),
                                 FilesWithoutRelease_A = groupBy1.Count(x => x.IsPaymentDateNull == false && x.IsHatraDateNull == true  && x.IsClose == false && x.IsAvailabilityDateNull == false && x.IsClosedForFollowUp != "1"),
+                                FilesToPay = groupBy1.Count(x => x.ClassificationStatus == "V" && x.ControllerStatus == "V" && x.IsClosedForFollowUp != "1" && x.CollectionOfMoneyStatus == "V" && x.IsAvailabilityDateNull==false && x.IsExceptionReasonsListNull==true),
+                                FilesToPay_A = groupBy1.Count(x => x.ClassificationStatus == "V" && x.ControllerStatus == "V" && x.IsClosedForFollowUp != "1" && x.CollectionOfMoneyStatus == "V" && x.IsAvailabilityDateNull == false && x.IsExceptionReasonsListNull == true),
 
                             }
                             );

@@ -80,6 +80,7 @@ export class DeclarationReferantDataList {
 	FclLclName: string;
 	TeamName: string;
 	CancelRequestStatusCode: string;
+	IsExceptionReasonsListNull: boolean;
 	
 }
  
