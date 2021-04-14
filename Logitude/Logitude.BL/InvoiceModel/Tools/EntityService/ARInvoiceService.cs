@@ -3579,17 +3579,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             #endregion
 
             #region Entity References
-            if (allActiveShipmentIds != null)
-            {
-                if (allActiveShipmentIds.Count > 0)
-                {
-                    List<Shipment> iActiveShipments = this.allShipments.Where(d => allActiveShipmentIds.Contains(d.Id)).ToList();
-                    foreach (Shipment iShipment in iActiveShipments)
-                    {
-                        MethodHelper.AddToSearchFields(ref mySearchFields, iShipment.ShipmentNumber);
-                    }
-                }
-            }
+
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ShipmentsNumbers);
+
+            //if (allActiveShipmentIds != null)
+            //{
+            //    if (allActiveShipmentIds.Count > 0)
+            //    {
+            //        List<Shipment> iActiveShipments = this.allShipments.Where(d => allActiveShipmentIds.Contains(d.Id)).ToList();
+            //        foreach (Shipment iShipment in iActiveShipments)
+            //        {
+            //            MethodHelper.AddToSearchFields(ref mySearchFields, iShipment.ShipmentNumber);
+            //        }
+            //    }
+            //}
             #endregion
 
             #region Payments
