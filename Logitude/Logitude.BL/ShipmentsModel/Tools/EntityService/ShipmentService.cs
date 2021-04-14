@@ -487,7 +487,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             }
                         }
 
-                        this.UpdateShipmentStoragePricingsCollection();
+                        foreach (ShipmentStoragePricingPM pricingPM in entityPM.ShipmentStoragePricings.Where(d => d.ChangeSetOp == ChangeSetOperation.Update))
+                        {
+                            this.UpdateShipmentStoragePricing(pricingPM);
+                        }
                     }
 
                     if (shipmentBehaviourFacade.DatesUpdated_CrossDoc)
