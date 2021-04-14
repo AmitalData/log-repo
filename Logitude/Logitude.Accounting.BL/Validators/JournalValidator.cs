@@ -712,11 +712,14 @@ accountingValidationContextServiceProvider
                     {
                         myExternalReconcileMoveBankCheckFromTransfer2GLAccountService.OnAdjustMustInit(myJournalPM.JournalLines[3].DebitAccountId, "");
                     }
-                    LedgerTransactionPM myLedgerTransactionBankTransferPM;
+                    List<LedgerTransactionPM> myLedgerTransactionBankTransferPMs;
                     BankAccountPM bankAccountFromTransfer;
                     ReconcileExternalPageLinePM myReconcileExternalPageLinePM;
                     string errString;
-                    myExternalReconcileMoveBankCheckFromTransfer2GLAccountService.PrepareAndValidate(myJournalPM.Tenant, false, myJournalPM.JournalExternalReconciles[0].LedgerTransactionId, myJournalPM.JournalExternalReconciles[0].ReconcileExternalPageLineId, out myLedgerTransactionBankTransferPM, out bankAccountFromTransfer, out myReconcileExternalPageLinePM, out errString);
+                    myExternalReconcileMoveBankCheckFromTransfer2GLAccountService.PrepareAndValidate(myJournalPM.Tenant, false,
+                        ///myJournalPM.JournalExternalReconciles[0].LedgerTransactionId
+                        myJournalPM.JournalExternalReconciles.Select(r=>r.LedgerTransactionId).ToList()
+                        , myJournalPM.JournalExternalReconciles[0].ReconcileExternalPageLineId, out myLedgerTransactionBankTransferPMs, out bankAccountFromTransfer, out myReconcileExternalPageLinePM, out errString);
                     if (!string.IsNullOrWhiteSpace(errString))
                     {
                         errorsList.Add(errString);
