@@ -78,6 +78,7 @@
     <None Include="DBScripts\202102070900_UpdateNullableGLAccountFutureFields.sxml" />
     <None Include="DBScripts\202101141620_ UpdateStatusCodeFieldOnTaxReportLine.sxml" />
     <None Include="DBScripts\202103311233_BankAccountSearchFields.sxml" />
+    <None Include="DBScripts\202104111142_PaymentChequesSearchFields.sxml" />
     <None Include="DBScripts\Post\202103160820_ RebuildGLAccountRecocileDatas.sxml" />
     <None Include="DBScripts\202103180820_ InsertGLAccountAgingDatas.sxml" />
     <None Include="DBScripts\202103240820_usp_AccountingStreamingTypes.sxml" />
