@@ -2,14 +2,12 @@
 <Script DBType="Main" Module="Quote" AOT="true" TargetTableName="Quotes"  Pre="true">
   <Sql Version="2">
     <![CDATA[
-
-
-If(OBJECT_ID('tempdb..#temp') Is Not Null)
+If(OBJECT_ID('tempdb..#temp ')  Is Not Null)
 Begin
     Drop Table #temp
 End
 
-If(OBJECT_ID('tempdb..#temp_QuoteComputedFields') Is Not Null)
+If(OBJECT_ID(' tempdb..#temp_QuoteComputedFields ') Is Not Null)
 Begin
     Drop Table #temp_QuoteComputedFields
 End
