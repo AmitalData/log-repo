@@ -1324,12 +1324,13 @@ namespace WebFreight.Web.Helpers
             }
             if ((number / 1000000000) > 0 && number >= 1000000000)
             {
-                amountInWords += HandleIntegerNumberPartInFrenchWords(number / 1000000000) + " milliard ";
+
+                amountInWords += HandleIntegerNumberPartInFrenchWords(number / 1000000000) + " milliards ";
                 number %= 1000000000;
             }
             if ((number / 1000000) > 0 && number >= 1000000)
             {
-                amountInWords += HandleIntegerNumberPartInFrenchWords(number / 1000000) + " million ";
+                amountInWords += HandleIntegerNumberPartInFrenchWords(number / 1000000) + " millions ";
                 number %= 1000000;
             }
             if ((number / 1000) > 0 && number >= 1000)
