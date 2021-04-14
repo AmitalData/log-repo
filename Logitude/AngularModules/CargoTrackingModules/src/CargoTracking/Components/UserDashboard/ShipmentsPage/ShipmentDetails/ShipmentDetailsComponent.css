@@ -14,23 +14,23 @@ h1 {
     -ms-filter: "FlipH";
 }
 .circle-image {
-    background: #e5e9ef; /*#F2F4F7;*/
+    background: var(--CircleImageColor);
     border-radius: 50%;
-    width: 80px !important;
-    height: 80px;
+    width: 90px !important;
+    height: 90px;
     padding: 0 !important;
     margin: 0 auto;
-    /* top: 50%; */
+    margin-top: 18px;
     position: relative;
     text-align: center;
 }
 
-.circle-image img {
-    width: 30px;
-    height: 24px;
+.direction-icon {
     position: relative;
-    top: calc(50% - 9px);
+    bottom: -30px;
+    transform: rotate(45deg);
 }
+
 .shipment-header::after,
 .slider::after {
     content: "";
@@ -305,4 +305,6 @@ h1 {
         box-shadow: 6px 4px 10px 0px #00000020;
         font-weight: bold;
     }
+
+  
 }
