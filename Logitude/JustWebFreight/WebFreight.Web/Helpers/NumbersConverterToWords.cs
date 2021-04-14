@@ -1383,13 +1383,13 @@ namespace WebFreight.Web.Helpers
             else if (number < 70)
             {
                 amountInWords += tensMapInFranch[(int)number / 10];
-                if (number % 10 != 0)
+                if (number % 10 != 0 && number % 10 >= 1)
                     amountInWords += (number % 10) > 0 && (number % 10) != 1 ? "-" + unitsMapInFranch[(int)number % 10] : "-et-" + unitsMapInFranch[(int)number % 10];
             }
             else if (number < 80)
             {
                 amountInWords += tensMapInFranch[(int)number / 10];
-                if (number % 10 != 0)
+                if (number % 10 != 0 && number % 10 >= 1)
                 {
                     number = number % 10 + 10;
                     if (number == 11)
