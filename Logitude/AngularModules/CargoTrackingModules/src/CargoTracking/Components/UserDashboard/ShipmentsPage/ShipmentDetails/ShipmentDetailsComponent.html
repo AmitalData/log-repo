@@ -21,24 +21,24 @@
         <div>
             <div class="title">Customer Ref.  &nbsp;&nbsp;&nbsp;<a (click)="showMoreReferences=!showMoreReferences" style="cursor: pointer;text-decoration: underline;">{{showMoreReferences?'Show Less':'See all'}}</a>  </div>
             <ul *ngIf="showMoreReferences">
-                <li *ngFor="let ref of CustomersReferences, let i = index">{{ref}}</li>
+                <li *ngFor="let ref of ShipmentReferences, let i = index">{{ref}}</li>
             </ul>
             <ul *ngIf="!showMoreReferences">
-                <li *ngFor="let ref of CustomersReferences.slice(0,2), let i = index">{{ref}}</li>
+                <li *ngFor="let ref of ShipmentReferences.slice(0,2), let i = index">{{ref}}</li>
             </ul>
         </div>
 
         <div>
             <div class="title">Customs Broker Ref.</div>
             <ul>
-                <li>5689974987132</li>
+                <li>{{CustomsBrokerReference}}</li>
             </ul>
         </div>
 
         <div>
             <div class="title">Routing</div>
             <ul>
-                <li>US-BOS to USD-NYC</li>
+                <li>{{fromPortCode}} to {{toPortCode}}</li>
             </ul>
         </div>
 
