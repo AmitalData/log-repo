@@ -228,6 +228,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.UNNumber).HasColumnName("UNNumber").HasMaxLength(4).IsUnicode(false);
 
             this.Property(t => t.RiskGroup).HasColumnName("RiskGroup").HasMaxLength(2).IsUnicode(true);
+
+            this.Property(t => t.ExporterRef).HasColumnName("ExporterRef").HasMaxLength(1000).IsUnicode(true);
         }
     }
 }

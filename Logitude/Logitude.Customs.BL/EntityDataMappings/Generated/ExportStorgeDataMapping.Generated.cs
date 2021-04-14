@@ -124,7 +124,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         OwnershipCode, 
 	         ContainerTypeWCO, 
 	         UNNumber, 
-	         RiskGroup,
+	         RiskGroup, 
+	         ExporterRef,
 	      }
 
 
@@ -235,7 +236,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         OwnershipCode, 
 	         ContainerTypeWCO, 
 	         UNNumber, 
-	         RiskGroup,
+	         RiskGroup, 
+	         ExporterRef, 
+	         Hatara, 
+	         CustomStatus,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -752,6 +756,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RiskGroup))
             {
 				entityPOCO.RiskGroup = entityPM.RiskGroup;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExporterRef))
+            {
+				entityPOCO.ExporterRef = entityPM.ExporterRef;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1275,6 +1284,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.RiskGroup = entityPOCO.RiskGroup;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExporterRef))
+            {
+					entityPM.ExporterRef = entityPOCO.ExporterRef;
+            }
+
 		}
 
 		public void PMToOldPM(ExportStorgePM entityPM, ExportStorgePM oldEntityPM)
@@ -1791,6 +1805,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.RiskGroup = entityPM.RiskGroup;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExporterRef))
+            {
+                oldEntityPM.ExporterRef = entityPM.ExporterRef;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(ExportStorgePM entityPM)
@@ -1867,6 +1886,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.RiskGroup)) //T4 find type == nText 
             {
                 entityPM.RiskGroup = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.RiskGroup));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ExporterRef)) //T4 find type == nText 
+            {
+                entityPM.ExporterRef = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ExporterRef));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

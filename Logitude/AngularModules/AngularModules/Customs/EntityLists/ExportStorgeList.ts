@@ -85,6 +85,9 @@ export class ExportStorgeList {
 	VolumeSize: number;
 	LicensePlateNumber: string;
 	ContainerNumber: string;
+	ExporterRef: string;
+	Hatara: string;
+	CustomStatus: string;
 	
 }
  

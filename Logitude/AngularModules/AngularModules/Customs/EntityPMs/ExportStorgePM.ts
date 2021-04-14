@@ -549,6 +549,21 @@ export class ExportStorgePM {
     public set RiskGroup(newValue: string) { if (this.riskGroup != newValue) { this.riskGroup = newValue; this.MarkAsDirty("RiskGroup"); } }
        
 	 
+    private exporterRef: string;
+    public get ExporterRef() { return this.exporterRef; }
+    public set ExporterRef(newValue: string) { if (this.exporterRef != newValue) { this.exporterRef = newValue; this.MarkAsDirty("ExporterRef"); } }
+       
+	 
+    private hatara: string;
+    public get Hatara() { return this.hatara; }
+    public set Hatara(newValue: string) { if (this.hatara != newValue) { this.hatara = newValue; this.MarkAsDirty("Hatara"); } }
+       
+	 
+    private customStatus: string;
+    public get CustomStatus() { return this.customStatus; }
+    public set CustomStatus(newValue: string) { if (this.customStatus != newValue) { this.customStatus = newValue; this.MarkAsDirty("CustomStatus"); } }
+       
+	 
 
     public OldEntityPM: ExportStorgePM;
 		

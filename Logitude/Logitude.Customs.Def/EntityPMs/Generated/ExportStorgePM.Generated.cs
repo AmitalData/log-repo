@@ -2435,6 +2435,75 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string exporterRef ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExporterRef  
+	   {
+	    
+	     get
+		{
+		   return exporterRef;
+		 }
+		 set
+		 {
+		   if(exporterRef != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExporterRef",OldValue=exporterRef,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exporterRef=value;
+		   }
+			
+		 }
+	   }
+	  private string hatara ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Hatara  
+	   {
+	    
+	     get
+		{
+		   return hatara;
+		 }
+		 set
+		 {
+		   if(hatara != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Hatara",OldValue=hatara,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   hatara=value;
+		   }
+			
+		 }
+	   }
+	  private string customStatus ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomStatus  
+	   {
+	    
+	     get
+		{
+		   return customStatus;
+		 }
+		 set
+		 {
+		   if(customStatus != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomStatus",OldValue=customStatus,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customStatus=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -15,73 +15,80 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
-{ 
+{
 
     public partial class ExportStorgeListQueryService
     {
-	    private IQueryable<ExportStorgeList> GetIqueryableList(IQueryable<ExportStorge> iQueryable)
+        private IQueryable<ExportStorgeList> GetIqueryableList(IQueryable<ExportStorge> iQueryable)
         {
-		IQueryable<ExportStorgeList> query = (from a in iQueryable
-                                            select new ExportStorgeList()
-											{
-                     
-					                          Id = a.Id,
-					
-					                          Tenant = a.Tenant,
-					
-					                          SearchFields = a.SearchFields,
-					
-					                          DeclarationId = a.DeclarationId,
-					
-					                          ExportFileNo = a.ExportFileNo,
-					
-					                          OrderNo = a.OrderNo,
-					
-					                          CustomFileNo = a.CustomFileNo,
-					
-					                          StorageNo = a.StorageNo,
-					
-					                          VoyageNo = a.VoyageNo,
-					
-					                          StorageDate = a.StorageDate,
-					
-					                          StorageStatus = a.StorageStatus,
-					
-					                          OperationCode = a.OperationCode,
-					
-					                          SenderCodeID = a.SenderCodeID,
-					
-					                          MessageFromForm = a.MessageFromForm,
-					
-					                          ReplyPhoneNumeric = a.ReplyPhoneNumeric,
-					
-					                          OperatorID = a.OperatorID,
-					
-					                          InformedParty = a.InformedParty,
-					
-					                          DeclarationNumber = a.DeclarationNumber,
-					
-					                          DeclarationsInContainer = a.DeclarationsInContainer,
-					
-					                          ExportManifestNumber = a.ExportManifestNumber,
-					
-					                          ReceivingSite = a.ReceivingSite,
-					
-					                          StuffingSiteType = a.StuffingSiteType,
-					
-					                          LoadingSite = a.LoadingSite,
-											  OpenDate=a.OpenDate,
-					
-		                    	            });
-            return query;
-		}
+            IQueryable<ExportStorgeList> query = (from a in iQueryable
+                                                  select new ExportStorgeList()
+                                                  {
 
-		private IQueryable<ExportStorge> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<ExportStorge> iQueryable, int tenant)
+                                                      Id = a.Id,
+
+                                                      Tenant = a.Tenant,
+
+                                                      SearchFields = a.SearchFields,
+
+                                                      DeclarationId = a.DeclarationId,
+
+                                                      ExportFileNo = a.ExportFileNo,
+
+                                                      OrderNo = a.OrderNo,
+
+                                                      CustomFileNo = a.CustomFileNo,
+
+                                                      StorageNo = a.StorageNo,
+
+                                                      VoyageNo = a.VoyageNo,
+
+                                                      StorageDate = a.StorageDate,
+
+                                                      StorageStatus = a.StorageStatus,
+
+                                                      OperationCode = a.OperationCode,
+
+                                                      SenderCodeID = a.SenderCodeID,
+
+                                                      MessageFromForm = a.MessageFromForm,
+
+                                                      ReplyPhoneNumeric = a.ReplyPhoneNumeric,
+
+                                                      OperatorID = a.OperatorID,
+
+                                                      InformedParty = a.InformedParty,
+
+                                                      DeclarationNumber = a.DeclarationNumber,
+
+                                                      DeclarationsInContainer = a.DeclarationsInContainer,
+
+                                                      ExportManifestNumber = a.ExportManifestNumber,
+
+                                                      ReceivingSite = a.ReceivingSite,
+
+                                                      StuffingSiteType = a.StuffingSiteType,
+
+                                                      LoadingSite = a.LoadingSite,
+
+                                                      OpenDate = a.OpenDate,
+
+                                                      Hatara = "",
+
+                                                      CustomStatus = "",
+
+                                                      ExporterRef = a.ExporterRef,
+
+
+                                                  });
+            return query;
+        }
+
+        private IQueryable<ExportStorge> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<ExportStorge> iQueryable, int tenant)
         {
-			return iQueryable;
-		}
-			}
+            return iQueryable;
+        }
+    }
 
 
 }
-	

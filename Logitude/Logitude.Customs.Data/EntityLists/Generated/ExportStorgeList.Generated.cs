@@ -168,6 +168,12 @@ namespace Logitude.Customs.Data.EntityLists
        public string LicensePlateNumber  { get; set; }
        [DataMember]
        public string ContainerNumber  { get; set; }
+       [DataMember]
+       public string ExporterRef  { get; set; }
+       [DataMember]
+       public string Hatara  { get; set; }
+       [DataMember]
+       public string CustomStatus  { get; set; }
    }
 
 }

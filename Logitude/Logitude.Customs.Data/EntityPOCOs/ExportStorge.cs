@@ -327,6 +327,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual HazardousSubstance HazardousSubstance { get; set; }
         [Column("RiskGroup")]
 	    public string RiskGroup { get; set; }
+        [Column("ExporterRef")]
+	    public string ExporterRef { get; set; }
     }
 }
 	 

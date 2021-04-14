@@ -738,6 +738,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ExporterRef"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="FclLcl"
     ReferencedTable="FclLclCodes"
