@@ -40,7 +40,7 @@ Declare GLAccountCards cursor
 
 	if( @cardDataId is null and @isMultiCurrency=1)
 	begin
-	EXECUTE usp_GetNextTableIdValue @GLAccountCardsDataId OUTPUT,'GLAccountCardsDatas'
+	EXECUTE usp_GetNextTableIdValue @GLAccountCardsDataId OUTPUT,'GLAccountCardsData'
  
 	  insert into GLAccountCardsDatas (Id,PaymentTermId,SalesmanUserId,CollectorUserId,VatNumber,Phone,Tenant,CreditLimit,TotalOpenShipments) values (@GLAccountCardsDataId,@paymentTermId,@SalesmanUserId,@collector,@vatnumber,@phone,@tenant,@creditLimitAmount,@TotalOpenShipments)
 	  update glaccounts set CardsDataId= @GLAccountCardsDataId where Id in (select glaccountid from GLAccountCurrencies where MainGLAccountId=@Id)
@@ -52,7 +52,7 @@ Declare GLAccountCards cursor
    set @singleAccountId = (select Id from GLAccountCurrencies where GLAccountId = @Id)
    if(@singleAccountId is null)
    begin
-   	EXECUTE usp_GetNextTableIdValue @GLAccountCardsDataId OUTPUT,'GLAccountCardsDatas'
+   	EXECUTE usp_GetNextTableIdValue @GLAccountCardsDataId OUTPUT,'GLAccountCardsData'
 
 	  
 	  insert into GLAccountCardsDatas (Id,PaymentTermId,SalesmanUserId,CollectorUserId,VatNumber,Phone,Tenant,CreditLimit,TotalOpenShipments) values (@GLAccountCardsDataId,@paymentTermId,@SalesmanUserId,@collector,@vatnumber,@phone,@tenant,@creditLimitAmount,@TotalOpenShipments)
