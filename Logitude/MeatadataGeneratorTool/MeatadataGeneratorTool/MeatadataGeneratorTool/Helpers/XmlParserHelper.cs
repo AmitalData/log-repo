@@ -855,6 +855,7 @@ namespace MeatadataGeneratorTool.Helpers
             feature.IsOld = GetAttributeBoolValue(fieldNode.Attributes["IsOld"]);
             feature.IsCoreFeature = GetAttributeBoolValue(fieldNode.Attributes["IsCoreFeature"]);
             feature.IsBusinessUnitEnabled = GetAttributeBoolValue(fieldNode.Attributes["IsBusinessUnitEnabled"]);
+            feature.ToggleCode = GetAttributeStringValue(fieldNode.Attributes["ToggleCode"]);
 
             return feature;
         }
