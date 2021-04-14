@@ -110,6 +110,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             forwardingMilstonesFields.Add("FromWarehouseDone");
             forwardingMilstonesFields.Add("FromWarehouseDate");
             forwardingMilstonesFields.Add("FromWarehouseEstimationDate");
+            forwardingMilstonesFields.Add("FromWarehouseNotes");
             forwardingMilstonesFields.Add("DepartureDone");
             forwardingMilstonesFields.Add("DepartureDate");
             forwardingMilstonesFields.Add("DepartureEstimationDate");
