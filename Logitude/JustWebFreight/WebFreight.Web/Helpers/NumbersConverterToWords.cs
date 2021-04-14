@@ -1317,10 +1317,10 @@ namespace WebFreight.Web.Helpers
         private  string HandleIntegerNumberPartInFrenchWords(double number)
         {
             string amountInWords = "";
-            if ((number / 100000000000) > 0 && number >= 100000000000)
+            if ((number / 1000000000000) > 0 && number >= 1000000000000)
             {
                 amountInWords += HandleIntegerNumberPartInFrenchWords(number / 1000000000000) + " billions ";
-                number %= 100000000000;
+                number %= 1000000000000;
             }
             if ((number / 1000000000) > 0 && number >= 1000000000)
             {
@@ -1411,7 +1411,7 @@ namespace WebFreight.Web.Helpers
             string amountInWords = "";
             if (number < 90)
             {
-                if (number == 80)
+                if (number == 80 || (number - 80) < 1)
                     amountInWords += "quatre-vingts";
                 else
                 {
