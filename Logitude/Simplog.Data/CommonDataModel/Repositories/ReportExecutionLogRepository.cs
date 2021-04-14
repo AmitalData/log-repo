@@ -47,6 +47,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public void Add(ReportExecutionLog entity)
         {
+            entity.SearchFields = entity.CreatedByUserId + "," + entity.ReportId + "," + entity.StatusCode + "," + entity.ExecutedByServerName + "," + entity.Tenant;
             context.ReportExecutionLogs.Add(entity);
         }
 
