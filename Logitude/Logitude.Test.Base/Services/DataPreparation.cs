@@ -1,8 +1,11 @@
-﻿using Logitude.Test.Base.Models.Api;
+﻿using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.LocationsPreparation;
 using Logitude.Test.Base.Models.PartnersPreparation;
 using Logitude.Test.Base.Models.Shared;
 using Logitude.Test.Base.Models.UserTenantPreparation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -266,6 +269,10 @@ namespace Logitude.Test.Base.Services
                 {
                     string tenantZeroPartnerId = GetPartnerIdFromTenant(partnerParameters, true);
                     userTenantPartnerId = GetCopiedPartnerIdFromTenantZero(tenantZeroPartnerId);
+                    if(partnerParameters.Code == "AA")//can be set to update all the airlines not only AA
+                    {
+                        UpdateAirline(partnerParameters);
+                    }
                 }
                 else
                 {
@@ -323,6 +330,19 @@ namespace Logitude.Test.Base.Services
             string requestUrl = Urls.PartnersDomainGetCarrierCopyToCurrentTenant(tenantZeroPartnerId);
             ApiResponse<dynamic> response = APICaller.CallGet<dynamic>(requestUrl, UserTenant.Token);
             return response.Data?["Id"];
+        }
+
+        private static void UpdateAirline(PartnerParameters partnerParameters)
+        {
+            string userTenantPartnerId = GetPartnerIdFromTenant(partnerParameters, false);
+            string getRequestUrl = Urls.AirlineGetSingle(userTenantPartnerId);
+            string putRequestUrl = Urls.Airlines;
+
+            ApiResponse<AirlinePM> response = APICaller.CallGet<AirlinePM>(getRequestUrl, UserTenant.Token);
+            AirlinePM airline = response.Data;
+            airline.LimitedLength = false;
+            airline.CheckDigit = false;
+            ApiResponse<AirlinePM> responseUpdate = APICaller.CallPut<AirlinePM>(airline, putRequestUrl, UserTenant.Token);
         }
 
         private static Partner BuildPartner(PartnerParameters partnerParameters)

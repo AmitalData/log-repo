@@ -29,8 +29,9 @@ namespace TestTenantConfiguration
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.CreateTenant = new System.Windows.Forms.Button();
+            this.CreateTenantBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.TenantEmailTextBox = new System.Windows.Forms.TextBox();
@@ -41,22 +42,24 @@ namespace TestTenantConfiguration
             this.ValidateCopy = new System.Windows.Forms.Label();
             this.TenantEmailValidation = new System.Windows.Forms.Label();
             this.TenantCompanyValidation = new System.Windows.Forms.Label();
+            this.Timerlbl = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
-            // CreateTenant
+            // CreateTenantBtn
             // 
-            this.CreateTenant.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.CreateTenantBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CreateTenant.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.CreateTenant.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CreateTenant.Location = new System.Drawing.Point(177, 281);
-            this.CreateTenant.Name = "CreateTenant";
-            this.CreateTenant.Size = new System.Drawing.Size(210, 55);
-            this.CreateTenant.TabIndex = 0;
-            this.CreateTenant.Text = "Create Tenant";
-            this.CreateTenant.UseVisualStyleBackColor = false;
-            this.CreateTenant.Click += new System.EventHandler(this.CreateTenant_Click);
+            this.CreateTenantBtn.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.CreateTenantBtn.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CreateTenantBtn.Location = new System.Drawing.Point(177, 281);
+            this.CreateTenantBtn.Name = "CreateTenantBtn";
+            this.CreateTenantBtn.Size = new System.Drawing.Size(210, 55);
+            this.CreateTenantBtn.TabIndex = 0;
+            this.CreateTenantBtn.Text = "Create Tenant";
+            this.CreateTenantBtn.UseVisualStyleBackColor = false;
+            this.CreateTenantBtn.Click += new System.EventHandler(this.CreateTenantBtn_Click);
             // 
             // label1
             // 
@@ -160,11 +163,27 @@ namespace TestTenantConfiguration
             this.TenantCompanyValidation.Size = new System.Drawing.Size(0, 19);
             this.TenantCompanyValidation.TabIndex = 11;
             // 
+            // Timerlbl
+            // 
+            this.Timerlbl.AutoSize = true;
+            this.Timerlbl.Location = new System.Drawing.Point(407, 317);
+            this.Timerlbl.Name = "Timerlbl";
+            this.Timerlbl.Size = new System.Drawing.Size(24, 19);
+            this.Timerlbl.TabIndex = 12;
+            this.Timerlbl.Text = "...";
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(713, 440);
+            this.Controls.Add(this.Timerlbl);
             this.Controls.Add(this.TenantCompanyValidation);
             this.Controls.Add(this.TenantEmailValidation);
             this.Controls.Add(this.ValidateCopy);
@@ -175,7 +194,7 @@ namespace TestTenantConfiguration
             this.Controls.Add(this.TenantEmailTextBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.CreateTenant);
+            this.Controls.Add(this.CreateTenantBtn);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
@@ -187,7 +206,7 @@ namespace TestTenantConfiguration
 
         #endregion
 
-        private System.Windows.Forms.Button CreateTenant;
+        private System.Windows.Forms.Button CreateTenantBtn;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox TenantEmailTextBox;
@@ -198,6 +217,8 @@ namespace TestTenantConfiguration
         private System.Windows.Forms.Label ValidateCopy;
         private System.Windows.Forms.Label TenantCompanyValidation;
         private System.Windows.Forms.Label TenantEmailValidation;
+        private System.Windows.Forms.Label Timerlbl;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

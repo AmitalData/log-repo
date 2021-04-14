@@ -30,13 +30,28 @@ using System.Drawing;
 using System.Linq;
 using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
+using System.Threading;
+using System.Diagnostics;
+using System.Reflection;
+using Logitude.CRM.BL.EntityPMs;
+using System.Collections.Generic;
+using Logitude.CRM.BL.EntityUpdateServices;
+using Logitude.CRM.Data;
+using Logitude.Server.Tools.Counters;
+using Logitude.CRM.BL.EntityDataMappings;
+using Logitude.CRM.Data.EntityPOCOs;
+using Logitude.CRM.Data.Repsitories;
+using System.Data.Entity.Validation;
+using Logitude.CRM.Data.EntityKeys;
+using Logitude.BL.Helpers;
+using WebFreight.Web.Helpers.APIHelpers;
 
 namespace TestTenantConfiguration
 {
     public partial class Form1 : Form
     {
         private int Tenant;
-        private string AgentId, AddressId;
+        private string AgentId, AddressId, EmployeeId, ContactID;
         private string TenantEmail, TenantCompanyName;
 
         public Form1()
@@ -116,6 +131,7 @@ namespace TestTenantConfiguration
 
         private ContactPM GetContactEmailOnly(string email)
         {
+
             ContactQuery contactQuery = new ContactQuery(this.Tenant);
             ContactPM contactPM = contactQuery.GetSingleByEmailWithoutTenant(email);
             return contactPM;
@@ -127,10 +143,10 @@ namespace TestTenantConfiguration
             {
                 this.TenantEmailValidation.Text = "Please Fill The Email!";
             }
-            //else if (GetContactEmailOnly(TenantEmailTextBox.Text) != null)
-            //{
-            //    this.TenantEmailValidation.Text = "This Email Already Exist!";
-            //}
+            else if (GetContactEmailOnly(TenantEmailTextBox.Text) != null)
+            {
+                this.TenantEmailValidation.Text = "This Email Already Exist!";
+            }
             else if (!((TenantEmailTextBox.Text).Contains("@") && (TenantEmailTextBox.Text).Contains(".com")))
             {
                 this.TenantEmailValidation.Text = "This Email Format is incorrect!";
@@ -140,6 +156,8 @@ namespace TestTenantConfiguration
                 this.TenantEmailValidation.Text = "";
             }
         }
+
+
 
         private void TenantCompanyTextBox_LostFocus(object sender, EventArgs e)
         {
@@ -152,34 +170,81 @@ namespace TestTenantConfiguration
                 this.TenantCompanyValidation.Text = "";
             }
         }
-
         #endregion
 
-        private void CreateTenant_Click(object sender, EventArgs e)
+        private void CreateTenantBtn_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => CreateTenant());
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        Stopwatch globalStopwatch;
+        Label generalLabel;
+        private void CreateTenant()
+        {
+            SetControlPropertyValue(Timerlbl, "Text", "Updating...");
+            SetControlPropertyValue(Timerlbl, "ForeColor", Color.Black);
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            globalStopwatch = stopWatch;
+            generalLabel = this.Timerlbl;
+            timer1.Enabled = true;
+            timer1.Start();
+
+            CreateTenantMethods();
+
+            // for timer
+            globalStopwatch = null;
+            generalLabel = null;
+            timer1.Start();
+
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+
+            SetControlPropertyValue(Timerlbl, "Font", new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold));
+            SetControlPropertyValue(Timerlbl, "ForeColor", Color.Green);
+            SetControlPropertyValue(Timerlbl, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
+        }
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (globalStopwatch != null && generalLabel != null)
+            {
+                TimeSpan elapsedTime = globalStopwatch.Elapsed;
+            }
+        }
+
+        private void CreateTenantMethods()
         {
             CreateSignup();
             CreateAgent();
             CreateAddress();
             CreateRatesTables();
             UpdateTenant();
-
+            AcceptTerms();
             ResetPassword();
 
+            //Maintenance settings
             CreateTranslationsInComputingPartners();
             UpdateQuoteSettings();
             UpdateAMANACTab();
             UpdateTrialStatus();
+            TicketPrepareData();
+
+            //Prepare data
+            //local partners shipment !
         }
 
-        #region Create Tenant 
-
+        #region Create & Update Tenant 
         #region SignUp 
         private void CreateSignup()
         {
             SignUpInfoClass signUpInfo = CreateSignUpInfoInstance();
             String Password = SignUpClass.StartSignUp(signUpInfo);
             this.Tenant = signUpInfo.Tenant;
-            OldPassword.Text = Password;
+            SetControlPropertyValue(OldPassword, "Text", Password);
         }
 
         private SignUpInfoClass CreateSignUpInfoInstance()
@@ -273,23 +338,27 @@ namespace TestTenantConfiguration
         #region Rates
         private void CreateRatesTables()
         {
-            RatesTablePM RatesPM = CreateRatesTablesInstance();
+            RatesTablePM RatesPM = CreateRatesTablesInstance("USD", "NIS", TenantServerConfigration.GetCurrentDateTime(this.Tenant), 3.8);
+            RatesTablePM RatesPM2 = CreateRatesTablesInstance("USD", "EUR", DateHelper.GetDate("2019:6:24:0:0:0"), 4);
+            RatesTablePM RatesPM3 = CreateRatesTablesInstance("USD", "EUR", TenantServerConfigration.GetCurrentDateTime(this.Tenant), 3.8);
             IWebFreightContext MyContext = WebFreightContext.GetContext(RatesPM.Tenant);
             RatesTableService service = new RatesTableService(MyContext, RatesPM.Tenant);
             service.Create(RatesPM);
+            service.Create(RatesPM2);
+            service.Create(RatesPM3);
         }
 
-        private RatesTablePM CreateRatesTablesInstance()
+        private RatesTablePM CreateRatesTablesInstance(string baseCurrency, string foreignCurrency, DateTime? date, double rate)
         {
             RatesTablePM RatesPM = new RatesTablePM
             {
-                BaseCurrencyId = GetCurrencyIdFromTenant("USD"),
-                ForeignCurrencyId = GetCurrencyIdFromTenant("NIS"),
+                BaseCurrencyId = GetCurrencyIdFromTenant(baseCurrency),
+                ForeignCurrencyId = GetCurrencyIdFromTenant(foreignCurrency),
                 LogDateTime = TenantServerConfigration.GetCurrentDateTime(this.Tenant),
-                Rate = 3.8,
+                Rate = rate,
                 Tenant = this.Tenant
             };
-            RatesPM.ValueDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant);
+            RatesPM.ValueDate = date;
             return RatesPM;
         }
 
@@ -304,6 +373,7 @@ namespace TestTenantConfiguration
             return currencyPM.Id;
         }
 
+        ICommonDataContext objectContext;
         private string CreateCurrencyInTenant(string code)
         {
             CurrencyPM CurrencyInTenantZero = GetCurrencyFromTenantZero(code);
@@ -322,6 +392,10 @@ namespace TestTenantConfiguration
             ICommonDataContext MyContext = CommonDataContext.GetContext(currencyPM.Tenant);
             CurrencyService service = new CurrencyService(MyContext, currencyPM.Tenant);
             service.Create(currencyPM);
+            objectContext = CommonDataContext.GetContext(this.Tenant);
+            TableLastUpdateClass.UpdateTableHistory(currencyPM.Tenant, "Currency");
+            objectContext.SaveChanges();
+
             return currencyPM.Id;
         }
 
@@ -333,14 +407,15 @@ namespace TestTenantConfiguration
         }
         #endregion
 
+        #region Update Tenant
         private void UpdateTenant()
         {
             TenantQuery tenantQuery = new TenantQuery(this.Tenant);
             TenantPM tenantPM = tenantQuery.GetSinglePM(this.Tenant);
             tenantPM.AgentId = this.AgentId;
             tenantPM.AddressId = this.AddressId;
-            tenantPM.CurrencyId = GetCurrencyFromTenantZero("USD").Id;
-            tenantPM.ProfitCurrencyId = GetCurrencyFromTenantZero("NIS").Id;
+            tenantPM.CurrencyId = GetCurrencyIdFromTenant("USD");
+            tenantPM.ProfitCurrencyId = GetCurrencyIdFromTenant("NIS");
             tenantPM.ProfitCurrencyRate = 3.8;
             tenantPM.TimeZoneOffset = 3;
             tenantPM.FreightCurrencyId = GetCurrencyIdFromTenant("EUR");
@@ -383,6 +458,28 @@ namespace TestTenantConfiguration
         }
         #endregion
 
+        #region Accept Terms
+        private void AcceptTerms()
+        {
+            TermsofUseSignaturePM entityPM = CreateTermInstance();
+            ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
+            TermsofUseSignatureService service = new TermsofUseSignatureService(MyContext, entityPM.Tenant);
+            service.Create(entityPM);
+        }
+
+        private TermsofUseSignaturePM CreateTermInstance()
+        {
+            TermsofUseSignaturePM entityPM = new TermsofUseSignaturePM()
+            {
+                ContactId = GetContactIdByEmail(this.TenantEmail),
+                SignedDatetime = TenantServerConfigration.GetCurrentDateTime(this.Tenant),
+                Tenant = this.Tenant,
+                TermsofUseVersion = 2
+            };
+            return entityPM;
+        }
+        #endregion
+
         private void ResetPassword()
         {
             string NewPassword = "!Cypress1";
@@ -390,11 +487,13 @@ namespace TestTenantConfiguration
             bool succeeded = passwordChangeHelper.ChangePassword(this.TenantEmail, NewPassword);
             if (succeeded)
             {
-                this.NewPasswordText.Text = NewPassword;
-                Clipboard.SetText(NewPassword);
-                this.ValidateCopy.Text = "New password was successfully copied to clipboard";
+                SetControlPropertyValue(NewPasswordText, "Text", NewPassword);
+                //Clipboard.SetText(NewPassword);
+                SetControlPropertyValue(ValidateCopy, "Text", "New password was successfully changed");
             }
         }
+
+        #endregion
 
         #region Computing Partner Translation
         private void CreateTranslationsInComputingPartners()
@@ -447,7 +546,7 @@ namespace TestTenantConfiguration
         }
         #endregion
 
-        #region Quote Domain
+        #region Quote Settings
         private void UpdateQuoteSettings()
         {
             QuoteSettingPM entityPM = CreateQuoteDomainInstnace();
@@ -537,5 +636,159 @@ namespace TestTenantConfiguration
             entityRepository.SubmitChanges();
         }
         #endregion
+
+        #region Ticket
+        IMapping<EmployeeGroupPM, EmployeeGroup> employeeGroupMapping;
+        IRepository<EmployeeGroup> employeeGroupRepository;
+        IMapping<EmployeeGroupLinePM, EmployeeGroupLine> employeeGroupLineMapping;
+        IRepository<EmployeeGroupLine> employeeGroupLineRepository;
+        IMapping<TicketClassificationPM, TicketClassification> ticketClassificationMapping;
+        IRepository<TicketClassification> ticketClassificationRepository;
+        private ICRMContext MainContext;
+        private Dictionary<string, IContext> additionalContexts;
+
+        private void TicketPrepareData()
+        {
+            TicketConstructor();
+            CreateEmployeeGroup();
+            CreateClassifiactionInstance();
+        }
+
+        private void TicketConstructor()
+        {
+            ICRMContext MyContext = CRMContext.GetContext(this.Tenant);
+            this.MainContext = MyContext as CRMContext;
+            additionalContexts = new Dictionary<string, IContext>();
+            employeeGroupMapping = new EmployeeGroupDataMapping();
+            employeeGroupRepository = new EmployeeGroupRepository(this.MainContext);
+            employeeGroupLineMapping = new EmployeeGroupLineDataMapping();
+            employeeGroupLineRepository = new EmployeeGroupLineRepository(this.MainContext);
+            ticketClassificationMapping = new TicketClassificationDataMapping();
+            ticketClassificationRepository = new TicketClassificationRepository(this.MainContext);
+            this.ContactID = GetContactIdByEmail(this.TenantEmail);
+        }
+
+        private void CreateEmployeeGroup()
+        {
+            EmployeeGroupLinePM employeeGroupLine = new EmployeeGroupLinePM()
+            {
+                Tenant = this.Tenant,
+                UserId = this.ContactID,
+                IsDefaultOwner = true,
+                ChangeSetOp = ChangeSetOperation.Insert
+            };
+            List<EmployeeGroupLinePM> employeeGroupLineList = new List<EmployeeGroupLinePM>();
+            employeeGroupLineList.Add(employeeGroupLine);
+            EmployeeGroupPM employeeGroupPM = new EmployeeGroupPM()
+            {
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant),
+                CreatedByUserId = this.ContactID,
+                ManagerUserId = this.ContactID,
+                Name = "Support Group",
+                Tenant = this.Tenant,
+                UpdateDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant),
+                UpdatedByUserId = this.ContactID,
+                EmployeeGroupLines = employeeGroupLineList
+            };
+
+            employeeGroupPM.Id = this.EmployeeId = IdCounter.GetNumber("EmployeeGroup", employeeGroupPM.Tenant);
+            employeeGroupLine.Id = IdCounter.GetNumber("EmployeeGroupLine", employeeGroupLine.Tenant);
+            employeeGroupPM.EmployeeGroupLines.First().EmployeeGroupId = employeeGroupPM.Id;
+
+
+            EmployeeGroup employeeGroupPoco = new EmployeeGroup();
+            employeeGroupMapping.CustomPMToPOCO(employeeGroupPM, employeeGroupPoco);
+            employeeGroupMapping.PMToPOCO(employeeGroupPM, employeeGroupPoco);
+            employeeGroupRepository.Add(employeeGroupPoco);
+
+            EmployeeGroupLine employeeGroupLinePOCO = new EmployeeGroupLine();
+            employeeGroupLineMapping.CustomPMToPOCO(employeeGroupLine, employeeGroupLinePOCO);
+            employeeGroupLineMapping.PMToPOCO(employeeGroupLine, employeeGroupLinePOCO);
+            employeeGroupLineRepository.Add(employeeGroupLinePOCO);
+
+            SubmitChanges();
+        }
+
+        private void CreateClassifiactionInstance()
+        {
+            TicketClassificationPM entityPM = new TicketClassificationPM()
+            {
+                Tenant = this.Tenant,
+                Id = this.Tenant.ToString(),
+                Name = "test",
+                SearchFields = "test",
+                Inactive = false,
+                EmployeeGroupId = this.EmployeeId,
+                ManagerUserId = this.ContactID,
+                EscalationNotify = this.TenantEmail,
+                DefaultSeverityId = GetDefaultSeverityId("Medium")
+            };
+
+            EntityKeyFields entityKeys = GetKeys(entityPM);
+            TicketClassification EntityPOCO = ticketClassificationRepository.GetSingle(entityKeys);
+            TicketClassificationPM OldEntityPM = new TicketClassificationPM();
+            TicketClassificationPM ChangeTrackingEntityPM = new TicketClassificationPM();
+            ticketClassificationMapping.POCOToPM(OldEntityPM, EntityPOCO);
+            ticketClassificationMapping.POCOToPM(ChangeTrackingEntityPM, EntityPOCO);
+            ticketClassificationMapping.PMToOldPM(entityPM, ChangeTrackingEntityPM);
+
+            ticketClassificationMapping.CustomPMToPOCO(entityPM, EntityPOCO);
+            ticketClassificationMapping.PMToPOCO(entityPM, EntityPOCO);
+            ticketClassificationRepository.Update(EntityPOCO);
+            SubmitChanges();
+        }
+
+        protected virtual void SubmitChanges()
+        {
+            try
+            {
+                MainContext.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                throw;
+            }
+            foreach (IContext context in additionalContexts.Values)
+            {
+                context.SaveChanges();
+            }
+
+        }
+
+        private EntityKeyFields GetKeys(TicketClassificationPM entityPM)
+        {
+            TicketClassificationKeys entityKeys = new TicketClassificationKeys() { Id = entityPM.Id };
+            return entityKeys;
+        }
+
+        private string GetDefaultSeverityId(string name)
+        {
+            TicketSeverityRepository ticketSeverityRepository = new TicketSeverityRepository(this.Tenant);
+            TicketSeverity ticketSeverity = ticketSeverityRepository.GetSingleByName(name, this.Tenant);
+            return ticketSeverity.Id;
+        }
+        #endregion
+
+        delegate void SetControlValueCallback(Control oControl, string propName, object propValue);
+        private void SetControlPropertyValue(Control oControl, string propName, object propValue)
+        {
+            if (oControl.InvokeRequired)
+            {
+                SetControlValueCallback d = new SetControlValueCallback(SetControlPropertyValue);
+                oControl.Invoke(d, new object[] { oControl, propName, propValue });
+            }
+            else
+            {
+                Type t = oControl.GetType();
+                PropertyInfo[] props = t.GetProperties();
+                foreach (PropertyInfo p in props)
+                {
+                    if (p.Name.ToUpper() == propName.ToUpper())
+                    {
+                        p.SetValue(oControl, propValue, null);
+                    }
+                }
+            }
+        }
     }
 }
