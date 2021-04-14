@@ -1205,7 +1205,7 @@ namespace WebFreight.Web.Helpers
             text = FixSpaces(text);
             return (text+ " בלבד");
         }
-        public string ConvertNumbersToFrenchNewVersion(double number,string localCurrencyName, string localCurrencyCode)
+        public string ConvertNumbersToFrenchNewVersion(double number,string localCurrencyName)
         {
             string currencyNameOfDecimalPart = "centimes";
             return HandleUnsignedNumberInFrenchWords(number,localCurrencyName, currencyNameOfDecimalPart);
@@ -1289,13 +1289,13 @@ namespace WebFreight.Web.Helpers
         private  string HandleSignedFullNumberInFrenchWords(double number, string currencyName, string currencyNameOfDecimalPart)
         {
             string amountInWords = "";
-            double decimalDigits = number - (int)number;
-            double intgerNumberWithoutDecimals = (int)number;
-            if (decimalDigits != 0)
+            string numberAsString = number.ToString();
+            double valueOfDecimalPartOfTheNumber = 0, intgerNumberWithoutDecimals = 0;
+            if (numberAsString.Contains('.'))
             {
-                string numberAsString = number.ToString();
                 string decimalPartOfTheNumber = numberAsString.Split('.')[1];
-                double valueOfDecimalPartOfTheNumber = Convert.ToDouble(decimalPartOfTheNumber);
+                valueOfDecimalPartOfTheNumber = Convert.ToDouble(decimalPartOfTheNumber);
+                intgerNumberWithoutDecimals = Convert.ToDouble(numberAsString.Split('.')[0]);
                 bool checkIfDecimalDigitIsNotAnyTensValue = valueOfDecimalPartOfTheNumber >= 1 && valueOfDecimalPartOfTheNumber <= 9 && !decimalPartOfTheNumber.StartsWith("0");
                 valueOfDecimalPartOfTheNumber = checkIfDecimalDigitIsNotAnyTensValue ? valueOfDecimalPartOfTheNumber * 10 : valueOfDecimalPartOfTheNumber;
                 amountInWords += HandleIntegerNumberPartInFrenchWords(intgerNumberWithoutDecimals);
@@ -1317,6 +1317,11 @@ namespace WebFreight.Web.Helpers
         private  string HandleIntegerNumberPartInFrenchWords(double number)
         {
             string amountInWords = "";
+            if ((number / 100000000000) > 0 && number >= 100000000000)
+            {
+                amountInWords += HandleIntegerNumberPartInFrenchWords(number / 1000000000000) + " billions ";
+                number %= 100000000000;
+            }
             if ((number / 1000000000) > 0 && number >= 1000000000)
             {
                 amountInWords += HandleIntegerNumberPartInFrenchWords(number / 1000000000) + " milliard ";
