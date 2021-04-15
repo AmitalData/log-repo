@@ -5319,6 +5319,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   
 	   
 	   
+	   
 	   	   GLAccountTotalDateTypeUpdateClass.FillGLAccountTotalDateType();
 	
 	   	   GLAccountTypeUpdateClass.FillGLAccountType();

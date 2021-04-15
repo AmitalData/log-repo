@@ -12,6 +12,7 @@ import { AccountingPeriodList } from '../../../../Accounting/EntityLists/Account
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 declare var window: any;
 
@@ -35,12 +36,12 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public ChequesCounter: number;
     public TotalAmount: number;
-    
+   public isLTR: boolean;
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-       
+        this.isLTR = (ObjectsLocator.GlobalSetting.LayoutDirection == "ltr");
     }
    
     SetWindowArgs(args: any) {

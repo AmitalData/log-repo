@@ -549,7 +549,7 @@
                                                 </td>
                                             </tr>
 
-                                            <tr class="customtrclass">
+                                            <tr>
                                                 <td style="width:150px;">
                                                     <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'"
                                                                 [DigitsAfterPoint]="2" [Text]="AmountInPaymentCurrency"
@@ -626,15 +626,24 @@
                                                         {{ARPaymentChequeStatus}}
                                                     </div>
                                                 </td>
-
-                                                <td *ngIf="isFullAccounting && AccountingPaymentMethodCode == 'CH'">
-                                                    <div *ngIf="EntityPM.StatusCode !='AD'">
-                                                        <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddChequesButtonClicked()"></IconButton>
-                                                    </div>
-                                                    <div *ngIf="isMultipleCheques && EntityPM.StatusCode=='AD'">
-                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="DisplayChequesButtonClicked()"></IconButton>
-                                                    </div>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td *ngIf="isFullAccounting && AccountingPaymentMethodCode == 'CH'" style="width:10px">
+                                                                <div *ngIf="EntityPM.StatusCode !='AD'">
+                                                                    <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddChequesButtonClicked()"></IconButton>
+                                                                </div>
+                                                                <div *ngIf="isMultipleCheques && EntityPM.StatusCode=='AD'">
+                                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="DisplayChequesButtonClicked()"></IconButton>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </td>
+                                               
+                                                <td></td>
                                             </tr>
                                         </table>
                                     </td>

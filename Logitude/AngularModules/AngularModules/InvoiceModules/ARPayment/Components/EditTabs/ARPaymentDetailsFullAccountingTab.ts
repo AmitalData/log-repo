@@ -2103,7 +2103,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         logWindow.WindowClosed.subscribe(($event: any) => this.UpdateChequesSection($event));
         logWindow.Show('./InvoiceModules/ARPayment/Components/Other/ARPaymentMultiChequesComponent');
     }
-    UpdateChequesSection(event:any) {
+    UpdateChequesSection(event: any) {
+        this.isMultipleCheques = false;
         if (event == 'ok') {
             if (this.EntityPM.ARPaymentChequeReplicas.length > 1) {
                 this.isMultipleCheques = true;
