@@ -3346,7 +3346,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             var computedAmount = entityPM.AWBChargeAmount;
             var totaAmount = entityPM.AWBFreightAmountPrepaid + entityPM.AWBFreightAmountCollect;
 
-            var recompute = true;
+            var recomputeAmounts = true;
             var isPrepaidHasAmount = (entityPM.AWBFreightAmountPrepaid != 0 && entityPM.AWBFreightAmountPrepaid != null);
             var isCollectHasAmount = (entityPM.AWBFreightAmountCollect != 0 && entityPM.AWBFreightAmountCollect != null);
 
@@ -3354,23 +3354,28 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 if (isPrepaidHasAmount && isCollectHasAmount && (computedAmount == totaAmount))
                 {
-                    recompute = false;
+                    recomputeAmounts = false;
                 }
             }
 
-            if (recompute)
+            if (recomputeAmounts)
             {
-                if (entityPM.FreightPrepaidCollectId == "P")
-                {
-                    entityPM.AWBFreightAmountCollect = 0;
-                    entityPM.AWBFreightAmountPrepaid = computedAmount == null ? 0 : computedAmount;
-                }
+                RecomputeAWBFrieghtAmountCollectAndPrepaid(computedAmount);
+            }
+        }
+        public void RecomputeAWBFrieghtAmountCollectAndPrepaid(double? computedAmount)
+        {
 
-                else if (entityPM.FreightPrepaidCollectId == "C")
-                {
-                    entityPM.AWBFreightAmountPrepaid = 0;
-                    entityPM.AWBFreightAmountCollect = computedAmount == null ? 0 : computedAmount;
-                }
+            if (entityPM.FreightPrepaidCollectId == "P")
+            {
+                entityPM.AWBFreightAmountCollect = 0;
+                entityPM.AWBFreightAmountPrepaid = computedAmount == null ? 0 : computedAmount;
+            }
+
+            else if (entityPM.FreightPrepaidCollectId == "C")
+            {
+                entityPM.AWBFreightAmountPrepaid = 0;
+                entityPM.AWBFreightAmountCollect = computedAmount == null ? 0 : computedAmount;
             }
         }
 
