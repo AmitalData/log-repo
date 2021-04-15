@@ -104,6 +104,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly DeleteButton='button[id^=Delete]'
     public static readonly Anchor="a"
     public static readonly LogitudeIconButton = ".LogitudeIconButton"
+    public static readonly LoggedUser="#LoggedUser"
     //#endregion
 
     public static readonly FirstElementInList = 'ul > li';
