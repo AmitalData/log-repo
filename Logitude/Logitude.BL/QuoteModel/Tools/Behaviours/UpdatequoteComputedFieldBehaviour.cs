@@ -101,6 +101,10 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
                     quoteComputedField.PickupFrom = CalculatePickupFromUsingFromAddressCountryAndCity();
                 }
             }
+            else
+            {
+                quoteComputedField.PickupFrom = null;
+            }
         }
 
         private void MapDeliveryToField()
@@ -115,6 +119,10 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
                 {
                     quoteComputedField.DeliveryTo = CalculateDeliveryToUsingToAddressCountryAndCity();
                 }
+            }
+            else
+            {
+                quoteComputedField.DeliveryTo = null;
             }
         }
 
