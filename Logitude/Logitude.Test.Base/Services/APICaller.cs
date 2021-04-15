@@ -1,19 +1,20 @@
-﻿using Logitude.Test.Base.Models;
+﻿using Logitude.Test.Base.Models.Api;
+using Logitude.Test.Base.Models.Infrastructure;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace Logitude.Test.Base.Services
 {
     public class APICaller
     {
-        public static ApiResponse<T> CallPost<T>(object requestBody, string url, string token)
+        public static ApiResponse<T> CallPost<T>(object requestBody, string url, string token, int retries = 0)
         {
             ApiRequestParameters request = new ApiRequestParameters()
             {
@@ -23,10 +24,10 @@ namespace Logitude.Test.Base.Services
                 Url = url
             };
 
-            return CallAPIProcess<T>(request);
+            return CallAPIProcess<T>(request, retries);
         }
 
-        public static ApiResponse<T> CallPut<T>(object requestBody, string url, string token)
+        public static ApiResponse<T> CallPut<T>(object requestBody, string url, string token, int retries = 0)
         {
             ApiRequestParameters request = new ApiRequestParameters()
             {
@@ -36,10 +37,10 @@ namespace Logitude.Test.Base.Services
                 Url = url
             };
 
-            return CallAPIProcess<T>(request);
+            return CallAPIProcess<T>(request, retries);
         }
 
-        public static ApiResponse<T> CallGet<T>(string url, string token)
+        public static ApiResponse<T> CallGet<T>(string url, string token, int retries = 0)
         {
             ApiRequestParameters request = new ApiRequestParameters()
             {
@@ -48,7 +49,7 @@ namespace Logitude.Test.Base.Services
                 Url = url
             };
 
-            return CallAPIProcess<T>(request);
+            return CallAPIProcess<T>(request, retries);
         }
 
         public static ApiResponse<T> CallGetByFilters<T>(string url, string token, ApiQueryFilters apiQueryFilters)
@@ -64,8 +65,10 @@ namespace Logitude.Test.Base.Services
         }
 
         
-        private static ApiResponse<T> CallAPIProcess<T>(ApiRequestParameters requestParameters)
+        private static ApiResponse<T> CallAPIProcess<T>(ApiRequestParameters requestParameters, int retries = 0)
         {
+            var pauseBetweenFailures = TimeSpan.FromSeconds(2);
+
             string restClientUrl = GetRequestUrl(requestParameters.Url);
             RestClient restClient = new RestClient(restClientUrl);
             RestRequest restRequest = new RestRequest(requestParameters.Method) { RequestFormat = DataFormat.Json };
@@ -80,18 +83,40 @@ namespace Logitude.Test.Base.Services
                 restRequest.AddJsonBody(JsonConvert.SerializeObject(requestParameters.RequestBody));
             }
 
-            IRestResponse<T> restResponse = restClient.Execute<T>(restRequest);
-            response.StatusCode = restResponse.StatusCode;
+            var attempts = 0;
+            IRestResponse<T> restResponse;
+            var exceptions = new List<Exception>();
+            do
+            {
+                try
+                {
+                    restResponse = restClient.Execute<T>(restRequest);
+                    response.StatusCode = restResponse.StatusCode;
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        response.Data = restResponse.Data;
+                        break;
+                    }
+                    else
+                    {
+                        JObject jObject = JObject.Parse(restResponse.Content);
+                        response.ErrorMessage = jObject["ErrorMessage"].ToString().Replace("\r", string.Empty).Replace("\n", string.Empty).Trim();
+                        throw new Exception(response.ErrorMessage);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    exceptions.Add(ex);
+                    if (attempts == retries)
+                        throw new AggregateException(exceptions);
 
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                response.Data = restResponse.Data;
-            }
-            else
-            {
-                JObject jObject = JObject.Parse(restResponse.Content);
-                response.ErrorMessage = jObject["ErrorMessage"].ToString().Replace("\r", string.Empty).Replace("\n", string.Empty).Trim();
-            }
+                    attempts++;
+                    Task.Delay(pauseBetweenFailures).Wait();
+                    pauseBetweenFailures = TimeSpan.FromTicks(pauseBetweenFailures.Add(pauseBetweenFailures).Ticks * (attempts + 1));
+                    if (pauseBetweenFailures.CompareTo(TimeSpan.FromMinutes(5)) > 0)
+                        pauseBetweenFailures = TimeSpan.FromMinutes(5);
+                }
+            } while (true);
 
             return response;
         }
@@ -127,6 +152,7 @@ namespace Logitude.Test.Base.Services
             {
                 JObject jObject = JObject.Parse(restResponse.Content);
                 response.ErrorMessage = jObject["ErrorMessage"].ToString().Replace("\r", string.Empty).Replace("\n", string.Empty).Trim();
+                throw new Exception(response.ErrorMessage);
             }
 
             return response;
@@ -151,7 +177,7 @@ namespace Logitude.Test.Base.Services
                 IDictionary<string, string> apiQueryFiltersDictionary = JsonConvert.DeserializeObject<IDictionary<string, string>>(apiQueryFiltersJson);
                 IEnumerable<string> apiQueryFiltersQueryStringList = apiQueryFiltersDictionary.Where(x => !String.IsNullOrEmpty(x.Value))
                                                                                               .Select(x => HttpUtility.UrlEncode(x.Key) + "=" + HttpUtility.UrlEncode(x.Value));
-                string apiQueryFiltersQueryString = "?ForceCacheRefresh=false&" + string.Join("&", apiQueryFiltersQueryStringList);
+                string apiQueryFiltersQueryString = "?" + string.Join("&", apiQueryFiltersQueryStringList);
                 return apiQueryFiltersQueryString;
             }
             catch (Exception)

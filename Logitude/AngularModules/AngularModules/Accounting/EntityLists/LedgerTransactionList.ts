@@ -73,6 +73,7 @@ export class LedgerTransactionList {
 	CumulativeForeignAmountSign: string;
 	CalculatedLocalAmount: number;
 	CalculatedForeignAmount: number;
+	AccountDisplayNumber: string;
 	
 }
  

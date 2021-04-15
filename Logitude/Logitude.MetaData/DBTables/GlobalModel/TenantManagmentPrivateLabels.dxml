@@ -5,35 +5,6 @@
   DBType="Global"
   Module="Infrastructure">
   <Column
-    Name="Id"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="PrivateLabelName"
-    Type="nvarchar"
-    Size="60">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="PrivateLabelShortName"
-    Type="varchar"
-    Size="60">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="PrivateLabelUrl"
-    Type="varchar"
-    Size="100">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="MainLogo"
     Type="varbinary"
     Size="-1">
@@ -46,6 +17,42 @@
     Size="-1">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="HybridPartnerId"
+    Type="nvarchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PrivateLabelShortName"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PrivateLabelName"
+    Type="nvarchar"
+    Size="60">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PrivateLabelUrl"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Column
     Name="ContactUsEmail"
@@ -61,9 +68,8 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="HybridPartnerId"
-    Type="nvarchar"
-    Size="15">
+    Name="InActive"
+    Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
@@ -75,15 +81,70 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="InActive"
-    Type="bit">
+    Name="Tenant"
+    Type="int"
+    DefaultValue="0">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="Tenant"
-    Type="int"
-    DefaultValue="0">
+    Name="BackgroundImageId"
+    OldNames="BackgroundImage"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LoginImageId"
+    OldNames="MainImageId,MainImage"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PrivateLabelDomain"
+    Type="varchar"
+    Size="100"
+    DefaultValue="'dsv.co.il'">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="MainColor"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LoginProgressImageId"
+    OldNames="LoginProgressImage"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ForgetPasswordImageId"
+    OldNames="ForgetPasswordImage"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SecondaryColor"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HasLogboxAccess"
+    OldNames="CustomPrivateLabel"
+    Type="bit">
     <Constraints
       Nullable="false" />
   </Column>

@@ -1052,7 +1052,7 @@ namespace Logitude.BL.Helpers
 
                                 if (setting.TotalPerContainersCurrencyType == "LOCAL")
                                 {
-                                    value = value * (double)totalPerContainersLists[0].SaleExchangeRate;
+                                    value = value * (double)quotePM.ExchangeRate;
                                 }
                                 totals.Add(new TotalPerContainerClass() { Value = value, FieldCode = totalPerContainersLists[0].FieldCode });
                                 HtmlTemplate.Append(BuildTableColumn(value.ToString("N"), totalPerContainersTableLines, totalPerContainersTableDesign, "Field", null, true));
@@ -3657,7 +3657,7 @@ namespace Logitude.BL.Helpers
 
         private static string GetChargeCurrencyCode(QuotePM quotePM, QuoteSaleChargePM chargePM)
         {
-            return (quotePM.IsSaleCurrencySameAsCost ? chargePM.CurrencyCode : quotePM.SaleCurrencyCode);
+            return (quotePM.IsSaleCurrencySameAsCost || quotePM.IsMultiCurrency) ? chargePM.CurrencyCode : quotePM.SaleCurrencyCode;
         }
 
         private static string GetFormatDisplayAmountWithCurrencyCode(string saleTotalAmount, string currencyCode, QuoteTemplateSettingPM setting)
@@ -3700,37 +3700,65 @@ namespace Logitude.BL.Helpers
         #region TotalPerContainer
         private void BuildTotalPerContainerClassLists(QuotePM quotePM, List<QuoteSaleChargePM> quoteSaleCharges, StringBuilder HtmlTemplate, QuoteTemplateSettingPM setting, List<TotalPerContainerClass> totalPerContainerClassLists)
         {
-            foreach (QuoteSaleChargePM chargePM in quoteSaleCharges)
+            QuoteSaleChargePM freightQuoteSaleChargePM = quoteSaleCharges.Where(d => d.ChargesGroupCode == "FRT").FirstOrDefault();
+            foreach (QuoteSaleChargePM quoteSaleChargePM in quoteSaleCharges)
             {
+
                 if (quotePM.PackageType1Id != null)
                 {
-                    //SaleContainerType1UnitPrice
-                    ComputedTotalPerContainer(totalPerContainerClassLists, quotePM.PackageType1Id, chargePM.SaleUnitPrice1InSaleCurrency, quotePM.PackageType1Quantity, "PackageType1Id", chargePM);
+                    double? saleUnitPrice1InSaleCurrency = GetSaleUnitPriceInSaleCurrency("SaleUnitPrice1InSaleCurrency", quoteSaleChargePM, freightQuoteSaleChargePM);
+                    ComputedTotalPerContainer(totalPerContainerClassLists, quotePM.PackageType1Id, saleUnitPrice1InSaleCurrency, quotePM.PackageType1Quantity, "PackageType1Id", quoteSaleChargePM);
                 }
 
                 if (quotePM.PackageType2Id != null)
                 {
+                    double? saleUnitPrice2InSaleCurrency = GetSaleUnitPriceInSaleCurrency("SaleUnitPrice2InSaleCurrency", quoteSaleChargePM, freightQuoteSaleChargePM);
 
-                    ComputedTotalPerContainer(totalPerContainerClassLists, quotePM.PackageType2Id, chargePM.SaleUnitPrice2InSaleCurrency, quotePM.PackageType2Quantity, "PackageType2Id", chargePM);
+                    ComputedTotalPerContainer(totalPerContainerClassLists, quotePM.PackageType2Id, saleUnitPrice2InSaleCurrency, quotePM.PackageType2Quantity, "PackageType2Id", quoteSaleChargePM);
                 }
 
                 if (quotePM.PackageType3Id != null)
                 {
-                    ComputedTotalPerContainer(totalPerContainerClassLists, quotePM.PackageType3Id, chargePM.SaleUnitPrice3InSaleCurrency, quotePM.PackageType3Quantity, "PackageType3Id", chargePM);
+                    double? saleUnitPrice3InSaleCurrency = GetSaleUnitPriceInSaleCurrency("SaleUnitPrice3InSaleCurrency", quoteSaleChargePM, freightQuoteSaleChargePM);
+
+                    ComputedTotalPerContainer(totalPerContainerClassLists, quotePM.PackageType3Id, saleUnitPrice3InSaleCurrency, quotePM.PackageType3Quantity, "PackageType3Id", quoteSaleChargePM);
                 }
 
                 if (quotePM.PackageType4Id != null)
                 {
-                    ComputedTotalPerContainer(totalPerContainerClassLists, quotePM.PackageType4Id, chargePM.SaleUnitPrice4InSaleCurrency, quotePM.PackageType4Quantity, "PackageType4Id", chargePM);
+                    double? saleUnitPrice4InSaleCurrency = GetSaleUnitPriceInSaleCurrency("SaleUnitPrice4InSaleCurrency", quoteSaleChargePM, freightQuoteSaleChargePM);
+
+                    ComputedTotalPerContainer(totalPerContainerClassLists, quotePM.PackageType4Id, saleUnitPrice4InSaleCurrency, quotePM.PackageType4Quantity, "PackageType4Id", quoteSaleChargePM);
                 }
 
                 if (quotePM.PackageType5Id != null)
                 {
-                    ComputedTotalPerContainer(totalPerContainerClassLists, quotePM.PackageType5Id, chargePM.SaleUnitPrice5InSaleCurrency, quotePM.PackageType5Quantity, "PackageType5Id", chargePM);
+                    double? saleUnitPrice5InSaleCurrency = GetSaleUnitPriceInSaleCurrency("SaleUnitPrice5InSaleCurrency", quoteSaleChargePM, freightQuoteSaleChargePM);
+
+                    ComputedTotalPerContainer(totalPerContainerClassLists, quotePM.PackageType5Id, saleUnitPrice5InSaleCurrency, quotePM.PackageType5Quantity, "PackageType5Id", quoteSaleChargePM);
                 }
 
             }
         }
+
+        private double? GetSaleUnitPriceInSaleCurrency(string fieldName, QuoteSaleChargePM quoteSaleChargePM, QuoteSaleChargePM fRTQuoteSaleChargePM)
+        {
+            double? result =0;
+            var entityPM = quoteSaleChargePM.SaleMeasurementCode != "PRFR" ? quoteSaleChargePM : fRTQuoteSaleChargePM;
+            if (entityPM != null)
+            {
+                PropertyInfo propInfo = entityPM.GetType().GetProperty(fieldName);
+                object propertValue = propInfo.GetValue(entityPM);
+                if (propertValue != null && !string.IsNullOrEmpty(propertValue.ToString()))
+                {
+                    result = double.Parse(propertValue.ToString());
+                }
+            }
+
+            return result;
+
+        }
+
         private void ComputedTotalPerContainer(List<TotalPerContainerClass> totalPerContainerClassLists, string PackageTypeId, double? saleUnitPriceInSaleCurrency, int? packageTypeQuantity, string fieldCode, QuoteSaleChargePM chargePM)
         {
             double value = 0;
@@ -3761,6 +3789,10 @@ namespace Logitude.BL.Helpers
                 value = (double)chargePM.SaleUnitPriceInSaleCurrency * (double)packageTypeQuantity * packageType.TEU;
                 orginalValue = (double)packageTypeQuantity * (double)orginalValue * packageType.TEU; 
             }
+            else if (chargePM.SaleMeasurementCode == "PRFR")
+            {
+                value = GetTotalPerContainerForPercentofFreight(saleUnitPriceInSaleCurrency, packageTypeQuantity, chargePM);
+            }
             else
             {
                 if (chargePM.SaleAmountInSaleCurrency != null)
@@ -3771,6 +3803,12 @@ namespace Logitude.BL.Helpers
             AddPerContainerClassToLists(totalPerContainerClassLists, value, name, fieldCode, chargePM, (double)orginalValue);
 
         }
+
+        private static double GetTotalPerContainerForPercentofFreight(double? saleUnitPriceInSaleCurrency, int? packageTypeQuantity, QuoteSaleChargePM chargePM)
+        {
+            return (double)((saleUnitPriceInSaleCurrency * (double)packageTypeQuantity) * chargePM.SaleUnitPrice) / 100;
+        }
+
         private static void AddPerContainerClassToLists(List<TotalPerContainerClass> totalPerContainerClassLists, double value, string name, string fieldCode, QuoteSaleChargePM chargePM , double orginalValue)
         {
             if (totalPerContainerClassLists != null)

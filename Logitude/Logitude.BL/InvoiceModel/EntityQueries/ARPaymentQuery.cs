@@ -318,6 +318,24 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return glaAccount;
         }
 
+        public List<ARPaymentPM> GetARpaymentsForCard(string billtoId, int tenant)
+        {
+            List<ARPaymentPM> payments= (from a in repository.context.ARPayments where
+                   a.BillToId == billtoId && a.Tenant == tenant
+                   select new ARPaymentPM()
+                   {
+                       Id = a.Id,
+                       Tenant = a.Tenant,
+                   
+                   }
+                   
+                   ).ToList();
+            foreach(ARPaymentPM paymentPM in payments)
+            {
+                paymentPM.ARPaymentChequeReplicas = GetARPaymentChequeReplicasByPaymentId(paymentPM.Id, paymentPM.Tenant);
+            }
+            return payments;
+        } 
 
 
         public ARPayment GetSingleARPayment(string id, int tenant)
@@ -876,6 +894,12 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             ARPaymentRepository aRPaymentRepository = new ARPaymentRepository(tenant);
             string arPaymentNo = aRPaymentRepository.GetARPaymentNumber(arPaymentId, tenant);
             return arPaymentNo;
+        }
+
+        public User getUserByARPayment(ARPayment aRPayment)
+        {
+            User createByUser = repository.getUserByARPayment(aRPayment);
+            return createByUser;
         }
     }
 }

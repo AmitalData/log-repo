@@ -1,780 +1,16 @@
 {
-	"id": "b7a75818-7fae-43b4-bc93-36e940f9dbf0",
-	"name": "FullAccountingTesting",
-	"description": null,
-	"auth": null,
-	"events": null,
-	"variables": [],
-	"order": [
-		"93bbcd4e-0d2e-4036-9581-c6c1003b7c67",
-		"2d17c314-63d3-45ad-b0dd-23147d0ff046",
-		"cdfab843-76f6-4d69-a213-0f1968a27aac",
-		"71bc2ce3-6f1c-4f3e-99a4-30330ea3d22e",
-		"2e8fbf23-57e5-4599-8bc6-eea594187a1f",
-		"30f9c94e-8aa7-4170-b69d-762177bc2ca7",
-		"f68df0fd-4399-4f2c-afa7-6d06b965a3be",
-		"9d57f4d8-2981-416f-9c9a-960948269f24",
-		"9b680e44-2e10-4c46-8c4b-3f56ce09cda5",
-		"ee1e2a3a-e995-4486-bc8b-e79162bbf969",
-		"1005e286-768a-4ec5-8fcf-2b1e1f925dbd",
-		"46607709-60f6-4b0f-a4ee-37345ec2cfdb",
-		"bbcd029b-84ec-4675-a508-e51f891974db",
-		"12f5d59b-8bc9-4567-b783-982ec7689a90",
-		"c64139e7-e1c8-4844-83e1-befd09074579",
-		"ed989167-46b9-4605-bbe1-78cc6b1b296b",
-		"e133217c-b6f8-4ecf-ba05-4ae155d8b53d",
-		"e67c0524-2937-42d5-bda4-829fa29cd966",
-		"027b2f4b-7e48-4d5b-9d13-91977a70545d",
-		"73e3d83f-ed15-42c3-b8c5-fc7fd1ae29f4"
-	],
-	"folders_order": [],
-	"protocolProfileBehavior": {},
-	"folders": [],
-	"requests": [
+	"info": {
+		"_postman_id": "1aa720b3-85c4-47a8-8f87-08ae6f620b65",
+		"name": "FullAccountingTesting",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
 		{
-			"id": "027b2f4b-7e48-4d5b-9d13-91977a70545d",
-			"name": "GETDeposit",
-			"url": "{{URL}}/api/bankdepositviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{DepositNumber}}&GetCount=true&PageIndex=0&PageSize=22&SortBy=DepositNumber&SortDirection=Desending",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "authority",
-					"value": "test.logitudeworld.com"
-				},
-				{
-					"key": "accept",
-					"value": "application/json, text/plain, */*"
-				},
-				{
-					"key": "user-agent",
-					"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}"
-				},
-				{
-					"key": "sec-fetch-site",
-					"value": "same-origin"
-				},
-				{
-					"key": "sec-fetch-mode",
-					"value": "cors"
-				},
-				{
-					"key": "referer",
-					"value": "https://test.logitudeworld.com/staging/Angular19061113/index.html"
-				},
-				{
-					"key": "accept-encoding",
-					"value": "gzip, deflate, br"
-				},
-				{
-					"key": "accept-language",
-					"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
-				},
-				{
-					"key": "cookie",
-					"value": "email_cookie=sumaya@logitudeworld.com"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "ForceCacheRefresh",
-					"value": "false"
-				},
-				{
-					"key": "GetAll",
-					"value": "false"
-				},
-				{
-					"key": "Filter1Name",
-					"value": "SearchFields"
-				},
-				{
-					"key": "Filter1Operator",
-					"value": "Contains"
-				},
-				{
-					"key": "Filter1Value",
-					"value": "{{DepositNumber}}"
-				},
-				{
-					"key": "GetCount",
-					"value": "true"
-				},
-				{
-					"key": "PageIndex",
-					"value": "0"
-				},
-				{
-					"key": "PageSize",
-					"value": "22"
-				},
-				{
-					"key": "SortBy",
-					"value": "DepositNumber"
-				},
-				{
-					"key": "SortDirection",
-					"value": "Desending"
-				},
-				{
-					"key": "AdditionalFilters",
-					"value": "\\[\\{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%221179%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false\\}\\]",
-					"enabled": false
-				}
-			],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "37bc1ebb-d353-4114-acab-d4eb1e27f80d",
-						"exec": [
-							"pm.test(\"GETDeposit\", function () {",
-							"   pm.response.to.have.status(200);",
-							"   if(pm.response.json().Result.length < 1 ){",
-							"     tests[\"DepositExsits : \" + false] = (true);",
-							"   }",
-							"   else {",
-							"    var idvalue=pm.response.json().Result[0].Id;",
-							"    pm.environment.set(\"DepositId\",idvalue);",
-							"    tests[\"DepositExsits : \" + true ] = (true);",
-							"    postman.setNextRequest(\"LoggedOut\");  ",
-							"    }",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"headers": "authority: test.logitudeworld.com\naccept: application/json, text/plain, */*\nuser-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36\ntoken: {{Token}}\nsec-fetch-site: same-origin\nsec-fetch-mode: cors\nreferer: https://test.logitudeworld.com/staging/Angular19061113/index.html\naccept-encoding: gzip, deflate, br\naccept-language: ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7\ncookie: email_cookie=sumaya@logitudeworld.com\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "1005e286-768a-4ec5-8fcf-2b1e1f925dbd",
-			"name": "GETAPpayment",
-			"url": "{{URL}}/api/appaymentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{APPaymentNo}}&GetCount=true&PageIndex=0&PageSize=23&SortBy=CreateDate&SortDirection=Descending&&",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "ForceCacheRefresh",
-					"value": "false"
-				},
-				{
-					"key": "GetAll",
-					"value": "false"
-				},
-				{
-					"key": "Filter1Name",
-					"value": "SearchFields"
-				},
-				{
-					"key": "Filter1Operator",
-					"value": "Contains"
-				},
-				{
-					"key": "Filter1Value",
-					"value": "{{APPaymentNo}}"
-				},
-				{
-					"key": "GetCount",
-					"value": "true"
-				},
-				{
-					"key": "PageIndex",
-					"value": "0"
-				},
-				{
-					"key": "PageSize",
-					"value": "23"
-				},
-				{
-					"key": "SortBy",
-					"value": "CreateDate"
-				},
-				{
-					"key": "SortDirection",
-					"value": "Descending"
-				},
-				{
-					"key": null,
-					"value": null
-				},
-				{
-					"key": null,
-					"value": null
-				}
-			],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "147f699c-3607-4602-9dbe-55aee9b4aa0d",
-						"exec": [
-							"pm.test(\"GetAPpaymnet\", function () {",
-							"   pm.response.to.have.status(200);",
-							"   if(pm.response.json().Result.length < 1 ){",
-							"    ",
-							"     tests[\"APpaymentExsits : \" + false] = (true);",
-							"     ",
-							"   }",
-							"   else {",
-							"    ",
-							"var idvalue=pm.response.json().Result[0].Id;",
-							"     pm.environment.set(\"APpaymentId\",idvalue);",
-							"",
-							"     tests[\"APpaymentExsits : \" + true ] = (true);",
-							"    postman.setNextRequest(\"PostCashbooks\");  ",
-							"    }",
-							"   ",
-							"    ",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"headers": "token: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "12f5d59b-8bc9-4567-b783-982ec7689a90",
-			"name": "PostBankAccount",
-			"url": "{{URL}}/api/bankaccounts",
-			"description": null,
-			"data": [],
-			"dataOptions": null,
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "authority",
-					"value": "test.logitudeworld.com"
-				},
-				{
-					"key": "accept",
-					"value": "application/json, text/plain, */*"
-				},
-				{
-					"key": "origin",
-					"value": "https://test.logitudeworld.com"
-				},
-				{
-					"key": "user-agent",
-					"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}"
-				},
-				{
-					"key": "content-type",
-					"value": "application/json"
-				},
-				{
-					"key": "sec-fetch-site",
-					"value": "same-origin"
-				},
-				{
-					"key": "sec-fetch-mode",
-					"value": "cors"
-				},
-				{
-					"key": "referer",
-					"value": "https://test.logitudeworld.com/staging/Angular19061113/index.html"
-				},
-				{
-					"key": "accept-encoding",
-					"value": "gzip, deflate, br"
-				},
-				{
-					"key": "accept-language",
-					"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
-				},
-				{
-					"key": "cookie",
-					"value": "email_cookie=sumaya@logitudeworld.com"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "51a20cb6-64ee-4c6b-b8c7-804f279322b6",
-						"exec": [
-							"pm.test(\"PostBankAccount\", function () {",
-							"    pm.response.to.have.status(200);",
-							"    var idvalue = (pm.response.json().AccountNumber);",
-							"    var idvalue1 = (pm.response.json().Id);",
-							"    var idvalue2 = (pm.response.json().EnglishName);",
-							"    var id1exist = idvalue1 !== null;",
-							"    pm.expect(id1exist);",
-							"    pm.environment.set(\"BankAccountId\",idvalue1);",
-							"    pm.environment.set(\"BankAccountNumber\",idvalue);",
-							"    pm.environment.set(\"BankAccountEnglishName\",idvalue2);",
-							"    tests[\"IdExist : \" + id1exist] = (id1exist);",
-							"    postman.setNextRequest(\"GETBankAccount\");",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"rawModeData": "{\n    \"tenant\": {{Tenant}},\n    \"bankId\": \"{{CodeId}}\",\n    \"branchNumber\": 99,\n    \"accountNumber\": \"BK{{tot}}\",\n    \"currencyId\": \"{{AccountingCurrencyId}}\",\n    \"gLAccountId\": \"{{BankGLAccountId}}\",\n    \"deferredGLAccountId\": \"{{BankGLAccountId}}\",\n    \"transferGLAcccountId\": \"{{BankGLAccountId}}\",\n    \"EnglishName\":\"Bank Account Test\",\n    \"LocalName\":\"מבחן חשבון בנק\"\n}",
-			"headers": "authority: test.logitudeworld.com\naccept: application/json, text/plain, */*\norigin: https://test.logitudeworld.com\nuser-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36\ntoken: {{Token}}\ncontent-type: application/json\nsec-fetch-site: same-origin\nsec-fetch-mode: cors\nreferer: https://test.logitudeworld.com/staging/Angular19061113/index.html\naccept-encoding: gzip, deflate, br\naccept-language: ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7\ncookie: email_cookie=sumaya@logitudeworld.com\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "2d17c314-63d3-45ad-b0dd-23147d0ff046",
-			"name": "CreateApprovedJournal",
-			"url": "{{URL}}/api/journals",
-			"description": null,
-			"data": [],
-			"dataOptions": null,
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"name": "Content-Type",
-					"value": "application/json",
-					"type": "text"
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "c6c8c081-e790-4d7e-b6dd-33ecb99c9dbe",
-						"exec": [
-							"pm.test(\"CreateJounal \", function () {",
-							"    pm.response.to.have.status(200);",
-							"    var idvalue1 = (pm.response.json().Id);",
-							"    var id1exist = idvalue1 !== null;",
-							"    pm.expect(id1exist);",
-							"    pm.environment.set(\"JournalId\",idvalue1);",
-							"   tests[\"JournalIdSExist : \" + id1exist] = (id1exist);",
-							"    postman.setNextRequest(\"UpdateGlACcount\"); ",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"rawModeData": "{  \r\n   \r\n   \"Tenant\":\"{{Tenant}}\",\r\n   \"CreateDate\":\"2019-05-26T18:51:56.7660529+00:00\",\r\n   \"AccountingDate\":\"2019-08-01T00:00:00Z\",\r\n   \"TypeCode\":\"0\",\r\n   \"StatusCode\":\"2\",\r\n   \"CreatedByUserId\":\"{{LoggedUserId}}\",\r\n   \"CreatedByUserName\":\"{{LoggedUserEnglishName}}\",\r\n   \"AccountingEntityCode\":\"1\",\r\n   \"JournalLines\":[  \r\n      {  \r\n         \r\n         \"Tenant\":\"{{Tenant}}\",\r\n         \"Line\":1,\r\n         \"ActionCode\":\"1\",\r\n         \"DebitAccountId\":\"{{VendorGLAccountId}}\",\r\n         \"CreditAccountId\":\"{{CustomerGLAccountId}}\",\r\n         \"DocumentDate\":\"2019-08-01T00:00:00Z\",\r\n         \"AccountingDate\":\"2019-08-01T00:00:00Z\",\r\n         \"DueDate\":\"2019-08-01T00:00:00Z\",\r\n         \"LocalAmount\":100.0,\r\n         \"CurrencyId\":\"{{AccountingCurrencyId}}\",\r\n         \"ForeignAmount\":100.0,\r\n         \"ExchangeRate\":1.0,\r\n         \"ActionTypeCode\":\"1\",\r\n         \"ActionTypeCodeEnum\":\"1\",\r\n         \"ChangeSetOp\":1\r\n      \r\n      },\r\n      {\r\n          \r\n         \"Tenant\":\"{{Tenant}}\",\r\n         \"Line\":2,\r\n         \"ActionCode\":\"2\",\r\n         \"DebitAccountId\":\"{{CustomerGLAccountId}}\",\r\n         \"CreditAccountId\":\"{{VendorGLAccountId}}\",\r\n         \"DocumentDate\":\"2019-08-01T00:00:00Z\",\r\n         \"AccountingDate\":\"2019-08-01T00:00:00Z\",\r\n         \"DueDate\":\"2019-08-01T00:00:00Z\",\r\n         \"LocalAmount\":100.0,\r\n         \"CurrencyId\":\"{{AccountingCurrencyId}}\",\r\n         \"ForeignAmount\":100.0,\r\n         \"ExchangeRate\":1.0,\r\n         \"ActionTypeCode\":\"2\",\r\n         \"ActionTypeCodeEnum\":\"2\",\r\n         \"ChangeSetOp\":1\r\n      \r\n      }\r\n   ],\r\n   \"UpdateDate\":\"2019-05-26T18:51:57.6763003+00:00\",\r\n   \"UpdatedByUserId\":\"{{LoggedUserId}}\",\r\n   \"ApproveDate\":\"2019-05-26T18:51:57.6919354Z\",\r\n   \"ApprovedByUserId\":\"{{LoggedUserId}}\",\r\n   \"SearchFields\":\"1175\",\r\n   \"AccountingEntityReference\":\"1175\",\r\n   \"IsVoided\":false,\r\n   \"JournalReconciles\":[  \r\n   ],\r\n   \"IsLedgerCreated\":true,\r\n   \"ChangeSetOp\":1,\r\n   \"EncodeBase64NVARCHARFieldsBy\":null\r\n}",
-			"headers": "Content-Type: application/json\ntoken: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "2e8fbf23-57e5-4599-8bc6-eea594187a1f",
-			"name": "GETARinvoice",
-			"url": "{{URL}}/api/arinvoiceviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{InvoiceNumber}}&GetCount=true&PageIndex=0&PageSize=23&SortBy=CreateDate&SortDirection=Descending\n&&",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "ForceCacheRefresh",
-					"value": "false"
-				},
-				{
-					"key": "GetAll",
-					"value": "false"
-				},
-				{
-					"key": "Filter1Name",
-					"value": "SearchFields"
-				},
-				{
-					"key": "Filter1Operator",
-					"value": "Contains"
-				},
-				{
-					"key": "Filter1Value",
-					"value": "{{InvoiceNumber}}"
-				},
-				{
-					"key": "GetCount",
-					"value": "true"
-				},
-				{
-					"key": "PageIndex",
-					"value": "0"
-				},
-				{
-					"key": "PageSize",
-					"value": "23"
-				},
-				{
-					"key": "SortBy",
-					"value": "CreateDate"
-				},
-				{
-					"key": "SortDirection",
-					"value": "Descending\n"
-				},
-				{
-					"key": null,
-					"value": null
-				},
-				{
-					"key": null,
-					"value": null
-				}
-			],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "c32f4e68-883a-42db-8c5e-5b83a963c0fd",
-						"exec": [
-							"pm.test(\"GetARinvoice124\", function () {",
-							"   pm.response.to.have.status(200);",
-							"   if(pm.response.json().Result.length < 1 ){",
-							"    ",
-							"     tests[\"ARinvoiceExsits : \" + false] = (true);",
-							"     ",
-							"   }",
-							"   else {",
-							"    ",
-							"var idvalue=pm.response.json().Result[0].Id;",
-							"     pm.environment.set(\"ARinvoieId\",idvalue);",
-							"",
-							"     tests[\"ARinvoiceExsits : \" + true ] = (true);",
-							"    postman.setNextRequest(\"PostAPinvoice\");  ",
-							"    }",
-							" let response = pm.response.json(),",
-							"    savedData = JSON.stringify(response);",
-							"pm.environment.set(\"savedData\", savedData);  ",
-							"    ",
-							"});",
-							"",
-							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"headers": "token: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "30f9c94e-8aa7-4170-b69d-762177bc2ca7",
-			"name": "PostAPinvoice",
-			"url": "{{URL}}/api/apinvoices",
-			"description": null,
-			"data": [],
-			"dataOptions": null,
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				},
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"type": "text"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "e775513f-c507-4fc6-ad1a-542f75038023",
-						"exec": [
-							"pm.test(\"CreateAPinvoice \", function () {",
-							"    pm.response.to.have.status(200);",
-							"    var idvalue1 = (pm.response.json().Id);",
-							"     var idvalue = (pm.response.json().InvoiceNumber);",
-							"    var id1exist = idvalue1 !== null;",
-							"    pm.expect(id1exist);",
-							"    pm.environment.set(\"InvoicePId\",idvalue1);",
-							"      pm.environment.set(\"APInvoiceNumber\",idvalue);",
-							"   tests[\"IdExist : \" + id1exist] = (id1exist);",
-							"     postman.setNextRequest(\"GETAPinvoice\");  ",
-							"    ",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"rawModeData": "{\r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"IsSecured\":false,\r\n   \"InternalNumber\":\"Bill3005\",\r\n   \"InvoiceNumber\":\"PN{{tot}}\",\r\n   \"VendorId\":\"{{VendorId}}\",\r\n  \r\n   \"InvoiceDate\":\"2020-05-31T00:00:00Z\",\r\n   \"PaymentTermId\":\"{{PaymentTermId}}\",\r\n   \"DueDate\":\"2020-06-10T00:00:00Z\",\r\n   \"InvoiceCurrencyExchangeRate\":1.0,\r\n   \"ExchangeRateDate\":null,\r\n   \"InvoiceCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyCode\":\"NIS\",\r\n  \r\n   \"SubTotalInLocalCurrency\":200.0,\r\n   \"SubTotalInInvoiceCurrency\":200.0,\r\n   \"AmountInInvoiceCurrency\":200.0,\r\n   \"AmountInInvoiceCurrency_Summary\":200.0,\r\n   \"AmountInLocalCurrency\":200.0,\r\n   \"AmountInLocalCurrency_Summary\":200.0,\r\n   \"AmountInProfitCurrency\":100.0,\r\n   \"AmountInProfitCurrency_Summary\":null,\r\n   \"StatusCode\":\"AD\",\r\n   \"CreateDate\":\"2020-06-10T20:46:10.1943336Z\",\r\n   \"CreatedByUserId\":\"1-82355\",\r\n   \"IsClosed\":false,\r\n   \"ProfitCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"ProfitCurrencyExchangeRate\":2.0,\r\n \r\n   \"InvoiceExpectedAmount\":200.0,\r\n   \r\n   \"SearchFields\":\"1205,test\",\r\n  \r\n  \r\n   \"AmountDue\":200.0,\r\n   \"RefundAmount\":null,\r\n   \"AmountDueInLocalCurrency\":1200.0,\r\n   \"AmountDueInProfitCurrency\":600.0,\r\n   \"BranchId\":\"{{BranchId}}\",\r\n   \r\n   \"VendorPartnerTypeId\":\"VD\",\r\n   \r\n \r\n   \"VATNumber\":\"5145599\",\r\n   \"AccountingDate\":\"2020-05-31T00:00:00Z\",\r\n   \"IsExternalEntity\":false,\r\n   \"IsGeneralInvoice\":true,\r\n  \r\n   \"InvoiceLines\":[\r\n      {\r\n         \r\n         \"LineNumber\":1,\r\n         \"Tenant\":{{CurrentTenant}},\r\n         \"InvoiceCurrencyAmount\":200.0,\r\n      \r\n         \"ChargesTypeId\":\"{{ChargeId}}\",\r\n         \"VatTypeId\":\"{{VatId}}\",\r\n         \"VatPercentage\":0.0,\r\n         \"VatTypeName\":\"Exempt\",\r\n         \"ExternalVATCard\":null,\r\n         \"ExternalTAXItemId\":null,\r\n         \"VatIsMultiPercentage\":false,\r\n      \r\n         \"OpenAmount\":null,\r\n         \"ForiegnCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n         \"ForiegnCurrencyAmount\":200.0,\r\n         \"ForiegnExchangeRate\":1.0,\r\n         \"LocalCurrencyAmount\":200.0,\r\n         \"ProfitCurrencyAmount\":100.0,\r\n       \r\n         \"CorrectionNote\":null,\r\n         \"CorrectionByUserId\":null,\r\n         \"CorrectionDate\":null,\r\n         \"AmountTypeCode\":\"NEXP\",\r\n         \"ForiegnCurrencyCode\":\"NIS\",\r\n         \"ChangeSetOp\":1,\r\n         \"DebitAccount\":null,\r\n         \"Description\":\"Air Freight\",\r\n         \"LocalDescription\":\"Air Freight\",\r\n         \"ChargeTypeGLAccountId\":\"{{CustomerGLAccountId}}\",\r\n         \"AuthorizedSignatory\":false,\r\n         \"PrepaidCollectId\":null\r\n      }\r\n   ],\r\n\r\n   \"TotalVATs\":[\r\n      {\r\n         \r\n       \"Tenant\":{{CurrentTenant}},\r\n         \"APInvoiceId\":null,\r\n         \"VatTypeId\":\"{{VatId}}\",\r\n         \"VatPercent\":0.0,\r\n         \"VatTypeName\":\"Exempt\",\r\n         \"VatTypeCell\":\"Exempt (0%)\",\r\n         \"ExternalVATCard\":null,\r\n         \"ExternalTAXItemId\":null,\r\n         \"InvoiceCurrencyVatableAmount\":200.0,\r\n         \"LocalVatableAmount\":200.0,\r\n         \"ProfitVatableAmount\":100.0,\r\n         \"InvoiceCurrencyVATAmount\":0.0,\r\n         \"LocalVATAmount\":0.0,\r\n         \"ProfitCurrencyVATAmount\":0.0,\r\n         \"ChangeSetOp\":1\r\n      }\r\n   ],\r\n   \"SetVoided\":false,\r\n   \"SetApproved\":false,\r\n\r\n   \"SetReSendQBO\":false,\r\n   \"JournalNumber\":\"1230\",\r\n   \"ShipmentConcurrencyGUID\":null,\r\n   \"ShipmentNewConcurrencyGUID\":null\r\n}",
-			"headers": "token: {{Token}}\nContent-Type: application/json\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "46607709-60f6-4b0f-a4ee-37345ec2cfdb",
-			"name": "PostCashbooks",
-			"url": "{{URL}}/api/cashbooks",
-			"description": null,
-			"data": [],
-			"dataOptions": null,
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "authority",
-					"value": "test.logitudeworld.com"
-				},
-				{
-					"key": "accept",
-					"value": "application/json, text/plain, */*"
-				},
-				{
-					"key": "origin",
-					"value": "https://test.logitudeworld.com"
-				},
-				{
-					"key": "user-agent",
-					"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}"
-				},
-				{
-					"key": "content-type",
-					"value": "application/json"
-				},
-				{
-					"key": "sec-fetch-site",
-					"value": "same-origin"
-				},
-				{
-					"key": "sec-fetch-mode",
-					"value": "cors"
-				},
-				{
-					"key": "referer",
-					"value": "https://test.logitudeworld.com/staging/Angular19061118/index.html"
-				},
-				{
-					"key": "accept-encoding",
-					"value": "gzip, deflate, br"
-				},
-				{
-					"key": "accept-language",
-					"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
-				},
-				{
-					"key": "cookie",
-					"value": "email_cookie=sumaya@logitudeworld.com"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "6cd0268b-3df3-4ccf-a124-30eafa0cb9d2",
-						"exec": [
-							"pm.test(\"PostCashbooks \", function () {",
-							"    pm.response.to.have.status(200);",
-							"    var idvalue1 = (pm.response.json().Id);",
-							"    var idvalue2 = (pm.response.json().EnglishName);",
-							"    var idvalue = (pm.response.json().AccountNumber);",
-							"    var id1exist = idvalue1 !== null;",
-							"    pm.expect(id1exist);",
-							"    pm.environment.set(\"CashBookId\",idvalue1);",
-							"    pm.environment.set(\"CashBooksAccountNumber\",idvalue);",
-							"    pm.environment.set(\"CashBooksAccountEnglishName\",idvalue2);",
-							"    tests[\"IdExist : \" + id1exist] = (id1exist);",
-							"    postman.setNextRequest(\"GETCashBooks\"); ",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"rawModeData": "{\n  \n    \"tenant\": {{Tenant}},\n    \"createdByUserId\": \"{{LoggedUserId}}\",\n    \"AccountNumber\":\"CB{{tot}}\", \n    \"updatedByUserId\": \"{{LoggedUserId}}\",\n    \"cashBookTypeCode\": \"2\",\n    \"currencyId\": \"{{AccountingCurrencyId}}\",\n    \"accountId\": \"{{BankGLAccountId}}\",\n    \"localName\": \"מבחן התרסקות\",\n    \"englishName\": \"Chash Book Test\",\n    \"branchId\": \"{{BranchCashBookId}}\"\n      \n}",
-			"headers": "authority: test.logitudeworld.com\naccept: application/json, text/plain, */*\norigin: https://test.logitudeworld.com\nuser-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36\ntoken: {{Token}}\ncontent-type: application/json\nsec-fetch-site: same-origin\nsec-fetch-mode: cors\nreferer: https://test.logitudeworld.com/staging/Angular19061118/index.html\naccept-encoding: gzip, deflate, br\naccept-language: ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7\ncookie: email_cookie=sumaya@logitudeworld.com\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "71bc2ce3-6f1c-4f3e-99a4-30330ea3d22e",
-			"name": "PostARinvoice",
-			"url": "{{URL}}/api/arinvoices",
-			"description": null,
-			"data": [],
-			"dataOptions": null,
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				},
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"type": "text"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "0114501c-cb25-4ef5-8dd0-e433e4d7957d",
-						"exec": [
-							"pm.test(\"CreateARinvoice \", function () {",
-							"    pm.response.to.have.status(200);",
-							"    var idvalue1 = (pm.response.json().Id);",
-							"    var idvalue = (pm.response.json().InvoiceNumber);",
-							"    var id1exist = idvalue1 !== null;",
-							"    pm.expect(id1exist);",
-							"    pm.environment.set(\"InvoiceId\",idvalue1);",
-							"    pm.environment.set(\"InvoiceNumber\",idvalue); ",
-							"   tests[\"IdExist : \" + id1exist] = (id1exist);",
-							"    postman.setNextRequest(\"GETARinvoice\"); ",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"rawModeData": "{\r\n  \r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"InvoiceNumber\":\"RN{{tot}}\",\r\n   \"ARInvoiceTypeCode\":\"IN\",\r\n   \"BillToId\":\"{{CustomerId}}\",\r\n   \"BillToPartnerTypeId\":\"CS\",\r\n   \"InvoiceDate\":\"2020-08-02T00:00:00Z\",\r\n   \"DueDate\":\"2020-08-02T00:00:00Z\",\r\n   \"IssuedByUserId\":\"{{LoggedUserId}}\",\r\n   \"InvoiceCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"SubTotalInLocalCurrency\":4000.0,\r\n   \"SubTotalInInvoiceCurrency\":4000.0,\r\n   \"AmountInLocalCurrency\":4000.0,\r\n   \"AmountInInvoiceCurrency\":4000.0,\r\n   \"StatusCode\":\"AD\",\r\n   \"StatusName\":\"Unpaid\",\r\n   \"InvoiceCurrencyExchangeRate\":1.0,\r\n   \"PaymentTermId\":\"{{PaymentTermId}}\",\r\n   \"CreatedByUserId\":\"1-82355\",\r\n   \"CreateDate\":\"2020-04-10T19:10:40.2580869Z\",\r\n   \"SearchFields\":\"1066,Accounting Customer 2 \",\r\n  \"IsGeneralInvoice\": true,\r\n   \"AmountDue\":4000.0,\r\n  \r\n   \"ProfitCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n  \r\n   \r\n   \"ProfitCurrencyExchangeRate\":2.0,\r\n \"VATNumber\":\"5145599\",\r\n   \"AmountDueInLocalCurrency\":4000.0,\r\n   \"AmountDueInProfitCurrency\":2000.0,\r\n   \r\n\r\n   \"BranchId\":\"{{BranchId}}\",\r\n\r\n   \"InvoiceLines\":[  \r\n      {  \r\n      \t\"Tenant\":\"{{CurrentTenant}}\",\r\n         \"ChargesTypeId\":\"{{ChargeId}}\",\r\n         \"ForiegnCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n     \r\n         \"ForiegnCurrencyAmount\":4000.0,\r\n         \"LocalCurrencyAmount\":4000.0,\r\n         \"InvoiceCurrencyAmount\":4000.0,\r\n         \"VatTypeId\":\"{{VatId}}\",\r\n         \"VatPercentage\":0.0,\r\n         \"VatAmount\":null,\r\n         \"VatTypeName\":\"Exempt\",\r\n         \"ChargeTypeGLAccountId\":\"{{CustomerGLAccountId}}\",\r\n         \"ForiegnExchangeRate\":1.0,\r\n         \"LineNumber\":1,\r\n        \r\n         \"Quantity\":20.0,\r\n         \"UnitPrice\":200.0,\r\n         \"ViewOrder\":0,\r\n         \"MeasurementId\":null,\r\n         \"IsExchangeRateFixed\":false,\r\n        \r\n         \"ProfitCurrencyAmount\":2000.0,\r\n         \"InvoiceLocalCurrencyCode\":null,\r\n         \"InvoiceCurrencyCode\":null,\r\n         \"ChangeSetOp\":1,\r\n         \"CreditAccount\":\"{{CustomerGLAccountId}}\",\r\n         \"Description\":\"Air Freight\",\r\n         \"LocalDescription\":\"Air Freight\",\r\n         \"Notes\":null,\r\n         \"DateForInterest\":null,\r\n         \"ValueDate\":null,\r\n         \"GLAccountId\":\"{{CustomerGLAccountId}}\",\r\n         \"LineActionCode\":\"1\"\r\n       \r\n      }\r\n   ]\r\n  ,\r\n  \r\n   \"SetApproved\":true,\r\n  \r\n   \"TotalAmountForTaxReport\":4000.0,\r\n   \"TotaVatableAmountForTaxReport\":0.0,\r\n   \"TotalVAT\":0.0,\r\n   \"IsFullAccounting\":true\r\n   \r\n}",
-			"headers": "token: {{Token}}\nContent-Type: application/json\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "73e3d83f-ed15-42c3-b8c5-fc7fd1ae29f4",
-			"name": "LoggedOut",
-			"url": "{{URL}}/api/authentication/GetSignOut",
-			"description": null,
-			"data": [],
-			"dataOptions": null,
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"type": "text"
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "2dbb27ab-1e0b-407a-a306-a3a4c44d1fc8",
-						"exec": [
-							"pm.test(\"Logged Out successfuly \", function () {",
-							"    pm.response.to.have.status(200);",
-							" });"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"rawModeData": "{\"Email\":\"khawla@logitudeworld.com\",\"Password\":\"0597485181@kh\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":989} ",
-			"headers": "Content-Type: application/json\ntoken: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "93bbcd4e-0d2e-4036-9581-c6c1003b7c67",
 			"name": "Authentication Copy",
-			"url": "{{URL}}/api/authentication?tenant={{Tenant}}",
-			"description": null,
-			"data": [],
-			"dataOptions": null,
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"type": "text"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "tenant",
-					"value": "{{Tenant}}"
-				}
-			],
-			"auth": null,
-			"events": [
+			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "6b0e2b55-62ef-4a9c-b34f-9d1534bf811a",
 						"exec": [
 							"pm.test(\"logged successfuly\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -814,84 +50,523 @@
 					}
 				}
 			],
-			"folder": null,
-			"rawModeData": "{\"Email\":\"{{Email}}\",\"Password\":\"{{Password}}\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":\"{{Tenant}}\"}\n",
-			"headers": "Content-Type: application/json\n",
-			"pathVariables": {}
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"Email\":\"{{Email}}\",\"Password\":\"{{Password}}\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":\"{{Tenant}}\"}\n"
+				},
+				"url": {
+					"raw": "{{URL}}/api/authentication?tenant={{Tenant}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"authentication"
+					],
+					"query": [
+						{
+							"key": "tenant",
+							"value": "{{Tenant}}"
+						}
+					]
+				}
+			},
+			"response": []
 		},
 		{
-			"id": "9b680e44-2e10-4c46-8c4b-3f56ce09cda5",
-			"name": "GETArpayment",
-			"url": "{{URL}}/api/arpaymentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{PaymentNo}}&GetCount=true&PageIndex=0&PageSize=23&SortBy=CreateDate&SortDirection=Descending&&",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "ForceCacheRefresh",
-					"value": "false"
-				},
-				{
-					"key": "GetAll",
-					"value": "false"
-				},
-				{
-					"key": "Filter1Name",
-					"value": "SearchFields"
-				},
-				{
-					"key": "Filter1Operator",
-					"value": "Contains"
-				},
-				{
-					"key": "Filter1Value",
-					"value": "{{PaymentNo}}"
-				},
-				{
-					"key": "GetCount",
-					"value": "true"
-				},
-				{
-					"key": "PageIndex",
-					"value": "0"
-				},
-				{
-					"key": "PageSize",
-					"value": "23"
-				},
-				{
-					"key": "SortBy",
-					"value": "CreateDate"
-				},
-				{
-					"key": "SortDirection",
-					"value": "Descending"
-				},
-				{
-					"key": null,
-					"value": null
-				},
-				{
-					"key": null,
-					"value": null
-				}
-			],
-			"auth": null,
-			"events": [
+			"name": "CreateApprovedJournal",
+			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "b33503ba-2cfc-400a-b082-f4378a7d0c4e",
+						"exec": [
+							"pm.test(\"CreateJounal \", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue1 = (pm.response.json().Id);",
+							"    var id1exist = idvalue1 !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.environment.set(\"JournalId\",idvalue1);",
+							"   tests[\"JournalIdSExist : \" + id1exist] = (id1exist);",
+							"    postman.setNextRequest(\"UpdateGlACcount\"); ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \r\n   \"Tenant\":\"{{Tenant}}\",\r\n   \"CreateDate\":\"2019-05-26T18:51:56.7660529+00:00\",\r\n   \"AccountingDate\":\"2019-08-01T00:00:00Z\",\r\n   \"TypeCode\":\"0\",\r\n   \"StatusCode\":\"2\",\r\n   \"CreatedByUserId\":\"{{LoggedUserId}}\",\r\n   \"CreatedByUserName\":\"{{LoggedUserEnglishName}}\",\r\n   \"AccountingEntityCode\":\"1\",\r\n   \"JournalLines\":[  \r\n      {  \r\n         \r\n         \"Tenant\":\"{{Tenant}}\",\r\n         \"Line\":1,\r\n         \"ActionCode\":\"1\",\r\n         \"DebitAccountId\":\"{{VendorGLAccountId}}\",\r\n         \"CreditAccountId\":\"{{CustomerGLAccountId}}\",\r\n         \"DocumentDate\":\"2019-08-01T00:00:00Z\",\r\n         \"AccountingDate\":\"2019-08-01T00:00:00Z\",\r\n         \"DueDate\":\"2019-08-01T00:00:00Z\",\r\n         \"LocalAmount\":100.0,\r\n         \"CurrencyId\":\"{{AccountingCurrencyId}}\",\r\n         \"ForeignAmount\":100.0,\r\n         \"ExchangeRate\":1.0,\r\n         \"ActionTypeCode\":\"1\",\r\n         \"ActionTypeCodeEnum\":\"1\",\r\n         \"ChangeSetOp\":1\r\n      \r\n      },\r\n      {\r\n          \r\n         \"Tenant\":\"{{Tenant}}\",\r\n         \"Line\":2,\r\n         \"ActionCode\":\"2\",\r\n         \"DebitAccountId\":\"{{CustomerGLAccountId}}\",\r\n         \"CreditAccountId\":\"{{VendorGLAccountId}}\",\r\n         \"DocumentDate\":\"2019-08-01T00:00:00Z\",\r\n         \"AccountingDate\":\"2019-08-01T00:00:00Z\",\r\n         \"DueDate\":\"2019-08-01T00:00:00Z\",\r\n         \"LocalAmount\":100.0,\r\n         \"CurrencyId\":\"{{AccountingCurrencyId}}\",\r\n         \"ForeignAmount\":100.0,\r\n         \"ExchangeRate\":1.0,\r\n         \"ActionTypeCode\":\"2\",\r\n         \"ActionTypeCodeEnum\":\"2\",\r\n         \"ChangeSetOp\":1\r\n      \r\n      }\r\n   ],\r\n   \"UpdateDate\":\"2019-05-26T18:51:57.6763003+00:00\",\r\n   \"UpdatedByUserId\":\"{{LoggedUserId}}\",\r\n   \"ApproveDate\":\"2019-05-26T18:51:57.6919354Z\",\r\n   \"ApprovedByUserId\":\"{{LoggedUserId}}\",\r\n   \"SearchFields\":\"1175\",\r\n   \"AccountingEntityReference\":\"1175\",\r\n   \"IsVoided\":false,\r\n   \"JournalReconciles\":[  \r\n   ],\r\n   \"IsLedgerCreated\":true,\r\n   \"ChangeSetOp\":1,\r\n   \"EncodeBase64NVARCHARFieldsBy\":null\r\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/journals",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"journals"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateGlACcount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Update GlACcount\", function () {",
+							"   pm.response.to.have.status(200);",
+							"    var idvalue =(pm.response.json().Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"     tests[\"GlAccountUpdatedsuccessfully: \" + idexist ] = (idexist);",
+							"    postman.setNextRequest(\"PostARinvoice\"); ",
+							"    ",
+							"   ",
+							"    ",
+							"});",
+							"    "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"Id\": \"{{VendorGLAccountId}}\",\n            \"Tenant\": {{Tenant}},\n            \"InternalNumber\": \"{{InternalNumber}}\",\n            \"AccountTypeCode\": \"3\",\n            \"DisplayNumber\": \"{{DisplayNumber}}\",\n            \"LocalName\": \"VendGlAccountLocal{{RandomNum}}\",\n            \"EnglishName\": \"VendGlAccountEnglish\",\n            \"SearchFields\": \"PMGLVend,VendGlAccountEnglish,VendGlAccountLocal\",\n            \"IsMultiCurrency\": true,\n            \"CurrencyId\": null,\n            \"RevenueExpenseType\": \"3\",\n            \"IsControlAccount\": false,\n            \"ChartOfAccountsId\": \"{{ChartOfAccountsId}}\",\n            \"Inactive\": false,\n            \"AccountTypeName\": \"Vendor\",\n            \"CurrencyName\": null,\n            \"RevenueExpenseName\": \"Other\",\n            \"ChartOfAccountsName\": \"ספקים\",\n            \"ChartOfAccountsTypeCode\": \"4\",\n            \"ChartOfAccountsTypeName\": \"Vendors\",\n            \"CurrencyCode\": \"Multi\",\n            \"ReconcileMethodCode\": \"0\",\n            \"ReconcileMethodName\": \"Local Currency\",\n            \"ControlAccountId\": \"{{VendorControlAccountId}}\",\n            \"ActiveStatusName\": \"Active\",\n            \"AutomaticReconcileId\": null,\n            \"AutomaticReconcileName\": null,\n            \"PreviousEnglishName\": null,\n            \"PreviousEnglishNameChangeDate\": \"2019-06-24T11:40:54.927\",\n            \"PreviousLocalName\": null,\n            \"PreviousLocalNameChangeDate\": \"2019-06-24T11:40:54.927\",\n            \"PreviousNumber\": null,\n            \"PreviousNumberChangeDate\": \"2019-06-24T11:40:54.927\",\n            \"PreviousChartOfAccountsId\": null,\n            \"PreviousChartOfAccountsChangeDate\": \"2019-06-24T11:40:54.927\",\n            \"CustomerGLAccountId\": null,\n            \"CustomerGLAccountName\": null,\n            \"CustomerGLAccountNumber\": null,\n            \"BalanceInLocalCurrency\": 1200,\n            \"RevaluationEnabled\": null,\n            \"ParentAccountId\": null,\n            \"ParentAccountName\": null,\n            \"ParentAccountNumber\": null,\n            \"Category1Id\": null,\n            \"Category1Name\": null,\n            \"Category2Id\": null,\n            \"Category2Name\": null,\n            \"Category3Id\": null,\n            \"Category3Name\": null,\n            \"Category4Id\": null,\n            \"Category4Name\": null,\n            \"Category5Id\": null,\n            \"Category5Name\": null,\n            \"IsVATExempt\": null,\n            \"LastActivityDate\": null,\n            \"LastActivityTypeName\": null,\n            \"LastActivityByUserName\": null,\n            \"VatNumber\": null,\n            \"PaymentTermId\": null,\n            \"SalesmanUserId\": null,\n            \"NewGLAccountCardId\": null,\n            \"LocalBalanceInDue\": 1200,\n            \"NextDueDate\": null,\n            \"CurrencySign\": \"\",\n            \"DeductionFileTypeId\": null,\n            \"DeductionFileNumber\": null,\n            \"AssessingOfficeCode\": null,\n            \"Occupation\": null,\n            \"DeductionTypeId\": null,\n            \"ConsolidationVat\": null,\n            \"IsEquipmentVendor\": false,\n            \"ExcludeFromDeductionReport\": false,\n            \"DeductionTypeName\": null,\n            \"DeductionFileTypeCode\": null,\n            \"DeductionFileTypeName\": null,\n            \"AssessingOfficeName\": null,\n            \"DeductionTypeEnglishName\": null,\n            \"TotalOpenChequesInLocalCur\": null,\n            \"AutomaticReconcileLocalName\": null,\n            \"ReconcileMethodLocalName\": \"מטבע מקומי\",\n            \"TotFutureOpenChequesInLocalCur\": null,\n            \"CardId\": null,\n            \"CreatedByUserId\": null,\n            \"UpdatedByUserId\": null,\n            \"CreateDate\": \"2019-06-24T11:40:54.267\",\n            \"UpdateDate\": \"2019-06-24T11:40:54.507\",\n            \"CreatedByUserName\": \"khawla T0 \",\n            \"UpdatedByUserName\": \"khawla T0 \",\n            \"CreatedByLocalName\": \"עברית חוולה\",\n            \"UpdatedByLocalName\": \"עברית חוולה\"\n        }"
+				},
+				"url": {
+					"raw": "{{URL}}/api/glaccounts/",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"glaccounts",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostARinvoice",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"CreateARinvoice \", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue1 = (pm.response.json().Id);",
+							"    var idvalue = (pm.response.json().InvoiceNumber);",
+							"    var id1exist = idvalue1 !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.environment.set(\"InvoiceId\",idvalue1);",
+							"    pm.environment.set(\"InvoiceNumber\",idvalue); ",
+							"   tests[\"IdExist : \" + id1exist] = (id1exist);",
+							"    postman.setNextRequest(\"GETARinvoice\"); ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"InvoiceNumber\":\"RN{{tot}}\",\r\n   \"ARInvoiceTypeCode\":\"IN\",\r\n   \"BillToId\":\"{{CustomerId}}\",\r\n   \"BillToPartnerTypeId\":\"CS\",\r\n   \"InvoiceDate\":\"2020-08-02T00:00:00Z\",\r\n   \"DueDate\":\"2020-08-02T00:00:00Z\",\r\n   \"IssuedByUserId\":\"{{LoggedUserId}}\",\r\n   \"InvoiceCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"SubTotalInLocalCurrency\":4000.0,\r\n   \"SubTotalInInvoiceCurrency\":4000.0,\r\n   \"AmountInLocalCurrency\":4000.0,\r\n   \"AmountInInvoiceCurrency\":4000.0,\r\n   \"StatusCode\":\"AD\",\r\n   \"StatusName\":\"Unpaid\",\r\n   \"InvoiceCurrencyExchangeRate\":1.0,\r\n   \"PaymentTermId\":\"{{PaymentTermId}}\",\r\n   \"CreatedByUserId\":\"1-82355\",\r\n   \"CreateDate\":\"2020-04-10T19:10:40.2580869Z\",\r\n   \"SearchFields\":\"1066,Accounting Customer 2 \",\r\n  \"IsGeneralInvoice\": true,\r\n   \"AmountDue\":4000.0,\r\n  \r\n   \"ProfitCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n  \r\n   \r\n   \"ProfitCurrencyExchangeRate\":2.0,\r\n \"VATNumber\":\"5145599\",\r\n   \"AmountDueInLocalCurrency\":4000.0,\r\n   \"AmountDueInProfitCurrency\":2000.0,\r\n   \r\n\r\n   \"BranchId\":\"{{BranchId}}\",\r\n\r\n   \"InvoiceLines\":[  \r\n      {  \r\n      \t\"Tenant\":\"{{CurrentTenant}}\",\r\n         \"ChargesTypeId\":\"{{ChargeId}}\",\r\n         \"ForiegnCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n     \r\n         \"ForiegnCurrencyAmount\":4000.0,\r\n         \"LocalCurrencyAmount\":4000.0,\r\n         \"InvoiceCurrencyAmount\":4000.0,\r\n         \"VatTypeId\":\"{{VatId}}\",\r\n         \"VatPercentage\":0.0,\r\n         \"VatAmount\":null,\r\n         \"VatTypeName\":\"Exempt\",\r\n         \"ChargeTypeGLAccountId\":\"{{CustomerGLAccountId}}\",\r\n         \"ForiegnExchangeRate\":1.0,\r\n         \"LineNumber\":1,\r\n        \r\n         \"Quantity\":20.0,\r\n         \"UnitPrice\":200.0,\r\n         \"ViewOrder\":0,\r\n         \"MeasurementId\":null,\r\n         \"IsExchangeRateFixed\":false,\r\n        \r\n         \"ProfitCurrencyAmount\":2000.0,\r\n         \"InvoiceLocalCurrencyCode\":null,\r\n         \"InvoiceCurrencyCode\":null,\r\n         \"ChangeSetOp\":1,\r\n         \"CreditAccount\":\"{{CustomerGLAccountId}}\",\r\n         \"Description\":\"Air Freight\",\r\n         \"LocalDescription\":\"Air Freight\",\r\n         \"Notes\":null,\r\n         \"DateForInterest\":null,\r\n         \"ValueDate\":null,\r\n         \"GLAccountId\":\"{{CustomerGLAccountId}}\",\r\n         \"LineActionCode\":\"1\"\r\n       \r\n      }\r\n   ]\r\n  ,\r\n  \r\n   \"SetApproved\":true,\r\n  \r\n   \"TotalAmountForTaxReport\":4000.0,\r\n   \"TotaVatableAmountForTaxReport\":0.0,\r\n   \"TotalVAT\":0.0,\r\n   \"IsFullAccounting\":true\r\n   \r\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/arinvoices",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"arinvoices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETARinvoice",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GetARinvoice124\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"    ",
+							"     tests[\"ARinvoiceExsits : \" + false] = (true);",
+							"     ",
+							"   }",
+							"   else {",
+							"    ",
+							"var idvalue=pm.response.json().Result[0].Id;",
+							"     pm.environment.set(\"ARinvoieId\",idvalue);",
+							"",
+							"     tests[\"ARinvoiceExsits : \" + true ] = (true);",
+							"    postman.setNextRequest(\"PostAPinvoice\");  ",
+							"    }",
+							" let response = pm.response.json(),",
+							"    savedData = JSON.stringify(response);",
+							"pm.environment.set(\"savedData\", savedData);  ",
+							"    ",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/arinvoiceviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{InvoiceNumber}}&GetCount=true&PageIndex=0&PageSize=23&SortBy=CreateDate&SortDirection=Descending\n&&",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"arinvoiceviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "{{InvoiceNumber}}"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": "SortBy",
+							"value": "CreateDate"
+						},
+						{
+							"key": "SortDirection",
+							"value": "Descending\n"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostAPinvoice",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"CreateAPinvoice \", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue1 = (pm.response.json().Id);",
+							"     var idvalue = (pm.response.json().InvoiceNumber);",
+							"    var id1exist = idvalue1 !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.environment.set(\"InvoicePId\",idvalue1);",
+							"      pm.environment.set(\"APInvoiceNumber\",idvalue);",
+							"   tests[\"IdExist : \" + id1exist] = (id1exist);",
+							"     postman.setNextRequest(\"GETAPinvoice\");  ",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"IsSecured\":false,\r\n   \"InternalNumber\":\"Bill3005\",\r\n   \"InvoiceNumber\":\"PN{{tot}}\",\r\n   \"VendorId\":\"{{VendorId}}\",\r\n  \r\n   \"InvoiceDate\":\"2020-05-31T00:00:00Z\",\r\n   \"PaymentTermId\":\"{{PaymentTermId}}\",\r\n   \"DueDate\":\"2020-06-10T00:00:00Z\",\r\n   \"InvoiceCurrencyExchangeRate\":1.0,\r\n   \"ExchangeRateDate\":null,\r\n   \"InvoiceCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyCode\":\"NIS\",\r\n  \r\n   \"SubTotalInLocalCurrency\":200.0,\r\n   \"SubTotalInInvoiceCurrency\":200.0,\r\n   \"AmountInInvoiceCurrency\":200.0,\r\n   \"AmountInInvoiceCurrency_Summary\":200.0,\r\n   \"AmountInLocalCurrency\":200.0,\r\n   \"AmountInLocalCurrency_Summary\":200.0,\r\n   \"AmountInProfitCurrency\":100.0,\r\n   \"AmountInProfitCurrency_Summary\":null,\r\n   \"StatusCode\":\"AD\",\r\n   \"CreateDate\":\"2020-06-10T20:46:10.1943336Z\",\r\n   \"CreatedByUserId\":\"1-82355\",\r\n   \"IsClosed\":false,\r\n   \"ProfitCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"ProfitCurrencyExchangeRate\":2.0,\r\n \r\n   \"InvoiceExpectedAmount\":200.0,\r\n   \r\n   \"SearchFields\":\"1205,test\",\r\n  \r\n  \r\n   \"AmountDue\":200.0,\r\n   \"RefundAmount\":null,\r\n   \"AmountDueInLocalCurrency\":1200.0,\r\n   \"AmountDueInProfitCurrency\":600.0,\r\n   \"BranchId\":\"{{BranchId}}\",\r\n   \r\n   \"VendorPartnerTypeId\":\"VD\",\r\n   \r\n \r\n   \"VATNumber\":\"5145599\",\r\n   \"AccountingDate\":\"2020-05-31T00:00:00Z\",\r\n   \"IsExternalEntity\":false,\r\n   \"IsGeneralInvoice\":true,\r\n  \r\n   \"InvoiceLines\":[\r\n      {\r\n         \r\n         \"LineNumber\":1,\r\n         \"Tenant\":{{CurrentTenant}},\r\n         \"InvoiceCurrencyAmount\":200.0,\r\n      \r\n         \"ChargesTypeId\":\"{{ChargeId}}\",\r\n         \"VatTypeId\":\"{{VatId}}\",\r\n         \"VatPercentage\":0.0,\r\n         \"VatTypeName\":\"Exempt\",\r\n         \"ExternalVATCard\":null,\r\n         \"ExternalTAXItemId\":null,\r\n         \"VatIsMultiPercentage\":false,\r\n      \r\n         \"OpenAmount\":null,\r\n         \"ForiegnCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n         \"ForiegnCurrencyAmount\":200.0,\r\n         \"ForiegnExchangeRate\":1.0,\r\n         \"LocalCurrencyAmount\":200.0,\r\n         \"ProfitCurrencyAmount\":100.0,\r\n       \r\n         \"CorrectionNote\":null,\r\n         \"CorrectionByUserId\":null,\r\n         \"CorrectionDate\":null,\r\n         \"AmountTypeCode\":\"NEXP\",\r\n         \"ForiegnCurrencyCode\":\"NIS\",\r\n         \"ChangeSetOp\":1,\r\n         \"DebitAccount\":null,\r\n         \"Description\":\"Air Freight\",\r\n         \"LocalDescription\":\"Air Freight\",\r\n         \"ChargeTypeGLAccountId\":\"{{CustomerGLAccountId}}\",\r\n         \"AuthorizedSignatory\":false,\r\n         \"PrepaidCollectId\":null\r\n      }\r\n   ],\r\n\r\n   \"TotalVATs\":[\r\n      {\r\n         \r\n       \"Tenant\":{{CurrentTenant}},\r\n         \"APInvoiceId\":null,\r\n         \"VatTypeId\":\"{{VatId}}\",\r\n         \"VatPercent\":0.0,\r\n         \"VatTypeName\":\"Exempt\",\r\n         \"VatTypeCell\":\"Exempt (0%)\",\r\n         \"ExternalVATCard\":null,\r\n         \"ExternalTAXItemId\":null,\r\n         \"InvoiceCurrencyVatableAmount\":200.0,\r\n         \"LocalVatableAmount\":200.0,\r\n         \"ProfitVatableAmount\":100.0,\r\n         \"InvoiceCurrencyVATAmount\":0.0,\r\n         \"LocalVATAmount\":0.0,\r\n         \"ProfitCurrencyVATAmount\":0.0,\r\n         \"ChangeSetOp\":1\r\n      }\r\n   ],\r\n   \"SetVoided\":false,\r\n   \"SetApproved\":false,\r\n\r\n   \"SetReSendQBO\":false,\r\n   \"JournalNumber\":\"1230\",\r\n   \"ShipmentConcurrencyGUID\":null,\r\n   \"ShipmentNewConcurrencyGUID\":null\r\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/apinvoices",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"apinvoices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETAPinvoice",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"GetAPinvoice\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"    ",
+							"     tests[\"APinvoiceExsits : \" + false] = (true);",
+							"     ",
+							"   }",
+							"   else {",
+							"    ",
+							"var idvalue=pm.response.json().Result[0].Id;",
+							"     pm.environment.set(\"APinvoieId\",idvalue);",
+							"",
+							"     tests[\"APinvoiceExsits : \" + true ] = (true);",
+							"    postman.setNextRequest(\"PostArpayment\");  ",
+							"    }",
+							"   ",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/apinvoiceviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{APInvoiceNumber}}&GetCount=true&PageIndex=0&PageSize=23&SortBy=CreateDate&SortDirection=Descending",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"apinvoiceviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "{{APInvoiceNumber}}"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": "SortBy",
+							"value": "CreateDate"
+						},
+						{
+							"key": "SortDirection",
+							"value": "Descending"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostArpayment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"CreateARPayment \", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue1 = (pm.response.json().Id);",
+							"     var idvalue = (pm.response.json().PaymentNo);",
+							"    var id1exist = idvalue1 !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.environment.set(\"paymentId\",idvalue1);",
+							"      pm.environment.set(\"PaymentNo\",idvalue);",
+							"    ",
+							"    ",
+							"     ",
+							"   tests[\"IdExist : \" + id1exist] = (id1exist);",
+							"   postman.setNextRequest(\"GETArpayment\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \r\n   \"Tenant\":{{Tenant}},\r\n   \"IsSecured\":true,\r\n   \"PaymentNo\":\"RP{{tot}}\",\r\n   \"CreateDate\":\"2019-06-10T20:14:25.5894288Z\",\r\n   \"CreatedByUserId\":\"1-82355\",\r\n  \r\n   \"LocalCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n  \r\n   \"AmountInPaymentCurrency\":12000.0,\r\n   \"AmountInLocalCurrency\":12000.0,\r\n \r\n   \"BranchId\":\"{{BranchId}}\",\r\n   \"BillToId\":\"{{CustomerId}}\",\r\n \r\n   \"StatusCode\":\"AD\",\r\n   \"IsClosed\":false,\r\n   \"PaymentCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"PaidBy\":null,\r\n   \"AccountingPaymentMethodId\":\"{{PaymentMethodId}}\",\r\n   \"AccountingPaymentMethodCode\":\"CA\",\r\n  \r\n   \"PaymentCurrencyExchangeRate\":1.0,\r\n   \"ExchangeRateDate\":null,\r\n   \"BillToAddressId\":\"{{CustomerAddressId}}\",\r\n   \"RegisterDate\":\"2019-08-02T00:00:00Z\",\r\n   \"SearchFields\":\"ARP2059,AD,CA,Accounting Customer 2 ,NIS\",\r\n   \r\n   \r\n   \"OpenAmount\":12000.0,\r\n   \"OpenAmountInLocalCurrency\": 12000.0,\r\n   \"ValueDate\":\"2019-08-02T00:00:00Z\",\r\n  \r\n   \"UpdatedByUserId\":\"1-82355\",\r\n   \"CreditCardTypeId\":null,\r\n  \r\n   \"SetVoided\":false,\r\n   \"SetApproved\":true,\r\n  \r\n \r\n   \"BillToPartnerTypeId\":\"CS\",\r\n\r\n   \r\n   \"IsFullAccounting\":true\r\n\r\n  \r\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/arpayments",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"arpayments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETArpayment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
 						"exec": [
 							"pm.test(\"GetARpaymnet\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -916,170 +591,337 @@
 					}
 				}
 			],
-			"folder": null,
-			"headers": "token: {{Token}}\n",
-			"pathVariables": {}
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/arpaymentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{PaymentNo}}&GetCount=true&PageIndex=0&PageSize=23&SortBy=CreateDate&SortDirection=Descending&&",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"arpaymentviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "{{PaymentNo}}"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": "SortBy",
+							"value": "CreateDate"
+						},
+						{
+							"key": "SortDirection",
+							"value": "Descending"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
 		},
 		{
-			"id": "9d57f4d8-2981-416f-9c9a-960948269f24",
-			"name": "PostArpayment",
-			"url": "{{URL}}/api/arpayments",
-			"description": null,
-			"data": [],
-			"dataOptions": null,
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"name": "Content-Type",
-					"value": "application/json",
-					"type": "text"
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
+			"name": "POSTAPpayment",
+			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "fb106f65-3db5-4896-8f26-3bc545f82ff4",
 						"exec": [
-							"pm.test(\"CreateARPayment \", function () {",
+							"pm.test(\"CreateAPPayment \", function () {",
 							"    pm.response.to.have.status(200);",
 							"    var idvalue1 = (pm.response.json().Id);",
-							"     var idvalue = (pm.response.json().PaymentNo);",
+							"    var idvalue = (pm.response.json().PaymentNo);",
 							"    var id1exist = idvalue1 !== null;",
 							"    pm.expect(id1exist);",
-							"    pm.environment.set(\"paymentId\",idvalue1);",
-							"      pm.environment.set(\"PaymentNo\",idvalue);",
-							"    ",
-							"    ",
-							"     ",
+							"    pm.environment.set(\"APPaymentId\",idvalue1);",
+							"    pm.environment.set(\"APPaymentNo\",idvalue);",
 							"   tests[\"IdExist : \" + id1exist] = (id1exist);",
-							"   postman.setNextRequest(\"GETArpayment\");",
+							"   postman.setNextRequest(\"GETAPpayment\");",
 							"});"
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
-			"folder": null,
-			"rawModeData": "{\r\n \r\n   \"Tenant\":{{Tenant}},\r\n   \"IsSecured\":true,\r\n   \"PaymentNo\":\"RP{{tot}}\",\r\n   \"CreateDate\":\"2019-06-10T20:14:25.5894288Z\",\r\n   \"CreatedByUserId\":\"1-82355\",\r\n  \r\n   \"LocalCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n  \r\n   \"AmountInPaymentCurrency\":12000.0,\r\n   \"AmountInLocalCurrency\":12000.0,\r\n \r\n   \"BranchId\":\"{{BranchId}}\",\r\n   \"BillToId\":\"{{CustomerId}}\",\r\n \r\n   \"StatusCode\":\"AD\",\r\n   \"IsClosed\":false,\r\n   \"PaymentCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"PaidBy\":null,\r\n   \"AccountingPaymentMethodId\":\"{{PaymentMethodId}}\",\r\n   \"AccountingPaymentMethodCode\":\"CA\",\r\n  \r\n   \"PaymentCurrencyExchangeRate\":1.0,\r\n   \"ExchangeRateDate\":null,\r\n   \"BillToAddressId\":\"{{CustomerAddressId}}\",\r\n   \"RegisterDate\":\"2019-08-02T00:00:00Z\",\r\n   \"SearchFields\":\"ARP2059,AD,CA,Accounting Customer 2 ,NIS\",\r\n   \r\n   \r\n   \"OpenAmount\":12000.0,\r\n   \"OpenAmountInLocalCurrency\": 12000.0,\r\n   \"ValueDate\":\"2019-08-02T00:00:00Z\",\r\n  \r\n   \"UpdatedByUserId\":\"1-82355\",\r\n   \"CreditCardTypeId\":null,\r\n  \r\n   \"SetVoided\":false,\r\n   \"SetApproved\":true,\r\n  \r\n \r\n   \"BillToPartnerTypeId\":\"CS\",\r\n\r\n   \r\n   \"IsFullAccounting\":true\r\n\r\n  \r\n}",
-			"headers": "Content-Type: application/json\ntoken: {{Token}}\n",
-			"pathVariables": {}
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"IsSecured\":true,\r\n   \"PaymentNo\":\"PP{{tot}}\",\r\n   \"CreateDate\":\"2019-05-20T12:09:35.6\",\r\n   \"CreatedByUserId\":\"1-81443\",\r\n   \"LocalCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyCode\":\"NIS\",\r\n   \"AmountInLocalCurrency\":100.0,\r\n   \r\n   \"AccountingPaymentMethodId\":\"{{PaymentMethodId}}\",\r\n   \"VendorId\":\"{{VendorId}}\",\r\n   \"StatusCode\":\"AD\",\r\n   \"IsClosed\":false,\r\n   \"PaymentMethodCode\":\"CA\",\r\n   \r\n   \"PaymentCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"AmountInPaymentCurrency\":100.0,\r\n   \"PaymentCurrencyExchangeRate\":1.0,\r\n   \"PaymentCurrencyExchangeRateDate\":null,\r\n   \"VendorAddressId\":\"{{VendorAddressId}}\",\r\n   \"RegisterDate\":\"2019-05-20T00:00:00\",\r\n   \"OpenAmount\":100.0,\r\n   \r\n   \"ValueDate\":\"2019-05-20T00:00:00\",\r\n   \"Bank\":null,\r\n   \"BankBranch\":null,\r\n   \"Account\":null,\r\n   \"SearchFields\":null,\r\n   \"CreatedByUserName\":null,\r\n   \"VendorName\":\"Clal Insurance Company\",\r\n   \"StatusName\":\"Approved\",\r\n   \r\n   \"BranchId\":\"{{BranchId}}\",\r\n   \"UpdateDate\":\"2019-05-20T12:09:35.6\",\r\n   \"UpdatedByUserId\":\"1-81443\",\r\n   \"CreditCardTypeId\":null,\r\n   \"FirstApproveDate\":null,\r\n   \"PaymentInvoices\":[\r\n\r\n   ],\r\n   \"SetVoided\":false,\r\n   \"SetApproved\":false,\r\n   \"SetCancelApproval\":false,\r\n   \"HasInvoicesErrors\":false,\r\n   \"VendorPartnerTypeId\":\"VD\",\r\n   \"SetReSendQBO\":false,\r\n   \"TaxDeductionLocalAmount\":30.00,\r\n   \"TaxDeductionPercentage\":30,\r\n   \"ApprovedByUserId\":null,\r\n   \"ApprovedDateTime\":null,\r\n   \"BankAccountId\":null,\r\n   \"BranchName\":\"Petah Tikva\"\r\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/appayments",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"appayments"
+					]
+				}
+			},
+			"response": []
 		},
 		{
-			"id": "bbcd029b-84ec-4675-a508-e51f891974db",
-			"name": "GETCashBooks",
-			"url": "{{URL}}/api/cashbookviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{CashBooksAccountNumber}}&GetCount=true&PageIndex=0&PageSize=22&SortBy=EnglishName&SortDirection=Ascending",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "authority",
-					"value": "test.logitudeworld.com"
-				},
-				{
-					"key": "accept",
-					"value": "application/json, text/plain, */*"
-				},
-				{
-					"key": "user-agent",
-					"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}"
-				},
-				{
-					"key": "sec-fetch-site",
-					"value": "same-origin"
-				},
-				{
-					"key": "sec-fetch-mode",
-					"value": "cors"
-				},
-				{
-					"key": "referer",
-					"value": "https://test.logitudeworld.com/staging/Angular19061113/index.html"
-				},
-				{
-					"key": "accept-encoding",
-					"value": "gzip, deflate, br"
-				},
-				{
-					"key": "accept-language",
-					"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
-				},
-				{
-					"key": "cookie",
-					"value": "email_cookie=sumaya@logitudeworld.com"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "ForceCacheRefresh",
-					"value": "false"
-				},
-				{
-					"key": "GetAll",
-					"value": "false"
-				},
-				{
-					"key": "Filter1Name",
-					"value": "SearchFields"
-				},
-				{
-					"key": "Filter1Operator",
-					"value": "Contains"
-				},
-				{
-					"key": "Filter1Value",
-					"value": "{{CashBooksAccountNumber}}"
-				},
-				{
-					"key": "GetCount",
-					"value": "true"
-				},
-				{
-					"key": "PageIndex",
-					"value": "0"
-				},
-				{
-					"key": "PageSize",
-					"value": "22"
-				},
-				{
-					"key": "SortBy",
-					"value": "EnglishName"
-				},
-				{
-					"key": "SortDirection",
-					"value": "Ascending"
-				},
-				{
-					"key": "AdditionalFilters",
-					"value": "\\[\\{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22RP11719157310734087%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false\\}\\]",
-					"enabled": false
-				}
-			],
-			"auth": null,
-			"events": [
+			"name": "GETAPpayment",
+			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "fa8b30d3-44c7-4b2a-84ac-0e1b6a752b3d",
+						"exec": [
+							"pm.test(\"GetAPpaymnet\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"    ",
+							"     tests[\"APpaymentExsits : \" + false] = (true);",
+							"     ",
+							"   }",
+							"   else {",
+							"    ",
+							"var idvalue=pm.response.json().Result[0].Id;",
+							"     pm.environment.set(\"APpaymentId\",idvalue);",
+							"",
+							"     tests[\"APpaymentExsits : \" + true ] = (true);",
+							"    postman.setNextRequest(\"PostCashbooks\");  ",
+							"    }",
+							"   ",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/appaymentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{APPaymentNo}}&GetCount=true&PageIndex=0&PageSize=23&SortBy=CreateDate&SortDirection=Descending&&",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"appaymentviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "{{APPaymentNo}}"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": "SortBy",
+							"value": "CreateDate"
+						},
+						{
+							"key": "SortDirection",
+							"value": "Descending"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostCashbooks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"PostCashbooks \", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue1 = (pm.response.json().Id);",
+							"    var idvalue2 = (pm.response.json().EnglishName);",
+							"    var idvalue = (pm.response.json().AccountNumber);",
+							"    var id1exist = idvalue1 !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.environment.set(\"CashBookId\",idvalue1);",
+							"    pm.environment.set(\"CashBooksAccountNumber\",idvalue);",
+							"    pm.environment.set(\"CashBooksAccountEnglishName\",idvalue2);",
+							"    tests[\"IdExist : \" + id1exist] = (id1exist);",
+							"    postman.setNextRequest(\"GETCashBooks\"); ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authority",
+						"value": "test.logitudeworld.com"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "origin",
+						"value": "https://test.logitudeworld.com"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "referer",
+						"value": "https://test.logitudeworld.com/staging/Angular19061118/index.html"
+					},
+					{
+						"key": "accept-encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "accept-language",
+						"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "cookie",
+						"value": "email_cookie=sumaya@logitudeworld.com"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \n    \"tenant\": {{Tenant}},\n    \"createdByUserId\": \"{{LoggedUserId}}\",\n    \"AccountNumber\":\"CB{{tot}}\", \n    \"updatedByUserId\": \"{{LoggedUserId}}\",\n    \"cashBookTypeCode\": \"2\",\n    \"currencyId\": \"{{AccountingCurrencyId}}\",\n    \"accountId\": \"{{BankGLAccountId}}\",\n    \"localName\": \"מבחן התרסקות\",\n    \"englishName\": \"Chash Book Test\",\n    \"branchId\": \"{{BranchCashBookId}}\"\n      \n}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/cashbooks",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"cashbooks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETCashBooks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
 						"exec": [
 							"pm.test(\"GETCashBooks\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1108,115 +950,211 @@
 					}
 				}
 			],
-			"folder": null,
-			"headers": "authority: test.logitudeworld.com\naccept: application/json, text/plain, */*\nuser-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36\ntoken: {{Token}}\nsec-fetch-site: same-origin\nsec-fetch-mode: cors\nreferer: https://test.logitudeworld.com/staging/Angular19061113/index.html\naccept-encoding: gzip, deflate, br\naccept-language: ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7\ncookie: email_cookie=sumaya@logitudeworld.com\n",
-			"pathVariables": {}
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authority",
+						"value": "test.logitudeworld.com"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "referer",
+						"value": "https://test.logitudeworld.com/staging/Angular19061113/index.html"
+					},
+					{
+						"key": "accept-encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "accept-language",
+						"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "cookie",
+						"value": "email_cookie=sumaya@logitudeworld.com"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/cashbookviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{CashBooksAccountNumber}}&GetCount=true&PageIndex=0&PageSize=22&SortBy=EnglishName&SortDirection=Ascending",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"cashbookviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "{{CashBooksAccountNumber}}"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						},
+						{
+							"key": "SortBy",
+							"value": "EnglishName"
+						},
+						{
+							"key": "SortDirection",
+							"value": "Ascending"
+						},
+						{
+							"key": "AdditionalFilters",
+							"value": "\\[\\{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22RP11719157310734087%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false\\}\\]",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
 		},
 		{
-			"id": "c64139e7-e1c8-4844-83e1-befd09074579",
-			"name": "GETBankAccount",
-			"url": "{{URL}}/api/bankaccountviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{BankAccountNumber}}&GetCount=true&PageIndex=0&PageSize=22&SortBy=EnglishName&SortDirection=Desending",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "authority",
-					"value": "test.logitudeworld.com"
-				},
-				{
-					"key": "accept",
-					"value": "application/json, text/plain, */*"
-				},
-				{
-					"key": "user-agent",
-					"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}"
-				},
-				{
-					"key": "sec-fetch-site",
-					"value": "same-origin"
-				},
-				{
-					"key": "sec-fetch-mode",
-					"value": "cors"
-				},
-				{
-					"key": "referer",
-					"value": "https://test.logitudeworld.com/staging/Angular19061113/index.html"
-				},
-				{
-					"key": "accept-encoding",
-					"value": "gzip, deflate, br"
-				},
-				{
-					"key": "accept-language",
-					"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
-				},
-				{
-					"key": "cookie",
-					"value": "email_cookie=sumaya@logitudeworld.com"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "ForceCacheRefresh",
-					"value": "false"
-				},
-				{
-					"key": "GetAll",
-					"value": "false"
-				},
-				{
-					"key": "Filter1Name",
-					"value": "SearchFields"
-				},
-				{
-					"key": "Filter1Operator",
-					"value": "Contains"
-				},
-				{
-					"key": "Filter1Value",
-					"value": "{{BankAccountNumber}}"
-				},
-				{
-					"key": "GetCount",
-					"value": "true"
-				},
-				{
-					"key": "PageIndex",
-					"value": "0"
-				},
-				{
-					"key": "PageSize",
-					"value": "22"
-				},
-				{
-					"key": "SortBy",
-					"value": "EnglishName"
-				},
-				{
-					"key": "SortDirection",
-					"value": "Desending"
-				},
-				{
-					"key": "AdditionalFilters",
-					"value": "\\[\\{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22BKTest14%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false\\}\\]",
-					"enabled": false
-				}
-			],
-			"auth": null,
-			"events": [
+			"name": "PostBankAccount",
+			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "dd0c6323-72ba-458d-ab5e-e9b69f9a39b8",
+						"exec": [
+							"pm.test(\"PostBankAccount\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue = (pm.response.json().AccountNumber);",
+							"    var idvalue1 = (pm.response.json().Id);",
+							"    var idvalue2 = (pm.response.json().EnglishName);",
+							"    var id1exist = idvalue1 !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.environment.set(\"BankAccountId\",idvalue1);",
+							"    pm.environment.set(\"BankAccountNumber\",idvalue);",
+							"    pm.environment.set(\"BankAccountEnglishName\",idvalue2);",
+							"    tests[\"IdExist : \" + id1exist] = (id1exist);",
+							"    postman.setNextRequest(\"GETBankAccount\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authority",
+						"value": "test.logitudeworld.com"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "origin",
+						"value": "https://test.logitudeworld.com"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "referer",
+						"value": "https://test.logitudeworld.com/staging/Angular19061113/index.html"
+					},
+					{
+						"key": "accept-encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "accept-language",
+						"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "cookie",
+						"value": "email_cookie=sumaya@logitudeworld.com"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"tenant\": {{Tenant}},\n    \"bankId\": \"{{CodeId}}\",\n    \"branchNumber\": 99,\n    \"accountNumber\": \"BK{{tot}}\",\n    \"currencyId\": \"{{AccountingCurrencyId}}\",\n    \"gLAccountId\": \"{{BankGLAccountId}}\",\n    \"deferredGLAccountId\": \"{{BankGLAccountId}}\",\n    \"transferGLAcccountId\": \"{{BankGLAccountId}}\",\n    \"EnglishName\":\"Bank Account Test\",\n    \"LocalName\":\"מבחן חשבון בנק\"\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/bankaccounts",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"bankaccounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETBankAccount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
 						"exec": [
 							"pm.test(\"GETBankAccount\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1239,167 +1177,216 @@
 					}
 				}
 			],
-			"folder": null,
-			"headers": "authority: test.logitudeworld.com\naccept: application/json, text/plain, */*\nuser-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36\ntoken: {{Token}}\nsec-fetch-site: same-origin\nsec-fetch-mode: cors\nreferer: https://test.logitudeworld.com/staging/Angular19061113/index.html\naccept-encoding: gzip, deflate, br\naccept-language: ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7\ncookie: email_cookie=sumaya@logitudeworld.com\n",
-			"pathVariables": {}
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authority",
+						"value": "test.logitudeworld.com"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "referer",
+						"value": "https://test.logitudeworld.com/staging/Angular19061113/index.html"
+					},
+					{
+						"key": "accept-encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "accept-language",
+						"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "cookie",
+						"value": "email_cookie=sumaya@logitudeworld.com"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/bankaccountviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{BankAccountNumber}}&GetCount=true&PageIndex=0&PageSize=22&SortBy=EnglishName&SortDirection=Desending",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"bankaccountviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "{{BankAccountNumber}}"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						},
+						{
+							"key": "SortBy",
+							"value": "EnglishName"
+						},
+						{
+							"key": "SortDirection",
+							"value": "Desending"
+						},
+						{
+							"key": "AdditionalFilters",
+							"value": "\\[\\{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22BKTest14%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false\\}\\]",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
 		},
 		{
-			"id": "cdfab843-76f6-4d69-a213-0f1968a27aac",
-			"name": "UpdateGlACcount",
-			"url": "{{URL}}/api/glaccounts/",
-			"description": null,
-			"data": [],
-			"dataOptions": null,
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"type": "text"
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				}
-			],
-			"method": "PUT",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
+			"name": "PostPaymentCheques",
+			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "c2579dff-51df-4240-8f0e-646a04be621e",
 						"exec": [
-							"pm.test(\"Update GlACcount\", function () {",
-							"   pm.response.to.have.status(200);",
-							"    var idvalue =(pm.response.json().Id);",
-							"    var idexist = idvalue !== null;",
-							"    pm.expect(idexist);",
-							"     tests[\"GlAccountUpdatedsuccessfully: \" + idexist ] = (idexist);",
-							"    postman.setNextRequest(\"PostARinvoice\"); ",
-							"    ",
-							"   ",
-							"    ",
-							"});",
-							"    "
+							"pm.test(\"PostPaymentCheques \", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue = (pm.response.json().ChequeNumber);",
+							"    var idvalue1 = (pm.response.json().Id);",
+							"    var id1exist = idvalue1 !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.environment.set(\"PaymentChequeId\",idvalue1);",
+							"    pm.environment.set(\"PaymentChequeNumber\",idvalue);",
+							"    tests[\"IdExist : \" + id1exist] = (id1exist);",
+							"    postman.setNextRequest(\"GETPaymentCheques\");",
+							"});"
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
-			"folder": null,
-			"rawModeData": "{\"Id\": \"{{VendorGLAccountId}}\",\n            \"Tenant\": {{Tenant}},\n            \"InternalNumber\": \"{{InternalNumber}}\",\n            \"AccountTypeCode\": \"3\",\n            \"DisplayNumber\": \"{{DisplayNumber}}\",\n            \"LocalName\": \"VendGlAccountLocal{{RandomNum}}\",\n            \"EnglishName\": \"VendGlAccountEnglish\",\n            \"SearchFields\": \"PMGLVend,VendGlAccountEnglish,VendGlAccountLocal\",\n            \"IsMultiCurrency\": true,\n            \"CurrencyId\": null,\n            \"RevenueExpenseType\": \"3\",\n            \"IsControlAccount\": false,\n            \"ChartOfAccountsId\": \"{{ChartOfAccountsId}}\",\n            \"Inactive\": false,\n            \"AccountTypeName\": \"Vendor\",\n            \"CurrencyName\": null,\n            \"RevenueExpenseName\": \"Other\",\n            \"ChartOfAccountsName\": \"ספקים\",\n            \"ChartOfAccountsTypeCode\": \"4\",\n            \"ChartOfAccountsTypeName\": \"Vendors\",\n            \"CurrencyCode\": \"Multi\",\n            \"ReconcileMethodCode\": \"0\",\n            \"ReconcileMethodName\": \"Local Currency\",\n            \"ControlAccountId\": \"{{VendorControlAccountId}}\",\n            \"ActiveStatusName\": \"Active\",\n            \"AutomaticReconcileId\": null,\n            \"AutomaticReconcileName\": null,\n            \"PreviousEnglishName\": null,\n            \"PreviousEnglishNameChangeDate\": \"2019-06-24T11:40:54.927\",\n            \"PreviousLocalName\": null,\n            \"PreviousLocalNameChangeDate\": \"2019-06-24T11:40:54.927\",\n            \"PreviousNumber\": null,\n            \"PreviousNumberChangeDate\": \"2019-06-24T11:40:54.927\",\n            \"PreviousChartOfAccountsId\": null,\n            \"PreviousChartOfAccountsChangeDate\": \"2019-06-24T11:40:54.927\",\n            \"CustomerGLAccountId\": null,\n            \"CustomerGLAccountName\": null,\n            \"CustomerGLAccountNumber\": null,\n            \"BalanceInLocalCurrency\": 1200,\n            \"RevaluationEnabled\": null,\n            \"ParentAccountId\": null,\n            \"ParentAccountName\": null,\n            \"ParentAccountNumber\": null,\n            \"Category1Id\": null,\n            \"Category1Name\": null,\n            \"Category2Id\": null,\n            \"Category2Name\": null,\n            \"Category3Id\": null,\n            \"Category3Name\": null,\n            \"Category4Id\": null,\n            \"Category4Name\": null,\n            \"Category5Id\": null,\n            \"Category5Name\": null,\n            \"IsVATExempt\": null,\n            \"LastActivityDate\": null,\n            \"LastActivityTypeName\": null,\n            \"LastActivityByUserName\": null,\n            \"VatNumber\": null,\n            \"PaymentTermId\": null,\n            \"SalesmanUserId\": null,\n            \"NewGLAccountCardId\": null,\n            \"LocalBalanceInDue\": 1200,\n            \"NextDueDate\": null,\n            \"CurrencySign\": \"\",\n            \"DeductionFileTypeId\": null,\n            \"DeductionFileNumber\": null,\n            \"AssessingOfficeCode\": null,\n            \"Occupation\": null,\n            \"DeductionTypeId\": null,\n            \"ConsolidationVat\": null,\n            \"IsEquipmentVendor\": false,\n            \"ExcludeFromDeductionReport\": false,\n            \"DeductionTypeName\": null,\n            \"DeductionFileTypeCode\": null,\n            \"DeductionFileTypeName\": null,\n            \"AssessingOfficeName\": null,\n            \"DeductionTypeEnglishName\": null,\n            \"TotalOpenChequesInLocalCur\": null,\n            \"AutomaticReconcileLocalName\": null,\n            \"ReconcileMethodLocalName\": \"מטבע מקומי\",\n            \"TotFutureOpenChequesInLocalCur\": null,\n            \"CardId\": null,\n            \"CreatedByUserId\": null,\n            \"UpdatedByUserId\": null,\n            \"CreateDate\": \"2019-06-24T11:40:54.267\",\n            \"UpdateDate\": \"2019-06-24T11:40:54.507\",\n            \"CreatedByUserName\": \"khawla T0 \",\n            \"UpdatedByUserName\": \"khawla T0 \",\n            \"CreatedByLocalName\": \"עברית חוולה\",\n            \"UpdatedByLocalName\": \"עברית חוולה\"\n        }",
-			"headers": "Content-Type: application/json\ntoken: {{Token}}\n",
-			"pathVariables": {}
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authority",
+						"value": "test.logitudeworld.com"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "origin",
+						"value": "https://test.logitudeworld.com"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "referer",
+						"value": "https://test.logitudeworld.com/staging/Angular19061118/index.html"
+					},
+					{
+						"key": "accept-encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "accept-language",
+						"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "cookie",
+						"value": "email_cookie=sumaya@logitudeworld.com"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"tenant\": \"{{Tenant}}\",\n    \"currencyId\": \"{{AccountingCurrencyId}}\",\n    \"ChequeNumber\":\"PC{{tot}}\",\n    \"valueDate\": \"2019-11-07T05:57:35.324Z\",\n    \"bankAccountId\": \"{{BankAccountId}}\",\n    \"localAmount\": 200,\n    \"payToGLAccountId\": \"{{BankGLAccountId}}\",\n    \"payToName\": \"Bank Account Test\",\n    \"createdByUserId\": \"{{LoggedUserId}}\",\n    \"updatedByUserId\": \"{{LoggedUserId}}\",\n    \"SearchFields\":\"PC{{tot}}\"\n \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/paymentcheques",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"paymentcheques"
+					]
+				}
+			},
+			"response": []
 		},
 		{
-			"id": "e133217c-b6f8-4ecf-ba05-4ae155d8b53d",
 			"name": "GETPaymentCheques",
-			"url": "{{URL}}/api/paymentchequeviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{PaymentChequeNumber}}&GetCount=true&PageIndex=0&PageSize=22&SortBy=CreateDate&SortDirection=Desending",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "authority",
-					"value": "test.logitudeworld.com"
-				},
-				{
-					"key": "accept",
-					"value": "application/json, text/plain, */*"
-				},
-				{
-					"key": "user-agent",
-					"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}"
-				},
-				{
-					"key": "sec-fetch-site",
-					"value": "same-origin"
-				},
-				{
-					"key": "sec-fetch-mode",
-					"value": "cors"
-				},
-				{
-					"key": "referer",
-					"value": "https://test.logitudeworld.com/staging/Angular19061113/index.html"
-				},
-				{
-					"key": "accept-encoding",
-					"value": "gzip, deflate, br"
-				},
-				{
-					"key": "accept-language",
-					"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
-				},
-				{
-					"key": "cookie",
-					"value": "email_cookie=sumaya@logitudeworld.com"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "ForceCacheRefresh",
-					"value": "false"
-				},
-				{
-					"key": "GetAll",
-					"value": "false"
-				},
-				{
-					"key": "Filter1Name",
-					"value": "SearchFields"
-				},
-				{
-					"key": "Filter1Operator",
-					"value": "Contains"
-				},
-				{
-					"key": "Filter1Value",
-					"value": "{{PaymentChequeNumber}}"
-				},
-				{
-					"key": "GetCount",
-					"value": "true"
-				},
-				{
-					"key": "PageIndex",
-					"value": "0"
-				},
-				{
-					"key": "PageSize",
-					"value": "22"
-				},
-				{
-					"key": "SortBy",
-					"value": "CreateDate"
-				},
-				{
-					"key": "SortDirection",
-					"value": "Desending"
-				},
-				{
-					"key": "AdditionalFilters",
-					"value": "\\[\\{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22PC1171915731210%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false\\}\\]",
-					"enabled": false
-				}
-			],
-			"auth": null,
-			"events": [
+			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "4cb17b4e-62ce-4ccf-9162-5da7dc610869",
 						"exec": [
 							"pm.test(\"GETPaymentCheques\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1418,77 +1405,117 @@
 					}
 				}
 			],
-			"folder": null,
-			"headers": "authority: test.logitudeworld.com\naccept: application/json, text/plain, */*\nuser-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36\ntoken: {{Token}}\nsec-fetch-site: same-origin\nsec-fetch-mode: cors\nreferer: https://test.logitudeworld.com/staging/Angular19061113/index.html\naccept-encoding: gzip, deflate, br\naccept-language: ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7\ncookie: email_cookie=sumaya@logitudeworld.com\n",
-			"pathVariables": {}
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authority",
+						"value": "test.logitudeworld.com"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "referer",
+						"value": "https://test.logitudeworld.com/staging/Angular19061113/index.html"
+					},
+					{
+						"key": "accept-encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "accept-language",
+						"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "cookie",
+						"value": "email_cookie=sumaya@logitudeworld.com"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/paymentchequeviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{PaymentChequeNumber}}&GetCount=true&PageIndex=0&PageSize=22&SortBy=CreateDate&SortDirection=Desending",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"paymentchequeviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "{{PaymentChequeNumber}}"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						},
+						{
+							"key": "SortBy",
+							"value": "CreateDate"
+						},
+						{
+							"key": "SortDirection",
+							"value": "Desending"
+						},
+						{
+							"key": "AdditionalFilters",
+							"value": "\\[\\{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22PC1171915731210%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false\\}\\]",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
 		},
 		{
-			"id": "e67c0524-2937-42d5-bda4-829fa29cd966",
 			"name": "PostDeposit",
-			"url": "{{URL}}/api/bankdeposits",
-			"description": null,
-			"data": [],
-			"dataOptions": null,
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "authority",
-					"value": "test.logitudeworld.com"
-				},
-				{
-					"key": "accept",
-					"value": "application/json, text/plain, */*"
-				},
-				{
-					"key": "origin",
-					"value": "https://test.logitudeworld.com"
-				},
-				{
-					"key": "user-agent",
-					"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}"
-				},
-				{
-					"key": "content-type",
-					"value": "application/json"
-				},
-				{
-					"key": "sec-fetch-site",
-					"value": "same-origin"
-				},
-				{
-					"key": "sec-fetch-mode",
-					"value": "cors"
-				},
-				{
-					"key": "referer",
-					"value": "https://test.logitudeworld.com/staging/Angular19061113/index.html"
-				},
-				{
-					"key": "accept-encoding",
-					"value": "gzip, deflate, br"
-				},
-				{
-					"key": "accept-language",
-					"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
-				},
-				{
-					"key": "cookie",
-					"value": "email_cookie=sumaya@logitudeworld.com"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
+			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "b1f408ec-1c81-4ae1-be44-3e150c5ee906",
 						"exec": [
 							"pm.test(\"PostDeposit\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -1506,250 +1533,253 @@
 					}
 				}
 			],
-			"folder": null,
-			"rawModeData": "{\n    \"accountingDate\": \"2019-11-02T11:34:48.000Z\",\n    \"tenant\": {{Tenant}},\n    \"depositDate\": \"2019-11-02T11:34:48.000Z\",\n    \"cashBookId\": \"{{CashBookId}}\",\n    \"depositCurrencyId\": \"{{AccountingCurrencyId}}\",\n    \"depositBankAccountId\": \"{{BankAccountId}}\",\n    \"isCashDeposit\": true,\n    \"cashBookName\": \"{{CashBooksAccountEnglishName}}\",\n    \"bankAccountNumber\": \"{{BankAccountNumber}}\",\n    \"foreignAmount\": \"335\",\n    \"localDepositAmount\": 335,\n    \"createdByUserId\": \"{{LoggedUserId}}\",\n    \"updatedByUserId\": \"{{LoggedUserId}}\",\n}",
-			"headers": "authority: test.logitudeworld.com\naccept: application/json, text/plain, */*\norigin: https://test.logitudeworld.com\nuser-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36\ntoken: {{Token}}\ncontent-type: application/json\nsec-fetch-site: same-origin\nsec-fetch-mode: cors\nreferer: https://test.logitudeworld.com/staging/Angular19061113/index.html\naccept-encoding: gzip, deflate, br\naccept-language: ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7\ncookie: email_cookie=sumaya@logitudeworld.com\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "ed989167-46b9-4605-bbe1-78cc6b1b296b",
-			"name": "PostPaymentCheques",
-			"url": "{{URL}}/api/paymentcheques",
-			"description": null,
-			"data": [],
-			"dataOptions": {
-				"raw": {
-					"language": "json"
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authority",
+						"value": "test.logitudeworld.com"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "origin",
+						"value": "https://test.logitudeworld.com"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "referer",
+						"value": "https://test.logitudeworld.com/staging/Angular19061113/index.html"
+					},
+					{
+						"key": "accept-encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "accept-language",
+						"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "cookie",
+						"value": "email_cookie=sumaya@logitudeworld.com"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"accountingDate\": \"2019-11-02T11:34:48.000Z\",\n    \"tenant\": {{Tenant}},\n    \"depositDate\": \"2019-11-02T11:34:48.000Z\",\n    \"cashBookId\": \"{{CashBookId}}\",\n    \"depositCurrencyId\": \"{{AccountingCurrencyId}}\",\n    \"depositBankAccountId\": \"{{BankAccountId}}\",\n    \"isCashDeposit\": true,\n    \"cashBookName\": \"{{CashBooksAccountEnglishName}}\",\n    \"bankAccountNumber\": \"{{BankAccountNumber}}\",\n    \"foreignAmount\": \"335\",\n    \"localDepositAmount\": 335,\n    \"createdByUserId\": \"{{LoggedUserId}}\",\n    \"updatedByUserId\": \"{{LoggedUserId}}\",\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/bankdeposits",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"bankdeposits"
+					]
 				}
 			},
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "authority",
-					"value": "test.logitudeworld.com"
-				},
-				{
-					"key": "accept",
-					"value": "application/json, text/plain, */*"
-				},
-				{
-					"key": "origin",
-					"value": "https://test.logitudeworld.com"
-				},
-				{
-					"key": "user-agent",
-					"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}"
-				},
-				{
-					"key": "Content-Type",
-					"name": "Content-Type",
-					"value": "application/json",
-					"type": "text"
-				},
-				{
-					"key": "sec-fetch-site",
-					"value": "same-origin"
-				},
-				{
-					"key": "sec-fetch-mode",
-					"value": "cors"
-				},
-				{
-					"key": "referer",
-					"value": "https://test.logitudeworld.com/staging/Angular19061118/index.html"
-				},
-				{
-					"key": "accept-encoding",
-					"value": "gzip, deflate, br"
-				},
-				{
-					"key": "accept-language",
-					"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
-				},
-				{
-					"key": "cookie",
-					"value": "email_cookie=sumaya@logitudeworld.com"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "090f6199-aedb-40b6-adc6-37d57ee366e7",
-						"exec": [
-							"pm.test(\"PostPaymentCheques \", function () {",
-							"    pm.response.to.have.status(200);",
-							"    var idvalue = (pm.response.json().ChequeNumber);",
-							"    var idvalue1 = (pm.response.json().Id);",
-							"    var id1exist = idvalue1 !== null;",
-							"    pm.expect(id1exist);",
-							"    pm.environment.set(\"PaymentChequeId\",idvalue1);",
-							"    pm.environment.set(\"PaymentChequeNumber\",idvalue);",
-							"    tests[\"IdExist : \" + id1exist] = (id1exist);",
-							"    postman.setNextRequest(\"GETPaymentCheques\");",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"rawModeData": "{\n    \"tenant\": \"{{Tenant}}\",\n    \"currencyId\": \"{{AccountingCurrencyId}}\",\n    \"ChequeNumber\":\"PC{{tot}}\",\n    \"valueDate\": \"2019-11-07T05:57:35.324Z\",\n    \"bankAccountId\": \"{{BankAccountId}}\",\n    \"localAmount\": 200,\n    \"payToGLAccountId\": \"{{BankGLAccountId}}\",\n    \"payToName\": \"Bank Account Test\",\n    \"createdByUserId\": \"{{LoggedUserId}}\",\n    \"updatedByUserId\": \"{{LoggedUserId}}\",\n    \"SearchFields\":\"PC{{tot}}\"\n \n}",
-			"headers": "authority: test.logitudeworld.com\naccept: application/json, text/plain, */*\norigin: https://test.logitudeworld.com\nuser-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36\ntoken: {{Token}}\nContent-Type: application/json\nsec-fetch-site: same-origin\nsec-fetch-mode: cors\nreferer: https://test.logitudeworld.com/staging/Angular19061118/index.html\naccept-encoding: gzip, deflate, br\naccept-language: ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7\ncookie: email_cookie=sumaya@logitudeworld.com\n",
-			"pathVariables": {}
+			"response": []
 		},
 		{
-			"id": "ee1e2a3a-e995-4486-bc8b-e79162bbf969",
-			"name": "POSTAPpayment",
-			"url": "{{URL}}/api/appayments",
-			"description": null,
-			"data": [],
-			"dataOptions": null,
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"name": "Content-Type",
-					"value": "application/json",
-					"type": "text"
-				},
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [
+			"name": "GETDeposit",
+			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "a0d6dc27-4b10-48f2-87aa-3443724c15d6",
 						"exec": [
-							"pm.test(\"CreateAPPayment \", function () {",
-							"    pm.response.to.have.status(200);",
-							"    var idvalue1 = (pm.response.json().Id);",
-							"    var idvalue = (pm.response.json().PaymentNo);",
-							"    var id1exist = idvalue1 !== null;",
-							"    pm.expect(id1exist);",
-							"    pm.environment.set(\"APPaymentId\",idvalue1);",
-							"    pm.environment.set(\"APPaymentNo\",idvalue);",
-							"   tests[\"IdExist : \" + id1exist] = (id1exist);",
-							"   postman.setNextRequest(\"GETAPpayment\");",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"folder": null,
-			"rawModeData": "{\r\n   \r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"IsSecured\":true,\r\n   \"PaymentNo\":\"PP{{tot}}\",\r\n   \"CreateDate\":\"2019-05-20T12:09:35.6\",\r\n   \"CreatedByUserId\":\"1-81443\",\r\n   \"LocalCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyCode\":\"NIS\",\r\n   \"AmountInLocalCurrency\":100.0,\r\n   \r\n   \"AccountingPaymentMethodId\":\"{{PaymentMethodId}}\",\r\n   \"VendorId\":\"{{VendorId}}\",\r\n   \"StatusCode\":\"AD\",\r\n   \"IsClosed\":false,\r\n   \"PaymentMethodCode\":\"CA\",\r\n   \r\n   \"PaymentCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"AmountInPaymentCurrency\":100.0,\r\n   \"PaymentCurrencyExchangeRate\":1.0,\r\n   \"PaymentCurrencyExchangeRateDate\":null,\r\n   \"VendorAddressId\":\"{{VendorAddressId}}\",\r\n   \"RegisterDate\":\"2019-05-20T00:00:00\",\r\n   \"OpenAmount\":100.0,\r\n   \r\n   \"ValueDate\":\"2019-05-20T00:00:00\",\r\n   \"Bank\":null,\r\n   \"BankBranch\":null,\r\n   \"Account\":null,\r\n   \"SearchFields\":null,\r\n   \"CreatedByUserName\":null,\r\n   \"VendorName\":\"Clal Insurance Company\",\r\n   \"StatusName\":\"Approved\",\r\n   \r\n   \"BranchId\":\"{{BranchId}}\",\r\n   \"UpdateDate\":\"2019-05-20T12:09:35.6\",\r\n   \"UpdatedByUserId\":\"1-81443\",\r\n   \"CreditCardTypeId\":null,\r\n   \"FirstApproveDate\":null,\r\n   \"PaymentInvoices\":[\r\n\r\n   ],\r\n   \"SetVoided\":false,\r\n   \"SetApproved\":false,\r\n   \"SetCancelApproval\":false,\r\n   \"HasInvoicesErrors\":false,\r\n   \"VendorPartnerTypeId\":\"VD\",\r\n   \"SetReSendQBO\":false,\r\n   \"TaxDeductionLocalAmount\":30.00,\r\n   \"TaxDeductionPercentage\":30,\r\n   \"ApprovedByUserId\":null,\r\n   \"ApprovedDateTime\":null,\r\n   \"BankAccountId\":null,\r\n   \"BranchName\":\"Petah Tikva\"\r\n}",
-			"headers": "Content-Type: application/json\ntoken: {{Token}}\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "f68df0fd-4399-4f2c-afa7-6d06b965a3be",
-			"name": "GETAPinvoice",
-			"url": "{{URL}}/api/apinvoiceviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{APInvoiceNumber}}&GetCount=true&PageIndex=0&PageSize=23&SortBy=CreateDate&SortDirection=Descending",
-			"description": null,
-			"data": null,
-			"dataOptions": null,
-			"dataMode": null,
-			"headerData": [
-				{
-					"key": "token",
-					"value": "{{Token}}",
-					"type": "text"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "ForceCacheRefresh",
-					"value": "false"
-				},
-				{
-					"key": "GetAll",
-					"value": "false"
-				},
-				{
-					"key": "Filter1Name",
-					"value": "SearchFields"
-				},
-				{
-					"key": "Filter1Operator",
-					"value": "Contains"
-				},
-				{
-					"key": "Filter1Value",
-					"value": "{{APInvoiceNumber}}"
-				},
-				{
-					"key": "GetCount",
-					"value": "true"
-				},
-				{
-					"key": "PageIndex",
-					"value": "0"
-				},
-				{
-					"key": "PageSize",
-					"value": "23"
-				},
-				{
-					"key": "SortBy",
-					"value": "CreateDate"
-				},
-				{
-					"key": "SortDirection",
-					"value": "Descending"
-				}
-			],
-			"auth": null,
-			"events": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "30343d70-34bc-465c-8214-d63511d1b82b",
-						"exec": [
-							"pm.test(\"GetAPinvoice\", function () {",
+							"pm.test(\"GETDeposit\", function () {",
 							"   pm.response.to.have.status(200);",
 							"   if(pm.response.json().Result.length < 1 ){",
-							"    ",
-							"     tests[\"APinvoiceExsits : \" + false] = (true);",
-							"     ",
+							"     tests[\"DepositExsits : \" + false] = (true);",
 							"   }",
 							"   else {",
-							"    ",
-							"var idvalue=pm.response.json().Result[0].Id;",
-							"     pm.environment.set(\"APinvoieId\",idvalue);",
-							"",
-							"     tests[\"APinvoiceExsits : \" + true ] = (true);",
-							"    postman.setNextRequest(\"PostArpayment\");  ",
+							"    var idvalue=pm.response.json().Result[0].Id;",
+							"    pm.environment.set(\"DepositId\",idvalue);",
+							"    tests[\"DepositExsits : \" + true ] = (true);",
+							"    postman.setNextRequest(\"LoggedOut\");  ",
 							"    }",
-							"   ",
-							"    ",
 							"});"
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
-			"folder": null,
-			"headers": "token: {{Token}}\n",
-			"pathVariables": {}
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authority",
+						"value": "test.logitudeworld.com"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "referer",
+						"value": "https://test.logitudeworld.com/staging/Angular19061113/index.html"
+					},
+					{
+						"key": "accept-encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "accept-language",
+						"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "cookie",
+						"value": "email_cookie=sumaya@logitudeworld.com"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/bankdepositviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{DepositNumber}}&GetCount=true&PageIndex=0&PageSize=22&SortBy=DepositNumber&SortDirection=Desending",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"bankdepositviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "{{DepositNumber}}"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						},
+						{
+							"key": "SortBy",
+							"value": "DepositNumber"
+						},
+						{
+							"key": "SortDirection",
+							"value": "Desending"
+						},
+						{
+							"key": "AdditionalFilters",
+							"value": "\\[\\{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%221179%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false\\}\\]",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LoggedOut",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Logged Out successfuly \", function () {",
+							"    pm.response.to.have.status(200);",
+							" });"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"Email\":\"khawla@logitudeworld.com\",\"Password\":\"0597485181@kh\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":989} "
+				},
+				"url": {
+					"raw": "{{URL}}/api/authentication/GetSignOut",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"authentication",
+						"GetSignOut"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

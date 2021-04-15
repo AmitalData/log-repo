@@ -261,7 +261,7 @@ export class FollowupButton implements OnInit, OnDestroy {
         else if (this.ShipmentPM) {
             switch (this.FollowupLegType) {
 
-                // Pre
+                // Pre Carriage
                 case "PreCarriageDeparture": {
                     this.ExpDateName = "PreCarriageETD";
                     this.ActDateName = "PreCarriageATD";
@@ -270,6 +270,18 @@ export class FollowupButton implements OnInit, OnDestroy {
                 case "PreCarriageArrival": {
                     this.ExpDateName = "PreCarriageETA";
                     this.ActDateName = "PreCarriageATA";
+                    break;
+                }
+
+                // Pre Forwarding
+                case "PreForwardingDeparture": {
+                    this.ExpDateName = "PreForwardingETD";
+                    this.ActDateName = "PreForwardingATD";
+                    break;
+                }
+                case "PreForwardingArrival": {
+                    this.ExpDateName = "PreForwardingETA";
+                    this.ActDateName = "PreForwardingATA";
                     break;
                 }
 
@@ -321,7 +333,7 @@ export class FollowupButton implements OnInit, OnDestroy {
                     break;
                 }
 
-                // On
+                // On Carriage
                 case "OnCarriageDeparture": {
                     this.ExpDateName = "OnCarriageETD";
                     this.ActDateName = "OnCarriageATD";
@@ -330,6 +342,18 @@ export class FollowupButton implements OnInit, OnDestroy {
                 case "OnCarriageArrival": {
                     this.ExpDateName = "OnCarriageETA";
                     this.ActDateName = "OnCarriageATA";
+                    break;
+                }
+
+                // On Forwarding
+                case "OnForwardingDeparture": {
+                    this.ExpDateName = "OnForwardingETD";
+                    this.ActDateName = "OnForwardingATD";
+                    break;
+                }
+                case "OnForwardingArrival": {
+                    this.ExpDateName = "OnForwardingETA";
+                    this.ActDateName = "OnForwardingATA";
                     break;
                 }
 

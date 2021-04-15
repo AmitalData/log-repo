@@ -30,7 +30,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             string active = TranslateTextsClass.Translate("GLAccounts.Q.Active", 0);
             string inactive = TranslateTextsClass.Translate("GLAccounts.Q.Inactive", 0);
             GLAccountRepository repository = new GLAccountRepository(context);
-            IQueryable<GLAccountList> query = (from a in iQueryable
+            IQueryable<GLAccountList> query = (from a in iQueryable.Include("ChartOfAccount").Include("ChartOfAccountsType")
                                                join md in context.GLAccountMoreDatas on a.Id equals md.AccountId
                                                select new GLAccountList()
                                                     {
@@ -68,7 +68,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         ChartOfAccountsName = a.ChartOfAccount != null ? a.ChartOfAccount.LocalName : null,
                                                         ChartOfAccountsEnglishName = a.ChartOfAccount != null ? a.ChartOfAccount.EnglishName : null,
                                                         ChartOfAccountsLocalName = a.ChartOfAccount != null ? a.ChartOfAccount.LocalName : null,
-
+                                                        CardsDataId= a.CardsDataId,
                                                         ActiveStatusName = a.Inactive == false ? active : inactive,
                                                         AutomaticReconcileId = a.AutomaticReconcileId,
                                                         AutomaticReconcileName = a.AutomaticReconcile != null ?

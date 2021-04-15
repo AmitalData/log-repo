@@ -28,7 +28,6 @@ import { ShipmentPickupValidator } from '../../../../Shipment/Validators/Shipmen
 
 export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
   public SelectedTab: any;
-
     public EntityPM: ShipmentPickUpPM;
     public ShipmentPM: ShipmentPM;
     public ObjectTableName: string = "ShipmentPickUpDelivery";

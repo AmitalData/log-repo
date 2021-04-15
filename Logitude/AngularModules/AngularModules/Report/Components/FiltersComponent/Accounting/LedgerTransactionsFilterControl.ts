@@ -124,14 +124,11 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     }
 
     FillDefaultDateDetails() {
-        if (AppTool.IsNullOrEmpty(this.ToDate)) {
-            this.ToDate = new Date();
-        }
-
-        if (AppTool.IsNullOrEmpty(this.FromDate)) {
-            var today = new Date();
-            var lastmonth = today.setMonth(today.getMonth() - 1);
-            this.FromDate = new Date(lastmonth);
+        if (!this.IsSchedulerReport) {
+            this.ToDate = AppTool.IsNullOrEmpty(this.ToDate) ? new Date() : this.ToDate;
+            const today = new Date();
+            const lastmonth = today.setMonth(today.getMonth() - 1);
+            this.FromDate = AppTool.IsNullOrEmpty(this.FromDate) ? new Date(lastmonth) : this.FromDate;
         }
     }
 
@@ -184,8 +181,10 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
             setTimeout(() =>
             {
-                this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustGreaterFromDate"));
-                this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
+                if (!this.IsOldDate("ToDate"))
+                    this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustGreaterFromDate"));
+                if (!this.IsOldDate("FromDate"))
+                    this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
                 this.CD.detectChanges();
             }, 200);
 
@@ -199,7 +198,18 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
         }
     }
+
+    private IsOldDate(fieldName) {
+        let isOldDate: boolean = false;
+        const uiProperty = this.UIProperties.UIPropertyList.filter(uiProp => uiProp.FieldName == fieldName)[0];
+        if (uiProperty)
+            isOldDate = uiProperty.ValidationError == "Date time is too way in the past!" || uiProperty.ValidationError == "Invalid Date";
+        
+        return isOldDate;
+    }
+
     private chartOfAccountId: string;
+
     get ChartOfAccountId() { return this.chartOfAccountId; }
     set ChartOfAccountId(value: string)
     {
@@ -370,6 +380,10 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         }
     }
 
+    GetMainCustomerFieldName() {
+        return 'GLAccountId';
+    }
+
     IsPartnersChanged(SelectedTab) {
         if (SelectedTab == '2')
             this.GLAccountChanged = false;
@@ -493,36 +507,51 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     private SetFilterItem(queryFilterItem: QueryFilterItem)
     {
         if (queryFilterItem) {
-            if (queryFilterItem.FieldName == "FromDate") {
-                this.FromDate = queryFilterItem.FieldValue;
-            }
-            else if (queryFilterItem.FieldName == "ToDate") {
-                this.ToDate = queryFilterItem.FieldValue;
-            }
-            else if (queryFilterItem.FieldName == "GLAccountId") {
-                this.GLAccountId = queryFilterItem.FieldValue;
-            }
-            else if (queryFilterItem.FieldName == "ChartOfAccountId") {
-                this.ChartOfAccountId = queryFilterItem.FieldValue;
-            }
-            else if (queryFilterItem.FieldName == "CurrencyId") {
-                this.CurrencyId = queryFilterItem.FieldValue;
-            }
-            else if (queryFilterItem.FieldName == "IncludeChildAccounts") {
-                this.IncludeChildAccounts = queryFilterItem.FieldValue;
-            }
-            else if (queryFilterItem.FieldName == "SearchFields") {
-                this.SearchFields = queryFilterItem.FieldValue;
-            }
-            else if (queryFilterItem.FieldName == "DateTypeCode") {
-                this._dateTypeCode = queryFilterItem.FieldValue;
-                this.SetFilterSelectedValue();
-            }
-            else if (queryFilterItem.FieldName == "IncludeRelatedCurrenciesAccount") {
-                this.IncludeRelatedCurrenciesAccount = queryFilterItem.FieldValue;
-            }
-            else if (queryFilterItem.FieldName == "IsReconciled") {
-                this.IsReconciled = queryFilterItem.FieldValue;
+            switch (queryFilterItem.FieldName) {
+                case "FromDate":
+                    this.FromDate = queryFilterItem.FieldValue;
+                    break;
+                case "ToDate":
+                    this.ToDate = queryFilterItem.FieldValue;
+                    break;
+                case "GLAccountId":
+                    this.GLAccountId = queryFilterItem.FieldValue;
+                    break;
+                case "ChartOfAccountId":
+                    this.ChartOfAccountId = queryFilterItem.FieldValue;
+                    break;
+                case "CurrencyId":
+                    this.CurrencyId = queryFilterItem.FieldValue;
+                    break;
+                case "IncludeChildAccounts":
+                    this.IncludeChildAccounts = queryFilterItem.FieldValue;
+                    break;
+                case "SearchFields":
+                    this.SearchFields = queryFilterItem.FieldValue;
+                    break;
+                case "DateTypeCode":
+                    this._dateTypeCode = queryFilterItem.FieldValue;
+                    this.SetFilterSelectedValue();
+                    break;
+                case "IncludeRelatedCurrenciesAccount":
+                    this.IncludeRelatedCurrenciesAccount = queryFilterItem.FieldValue;
+                    break;
+                case "IsReconciled":
+                    this.IsReconciled = queryFilterItem.FieldValue;
+                    this.AttachedGLAccountCheckBox = queryFilterItem.FieldValue;
+                    break;
+                case "SalesmanUserId":
+                    this.Salesman = queryFilterItem.FieldValue;
+                    break;
+                case "CategoryIndex":
+                    this.SelectedItemChanged(this.GetLookUpFieldValue(queryFilterItem.FieldValue));
+                    break;
+                case "CategoryValue":
+                    //CategoryValue
+                    break;
+                case "ChartOfAccountsTypeCode":
+                    this.ChartOfAccountsTypeCode = queryFilterItem.FieldValue;
+                    break;
             }
         }
     }
@@ -656,7 +685,8 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         if (this.fromDate != value) {
             this.fromDate = value;
             this.ValidateDate();
-            this.UIProperties.SetRequired("FromDate", this.ObjectTableName, !value);
+            if (!this.IsOldDate("FromDate"))
+                this.UIProperties.SetRequired("FromDate", this.ObjectTableName, !value);
         }
     }
 
@@ -667,6 +697,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         if (this.toDate != value) {
             this.toDate = value;
             this.ValidateDate();
+            if (!this.IsOldDate("ToDate"))
             this.UIProperties.SetRequired("ToDate", this.ObjectTableName, !value);
 
         }
@@ -707,13 +738,20 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     set GLAccountId(value: string)
     {
         if (this._GLAccountId != value) {
+            this.SetGLAccountChanged(this._GLAccountId);
             this._GLAccountId = value;
-            this.GLAccountChanged = true;
-
         }
     }
 
+
+    private SetGLAccountChanged(value: string) {
+        if (value != undefined)
+            this.GLAccountChanged = true;
+    }
+
+
     private glaccountPM: any;
+    
     get GLAccount() { return this.glaccountPM; }
     set GLAccount(value: any)
     {
@@ -722,10 +760,10 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             if (this.glaccountPM) {
                 if (this.glaccountPM.IsMultiCurrency) {
 
-                    this.CurrencyId = null;
+                    this.CurrencyId = !AppTool.IsNullOrEmpty(this.CurrencyId) && this.IsSchedulerReport ? this.CurrencyId : null;
                     this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
                 } else {
-                    this.CurrencyId = this.glaccountPM.CurrencyId;
+                    this.CurrencyId = !AppTool.IsNullOrEmpty(this.CurrencyId) && this.IsSchedulerReport ? this.CurrencyId : this.glaccountPM.CurrencyId;
                     this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
                 }
             }

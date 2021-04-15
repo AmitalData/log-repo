@@ -154,9 +154,9 @@ export class SendToContactsComponent implements OnInit {
         ComponentArgs.AddComponent(new ParameterComponentArgs(this.CurrentSession.Sessionkey + "SendTo", this));
 
 
-
+        const clearRecepients = args.ClearRecepients;
         // To  Email
-        if (this.ToEmail) {
+        if (this.ToEmail && !clearRecepients) {
             this.ToEmail.split(';').forEach((item) => {
                 if (item) {
                     this.ToEmailLists.push(item.toLowerCase());
@@ -166,7 +166,7 @@ export class SendToContactsComponent implements OnInit {
         }
 
         // Cc  Email
-        if (this.Cc) {
+        if (this.Cc && !clearRecepients) {
             this.Cc.split(';').forEach((item) => {
                 if (item) {
                     this.CcEmailLists.push(item.toLowerCase());
@@ -176,7 +176,7 @@ export class SendToContactsComponent implements OnInit {
         }
 
         // Bcc  Email
-        if (this.Bcc) {
+        if (this.Bcc && !clearRecepients) {
             this.Bcc.split(';').forEach((item) => {
                 if (item) {
                     this.BccEmailLists.push(item.toLowerCase());

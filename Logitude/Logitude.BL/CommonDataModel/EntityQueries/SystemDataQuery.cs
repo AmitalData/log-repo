@@ -12,6 +12,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using System.Transactions;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -34,7 +35,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
 
             Tenant tenant = TenantRepository.GetSingleTenant(tenantNum, true);
-            string supportEmail = GetSupportEmail(tenantNum); 
+            string supportEmail = GetSupportEmail(tenantNum);
+            string userSignatureImage = new ImageDetailsHtmlRenderingService().Render(user.SignatureImageId, user.Tenant);
 
             return new SystemDataPM()
             {
@@ -52,6 +54,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 Website = tenant.Website,
                 ContactId = user != null ? user.Id:"",
                 Supportemail = supportEmail,
+                UserSignatureImage = userSignatureImage,
             };
         }
 

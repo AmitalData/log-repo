@@ -187,7 +187,7 @@
                                                                         </table>
                                                                     </li>
                                                                 </ul>
-                                                            </QuickSearchTextBox>                                                           
+                                                            </QuickSearchTextBox>
                                                         </td>
 
                                                         <td>
@@ -274,7 +274,7 @@
                                         <tr class="FormFieldRow">
                                             <td style="width:110px;">
                                                 <button [disabled]="!IsEditingAllowed" class="Button" (click)="LoadPortsClicked()">Load New Ports</button>
-                                                <input [attr.id]="PortsFileHtmlId" accept=".csv,.CSV" type="file" (change)="UploadFile($event)" style="display:none" class="upload"/>
+                                                <input [attr.id]="PortsFileHtmlId" accept=".csv,.CSV" type="file" (change)="UploadFile($event)" style="display:none" class="upload" />
                                             </td>
 
                                             <td>
@@ -315,7 +315,7 @@
 
                                                         <div class="SimpleGridViewBody">
                                                             <table>
-                                                                <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource" >
+                                                                <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
                                                                     <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px;">
                                                                         {{item.Code}}
                                                                     </td>
@@ -336,10 +336,10 @@
                                                                                 </td>
 
                                                                                 <td>
-                                                                                    <CheckBox [IsChecked]="item.IsRequested" (Checked)="item.IsRequested = $event" [IsEnabled]="item.IsRequestedEnabled"></CheckBox>                                                                                                                                    
+                                                                                    <CheckBox [IsChecked]="item.IsRequested" (Checked)="item.IsRequested = $event" [IsEnabled]="item.IsRequestedEnabled"></CheckBox>
                                                                                 </td>
                                                                             </tr>
-                                                                        </table>                                                                        
+                                                                        </table>
                                                                     </td>
 
                                                                     <td class="CellStretched" style="width: 80px; min-width: 80px; max-width: 80px;">
@@ -353,7 +353,7 @@
                                                                                     <CheckBox [IsChecked]="item.IsDirect" (Checked)="item.IsDirect = $event" [IsEnabled]="item.IsDirectEnabled"></CheckBox>
                                                                                 </td>
                                                                             </tr>
-                                                                        </table>                                                                        
+                                                                        </table>
                                                                     </td>
 
                                                                     <td class="CellStretched" style="width: 125px; min-width: 125px; max-width: 125px; text-align:center;">
@@ -368,7 +368,7 @@
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
-                                                                        
+
                                                                         <label *ngIf="!item.IsRegistrationNeeded" style="font-size:10px; font-family:Arial; font-style:italic; color:gray;">No Registration Needed</label>
                                                                     </td>
 
@@ -389,13 +389,13 @@
                                                                                     <CheckBox [IsChecked]="item.IsDeclined" (Checked)="item.IsDeclined = $event" [IsEnabled]="item.IsDeclinedEnabled"></CheckBox>
                                                                                 </td>
                                                                             </tr>
-                                                                        </table>                                                                       
+                                                                        </table>
                                                                     </td>
 
                                                                     <td class="GridViewCell" style="width: 250px; min-width: 250px; max-width: 250px;">
                                                                         <div style="height:22px;">
                                                                             <LogTextBox (LostFocus)="item.DeclineNotesLostFocusMethod($event)" [IsMultiline]="false" [ObjectFieldName]="'DeclineNotes'" [ObjectTableName]="'Airline'" [DataContext]="item.DataContext"></LogTextBox>
-                                                                        </div>                                                                        
+                                                                        </div>
                                                                     </td>
 
                                                                     <td><div></div></td>

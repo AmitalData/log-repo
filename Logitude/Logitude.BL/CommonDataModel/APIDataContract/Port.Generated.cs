@@ -33,6 +33,10 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     
 	[XmlAttribute]
     public string PartnerCode { get; set; }
+    
+    public Country Country { get; set; }
+    
+    public State State { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

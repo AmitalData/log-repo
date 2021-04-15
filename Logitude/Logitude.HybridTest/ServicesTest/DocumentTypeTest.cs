@@ -11,21 +11,30 @@ namespace Logitude.HybridTest.ServicesTest
     public class DocumentTypeTest
     {
         private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
+        public TestContext TestContext { get; set; }
         [TestMethod]
         public void Test_DocumentType_UPSERT()
         {
-            DocumentTypePM documentTypePM = new DocumentTypePM()
+            try
             {
-                Code = HybridData.DocumentTypeCodeHDT,
-                Name = "Hybrid DocumentType",
-                ObjectTableName = "Shipment",
-                DocumentTypeCategoryCode = "O",
-                IsDocIn = true,
-                Tenant = EnvironmentGlobalParams.MainTenant,
-            };
-            ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(documentTypePM);
-            Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
-            Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
+                RetryTest.InsertTestMethodToDictionary(TestContext.TestName);
+                DocumentTypePM documentTypePM = new DocumentTypePM()
+                {
+                    Code = HybridData.DocumentTypeCodeHDT,
+                    Name = "Hybrid DocumentType",
+                    ObjectTableName = "Shipment",
+                    DocumentTypeCategoryCode = "O",
+                    IsDocIn = true,
+                    Tenant = EnvironmentGlobalParams.MainTenant,
+                };
+                ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(documentTypePM);
+                Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
+                Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
+            }
+            catch (Exception ex)
+            {
+                RetryTest.RetryFailTestRun(TestContext, this, ex.Message);
+            }
         }
 
         [TestMethod]

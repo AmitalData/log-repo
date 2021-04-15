@@ -252,7 +252,9 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         
         public string BackgroundId { get; set; }
         public string ComapnylogoId { get; set; }
+        public string InvertedLogoId { get; set; }
         public string BrowserIconId { get; set; }
+        public string ShipmentHeaderImageId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]
@@ -371,5 +373,15 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? LastContainerStatusReceived { get; set; }
 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? LastTariffUpdateDate { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? LastTariffUsageDate { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public int LastWeekCreatedTariffs { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public int LastMonthCreatedTariffs { get; set; }
+
+        public int ScheduledTasksLimitPerReport { get; set; }
     }
 }

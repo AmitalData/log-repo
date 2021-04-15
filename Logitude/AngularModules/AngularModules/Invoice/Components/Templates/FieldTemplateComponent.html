@@ -9,6 +9,10 @@
                     <tr>
                         <td>
                             <div class="MediaFill">
+                                <!-- Shipment Number -->
+                                <div *ngIf="FieldName == 'MainEntityReference' && IsHeaderScreenTemplate">
+                                    <span class="hyperlink" (click)="ViewEntityClicked('SHI')">{{Entity['MainEntityReference']}}</span>
+                                </div>
 
                                 <div *ngIf="FieldName == 'SATTransferStatusName'" [attr.title]="Entity.SATTransferStatusName">{{FieldValue}}</div>
 
@@ -161,6 +165,10 @@
                     <tr>
                         <td>
                             <div class="MediaFill">
+                                <!-- Shipment Number -->
+                                <div *ngIf="FieldName == 'ConnectedEntityReferences' && IsHeaderScreenTemplate">
+                                    <span class="hyperlink" (click)="ViewEntityClicked('SHI')">{{Entity['ConnectedEntityReferences']}}</span>
+                                </div>
 
                                 <!-- StatusName -->
                                 <div *ngIf="FieldName == 'StatusName'" class="TemplateTrimming">

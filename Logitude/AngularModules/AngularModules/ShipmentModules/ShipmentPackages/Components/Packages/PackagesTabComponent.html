@@ -657,13 +657,13 @@
                                                 <div class="MediaFillRelative">
 
                                                     <div class="MediaFillRelative" *ngIf="!item.DeliveryId && !item.IsDeliveryFU && IsEditingEnabled" (mousedown)="item.DeliveryIconClicked()" style="cursor: pointer;">
-                                                        <div class="CenterCenter" style="width: 12px; height: 12px;">
+                                                        <div attr.data-cy="{{'AddContainerDelivery_' + item.ContainerNumber | IdGeneratorPipe}}" class="CenterCenter" style="width: 12px; height: 12px;">
                                                             <div *ngIf="item.IsRowHover" class="GreenAddButton"></div>
                                                         </div>
                                                     </div>
 
-                                                    <img *ngIf="!item.DeliveryId && item.IsDeliveryFU" src="./Images/CellIcons/ContainerFollowup.png" class="CenterCenter" style="cursor: pointer; width: 24px; height: 24px;" (mousedown)="item.DeliveryIconClicked()" />
-                                                    <img *ngIf="item.DeliveryId" src="./Images/CellIcons/Trucker.png" class="CenterCenter" style="cursor: pointer;" (mousedown)="item.DeliveryIconClicked()" />
+                                                    <img attr.data-cy="{{'EditContainerDelivery_' + item.ContainerNumber | IdGeneratorPipe}}" *ngIf="!item.DeliveryId && item.IsDeliveryFU" src="./Images/CellIcons/ContainerFollowup.png" class="CenterCenter" style="cursor: pointer; width: 24px; height: 24px;" (mousedown)="item.DeliveryIconClicked()" />
+                                                    <img attr.data-cy="{{'EditContainerDelivery_' + item.ContainerNumber | IdGeneratorPipe}}" *ngIf="item.DeliveryId" src="./Images/CellIcons/Trucker.png" class="CenterCenter" style="cursor: pointer;" (mousedown)="item.DeliveryIconClicked()" />
 
                                                 </div>
                                             </log-cell-template>
@@ -684,13 +684,13 @@
                                             <log-cell-template #logcelltemplate [TabIndex]="-1">
                                                 <div class="MediaFillRelative">
                                                     <div class="MediaFillRelative" *ngIf="!item.EmptyContainerReturnId && !item.IsEmptyContainerReturnFU && IsEditingEnabled" (mousedown)="item.EmptyContainerIconClicked()" style="cursor: pointer;">
-                                                        <div class="CenterCenter" style="width: 12px; height: 12px;">
+                                                        <div attr.data-cy="{{'AddContainerReturn_' + item.ContainerNumber | IdGeneratorPipe}}" class="CenterCenter" style="width: 12px; height: 12px;">
                                                             <div *ngIf="item.IsRowHover" class="GreenAddButton"></div>
                                                         </div>
                                                     </div>
 
-                                                    <img *ngIf="!item.EmptyContainerReturnId && item.IsEmptyContainerReturnFU" src="./Images/CellIcons/ContainerFollowup.png" class="CenterCenter" style="cursor: pointer; width: 24px; height: 24px;" (mousedown)="item.EmptyContainerIconClicked()" />
-                                                    <img *ngIf="item.EmptyContainerReturnId" src="./Images/CellIcons/Container.png" class="CenterCenter" style="cursor: pointer;" (mousedown)="item.EmptyContainerIconClicked()" />
+                                                    <img attr.data-cy="{{'EditContainerReturn_' + item.ContainerNumber | IdGeneratorPipe}}" *ngIf="!item.EmptyContainerReturnId && item.IsEmptyContainerReturnFU" src="./Images/CellIcons/ContainerFollowup.png" class="CenterCenter" style="cursor: pointer; width: 24px; height: 24px;" (mousedown)="item.EmptyContainerIconClicked()" />
+                                                    <img attr.data-cy="{{'EditContainerReturn_' + item.ContainerNumber | IdGeneratorPipe}}" *ngIf="item.EmptyContainerReturnId" src="./Images/CellIcons/Container.png" class="CenterCenter" style="cursor: pointer;" (mousedown)="item.EmptyContainerIconClicked()" />
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
@@ -833,8 +833,13 @@
                                     </td>
 
                                     <td style="width: 20px; padding-left: 4px;">
-                                        <span class="hyperlink" [class.HyperlinkDisabled]="!IsTotalsFieldEnabled" (click)="ChooseCommodityClicked()">
+                                        <span *ngIf="!EntityPM.IsMultipleCommodities" class="hyperlink" [class.HyperlinkDisabled]="!IsTotalsFieldEnabled" (click)="ChooseCommodityClicked()">
                                             <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/LOVSearch.png" />
+                                        </span>
+
+                                        <span *ngIf="EntityPM.IsMultipleCommodities">
+                                            <!--<img title="This shipment is marked as multi commodity" class="CenterCenter" src="./Images/Info.png" />-->
+                                            <HelpIcon [HideHeader]="true" [Text]="'This shipment is marked as multi commodity'" class="BottomCenter"></HelpIcon>
                                         </span>
                                     </td>
                                 </tr>

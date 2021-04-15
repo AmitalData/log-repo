@@ -109,7 +109,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
                         if (MyGroup.FieldsList != null && MyGroup.FieldsList.Count > 0)
                         {
-                            if (MyGroup.Key == "Custom Fields")
+                            if (MyGroup.Key == "Custom Fields" || MyGroup.Key == "CustomFields" )
                             {
                                 ResolveDWCustomObjectFields(objectFieldPMs, MyGroup, authToken.Tenant);
 
@@ -148,7 +148,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
             ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(tenant);
             DWObjectTableQuery dWObjectTableQuery = new DWObjectTableQuery(tenant);
             DWObjectTablePM dWObjectTablePM = dWObjectTableQuery.GetSinglePM(DWOTId, tenant);
-            if (dWObjectTablePM != null) objectFieldPMs = objectFieldQuery.GetCustomObjectFieldsByTenantAndObjectTable(tenant, "Shipment");
+            if (dWObjectTablePM != null && !string.IsNullOrEmpty(dWObjectTablePM.ObjectTableName)) objectFieldPMs = objectFieldQuery.GetCustomObjectFieldsByTenantAndObjectTable(tenant, dWObjectTablePM.ObjectTableName);
 
             //if (dWObjectTablePM != null && dWObjectTablePM.RecordType == "Master")
             //    objectFieldPMs.AddRange(objectFieldQuery.GetCustomObjectFieldsByTenantAndObjectTable(tenant, "Shipment"));

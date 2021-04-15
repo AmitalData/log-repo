@@ -144,7 +144,7 @@
                                             </tr>
 
                                             <!-- EORI number -->
-                                            <tr class="FormFieldRow">
+                                            <tr class="FormFieldRow" *ngIf ="!IsAmitalCloudEnvironment">
                                                 <td>
                                                     <LogLabel [ObjectFieldName]="'EORInumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
@@ -209,7 +209,7 @@
                                             </tr>
 
                                             <!--Storage Free Days-->
-                                            <tr class="FormFieldRow" *ngIf="IsCustomer">
+                                            <tr class="FormFieldRow" *ngIf="IsCustomer && !IsAmitalCloudEnvironment">
                                                 <td>
                                                     <LogLabel [ObjectFieldName]="'StorageFreeDays'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>

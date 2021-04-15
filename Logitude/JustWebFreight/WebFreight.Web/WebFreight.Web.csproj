@@ -631,11 +631,8 @@
     <Content Include="AmitalBrowserTester.html" />
     <Content Include="FileNotFound.aspx" />
     <Content Include="Errors\404.aspx" />
-    <Content Include="AccountingWebServices\Testers\AccountingBalanceTester.aspx" />
-    <Content Include="AccountingWebServices\Testers\Reconcile.aspx" />
-    <Content Include="AccountingWebServices\Testers\RevaluationWorkerRoleTester.aspx" />
-    <Content Include="AccountingWebServices\Testers\TrailReport.aspx" />
-    <Content Include="AccountingWebServices\Testers\TreeMapGLAccountBanlanceByCOA.aspx" />
+    <Content Include="AccountingWebServices\TestersNoInUSE\AccountingBalanceTester.aspx" />
+    <Content Include="AccountingWebServices\TestersNoInUSE\TrailReport.aspx" />
     <Content Include="AccountingWebServices\YearTransferWebService.asmx" />
     <Content Include="AerolineaseRegistrationPage.aspx" />
     <Content Include="AmitalDefault.aspx" />
@@ -683,7 +680,7 @@
     <Content Include="HtmlHelpers\Images\Icons\Drop.png" />
     <Content Include="js\jquery-3.5.1.min.js" />
     <Content Include="HtmlHelpers\JS\jquery-1.7.1.js" />
-    <Content Include="HtmlHelpers\JS\Logitude.Tools.js" />
+    <Content Include="HtmlHelpers\JS\LogitudeTools.js" />
     <Content Include="js\jquery.dateFormat-1.0.js" />
     <Content Include="js\kendo.all.min.js" />
     <Content Include="js\knockout-3.5.1.js" />
@@ -964,6 +961,7 @@
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.GLAccountLedgerTransaction.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.UserDefinedReport.cs" />
     <Compile Include="AccountingModel\LedgerTransactionService\TransactionsBalanceByFiltersService.cs" />
+    <Content Include="App_Code\AngularJS_App_Code\DocumentTypeCopyExtendedController.cs" />
     <Compile Include="CommonDataModel\LogitudeGridExportToExcel\LogitudeGridExportToExcelArguments.cs" />
     <Compile Include="CommonDataModel\LogitudeGridExportToExcel\LogitudeGridExportToExcelHelper.cs" />
     <Compile Include="Controllers\AccountingModel\BankCodeController.cs" />
@@ -1016,7 +1014,9 @@
     <Compile Include="Controllers\Integration\IntegrationTestController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\CarrierAreaExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\LogitudeGridExportToExcelController.cs" />
+    <Compile Include="Controllers\CommonDataModel\Extended\ReportExecutionLogExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\HorseViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ReportExecutionLogViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\VatUniquePartnerTypeViewsController.Generated.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.WarehouseWeightMeasurement.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.WarehouseWeightRounding.cs" />
@@ -1054,12 +1054,14 @@
     <Compile Include="Controllers\Integration\Shipment\ShipmentIntegrationVariables.cs" />
     <Compile Include="Controllers\QuoteModel\Generated\PMControllers\QuoteClosingReasonController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBrandingController.cs" />
-    <Compile Include="Controllers\ShipmentsModel\ApiHelpers\ExternalTasksQueueHelper.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\LogboxShipmentExportExcelController.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentCargoTrackingController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AccountingInformationIdentifierViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\DocumentApprovalController.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffVersionUploadedExcelViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffVersionUploadedExcelController.Generated.cs" />
+    <Compile Include="Controllers\WebDomainControllers\PotentialAddressController.cs" />
+    <Compile Include="DataContracts\AccountingPartnerApiFilters.cs" />
     <Compile Include="DataContracts\CargoTrackingBrandingDataRequest.cs" />
     <Compile Include="DataContracts\CargoTrackingBrandingData.cs" />
     <Compile Include="DataContracts\CreateDocumentOutArgs.cs" />
@@ -1075,8 +1077,13 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CancellationRequestStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ReferantTeamViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferantTeamController.Generated.cs" />
+    <Compile Include="DataContracts\PrivateLabelsBrandingData.cs" />
+    <Compile Include="DataContracts\PrivateLabelsBrandingDataRequest.cs" />
     <Compile Include="DataProviders\UserDefinedReportDataProvider.cs" />
+    <Compile Include="ExternalAPIs\RatesUpdateController.cs" />
     <Compile Include="ExternalAPIs\ShipmentNumbersController.cs" />
+    <Compile Include="ExternalAPIs\V1\GLAccountChequeDetailsController.cs" />
+    <Compile Include="ExternalAPIs\V1\CargoTrackingShipmentDetailsController.cs" />
     <Compile Include="FileNotFound.aspx.cs">
       <DependentUpon>FileNotFound.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1107,19 +1114,12 @@
     <Compile Include="AccountingModel\Reports\PaymentCheque\PaymentChequePrintService.cs" />
     <Compile Include="AccountingModel\Reports\TaxDeductionReport\TaxDeductionReportPrintService.cs" />
     <Compile Include="AccountingModel\WebInjection\XLSUtil.cs" />
-    <Compile Include="AccountingWebServices\Testers\TrailReport.aspx.cs">
+    <Compile Include="AccountingWebServices\TestersNoInUSE\TrailReport.aspx.cs">
       <DependentUpon>TrailReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="AccountingWebServices\Testers\TrailReport.aspx.designer.cs">
+    <Compile Include="AccountingWebServices\TestersNoInUSE\TrailReport.aspx.designer.cs">
       <DependentUpon>TrailReport.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="AccountingWebServices\Testers\TreeMapGLAccountBanlanceByCOA.aspx.cs">
-      <DependentUpon>TreeMapGLAccountBanlanceByCOA.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AccountingWebServices\Testers\TreeMapGLAccountBanlanceByCOA.aspx.designer.cs">
-      <DependentUpon>TreeMapGLAccountBanlanceByCOA.aspx</DependentUpon>
     </Compile>
     <Content Include="App_Code\PrivateLableController.cs" />
     <Content Include="App_Code\LogBoxSignTool\LogBoxSignatureClientController.cs" />
@@ -2610,10 +2610,13 @@
     </Compile>
     <Compile Include="Helpers\AdvancedDateResolver.cs" />
     <Compile Include="Helpers\APIHelpers\ApiExceptionFilter.cs" />
+    <Compile Include="Helpers\APIHelpers\CargoTrackingShipmentDetailsInstanceCreator.cs" />
     <Compile Include="Helpers\APIHelpers\APIReceivablePayableHelper.cs" />
     <Compile Include="Helpers\APIHelpers\APITransshipmentHelper.cs" />
+    <Compile Include="Helpers\APIHelpers\CargoTrackingShipmentDetailsResult.cs" />
     <Compile Include="Helpers\APIHelpers\ConsolidationServiceBatch.cs" />
     <Compile Include="Helpers\APIHelpers\GenerateTariffsHelper.cs" />
+    <Compile Include="Helpers\APIHelpers\GLAccountChequeDetailsInstanceCreator.cs" />
     <Compile Include="Helpers\APIHelpers\ImageLibraryControllerHelper.cs" />
     <Compile Include="Helpers\APIHelpers\PartnersUploadHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TariffGeneratorFromExcel.cs" />
@@ -2623,6 +2626,7 @@
     <Compile Include="Helpers\AutomationModel\ReportTemplateDocOutService.cs" />
     <Compile Include="Helpers\AutomationModel\FTPAutomationService.cs" />
     <Compile Include="Helpers\BIReportsSecurityIntegrationService.cs" />
+    <Compile Include="Helpers\BIReport\BIReportHtmlRenderingService.cs" />
     <Compile Include="Helpers\BIReport\ExportBIReportService.cs" />
     <Compile Include="Helpers\BIReport\ExportBIReportExcelService.cs" />
     <Compile Include="Helpers\BIReport\ExportBIReportPdfService.cs" />
@@ -2636,7 +2640,9 @@
     <Compile Include="Helpers\DataProviderHelpers\CrossDockReleaseShipmentService.cs" />
     <Compile Include="Helpers\DataProviderHelpers\ShipmentsEventsListDataProvider.cs" />
     <Compile Include="Helpers\AutomationDocumentHelper.cs" />
+    <Compile Include="Helpers\BaseDataProviderService.cs" />
     <Compile Include="Helpers\DocumentTypeTemplateDefultAttachmentService.cs" />
+    <Compile Include="Helpers\PrivateLabelsBrandingDataService.cs" />
     <Compile Include="Helpers\UserViewLinkLimitationService.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
     <Compile Include="Helpers\AgentSharedManifestHelper.cs" />
@@ -2884,6 +2890,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\RateClassUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\RegionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\RegistryDateTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ReportExecutionLogUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ReportsTemplatesVersionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ReportsTemplateUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ReportUpdateClass.cs" />
@@ -3054,12 +3061,15 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\FreightPaymentMethodUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\FullAccountingSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\FullnessCodeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountAgingDataUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountCardsDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountCounterUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GatepassRequestUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GatepassReturnCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountCurrencyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountInterestPeriodUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountMoreDataUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountRecocileDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountTotalDateTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountWithholdingTaxUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\HandingCodeUpdateClass.cs" />
@@ -3290,6 +3300,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\MarkUpTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteChargeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteClosingReasonUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteComputedFieldUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteCostChargeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteCustomerTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuotePackageUpdateClass.cs" />
@@ -3458,6 +3469,7 @@
     <Content Include="css\kendo.common.min.css.map" />
     <Content Include="css\kendo.default.min.css.map" />
     <Content Include="css\kendo.mobile.all.min.css.map" />
+    <Content Include="Integration Test\LoginVars\Production\Cloud\TeamIslam\LoginVars.csv" />
     <None Include="Properties\PublishProfiles\FeatureBranchPub.pubxml" />
     <None Include="Properties\PublishProfiles\MasterDev.pubxml" />
     <None Include="Properties\PublishProfiles\CustomsDev.pubxml" />
@@ -3480,7 +3492,6 @@
     <Content Include="Monitoring\SignupLeadMonitoringPage.aspx" />
     <Content Include="Monitoring\StorageBackup.aspx" />
     <Content Include="QuickbooksOnlineAuth2.aspx" />
-    <Content Include="QuickbooksOnline.aspx" />
     <EmbeddedResource Include="Properties\webfreight.web.dll.licenses" />
     <Content Include="ReportsWebServices\APInvoiceWebService.asmx" />
     <None Include="Properties\PublishProfiles\sendgrid.pubxml" />
@@ -4031,26 +4042,12 @@
     <Compile Include="AccountingModel\DomainServices\Generated\BankAccountDomainService.Generated.cs" />
     <Compile Include="AccountingModel\DomainServices\Generated\BankCodeDomainService.Generated.cs" />
     <Compile Include="AccountingModel\DomainServices\Generated\CashBookTypeDomainService.Generated.cs" />
-    <Compile Include="AccountingWebServices\Testers\AccountingBalanceTester.aspx.cs">
+    <Compile Include="AccountingWebServices\TestersNoInUSE\AccountingBalanceTester.aspx.cs">
       <DependentUpon>AccountingBalanceTester.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="AccountingWebServices\Testers\AccountingBalanceTester.aspx.designer.cs">
+    <Compile Include="AccountingWebServices\TestersNoInUSE\AccountingBalanceTester.aspx.designer.cs">
       <DependentUpon>AccountingBalanceTester.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="AccountingWebServices\Testers\Reconcile.aspx.cs">
-      <DependentUpon>Reconcile.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AccountingWebServices\Testers\Reconcile.aspx.designer.cs">
-      <DependentUpon>Reconcile.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="AccountingWebServices\Testers\RevaluationWorkerRoleTester.aspx.cs">
-      <DependentUpon>RevaluationWorkerRoleTester.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AccountingWebServices\Testers\RevaluationWorkerRoleTester.aspx.designer.cs">
-      <DependentUpon>RevaluationWorkerRoleTester.aspx</DependentUpon>
     </Compile>
     <Compile Include="AccountingWebServices\YearTransferWebService.asmx.cs">
       <DependentUpon>YearTransferWebService.asmx</DependentUpon>
@@ -5002,7 +4999,6 @@
     <Content Include="WebServices\PerformanceLogService.asmx" />
     <Content Include="WebServices\QueueMessagesWebService.asmx" />
     <Content Include="WebServices\QuickbooksIntegrationWebService.asmx" />
-    <Content Include="WebServices\QuickBooksTransferWebService.asmx" />
     <Content Include="WebServices\QuoteTemplateWebService.asmx" />
     <Content Include="WebServices\SharedLogisticsUpdateWebService.asmx" />
     <Content Include="WebServices\ShipmentToCustomsWebService.asmx" />
@@ -5716,12 +5712,6 @@
     <Compile Include="QuickbooksOnlineAuth2.aspx.designer.cs">
       <DependentUpon>QuickbooksOnlineAuth2.aspx</DependentUpon>
     </Compile>
-    <Compile Include="QuickbooksOnline.aspx.cs">
-      <DependentUpon>QuickbooksOnline.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="QuickbooksOnline.aspx.designer.cs">
-      <DependentUpon>QuickbooksOnline.aspx</DependentUpon>
-    </Compile>
     <Compile Include="QuoteModel\DomainServices\QuotesDomainService.QuoteClosingReason.cs" />
     <Compile Include="QuoteModel\DomainServices\QuotesDomainService.QuoteDocumentVersion.cs" />
     <Compile Include="QuoteModel\DomainServices\QuotesDomainService.QuoteRating.cs" />
@@ -5741,11 +5731,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\AccountingDepositReportManager.cs" />
-    <Compile Include="ReportsWebServices\LogitudeReports\Accounting\ExternalReconciliationLinesReportManager.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\Accounting\ExternalReconciliationLinesReportLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\CustomerStatusDataProviderLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\AgingReportDataProviderLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\InterestReportLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\LedgerTransactionReportLoader.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\Accounting\Utilities\QueryOperationsFilterValueGetter.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\StatementReportManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\UserDefinedReportManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\CRM\MonthlyConversionManager.cs" />
@@ -6896,10 +6887,6 @@
       <DependentUpon>QuickbooksIntegrationWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="WebServices\QuickBooksTransferWebService.asmx.cs">
-      <DependentUpon>QuickBooksTransferWebService.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="WebServices\QuoteTemplateWebService.asmx.cs">
       <DependentUpon>QuoteTemplateWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -7168,7 +7155,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>9996</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

@@ -8,15 +8,11 @@ import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocato
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {ImageLibraryService} from '../../../../Common/Services/Others/ImageLibraryService';
-import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {ImageParameter} from '../../../../Infrastructure/DataContracts/ImageParameter';
-import {FilterField, FilterFieldsClass, FieldsValues} from '../../../../Infrastructure/Components/LogitudeComponents/QueryListComponent/FilterField';
 import {DateTool} from '../../../../Infrastructure/Tools';
 import {CustomerAdditionalServicePM} from '../../../../Common/EntityPMs/CustomerAdditionalServicePM';
 import {CustomerProductPM} from '../../../../Common/EntityPMs/CustomerProductPM';
 import {CommonDomainService} from '../../../../Common/Services/CommonDomainService';
-import {QuoteDomainService} from '../../../../Quote/Services/QuoteDomainService';
 import {RankList} from '../../../../Common/EntityLists/RankList';
 import {RankListService} from '../../../../Common/Services/StandardLists/RankListService';
 import {AdditionalServiceListService} from '../../../../Common/Services/StandardLists/AdditionalServiceListService'; 
@@ -28,12 +24,6 @@ import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {CustomerCompetitorPM} from '../../../../Common/EntityPMs/CustomerCompetitorPM';
 import {CompetitorList} from '../../../../Common/EntityLists/CompetitorList';
 import {CompetitorListService} from '../../../../Common/Services/StandardLists/CompetitorListService';
-import {CustomerAccountManagerByProductSplitComponentARGS} from '../../../../Common/Args';
-import {CustomerSalesmanByProductPM}  from '../../../../Common/EntityPMs/CustomerSalesmanByProductPM';
-import {CustomerAccountManagerByProductPM}  from '../../../../Common/EntityPMs/CustomerAccountManagerByProductPM';
-import {CustomerMediatorByProductPM}  from '../../../../Common/EntityPMs/CustomerMediatorByProductPM';
-import {CustomerForwarderByProductPM}  from '../../../../Common/EntityPMs/CustomerForwarderByProductPM';
-import {CustomerCustomsAgentByProductPM}  from '../../../../Common/EntityPMs/CustomerCustomsAgentByProductPM';
 import {GroupByPipe} from '../../../../Infrastructure/Pipes/GroupByPipe';
 import {ProductTypeListService} from '../../../../Common/Services/StandardLists/ProductTypeListService';
 import {LeadSourceListService} from '../../../../Common/Services/StandardLists/LeadSourceListService';
@@ -42,9 +32,9 @@ declare var UploadLogoFile, HideImage, SetImage, ArrayBufferToBase64: any;
 import {CustomerFieldsUpdateSettingListService} from '../../../../Common/Services/StandardLists/CustomerFieldsUpdateSettingListService';
 import {CustomerFieldsUpdateSettingList} from '../../../../Common/EntityLists/CustomerFieldsUpdateSettingList';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
-@Component({
-    
+@Component({    
     templateUrl: './CustomerGeneralTabComponent.html',
     providers: [ImageLibraryService, EntityPMService]
 })
@@ -74,6 +64,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     private groupByPipe: GroupByPipe;
+    public IsAmitalCloudEnvironment: boolean = false;
     constructor(public entityArgs: EntityArgs, public _imageLibraryService: ImageLibraryService, private CD: ChangeDetectorRef, private entityPMService: EntityPMService) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -140,6 +131,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
             this.RankSource2();
             this.RankSource3();
             this.SetMoreButtonsVisibility();
+            this.CheckAmitalCloudEnviroment();
         }
 
         else {
@@ -261,10 +253,12 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
 
     BuildCompetitorToggleButtonList() {
         this.CompetitorToggleButtonList = [];
-        var data: Array<any> = this.AllCompetitors;
+        var ActiveCompetitors: Array<CompetitorList> = [];
+        ActiveCompetitors = this.AllCompetitors.filter(compatitor => compatitor.InActive == false);
+        var data: Array<any> = ActiveCompetitors;
 
         if (!AppTool.IsNullOrEmpty(this.SearchTextCompetitor)) {
-            data = this.AllCompetitors.filter(f => f.Name.toLowerCase().indexOf(this.SearchTextCompetitor.toLowerCase()) > -1);
+            data = ActiveCompetitors.filter(f => f.Name.toLowerCase().indexOf(this.SearchTextCompetitor.toLowerCase()) > -1);
         }
 
         data.forEach(item => {
@@ -506,14 +500,14 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
                 this.UIProperties.SetEnabled("SalesmanUserId", this.ObjectTableName, false);
             }
 
-            else {
-                this.UIProperties.SetEnabled("SalesmanUserId", this.ObjectTableName, isEnabled);
-            }
+            //else {
+            //    this.UIProperties.SetEnabled("SalesmanUserId", this.ObjectTableName, isEnabled);
+            //}
         }
 
-        else {
-             this.UIProperties.SetEnabled("SalesmanUserId", this.ObjectTableName, isEnabled);
-        }
+        //else {
+        //     this.UIProperties.SetEnabled("SalesmanUserId", this.ObjectTableName, isEnabled);
+        //}
     }
     SetUIProperties_Forwarder() {
         var isEnabled = false;
@@ -1189,6 +1183,14 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
             this.IsMoreButtonVisible_Mediator = true;
         }
     }
+
+    CheckAmitalCloudEnviroment() {
+        var amitalEnvironment = "amitalstorage"
+        if (ObjectsLocator.GlobalSetting.DeploymentStage == amitalEnvironment) {
+            this.IsAmitalCloudEnvironment = true;
+        }
+    }
+
     MoreButtonClicked(field: string) {
 
         var windowTitle: string = null;

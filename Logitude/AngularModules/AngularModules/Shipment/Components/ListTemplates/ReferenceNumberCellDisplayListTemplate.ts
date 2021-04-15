@@ -56,7 +56,7 @@ export class ReferenceNumberCellDisplayListTemplate {
         if (!this.CurrentSession.Imgs) {
             this.CurrentSession.Imgs = [];
         }
-        var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX" && d.TenantNumber == SessionLocator.Tenant)[0];
+        var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX")[0];
         if (FeatureToggle) {
             this.ToggleIsExportShipments = true;
         }

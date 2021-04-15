@@ -3,28 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WarehouseData.Service;
 
 namespace WarehouseData.Helper
 {
   public  class FinalDataWarehouseService
     {
         GeneralDataWarehouseService generalDataWarehouseService;
+        EnvironmentDWTableUnUseSqlProvider environmentDWTableUnUseSqlProvider;
         public FinalDataWarehouseService()
         {
             generalDataWarehouseService = new GeneralDataWarehouseService();
+
         }
 
 
-        public void FinishBuildingDataWarehouse(string connectionString, List<TableClass> tableLists)
+        public void FinishBuildingDataWarehouse(string connectionString ,string destinationConnectionString, List<TableClass> tableLists)
         {
             StringBuilder stringBuilder = new StringBuilder();
-
+            stringBuilder.Append(new EnvironmentDWTableUnUseSqlProvider(connectionString).GetUnUseDataWarehouseSQL());
             stringBuilder.Append(RenameAllDataWarehouseTables(tableLists));
             stringBuilder.Append(AddRelationsBetweenFactAndDimensionTables(tableLists));
             stringBuilder.Append(AddNonClusteredIndexs(tableLists));
-            generalDataWarehouseService.ExecuteSql(stringBuilder.ToString(), connectionString);
-
+            generalDataWarehouseService.ExecuteSql(stringBuilder.ToString(), destinationConnectionString);
         }
+
 
         #region Rename Data Warehouse Tables
         public string RenameAllDataWarehouseTables(List<TableClass> tables)

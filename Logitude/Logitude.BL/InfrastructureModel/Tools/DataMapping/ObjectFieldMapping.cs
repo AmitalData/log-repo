@@ -94,6 +94,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectField.ShortNameTextCodeCode = objectFieldPM.ShortNameTextCodeCode;
             objectField.HelpTextCodeCode = objectFieldPM.HelpTextCodeCode;
             objectField.ListTextCodeCode = objectFieldPM.ListTextCodeCode;
+            objectField.AdditionalQuerySections = objectFieldPM.AdditionalQuerySections;
+
 
             if (objectFieldModification != null)
             {

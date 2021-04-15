@@ -27,10 +27,6 @@ export class SessionInfo{
 
     public static ShipmentsFilters: CargoTrackingShipmentFilters;
 
-    //private static loggedUserPM: UserPM;
-    //public static get LoggedUserPM(): UserPM { return this.loggedUserPM; }
-    //public static set LoggedUserPM(newValue: UserPM)
-    //{
-    //    if (this.loggedUserPM != newValue) this.loggedUserPM = newValue;
-    //}
+    public static LoggedUserPM: any;
+
 }

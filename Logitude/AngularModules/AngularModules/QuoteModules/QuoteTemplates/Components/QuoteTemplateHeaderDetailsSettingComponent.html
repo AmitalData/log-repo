@@ -55,7 +55,7 @@
                     <div class="TabControlHead">
                         <ul style="margin-left: 2px;">
                             <li [class.Selected]="SelectedTabCode == 'TAC'" (click)="SelectedTabCode = 'TAC'" style="margin-left:2px;">
-                                <div style="width:100px;text-align:left;font-size:11px;color:black" class="InnerChild">
+                                <div style="width:100px;text-align:left;font-size:11px;color:black" class="InnerChild" attr.data-cy="{{'Tablecolumns'}}">
                                     <span>{{'QuoteTemplate.S.Tablecolumns' | TextCodeTranslationPipe}}  </span>
                                 </div>
                             </li>
@@ -63,7 +63,7 @@
                             <li [class.Selected]="SelectedTabCode == 'LAB'" (click)="SelectedTabCode = 'LAB'">
                                 <div class="InnerChild" style="color:black;width:70px">
 
-                                    <div style="width:70px;text-align:left;font-size:11px;color:black" class="InnerChild">
+                                    <div style="width:70px;text-align:left;font-size:11px;color:black" class="InnerChild" attr.data-cy="{{'Labels'}}">
                                         <span>{{'QuoteTemplate.S.Labels' | TextCodeTranslationPipe}} </span>
                                     </div>
                                 </div>
@@ -72,7 +72,7 @@
                             <li [class.Selected]="SelectedTabCode == 'TAD'" (click)="SelectedTabCode = 'TAD'">
                                 <div class="InnerChild" style="color:black;width:100px">
 
-                                    <div style="width:100px;text-align:left;font-size:11px;color:black" class="InnerChild">
+                                    <div style="width:100px;text-align:left;font-size:11px;color:black" class="InnerChild" attr.data-cy="{{'TableDesign'}}">
                                         <span>{{'QuoteTemplate.S.TableDesign' | TextCodeTranslationPipe}}  </span>
                                     </div>
                                 </div>
@@ -124,7 +124,7 @@
                                                                   <td style="width:120px"></td>
                                                                   <td style="width:265px">
                                                                       <div style="font-size:14px;color:gray;height:25px;vertical-align:central;width:265px;text-align:center;">{{'QuoteTemplate.S.AvaiLabelFields' | TextCodeTranslationPipe}}  </div>
-                                                                      <div style="border:1px solid gray;height:300px;width:265px;">
+                                                                      <div style="border:1px solid gray;height:300px;width:265px;" attr.data-cy="{{'AvaiLabelFields'}}" >
                                                                           <!---->
                                                                           <div (drop)="DropItemToObjectFieldTextList($event)" dropzone="true" (dragover)="allowDropObjectFieldTextList($event)" style="overflow:auto; height:295px;vertical-align:top;">
                                                                               <table style="vertical-align:top;">
@@ -135,7 +135,7 @@
 
                                                                                       <td class="GridViewCell" style="width: 220px; min-width: 220px; max-width: 220px; position: relative;">
 
-                                                                                          <div style="text-align:left;width:220px; min-width: 220px;margin-top:5px;overflow:hidden;text-overflow: ellipsis;white-space: nowrap;display:inline-block">{{item.Name}}</div>
+                                                                                          <div style="text-align:left;width:220px; min-width: 220px;margin-top:5px;overflow:hidden;text-overflow: ellipsis;white-space: nowrap;display:inline-block" attr.data-cy="{{'Column_' + item.Name}}" >{{item.Name}}</div>
                                                                                       </td>
                                                                                       <td></td>
 
@@ -151,7 +151,7 @@
 
                                                                   <td style="width:180px">
                                                                       <div style="font-size:14px;color:gray;height:25px;vertical-align:central;width:180px;text-align:center;">{{'QuoteTemplate.S.Column1' | TextCodeTranslationPipe}}</div>
-                                                                      <div style="border:1px solid gray;height:300px;width:180px">
+                                                                      <div style="border:1px solid gray;height:300px;width:180px" attr.data-cy="{{'Column1'}}">
 
                                                                           <div (drop)="DropItemToObjectFieldTextColumn1List($event)" dropzone="true" (dragover)="allowDropObjectFieldTextColumn1List($event)" style="overflow:auto; height:295px;vertical-align:top;">
                                                                               <table style="vertical-align:top;">
@@ -179,7 +179,7 @@
                                                                   <td style="width:30px"></td>
                                                                   <td style="width:180px">
                                                                       <div style="font-size:14px;color:gray;height:30px;vertical-align:central;width:180px;text-align:center">{{'QuoteTemplate.S.Column2' | TextCodeTranslationPipe}}</div>
-                                                                      <div style="border:1px solid gray;height:300px;width:180px">
+                                                                      <div style="border:1px solid gray;height:300px;width:180px" attr.data-cy="{{'Column2'}}">
 
                                                                           <div (drop)="DropItemToObjectFieldTextColumn2List($event)" dropzone="true" (dragover)="allowDropObjectFieldTextColumn2List($event)" style="overflow:auto; height:295px;vertical-align:top;">
                                                                               <table style="vertical-align:top;">
@@ -411,12 +411,12 @@
                                                                                     <tr>
 
                                                                                         <td>
-                                                                                            <div [style.width]="item.IsShowRestoreOriginalEnglishName ? '390px':'420px'" *ngIf="logcelltemplate.IsDisplayMode" class="TextTrimming">
+                                                                                            <div [style.width]="item.IsShowRestoreOriginalEnglishName ? '390px':'420px'" *ngIf="logcelltemplate.IsDisplayMode" class="TextTrimming" attr.data-cy="{{'Label_' + item.EnglishName}}">
                                                                                                 {{item.EnglishName}}
                                                                                             </div>
                                                                                             <div *ngIf="logcelltemplate.IsEditMode">
 
-                                                                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'EnglishName'" [Text]="item.EnglishName" [DataContext]="item" [ObjectTableName]="'QuoteTemplateTextCode'" [HideColumns]="true"></LogTextBox>
+                                                                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'EnglishName'" [Text]="item.EnglishName" [DataContext]="item" [ObjectTableName]="'QuoteTemplateTextCode'" [HideColumns]="true" attr.data-cy="{{'LogTextBox_' + item.EnglishName}}"></LogTextBox>
                                                                                             </div>
                                                                                         </td>
 

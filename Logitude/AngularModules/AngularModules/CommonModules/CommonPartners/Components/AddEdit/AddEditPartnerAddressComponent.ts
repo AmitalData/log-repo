@@ -14,6 +14,9 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { PartnersDomainService } from '../../../../Common/Services/PartnersDomainService';
+import { PotentialAddressService } from '../../../../Common/Services/PotentialAddressService';
+
 
 @Component({
     templateUrl: './AddEditPartnerAddressComponent.html',
@@ -32,10 +35,15 @@ export class AddEditPartnerAddressComponent extends BaseComponent {
     public AddressTypeDependencyProperty1: string = "O";
     private CurrentSession = SessionLocator.SelectedSession;
     private entityPMService: AddressPMService;
+    public PartnersDomainService: PartnersDomainService;
+    public PotentialAddressService: PotentialAddressService;
+
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = new AddressPM();
         this.entityPMService = new AddressPMService();
+        this.PartnersDomainService = new PartnersDomainService();
+        this.PotentialAddressService = new PotentialAddressService();
     }
 
     SetWindowArgs(args: any) {
@@ -119,7 +127,7 @@ export class AddEditPartnerAddressComponent extends BaseComponent {
     SetUIProperties() {
         this.SetUIProperties_PartnerType();
         this.SetUIProperties_Description();
-
+        this.SetUIProperties_City();
         this.SetUIProperties_State();
         this.SetUIProperties_TelFax();
     }
@@ -210,6 +218,15 @@ export class AddEditPartnerAddressComponent extends BaseComponent {
         this.UIProperties.SetRequired("FaxNumber", this.ObjectTableName, isFaxRequired);
     }
 
+    SetUIProperties_City() {
+        var isRequired = false;
+        
+        if (AppTool.IsNullOrEmpty(this.City) && this.PartnerTypeId != "PO") {
+            isRequired = true;
+        }
+        this.UIProperties.SetRequired("City", this.ObjectTableName, isRequired);
+    }
+
     private addressTypeList: AddressTypeList = null;
     get AddressTypeList() { return this.addressTypeList; }
     set AddressTypeList(value: AddressTypeList) {
@@ -276,6 +293,7 @@ export class AddEditPartnerAddressComponent extends BaseComponent {
     set City(newValue: string) {
         if (this.EntityPM.City != newValue) {
             this.EntityPM.City = newValue;
+            this.SetUIProperties_City();
         }
     }
 
@@ -468,7 +486,8 @@ export class AddEditPartnerAddressComponent extends BaseComponent {
     }
     OkButtonClicked() {
         var errors: string[] = [];
-        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+
+        this.ValidateAddress(errors);
 
         if (this.IsCustomer) {
             if (this.PartnerTypeId == "CS") {
@@ -507,7 +526,8 @@ export class AddEditPartnerAddressComponent extends BaseComponent {
             this.CurrentSession.StartBusyIndicatorSaving();
 
             if (this.IsNewEntity) {
-                this.entityPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+
+                this.PotentialAddressService.AddAddress(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
                     if (myResponse.HasError) {
                         this.ValidationErrorsList = myResponse.ErrorsArray;
                     }
@@ -521,7 +541,8 @@ export class AddEditPartnerAddressComponent extends BaseComponent {
             }
 
             else {
-                this.entityPMService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+
+                this.PotentialAddressService.PutAddress(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
                     if (myResponse.HasError) {
                         this.ValidationErrorsList = myResponse.ErrorsArray;
                     }
@@ -535,4 +556,18 @@ export class AddEditPartnerAddressComponent extends BaseComponent {
             }
         }
     }
+
+    private ValidateAddress(errors: string[]) {
+        var newPotentialAddressCity = this.EntityPM.City;
+        if (AppTool.IsNullOrEmpty(this.EntityPM.City) && this.PartnerTypeId == "PO") {
+            this.EntityPM.City = (AppTool.IsNullOrEmpty(this.EntityPM.City) ? " Potential city " : this.EntityPM.City);
+        }
+
+        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+
+        if (this.PartnerTypeId == "PO") {
+            this.EntityPM.City = newPotentialAddressCity;
+        }
+    }
+
 }

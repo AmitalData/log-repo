@@ -17,12 +17,23 @@ namespace WebFreight.Web.DataContracts
         public string ComapnylogoId { get; set; }
         public string ComapnylogoImg { get; set; }
         public string ComapnylogoURL { get; set; }
+        public string InvertedLogoId { get; set; }
+        public string InvertedLogoImg { get; set; }
+        public string InvertedLogoURL { get; set; }
         public string BrowserIconId { get; set; }
         public string BrowserIconImg { get; set; }
         public string BrowserIconURL { get; set; }
+        public string ShipmentHeaderImageId { get; set; }
+        public string ShipmentHeaderImage { get; set; }
+        public string ShipmentHeaderURL { get; set; }
+
         public string CustomerURL { get; set; }
         public byte[] BrowserIconBytes { get; set; }
         public byte[] ComapnylogoBytes { get; set; }
+        public byte[] InvertedLogoBytes { get; set; }
         public byte[] BackgroundBytes { get; set; }
+        public byte[] ShipmentHeaderBytes { get; set; }
+
+        
     }
 }

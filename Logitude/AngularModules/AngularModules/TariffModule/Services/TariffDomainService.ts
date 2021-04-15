@@ -380,6 +380,11 @@ export class TariffSearchSummary {
     Remarks: string;
     ImageId: string;
     SellerName: string;
+    ViaPortId: string;
+    ViaPortCode: string;
+    ViaPortName: string;
+    ViaPortCountryCode: string;
+    ViaPortCountryName: string;
     CurrencyCode: string;
     CurrencyId: string;
     VersionId: string;
@@ -405,6 +410,8 @@ export class TariffSearchSummary {
     CurrencySign: string;
     NoteMissingContainers: string;
     MoreLessDetailsLabel: string = "More Details";
+    ActualMinPrice: number;
+    IsDifferentCurrency: boolean;
 }
 
 export class ContainersPrice {
@@ -512,6 +519,7 @@ export class TariffSearchArgs {
 
     OriginPortId: string;
     DestinationPortId: string;
+    ViaPortId: string;
     Date: string;
     Weight : number;
     WeightCode: string;

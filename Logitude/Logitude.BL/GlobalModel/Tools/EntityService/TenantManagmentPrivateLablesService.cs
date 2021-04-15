@@ -36,42 +36,42 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
 
         public void Create(TenantManagmentPrivateLabelsPM entityPM)
         {
-                TenantManagmentPrivateLabels ModsPoco = new TenantManagmentPrivateLabels();
-                this.isNewEntity = true;
-                this.entityPm = entityPM;
+            TenantManagmentPrivateLabels ModsPoco = new TenantManagmentPrivateLabels();
+            this.isNewEntity = true;
+            this.entityPm = entityPM;
 
 
 
-                this.isNewEntity = true;
-                this.entityPm = entityPM;
-                this.Poco = new TenantManagmentPrivateLabels();
+            this.isNewEntity = true;
+            this.entityPm = entityPM;
+            this.Poco = new TenantManagmentPrivateLabels();
 
 
-                this.Poco.Id = IdCounter.GetNumber("TenantManagmentPrivateLabels", 0);
-                TenantManagmentPrivateLablesMapping.MapEntity(entityPM, Poco, isNewEntity);
-                entityRepository.Add(Poco);
-                entityRepository.SubmitChanges();
-               
+            this.Poco.Id = IdCounter.GetNumber("TenantManagmentPrivateLabels", 0);
+            TenantManagmentPrivateLablesMapping.MapEntity(entityPM, Poco, isNewEntity);
+            entityRepository.Add(Poco);
+            entityRepository.SubmitChanges();
+
 
         }
 
 
 
         public void Update(TenantManagmentPrivateLabelsPM entityPM)
-        { 
-                TenantManagmentPrivateLabels ModsPoco = new TenantManagmentPrivateLabels();
-                
-                this.isNewEntity = false;
-                this.entityPm = entityPM;
+        {
+            TenantManagmentPrivateLabels ModsPoco = new TenantManagmentPrivateLabels();
 
-                this.Poco = entityRepository.GetSingleTenantManagmentPrivateLabels(entityPM.Id);
+            this.isNewEntity = false;
+            this.entityPm = entityPM;
+
+            this.Poco = entityRepository.GetSingleTenantManagmentPrivateLabels(entityPM.Id);
 
 
 
-                TenantManagmentPrivateLablesMapping.MapEntity(entityPM, Poco, isNewEntity);
-                entityRepository.Update(Poco);
-                entityRepository.SubmitChanges();
-                
+            TenantManagmentPrivateLablesMapping.MapEntity(entityPM, Poco, isNewEntity);
+            entityRepository.Update(Poco);
+            entityRepository.SubmitChanges();
+
         }
 
 

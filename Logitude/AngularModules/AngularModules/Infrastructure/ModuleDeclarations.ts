@@ -96,8 +96,8 @@ import {AutomationsConditionAreaComponent} from './Components/Maintenance/Automa
 import {RootComponent} from './RootComponent';
 import {RootComponent_Cust} from './RootComponent_Cust';
 import {LoginComponent} from './Components/LoginComponent/LoginComponent';
-import {DSVLoginProcessComponent} from './Components/LoginComponent/CustomLoginComponents/DSVLoginProcessComponent';
-import {DSVMobileLoginProcessComponent} from './Components/LoginComponent/CustomLoginComponents/DSVMobileLoginProcessComponent';
+import {DSVLoginProcessComponent} from './Components/LoginComponent/PrivateLabelComponents/DSVLoginProcessComponent';
+import {DSVMobileLoginProcessComponent} from './Components/LoginComponent/PrivateLabelComponents/DSVMobileLoginProcessComponent';
 import {BlockScreenComponent} from './Components/LoginComponent/BlockScreenComponent';
 import {HomeComponent} from './Components/HomeComponent/HomeComponent';
 import {SessionComponent} from './Components/Session/SessionComponent';
@@ -186,7 +186,12 @@ import { FTPAutomationDetailsComponent } from './Components/Maintenance/Automati
 import { ToolTipFloatDirective } from './Utilities/RTLDirectives/ToolTipFloatDirective';
 import { SendDocumentResultComponent } from './Components/Maintenance/Automation/AutomationResult/SendDocumentResultComponent';
 
-
+import { PrivateLabelLoginProcessComponent } from './Components/LoginComponent/PrivateLabelComponents/PrivateLabelLoginProcessComponent';
+import { AutomationsConditionsViewDetailsComponent } from './Components/Maintenance/Automation/AutomationsConditionsViewDetailsComponent';
+import { AutomationConditionsDetailsComponent } from './Components/Maintenance/Automation/AutomationConditionsDetailsComponent';
+import { CreateTaskResultComponent } from './Components/Maintenance/Automation/AutomationResult/CreateTaskResultComponent';
+ 
+ 
 
 
 
@@ -306,6 +311,9 @@ export const ControlsComponents =
         SendInterfaceResultComponent,
         FTPAutomationDetailsComponent,
         SendDocumentResultComponent,
+        AuditAutomationTabComponent,
+        AutomationsConditionsViewDetailsComponent,
+        CreateTaskResultComponent,
     ];
 export const Components =
     [
@@ -381,7 +389,12 @@ export const Components =
         BTEParameterTabComponent,
         LastSuccessfulLoginComponent,
         FTBSchedulerTemplateComponent,
-        
+
+        PrivateLabelLoginProcessComponent,
+         
+        AutomationConditionsDetailsComponent,
+        AutomationsConditionsViewDetailsComponent
+
         
     ];
 
@@ -423,8 +436,8 @@ export class ModuleDeclarations {
             case 'ChooseSpecificUserComponent': { myResult = ChooseSpecificUserComponent; break; }
             case 'DelayAutomationconditionsComponent': { myResult = DelayAutomationconditionsComponent; break; }
             case 'ViewAutomationHistoryComponent': { myResult = ViewAutomationHistoryComponent; break; }
-
-
+            case 'AutomationConditionsDetailsComponent': { myResult = AutomationConditionsDetailsComponent; break; }
+                 
 
             case 'NewViewComponent': { myResult = NewViewComponent; break; }
             case 'Export2ExcelControl': { myResult = Export2ExcelControl; break; }
@@ -470,7 +483,9 @@ export class ModuleDeclarations {
             case 'WizardAccountingComponent': { myResult = WizardAccountingComponent; break; }
             case 'SelectDocumentTypesComponent': { myResult = SelectDocumentTypesComponent; break; }
             case 'StimulsoftDesignerComponent': { myResult = StimulsoftDesignerComponent; break; }
-              case 'AutomationsConditionAreaComponent': { myResult = AutomationsConditionAreaComponent; break; }
+            case 'AutomationsConditionAreaComponent': { myResult = AutomationsConditionAreaComponent; break; }
+            case 'AutomationsConditionAreaComponent': { myResult = AutomationsConditionsViewDetailsComponent; break; }
+                 
 
             case 'EraseTenantManagementDataComponent': { myResult = EraseTenantManagementDataComponent; break; }
 
@@ -486,13 +501,13 @@ export class ModuleDeclarations {
             case 'FTBSchedulerTemplateComponent': { myResult = FTBSchedulerTemplateComponent; break; }
             case 'SendInterfaceResultComponent': { myResult = SendInterfaceResultComponent; break; }
             case 'FTPAutomationDetailsComponent': { myResult = FTPAutomationDetailsComponent; break; }
-            case 'SendDocumentResultComponent': { myResult = SendDocumentResultComponent; break; }
+            case 'SendDocumentResultComponent': { myResult = SendDocumentResultComponent; break; } 
+            case 'PrivateLabelLoginProcessComponent': { myResult = PrivateLabelLoginProcessComponent; break; } 
+            case 'CreateTaskResultComponent': { myResult = CreateTaskResultComponent; break; }
+                 
+                 
 
-                
-
-
-                
-
+                 
         }
 
         return myResult;

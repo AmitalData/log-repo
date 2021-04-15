@@ -122,6 +122,24 @@
         opacity: 0.5;
         pointer-events: none;
     }
+
+    .ShortName {
+        width:133px;
+    }
+
+    .LongName {
+        width: 150px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    .AgentNameText {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        display: block;
+    }
+
 </style>
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
@@ -158,10 +176,10 @@
                                             <td>
                                                 <div *ngIf="EntityPm.HasFile == true">
                                                     <div style="float:left;">
-                                                        <button class="Button" style="width: 133px;margin-right: 15px;font-size: 12px;height:24px;color:gray;float:left;" (click)="ShareWithAgent()" [class.DisableSharedWithAgentButton]="!IssharedWithAgentButtonEnabled" [class.Disable]="EntityPm.SignRequestByUserEmail">
+                                                        <button class="Button" [ngClass] = "AgentLabelClass" title="Share With {{AgentLable}}" style="margin-right: 15px;font-size: 12px;height:24px;color:gray;float:left;" (click)="ShareWithAgent()" [class.DisableSharedWithAgentButton]="!IssharedWithAgentButtonEnabled" [class.Disable]="EntityPm.SignRequestByUserEmail">
                                                             <!--<img src="./Images/ShareWithAgentGray.png" /> Share With Agent-->
-                                                            <div *ngIf="!EntityPm.IsSharedWithForwarder"><img src="./Images/ShareWithAgentGray.png" style="margin-top: -3px;margin-right: 3px;" />Share With {{AgentLable}}</div>
-                                                            <div *ngIf="EntityPm.IsSharedWithForwarder"><img src="./Images/SharedWithAgentB.png" style="margin-top: -3px;margin-right: 3px;" />Shared With {{AgentLable}}</div>
+                                                            <div class="AgentNameText" *ngIf="!EntityPm.IsSharedWithForwarder"><img src="./Images/ShareWithAgentGray.png" style="margin-top: -3px;margin-right: 3px;" />Share With {{AgentLable}}</div>
+                                                            <div class="AgentNameText" *ngIf="EntityPm.IsSharedWithForwarder"><img src="./Images/SharedWithAgentB.png" style="margin-top: -3px;margin-right: 3px;" />Shared With {{AgentLable}}</div>
                                                         </button>
                                                         <img src="./Images/SharedNote.png" style="width:22px;height:22px;float:left" class="ActionButtons" (mouseout)="HideNoteClicked()" (mouseover)="ShowNoteClicked()" />
                                                     </div>

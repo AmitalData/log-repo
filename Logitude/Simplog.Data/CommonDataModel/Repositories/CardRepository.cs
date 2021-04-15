@@ -6,6 +6,7 @@ using System.Web;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
+using System.Text;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
@@ -642,6 +643,24 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 return entity;
             }
             return null;
+        }
+
+        public List<Card> GetCardsFromIdList(List<string> ids, int tenant)
+        {
+            ICommonDataContext cardViewContext = CommonDataContext.GetContext(tenant);
+            List<Card> cards = new List<Card>();
+            if (ids.Count() != 0)
+            {
+                StringBuilder values = new StringBuilder();
+                values.AppendFormat("{0}", "'" + ids[0] + "'");
+                for (int i = 1; i < ids.Count; i++)
+                    values.AppendFormat(", {0}", "'" + ids[i] + "'");
+
+                string sql = string.Format("SELECT * FROM CARDS WHERE ID IN ({0})", values);
+                cards = cardViewContext.GetActiveDbContext().Database.SqlQuery<Card>(sql).ToList();
+            }
+
+            return cards;
         }
 
     }

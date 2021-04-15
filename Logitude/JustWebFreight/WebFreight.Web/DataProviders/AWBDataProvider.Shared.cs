@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 namespace WebFreight.Web.DataProviders
 {
-    public class AWBDataProvider
+    public class AWBDataProvider: BaseDataProvider
     {
         public string BranchSignature { get; set; }
         public string MainCarriageCarrierPrefix { get; set; }        
@@ -234,6 +234,7 @@ namespace WebFreight.Web.DataProviders
         public byte[] CustomerLogo { get; set; }
         public string HouseReferenceNumber { get; set; }
         public string Notify2NameAddress { get; set; }
+        public string SpecialHandlingCodes { get; set; }
     }
 
     public class CommodityLine

@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
 using Logitude.ShipmentTests.Models;
-using Logitude.Test.Base.Models;
+using Logitude.Test.Base.Models.Api;
+using Logitude.Test.Base.Models.Shared;
+using Logitude.Test.Base.Models.UserTenantPreparation;
 
 namespace Logitude.ShipmentTests.Steps.SecurityTests
 {
@@ -19,33 +21,42 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
             Context = context;
         }
 
-        [When(@"First user get the first shipment from shipments list")]
-        public void WhenFirstUserGetTheFirstShipmentFromShipmentsList()
+        #region Step Region
+
+        #region Get shipment from user's tenant steps
+        [When(@"get a shipment from User's shipment list")]
+        public void WhenGetAShipmentFromUserSShipmentList()
         {
             ShipmentPM shipment = GetAShipmentFromFirstUserList();
             Context.FirstUserPMData.Id = shipment?.Id;
         }
 
-        [When(@"Second user get the shipment that requested by first user")]
-        public void WhenSecondUserGetTheShipmentThatRequestedByFirstUser()
-        {
-            ApiResponse<ShipmentPM> response = GetAsingleShipmentForFirstUser(UserOtherTenant.Token); 
-            Context.SecondUserPMData.Id = response.Data?.Id;
-        }
-
-        [Then(@"Shipment for first user should be exists")]
-        public void ThenShipmentForFirstUserShouldBeExists()
+        [Then(@"the shipment should exist")]
+        public void ThenTheShipmentShouldExist()
         {
             Context.FirstUserPMData.Id.Should().NotBeNull();
         }
+        #endregion
 
-        [Then(@"Shipment for second user should not be exists")]
-        public void ThenShipmentForSecondUserShouldNotBeExists()
+        #region Get shipment from other tenant steps
+        [When(@"get a shipment from Other Tenant")]
+        public void WhenGetAShipmentFromOtherTenant()
+        {
+            ApiResponse<ShipmentPM> response = GetASingleShipmentForFirstUser(UserOtherTenant.Token);
+            Context.SecondUserPMData.Id = response.Data?.Id;
+        }
+
+        [Then(@"the shipment should not exist")]
+        public void ThenTheShipmentShouldNotExist()
         {
             Context.SecondUserPMData.Id.Should().BeNull();
         }
+        #endregion
 
-        private ApiResponse<ShipmentPM> GetAsingleShipmentForFirstUser(string Token)
+        #endregion
+
+        #region Private Function Region
+        private ApiResponse<ShipmentPM> GetASingleShipmentForFirstUser(string Token)
         {
             ShipmentPM firstUserShipment = GetAShipmentFromFirstUserList();
             string shipmentGetSingleUrl = Urls.ShipmentGetSingle(firstUserShipment?.Id);
@@ -63,5 +74,6 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
             ApiResponse<IEnumerable<ShipmentPM>> response = APICaller.CallGetByFilters<IEnumerable<ShipmentPM>>(Urls.ShipmentViewsGetByFilters, UserTenant.Token, apiQueryFilters);
             return response.Data?.FirstOrDefault();
         }
+        #endregion
     }
 }

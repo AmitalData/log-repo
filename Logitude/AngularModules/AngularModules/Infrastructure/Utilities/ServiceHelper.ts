@@ -9,6 +9,7 @@ import {SessionLocator} from '../Utilities/SessionLocator';
 import {LogitudeErrorHandler} from '../Utilities/LogitudeErrorHandler';
 import { LoginService } from '../Services/LoginService';
 import { of } from 'rxjs';
+import { isNullOrUndefined } from 'util';
 declare var window: any;
 
 export class ServiceHelper {
@@ -86,8 +87,13 @@ export class ServiceHelper {
             }
             else {
                 if (error.status == 0) {
-
-                    ServiceHelper.LogServiceError("There seems to be an Internet Connection Problem", "net::ERR_CONNECTION_REFUSED", false);//("net::ERR_CONNECTION_REFUSED", "net::ERR_CONNECTION_REFUSED");
+                    console.log(error.message);
+                    const apiException = error.error;
+                    let additionalDetails = "";
+                    if (SessionLocator.LoggedUserPM.Email == "angular@fnarsoft.com" || SessionLocator.LoggedUserPM.Email == "specflowtest@logitudeworld.com" || SessionLocator.LoggedUserPM.Email == "BDDSpecialCases@mail.com" || SessionLocator.LoggedUserPM.Email == "ahmada@logitudeworld.com") {
+                        additionalDetails = ": " + (!isNullOrUndefined(apiException?.ExceptionMessage) ? apiException?.ExceptionMessage : (!isNullOrUndefined(error.message) ? error.message : error.statusText));
+                    }
+                    ServiceHelper.LogServiceError("There seems to be an Internet Connection Problem" + additionalDetails, "net::ERR_CONNECTION_REFUSED", false);//("net::ERR_CONNECTION_REFUSED", "net::ERR_CONNECTION_REFUSED");
                 }
                 else if (error.status == 500) {
                     try {
@@ -172,8 +178,13 @@ export class ServiceHelper {
             }
             else {
                 if (error.status == 0) {
-
-                    ServiceHelper.LogServiceError("There seems to be an Internet Connection Problem", "net::ERR_CONNECTION_REFUSED", false);//("net::ERR_CONNECTION_REFUSED", "net::ERR_CONNECTION_REFUSED");
+                    console.log(error.message);
+                    const apiException = error.error;
+                    let additionalDetails = "";
+                    if (SessionLocator.LoggedUserPM.Email == "angular@fnarsoft.com" || SessionLocator.LoggedUserPM.Email == "specflowtest@logitudeworld.com" || SessionLocator.LoggedUserPM.Email == "BDDSpecialCases@mail.com" || SessionLocator.LoggedUserPM.Email == "ahmada@logitudeworld.com") {
+                        additionalDetails = ": " + (!isNullOrUndefined(apiException?.ExceptionMessage) ? apiException?.ExceptionMessage : (!isNullOrUndefined(error.message) ? error.message : error.statusText));
+                    }
+                    ServiceHelper.LogServiceError("There seems to be an Internet Connection Problem" + additionalDetails, "net::ERR_CONNECTION_REFUSED", false);//("net::ERR_CONNECTION_REFUSED", "net::ERR_CONNECTION_REFUSED");
                 }
                 else if (error.status == 500) {
                     try {

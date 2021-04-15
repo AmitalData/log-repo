@@ -9,6 +9,8 @@ import {ChangeField} from '../../../../Common/DataContracts/ChangeField';
 import {EntityChangeAutomation} from '../../../../Common/DataContracts/EntityChangeAutomation';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { AutomationConditionsDetailsComponent } from './AutomationConditionsDetailsComponent';
 
 @Component({
     
@@ -39,6 +41,8 @@ export class AuditAutomationTabComponent implements OnInit, AfterViewInit {
     SelectedEntityAutomationList: EntityChangeAutomation;
     IsCustomerCareUser: boolean = true;
     private CurrentSession = SessionLocator.SelectedSession;
+    ShowConditionsDetailsLink: boolean = true;
+
     constructor(private _entityChangeExtendedPMService: EntityChangeExtendedPMService, private cd: ChangeDetectorRef) {
 
         if (SessionLocator.LoggedUserPM.IsCustomerCare) {
@@ -46,6 +50,29 @@ export class AuditAutomationTabComponent implements OnInit, AfterViewInit {
         }
 
         this.Listen();
+    }
+
+    SetWindowArgs(windowArgs) {
+        //this.ReportGroupList = windowArgs.ReportGroupList;
+        //this.ReportList = windowArgs.ReportList;
+    }
+
+    ShowCondithionsDetails(item) { 
+        let windowArgs: any = {};  
+        let logWindow = new LogitudeWindow(); 
+        logWindow.DataContext = this;
+        logWindow.Height = 800;
+        logWindow.Width = 840;
+        logWindow.Title = "Conditions Statuses";
+        logWindow.DataContext = this;
+        windowArgs.CurrentEntityPM = item; 
+        windowArgs.AutomationHistoryPM = item;
+        windowArgs.DataViewModel = this;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.IsShowCloseButton = true;
+        logWindow.Show('./Infrastructure/Components/Maintenance/Automation/AutomationConditionsDetailsComponent');
+        logWindow.WindowClosed.subscribe(closed => { 
+        });
     }
 
     Listen() {
@@ -126,6 +153,11 @@ export class AuditAutomationTabComponent implements OnInit, AfterViewInit {
                 if (entityChangeAutomationsSummary) {
                     this.ChangeFieldsList = entityChangeAutomationsSummary.ChangeFieldsList;
                     this.AutomationList = this.EntityAutomationList = entityChangeAutomationsSummary.EntityChangeAutomationList;
+                    if (this.AutomationList.length && !this.AutomationList[0].ConditionsList.length) {
+                        this.ShowConditionsDetailsLink = false;
+                    } else {
+                        this.ShowConditionsDetailsLink = true;
+                    }
 
                 }
             }

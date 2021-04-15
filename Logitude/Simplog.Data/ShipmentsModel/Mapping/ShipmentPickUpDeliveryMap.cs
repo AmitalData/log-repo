@@ -10,7 +10,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
         {
             this.HasKey(t => t.Id);
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.CarrierNumber).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.CarrierNumber).HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.Notes).HasMaxLength(2000).IsUnicode(true);
             this.Property(t => t.ShipmentId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.PickUpDeliveryNumber).IsRequired().HasMaxLength(25).IsUnicode(false);
@@ -40,6 +40,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ToAddressZipCode).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ToAddressCountryId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.TransportModeCode).HasMaxLength(4).IsUnicode(false);
+            this.Property(t => t.ParentPickUpDeliveryId).HasMaxLength(15).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ShipmentPickUpDeliveries");
@@ -68,8 +69,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ToAddress).HasColumnName("ToAddress");
             this.Property(t => t.FromAddress).HasColumnName("FromAddress");
             this.Property(t => t.EmptyPickupContainerPartnerId).HasColumnName("EmptyPickupContainerPartnerId");
-            this.Property(t => t.EmptyPickupDepotReference).HasColumnName("EmptyPickupDepotReference");
-            
+            this.Property(t => t.EmptyPickupDepotReference).HasColumnName("EmptyPickupDepotReference");            
             this.Property(t => t.EmptyDeliveryDepotReference).HasColumnName("EmptyDeliveryDepotReference");
             this.Property(t => t.FromAddressId).HasColumnName("FromAddressId");
             this.Property(t => t.ToAddressId).HasColumnName("ToAddressId");
@@ -80,6 +80,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ToAddressZipCode).HasColumnName("ToAddressZipCode");
             this.Property(t => t.ToAddressCountryId).HasColumnName("ToAddressCountryId");
             this.Property(t => t.TransportModeCode).HasColumnName("TransportModeCode");
+            this.Property(t => t.ParentPickUpDeliveryId).HasColumnName("ParentPickUpDeliveryId");
+            this.Property(t => t.ChildPickUpIndex).HasColumnName("ChildPickUpIndex");
+            this.Property(t => t.ChildDeliveryIndex).HasColumnName("ChildDeliveryIndex");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -111,7 +114,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.EmptyPickupContainerPartner).WithMany().HasForeignKey(d => d.EmptyPickupContainerPartnerId);
             this.HasOptional(t => t.EmptyDeliveryContainerPartner).WithMany().HasForeignKey(d => d.EmptyDeliveryContainerPartnerId);
             this.HasOptional(t => t.TransportMode).WithMany().HasForeignKey(d => d.TransportModeCode);
-
+            this.HasOptional(t => t.ParentPickUpDelivery).WithMany().HasForeignKey(d => d.ParentPickUpDeliveryId);
         }
     }
 }

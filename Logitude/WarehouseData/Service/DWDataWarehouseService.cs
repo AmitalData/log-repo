@@ -14,8 +14,9 @@ namespace WarehouseData.Service
 {
   public  class DWDataWarehouseService
     {
-        GeneralDataWarehouseService generalDataWarehouseService;
-        WaterMarkDataWarehouseService waterMarkDataWarehouseService;
+        public  List<string> CustomObjectFieldTableLists { get; set; }
+        private GeneralDataWarehouseService generalDataWarehouseService;
+        private WaterMarkDataWarehouseService waterMarkDataWarehouseService;
         public DWDataWarehouseService()
         {
             generalDataWarehouseService = new GeneralDataWarehouseService();
@@ -250,7 +251,9 @@ namespace WarehouseData.Service
                     cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "SalesmanUserId DEFAULT '-1' FOR SalesmanUserId"
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PrimaryContactId DEFAULT '-1' FOR PrimaryContactId;"
                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CountryId DEFAULT '-1' FOR CountryId;"
-                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PartnerTypeId DEFAULT '-1' FOR PartnerTypeId;";
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PartnerTypeId DEFAULT '-1' FOR PartnerTypeId;"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "BillToId DEFAULT '-1' FOR BillToId;";
+
                     break;
                 case "Tenants":
 
@@ -377,11 +380,9 @@ namespace WarehouseData.Service
 
                 if (table.TableName == "ObjectField")
                 {
-                    condition += !isPrivateDB ? " where " : " and";
-                    condition += " IsCustom = 1 and ObjectTableId in (select id from ObjectTables where Name = 'Shipment')";
-
+                    condition += ((!isPrivateDB ? " where " : " and") + GetCustomObjectFieldCondition());
                 }
-
+            
                 string originTableName = table.TableName == "WaterMark" && isPrivateDB ? ("Private" + table.DBTableName) : table.DBTableName;
 
 
@@ -437,6 +438,18 @@ namespace WarehouseData.Service
 
             }
         }
+
+        private string GetCustomObjectFieldCondition()
+        {
+            string condition  = " IsCustom = 1 and ObjectTableId in (select id from ObjectTables where Name in (";
+            foreach (string customObjectField in CustomObjectFieldTableLists)
+            {
+                condition += "'" + customObjectField + "' ,";
+            }
+            condition = condition.Remove(condition.Length - 1) + "))";
+            return condition;
+        }
+
         private void OnSqlRowsCopied(
        object sender, SqlRowsCopiedEventArgs e)
         {
@@ -596,7 +609,7 @@ namespace WarehouseData.Service
             }
         }
 
-        private static string GetUpdateDWDataBaseCondition(BuildDWArgs buildDWArgs)
+        private  string GetUpdateDWDataBaseCondition(BuildDWArgs buildDWArgs)
         {
 
             bool isPrivateDB = buildDWArgs.PrivateTenant != null ? true : false;
@@ -612,8 +625,7 @@ namespace WarehouseData.Service
 
             if (buildDWArgs.table.TableName == "ObjectField")
             {
-                condition += "and IsCustom = 1 and ObjectTableId =(select id from ObjectTables where Name = 'Shipment')";
-
+                condition += (" and" + GetCustomObjectFieldCondition());
             }
 
             return condition;

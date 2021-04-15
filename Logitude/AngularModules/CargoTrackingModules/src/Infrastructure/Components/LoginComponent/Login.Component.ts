@@ -44,16 +44,16 @@ export class LoginComponent implements OnInit {
         this.RouteToMainPage();
         this.GetcargoTrackingData(baseUrl);
     }
- 
+
     private GetcargoTrackingData(baseUrl:string) {
         this.LogoImgSrc = "./assets/images/logo/White.jpg";
-        this.cargoTrackingBrandingDataExtendedService.GetCargoTrackingBrandingDataForPrivateSite(ServiceHelper.GetcargoTrackingDataRequest(baseUrl)).subscribe((response: ServiceResponse) => { 
+        this.cargoTrackingBrandingDataExtendedService.GetUserDashboardBrandingData(ServiceHelper.GetcargoTrackingDataRequest(baseUrl)).subscribe((response: ServiceResponse) => {
             if(response.Result){
                 this.Tenant = response.Result.Tenant;
                 ServiceHelper.SetCargoTrackingDate(response.Result,baseUrl);
                 this.LogoImgSrc = this.loginServiceHelper.GetLoginLogoImg();
-                this.MainColor = response.Result.MainColor != null ? ServiceHelper.ConvertHexaToRGBA(response.Result.MainColor) : null;
-                this.SecondaryColor = response.Result.SecondaryColor != null ? ServiceHelper.ConvertHexaToRGBA(response.Result.SecondaryColor) : null;
+                this.MainColor = response.Result.MainColor;
+                this.SecondaryColor = response.Result.SecondaryColor;
             }
             else{
                 this.GoToError401();
@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit {
     }
 
     private initComponent() {
-        document.body.style.background = "#fff";
+        // document.body.style.background = "#fff";
     }
 
     public passEyeClicked() {
@@ -167,7 +167,19 @@ export class LoginComponent implements OnInit {
                     this.RouteToMainPage();
                 }
             });
+
+            this.GetLoggedUserPM(LoginParams.Email, LogInToTenant.Tenant);
         }
+    }
+
+    private GetLoggedUserPM(email: any, tenant: any)
+    {
+        this.loginExtendedService.GetLoggedUser(email, tenant).subscribe((loggedUserPM: any) =>
+        {
+            if (loggedUserPM) {
+                SessionInfo.LoggedUserPM = loggedUserPM;
+            }
+        });
     }
 
     private FillSessionInfoData(userData: any) {
@@ -182,7 +194,6 @@ export class LoginComponent implements OnInit {
         SessionInfo.LoggedUserTenant = userData.CurrentTenant;
         SessionInfo.Token = userData.Token;
         SessionInfo.DocumentDownloadToken = userData.DocumentDownloadToken;
-        SessionInfo.LoggedUser = userData;
     }
 
     private RouteToMainPage(){
@@ -199,9 +210,9 @@ export class LoginComponent implements OnInit {
         //this.Tenant = this.route.snapshot.queryParams?.tenant;
         if(this.Tenant)
 
-            this.router.navigate(["Cargo-Tracking/resetpassword"]);//,{ queryParams: {tenant: this.Tenant}}
+            this.router.navigate(["cargo-tracking/resetpassword"]);//,{ queryParams: {tenant: this.Tenant}}
         else
-            this.router.navigate(["Cargo-Tracking/resetpassword"]);
+            this.router.navigate(["cargo-tracking/resetpassword"]);
     }
 
 }

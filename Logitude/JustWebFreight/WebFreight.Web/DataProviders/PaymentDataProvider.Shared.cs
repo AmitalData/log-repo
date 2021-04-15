@@ -72,6 +72,9 @@ namespace WebFreight.Web.DataProviders
         public string BranchAddress { get; set; }
 		public string BillToCountryCode { get; set; }
         public string ForeignRFC { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string IssuedByLocalName { get; set; }
 
         public double? AmountInLocalCurrency { get; set; }
 

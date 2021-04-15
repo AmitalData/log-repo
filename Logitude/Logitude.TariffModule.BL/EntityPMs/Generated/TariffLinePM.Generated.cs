@@ -2102,6 +2102,397 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool isDifferentCurrenciesPerCharge ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsDifferentCurrenciesPerCharge  
+	   {
+	    
+	     get
+		{
+		   return isDifferentCurrenciesPerCharge;
+		 }
+		 set
+		 {
+		   if(isDifferentCurrenciesPerCharge != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsDifferentCurrenciesPerCharge",OldValue=isDifferentCurrenciesPerCharge,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isDifferentCurrenciesPerCharge=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge1CurrencyId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge1CurrencyId  
+	   {
+	    
+	     get
+		{
+		   return surcharge1CurrencyId;
+		 }
+		 set
+		 {
+		   if(surcharge1CurrencyId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge1CurrencyId",OldValue=surcharge1CurrencyId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge1CurrencyId=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge2CurrencyId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge2CurrencyId  
+	   {
+	    
+	     get
+		{
+		   return surcharge2CurrencyId;
+		 }
+		 set
+		 {
+		   if(surcharge2CurrencyId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge2CurrencyId",OldValue=surcharge2CurrencyId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge2CurrencyId=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge3CurrencyId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge3CurrencyId  
+	   {
+	    
+	     get
+		{
+		   return surcharge3CurrencyId;
+		 }
+		 set
+		 {
+		   if(surcharge3CurrencyId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge3CurrencyId",OldValue=surcharge3CurrencyId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge3CurrencyId=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge4CurrencyId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge4CurrencyId  
+	   {
+	    
+	     get
+		{
+		   return surcharge4CurrencyId;
+		 }
+		 set
+		 {
+		   if(surcharge4CurrencyId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge4CurrencyId",OldValue=surcharge4CurrencyId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge4CurrencyId=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge5CurrencyId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge5CurrencyId  
+	   {
+	    
+	     get
+		{
+		   return surcharge5CurrencyId;
+		 }
+		 set
+		 {
+		   if(surcharge5CurrencyId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge5CurrencyId",OldValue=surcharge5CurrencyId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge5CurrencyId=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge6CurrencyId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge6CurrencyId  
+	   {
+	    
+	     get
+		{
+		   return surcharge6CurrencyId;
+		 }
+		 set
+		 {
+		   if(surcharge6CurrencyId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge6CurrencyId",OldValue=surcharge6CurrencyId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge6CurrencyId=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge7CurrencyId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge7CurrencyId  
+	   {
+	    
+	     get
+		{
+		   return surcharge7CurrencyId;
+		 }
+		 set
+		 {
+		   if(surcharge7CurrencyId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge7CurrencyId",OldValue=surcharge7CurrencyId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge7CurrencyId=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge8CurrencyId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge8CurrencyId  
+	   {
+	    
+	     get
+		{
+		   return surcharge8CurrencyId;
+		 }
+		 set
+		 {
+		   if(surcharge8CurrencyId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge8CurrencyId",OldValue=surcharge8CurrencyId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge8CurrencyId=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge9CurrencyId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge9CurrencyId  
+	   {
+	    
+	     get
+		{
+		   return surcharge9CurrencyId;
+		 }
+		 set
+		 {
+		   if(surcharge9CurrencyId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge9CurrencyId",OldValue=surcharge9CurrencyId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge9CurrencyId=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge10CurrencyId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge10CurrencyId  
+	   {
+	    
+	     get
+		{
+		   return surcharge10CurrencyId;
+		 }
+		 set
+		 {
+		   if(surcharge10CurrencyId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge10CurrencyId",OldValue=surcharge10CurrencyId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge10CurrencyId=value;
+		   }
+			
+		 }
+	   }
+	  private string viaPortId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ViaPortId  
+	   {
+	    
+	     get
+		{
+		   return viaPortId;
+		 }
+		 set
+		 {
+		   if(viaPortId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ViaPortId",OldValue=viaPortId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   viaPortId=value;
+		   }
+			
+		 }
+	   }
+	  private string viaPortText ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ViaPortText  
+	   {
+	    
+	     get
+		{
+		   return viaPortText;
+		 }
+		 set
+		 {
+		   if(viaPortText != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ViaPortText",OldValue=viaPortText,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   viaPortText=value;
+		   }
+			
+		 }
+	   }
+	  private string viaPortName ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ViaPortName  
+	   {
+	    
+	     get
+		{
+		   return viaPortName;
+		 }
+		 set
+		 {
+		   if(viaPortName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ViaPortName",OldValue=viaPortName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   viaPortName=value;
+		   }
+			
+		 }
+	   }
+	  private string viaPortCombinedCode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ViaPortCombinedCode  
+	   {
+	    
+	     get
+		{
+		   return viaPortCombinedCode;
+		 }
+		 set
+		 {
+		   if(viaPortCombinedCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ViaPortCombinedCode",OldValue=viaPortCombinedCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   viaPortCombinedCode=value;
+		   }
+			
+		 }
+	   }
+	  private string viaPortCode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ViaPortCode  
+	   {
+	    
+	     get
+		{
+		   return viaPortCode;
+		 }
+		 set
+		 {
+		   if(viaPortCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ViaPortCode",OldValue=viaPortCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   viaPortCode=value;
+		   }
+			
+		 }
+	   }
+	  private bool viaPortHasWrongTransMode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool ViaPortHasWrongTransMode  
+	   {
+	    
+	     get
+		{
+		   return viaPortHasWrongTransMode;
+		 }
+		 set
+		 {
+		   if(viaPortHasWrongTransMode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ViaPortHasWrongTransMode",OldValue=viaPortHasWrongTransMode,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   viaPortHasWrongTransMode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -72,7 +72,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.Poco = new User();
             this.Poco.Id = this.entityPm.Id;
 
-            UserValidating.Validate(entityPM);
+            UserValidating.Validate(entityPM, isNewEntity);
             
             this.CheckNumberOfUsers();
 
@@ -260,7 +260,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             MapUserToContact(entityPM, contact);
             service.Update(contact);
 
-            UserValidating.Validate(entityPM);
+            UserValidating.Validate(entityPM, isNewEntity);
             UserMapping.MapEntity(entityPm, Poco, isNewEntity);
 
             entityRepository.Update(Poco);

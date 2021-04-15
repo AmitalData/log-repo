@@ -133,6 +133,14 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public string ShipmentNumber { get; set; }
     
     public string ConcurrencyGUID { get; set; }
+    
+    public EntityStatus Status { get; set; }
+    
+    public string BookingConfirmationNumber { get; set; }
+    
+    public DateTime? EstimatedFinalArrivalDate { get; set; }
+    
+    public DateTime? ActualFinalArrivalDate { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

@@ -12,20 +12,29 @@ namespace Logitude.HybridTest.ServicesTest
     public class CurrencyTest
     {
         private static EntityWcfCaller entityWcfCaller = new EntityWcfCaller();
+        public TestContext TestContext { get; set; }
         [TestMethod]
         public void Test_Currency_UPSERT()
         {
-            CurrencyPM currencyPM = new CurrencyPM()
+            try
             {
-                Code = HybridData.CurrencyCodeHCR,
-                EnglishName = "Hybrid Currency",
-                LocalName = "Hybrid Currency",
-                AddedManually = true,
-                Tenant = EnvironmentGlobalParams.MainTenant,
-            };
-            ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(currencyPM);
-            Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
-            Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
+                RetryTest.InsertTestMethodToDictionary(TestContext.TestName);
+                CurrencyPM currencyPM = new CurrencyPM()
+                {
+                    Code = HybridData.CurrencyCodeHCR,
+                    EnglishName = "Hybrid Currency",
+                    LocalName = "Hybrid Currency",
+                    AddedManually = true,
+                    Tenant = EnvironmentGlobalParams.MainTenant,
+                };
+                ServiceOutcome serviceOutcome = entityWcfCaller.CallEntityUpsert(currencyPM);
+                Assert.IsFalse(serviceOutcome.Response.HasError, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
+                Assert.IsNotNull(serviceOutcome.Response.Result, "Upsert Failed! " + serviceOutcome.Response.ErrorMessage);
+            }
+            catch (Exception ex)
+            {
+                RetryTest.RetryFailTestRun(TestContext, this, ex.Message);
+            }
         }
 
         [TestMethod]

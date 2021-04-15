@@ -24,6 +24,11 @@ namespace Logitude.TariffModule.BL.DataContracts
         public DateTime? EffictiveDate { get; set; }
         public string Remarks { get; set; }
         public string SellerName { get; set; }
+        public string ViaPortId { get; set; }
+        public string ViaPortCode { get; set; }
+        public string ViaPortName { get; set; }
+        public string ViaPortCountryCode { get; set; }
+        public string ViaPortCountryName{ get; set; }
         public string ImageId { get; set; }
         public decimal? decimalprice { get; set; }
         public string CurrencyCode { get; set; }

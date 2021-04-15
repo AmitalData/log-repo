@@ -490,8 +490,8 @@
                     <!-- Cashbook lines Filters -->
                     <tr *ngIf="IsLinesSelection && !this.EntityPM.IsCashDeposit" style="height: 20px;">
                         <td style="width: 30px; padding: 5px;">
-                            <div *ngIf="!NoCashBookRows" style="width: 29px;">
-                                <div class="Button More"><CheckBox (Checked)="SelectAll($event)" [IsChecked]="IsAllSelected" style="width: 29px;"></CheckBox></div>
+                            <div style="width: 29px;">
+                                <div class="Button More"><CheckBox (Checked)="SelectAll($event)" [IsEnabled]="!NoCashBookRows" [IsChecked]="IsAllSelected" style="width: 29px;"></CheckBox></div>
                             </div>
                         </td>
                         <td style="width: 350px; padding: 5px;">
@@ -544,7 +544,9 @@
                         <td [attr.colspan]="IsLinesSelection?3:1" style="height: 100%; padding-bottom: 75px;">
 
                             <div class="GeneratedGridContainer">
-
+                                <div *ngIf="IsLinesSelection && CashbookLines?.Length == 0" id="{{'ARPaymentSpinner' | IdGeneratorPipe}}" class="NoDataText">
+                                    {{'CashbookLine.O.NoDataFound' | TextCodeTranslationPipe}}
+                                </div>
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%"
                                                     [ItemSource]="IsLinesSelection ? CashbookLines : BankDepositLines" [UseVirtuallization]="true">
 
@@ -553,12 +555,13 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                                 <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" style="padding-top: 2px;">
-                                                    <CheckBox [IsChecked]="item.IsSelected == true" (Checked)="LineSelection(item , $event)"></CheckBox>
+                                                    <CheckBox [IsChecked]="IsAllSelected || item.IsSelected == true" (Checked)="LineSelection(item , $event)"></CheckBox>
+                                                    all[{{IsAllSelected}}] - line [{{item.IsSelected}}]
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
-
+ 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'"
                                                 [header]="'BankDepositLine.F.ChequeNumber' | TextCodeTranslationPipe" [width]="'90'"
                                                 [binding]="'ChequeNumber'" [SortFieldName]="'ChequeNumber'">
@@ -668,7 +671,7 @@
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'"
                                                 [header]="'ARPaymentCheque.F.StatusCode' | TextCodeTranslationPipe" [width]="'100'"
-                                                [binding]="'StatusCode'" [SortFieldName]="'StatusCode'">
+                                                [binding]="'StatusCode'" [SortFieldName]="IsLinesSelection? (showLocal? 'ARPChequeStatusName' :'ARPChequeStatusLocalName' ) : (showLocal? 'ChequeStatusName' : 'ChequeStatusLocalName')">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                                 <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">

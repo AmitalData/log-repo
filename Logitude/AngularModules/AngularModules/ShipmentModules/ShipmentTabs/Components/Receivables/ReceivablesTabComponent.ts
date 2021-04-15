@@ -32,6 +32,8 @@ import {ObservableCollection} from '../../../../Infrastructure/Utilities/Observa
 import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
 import {QuotePMService} from '../../../../Quote/Services/StandardPMs/QuotePMService';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
+import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
 
 @Component({
     
@@ -59,6 +61,9 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
     public IsEditExchangeRateVisible: boolean = false;
     private myDomainService: ShipmentDomainService;
     private CurrentSession = SessionLocator.SelectedSession;
+    public CommonDomainService: CommonDomainService;
+    public CardListService: CardListService;
+
     constructor(private entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -71,6 +76,8 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
         this.ItemsSource = new ObservableCollection([]);
         this.myDomainService = new ShipmentDomainService();
+        this.CommonDomainService = new CommonDomainService();
+        this.CardListService = new CardListService();
         this.Listen();
         this.Initialize();
         this.SetEditEnabled();
@@ -122,8 +129,9 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                     this.OriginShipment = this.entityArgs.OriginEntity;
                 }
 
-                else if (s == "StorageReceivableCreated" || s == "StorageReceivableRemoved" || s == "StorageReceivableCurrencyChanged") {
+                else if (s == "StorageReceivableCalculationsChanged") {
                     this.BuildItemsSource();
+                    this.ComputeShipmentFields();
                 }
             });
 
@@ -908,7 +916,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                     if (itemComponent.ChargesGroupCode == "FRT") {
                         this.OnFreightAmountChanged();
                     }
-
+                    this.OnPercentForeignAmountChanged();
                     this.ComputeShipmentFields();
                 }
             });
@@ -922,6 +930,15 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         this.BuildSummaryData();
         this.BuildProfitData();
     }
+
+    OnPercentForeignAmountChanged() {
+        this.ItemsSource.Collection.filter(f => f.MeasurementCode == "PFCL").forEach(item => {
+            if (item.IsLineAttachted == false) {
+                item.SetQuantity();
+            }
+        });
+    }
+
     OnFreightAmountChanged() {
         this.ItemsSource.Collection.filter(f => f.ChargesGroupCode != "FRT" && f.MeasurementCode == "PRFR").forEach(item => {
             if (item.IsLineAttachted == false) {
@@ -1256,6 +1273,14 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
 
             activeLines.forEach(item => {
                 switch (item.MeasurementCode) {
+                    case "PFCL": {
+                        var quantity = ArrayTool.Sum(this.EntityPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "TotalAmountLocal");
+                        if (item.Quantity != quantity) {
+                            isDifferentOrders = true;
+                        }
+                        break;
+                    }
+
                     case "SCGW": {
                         if (item.Quantity != this.EntityPM.GrossWeightPerStorageDays) {
                             isDifferentOrders = true;
@@ -1652,7 +1677,6 @@ export class ShipmentReceivableItem extends BaseComponent {
             this.EntityPM.IATACodeId = list.IATACodeId;
             //this.EntityPM.IsBackToBack = list.IsBackToBack;
             this.EntityPM.IsExpense = list.IsExpense;
-
             this.SetPrepaidCollectId();
 
             if (!AppTool.IsNullOrEmpty(list.ReceivablesDefaultCurrencyId)) {
@@ -1824,6 +1848,11 @@ export class ShipmentReceivableItem extends BaseComponent {
 
                                 case "SCGW": {
                                     this.Quantity = this.ShipmentPM.GrossWeightPerStorageDays;
+                                    break;
+                                }
+
+                                case "PFCL": {
+                                    this.Quantity = ArrayTool.Sum(this.ShipmentPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "TotalAmountLocal");
                                     break;
                                 }
 
@@ -2056,6 +2085,8 @@ export class ShipmentReceivableItem extends BaseComponent {
             });
 
             this.ComputeInsideReceivablesData();
+            var Generator = new ShipmentGenerator(this.fatherComponent.EntityPM, this.fatherComponent.AllRates);
+            Generator.CalculateReceivableVatAmount(this.EntityPM);
         }
     }
 
@@ -2063,6 +2094,8 @@ export class ShipmentReceivableItem extends BaseComponent {
     set AmountInProfitCurrency(newVaule: number) {
         if (this.EntityPM.AmountInProfitCurrency != newVaule) {
             this.EntityPM.AmountInProfitCurrency = AppTool.Round(newVaule, 2);
+            var Generator = new ShipmentGenerator(this.fatherComponent.EntityPM, this.fatherComponent.AllRates);
+            Generator.CalculateReceivableVatAmount(this.EntityPM);
         }
     }
 
@@ -2110,7 +2143,7 @@ export class ShipmentReceivableItem extends BaseComponent {
             var iAmount: number = null;
 
             if (this.EntityPM.Quantity != null && this.EntityPM.UnitPrice != null) {
-                if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR") {
+                if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR" || this.MeasurementCode == "PFCL") {
                     var price = this.EntityPM.UnitPrice / 100;
                     iAmount = this.EntityPM.Quantity * price;
                 }
@@ -2451,6 +2484,12 @@ export class ShipmentReceivableItem extends BaseComponent {
                                 break;
                             }
 
+                            case "PFCL": {
+                                unitPrice = this.UnitPrice;
+                                quantity = item.PercentForeignChargesLocal;
+                                break;
+                            }
+
                             default: {
                                 if (this.fatherComponent.IsFCLEntity) {
                                     var list: PackageTypeList = AllPackageTypes.filter(f => f.MeasurementId == this.MeasurementId)[0];
@@ -2492,7 +2531,7 @@ export class ShipmentReceivableItem extends BaseComponent {
 
                         var totalAmount = quantity * unitPrice;
 
-                        if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR") {
+                        if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR" || this.MeasurementCode == "PFCL") {
                             totalAmount = quantity * unitPrice / 100;
                         }
 
@@ -2568,6 +2607,10 @@ export class ShipmentReceivableItem extends BaseComponent {
                 result = this.ShipmentPM.GrossWeightPerStorageDays; break;
             }
 
+            case "PFCL": {
+                result = ArrayTool.Sum(this.ShipmentPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "TotalAmountLocal"); break;
+            }
+
             default: {
                 if (!AppTool.IsNullOrEmpty(this.MeasurementId)) {
                     var allBCNTGrouped: ByPckageType[] = ShipmentTool.GetByPckageTypeGrouped(this.ShipmentPM);
@@ -2588,6 +2631,8 @@ export class ShipmentReceivableItem extends BaseComponent {
         if (this.ChargesGroupCode == "FRT") {
             this.fatherComponent.OnFreightAmountChanged();
         }
+
+        this.fatherComponent.OnPercentForeignAmountChanged();
     }
 
     StoragePricingClicked() {
@@ -2710,6 +2755,7 @@ export class InsideReceivableViewModel {
     get GrossWeightInKG() { return this.ShipmentPM.GrossWeightInKG; }
     get VolumeInCBM() { return this.ShipmentPM.VolumeInCBM; }
     get GrossWeightPerStorageDays() { return this.ShipmentPM.GrossWeightPerStorageDays; }
+    get PercentForeignChargesLocal() { return this.ShipmentPM.PercentForeignChargesLocal; }
 
     // Receivable Properties
     get ShipmentId() { return this.EntityPM.ShipmentId; }
@@ -2769,11 +2815,19 @@ export class InsideReceivableViewModel {
         var myQuantity = null;
 
         switch (this.MeasurementCode) {
+
             case "SCGW": {
                 if (this.ShipmentPM) {
                     myQuantity = this.ShipmentPM.GrossWeightPerStorageDays;
                 }
 
+                break;
+            }
+
+            case "PFCL": {
+                if (this.ShipmentPM) {
+                    myQuantity = this.ShipmentPM.PercentForeignChargesLocal;
+                }
                 break;
             }
 
@@ -2950,7 +3004,7 @@ export class InsideReceivableViewModel {
         if (this.Quantity != null && this.UnitPrice != null) {
             myResult = this.Quantity * this.UnitPrice;
 
-            if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR") {
+            if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR" || this.MeasurementCode == "PFCL") {
                 myResult = this.Quantity * this.UnitPrice / 100;
             }
         }

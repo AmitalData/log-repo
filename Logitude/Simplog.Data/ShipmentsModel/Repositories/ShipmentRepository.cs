@@ -401,7 +401,6 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             IShipmentFollowUpDataViewContext dataViewEntities = ShipmentFollowUpDataViewContext.GetContext(tenant);
             IQueryable<ShipmentFollowUpDataView> result = (from a in dataViewEntities.ShipmentFollowUpDataViews where a.Tenant == tenant && a.IsCancelled == false select a);
-            var test = result.ToList();
             return result;
         }
 
@@ -521,6 +520,14 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             int count = (from a in context.Shipments
                          where a.ShipmentLevelCode != "C" && a.Tenant == tenant && a.IsOperationalClosed == false && a.IsAccountingClosed == false && a.CustomerId == customerid && a.IsCancelled == false
+                         select a).Count();
+            return count;
+        }
+
+        public int GetCancelledShipmentsCountForCustomer(int tenant, string customerid)
+        {
+            int count = (from a in context.Shipments
+                         where a.ShipmentLevelCode != "C" && a.Tenant == tenant  && a.CustomerId == customerid && a.IsCancelled == true
                          select a).Count();
             return count;
         }
@@ -755,7 +762,11 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public bool IsCustomerConnectedToShipments(string customerId, int tenant)
         {
-            return (from f in context.Shipments where f.CustomerId == customerId && f.Tenant == tenant select f).Any();
+            return (from f in context.Shipments where (f.CustomerId == customerId || f.AgentId == customerId || f.ConsigneeId == customerId 
+                    || f.ShipperId == customerId || f.IssuingCarrierAgentId == customerId || f.CustomAgentExportId == customerId || f.CustomAgentImportId == customerId
+                    || f.Notify1Id == customerId || f.Notify2Id == customerId || f.ShipperNotExporterId == customerId || f.ConsigneeNotImporterId == customerId
+                    || f.FreightForwarderId == customerId || f.ColoaderId == customerId || f.CustomClearancePointId == customerId || f.ConsolidatorId == customerId
+                    || f.ReleasingAgentId == customerId) && f.Tenant == tenant select f).Any();
         }
 
         public ShipmentDataView GetSingleShipmentDataView(string shipmentId, int tenant)
@@ -893,6 +904,23 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                                        && s.MasterShipmentDataId == masterId
                                        select s).Count();
             return count;
+        }
+
+        public IQueryable<Shipment> GetShipmentsFromPackagesIds(List<string> packagesIds, int tenant)
+        {
+            IQueryable<Shipment> shipments = (from shipment in context.Shipments
+                                              join shipmentPackage in context.ShipmentPackages.Where(t => packagesIds.Contains(t.Id))
+                                              on shipment.Id equals shipmentPackage.ShipmentId
+                                              where shipment.Tenant == tenant
+                                              select shipment).Distinct();
+            return shipments;
+        }
+
+        public List<Shipment> GetAllShipmentsByHouseNumber(string house, int tenant)
+        {
+            return (from a in context.Shipments
+                    where a.House == house && a.Tenant == tenant
+                    select a).ToList();
         }
     }
 }

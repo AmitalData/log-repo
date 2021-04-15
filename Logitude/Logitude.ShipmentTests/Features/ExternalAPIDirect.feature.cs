@@ -19,7 +19,7 @@ namespace Logitude.ShipmentTests.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class ExternalAPIDirectFeature : object, Xunit.IClassFixture<ExternalAPIDirectFeature.FixtureData>, System.IDisposable
+    public partial class ExternalAPIDirectShipmentFeature : object, Xunit.IClassFixture<ExternalAPIDirectShipmentFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -31,7 +31,7 @@ namespace Logitude.ShipmentTests.Features
 #line 1 "ExternalAPIDirect.feature"
 #line hidden
         
-        public ExternalAPIDirectFeature(ExternalAPIDirectFeature.FixtureData fixtureData, Logitude_ShipmentTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public ExternalAPIDirectShipmentFeature(ExternalAPIDirectShipmentFeature.FixtureData fixtureData, Logitude_ShipmentTests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,8 @@ namespace Logitude.ShipmentTests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "External API Direct", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "External API – Direct Shipment", "\tWith pre-prepared base and shipment data\r\n\tWe want to create direct shipment wit" +
+                    "h main carriage leg\r\n\tAnd update ETD, ATD, ETA, and ATA dates.", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -77,26 +78,20 @@ namespace Logitude.ShipmentTests.Features
         
         public virtual void FeatureBackground()
         {
-#line 3
+#line 6
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Name",
+                        "Field",
                         "Value"});
             table3.AddRow(new string[] {
-                        "Agent",
-                        "10026"});
-            table3.AddRow(new string[] {
                         "Direction",
-                        "E"});
+                        "Export"});
             table3.AddRow(new string[] {
                         "TransportMode",
-                        "O"});
+                        "Ocean"});
             table3.AddRow(new string[] {
                         "ShipmentType",
                         "FCLD"});
-            table3.AddRow(new string[] {
-                        "Shipper",
-                        "10009"});
             table3.AddRow(new string[] {
                         "ShipperReference1",
                         "SR1"});
@@ -114,15 +109,12 @@ namespace Logitude.ShipmentTests.Features
                         "TES"});
             table3.AddRow(new string[] {
                         "Incoterm",
-                        "CIF"});
+                        "LDE"});
             table3.AddRow(new string[] {
                         "MainCarriageCarrier",
-                        "CA20"});
-            table3.AddRow(new string[] {
-                        "MainCarriageATD",
-                        "2021-01-07"});
-#line 4
- testRunner.Given("Direct shipment with the following properties", ((string)(null)), table3, "Given ");
+                        "MSCU"});
+#line 7
+ testRunner.Given("a direct shipment with the following fields", ((string)(null)), table3, "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                         "LegIndex",
@@ -131,17 +123,17 @@ namespace Logitude.ShipmentTests.Features
                         "ToPort"});
             table4.AddRow(new string[] {
                         "1",
-                        "CA20",
-                        "DE222",
-                        "DE223"});
+                        "MSCU",
+                        "USNYC",
+                        "USSOU"});
 #line 19
- testRunner.And("List of main carriage legs", ((string)(null)), table4, "And ");
+ testRunner.And("a main carriage leg", ((string)(null)), table4, "And ");
 #line hidden
 #line 22
- testRunner.When("Create direct shipment using external API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("create shipment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 23
- testRunner.Then("The direct shipment should be created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("shipment should create successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
         }
         
@@ -150,15 +142,15 @@ namespace Logitude.ShipmentTests.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Update shipment main carriage leg with invalid ATA")]
-        [Xunit.TraitAttribute("FeatureTitle", "External API Direct")]
-        [Xunit.TraitAttribute("Description", "Update shipment main carriage leg with invalid ATA")]
-        public virtual void UpdateShipmentMainCarriageLegWithInvalidATA()
+        [Xunit.SkippableFactAttribute(DisplayName="Update main carriage ATA to future date")]
+        [Xunit.TraitAttribute("FeatureTitle", "External API – Direct Shipment")]
+        [Xunit.TraitAttribute("Description", "Update main carriage ATA to future date")]
+        public virtual void UpdateMainCarriageATAToFutureDate()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update shipment main carriage leg with invalid ATA", null, tagsOfScenario, argumentsOfScenario);
-#line 25
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update main carriage ATA to future date", null, tagsOfScenario, argumentsOfScenario);
+#line 26
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -178,28 +170,28 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 3
+#line 6
 this.FeatureBackground();
-#line hidden
-#line 26
- testRunner.When("Update main carriage leg ATA to future date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 27
- testRunner.Then("Error message (cannot set main carriage ATA to future date) should received", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("update ATA to future date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 28
+ testRunner.Then("should receive error message say cannot set main carriage ATA to future date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Update shipment main carriage leg with invalid ATD")]
-        [Xunit.TraitAttribute("FeatureTitle", "External API Direct")]
-        [Xunit.TraitAttribute("Description", "Update shipment main carriage leg with invalid ATD")]
-        public virtual void UpdateShipmentMainCarriageLegWithInvalidATD()
+        [Xunit.SkippableFactAttribute(DisplayName="Update main carriage ATD to future date")]
+        [Xunit.TraitAttribute("FeatureTitle", "External API – Direct Shipment")]
+        [Xunit.TraitAttribute("Description", "Update main carriage ATD to future date")]
+        public virtual void UpdateMainCarriageATDToFutureDate()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update shipment main carriage leg with invalid ATD", null, tagsOfScenario, argumentsOfScenario);
-#line 29
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update main carriage ATD to future date", null, tagsOfScenario, argumentsOfScenario);
+#line 30
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -219,28 +211,28 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 3
+#line 6
 this.FeatureBackground();
-#line hidden
-#line 30
- testRunner.When("Update main carriage leg ATD to future date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 31
- testRunner.Then("Error message (cannot set main carriage ATD to future date) should received", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("update ATD to future date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 32
+ testRunner.Then("should receive error message say cannot set main carriage ATD to future date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Update shipment main carriage leg with vaild dates")]
-        [Xunit.TraitAttribute("FeatureTitle", "External API Direct")]
-        [Xunit.TraitAttribute("Description", "Update shipment main carriage leg with vaild dates")]
-        public virtual void UpdateShipmentMainCarriageLegWithVaildDates()
+        [Xunit.SkippableFactAttribute(DisplayName="Update main carriage ETD, ATD, ETA, and ATA to vaild dates")]
+        [Xunit.TraitAttribute("FeatureTitle", "External API – Direct Shipment")]
+        [Xunit.TraitAttribute("Description", "Update main carriage ETD, ATD, ETA, and ATA to vaild dates")]
+        public virtual void UpdateMainCarriageETDATDETAAndATAToVaildDates()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update shipment main carriage leg with vaild dates", null, tagsOfScenario, argumentsOfScenario);
-#line 33
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Update main carriage ETD, ATD, ETA, and ATA to vaild dates", null, tagsOfScenario, argumentsOfScenario);
+#line 34
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -260,14 +252,14 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 3
+#line 6
 this.FeatureBackground();
 #line hidden
-#line 34
- testRunner.When("Update main carriage leg ETD,ATD,ETA and ATA to valid date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
 #line 35
- testRunner.Then("The shipment should updated succesfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("update ETD, ATD, ETA, and ATA to vaild dates", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 36
+ testRunner.Then("shipment should update successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -280,12 +272,12 @@ this.FeatureBackground();
             
             public FixtureData()
             {
-                ExternalAPIDirectFeature.FeatureSetup();
+                ExternalAPIDirectShipmentFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                ExternalAPIDirectFeature.FeatureTearDown();
+                ExternalAPIDirectShipmentFeature.FeatureTearDown();
             }
         }
     }

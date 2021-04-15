@@ -462,6 +462,10 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new CardSearchMap());
             modelBuilder.Configurations.Add(new HorseMap());
 
+            modelBuilder.Configurations.Add(new DWHEnvironmentSettingMap());
+
+
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -1024,6 +1028,7 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<VatUniquePartnerType> VatUniquePartnerTypes { get; set; }
         public IDbSet<CardSearch> CardSearches { get; set; }
 
+        public IDbSet<DWHEnvironmentSetting> DWHEnvironmentSettings { get; set; }
 
 
 

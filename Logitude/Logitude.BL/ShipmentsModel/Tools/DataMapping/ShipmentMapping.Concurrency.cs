@@ -70,15 +70,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.NumberOfPackages = entityPM.NumberOfPackages;
             entityPoco.GrossWeight = entityPM.GrossWeight;
             entityPoco.ChargeableWeight = entityPM.ChargeableWeight;
-            entityPoco.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
-            entityPoco.PreCarriageATA = entityPM.PreCarriageATA;
-            entityPoco.PreCarriageATD = entityPM.PreCarriageATD;
-            entityPoco.PreCarriageETA = entityPM.PreCarriageETA;
-            entityPoco.PreCarriageETD = entityPM.PreCarriageETD;
-            entityPoco.OnCarriageATA = entityPM.OnCarriageATA;
-            entityPoco.OnCarriageATD = entityPM.OnCarriageATD;
-            entityPoco.OnCarriageETA = entityPM.OnCarriageETA;
-            entityPoco.OnCarriageETD = entityPM.OnCarriageETD;
+            entityPoco.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;            
 
             if (entityPM.ShipmentLevelCode != "H")
             {
@@ -118,8 +110,29 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     entityMasterData.Transshipment3STD = entityPM.Transshipment3STD;
                     entityMasterData.Transshipment3STA = entityPM.Transshipment3STA;
 
+                    entityMasterData.PreCarriageATA = entityPM.PreCarriageATA;
+                    entityMasterData.PreCarriageATD = entityPM.PreCarriageATD;
+                    entityMasterData.PreCarriageETA = entityPM.PreCarriageETA;
+                    entityMasterData.PreCarriageETD = entityPM.PreCarriageETD;
+                    entityMasterData.OnCarriageATA = entityPM.OnCarriageATA;
+                    entityMasterData.OnCarriageATD = entityPM.OnCarriageATD;
+                    entityMasterData.OnCarriageETA = entityPM.OnCarriageETA;
+                    entityMasterData.OnCarriageETD = entityPM.OnCarriageETD;
+
                     FillEstimatedDatesFields(entityMasterData, entityPM);
                 }
+            }
+
+            else
+            {
+                entityPoco.PreForwardingATA = entityPM.PreForwardingATA;
+                entityPoco.PreForwardingATD = entityPM.PreForwardingATD;
+                entityPoco.PreForwardingETA = entityPM.PreForwardingETA;
+                entityPoco.PreForwardingETD = entityPM.PreForwardingETD;
+                entityPoco.OnForwardingATA = entityPM.OnForwardingATA;
+                entityPoco.OnForwardingATD = entityPM.OnForwardingATD;
+                entityPoco.OnForwardingETA = entityPM.OnForwardingETA;
+                entityPoco.OnForwardingETD = entityPM.OnForwardingETD;
             }
         }
         private static void MapConcurrencyFields_INTTRA(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData)
@@ -195,15 +208,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.NumberOfPackages = GetConcurrencyFieldValue_Int(entityPM.NumberOfPackages_Original, entityPM.NumberOfPackages, entityPoco.NumberOfPackages);
             entityPoco.GrossWeight = GetConcurrencyFieldValue_Double(entityPM.GrossWeight_Original, entityPM.GrossWeight, entityPoco.GrossWeight);
             entityPoco.ChargeableWeight = GetConcurrencyFieldValue_Double(entityPM.ChargeableWeight_Original, entityPM.ChargeableWeight, entityPoco.ChargeableWeight);
-            entityPoco.GrossWeightUnitCode = GetConcurrencyFieldValue_String(entityPM.GrossWeightUnitCode_Original, entityPM.GrossWeightUnitCode, entityPoco.GrossWeightUnitCode);
-            entityPoco.PreCarriageATA = GetConcurrencyFieldValue_Date(entityPM.PreCarriageATA_Original, entityPM.PreCarriageATA, entityPoco.PreCarriageATA);
-            entityPoco.PreCarriageATD = GetConcurrencyFieldValue_Date(entityPM.PreCarriageATD_Original, entityPM.PreCarriageATD, entityPoco.PreCarriageATD);
-            entityPoco.PreCarriageETA = GetConcurrencyFieldValue_Date(entityPM.PreCarriageETA_Original, entityPM.PreCarriageETA, entityPoco.PreCarriageETA);
-            entityPoco.PreCarriageETD = GetConcurrencyFieldValue_Date(entityPM.PreCarriageETD_Original, entityPM.PreCarriageETD, entityPoco.PreCarriageETD);
-            entityPoco.OnCarriageATA = GetConcurrencyFieldValue_Date(entityPM.OnCarriageATA_Original, entityPM.OnCarriageATA, entityPoco.OnCarriageATA);
-            entityPoco.OnCarriageATD = GetConcurrencyFieldValue_Date(entityPM.OnCarriageATD_Original, entityPM.OnCarriageATD, entityPoco.OnCarriageATD);
-            entityPoco.OnCarriageETA = GetConcurrencyFieldValue_Date(entityPM.OnCarriageETA_Original, entityPM.OnCarriageETA, entityPoco.OnCarriageETA);
-            entityPoco.OnCarriageETD = GetConcurrencyFieldValue_Date(entityPM.OnCarriageETD_Original, entityPM.OnCarriageETD, entityPoco.OnCarriageETD);
+            entityPoco.GrossWeightUnitCode = GetConcurrencyFieldValue_String(entityPM.GrossWeightUnitCode_Original, entityPM.GrossWeightUnitCode, entityPoco.GrossWeightUnitCode);            
             entityPoco.INTTRABookingStatusCode = GetConcurrencyFieldValue_String(entityPM.INTTRABookingStatusCode_Original, entityPM.INTTRABookingStatusCode, entityPoco.INTTRABookingStatusCode);
 
             if (entityPM.ShipmentLevelCode != "H")
@@ -243,7 +248,27 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     entityMasterData.BookingConfirmedBy = GetConcurrencyFieldValue_String(entityPM.BookingConfirmedBy_Original, entityPM.BookingConfirmedBy, entityMasterData.BookingConfirmedBy);
                     entityMasterData.BookingConfirmationNumber = GetConcurrencyFieldValue_String(entityPM.BookingConfNumber_Original, entityPM.BookingConfirmationNumber, entityMasterData.BookingConfirmationNumber);
                     entityMasterData.MainCarriageCarrierNumber = GetConcurrencyFieldValue_String(entityPM.MAN_CarrierNumber_Original, entityPM.MainCarriageCarrierNumber, entityMasterData.MainCarriageCarrierNumber);
+                    entityMasterData.PreCarriageATA = GetConcurrencyFieldValue_Date(entityPM.PreCarriageATA_Original, entityPM.PreCarriageATA, entityMasterData.PreCarriageATA);
+                    entityMasterData.PreCarriageATD = GetConcurrencyFieldValue_Date(entityPM.PreCarriageATD_Original, entityPM.PreCarriageATD, entityMasterData.PreCarriageATD);
+                    entityMasterData.PreCarriageETA = GetConcurrencyFieldValue_Date(entityPM.PreCarriageETA_Original, entityPM.PreCarriageETA, entityMasterData.PreCarriageETA);
+                    entityMasterData.PreCarriageETD = GetConcurrencyFieldValue_Date(entityPM.PreCarriageETD_Original, entityPM.PreCarriageETD, entityMasterData.PreCarriageETD);
+                    entityMasterData.OnCarriageATA = GetConcurrencyFieldValue_Date(entityPM.OnCarriageATA_Original, entityPM.OnCarriageATA, entityMasterData.OnCarriageATA);
+                    entityMasterData.OnCarriageATD = GetConcurrencyFieldValue_Date(entityPM.OnCarriageATD_Original, entityPM.OnCarriageATD, entityMasterData.OnCarriageATD);
+                    entityMasterData.OnCarriageETA = GetConcurrencyFieldValue_Date(entityPM.OnCarriageETA_Original, entityPM.OnCarriageETA, entityMasterData.OnCarriageETA);
+                    entityMasterData.OnCarriageETD = GetConcurrencyFieldValue_Date(entityPM.OnCarriageETD_Original, entityPM.OnCarriageETD, entityMasterData.OnCarriageETD);
                 }
+            }
+
+            else
+            {
+                entityPoco.PreForwardingATA = GetConcurrencyFieldValue_Date(entityPM.PreForwardingATA_Original, entityPM.PreForwardingATA, entityPoco.PreForwardingATA);
+                entityPoco.PreForwardingATD = GetConcurrencyFieldValue_Date(entityPM.PreForwardingATD_Original, entityPM.PreForwardingATD, entityPoco.PreForwardingATD);
+                entityPoco.PreForwardingETA = GetConcurrencyFieldValue_Date(entityPM.PreForwardingETA_Original, entityPM.PreForwardingETA, entityPoco.PreForwardingETA);
+                entityPoco.PreForwardingETD = GetConcurrencyFieldValue_Date(entityPM.PreForwardingETD_Original, entityPM.PreForwardingETD, entityPoco.PreForwardingETD);
+                entityPoco.OnForwardingATA = GetConcurrencyFieldValue_Date(entityPM.OnForwardingATA_Original, entityPM.OnForwardingATA, entityPoco.OnForwardingATA);
+                entityPoco.OnForwardingATD = GetConcurrencyFieldValue_Date(entityPM.OnForwardingATD_Original, entityPM.OnForwardingATD, entityPoco.OnForwardingATD);
+                entityPoco.OnForwardingETA = GetConcurrencyFieldValue_Date(entityPM.OnForwardingETA_Original, entityPM.OnForwardingETA, entityPoco.OnForwardingETA);
+                entityPoco.OnForwardingETD = GetConcurrencyFieldValue_Date(entityPM.OnForwardingETD_Original, entityPM.OnForwardingETD, entityPoco.OnForwardingETD);
             }
         }
         private static void MapCalculatedFields(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData)
@@ -267,15 +292,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.NumberOfPackages = entityPM.NumberOfPackages;
             entityPoco.GrossWeight = entityPM.GrossWeight;
             entityPoco.ChargeableWeight = entityPM.ChargeableWeight;
-            entityPoco.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
-            entityPoco.PreCarriageATA = entityPM.PreCarriageATA;
-            entityPoco.PreCarriageATD = entityPM.PreCarriageATD;
-            entityPoco.PreCarriageETA = entityPM.PreCarriageETA;
-            entityPoco.PreCarriageETD = entityPM.PreCarriageETD;
-            entityPoco.OnCarriageATA = entityPM.OnCarriageATA;
-            entityPoco.OnCarriageATD = entityPM.OnCarriageATD;
-            entityPoco.OnCarriageETA = entityPM.OnCarriageETA;
-            entityPoco.OnCarriageETD = entityPM.OnCarriageETD;
+            entityPoco.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;            
             entityPoco.HasContainerException = entityPM.HasContainerException;
             entityPoco.INTTRALastStatusDate = entityPM.INTTRALastStatusDate;
             entityPoco.INTTRASIStatusCode = entityPM.INTTRASIStatusCode;
@@ -338,10 +355,30 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     entityMasterData.MainCarriageCarrierNumber = entityPM.MainCarriageCarrierNumber;
                     entityMasterData.CargonautFWBStatusCode = entityPM.CargonautFWBStatusCode;
                     entityMasterData.CargonautFWBStatusDate = entityPM.CargonautFWBStatusDate;
-                    
+                    entityMasterData.PreCarriageATA = entityPM.PreCarriageATA;
+                    entityMasterData.PreCarriageATD = entityPM.PreCarriageATD;
+                    entityMasterData.PreCarriageETA = entityPM.PreCarriageETA;
+                    entityMasterData.PreCarriageETD = entityPM.PreCarriageETD;
+                    entityMasterData.OnCarriageATA = entityPM.OnCarriageATA;
+                    entityMasterData.OnCarriageATD = entityPM.OnCarriageATD;
+                    entityMasterData.OnCarriageETA = entityPM.OnCarriageETA;
+                    entityMasterData.OnCarriageETD = entityPM.OnCarriageETD;
+
                     CalculateFinalDestinationPort(entityPM, entityMasterData);
                     FillEstimatedDatesFields(entityMasterData, entityPM);
                 }
+            }
+
+            else
+            {
+                entityPoco.PreForwardingATA = entityPM.PreForwardingATA;
+                entityPoco.PreForwardingATD = entityPM.PreForwardingATD;
+                entityPoco.PreForwardingETA = entityPM.PreForwardingETA;
+                entityPoco.PreForwardingETD = entityPM.PreForwardingETD;
+                entityPoco.OnForwardingATA = entityPM.OnForwardingATA;
+                entityPoco.OnForwardingATD = entityPM.OnForwardingATD;
+                entityPoco.OnForwardingETA = entityPM.OnForwardingETA;
+                entityPoco.OnForwardingETD = entityPM.OnForwardingETD;
             }
 
             if (packagesListCount == 0)

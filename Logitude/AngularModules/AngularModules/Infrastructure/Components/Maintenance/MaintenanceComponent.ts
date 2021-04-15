@@ -50,6 +50,10 @@ export class MaintenanceComponent {
         this.PagesMenu.push(new Menu("PRS", TextCodeTranslator.Translate("General.MC.PersonalSettings.PersonalSettings")));
         this.PagesMenu.push(new Menu("CMS", TextCodeTranslator.Translate("General.MC.SystemSettings.SystemSettings")));
 
+        if (FeatureLocator.HasFeaturePermession("General", "REPORTEXECUTIONLOGS")) {
+            this.PagesMenu.push(new Menu("RELO", TextCodeTranslator.Translate("General.MH.ReportExecutionLogs")));
+        }
+
 
         if (SessionLocator.Tenant == 0) {
             this.PagesMenu.push(new Menu("MNG", TextCodeTranslator.Translate("General.MC.Management.Management")));
@@ -1391,6 +1395,7 @@ export class MaintenanceComponent {
                     }
                 case "QuoteSettings": {
                     var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Height = 600;
                     logitudeWindow.Title = "Quote Settings";
                     logitudeWindow.Show('./QuoteModules/QuoteOthers/Components/Maintenance/QuoteSettingsComponent');
                     break;
@@ -1549,6 +1554,21 @@ export class MaintenanceComponent {
                 logitudeWindow.Height = 300;
                 logitudeWindow.Title = "Accounting Load Test";
                 logitudeWindow.Show('./Accounting/Components/Maintenance/AccountingFunctionalTestComponent');
+
+            } break;
+            case "jokeracctest": {
+
+                if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Show("nono NO only Customer Care ");
+                    return;
+                }
+                var logitudeWindow = new LogitudeWindow();
+                logitudeWindow.Width = 1600;
+                logitudeWindow.Height = 1200;
+                logitudeWindow.Title = "Accounting main Tester";
+                logitudeWindow.ShowCloseButton = true;
+                logitudeWindow.Show('./Accounting/Components/Maintenance/Tester/AccountingMainTesterComponent');
 
             } break;
             case "jokeraccloadtest": {

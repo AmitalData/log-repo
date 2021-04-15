@@ -152,7 +152,19 @@ namespace CommunicationWorkerRole.Services
             schedulerDetails.ReportDetails.Recepients = GetReportPermittedContacts(reportTask, schedulerDetails);
             if (schedulerDetails.ReportDetails.Recepients != null)
             {
-                StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
+                TryToSendReportAfterMeetACertainConditions(reportTask, schedulerDetails, reportFilter);
+            }
+        }
+
+        private void TryToSendReportAfterMeetACertainConditions(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
+        {
+            StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
+            if (stiReport == null)
+            {
+                this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Report Is Empty"));
+            }
+            else
+            {
                 this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Exporting report to pdf file"));
                 string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant);
                 SendPdfReportIfIsValid(reportTask, schedulerDetails, documentId);
@@ -162,7 +174,8 @@ namespace CommunicationWorkerRole.Services
         private ReportSchedulerRecepients GetReportPermittedContacts(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails)
         {
             List<ContactList> allPermittedContacts = GetAllPermittedContacts(reportTask.Tenant, null);
-            string gLAccountId = GetFilterFieldValueByName(schedulerDetails.ReportDetails.ReportFilterItems, "GLAccountId");
+            string mainCustomerFieldName = string.IsNullOrEmpty(schedulerDetails.ReportDetails.MainCustomerFieldName) ? "GLAccountId" : schedulerDetails.ReportDetails.MainCustomerFieldName;
+            string gLAccountId = GetFilterFieldValueByName(schedulerDetails.ReportDetails.ReportFilterItems, mainCustomerFieldName);
             List<ContactList> allPermittedCards = GetAllPermittedContacts(reportTask.Tenant, gLAccountId);
             allPermittedContacts = allPermittedContacts.Concat(allPermittedCards).ToList();
             ReportSchedulerRecepients recepients =  RemoveNonPermittedContacts(schedulerDetails.ReportDetails.Recepients, allPermittedContacts);
@@ -375,7 +388,9 @@ namespace CommunicationWorkerRole.Services
                 QueryFilterItemLists = schedulerDetails.ReportDetails.ReportFilterItems,
                 DefaultTemplateId = schedulerDetails.ReportDetails.ReportTemplateId,
                 tenant = schedulerDetails.Tenant,
-                ReportCode = reportCode
+                ReportCode = reportCode,
+                IsSchedulerReport = true,
+                SendIfEmpty = schedulerDetails.SendIfEmpty,
             };
 
             this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();

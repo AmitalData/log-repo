@@ -2,8 +2,11 @@
 using Logitude.ShipmentTests.Models;
 using Logitude.ShipmentTests.Models.Builders;
 using Logitude.Test.Base.Context;
-using Logitude.Test.Base.Models;
+using Logitude.Test.Base.Models.Api;
+using Logitude.Test.Base.Models.Shared;
+using Logitude.Test.Base.Models.UserTenantPreparation;
 using Logitude.Test.Base.Services;
+using System;
 using TechTalk.SpecFlow;
 
 namespace Logitude.ShipmentTests.Steps.SecurityTests
@@ -12,73 +15,77 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
     public class CreateAndUpdateShipmentSecurityAccessSteps
     {
         private SecurityAccessStepsContext<ShipmentPM> Context;
-        private string ErrorMsg;
 
         public CreateAndUpdateShipmentSecurityAccessSteps(SecurityAccessStepsContext<ShipmentPM> context)
         {
             Context = context;
         }
 
-        [When(@"Create shipment request sent for User's Tenant")]
-        public void WhenCreateShipmentRequestSentForUserSTenant()
+        #region Step Region
+
+        #region Create shipment for user's tenant steps
+        [When(@"create a shipment for user's tenant")]
+        public void WhenCreateAShipmentForUserSTenant()
         {
             ApiResponse<ShipmentPM> response = CreateShipmentForFirstUser(UserTenant.Token);
             Context.FirstUserPMData.Id = response.Data?.Id;
-            ErrorMsg = response.ErrorMessage;
         }
 
-        [Then(@"Shipment should be added successfully")]
-        public void ThenShipmentShouldBeAddedSuccessfully()
+        [Then(@"the shipment should create successfully")]
+        public void ThenTheShipmentShouldCreateSuccessfully()
         {
             Context.FirstUserPMData.Id.Should().NotBeNull();
-            ErrorMsg.Should().BeNull();
         }
+        #endregion
 
-        [When(@"Create shipment request sent for other Tenant")]
-        public void WhenCreateShipmentRequestSentForOtherTenant()
+        #region Create shipment for other tenant steps
+        [When(@"create a shipment for other tenant")]
+        public void WhenCreateAShipmentForOtherTenant()
         {
-            ApiResponse<ShipmentPM> response = CreateShipmentForFirstUser(UserOtherTenant.Token);
-            Context.SecondUserPMData.Id = response.Data?.Id;
-            ErrorMsg = response.ErrorMessage;
+            Context.act = () => CreateShipmentForFirstUser(UserOtherTenant.Token);
         }
 
-        [Then(@"Shipment should not be added")]
-        public void ThenShipmentShouldNotBeAdded()
+        [Then(@"the shipment should not create successfully")]
+        public void ThenTheShipmentShouldNotCreateSuccessfully()
         {
-            Context.SecondUserPMData.Id.Should().BeNull();
-            ErrorMsg.Should().Contain("Sorry! you have no permission to do this operation on Tenant");
+            Context.act.Should().ThrowExactly<AggregateException>()
+                .And.InnerExceptions[0].Message.Contains("Sorry! you have no permission to do this operation on Tenant");
         }
+        #endregion
 
-        [When(@"Update shipment request sent for User's Tenant")]
-        public void WhenUpdateShipmentRequestSentForUserSTenant()
+        #region Update shipment for user's tenant steps
+        [When(@"update a shipment for user's tenant")]
+        public void WhenUpdateAShipmentForUserSTenant()
         {
             ApiResponse<ShipmentPM> response = UpdateShipmentForFirstUser(UserTenant.Token);
             Context.FirstUserPMData.Id = response.Data?.Id;
-            ErrorMsg = response.ErrorMessage;
         }
 
-        [Then(@"Shipment should be Updated successfully")]
-        public void ThenShipmentShouldBeUpdatedSuccessfully()
+        [Then(@"the shipment should update successfully")]
+        public void ThenTheShipmentShouldUpdateSuccessfully()
         {
             Context.FirstUserPMData.Id.Should().NotBeNull();
-            ErrorMsg.Should().BeNull();
         }
+        #endregion
 
-        [When(@"Update shipment request sent for other Tenant")]
-        public void WhenUpdateShipmentRequestSentForOtherTenant()
+        #region Update shipment for other tenant steps
+        [When(@"update a shipment for other tenant")]
+        public void WhenUpdateAShipmentForOtherTenant()
         {
-            ApiResponse<ShipmentPM> response = UpdateShipmentForFirstUser(UserOtherTenant.Token);
-            Context.SecondUserPMData.Id = response.Data?.Id;
-            ErrorMsg = response.ErrorMessage;
+            Context.act = () => UpdateShipmentForFirstUser(UserOtherTenant.Token);
         }
 
-        [Then(@"Shipment should not be Updated")]
-        public void ThenShipmentShouldNotBeUpdated()
+        [Then(@"the shipment should not update successfully")]
+        public void ThenTheShipmentShouldNotUpdateSuccessfully()
         {
-            Context.SecondUserPMData.Id.Should().BeNull();
-            ErrorMsg.Should().Contain("Sorry! you have no permission to do this operation on Tenant");
+            Context.act.Should().ThrowExactly<AggregateException>()
+                .And.InnerExceptions[0].Message.Contains("Sorry! you have no permission to do this operation on Tenant");
         }
+        #endregion
 
+        #endregion
+
+        #region Private Function Region
         private ApiResponse<ShipmentPM> UpdateShipmentForFirstUser(string Token)
         {
             ApiResponse<ShipmentPM> response = CreateShipmentForFirstUser(UserTenant.Token);
@@ -91,6 +98,9 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
             return APICaller.CallPost<ShipmentPM>(shipmentModel, Urls.ShipmentController, Token);
         }
 
+        #endregion
+
+        #region Build Models Region
         private ShipmentPM GetValidUserShipmentPM()
         {
             return new ShipmentBuilder().WithDefualtValues()
@@ -103,5 +113,7 @@ namespace Logitude.ShipmentTests.Steps.SecurityTests
                 .MainCarriageFromPortIdByCode("MIA")
                 .Build();
         }
+
+        #endregion
     }
 }

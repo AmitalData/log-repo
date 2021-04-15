@@ -105,11 +105,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
     ngOnInit() {
 
-        //var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "BDW" && d.TenantNumber == SessionLocator.Tenant)[0];
-        //if (featureToggle) {
-        //    this.IsBuildDocumentViaWorkerRole = true;
-        //}
-
+       
 
     }
     ObjectTableId: string;

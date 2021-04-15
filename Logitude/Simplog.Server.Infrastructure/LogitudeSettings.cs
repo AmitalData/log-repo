@@ -45,10 +45,7 @@ namespace Simplog.Server.Infrastructure
         public static double AndroidSharedAppMinimumVersion { get; set; }
         public static string DomainName { get; set; }
         public static string ProductName { get; set; }
-        public static string EmailAlertSignature { get; set; }
-        public static string QBOConsumerKey { get; set; }
-        public static string QBOConsumerSecretKey { get; set; }
-        public static string QBOAppToken { get; set; }
+        public static string EmailAlertSignature { get; set; }        
         public static string ABMProductId { get; set; }
 
         public static string QBOClientID { get; set; }

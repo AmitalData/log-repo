@@ -37,6 +37,9 @@ namespace WebFreight.Web.DataProviders
     {
         public string CustomerId { get; set; }
         public string CustomerName { get; set; }
+        public string PartnerId { get; set; }
+        public string PartnerName { get; set; }
+        public string PartnerAddress { get; set; }
         public string CustomerAddress { get; set; }
         public string CardCode { get; set; }
         public List<AccountingLedger> AccountingLedgerList { get; set; }
@@ -62,6 +65,7 @@ namespace WebFreight.Web.DataProviders
         public DateTime? ValueDate { get; set; }
         public string PaymentMethod { get; set; }
         public string CustomerId { get; set; }
+        public string PartnerId { get; set; }
         public string BillToVendor { get; set; }
         public string HouseNumber { get; set; }
         public string MasterNumber { get; set; }

@@ -18,6 +18,7 @@ import {EntityLastActivityService} from './Services/EntityLastActivityService';
 import {TotangoService} from './Services/WebServices/TotangoService';
 import {LogitudeErrorHandler} from './Utilities/LogitudeErrorHandler'
 import {ErrorHandler} from '@angular/core';
+import {PrivateLabelsBrandingDataService} from './Services/WebServices/PrivateLabelsBrandingDataService';
 
 @NgModule({
     imports: [ControlsModule, MaterialModule],
@@ -34,8 +35,10 @@ import {ErrorHandler} from '@angular/core';
         EntityPMService,
         IndexedDbService,
         EntityResourceService,
-        EntityLastActivityService,
+         EntityLastActivityService,
+         PrivateLabelsBrandingDataService,
         TotangoService,
+
 
         //Islam: if you comment it dont check in!
         { provide: ErrorHandler, useClass: LogitudeErrorHandler }

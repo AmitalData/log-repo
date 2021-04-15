@@ -73,7 +73,7 @@ export class CCSSettingsTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("PIMA", this.ObjectTableName, this.isTenantManagementEditable);
         this.UIProperties.SetEnabled("AWBMessagesCCSTypeCode", this.ObjectTableName, this.isTenantManagementEditable);
         this.UIProperties.SetEnabled("IsCargonautEnabled", this.ObjectTableName, this.isTenantManagementEditable);
-        this.UIProperties.SetEnabled("IsDEXXConnectionEnabled", this.ObjectTableName, this.isTenantManagementEditable);
+        this.UIProperties.SetEnabled("IsDEXXConnectionEnabled", this.ObjectTableName, this.isTenantManagementEditable); 
 
         this.UIProperties.SetVisibility("IsEAWBOnlyDemo", this.ObjectTableName, (SessionLocator.Tenant == 0 || SessionLocator.Tenant == 341) ? true : false);
         this.UIProperties.SetVisibility("IsINTTRAOnlyDemo", this.ObjectTableName, (SessionLocator.Tenant == 0) ? true : false);
@@ -83,7 +83,9 @@ export class CCSSettingsTabComponent extends BaseComponent {
 
     private SetUIProperties_SetRequires() {
         //this.UIProperties.SetRequires("TTY", TargetEntityName, entityPM, false);
-        this.UIProperties.SetRequired("PIMA", this.ObjectTableName, false);
+        this.UIProperties.SetRequired("PIMA", this.ObjectTableName, false); 
+         
+
 
         if (this.AWBMessagesCCSTypeCode == "CHAMP") {
             //if (string.IsNullOrEmpty(TTY))
@@ -136,6 +138,7 @@ export class CCSSettingsTabComponent extends BaseComponent {
             this.SetUIProperties_SetRequires();
         }
     }
+ 
 
     get IsEAWBOnlyDemo() { return this.EntityPM.IsEAWBOnlyDemo; }
     set IsEAWBOnlyDemo(newValue: boolean) {

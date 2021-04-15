@@ -13,17 +13,21 @@ import { HttpClient, HttpEvent, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { CustomsTransferHeaderPM } from '../EntityPMs/CustomsTransferHeaderPM';
 import { CustomsTransferHeaderPMService } from './StandardPMs/CustomsTransferHeaderPMService';
-//import { defer } from 'rxjs';
+import { ShipmentTool } from '../Tools';
+import { BaseService } from '../../Abstractions/Services/BaseService';
+import { Observable } from 'rxjs';
 
 @Injectable()
 
-export class ShipmentDomainService {
+export class ShipmentDomainService extends BaseService  {
 
     private _httpClient: HttpClient;
     private _apiUrl: string;
     constructor() {
+        super();
         this._httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain';
+        this.ApiURL = this.BaseURL + 'api/ShipmentDomain';
     }
 
     GetCustomerCreditLimitDetails(customerId: string, quoteId: string, isBuildFromQuote: boolean) {
@@ -86,20 +90,25 @@ export class ShipmentDomainService {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
-    GetRecentShipments() {
+    GetRecentShipments1() {
 
-        var url = this._apiUrl + '/GetRecentShipments';
+        var url = this.ApiURL + '/GetRecentShipments';
 
         return defer(() => {
-            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
-
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = allLists;
-                return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            return this.HttpClient.get(url, this.HttpHeaders).pipe(
+                map(response => {
+                    return this.GetServiceResponse(response);
+                }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+    GetRecentShipments() {
+        return Observable.create(observer => {
+            this.Get(this.ApiURL + '/GetRecentShipments').subscribe((response: any) => {
+                return observer.next(this.GetServiceResponse(response));                
+            });
+        });
+    }
+
     GetDeparturesArrivals(myDirectionId: string, myTransportModeId: string) {
 
         var url = this._apiUrl + '/GetDeparturesArrivals?myDirectionId=' + myDirectionId + '&myTransportModeId=' + myTransportModeId;
@@ -191,29 +200,41 @@ export class ShipmentDomainService {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
-    ValidateShipmentMasterFieldExistance(entityId: string, myBookingId: string, myMasterField: string, myAirlinePrefixField: string, myDirectionId: string, myTransportModeId: string, myShipmentLevelCode: string, isCancelled: boolean) {
+
+    ValidateShipmentMasterFieldExistance(entityPM: ShipmentPM) {
         return defer(() => {
 
+            var isValidating = ShipmentTool.IsValidatingShipmentMasterFieldExistance(entityPM);
 
-            var args = new ValidateShipmentMasterArgs();
-            args.ShipmentId = entityId;
-            args.BookingId = myBookingId;
-            args.Master = myMasterField;
-            args.AirlinePrefix = myAirlinePrefixField;
-            args.DirectionId = myDirectionId;
-            args.TransportModeId = myTransportModeId;
-            args.ShipmentLevelCode = myShipmentLevelCode;
-            args.IsCancelled = isCancelled;
+            if (!isValidating) {
+                return null;
+            }
 
-            var mappedEntity: ValidateShipmentMasterArgs = this.MapJsonToValidateShipmentMasterArgs(args, false);
+            else {
+                var args = new ValidateShipmentMasterArgs();
+                args.ShipmentId = entityPM.Id;
+                args.BookingId = entityPM.BookingId;
+                args.Master = entityPM.Master;
+                args.AirlinePrefix = entityPM.AirlinePrefix;
+                args.DirectionId = entityPM.DirectionId;
+                args.TransportModeId = entityPM.TransportModeId;
+                args.ShipmentLevelCode = entityPM.ShipmentLevelCode;
+                args.IsCancelled = entityPM.IsCancelled;
+                args.OperationalDate = ShipmentTool.CalculateShipmentOperationalDate(entityPM);
 
-            return this._httpClient.post(this._apiUrl + "/PostValidateShipmentMasterArgs", JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                var myJsonResult = res;
-                return myJsonResult;
+                var mappedEntity: ValidateShipmentMasterArgs = this.MapJsonToValidateShipmentMasterArgs(args, false);
 
-            }), catchError(ServiceHelper.HandleServiceError));
+                return this.HttpClient.post(this.ApiURL + "/PostValidateShipmentMasterArgs", JSON.stringify(mappedEntity), this.HttpHeaders).pipe(
+                    map((res) => {
+                        var myJsonResult = res;
+                        return myJsonResult;
+
+                    }), catchError(ServiceHelper.HandleServiceError));
+            }
         });
     }
+
+
     GetMasterReceivables(entityId: string) {
 
         var url = this._apiUrl + '/GetMasterReceivables?entityId=' + entityId;
@@ -294,10 +315,25 @@ export class ShipmentDomainService {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
-    GetShipmentsQueriesCounts(tenant: number, transportModeId: string, directionId: string, SearchFilter: string, serviceContextUser: string, TypeCode: string = null) {
+    GetShipmentsQueriesCounts(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
+        let urlparameters = '/GetShipmentsQueriesCounts?';
+        const mykeys = Object.keys(shipmentsQueriesCountsArgs);
+        for (var i in mykeys) {
+            let propName = mykeys[i];
+            let propValue = shipmentsQueriesCountsArgs[propName];
+
+            if (urlparameters != "/GetShipmentsQueriesCounts?") {
+                urlparameters = urlparameters.concat('&');
+            }
+
+            propValue = encodeURIComponent(propValue);
+            urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+        }
+
+        const callUrl = this._apiUrl.concat(urlparameters);
 
         return defer(() => {
-            return this._httpClient.get(this._apiUrl + '/GetShipmentsQueriesCounts?tenant=' + tenant + '&transportModeId=' + transportModeId + '&directionId=' + directionId + '&SearchFilter=' + SearchFilter + '&serviceContextUser=' + serviceContextUser + '&TypeCode=' + TypeCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._httpClient.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
 
@@ -978,6 +1014,7 @@ export class ValidateShipmentMasterArgs {
     public TransportModeId: string;
     public ShipmentLevelCode: string;
     public IsCancelled: boolean;
+    public OperationalDate: Date;
 }
 export class ImporterQueriesDataCounts {
     public OpenShipmentsCount: number;
@@ -1023,4 +1060,14 @@ export class ExcelPackage {
     Description: string;
     IsRefrigerated: boolean;
     HasErrors: boolean;
+}
+
+export class ShipmentsQueriesCountsArgs {
+    Tenant: number;
+    TransportModeId: string;
+    DirectionId: string;
+    SearchFilter: string;
+    ServiceContextUser: string;
+    TypeCode: string = null;
+    ForwarderPartnerId: string;
 }

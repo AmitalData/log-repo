@@ -185,7 +185,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
             this.agGrid.api.refreshCells();
 
             if (count > 50000 || msg == "MT5000") {
-                this.CountText = "Showing the first 10,000 rows, download the excel to view all.";
+                this.CountText = "Showing the first 10,000 rows, download the report to view all.";
             }
             else {
                 this.CountText = count + " rows";

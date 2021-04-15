@@ -140,6 +140,7 @@ export class ShipmentList {
 		hasChanges: boolean;
 		StatusId: string;
 		StatusName: string;
+		ExactStatusName: string;
 		StatusDate: Date;
 		StatusLocation: string;
 		Master: string;
@@ -288,7 +289,9 @@ export class ShipmentList {
 		AccountManagerUserName: string;
 		SalesmanUserId: string;
 		PreCarriageETD: Date;
+		PreForwardingETD: Date;
 		IsException: boolean;
+
 		SalesmanUserName: string;
 		CreatedByUserName: string;
 		AirlinePrefix: string;
@@ -410,6 +413,7 @@ export class ShipmentList {
 		INTTRABookingStatusCode: string;
 		INTTRABookingTransStatusName: string;
 		INTTRABookingStatusName: string;
+		INTTRALastEBbookingSendDate: Date;
 		From: string;
 		To: string;
 		Origin: string;
@@ -452,5 +456,7 @@ export class ShipmentList {
 		IsAccrualsApproved: boolean;
 		AccrualsApprovalDate: Date;
 		MainHarmonize: string;
+		PreForwardingFromPortId: string;
+		OnForwardingToPortId: string;
 	
-}
+}

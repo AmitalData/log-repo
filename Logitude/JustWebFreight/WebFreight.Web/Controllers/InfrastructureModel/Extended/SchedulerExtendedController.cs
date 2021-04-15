@@ -73,6 +73,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
             }
         }
 
+
         public HttpResponseMessage Post(TasksSchedulerPM entityPM)
         {
             if (ModelState.IsValid)
@@ -152,7 +153,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 
                     if (entityPM.SchedulerDetailsData != null)
                     {
-                        if(entityPM.SchedulerDetailsData.FTPDetails != null && !string.IsNullOrEmpty(entityPM.SchedulerDetailsData.FTPDetails.Extension))
+                        if (entityPM.SchedulerDetailsData.FTPDetails != null && !string.IsNullOrEmpty(entityPM.SchedulerDetailsData.FTPDetails.Extension))
                         {
                             entityPM.SchedulerDetailsData.FTPDetails.Extension = entityPM.SchedulerDetailsData.FTPDetails.Extension.TrimStart('.');
                         }
@@ -187,5 +188,36 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
             }
         }
 
+        public HttpResponseMessage GetIsExceedsScheduledTasksLimitPerReport(int tenant, string entityId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
+
+                SecurityUtility.CheckContactFeature("TasksScheduler", "READ", authToken.Tenant);
+                TasksSchedulerService service = new TasksSchedulerService(MyContext, tenant);
+                TasksSchedulerQuery tasksSchedulerQuery = new TasksSchedulerQuery(tenant);
+
+                bool isExceedsScheduledTasksLimitPerReport = service.isExceedsScheduledTasksLimitPerReport(tenant, entityId);
+                if (!isExceedsScheduledTasksLimitPerReport)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, isExceedsScheduledTasksLimitPerReport);
+
+                }
+                else
+                {
+                    throw new ArgumentException("You have exceeded the defined quota. Contact your account manager if you need to add more!");
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }

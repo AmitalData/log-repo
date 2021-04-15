@@ -61,6 +61,7 @@ export class ARInvoiceList {
 		AmountDueInLocalCurrency: number;
 		AmountDueInProfitCurrency: number;
 		MainEntityId: string;
+		MasterEntityId: string;
 		HouseNumber: string;
 		MasterNumber: string;
 		Description: string;

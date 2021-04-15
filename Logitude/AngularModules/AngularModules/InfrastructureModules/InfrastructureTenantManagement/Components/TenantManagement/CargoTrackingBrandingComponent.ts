@@ -40,7 +40,9 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     public EntityId: number;
     public BackgroundId: string;
     public ComapnylogoId: string;
+    public InvertedLogoId: string;
     public BrowserIconId: string;
+    public ShipmentHeaderImageId: string;
     private entityResourceService: EntityResourceService = new EntityResourceService();
     constructor(public entityArgs: EntityArgs)
     {
@@ -68,10 +70,34 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     {
         this.BackgroundId = this.EntityPM.BackgroundId;
         this.ComapnylogoId = this.EntityPM.ComapnylogoId;
+        this.InvertedLogoId = this.EntityPM.InvertedLogoId;
         this.BrowserIconId = this.EntityPM.BrowserIconId;
+        this.ShipmentHeaderImageId = this.EntityPM.ShipmentHeaderImageId;
+        
     }
 
-
+    RemoveImage(name){
+        if(name=='inverted'){
+            this.EntityPM.InvertedLogoId=null;
+            this.InvertedLogoId=null;
+        }
+        if(name=='company'){
+            this.EntityPM.ComapnylogoId=null;
+            this.ComapnylogoId=null;
+        }
+        if(name=='favicon'){
+            this.EntityPM.BrowserIconId=null;
+            this.BrowserIconId=null;
+        }
+        if(name=='bg'){
+            this.EntityPM.BackgroundId=null;
+            this.BackgroundId=null;
+        }
+        if (name == 'ShipmentHeader') {
+            this.EntityPM.ShipmentHeaderImageId = null;
+            this.ShipmentHeaderImageId = null;
+        }
+    }
     ngAfterViewInit()
     {
         this.ListenToEntitySavedEvent();
@@ -285,10 +311,19 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.ComapnylogoId = code;
         this.EntityPM.ComapnylogoId = code;
     }
+    InvertedLogoUploadedCompleted(code)
+    {
+        this.InvertedLogoId = code;
+        this.EntityPM.InvertedLogoId = code;
+    }
     BrowserIconUploadedCompleted(code)
     {
         this.BrowserIconId = code;
         this.EntityPM.BrowserIconId = code;
+    }
+    ShipmentHeaderImageUploadedCompleted(code) {
+        this.ShipmentHeaderImageId = code;
+        this.EntityPM.ShipmentHeaderImageId = code;
     }
 
     EnableBrandingChange(value: any)

@@ -92,7 +92,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CurrencyCode, 
 	         CurrencySign, 
 	         PrintingBranchNumber, 
-	         PrintingAccountNumber,
+	         PrintingAccountNumber, 
+	         BankCodeEnglishName, 
+	         BankCodeLocalName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

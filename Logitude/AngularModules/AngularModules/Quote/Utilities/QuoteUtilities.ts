@@ -337,12 +337,18 @@ export class QuoteUtilities {
             newChargePM.CostMinAmount = item.CostMinAmount;
             newChargePM.SaleMinAmount = item.SaleMinAmount;
             newChargePM.SaleMaxAmount = item.SaleMaxAmount;
-            newChargePM.MarkUpValue = 0;
-            newChargePM.ContainerType1MarkUpValue = 0;
-            newChargePM.ContainerType2MarkUpValue = 0;
-            newChargePM.ContainerType3MarkUpValue = 0;
-            newChargePM.ContainerType4MarkUpValue = 0;
-            newChargePM.ContainerType5MarkUpValue = 0;
+            newChargePM.MarkUpValue = item.MarkUpValue;
+            newChargePM.ContainerType1MarkUpValue = item.ContainerType1MarkUpValue;
+            newChargePM.ContainerType2MarkUpValue = item.ContainerType2MarkUpValue;
+            newChargePM.ContainerType3MarkUpValue = item.ContainerType3MarkUpValue;
+            newChargePM.ContainerType4MarkUpValue = item.ContainerType4MarkUpValue;
+            newChargePM.ContainerType5MarkUpValue = item.ContainerType5MarkUpValue;
+            newChargePM.MarkUpText = item.MarkUpText;
+            newChargePM.ContainerType1MarkUpText = item.ContainerType1MarkUpText;
+            newChargePM.ContainerType2MarkUpText = item.ContainerType2MarkUpText;
+            newChargePM.ContainerType3MarkUpText = item.ContainerType3MarkUpText;
+            newChargePM.ContainerType4MarkUpText = item.ContainerType4MarkUpText;
+            newChargePM.ContainerType5MarkUpText = item.ContainerType5MarkUpText;
             newChargePM.MarkUpTypeCode = "F";
             newChargePM.ContainerType1MarkUpTypeCode = "F";
             newChargePM.ContainerType2MarkUpTypeCode = "F";
@@ -378,6 +384,12 @@ export class QuoteUtilities {
                 newChargePM.ContainerType3MarkUpValue = item.ContainerType3MarkUpValue;
                 newChargePM.ContainerType4MarkUpValue = item.ContainerType4MarkUpValue;
                 newChargePM.ContainerType5MarkUpValue = item.ContainerType5MarkUpValue;
+                newChargePM.MarkUpText = item.MarkUpText;
+                newChargePM.ContainerType1MarkUpText = item.ContainerType1MarkUpText;
+                newChargePM.ContainerType2MarkUpText = item.ContainerType2MarkUpText;
+                newChargePM.ContainerType3MarkUpText = item.ContainerType3MarkUpText;
+                newChargePM.ContainerType4MarkUpText = item.ContainerType4MarkUpText;
+                newChargePM.ContainerType5MarkUpText = item.ContainerType5MarkUpText;
                 newChargePM.MarkUpTypeCode = item.MarkUpTypeCode;
                 newChargePM.ContainerType1MarkUpTypeCode = item.ContainerType1MarkUpTypeCode;
                 newChargePM.ContainerType2MarkUpTypeCode = item.ContainerType2MarkUpTypeCode;
@@ -669,7 +681,7 @@ export class QuoteUtilities {
 
     public static IsPriceCheckVisible(entityPM: QuotePM) {
         var myResult = false;
-        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TAR" && d.TenantNumber == SessionLocator.Tenant)[0];
+        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TAR")[0];
         if (featureToggle  != null && FeatureLocator.HasFeaturePermession("Quote", "QuotePriceCheck") && (entityPM.TransportModeId.toUpperCase() == "A" || this.IsLCLQuote(entityPM)) && (entityPM.QuoteTypeCode != null && entityPM.QuoteTypeCode.toUpperCase() == "A")) {
             myResult = true;
         }

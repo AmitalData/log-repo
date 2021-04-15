@@ -99,32 +99,32 @@ export class AddEditPayableComponent implements OnDestroy {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
     }
-
+    private errors: string[] = [];
     OkButtonClicked() {
-        var errors: string[] = [];
-        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+        this.errors = [];
+        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, this.errors);
 
         if (this.EntityPM.ShipmentPayableAmountTypeCode == "ACCU") {
             if (AppTool.IsNullOrEmpty(this.EntityPM.MeasurementId)) {
-                errors.push("Measurement field is Required");
+                this.errors.push("Measurement field is Required");
             }
         }
 
         if (this.DataContext.IsByContainerType) {
             if (this.DataContext.ByContainersItemsSource.length == 0) {
-                errors.push("This shipment doesn't contain any containers");
+                this.errors.push("This shipment doesn't contain any containers");
             }
 
             else {
                 this.DataContext.ByContainersItemsSource.forEach(item => {
-                    Validator.TryValidateObject(item, this.ObjectTableName, errors);
+                    Validator.TryValidateObject(item, this.ObjectTableName, this.errors);
                 });
             }
         }
-
+        this.ValidateAddingPFCLUOM();
         // Back To Back Check
 
-        this.ValidationErrorsList = errors;
+        this.ValidationErrorsList = this.errors;
 
         if (this.ValidationErrorsList.length == 0) {
             if (this.DataContext.VendorId != null && this.DataContext.VendorCardEntity != null) {
@@ -160,6 +160,16 @@ export class AddEditPayableComponent implements OnDestroy {
             }
         }
     }
+
+    ValidateAddingPFCLUOM() {
+        if (this.EntityPM.MeasurementCode == "PFCL") {
+            if (this.DataContext.ShipmentPM.ShipmentPayables.filter(d => d.MeasurementCode == "PFCL" && d.Id != this.EntityPM.Id).length > 0) {
+                this.errors.push("Charge with Percent of foreign charges local amounts UOM already added");
+            }
+        }
+    }
+
+
     AddPayable() {
         if (this.DataContext.IsByContainerType) {
             this.AddByContainerEntities();
@@ -182,6 +192,8 @@ export class AddEditPayableComponent implements OnDestroy {
 
             this.DataContext.fatherComponent.ComputeShipmentFields();
         }
+
+        this.DataContext.fatherComponent.OnPercentForeignAmountChanged();
 
         if (!AppTool.IsNullOrEmpty(this.DataContext.TariffId) && this.EntityPM.IsDirty && !this.DataContext.IsNewEntity) {
 

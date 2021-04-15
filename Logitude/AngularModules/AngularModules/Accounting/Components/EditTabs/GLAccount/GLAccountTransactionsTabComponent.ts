@@ -73,7 +73,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef){
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-        this.UsingLogGridV2 = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2" && d.TenantNumber == SessionLocator.Tenant)[0]? true : false;
+        this.UsingLogGridV2 = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2")[0]? true : false;
         this._entityListService = new EntityListService();
         this.EntityPM = entityArgs.EntityPM;
         this.CurrencyId = this.EntityPM.CurrencyId;
@@ -483,7 +483,12 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         this.filterAgrs.PageIndex = skip;
         this.filterAgrs.GetAll = false;
         this.filterAgrs.GetCount = true;
-
+        if (sortingCol) {
+            this.filterAgrs.SortBy = sortingCol;
+        }
+        if (sortingDir) {
+            this.filterAgrs.SortDirection = sortingDir;
+        }
         this.filterAgrs.addAdditionalFilter("GLAccountId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
  
         this.filterAgrs.addAdditionalFilter("IncludeRelatedCurrenciesAccount", this.splittedByCurrencyCheckBox == null ? false : this.splittedByCurrencyCheckBox, null, null, "Equals", false, false, false, "boolean");

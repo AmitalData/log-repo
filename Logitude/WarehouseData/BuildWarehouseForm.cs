@@ -22,9 +22,9 @@ namespace WarehouseData
 {
     public partial class BuildWarehouseForm : Form
     {
-        string dbSourceConnection = "Logitude2-5_Main,sa,Saas256,.";//"LogitudeMain-PreR2,logitudemanager,!LO009008,logitudetest.database.windows.net";//"LogitudeMain-Test2,sa,Saas256,logitudetest.cloudapp.net";
+        string dbSourceConnection = "2021R1_Main,sa,Saas256,.";//"LogitudeMain-PreR2,logitudemanager,!LO009008,logitudetest.database.windows.net";//"LogitudeMain-Test2,sa,Saas256,logitudetest.cloudapp.net";
 
-        string dbDestinationConnection = "Logitude2-5_Global,sa,Saas256,.";
+        string dbDestinationConnection = "2021R1_Global,sa,Saas256,.";
 
 
         public BuildWarehouseForm()
@@ -138,6 +138,7 @@ namespace WarehouseData
                             {
                                 stepName = table.DBTableName;
 
+                            
                                 Stopwatch stopWatchDWTable = null;
                                 if (table.DispayInScreen)
                                 {
@@ -177,10 +178,6 @@ namespace WarehouseData
                             {
                                 Stopwatch stopWatchDimensionsTable = null;
 
-                                //  if(table.DBTableName == "QuoteStages")
-                                // {
-
-                                //  }
                                 if (table.DispayInScreen)
                                 {
                                     stopWatchDimensionsTable = new Stopwatch();
@@ -229,7 +226,7 @@ namespace WarehouseData
 
 
 
-                            mainDataWarehouseService.FinishBuildingDataWarehouse(destinationConnectionString, tableNameLists);
+                            mainDataWarehouseService.FinishBuildingDataWarehouse(sourceConnectionString ,destinationConnectionString, tableNameLists);
                             stopWatch.Stop();
                             TimeSpan ts = stopWatch.Elapsed;
                             SetControlPropertyValue("Text", "Done in ( " + ts.ToString(@"hh\:mm\:ss") + " )");

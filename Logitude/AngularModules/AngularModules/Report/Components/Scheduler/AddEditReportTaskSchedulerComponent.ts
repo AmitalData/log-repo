@@ -27,7 +27,6 @@ export class AddEditReportTaskSchedulerComponent {
     public EntityPM: TasksSchedulerPM;
     public DataContext: TaskReportSchedulerItemClass;
     public ObjectTableName: string = 'TasksScheduler';
-    public ValidationErrorsList: string[];
     public DisplayFTPOption: boolean = false;
     public SchedulerFormats: CodeNameClass[] = [];
     public SelectedFormat: CodeNameClass;
@@ -192,6 +191,15 @@ export class AddEditReportTaskSchedulerComponent {
         }
     }
 
+    get SendIfEmpty() {
+        return this.DataContext.SendIfEmpty;
+    }
+    set SendIfEmpty(newValue: boolean) {
+        if (this.DataContext.SendIfEmpty != newValue) {
+            this.DataContext.SendIfEmpty = newValue;
+        }
+    }
+
     SetFormatAdvanced(formatAdvanced: string) {
         this.SelectedFormatAdvanced = formatAdvanced;
         this.EntityPM.AdvancedFormat = formatAdvanced;
@@ -286,8 +294,8 @@ export class AddEditReportTaskSchedulerComponent {
             errors.push("You can't select a past date");
         }
 
-        this.ValidationErrorsList = errors;
-        if (this.ValidationErrorsList.length == 0) {
+        this.parentComponent.ValidationErrorsList = errors;
+        if (this.parentComponent.ValidationErrorsList.length == 0) {
             return true;
         }
     }
@@ -302,7 +310,7 @@ export class AddEditReportTaskSchedulerComponent {
                 if (!myResponse.HasError) {
                     this.SetSchedulerDetailsData(myResponse.Result);
                 } else {
-                    this.ValidationErrorsList = myResponse.ErrorsArray;
+                    this.parentComponent.ValidationErrorsList = myResponse.ErrorsArray;
                     this.Clone();
                 }
                 this.CurrentSession.StopBusyIndicator();
@@ -322,16 +330,10 @@ export class AddEditReportTaskSchedulerComponent {
         }
     }
 
-    SaveButtonClicked(
-        reportFilterItems: Array<QueryFilterItem>,
-        reportTemplateId: string,
-        recepients: ReportSchedulerRecepients
-    ) {
-
-        
+    SaveButtonClicked(reportSchedulerDetails: ReportSchedulerDetails) {
         this.CurrentSession.StartBusyIndicatorSaving();
 
-        this.SetReportDetails(reportFilterItems, reportTemplateId, recepients);
+        this.SetReportDetails(reportSchedulerDetails);
         if (this.DataContext.IsNew) {
             this.DataContext.SchedulerDetails.ReportDetails.CreatedByUserId =
                 SessionLocator.LoggedUserId;
@@ -343,6 +345,7 @@ export class AddEditReportTaskSchedulerComponent {
                         this.EntityPM = myResponse.Result;
                         this.EntityPM.IsDirty = false;
                         if (this.DataContext.fatherComponent) {
+                            this.DataContext.fatherComponent.RefreshButtonClicked();
                             this.DataContext.fatherComponent.RefreshButtonClicked();
                         }
 
@@ -383,18 +386,25 @@ export class AddEditReportTaskSchedulerComponent {
 
 
     private HandleServiceError(myResponse: ServiceResponse) {
-        this.ValidationErrorsList = myResponse.ErrorsArray;
+        this.parentComponent.ValidationErrorsList = myResponse.ErrorsArray;
+        if (this.isReportPreviewTab())
+            this.openReportTaskTab();
+    }
+
+    private openReportTaskTab() {
         this.parentComponent.SelectedTabLocation = 0;
         this.parentComponent.SetSelectedItem("RETASK");
     }
 
-    SetReportDetails(
-        reportFilterItems: Array<QueryFilterItem>,
-        reportTemplateId: string,
-        recepients: ReportSchedulerRecepients
-    ) {
-        this.DataContext.SchedulerDetails.ReportDetails.ReportFilterItems = reportFilterItems;
-        this.DataContext.SchedulerDetails.ReportDetails.ReportTemplateId = reportTemplateId;
+    private isReportPreviewTab() {
+        return this.parentComponent.SelectedTabLocation == 1;
+    }
+
+    SetReportDetails(reportSchedulerDetails: ReportSchedulerDetails) {
+        this.DataContext.SchedulerDetails.ReportDetails.MainCustomerFieldName = reportSchedulerDetails.MainCustomerFieldName;
+        this.DataContext.SchedulerDetails.ReportDetails.ReportFilterItems = reportSchedulerDetails.ReportFilterItems;
+        this.DataContext.SchedulerDetails.ReportDetails.ReportTemplateId = reportSchedulerDetails.ReportTemplateId;
+        const recepients = reportSchedulerDetails.Recepients;
         this.DataContext.SchedulerDetails.ReportDetails.Recepients.To = recepients.To
             ? recepients.To.toString().split(',').join(';')
             : '';

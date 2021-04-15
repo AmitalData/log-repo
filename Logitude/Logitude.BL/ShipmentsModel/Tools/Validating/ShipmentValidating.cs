@@ -972,11 +972,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
 
                 // PreCarriage
-                if (entityPM.PreCarriageATD > todayDateTime)
+                if (entityPM.ShipmentLevelCode == "H" && entityPM.PreForwardingATD > todayDateTime)
+                {
+                    throw new ApplicationException(message.Replace("Field", "Pre Forwarding ATD"));
+                }
+                else if (entityPM.PreCarriageATD > todayDateTime)
                 {
                     throw new ApplicationException(message.Replace("Field", "Pre Carriage ATD"));
                 }
-                if (entityPM.PreCarriageATA > todayDateTime)
+
+                if (entityPM.ShipmentLevelCode == "H" && entityPM.PreForwardingATA > todayDateTime)
+                {
+                    throw new ApplicationException(message.Replace("Field", "Pre Forwarding ATA"));
+                }
+                else if (entityPM.PreCarriageATA > todayDateTime)
                 {
                     throw new ApplicationException(message.Replace("Field", "Pre Carriage ATA"));
                 }
@@ -1038,11 +1047,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
 
                 // OnCarriage
-                if (entityPM.OnCarriageATD > todayDateTime)
+                if (entityPM.ShipmentLevelCode == "H" && entityPM.OnForwardingATD > todayDateTime)
+                {
+                    throw new ApplicationException(message.Replace("Field", "On Forwarding ATD"));
+                }
+                else if (entityPM.OnCarriageATD > todayDateTime)
                 {
                     throw new ApplicationException(message.Replace("Field", "On Carriage ATD"));
                 }
-                if (entityPM.OnCarriageATA > todayDateTime)
+
+                if (entityPM.ShipmentLevelCode == "H" && entityPM.OnForwardingATA > todayDateTime)
+                {
+                    throw new ApplicationException(message.Replace("Field", "On Forwarding ATA"));
+                }
+                else if (entityPM.OnCarriageATA > todayDateTime)
                 {
                     throw new ApplicationException(message.Replace("Field", "On Carriage ATA"));
                 }
@@ -1490,6 +1508,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 {
                     throw new ApplicationException("Cannot change shipment type when connected to house shipments ");
                 }
+                else if (HasPayablesAmounts(entityPM) && HasReceivablesAmounts(entityPM))
+                {
+                    throw new ApplicationException("Cannot change shipment type when shipment has Payables and Receivables amounts ");
+                }
+                else if (HasPayablesAmounts(entityPM))
+                {
+                    throw new ApplicationException("Cannot change shipment type when shipment has Payables amounts ");
+                }
+                else if (HasReceivablesAmounts(entityPM))
+                {
+                    throw new ApplicationException("Cannot change shipment type when shipment has Receivables amounts ");
+                }
             }
         }
         private static void AddDomesticPort(List<DomesticCountry> iDomesticCountries, string iPortId, int iTenant)
@@ -1565,6 +1595,24 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     }
                 }
             }
+        }
+        private static bool HasPayablesAmounts(ShipmentPM entityPM)
+        {
+            bool hasAnyPayableAmount = false;
+            if(entityPM.ShipmentPayables != null)
+            {
+                hasAnyPayableAmount = entityPM.ShipmentPayables.Select(payable => payable.ExpectedAmount).Where(payable => payable != null && payable != 0.0).Any();
+            }
+            return hasAnyPayableAmount;
+        }
+        private static bool HasReceivablesAmounts(ShipmentPM entityPM)
+        {
+            bool hasAnyReceivableAmount = false;
+            if (entityPM.ShipmentReceivables != null)
+            {
+                hasAnyReceivableAmount = entityPM.ShipmentReceivables.Select(receivable => receivable.TotalAmount).Where(receivable => receivable != null && receivable != 0.0).Any();
+            }
+            return hasAnyReceivableAmount;
         }
     }
     public class DomesticCountry

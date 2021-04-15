@@ -120,7 +120,7 @@
                                                             <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;" *ngIf="Container4Visibility">{{Container4Label}}</td>
                                                             <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;" *ngIf="Container5Visibility">{{Container5Label}}</td>
                                                             <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;">{{'TariffLinesContainersPrice.F.CostPrice' | TextCodeTranslationPipe}}</td>
-
+                                                            <td style="width: 80px; min-width: 80px; max-width: 80px; color : #6E7172;">{{'TariffLinesContainersPrice.F.CurrencyId' | TextCodeTranslationPipe}}</td>
                                                             <td class="LastChild">
                                                                 <div></div>
                                                             </td>
@@ -249,13 +249,17 @@
                                                                 </table>
                                                             </td>
 
+                                                            <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px;">
+                                                                {{containerItem.CurrencyCode}}
+                                                            </td>
+
                                                             <td class="CellStretched">
                                                                 <div></div>
                                                             </td>
                                                         </tr>
 
                                                         <tr>
-                                                            <td colspan="8">
+                                                            <td colspan="9">
                                                                 <div></div>
                                                             </td>
                                                         </tr>
@@ -409,9 +413,10 @@
                         <log-column [header]="'TariffLine.F.CurrencyId' | TextCodeTranslationPipe" [width]="'70'">
 
                             <ng-template let-item>
-                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled && !item.IsDifferentCurrenciesPerCharge" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                        <span>{{item.CurrencyCode}}</span>
+                                        <span *ngIf="!item.IsDifferentCurrenciesPerCharge">{{item.CurrencyCode}}</span>
+                                        <span *ngIf="item.IsDifferentCurrenciesPerCharge">Multi</span>
                                     </div>
 
                                     <div *ngIf="logcelltemplate.IsEditMode">
@@ -453,7 +458,9 @@
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                        {{item.Surcharge1PriceValue}}
+                                        <span *ngFor="let itemArray of item.Surcharge1PriceArray" [ngStyle]="{color: itemArray.Color}">
+                                            {{itemArray.Price}}
+                                        </span>
                                     </div>
                                 </log-cell-template>
                             </ng-template>
@@ -464,7 +471,9 @@
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                        {{item.Surcharge2PriceValue}}
+                                        <span *ngFor="let itemArray of item.Surcharge2PriceArray" [ngStyle]="{color: itemArray.Color}">
+                                            {{itemArray.Price}}
+                                        </span>
                                     </div>
                                 </log-cell-template>
                             </ng-template>
@@ -475,7 +484,9 @@
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                        {{item.Surcharge3PriceValue}}
+                                        <span *ngFor="let itemArray of item.Surcharge3PriceArray" [ngStyle]="{color: itemArray.Color}">
+                                            {{itemArray.Price}}
+                                        </span>
                                     </div>
                                 </log-cell-template>
                             </ng-template>
@@ -486,7 +497,9 @@
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                        {{item.Surcharge4PriceValue}}
+                                        <span *ngFor="let itemArray of item.Surcharge4PriceArray" [ngStyle]="{color: itemArray.Color}">
+                                            {{itemArray.Price}}
+                                        </span>
                                     </div>
                                 </log-cell-template>
                             </ng-template>
@@ -497,7 +510,9 @@
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                        {{item.Surcharge5PriceValue}}
+                                        <span *ngFor="let itemArray of item.Surcharge5PriceArray" [ngStyle]="{color: itemArray.Color}">
+                                            {{itemArray.Price}}
+                                        </span>
                                     </div>
                                 </log-cell-template>
                             </ng-template>
@@ -508,7 +523,9 @@
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                        {{item.Surcharge6PriceValue}}
+                                        <span *ngFor="let itemArray of item.Surcharge6PriceArray" [ngStyle]="{color: itemArray.Color}">
+                                            {{itemArray.Price}}
+                                        </span>
                                     </div>
                                 </log-cell-template>
                             </ng-template>
@@ -519,7 +536,9 @@
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                        {{item.Surcharge7PriceValue}}
+                                        <span *ngFor="let itemArray of item.Surcharge7PriceArray" [ngStyle]="{color: itemArray.Color}">
+                                            {{itemArray.Price}}
+                                        </span>
                                     </div>
                                 </log-cell-template>
                             </ng-template>
@@ -530,7 +549,9 @@
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                        {{item.Surcharge8PriceValue}}
+                                        <span *ngFor="let itemArray of item.Surcharge8PriceArray" [ngStyle]="{color: itemArray.Color}">
+                                            {{itemArray.Price}}
+                                        </span>
                                     </div>
                                 </log-cell-template>
                             </ng-template>
@@ -541,7 +562,9 @@
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                        {{item.Surcharge9PriceValue}}
+                                        <span *ngFor="let itemArray of item.Surcharge9PriceArray" [ngStyle]="{color: itemArray.Color}">
+                                            {{itemArray.Price}}
+                                        </span>
                                     </div>
                                 </log-cell-template>
                             </ng-template>
@@ -552,7 +575,9 @@
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                        {{item.Surcharge10PriceValue}}
+                                        <span *ngFor="let itemArray of item.Surcharge10PriceArray" [ngStyle]="{color: itemArray.Color}">
+                                            {{itemArray.Price}}
+                                        </span>
                                     </div>
                                 </log-cell-template>
                             </ng-template>
@@ -641,7 +666,8 @@
                                                     </div>
                                                 </td>
                                                 <td class="CellDisabled" style="width: 70px; min-width:70px; max-width:70px; text-align: left;">
-                                                    {{item.CurrencyCode }}
+                                                    <span *ngIf="!item.IsDifferentCurrenciesPerCharge">{{item.CurrencyCode}}</span>
+                                                    <span *ngIf="item.IsDifferentCurrenciesPerCharge">Multi</span>
                                                 </td>
                                                 <td class="CellDisabled" style="width: 120px; min-width:120px; max-width:120px; text-align: left;">
                                                     {{item.StartDate | DateTimePipe:'SD'}}

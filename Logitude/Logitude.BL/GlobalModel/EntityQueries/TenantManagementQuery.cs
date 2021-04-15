@@ -43,7 +43,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                        MainColor = a.MainColor, 
                                                        SecondaryColor = a.SecondaryColor, 
                                                        BackgroundId = a.BackgroundId,
+                                                       ShipmentHeaderImageId = a.ShipmentHeaderImageId,
                                                        ComapnylogoId = a.ComapnylogoId,
+                                                       InvertedLogoId = a.InvertedLogoId,
                                                        BrowserIconId = a.BrowserIconId,
                                                        CustomerURL = a.CustomerURL,
 
@@ -231,7 +233,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      SecondaryColor = a.SecondaryColor,// != null && a.SecondaryColor.Length > 7) ? "#" + a.SecondaryColor.Substring(3, 6) : null,
 
                                                      BackgroundId = a.BackgroundId,
+                                                     ShipmentHeaderImageId = a.ShipmentHeaderImageId,
                                                      ComapnylogoId = a.ComapnylogoId,
+                                                     InvertedLogoId = a.InvertedLogoId,
                                                      BrowserIconId = a.BrowserIconId,
                                                      NoPaymentForChildTenants = a.NoPaymentForChildTenants,
                                                      LastEbookingSentDate = a.LastEbookingSentDate,
@@ -239,6 +243,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      NumberOfBookingSentLastWeek = a.NumberOfBookingSentLastWeek,
                                                      NumberOfSISentLastWeek = a.NumberOfSISentLastWeek,
                                                      LastContainerStatusReceived = a.LastContainerStatusReceived,
+                                                     LastTariffUpdateDate = a.LastTariffUpdateDate,
+                                                     LastTariffUsageDate = a.LastTariffUsageDate,
+                                                     LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
+                                                     LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
+                                                     ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -421,13 +430,20 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
                                                   BackgroundId = a.BackgroundId,
                                                   ComapnylogoId = a.ComapnylogoId,
+                                                  InvertedLogoId = a.InvertedLogoId,
                                                   BrowserIconId = a.BrowserIconId,
+                                                  ShipmentHeaderImageId = a.ShipmentHeaderImageId,
                                                   NoPaymentForChildTenants = a.NoPaymentForChildTenants,
                                                   LastEbookingSentDate = a.LastEbookingSentDate,
                                                   LastSISentDate = a.LastSISentDate,
                                                   NumberOfBookingSentLastWeek = a.NumberOfBookingSentLastWeek,
                                                   NumberOfSISentLastWeek = a.NumberOfSISentLastWeek,
                                                   LastContainerStatusReceived = a.LastContainerStatusReceived,
+                                                  LastTariffUpdateDate = a.LastTariffUpdateDate,
+                                                  LastTariffUsageDate = a.LastTariffUsageDate,
+                                                  LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
+                                                  LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
+                                                  ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
 
                                               }).FirstOrDefault();
 
@@ -612,6 +628,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         NumberOfBookingSentLastWeek = a.NumberOfBookingSentLastWeek,
                         NumberOfSISentLastWeek = a.NumberOfSISentLastWeek,
                         LastContainerStatusReceived = a.LastContainerStatusReceived,
+                        LastTariffUpdateDate = a.LastTariffUpdateDate,
+                        LastTariffUsageDate = a.LastTariffUsageDate,
+                        LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
+                        LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
+                        ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
 
                     });
         }
@@ -746,6 +767,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     NumberOfBookingSentLastWeek = entity.NumberOfBookingSentLastWeek,
                     NumberOfSISentLastWeek = entity.NumberOfSISentLastWeek,
                     LastContainerStatusReceived = entity.LastContainerStatusReceived,
+                    LastTariffUpdateDate = entity.LastTariffUpdateDate,
+                    LastTariffUsageDate = entity.LastTariffUsageDate,
+                    LastWeekCreatedTariffs = entity.LastWeekCreatedTariffs,
+                    LastMonthCreatedTariffs = entity.LastMonthCreatedTariffs,
+                    ScheduledTasksLimitPerReport = entity.ScheduledTasksLimitPerReport,
                 };
             }
 
@@ -878,7 +904,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        NumberOfBookingSentLastWeek = a.NumberOfBookingSentLastWeek,
                        NumberOfSISentLastWeek = a.NumberOfSISentLastWeek,
                        LastContainerStatusReceived = a.LastContainerStatusReceived,
-
+                       LastTariffUpdateDate = a.LastTariffUpdateDate,
+                       LastTariffUsageDate = a.LastTariffUsageDate,
+                       LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
+                       LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
+                       ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
                    };
         }
 
@@ -1148,7 +1178,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              NumberOfBookingSentLastWeek = a.NumberOfBookingSentLastWeek,
                                              NumberOfSISentLastWeek = a.NumberOfSISentLastWeek,
                                              LastContainerStatusReceived = a.LastContainerStatusReceived,
-
+                                             LastTariffUpdateDate = a.LastTariffUpdateDate,
+                                             LastTariffUsageDate = a.LastTariffUsageDate,
+                                             LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
+                                             LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
+                                             ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
                                          }).FirstOrDefault();
 
             return tenant;
@@ -1271,36 +1305,63 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
         public string GetSystemDomain(int id)
         {
-            string workEnvironment = Simplog.Server.Infrastructure.LogitudeSettings.WorkEnvironment;
-            string deploymentStage = Simplog.Server.Infrastructure.LogitudeSettings.DeploymentStage;
-            string fromEmail = "no-reply@" + (workEnvironment == "cloud" 
-                ? "amital.co.il" : deploymentStage != null && (deploymentStage.ToLower() == "logboxwe1" || deploymentStage.ToLower() == "test2")
-                ? GetLogboxDomain(id) : "LogitudeWorld.com");
+            string fromEmail = "no-reply@";
+            fromEmail += IsCloudEnvironment() ? "amital.co.il" : (IsLogboxEnvironment() ? GetLogboxDomainByTenant(id) : "LogitudeWorld.com");
 
             return fromEmail;
         }
 
-        private string GetLogboxDomain(int tenantId)
+        private bool IsCloudEnvironment()
         {
-            string privateLabelId = (from a in repository.context.GlobalTenants
-                                     where a.Id == tenantId
-                                     select a.PrivateLabelId).FirstOrDefault();
+            string workEnvironment = Simplog.Server.Infrastructure.LogitudeSettings.WorkEnvironment;
+            bool isCloudEnvironment = workEnvironment == "cloud";
+            return isCloudEnvironment;
+        }
 
+        private bool IsLogboxEnvironment()
+        {
+            string deploymentStage = Simplog.Server.Infrastructure.LogitudeSettings.DeploymentStage;
+            bool isLogboxEnvironment = deploymentStage != null && (deploymentStage.ToLower() == "logboxwe1" || deploymentStage.ToLower() == "test2");
+            return isLogboxEnvironment;
+        }
 
-            if (!string.IsNullOrEmpty(privateLabelId))
+        private string GetLogboxDomainByTenant(int tenantId)
+        {
+            string logboxDomain = "logbox.co.il";
+            string privateLabelDomain = GetPrivateLableDomain(tenantId);
+            if (!string.IsNullOrEmpty(privateLabelDomain))
             {
-                string privateLabelUrl = (from a in repository.context.TenantManagmentPrivateLabels
-                                          where a.Id == privateLabelId
-                                          select a.PrivateLabelUrl).FirstOrDefault();
-
-                if (!string.IsNullOrEmpty(privateLabelUrl))
-                {
-                    privateLabelUrl = privateLabelUrl.Replace("system.", "");
-                    return privateLabelUrl;
-                }
-
+                return privateLabelDomain;
             }
-            return "logbox.co.il";
+            return logboxDomain;
+        }
+
+        private string GetPrivateLableDomain(int tenant)
+        {
+            string privateLabelId = GetPrivateLabelIdByTenant(tenant);
+            string privateLabelDomain = GetPrivateLableDomainById(privateLabelId);
+
+            return privateLabelDomain;
+        }
+
+        private string GetPrivateLableDomainById(string id)
+        {
+            string privateLabelDomain = "";
+            if (!string.IsNullOrEmpty(id))
+            {
+                privateLabelDomain = (from a in repository.context.TenantManagmentPrivateLabels
+                                             where a.Id == id
+                                             select a.PrivateLabelDomain).FirstOrDefault();
+            }
+
+            return privateLabelDomain;
+        }
+
+        private string GetPrivateLabelIdByTenant(int tenant)
+        {
+            return (from a in repository.context.GlobalTenants
+                    where a.Id == tenant
+                    select a.PrivateLabelId).FirstOrDefault();
         }
     }
 }

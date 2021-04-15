@@ -32,6 +32,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     private myShipmentDomainService: ShipmentDomainService;
     public AgentShortName: string = "";
     public IsPrivateLabel: boolean = false;
+    public IsDSV: boolean = false;
     private messageWindow: MessageWindow = new MessageWindow();
     //EntityPm: ShipmentPM = new ShipmentPM();
     DataContext: MultiArchiveShipmentsComponent = this;
@@ -46,23 +47,28 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityListService: EntityListService) {
         super();
-
         this.myShipmentDomainService = new ShipmentDomainService();
-        //if (SessionLocator.PrivateLableSettings) {
-            //this.ValidationErrorsList = [];
-            //this.AgentShortName = SessionLocator.PrivateLableSettings.PrivateLabelShortName;
-            //this.IsPrivateLabel = true;
-            this._PortExtendedPMService = new PortExtendedPMService();
-            this._ShipmentPMService = new ShipmentPMService();
-            this._EntityStatusExtendedListService = new EntityStatusExtendedListService();
-        //}
+        this._PortExtendedPMService = new PortExtendedPMService();
+        this._ShipmentPMService = new ShipmentPMService();
+        this._EntityStatusExtendedListService = new EntityStatusExtendedListService();
     }
+
     ngOnInit() {
+        this.handlePrivateLable();
         this.LoadImporterShipments();
     }
+
+    private handlePrivateLable() {
+        if (SessionLocator.PrivateLableSettings) {
+            this.IsPrivateLabel = true;
+            this.IsDSV = SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
+        }
+    }
+
     ngAfterViewInit() {
 
     }
+
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() ShipmentSelectedEvent = new EventEmitter();
     @Output() OnImporterShipmentsFilterChanged = new EventEmitter();
@@ -74,40 +80,25 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     public RecentImg: string = "./Images/LogBox/Recent.png";
     SearchFilter: string = "";
     SourceEntity: any;
+
     private mySelectedTransportFilter: string = "All";
     get SelectedTransportFilter() { return this.mySelectedTransportFilter; }
     set SelectedTransportFilter(newValue: string) {
         if (this.mySelectedTransportFilter != newValue) {
             this.mySelectedTransportFilter = newValue;
-            //if (this.filterAgrs == null) {
-            //    this.filterAgrs = new ApiQueryFilters();
-            //}
-            //if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'TransportModeId').length > 0) {
-            //    this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'TransportModeId');
-            //}
-            //this.filterAgrs.addAdditionalFilter("TransportModeId", this.SelectedTransportFilter, null, null, "Equals", false, true, false, "string", this.SelectedTransportFilter == "All" ? true : false);
-            //this.LoadQueriesCounts();
-            //this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: this.SelectedTransportFilter == "All" ? true : false });
             this.LoadImporterShipments();
         }
     }
+
     private mySelectedArchiveFilter: string = "O";
     get SelectedArchiveFilter() { return this.mySelectedArchiveFilter; }
     set SelectedArchiveFilter(newValue: string) {
         if (this.mySelectedArchiveFilter != newValue) {
             this.mySelectedArchiveFilter = newValue;
-            //if (this.filterAgrs == null) {
-            //    this.filterAgrs = new ApiQueryFilters();
-            //}
-            //if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'IsOperationalClosed').length > 0) {
-            //    this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'IsOperationalClosed');
-            //}
-            //this.filterAgrs.addAdditionalFilter("IsOperationalClosed", this.SelectedTransportFilter == "O" ? false : true, null, null, "Equals", false, true, false, "string", this.SelectedTransportFilter == "All" ? true : false);
-            //this.LoadQueriesCounts();
-            //this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: this.SelectedTransportFilter == "All" ? true : false });
             this.LoadImporterShipments();
         }
     }
+
     public AgentShipmentsCount: string;
     public MyShipmentsCount: string;
     public RequestedCount: string;
@@ -115,6 +106,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     public searchFields: string;
     public HasSharedDocs: boolean = true;
     @Output() SearchFieldchangeevent = new EventEmitter();
+
     DataSource = {
         pageSize: 20,
         rowCount: null,
@@ -122,13 +114,10 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
         sortingDir: "Descending",
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
             var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
-            //if (!this.SelectedFilter) {
-            //    this.SelectedFilter = tempo.rowData;
-            //    this.ShipmentSelectedEvent.emit(this.SelectedRow);
-            //}
             return tempo;
         },
     };
+
     private GetSourceEntityEvent: any = null;
     SetWindowArgs(args: any) {
         this.SourceEntity = {};//args.SourceEntity;
@@ -151,6 +140,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
         //    }
         //}); 
     }
+
     BuildColumns() {
         this.columns = [];
         this.columns.push({
@@ -206,12 +196,16 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
 
         this.CustomColumnsReady.emit(this.columns);
     }
+
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         //if (filters == null) {
         filters = new ApiQueryFilters();
         filters.SortBy = "StatusDate";
         filters.SortDirection = "Descending";
         //}
+        if (this.IsPrivateLabel && !this.IsDSV) {
+            filters.addAdditionalFilter("ForwarderPartnerId", SessionLocator.PrivateLableSettings.HybridPartnerId, null, null, "Equal", true, true, false, "String");
+        }
         if (!AppTool.IsNullOrEmpty(searchfields)) {
             filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "SearchFields");
             filters.addAdditionalFilter("SearchFields", searchfields, null, null, "Contains", false, true, false, "String");
@@ -313,6 +307,11 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
             this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'NotForwarderShipmentsFilter');
         }
         this.filterAgrs.addAdditionalFilter("ForwarderShipmentsFilter", "null", null, null, "NotEqual", true, true, false, "String");
+
+        if (this.IsPrivateLabel && !this.IsDSV) {
+            this.filterAgrs.addAdditionalFilter("ForwarderPartnerId", SessionLocator.PrivateLableSettings.HybridPartnerId, null, null, "Equal", true, true, false, "String");
+        }
+
         var FilterDate = new Date();
         if (this.SelectedValue == "7d") {
             FilterDate = last7Date;
@@ -391,15 +390,12 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
                     this.SelectedRecordsCount = myResult.Result.length;
                     this.SelectedRecords = myResult.Result;
                     this.SelectedItemsCountText = this.SelectedRecordsCount + " of " + this.AllRecordsCount + " shipments selected";
-                    
-                    
                 }
                 else {
                     this.ValidationErrorsList = myResult.ErrorsArray;
                 }
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
             });
-           
         }
         else {
             this.SelectedItemsCountText = "0 of " + this.AllRecordsCount + " shipments selected";
@@ -408,6 +404,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
         }
 
     }
+
     onCheckBoxChecked(event) {
         var temp = this.SelectedRecords.filter(a => a == event.rowData.Id);
         if (event.IsChecked) {

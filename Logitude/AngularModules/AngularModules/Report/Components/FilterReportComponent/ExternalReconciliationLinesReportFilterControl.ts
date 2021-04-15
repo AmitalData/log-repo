@@ -13,7 +13,7 @@ import { EntityResourceService } from 'Infrastructure/Services/EntityResourceSer
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    
+
     selector: 'ExternalReconciliationLinesReportFilterControl',
     templateUrl: './ExternalReconciliationLinesReportFilterControl.html',
     inputs: ['ReportsPreview']
@@ -51,8 +51,8 @@ export class ExternalReconciliationLinesReportFilterControl extends BaseComponen
     ngOnInit() {
 
     }
-   
-   
+
+
 
     daysInMonth(aDate: Date) {
         return (new Date(aDate.getFullYear(), aDate.getMonth() + 1, 0)).getDate();
@@ -69,7 +69,7 @@ export class ExternalReconciliationLinesReportFilterControl extends BaseComponen
         return date;
     }
 
-  
+
 
     public IsExternalReconciledFilter: string = 'open';
     IsExternalReconciledFilterItemClicked(itemValue: string)
@@ -97,7 +97,7 @@ export class ExternalReconciliationLinesReportFilterControl extends BaseComponen
         }
     }
 
-    public IncludesTransferGlaccount:boolean =false;
+    public IncludesTransferGlaccount:boolean =true;
 
     private externalReconciliationNumber: number;
     public get ExternalReconciliationNumber() { return this.externalReconciliationNumber; }
@@ -105,7 +105,7 @@ export class ExternalReconciliationLinesReportFilterControl extends BaseComponen
     {
         if (this.externalReconciliationNumber != value) {
             this.externalReconciliationNumber = value;
-             
+
         }
     }
 
@@ -126,12 +126,12 @@ export class ExternalReconciliationLinesReportFilterControl extends BaseComponen
         }
 
     }
-   
+
     RunReport() {
         this.ValidationErrorsList = [];
         // this.REFFromDate.setHours(0,0,0,);
         // this.REFToDate.setHours(0,0,0,);
-  
+
         var FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         if (this.REFFromDate == null) {
             var REFFromDateValidation: string = FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("LedgerTransaction.O.REFFrom"));
@@ -150,7 +150,7 @@ export class ExternalReconciliationLinesReportFilterControl extends BaseComponen
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
             }
         }
-      
+
         if (this.ValidationErrorsList.length == 0) {
 
            this.BuildReport();
@@ -167,7 +167,7 @@ export class ExternalReconciliationLinesReportFilterControl extends BaseComponen
         this.queryFilterItems.push(this.GetNewQueryFilterItem("REFFromDate",this.REFFromDate,"Date"));
         this.queryFilterItems.push(this.GetNewQueryFilterItem("REFToDate",this.REFToDate,"Date"));
         this.queryFilterItems.push(this.GetNewQueryFilterItem("IsExternalReconciled",this.IsExternalReconciledFilter));
-        this.queryFilterItems.push(this.GetNewQueryFilterItem("ExternalReconciliationNumber",this.ExternalReconciliationNumber));
+        this.queryFilterItems.push(this.GetNewQueryFilterItem("ExternalReconciliationNumber",this.ExternalReconciliationNumber,"int"));
         this.queryFilterItems.push(this.GetNewQueryFilterItem("IncludesTransferGlaccount",this.IncludesTransferGlaccount));
     }
 

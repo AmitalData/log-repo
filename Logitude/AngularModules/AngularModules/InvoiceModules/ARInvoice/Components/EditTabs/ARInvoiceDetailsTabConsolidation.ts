@@ -153,7 +153,7 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
         this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("FromDate", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("ToDate", this.ObjectTableName, isEditingEnabled);
-
+        this.UIProperties.SetEnabled("PartnerId", this.ObjectTableName, isEditingEnabled);
         // Generated General Tab
         if (this.EntityPM != null) {
             this.EntityPM.UIProperties.SetEnabled("UpdateDate", this.ObjectTableName, false);

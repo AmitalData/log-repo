@@ -756,11 +756,13 @@ export class AWBWizardComponent implements AfterViewInit{
                         }
                         case "PAC": {
                             if (this.PageChild_PAC == null) {
-                                this._entityResourceService.getEntityResourceByTableName("ShipmentPackage").subscribe(response=> {
-                                    SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentAWB/Components/AWBWizard/Packages/AWBPackagesTabComponent', myLocation.viewContainerRef)
-                                    .then(cmpRef => {
-                                        this.PageChild_PAC = cmpRef.instance;
-                                        this.PageChild_PAC.InitTab(this);
+                                this._entityResourceService.getEntityResourceByTableName("ShipmentPackage").subscribe(response => {
+                                    this._entityResourceService.getEntityResourceByTableName("ShipmentCommodity").subscribe(response2 => {
+                                        SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentAWB/Components/AWBWizard/Packages/AWBPackagesTabComponent', myLocation.viewContainerRef)
+                                            .then(cmpRef => {
+                                                this.PageChild_PAC = cmpRef.instance;
+                                                this.PageChild_PAC.InitTab(this);
+                                            });
                                     });
                                 });
                             }
@@ -1569,12 +1571,12 @@ export class AWBWizardComponent implements AfterViewInit{
         }
 
         else {
-            if (this.EntityPM.HasPreCarriage && AppTool.IsNullOrEmpty(this.EntityPM.PreCarriageFromPortId)) {
-                screenErrors.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.PreCarriageFromPortId")));
+            if (this.EntityPM.HasPreForwarding && AppTool.IsNullOrEmpty(this.EntityPM.PreForwardingFromPortId)) {
+                screenErrors.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.PreForwardingFromPortId")));
             }
 
-            if (this.EntityPM.HasOnCarriage && AppTool.IsNullOrEmpty(this.EntityPM.OnCarriageToPortId)) {
-                screenErrors.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.OnCarriageToPortId")));
+            if (this.EntityPM.HasOnForwarding && AppTool.IsNullOrEmpty(this.EntityPM.OnForwardingToPortId)) {
+                screenErrors.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.OnForwardingToPortId")));
             }
             if (!this.IsImportWizard) {
                 if (AppTool.IsNullOrEmpty(this.EntityPM.House)) {
@@ -1670,10 +1672,10 @@ export class AWBWizardComponent implements AfterViewInit{
                                 if (AppTool.IsNullOrZero(item.ChargeRate)) {
                                     screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("ShipmentCommodity.F.ChargeRate")));
                                 }
-                            }
 
-                            if (AppTool.IsNullOrZero(item.ChargeAmount)) {
-                                screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("ShipmentCommodity.F.AWBChargeAmount")));
+                                if (AppTool.IsNullOrZero(item.ChargeAmount)) {
+                                    screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("ShipmentCommodity.F.ChargeAmount")));
+                                }
                             }
                         }
                     });
@@ -3130,19 +3132,6 @@ export class AWBWizardComponent implements AfterViewInit{
 
         this.GetDocstOut();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     private ExecuteSend() {
 

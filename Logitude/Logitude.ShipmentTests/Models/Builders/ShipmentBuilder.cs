@@ -1,9 +1,10 @@
-﻿using Logitude.Test.Base.Models;
+﻿using Logitude.Test.Base.Models.LocationsPreparation;
+using Logitude.Test.Base.Models.PartnersPreparation;
+using Logitude.Test.Base.Models.UserTenantPreparation;
 using System;
 using System.Collections.Generic;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
-
 
 namespace Logitude.ShipmentTests.Models.Builders
 {
@@ -220,13 +221,13 @@ namespace Logitude.ShipmentTests.Models.Builders
                 case "LHR":
                     return LocationsData.PortLHRId;
                 case "MIA":
-                    return LocationsData.PortMIAId;
+                    return LocationsData.PortMIADomesticId;
                 case "JFK":
-                    return LocationsData.PortJFKId;
+                    return LocationsData.PortAirJFKId;
                 case "SOU":
-                    return LocationsData.PortSOUId;
+                    return LocationsData.PortOceanSOUId;
                 case "NYC":
-                    return LocationsData.PortNYCId;
+                    return LocationsData.PortInlandNYCId;
                 case "LON":
                     return LocationsData.PortLONId;
                 case "MAN":

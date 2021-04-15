@@ -50,6 +50,11 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public decimal? Price5 { get; set; }
         [Column("CostPrice")]
 	    public decimal? CostPrice { get; set; }
+        [ForeignKey("Currency")]
+        [Column("CurrencyId")]
+	    public string CurrencyId { get; set; }
+	      
+        public virtual Currency Currency { get; set; }
     }
 }
 	 

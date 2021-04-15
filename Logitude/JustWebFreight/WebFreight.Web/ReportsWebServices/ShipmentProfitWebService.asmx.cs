@@ -182,6 +182,20 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 #region Shipment Fields
 
+                if (shipmentPM.ShipmentLevelCode == "H")
+                {
+                    Shipment tempMaterShipment = shipmentRepository.GetSingleShipment(shipmentPM.MasterShipmentDataId, tenant);
+                    if (tempMaterShipment != null)
+                    {
+                        provider.MasterShipmentNumber = tempMaterShipment.ShipmentNumber;
+                    }
+                }
+
+                else if (shipmentPM.ShipmentLevelCode == "C")
+                {
+                    provider.MasterShipmentNumber = shipmentPM.ShipmentNumber;
+                }
+
                 double? openReceivablesLocal = shipmentPM.OpenReceivablesInLocalCurrency;
                 double? acctReceivablesLocal = shipmentPM.AccountedReceivablesInLocalCurrency;
                 double? allReceivablesLocal = openReceivablesLocal.Value + acctReceivablesLocal.Value;
@@ -742,7 +756,7 @@ namespace WebFreight.Web.ReportsWebServices
             if (shipment != null)
             {
                 provider.ShipmentNumber = string.IsNullOrEmpty(shipment.ShipmentNumber) ? "" : shipment.ShipmentNumber;
-                
+
                 IncotermRepository incotermRepository = new IncotermRepository(tenant);
                 Incoterm incoterm = incotermRepository.GetSingleIncoterm(shipment.IncotermId,tenant);
                 if (incoterm != null)
@@ -911,34 +925,37 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                     }
 
-                    if (!string.IsNullOrEmpty(shipment.PreCarriageFromPortId) && string.IsNullOrEmpty(shipment.PreCarriageToPortId))
+                    if (masterData != null)
                     {
-                        Port port = portRepository.GetSinglePort(tenant, shipment.PreCarriageFromPortId);
-                        if (port != null)
+                        if (!string.IsNullOrEmpty(masterData.PreCarriageFromPortId) && string.IsNullOrEmpty(masterData.PreCarriageToPortId))
                         {
-                            provider.OriginLocation = port.EnglishName + " - " + port.Code;
-
-                            Country country = countryRepository.GetSingleCountry(port.CountryId, tenant);
-                            if (country != null)
+                            Port port = portRepository.GetSinglePort(tenant, masterData.PreCarriageFromPortId);
+                            if (port != null)
                             {
-                                provider.OriginCountryCode = country.Code;
-                                provider.OriginCountryName= country.EnglishName;
+                                provider.OriginLocation = port.EnglishName + " - " + port.Code;
+
+                                Country country = countryRepository.GetSingleCountry(port.CountryId, tenant);
+                                if (country != null)
+                                {
+                                    provider.OriginCountryCode = country.Code;
+                                    provider.OriginCountryName = country.EnglishName;
+                                }
                             }
                         }
-                    }
 
-                    if (!string.IsNullOrEmpty(shipment.OnCarriageFromPortId) && string.IsNullOrEmpty(shipment.OnCarriageToPortId))
-                    {
-                        Port port = portRepository.GetSinglePort(tenant, shipment.OnCarriageToPortId);
-                        if (port != null)
+                        if (!string.IsNullOrEmpty(masterData.OnCarriageFromPortId) && string.IsNullOrEmpty(masterData.OnCarriageToPortId))
                         {
-                            provider.DestinationLocation = port.EnglishName + " - " + port.Code;
-
-                            Country country = countryRepository.GetSingleCountry(port.CountryId, tenant);
-                            if (country != null)
+                            Port port = portRepository.GetSinglePort(tenant, masterData.OnCarriageToPortId);
+                            if (port != null)
                             {
-                                provider.DestinationCountryCode = country.Code;
-                                provider.DestinationCountryName = country.EnglishName;
+                                provider.DestinationLocation = port.EnglishName + " - " + port.Code;
+
+                                Country country = countryRepository.GetSingleCountry(port.CountryId, tenant);
+                                if (country != null)
+                                {
+                                    provider.DestinationCountryCode = country.Code;
+                                    provider.DestinationCountryName = country.EnglishName;
+                                }
                             }
                         }
                     }

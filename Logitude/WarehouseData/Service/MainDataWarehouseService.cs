@@ -10,7 +10,7 @@ using WarehouseDataViews.Service;
 
 namespace WarehouseData.Helper
 {
-   public class MainDataWarehouseService : GeneralDataWarehouseService
+    public class MainDataWarehouseService : GeneralDataWarehouseService
     {
         public PrivateTenantDataWarehouse privateTenantDataWarehouse;
         ObjectFieldDataWarehouseService objectFieldDataWarehouseService;
@@ -20,7 +20,6 @@ namespace WarehouseData.Helper
         FactWarehouseService factWarehouseService;
         WaterMarkDataWarehouseService waterMarkDataWarehouseService;
         DWDataWarehouseService dWDataWarehouseService;
-
 
         public MainDataWarehouseService(string applicationName = "WarehouseData", string applicationMode = "Debug") :base(applicationName, applicationMode)
         {
@@ -44,6 +43,8 @@ namespace WarehouseData.Helper
         public List<TableClass> BulidDataWarehouseTableLists (string connectionString)
         {
             List<TableClass> dataWarehouseTables = FillDataWarehouseTable();
+            dataWarehouseTables = GetEnvironmentFactDataWarehouseTables(dataWarehouseTables, connectionString);
+            dataWarehouseTables = objectFieldDataWarehouseService.SetCustomObjectFieldMetaData(dataWarehouseTables, connectionString);
             dataWarehouseTables = objectFieldDataWarehouseService.BuildWarehouseObjectFieldOnTables(dataWarehouseTables, connectionString);
             dataWarehouseTables = objectFieldDataWarehouseService.BuildDWObjectFieldDB(dataWarehouseTables, connectionString);
 
@@ -57,6 +58,8 @@ namespace WarehouseData.Helper
 
             }
 
+            dWDataWarehouseService.CustomObjectFieldTableLists = dataWarehouseTables.Where(d => !string.IsNullOrEmpty(d.ObjectTableName)).GroupBy(d => d.ObjectTableName).Select(d => d.First().ObjectTableName).ToList();
+           
             return dataWarehouseTables;
         }
 
@@ -123,12 +126,10 @@ namespace WarehouseData.Helper
         #endregion
 
 
-        public void FinishBuildingDataWarehouse(string connectionString,List<TableClass> tableLists)
+        public void FinishBuildingDataWarehouse(string connectionString ,string destinationConnectionString, List<TableClass> tableLists)
         {
         
-            finalDataWarehouseService.FinishBuildingDataWarehouse(connectionString, tableLists);
-
-
+            finalDataWarehouseService.FinishBuildingDataWarehouse(connectionString, destinationConnectionString, tableLists);
         }
 
         public void RunAdditionalScripte(string connectionString, List<TableClass> tableLists, bool isIncrement = false)
@@ -136,6 +137,7 @@ namespace WarehouseData.Helper
 
             customFieldWarehouseService.BuildCustomObjectFieldsTable(connectionString, tableLists);
             RunSqlFunctions(connectionString);
+            if(!isIncrement)  ExecuteScript("Others", "AddAdditionalIndexesToDWTables", connectionString);
         }
 
 
@@ -192,7 +194,7 @@ namespace WarehouseData.Helper
             }
 
 
-            FinishBuildingDataWarehouse(destinationConnectionString,tableNameLists);
+            FinishBuildingDataWarehouse(sourceConnectionString, destinationConnectionString, tableNameLists);
         }
 
         public void UpdateDataWarehouse(string sourceConnectionString, string destinationConnectionString, int? privateTenant = null, string relatedTenants = null)

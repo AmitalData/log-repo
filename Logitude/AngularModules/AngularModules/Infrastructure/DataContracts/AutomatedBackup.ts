@@ -6,6 +6,7 @@ import {AutomationFollowUp} from './AutomationFollowUp';
 import {AutomationQueuedTask} from './AutomationQueuedTask';
 import {AutomationSendInterface} from './AutomationSendInterface';
 import {AutomationSendDocument} from './AutomationSendDocument';
+import { AutomationCreateTask } from './AutomationCreateTask';
 
 @Injectable() 
 
@@ -25,6 +26,7 @@ export class AutomatedBackup {
     public Type: string;
     public IsAutomationResultEmailAllActiveUsers: boolean;
     public ReportTemplateId: string;
+    public DocumentCopyId: string;
 
     AautomationConditionLists: AutomationCondition[];
     AutomationSetValueLists: AutomationSetValue[];
@@ -34,6 +36,7 @@ export class AutomatedBackup {
     AutomationSetSLAValue: AutomationSetSLAValue;
     AutomationSendInterface: AutomationSendInterface;
     AutomationSendDocument: AutomationSendDocument;
+    AutomationCreateTask: AutomationCreateTask;
 
 }
 

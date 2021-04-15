@@ -254,6 +254,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                 VolumeUnit: this.EntityPM.VolumeUnitCode,
                 IsShipment: true,
                 FatherComponent: this,
+                ViaPort: this.EntityPM.Transshipment1FromPortId,
                 TariffType: tariffType
             };
             var logWindow = new LogitudeWindow();
@@ -290,7 +291,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
             this.IsDeleteAllPayablesVisible = true;
         }
 
-        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TAR" && d.TenantNumber == SessionLocator.Tenant)[0];
+        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TAR")[0];
         if (FeatureLocator.HasFeaturePermession("Shipment", "ShipmentPriceCheck") && (this.IsLCLEntity || this.IsFCLEntity) && this.EntityPM.TransportModeId != "I"
             && featureToggle  != null) {
             this.IsPriceCheckVisible = true;
@@ -856,7 +857,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                     }
 
                     var newPrice: number = 0;                    
-                    if (feightPayable.MeasurementCode == "PRVL" || feightPayable.MeasurementCode == "PRFR") {
+                    if (feightPayable.MeasurementCode == "PRVL" || feightPayable.MeasurementCode == "PRFR" || feightPayable.MeasurementCode == "PFCL") {
                         var price = loadedResult.ActualPrice * 100;
                         newPrice = AppTool.Round(price / quantity, 3);
                     }
@@ -909,7 +910,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                             }
 
                             var newPrice: number = 0;
-                            if (surchargePayable.MeasurementCode == "PRVL" || surchargePayable.MeasurementCode == "PRFR") {
+                            if (surchargePayable.MeasurementCode == "PRVL" || surchargePayable.MeasurementCode == "PRFR" || surchargePayable.MeasurementCode == "PFCL") {
                                 var price = item.ActualPrice * 100;
                                 newPrice = AppTool.Round(price / quantity, 3);
                             }
@@ -1012,7 +1013,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                     if (itemComponent.ChargesGroupCode == "FRT") {
                         this.OnFreightAmountChanged();
                     }
-
+                    this.OnPercentForeignAmountChanged();
                     this.ComputeShipmentFields();
                 }
             });
@@ -1237,6 +1238,14 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         });
     }
 
+    OnPercentForeignAmountChanged() {
+        this.ItemsSource.Collection.filter(f => f.MeasurementCode == "PFCL").forEach(item => {
+            if (item.IsLineAttachted == false) {
+                item.SetQuantity();
+            }
+        });
+    }
+
     // Update Quantities
     public UpdateQuantitiesMessage: string;
     public UpdateQuantitiesMessageWidth: number = 0;
@@ -1260,6 +1269,14 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
 
             activeLines.forEach(item => {
                 switch (item.MeasurementCode) {
+                    case "PFCL": {
+                        var quantity = ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL" ), "ExpectedAmountLocal");
+                        if (item.Quantity != quantity) {
+                            isDifferentOrders = true;
+                        }
+                        break;
+                    }
+
                     case "SCGW": {
                         if (item.Quantity != this.EntityPM.GrossWeightPerStorageDays) {
                             isDifferentOrders = true;
@@ -2018,6 +2035,11 @@ export class ShipmentPayableItem extends BaseComponent {
                                     break;
                                 }
 
+                                case "PFCL": {
+                                    this.Quantity = ArrayTool.Sum(this.ShipmentPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal");
+                                    break;
+                                }
+
                                 default: {
                                     var myGrouped: ByPckageType[] = ShipmentTool.GetByPckageTypeGrouped(this.ShipmentPM);
                                     var itemGrouped = myGrouped.filter(f => f.MeasurementId == this.MeasurementId)[0];
@@ -2160,6 +2182,9 @@ export class ShipmentPayableItem extends BaseComponent {
                     }
                 });
             }
+
+            var Generator = new ShipmentGenerator(this.fatherComponent.EntityPM, this.fatherComponent.AllRates);
+            Generator.CalculatePayableVatAmount(this.EntityPM);
         }
     }
 
@@ -2266,6 +2291,8 @@ export class ShipmentPayableItem extends BaseComponent {
             });
 
             this.ComputeInsidePayablesData();
+            var Generator = new ShipmentGenerator(this.fatherComponent.EntityPM, this.fatherComponent.AllRates);
+            Generator.CalculatePayableVatAmount(this.EntityPM);
         }
     }
 
@@ -2273,6 +2300,8 @@ export class ShipmentPayableItem extends BaseComponent {
     set ExpectedAmountInProfitCurrency(newVaule: number) {
         if (this.EntityPM.ExpectedAmountInProfitCurrency != newVaule) {
             this.EntityPM.ExpectedAmountInProfitCurrency = AppTool.Round(newVaule, 2);
+            var Generator = new ShipmentGenerator(this.fatherComponent.EntityPM, this.fatherComponent.AllRates);
+            Generator.CalculatePayableVatAmount(this.EntityPM);
         }
     }
 
@@ -2454,12 +2483,12 @@ export class ShipmentPayableItem extends BaseComponent {
             }
         }
     }
-    ComputeTotalAmount() {
+    public ComputeTotalAmount() {
 
         var iAmount: number = null;
 
         if (this.Quantity != null && this.UnitPrice != null) {
-            if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR") {
+            if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR" || this.MeasurementCode == "PFCL") {
                 var price = this.EntityPM.UnitPrice / 100;
                 iAmount = this.EntityPM.Quantity * price;
             }
@@ -2853,6 +2882,12 @@ export class ShipmentPayableItem extends BaseComponent {
                                 break;
                             }
 
+                            case "PFCL": {
+                                unitPrice = this.UnitPrice;
+                                quantity = item.PercentForeignChargesLocal;
+                                break;
+                            }
+
                             default: {
                                 if (this.fatherComponent.IsFCLEntity) {
                                     var list: PackageTypeList = AllPackageTypes.filter(f => f.MeasurementId == this.MeasurementId)[0];
@@ -2894,7 +2929,7 @@ export class ShipmentPayableItem extends BaseComponent {
 
                         var expectedAmount = quantity * unitPrice;
 
-                        if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR") {
+                        if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR" || this.MeasurementCode == "PFCL" ) {
                             expectedAmount = quantity * unitPrice / 100;
                         }
 
@@ -2942,7 +2977,9 @@ export class ShipmentPayableItem extends BaseComponent {
             case "CWKG": { result = this.ShipmentPM.ChargeableWeightInKG; break; }
             case "GWKG": { result = this.ShipmentPM.GrossWeightInKG; break; }
             case "VCBM": { result = this.ShipmentPM.VolumeInCBM; break; }
-            case "SCGW": { result = this.ShipmentPM.GrossWeightPerStorageDays; break;}
+            case "SCGW": { result = this.ShipmentPM.GrossWeightPerStorageDays; break; }
+            case "SCGW": { result = this.ShipmentPM.GrossWeightPerStorageDays; break; }
+            case "PFCL": { result = ArrayTool.Sum(this.ShipmentPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal"); break;}
             case "BCNT": {
                 break;
             }
@@ -2967,6 +3004,8 @@ export class ShipmentPayableItem extends BaseComponent {
         if (this.ChargesGroupCode == "FRT") {
             this.fatherComponent.OnFreightAmountChanged();
         }
+
+        this.fatherComponent.OnPercentForeignAmountChanged();
     }
 }
 export class InsidePayableViewModel {
@@ -3011,6 +3050,7 @@ export class InsidePayableViewModel {
     get GrossWeightInKG() { return this.ShipmentPM.GrossWeightInKG; }
     get VolumeInCBM() { return this.ShipmentPM.VolumeInCBM; }
     get GrossWeightPerStorageDays() { return this.ShipmentPM.GrossWeightPerStorageDays; }
+    get PercentForeignChargesLocal() { return this.ShipmentPM.PercentForeignChargesLocal; }
 
     // Payable Properties
     get ShipmentId() { return this.EntityPM.ShipmentId; }
@@ -3084,6 +3124,14 @@ export class InsidePayableViewModel {
         var myQuantity = null;
 
         switch (this.MeasurementCode) {
+            case "PFCL": {
+                if (this.ShipmentPM) {
+                    myQuantity = this.ShipmentPM.PercentForeignChargesLocal;
+                }
+
+                break;
+            }
+
             case "SCGW": {
                 if (this.ShipmentPM) {
                     myQuantity = this.ShipmentPM.GrossWeightPerStorageDays;
@@ -3295,7 +3343,7 @@ export class InsidePayableViewModel {
         if (this.Quantity != null && this.UnitPrice != null) {
             iAmount = this.Quantity * this.UnitPrice;
 
-            if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR") {
+            if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR" || this.MeasurementCode == "PFCL") {
                 iAmount = this.Quantity * this.UnitPrice / 100;
             }
         }

@@ -162,6 +162,26 @@ export class ConsoleShipmentPM {
     public get VolumeInCBM() { return this.volumeInCBM; }
     public set VolumeInCBM(newValue: number) { this.volumeInCBM = newValue; this.MarkAsDirty(); }
 
+    private percentForeignChargesLocal: number;
+    public get PercentForeignChargesLocal() { return this.percentForeignChargesLocal; }
+    public set PercentForeignChargesLocal(newValue: number) { this.percentForeignChargesLocal = newValue; this.MarkAsDirty(); }
+
+    private preForwardingFromPortId: string;
+    public get PreForwardingFromPortId() { return this.preForwardingFromPortId; }
+    public set PreForwardingFromPortId(newValue: string) { if (this.preForwardingFromPortId != newValue) { this.preForwardingFromPortId = newValue; this.MarkAsDirty(); } }
+
+    private preForwardingToPortId: string;
+    public get PreForwardingToPortId() { return this.preForwardingToPortId; }
+    public set PreForwardingToPortId(newValue: string) { if (this.preForwardingToPortId != newValue) { this.preForwardingToPortId = newValue; this.MarkAsDirty(); } }
+
+    private onForwardingFromPortId: string;
+    public get OnForwardingFromPortId() { return this.onForwardingFromPortId; }
+    public set OnForwardingFromPortId(newValue: string) { if (this.onForwardingFromPortId != newValue) { this.onForwardingFromPortId = newValue; this.MarkAsDirty(); } }
+
+    private onForwardingToPortId: string;
+    public get OnForwardingToPortId() { return this.onForwardingToPortId; }
+    public set OnForwardingToPortId(newValue: string) { if (this.onForwardingToPortId != newValue) { this.onForwardingToPortId = newValue; this.MarkAsDirty(); } }
+
     private fCLDataList: HouseContainerPackage[];
     get FCLDataList() {
         if (this.fCLDataList == null) {

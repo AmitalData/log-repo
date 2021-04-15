@@ -61,6 +61,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.ShipmentReceivableParentId = itemPM.ShipmentReceivableParentId;
             itemPoco.QuoteSaleMinAmount = itemPM.QuoteSaleMinAmount;
             itemPoco.QuoteSaleMaxAmount = itemPM.QuoteSaleMaxAmount;
+            itemPoco.VatAmountLocal = itemPM.VatAmountLocal;
+            itemPoco.VatAmountProfit = itemPM.VatAmountProfit;
         }
     }
 }

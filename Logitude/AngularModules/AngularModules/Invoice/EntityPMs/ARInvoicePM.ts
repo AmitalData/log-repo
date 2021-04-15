@@ -358,6 +358,11 @@ export class ARInvoicePM {
     public set MainEntityId(newValue: string) { if (this.mainEntityId != newValue) { this.mainEntityId = newValue; this.MarkAsDirty("MainEntityId"); } }
        
 	 
+    private masterEntityId: string;
+    public get MasterEntityId() { return this.masterEntityId; }
+    public set MasterEntityId(newValue: string) { if (this.masterEntityId != newValue) { this.masterEntityId = newValue; this.MarkAsDirty("MasterEntityId"); } }
+       
+	 
     private mainEntityReference: string;
     public get MainEntityReference() { return this.mainEntityReference; }
     public set MainEntityReference(newValue: string) { if (this.mainEntityReference != newValue) { this.mainEntityReference = newValue; this.MarkAsDirty("MainEntityReference"); } }

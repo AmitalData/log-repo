@@ -371,8 +371,8 @@ export class UpdateSurchargesComponent extends BaseComponent {
 
             else {
                 if (this.ContainerPricesItemsSource.filter(d => d.IsChargeChecked &&
-                    AppTool.IsNullOrZero(d.Price1) && AppTool.IsNullOrZero(d.Price2) && AppTool.IsNullOrZero(d.Price3) && AppTool.IsNullOrZero(d.Price4) && AppTool.IsNullOrZero(d.Price5)
-                    && AppTool.IsNullOrZero(d.CostPrice)
+                    AppTool.IsNullOrEmpty(d.Price1) && AppTool.IsNullOrEmpty(d.Price2) && AppTool.IsNullOrEmpty(d.Price3) && AppTool.IsNullOrEmpty(d.Price4) && AppTool.IsNullOrEmpty(d.Price5)
+                    && AppTool.IsNullOrEmpty(d.CostPrice)
                 ).length > 0) {
                     errors.push("No surcharges updated");
                 }
@@ -385,7 +385,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
             }
 
             else {
-                if (this.TariffChargesObsList.filter(d => d.IsChargeChecked && AppTool.IsNullOrZero(d.NewPrice)).length > 0) {
+                if (this.TariffChargesObsList.filter(d => d.IsChargeChecked && AppTool.IsNullOrEmpty(d.NewPrice)).length > 0) {
                     errors.push("No surcharges updated");
                 }
             }
@@ -471,7 +471,7 @@ export class TariffCharge extends BaseComponent{
     SetUIProperties() {
         var isPriceRequired: boolean = false;
         if (this.IsChargeChecked) {
-            if (AppTool.IsNullOrZero(this.NewPrice)) {
+            if (AppTool.IsNullOrEmpty(this.NewPrice)) {
                 isPriceRequired = true;
             }
         }
@@ -480,6 +480,18 @@ export class TariffCharge extends BaseComponent{
         this.UIProperties.SetRequired("NewPrice", null, isPriceRequired);        
 
         this.SetUIProperties_MinPrice();
+
+        if (this.IsChargeChecked) {
+            this.minPricePlaceHolder = "";
+            this.newPricePlaceHolder = "";
+        }
+        if (!this.IsChargeChecked ) {
+          
+            this.newPricePlaceHolder = "No Update";
+        }
+        if (this.MeasurementCode != "FIXD" && !this.IsChargeChecked) {
+            this.minPricePlaceHolder = "No Update";
+        }
     }
 
     private SetUIProperties_MinPrice() {
@@ -488,9 +500,10 @@ export class TariffCharge extends BaseComponent{
         if (this.IsChargeChecked) {
             if (this.MeasurementCode != "FIXD") {
                 isMinPriceEnabled = true
+                this.minPricePlaceHolder = "No Update";
             }
         }
-
+        this.minPricePlaceHolder = "";
         this.UIProperties.SetEnabled("NewMinPrice", null, isMinPriceEnabled);
     }
 
@@ -540,6 +553,16 @@ export class TariffCharge extends BaseComponent{
     set MinPricePlaceHolder(value: string) {
         if (this.minPricePlaceHolder != value) {
             this.minPricePlaceHolder = value;            
+        }
+    }
+
+    private newPricePlaceHolder: string = "No Update";
+    get NewPricePlaceHolder() {
+        return this.newPricePlaceHolder;
+    }
+    set NewPricePlaceHolder(value: string) {
+        if (this.newPricePlaceHolder != value) {
+            this.newPricePlaceHolder = value;
         }
     }
 }
@@ -625,13 +648,15 @@ export class ContainerPriceClass extends BaseComponent {
     public DataContext: ContainerPriceClass = this;
     private measurementCode: string;
     private isEnabled: boolean;
+    public numbersUsedInNaming = ['One', 'Two', 'Three', 'Four', 'Five'];
+
     constructor(charge: CodeNameClass, public mainComponent: any) {
         super();
         this.ChargeLabel = charge.DisplyText;
         this.ChargeId = charge.Code;
         this.ChargeCode = charge.Name;
         this.measurementCode = charge.AdditionalField;
-        this.SetUIProperties();
+        this.SetUIProperties();    
     }
 
     SetUIProperties() {
@@ -639,23 +664,37 @@ export class ContainerPriceClass extends BaseComponent {
             this.isEnabled = false;
             this.SetUIProperties_TariffLinesContainersPrice();
             this.UIProperties.SetEnabled("CostPrice", null, this.IsChargeChecked && true);
+            this.priceOnePlaceholder = "";
+            this.priceTwoPlaceholder = "";
+            this.priceThreePlaceholder = "";
+            this.priceFourPlaceholder = "";
+            this.priceFivePlaceholder = "";
+
         }
         else if (this.measurementCode == "BCNT") {
             this.isEnabled = true;
             this.SetUIProperties_TariffLinesContainersPrice();
+            this.costPricePlaceholder = "";
             this.UIProperties.SetEnabled("CostPrice", null, false);
         }
     }
 
+
     SetUIProperties_TariffLinesContainersPrice() {
-        this.SetUIProperties_Price(1);
-        this.SetUIProperties_Price(2);
-        this.SetUIProperties_Price(3);
-        this.SetUIProperties_Price(4);
-        this.SetUIProperties_Price(5);
+        for (var counter = 1; counter <= 6; ++counter) {
+            this.SetUIProperties_Price(counter);
+        }      
     }
+
     private SetUIProperties_Price(index: number) {        
         this.UIProperties.SetEnabled(("Price" + index), null, this.IsChargeChecked && this.isEnabled);
+
+        if (index != 6) {
+            this['price' + this.numbersUsedInNaming[index - 1] + 'Placeholder'] = this.IsChargeChecked ? "" : "No Update";
+        }
+        else{
+            this.costPricePlaceholder = this.IsChargeChecked ? "" : "No Update";
+        }
     }
     
     private isChargeChecked: boolean;
@@ -678,6 +717,7 @@ export class ContainerPriceClass extends BaseComponent {
         if (this.costPrice != value) {
             this.costPrice = value;
             this.UIProperties.SetEnabled("CostPrice", null, this.IsChargeChecked);
+            this.SetUIProperties_Price(6);
         }
     }
 
@@ -740,4 +780,65 @@ export class ContainerPriceClass extends BaseComponent {
             this.SetUIProperties_Price(5);
         }
     }
+
+    private priceOnePlaceholder: string = "No Update";
+    get PriceOnePlaceholder() {
+        return this.priceOnePlaceholder;
+    }
+    set PriceOnePlaceholder(value: string) {
+        if (this.priceOnePlaceholder != value) {
+            this.priceOnePlaceholder = value;
+        }
+    }
+
+    private priceTwoPlaceholder: string = "No Update";
+    get PriceTwoPlaceholder() {
+        return this.priceTwoPlaceholder;
+    }
+    set PriceTwoPlaceholder(value: string) {
+        if (this.priceTwoPlaceholder != value) {
+            this.priceTwoPlaceholder = value;
+        }
+    }
+
+    private priceThreePlaceholder: string = "No Update";
+    get PriceThreePlaceholder() {
+        return this.priceThreePlaceholder;
+    }
+    set PriceThreePlaceholder(value: string) {
+        if (this.priceThreePlaceholder != value) {
+            this.priceThreePlaceholder = value;
+        }
+    }
+
+    private priceFourPlaceholder: string = "No Update";
+    get PriceFourPlaceholder() {
+        return this.priceFourPlaceholder;
+    }
+    set PriceFourPlaceholder(value: string) {
+        if (this.priceFourPlaceholder != value) {
+            this.priceFourPlaceholder = value;
+        }
+    }
+
+    private priceFivePlaceholder: string = "No Update";
+    get PriceFivePlaceholder() {
+        return this.priceFivePlaceholder;
+    }
+    set PriceFivePlaceholder(value: string) {
+        if (this.priceFivePlaceholder != value) {
+            this.priceFivePlaceholder = value;
+        }
+    }
+
+    private costPricePlaceholder: string = "No Update";
+    get CostPricePlaceholder() {
+        return this.CostPricePlaceholder;
+    }
+    set CostPricePlaceholder(value: string) {
+        if (this.costPricePlaceholder != value) {
+            this.costPricePlaceholder = value;
+        }
+    }
+
 }

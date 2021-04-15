@@ -7,6 +7,7 @@ export class NewQuoteComponentArgs {
     public OpportunityId: string = null;
     public IsCreatedFromTicket: boolean = false;
     public TicketCreateDate: Date;
+    public ConvertTransportMode: boolean = false;  
 }
 
 export class QuoteEventNotesArgs {

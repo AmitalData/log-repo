@@ -15,7 +15,7 @@
     <script src="../js/knockout-3.5.1.js" type="text/javascript"></script>
     <script src="../js/knockout-kendo.min.js" type="text/javascript"></script>
 
-    <script src="../HtmlHelpers/JS/Logitude.Tools.js" type="text/javascript"></script>
+    <script src="../HtmlHelpers/JS/LogitudeTools.js" type="text/javascript"></script>
     <link href="../HtmlHelpers/CSS/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="../HtmlHelpers/CSS/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>    
     <link href="../HtmlHelpers/CSS/sunburst.css" rel="stylesheet" type="text/css"/>

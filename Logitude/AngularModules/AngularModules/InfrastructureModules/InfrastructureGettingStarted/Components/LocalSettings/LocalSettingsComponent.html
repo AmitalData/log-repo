@@ -84,7 +84,7 @@
                     </td>
 
                     <td>
-                        <ComboBox [IsDisabled]="IsHitTestVisible" style="width:150px;" [ItemsSource]="TimeZonesList" (SelectedItemChanged)="TimeZoneSelectedItem = $event" [SelectedItem]="TimeZoneSelectedItem" [Binding]="'TimeZoneName'"></ComboBox>
+                        <ComboBox [IsDisabled]="IsHitTestVisible" style="width:150px;" [ItemsSource]="TimeZonesList" (SelectedItemChanged)="TimeZoneSelectedItem = $event" [SelectedItem]="TimeZoneSelectedItem" [Binding]="'TimeZoneName'" attr.data-cy="{{'ComboBox_TimeZone'}}"></ComboBox>
                     </td>
 
                     <td style="padding-left: 5px;">
@@ -99,7 +99,7 @@
                     </td>
 
                     <td>
-                        <ComboBox [IsDisabled]="IsHitTestVisible" style="width:200px;" [ItemsSource]="DateTimeFormatsList" [SelectedItem]="DateTimeFormatSelectedItem" (SelectedItemChanged)="DateTimeFormatSelectedChange($event)" [Binding]="'DisplayName'"></ComboBox>
+                        <ComboBox [IsDisabled]="IsHitTestVisible" style="width:200px;" [ItemsSource]="DateTimeFormatsList" [SelectedItem]="DateTimeFormatSelectedItem" (SelectedItemChanged)="DateTimeFormatSelectedChange($event)" [Binding]="'DisplayName'" attr.data-cy="{{'ComboBox_DateTimeFormat'}}"></ComboBox>
                     </td>
 
                     <td>

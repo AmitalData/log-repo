@@ -30,6 +30,14 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.HybridPartnerId = entityPM.HybridPartnerId;
             entityPOCO.ContactUsEmail = entityPM.ContactUsEmail;
             entityPOCO.SearchFields = entityPM.PrivateLabelName + "," + entityPM.PrivateLabelShortName + "," + entityPM.PrivateLabelUrl + "," + entityPM.ContactUsEmail;
+            entityPOCO.MainColor = entityPM.MainColor;
+            entityPOCO.BackgroundImageId = entityPM.BackgroundImageId;
+            entityPOCO.LoginImageId = entityPM.LoginImageId;
+            entityPOCO.LoginProgressImageId = entityPM.LoginProgressImageId;
+            entityPOCO.ForgetPasswordImageId = entityPM.ForgetPasswordImageId; 
+            entityPOCO.SecondaryColor = entityPM.SecondaryColor;
+            entityPOCO.HasLogboxAccess = entityPM.HasLogboxAccess;
+
         }
     }
 }

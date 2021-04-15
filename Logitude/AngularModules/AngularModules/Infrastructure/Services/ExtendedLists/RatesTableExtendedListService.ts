@@ -36,6 +36,27 @@ export class RatesTableExtendedListService {
         });
     }
 
+ getExchageRateByValueAndDate(baseCurrenyId: string, foreignCurrencyId: string, date: Date) {
+        var url = this._apiUrl + '/GetExchageRateByValueAndDate/?' + 'baseCurrenyId=' + baseCurrenyId + '&foreignCurrencyId=' + foreignCurrencyId + '&dateString=' + ServiceHelper.GetDateString(date);
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var list = response;
+
+                var entity: RatesTableList;
+                if (list) {
+                    entity = this.MapJsonToEntityList(list);
+                }
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = entity;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+
+    }
+
     MapJsonToEntityList(jsonList: any) {
         var entityList: RatesTableList;
         entityList = new RatesTableList();

@@ -55,24 +55,35 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile.Utils
 
         private bool TypeIs_CreateAutoExternalReconcileMoveBankCheckFromTransfer(JournalPM journalPM)
         {
-            if (journalPM.JournalExternalReconciles.Count() != 1)
+            if (journalPM.JournalExternalReconciles.Count() /*!=*/< 1)
             {
                 return false;
-            }
-            var myJournalExternalReconciles = journalPM.JournalExternalReconciles.First();
-            if (String.IsNullOrWhiteSpace(myJournalExternalReconciles.LedgerTransactionId))
-            {
-                return false;
-            }
-            var listLedger =
-            _ExternalReconcileDataProvider.GetLedgerTransactionList(new List<string>() { myJournalExternalReconciles.LedgerTransactionId }, journalPM.Tenant);
-            var myLedgerTransactionTransferInCredit = listLedger.First();
-            if (myLedgerTransactionTransferInCredit.LocalAmountDebit != 0)
-            {
-                return false;// not in credit
             }
 
-            var BankAccountFromTransferAccount = _ExternalReconcileDataProvider.GetBankAccountFromTransferAccount(myLedgerTransactionTransferInCredit.AccountId, journalPM.Tenant);
+
+            var my1stJournalExternalReconcile = journalPM.JournalExternalReconciles.First();
+            if (String.IsNullOrWhiteSpace(my1stJournalExternalReconcile.LedgerTransactionId))
+            {
+                return false;
+            }
+            var ledgerIds=journalPM.JournalExternalReconciles.Select(r => r.LedgerTransactionId).ToList();
+            var listLedger =
+            _ExternalReconcileDataProvider.GetLedgerTransactionList(ledgerIds, journalPM.Tenant);
+            //var myLedgerTransactionTransferInCredit = listLedger.First();
+            foreach (var myLedgerTransactionTransferInCredit in listLedger)
+            {
+                if (myLedgerTransactionTransferInCredit.LocalAmountDebit != 0)
+                {
+                    return false;// not in credit
+                }
+            }
+            var accIds=listLedger.Select(r => r.AccountId).Distinct().ToList();
+            if (accIds.Count>1)
+            {
+                return false;//all ledager have to be in TRansfer account !!!!
+            }
+
+            var BankAccountFromTransferAccount = _ExternalReconcileDataProvider.GetBankAccountFromTransferAccount(/*myLedgerTransactionTransferInCredit.AccountId*/accIds.First(), journalPM.Tenant);
             return BankAccountFromTransferAccount != null;
         }
     }

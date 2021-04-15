@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<entity Id="&quot;746737ba-8d5f-40b2-a61a-0810c79f8c49&quot;" Code="&quot;Fact_Charges&quot;" Name="&quot;Fact_Charges&quot;" TypeCode="&quot;Fact&quot;" IsClosed="false" DataViewName="&quot;factCharges&quot;" HasPivotColumn="true" PivotFieldCode="&quot;DIM_ChargesTypes&quot;" AdditionalFactCode="&quot;Fact_Shipments&quot;" AdditionalFactForeignKey="&quot;[Shipment Id]&quot;" RecordType="&quot;Shipment&quot;" DisplayName="&quot;Shipment Charges&quot;">
+<entity Id="&quot;746737ba-8d5f-40b2-a61a-0810c79f8c49&quot;" Code="&quot;Fact_Charges&quot;" Name="&quot;Fact_Charges&quot;" TypeCode="&quot;Fact&quot;" IsClosed="false" DataViewName="&quot;factCharges&quot;" HasPivotColumn="true" PivotFieldCode="&quot;DIM_ChargesTypes&quot;" AdditionalFactCode="&quot;Fact_Shipments&quot;" AdditionalFactForeignKey="&quot;[Shipment Id]&quot;" RecordType="&quot;Shipment&quot;" DisplayName="&quot;Shipment Charges&quot;" ObjectTableName="&quot;Shipment&quot;" HasCustomFields="false" MaxNumberOfCustomFields="0">
   <fields>
     <field Id="&quot;5660a4d8-db44-43f3-8737-ce36d8ad523a&quot;" Code="&quot;[Id_Number]&quot;" Name="&quot;Id_Number&quot;" DataTypeCode="&quot;Integer&quot;" IsRequired="true" MinLength="0" MaxLength="0" IsPrimaryKey="true" IsMeasurement="false" DisplayInQueryBuilder="false" HideTree="false" CannotFilter="false" IsCustom="false" DontDisplayInView="true" IsMultipleSelection="false" />
     <field Id="&quot;0c89141f-5955-4d19-8842-87fc832b14f1&quot;" Code="&quot;[Shipment Id]&quot;" Name="&quot;Shipment Id&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="true" MinLength="0" MaxLength="15" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="false" HideTree="false" CannotFilter="false" IsCustom="false" OriginalObjectFieldCode="&quot;ShipmentPayable.ShipmentId&quot;" DontDisplayInView="true" IsMultipleSelection="false" />
@@ -76,7 +76,11 @@
     <field Id="&quot;cb603936-5a77-4b0f-a4e4-c15fad453a51&quot;" Code="&quot;[Houses ACCT Payables In Profit]&quot;" Name="&quot;Accounted Payables from houses only (Profit)&quot;" DataTypeCode="&quot;Decimal&quot;" IsRequired="false" MinLength="0" MaxLength="0" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="true" Category1="&quot;Charges&quot;" HideTree="false" CannotFilter="false" IsCustom="false" OriginalObjectFieldCode="&quot;Shipment.HousesACCTPayablesInProfit&quot;" DontDisplayInView="false" IsMultipleSelection="true" RecordType="&quot;Master&quot;" />
   </fields>
   <Indexes>
-    <Index Columns="[Source Tenant],[Shipment Create Date]" />
-    <Index Columns="[Source Tenant],[Shipment Create Date Time]" />
+      <Index Columns="[Source Tenant],[Shipment Create Date]" />
+      <Index Columns="[Source Tenant],[Shipment Create Date Time]" />
+      <Index Columns="[Source Tenant],[Invoice Date]" />
+      <Index Columns="[Source Tenant],[DirectHouse]" />
+
+      
   </Indexes>
 </entity>

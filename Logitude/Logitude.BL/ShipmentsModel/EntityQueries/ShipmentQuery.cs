@@ -87,10 +87,22 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     if (CLoudData != null)
                     {
                         returnShipment.DeclarationXMLData = CLoudData.DeclarationXmlData;
+                        returnShipment.DeclarationWCOXml = CLoudData.DeclarationWCOXml;
                         returnShipment.ApproveDateTime = CLoudData.ApproveDateTime;
                         returnShipment.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                         returnShipment.VersionApproved = CLoudData.VersionApproved;
                         returnShipment.ShipmentAddtionalDataXML = CLoudData.ShipmentAddtionalDataXML;
+                        returnShipment.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
+                        returnShipment.DocsSentToAgent = CLoudData.DocsSentToAgent;
+                        returnShipment.ApprovedBy = CLoudData.ApprovedByUserName;
+                        returnShipment.DocumentsApprovedByUserName = CLoudData.DocumentsApprovedByUserName;
+                        returnShipment.IsUserIDNumberRequired = CLoudData.IsUserIDNumberRequired;
+                        returnShipment.UserIdNumberUpdateDate = CLoudData.UserIdNumberUpdateDate;
+                        returnShipment.UserIdNumberXMLData = CLoudData.UserIdNumberXMLData;
+                        returnShipment.UserIdNumber = CLoudData.UserIdNumber;
+                        returnShipment.PaymentRequestXML = CLoudData.PaymentRequestXML;
+                        returnShipment.PaymentDateTime = CLoudData.PaymentDateTime;
+                        returnShipment.IsPaymentRequired = CLoudData.IsPaymentRequired;
                     }
                     return returnShipment;
                 }
@@ -126,11 +138,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             Direction direction = directionRep.GetSingleDirection(shipment.DirectionId);
 
             PortQuery portQuery = new PortQuery(portsRep);
-            PortPM oncarriageFromPort = null;
-            PortPM oncarriageToPort = null;
-            PortPM precarriageFromPort = null;
-            PortPM precarriageToPort = null;
-
+            
             bool isInlandDomesticShipment = (shipment.DirectionId == "D" && shipment.TransportModeId == "I");
 
             if (masterData == null)
@@ -138,29 +146,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 if (shipment.MasterShipmentDataId != null && shipmentMasterDataList != null)
                 {
                     masterData = (from a in shipmentMasterDataList where a.Id == shipment.MasterShipmentDataId select a).FirstOrDefault();
-                }
-            }
-
-            if (!isInlandDomesticShipment)
-            {
-                if (!string.IsNullOrEmpty(shipment.OnCarriageFromPortId))
-                {
-                    oncarriageFromPort = portQuery.GetSinglePM(shipment.OnCarriageFromPortId, shipment.Tenant);
-                }
-
-                if (!string.IsNullOrEmpty(shipment.OnCarriageToPortId))
-                {
-                    oncarriageToPort = portQuery.GetSinglePM(shipment.OnCarriageToPortId, shipment.Tenant);
-                }
-
-                if (!string.IsNullOrEmpty(shipment.PreCarriageFromPortId))
-                {
-                    precarriageFromPort = portQuery.GetSinglePM(shipment.PreCarriageFromPortId, shipment.Tenant);
-                }
-
-                if (!string.IsNullOrEmpty(shipment.PreCarriageToPortId))
-                {
-                    precarriageToPort = portQuery.GetSinglePM(shipment.PreCarriageToPortId, shipment.Tenant);
                 }
             }
 
@@ -183,60 +168,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 if (subType != null)
                 {
                     shipmentPM.ShipmentSubTypeName = subType.Name;
-                }
-            }
-
-            if (shipment.ShipmentLevelCode == "C")
-            {
-                shipmentPM.MasterPreCarriageCarrierNumber = shipment.PreCarriageCarrierNumber;
-                shipmentPM.MasterProjectNumber = shipment.ProjectNumber;
-
-                shipmentPM.MasterPreCarriageFromPortName = precarriageFromPort != null ? precarriageFromPort.EnglishName: null;
-
-                if (!string.IsNullOrEmpty(shipment.PreCarriageVesselId))
-                {
-                    Vessel vesselEntity = vesselRep.GetSingleVessel(shipment.PreCarriageVesselId, tenant);
-                    if (vesselEntity != null)
-                    {
-                        shipmentPM.MasterPreCarriageVesselName = vesselEntity.EnglishName;
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(shipment.PreCarriageFromPortId))
-                {
-                    Port portEntity = portsRep.GetSinglePort(shipment.PreCarriageFromPortId, tenant);
-                    if (portEntity != null)
-                    {
-                        shipmentPM.MasterPreCarriageFromPortName = portEntity.EnglishName;
-                    }
-                }
-            }
-
-            else if (shipment.ShipmentLevelCode == "H")
-            {
-                Shipment masterShipment = (from a in repository.context.Shipments
-                                           where a.Id == shipment.MasterShipmentDataId
-                                           select a).FirstOrDefault();
-
-                if (masterShipment != null)
-                {
-                    shipmentPM.MasterPreCarriageCarrierNumber = masterShipment.PreCarriageCarrierNumber;
-                    shipmentPM.MasterProjectNumber = masterShipment.ProjectNumber;
-
-                    if (!string.IsNullOrEmpty(masterShipment.PreCarriageVesselId))
-                    {
-                        Vessel vessel = vesselRep.GetSingleVessel(masterShipment.PreCarriageVesselId, tenant);
-
-                        shipmentPM.MasterPreCarriageVesselName = vessel != null ? vessel.EnglishName : null;
-                    }
-
-                    if (!string.IsNullOrEmpty(masterShipment.PreCarriageFromPortId))
-                    {
-                        Port port = portsRep.GetSinglePort(masterShipment.PreCarriageFromPortId, tenant);
-
-                        shipmentPM.MasterPreCarriageFromPortName = port != null ? port.EnglishName : null;
-                    }
-
                 }
             }
 
@@ -370,9 +301,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.MainCarriageFinalDestinationATA = masterData.MainCarriageFinalDestinationATA;
                 shipmentPM.OBLTypeCode = masterData.OBLTypeCode;
                 shipmentPM.DocumentsClosingDate = masterData.DocumentsClosingDate;
-
                 shipmentPM.FWBStatusCode = masterData.FWBStatusCode;
                 shipmentPM.FWBStatusDate = masterData.FWBStatusDate;
+
                 if (!string.IsNullOrEmpty(masterData.FWBStatusCode))
                 {
                     FWBStatusRepository myRepository = new FWBStatusRepository(tenant);
@@ -451,11 +382,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.FinalDistenationPortId = masterData.MainCarriageToPortId;
                     shipmentPM.MainCarriageFinalDestinationPortId = masterData.MainCarriageFinalDestinationPortId;
                     shipmentPM.MainCarriageFromPortId = masterData.MainCarriageFromPortId;
-
-
                     shipmentPM.OriginMainCarriageFromPortId = masterData.MainCarriageFromPortId;
                     shipmentPM.OriginFinalDestinationPortId = masterData.MainCarriageFinalDestinationPortId;
-
                     shipmentPM.MainCarriageToPortId = masterData.MainCarriageToPortId;
 
                     PortPM mainCarriageFromPort = portQuery.GetSinglePM(masterData.MainCarriageFromPortId, masterData.Tenant);
@@ -500,7 +428,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.MainCarriageFinalDestinationPortCountryName = mainCarriageFinalDestinationPort.CountryName;
                     }
 
-
                     shipmentPM.MainCarriageVesselId = masterData.MainCarriageVesselId;
                     shipmentPM.Transshipment1VesselId = masterData.Transshipment1VesselId;
                     shipmentPM.Transshipment2VesselId = masterData.Transshipment2VesselId;
@@ -514,7 +441,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             shipmentPM.MainCarriageVesselName = vesselEntity.EnglishName;
                         }
                     }
-
 
                     if (!string.IsNullOrEmpty(shipmentPM.Transshipment1VesselId))
                     {
@@ -698,10 +624,172 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     }
                     #endregion
 
+                    #region Pre carriage
+                    if (!string.IsNullOrEmpty(masterData.PreCarriageFromPortId) || !string.IsNullOrEmpty(masterData.PreCarriageToPortId))
+                    {
+                        shipmentPM.HasPreCarriage = true;
+                    }
+
+                    PortPM precarriageFromPort = null;
+                    PortPM precarriageToPort = null;
+                    if (!string.IsNullOrEmpty(masterData.PreCarriageFromPortId))
+                    {
+                        precarriageFromPort = portQuery.GetSinglePM(masterData.PreCarriageFromPortId, masterData.Tenant);
+                    }
+
+                    if (!string.IsNullOrEmpty(masterData.PreCarriageToPortId))
+                    {
+                        precarriageToPort = portQuery.GetSinglePM(masterData.PreCarriageToPortId, masterData.Tenant);
+                    }
+
+                    shipmentPM.OriginPreCarriageFromPortId = masterData.PreCarriageFromPortId;
+                    shipmentPM.OriginPreCarriageToPortId = masterData.PreCarriageToPortId;
+                    shipmentPM.PreCarriageFromPortId = masterData.PreCarriageFromPortId;
+                    shipmentPM.PreCarriageToPortId = masterData.PreCarriageToPortId;
+                    shipmentPM.PreCarriageCarrierId = masterData.PreCarriageCarrierId;
+                    shipmentPM.PreCarriageCarrierNumber = masterData.PreCarriageCarrierNumber;
+                    shipmentPM.PreCarriageATA = masterData.PreCarriageATA;
+                    shipmentPM.PreCarriageATD = masterData.PreCarriageATD;
+                    shipmentPM.PreCarriageETA = masterData.PreCarriageETA;
+                    shipmentPM.PreCarriageETD = masterData.PreCarriageETD;
+                    shipmentPM.PreCarriageTransportModeId = masterData.PreCarriageTransportModeId;
+                    shipmentPM.PreCarriageVesselId = masterData.PreCarriageVesselId;
+
+                    if (precarriageFromPort != null)
+                    {
+                        shipmentPM.PreCarriageFromPortCode = precarriageFromPort.Code;
+                        shipmentPM.PreCarriageFromPortName = precarriageFromPort.EnglishName;
+                        shipmentPM.PreCarriageFromPortCountryCode = precarriageFromPort.CountryCode;
+                        shipmentPM.PreCarriageFromPortCountryName = precarriageFromPort.CountryName;
+                    }
+
+                    if (precarriageToPort != null)
+                    {
+                        shipmentPM.PreCarriageToPortCode = precarriageToPort.Code;
+                        shipmentPM.PreCarriageToPortName = precarriageToPort.EnglishName;
+                        shipmentPM.PreCarriageToPortCountryCode = precarriageToPort.CountryCode;
+                        shipmentPM.PreCarriageToPortCountryName = precarriageToPort.CountryName;
+                    }
+
+                    if (!string.IsNullOrEmpty(masterData.PreCarriageCarrierId))
+                    {
+                        Card cardObject = CardRepository.GetSingleCard(masterData.PreCarriageCarrierId, masterData.Tenant, true);
+                        if (cardObject != null)
+                        {
+                            shipmentPM.PreCarriageCarrierCode = cardObject.Code;
+                            shipmentPM.PreCarriageCarrierName = cardObject.EnglishName;
+                            shipmentPM.PreCarriageCarrierWebSite = cardObject.Website;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(masterData.PreCarriageVesselId))
+                    {
+                        Vessel vesselEntity = vesselRep.GetSingleVessel(masterData.PreCarriageVesselId, masterData.Tenant);
+                        if (vesselEntity != null)
+                        {
+                            shipmentPM.PreCarriageVesselName = vesselEntity.EnglishName;
+                        }
+                    }
+                    #endregion
+
+                    #region On carriage
+                    if (!string.IsNullOrEmpty(masterData.OnCarriageFromPortId) || !string.IsNullOrEmpty(masterData.OnCarriageToPortId))
+                    {
+                        shipmentPM.HasOnCarriage = true;
+                    }
+
+                    PortPM oncarriageFromPort = null;
+                    PortPM oncarriageToPort = null;
+
+                    if (!string.IsNullOrEmpty(masterData.OnCarriageFromPortId))
+                    {
+                        oncarriageFromPort = portQuery.GetSinglePM(masterData.OnCarriageFromPortId, masterData.Tenant);
+                    }
+
+                    if (!string.IsNullOrEmpty(masterData.OnCarriageToPortId))
+                    {
+                        oncarriageToPort = portQuery.GetSinglePM(masterData.OnCarriageToPortId, masterData.Tenant);
+                    }
+
+                    shipmentPM.OnCarriageAdditionalTransportModeCode = masterData.OnCarriageAdditionalTransportModeCode;
+                    shipmentPM.SplitOnCarriage = masterData.SplitOnCarriage;
+                    shipmentPM.OnCarriageFromPortId = masterData.OnCarriageFromPortId;
+                    shipmentPM.OnCarriageToPortId = masterData.OnCarriageToPortId;
+                    shipmentPM.OriginOnCarriageToPortId = masterData.OnCarriageToPortId;
+                    shipmentPM.OriginOnCarriageFromPortId = masterData.OnCarriageFromPortId;
+                    shipmentPM.OnCarriageCarrierId = masterData.OnCarriageCarrierId;
+                    shipmentPM.OnCarriageCarrierNumber = masterData.OnCarriageCarrierNumber;
+                    shipmentPM.OnCarriageATA = masterData.OnCarriageATA;
+                    shipmentPM.OnCarriageATD = masterData.OnCarriageATD;
+                    shipmentPM.OnCarriageETA = masterData.OnCarriageETA;
+                    shipmentPM.OnCarriageETD = masterData.OnCarriageETD;
+                    shipmentPM.OnCarriageTransportModeId = masterData.OnCarriageTransportModeId;
+                    shipmentPM.OnCarriageVesselId = masterData.OnCarriageVesselId;
+
+                    if (oncarriageFromPort != null)
+                    {
+                        shipmentPM.OnCarriageFromPortCode = oncarriageFromPort.Code;
+                        shipmentPM.OnCarriageFromPortName = oncarriageFromPort.EnglishName;
+                        shipmentPM.OnCarriageFromPortCountryCode = oncarriageFromPort.CountryCode;
+                        shipmentPM.OnCarriageFromPortCountryName = oncarriageFromPort.CountryName;
+                    }
+
+                    if (oncarriageToPort != null)
+                    {
+                        shipmentPM.OnCarriageToPortCode = oncarriageToPort.Code;
+                        shipmentPM.OnCarriageToPortName = oncarriageToPort.EnglishName;
+                        shipmentPM.OnCarriageToPortCountryCode = oncarriageToPort.CountryCode;
+                        shipmentPM.OnCarriageToPortCountryName = oncarriageToPort.CountryName;
+                    }
+
+                    if (!string.IsNullOrEmpty(masterData.OnCarriageCarrierId))
+                    {
+                        Card cardObject = CardRepository.GetSingleCard(masterData.OnCarriageCarrierId, masterData.Tenant, true);
+                        if (cardObject != null)
+                        {
+                            shipmentPM.OnCarriageCarrierCode = cardObject.Code;
+                            shipmentPM.OnCarriageCarrierName = cardObject.EnglishName;
+                            shipmentPM.OnCarriageCarrierWebSite = cardObject.Website;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(masterData.OnCarriageVesselId))
+                    {
+                        Vessel vesselEntity = vesselRep.GetSingleVessel(masterData.OnCarriageVesselId, masterData.Tenant);
+                        if (vesselEntity != null)
+                        {
+                            shipmentPM.OnCarriageVesselName = vesselEntity.EnglishName;
+                        }
+                    }
+
+                    #endregion
+
                     shipmentPM.MainCarriageCarrierPrefix = masterData.MainCarriageCarrierPrefix;
                     shipmentPM.Transshipment1CarrierPrefix = masterData.Transshipment1CarrierPrefix;
                     shipmentPM.Transshipment2CarrierPrefix = masterData.Transshipment2CarrierPrefix;
                     shipmentPM.Transshipment3CarrierPrefix = masterData.Transshipment3CarrierPrefix;
+
+                    shipmentPM.MasterPreCarriageCarrierNumber = masterData.PreCarriageCarrierNumber;
+                    shipmentPM.MasterProjectNumber = shipment.ProjectNumber;
+                    shipmentPM.MasterPreCarriageFromPortName = precarriageFromPort != null ? precarriageFromPort.EnglishName : null;
+
+                    if (!string.IsNullOrEmpty(masterData.PreCarriageVesselId))
+                    {
+                        Vessel vesselEntity = vesselRep.GetSingleVessel(masterData.PreCarriageVesselId, tenant);
+                        if (vesselEntity != null)
+                        {
+                            shipmentPM.MasterPreCarriageVesselName = vesselEntity.EnglishName;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(masterData.PreCarriageFromPortId))
+                    {
+                        Port portEntity = portsRep.GetSinglePort(masterData.PreCarriageFromPortId, tenant);
+                        if (portEntity != null)
+                        {
+                            shipmentPM.MasterPreCarriageFromPortName = portEntity.EnglishName;
+                        }
+                    }
                 }
             }
             #endregion
@@ -749,7 +837,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.MainCarriageFinalDestinationPortCountryCode = toPort.CountryCode;
                         shipmentPM.MainCarriageFinalDestinationPortCountryName = toPort.CountryName;
                     }
-
                 }
             }
             shipmentPM.Routing = shipment.Routing;
@@ -1505,6 +1592,142 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.NumberOfFollowUps = shipment.NumberOfFollowUps;
             #endregion
 
+            #region Pre Forwarding
+            if (!string.IsNullOrEmpty(shipment.PreForwardingFromPortId) || !string.IsNullOrEmpty(shipment.PreForwardingToPortId))
+            {
+                shipmentPM.HasPreForwarding = true;
+            }
+
+            PortPM preForwardingFromPort = null;
+            PortPM preForwardingToPort = null;
+
+            if (!string.IsNullOrEmpty(shipment.PreForwardingFromPortId))
+            {
+                preForwardingFromPort = portQuery.GetSinglePM(shipment.PreForwardingFromPortId, shipment.Tenant);
+            }
+
+            if (!string.IsNullOrEmpty(shipment.PreForwardingToPortId))
+            {
+                preForwardingToPort = portQuery.GetSinglePM(shipment.PreForwardingToPortId, shipment.Tenant);
+            }
+
+            shipmentPM.PreForwardingFromPortId = shipment.PreForwardingFromPortId;
+            shipmentPM.PreForwardingToPortId = shipment.PreForwardingToPortId;
+            shipmentPM.PreForwardingCarrierId = shipment.PreForwardingCarrierId;
+            shipmentPM.PreForwardingCarrierNumber = shipment.PreForwardingCarrierNumber;
+            shipmentPM.PreForwardingATA = shipment.PreForwardingATA;
+            shipmentPM.PreForwardingATD = shipment.PreForwardingATD;
+            shipmentPM.PreForwardingETA = shipment.PreForwardingETA;
+            shipmentPM.PreForwardingETD = shipment.PreForwardingETD;
+            shipmentPM.PreForwardingTransportModeId = shipment.PreForwardingTransportModeId;
+            shipmentPM.PreForwardingVesselId = shipment.PreForwardingVesselId;
+
+            if (preForwardingFromPort != null)
+            {
+                shipmentPM.PreForwardingFromPortCode = preForwardingFromPort.Code;
+                shipmentPM.PreForwardingFromPortName = preForwardingFromPort.EnglishName;
+                shipmentPM.PreForwardingFromPortCountryCode = preForwardingFromPort.CountryCode;
+                shipmentPM.PreForwardingFromPortCountryName = preForwardingFromPort.CountryName;
+            }
+
+            if (preForwardingToPort != null)
+            {
+                shipmentPM.PreForwardingToPortCode = preForwardingToPort.Code;
+                shipmentPM.PreForwardingToPortName = preForwardingToPort.EnglishName;
+                shipmentPM.PreForwardingToPortCountryCode = preForwardingToPort.CountryCode;
+                shipmentPM.PreForwardingToPortCountryName = preForwardingToPort.CountryName;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.PreForwardingCarrierId))
+            {
+                Card cardObject = CardRepository.GetSingleCard(shipment.PreForwardingCarrierId, shipment.Tenant, true);
+                if (cardObject != null)
+                {
+                    shipmentPM.PreForwardingCarrierCode = cardObject.Code;
+                    shipmentPM.PreForwardingCarrierName = cardObject.EnglishName;
+                    shipmentPM.PreForwardingCarrierWebSite = cardObject.Website;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(shipment.PreForwardingVesselId))
+            {
+                Vessel vesselEntity = vesselRep.GetSingleVessel(shipment.PreForwardingVesselId, shipment.Tenant);
+                if (vesselEntity != null)
+                {
+                    shipmentPM.PreForwardingVesselName = vesselEntity.EnglishName;
+                }
+            }
+            #endregion
+
+            #region On Forwarding
+            if (!string.IsNullOrEmpty(shipment.OnForwardingFromPortId) || !string.IsNullOrEmpty(shipment.OnForwardingToPortId))
+            {
+                shipmentPM.HasOnForwarding = true;
+            }
+
+            PortPM onForwardingFromPort = null;
+            PortPM onForwardingToPort = null;
+
+            if (!string.IsNullOrEmpty(shipment.OnForwardingFromPortId))
+            {
+                onForwardingFromPort = portQuery.GetSinglePM(shipment.OnForwardingFromPortId, shipment.Tenant);
+            }
+
+            if (!string.IsNullOrEmpty(shipment.OnForwardingToPortId))
+            {
+                onForwardingToPort = portQuery.GetSinglePM(shipment.OnForwardingToPortId, shipment.Tenant);
+            }
+
+            shipmentPM.OnForwardingAdditionalTransportModeCode = shipment.OnForwardingAdditionalTransportModeCode;
+            shipmentPM.SplitOnForwarding = shipment.SplitOnForwarding;
+            shipmentPM.OnForwardingFromPortId = shipment.OnForwardingFromPortId;
+            shipmentPM.OnForwardingToPortId = shipment.OnForwardingToPortId;
+            shipmentPM.OnForwardingCarrierId = shipment.OnForwardingCarrierId;
+            shipmentPM.OnForwardingCarrierNumber = shipment.OnForwardingCarrierNumber;
+            shipmentPM.OnForwardingATA = shipment.OnForwardingATA;
+            shipmentPM.OnForwardingATD = shipment.OnForwardingATD;
+            shipmentPM.OnForwardingETA = shipment.OnForwardingETA;
+            shipmentPM.OnForwardingETD = shipment.OnForwardingETD;
+            shipmentPM.OnForwardingTransportModeId = shipment.OnForwardingTransportModeId;
+            shipmentPM.OnForwardingVesselId = shipment.OnForwardingVesselId;
+
+            if (onForwardingFromPort != null)
+            {
+                shipmentPM.OnForwardingFromPortCode = onForwardingFromPort.Code;
+                shipmentPM.OnForwardingFromPortName = onForwardingFromPort.EnglishName;
+                shipmentPM.OnForwardingFromPortCountryCode = onForwardingFromPort.CountryCode;
+                shipmentPM.OnForwardingFromPortCountryName = onForwardingFromPort.CountryName;
+            }
+
+            if (onForwardingToPort != null)
+            {
+                shipmentPM.OnForwardingToPortCode = onForwardingToPort.Code;
+                shipmentPM.OnForwardingToPortName = onForwardingToPort.EnglishName;
+                shipmentPM.OnForwardingToPortCountryCode = onForwardingToPort.CountryCode;
+                shipmentPM.OnForwardingToPortCountryName = onForwardingToPort.CountryName;
+            }
+
+            if (!string.IsNullOrEmpty(shipment.OnForwardingCarrierId))
+            {
+                Card cardObject = CardRepository.GetSingleCard(shipment.OnForwardingCarrierId, shipment.Tenant, true);
+                if (cardObject != null)
+                {
+                    shipmentPM.OnForwardingCarrierCode = cardObject.Code;
+                    shipmentPM.OnForwardingCarrierName = cardObject.EnglishName;
+                    shipmentPM.OnForwardingCarrierWebSite = cardObject.Website;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(shipment.OnForwardingVesselId))
+            {
+                Vessel vesselEntity = vesselRep.GetSingleVessel(shipment.OnForwardingVesselId, shipment.Tenant);
+                if (vesselEntity != null)
+                {
+                    shipmentPM.OnForwardingVesselName = vesselEntity.EnglishName;
+                }
+            }
+            #endregion
+
             // Warehouse Leg 
             shipmentPM.WarehouseLegWarehouseId = shipment.WarehouseLegWarehouseId;
             shipmentPM.WarehouseLegAddressId = shipment.WarehouseLegAddressId;
@@ -1555,16 +1778,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.LocalCustomsSentByUserId = shipment.LocalCustomsSentByUserId;
             shipmentPM.FirstOperationalCloseDate = shipment.FirstOperationalCloseDate;
             shipmentPM.FirstAccountingCloseDate = shipment.FirstAccountingCloseDate;
-            shipmentPM.OnCarriageAdditionalTransportModeCode = shipment.OnCarriageAdditionalTransportModeCode;
             shipmentPM.LastFinalDestination = shipment.LastFinalDestination;
             shipmentPM.FirstPickupETA = shipment.FirstPickupETA;
-            shipmentPM.FirstPickupETD = shipment.FirstPickupETD;
-            shipmentPM.SplitOnCarriage = shipment.SplitOnCarriage;
+            shipmentPM.FirstPickupETD = shipment.FirstPickupETD;        
             shipmentPM.From = shipment.From;
             shipmentPM.To = shipment.To;
             shipmentPM.Origin = shipment.Origin;
             shipmentPM.AgentComputed = shipment.AgentComputed;
             shipmentPM.ComputedShipmentNumber = shipment.ComputedShipmentNumber;
+            shipmentPM.TruckerId = shipment.TruckerId;
+            shipmentPM.AssignedToTruckerDate = shipment.AssignedToTruckerDate;
+            shipmentPM.AssginedToCustomsAgentDate = shipment.AssginedToCustomsAgentDate;
+            shipmentPM.AssginedtoCustomsAgentId = shipment.AssginedtoCustomsAgentId;
 
             if (!string.IsNullOrEmpty(shipmentPM.UpdatedByUserId))
             {
@@ -1605,17 +1830,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             shipmentPM.OriginShipmentId = shipment.OriginShipmentId;
-
             shipmentPM.FBLIsFromStock = shipment.FBLIsFromStock;
             shipmentPM.StatusId = shipment.StatusId;
             shipmentPM.StatusName = shipment.EntityStatus.Name;
             shipmentPM.StatusLocation = shipment.StatusLocation;
             shipmentPM.StatusDate = shipment.StatusDate;
             shipmentPM.StatusWeight = shipment.EntityStatus.StatusWeight;
-
             shipmentPM.LastSentByUserId = shipment.LastSentByUserId;
             shipmentPM.ProfitCurrencyId = shipment.ProfitCurrencyId;
             shipmentPM.ProfitExchangeRate = shipment.ProfitExchangeRate;
+
             if (shipmentPM.ProfitCurrencyId != null)
             {
                 Currency myCurrency = CurrencyRepository.GetSingleCurrency(shipmentPM.ProfitCurrencyId, tenant, true);
@@ -1670,125 +1894,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             #endregion
 
             #region Routings
-
-            if (!string.IsNullOrEmpty(shipment.PreCarriageFromPortId) || !string.IsNullOrEmpty(shipment.PreCarriageToPortId))
-            {
-                shipmentPM.HasPreCarriage = true;
-            }
-
-            if (!string.IsNullOrEmpty(shipment.OnCarriageFromPortId) || !string.IsNullOrEmpty(shipment.OnCarriageToPortId))
-            {
-                shipmentPM.HasOnCarriage = true;
-            }
-
-            shipmentPM.PreCarriageCarrierId = shipment.PreCarriageCarrierId;
             shipmentPM.FromPortId = shipment.FromPortId;
             shipmentPM.ToPortId = shipment.ToPortId;
-            shipmentPM.PreCarriageFromPortId = shipment.PreCarriageFromPortId;
-
-            if (precarriageFromPort != null)
-            {
-                shipmentPM.PreCarriageFromPortCode = precarriageFromPort.Code;
-                shipmentPM.PreCarriageFromPortName = precarriageFromPort.EnglishName;
-                shipmentPM.PreCarriageFromPortCountryCode = precarriageFromPort.CountryCode;
-                shipmentPM.PreCarriageFromPortCountryName = precarriageFromPort.CountryName;
-            }
-
-            if (precarriageToPort != null)
-            {
-                shipmentPM.PreCarriageToPortId = shipment.PreCarriageToPortId;
-                shipmentPM.PreCarriageToPortCode = precarriageToPort.Code;
-                shipmentPM.PreCarriageToPortName = precarriageToPort.EnglishName;
-                shipmentPM.PreCarriageToPortCountryCode = precarriageToPort.CountryCode;
-                shipmentPM.PreCarriageToPortCountryName = precarriageToPort.CountryName;
-            }
-
-            if (!string.IsNullOrEmpty(shipment.PreCarriageCarrierId))
-            {
-                Card cardObject = CardRepository.GetSingleCard(shipment.PreCarriageCarrierId, shipment.Tenant, true);
-                if (cardObject != null)
-                {
-                    shipmentPM.PreCarriageCarrierCode = cardObject.Code;
-                    shipmentPM.PreCarriageCarrierName = cardObject.EnglishName;
-                    shipmentPM.PreCarriageCarrierWebSite = cardObject.Website;
-                }
-            }
-
-            shipmentPM.PreCarriageCarrierNumber = shipment.PreCarriageCarrierNumber;
-            shipmentPM.PreCarriageATA = shipment.PreCarriageATA;
-            shipmentPM.PreCarriageATD = shipment.PreCarriageATD;
-            shipmentPM.PreCarriageETA = shipment.PreCarriageETA;
-            shipmentPM.PreCarriageETD = shipment.PreCarriageETD;
-            //shipmentPM.PreCarriageSTA = shipment.PreCarriageSTA;
-            //shipmentPM.PreCarriageSTD = shipment.PreCarriageSTD;
-            shipmentPM.PreCarriageTransportModeId = shipment.PreCarriageTransportModeId;
-
-
-            /* OnCarriage */
-            shipmentPM.OnCarriageFromPortId = shipment.OnCarriageFromPortId;
-            if (oncarriageFromPort != null)
-            {
-                shipmentPM.OnCarriageFromPortCode = oncarriageFromPort.Code;
-                shipmentPM.OnCarriageFromPortName = oncarriageFromPort.EnglishName;
-                shipmentPM.OnCarriageFromPortCountryCode = oncarriageFromPort.CountryCode;
-                shipmentPM.OnCarriageFromPortCountryName = oncarriageFromPort.CountryName;
-            }
-
-            if (oncarriageToPort != null)
-            {
-                shipmentPM.OnCarriageToPortId = shipment.OnCarriageToPortId;
-                shipmentPM.OnCarriageToPortCode = oncarriageToPort.Code;
-                shipmentPM.OnCarriageToPortName = oncarriageToPort.EnglishName;
-                shipmentPM.OnCarriageToPortCountryCode = oncarriageToPort.CountryCode;
-                shipmentPM.OnCarriageToPortCountryName = oncarriageToPort.CountryName;
-            }
-
-            shipmentPM.OnCarriageCarrierId = shipment.OnCarriageCarrierId;
-            if (!string.IsNullOrEmpty(shipment.OnCarriageCarrierId))
-            {
-                Card cardObject = CardRepository.GetSingleCard(shipment.OnCarriageCarrierId, shipment.Tenant, true);
-                if (cardObject != null)
-                {
-                    shipmentPM.OnCarriageCarrierCode = cardObject.Code;
-                    shipmentPM.OnCarriageCarrierName = cardObject.EnglishName;
-                    shipmentPM.OnCarriageCarrierWebSite = cardObject.Website;
-                }
-            }
-
-            shipmentPM.OnCarriageCarrierNumber = shipment.OnCarriageCarrierNumber;
-            shipmentPM.OnCarriageATA = shipment.OnCarriageATA;
-            shipmentPM.OnCarriageATD = shipment.OnCarriageATD;
-            shipmentPM.OnCarriageETA = shipment.OnCarriageETA;
-            shipmentPM.OnCarriageETD = shipment.OnCarriageETD;
-            //shipmentPM.OnCarriageSTA = shipment.OnCarriageSTA;
-            //shipmentPM.OnCarriageSTD = shipment.OnCarriageSTD;            
-
             shipmentPM.QuoteId = shipment.QuoteId;
             shipmentPM.QuoteNumber = shipment.QuoteNumber;
-
-            shipmentPM.OnCarriageTransportModeId = shipment.OnCarriageTransportModeId;
-
-            shipmentPM.OnCarriageVesselId = shipment.OnCarriageVesselId;
-            shipmentPM.PreCarriageVesselId = shipment.PreCarriageVesselId;
-
-            if (!string.IsNullOrEmpty(shipmentPM.OnCarriageVesselId))
-            {
-                Vessel vesselEntity = vesselRep.GetSingleVessel(shipment.OnCarriageVesselId, shipment.Tenant);
-                if (vesselEntity != null)
-                {
-                    shipmentPM.OnCarriageVesselName = vesselEntity.EnglishName;
-                }
-            }
-
-            if (!string.IsNullOrEmpty(shipmentPM.PreCarriageVesselId))
-            {
-                Vessel vesselEntity = vesselRep.GetSingleVessel(shipment.PreCarriageVesselId, shipment.Tenant);
-                if (vesselEntity != null)
-                {
-                    shipmentPM.PreCarriageVesselName = vesselEntity.EnglishName;
-                }
-            }
-
             #endregion
 
             #region follow ups
@@ -1853,10 +1962,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.OrderIsDangerouseGoods = shipment.OrderIsDangerouseGoods;
             shipmentPM.FirstPickupETA = shipment.FirstPickupETA;
             shipmentPM.FirstPickupETD = shipment.FirstPickupETD;
-            shipmentPM.PreCarriageETA = shipment.PreCarriageETA;
-            shipmentPM.PreCarriageETD = shipment.PreCarriageETD;
-            shipmentPM.OnCarriageETA = shipment.OnCarriageETA;
-            shipmentPM.OnCarriageETD = shipment.OnCarriageETD;
             shipmentPM.WarehouseLegLastFreeDate = shipment.WarehouseLegLastFreeDate;
 
             if (shipment.MoveTypeId != null)
@@ -1951,6 +2056,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
 
                 shipmentPM.ShipmentPackages = shipmentPackageQuery.GetShipmentPackages(shipment.Id, shipment.ShipmentNumber, shipment.Tenant);
+                if (shipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(shipment.MasterShipmentDataId) && masterData != null)
+                {
+                    shipmentPM.ConnectedMasterPackages = shipmentPackageQuery.GetShipmentPackages(masterData.Id, shipment.ShipmentNumber, shipment.Tenant);
+                }
                 #endregion
 
                 #region AWB Print Onlies
@@ -2626,6 +2735,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.PreCarriageETA_Original = shipmentPM.PreCarriageETA;
             shipmentPM.PreCarriageATD_Original = shipmentPM.PreCarriageATD;
             shipmentPM.PreCarriageETD_Original = shipmentPM.PreCarriageETD;
+            shipmentPM.OnForwardingATD_Original = shipmentPM.OnForwardingATD;
+            shipmentPM.OnForwardingETD_Original = shipmentPM.OnForwardingETD;
+            shipmentPM.OnForwardingATA_Original = shipmentPM.OnForwardingATA;
+            shipmentPM.OnForwardingETA_Original = shipmentPM.OnForwardingETA;
+            shipmentPM.PreForwardingATA_Original = shipmentPM.PreForwardingATA;
+            shipmentPM.PreForwardingETA_Original = shipmentPM.PreForwardingETA;
+            shipmentPM.PreForwardingATD_Original = shipmentPM.PreForwardingATD;
+            shipmentPM.PreForwardingETD_Original = shipmentPM.PreForwardingETD;
             shipmentPM.INTTRABookingStatusCode_Original = shipmentPM.INTTRABookingStatusCode;
             shipmentPM.BookingConfirmedBy_Original = shipmentPM.BookingConfirmedBy;
             shipmentPM.BookingConfNumber_Original = shipmentPM.BookingConfirmationNumber;
@@ -2777,38 +2894,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             PortQuery portQuery = new PortQuery(portsRep);
             bool isInlandDomesticShipment = (shipment.DirectionId == "D" && shipment.TransportModeId == "I");
 
-            PortPM oncarriageFromPort = null;
-            PortPM oncarriageToPort = null;
-            PortPM precarriageFromPort = null;
-            PortPM precarriageToPort = null;
-
-            if (!isInlandDomesticShipment)
-            {
-                if (!string.IsNullOrEmpty(shipment.OnCarriageFromPortId))
-                {
-                    oncarriageFromPort = portQuery.GetSinglePM(shipment.OnCarriageFromPortId, shipment.Tenant);
-                }
-
-                if (!string.IsNullOrEmpty(shipment.OnCarriageToPortId))
-                {
-                    oncarriageToPort = portQuery.GetSinglePM(shipment.OnCarriageToPortId, shipment.Tenant);
-                }
-
-                if (!string.IsNullOrEmpty(shipment.PreCarriageFromPortId))
-                {
-                    precarriageFromPort = portQuery.GetSinglePM(shipment.PreCarriageFromPortId, shipment.Tenant);
-                }
-
-                if (!string.IsNullOrEmpty(shipment.PreCarriageToPortId))
-                {
-                    precarriageToPort = portQuery.GetSinglePM(shipment.PreCarriageToPortId, shipment.Tenant);
-                }
-            }
-
             #region if (masterData != null)
             if (masterData != null)
             {
-
                 shipmentPM.Master = masterData.Master;
                 shipmentPM.LongMaster = EntityFieldsHelper.GetLongMasterField(shipment, masterData);
                 shipmentPM.MasterShipmentNumber = masterData.MasterShipmentNumber;
@@ -2817,8 +2905,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.MainCarriageETA = masterData.MainCarriageETA;
                 shipmentPM.MainCarriageATD = masterData.MainCarriageATD;
                 shipmentPM.MainCarriageATA = masterData.MainCarriageATA;
-
-
 
                 #region Carrier
 
@@ -2841,31 +2927,20 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             shipmentPM.MainCarriageCarrierAddressId = address.Id;
                         }
                     }
-
-
                 }
                 #endregion
-
-
 
                 if (!isInlandDomesticShipment)
                 {
                     PortPM mainCarriageFromPort = portQuery.GetSinglePM(masterData.MainCarriageFromPortId, masterData.Tenant);
-                    //shipmentPM.FromCountryId = mainCarriageFromPort.CountryId;
-
-
                     shipmentPM.FromPortName = mainCarriageFromPort.EnglishName;
                     shipmentPM.MainCarriageFromPortCode = mainCarriageFromPort.Code;
                     shipmentPM.MainCarriageFromPortName = mainCarriageFromPort.EnglishName;
                     shipmentPM.MainCarriageFromPortCountryCode = mainCarriageFromPort.CountryCode;
 
                     PortPM mainCarriageToPort = portQuery.GetSinglePM(masterData.MainCarriageToPortId, masterData.Tenant);
-                    //shipmentPM.ToCountryId = mainCarriageToPort.CountryId;
-
-
                     shipmentPM.ToPortName = mainCarriageToPort.EnglishName;
                     shipmentPM.ToPortCountry = mainCarriageToPort.CountryName;
-
                     shipmentPM.MainCarriageToPortCode = mainCarriageToPort.Code;
                     shipmentPM.MainCarriageToPortName = mainCarriageToPort.EnglishName;
                     shipmentPM.MainCarriageToPortCountryCode = mainCarriageToPort.CountryCode;
@@ -2881,7 +2956,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.Transshipment1ToPortId = masterData.Transshipment1ToPortId;
 
                     shipmentPM.Transshipment1CarrierNumber = masterData.Transshipment1CarrierNumber;
-
 
                     shipmentPM.MainCarriageVesselId = masterData.MainCarriageVesselId;
                     shipmentPM.Transshipment1VesselId = masterData.Transshipment1VesselId;
@@ -2925,8 +2999,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         }
                     }
 
-
-
                     if (!string.IsNullOrEmpty(shipmentPM.Transshipment1FromPortId))
                     {
                         PortPM transshipment1FromPort = portQuery.GetSinglePM(masterData.Transshipment1FromPortId, masterData.Tenant);
@@ -2935,7 +3007,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             shipmentPM.Transshipment1FromPortCode = transshipment1FromPort.Code;
                             shipmentPM.Transshipment1FromPortName = transshipment1FromPort.EnglishName;
                             shipmentPM.Transshipment1FromPortCountryCode = transshipment1FromPort.CountryCode;
-
                         }
                     }
 
@@ -2947,7 +3018,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             shipmentPM.Transshipment1ToPortCode = transshipment1ToPort.Code;
                             shipmentPM.Transshipment1ToPortName = transshipment1ToPort.EnglishName;
                             shipmentPM.Transshipment1ToPortCountryCode = transshipment1ToPort.CountryCode;
-
                         }
                     }
 
@@ -2958,7 +3028,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         {
                             shipmentPM.Transshipment1CarrierCode = cardObject.Code;
                             shipmentPM.Transshipment1CarrierName = cardObject.EnglishName;
-
                         }
                     }
                     #endregion
@@ -2968,11 +3037,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.Transshipment2ATD = masterData.Transshipment2ATD;
                     shipmentPM.Transshipment2ETA = masterData.Transshipment2ETA;
                     shipmentPM.Transshipment2ETD = masterData.Transshipment2ETD;
-
-
                     shipmentPM.Transshipment2FromPortId = masterData.Transshipment2FromPortId;
                     shipmentPM.Transshipment2ToPortId = masterData.Transshipment2ToPortId;
-
                     shipmentPM.Transshipment2CarrierNumber = masterData.Transshipment2CarrierNumber;
 
                     if (!string.IsNullOrEmpty(shipmentPM.Transshipment2FromPortId))
@@ -2983,7 +3049,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             shipmentPM.Transshipment2FromPortCode = transshipment2FromPort.Code;
                             shipmentPM.Transshipment2FromPortName = transshipment2FromPort.EnglishName;
                             shipmentPM.Transshipment2FromPortCountryCode = transshipment2FromPort.CountryCode;
-
                         }
                     }
 
@@ -2995,7 +3060,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             shipmentPM.Transshipment2ToPortCode = transshipment2ToPort.Code;
                             shipmentPM.Transshipment2ToPortName = transshipment2ToPort.EnglishName;
                             shipmentPM.Transshipment2ToPortCountryCode = transshipment2ToPort.CountryCode;
-
                         }
                     }
 
@@ -3006,7 +3070,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         {
                             shipmentPM.Transshipment2CarrierCode = cardObject.Code;
                             shipmentPM.Transshipment2CarrierName = cardObject.EnglishName;
-
                         }
                     }
                     #endregion
@@ -3016,11 +3079,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.Transshipment3ATD = masterData.Transshipment3ATD;
                     shipmentPM.Transshipment3ETA = masterData.Transshipment3ETA;
                     shipmentPM.Transshipment3ETD = masterData.Transshipment3ETD;
-
-
                     shipmentPM.Transshipment3FromPortId = masterData.Transshipment3FromPortId;
                     shipmentPM.Transshipment3ToPortId = masterData.Transshipment3ToPortId;
-
                     shipmentPM.Transshipment3CarrierNumber = masterData.Transshipment3CarrierNumber;
 
                     if (!string.IsNullOrEmpty(shipmentPM.Transshipment3FromPortId))
@@ -3031,10 +3091,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             shipmentPM.Transshipment3FromPortCode = transshipment3FromPort.Code;
                             shipmentPM.Transshipment3FromPortName = transshipment3FromPort.EnglishName;
                             shipmentPM.Transshipment3FromPortCountryCode = transshipment3FromPort.CountryCode;
-
                         }
                     }
-
 
                     if (!string.IsNullOrEmpty(shipmentPM.Transshipment3ToPortId))
                     {
@@ -3044,10 +3102,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             shipmentPM.Transshipment3ToPortCode = transshipment3ToPort.Code;
                             shipmentPM.Transshipment3ToPortName = transshipment3ToPort.EnglishName;
                             shipmentPM.Transshipment3ToPortCountryCode = transshipment3ToPort.CountryCode;
-
                         }
                     }
-
 
                     if (!string.IsNullOrEmpty(masterData.Transshipment3CarrierId))
                     {
@@ -3056,13 +3112,145 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         {
                             shipmentPM.Transshipment3CarrierCode = cardObject.Code;
                             shipmentPM.Transshipment3CarrierName = cardObject.EnglishName;
-
                         }
                     }
                     #endregion
 
+                    #region Pre carriage
+                    if (!string.IsNullOrEmpty(masterData.PreCarriageFromPortId) || !string.IsNullOrEmpty(masterData.PreCarriageToPortId))
+                    {
+                        shipmentPM.HasPreCarriage = true;
+                    }
 
+                    PortPM precarriageFromPort = null;
+                    PortPM precarriageToPort = null;
+                    if (!string.IsNullOrEmpty(masterData.PreCarriageFromPortId))
+                    {
+                        precarriageFromPort = portQuery.GetSinglePM(masterData.PreCarriageFromPortId, masterData.Tenant);
+                    }
 
+                    if (!string.IsNullOrEmpty(masterData.PreCarriageToPortId))
+                    {
+                        precarriageToPort = portQuery.GetSinglePM(masterData.PreCarriageToPortId, masterData.Tenant);
+                    }
+
+                    shipmentPM.PreCarriageFromPortId = masterData.PreCarriageFromPortId;
+                    shipmentPM.PreCarriageToPortId = masterData.PreCarriageToPortId;
+                    shipmentPM.PreCarriageCarrierId = masterData.PreCarriageCarrierId;
+                    shipmentPM.PreCarriageCarrierNumber = masterData.PreCarriageCarrierNumber;
+                    shipmentPM.PreCarriageATA = masterData.PreCarriageATA;
+                    shipmentPM.PreCarriageATD = masterData.PreCarriageATD;
+                    shipmentPM.PreCarriageETA = masterData.PreCarriageETA;
+                    shipmentPM.PreCarriageETD = masterData.PreCarriageETD;
+                    shipmentPM.PreCarriageTransportModeId = masterData.PreCarriageTransportModeId;
+                    shipmentPM.PreCarriageVesselId = masterData.PreCarriageVesselId;
+
+                    if (precarriageFromPort != null)
+                    {
+                        shipmentPM.PreCarriageFromPortCode = precarriageFromPort.Code;
+                        shipmentPM.PreCarriageFromPortName = precarriageFromPort.EnglishName;
+                        shipmentPM.PreCarriageFromPortCountryCode = precarriageFromPort.CountryCode;
+                        shipmentPM.PreCarriageFromPortCountryName = precarriageFromPort.CountryName;
+                    }
+
+                    if (precarriageToPort != null)
+                    {
+                        shipmentPM.PreCarriageToPortCode = precarriageToPort.Code;
+                        shipmentPM.PreCarriageToPortName = precarriageToPort.EnglishName;
+                        shipmentPM.PreCarriageToPortCountryCode = precarriageToPort.CountryCode;
+                        shipmentPM.PreCarriageToPortCountryName = precarriageToPort.CountryName;
+                    }
+
+                    if (!string.IsNullOrEmpty(masterData.PreCarriageCarrierId))
+                    {
+                        Card cardObject = CardRepository.GetSingleCard(masterData.PreCarriageCarrierId, masterData.Tenant, true);
+                        if (cardObject != null)
+                        {
+                            shipmentPM.PreCarriageCarrierCode = cardObject.Code;
+                            shipmentPM.PreCarriageCarrierName = cardObject.EnglishName;
+                            shipmentPM.PreCarriageCarrierWebSite = cardObject.Website;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(masterData.PreCarriageVesselId))
+                    {
+                        Vessel vesselEntity = vesselRep.GetSingleVessel(masterData.PreCarriageVesselId, masterData.Tenant);
+                        if (vesselEntity != null)
+                        {
+                            shipmentPM.PreCarriageVesselName = vesselEntity.EnglishName;
+                        }
+                    }
+                    #endregion
+
+                    #region On carriage
+                    if (!string.IsNullOrEmpty(masterData.OnCarriageFromPortId) || !string.IsNullOrEmpty(masterData.OnCarriageToPortId))
+                    {
+                        shipmentPM.HasOnCarriage = true;
+                    }
+
+                    PortPM oncarriageFromPort = null;
+                    PortPM oncarriageToPort = null;
+
+                    if (!string.IsNullOrEmpty(masterData.OnCarriageFromPortId))
+                    {
+                        oncarriageFromPort = portQuery.GetSinglePM(masterData.OnCarriageFromPortId, masterData.Tenant);
+                    }
+
+                    if (!string.IsNullOrEmpty(masterData.OnCarriageToPortId))
+                    {
+                        oncarriageToPort = portQuery.GetSinglePM(masterData.OnCarriageToPortId, masterData.Tenant);
+                    }
+
+                    shipmentPM.OnCarriageAdditionalTransportModeCode = masterData.OnCarriageAdditionalTransportModeCode;
+                    shipmentPM.SplitOnCarriage = masterData.SplitOnCarriage;
+                    shipmentPM.OnCarriageFromPortId = masterData.OnCarriageFromPortId;
+                    shipmentPM.OnCarriageToPortId = masterData.OnCarriageToPortId;
+                    shipmentPM.OnCarriageCarrierId = masterData.OnCarriageCarrierId;
+                    shipmentPM.OnCarriageCarrierNumber = masterData.OnCarriageCarrierNumber;
+                    shipmentPM.OnCarriageATA = masterData.OnCarriageATA;
+                    shipmentPM.OnCarriageATD = masterData.OnCarriageATD;
+                    shipmentPM.OnCarriageETA = masterData.OnCarriageETA;
+                    shipmentPM.OnCarriageETD = masterData.OnCarriageETD;
+                    shipmentPM.OnCarriageTransportModeId = masterData.OnCarriageTransportModeId;
+                    shipmentPM.OnCarriageVesselId = masterData.OnCarriageVesselId;
+
+                    if (oncarriageFromPort != null)
+                    {
+                        shipmentPM.OnCarriageFromPortCode = oncarriageFromPort.Code;
+                        shipmentPM.OnCarriageFromPortName = oncarriageFromPort.EnglishName;
+                        shipmentPM.OnCarriageFromPortCountryCode = oncarriageFromPort.CountryCode;
+                        shipmentPM.OnCarriageFromPortCountryName = oncarriageFromPort.CountryName;
+                    }
+
+                    if (oncarriageToPort != null)
+                    {
+                        shipmentPM.OnCarriageToPortCode = oncarriageToPort.Code;
+                        shipmentPM.OnCarriageToPortName = oncarriageToPort.EnglishName;
+                        shipmentPM.OnCarriageToPortCountryCode = oncarriageToPort.CountryCode;
+                        shipmentPM.OnCarriageToPortCountryName = oncarriageToPort.CountryName;
+                    }
+
+                    if (!string.IsNullOrEmpty(masterData.OnCarriageCarrierId))
+                    {
+                        Card cardObject = CardRepository.GetSingleCard(masterData.OnCarriageCarrierId, masterData.Tenant, true);
+                        if (cardObject != null)
+                        {
+                            shipmentPM.OnCarriageCarrierCode = cardObject.Code;
+                            shipmentPM.OnCarriageCarrierName = cardObject.EnglishName;
+                            shipmentPM.OnCarriageCarrierWebSite = cardObject.Website;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(masterData.OnCarriageVesselId))
+                    {
+                        Vessel vesselEntity = vesselRep.GetSingleVessel(masterData.OnCarriageVesselId, masterData.Tenant);
+                        if (vesselEntity != null)
+                        {
+                            shipmentPM.OnCarriageVesselName = vesselEntity.EnglishName;
+                        }
+                    }
+
+                    #endregion
                 }
             }
             #endregion
@@ -3072,31 +3260,158 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 if (!isInlandDomesticShipment)
                 {
-
                     PortPM fromPort = portQuery.GetSinglePM(shipment.FromPortId, shipment.Tenant);
                     shipmentPM.MainCarriageFromPortCode = fromPort.Code;
                     shipmentPM.MainCarriageFromPortName = fromPort.EnglishName;
                     shipmentPM.MainCarriageFromPortCountryCode = fromPort.CountryCode;
-
                     shipmentPM.FromPortName = fromPort.EnglishName;
-
                     PortPM toPort = portQuery.GetSinglePM(shipment.ToPortId, shipment.Tenant);
                     shipmentPM.MainCarriageToPortCode = toPort.Code;
                     shipmentPM.MainCarriageToPortName = toPort.EnglishName;
                     shipmentPM.MainCarriageToPortCountryCode = toPort.CountryCode;
-
                     shipmentPM.ToPortName = toPort.EnglishName;
+
+                    #region Pre Forwarding
+                    if (!string.IsNullOrEmpty(shipment.PreForwardingFromPortId) || !string.IsNullOrEmpty(shipment.PreForwardingToPortId))
+                    {
+                        shipmentPM.HasPreForwarding = true;
+                    }
+
+                    PortPM preForwardingFromPort = null;
+                    PortPM preForwardingToPort = null;
+
+                    if (!string.IsNullOrEmpty(shipment.PreForwardingFromPortId))
+                    {
+                        preForwardingFromPort = portQuery.GetSinglePM(shipment.PreForwardingFromPortId, shipment.Tenant);
+                    }
+
+                    if (!string.IsNullOrEmpty(shipment.PreForwardingToPortId))
+                    {
+                        preForwardingToPort = portQuery.GetSinglePM(shipment.PreForwardingToPortId, shipment.Tenant);
+                    }
+
+                    shipmentPM.PreForwardingFromPortId = shipment.PreForwardingFromPortId;
+                    shipmentPM.PreForwardingToPortId = shipment.PreForwardingToPortId;
+                    shipmentPM.PreForwardingCarrierId = shipment.PreForwardingCarrierId;
+                    shipmentPM.PreForwardingCarrierNumber = shipment.PreForwardingCarrierNumber;
+                    shipmentPM.PreForwardingATA = shipment.PreForwardingATA;
+                    shipmentPM.PreForwardingATD = shipment.PreForwardingATD;
+                    shipmentPM.PreForwardingETA = shipment.PreForwardingETA;
+                    shipmentPM.PreForwardingETD = shipment.PreForwardingETD;
+                    shipmentPM.PreForwardingTransportModeId = shipment.PreForwardingTransportModeId;
+                    shipmentPM.PreForwardingVesselId = shipment.PreForwardingVesselId;
+
+                    if (preForwardingFromPort != null)
+                    {
+                        shipmentPM.PreForwardingFromPortCode = preForwardingFromPort.Code;
+                        shipmentPM.PreForwardingFromPortName = preForwardingFromPort.EnglishName;
+                        shipmentPM.PreForwardingFromPortCountryCode = preForwardingFromPort.CountryCode;
+                        shipmentPM.PreForwardingFromPortCountryName = preForwardingFromPort.CountryName;
+                    }
+
+                    if (preForwardingToPort != null)
+                    {
+                        shipmentPM.PreForwardingToPortCode = preForwardingToPort.Code;
+                        shipmentPM.PreForwardingToPortName = preForwardingToPort.EnglishName;
+                        shipmentPM.PreForwardingToPortCountryCode = preForwardingToPort.CountryCode;
+                        shipmentPM.PreForwardingToPortCountryName = preForwardingToPort.CountryName;
+                    }
+
+                    if (!string.IsNullOrEmpty(shipment.PreForwardingCarrierId))
+                    {
+                        Card cardObject = CardRepository.GetSingleCard(shipment.PreForwardingCarrierId, shipment.Tenant, true);
+                        if (cardObject != null)
+                        {
+                            shipmentPM.PreForwardingCarrierCode = cardObject.Code;
+                            shipmentPM.PreForwardingCarrierName = cardObject.EnglishName;
+                            shipmentPM.PreForwardingCarrierWebSite = cardObject.Website;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(shipment.PreForwardingVesselId))
+                    {
+                        Vessel vesselEntity = vesselRep.GetSingleVessel(shipment.PreForwardingVesselId, shipment.Tenant);
+                        if (vesselEntity != null)
+                        {
+                            shipmentPM.PreForwardingVesselName = vesselEntity.EnglishName;
+                        }
+                    }
+                    #endregion
+
+                    #region On Forwarding
+                    if (!string.IsNullOrEmpty(shipment.OnForwardingFromPortId) || !string.IsNullOrEmpty(shipment.OnForwardingToPortId))
+                    {
+                        shipmentPM.HasOnForwarding = true;
+                    }
+
+                    PortPM onForwardingFromPort = null;
+                    PortPM onForwardingToPort = null;
+
+                    if (!string.IsNullOrEmpty(shipment.OnForwardingFromPortId))
+                    {
+                        onForwardingFromPort = portQuery.GetSinglePM(shipment.OnForwardingFromPortId, shipment.Tenant);
+                    }
+
+                    if (!string.IsNullOrEmpty(shipment.OnForwardingToPortId))
+                    {
+                        onForwardingToPort = portQuery.GetSinglePM(shipment.OnForwardingToPortId, shipment.Tenant);
+                    }
+
+                    shipmentPM.OnForwardingAdditionalTransportModeCode = shipment.OnForwardingAdditionalTransportModeCode;
+                    shipmentPM.SplitOnForwarding = shipment.SplitOnForwarding;
+                    shipmentPM.OnForwardingFromPortId = shipment.OnForwardingFromPortId;
+                    shipmentPM.OnForwardingToPortId = shipment.OnForwardingToPortId;
+                    shipmentPM.OnForwardingCarrierId = shipment.OnForwardingCarrierId;
+                    shipmentPM.OnForwardingCarrierNumber = shipment.OnForwardingCarrierNumber;
+                    shipmentPM.OnForwardingATA = shipment.OnForwardingATA;
+                    shipmentPM.OnForwardingATD = shipment.OnForwardingATD;
+                    shipmentPM.OnForwardingETA = shipment.OnForwardingETA;
+                    shipmentPM.OnForwardingETD = shipment.OnForwardingETD;
+                    shipmentPM.OnForwardingTransportModeId = shipment.OnForwardingTransportModeId;
+                    shipmentPM.OnForwardingVesselId = shipment.OnForwardingVesselId;
+
+                    if (onForwardingFromPort != null)
+                    {
+                        shipmentPM.OnForwardingFromPortCode = onForwardingFromPort.Code;
+                        shipmentPM.OnForwardingFromPortName = onForwardingFromPort.EnglishName;
+                        shipmentPM.OnForwardingFromPortCountryCode = onForwardingFromPort.CountryCode;
+                        shipmentPM.OnForwardingFromPortCountryName = onForwardingFromPort.CountryName;
+                    }
+
+                    if (onForwardingToPort != null)
+                    {
+                        shipmentPM.OnForwardingToPortCode = onForwardingToPort.Code;
+                        shipmentPM.OnForwardingToPortName = onForwardingToPort.EnglishName;
+                        shipmentPM.OnForwardingToPortCountryCode = onForwardingToPort.CountryCode;
+                        shipmentPM.OnForwardingToPortCountryName = onForwardingToPort.CountryName;
+                    }
+
+                    if (!string.IsNullOrEmpty(shipment.OnForwardingCarrierId))
+                    {
+                        Card cardObject = CardRepository.GetSingleCard(shipment.OnForwardingCarrierId, shipment.Tenant, true);
+                        if (cardObject != null)
+                        {
+                            shipmentPM.OnForwardingCarrierCode = cardObject.Code;
+                            shipmentPM.OnForwardingCarrierName = cardObject.EnglishName;
+                            shipmentPM.OnForwardingCarrierWebSite = cardObject.Website;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(shipment.OnForwardingVesselId))
+                    {
+                        Vessel vesselEntity = vesselRep.GetSingleVessel(shipment.OnForwardingVesselId, shipment.Tenant);
+                        if (vesselEntity != null)
+                        {
+                            shipmentPM.OnForwardingVesselName = vesselEntity.EnglishName;
+                        }
+                    }
+                    #endregion
                 }
             }
-
             #endregion
 
-
             #region Partners
-
             shipmentPM.CustomerId = shipment.CustomerId;
-
-
 
             #region FreightForwarder
             shipmentPM.FreightForwarderId = shipment.FreightForwarderId;
@@ -3106,17 +3421,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             #endregion
 
-
             shipmentPM.ShipperId = shipment.ShipperId;
-
             shipmentPM.ShipperName = shipment.ShipperName;
             shipmentPM.ShipperAddressId = shipment.ShipperAddressId;
             shipmentPM.ShipperContactId = shipment.ShipperContactId;
             shipmentPM.ShipperReference1 = shipment.ShipperReference1;
             shipmentPM.ShipperReference2 = shipment.ShipperReference2;
-
-
-
 
             #region Consignee
             shipmentPM.ConsigneeId = shipment.ConsigneeId;
@@ -3245,9 +3555,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.DirectionName = direction.Name;
             shipmentPM.ForeignPartnerCountryCode = shipment.ForeignPartnerCountryCode;
 
-
-
-
             /* Bills*/
             shipmentPM.House = shipment.House;
 
@@ -3323,93 +3630,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.NumberOfFollowUps = shipment.NumberOfFollowUps;
             #endregion
 
-            #region Routings
-
-            shipmentPM.PreCarriageCarrierId = shipment.PreCarriageCarrierId;
-
-            shipmentPM.PreCarriageFromPortId = shipment.PreCarriageFromPortId;
-
-            if (precarriageFromPort != null)
-            {
-                shipmentPM.PreCarriageFromPortCode = precarriageFromPort.Code;
-                shipmentPM.PreCarriageFromPortName = precarriageFromPort.EnglishName;
-                shipmentPM.PreCarriageFromPortCountryCode = precarriageFromPort.CountryCode;
-                shipmentPM.PreCarriageFromPortCountryName = precarriageFromPort.CountryName;
-            }
-
-            if (precarriageToPort != null)
-            {
-                shipmentPM.PreCarriageToPortId = shipment.PreCarriageToPortId;
-                shipmentPM.PreCarriageToPortCode = precarriageToPort.Code;
-                shipmentPM.PreCarriageToPortName = precarriageToPort.EnglishName;
-                shipmentPM.PreCarriageToPortCountryCode = precarriageToPort.CountryCode;
-                shipmentPM.PreCarriageToPortCountryName = precarriageToPort.CountryName;
-            }
-
-            if (!string.IsNullOrEmpty(shipment.PreCarriageCarrierId))
-            {
-                Card cardObject = CardRepository.GetSingleCard(shipment.PreCarriageCarrierId, shipment.Tenant, true);
-                if (cardObject != null)
-                {
-                    shipmentPM.PreCarriageCarrierCode = cardObject.Code;
-                    shipmentPM.PreCarriageCarrierName = cardObject.EnglishName;
-
-                }
-            }
-
-            shipmentPM.PreCarriageCarrierNumber = shipment.PreCarriageCarrierNumber;
-            shipmentPM.PreCarriageATA = shipment.PreCarriageATA;
-            shipmentPM.PreCarriageATD = shipment.PreCarriageATD;
-            shipmentPM.PreCarriageETA = shipment.PreCarriageETA;
-            shipmentPM.PreCarriageETD = shipment.PreCarriageETD;
-            //shipmentPM.PreCarriageSTA = shipment.PreCarriageSTA;
-            //shipmentPM.PreCarriageSTD = shipment.PreCarriageSTD;
-            shipmentPM.PreCarriageTransportModeId = shipment.PreCarriageTransportModeId;
-
-
-            /* OnCarriage */
-            shipmentPM.OnCarriageFromPortId = shipment.OnCarriageFromPortId;
-            if (oncarriageFromPort != null)
-            {
-                shipmentPM.OnCarriageFromPortCode = oncarriageFromPort.Code;
-                shipmentPM.OnCarriageFromPortName = oncarriageFromPort.EnglishName;
-                shipmentPM.OnCarriageFromPortCountryCode = oncarriageFromPort.CountryCode;
-
-            }
-
-            if (oncarriageToPort != null)
-            {
-                shipmentPM.OnCarriageToPortId = shipment.OnCarriageToPortId;
-                shipmentPM.OnCarriageToPortCode = oncarriageToPort.Code;
-                shipmentPM.OnCarriageToPortName = oncarriageToPort.EnglishName;
-                shipmentPM.OnCarriageToPortCountryCode = oncarriageToPort.CountryCode;
-                shipmentPM.OnCarriageToPortCountryName = oncarriageToPort.CountryName;
-            }
-
-            if (!string.IsNullOrEmpty(shipment.OnCarriageCarrierId))
-            {
-                Card cardObject = CardRepository.GetSingleCard(shipment.OnCarriageCarrierId, shipment.Tenant, true);
-                if (cardObject != null)
-                {
-                    shipmentPM.OnCarriageCarrierCode = cardObject.Code;
-                    shipmentPM.OnCarriageCarrierName = cardObject.EnglishName;
-
-                }
-            }
-
-            shipmentPM.OnCarriageCarrierNumber = shipment.OnCarriageCarrierNumber;
-            shipmentPM.OnCarriageATA = shipment.OnCarriageATA;
-            shipmentPM.OnCarriageATD = shipment.OnCarriageATD;
-            shipmentPM.OnCarriageETA = shipment.OnCarriageETA;
-            shipmentPM.OnCarriageETD = shipment.OnCarriageETD;
-            //shipmentPM.OnCarriageSTA = shipment.OnCarriageSTA;
-            //shipmentPM.OnCarriageSTD = shipment.OnCarriageSTD;            
-
-
-            shipmentPM.OnCarriageTransportModeId = shipment.OnCarriageTransportModeId;
-
-            #endregion
-
             #region shipmentpickup deliveries
 
             shipmentPM.ShipmentPickUps = shipmentPickUpQuery.GetShipmentPickUpPMsByTenantAndShipment(shipment.Id, shipment.Tenant).ToList();
@@ -3458,8 +3678,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.FirstAccountingCloseDate = shipment.FirstAccountingCloseDate;
             shipmentPM.LastFinalDestination = shipment.LastFinalDestination;
             shipmentPM.FirstPickupETA = shipment.FirstPickupETA;
-            shipmentPM.FirstPickupETD = shipment.FirstPickupETD;
-            shipmentPM.SplitOnCarriage = shipment.SplitOnCarriage;
+            shipmentPM.FirstPickupETD = shipment.FirstPickupETD;            
+            shipmentPM.SplitOnForwarding = shipment.SplitOnForwarding;
             shipmentPM.From = shipment.From;
             shipmentPM.To = shipment.To;
             shipmentPM.Origin = shipment.Origin;
@@ -3484,7 +3704,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(repository.context);
                 ShipmentPackageQuery shipmentPackageQuery = new ShipmentPackageQuery(shipmentPackageRepository);
 
-
                 #region shipment order packages
                 shipmentPM.ShipmentOrderPackages = shipmentOrderPackageQuery.GetShipmentOrderPackagesByShipment(shipment.Id, shipment.Tenant);
                 #endregion
@@ -3493,9 +3712,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                 shipmentPM.ShipmentPackages = shipmentPackageQuery.GetShipmentPackages(shipment.Id, shipment.ShipmentNumber, shipment.Tenant);
                 #endregion
-
-
-
                 #endregion
             }
 
@@ -3566,15 +3782,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
 
-
-
             if (EntityChangeHelper.IsShowLogBoxAutomationFields())
             {
                 #region ShipmentAdditionalCloudDatas
                 shipmentPM.IsImporterApprovalRequired = GetIsImporterApprovalRequried(shipment.Id, shipment.Tenant);
                 #endregion
-            }
-            
+            }            
 
             shipmentPM.CreatedByPartner = shipment.CreatedByPartner;
             shipmentPM.Tenant = shipment.Tenant;
@@ -3609,14 +3822,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.OrderIsDangerouseGoods = shipment.OrderIsDangerouseGoods;
             shipmentPM.FirstPickupETA = shipment.FirstPickupETA;
             shipmentPM.FirstPickupETD = shipment.FirstPickupETD;
-            shipmentPM.PreCarriageETA = shipment.PreCarriageETA;
-            shipmentPM.PreCarriageETD = shipment.PreCarriageETD;
-            shipmentPM.OnCarriageETA = shipment.OnCarriageETA;
-            shipmentPM.OnCarriageETD = shipment.OnCarriageETD;
+            shipmentPM.PreForwardingETA = shipment.PreForwardingETA;
+            shipmentPM.PreForwardingETD = shipment.PreForwardingETD;
+            shipmentPM.OnForwardingETA = shipment.OnForwardingETA;
+            shipmentPM.OnForwardingETD = shipment.OnForwardingETD;
             shipmentPM.WarehouseLegLastFreeDate = shipment.WarehouseLegLastFreeDate;
             shipmentPM.LastSharedEventId = shipment.LastSharedEventId;
             shipmentPM.LastSharedEventDate = shipment.LastSharedEventDate;
-            shipmentPM.IsAccrualsApproved = shipment.IsAccrualsApproved;
+            shipmentPM.IsAccrualsApproved = shipment.IsAccrualsApproved; 
+            shipmentPM.LastUpdateDate = shipment.LastUpdateDate;
 
             if (masterData != null)
             {
@@ -3630,6 +3844,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.FinalDistenationPortId = masterData.Transshipment3ToPortId != null ? masterData.Transshipment3ToPortId : masterData.Transshipment2ToPortId != null ? masterData.Transshipment2ToPortId : masterData.Transshipment1ToPortId != null ? masterData.Transshipment1ToPortId : masterData.MainCarriageToPortId;
                 shipmentPM.CutoffDate = masterData.CutoffDate;
                 shipmentPM.DocumentsClosingDate = masterData.DocumentsClosingDate;
+                shipmentPM.PreCarriageETA = masterData.PreCarriageETA;
+                shipmentPM.PreCarriageETD = masterData.PreCarriageETD;
+                shipmentPM.OnCarriageETA = masterData.OnCarriageETA;
+                shipmentPM.OnCarriageETD = masterData.OnCarriageETD;
             }
 
             shipmentPM.Field1 = new CustomFieldClass("Field1", "Shipment", shipment.Field1);
@@ -3677,10 +3895,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             MapShipmentComputedFields(shipmentPM);
             #endregion
 
-
-
-
-
             return null;
         }
 
@@ -3709,7 +3923,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.ExpectedArrivalNoticeSentDate = entityComputedFields.ExpectedArrivalNoticeSent;
                 shipmentPM.ArrivalNoticeSentDate = entityComputedFields.ArrivalNoticeSent;
                 shipmentPM.T1ReceivedDate = entityComputedFields.T1Received;
-
+                shipmentPM.FirstPickupATD = entityComputedFields.FirstPickupATD;
             }
         }
 
@@ -3834,6 +4048,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return returnShipment;
         }
 
+        public string GetShipmentIdIfOneShipmentHaveHouseNumber(string house, int tenant)
+        {
+            if (string.IsNullOrEmpty(house)) { return null; }
+
+            List<Shipment> shipments = repository.GetAllShipmentsByHouseNumber(house, tenant);
+
+            if (shipments.Count == 0) { throw new Exception("There is no Shipment found with house " + house);}
+
+            if (shipments.Count == 1) { return shipments[0].Id;}
+            return null;
+        }
+      
+
         public ShipmentPM GetSinglePM(string id, int tenant)
         {
             if (!string.IsNullOrEmpty(id))
@@ -3850,9 +4077,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                     ShipmentPM shipmentPM = new ShipmentPM();
 
-                    shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true);
-                    //shipmentPM.ToCountryCode = !string.IsNullOrEmpty(shipmentPM.MainCarriageFinalDestinationPortCountryCode) ? shipmentPM.MainCarriageFinalDestinationPortCountryCode : shipmentPM.ToPortCountryCode,
-                    //shipmentPM.FromCountryCode = f.ShipmentLevelCode == "H" && string.IsNullOrEmpty(f.MasterShipmentDataId) ? f.FromPortCountryCode : f.MainCarriageFromPortCountryCode,
+                    shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true);                   
                     ShipmentPM securedPM = new ShipmentPM();
                     securedPM = SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
 
@@ -3872,6 +4097,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         returnShipment.ShipmentAddtionalDataXML = CLoudData.ShipmentAddtionalDataXML;
                         returnShipment.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         returnShipment.DocsSentToAgent = CLoudData.DocsSentToAgent;
+                        returnShipment.ApprovedBy = CLoudData.ApprovedByUserName;
+                        returnShipment.DocumentsApprovedByUserName = CLoudData.DocumentsApprovedByUserName;
+                        returnShipment.IsUserIDNumberRequired = CLoudData.IsUserIDNumberRequired;
+                        returnShipment.UserIdNumberUpdateDate = CLoudData.UserIdNumberUpdateDate;
+                        returnShipment.UserIdNumberXMLData = CLoudData.UserIdNumberXMLData;
+                        returnShipment.UserIdNumber = CLoudData.UserIdNumber;
+                        returnShipment.PaymentRequestXML = CLoudData.PaymentRequestXML;
+                        returnShipment.PaymentDateTime = CLoudData.PaymentDateTime;
+                        returnShipment.IsPaymentRequired = CLoudData.IsPaymentRequired;
                     }
 
                     MapShipmentComputedFields(returnShipment);
@@ -3987,6 +4221,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         shipmentPM.ApprovedBy = CLoudData.ApprovedByUserName;
                         shipmentPM.DocumentsApprovedByUserName = CLoudData.DocumentsApprovedByUserName;
+                        shipmentPM.IsUserIDNumberRequired = CLoudData.IsUserIDNumberRequired;
+                        shipmentPM.UserIdNumberUpdateDate = CLoudData.UserIdNumberUpdateDate;
+                        shipmentPM.UserIdNumberXMLData = CLoudData.UserIdNumberXMLData;
+                        shipmentPM.UserIdNumber = CLoudData.UserIdNumber;
+                        shipmentPM.PaymentRequestXML = CLoudData.PaymentRequestXML;
+                        shipmentPM.PaymentDateTime = CLoudData.PaymentDateTime;
+                        shipmentPM.IsPaymentRequired = CLoudData.IsPaymentRequired;
                     }
                     return shipmentPM;
                 }
@@ -4040,6 +4281,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         shipmentPM.ApprovedBy = CLoudData.ApprovedByUserName;
                         shipmentPM.DocumentsApprovedByUserName = CLoudData.DocumentsApprovedByUserName;
+                        shipmentPM.IsUserIDNumberRequired = CLoudData.IsUserIDNumberRequired;
+                        shipmentPM.UserIdNumberUpdateDate = CLoudData.UserIdNumberUpdateDate;
+                        shipmentPM.UserIdNumberXMLData = CLoudData.UserIdNumberXMLData;
+                        shipmentPM.UserIdNumber = CLoudData.UserIdNumber;
+                        shipmentPM.PaymentRequestXML = CLoudData.PaymentRequestXML;
+                        shipmentPM.PaymentDateTime = CLoudData.PaymentDateTime;
+                        shipmentPM.IsPaymentRequired = CLoudData.IsPaymentRequired;
                     }
                     return shipmentPM;
                 }
@@ -4086,6 +4334,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 returnShipment.DocsSentToAgent = CLoudData.DocsSentToAgent;
                 returnShipment.ApprovedBy = CLoudData.ApprovedByUserName;
                 returnShipment.DocumentsApprovedByUserName = CLoudData.DocumentsApprovedByUserName;
+                returnShipment.IsUserIDNumberRequired = CLoudData.IsUserIDNumberRequired;
+                returnShipment.UserIdNumberUpdateDate = CLoudData.UserIdNumberUpdateDate;
+                returnShipment.UserIdNumberXMLData = CLoudData.UserIdNumberXMLData;
+                returnShipment.UserIdNumber = CLoudData.UserIdNumber;
+                returnShipment.PaymentRequestXML = CLoudData.PaymentRequestXML;
+                returnShipment.PaymentDateTime = CLoudData.PaymentDateTime;
+                returnShipment.IsPaymentRequired = CLoudData.IsPaymentRequired;
             }
             return returnShipment;
         }
@@ -4264,48 +4519,48 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         NumberOfContainers = s.NumberOfContainers,
                                                         NumberOfFollowUps = s.NumberOfFollowUps,
                                                         NumberOfPackages = s.NumberOfPackages,
-                                                        OnCarriageATA = s.OnCarriageATA,
-                                                        OnCarriageATD = s.OnCarriageATD,
-                                                        OnCarriageCarrierCode = s.OnCarriageCarrierCard != null ? s.OnCarriageCarrierCard.Code : null,
-                                                        OnCarriageCarrierId = s.OnCarriageCarrierId,
-                                                        OnCarriageCarrierName = s.OnCarriageCarrierCard != null ? s.OnCarriageCarrierCard.EnglishName : null,
-                                                        OnCarriageCarrierNumber = s.OnCarriageCarrierNumber,
-                                                        OnCarriageCarrierWebSite = s.OnCarriageCarrierCard != null ? s.OnCarriageCarrierCard.Website : null,
-                                                        OnCarriageETA = s.OnCarriageETA,
-                                                        OnCarriageETD = s.OnCarriageETD,
-                                                        OnCarriageFromPortCode = s.OnCarriageFromPort != null ? s.OnCarriageFromPort.Code : null,
-                                                        OnCarriageFromPortCountryCode = s.OnCarriageFromPort != null ? s.OnCarriageFromPort.Country.Code : null,
-                                                        OnCarriageFromPortCountryName = s.OnCarriageFromPort != null ? s.OnCarriageFromPort.Country.EnglishName : null,
-                                                        OnCarriageFromPortId = s.OnCarriageFromPortId,
-                                                        OnCarriageFromPortName = s.OnCarriageToPort != null ? s.OnCarriageToPort.EnglishName : null,
-                                                        OnCarriageToPortCode = s.OnCarriageToPort != null ? s.OnCarriageToPort.Code : null,
-                                                        OnCarriageToPortCountryCode = s.OnCarriageToPort != null ? s.OnCarriageToPort.Country.Code : null,
-                                                        OnCarriageToPortCountryName = s.OnCarriageToPort != null ? s.OnCarriageToPort.Country.EnglishName : null,
-                                                        OnCarriageToPortId = s.OnCarriageToPortId,
-                                                        OnCarriageToPortName = s.OnCarriageToPort != null ? s.OnCarriageToPort.EnglishName : null,
-                                                        OnCarriageTransportModeId = s.OnCarriageTransportModeId,
-                                                        OnCarriageVesselId = s.OnCarriageVesselId,
-                                                        PreCarriageATA = s.PreCarriageATA,
-                                                        PreCarriageATD = s.PreCarriageATD,
-                                                        PreCarriageCarrierCode = s.PreCarriageCarrierCard != null ? s.PreCarriageCarrierCard.Code : null,
-                                                        PreCarriageCarrierId = s.PreCarriageCarrierId,
-                                                        PreCarriageCarrierName = s.PreCarriageCarrierCard != null ? s.PreCarriageCarrierCard.EnglishName : null,
-                                                        PreCarriageCarrierNumber = s.PreCarriageCarrierNumber,
-                                                        PreCarriageCarrierWebSite = s.PreCarriageCarrierCard != null ? s.PreCarriageCarrierCard.Website : null,
-                                                        PreCarriageETA = s.PreCarriageETA,
-                                                        PreCarriageETD = s.PreCarriageETD,
-                                                        PreCarriageFromPortCode = s.PreCarriageFromPort != null ? s.PreCarriageFromPort.Code : null,
-                                                        PreCarriageFromPortCountryCode = s.PreCarriageFromPort != null ? s.PreCarriageFromPort.Country.Code : null,
-                                                        PreCarriageFromPortCountryName = s.PreCarriageFromPort != null ? s.PreCarriageFromPort.Country.EnglishName : null,
-                                                        PreCarriageFromPortId = s.PreCarriageFromPortId,
-                                                        PreCarriageFromPortName = s.PreCarriageToPort != null ? s.PreCarriageToPort.EnglishName : null,
-                                                        PreCarriageToPortCode = s.PreCarriageToPort != null ? s.PreCarriageToPort.Code : null,
-                                                        PreCarriageToPortCountryCode = s.PreCarriageToPort != null ? s.PreCarriageToPort.Country.Code : null,
-                                                        PreCarriageToPortCountryName = s.PreCarriageToPort != null ? s.PreCarriageToPort.Country.EnglishName : null,
-                                                        PreCarriageToPortId = s.PreCarriageToPortId,
-                                                        PreCarriageToPortName = s.PreCarriageToPort != null ? s.PreCarriageToPort.EnglishName : null,
-                                                        PreCarriageTransportModeId = s.PreCarriageTransportModeId,
-                                                        PreCarriageVesselId = s.PreCarriageVesselId,
+                                                        OnCarriageATA = m.OnCarriageATA,
+                                                        OnCarriageATD = m.OnCarriageATD,
+                                                        OnCarriageCarrierCode = m.OnCarriageCarrierCard != null ? m.OnCarriageCarrierCard.Code : null,
+                                                        OnCarriageCarrierId = m.OnCarriageCarrierId,
+                                                        OnCarriageCarrierName = m.OnCarriageCarrierCard != null ? m.OnCarriageCarrierCard.EnglishName : null,
+                                                        OnCarriageCarrierNumber = m.OnCarriageCarrierNumber,
+                                                        OnCarriageCarrierWebSite = m.OnCarriageCarrierCard != null ? m.OnCarriageCarrierCard.Website : null,
+                                                        OnCarriageETA = m.OnCarriageETA,
+                                                        OnCarriageETD = m.OnCarriageETD,
+                                                        OnCarriageFromPortCode = m.OnCarriageFromPort != null ? m.OnCarriageFromPort.Code : null,
+                                                        OnCarriageFromPortCountryCode = m.OnCarriageFromPort != null ? m.OnCarriageFromPort.Country.Code : null,
+                                                        OnCarriageFromPortCountryName = m.OnCarriageFromPort != null ? m.OnCarriageFromPort.Country.EnglishName : null,
+                                                        OnCarriageFromPortId = m.OnCarriageFromPortId,
+                                                        OnCarriageFromPortName = m.OnCarriageToPort != null ? m.OnCarriageToPort.EnglishName : null,
+                                                        OnCarriageToPortCode = m.OnCarriageToPort != null ? m.OnCarriageToPort.Code : null,
+                                                        OnCarriageToPortCountryCode = m.OnCarriageToPort != null ? m.OnCarriageToPort.Country.Code : null,
+                                                        OnCarriageToPortCountryName = m.OnCarriageToPort != null ? m.OnCarriageToPort.Country.EnglishName : null,
+                                                        OnCarriageToPortId = m.OnCarriageToPortId,
+                                                        OnCarriageToPortName = m.OnCarriageToPort != null ? m.OnCarriageToPort.EnglishName : null,
+                                                        OnCarriageTransportModeId = m.OnCarriageTransportModeId,
+                                                        OnCarriageVesselId = m.OnCarriageVesselId,
+                                                        PreCarriageATA = m.PreCarriageATA,
+                                                        PreCarriageATD = m.PreCarriageATD,
+                                                        PreCarriageCarrierCode = m.PreCarriageCarrierCard != null ? m.PreCarriageCarrierCard.Code : null,
+                                                        PreCarriageCarrierId = m.PreCarriageCarrierId,
+                                                        PreCarriageCarrierName = m.PreCarriageCarrierCard != null ? m.PreCarriageCarrierCard.EnglishName : null,
+                                                        PreCarriageCarrierNumber = m.PreCarriageCarrierNumber,
+                                                        PreCarriageCarrierWebSite = m.PreCarriageCarrierCard != null ? m.PreCarriageCarrierCard.Website : null,
+                                                        PreCarriageETA = m.PreCarriageETA,
+                                                        PreCarriageETD = m.PreCarriageETD,
+                                                        PreCarriageFromPortCode = m.PreCarriageFromPort != null ? m.PreCarriageFromPort.Code : null,
+                                                        PreCarriageFromPortCountryCode = m.PreCarriageFromPort != null ? m.PreCarriageFromPort.Country.Code : null,
+                                                        PreCarriageFromPortCountryName = m.PreCarriageFromPort != null ? m.PreCarriageFromPort.Country.EnglishName : null,
+                                                        PreCarriageFromPortId = m.PreCarriageFromPortId,
+                                                        PreCarriageFromPortName = m.PreCarriageToPort != null ? m.PreCarriageToPort.EnglishName : null,
+                                                        PreCarriageToPortCode = m.PreCarriageToPort != null ? m.PreCarriageToPort.Code : null,
+                                                        PreCarriageToPortCountryCode = m.PreCarriageToPort != null ? m.PreCarriageToPort.Country.Code : null,
+                                                        PreCarriageToPortCountryName = m.PreCarriageToPort != null ? m.PreCarriageToPort.Country.EnglishName : null,
+                                                        PreCarriageToPortId = m.PreCarriageToPortId,
+                                                        PreCarriageToPortName = m.PreCarriageToPort != null ? m.PreCarriageToPort.EnglishName : null,
+                                                        PreCarriageTransportModeId = m.PreCarriageTransportModeId,
+                                                        PreCarriageVesselId = m.PreCarriageVesselId,
                                                         CreatedByUserId = s.CreatedByUserId,
                                                         OrderChargeableWeight = s.OrderChargeableWeight,
                                                         OrderGrossWeight = s.OrderGrossWeight,
@@ -4486,6 +4741,48 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         ValueOfGoods = s.ValueOfGoods,
                                                         ManifestLastSharingDate = s.ManifestLastSharingDate,
                                                         SpecialServicesTypeId = s.SpecialServicesTypeId,
+                                                        OnForwardingATA = s.OnForwardingATA,
+                                                        OnForwardingATD = s.OnForwardingATD,
+                                                        OnForwardingCarrierCode = s.OnForwardingCarrierCard != null ? s.OnForwardingCarrierCard.Code : null,
+                                                        OnForwardingCarrierId = s.OnForwardingCarrierId,
+                                                        OnForwardingCarrierName = s.OnForwardingCarrierCard != null ? s.OnForwardingCarrierCard.EnglishName : null,
+                                                        OnForwardingCarrierNumber = s.OnForwardingCarrierNumber,
+                                                        OnForwardingCarrierWebSite = s.OnForwardingCarrierCard != null ? s.OnForwardingCarrierCard.Website : null,
+                                                        OnForwardingETA = s.OnForwardingETA,
+                                                        OnForwardingETD = s.OnForwardingETD,
+                                                        OnForwardingFromPortCode = s.OnForwardingFromPort != null ? s.OnForwardingFromPort.Code : null,
+                                                        OnForwardingFromPortCountryCode = s.OnForwardingFromPort != null ? s.OnForwardingFromPort.Country.Code : null,
+                                                        OnForwardingFromPortCountryName = s.OnForwardingFromPort != null ? s.OnForwardingFromPort.Country.EnglishName : null,
+                                                        OnForwardingFromPortId = s.OnForwardingFromPortId,
+                                                        OnForwardingFromPortName = s.OnForwardingToPort != null ? s.OnForwardingToPort.EnglishName : null,
+                                                        OnForwardingToPortCode = s.OnForwardingToPort != null ? s.OnForwardingToPort.Code : null,
+                                                        OnForwardingToPortCountryCode = s.OnForwardingToPort != null ? s.OnForwardingToPort.Country.Code : null,
+                                                        OnForwardingToPortCountryName = s.OnForwardingToPort != null ? s.OnForwardingToPort.Country.EnglishName : null,
+                                                        OnForwardingToPortId = s.OnForwardingToPortId,
+                                                        OnForwardingToPortName = s.OnForwardingToPort != null ? s.OnForwardingToPort.EnglishName : null,
+                                                        OnForwardingTransportModeId = s.OnForwardingTransportModeId,
+                                                        OnForwardingVesselId = s.OnForwardingVesselId,
+                                                        PreForwardingATA = s.PreForwardingATA,
+                                                        PreForwardingATD = s.PreForwardingATD,
+                                                        PreForwardingCarrierCode = s.PreForwardingCarrierCard != null ? s.PreForwardingCarrierCard.Code : null,
+                                                        PreForwardingCarrierId = s.PreForwardingCarrierId,
+                                                        PreForwardingCarrierName = s.PreForwardingCarrierCard != null ? s.PreForwardingCarrierCard.EnglishName : null,
+                                                        PreForwardingCarrierNumber = s.PreForwardingCarrierNumber,
+                                                        PreForwardingCarrierWebSite = s.PreForwardingCarrierCard != null ? s.PreForwardingCarrierCard.Website : null,
+                                                        PreForwardingETA = s.PreForwardingETA,
+                                                        PreForwardingETD = s.PreForwardingETD,
+                                                        PreForwardingFromPortCode = s.PreForwardingFromPort != null ? s.PreForwardingFromPort.Code : null,
+                                                        PreForwardingFromPortCountryCode = s.PreForwardingFromPort != null ? s.PreForwardingFromPort.Country.Code : null,
+                                                        PreForwardingFromPortCountryName = s.PreForwardingFromPort != null ? s.PreForwardingFromPort.Country.EnglishName : null,
+                                                        PreForwardingFromPortId = s.PreForwardingFromPortId,
+                                                        PreForwardingFromPortName = s.PreForwardingToPort != null ? s.PreForwardingToPort.EnglishName : null,
+                                                        PreForwardingToPortCode = s.PreForwardingToPort != null ? s.PreForwardingToPort.Code : null,
+                                                        PreForwardingToPortCountryCode = s.PreForwardingToPort != null ? s.PreForwardingToPort.Country.Code : null,
+                                                        PreForwardingToPortCountryName = s.PreForwardingToPort != null ? s.PreForwardingToPort.Country.EnglishName : null,
+                                                        PreForwardingToPortId = s.PreForwardingToPortId,
+                                                        PreForwardingToPortName = s.PreForwardingToPort != null ? s.PreForwardingToPort.EnglishName : null,
+                                                        PreForwardingTransportModeId = s.PreForwardingTransportModeId,
+                                                        PreForwardingVesselId = s.PreForwardingVesselId,
                                                     };
 
             List<ShipmentPM> securedShipmentPMs = new List<ShipmentPM>();
@@ -5032,6 +5329,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         returnShipment.ShipmentAddtionalDataXML = CLoudData.ShipmentAddtionalDataXML;
                         returnShipment.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         returnShipment.DocsSentToAgent = CLoudData.DocsSentToAgent;
+                        returnShipment.ApprovedBy = CLoudData.ApprovedByUserName;
+                        returnShipment.DocumentsApprovedByUserName = CLoudData.DocumentsApprovedByUserName;
+                        returnShipment.IsUserIDNumberRequired = CLoudData.IsUserIDNumberRequired;
+                        returnShipment.UserIdNumberUpdateDate = CLoudData.UserIdNumberUpdateDate;
+                        returnShipment.UserIdNumberXMLData = CLoudData.UserIdNumberXMLData;
+                        returnShipment.UserIdNumber = CLoudData.UserIdNumber;
+                        returnShipment.PaymentRequestXML = CLoudData.PaymentRequestXML;
+                        returnShipment.PaymentDateTime = CLoudData.PaymentDateTime;
+                        returnShipment.IsPaymentRequired = CLoudData.IsPaymentRequired;
                     }
 
                     return returnShipment;
@@ -10903,14 +11209,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      ShipmentPackageReference3 = jd.Reference3,
                      ShipmentPackageReference4 = jd.Reference4,
                      ContainerTypeName = jd.PackageType != null ? jd.PackageType.EnglishName : null,
-                     OnCarriageToPortId = shipment.OnCarriageToPortId,
-                     OnCarriageTo = shipment.OnCarriageToPort != null ? shipment.OnCarriageToPort.EnglishName : null,
-                     OnCarriageToPortCode = shipment.OnCarriageToPort != null ? shipment.OnCarriageToPort.Code : null,
+                     OnCarriageToPortId = m.OnCarriageToPortId,
+                     OnCarriageTo = m.OnCarriageToPort != null ? m.OnCarriageToPort.EnglishName : null,
+                     OnCarriageToPortCode = m.OnCarriageToPort != null ? m.OnCarriageToPort.Code : null,
                      ATA = m.MainCarriageATA,
                      ATD = m.MainCarriageATD,
-                     OnCarriageATD = shipment.OnCarriageATD,
-                     OnCarriageATA = shipment.OnCarriageATA,
-                     OnCarriageETA = shipment.OnCarriageETA,
+                     OnCarriageATD = m.OnCarriageATD,
+                     OnCarriageATA = m.OnCarriageATA,
+                     OnCarriageETA = m.OnCarriageETA,
                      ContainerNotes = jd.Notes,
                      MainCarriageToPortId = m.MainCarriageToPortId,
                      Transshipment1ToPortId = m.Transshipment1ToPortId,
@@ -10922,7 +11228,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      Transshipment3ToPortName = m.Transshipment3ToPort != null ? m.Transshipment3ToPort.EnglishName : null,
                      PackagesGrossWeight = jd.Weight,
                      ContainerFollowUp = jd.IsDeliveryFU,
-                     SplitOnCarriage = shipment.SplitOnCarriage,
+                     SplitOnCarriage = m.SplitOnCarriage,
                      PackageOnCarriageATA = jd.OnCarriageATA,
                      PackageOnCarriageATD = jd.OnCarriageATD,
                      PackageOnCarriageETA = jd.OnCarriageETA,
@@ -11094,32 +11400,112 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         }
 
-        public ImporterQueriesDataCounts GetShipmentsQueriesCounts(int tenant, string transportModeId, string directionId, string SearchFilter, string serviceContextUser, string TypeCode = null)
+        public ImporterQueriesDataCounts GetShipmentsQueriesCounts(ShipmentsQueriesCountsArgs shipmentsQueriesCountsArgs)
         {
             ImporterQueriesDataCounts myResult = new ImporterQueriesDataCounts() { Id = 1 };
+            IShipmentDataViewContext dataViewContext = ShipmentDataViewContext.GetContext(shipmentsQueriesCountsArgs.Tenant);
+            IQueryable<ShipmentDataView> allShipments = (from f in dataViewContext.ShipmentDataViews where f.Tenant == shipmentsQueriesCountsArgs.Tenant && f.IsCancelled == false select f);
+            allShipments = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ShipmentDataView>(new QueryOperations(), allShipments, shipmentsQueriesCountsArgs.Tenant);
+            allShipments = ProductPermitionsFilter.AddUserProductRestrictionFilters<ShipmentDataView>(new QueryOperations(), allShipments, shipmentsQueriesCountsArgs.Tenant);
+            allShipments = GetAllFliteredShipments(allShipments, shipmentsQueriesCountsArgs);
 
-            IShipmentDataViewContext dataViewContext = ShipmentDataViewContext.GetContext(tenant);
-            IQueryable<ShipmentDataView> allShipments = (from f in dataViewContext.ShipmentDataViews where f.Tenant == tenant && f.IsCancelled == false select f);
+            myResult.AllShipmentsCount = allShipments.Take(1001).Count();
+            MapOpenShipmentsCount(myResult, allShipments);
+            MapArchivedShipmentsCount(myResult, allShipments);
+            MapMissingDocsCount(myResult, allShipments);
+            MapAgentShipmentsCount(myResult, allShipments);
+            MapImporterShipmentsCount(myResult, allShipments);
+            MapRequestedDocsCount(myResult, allShipments);
+            MapRequiredActionsCount(myResult, allShipments);
 
-            allShipments = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ShipmentDataView>(new QueryOperations(), allShipments, tenant);
-            allShipments = ProductPermitionsFilter.AddUserProductRestrictionFilters<ShipmentDataView>(new QueryOperations(), allShipments, tenant);
+            return myResult;
+        }
 
-
-            if (!string.IsNullOrEmpty(transportModeId))
+        private void MapRequiredActionsCount(ImporterQueriesDataCounts myResult, IQueryable<ShipmentDataView> allShipments)
+        {
+            IQueryable<ShipmentDataView> allReqActionsShipments = allShipments.Where(d => d.IsRequestedDocuments || d.RequestedDocumentsCount > 0 || d.IsDigitalSignRequired == true || d.IsDepositionRequired == true || (d.IsImporterApprovalRequried == true && string.IsNullOrEmpty(d.ApprovedByUserName)));
+            if (allReqActionsShipments != null)
             {
-                allShipments = allShipments.Where(d => d.TransportModeId == transportModeId);
+                myResult.RequiredActionsCount = (from r in allReqActionsShipments select r).Take(1001).Count();
             }
-            if (!string.IsNullOrEmpty(directionId))
+        }
+
+        private void MapRequestedDocsCount(ImporterQueriesDataCounts myResult, IQueryable<ShipmentDataView> allShipments)
+        {
+            IQueryable<ShipmentDataView> allReqDocsShipments = allShipments.Where(d => d.IsRequestedDocuments == true || d.RequestedDocumentsCount > 0 || d.IsDigitalSignRequired == true || d.IsDepositionRequired == true || (d.IsImporterApprovalRequried == true && string.IsNullOrEmpty(d.ApprovedByUserName)));
+            if (allReqDocsShipments != null)
             {
-                allShipments = allShipments.Where(d => d.DirectionId == directionId);
+                myResult.RequestedDocsCount = (from r in allReqDocsShipments select r).Take(1001).Count();
             }
-            if (!string.IsNullOrEmpty(SearchFilter))
+        }
+
+        private void MapImporterShipmentsCount(ImporterQueriesDataCounts myResult, IQueryable<ShipmentDataView> allShipments)
+        {
+            IQueryable<ShipmentDataView> allImporterShipments = allShipments.Where(d => d.ForwarderShipmentNumber == null || d.ForwarderShipmentNumber == string.Empty);
+            if (allImporterShipments != null)
             {
-                allShipments = allShipments.Where(d => (d.SearchFields.ToUpper().Contains(SearchFilter.ToUpper()) || d.DocumentsSearchFields.ToUpper().Contains(SearchFilter.ToUpper())));
+                myResult.ImporterShipmentsCount = (from r in allImporterShipments select r).Take(1001).Count();
             }
-            if (!string.IsNullOrEmpty(TypeCode))
+        }
+
+        private void MapAgentShipmentsCount(ImporterQueriesDataCounts myResult, IQueryable<ShipmentDataView> allShipments)
+        {
+            IQueryable<ShipmentDataView> allAgentShipments = allShipments.Where(d => d.ForwarderShipmentNumber != null && d.ForwarderShipmentNumber != string.Empty);
+            if (allAgentShipments != null)
             {
-                if (TypeCode.ToUpper() == "O")
+                myResult.AgentShipmentsCount = (from r in allAgentShipments select r).Take(1001).Count();
+            }
+        }
+
+        private void MapMissingDocsCount(ImporterQueriesDataCounts myResult, IQueryable<ShipmentDataView> allShipments)
+        {
+            IQueryable<ShipmentDataView> allMissingDocs = allShipments.Where(d => d.IsMissingDocument == true);
+            if (allMissingDocs != null)
+            {
+                myResult.MissingDocsCount = (from r in allMissingDocs select r).Take(1001).Count();
+            }
+        }
+
+        private void MapArchivedShipmentsCount(ImporterQueriesDataCounts myResult, IQueryable<ShipmentDataView> allShipments)
+        {
+            IQueryable<ShipmentDataView> allClosedShipments = allShipments.Where(d => d.IsOperationalClosed == true);
+            if (allClosedShipments != null)
+            {
+                myResult.ArchivedShipmentsCount = (from r in allClosedShipments select r).Take(1001).Count();
+            }
+        }
+
+        private void MapOpenShipmentsCount(ImporterQueriesDataCounts myResult, IQueryable<ShipmentDataView> allShipments)
+        {
+            IQueryable<ShipmentDataView> allOpenShipments = allShipments.Where(d => d.IsOperationalClosed == false);
+            if (allOpenShipments != null)
+            {
+                myResult.OpenShipmentsCount = (from r in allOpenShipments select r).Take(1001).Count();
+            }
+        }
+
+        private IQueryable<ShipmentDataView> GetAllFliteredShipments(IQueryable<ShipmentDataView> allShipmentsDataViews, ShipmentsQueriesCountsArgs shipmentsQueriesCountsArgs)
+        {
+            IQueryable <ShipmentDataView> allShipments = allShipmentsDataViews;
+            if (!string.IsNullOrEmpty(shipmentsQueriesCountsArgs.ForwarderPartnerId))
+            {
+                allShipments = allShipments.Where(d => d.ForwarderPartnerId == shipmentsQueriesCountsArgs.ForwarderPartnerId);
+            }
+            if (!string.IsNullOrEmpty(shipmentsQueriesCountsArgs.TransportModeId))
+            {
+                allShipments = allShipments.Where(d => d.TransportModeId == shipmentsQueriesCountsArgs.TransportModeId);
+            }
+            if (!string.IsNullOrEmpty(shipmentsQueriesCountsArgs.DirectionId))
+            {
+                allShipments = allShipments.Where(d => d.DirectionId == shipmentsQueriesCountsArgs.DirectionId);
+            }
+            if (!string.IsNullOrEmpty(shipmentsQueriesCountsArgs.SearchFilter))
+            {
+                allShipments = allShipments.Where(d => (d.SearchFields.ToUpper().Contains(shipmentsQueriesCountsArgs.SearchFilter.ToUpper()) || d.DocumentsSearchFields.ToUpper().Contains(shipmentsQueriesCountsArgs.SearchFilter.ToUpper())));
+            }
+            if (!string.IsNullOrEmpty(shipmentsQueriesCountsArgs.TypeCode))
+            {
+                if (shipmentsQueriesCountsArgs.TypeCode.ToUpper() == "O")
                 {
                     allShipments = allShipments.Where(d => (d.IsOperationalClosed == false));
                 }
@@ -11127,48 +11513,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 {
                     allShipments = allShipments.Where(d => (d.IsOperationalClosed == true));
                 }
-
             }
 
-            IQueryable<ShipmentDataView> allOpenShipments = allShipments.Where(d => d.IsOperationalClosed == false);
-            IQueryable<ShipmentDataView> allClosedShipments = allShipments.Where(d => d.IsOperationalClosed == true);
-            IQueryable<ShipmentDataView> allMissingDocs = allShipments.Where(d => d.IsMissingDocument == true);
-
-            IQueryable<ShipmentDataView> allAgentShipments = allShipments.Where(d => d.ForwarderShipmentNumber != null && d.ForwarderShipmentNumber != string.Empty);
-            IQueryable<ShipmentDataView> allImporterShipments = allShipments.Where(d => d.ForwarderShipmentNumber == null || d.ForwarderShipmentNumber == string.Empty);
-            IQueryable<ShipmentDataView> allReqDocsShipments = allShipments.Where(d => d.IsRequestedDocuments == true || d.RequestedDocumentsCount > 0 || d.IsDigitalSignRequired == true || d.IsDepositionRequired == true || (d.IsImporterApprovalRequried == true && string.IsNullOrEmpty(d.ApprovedByUserName)));
-            IQueryable<ShipmentDataView> allReqActionsShipments = allShipments.Where(d => d.IsRequestedDocuments || d.RequestedDocumentsCount > 0 || d.IsDigitalSignRequired == true || d.IsDepositionRequired == true || (d.IsImporterApprovalRequried == true && string.IsNullOrEmpty(d.ApprovedByUserName)));
-
-            myResult.AllShipmentsCount = allShipments.Take(1001).Count();
-            if (allOpenShipments != null)
-            {
-                myResult.OpenShipmentsCount = (from r in allOpenShipments select r).Take(1001).Count();
-            }
-            if (allClosedShipments != null)
-            {
-                myResult.ArchivedShipmentsCount = (from r in allClosedShipments select r).Take(1001).Count();
-            }
-            if (allMissingDocs != null)
-            {
-                myResult.MissingDocsCount = (from r in allMissingDocs select r).Take(1001).Count();
-            }
-            if (allAgentShipments != null)
-            {
-                myResult.AgentShipmentsCount = (from r in allAgentShipments select r).Take(1001).Count();
-            }
-            if (allImporterShipments != null)
-            {
-                myResult.ImporterShipmentsCount = (from r in allImporterShipments select r).Take(1001).Count();
-            }
-            if (allReqDocsShipments != null)
-            {
-                myResult.RequestedDocsCount = (from r in allReqDocsShipments select r).Take(1001).Count();
-            }
-            if (allReqActionsShipments != null)
-            {
-                myResult.RequiredActionsCount = (from r in allReqActionsShipments select r).Take(1001).Count();
-            }
-            return myResult;
+            return allShipments;
         }
 
         public List<string> GetShipmentsByTenantCreateDateCustomer(int tenant, DateTime StartDate, DateTime EndDate, string CustomerId, string CustomerTenantAccessId)
@@ -11277,7 +11624,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          NumberOfContainers = s.NumberOfContainers,
                                                          NumberOfFollowUps = s.NumberOfFollowUps,
                                                          NumberOfPackages = s.NumberOfPackages,
-                                                         PreCarriageETD = s.PreCarriageETD,
+                                                         PreCarriageETD = m.PreCarriageETD,
                                                          OrderChargeableWeight = s.OrderChargeableWeight,
                                                          OrderVolumetricWeight = s.OrderVolumetricWeight,
                                                          TransportModeId = s.TransportModeId,
@@ -11396,6 +11743,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          LongMaster = s.TransportModeId == "A" ? (m.AirlinePrefix != null && m.Master != null ? m.AirlinePrefix + "-" + m.Master : m.Master) : m.Master,
                                                          IsDangerous = s.IsDangerous,
                                                          DangerousUnNumber = s.DangerousUnNumber,
+                                                         BookingConfirmationNumber = m.BookingConfirmationNumber,
                                                      };
 
             return shipmentsList;
@@ -11832,7 +12180,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                MainHarmonize = f.MainHarmonize,
                                StatusId = f.StatusId,
                                StatusDate = f.StatusDate,
-                               StatusName = f.StatusName,
+                               //StatusName = f.StatusName,
                                StatusLocation = f.StatusLocation,
                                LongMaster = f.LongMaster,
                                PartnerLogoId = f.PartnerLogoId,
@@ -11950,6 +12298,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ComputedStatusDate = f.ComputedStatusDate,
                                QuoteId = f.QuoteId,
                                QuoteNumber = f.QuoteNumber,
+                               StatusName = !string.IsNullOrEmpty(f.StatusLocation) ? f.StatusName + " (" + f.StatusLocation + ")" : f.StatusName,
+                               ExactStatusName = f.StatusName,
+                               PreForwardingETD = f.PreForwardingETD,
                            };
             return myResult;
         }
@@ -12197,7 +12548,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     MainCarriageToPortName = f.MainCarriageToPortName,
                     StatusId = f.StatusId,
                     StatusDate = f.StatusDate,
-                    StatusName = f.StatusName,
+                    //StatusName = f.StatusName,
                     StatusLocation = f.StatusLocation,
                     LongMaster = f.LongMaster,
                     PartnerLogoId = f.PartnerLogoId,
@@ -12308,6 +12659,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     DangerousUnNumber = f.DangerousUnNumber,
                     QuoteId = f.QuoteId,
                     QuoteNumber = f.QuoteNumber,
+                    StatusName = !string.IsNullOrEmpty(f.StatusLocation) ? f.StatusName + "(" + f.StatusLocation + ")" : f.StatusName,
+                    ExactStatusName = f.StatusName,
+                    PreForwardingETD = f.PreForwardingETD,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -12527,6 +12881,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ENSNumber = f.ENSNumber,
                     ENSDate = f.ENSDate,
                     WarehouseLegWarehouseId = f.WarehouseLegWarehouseId,
+                    WarehouseLegTerminalName = f.WarehouseLegTerminalName,
                     WarehouseLegAddressId = f.WarehouseLegAddressId,
                     WarehouseLegTerminalCode = f.WarehouseLegTerminalCode,
                     WarehouseLegExpectedEntryDate = f.WarehouseLegExpectedEntryDate,
@@ -12567,6 +12922,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     NotInvoicedReceivablesAmount = f.NotInvoicedReceivablesAmount,
                     IsDangerous = f.IsDangerous,
                     DangerousUnNumber = f.DangerousUnNumber,
+                    MainCarriageVesselName = f.MainCarriageVesselName,
+                    BookingConfirmationNumber = f.BookingConfirmationNumber,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -12767,6 +13124,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     if (CLoudData != null)
                     {
                         shipmentPM.DeclarationXMLData = CLoudData.DeclarationXmlData;
+                        shipmentPM.DeclarationWCOXml = CLoudData.DeclarationWCOXml;
                         shipmentPM.ApproveDateTime = CLoudData.ApproveDateTime;
                         shipmentPM.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                         shipmentPM.VersionApproved = CLoudData.VersionApproved;
@@ -12774,11 +13132,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.SendUpdatesToAgentEnabled = CLoudData.SendUpdatesToAgentEnabled;
                         shipmentPM.DocsSentToAgent = CLoudData.DocsSentToAgent;
                         shipmentPM.ApprovedBy = CLoudData.ApprovedByUserName;
-                        shipmentPM.UserIdNumberXMLData = CLoudData.UserIdNumberXMLData;
-                        shipmentPM.UserIdNumberUpdateDate = CLoudData.UserIdNumberUpdateDate;
-                        shipmentPM.IsUserIDNumberRequired = CLoudData.IsUserIDNumberRequired;
-                        shipmentPM.UserIdNumber = CLoudData.UserIdNumber;
                         shipmentPM.DocumentsApprovedByUserName = CLoudData.DocumentsApprovedByUserName;
+                        shipmentPM.IsUserIDNumberRequired = CLoudData.IsUserIDNumberRequired;
+                        shipmentPM.UserIdNumberUpdateDate = CLoudData.UserIdNumberUpdateDate;
+                        shipmentPM.UserIdNumberXMLData = CLoudData.UserIdNumberXMLData;
+                        shipmentPM.UserIdNumber = CLoudData.UserIdNumber;
+                        shipmentPM.PaymentRequestXML = CLoudData.PaymentRequestXML;
+                        shipmentPM.PaymentDateTime = CLoudData.PaymentDateTime;
+                        shipmentPM.IsPaymentRequired = CLoudData.IsPaymentRequired;
 
                     }
                     return shipmentPM;
@@ -12892,6 +13253,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                      where s.Tenant == tenant
                                                      select new ShipmentList()
                                                      {
+                                                         BookingConfirmationNumber =m.BookingConfirmationNumber,
                                                          ProfitExchangeRate = s.ProfitExchangeRate,
                                                          OpenPayablesInLocalCurrency = s.OpenPayablesInLocalCurrency,
                                                          AccountedPayablesInLocalCurrency = s.AccountedPayablesInLocalCurrency,
@@ -12976,7 +13338,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          NumberOfContainers = s.NumberOfContainers,
                                                          NumberOfFollowUps = s.NumberOfFollowUps,
                                                          NumberOfPackages = s.NumberOfPackages,
-                                                         PreCarriageETD = s.PreCarriageETD,
+                                                         PreCarriageETD = m.PreCarriageETD,
                                                          OrderChargeableWeight = s.OrderChargeableWeight,
                                                          OrderVolumetricWeight = s.OrderVolumetricWeight,
                                                          TransportModeId = s.TransportModeId,
@@ -13067,8 +13429,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          ShipmentLevelName = s.ShipmentLevel == null ? null : s.ShipmentLevel.Name,
                                                          CreatedByUserName = s.CreatedByUser == null ? null : s.CreatedByUser.Contact.EnglishName,
                                                          SpecialServicesTypeName = s.SpecialServicesType == null ? null : s.SpecialServicesType.EnglishName,
-                                                         PreCarriageFromPortId = s.PreCarriageFromPortId,
-                                                         OnCarriageToPortId = s.OnCarriageToPortId,
+                                                         PreCarriageFromPortId = m.PreCarriageFromPortId,
+                                                         OnCarriageToPortId = m.OnCarriageToPortId,
                                                          Transshipment1ToPortId = m.Transshipment1ToPortId,
                                                          Transshipment2ToPortId = m.Transshipment2ToPortId,
                                                          Transshipment3ToPortId = m.Transshipment3ToPortId,
@@ -13076,7 +13438,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          From = s.From,
                                                          To = s.To,
                                                          Origin = s.Origin,
-                                                          CreatedByPartner = s.CreatedByPartner,
+                                                         CreatedByPartner = s.CreatedByPartner,
                                                      };
 
             return shipmentsList;
@@ -13137,6 +13499,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             return masterNumber;
         }
+
+        public ShipmentPM GetShipmentForCargoTrackingByEntityId(string id, int tenant)
+        {
+            Shipment shipment = repository.GetSingleShipmentwithOutIncludes(id, tenant);
+            ShipmentPM shipmentPM = new ShipmentPM()
+            {
+                Id = shipment.Id,
+                CustomFileNumber = shipment.CustomFileNumber,
+            };
+
+            return shipmentPM;
+        }
     }
 
     public class DeparturesArrivalsDataItem
@@ -13160,5 +13534,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
     public class ShipmentJoinPayablesList
     {
 
+    }
+
+    public class ShipmentsQueriesCountsArgs
+    {
+        public int Tenant { get; set; }
+        public string TransportModeId { get; set; }
+        public string DirectionId { get; set; }
+        public string SearchFilter { get; set; }
+        public string ServiceContextUser { get; set; }
+        public string TypeCode { get; set; }
+        public string ForwarderPartnerId { get; set; }
     }
 }

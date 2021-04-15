@@ -40,6 +40,7 @@ using Simplog.Data.InvoiceModel;
 using Logitude.BL.InvoiceModel.CloseTables;
 using System.Diagnostics;
 using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
+using Logitude.Accounting.BL.CoreBL.Reports;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -292,8 +293,52 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     //Voided
                 }
             }
-
+            this.GLAccountRecocileDataUpSert(_CancelledAction, entityPM);
             base.OnUpdating(entityPM, entityPOCO);
+        }
+
+        private void GLAccountRecocileDataUpSert(bool cancelledAction, ReconciliationPM entityPM)
+        {
+            int tenant= entityPM.Tenant;
+            string accountId= entityPM.AccountId; 
+            DateTime? createDate =entityPM.CreateDate; 
+            string createdByUserId= entityPM.CreatedByUserId;
+        
+            var gLAccountRecocileDataQueryService = new GLAccountRecocileDataQueryService(this.MainContext as IAccountingContext) ;
+            var pm=gLAccountRecocileDataQueryService.GetSingle(accountId, false, false);
+            ChangeSetOperation changeSetOperation = ChangeSetOperation.Insert;
+            if (pm != null)
+            {
+                changeSetOperation = ChangeSetOperation.Update;
+            }
+            if (cancelledAction)
+            {
+                string cancelledReconciliationId = entityPM.Id;
+                var reconciliationRepository = new ReconciliationRepository(this.MainContext as IAccountingContext);
+                var last=reconciliationRepository.GetLastOpenReconciliation(tenant, accountId, cancelledReconciliationId);
+                if (last==null)
+                {
+                    createDate = null;
+                    createdByUserId = null;
+
+                }
+                else
+                {
+                    createDate = last.CreateDate;
+                    createdByUserId = last.CreatedByUserId;
+
+                }
+            }
+            var gLAccountRecocileDataUpdateService = new GLAccountRecocileDataUpdateService(this.MainContext, new Dictionary<string, IContext>(), tenant);
+            gLAccountRecocileDataUpdateService.Update(new GLAccountRecocileDataPM()
+            {
+                AccountId = accountId,
+                Tenant = tenant,
+                ChangeSetOp = changeSetOperation,
+                LastReconcileDateTime = createDate,
+                LastReconciledByUserId = createdByUserId
+
+            }, true);
         }
 
         private bool IsMonthOpenForAccountingDate(DateTime accountingDate, int tenant)
@@ -420,6 +465,25 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             ledgerTransactionUpdateService._CancelledAction = this._CancelledAction;
             ledgerTransactionUpdateService.UpdateMulti(LedgerTransactionPMsUpdated, new List<LedgerTransactionPM>(), entityPM, false);
+
+            bool getNewContextWhileStreamingLedger = true;
+            if (getNewContextWhileStreamingLedger)
+            {
+                var newContextWhileStreamingLedger = AccountingContext.GetContext(entityPM.Tenant);
+                var reconciliationUpdateAgingService = new ReconciliationUpdateAgingService(newContextWhileStreamingLedger);
+                var deltaGLAccountAgingDataPM = reconciliationUpdateAgingService.GetDelta(this._CancelledAction, entityPM);
+                if (!string.IsNullOrWhiteSpace(deltaGLAccountAgingDataPM.AccountId))
+                {
+                    reconciliationUpdateAgingService.UpdateDelta(deltaGLAccountAgingDataPM, false);
+                    newContextWhileStreamingLedger.SaveChanges();// MUST SAVE DUE NEW CONTEXT !!!
+
+                }
+
+
+            }
+
+
+
         }
 
         public bool SuppressResetDraftOpenReconciliation { get; set; }

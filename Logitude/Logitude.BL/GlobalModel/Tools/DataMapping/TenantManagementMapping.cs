@@ -143,8 +143,10 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPM.MainColor = entityPM.MainColor;
             entityPM.SecondaryColor = entityPM.SecondaryColor;
             entityPOCO.ComapnylogoId = entityPM.ComapnylogoId;
+            entityPOCO.InvertedLogoId = entityPM.InvertedLogoId;
             entityPOCO.BackgroundId = entityPM.BackgroundId;
             entityPOCO.BrowserIconId = entityPM.BrowserIconId;
+            entityPOCO.ShipmentHeaderImageId = entityPM.ShipmentHeaderImageId;
             entityPOCO.NoPaymentForChildTenants = entityPM.NoPaymentForChildTenants;
 
             entityPOCO.LastEbookingSentDate = entityPM.LastEbookingSentDate;
@@ -152,6 +154,12 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.NumberOfBookingSentLastWeek = entityPM.NumberOfBookingSentLastWeek;
             entityPOCO.NumberOfSISentLastWeek = entityPM.NumberOfSISentLastWeek;
             entityPOCO.LastContainerStatusReceived = entityPM.LastContainerStatusReceived;
+
+            entityPOCO.LastTariffUpdateDate = entityPM.LastTariffUpdateDate;
+            entityPOCO.LastTariffUsageDate = entityPM.LastTariffUsageDate;
+            entityPOCO.LastWeekCreatedTariffs = entityPM.LastWeekCreatedTariffs;
+            entityPOCO.LastMonthCreatedTariffs = entityPM.LastMonthCreatedTariffs;
+            entityPOCO.ScheduledTasksLimitPerReport = entityPM.ScheduledTasksLimitPerReport;
 
             string packageName = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())

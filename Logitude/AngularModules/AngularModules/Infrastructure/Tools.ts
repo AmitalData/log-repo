@@ -274,7 +274,7 @@ export class AppTool {
         var logitude_url = location.href.replace('index.html', '');
 
         if (location.href.indexOf('localhost') > -1) {
-            logitude_url = 'http://localhost:9996/';//test.logitudeworld.com/test/';
+            logitude_url = 'http://localhost:9996/';//test.logitudeworld.com/test/';//
         }
 
         else {
@@ -569,7 +569,7 @@ export class AppTool {
             case "lcld":
             case "ltl":
                 {
-                    myResult = 3.3;
+                    myResult = 3.0;
                     break;
                 }
             case "ftl":
@@ -1249,6 +1249,17 @@ export class DateTool {
         myResult.setUTCFullYear(myResult.getFullYear());
         myResult.setUTCMonth(myResult.getMonth());
         myResult.setUTCDate(myResult.getDate());
+        myResult.setUTCHours(0);
+        myResult.setUTCMinutes(0);
+        myResult.setUTCSeconds(0);
+        myResult.setUTCMilliseconds(0);
+        return myResult;
+    }
+    public static GetCurrentDateAsUtcForAccountingValidation() {
+        var myResult: Date = new Date();
+        myResult.setUTCFullYear(myResult.getUTCFullYear());
+        myResult.setUTCMonth(myResult.getUTCMonth());
+        myResult.setUTCDate(myResult.getUTCDate());
         myResult.setUTCHours(0);
         myResult.setUTCMinutes(0);
         myResult.setUTCSeconds(0);

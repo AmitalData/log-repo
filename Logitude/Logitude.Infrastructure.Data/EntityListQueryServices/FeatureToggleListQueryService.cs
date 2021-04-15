@@ -25,7 +25,11 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
                                                        Inactive = a.Inactive,
                                                        ToggleCode = a.ToggleCode,
                                                        ToggleName = a.Toggle == null ? null : a.Toggle.Name,
+                                                       ToggleDescription = a.Toggle == null ? null : a.Toggle.Description,
                                                        CreatedByUser = a.CreatedByUser == null ? null : a.CreatedByUser.Contact.EnglishName,
+                                                       ToTenantNumber = a.ToTenantNumber,
+                                                       FromTenantNumber = a.FromTenantNumber,
+                                                       IsMultiTenant = a.IsMultiTenant,
                                                    });
             return query;
         }
