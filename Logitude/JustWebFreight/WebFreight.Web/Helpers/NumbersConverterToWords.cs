@@ -1205,6 +1205,12 @@ namespace WebFreight.Web.Helpers
             text = FixSpaces(text);
             return (text+ " בלבד");
         }
+        public string ConvertNumbersToFrenchNewVersion(double number,string localCurrencyName)
+        {
+            string currencyNameOfDecimalPart = "centimes";
+            return HandleUnsignedNumberInFrenchWords(number,localCurrencyName, currencyNameOfDecimalPart);
+            
+        }
 
         private string FixSpaces(string s)
         {
@@ -1266,5 +1272,169 @@ namespace WebFreight.Web.Helpers
             else
                 return (s1.LastIndexOf(s2, int.Parse(n)) + 1);
         }
+
+        private  string[] unitsMapInFranch = new[] { "zéro", "un", "deux", "trois", "quatre", "cinq", "six", "sept", "huit", "neuf", "dix", "onze", "douze", "treize", "quatorze", "quinze", "seize", "dix-sept", "dix-huit", "dix-neuf" };
+        private  string[] tensMapInFranch = new[] { "zéro", "dix", "vingt", "trente", "quarante", "cinquante", "soixante", "soixante", "quatre-vingt", "quatre-vingt" };
+        private  string HandleUnsignedNumberInFrenchWords(double number, string currencyName, string currencyNameOfDecimalPart)
+        {
+            if (number == 0)
+                return "zéro";
+            if (number == 1)
+                return "un";
+            if (number < 0)
+                return "moins " + HandleSignedFullNumberInFrenchWords(Math.Abs(number), currencyName, currencyNameOfDecimalPart);
+
+            return HandleSignedFullNumberInFrenchWords(number, currencyName, currencyNameOfDecimalPart);
+        }
+        private  string HandleSignedFullNumberInFrenchWords(double number, string currencyName, string currencyNameOfDecimalPart)
+        {
+            string amountInWords = "";
+            string numberAsString = number.ToString();
+            double valueOfDecimalPartOfTheNumber = 0, intgerNumberWithoutDecimals = 0;
+            if (numberAsString.Contains('.'))
+            {
+                string decimalPartOfTheNumber = numberAsString.Split('.')[1];
+                valueOfDecimalPartOfTheNumber = Convert.ToDouble(decimalPartOfTheNumber);
+                intgerNumberWithoutDecimals = Convert.ToDouble(numberAsString.Split('.')[0]);
+                bool checkIfDecimalDigitIsNotAnyTensValue = valueOfDecimalPartOfTheNumber >= 1 && valueOfDecimalPartOfTheNumber <= 9 && !decimalPartOfTheNumber.StartsWith("0");
+                valueOfDecimalPartOfTheNumber = checkIfDecimalDigitIsNotAnyTensValue ? valueOfDecimalPartOfTheNumber * 10 : valueOfDecimalPartOfTheNumber;
+                amountInWords += HandleIntegerNumberPartInFrenchWords(intgerNumberWithoutDecimals);
+                if (!String.IsNullOrEmpty(currencyName))
+                {
+                    amountInWords += (" " + currencyName + HandleDecimalNumberPartInFrenchWords(valueOfDecimalPartOfTheNumber, true) + " " + currencyNameOfDecimalPart);
+                }
+                else
+                {
+                    amountInWords += (" virgule" + HandleDecimalNumberPartInFrenchWords(valueOfDecimalPartOfTheNumber, false));
+                }
+            }
+            else
+            {
+                amountInWords += HandleIntegerNumberPartInFrenchWords(number) + " " + currencyName;
+            }
+            return amountInWords;
+        }
+        private  string HandleIntegerNumberPartInFrenchWords(double number)
+        {
+            string amountInWords = "";
+            if ((number / 1000000000000) > 0 && number >= 1000000000000)
+            {
+                amountInWords += HandleIntegerNumberPartInFrenchWords(number / 1000000000000) + " billions ";
+                number %= 1000000000000;
+            }
+            if ((number / 1000000000) > 0 && number >= 1000000000)
+            {
+
+                amountInWords += HandleIntegerNumberPartInFrenchWords(number / 1000000000) + " milliards ";
+                number %= 1000000000;
+            }
+            if ((number / 1000000) > 0 && number >= 1000000)
+            {
+                amountInWords += HandleIntegerNumberPartInFrenchWords(number / 1000000) + " millions ";
+                number %= 1000000;
+            }
+            if ((number / 1000) > 0 && number >= 1000)
+            {
+                amountInWords += HandleIntegerNumberPartInFrenchWords(number / 1000) + " mille ";
+                number %= 1000;
+            }
+            if ((number / 100) > 0 && number >= 100)
+            {
+                amountInWords += HandleIntegerNumberPartInFrenchWords(number / 100) + " cent ";
+                number %= 100;
+            }
+            if (number > 0)
+            {
+                amountInWords += HandleIntegerNumberFromOneToHundredInFrenchWords(number);
+            }
+            return amountInWords;
+        }
+        private  string HandleDecimalNumberPartInFrenchWords(double number, bool hasDecimalCurreny)
+        {
+            string amountInWords = "";
+            List<int> splitedNumbers = new List<int>();
+            int integerValueOfNumber = (int)number;
+            if (hasDecimalCurreny)
+            {  
+              amountInWords += " " + HandleIntegerNumberPartInFrenchWords(number);
+            }
+            else
+            {
+                while (integerValueOfNumber > 0)
+                {
+                    int mod = integerValueOfNumber % 10;
+                    splitedNumbers.Add(mod);
+                    integerValueOfNumber = integerValueOfNumber / 10;
+                }
+                splitedNumbers.Reverse();
+                foreach (int i in splitedNumbers)
+                {
+                    amountInWords += " " + unitsMapInFranch[i];
+                }
+            }
+            return amountInWords;
+        }
+        private  string HandleIntegerNumberFromOneToHundredInFrenchWords(double number)
+        {
+            string amountInWords = "";
+            if (number < 20)
+            {
+                amountInWords = ((int)number != 1) ? unitsMapInFranch[(int)number] : "";
+            }
+            else if (number < 70)
+            {
+                amountInWords += tensMapInFranch[(int)number / 10];
+                if (number % 10 != 0 && number % 10 >= 1)
+                    amountInWords += (number % 10) > 0 && (number % 10) != 1 ? "-" + unitsMapInFranch[(int)number % 10] : "-et-" + unitsMapInFranch[(int)number % 10];
+            }
+            else if (number < 80)
+            {
+                amountInWords += tensMapInFranch[(int)number / 10];
+                if (number % 10 != 0 && number % 10 >= 1)
+                {
+                    number = number % 10 + 10;
+                    if (number == 11)
+                    {
+                        amountInWords += "-et";
+                    }
+                    amountInWords += "-" + unitsMapInFranch[(int)number];
+                }
+            }
+            else
+            {
+                amountInWords += HandleIntegerNumberFromEightyToHundredInFrenchWords(ref number);
+            }
+            return amountInWords;
+        }
+        private  string HandleIntegerNumberFromEightyToHundredInFrenchWords(ref double number)
+        {
+            string amountInWords = "";
+            if (number < 90)
+            {
+                if (number == 80 || (number - 80) < 1)
+                    amountInWords += "quatre-vingts";
+                else
+                {
+                    amountInWords += tensMapInFranch[(int)number / 10];
+                    if (number == 0)
+                    {
+                        amountInWords += "s";
+                    }
+                    else
+                    {
+                        number = number % 10;
+                        amountInWords += "-" + unitsMapInFranch[(int)number];
+                    }
+                }
+            }
+            else
+            {
+                amountInWords += tensMapInFranch[(int)number / 10];
+                number = number % 10 + 10;
+                amountInWords += "-" + unitsMapInFranch[(int)number];
+            }
+            return amountInWords;
+        }
+
     }
 }
