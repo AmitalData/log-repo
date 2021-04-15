@@ -25,7 +25,7 @@ export function AssertAMANAandCustomsTransmissionsStatusDetails(amanacStatusDeta
     cy.Click(BaseSelectors.Button, BaseSelectors.ContainsSendtoCustoms);
     BaseAssertion.AssertElementContain(ShipmentSelectors.CustomsTransmissionsStatusValue, amanacStatusDetails.Status);
     BaseAssertion.AssertElementContain(ShipmentSelectors.CustomsTransmissionsStatusDate, currentDate);
-    cy.get("#LoggedUser").invoke('text').then(text => {
+    cy.get(BaseSelectors.LoggedUser).invoke('text').then(text => {
         var SentBy = text.replace(/\s/g, "");
         BaseAssertion.AssertElementContain(ShipmentSelectors.CustomsTransmissionsUserName, SentBy);
     })
