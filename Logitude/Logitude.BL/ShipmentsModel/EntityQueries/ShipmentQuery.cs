@@ -13510,21 +13510,49 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Id = shipment.Id,
                 CustomFileNumber = shipment.CustomFileNumber,
-
                 IncotermName = shipment.Incoterm?.Name,
                 IncotermCode = shipment.Incoterm?.Code,
+                WarehouseLegEnglishName = shipment.WarehouseLegCard?.EnglishName,
+                WarehouseLegLocalName = shipment.WarehouseLegCard?.LocalName,
+                PackagesTypesNames = GetShipmentPackagesTypeNames(tenant, shipment.Id),
+                ShipmentTypeName = shipment.ShipmentType?.Name,
             };
 
+            SetShipmentCloudDataFields(shipment, shipmentPM);
 
+            return shipmentPM;
+        }
+
+        private static void SetShipmentCloudDataFields(Shipment shipment, ShipmentPM shipmentPM)
+        {
             if (shipment.ShipmentAdditionalCloudData != null)
             {
                 ShipmentCloudCustomDataDeserializer deserializer = new ShipmentCloudCustomDataDeserializer();
                 var cloudCustomData = deserializer.BuildCustomDataFromXML(shipment.ShipmentAdditionalCloudData);
                 shipmentPM.TotalTax = cloudCustomData.TotalTax;
             }
-           
+        }
 
-            return shipmentPM;
+        private string GetShipmentPackagesTypeNames(int tenant, string shipmentId)
+        {
+            List<ShipmentPackagePM> shipmentPackages = GetPackagesOfShipment(tenant, shipmentId);
+            string combinedPackagesTypesNames = GetCombinedPackagesTypesNames(shipmentPackages);
+            return combinedPackagesTypesNames;
+        }
+
+        private static string GetCombinedPackagesTypesNames(List<ShipmentPackagePM> shipmentPackages)
+        {
+            var packagesTypesNames = shipmentPackages.Select(package => package.PackageTypeName).ToList();
+            var combinedPackagesTypesNames = string.Join(";", packagesTypesNames);
+            return combinedPackagesTypesNames;
+        }
+
+        private List<ShipmentPackagePM> GetPackagesOfShipment(int tenant, string shipmentId)
+        {
+            var shipmentIds = new List<string>() { shipmentId };
+            ShipmentPackageQuery shipmentPackageQuery = new ShipmentPackageQuery(tenant);
+            var shipmentPackages = shipmentPackageQuery.GetShipmentPackages(shipmentIds, tenant);
+            return shipmentPackages;
         }
     }
 

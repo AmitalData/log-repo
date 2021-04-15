@@ -284,6 +284,8 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return (from shipment in context.Shipments
                                             .Include("Incoterm")
                                             .Include("ShipmentAdditionalCloudData")
+                                            .Include("WarehouseLegCard")
+                                            .Include("ShipmentType")
                     where shipment.Id == id && shipment.Tenant == tenant
                     select shipment)
                     .FirstOrDefault();

@@ -170,45 +170,39 @@
             [DetailsTitle]="'Container List'">
 
         <div body>
-            <div class="data-cards">
+            <div class="data-cards" *ngIf="Shipment&& Shipment.ShipmentList">
                 <div>
                     <div class="title">Pack Type</div>
-                    <div class="description">Lorem ipsum</div>
+                    <div class="description">
+                        <div *ngFor="let package of ShipmentPM?.PackagesTypesNames?.split(';')">{{package}}</div>
+                    </div>
                 </div>
                 <div>
                     <div class="title">fcl / lcl</div>
-                    <div class="description">Full Container</div>
+                    <div class="description">{{ShipmentPM.ShipmentTypeName}}</div>
                 </div>
                 <div>
                     <div class="title">quantity</div>
-                    <div class="description">400 unit</div>
+                    <div class="description">{{ShipmentPM?.NumberOfPackages || 0}} unit</div>
                 </div>
                 <div>
                     <div class="title">weight</div>
-                    <div class="description">3 tons</div>
+                    <div class="description">{{Shipment.ShipmentList.GrossWeight }} {{Shipment.ShipmentList.GrossWeightUnitCode||''}}</div>
                 </div>
                 <div>
                     <div class="title">volume</div>
-                    <div class="description">528</div>
+                    <div class="description">{{Shipment.ShipmentList.Volume }}</div>
                 </div>
                 <div>
                     <div class="title">storage site</div>
                     <div class="description">
-                        Mamman
-                        <br>
-                        SwissPort
-                        <br>
-                        Ashdod bonded
+                        {{ShipmentPM?.WarehouseLegEnglishName}}
                     </div>
                 </div>
                 <div>
                     <div class="title">containers</div>
                     <div class="description">
-                        Medu2134541, Medu2134541
-                        <br>
-                        Medu2134541
-                        <br>
-                        Medu2134541
+                        {{Shipment.ShipmentList.ContainersNumbers}}
                     </div>
                 </div>
 
