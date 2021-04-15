@@ -13515,6 +13515,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 WarehouseLegEnglishName = shipment.WarehouseLegCard?.EnglishName,
                 WarehouseLegLocalName = shipment.WarehouseLegCard?.LocalName,
                 PackagesTypesNames = GetShipmentPackagesTypeNames(tenant, shipment.Id),
+                NumberOfPackages = GetShipmentPackagesQuantity(tenant, shipment.Id),
+                Volume = GetShipmentPackagesVolume(tenant, shipment.Id),
                 ShipmentTypeName = shipment.ShipmentType?.Name,
             };
 
@@ -13538,6 +13540,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             List<ShipmentPackagePM> shipmentPackages = GetPackagesOfShipment(tenant, shipmentId);
             string combinedPackagesTypesNames = GetCombinedPackagesTypesNames(shipmentPackages);
             return combinedPackagesTypesNames;
+        }
+        private int GetShipmentPackagesQuantity(int tenant, string shipmentId)
+        {
+            List<ShipmentPackagePM> shipmentPackages = GetPackagesOfShipment(tenant, shipmentId);
+            int? quantity = shipmentPackages.Sum(package => package.Quantity);
+            return quantity ?? 0;
+        }
+        private double GetShipmentPackagesVolume(int tenant, string shipmentId)
+        {
+            List<ShipmentPackagePM> shipmentPackages = GetPackagesOfShipment(tenant, shipmentId);
+            double? quantity = shipmentPackages.Sum(package => package.Volume);
+            return quantity ?? 0;
         }
 
         private static string GetCombinedPackagesTypesNames(List<ShipmentPackagePM> shipmentPackages)
