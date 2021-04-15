@@ -45,10 +45,7 @@ export function FillINTTRABranchesSettings(branchSettingsDetailsList: BranchSett
         let branchName = branchSettingsDetailsList[i].BranchName
         FillBranchINTTRAId(branchName, branchSettingsDetailsList[i].INTTRAID);
         FillBranchINTTRAAlias(branchName, branchSettingsDetailsList[i].PartyAlias);
-        cy.get(BaseSelectors.LoggedUser).invoke('text').then(text => {
-            var Contact = text.replace(/\s/g, "");
-            FillBranchINTTRAContact(branchName,Contact);
-        })
+        FillBranchINTTRAContact(branchName, branchSettingsDetailsList[i].Contact);
     }
 }
 
