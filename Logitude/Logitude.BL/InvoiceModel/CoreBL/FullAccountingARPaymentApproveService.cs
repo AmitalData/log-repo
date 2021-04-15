@@ -163,7 +163,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             if (!exist)
             {
                 var arPaymentcheque = InitializeARPaymentChequeFromReplica(arpaymentPM, chequeReplica);
-               // arPaymentcheque.LineNumber = LineNumberCounter++;
+               arPaymentcheque.LineNumber = LineNumberCounter++;
                 SubmitARPaymentCheque(arPaymentcheque);
                 return arPaymentcheque;
             }

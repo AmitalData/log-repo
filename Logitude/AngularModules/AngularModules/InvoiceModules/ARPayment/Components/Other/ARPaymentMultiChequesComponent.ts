@@ -190,7 +190,7 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
             this.ValidationErrorsList.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.ValueDate")));
         }
         if (AppTool.IsNullOrEmpty(cheque.ForeignAmount)) {
-            this.ValidationErrorsList.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("ARPaymentCheque.F.ForeignAmount")));
+            this.ValidationErrorsList.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.AmountInPaymentCurrency")));
         }
     }
     public SelectedRow: any = null;
@@ -308,9 +308,16 @@ export class PaymentChequeLine extends BaseComponent {
         if (this.parent.paymentPM.ARPaymentChequeReplicas.includes(this.entityPM)) {
             this.parent.paymentPM.RemoveARPaymentChequeReplicaPM(this.entityPM);
         }
+        this.ResetLineNumber();     
         this.parent.CalculateTotal();
         --this.parent.ChequesCounter;
     }
-
+    ResetLineNumber() {
+        var sequence: number = 1;
+        this.parent.ItemsSource.Collection.forEach((item: PaymentChequeLine) => {
+            item.LineNumber = sequence;
+            sequence++;
+        });
+    }
 
 }

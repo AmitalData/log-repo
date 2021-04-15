@@ -2104,15 +2104,16 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         logWindow.Show('./InvoiceModules/ARPayment/Components/Other/ARPaymentMultiChequesComponent');
     }
     UpdateChequesSection(event: any) {
-        this.isMultipleCheques = false;
         if (event == 'ok') {
-            if (this.EntityPM.ARPaymentChequeReplicas.length > 1) {
-                this.isMultipleCheques = true;
+            this.isMultipleCheques = false;         
+                if (this.EntityPM.ARPaymentChequeReplicas.length > 1) {
+                    this.isMultipleCheques = true;
+                }
+                else if (this.EntityPM.ARPaymentChequeReplicas.length == 0) {
+                    this.SetChequeFieldsToNull();
+                }
             }
-            else if (this.EntityPM.ARPaymentChequeReplicas.length == 0) {
-                this.SetChequeFieldsToNull();
-            }
-        }
+        
     }
     SetChequeFieldsToNull() {
         this.Bank = null;
