@@ -406,8 +406,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         }
         private void UpdateStorageShipmentReceivable(double? amount)
         {
-            storageShipmentReceivable.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-            this.SetAmountsFields(amount);            
+            if (storageShipmentReceivable.TotalAmount != amount)
+            {
+                storageShipmentReceivable.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                this.SetAmountsFields(amount);
+            }
         }
         private void DeleteStorageShipmentReceivable()
         {
@@ -415,8 +418,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             {
                 storageShipmentReceivable.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
             }
-        }
-    
+        }    
         private ChargesType GetImportStorageChargesType()
         {
             string importStorageChargeCode = "ISTOR";
