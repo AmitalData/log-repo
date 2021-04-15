@@ -4,20 +4,29 @@
   Name="usp_DeleteCRMRecords"
   Schema="dbo"
   Module="CRM">
-  <SqlScript>
-    <![CDATA[
-    Create PROCEDURE [dbo].usp_DeleteCRMRecords
-    (
-	    @Tenant int
-    )
-    AS
+  <SqlScript><![CDATA[
+Create PROCEDURE [dbo].usp_DeleteCRMRecords
+(
+	@Tenant int
+)
+AS
 
-    BEGIN
+BEGIN
 
-    exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Activities'
-    exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Opportunities'
+delete from ActivityNotes where Tenant = @Tenant
+delete from ActivityOwnerHistories where Tenant = @Tenant
+delete from ActivityInvitees where Tenant = @Tenant
+delete from ActivityEmailRecipients where Tenant = @Tenant
+delete from Activities where Tenant = @Tenant
 
-    END
+delete from OpportunityStages  where Tenant = @Tenant
+delete from OpportunityProductLocations  where Tenant = @Tenant
+delete from OpportunityProducts  where Tenant = @Tenant
+delete from OpportunityCompetitors  where Tenant = @Tenant
+delete from OpportunityAdditionalServices  where Tenant = @Tenant
+delete from Opportunities  where Tenant = @Tenant
+
+END
 ]]></SqlScript>
   <OracleScript>
 </OracleScript>
