@@ -3777,7 +3777,8 @@ namespace WebFreight.Web.WebServices
 
         private string getLoadNumberPrefix(char legType, int tenant)
         {
-            return tenant + "/" + legType;
+            string loadNumberPrefix = tenant.ToString() + (legType == 'M' ? '/' : '/' + legType);
+            return loadNumberPrefix;
         }
 
         private void FillPickUpDeliveryAddresses(ShipmentPickUpDelivery myFirstPickup, ShipmentPickUpDelivery myLastDelivery, ShippingDeclarationDataProvider myDataProvider)
