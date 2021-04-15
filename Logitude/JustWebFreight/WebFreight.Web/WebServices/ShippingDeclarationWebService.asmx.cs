@@ -2003,6 +2003,7 @@ namespace WebFreight.Web.WebServices
                             }
                     }
                     #endregion
+
                     myDataProvider.DeliveryInstructions = myLastDelivery.Notes != null ? myLastDelivery.Notes : "";
                 }
 
@@ -3792,36 +3793,7 @@ namespace WebFreight.Web.WebServices
                     myDataProvider.FirstFromCityCountryZipCodeDetails = myDataProvider.FirstFrom;
                 }
 
-                if (myLastDelivery != null)
-                {
-                    myDataProvider.LastTo = myServicHelper.GetToDeliveryName(shipment, myLastDelivery, false);
-                    myDataProvider.LastToCityCountryZipCodeDetails = myServicHelper.GetToDeliveryName(shipment, myLastDelivery, true);
-                }
-                else if (shipment.OnCarriageToPortId != null)
-                {
-                    myDataProvider.LastTo = shipment.OnCarriageToPortName + " - " + shipment.OnCarriageToPortCountryName;
-                    myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
-                }
-                else if (shipment.Transshipment3ToPortId != null)
-                {
-                    myDataProvider.LastTo = shipment.Transshipment3ToPortName + " - " + shipment.Transshipment3ToPortCountryName;
-                    myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
-                }
-                else if (shipment.Transshipment2ToPortId != null)
-                {
-                    myDataProvider.LastTo = shipment.Transshipment2ToPortName + " - " + shipment.Transshipment2ToPortCountryName;
-                    myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
-                }
-                else if (shipment.Transshipment1ToPortId != null)
-                {
-                    myDataProvider.LastTo = shipment.Transshipment1ToPortName + " - " + shipment.Transshipment1ToPortCountryName;
-                    myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
-                }
-                else if (shipment.MainCarriageToPortId != null)
-                {
-                    myDataProvider.LastTo = shipment.MainCarriageToPortName + " - " + shipment.MainCarriageToPortCountryName;
-                    myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
-                }
+                this.ComputeLastToField(myDataProvider, myLastDelivery);                
 
                 #region Warehouse Leg
                 myDataProvider.WarehouseLegExpectedEntryDate = shipment.WarehouseLegExpectedEntryDate;
@@ -3875,7 +3847,44 @@ namespace WebFreight.Web.WebServices
 
             return myDataProvider;
         }
-
+        private void ComputeLastToField(ShippingDeclarationDataProvider myDataProvider, ShipmentPickUpDelivery myLastDelivery)
+        {
+            if (myLastDelivery != null)
+            {
+                myDataProvider.LastTo = myServicHelper.GetToDeliveryName(shipment, myLastDelivery, false);
+                myDataProvider.LastToCityCountryZipCodeDetails = myServicHelper.GetToDeliveryName(shipment, myLastDelivery, true);
+            }
+            else if (shipment.OnForwardingToPortId != null)
+            {
+                myDataProvider.LastTo = shipment.OnForwardingToPortName + " - " + shipment.OnForwardingToPortCountryName;
+                myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
+            }
+            else if (shipment.OnCarriageToPortId != null)
+            {
+                myDataProvider.LastTo = shipment.OnCarriageToPortName + " - " + shipment.OnCarriageToPortCountryName;
+                myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
+            }
+            else if (shipment.Transshipment3ToPortId != null)
+            {
+                myDataProvider.LastTo = shipment.Transshipment3ToPortName + " - " + shipment.Transshipment3ToPortCountryName;
+                myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
+            }
+            else if (shipment.Transshipment2ToPortId != null)
+            {
+                myDataProvider.LastTo = shipment.Transshipment2ToPortName + " - " + shipment.Transshipment2ToPortCountryName;
+                myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
+            }
+            else if (shipment.Transshipment1ToPortId != null)
+            {
+                myDataProvider.LastTo = shipment.Transshipment1ToPortName + " - " + shipment.Transshipment1ToPortCountryName;
+                myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
+            }
+            else if (shipment.MainCarriageToPortId != null)
+            {
+                myDataProvider.LastTo = shipment.MainCarriageToPortName + " - " + shipment.MainCarriageToPortCountryName;
+                myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
+            }
+        }
         private void MapMainCarriageLoadNumber(ShippingDeclarationDataProvider myDataProvider, int tenant)
         {
             if (shipment.FromPortId != null)
