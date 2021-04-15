@@ -13513,6 +13513,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                 IncotermName = shipment.Incoterm?.Name,
                 IncotermCode = shipment.Incoterm?.Code,
+                NumberOfPackages = GetShipmentPackagesQuantity(tenant, shipment.Id),
             };
 
 
@@ -13525,6 +13526,22 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
            
 
             return shipmentPM;
+        }
+
+        private int GetShipmentPackagesQuantity(int tenant, string shipmentId)
+        {
+            List<ShipmentPackagePM> shipmentPackages = GetPackagesOfShipment(tenant, shipmentId);
+            int? quantity = shipmentPackages.Sum(package => package.Quantity);
+            return quantity ?? 0;
+        }
+
+
+        private List<ShipmentPackagePM> GetPackagesOfShipment(int tenant, string shipmentId)
+        {
+            var shipmentIds = new List<string>() { shipmentId };
+            ShipmentPackageQuery shipmentPackageQuery = new ShipmentPackageQuery(tenant);
+            var shipmentPackages = shipmentPackageQuery.GetShipmentPackages(shipmentIds, tenant);
+            return shipmentPackages;
         }
     }
 
