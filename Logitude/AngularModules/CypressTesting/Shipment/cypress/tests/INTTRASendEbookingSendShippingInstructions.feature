@@ -27,8 +27,8 @@ Feature: INTTRA Sending E-Booking and Shipping Instructions
             | Host     | ftp.cvt.inttra.com |
             | Folder   | outbound           |
         And fill the following branches settings
-            | BranchName  | INTTRAID | PartyAlias | Contact      |
-            | Main Office | 1234     | 5678       | SpecflowTest |
+            | BranchName  | INTTRAID | PartyAlias | Contact    |
+            | Main Office | 1234     | 5678       | LoggedUser |
         And fill the following registration settings
             | BranchName  | RegistrationCode |
             | Main Office | YMLU             |
