@@ -103,6 +103,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly LogitudeScrollViewer='.LogitudeScrollViewer'
     public static readonly DeleteButton='button[id^=Delete]'
     public static readonly Anchor="a"
+    public static readonly LogitudeIconButton = ".LogitudeIconButton"
     //#endregion
 
     public static readonly FirstElementInList = 'ul > li';
