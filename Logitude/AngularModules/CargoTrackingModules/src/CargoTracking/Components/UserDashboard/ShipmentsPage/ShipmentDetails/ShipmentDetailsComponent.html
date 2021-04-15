@@ -117,8 +117,8 @@
                 <!-- ETA/ATA -->
                 <div>
                     <div class="title">
-                        <span *ngIf="Shipment.ShipmentList.DepartureDate">ata</span>
-                        <span *ngIf="Shipment.ShipmentList.DepartureEstimationDate && !Shipment.ShipmentList.DepartureDate">eta</span>
+                        <span *ngIf="Shipment.ShipmentList.ArrivalDate">ata</span>
+                        <span *ngIf="Shipment.ShipmentList.ArrivalEstimationDate && !Shipment.ShipmentList.ArrivalDate">eta</span>
                     </div>
                     <div class="description">
                         <span *ngIf="Shipment.ShipmentList.ArrivalDate">{{Shipment.ShipmentList.ArrivalDate | date:'dd/MM/yyyy'}}</span>
@@ -139,7 +139,7 @@
                 </div>
                 <div>
                     <div class="title">quantity</div>
-                    <div class="description">{{Shipment.ShipmentList.PackagesQuantity || 0}} units</div>
+                    <div class="description">{{ShipmentPM?.NumberOfPackages || 0}} units</div>
                 </div>
                 <div>
                     <div class="title">weight</div>
