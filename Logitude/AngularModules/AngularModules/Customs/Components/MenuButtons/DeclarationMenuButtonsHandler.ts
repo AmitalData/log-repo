@@ -584,7 +584,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         };
         var logWindow = new LogitudeWindow();
         logWindow.Width = 600;
-        logWindow.Height = 320;
+        logWindow.Height = 350;
         logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.DeclarationCancellation");
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
@@ -599,7 +599,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         };
         var logWindow = new LogitudeWindow();
         logWindow.Width = 600;
-        logWindow.Height = 320;
+        logWindow.Height = 350;
         logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.DeclarationCancellation");
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
