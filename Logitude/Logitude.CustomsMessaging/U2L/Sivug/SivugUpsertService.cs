@@ -221,7 +221,10 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                         this._INVOICE = itemINVOICE;
                         MyCommunicationsParams.Tenant = ResolvedTenant();
                         MyGenericResponseObj.Stage = "Upsert " + this._INVOICE.INVOICENUMBER;
+                        AppendLogLine("InvoiceInsert()");
+
                         InvoiceInsert();
+                        AppendLogLine("end InvoiceInsert()");
 
                         MyGenericResponseObj.Stage = "Done " + this._INVOICE.INVOICENUMBER;
                     }
@@ -462,6 +465,8 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 
             MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
             MyGenericResponseObj.ApplicationId = this._MyDeclarationPM.CustomFileNo;
+            string log = GetLog();
+            MessageOut = log;
 
         }
 
@@ -602,11 +607,15 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             MyGenericResponseObj.Stage = "GetContext";
             if (mode != "UPDATE_ONLY" && mode != "INSERT_UPDATE_DELETE")
             {
+                AppendLogLine("mode != 'UPDATE_ONLY' && mode != 'INSERT_UPDATE_DELETE'");
+
                 this._MySupplierInvoicePM = new Logitude.Customs.Def.EntityPMs.SupplierInvoicePM();
                 this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Insert;
             }
             else
             {
+                AppendLogLine(" else mode != 'UPDATE_ONLY' && mode != 'INSERT_UPDATE_DELETE'");
+
                 this._MySupplierInvoicePM = _MyDeclarationPM.SupplierInvoices.Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER).FirstOrDefault();
                 if (this._MySupplierInvoicePM == null)
                 {
@@ -615,16 +624,26 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 }
                 else if (mode == "INSERT_UPDATE_DELETE" && !String.IsNullOrWhiteSpace(this._MySupplierInvoicePM.ChangeInSupplierInvoice))
                 {
+                    AppendLogLine("mode == 'INSERT_UPDATE_DELETE' && !String.IsNullOrWhiteSpace(this._MySupplierInvoicePM.ChangeInSupplierInvoice");
+
+
                     if (this._INVOICE.QUE_TYPE == "OCR")
                     {
+                        AppendLogLine("this._INVOICE.QUE_TYPE == 'OCR'");
+
                         if (isNewHandleDocSIPointer)
                         {
                             
                         }
                         else
                         {
+                            AppendLogLine("else isNewHandleDocSIPointer");
+
                             if (int.TryParse(this._INVOICE.INVOICELINENO, out int1))
                             {
+
+                                AppendLogLine("int.TryParse(this._INVOICE.INVOICELINENO, out int1)");
+
                                 if (lineToSequence == null) lineToSequence = new List<LineToSequenceNumeric>();
                                 var lineToSequenceNumeric = new LineToSequenceNumeric();
                                 lineToSequenceNumeric.line = int1;
@@ -647,6 +666,8 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     }
                     else if(this._INVOICE.QUE_TYPE == "SYS")
                     {
+                        AppendLogLine("this._INVOICE.QUE_TYPE == 'SYS'");
+
                         if (int.TryParse(this._INVOICE.INVOICELINENO, out int1))
                         {
                             if (lineToSequence == null) lineToSequence = new List<LineToSequenceNumeric>();
@@ -666,8 +687,12 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 }
                 else
                 {
+                    AppendLogLine("else mode == 'INSERT_UPDATE_DELETE' && !String.IsNullOrWhiteSpace(this._MySupplierInvoicePM.ChangeInSupplierInvoice");
+
                     if (mode == "INSERT_UPDATE_DELETE")
                     {
+                        AppendLogLine("mode ==  'INSERT_UPDATE_DELETE'");
+
                         this._MySupplierInvoicePM = new Logitude.Customs.Def.EntityPMs.SupplierInvoicePM();
                         this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Insert;
                     }
@@ -807,6 +832,8 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
         {
             foreach (var invoiceItem in invoice.INVOICEITEMS)
             {
+                AppendLogLine("invoiceItem ; " + invoiceItem.CLASSIFICATIONCODE);
+
                 int int1 = 0;
                 SupplierInvoiceItemPM SupplierInvoiceItemPM;
 
@@ -821,6 +848,8 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 if (_MyDeclarationPM.SupplierInvoices.Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER).FirstOrDefault() != null &&
                     _MyDeclarationPM.SupplierInvoices.Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER).FirstOrDefault().SupplierInvoiceItems != null)
                 {
+                    AppendLogLine("MyDeclarationPM.SupplierInvoices.Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER).FirstOrDefault()");
+
                     SupplierInvoiceItemPM = _MyDeclarationPM.SupplierInvoices
                         .Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER)
                         .First()
@@ -828,6 +857,10 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                         .FirstOrDefault();
                     if (SupplierInvoiceItemPM != null)
                     {
+                        AppendLogLine("UpdateClassificationCodeOnly:SupplierInvoiceItemPM != null");
+
+                        AppendLogLine("SupplierInvoiceItemPM.ClassificationCode:" + SupplierInvoiceItemPM.ClassificationCode + ",invoiceItem.CLASSIFICATIONCODE:" + invoiceItem.CLASSIFICATIONCODE);
+
                         if (invoiceItem.CLASSIFICATIONCODE != SupplierInvoiceItemPM.ClassificationCode) SupplierInvoiceItemPM.ClassificationCode = invoiceItem.CLASSIFICATIONCODE;
                         if (invoiceItem.TRADEAGREEMENTCODE != SupplierInvoiceItemPM.TradeAgreementCode)
                         {
