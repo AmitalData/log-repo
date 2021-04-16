@@ -146,6 +146,9 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesInCreditControl"));
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesInCreditControl", true));
 
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesToPay"));
+            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesToPay", true));
+
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesAvailableFreeOfCharge"));
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesAvailableFreeOfCharge", true));
 
@@ -161,8 +164,6 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesRejectedByClassification"));
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesRejectedByClassification", true));
 
-            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesToPay"));
-            this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("FilesToPay", true));
 
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("AllCases"));
             this.InProgressDeclarationReferantDataDashboard.push(this.createChartingItem("AllCases", true));
