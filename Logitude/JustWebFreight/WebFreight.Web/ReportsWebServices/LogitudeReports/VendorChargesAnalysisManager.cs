@@ -14,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
+using WebFreight.Web.WebServices;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 {
@@ -36,6 +37,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         private IShipmentsContext shipmentsContext;
         private AddressRepository addressRepository;
         private PortRepository portRepository;
+        private WebServiceHelper webServiceHelper;
         public VendorChargesAnalysisManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
@@ -187,6 +189,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             addressRepository = new AddressRepository(commonContext);
             portRepository = new PortRepository(commonContext);
             shipmentsContext = ShipmentsContext.GetContext(tenant);
+            webServiceHelper = new WebServiceHelper(tenant);
+
             ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
             ShipmentPayableRepository shipmentPayableRepository = new ShipmentPayableRepository(shipmentsContext);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
@@ -382,8 +386,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.Type = item.Level;
                             }
 
-                            this.ComputeFromProperies(myRecord, item);
-                            this.ComputeToProperies(myRecord, item);
+                            this.ComputeFromLocationProperties(myRecord, item);
+                            this.ComputeToLocationProperties(myRecord, item);
 
                             myDataProvider.Shipments.Add(myRecord);
                         }
@@ -394,7 +398,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             return myDataProvider;
         }
 
-        private void ComputeToProperies(VendorChargesShipment myRecord, ShipmentsJoinPayablesList item)
+        private void ComputeToLocationProperties(VendorChargesShipment myRecord, ShipmentsJoinPayablesList item)
         {
             ShipmentPickUpDelivery myLastDelivery = (from d in shipmentsContext.ShipmentPickUpDeliveries
                                                      where d.ShipmentId == item.ShipmentId && d.PickUpDeliveryTypeCode == "DELV"
@@ -402,125 +406,67 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
             if (myLastDelivery != null)
             {
-                switch (myLastDelivery.PickUpDeliveryToTypeCode)
+                PickUpDeliveryPlaceData myLastDeliveryResult = webServiceHelper.GetPickUpDeliveryPlaceData(myLastDelivery, "Delivery");
+
+                if(myLastDeliveryResult != null)
                 {
-                    case "PART":
-                        {
-                            if (!string.IsNullOrEmpty(myLastDelivery.ToAddressId))
-                            {
-                                Address toAddress = addressRepository.GetSingleAddress(myLastDelivery.ToAddressId, tenant);
-                                if (toAddress != null)
-                                {
-                                    myRecord.To = toAddress.City;
-                                    myRecord.ToState = toAddress.State == null ? null : toAddress.State.EnglishName;
-                                    myRecord.ToCountry = toAddress.Country == null ? null : toAddress.Country.EnglishName;
-                                }
-                            }
-
-                            break;
-                        }
-
-                    case "PORT":
-                        {
-                            if (!string.IsNullOrEmpty(myLastDelivery.ToPortId))
-                            {
-                                Port myPort = portRepository.GetSinglePort(tenant, myLastDelivery.ToPortId);
-                                if (myPort != null)
-                                {
-                                    myRecord.To = myPort.EnglishName;
-                                    myRecord.ToState = myPort.State == null ? null : myPort.State.EnglishName;
-                                    myRecord.ToCountry = myPort.Country == null ? null : myPort.Country.EnglishName;
-                                }
-                            }
-
-                            break;
-                        }
-
-                    case "CASL":
-                        {
-                            myRecord.To = myLastDelivery.ToAddressCity;
-
-                            if (!string.IsNullOrEmpty(myLastDelivery.ToAddressCountryId))
-                            {
-                                Country toAddressCountry = CountryRepository.GetSingleCountry(myLastDelivery.ToAddressCountryId, tenant, false);
-                                if (toAddressCountry != null)
-                                {
-                                    myRecord.ToCountry = toAddressCountry.EnglishName;
-                                }
-                            }
-
-                            break;
-                        }
-                }
-            }
-
-            else if (item.OnForwardingToPortId != null)
-            {
-                Port myPort = portRepository.GetSinglePort(tenant, item.OnForwardingToPortId);
-                if (myPort != null)
-                {
-                    myRecord.To = myPort.EnglishName;
-                    myRecord.ToState = myPort.State == null ? null : myPort.State.EnglishName;
-                    myRecord.ToCountry = myPort.Country == null ? null : myPort.Country.EnglishName;
-                }
-            }
-
-            else if (item.OnCarriageToPortId != null)
-            {
-                Port myPort = portRepository.GetSinglePort(tenant, item.OnCarriageToPortId);
-                if (myPort != null)
-                {
-                    myRecord.To = myPort.EnglishName;
-                    myRecord.ToState = myPort.State == null ? null : myPort.State.EnglishName;
-                    myRecord.ToCountry = myPort.Country == null ? null : myPort.Country.EnglishName;
-                }
-            }
-
-            else if (item.Transshipment3ToPortId != null)
-            {
-                Port myPort = portRepository.GetSinglePort(tenant, item.Transshipment3ToPortId);
-                if (myPort != null)
-                {
-                    myRecord.To = myPort.EnglishName;
-                    myRecord.ToState = myPort.State == null ? null : myPort.State.EnglishName;
-                    myRecord.ToCountry = myPort.Country == null ? null : myPort.Country.EnglishName;
-                }
-            }
-
-            else if (item.Transshipment2ToPortId != null)
-            {
-                Port myPort = portRepository.GetSinglePort(tenant, item.Transshipment2ToPortId);
-                if (myPort != null)
-                {
-                    myRecord.To = myPort.EnglishName;
-                    myRecord.ToState = myPort.State == null ? null : myPort.State.EnglishName;
-                    myRecord.ToCountry = myPort.Country == null ? null : myPort.Country.EnglishName;
-                }
-            }
-
-            else if (item.Transshipment1ToPortId != null)
-            {
-                Port myPort = portRepository.GetSinglePort(tenant, item.Transshipment1ToPortId);
-                if (myPort != null)
-                {
-                    myRecord.To = myPort.EnglishName;
-                    myRecord.ToState = myPort.State == null ? null : myPort.State.EnglishName;
-                    myRecord.ToCountry = myPort.Country == null ? null : myPort.Country.EnglishName;
+                    myRecord.To = myLastDeliveryResult.City;
+                    myRecord.ToState = myLastDeliveryResult.StateName;
+                    myRecord.ToCountry = myLastDeliveryResult.CountryName;
                 }
             }
 
             else
             {
-                Port myPort = portRepository.GetSinglePort(tenant, item.MainCarriageToPortId);
-                if (myPort != null)
+                string toLocationPortId =  this.GetToLocationPortId(item);
+
+                if(!string.IsNullOrEmpty(toLocationPortId))
                 {
-                    myRecord.To = myPort.EnglishName;
-                    myRecord.ToState = myPort.State == null ? null : myPort.State.EnglishName;
-                    myRecord.ToCountry = myPort.Country == null ? null : myPort.Country.EnglishName;
+                    Port myPort = portRepository.GetSinglePort(tenant, toLocationPortId);
+                    if (myPort != null)
+                    {
+                        myRecord.To = myPort.EnglishName;
+                        myRecord.ToState = myPort.State == null ? null : myPort.State.EnglishName;
+                        myRecord.ToCountry = myPort.Country == null ? null : myPort.Country.EnglishName;
+                    }
                 }
             }
         }
-        private void ComputeFromProperies(VendorChargesShipment myRecord, ShipmentsJoinPayablesList item)
+
+        private string GetToLocationPortId(ShipmentsJoinPayablesList item)
+        {
+            if (item.OnForwardingToPortId != null)
+            {
+                return item.OnForwardingToPortId;                
+            }
+
+            else if (item.OnCarriageToPortId != null)
+            {
+                return item.OnCarriageToPortId;
+            }
+
+            else if (item.Transshipment3ToPortId != null)
+            {
+                return item.Transshipment3ToPortId;
+            }
+
+            else if (item.Transshipment2ToPortId != null)
+            {
+                return item.Transshipment2ToPortId;
+            }
+
+            else if (item.Transshipment1ToPortId != null)
+            {
+                return item.Transshipment1ToPortId;
+            }
+
+            else
+            {
+                return item.MainCarriageToPortId;
+            }
+        }
+
+        private void ComputeFromLocationProperties(VendorChargesShipment myRecord, ShipmentsJoinPayablesList item)
         {
             ShipmentPickUpDelivery myFirstPickup = (from d in shipmentsContext.ShipmentPickUpDeliveries
                                                     where d.ShipmentId == item.ShipmentId && d.PickUpDeliveryTypeCode == "PICK"
@@ -528,89 +474,48 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
             if (myFirstPickup != null)
             {
-                switch (myFirstPickup.PickUpDeliveryFromTypeCode)
+                PickUpDeliveryPlaceData myFirstPickupResult = webServiceHelper.GetPickUpDeliveryPlaceData(myFirstPickup, "Pickup");
+
+                if (myFirstPickupResult != null)
                 {
-                    case "PART":
-                        {
-                            if (!string.IsNullOrEmpty(myFirstPickup.FromAddressId))
-                            {
-                                Address fromAddress = addressRepository.GetSingleAddress(myFirstPickup.FromAddressId, tenant);
-                                if (fromAddress != null)
-                                {
-                                    myRecord.From = fromAddress.City;
-                                    myRecord.FromState = fromAddress.State == null ? null : fromAddress.State.EnglishName;
-                                    myRecord.FromCountry = fromAddress.Country == null ? null : fromAddress.Country.EnglishName;
-                                }
-                            }
-
-                            break;
-                        }
-
-                    case "PORT":
-                        {
-                            if (!string.IsNullOrEmpty(myFirstPickup.FromPortId))
-                            {
-                                Port myPort = portRepository.GetSinglePort(tenant, myFirstPickup.FromPortId);
-                                if (myPort != null)
-                                {
-                                    myRecord.From = myPort.EnglishName;
-                                    myRecord.FromState = myPort.State == null ? null : myPort.State.EnglishName;
-                                    myRecord.FromCountry = myPort.Country == null ? null : myPort.Country.EnglishName;
-                                }
-                            }
-
-                            break;
-                        }
-
-                    case "CASL":
-                        {
-                            myRecord.From = myFirstPickup.FromAddressCity;
-
-                            if (!string.IsNullOrEmpty(myFirstPickup.FromAddressCountryId))
-                            {
-                                Country fromAddressCountry = CountryRepository.GetSingleCountry(myFirstPickup.FromAddressCountryId, tenant, false);
-                                if (fromAddressCountry != null)
-                                {
-                                    myRecord.FromCountry = fromAddressCountry.EnglishName;
-                                }
-                            }
-
-                            break;
-                        }
-                }
-            }
-
-            else if (item.PreForwardingFromPortId != null)
-            {
-                Port myPort = portRepository.GetSinglePort(tenant, item.PreForwardingFromPortId);
-                if (myPort != null)
-                {
-                    myRecord.From = myPort.EnglishName;
-                    myRecord.FromState = myPort.State == null ? null : myPort.State.EnglishName;
-                    myRecord.FromCountry = myPort.Country == null ? null : myPort.Country.EnglishName;
-                }
-            }
-
-            else if (item.PreCarriageFromPortId != null)
-            {
-                Port myPort = portRepository.GetSinglePort(tenant, item.PreCarriageFromPortId);
-                if (myPort != null)
-                {
-                    myRecord.From = myPort.EnglishName;
-                    myRecord.FromState = myPort.State == null ? null : myPort.State.EnglishName;
-                    myRecord.FromCountry = myPort.Country == null ? null : myPort.Country.EnglishName;
+                    myRecord.From = myFirstPickupResult.City;
+                    myRecord.FromState = myFirstPickupResult.StateName;
+                    myRecord.FromCountry = myFirstPickupResult.CountryName;
                 }
             }
 
             else
             {
-                Port myPort = portRepository.GetSinglePort(tenant, item.MainCarriageFromPortId);
-                if (myPort != null)
+                string fromLocationPortId = this.GetFromLocationPortId(item);
+
+                if (!string.IsNullOrEmpty(fromLocationPortId))
                 {
-                    myRecord.From = myPort.EnglishName;
-                    myRecord.FromState = myPort.State == null ? null : myPort.State.EnglishName;
-                    myRecord.FromCountry = myPort.Country == null ? null : myPort.Country.EnglishName;
+                    Port myPort = portRepository.GetSinglePort(tenant, fromLocationPortId);
+                    if (myPort != null)
+                    {
+                        myRecord.To = myPort.EnglishName;
+                        myRecord.ToState = myPort.State == null ? null : myPort.State.EnglishName;
+                        myRecord.ToCountry = myPort.Country == null ? null : myPort.Country.EnglishName;
+                    }
                 }
+            }
+        }
+
+        private string GetFromLocationPortId(ShipmentsJoinPayablesList item)
+        {
+            if (item.PreForwardingFromPortId != null)
+            {
+                return item.PreForwardingFromPortId;
+            }
+
+            else if (item.PreCarriageFromPortId != null)
+            {
+                return item.PreCarriageFromPortId;
+            }
+
+            else
+            {
+                return item.MainCarriageFromPortId;
             }
         }
     }
