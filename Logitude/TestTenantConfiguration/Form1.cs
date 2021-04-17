@@ -35,7 +35,6 @@ using System.Diagnostics;
 using System.Reflection;
 using Logitude.CRM.BL.EntityPMs;
 using System.Collections.Generic;
-using Logitude.CRM.BL.EntityUpdateServices;
 using Logitude.CRM.Data;
 using Logitude.Server.Tools.Counters;
 using Logitude.CRM.BL.EntityDataMappings;
@@ -52,7 +51,8 @@ namespace TestTenantConfiguration
     {
         private int Tenant;
         private string AgentId, AddressId, EmployeeId, ContactID;
-        private string TenantEmail, TenantCompanyName;
+        private string TenantEmail, TenantCompanyName , NewPassword;
+        private bool ValidateEmail = false, ValidateCompany = false;
 
         public Form1()
         {
@@ -60,6 +60,7 @@ namespace TestTenantConfiguration
             FillAppSettings();
             ContainerAccessor.InitContainer();
             InitializeComponent();
+            GetContactEmailOnly("");
         }
 
         private void FillAppSettings()
@@ -122,23 +123,29 @@ namespace TestTenantConfiguration
         #region Setup before creating tenant
         private void TenantEmailTextBox_TextChanged(object sender, EventArgs e)
         {
+            if(TenantEmailTextBox.Text != null)
+            {
+                this.TenantEmailValidation.Text = "";
+            }
             this.TenantEmail = TenantEmailTextBox.Text;
         }
         private void TenantCompanyTextBox_TextChanged(object sender, EventArgs e)
         {
+            if (TenantCompanyTextBox.Text != null)
+            {
+                this.TenantCompanyValidation.Text = "";
+            }
             this.TenantCompanyName = TenantCompanyTextBox.Text;
         }
-
-        private ContactPM GetContactEmailOnly(string email)
-        {
-
-            ContactQuery contactQuery = new ContactQuery(this.Tenant);
-            ContactPM contactPM = contactQuery.GetSingleByEmailWithoutTenant(email);
-            return contactPM;
-        }
-
+        
         private void TenantEmailTextBox_LostFocus(object sender, EventArgs e)
         {
+            ValidateEmailTB();
+        }
+
+        private void ValidateEmailTB()
+        {
+            ValidateEmail = false;
             if (string.IsNullOrEmpty(TenantEmailTextBox.Text))
             {
                 this.TenantEmailValidation.Text = "Please Fill The Email!";
@@ -154,13 +161,18 @@ namespace TestTenantConfiguration
             else
             {
                 this.TenantEmailValidation.Text = "";
+                ValidateEmail = true;
             }
         }
 
-
-
         private void TenantCompanyTextBox_LostFocus(object sender, EventArgs e)
         {
+            ValidateCompanyTB();
+        }
+
+        private void ValidateCompanyTB()
+        {
+            ValidateCompany = false;
             if (string.IsNullOrEmpty(TenantCompanyTextBox.Text))
             {
                 this.TenantCompanyValidation.Text = "Please Fill The Company Name";
@@ -168,22 +180,38 @@ namespace TestTenantConfiguration
             else
             {
                 this.TenantCompanyValidation.Text = "";
+                ValidateCompany = true;
             }
+        }
+
+        private ContactPM GetContactEmailOnly(string email)
+        {
+            ContactQuery contactQuery = new ContactQuery(this.Tenant);
+            ContactPM contactPM = contactQuery.GetSingleByEmailWithoutTenant(email);
+            return contactPM;
         }
         #endregion
 
         private void CreateTenantBtn_Click(object sender, EventArgs e)
         {
-            Thread thread = new Thread(() => CreateTenant());
-            thread.IsBackground = true;
-            thread.Start();
+            if(ValidateEmail && ValidateCompany)
+            {
+                Thread thread = new Thread(() => StartCreateTenant());
+                thread.IsBackground = true;
+                thread.Start();
+            }
+            else
+            {
+                ValidateEmailTB();
+                ValidateCompanyTB();
+            }
         }
 
         Stopwatch globalStopwatch;
         Label generalLabel;
-        private void CreateTenant()
+        private void StartCreateTenant()
         {
-            SetControlPropertyValue(Timerlbl, "Text", "Updating...");
+            SetControlPropertyValue(Timerlbl, "Text", "Creating Tenant...");
             SetControlPropertyValue(Timerlbl, "ForeColor", Color.Black);
 
             Stopwatch stopWatch = new Stopwatch();
@@ -218,13 +246,7 @@ namespace TestTenantConfiguration
 
         private void CreateTenantMethods()
         {
-            CreateSignup();
-            CreateAgent();
-            CreateAddress();
-            CreateRatesTables();
-            UpdateTenant();
-            AcceptTerms();
-            ResetPassword();
+            CreateTenantConfiguration();
 
             //Maintenance settings
             CreateTranslationsInComputingPartners();
@@ -234,17 +256,43 @@ namespace TestTenantConfiguration
             TicketPrepareData();
 
             //Prepare data
-            //local partners shipment !
+            PrepareDataForTenant();
         }
 
         #region Create & Update Tenant 
+        private ICommonDataContext MyContext;
+
+        private void CreateTenantConfiguration()
+        {
+            Signup();
+            TenantConstructor();
+            CreateAgent();
+            CreateAddress();
+            CreateRatesTables();
+            UpdateTenant();
+            AcceptTerms();
+            ResetPassword();
+        }
+
+        private void TenantConstructor()
+        {
+            MyContext = CommonDataContext.GetContext(this.Tenant);
+            this.ContactID = GetContactIdByEmail(this.TenantEmail);
+        }
+
+        private string GetContactIdByEmail(String email)
+        {
+            ContactQuery contactQuery = new ContactQuery(this.Tenant);
+            ContactPM contactPM = contactQuery.GetSingleContact(email, this.Tenant);
+            return contactPM?.Id;
+        }
+
         #region SignUp 
-        private void CreateSignup()
+        private void Signup()
         {
             SignUpInfoClass signUpInfo = CreateSignUpInfoInstance();
             String Password = SignUpClass.StartSignUp(signUpInfo);
             this.Tenant = signUpInfo.Tenant;
-            SetControlPropertyValue(OldPassword, "Text", Password);
         }
 
         private SignUpInfoClass CreateSignUpInfoInstance()
@@ -267,9 +315,7 @@ namespace TestTenantConfiguration
         private void CreateAgent()
         {
             AgentPM agentPM = CreateAgentInstance();
-            string loggedContactId = GetContactIdByEmail(this.TenantEmail);
-            ICommonDataContext MyContext = CommonDataContext.GetContext(agentPM.Tenant);
-            AgentService service = new AgentService(MyContext, agentPM, loggedContactId);
+            AgentService service = new AgentService(MyContext, agentPM, ContactID);
             service.Create(agentPM);
             this.AgentId = agentPM.Id;
         }
@@ -286,20 +332,12 @@ namespace TestTenantConfiguration
             };
             return agentPM;
         }
-
-        private string GetContactIdByEmail(String email)
-        {
-            ContactQuery contactQuery = new ContactQuery(this.Tenant);
-            ContactPM contactPM = contactQuery.GetSingleContact(email, this.Tenant);
-            return contactPM?.Id;
-        }
         #endregion
 
         #region Address
         private void CreateAddress()
         {
             AddressPM addressPM = CreateAddressInstance();
-            ICommonDataContext MyContext = CommonDataContext.GetContext(addressPM.Tenant);
             AddressService service = new AddressService(MyContext, addressPM.Tenant);
             service.Create(addressPM);
             this.AddressId = addressPM.Id;
@@ -389,12 +427,11 @@ namespace TestTenantConfiguration
                 Tenant = this.Tenant,
                 IsHybrid = true
             };
-            ICommonDataContext MyContext = CommonDataContext.GetContext(currencyPM.Tenant);
             CurrencyService service = new CurrencyService(MyContext, currencyPM.Tenant);
             service.Create(currencyPM);
-            objectContext = CommonDataContext.GetContext(this.Tenant);
+            //objectContext = CommonDataContext.GetContext(this.Tenant);
             TableLastUpdateClass.UpdateTableHistory(currencyPM.Tenant, "Currency");
-            objectContext.SaveChanges();
+            MyContext.SaveChanges();
 
             return currencyPM.Id;
         }
@@ -462,7 +499,6 @@ namespace TestTenantConfiguration
         private void AcceptTerms()
         {
             TermsofUseSignaturePM entityPM = CreateTermInstance();
-            ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
             TermsofUseSignatureService service = new TermsofUseSignatureService(MyContext, entityPM.Tenant);
             service.Create(entityPM);
         }
@@ -471,7 +507,7 @@ namespace TestTenantConfiguration
         {
             TermsofUseSignaturePM entityPM = new TermsofUseSignaturePM()
             {
-                ContactId = GetContactIdByEmail(this.TenantEmail),
+                ContactId = this.ContactID,
                 SignedDatetime = TenantServerConfigration.GetCurrentDateTime(this.Tenant),
                 Tenant = this.Tenant,
                 TermsofUseVersion = 2
@@ -482,12 +518,12 @@ namespace TestTenantConfiguration
 
         private void ResetPassword()
         {
-            string NewPassword = "!Cypress1";
+            this.NewPassword = "!Cypress1";
             PasswordChangeHelper passwordChangeHelper = new PasswordChangeHelper();
-            bool succeeded = passwordChangeHelper.ChangePassword(this.TenantEmail, NewPassword);
+            bool succeeded = passwordChangeHelper.ChangePassword(this.TenantEmail, this.NewPassword);
             if (succeeded)
             {
-                SetControlPropertyValue(NewPasswordText, "Text", NewPassword);
+                SetControlPropertyValue(NewPasswordText, "Text", this.NewPassword);
                 //Clipboard.SetText(NewPassword);
                 SetControlPropertyValue(ValidateCopy, "Text", "New password was successfully changed");
             }
@@ -499,9 +535,7 @@ namespace TestTenantConfiguration
         private void CreateTranslationsInComputingPartners()
         {
             ComputingPartnerTranslationPM entityPM = CreateComputingPartnerTranslationInstance();
-            string loggedContactId = GetContactIdByEmail(this.TenantEmail);
-            ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
-            ComputingPartnerTranslationService service = new ComputingPartnerTranslationService(MyContext, entityPM.Tenant, loggedContactId);
+            ComputingPartnerTranslationService service = new ComputingPartnerTranslationService(MyContext, entityPM.Tenant, this.ContactID);
             service.Create(entityPM);
         }
 
@@ -597,10 +631,8 @@ namespace TestTenantConfiguration
         #region AMANAC Tab
         private void UpdateAMANACTab()
         {
-            string loggedContactId = GetContactIdByEmail(this.TenantEmail);
             CustomsInterfaceSettingPM customsInterfaceSettingPM = CreateCustomsInterfaceSettingsInstance();
-            ICommonDataContext MyContext = CommonDataContext.GetContext(customsInterfaceSettingPM.Tenant);
-            CustomsInterfaceSettingService service = new CustomsInterfaceSettingService(MyContext, customsInterfaceSettingPM.Tenant, loggedContactId);
+            CustomsInterfaceSettingService service = new CustomsInterfaceSettingService(MyContext, customsInterfaceSettingPM.Tenant, this.ContactID);
             service.Update(customsInterfaceSettingPM);
         }
 
@@ -626,6 +658,8 @@ namespace TestTenantConfiguration
             TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(this.Tenant);
             TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(this.Tenant);
             tenantManagementPM.IsTrial = false;
+            tenantManagementPM.SupportActivated = true;
+            tenantManagementPM.SupportDomain = this.TenantEmail;
 
             IGlobalContext objectContext = GlobalContext.GetContext();
             TenantManagementRepository entityRepository = new TenantManagementRepository(objectContext);
@@ -665,7 +699,6 @@ namespace TestTenantConfiguration
             employeeGroupLineRepository = new EmployeeGroupLineRepository(this.MainContext);
             ticketClassificationMapping = new TicketClassificationDataMapping();
             ticketClassificationRepository = new TicketClassificationRepository(this.MainContext);
-            this.ContactID = GetContactIdByEmail(this.TenantEmail);
         }
 
         private void CreateEmployeeGroup()
@@ -768,6 +801,20 @@ namespace TestTenantConfiguration
             return ticketSeverity.Id;
         }
         #endregion
+
+        private void PrepareDataForTenant()
+        {
+            SetControlPropertyValue(Timerlbl, "Text", "Preparing Tenant Data ...");
+            SetControlPropertyValue(Timerlbl, "ForeColor", Color.DodgerBlue);
+
+            string LogitudeURL = System.Configuration.ConfigurationSettings.AppSettings.Get("LogitudeURL");
+
+            Logitude.Test.Base.Hooks.BeforeTestRun.PrepareTheData(this.TenantEmail, this.NewPassword, LogitudeURL);
+            Logitude.ShipmentTests.Hooks.BeforeTestRun.SetupShipmentPreparationVariables();
+
+            SetControlPropertyValue(ValidatePrepareData, "Text", "The Tenant is ready with the prepared data");
+            SetControlPropertyValue(ValidatePrepareData, "ForeColor", Color.Green);
+        }
 
         delegate void SetControlValueCallback(Control oControl, string propName, object propValue);
         private void SetControlPropertyValue(Control oControl, string propName, object propValue)

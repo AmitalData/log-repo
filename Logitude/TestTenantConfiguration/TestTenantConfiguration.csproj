@@ -91,9 +91,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\JustWebFreight\WebFreight.Web\WebFreight.Web.csproj">
       <Project>{8408e4e5-b4b7-46bc-8300-1ae163b36e2d}</Project>
@@ -114,6 +112,14 @@
     <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
       <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
       <Name>Logitude.Server.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.ShipmentTests\Logitude.ShipmentTests.csproj">
+      <Project>{81e2985e-f90a-49b1-9d8c-6a28589e7aaf}</Project>
+      <Name>Logitude.ShipmentTests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Test.Base\Logitude.Test.Base.csproj">
+      <Project>{74fbc07e-5cbf-44c5-85c8-f86facaa06b6}</Project>
+      <Name>Logitude.Test.Base</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>

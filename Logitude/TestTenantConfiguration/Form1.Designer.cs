@@ -37,13 +37,14 @@ namespace TestTenantConfiguration
             this.TenantEmailTextBox = new System.Windows.Forms.TextBox();
             this.TenantCompanyTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.OldPassword = new System.Windows.Forms.Label();
+            this.InProcess = new System.Windows.Forms.Label();
             this.NewPasswordText = new System.Windows.Forms.TextBox();
             this.ValidateCopy = new System.Windows.Forms.Label();
             this.TenantEmailValidation = new System.Windows.Forms.Label();
             this.TenantCompanyValidation = new System.Windows.Forms.Label();
             this.Timerlbl = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.ValidatePrepareData = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // CreateTenantBtn
@@ -111,14 +112,15 @@ namespace TestTenantConfiguration
             this.label4.TabIndex = 6;
             this.label4.Text = "Password:";
             // 
-            // OldPassword
+            // InProcess
             // 
-            this.OldPassword.AutoSize = true;
-            this.OldPassword.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.OldPassword.Location = new System.Drawing.Point(37, 394);
-            this.OldPassword.Name = "OldPassword";
-            this.OldPassword.Size = new System.Drawing.Size(0, 19);
-            this.OldPassword.TabIndex = 7;
+            this.InProcess.AutoSize = true;
+            this.InProcess.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.InProcess.Location = new System.Drawing.Point(37, 394);
+            this.InProcess.Name = "InProcess";
+            this.InProcess.Size = new System.Drawing.Size(101, 19);
+            this.InProcess.TabIndex = 7;
+            this.InProcess.Text = "";
             // 
             // NewPasswordText
             // 
@@ -178,17 +180,28 @@ namespace TestTenantConfiguration
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // ValidatePrepareData
+            // 
+            this.ValidatePrepareData.AutoSize = true;
+            this.ValidatePrepareData.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ValidatePrepareData.ForeColor = System.Drawing.Color.Green;
+            this.ValidatePrepareData.Location = new System.Drawing.Point(301, 249);
+            this.ValidatePrepareData.Name = "ValidatePrepareData";
+            this.ValidatePrepareData.Size = new System.Drawing.Size(0, 19);
+            this.ValidatePrepareData.TabIndex = 13;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(713, 440);
+            this.Controls.Add(this.ValidatePrepareData);
             this.Controls.Add(this.Timerlbl);
             this.Controls.Add(this.TenantCompanyValidation);
             this.Controls.Add(this.TenantEmailValidation);
             this.Controls.Add(this.ValidateCopy);
             this.Controls.Add(this.NewPasswordText);
-            this.Controls.Add(this.OldPassword);
+            this.Controls.Add(this.InProcess);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.TenantCompanyTextBox);
             this.Controls.Add(this.TenantEmailTextBox);
@@ -212,13 +225,14 @@ namespace TestTenantConfiguration
         private System.Windows.Forms.TextBox TenantEmailTextBox;
         private System.Windows.Forms.TextBox TenantCompanyTextBox;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label OldPassword;
+        private System.Windows.Forms.Label InProcess;
         private System.Windows.Forms.TextBox NewPasswordText;
         private System.Windows.Forms.Label ValidateCopy;
         private System.Windows.Forms.Label TenantCompanyValidation;
         private System.Windows.Forms.Label TenantEmailValidation;
         private System.Windows.Forms.Label Timerlbl;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label ValidatePrepareData;
     }
 }
 
