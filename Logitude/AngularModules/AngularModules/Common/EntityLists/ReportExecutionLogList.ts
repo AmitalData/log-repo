@@ -21,7 +21,9 @@ export class ReportExecutionLogList {
 		StartDate: Date;
 		ExecutedByServerName: string;
 		DisablePreview: boolean;
-		CommunicationStatusTypeName: string;
+		StatusName: string;
 		CreatedByUserName: string;
+		SearchFields: string;
+		ReportName: string;
 	
 }

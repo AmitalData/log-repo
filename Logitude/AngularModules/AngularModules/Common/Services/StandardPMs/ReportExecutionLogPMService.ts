@@ -14,7 +14,7 @@ export class ReportExecutionLogPMService {
     constructor() {
         this._http = ServiceHelper.HttpClient;
          //ReportExecutionLogExtended
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/reportexecutionlogviews';
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReportExecutionLogExtended';
     }
     get(id: string) {
         var authHeader = new Headers();
