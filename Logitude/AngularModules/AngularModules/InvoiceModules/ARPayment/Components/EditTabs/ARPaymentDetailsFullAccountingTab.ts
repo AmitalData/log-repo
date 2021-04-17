@@ -1,51 +1,44 @@
-import { JournalPM } from './../../../../Accounting/EntityPMs/JournalPM';
-import { JournalExtendedPMService } from './../../../../Accounting/Services/ExtendedPMs/JournalExtendedPMService';
-import { ARPaymentEventManager } from './../../../../Accounting/Utilities/ARPaymentEventManager';
-import { ReconciliationExtendedPMService } from './../../../../Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
-import { GLAccountListService } from './../../../../Accounting/Services/StandardLists/GLAccountListService';
-import { ReconcileEventManager } from './../../../../Accounting/Utilities/ReconcileEventManager';
-import { AccountingEntityHelper } from './../../../../Accounting/Utilities/AccountingEntityHelper';
-import { LedgerTransactionPM } from './../../../../Accounting/EntityPMs/LedgerTransactionPM';
-import { LedgerTransactionExtendedListService } from './../../../../Accounting/Services/ExtendedLists/LedgerTransactionExtendedListService';
-import { RegionList } from './../../../../Common/EntityLists/RegionList';
-import { EventEmitter, Output } from '@angular/core';
-import { EntityListService } from './../../../../Infrastructure/Services/EntityListService';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
-import { ARPaymentPM } from '../../../../Invoice/EntityPMs/ARPaymentPM';
-import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { AppTool, DateTool, ArrayTool } from '../../../../Infrastructure/Tools';
-import { CurrencyListService } from '../../../../Common/Services/StandardLists/CurrencyListService';
-import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
-import { CardList } from '../../../../Common/EntityLists/CardList';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { BankAccountPM } from '../../../../Accounting/EntityPMs/BankAccountPM';
+import { CashBookPM } from '../../../../Accounting/EntityPMs/CashBookPM';
+import { GLAccountPM } from '../../../../Accounting/EntityPMs/GLAccountPM';
+import { BankAccountPMService } from '../../../../Accounting/Services/StandardPMs/BankAccountPMService';
+import { GLAccountPMService } from '../../../../Accounting/Services/StandardPMs/GLAccountPMService';
 import { AddressList } from '../../../../Common/EntityLists/AddressList';
+import { CardList } from '../../../../Common/EntityLists/CardList';
+import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
+import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
+import { PartnersDomainService } from '../../../../Common/Services/PartnersDomainService';
 import { AddressListService } from '../../../../Common/Services/StandardLists/AddressListService';
 import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
-import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { ARInvoiceListService } from '../../../../Invoice/Services/StandardLists/ARInvoiceListService';
-import { ARInvoiceList } from '../../../../Invoice/EntityLists/ARInvoiceList';
-import { ARPaymentInvoicePM } from '../../../../Invoice/EntityPMs/ARPaymentInvoicePM';
-import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
-import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { CurrencyListService } from '../../../../Common/Services/StandardLists/CurrencyListService';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { PartnersDomainService } from '../../../../Common/Services/PartnersDomainService';
-import { BankAccountPMService } from '../../../../Accounting/Services/StandardPMs/BankAccountPMService';
-import { BankAccountPM } from '../../../../Accounting/EntityPMs/BankAccountPM';
-import { InvoiceDomainService } from '../../../../Invoice/Services/InvoiceDomainService';
-import { CashBookPM } from '../../../../Accounting/EntityPMs/CashBookPM';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { AppTool, ArrayTool, DateTool } from '../../../../Infrastructure/Tools';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { AccountingPaymentMethodList } from '../../../../Invoice/EntityLists/AccountingPaymentMethodList';
+import { ARInvoiceList } from '../../../../Invoice/EntityLists/ARInvoiceList';
+import { ARPaymentChequeReplicaPM } from '../../../../Invoice/EntityPMs/ARPaymentChequeReplicaPM';
+import { ARPaymentPM } from '../../../../Invoice/EntityPMs/ARPaymentPM';
+import { InvoiceDomainService } from '../../../../Invoice/Services/InvoiceDomainService';
 import { AccountingPaymentMethodListService } from '../../../../Invoice/Services/StandardLists/AccountingPaymentMethodListService';
-import { GLAccountPMService } from '../../../../Accounting/Services/StandardPMs/GLAccountPMService';
-import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList';
-import { LineModel } from '../../../../Accounting/Components/Others/ReconcileComponent';
-import { GLAccountPM } from '../../../../Accounting/EntityPMs/GLAccountPM';
+import { ARInvoiceListService } from '../../../../Invoice/Services/StandardLists/ARInvoiceListService';
 import { ARPaymentValidator } from '../../../../Invoice/Validators/ARPaymentValidator';
+import { JournalPM } from './../../../../Accounting/EntityPMs/JournalPM';
+import { LedgerTransactionPM } from './../../../../Accounting/EntityPMs/LedgerTransactionPM';
+import { LedgerTransactionExtendedListService } from './../../../../Accounting/Services/ExtendedLists/LedgerTransactionExtendedListService';
+import { JournalExtendedPMService } from './../../../../Accounting/Services/ExtendedPMs/JournalExtendedPMService';
+import { ReconciliationExtendedPMService } from './../../../../Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
+import { GLAccountListService } from './../../../../Accounting/Services/StandardLists/GLAccountListService';
+import { AccountingEntityHelper } from './../../../../Accounting/Utilities/AccountingEntityHelper';
 
 @Component({
 
@@ -2105,24 +2098,32 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     }
     UpdateChequesSection(event: any) {
         if (event == 'ok') {
-            this.isMultipleCheques = false;         
-                if (this.EntityPM.ARPaymentChequeReplicas.length > 1) {
-                    this.isMultipleCheques = true;
-                }
-                else if (this.EntityPM.ARPaymentChequeReplicas.length == 0) {
-                    this.SetChequeFieldsToNull();
-                }
+            this.isMultipleCheques = false;
+            if (this.EntityPM.ARPaymentChequeReplicas.length > 1) {
+                this.isMultipleCheques = true;
             }
-        
+            if (this.EntityPM.ARPaymentChequeReplicas.length >= 0) {
+                this.SetDefaultChequeFields();
+            }
+        }
     }
-    SetChequeFieldsToNull() {
-        this.Bank = null;
-        this.Account = null;
-        this.AmountInPaymentCurrency = null;
-        this.ValueDate = null;
-        this.BankBranch = null;
-        this.ChequeOrPaymentRef = null;
-
+    SetDefaultChequeFields() {
+            if (this.EntityPM.ARPaymentChequeReplicas.length >= 0) {
+                var firstCheque: ARPaymentChequeReplicaPM = this.EntityPM.ARPaymentChequeReplicas.filter(d => d.LineNumber == 1)[0];
+                this.MapChequeFields(firstCheque);
+            }
+            else if (this.EntityPM.ARPaymentChequeReplicas.length == 0) {
+                this.MapChequeFields(null);
+            }
+             
+    }
+    MapChequeFields(cheque: ARPaymentChequeReplicaPM) {
+        this.Bank = cheque != null ? cheque.BankId : null;
+        this.Account = cheque != null ? cheque.BankAccount : null;
+        this.AmountInPaymentCurrency = cheque != null ? cheque.ForeignAmount : null;
+        this.ValueDate = cheque != null ? cheque.ValueDate : null;
+        this.BankBranch = cheque != null ? cheque.BankBranch : null;
+        this.ChequeOrPaymentRef = cheque != null ? cheque.ChequeNumber : null;
     }
     DisplayChequesButtonClicked() {
         this.ShowMultiChequeScreen();      
