@@ -640,6 +640,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
                     this.EntityPM.AddAPInvoiceMultipleShipmentPM(itemPM);
                     this.BuildItemsSource();
                     this.ComputeTotals();
+                    this.ComputeShipmentsNumbers();
                 }
             }
         }
@@ -683,6 +684,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
 
                 if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
                     this.BuildItemsSource();
+                    this.ComputeShipmentsNumbers();
                 }
 
                 else {
@@ -736,6 +738,21 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
         }
     }
 
+    ComputeShipmentsNumbers() {
+        var shipmentsNumbers: string = "";
+
+        this.ItemsSource.forEach(item => {
+            if (AppTool.IsNullOrEmpty(shipmentsNumbers)) {
+                shipmentsNumbers = item.ShipmentNumber;
+            }
+
+            else {
+                shipmentsNumbers = shipmentsNumbers + ", " + item.ShipmentNumber;
+            }
+        });
+
+        this.EntityPM.ShipmentsNumbers = shipmentsNumbers;
+    }
 }
 
 export class MultipleShipmentLine {

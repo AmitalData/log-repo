@@ -5,57 +5,74 @@
   Schema="dbo"
   Module="Common">
   <SqlScript>
-			<![CDATA[
-			Create PROCEDURE [dbo].usp_DeleteCustomerRecords
-			(
-				@Tenant int
-			)
-			AS
+    <![CDATA[
+Create PROCEDURE [dbo].usp_DeleteCustomerRecords
+(
+	@Tenant int
+)
+AS
 
-			BEGIN
+BEGIN
 
-			declare @DeletedContactIdTable table
-			(
-				Id varchar(15) not null
-			)
+declare @DeletedContactIdTable table
+(
+  Id varchar(15) not null
+)
 
-			-- circular references
-			update Tickets set CompanyId = NULL where Tenant = @Tenant
-			update MAWBStacks set AssignedToId = null where Tenant = @Tenant
-			update Cards set PrimaryContactId = NULL where Tenant = @Tenant and (PartnerTypeId = 'CS' or PartnerTypeId = 'PO')
-			update Tenants set AgentId = NULL,AddressId = NULL where Id = @Tenant
+update Tickets set CompanyId = NULL where Tenant = @Tenant
+update MAWBStacks set AssignedToId = null where Tenant = @Tenant
+update Cards set PrimaryContactId = NULL where Tenant = @Tenant and (PartnerTypeId = 'CS' or PartnerTypeId = 'PO')
 
-			insert into @DeletedContactIdTable SELECT ContactId From CardContacts
-						Where Tenant = @Tenant  and CardId in (select Id from Cards where Tenant = @Tenant and (PartnerTypeId = 'CS' or PartnerTypeId = 'PO'))
+insert into @DeletedContactIdTable SELECT ContactId From CardContacts
+			Where Tenant = @Tenant  and CardId in (select Id from Cards where Tenant = @Tenant and (PartnerTypeId = 'CS' or PartnerTypeId = 'PO'))
 
-			declare @ContactId as varchar(15)
-			BEGIN
-					DECLARE DeleteContactCursor CURSOR READ_ONLY
-					FOR
-					SELECT Id
-					FROM @DeletedContactIdTable			
-					OPEN DeleteContactCursor FETCH NEXT FROM DeleteContactCursor INTO @ContactId
-					WHILE @@FETCH_STATUS = 0
-					BEGIN
+delete from CardContacts where Tenant = @Tenant and CardId in (select Id from Cards where Tenant = @Tenant and (PartnerTypeId = 'CS' or PartnerTypeId = 'PO'))
 
-					if not exists (select * from CardContacts where ContactId = @ContactId)
-					BEGIN
-						delete from ContactTenants where ContactId = @ContactId
-						delete from Contacts where Id = @ContactId
-					END
+declare @ContactId as varchar(15)
+BEGIN
+		DECLARE DeleteContactCursor CURSOR READ_ONLY
+		FOR
+		SELECT Id
+		FROM @DeletedContactIdTable			
+		OPEN DeleteContactCursor FETCH NEXT FROM DeleteContactCursor INTO @ContactId
+		WHILE @@FETCH_STATUS = 0
+		BEGIN
 
-					FETCH NEXT FROM DeleteContactCursor INTO @ContactId
+		if not exists (select * from CardContacts where ContactId = @ContactId)
+		BEGIN
+			delete from ContactTenants where ContactId = @ContactId
+			delete from Contacts where Id = @ContactId
+		END
 
-					END				
-					CLOSE DeleteContactCursor
-					DEALLOCATE DeleteContactCursor
-			END
-      exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Bookings'
-      exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Customers'
-			exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'WarehouseEntries'
-			exec [dbo].usp_DoTheTableDeletionSet @Tenant = @Tenant, @TableName = 'Cards', @WhereInput = ' and ($table.PartnerTypeId = ''CS'' or $table.PartnerTypeId = ''PO'')'
+		FETCH NEXT FROM DeleteContactCursor INTO @ContactId
 
-			END
+		END				
+		CLOSE DeleteContactCursor
+		DEALLOCATE DeleteContactCursor
+END
+
+delete from Addresses where Tenant = @Tenant and CardId in (select Id from Cards where Tenant = @Tenant and (PartnerTypeId = 'CS' or PartnerTypeId = 'PO'))
+delete from CardSearches where Tenant = @Tenant and CardId in (select Id from Cards where Tenant = @Tenant and (PartnerTypeId = 'CS' or PartnerTypeId = 'PO'))
+
+delete from CustomerProductLocations where Tenant = @Tenant
+delete from CustomerProducts where Tenant = @Tenant
+delete from CustomerProductLocationActualDatas where Tenant = @Tenant
+delete from CustomerProductActualDatas where Tenant = @Tenant
+delete from CustomerCompetitorProducts where Tenant = @Tenant
+delete from CustomerCompetitors where Tenant = @Tenant
+delete from CustomerAdditionalServices where Tenant = @Tenant
+delete from CustomerSalesNote where Tenant = @Tenant
+delete from CustomerSalesmanByProducts where Tenant = @Tenant
+delete from CustomerAccountManagerByProducts where Tenant = @Tenant
+delete from CustomerCustomsAgentByProducts where Tenant = @Tenant
+delete from CustomerForwarderByProducts where Tenant = @Tenant
+delete from CustomerMediatorByProducts where Tenant = @Tenant
+delete from CardExternalCodeByCurrencies where Tenant = @Tenant
+
+delete from Customers where Tenant = @Tenant
+delete from Cards where Tenant = @Tenant and (PartnerTypeId = 'CS' or PartnerTypeId = 'PO')
+
+END
 ]]>
   </SqlScript>
   <OracleScript>

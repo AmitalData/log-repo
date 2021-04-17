@@ -2309,7 +2309,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             {
                                 if (!string.IsNullOrEmpty(myFinalDelivery.ToPartnerCardId))
                                 {
-                                    Address myPartnerAddress = addressRepository.GetMainAddressByCardId(myFinalDelivery.ToPartnerCardId, tenant);
+                                    Address myPartnerAddress = addressRepository.GetSingleAddress(myFinalDelivery.ToAddressId, tenant);
                                     if (myPartnerAddress != null)
                                     {
                                         shipmentPM.FinalDeliveryLocation = myPartnerAddress.City;

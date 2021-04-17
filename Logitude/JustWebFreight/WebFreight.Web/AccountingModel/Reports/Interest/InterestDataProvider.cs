@@ -21,6 +21,8 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
         public List<InterestReportLinesByDateProvider> InterestReportLinesByDateList { get; set; }
         public decimal? CreditAllotmentPercentage { get; set; }
         public decimal? CalCreditAllotmentCommission { get; set; }
+        public decimal? AllotmentCommession { get; set; }
+        public string AllotmentCalculation { get; set; }
     }
 
     public class InterestReportLinesByDateProvider

@@ -214,7 +214,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
 
             this.EntityPM.Description = myDescription;
             this.EntityPM.OperationalDate = InvoiceTool.GetOperationalDate(shipmentPM);
-            this.EntityPM.ConnectedEntityReferences = this.shipmentPM.ShipmentNumber;
+            this.EntityPM.ShipmentsNumbers = this.shipmentPM.ShipmentNumber;
             this.EntityPM.ShipmentConcurrencyGUID = this.shipmentPM.ConcurrencyGUID;
             this.EntityPM.ShipmentNewConcurrencyGUID = this.shipmentPM.NewConcurrencyGUID;
         }

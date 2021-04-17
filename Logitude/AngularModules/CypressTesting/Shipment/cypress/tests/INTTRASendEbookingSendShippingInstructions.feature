@@ -1,4 +1,4 @@
-@release @stable
+@release @dev
 Feature: INTTRA Sending E-Booking and Shipping Instructions
     The Customer Care user configures INTTRA for the tenant,
     a second regular user creates an Ocean Export FCL shipment,
@@ -62,7 +62,7 @@ Feature: INTTRA Sending E-Booking and Shipping Instructions
     Scenario: Fill required information to send INTTRA e-booking
         Given the user fill the following information to send e-booking
             | BranchName         | Main Office        |
-            | ShippingLine       | YMLU               |
+            | ShippingLine       | MSCU               |
             | ContractNumber     | 53454              |
             | DescriptionOfGoods | Send booking test  |
             | ETDDate            | Today              |
