@@ -549,12 +549,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private bool isCancelled ;
+	  private bool? isCancelled ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public bool IsCancelled  
+       public bool? IsCancelled  
 	   {
 	    
 	     get
@@ -565,7 +565,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(isCancelled != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCancelled",OldValue=isCancelled,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCancelled",OldValue=isCancelled,NewValue=value,PropertyType="bool?"};
 		    NotifyPropertyChanged(values);
 		   isCancelled=value;
 		   }

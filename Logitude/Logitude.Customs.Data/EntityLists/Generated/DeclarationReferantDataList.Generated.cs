@@ -85,7 +85,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool IsCustomerLogBoxActivated  { get; set; }
        [DataMember]
-       public bool IsCancelled  { get; set; }
+       public bool? IsCancelled  { get; set; }
        [DataMember]
        public string ClassifiedUserName  { get; set; }
        [DataMember]
@@ -127,13 +127,13 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string ProcedureCurrentName  { get; set; }
        [DataMember]
-       public bool IsPaymentDateNull  { get; set; }
+       public bool? IsPaymentDateNull  { get; set; }
        [DataMember]
-       public bool IsAvailabilityDateNull  { get; set; }
+       public bool? IsAvailabilityDateNull  { get; set; }
        [DataMember]
        public string DeclarationNumber  { get; set; }
        [DataMember]
-       public bool IsHatraDateNull  { get; set; }
+       public bool? IsHatraDateNull  { get; set; }
        [DataMember]
        public int? RequestedCustomsDocId  { get; set; }
        [DataMember]
