@@ -1208,7 +1208,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             IQueryable<LedgerTransactionList> ledgerTransactions = GetFilteredList(queryOperations, tenant);
 
             IQueryable<LedgerTransactionList> accountOpenTransaction = GetTransactionsForNormalAccount(tenant, accountId, ledgerTransactions);
-            IQueryable<LedgerTransactionList> transferAccountOpenTransaction = GetTransactionsForTransferAccount(tenant, transferAccountId, ledgerTransactions);
+            IQueryable<LedgerTransactionList> transferAccountOpenTransaction = GetAllTransactionsForTransferAccount(tenant, transferAccountId, ledgerTransactions);
 
             IQueryable<LedgerTransactionList> resultedList = accountOpenTransaction.Union(transferAccountOpenTransaction).OrderByDescending(d=>d.DocumentDate);
             return resultedList;
@@ -1224,7 +1224,31 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return resultedList;
         }
 
-        private IQueryable<LedgerTransactionList> GetTransactionsForTransferAccount(int tenant, string transferAccountId, IQueryable<LedgerTransactionList> transactions)
+        private IQueryable<LedgerTransactionList> GetAllTransactionsForTransferAccount(int tenant, string transferAccountId, IQueryable<LedgerTransactionList> transactions)
+        {
+            IQueryable<LedgerTransactionList> ExternalTransactionsOnTransferAccount = GetExternalTransactionsOnTransferAccount(transactions, tenant, transferAccountId);
+            IQueryable<LedgerTransactionList> TransactionsOnTransferAccount = GetTransactionsOnTransferAccount(tenant, transferAccountId, transactions);
+
+            return ExternalTransactionsOnTransferAccount.Union(TransactionsOnTransferAccount);
+        }
+
+        private IQueryable<LedgerTransactionList> GetExternalTransactionsOnTransferAccount(IQueryable<LedgerTransactionList> transactions, int tenant, string transferAccountId)
+        {
+            DateTime today = GetCurrentDate(tenant);
+            string AccountingEntityCode_Journal = "1";
+            return (from trans in transactions
+                    join journal in context.Journals on trans.JournalId equals journal.Id
+                    where journal.ExternalSystem != null
+                    && trans.AccountId == transferAccountId
+                    && journal.AccountingEntityCode == AccountingEntityCode_Journal
+                    && trans.Tenant == tenant
+                    && trans.DueDate < today
+                    && trans.IsExternalReconcile == false
+                    && Math.Abs(trans.OpenAmount) == Math.Abs(trans.LocalAmountCredit + trans.LocalAmountDebit)
+                    select trans);
+        }
+
+        private static IQueryable<LedgerTransactionList> GetTransactionsOnTransferAccount(int tenant, string transferAccountId, IQueryable<LedgerTransactionList> transactions)
         {
             DateTime today = GetCurrentDate(tenant);
             return from a in transactions
@@ -1236,6 +1260,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                       && Math.Abs(a.OpenAmount) == Math.Abs(a.LocalAmountCredit + a.LocalAmountDebit)
                    select a;
         }
+
         public IQueryable<LedgerTransactionList> GetFilteredTransactions(LedgerTransactionsFilter filter)
         {
             IQueryable<LedgerTransactionList> tenantTransactions = GetTenantTransactions(filter.Tenant);
