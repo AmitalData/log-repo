@@ -207,6 +207,7 @@ namespace Logitude.Test.Base.Hooks
             PartnersData.AirlineBAId = partnersVariables.AirlineBAId;
             PartnersData.ShippingLineMSCUId = partnersVariables.ShippingLineMSCUId;
             PartnersData.ShippingLineMAEUId = partnersVariables.ShippingLineMAEUId;
+            PartnersData.ShippingLineYMLUId = partnersVariables.ShippingLineYMLUId;
             PartnersData.WarehouseId = partnersVariables.WarehouseId;
         }
     }
