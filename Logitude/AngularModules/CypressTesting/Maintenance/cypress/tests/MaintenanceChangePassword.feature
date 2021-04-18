@@ -1,4 +1,4 @@
-@release  @all @dev
+@release  @all @stable
 Feature:Change Password
 The user changes password from the Maintenance Module 
 
