@@ -1301,6 +1301,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 if (this.entityPM.ShipmentLevelCode != "D")
                 {
                     UpdateShipmentProfitClass.UpdatePayables(entityPM.Id, entityPM.Tenant, false);
+                    UpdateShipmentProfitClass.UpdateShipmentHousesPayablesVatAmounts(entityPM.Id, tenant);
 
                     // Ayman: Please don't remove
                     if (this.entityPM.ShipmentLevelCode == "C")
@@ -1318,6 +1319,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 if (this.entityPM.ShipmentLevelCode != "D")
                 {
                     UpdateShipmentProfitClass.UpdateReceivables(entityPM.Id, entityPM.Tenant, false);
+                    UpdateShipmentProfitClass.UpdateShipmentHousesReceivablesVatAmounts(entityPM.Id, tenant);
 
                     // Ayman: Please don't remove
                     if (this.entityPM.ShipmentLevelCode == "C")
