@@ -163,6 +163,8 @@ export class ActionButtonsListTemplate {
     }
 
     EditButtonClicked() {
+
+   
         this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
         this.CurrentSession.StartBusyIndicator("Loading ...");
         this._ShipmentPMService.get(this.rowData.Id).subscribe((myResult:any) => {
@@ -176,9 +178,8 @@ export class ActionButtonsListTemplate {
                 windowArgs.IsNew = false;
                 windowArgs.EntityPM = myResult.Result
                 newWindow.WindowArgs = windowArgs;
-                //newWindow.Add(control);
-                if (SessionLocator.PrivateLableSettings) {
-                    newWindow.Height = 376;
+                if ((SessionLocator.PrivateLableSettings) {
+                    newWindow.Height = this.IsDSV ?  376 : 420;
                     newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditPrivateLabelShipmentComponent');
                 }
                 else {
