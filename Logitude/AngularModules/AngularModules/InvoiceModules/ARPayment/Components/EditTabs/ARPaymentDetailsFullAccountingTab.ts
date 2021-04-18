@@ -2112,6 +2112,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 var firstCheque: ARPaymentChequeReplicaPM = this.EntityPM.ARPaymentChequeReplicas.filter(d => d.LineNumber == 1)[0];
                 this.MapChequeFields(firstCheque);
                 this.CalculatePaymentTotalAmount();
+              
             }
             else if (this.EntityPM.ARPaymentChequeReplicas.length == 0) {
                 this.MapChequeFields(null);
@@ -2119,11 +2120,15 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
              
     }
     CalculatePaymentTotalAmount() {
-        this.paymentAmountTotal = 0;
+        this.AmountInPaymentCurrency = 0;
         for (let cheque of this.EntityPM.ARPaymentChequeReplicas) {
-            if (!AppTool.IsNullOrEmpty(cheque.ForeignAmount))
-                this.paymentAmountTotal += cheque.ForeignAmount;
+            if (!AppTool.IsNullOrEmpty(cheque.ForeignAmount)) {
+                this.AmountInPaymentCurrency += cheque.ForeignAmount;
+              
+            }
         }
+        this.ComputeLocalAmount();
+        this.SetPaymentAmount();
     }
     MapChequeFields(cheque: ARPaymentChequeReplicaPM) {
         this.Bank = cheque != null ? cheque.BankId : null;
