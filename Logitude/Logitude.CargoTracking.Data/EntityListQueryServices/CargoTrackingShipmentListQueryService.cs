@@ -232,7 +232,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                     AssignedCustomsAgentExcReason = poco.AssignedCustomsAgentExcReason,
                     AssignedCustomsAgentNotes = poco.AssignedCustomsAgentNotes,
 
-
+                    DirectionId =poco.DirectionId,
                     DeliveryDone = poco.DeliveryDone,
 
                     DeliveryDate = poco.DeliveryDate,
