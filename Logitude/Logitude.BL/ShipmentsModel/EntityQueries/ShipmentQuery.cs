@@ -13208,18 +13208,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             string bookingConfirmationNumber = "", shipmentNumber = "";
             if (!string.IsNullOrEmpty(shipmentId))
             {
-                var shipmentData = (from a in repository.context.Shipments
+                var shipmentSelectedData = (from a in repository.context.Shipments
                                     where a.Id == shipmentId && a.Tenant == tenant
                                     select new
                                     {
                                         ShipmentNumber = a.ShipmentNumber,
                                         MasterShipmentDataId = a.MasterShipmentDataId
                                     }).FirstOrDefault();
-                shipmentNumber = shipmentData.ShipmentNumber;
-                if (shipmentData != null)
+                shipmentNumber = shipmentSelectedData.ShipmentNumber;
+                if (shipmentSelectedData != null)
                 {
                     bookingConfirmationNumber = (from a in repository.context.ShipmentMasterDatas
-                                                 where a.Id == shipmentData.MasterShipmentDataId
+                                                 where a.Id == shipmentSelectedData.MasterShipmentDataId
                                                  select a.BookingConfirmationNumber).FirstOrDefault();
                 }
             }
