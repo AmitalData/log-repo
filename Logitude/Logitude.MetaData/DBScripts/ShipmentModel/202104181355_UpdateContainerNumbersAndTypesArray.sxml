@@ -1,0 +1,12 @@
+﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="ShipmentComputedFields">
+  <Sql Version="1">
+    <![CDATA[
+    
+      update ShipmentComputedFields set ContainersNumbersandTypesArray = null where ContainersNumbersandTypesArray = '[]'
+      
+    ]]>
+  </Sql>
+</Script>
+
+
+
