@@ -723,7 +723,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 };
                 Customs.BL.EntityQueryServices.SupplierInvoiceQueryService supplierInvoiceQueryService = new Customs.BL.EntityQueryServices.SupplierInvoiceQueryService(tenant);
-                _OrgSupplierInvoicePM = supplierInvoiceQueryService.GetSupplierInvoiceWithSpecificItemBySequenceNumber(decIdOrg, (int)supplierInvoicePM.SequenceNumeric, tenant);
+                _OrgSupplierInvoicePM = supplierInvoiceQueryService.GetSupplierInvoiceWithSpecificItemBySequenceNumber(decIdOrg, (int)supplierInvoicePM.SequenceNumeric, (int)supplierInvoicePM.SequenceNumeric);
 
                 if (_OrgSupplierInvoicePM == null && declarationPMOrg!=null)
                     continue;
@@ -963,10 +963,24 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 if (goodsItemAmount.CustomsValueAmount != null)
                                     switch (GetValueCodeType(goodsItemAmount.AmountType))
                                     {
+                                        case "3":
+                                            {if(!isFromImporter)
+                                                {
+                                                    supplierInvoiceItemPM.ItemPrice = GetValueAmountType(goodsItemAmount.CustomsValueAmount);
+                                                    supplierInvoiceItemPM.ItemPriceCurrencyCode = goodsItemAmount.CustomsValueAmount.currencyID.ToString();
+
+                                                }
+                                                break;
+
+                                            }
                                         case "1":
                                             {
-                                                supplierInvoiceItemPM.ItemPrice = GetValueAmountType(goodsItemAmount.CustomsValueAmount);
-                                                supplierInvoiceItemPM.ItemPriceCurrencyCode = goodsItemAmount.CustomsValueAmount.currencyID.ToString();
+                                                if (isFromImporter)
+                                                {
+                                                    supplierInvoiceItemPM.ItemPrice = GetValueAmountType(goodsItemAmount.CustomsValueAmount);
+                                                    supplierInvoiceItemPM.ItemPriceCurrencyCode = goodsItemAmount.CustomsValueAmount.currencyID.ToString();
+
+                                                }
                                                 break;
 
                                             }
