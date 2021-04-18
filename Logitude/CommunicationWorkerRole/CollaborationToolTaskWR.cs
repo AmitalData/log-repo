@@ -45,7 +45,8 @@ namespace CommunicationWorkerRole
                                 }
                                 else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
                                 {
-                                    //var xx = result.Result.Content.ReadAsStringAsync().Result;
+                                    var Msg = result.Result.Content.ReadAsStringAsync().Result;
+                                    ExceptionHandler.HandleException(new Exception(Msg), DateTime.Now, 1, null, "CreateTaskCollaborationTool Request Faild", null, null); 
                                     queueservice.CompleteAsFailed();
                                 }
                             }
@@ -53,6 +54,7 @@ namespace CommunicationWorkerRole
                     }
                     catch (Exception ex)
                     {
+                        queueservice.CompleteAsFailed();
                         ConnectClient();
                         ExceptionHandler.HandleException(ex, DateTime.Now, 1, null, "CreateTaskCollaborationTool worker role start", null, null);
                         Thread.Sleep(10000);
@@ -96,16 +98,16 @@ namespace CommunicationWorkerRole
             int tenant = int.Parse(response.MessageValues["Tenant"].ToString());
             return new CollaborationToolTask()
             {
-                Tenant = tenant,
-                Title = "New task from Logitude",
+                Tenant = tenant, 
                 StartDate = DateTime.UtcNow,
                 EndDate = DateTime.Parse(response.MessageValues["EndDate"]),
                 AssigneeEmail = GetUserEmailFromId(tenant, response.MessageValues["AssigneeId"].ToString()),
                 PriorityCode = "M",
                 OwnerEmail = GetUserEmailFromId(tenant, response.MessageValues["OwnerId"].ToString()),
-                StatusCode = "NEW",
+                StatusCode = "TOD",
                 EntityNumber = response.MessageValues["EntityNumber"].ToString(),
                 TaskTypeName = response.MessageValues["TaskType"].ToString(),
+                Title = "New " + response.MessageValues["TaskType"].ToString(),
                 CreatedDate = DateTime.UtcNow,
                 CreatedByUserEmail = GetUserEmailFromId(tenant, response.MessageValues["OwnerId"].ToString())
             };
