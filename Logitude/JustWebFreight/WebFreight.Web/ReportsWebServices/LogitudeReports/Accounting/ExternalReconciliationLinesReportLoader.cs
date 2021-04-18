@@ -416,13 +416,30 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             IQueryable<LedgerTransactionList> transactionsQuery = GetFilteredTransactions(transactionsFilter);
 
             transactionsQuery = FilterTransactionQueryByRefDatePeriod(transactionsQuery);
+            transactionsQuery = FilterByOpenAndClosed(transactionsQuery);
 
             return transactionsQuery;
         }
 
+        private IQueryable<LedgerTransactionList> FilterByOpenAndClosed(IQueryable<LedgerTransactionList> transactionsQuery)
+        {
+            if (this.IsExternalReconciled == "open")
+            {
+                return transactionsQuery.Where(d => !d.IsExternalReconcile);
+            }
+            else if (this.IsExternalReconciled == "close")
+            {
+                return transactionsQuery.Where(d => d.IsExternalReconcile);
+            }
+            return transactionsQuery;
+
+
+        }
+
         private IQueryable<LedgerTransactionList> FilterTransactionQueryByRefDatePeriod(IQueryable<LedgerTransactionList> transactionsQuery)
         {
-            transactionsQuery = transactionsQuery.Where(transaction => DbFunctions.TruncateTime(transaction.DocumentDate) >= DbFunctions.TruncateTime(RefDateFrom) && DbFunctions.TruncateTime(transaction.DocumentDate) <= DbFunctions.TruncateTime(RefDateTo));
+            transactionsQuery = transactionsQuery.Where(transaction => DbFunctions.TruncateTime(transaction.DocumentDate) >= DbFunctions.TruncateTime(RefDateFrom)
+            && DbFunctions.TruncateTime(transaction.DocumentDate) <= DbFunctions.TruncateTime(RefDateTo));
             return transactionsQuery;
         }
 
@@ -431,9 +448,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             LedgerTransactionsFilter transactionsFilter = BuildTransferTransactionsFilter(bankAccounts);
             IQueryable<LedgerTransactionList> transactionsQuery = GetFilteredTransactions(transactionsFilter);
             IQueryable<LedgerTransactionList> externalTransactions = GetTransferAccountsExternalTransactions(bankAccounts);
+           
 
             transactionsQuery = FilterTransactionQueryByRefDatePeriod(transactionsQuery);
+            transactionsQuery = FilterByOpenAndClosed(transactionsQuery);
             externalTransactions = FilterTransactionQueryByRefDatePeriod(externalTransactions);
+            externalTransactions = FilterByOpenAndClosed(externalTransactions);
 
             var transferTransactions = new List<LedgerTransactionList>();
             transferTransactions.AddRange(transactionsQuery);

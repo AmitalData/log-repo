@@ -1286,7 +1286,7 @@
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
-    HasDataBaseField="false"
+    HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"

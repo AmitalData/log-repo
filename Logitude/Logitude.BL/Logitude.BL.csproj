@@ -70,6 +70,10 @@
     <Reference Include="HtmlAgilityPack, Version=1.8.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.8.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\JustWebFreight\WebFreight.Web\bin\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Intuit.Ipp.Core, Version=7.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\IppDotNetSdkForQuickBooksApiV3.7.5.0\lib\Intuit.Ipp.Core.dll</HintPath>
     </Reference>
@@ -2693,6 +2697,7 @@
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentAssemblyQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentAWBPrintOnlyQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentCarrierStatusQuery.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\ShipmentCloudCustomDataDeserializer.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentCommodityQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentConsoleShipmentQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentCustomerTypeQuery.cs" />

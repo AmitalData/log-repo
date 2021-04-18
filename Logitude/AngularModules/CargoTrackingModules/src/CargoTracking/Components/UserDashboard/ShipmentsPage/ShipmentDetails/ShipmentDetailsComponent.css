@@ -25,7 +25,7 @@ h1 {
     text-align: center;
 }
 
-.direction-icon {
+.circle-image .direction-icon {
     position: relative;
     bottom: -30px;
     transform: rotate(45deg);
@@ -204,7 +204,7 @@ h1 {
     line-height: 24px;
     margin: 10px;
     float: left;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .data-cards .title {
@@ -306,5 +306,163 @@ h1 {
         font-weight: bold;
     }
 
-  
+
+}
+
+.routing-timeline{
+    display: flex;
+    flex-flow: column wrap;
+}
+.routing-step{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 12px;
+    position: relative;
+
+}
+
+    .routing-banner svg{
+        width: 30px;
+    }
+.routing-card {
+    width: calc(100% - 50px);
+    border-radius: 5px;
+    padding: 5px;
+    background: #fff;
+    box-shadow: 0px 0px 8px 0px #00000030;
+    position: relative;
+}
+.routing-step.active .routing-card{
+    background: var(--MainColor);
+    color: white !important;
+
+}
+.route-card-body{
+    display: flex;
+    flex-flow: column wrap;
+    height: 100%;
+}
+
+.route-label{
+    font-weight: 700;
+    color: var(--MainColor);
+    text-transform: uppercase;
+}
+.routing-step.active .route-label{
+    color: white !important;
+}
+
+
+.route-direction{
+    margin-bottom: 4px;
+}
+.route-description {
+    max-width: 150px;
+}
+
+.routing-step.active .route-direction svg path{
+    fill: #fff !important;
+}
+@media screen and (min-width: 479px){
+    .routing-timeline{
+        flex-flow: row wrap;
+    }
+    .routing-step{
+        flex-flow: column nowrap;
+        width: 200px;
+    }
+    .routing-card{
+        order: -1;
+        filter: drop-shadow(0 2px 4px #00000030);
+    }
+    .routing-banner {
+        margin-top: 20px;
+    }
+    .route-label > div{
+        display: inline;
+    }
+    .routing-card::before {
+        z-index: 10;
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        margin-left: 0;
+        bottom: -5px;
+        left: calc(50% - 0px);
+        box-sizing: border-box;
+        border: 10px solid #fff;
+        border-color: transparent transparent #fff #fff;
+        transform-origin: 0 0;
+        transform: rotate(45deg);
+    }
+    .routing-card::after {
+        z-index: -99;
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        margin-left: 0;
+        bottom: -5px;
+        left: calc(50% - 0px);
+        box-sizing: border-box;
+        border: 10px solid #fff;
+        border-color: transparent #fff #fff transparent;
+        transform-origin: 0 0;
+        transform: rotate(45deg);
+    }
+    .routing-step.active .routing-card::after {
+        border-color: transparent var(--MainColor) var(--MainColor) transparent;
+    }
+    .routing-step.active .routing-card::before {
+        border-color: transparent transparent var(--MainColor) var(--MainColor);
+    }
+
+    .routing-step::after{
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: 0px;
+        width: 100%;
+        background: var(--MainColor);;
+        height: 2px;
+        left: 0;
+    }
+    .routing-step:first-child:after{
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: 0px;
+        width: calc(50% + 15px);
+        background: var(--MainColor);;
+        height: 2px;
+        right: 0;
+        left: unset !important;
+    }
+    .routing-step:last-child:after{
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: 0px;
+        width: calc(50% + 15px);
+        background: var(--MainColor);;
+        height: 2px;
+        left: 0;
+        right: unset !important;
+    }
+
+}
+@media screen and (max-width: 479px){
+    .mobile-font-18{
+        font-size: 18px;
+    }
+    .route-direction{
+        align-self: flex-end;
+    }
+    .routing-card {
+        height: 60px;
+    }
 }

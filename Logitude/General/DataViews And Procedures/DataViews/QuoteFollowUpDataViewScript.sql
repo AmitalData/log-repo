@@ -63,7 +63,7 @@ FROM            dbo.Quotes INNER JOIN
                          dbo.ShipmentTypes ON dbo.Quotes.ShipmentTypeId = dbo.ShipmentTypes.Id LEFT OUTER JOIN
                          dbo.BusinessUnits ON dbo.Quotes.BusinessUnitId = dbo.BusinessUnits.Id LEFT OUTER JOIN
 						 dbo.Incoterms ON dbo.Quotes.IncotermId = dbo.Incoterms.Id LEFT OUTER JOIN
-                         dbo.QuoteClosingReasons ON dbo.Quotes.QuoteClosingReasonCode = dbo.QuoteClosingReasons.Code
+                         dbo.QuoteClosingReasons ON dbo.Quotes.QuoteClosingReasonId = dbo.QuoteClosingReasons.Id
 
 
 GO

@@ -70,6 +70,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
     ObjectFieldTextListColum1ListSelected: ObjectFieldText;
     ObjectFieldTextListSelected: ObjectFieldText;
     ObjectFieldPMList: ObjectFieldPM[] = [];
+    IsWindowOpened: boolean = true;
 
     IsSaveQuoteTemplateTextDesignRuning: boolean = false;
     IsSaveQuoteTemplateTableDesignRuning: boolean = false;
@@ -1165,11 +1166,18 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
 
     SaveCompleted() {
         if (!this.IsSaveQuoteTemplateTextDesignRuning && !this.IsSaveQuoteTemplateTableDesignRuning && !this.IsSaveQuoteTemplateTextCodeRuning) {
-            this.CurrentSession.StopBusyIndicator();
-            this.CurrentSession.CurrentWindow.Close("Refresh");
+            this.CloseCurrentWindow();
 
         }
 
+    }
+
+    CloseCurrentWindow() {
+        if (this.IsWindowOpened) {
+            this.IsWindowOpened = false;
+            this.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.Close("Refresh");
+        }
     }
 
     CloseButtonClicked() {
