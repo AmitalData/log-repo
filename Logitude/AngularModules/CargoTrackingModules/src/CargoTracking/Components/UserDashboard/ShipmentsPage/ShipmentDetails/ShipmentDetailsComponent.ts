@@ -35,6 +35,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     CustomsBrokerReference: string;
     ShipmentPM: any;
 
+
     get tenant()
     {
         return CargoTrackingBrandingData.Tenant;
@@ -58,6 +59,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
             this.BuildSliderCards();
 
         }, 200);
+        this.InitRoutes();
 
     }
     @HostListener('window:resize', ['$event'])
@@ -300,6 +302,43 @@ export class ShipmentDetailsComponent implements AfterViewInit
     {
         this.router.navigate(['cargo-tracking', 'shipments']);
     }
+
+    ShipmentRouteSteps: RoutingStep[] = [];
+    InitRoutes(){
+        var step1 = new RoutingStep();
+        step1.FromPortLabel = "US-BOS";
+        step1.ToPortLabel = "US-NYC";
+        step1.Description = "Via lorem ipsum co.";
+        step1.TransportModeCode = "A";
+        step1.Directions = [
+            new RouteDirection(new Date(),"ATA","in"),
+            new RouteDirection(new Date(),"ETD","out"),
+        ];
+
+
+        var step2 = new RoutingStep();
+        step2.FromPortLabel = "US-QAL";
+        step2.ToPortLabel = "US-NYC";
+        step2.Description = "Via lorem ipsum co.";
+        step2.TransportModeCode = "I";
+        step2.Directions = [
+            new RouteDirection(new Date(),"ATA","in"),
+            new RouteDirection(new Date(),"ETD","out"),
+        ];
+
+        var step3 = new RoutingStep();
+        step3.FromPortLabel = "US-QAL";
+        step3.ToPortLabel = "US-NAB";
+        step3.Description = "Rafedia main st.";
+        step3.TransportModeCode = "O";
+        step3.IsActive = true;
+        step3.Directions = [
+            new RouteDirection(new Date(),"ATA","in"),
+            new RouteDirection(new Date(),"ATD","in"),
+        ];
+
+        this.ShipmentRouteSteps =  [step1,step2,step3];
+    }
 }
 
 
@@ -312,4 +351,24 @@ export class MilestoneCard
     IsActive: boolean;
     HasWarning: boolean;
     IsDimmed: boolean;
+}
+
+export class RoutingStep
+{
+    IsActive: boolean;
+    FromPortLabel;
+    ToPortLabel;
+    Description: string;
+    TransportModeCode: 'A' | 'I' | 'O';
+    Directions: RouteDirection[] = [];
+}
+export class RouteDirection{
+    constructor(date: Date,label: string,direction: 'in' | 'out') {
+        this.Date = date;
+        this.Label = label;
+        this.Direction = direction;
+    }
+    Date: Date;
+    Label: string;
+    Direction: 'in' | 'out' = 'in';
 }
