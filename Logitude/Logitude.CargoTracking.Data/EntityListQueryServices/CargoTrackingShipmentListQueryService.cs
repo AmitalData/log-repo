@@ -58,6 +58,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                PickupEstimationDate = shipment.PickupEstimationDate,
                                                                FromWarehouseEstimationDate = shipment.FromWarehouseEstimationDate,
                                                                ToWarehouseEstimationDate = shipment.ToWarehouseEstimationDate,
+                                                               DepartureDate = shipment.DepartureDate,
+                                                               DepartureDone = shipment.DepartureDone,
                                                                DepartureEstimationDate = shipment.DepartureEstimationDate,
                                                                ArrivalEstimationDate = shipment.ArrivalEstimationDate,
                                                                DeliveredEstimationDate = shipment.DeliveredEstimationDate,
@@ -75,8 +77,18 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                AssignedTruckerDone = shipment.AssignedTruckerDone,
                                                                GrossWeightUnitCode = shipment.GrossWeightUnitCode,
                                                                ArrivalDate = shipment.ArrivalDate,
+                                                               ArrivalDone = shipment.ArrivalDone,
                                                                CustomsPaymentDate = shipment.CustomsPaymentDate,
                                                                ContainersNumbers = shipment.ContainersNumbers,
+                                                               FromWarehouseDate = shipment.FromWarehouseDate,
+                                                               FromWarehouseNotes = shipment.FromWarehouseNotes,
+                                                               ToWarehouseDate = shipment.ToWarehouseDate,
+                                                               ToWarehouseNotes = shipment.ToWarehouseNotes,
+                                                               DeliveryEstimationDate = shipment.DeliveryEstimationDate,
+                                                               DeliveryDate = shipment.DeliveryDate,
+                                                               DeliveryNotes = shipment.DeliveryNotes,
+                                                               AssignedTruckerEstimationDate = shipment.AssignedTruckerEstimationDate,
+                                                               AssignedTruckerNotes = shipment.AssignedTruckerNotes,
 
                                                                // port fields
                                                                ToPortCountryCode = toPort.CountryCode,
@@ -90,7 +102,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                // card
                                                                CustomerEnglishName = customer.EnglishName,
                                                                CustomerLocalName = customer.LocalName,
-                                                               ShipperName = shipper.LocalName,
+                                                               ShipperName = shipper.EnglishName,
 
 
                                                            });
