@@ -76,6 +76,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                GrossWeightUnitCode = shipment.GrossWeightUnitCode,
                                                                ArrivalDate = shipment.ArrivalDate,
                                                                CustomsPaymentDate = shipment.CustomsPaymentDate,
+                                                               ContainersNumbers = shipment.ContainersNumbers,
 
                                                                // port fields
                                                                ToPortCountryCode = toPort.CountryCode,
@@ -90,7 +91,6 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                CustomerEnglishName = customer.EnglishName,
                                                                CustomerLocalName = customer.LocalName,
                                                                ShipperName = shipper.LocalName,
-
 
 
                                                            });
