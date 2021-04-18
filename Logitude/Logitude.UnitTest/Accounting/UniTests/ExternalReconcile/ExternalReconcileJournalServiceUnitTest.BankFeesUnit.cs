@@ -117,7 +117,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             myExternalReconcileJournalService.MustInit(fakeExternalReconcileDataProvider);
             string adjustGLAccountId = "adjustGLAccountId";
             myExternalReconcileJournalService.OnAdjustMustInit(adjustGLAccountId, "screenNotes");
-            myExternalReconcileJournalService.CreateJournalWithExtReconcile(_Tenant, myOrginalJournalTransaction.First().Id, myReconcileExternalPageLinePM.Id);
+            myExternalReconcileJournalService.CreateJournalWithExtReconcile(_Tenant,new List<string>() { myOrginalJournalTransaction.First().Id }, myReconcileExternalPageLinePM.Id);
 
             Assert.IsNotNull(myExternalReconcileJournalService.TheJournalPM);
             var theCreatedJournal = myExternalReconcileJournalService.TheJournalPM;
@@ -279,7 +279,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             myExternalReconcileJournalService.MustInit(fakeExternalReconcileDataProvider);
             string adjustGLAccountId = "adjustGLAccountId";
             myExternalReconcileJournalService.OnAdjustMustInit(adjustGLAccountId, "screenNotes");
-            myExternalReconcileJournalService.CreateJournalWithExtReconcile(_Tenant, myOrginalJournalTransaction.First().Id, myReconcileExternalPageLinePM.Id);
+            myExternalReconcileJournalService.CreateJournalWithExtReconcile(_Tenant, new List<string>() { myOrginalJournalTransaction.First().Id }, myReconcileExternalPageLinePM.Id);
 
             Assert.IsNotNull(myExternalReconcileJournalService.TheJournalPM);
             var theCreatedJournal = myExternalReconcileJournalService.TheJournalPM;
