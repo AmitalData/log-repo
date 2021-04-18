@@ -39,10 +39,8 @@ namespace WebFreight.Web.DataProviders
         public string TenantPhone { get; set; }
         public string TenantFax { get; set; }
         public string Name { get; set; }
-        public string BillToVendorName { get; set; }
-        public string PartnerName { get; set; }
-        public DateTime FromDate { get; set; }
-        public DateTime ToDate { get; set; }
+        public DateTime? FromDate { get; set; }
+        public DateTime? ToDate { get; set; }
         public string AROrAPFilter { get; set; }
         public string PaymentOrInvoiceFilter { get; set; }
         public List<StatementGroup> StatementGroupList { get; set; } 
