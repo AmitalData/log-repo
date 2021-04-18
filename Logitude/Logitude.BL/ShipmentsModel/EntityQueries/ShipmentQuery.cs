@@ -13577,13 +13577,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
 
 
-        private List<ShipmentPackagePM> GetPackagesOfShipment(int tenant, string shipmentId)
-        {
-            var shipmentIds = new List<string>() { shipmentId };
-            ShipmentPackageQuery shipmentPackageQuery = new ShipmentPackageQuery(tenant);
-            var shipmentPackages = shipmentPackageQuery.GetShipmentPackages(shipmentIds, tenant);
-            return shipmentPackages;
-        }
     }
 
     public class DeparturesArrivalsDataItem
