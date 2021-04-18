@@ -654,9 +654,9 @@ export class ListComponent implements OnInit, AfterViewInit {
 
         if (this.ObjectTableName == "Customs.ExportStorge") {
             this.LayoutDirection = "ltr";
-            ObjectsLocator.GlobalSetting.LayoutDirection = 'ltr';
-        } else {
-            ObjectsLocator.GlobalSetting.LayoutDirection = 'rtl';
+            this.RTL = false;
+            this.ShowViews = false;
+            this.EnglishView = true;
         }
     }
 
@@ -923,6 +923,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
     private listArgs: ListComponentArgs;
     ShowViews: boolean = true;
+    EnglishView: boolean = false;
     ResourcesLoaded: boolean = false;
   Run(args: ListComponentArgs) {
     this.CurrentSession.AddMenuReference(this.ComponentRef);

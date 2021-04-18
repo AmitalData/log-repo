@@ -69,7 +69,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                       StuffingSiteType = a.StuffingSiteType,
 
-                                                      LoadingSite = a.LoadingSite,
+                                                      LoadingSiteCode = a.PortLoadingSite.Code,
+                                                      
+                                                      FinalDestinationCode=a.FinalDestinati.Code,
 
                                                       OpenDate = a.OpenDate,
 
@@ -79,6 +81,21 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                       ExporterRef = a.ExporterRef,
 
+                                                      IsOpenStoarge=a.IsOpenStoarge,
+
+                                                      VesselAndVoyage=a.ShipCode + a.VoyageNo,
+
+                                                      ShipAgentName=a.ShippingAgent.Card.LocalName,
+
+                                                      DriverName=a.Trucker.Card.EnglishName,
+
+                                                      ExporterName= a.ExporterName,
+
+                                                      FclLclName = a.FclLclCodeTable == null ? null : a.FclLclCodeTable.Name,
+
+                                                      ContainerNumber=a.ContainerNumber,
+
+                                                      Customs=a.CustomFileNo,
 
                                                   });
             return query;

@@ -275,8 +275,12 @@
                             <span *ngIf="ShowViews">{{'General.O.View' | TextCodeTranslationPipe}}:</span>
                         </td>
 
+                        <td style="width: 35px; vertical-align: middle; font-size: 11px; color:  #45494A;">
+                            <span *ngIf="EnglishView">{{'View'}}:</span>
+                        </td>
+
                         <td style="vertical-align: middle;width:170px">
-                            <QueryList *ngIf="ShowViews && ResourcesLoaded" [ItemsSource]="Queries" [UserItemSource]="UserQueries" [Binding]="'NameTextCodeCode'" [onSelectedQueryChangeEvent]="onSelectedQueryChangeEvent" [SelectedItem]="SelectedQuery" [ObjectTableName]="ObjectTableName" (itemSelectedEvent)="QueryValueChanged($event)" [QueryListSourceChanged]="QueryListSourceChanged" (QueriesChangedEvent)="QueriesChangedEvent($event)" [LoadResourceCompleted]="LoadResourceCompleted" [pubSubAdvanceQueryFiltersService]="AdvanceQFiltersService" (NewViewClosedEvent)="NewViewClosedEvent($event)"></QueryList>
+                            <QueryList *ngIf="(ShowViews || EnglishView) && ResourcesLoaded" [ItemsSource]="Queries" [UserItemSource]="UserQueries" [Binding]="'NameTextCodeCode'" [onSelectedQueryChangeEvent]="onSelectedQueryChangeEvent" [SelectedItem]="SelectedQuery" [ObjectTableName]="ObjectTableName" (itemSelectedEvent)="QueryValueChanged($event)" [QueryListSourceChanged]="QueryListSourceChanged" (QueriesChangedEvent)="QueriesChangedEvent($event)" [LoadResourceCompleted]="LoadResourceCompleted" [pubSubAdvanceQueryFiltersService]="AdvanceQFiltersService" (NewViewClosedEvent)="NewViewClosedEvent($event)"></QueryList>
 
 
 
@@ -305,7 +309,7 @@
 
 
                         <td *ngIf="(dataSource && dataSource.rowCount == ConstantPageSize && DontApplyVirtualization)" style="color: #666666; font-size: 11px; padding-left:5px;padding-right:5px;width:1px;background-color:#FFFBDA">
-                            <div>  <span >Showing the first {{ConstantPageSize}} rows, use the search field to find more results.</span></div>
+                            <div>  <span>Showing the first {{ConstantPageSize}} rows, use the search field to find more results.</span></div>
                         </td>
 
 
@@ -313,7 +317,7 @@
                             <div></div>
                         </td>
 
-                        <td  *ngIf="IsReferantObjectTable" style="width: 650px; left:50PX;"> 
+                        <td *ngIf="IsReferantObjectTable" style="width: 650px; left:50PX;">
                             <div LocationDirective Code="MNH"></div>
                         </td>
                         <td style="width: 1px;" *ngIf="IsNavigateButtonVisible">

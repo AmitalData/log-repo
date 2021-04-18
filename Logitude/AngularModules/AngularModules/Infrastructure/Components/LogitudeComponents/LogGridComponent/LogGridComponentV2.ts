@@ -768,7 +768,9 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
     pubSubAdvanceQueryFiltersSub: any;
     SearchFieldChanged: boolean = false;
     ngOnInit() {
-
+        if (this.ObjectTable.Name == "Customs.ExportStorge") {
+            this.RTL = false;
+        }
         if (this.IsCustomTemplate) {
             this.rowHeight = 27;
         }
