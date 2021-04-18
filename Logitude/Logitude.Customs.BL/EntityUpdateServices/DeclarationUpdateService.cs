@@ -1409,6 +1409,43 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 LogMessagingUtil.Instance.AppendLine("Declaration Changed By Customs Notification");
             }
 
+
+            else if (eventCode == "DMA")
+            {
+                notificationDefinitionCode = "5117A";
+                desc = "תיקון הצהרה אושר " + declarationPM.DeclarationNumber;
+                type = "A";
+                LogMessagingUtil.Instance.AppendLine("Declaration Changed By Customs Notification");
+            }
+
+            else if (eventCode == "DMP")
+            {
+                notificationDefinitionCode = "5117P";
+                desc = "תיקון הצהרה אושר חלקית " + declarationPM.DeclarationNumber; 
+                type = "A";
+                LogMessagingUtil.Instance.AppendLine("Declaration Changed By Customs Notification");
+            }
+            else if (eventCode == "DMD")
+            {
+                notificationDefinitionCode = "5117D";
+                desc = "תיקון הצהרה נדחה " + declarationPM.DeclarationNumber;
+                type = "A";
+                LogMessagingUtil.Instance.AppendLine("Declaration Changed By Customs Notification");
+            }
+            else if (eventCode == "DMC")
+            {
+                notificationDefinitionCode = "5117C";
+                desc = "תיקון הצהרה בוטל" + declarationPM.DeclarationNumber;
+                type = "A";
+                LogMessagingUtil.Instance.AppendLine("Declaration Changed By Customs Notification");
+            }
+            else if (eventCode == "DWR")
+            {
+                notificationDefinitionCode = "5117W";
+                desc = "תיקון הצהרה ממתין להחלטת המכס" + declarationPM.DeclarationNumber;
+                type = "A";
+                LogMessagingUtil.Instance.AppendLine("Declaration Changed By Customs Notification");
+            }
             var notificationUpdateService = new NotificationUpdateService(this.MainContext as ICustomContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), declarationPM.Tenant);    //Yuval Chalup 17.11.2014 TASK-9089
             var notificationQueryService = new NotificationQueryService(this.MainContext as ICustomContext);  //Yuval Chalup 17.11.2014 TASK-9089
 
