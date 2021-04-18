@@ -619,7 +619,7 @@ export class ConsigmentTabContentComponent
                 {
                     if (this.declarationPM.TransportModeId == 'A' && this.ConsignmentType == 'E') {
                         this.ManifestNumberPlaceholder = "הזן שנה";
-                        this.SecondCargoIDPlaceholder = "הזן שמ”ב / שמ”פ";
+                        this.SecondCargoIDPlaceholder = "הזן שמ”ר / שמ”פ";
                         this.ThirdCargoIdPlaceholder = "הזן ח.תעופה/משלח";
                         break;
                     }
