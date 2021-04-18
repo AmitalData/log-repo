@@ -1,4 +1,4 @@
-@release @all @dev
+@release @all @dev @all
 Feature: Quote Set as Sent to Customer, Return to Draft, Reactivate & Copy
 
     The user creates a quote, sets it as Sent to Customer, returns it to draft,
