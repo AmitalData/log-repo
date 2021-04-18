@@ -723,7 +723,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 };
                 Customs.BL.EntityQueryServices.SupplierInvoiceQueryService supplierInvoiceQueryService = new Customs.BL.EntityQueryServices.SupplierInvoiceQueryService(tenant);
-                _OrgSupplierInvoicePM = supplierInvoiceQueryService.GetSupplierInvoiceWithSpecificItemBySequenceNumber(decIdOrg, (int)supplierInvoicePM.SequenceNumeric, tenant);
+                _OrgSupplierInvoicePM = supplierInvoiceQueryService.GetSupplierInvoiceWithSpecificItemBySequenceNumber(decIdOrg, (int)supplierInvoicePM.SequenceNumeric, (int)supplierInvoicePM.SequenceNumeric);
 
                 if (_OrgSupplierInvoicePM == null && declarationPMOrg!=null)
                     continue;
