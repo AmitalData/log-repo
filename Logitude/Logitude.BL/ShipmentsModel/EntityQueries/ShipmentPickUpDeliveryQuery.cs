@@ -14,7 +14,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
     public class ShipmentPickUpDeliveryQuery
     {
-        ShipmentPickUpDeliveryRepository repository;         
+        ShipmentPickUpDeliveryRepository repository;
         public ShipmentPickUpDeliveryQuery(int tenant)
         {
             repository = new ShipmentPickUpDeliveryRepository(tenant);
@@ -33,19 +33,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             ShipmentPickUpDelivery entityPOCO = repository.GetSingleShipmentPickUpDelivery(tenant, id);
             ShipmentPickUpPM pickUp = null;
             ShipmentDeliveryPM delivery = null;
-            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-            ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
-      
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            string shipmentNumber = "", bookingConfirmationNumber = "";
              
             if (entityPOCO != null)
             {
-                Tuple<string, string> shipmentNumberAndBookingConfirmationNumber = shipmentQuery.GetShipmentNumberAndBookingConfNumberByTenantAndShipmentId(entityPOCO.ShipmentId, entityPOCO.Tenant);
-                string shipmentNumber = "", bookingConfirmationNumber = "";
-                if (shipmentNumberAndBookingConfirmationNumber != null)
+                Tuple<string, string> shipmentFields = shipmentQuery.GetShipmentFieldsForPickUpDelivery(entityPOCO.ShipmentId, entityPOCO.Tenant);
+                if (shipmentFields != null)
                 {
-                     shipmentNumber = shipmentNumberAndBookingConfirmationNumber.Item1;
-                     bookingConfirmationNumber = shipmentNumberAndBookingConfirmationNumber.Item2;
+                    shipmentNumber = shipmentFields.Item1;
+                    bookingConfirmationNumber = shipmentFields.Item2;
                 }
+
                 if (entityPOCO.PickUpDeliveryTypeCode == "PICK")
                 {
                     pickUp = new ShipmentPickUpPM()
@@ -575,5 +574,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return entityId;
 
         }      
+
     }
 }

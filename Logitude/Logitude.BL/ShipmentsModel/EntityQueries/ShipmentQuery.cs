@@ -13203,7 +13203,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             return masterNumber;
         }
-        public Tuple<string, string> GetShipmentNumberAndBookingConfNumberByTenantAndShipmentId(string shipmentId, int tenant)
+        public Tuple<string, string> GetShipmentFieldsForPickUpDelivery(string shipmentId, int tenant)
         {
             string bookingConfirmationNumber = "", shipmentNumber = "";
             if (!string.IsNullOrEmpty(shipmentId))
