@@ -159,7 +159,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string CancelRequestStatusCode  { get; set; }
        [DataMember]
-       public bool IsExceptionReasonsListNull  { get; set; }
+       public bool? IsExceptionReasonsListNull  { get; set; }
    }
 
 }
