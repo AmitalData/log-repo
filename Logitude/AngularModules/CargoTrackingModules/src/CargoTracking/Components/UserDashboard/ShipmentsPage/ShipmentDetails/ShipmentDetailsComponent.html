@@ -85,7 +85,7 @@
                 <li *ngFor="let ref of ShipmentReferences, let i = index">{{ref}}</li>
             </ul>
             <ul *ngIf="!showMoreReferences">
-                <li *ngFor="let ref of ShipmentReferences.slice(0,2), let i = index">{{ref}}</li>
+                <li *ngFor="let ref of ShipmentReferences?.slice(0,2), let i = index">{{ref}}</li>
             </ul>
         </div>
 
@@ -155,46 +155,68 @@
             [Name]="'Overview'">
 
         <div body>
-            <div class="data-cards">
+            <div class="data-cards" *ngIf="Shipment&& Shipment.ShipmentList">
                 <div>
                     <div class="title">Incoterms</div>
-                    <div class="description">Dolar sit</div>
+                    <div class="description">{{ShipmentPM?.IncotermName}}</div>
                 </div>
+
+                <!-- ETD/ATD -->
                 <div>
-                    <div class="title">Atd</div>
-                    <div class="description">{{'2020/02/19' | date:'dd/MM/yyyy'}}</div>
+                    <div class="title">
+                        <span *ngIf="Shipment.ShipmentList.DepartureDate">atd</span>
+                        <span *ngIf="Shipment.ShipmentList.DepartureEstimationDate && !Shipment.ShipmentList.DepartureDate">etd</span>
+                    </div>
+                    <div class="description">
+                        <span *ngIf="Shipment.ShipmentList.DepartureDate">{{Shipment.ShipmentList.DepartureDate | date:'dd/MM/yyyy'}}</span>
+                        <span *ngIf="Shipment.ShipmentList.DepartureEstimationDate && !Shipment.ShipmentList.DepartureDate">{{Shipment.ShipmentList.DepartureEstimationDate | date:'dd/MM/yyyy'}}
+                            <span style="color: rgb(59, 59, 59); font-size: 12px;">(Expected)</span>
+                        </span>
+                    </div>
                 </div>
+
+                <!-- ETA/ATA -->
                 <div>
-                    <div class="title">eta</div>
-                    <div class="description">{{'2020/02/19' | date:'dd/MM/yyyy'}}</div>
+                    <div class="title">
+                        <span *ngIf="Shipment.ShipmentList.DepartureDate">ata</span>
+                        <span *ngIf="Shipment.ShipmentList.DepartureEstimationDate && !Shipment.ShipmentList.DepartureDate">eta</span>
+                    </div>
+                    <div class="description">
+                        <span *ngIf="Shipment.ShipmentList.ArrivalDate">{{Shipment.ShipmentList.ArrivalDate | date:'dd/MM/yyyy'}}</span>
+                        <span *ngIf="Shipment.ShipmentList.ArrivalEstimationDate && !Shipment.ShipmentList.ArrivalDate">{{Shipment.ShipmentList.ArrivalEstimationDate | date:'dd/MM/yyyy'}}
+                            <span style="color: rgb(59, 59, 59); font-size: 12px;">(Expected)</span>
+                        </span>
+                    </div>
                 </div>
+
+
                 <div>
                     <div class="title">customer</div>
-                    <div class="description">Lorem dolar</div>
+                    <div class="description">{{Shipment.ShipmentList.CustomerEnglishName}}</div>
                 </div>
                 <div>
                     <div class="title">shipper</div>
-                    <div class="description">Sit Amet dol</div>
+                    <div class="description">{{Shipment.ShipmentList.ShipperName}}</div>
                 </div>
                 <div>
                     <div class="title">quantity</div>
-                    <div class="description">400 units</div>
+                    <div class="description">{{Shipment.ShipmentList.PackagesQuantity || 0}} units</div>
                 </div>
                 <div>
                     <div class="title">weight</div>
-                    <div class="description">3 Tons</div>
+                    <div class="description">{{Shipment.ShipmentList.GrossWeight }} {{Shipment.ShipmentList.GrossWeightUnitCode||''}}</div>
                 </div>
                 <div>
                     <div class="title">total value nis</div>
-                    <div class="description">500 ₪</div>
+                    <div class="description"></div>
                 </div>
                 <div>
                     <div class="title">total taxes</div>
-                    <div class="description">1,600 ₪</div>
+                    <div class="description">{{ShipmentPM?.TotalTax}}</div>
                 </div>
                 <div>
                     <div class="title">declaration status</div>
-                    <div class="description">Lorem Ipsum dolar</div>
+                    <div class="description"></div>
                 </div>
 
             </div>
@@ -209,45 +231,39 @@
             [DetailsTitle]="'Container List'">
 
         <div body>
-            <div class="data-cards">
+            <div class="data-cards" *ngIf="Shipment&& Shipment.ShipmentList">
                 <div>
                     <div class="title">Pack Type</div>
-                    <div class="description">Lorem ipsum</div>
+                    <div class="description">
+                        <div *ngFor="let package of ShipmentPM?.PackagesTypesNames?.split(';')">{{package}}</div>
+                    </div>
                 </div>
                 <div>
                     <div class="title">fcl / lcl</div>
-                    <div class="description">Full Container</div>
+                    <div class="description">{{ShipmentPM.ShipmentTypeName}}</div>
                 </div>
                 <div>
                     <div class="title">quantity</div>
-                    <div class="description">400 unit</div>
+                    <div class="description">{{ShipmentPM?.NumberOfPackages || 0}} unit</div>
                 </div>
                 <div>
                     <div class="title">weight</div>
-                    <div class="description">3 tons</div>
+                    <div class="description">{{Shipment.ShipmentList.GrossWeight }} {{Shipment.ShipmentList.GrossWeightUnitCode||''}}</div>
                 </div>
                 <div>
                     <div class="title">volume</div>
-                    <div class="description">528</div>
+                    <div class="description">{{Shipment.ShipmentList.Volume }}</div>
                 </div>
                 <div>
                     <div class="title">storage site</div>
                     <div class="description">
-                        Mamman
-                        <br>
-                        SwissPort
-                        <br>
-                        Ashdod bonded
+                        {{ShipmentPM?.WarehouseLegEnglishName}}
                     </div>
                 </div>
                 <div>
                     <div class="title">containers</div>
                     <div class="description">
-                        Medu2134541, Medu2134541
-                        <br>
-                        Medu2134541
-                        <br>
-                        Medu2134541
+                        {{Shipment.ShipmentList.ContainersNumbers}}
                     </div>
                 </div>
 

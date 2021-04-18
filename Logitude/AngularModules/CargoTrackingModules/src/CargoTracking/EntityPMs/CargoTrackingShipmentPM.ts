@@ -444,6 +444,16 @@ export class CargoTrackingShipmentPM {
     public set ShipmentTypeCode(newValue: string) { if (this.shipmentTypeCode != newValue) { this.shipmentTypeCode = newValue; this.MarkAsDirty("ShipmentTypeCode"); } }
        
 	 
+    private customerEnglishName: string;
+    public get CustomerEnglishName() { return this.customerEnglishName; }
+    public set CustomerEnglishName(newValue: string) { if (this.customerEnglishName != newValue) { this.customerEnglishName = newValue; this.MarkAsDirty("CustomerEnglishName"); } }
+       
+	 
+    private customerLocalName: string;
+    public get CustomerLocalName() { return this.customerLocalName; }
+    public set CustomerLocalName(newValue: string) { if (this.customerLocalName != newValue) { this.customerLocalName = newValue; this.MarkAsDirty("CustomerLocalName"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		

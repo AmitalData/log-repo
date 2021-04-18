@@ -39,10 +39,12 @@ using System.IO;
 using System.Xml;
 using Logitude.Server.Tools;
 using System.Xml.Serialization;
+using System.Text;
+using ICSharpCode.SharpZipLib.BZip2;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
-    public class ShipmentQuery
+    public class ShipmentQuery : ShipmentCloudCustomDataDeserializer
     {
 
         ShipmentRepository repository;
@@ -13500,16 +13502,71 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return masterNumber;
         }
 
-        public ShipmentPM GetShipmentForCargoTrackingByEntityId(string id, int tenant)
+        public ShipmentPM GetShipmentPMForCargoTrackingByEntityId(string id, int tenant)
         {
-            Shipment shipment = repository.GetSingleShipmentwithOutIncludes(id, tenant);
+            Shipment shipment = repository.GetShipmentForCargoTracking(id, tenant);
+
             ShipmentPM shipmentPM = new ShipmentPM()
             {
                 Id = shipment.Id,
                 CustomFileNumber = shipment.CustomFileNumber,
+                IncotermName = shipment.Incoterm?.Name,
+                IncotermCode = shipment.Incoterm?.Code,
+                WarehouseLegEnglishName = shipment.WarehouseLegCard?.EnglishName,
+                WarehouseLegLocalName = shipment.WarehouseLegCard?.LocalName,
+                PackagesTypesNames = GetShipmentPackagesTypeNames(tenant, shipment.Id),
+                NumberOfPackages = GetShipmentPackagesQuantity(tenant, shipment.Id),
+                Volume = GetShipmentPackagesVolume(tenant, shipment.Id),
+                ShipmentTypeName = shipment.ShipmentType?.Name,
             };
 
+            SetShipmentCloudDataFields(shipment, shipmentPM);
+
             return shipmentPM;
+        }
+
+        private static void SetShipmentCloudDataFields(Shipment shipment, ShipmentPM shipmentPM)
+        {
+            if (shipment.ShipmentAdditionalCloudData != null)
+            {
+                ShipmentCloudCustomDataDeserializer deserializer = new ShipmentCloudCustomDataDeserializer();
+                var cloudCustomData = deserializer.BuildCustomDataFromXML(shipment.ShipmentAdditionalCloudData);
+                shipmentPM.TotalTax = cloudCustomData.TotalTax;
+            }
+        }
+
+        private string GetShipmentPackagesTypeNames(int tenant, string shipmentId)
+        {
+            List<ShipmentPackagePM> shipmentPackages = GetPackagesOfShipment(tenant, shipmentId);
+            string combinedPackagesTypesNames = GetCombinedPackagesTypesNames(shipmentPackages);
+            return combinedPackagesTypesNames;
+        }
+        private int GetShipmentPackagesQuantity(int tenant, string shipmentId)
+        {
+            List<ShipmentPackagePM> shipmentPackages = GetPackagesOfShipment(tenant, shipmentId);
+            int? quantity = shipmentPackages.Sum(package => package.Quantity);
+            return quantity ?? 0;
+        }
+        private double GetShipmentPackagesVolume(int tenant, string shipmentId)
+        {
+            List<ShipmentPackagePM> shipmentPackages = GetPackagesOfShipment(tenant, shipmentId);
+            double? quantity = shipmentPackages.Sum(package => package.Volume);
+            return quantity ?? 0;
+        }
+
+        private static string GetCombinedPackagesTypesNames(List<ShipmentPackagePM> shipmentPackages)
+        {
+            var packagesTypesNames = shipmentPackages.Select(package => package.PackageTypeName).ToList();
+            var combinedPackagesTypesNames = string.Join(";", packagesTypesNames);
+            return combinedPackagesTypesNames;
+        }
+
+        private List<ShipmentPackagePM> GetPackagesOfShipment(int tenant, string shipmentId)
+        {
+            var shipmentIds = new List<string>() { shipmentId };
+            ShipmentPackageQuery shipmentPackageQuery = new ShipmentPackageQuery(tenant);
+            var shipmentPackages = shipmentPackageQuery.GetShipmentPackages(shipmentIds, tenant);
+            return shipmentPackages;
         }
     }
 
@@ -13546,4 +13603,5 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public string TypeCode { get; set; }
         public string ForwarderPartnerId { get; set; }
     }
+
 }
