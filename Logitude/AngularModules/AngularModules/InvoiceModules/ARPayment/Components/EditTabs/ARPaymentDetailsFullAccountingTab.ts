@@ -73,6 +73,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 	isMultipleCheques: boolean = false;
     public OpenAmountCurrency: string;
     ARPaymentValidator: ARPaymentValidator;
+    public chequeAmount: number;
 	public InvoiceAmountCurrency: string = TextCodeTranslator.Translate("Accounting.O.ARP.InvoiceAmount") + " (" + SessionLocator.TenantPM.CurrencyCode + ")";
 	public PaymenyAmount: number;
 	get TextStore()
@@ -104,7 +105,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 		this.EntityPM = entityArgs.EntityPM;
 		this.SetAmountCurrencyCode();
 		this.ComputeLocalAmount();
-		this.SetPaymentAmount();
+        this.SetPaymentAmount();
+        this.SetChequeAmount();
 		if (this.EntityPM.ARPaymentChequeReplicas.length > 1) {
 			this.isMultipleCheques = true;
 		}
@@ -156,7 +158,15 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 		// this.UIProperties.SetEnabled("AmountToReconcile","LedgerTransaction",!this.IsGridReadOnly);
 		this.InitializeBillToLov();
 	}
-
+    private SetChequeAmount() {
+        if (this.EntityPM.ARPaymentChequeReplicas.length == 0) {
+            this.chequeAmount = this.EntityPM.AmountInPaymentCurrency;
+        }
+        else {
+            var firstCheque = this.EntityPM.ARPaymentChequeReplicas.filter(d => d.LineNumber == 1)[0];
+            this.chequeAmount = firstCheque.ForeignAmount;
+        }
+    }
 	private InitializeBillToLov() {
         
 		this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
@@ -651,7 +661,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 			this.UIProperties.SetEnabled("BranchId", this.ObjectTableName, false);
 			if (this.isFullAccounting) {
 				this.UIProperties.SetEnabled("BankAccountId", this.ObjectTableName, false);
-			}
+            }
+            this.UIProperties.SetEnabled("ChequeAmount", this.ObjectTableName, false);
 		}
 
 		else {
@@ -666,7 +677,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 			this.UIProperties.SetEnabled("PrintNotes", this.ObjectTableName, true);
 			this.UIProperties.SetEnabled("CreditCardTypeId", this.ObjectTableName, true);
 			this.UIProperties.SetEnabled("BranchId", this.ObjectTableName, true);
-
+            this.UIProperties.SetEnabled("ChequeAmount", this.ObjectTableName, true);
 			if (AppTool.IsNullOrEmpty(this.EntityPM.BillToId)) {
 				this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);
 			}
@@ -1249,6 +1260,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 			this.EntityPM.PaymentCurrencyCode = value;
 		}
 	}
+
 
 	get PaymentCurrencyExchangeRate() { return this.EntityPM.PaymentCurrencyExchangeRate; }
 	set PaymentCurrencyExchangeRate(value: number)
@@ -1918,7 +1930,17 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 		if (this.EntityPM.PrintNotes != value) {
 			this.EntityPM.PrintNotes = value;
 		}
-	}
+    }
+    get ChequeAmount() { return this.chequeAmount }
+    set ChequeAmount(value: number) {
+        if (this.chequeAmount != value) {
+            if (this.EntityPM.ARPaymentChequeReplicas.length == 1 || this.EntityPM.ARPaymentChequeReplicas.length == 0) {
+                this.AmountInPaymentCurrency = value;
+            }
+            this.chequeAmount = value;
+
+        }
+    }
 
 	ComputeOpenAmount()
 	{
@@ -2133,7 +2155,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     MapChequeFields(cheque: ARPaymentChequeReplicaPM) {
         this.Bank = cheque != null ? cheque.BankId : null;
         this.Account = cheque != null ? cheque.BankAccount : null;
-        this.AmountInPaymentCurrency = cheque != null ? cheque.ForeignAmount : null;
+        this.ChequeAmount = cheque != null ? cheque.ForeignAmount : null;
         this.ValueDate = cheque != null ? cheque.ValueDate : null;
         this.BankBranch = cheque != null ? cheque.BankBranch : null;
         this.ChequeOrPaymentRef = cheque != null ? cheque.ChequeNumber : null;

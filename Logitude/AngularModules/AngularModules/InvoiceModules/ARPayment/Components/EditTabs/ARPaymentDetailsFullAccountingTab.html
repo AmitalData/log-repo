@@ -550,12 +550,22 @@
                                             </tr>
 
                                             <tr>
-                                                <td style="width:150px;">
+                                                <td style="width:150px;" *ngIf="AccountingPaymentMethodCode != 'CH'">
                                                     <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'"
                                                                 [DigitsAfterPoint]="2" [Text]="AmountInPaymentCurrency"
                                                                 [InputType]="'double'" [ObjectTableName]="ObjectTableName"
                                                                 [DataContext]="DataContext">
                                                     </LogTextBox>
+                                                </td>
+                                                <td style="width:150px;" *ngIf="isFullAccounting && AccountingPaymentMethodCode == 'CH'">
+                                                 
+                                                    <LogTextBox [ObjectFieldName]="'ChequeAmount'"
+                                                                [Text]="ChequeAmount"
+                                                                [InputType]="'double'"
+                                                                [DataContext]="DataContext"
+                                                                [NoObjectField]="true"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                               ></LogTextBox>
                                                 </td>
 
                                                 <td style="width:150px;">
@@ -642,7 +652,7 @@
                                                         </tr>
                                                     </table>
                                                 </td>
-                                               
+
                                                 <td></td>
                                             </tr>
                                         </table>
