@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "b530408341fc55fe9f8723c1a89669f1";
+		public const string HashString = "e2ddf34e3b00bb6adc04c927d9eb996a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3482,6 +3482,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, EventTypeRepository, tenantEventTypes);
 
 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "JNUP",
+                EnglishName =  "Journal Notes Updated",
+                LocalName =  "Journal Notes Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = JournalObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
@@ -3494,15 +3512,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
       
     
-			   Feature JournalFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "JournalSave", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.WaitingForApproval", NameTextCodeDefaultText = "Waiting For Approval", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,JournalObjectTable);
+			   Feature JournalFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "JournalSaveButton", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.Save", NameTextCodeDefaultText = "Save", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,JournalObjectTable);
 
       
     
-			   Feature JournalFeature_MB2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "JournalApprove", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.Approve", NameTextCodeDefaultText = "Approve", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,JournalObjectTable);
+			   Feature JournalFeature_MB2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "JournalSave", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.WaitingForApproval", NameTextCodeDefaultText = "Waiting For Approval", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,JournalObjectTable);
 
-			   Feature JournalFeature_MB30 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "JournalVoid", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.Void", NameTextCodeDefaultText = "Void", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,JournalObjectTable);
-             			   Feature JournalFeature_MB31 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "JournalPrint", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.Print", NameTextCodeDefaultText = "Print", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,JournalObjectTable);
-             			   Feature JournalFeature_MB32 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CopyJournal", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.CopyJournal", NameTextCodeDefaultText = "Copy Journal", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,JournalObjectTable);
+      
+    
+			   Feature JournalFeature_MB3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "JournalApprove", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.Approve", NameTextCodeDefaultText = "Approve", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,JournalObjectTable);
+
+			   Feature JournalFeature_MB40 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "JournalVoid", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.Void", NameTextCodeDefaultText = "Void", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,JournalObjectTable);
+             			   Feature JournalFeature_MB41 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "JournalPrint", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.Print", NameTextCodeDefaultText = "Print", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,JournalObjectTable);
+             			   Feature JournalFeature_MB42 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CopyJournal", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.CopyJournal", NameTextCodeDefaultText = "Copy Journal", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,JournalObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -3537,6 +3559,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
 			   MenuButton JournalMenuButton1 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
+						EventCode = "JournalSaveButton",
+						Index = 0, 
+						IsActive = true,
+						LabelTextCodeCode = "Journal.B.Save",
+						LabelTextCodeDefaultText = "Save",
+						Tenant = 0,
+						MenuButtonGroupId = JournalMenuButtonGroup.Id,
+						ObjectTableId = JournalObjectTable.Id,
+						MenuButtonType = "button",
+						FeatureId = JournalFeature_MB1.Id,
+						Style = null,
+						LocalDefaultText = "שמור",
+						FeatureUniqeCode = JournalFeature_MB1.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+       
+   
+			   MenuButton JournalMenuButton2 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
 						EventCode = "JournalSave",
 						Index = 1, 
 						IsActive = true,
@@ -3546,16 +3588,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonGroupId = JournalMenuButtonGroup.Id,
 						ObjectTableId = JournalObjectTable.Id,
 						MenuButtonType = "button",
-						FeatureId = JournalFeature_MB1.Id,
+						FeatureId = JournalFeature_MB2.Id,
 						Style = null,
 						LocalDefaultText = null,
-						FeatureUniqeCode = JournalFeature_MB1.FeatureUniqeCode,
+						FeatureUniqeCode = JournalFeature_MB2.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
-			   MenuButton JournalMenuButton2 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton JournalMenuButton3 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "JournalApprove",
 						Index = 2, 
@@ -3566,16 +3608,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonGroupId = JournalMenuButtonGroup.Id,
 						ObjectTableId = JournalObjectTable.Id,
 						MenuButtonType = "button",
-						FeatureId = JournalFeature_MB2.Id,
+						FeatureId = JournalFeature_MB3.Id,
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = "אישור",
-						FeatureUniqeCode = JournalFeature_MB2.FeatureUniqeCode,
+						FeatureUniqeCode = JournalFeature_MB3.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
-			   MenuButton JournalMenuButton3 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton JournalMenuButton4 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "More",
 						Index = 3, 
@@ -3594,7 +3636,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
-			   MenuButton JournalMenuButton30 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton JournalMenuButton40 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "JournalVoid",
 						Index = 0, 
@@ -3603,18 +3645,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LabelTextCodeDefaultText = "Void",
 						Tenant = 0,
 						MenuButtonGroupId = JournalMenuButtonGroup.Id,
-						ParentMenuButtonId = JournalMenuButton3.Id,
+						ParentMenuButtonId = JournalMenuButton4.Id,
 						ObjectTableId = JournalObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  JournalFeature_MB30.Id,
+						FeatureId=  JournalFeature_MB40.Id,
 						Style = null,
 						LocalDefaultText = "ביטול",
                         HtmlComponentPath=null,
                         Width=0,
-						FeatureUniqeCode=  JournalFeature_MB30.FeatureUniqeCode,
+						FeatureUniqeCode=  JournalFeature_MB40.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton JournalMenuButton31 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton JournalMenuButton41 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "JournalPrint",
 						Index = 1, 
@@ -3623,18 +3665,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LabelTextCodeDefaultText = "Print",
 						Tenant = 0,
 						MenuButtonGroupId = JournalMenuButtonGroup.Id,
-						ParentMenuButtonId = JournalMenuButton3.Id,
+						ParentMenuButtonId = JournalMenuButton4.Id,
 						ObjectTableId = JournalObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  JournalFeature_MB31.Id,
+						FeatureId=  JournalFeature_MB41.Id,
 						Style = null,
 						LocalDefaultText = "הדפסה",
                         HtmlComponentPath=null,
                         Width=0,
-						FeatureUniqeCode=  JournalFeature_MB31.FeatureUniqeCode,
+						FeatureUniqeCode=  JournalFeature_MB41.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton JournalMenuButton32 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton JournalMenuButton42 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "CopyJournal",
 						Index = 2, 
@@ -3643,15 +3685,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LabelTextCodeDefaultText = "Copy Journal",
 						Tenant = 0,
 						MenuButtonGroupId = JournalMenuButtonGroup.Id,
-						ParentMenuButtonId = JournalMenuButton3.Id,
+						ParentMenuButtonId = JournalMenuButton4.Id,
 						ObjectTableId = JournalObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  JournalFeature_MB32.Id,
+						FeatureId=  JournalFeature_MB42.Id,
 						Style = null,
 						LocalDefaultText = " שכפול פקודת יומן",
                         HtmlComponentPath=null,
                         Width=0,
-						FeatureUniqeCode=  JournalFeature_MB32.FeatureUniqeCode,
+						FeatureUniqeCode=  JournalFeature_MB42.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }
@@ -3778,6 +3820,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode JournalTextCode_JournalOExchangeRateValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.ExchangeRateValidation", DefaultText = "There is no exchange rate for the selected currency on the accounting date for line",LocalDefaultText = @"לא הוגדר שער חליפין של המטבע שנבחר בתאריך החשבונאי שצויין בשורה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode JournalTextCode_JournalOhaveFutureAccountingorReferenceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.haveFutureAccountingorReferenceDate", DefaultText = "Can't approve The Journal . Some Lines have Future Accounting or Reference Date.",LocalDefaultText = @"לא ניתן לאשר את פקודת היומן , ישנם שורות עם תאריך חשבונאי/אסמכתא עתידי.", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMEditLineNote = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.EditLineNote", DefaultText = "Edit Line Note",LocalDefaultText = @"ערוך הערת שורה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMNote = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.Note", DefaultText = "Note",LocalDefaultText = @"הערת", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.Line", DefaultText = "Line",LocalDefaultText = @"שורה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -142,23 +142,24 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private void UpdatePrintNotesRelatedToJournal(JournalPM entityPM)
         {
-            JournalLinePM firstJournalLine = entityPM.JournalLines.FirstOrDefault();
-            if (firstJournalLine != null)
-            {
-                JournalLinePM journalLine = GetOldJournalLineFromDB(firstJournalLine);
-
-                if (journalLine != null)
+            foreach(JournalLinePM JournalLine in entityPM.JournalLines) {
+                if (JournalLine != null)
                 {
-                    if (firstJournalLine.Notes != journalLine.Notes)
+                    JournalLinePM oldJournalLine = GetOldJournalLineFromDB(JournalLine);
+
+                    if (oldJournalLine != null)
                     {
-                        LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(entityPM.Tenant);
-                        List<LedgerTransactionPM> allTransactionsRelatedToJournal = ledgerTransactionQueryService.GetByJournalId(entityPM.Id, entityPM.Tenant).ToList();
-                        var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(this.MainContext as IAccountingContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-                        foreach (LedgerTransactionPM transaction in allTransactionsRelatedToJournal)
+                        if (JournalLine.Notes != oldJournalLine.Notes)
                         {
-                            transaction.Notes = firstJournalLine.Notes;
-                            transaction.ChangeSetOp = ChangeSetOperation.Update;
-                            ledgerTransactionUpdateService.Update(transaction, false, null);
+                            LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(entityPM.Tenant);
+                            List<LedgerTransactionPM> allTransactionsRelatedToJournal = ledgerTransactionQueryService.GetByJournalLineIdAndLine(entityPM.Id, JournalLine.Line, entityPM.Tenant).ToList();
+                            var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(this.MainContext as IAccountingContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                            foreach (LedgerTransactionPM transaction in allTransactionsRelatedToJournal)
+                            {
+                                transaction.Notes = JournalLine.Notes;
+                                transaction.ChangeSetOp = ChangeSetOperation.Update;
+                                ledgerTransactionUpdateService.Update(transaction, false, null);
+                            }
                         }
                     }
                 }
@@ -333,11 +334,34 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 else
                 {
-
                     ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
                     string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
                     Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
-                    // ContactPM loggedContact = LoggedContact(entityPM.Tenant);
+                    bool showLocals = !contact.DontShowLocalLabels;
+                    bool isJournalLineNotesUpdated = false;
+                    foreach (JournalLinePM journalLinePM in entityPM.JournalLines)
+                    {
+                        JournalLinePM oldJournalLine = GetOldJournalLineFromDB(journalLinePM);
+                        if(oldJournalLine.Notes != journalLinePM.Notes)
+                        {
+                            isJournalLineNotesUpdated = true;
+                            string journalNotes = SetJournalLineEventNotes(entityPM, showLocals, journalLinePM, oldJournalLine);
+                            EventTracer.CreateTraceEvent(new EventTracerArgs()
+                            {
+                                EntityId = entityPM.Id,
+                                Tenant = entityPM.Tenant,
+                                UserId = contact.Id,
+                                ObjectTableName = "Journal",
+                                IsAddedManually = false,
+                                EventTypeCode = "JNUP",
+                                Notes = journalNotes,
+
+                            });
+                        }
+
+                    }
+
+                    if (!isJournalLineNotesUpdated) { 
                     String notes = "Journal Updated";
                     EventTracer.CreateTraceEvent(new EventTracerArgs()
                     {
@@ -350,13 +374,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         Notes = notes,
 
                     });
-
+                    }
 
                 }
 
 
             }
             base.Trace(entityPM, entityPOCO, changesXml);
+        }
+
+        private static string SetJournalLineEventNotes(JournalPM entityPM, bool showLocals, JournalLinePM journalLinePM, JournalLinePM oldJournalLine)
+        {
+            return string.Concat(TranslateTextsClass.Translate("Journal.M.Line", entityPM.Tenant, showLocals) , ' ' , oldJournalLine.Line , "\n" , TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals) , oldJournalLine.Notes , "\t" , TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals) , journalLinePM.Notes);
         }
 
         private void CreateCopyJournalEvent(JournalPM journal, Contact loggedContact)
