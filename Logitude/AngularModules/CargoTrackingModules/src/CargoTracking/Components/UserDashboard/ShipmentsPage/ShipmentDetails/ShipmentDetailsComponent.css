@@ -5,6 +5,12 @@ h1 {
     padding-bottom: 20px;
     font-size: 28px;
 }
+.card{
+    border-radius: 5px;
+    padding: 5px;
+    background: #fff;
+    box-shadow: 0px 0px 8px 0px #00000030;
+}
 .FlipImgHoriz {
     -moz-transform: scaleX(-1);
     -o-transform: scaleX(-1);
@@ -466,3 +472,89 @@ h1 {
         height: 60px;
     }
 }
+
+
+.partners-cards-wrapper{
+    display: flex;
+}
+.partner-card {
+    width: 140px;
+    height: 180px;
+    margin: 0 10px;
+    padding: 15px;
+
+}
+.partner-type-label{
+    text-transform: uppercase;
+    color: var(--MainColor);
+    font-size: 12px;
+    font-weight: 700;
+}
+.partner-card .body.bordered{
+    border-top: 1px solid rgb(175, 175, 175);
+}
+.partner-card .body{
+    padding-top: 10px;
+    margin-top: 10px;
+}
+.partner-address,.partner-mobile{
+    font-size: 12px;
+}
+.partner-mobile{
+    margin-top: 5px;
+}
+.circle-icon{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: var(--MainColor);
+    color: white;
+    text-align: center;
+    margin-right: 5px;
+    display: inline-block;
+    font-weight: 600;
+}
+.circle-icon-x2{
+    width: 35px;
+    height: 35px;
+    font-size: 18px;
+    border-radius: 50%;
+    background: var(--MainColor);
+    color: white;
+    text-align: center;
+    margin-right: 10px;
+    display: inline-block;
+    font-weight: 600;
+    line-height: 32px;
+}
+.partners-buttons{
+    margin-bottom: 10px;
+}
+.partners-footer-buttons{
+    margin-top: 20px;
+
+}
+@media screen and (max-width: 479px) {
+    .partner-card{
+        width: calc(100vw - 80px);
+        margin-bottom: 15px;
+        height: unset !important;
+    }
+    .partner-card .body{
+        display: none;
+    }
+    .partner-card .body.show{
+        display: block !important;
+    }
+    .partners-cards-wrapper{
+        flex-direction: column;
+    }
+    .partner-card .header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+
+

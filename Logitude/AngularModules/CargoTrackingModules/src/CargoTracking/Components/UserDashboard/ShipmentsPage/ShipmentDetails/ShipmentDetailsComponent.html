@@ -410,7 +410,7 @@
 
     </panel>
 
-    <panel style="order: 5;" [Title]="'Routing'" [Name]="'RoutingPanel'">
+    <panel style="order: 6;" [Title]="'Routing'" [Name]="'RoutingPanel'">
 
         <div body>
 
@@ -505,6 +505,49 @@
         </div>
 
     </panel>
+
+
+    <panel style="order: 7;"
+        [Title]="'Partners'"
+        [Name]="'PartnersPanel'"
+        TransparentBackground="true">
+
+        <div body>
+
+            <div class="partners-cards-wrapper">
+                <div class="card partner-card" *ngFor="let partnerCard of PartnerCards">
+                    <div class="header">
+                        <div class="partners-buttons hide-mobile">
+                            <div class="circle-icon">#</div>
+                            <div class="circle-icon">&</div>
+                        </div>
+                        <div>
+                            <div class="partner-type-label">{{partnerCard.Type}}</div>
+                            <div class="partner-name">{{partnerCard.Name}}</div>
+                        </div>
+                        <div class="mobile-only" (click)="partnerCard.ShowDetails = !partnerCard.ShowDetails" style="padding: 10px;">
+                            <img width="16" src="./assets/images/icons/arrow-down.png" alt="">
+                        </div>
+
+                    </div>
+                    <div class="body bordered" [class.show]="partnerCard.ShowDetails">
+                        <div class="partner-address">
+                            {{partnerCard.Address}}
+                        </div>
+                        <div class="partner-mobile">{{partnerCard.PhoneNumber}}</div>
+                        <div class="partners-footer-buttons mobile-only">
+                            <div class="circle-icon-x2">#</div>
+                            <div class="circle-icon-x2">&</div>
+                        </div>
+                    </div>
+                    <div></div>
+                </div>
+            </div>
+
+        </div>
+
+    </panel>
+
 
 </div>
 <br>
