@@ -52,6 +52,10 @@ export class ShipmentsListComponent implements AfterViewInit
     NumberOfPackages: number = 0;
     TitleOfEstimationORActualDate: string = "";
     ValueOfEstimationORActualDate: Date;
+    ShipmentTypeAndDirectionTooltip: string;
+    SupplierOrClientTitle: string;
+    ShipmenTypeForRouting: string;
+    
 
 
 
@@ -71,7 +75,6 @@ export class ShipmentsListComponent implements AfterViewInit
 
         this.InitComponent();
         this.SetDefaultBackgroundColor();
-
     }
     ngAfterViewInit(): void
     {
@@ -84,6 +87,79 @@ export class ShipmentsListComponent implements AfterViewInit
     {
         document.documentElement.style.setProperty('--BGColor', 'RGB(250,251,252)');
     }
+
+    SetShipmentTypeAndDirectionTooltip(shipment: CargoTrackingShipmentList) {
+        var type = ""; 
+        var direction = "";
+        switch (shipment.TransportModeId) {
+            case 'A': {
+                type = "Air"
+                break;
+            }
+
+            case 'I': {
+                type = "Inland"
+                break;
+            }
+
+            case 'O': {
+                type = "Ocean"
+                break;
+            }
+        }
+
+        switch (shipment.DirectionId) {
+            case 'E': {
+                direction = "Export "
+                break;
+            }
+
+            case 'I': {
+                direction = "Import"
+                break;
+            }
+        }
+
+        this.ShipmentTypeAndDirectionTooltip = type +' '+ direction;
+
+    }
+
+    SetSupplierOrClientTitle(shipment: CargoTrackingShipmentList) {
+        var title;
+        switch (shipment.DirectionId) {
+            case 'E': {
+                title = "CLIENT"
+                break;
+            }
+
+            case 'I': {
+                title = "SUPPLIER"
+                break;
+            }
+        }
+
+        this.SupplierOrClientTitle = title;
+    }
+
+    SetShipmenTypeForRouting(shipment: CargoTrackingShipmentList) {
+        
+        if (shipment.ShipmentLevelCode == 'D') {
+            this.ShipmenTypeForRouting = "Direct"
+        }
+
+        else if (shipment.ShipmentLevelCode == 'H') {
+            this.ShipmenTypeForRouting = "House"
+        }
+
+        else if (shipment.ShipmentTypeCode == "FCL") {
+            this.ShipmenTypeForRouting = "FCL"
+        }
+
+        else if (shipment.ShipmentTypeCode == "LCL") {
+            this.ShipmenTypeForRouting = "LCL"
+        }
+    }
+
 
     private GetPreservedToggleFiltersFromSessionInfo()
     {

@@ -112,12 +112,12 @@
                     </div>
 
                     <!-- Shipment Data -->
-                    <div *ngIf="shipment" style="width: 100%; height: 100%;">
-                        <div class="column mode-icon" style="width: 8%;">
+                    <div *ngIf="shipment" style="width: 100%; height: 100%;"  [attr.src]="SetShipmentTypeAndDirectionTooltip(shipment)">
+                        <div class="column mode-icon" [attr.title]="ShipmentTypeAndDirectionTooltip" style="width: 8%;">
                             <div class="circle-image">
                                 <!-- <img class="path " [attr.src]="GetModeIcon(shipment.TransportModeId)" alt=" " /> -->
 
-                                <div [ngSwitch]="shipment.TransportModeId" style="display: inline-block;    position: relative;     top: 30px">
+                                <div [ngSwitch]="shipment.TransportModeId" style="display: inline-block;    position: relative;     top: 30px" [attr.title]="ShipmentTypeAndDirectionTooltip" >
                                     <svg *ngSwitchCase="'O'" width="47px" height="20px" viewBox="0 0 47 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                         <title>0FD17A4A-5C03-438A-96BD-5AE25DEE0482</title>
                                         <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -214,14 +214,15 @@
 
                         <!-- Sender -->
                         <div class="column col-md-2 sender" style="width: 12%;">
-                            <div>
-                                <div class="subtitle">SUPPLIER </div>
+                            <div  [attr.src]="SetSupplierOrClientTitle(shipment)">
+                                <div class="subtitle">{{SupplierOrClientTitle}}</div>
                                 <div class="value truncateText"></div>
 
 
-                                <div class="subtitle hide-mobile">ROUTING</div>
+                                <div class="subtitle hide-mobile"  [attr.src]="SetShipmenTypeForRouting(shipment)">ROUTING</div>
                                 <div class="value truncateText">
-                                    {{shipment.FromPortCode}} to {{shipment.ToPortCode}}
+                                    {{shipment.FromPortCode}} to {{shipment.ToPortCode}} <br>
+                                    {{ShipmenTypeForRouting}}
                                 </div>
 
                             </div>
