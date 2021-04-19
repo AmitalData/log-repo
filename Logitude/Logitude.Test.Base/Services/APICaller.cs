@@ -65,7 +65,7 @@ namespace Logitude.Test.Base.Services
         }
 
         
-        private static ApiResponse<T> CallAPIProcess<T>(ApiRequestParameters requestParameters, int retries = 0)
+        private static ApiResponse<T> CallAPIProcess<T>(ApiRequestParameters requestParameters, int retries = 0)// needs refactoring
         {
             var pauseBetweenFailures = TimeSpan.FromSeconds(2);
 

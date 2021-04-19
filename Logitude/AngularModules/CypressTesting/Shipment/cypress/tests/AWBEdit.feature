@@ -1,4 +1,4 @@
-@release @stable
+@release @stable @all
 Feature: AWB Edit
    The user creates a Direct Export Air shipment, edits the AWB Wizard, 
    checks that the overview tabs appears, adds packages and saves.

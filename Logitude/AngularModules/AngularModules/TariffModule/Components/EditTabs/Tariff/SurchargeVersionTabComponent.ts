@@ -47,6 +47,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public SelectedVersionNumber: number;
     public OriginDependencyFilterValue: string = "A";
     public DestinationDependencyFilterValue = "A";
+    public ViaDependencyFilterValue = "A";
     public IsAir: boolean = false;
     public selectedRow: any;
     public changeScrollPosition: EventEmitter<any> = new EventEmitter();
@@ -74,6 +75,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         if (this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
             this.OriginDependencyFilterValue = "O";
             this.DestinationDependencyFilterValue = "O";
+            this.ViaDependencyFilterValue = "O";
         }
     }
 

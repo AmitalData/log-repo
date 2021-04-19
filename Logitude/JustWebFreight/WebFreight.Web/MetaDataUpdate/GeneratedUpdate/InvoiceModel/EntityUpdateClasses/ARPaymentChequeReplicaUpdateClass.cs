@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARPaymentChequeReplicaUpdateClass
    {  		
-		public const string HashString = "6794c9131c8eb3214fb790be69160f6a";
+		public const string HashString = "bd054cdb082da91aef45832c2cae2662";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "ARPaymentChequeReplica",
-			      				    Code =  "0447",
+			      				    Code =  "a6a4",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Invoice",

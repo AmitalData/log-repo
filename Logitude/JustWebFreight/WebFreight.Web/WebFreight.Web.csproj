@@ -1033,6 +1033,7 @@
     <Compile Include="Controllers\QuoteModel\Generated\PMControllers\QuoteClosingReasonController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBrandingController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\LogboxShipmentExportExcelController.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentCargoTrackingController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AccountingInformationIdentifierViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\DocumentApprovalController.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffVersionUploadedExcelViewsController.Generated.cs" />
@@ -3027,6 +3028,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\FreightPaymentMethodUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\FullAccountingSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountAgingDataUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountCardsDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountCounterUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GatepassRequestUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GatepassReturnCodeUpdateClass.cs" />
@@ -5688,11 +5690,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\AccountingDepositReportManager.cs" />
-    <Compile Include="ReportsWebServices\LogitudeReports\Accounting\ExternalReconciliationLinesReportManager.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\Accounting\ExternalReconciliationLinesReportLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\CustomerStatusDataProviderLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\AgingReportDataProviderLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\InterestReportLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\LedgerTransactionReportLoader.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\Accounting\Utilities\QueryOperationsFilterValueGetter.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\StatementReportManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\UserDefinedReportManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\CRM\MonthlyConversionManager.cs" />

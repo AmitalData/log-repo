@@ -28,17 +28,26 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public IQueryable<ReportExecutionLog> GetReportExecutionLogs(int tenant)
         {
-            return (from record in context.ReportExecutionLogs where record.Tenant == tenant select record);
+            if (tenant != 0)
+            {
+                return (from record in context.ReportExecutionLogs where record.Tenant == tenant select record);
+            }
+            else
+            {
+                return (from record in context.ReportExecutionLogs select record);
+            }
         }
 
         public ReportExecutionLog GetSingleReportExecutionLog(string id, int tenant)
         {
             return (from record in context.ReportExecutionLogs where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
+ 
 
 
         public void Add(ReportExecutionLog entity)
         {
+            entity.SearchFields = entity.CreatedByUserId + "," + entity.ReportId + "," + entity.StatusCode + "," + entity.ExecutedByServerName + "," + entity.Tenant;
             context.ReportExecutionLogs.Add(entity);
         }
 

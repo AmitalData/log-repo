@@ -70,7 +70,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                             externalReconcileMoveBankCheckFromTransfer2GLAccountService.OnAdjustMustInit(AdjustAccountId, Remarks);
                             externalReconcileMoveBankCheckFromTransfer2GLAccountService.CreateJournalWithExtReconcile(
                                 tenant,
-                                createJournalReconcileAdjustBankFeeM.LedgerTransactionIds.First(),
+                                createJournalReconcileAdjustBankFeeM.LedgerTransactionIds/*.First()*/,
                                 createJournalReconcileAdjustBankFeeM.ReconcileExternalPageLineIdList.First()
                                 );
                             TheNewJournal = externalReconcileMoveBankCheckFromTransfer2GLAccountService.TheJournalPM;

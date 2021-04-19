@@ -210,9 +210,9 @@ export class LoginComponent implements OnInit {
         //this.Tenant = this.route.snapshot.queryParams?.tenant;
         if(this.Tenant)
 
-            this.router.navigate(["Cargo-Tracking/resetpassword"]);//,{ queryParams: {tenant: this.Tenant}}
+            this.router.navigate(["cargo-tracking/resetpassword"]);//,{ queryParams: {tenant: this.Tenant}}
         else
-            this.router.navigate(["Cargo-Tracking/resetpassword"]);
+            this.router.navigate(["cargo-tracking/resetpassword"]);
     }
 
 }

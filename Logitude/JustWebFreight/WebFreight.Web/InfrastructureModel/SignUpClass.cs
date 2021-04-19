@@ -1293,6 +1293,13 @@ namespace WebFreight.Web.InfrastructureModel
             newTenant.MasterExportOtherPrepaidCollectId = tenantZero.MasterExportOtherPrepaidCollectId;
             newTenant.MasterImportFreightPrepaidCollectId = tenantZero.MasterImportFreightPrepaidCollectId;
             newTenant.MasterImportOtherPrepaidCollectId = tenantZero.MasterImportOtherPrepaidCollectId;
+
+            newTenant.AirRatio = tenantZero.AirRatio;
+            newTenant.FCLRatio = tenantZero.FCLRatio;
+            newTenant.LCLRatio = tenantZero.LCLRatio;
+            newTenant.FTLRatio = tenantZero.FTLRatio;
+            newTenant.LTLRatio = tenantZero.LTLRatio;
+
             if (CheckIsDayLightSettingsRequiredForEnvironment())
             {
                 newTenant.DayLightStartDate = tenantZero.DayLightStartDate;

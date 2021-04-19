@@ -95,14 +95,24 @@ export class ReportExecutionLogPM {
     public set DisablePreview(newValue: boolean) { if (this.disablePreview != newValue) { this.disablePreview = newValue; this.MarkAsDirty("DisablePreview"); } }
        
 	 
-    private communicationStatusTypeName: string;
-    public get CommunicationStatusTypeName() { return this.communicationStatusTypeName; }
-    public set CommunicationStatusTypeName(newValue: string) { if (this.communicationStatusTypeName != newValue) { this.communicationStatusTypeName = newValue; this.MarkAsDirty("CommunicationStatusTypeName"); } }
+    private statusName: string;
+    public get StatusName() { return this.statusName; }
+    public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
        
 	 
     private createdByUserName: string;
     public get CreatedByUserName() { return this.createdByUserName; }
     public set CreatedByUserName(newValue: string) { if (this.createdByUserName != newValue) { this.createdByUserName = newValue; this.MarkAsDirty("CreatedByUserName"); } }
+       
+	 
+    private searchFields: string;
+    public get SearchFields() { return this.searchFields; }
+    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
+       
+	 
+    private reportName: string;
+    public get ReportName() { return this.reportName; }
+    public set ReportName(newValue: string) { if (this.reportName != newValue) { this.reportName = newValue; this.MarkAsDirty("ReportName"); } }
        
 	 
 
