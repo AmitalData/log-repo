@@ -13203,6 +13203,28 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             return masterNumber;
         }
+        public Tuple<string, string> GetShipmentFieldsForPickUpDelivery(string shipmentId, int tenant)
+        {
+            string bookingConfirmationNumber = "", shipmentNumber = "";
+            if (!string.IsNullOrEmpty(shipmentId))
+            {
+                var shipmentSelectedData = (from a in repository.context.Shipments
+                                    where a.Id == shipmentId && a.Tenant == tenant
+                                    select new
+                                    {
+                                        ShipmentNumber = a.ShipmentNumber,
+                                        MasterShipmentDataId = a.MasterShipmentDataId
+                                    }).FirstOrDefault();
+                shipmentNumber = shipmentSelectedData.ShipmentNumber;
+                if (shipmentSelectedData != null)
+                {
+                    bookingConfirmationNumber = (from a in repository.context.ShipmentMasterDatas
+                                                 where a.Id == shipmentSelectedData.MasterShipmentDataId
+                                                 select a.BookingConfirmationNumber).FirstOrDefault();
+                }
+            }
+            return Tuple.Create(shipmentNumber, bookingConfirmationNumber);
+        }
     }
 
     public class DeparturesArrivalsDataItem
