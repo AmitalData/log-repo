@@ -385,7 +385,10 @@ export class TruckerPM {
     private billToId: string;
     public get BillToId() { return this.billToId; }
     public set BillToId(newValue: string) { if (this.billToId != newValue) { this.billToId = newValue; this.MarkAsDirty("BillToId"); } }
-       
+
+    private transmitToPort: string;
+    public get TransmitToPort() { return this.transmitToPort; }
+    public set TransmitToPort(newValue: string) { if (this.transmitToPort != newValue) { this.transmitToPort = newValue; this.MarkAsDirty("TransmitToPort"); } }
 	 
 
     public OldEntityPM: TruckerPM;
@@ -414,4 +417,4 @@ export class TruckerPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

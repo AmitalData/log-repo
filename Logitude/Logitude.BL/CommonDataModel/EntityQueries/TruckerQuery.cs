@@ -77,6 +77,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                UsoCFDICode = a.Card.UsoCFDICode,
                                GLAccountId = a.Card.GLAccountId,
                                GLAccountNumber = a.Card.GLAccountDisplayNumber,
+                               TransmitToPort=a.TransmitToPort,
                                Card = new CardPM()
                                {
                                    Id = a.Id,
@@ -270,7 +271,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   PrimaryContactEmail = a.PrimaryContactEmail,
                                                   PrimaryContactPhone = a.PrimaryContactPhone,
                                                   StateName = a.Card.StateName,
-                                                  GLAccountNumber = a.Card.GLAccountDisplayNumber
+                                                  GLAccountNumber = a.Card.GLAccountDisplayNumber,
+                                                  TransmitToPort=a.TransmitToPort
                                               });
 
 
