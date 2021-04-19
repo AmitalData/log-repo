@@ -49,6 +49,13 @@ export class ShipmentDetailsComponent implements AfterViewInit
     ngAfterViewInit(): void
     {
         this.LoadShipment();
+        setTimeout(() => {
+            this.InitSlider();
+            this.BuildSliderCards();
+
+        }, 200);
+        this.InitRoutes();
+        this.InitPartnerCards();
 
     }
     @HostListener('window:resize', ['$event'])
@@ -256,6 +263,24 @@ export class ShipmentDetailsComponent implements AfterViewInit
     {
         this.router.navigate(['cargo-tracking', 'shipments']);
     }
+
+    PartnerCards: PartnerCard[] = [];
+    InitPartnerCards(){
+        var partner1 = new PartnerCard();
+        partner1.Type = "customer";
+        partner1.Name = "Fratelli Fantini SPA";
+        partner1.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner1.PhoneNumber = "+39 0322918458";
+
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+
+        this.PartnerCards =  [partner1,partner2];
+
+    }
 }
 
 
@@ -268,4 +293,34 @@ export class MilestoneCard
     IsActive: boolean;
     HasWarning: boolean;
     IsDimmed: boolean;
+}
+
+export class RoutingStep
+{
+    IsActive: boolean;
+    FromPortLabel;
+    ToPortLabel;
+    Description: string;
+    TransportModeCode: 'A' | 'I' | 'O';
+    Directions: RouteDirection[] = [];
+}
+export class RouteDirection{
+    constructor(date: Date,label: string,direction: 'in' | 'out') {
+        this.Date = date;
+        this.Label = label;
+        this.Direction = direction;
+    }
+    Date: Date;
+    Label: string;
+    Direction: 'in' | 'out' = 'in';
+}
+
+export class PartnerCard{
+    constructor() {
+    }
+    Name: string;
+    Type: string;
+    Address: string;
+    PhoneNumber: string;
+    ShowDetails: boolean = false;
 }
