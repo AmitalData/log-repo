@@ -1,6 +1,9 @@
-.p-datatable-scrollable-header {
+/*
+    .p-datatable-scrollable-header {
     overflow: inherit !important;
 }
+
+*/
 
 .prime-web-component .cdk-virtual-scroll-content-wrapper, p-dynamicdialog .cdk-virtual-scroll-content-wrapper {
     contain: unset !important;

@@ -352,7 +352,7 @@
                                                 </td>
 
                                                 <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
-                                                    <Hyperlink (click)="item.ViewEntityClicked()">{{item.InvoiceNumber}}</Hyperlink>
+                                                    <Hyperlink (click)="item.ViewEntityClicked('ARInvoice')">{{item.InvoiceNumber}}</Hyperlink>
                                                 </td>
 
                                                 <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
@@ -368,7 +368,7 @@
                                                 </td>
 
                                                 <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
-                                                    {{item.MainEntityReference}}
+                                                    <Hyperlink (click)="item.ViewEntityClicked('Shipment')">{{item.MainEntityReference}}</Hyperlink>
                                                 </td>
 
                                                 <td class="GridViewCell" style="width: 140px; min-width: 140px; max-width: 140px;">

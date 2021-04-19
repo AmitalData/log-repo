@@ -98,6 +98,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -107,5 +114,15 @@
     ForeignKeyColumn="StatusCode"
     ReferencedTable="CommunicationStatusTypes"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ReportId"
+    ReferencedTable="Reports"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ReportTemplateId"
+    ReferencedTable="ReportsTemplates"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

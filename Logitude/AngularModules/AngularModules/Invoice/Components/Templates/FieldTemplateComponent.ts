@@ -59,7 +59,7 @@ export class FieldTemplateComponent extends BaseComponent {
 
                     if (this.Entity.StatusCode != "DR" && this.Entity.StatusCode != "VD" && !this.Entity.IsClosed) {
                         this.IsUnpaidInvoice = true;
-                    }
+                    }                    
 
                     this.ShowBusyIndicator = true;
                     this.BusyIndicatorMessage = "Loading...";

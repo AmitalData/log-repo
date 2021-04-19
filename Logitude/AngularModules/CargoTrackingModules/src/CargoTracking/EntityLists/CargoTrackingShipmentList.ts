@@ -94,6 +94,8 @@ export class CargoTrackingShipmentList {
 	GrossWeightUnitCode: string;
 	ForwardingShipmentNumber: string;
 	ShipmentTypeCode: string;
+	CustomerEnglishName: string;
+	CustomerLocalName: string;
 	
 }
  

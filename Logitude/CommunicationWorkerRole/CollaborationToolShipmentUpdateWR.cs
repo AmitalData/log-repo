@@ -1,6 +1,9 @@
 ﻿using CommunicationWorkerRole.Constants;
 using CommunicationWorkerRole.Messages;
 using Confluent.Kafka;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -28,7 +31,7 @@ namespace CommunicationWorkerRole
                         var msg = LogitudeConsumer.Consume();
                         if (msg.Message.Key == MessageType.Task)
                         {
-                            UpdateShipment(msg.Message.Value);
+                            UpdateShipmentPM(msg.Message.Value);
                         } 
                     }
                     catch (ConsumeException e)
@@ -71,7 +74,7 @@ namespace CommunicationWorkerRole
 
                 ShipmentRepository shipmentRepository = new ShipmentRepository(LogitudeUpdateMessage.Tenant);
                 Shipment shipment = shipmentRepository.GetSingleShipmentByShipmentNumber(LogitudeUpdateMessage.EntityNumber, LogitudeUpdateMessage.Tenant);
-
+                
                 var entryFields = JsonConvert.DeserializeObject<Dictionary<string, string>>(LogitudeUpdateMessage.EntryFields);
 
                 foreach (KeyValuePair<string, string> entry in entryFields)
@@ -84,6 +87,36 @@ namespace CommunicationWorkerRole
 
                 shipmentRepository.Update(shipment);
                 shipmentRepository.SubmitChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        private void UpdateShipmentPM(string jsonLogitudeUpdateMessage)
+        {
+            try
+            {
+                LogitudeUpdateMessage LogitudeUpdateMessage = JsonConvert.DeserializeObject<LogitudeUpdateMessage>(jsonLogitudeUpdateMessage);
+
+                ShipmentRepository shipmentRepository = new ShipmentRepository(LogitudeUpdateMessage.Tenant);
+                ShipmentQuery myQuery = new ShipmentQuery(shipmentRepository);
+                ShipmentPM shipment = myQuery.GetSinglePMByShipmentNumber(LogitudeUpdateMessage.EntityNumber, LogitudeUpdateMessage.Tenant);
+
+                
+                var entryFields = JsonConvert.DeserializeObject<Dictionary<string, string>>(LogitudeUpdateMessage.EntryFields);
+
+                foreach (KeyValuePair<string, string> entry in entryFields)
+                {
+                    PropertyInfo propertyInfo = shipment.GetType().GetProperty(entry.Key);
+                    Type t = Nullable.GetUnderlyingType(propertyInfo.PropertyType) ?? propertyInfo.PropertyType;
+                    object safeValue = (entry.Value == null) ? null : Convert.ChangeType(entry.Value, t);
+                    propertyInfo.SetValue(shipment, safeValue, null);
+                }
+
+                ShipmentService myService = new ShipmentService(shipmentRepository.context, shipment,"system@tenant" + shipment.Tenant + ".com");
+                myService.Update();
+
             }
             catch (Exception e)
             {

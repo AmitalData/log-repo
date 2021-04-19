@@ -30,18 +30,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private int tenant;
         public Tenant Poco { get; set; }
         public LogBoxTenantSetting LBtenantsettingPoco { get; set; }
-        //public int Tenant
-        //{
-        //    get { return tenant; }
-        //    set { tenant = value; }
-        //}
-
-        //public ICommonDataContext ObjectContext
-        //{
-        //    get { return objectContext; }
-        //    set { objectContext = value; }
-        //}
-
         private TenantPM entityPM;
         private ICommonDataContext objectContext;
         private TenantRepository entityRepository;

@@ -42,11 +42,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             //        entityPOCO.Tenant = entityPM.Tenant;
             //    }
 
-
-
-            //    this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
-            //    BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert);
-            //    entityPOCO.SearchFields = entityPM.SearchFields;
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
+            BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert);
+            entityPOCO.SearchFields = entityPM.SearchFields;
 
         }
         private static void BuildSearchFields(PaymentChequePM entityPM, PaymentCheque poco, bool isNewEntity)
@@ -97,6 +95,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     if (account.IsMultiCurrency == null) { account.IsMultiCurrency = false; }
                     entityPM.IsGLAccountMultiCurrency =(bool) account.IsMultiCurrency;
                     entityPM.GLAccountName = account.LocalName;
+                    entityPM.GLAccountNumber = account.DisplayNumber;
                 }
 
             }

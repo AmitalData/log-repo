@@ -1,4 +1,4 @@
-@release @dev
+@release @dev @all
 Feature: Cross Docks Entries and Releases
 
     The user creates a shipment, adds a cross dock entry, modifies it, cancels it,

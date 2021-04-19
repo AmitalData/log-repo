@@ -49,6 +49,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
     public SelectedVersionNumber: number;
     public OriginDependencyFilterValue: string = "A";
     public DestinationDependencyFilterValue = "A";
+    public ViaDependencyFilterValue = "A";
     public IsAir: boolean = false;
     public LineIdFromPriceCheck: string;
     public AllInCharges: string;
@@ -89,6 +90,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
         if (this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
             this.OriginDependencyFilterValue = "O";
             this.DestinationDependencyFilterValue = "O";
+            this.ViaDependencyFilterValue = "O";
         }
     }
 

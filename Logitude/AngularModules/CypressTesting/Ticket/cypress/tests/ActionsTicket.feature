@@ -1,4 +1,4 @@
-@smoke @release @stable
+@smoke @release @stable @all
 Feature: Actions Ticket test
     This file will create ticket then test the following Actions
     Cancel , Reactivate and Close Without Notifying
