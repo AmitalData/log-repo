@@ -1,50 +1,45 @@
-import { JournalPM } from './../../../../Accounting/EntityPMs/JournalPM';
-import { JournalExtendedPMService } from './../../../../Accounting/Services/ExtendedPMs/JournalExtendedPMService';
-import { ARPaymentEventManager } from './../../../../Accounting/Utilities/ARPaymentEventManager';
-import { ReconciliationExtendedPMService } from './../../../../Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
-import { GLAccountListService } from './../../../../Accounting/Services/StandardLists/GLAccountListService';
-import { ReconcileEventManager } from './../../../../Accounting/Utilities/ReconcileEventManager';
-import { AccountingEntityHelper } from './../../../../Accounting/Utilities/AccountingEntityHelper';
-import { LedgerTransactionPM } from './../../../../Accounting/EntityPMs/LedgerTransactionPM';
-import { LedgerTransactionExtendedListService } from './../../../../Accounting/Services/ExtendedLists/LedgerTransactionExtendedListService';
-import { RegionList } from './../../../../Common/EntityLists/RegionList';
-import { EventEmitter, Output } from '@angular/core';
-import { EntityListService } from './../../../../Infrastructure/Services/EntityListService';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
-import { ARPaymentPM } from '../../../../Invoice/EntityPMs/ARPaymentPM';
-import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { AppTool, DateTool, ArrayTool } from '../../../../Infrastructure/Tools';
-import { CurrencyListService } from '../../../../Common/Services/StandardLists/CurrencyListService';
-import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
-import { CardList } from '../../../../Common/EntityLists/CardList';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { BankAccountPM } from '../../../../Accounting/EntityPMs/BankAccountPM';
+import { CashBookPM } from '../../../../Accounting/EntityPMs/CashBookPM';
+import { GLAccountPM } from '../../../../Accounting/EntityPMs/GLAccountPM';
+import { BankAccountPMService } from '../../../../Accounting/Services/StandardPMs/BankAccountPMService';
+import { GLAccountPMService } from '../../../../Accounting/Services/StandardPMs/GLAccountPMService';
 import { AddressList } from '../../../../Common/EntityLists/AddressList';
+import { CardList } from '../../../../Common/EntityLists/CardList';
+import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
+import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
+import { PartnersDomainService } from '../../../../Common/Services/PartnersDomainService';
 import { AddressListService } from '../../../../Common/Services/StandardLists/AddressListService';
 import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
-import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { ARInvoiceListService } from '../../../../Invoice/Services/StandardLists/ARInvoiceListService';
-import { ARInvoiceList } from '../../../../Invoice/EntityLists/ARInvoiceList';
-import { ARPaymentInvoicePM } from '../../../../Invoice/EntityPMs/ARPaymentInvoicePM';
-import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
-import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { CurrencyListService } from '../../../../Common/Services/StandardLists/CurrencyListService';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { PartnersDomainService } from '../../../../Common/Services/PartnersDomainService';
-import { BankAccountPMService } from '../../../../Accounting/Services/StandardPMs/BankAccountPMService';
-import { BankAccountPM } from '../../../../Accounting/EntityPMs/BankAccountPM';
-import { InvoiceDomainService } from '../../../../Invoice/Services/InvoiceDomainService';
-import { CashBookPM } from '../../../../Accounting/EntityPMs/CashBookPM';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { AppTool, ArrayTool, DateTool } from '../../../../Infrastructure/Tools';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { AccountingPaymentMethodList } from '../../../../Invoice/EntityLists/AccountingPaymentMethodList';
+import { ARInvoiceList } from '../../../../Invoice/EntityLists/ARInvoiceList';
+import { ARPaymentChequeReplicaPM } from '../../../../Invoice/EntityPMs/ARPaymentChequeReplicaPM';
+import { ARPaymentPM } from '../../../../Invoice/EntityPMs/ARPaymentPM';
+import { InvoiceDomainService } from '../../../../Invoice/Services/InvoiceDomainService';
 import { AccountingPaymentMethodListService } from '../../../../Invoice/Services/StandardLists/AccountingPaymentMethodListService';
-import { GLAccountPMService } from '../../../../Accounting/Services/StandardPMs/GLAccountPMService';
-import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList';
-import { LineModel } from '../../../../Accounting/Components/Others/ReconcileComponent';
-import { GLAccountPM } from '../../../../Accounting/EntityPMs/GLAccountPM';
+import { ARInvoiceListService } from '../../../../Invoice/Services/StandardLists/ARInvoiceListService';
+import { ARPaymentValidator } from '../../../../Invoice/Validators/ARPaymentValidator';
+import { JournalPM } from './../../../../Accounting/EntityPMs/JournalPM';
+import { LedgerTransactionPM } from './../../../../Accounting/EntityPMs/LedgerTransactionPM';
+import { LedgerTransactionExtendedListService } from './../../../../Accounting/Services/ExtendedLists/LedgerTransactionExtendedListService';
+import { JournalExtendedPMService } from './../../../../Accounting/Services/ExtendedPMs/JournalExtendedPMService';
+import { ReconciliationExtendedPMService } from './../../../../Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
+import { GLAccountListService } from './../../../../Accounting/Services/StandardLists/GLAccountListService';
+import { AccountingEntityHelper } from './../../../../Accounting/Utilities/AccountingEntityHelper';
+
 
 @Component({
 
@@ -77,7 +72,9 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 	public ARPaymentChequeStatusColor = "black";
 	BankFieldsVisibile: boolean;
 	isMultipleCheques: boolean = false;
-	public OpenAmountCurrency: string;
+    public OpenAmountCurrency: string;
+    ARPaymentValidator: ARPaymentValidator;
+    public chequeAmount: number;
 	public InvoiceAmountCurrency: string = TextCodeTranslator.Translate("Accounting.O.ARP.InvoiceAmount") + " (" + SessionLocator.TenantPM.CurrencyCode + ")";
 	public PaymenyAmount: number;
 	get TextStore()
@@ -109,7 +106,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 		this.EntityPM = entityArgs.EntityPM;
 		this.SetAmountCurrencyCode();
 		this.ComputeLocalAmount();
-		this.SetPaymentAmount();
+        this.SetPaymentAmount();
+        this.SetChequeAmount();
 		if (this.EntityPM.ARPaymentChequeReplicas.length > 1) {
 			this.isMultipleCheques = true;
 		}
@@ -118,7 +116,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 		this.paymentAmountTotal = this.EntityPM.AmountInPaymentCurrency;
 		this.PaymentCurrencySign = this.EntityPM.PaymentCurrencySign;
 		this.TransactionsList = new ObservableCollection([]);
-
+        this.ARPaymentValidator = new ARPaymentValidator();
 		//#region old
 		this.ItemsSource = new ObservableCollection([]);
 		this.EnableNegativeOffsetARPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetARPayments;
@@ -161,7 +159,15 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 		// this.UIProperties.SetEnabled("AmountToReconcile","LedgerTransaction",!this.IsGridReadOnly);
 		this.InitializeBillToLov();
 	}
-
+    private SetChequeAmount() {
+        if (this.EntityPM.ARPaymentChequeReplicas.length == 0) {
+            this.chequeAmount = this.EntityPM.AmountInPaymentCurrency;
+        }
+        else {
+            var firstCheque = this.EntityPM.ARPaymentChequeReplicas.filter(d => d.LineNumber == 1)[0];
+            this.chequeAmount = firstCheque.ForeignAmount;
+        }
+    }
 	private InitializeBillToLov() {
         
 		this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
@@ -653,7 +659,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 			this.UIProperties.SetEnabled("BankBranch", this.ObjectTableName, false);
 			this.UIProperties.SetEnabled("Account", this.ObjectTableName, false);
 			this.UIProperties.SetEnabled("CreditCardTypeId", this.ObjectTableName, false);
-			this.UIProperties.SetEnabled("BranchId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("BranchId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("ChequeAmount", this.ObjectTableName, false);
 			if (this.isFullAccounting) {
 				this.UIProperties.SetEnabled("BankAccountId", this.ObjectTableName, false);
 			}
@@ -671,6 +678,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 			this.UIProperties.SetEnabled("PrintNotes", this.ObjectTableName, true);
 			this.UIProperties.SetEnabled("CreditCardTypeId", this.ObjectTableName, true);
 			this.UIProperties.SetEnabled("BranchId", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("ChequeAmount", this.ObjectTableName, true);
 
 			if (AppTool.IsNullOrEmpty(this.EntityPM.BillToId)) {
 				this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);
@@ -1582,8 +1590,13 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 	{
 		var result = "";
 		if (this.AccountingPaymentMethodCode == "CH") {
-			result = TextCodeTranslator.Translate("ARPayment.S.Details.Cheque");
-		}
+            if (!this.isMultipleCheques) {
+                result = TextCodeTranslator.Translate("ARPayment.S.Details.Cheque");
+            }
+            else {
+                result = TextCodeTranslator.Translate("Accounting.General.O.Cheques") + " (" + this.EntityPM.ARPaymentChequeReplicas.length + ")";
+            }
+        }
 
 		else if (this.AccountingPaymentMethodCode == "FS") {
 			result = "Offsetting";
@@ -1919,7 +1932,16 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 			this.EntityPM.PrintNotes = value;
 		}
 	}
+    get ChequeAmount() { return this.chequeAmount }
+    set ChequeAmount(value: number) {
+        if (this.chequeAmount != value) {
+            if (this.EntityPM.ARPaymentChequeReplicas.length == 1 || this.EntityPM.ARPaymentChequeReplicas.length == 0) {
+                this.AmountInPaymentCurrency = value;
+            }
+            this.chequeAmount = value;
 
+        }
+    }
 	ComputeOpenAmount()
 	{
 		this.OpenAmount = this.AmountInPaymentCurrency - this.Summary_AmountPaid;
@@ -2071,6 +2093,76 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         return this.PaymenyAmount - this.paymentReconciledAmountTotal - this.amount2reconcileTotal;
     }
 
+    ValidateChequeFields() {
+        var errors: string[];
+        errors = this.ARPaymentValidator.Validate(this.EntityPM);
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+        return errors;
+    }
+    AddChequesButtonClicked() {
+        var errors: string[] = this.ValidateChequeFields();
+        if (errors.length > 0) {
+            return;
+        }
+        this.ShowMultiChequeScreen();
+    }
+
+    ShowMultiChequeScreen() {
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1000;
+        logWindow.Height = 600;
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.UpdateChequesSection($event));
+        logWindow.Show('./InvoiceModules/ARPayment/Components/Other/ARPaymentMultiChequesComponent');
+    }
+    UpdateChequesSection(event: any) {
+        if (event == 'ok') {
+            this.isMultipleCheques = false;
+            if (this.EntityPM.ARPaymentChequeReplicas.length > 1) {
+                this.isMultipleCheques = true;
+            }
+            if (this.EntityPM.ARPaymentChequeReplicas.length >= 0) {
+                this.SetDefaultChequeFields();
+            }
+        }
+    }
+    SetDefaultChequeFields() {
+        if (this.EntityPM.ARPaymentChequeReplicas.length > 0) {
+            var firstCheque: ARPaymentChequeReplicaPM = this.EntityPM.ARPaymentChequeReplicas.filter(d => d.LineNumber == 1)[0];
+            this.MapChequeFields(firstCheque);
+            this.CalculatePaymentTotalAmount();
+
+        }
+        else if (this.EntityPM.ARPaymentChequeReplicas.length == 0) {
+            this.MapChequeFields(null);
+        }
+
+    }
+    CalculatePaymentTotalAmount() {
+        this.AmountInPaymentCurrency = 0;
+        for (let cheque of this.EntityPM.ARPaymentChequeReplicas) {
+            if (!AppTool.IsNullOrEmpty(cheque.ForeignAmount)) {
+                this.AmountInPaymentCurrency += cheque.ForeignAmount;
+
+            }
+        }
+        this.ComputeLocalAmount();
+        this.SetPaymentAmount();
+    }
+    MapChequeFields(cheque: ARPaymentChequeReplicaPM) {
+        this.Bank = cheque != null ? cheque.BankId : null;
+        this.Account = cheque != null ? cheque.BankAccount : null;
+        this.ChequeAmount = cheque != null ? cheque.ForeignAmount : null;
+        this.ValueDate = cheque != null ? cheque.ValueDate : null;
+        this.BankBranch = cheque != null ? cheque.BankBranch : null;
+        this.ChequeOrPaymentRef = cheque != null ? cheque.ChequeNumber : null;
+    }
+    DisplayChequesButtonClicked() {
+        this.ShowMultiChequeScreen();
+    }
 }
 
 

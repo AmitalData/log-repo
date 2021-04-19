@@ -107,8 +107,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		ExternalReconciliationLineUpdateClass  ExternalReconciliationLineUpdateClass = new ExternalReconciliationLineUpdateClass();
 		FullAccountingSettingUpdateClass  FullAccountingSettingUpdateClass = new FullAccountingSettingUpdateClass();
 		GLAccountUpdateClass  GLAccountUpdateClass = new GLAccountUpdateClass();
-		GLAccountCardsDataUpdateClass  GLAccountCardsDataUpdateClass = new GLAccountCardsDataUpdateClass();
 		GLAccountAgingDataUpdateClass  GLAccountAgingDataUpdateClass = new GLAccountAgingDataUpdateClass();
+		GLAccountCardsDataUpdateClass  GLAccountCardsDataUpdateClass = new GLAccountCardsDataUpdateClass();
 		GLAccountCounterUpdateClass  GLAccountCounterUpdateClass = new GLAccountCounterUpdateClass();
 		GLAccountCurrencyUpdateClass  GLAccountCurrencyUpdateClass = new GLAccountCurrencyUpdateClass();
 		GLAccountInterestPeriodUpdateClass  GLAccountInterestPeriodUpdateClass = new GLAccountInterestPeriodUpdateClass();
@@ -355,8 +355,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 			TablesHashStrings.Add("ExternalReconciliationLine",  ExternalReconciliationLineUpdateClass.HashString);
 			TablesHashStrings.Add("FullAccountingSetting",  FullAccountingSettingUpdateClass.HashString);
 			TablesHashStrings.Add("GLAccount",  GLAccountUpdateClass.HashString);
-			TablesHashStrings.Add("GLAccountCardsData",  GLAccountCardsDataUpdateClass.HashString);
 			TablesHashStrings.Add("GLAccountAgingData",  GLAccountAgingDataUpdateClass.HashString);
+			TablesHashStrings.Add("GLAccountCardsData",  GLAccountCardsDataUpdateClass.HashString);
 			TablesHashStrings.Add("GLAccountCounter",  GLAccountCounterUpdateClass.HashString);
 			TablesHashStrings.Add("GLAccountCurrency",  GLAccountCurrencyUpdateClass.HashString);
 			TablesHashStrings.Add("GLAccountInterestPeriod",  GLAccountInterestPeriodUpdateClass.HashString);
@@ -5361,6 +5361,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   
 	   	   ChartOfAccountsTypeUpdateClass.FillChartOfAccountsType();
 	
+	   
+	   
 	   
 	   
 	   
