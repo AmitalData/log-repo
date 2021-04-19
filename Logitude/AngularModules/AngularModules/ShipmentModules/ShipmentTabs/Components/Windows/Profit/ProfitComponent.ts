@@ -262,7 +262,7 @@ export class ProfitComponent {
                 record.Profit = -1 * (item.PayableOpenedAmount + item.PayableAcountedAmount);
             }
 
-            if (this.IncludingVAT && record.ReceivableAmountWithVat && record.PayableAmountWithVat)
+            if (this.IncludingVAT)
                 record.Profit = (record.ReceivableAmountWithVat) - (record.PayableAmountWithVat);
 
             this.ProfitsCollection.push(record);
@@ -385,7 +385,8 @@ export class ProfitComponent {
                 record.Profit = -1 * (item.PayableOpenedAmount + item.PayableAcountedAmount);
             }
 
-            if (this.IncludingVAT && record.ReceivableAmountWithVat && record.PayableAmountWithVat) {
+            if (this.IncludingVAT) {
+
                 record.Profit = (record.ReceivableAmountWithVat) - (record.PayableAmountWithVat);
             }
        

@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Shipment" Pre="true">
-  <Sql Version="4">
+  <Sql Version="5">
     <![CDATA[
     
     IF EXISTS (SELECT *
@@ -38,7 +38,7 @@
 	     if (@PayableVatTypeId is not null) 
 	     begin
 
-			   set @IsMultiPercentage = (select IsMultiPercentage from VatTypes where Tenant = @Tenant AND Id = @VatTypeId)
+			   set @IsMultiPercentage = (select IsMultiPercentage from VatTypes where Tenant = @Tenant AND Id = @PayableVatTypeId)
 			   if(@IsMultiPercentage = ''0'')
 			   begin 
 					 set @VatPercentage = (select top 1 Percentage from VatTypePercentages where VatTypeId = @PayableVatTypeId AND Tenant = @Tenant and FromDate <= @CreateDate order by FromDate desc)
@@ -52,7 +52,7 @@
 					DECLARE VatGroups_CURSOR CURSOR 
 					FOR 
 					SELECT SingleVATTypeId
-					FROM VATTypesGroups where GroupVATTypeId = @VatTypeId
+					FROM VATTypesGroups where GroupVATTypeId = @PayableVatTypeId
 					OPEN VatGroups_CURSOR
 					FETCH NEXT FROM VatGroups_CURSOR INTO @SingleVATTypeId
 					WHILE @@FETCH_STATUS = 0
