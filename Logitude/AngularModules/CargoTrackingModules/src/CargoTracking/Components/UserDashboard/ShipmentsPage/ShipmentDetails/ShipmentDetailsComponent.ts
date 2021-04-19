@@ -277,8 +277,65 @@ export class ShipmentDetailsComponent implements AfterViewInit
         partner2.Name = "Fratelli Abood SPA";
         partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
         partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
 
         this.PartnerCards =  [partner1,partner2];
+
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+
 
     }
 }
