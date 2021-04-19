@@ -1,13 +1,13 @@
-import { Component,
-     ViewChild, ElementRef, AfterViewInit, HostListener } from '@angular/core';
+import {
+    Component,
+    ViewChild, ElementRef, AfterViewInit, HostListener
+} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
 import { CargoTrackingShipmentList } from 'src/CargoTracking/EntityLists/CargoTrackingShipmentList';
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 import { CargoTrackingShipmentWithMilestones, Milestone } from 'src/CargoTracking/Components/PublicSite/PublicShipmentDetailsComponent/PublicShipmentDetailsComponent';
-import { CargoTrackingPortService } from '../../../../Services/Others/CargoTrackingPortService';
-import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoTrackingShipmentService';
 
 
 @Component({
@@ -15,8 +15,7 @@ import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoT
     templateUrl: './ShipmentDetailsComponent.html',
     styleUrls: ['./ShipmentDetailsComponent.css']
 })
-export class ShipmentDetailsComponent implements AfterViewInit
-{
+export class ShipmentDetailsComponent implements AfterViewInit {
 
     @ViewChild('SliderWrapper') SliderWrapperElement: ElementRef;
 
@@ -26,51 +25,44 @@ export class ShipmentDetailsComponent implements AfterViewInit
     showMoreReferences: boolean = false;
     SecurityKey: string = "";
     Shipment: CargoTrackingShipmentWithMilestones = null;
-    public ShipmentWithMilestones: CargoTrackingShipmentWithMilestones;
-    public toPortCode: string;
-    public fromPortCode: string;
-    isFromPortCodeFilled: boolean = false;
     SearchText: string = "";
-    ShipmentReferences: string[] = [];
-    CustomsBrokerReference: string;
-    ShipmentPM: any;
-
-
-    get tenant()
-    {
+    CustomersReferences = [
+        '5689974987646132',
+        '5689974987646132',
+        '5689974987646132',
+        '5689974987646132',
+        '5689974987646132',
+        '5689974987646132',
+        '5689974987646132',
+    ]
+    get tenant() {
         return CargoTrackingBrandingData.Tenant;
     }
     constructor(private router: Router,
         private route: ActivatedRoute,
-        private searchService: CargoTrackingSearchService,
-        private cargoTrackingPortService: CargoTrackingPortService,
-        private cargoTrackingShipmentService: CargoTrackingShipmentService
-  )
-    {
+        private searchService: CargoTrackingSearchService) {
 
         this.GetIdFromURI();
-        this.LoadShipment();
 
     }
-    ngAfterViewInit(): void
-    {
+    ngAfterViewInit(): void {
+        this.LoadShipment();
         setTimeout(() => {
             this.InitSlider();
             this.BuildSliderCards();
 
         }, 200);
         this.InitRoutes();
+        this.InitPartnerCards();
 
     }
     @HostListener('window:resize', ['$event'])
-    onResize()
-    {
-        //event.target.innerWidth;
+    onResize() {
+        //event.target.innerWidth;  
         this.InitSlider();
     }
 
-    onMousewheel(event: WheelEvent)
-    {
+    onMousewheel(event: WheelEvent) {
         event.preventDefault();
         if (event.deltaY > 0) {
             this.MoveSlider('left');
@@ -80,13 +72,11 @@ export class ShipmentDetailsComponent implements AfterViewInit
         }
     }
 
-    logPan(i)
-    {
+    logPan(i) {
         console.log(i);
 
     }
-    InitSlider()
-    {
+    InitSlider() {
 
         var PAGERS_WIDTH = 200; // 100 * 2 pager
         var screenwidth = window.innerWidth;
@@ -104,61 +94,22 @@ export class ShipmentDetailsComponent implements AfterViewInit
         this.sliderMarginLeft = screenwidth < 470 ? (this.sliderCardWidth + 55) * -1 : 0; // mobile: add
 
     }
-    LoadShipment()
-    {
+    LoadShipment() {
         this.isLoading = true;
-        this.searchService.getShipment(this.SecurityKey, this.tenant).subscribe((result: any) =>
-        {
+        this.searchService.getShipment(this.SecurityKey, this.tenant).subscribe((result: any) => {
+            this.isLoading = false;
             console.log("[getShipment]", result);
-            this.ShipmentWithMilestones = result;
-            if (this.ShipmentWithMilestones) {
-                this.Shipment = result;
-                this.ShipmentReferences = result.ShipmentList.CustomerReference ? result.ShipmentList.CustomerReference.split(',') : null;
-                this.SetRoutingVariables();
-                this.GetShipmentPM();
-            }
+            this.Shipment = result;
+
+            setTimeout(() => {
+                this.InitSlider();
+                this.BuildSliderCards();
+
+            }, 200);
 
         });
     }
-
-    SetRoutingVariables() {
-       this.GetCargoTrackingPortById(this.Shipment.ShipmentList.FromPortId);
-    }
-
-    GetCargoTrackingPortById(id: string) {
-        this.cargoTrackingPortService.get(id).subscribe((result: any) => {
-            var code = result.Code;
-            this.SetFromPortCodeORToPortCode(code);
-        })
-    }
-
-    private SetFromPortCodeORToPortCode(code: any) {
-
-        if (!this.isFromPortCodeFilled) {
-            this.fromPortCode = code;
-            this.isFromPortCodeFilled = true;
-        }
-
-        else
-            this.toPortCode = code;
-       this.GetCargoTrackingPortById(this.Shipment.ShipmentList.ToPortId);
-
-    }
-
-
-    GetShipmentPM() {
-        this.cargoTrackingShipmentService.get(this.Shipment.ShipmentList.EntityId).subscribe((result: any) => {
-            if (result) {
-                this.ShipmentPM = result;
-                this.CustomsBrokerReference = result.CustomFileNumber;
-                this.isLoading = false;
-            }
-        });
-    }
-
-
-    private GetIdFromURI()
-    {
+    private GetIdFromURI() {
 
         let _id = this.route.snapshot.paramMap.get('SecurityKey');
         this.SecurityKey = _id;
@@ -182,7 +133,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     sliderVisibleCardsCount: number = 5;
     sliderVisibleCardsWidth: number = 0;
 
-    BuildSliderCards(){
+    BuildSliderCards() {
         // this.Shipment.Milestones.forEach((milstone:Milestone) => {
         //     var newCard = new MilestoneCard();
         //     newCard.Code = milstone.Code;
@@ -195,28 +146,28 @@ export class ShipmentDetailsComponent implements AfterViewInit
         // });
 
         this.SliderCards = this.Shipment.Milestones
-        .filter(milstone=>{
-            var date = milstone.EstimationDate || milstone.Date;
-            if(date)
-                return true;
-            return false;
-        })
-        .sort((a, b) => {
-            if (a.Id > b.Id) return 1;
-            if (a.Id < b.Id) return -1;
-             return 0;
+            .filter(milstone => {
+                var date = milstone.EstimationDate || milstone.Date;
+                if (date)
+                    return true;
+                return false;
             })
-        .map((milstone:Milestone) => {
-            var newCard = new MilestoneCard();
-            newCard.Date =  milstone.Done ? milstone.Date : (milstone.EstimationDate || milstone.Date);
-            newCard.Code = 'No. '+milstone.Id;
-            newCard.Title = milstone.Name;
-            newCard.Description = milstone.Notes || 'This milestone does not have descriptions';
-            newCard.IsDimmed = milstone.IsEstimation && !milstone.Done;
-            newCard.IsActive = milstone.Id + '' == this.Shipment.ShipmentList.CurrentMilestoneCode;
-            newCard.HasWarning = newCard.IsActive;
-            return newCard;
-        });
+            .sort((a, b) => {
+                if (a.Id > b.Id) return 1;
+                if (a.Id < b.Id) return -1;
+                return 0;
+            })
+            .map((milstone: Milestone) => {
+                var newCard = new MilestoneCard();
+                newCard.Date = milstone.Done ? milstone.Date : (milstone.EstimationDate || milstone.Date);
+                newCard.Code = 'No. ' + milstone.Id;
+                newCard.Title = milstone.Name;
+                newCard.Description = milstone.Notes || 'This milestone does not have descriptions';
+                newCard.IsDimmed = milstone.IsEstimation && !milstone.Done;
+                newCard.IsActive = milstone.Id + '' == this.Shipment.ShipmentList.CurrentMilestoneCode;
+                newCard.HasWarning = newCard.IsActive;
+                return newCard;
+            });
         // .sort((a, b) => {
         //     if (a.Date > b.Date) return 1;
         //     if (a.Date < b.Date) return -1;
@@ -224,13 +175,12 @@ export class ShipmentDetailsComponent implements AfterViewInit
         //     });
     }
 
-    MoveSlider(dir)
-    {
+    MoveSlider(dir) {
 
-        if(dir == 'right' && this.sliderMarginLeft==0)
-        return;
+        if (dir == 'right' && this.sliderMarginLeft == 0)
+            return;
 
-        if(dir == 'left' && ((this.sliderMarginCardCount+this.sliderVisibleCardsCount)>=this.SliderCards.length) || (this.sliderVisibleCardsCount >= this.SliderCards.length))
+        if (dir == 'left' && ((this.sliderMarginCardCount + this.sliderVisibleCardsCount) >= this.SliderCards.length) || (this.sliderVisibleCardsCount >= this.SliderCards.length))
             return;
 
         var margin = this.sliderMarginLeft;
@@ -259,8 +209,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
 
     }
-    GetModeIcon()
-    {
+    GetModeIcon() {
         var iconPath = "";
         switch (this.Shipment.ShipmentList.TransportModeId) {
             case 'A':
@@ -284,35 +233,106 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
 
     selectedNavButton: string = "Overview";
-    PanelsNavigatorClicked(panelName: string)
-    {
+    PanelsNavigatorClicked(panelName: string) {
         this.ScrollToPanel(panelName);
     }
 
 
-    private ScrollToPanel(panelName: string)
-    {
+    private ScrollToPanel(panelName: string) {
         this.selectedNavButton = panelName;
         var panelElement = document.getElementById(panelName) as HTMLElement;
         if (panelElement)
             panelElement.scrollIntoView();
     }
 
-    BackLinkClicked()
-    {
+    BackLinkClicked() {
         this.router.navigate(['cargo-tracking', 'shipments']);
     }
 
+    PartnerCards: PartnerCard[] = [];
+    InitPartnerCards() {
+        var partner1 = new PartnerCard();
+        partner1.Type = "customer";
+        partner1.Name = "Fratelli Fantini SPA";
+        partner1.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner1.PhoneNumber = "+39 0322918458";
+
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+
+        this.PartnerCards = [partner1, partner2];
+
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";  
+        this.PartnerCards.push(partner2);
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+
+
+    }
     ShipmentRouteSteps: RoutingStep[] = [];
-    InitRoutes(){
+    InitRoutes() {
         var step1 = new RoutingStep();
         step1.FromPortLabel = "US-BOS";
         step1.ToPortLabel = "US-NYC";
         step1.Description = "Via lorem ipsum co.";
         step1.TransportModeCode = "A";
         step1.Directions = [
-            new RouteDirection(new Date(),"ATA","in"),
-            new RouteDirection(new Date(),"ETD","out"),
+            new RouteDirection(new Date(), "ATA", "in"),
+            new RouteDirection(new Date(), "ETD", "out"),
         ];
 
 
@@ -322,8 +342,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
         step2.Description = "Via lorem ipsum co.";
         step2.TransportModeCode = "I";
         step2.Directions = [
-            new RouteDirection(new Date(),"ATA","in"),
-            new RouteDirection(new Date(),"ETD","out"),
+            new RouteDirection(new Date(), "ATA", "in"),
+            new RouteDirection(new Date(), "ETD", "out"),
         ];
 
         var step3 = new RoutingStep();
@@ -333,17 +353,16 @@ export class ShipmentDetailsComponent implements AfterViewInit
         step3.TransportModeCode = "O";
         step3.IsActive = true;
         step3.Directions = [
-            new RouteDirection(new Date(),"ATA","in"),
-            new RouteDirection(new Date(),"ATD","in"),
+            new RouteDirection(new Date(), "ATA", "in"),
+            new RouteDirection(new Date(), "ATD", "in"),
         ];
 
-        this.ShipmentRouteSteps =  [step1,step2,step3];
+        this.ShipmentRouteSteps = [step1, step2, step3];
     }
 }
 
 
-export class MilestoneCard
-{
+export class MilestoneCard {
     Code: string;
     Date: Date;
     Title: string;
@@ -353,8 +372,7 @@ export class MilestoneCard
     IsDimmed: boolean;
 }
 
-export class RoutingStep
-{
+export class RoutingStep {
     IsActive: boolean;
     FromPortLabel;
     ToPortLabel;
@@ -362,8 +380,8 @@ export class RoutingStep
     TransportModeCode: 'A' | 'I' | 'O';
     Directions: RouteDirection[] = [];
 }
-export class RouteDirection{
-    constructor(date: Date,label: string,direction: 'in' | 'out') {
+export class RouteDirection {
+    constructor(date: Date, label: string, direction: 'in' | 'out') {
         this.Date = date;
         this.Label = label;
         this.Direction = direction;
@@ -371,4 +389,14 @@ export class RouteDirection{
     Date: Date;
     Label: string;
     Direction: 'in' | 'out' = 'in';
+}
+
+export class PartnerCard {
+    constructor() {
+    }
+    Name: string;
+    Type: string;
+    Address: string;
+    PhoneNumber: string;
+    ShowDetails: boolean = false;
 }
