@@ -190,6 +190,12 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public string CustomerEnglishName  { get; set; }
        [DataMember]
        public string CustomerLocalName  { get; set; }
+       [DataMember]
+       public string FromPortCode  { get; set; }
+       [DataMember]
+       public string ToPortCode  { get; set; }
+       [DataMember]
+       public int? NumberOfPackages  { get; set; }
    }
 
 }

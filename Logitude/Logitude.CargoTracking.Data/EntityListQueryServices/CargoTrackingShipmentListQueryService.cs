@@ -89,12 +89,15 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                DeliveryNotes = shipment.DeliveryNotes,
                                                                AssignedTruckerEstimationDate = shipment.AssignedTruckerEstimationDate,
                                                                AssignedTruckerNotes = shipment.AssignedTruckerNotes,
+                                                               NumberOfPackages = shipment.PackagesQuantity,
 
                                                                // port fields
                                                                ToPortCountryCode = toPort.CountryCode,
                                                                FromPortCountryCode = fromPort.CountryCode,
                                                                FromPortName = fromPort.EnglishName,
                                                                ToPortName = toPort.EnglishName,
+                                                               FromPortCode = fromPort.Code,
+                                                               ToPortCode = toPort.Code,
 
                                                                // transport mode
                                                                TransportModeName = transportMode.Name,
@@ -117,6 +120,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                     {
                         Id = p.Id,
                         EnglishName = p.EnglishName,
+                        Code = p.Code,
                         CountryCode = c.Code,
                     });
         }

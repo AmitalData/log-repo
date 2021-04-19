@@ -13569,14 +13569,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return shipmentPackages;
         }
 
-        private int GetShipmentPackagesQuantity(int tenant, string shipmentId)
-        {
-            List<ShipmentPackagePM> shipmentPackages = GetPackagesOfShipment(tenant, shipmentId);
-            int? quantity = shipmentPackages.Sum(package => package.Quantity);
-            return quantity ?? 0;
-        }
-
-
     }
 
     public class DeparturesArrivalsDataItem

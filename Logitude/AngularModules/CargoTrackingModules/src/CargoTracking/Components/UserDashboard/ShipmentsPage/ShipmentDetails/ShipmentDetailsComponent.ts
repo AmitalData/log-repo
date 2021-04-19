@@ -29,7 +29,6 @@ export class ShipmentDetailsComponent implements AfterViewInit
     public ShipmentWithMilestones: CargoTrackingShipmentWithMilestones;
     public toPortCode: string;
     public fromPortCode: string;
-    isFromPortCodeFilled: boolean = false;
     SearchText: string = "";
     ShipmentReferences: string[] = [];
     CustomsBrokerReference: string;
@@ -122,27 +121,20 @@ export class ShipmentDetailsComponent implements AfterViewInit
     }
 
     SetRoutingVariables() {
-       this.GetCargoTrackingPortById(this.Shipment.ShipmentList.FromPortId);
+        this.SetFromPortCode(this.Shipment.ShipmentList.FromPortId);
+        this.SetToPortCode(this.Shipment.ShipmentList.ToPortId);
     }
 
-    GetCargoTrackingPortById(id: string) {
+    private SetFromPortCode(id: string) {
         this.cargoTrackingPortService.get(id).subscribe((result: any) => {
-            var code = result.Code;
-            this.SetFromPortCodeORToPortCode(code);
+            this.fromPortCode = result.Code;
         })
     }
 
-    private SetFromPortCodeORToPortCode(code: any) {
-
-        if (!this.isFromPortCodeFilled) {
-            this.fromPortCode = code;
-            this.isFromPortCodeFilled = true;
-        }
-
-        else
-            this.toPortCode = code;
-       this.GetCargoTrackingPortById(this.Shipment.ShipmentList.ToPortId);
-
+    private SetToPortCode(id: string) {
+        this.cargoTrackingPortService.get(id).subscribe((result: any) => {
+            this.toPortCode = result.Code;
+        })
     }
 
 
