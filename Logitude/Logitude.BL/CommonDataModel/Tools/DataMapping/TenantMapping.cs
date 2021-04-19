@@ -118,6 +118,12 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.CBSA = entityPM.CBSA;
             poco.CAAT = entityPM.CAAT;
             poco.ApplyVATForAllPartners = entityPM.ApplyVATForAllPartners;
+           
+            poco.AirRatio = entityPM.AirRatio;
+            poco.LCLRatio = entityPM.LCLRatio;
+            poco.FCLRatio = entityPM.FCLRatio;
+            poco.LTLRatio = entityPM.LTLRatio;
+            poco.FTLRatio = entityPM.FTLRatio;
 
             if (entityPM.CheckDigitControlAlgorithmCode == null)
             {

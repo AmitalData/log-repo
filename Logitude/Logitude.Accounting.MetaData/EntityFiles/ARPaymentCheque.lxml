@@ -40,7 +40,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;שורת המחאה&quot;"
   DefaultText="&quot;Cheque Line&quot;"
-  Code="&quot;2923&quot;"
+  Code="&quot;d544&quot;"
   Name="&quot;ARPaymentCheque Query Group&quot;"
   GenerateDomainService="true"
   ClientModuleName="&quot;Accounting&quot;"
@@ -484,10 +484,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;LineNumber&quot;"
     DefaultText="&quot;Line No.&quot;"
-    FullLocalDefaultText="&quot;שורה&quot;"
+    FullLocalDefaultText="&quot;מספר שורה&quot;"
     ListFieldLable="&quot;LineNumberListLable&quot;"
     ListLableDefaultText="&quot;Line No.&quot;"
-    ListLocalDefaultText="&quot;שורה&quot;"
+    ListLocalDefaultText="&quot;מספר שורה&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -1889,13 +1889,6 @@
         IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
-  <AdditionalTextCodes>
-    <TextCode
-      Code="&quot;ARPaymentCheque.O.Cheques&quot;"
-      DefaultText="&quot;Cheques&quot;"
-      LocalDefaultText="&quot;המחאה&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-  </AdditionalTextCodes>
+  <AdditionalTextCodes />
   <AdditionalFeatures />
 </entity>

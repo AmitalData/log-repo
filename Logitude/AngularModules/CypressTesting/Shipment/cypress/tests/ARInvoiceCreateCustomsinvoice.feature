@@ -1,4 +1,4 @@
-@release @stable
+@release @stable @all
 
 Feature:AR Invoice Create Customs Invoice
   The user activates customs, creates a customer, creates a Direct Export Air shipment, 

@@ -1,3 +1,3 @@
 <div class="prime-web-component">
-    <task-list (entityclicked)="openShipmentEditScreen($event)"></task-list>
+    <task-list [isCustomView]="true" [LoggedUser]="myUser" (entityclicked)="openShipmentEditScreen($event)"></task-list>
 </div>

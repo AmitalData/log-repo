@@ -1,4 +1,4 @@
-@release @stable 
+@release @stable @all
 Feature: Wrong Email and Password Login and Reset Password
     The user fails to log in using wrong email and password and requests a password reset.
 

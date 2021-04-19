@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Simplog.Server.Infrastructure.Helpers;
 
 namespace Simplog.Data.InvoiceModel.Repositories
 {
@@ -41,7 +40,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
        
         public IQueryable<ARPaymentChequeReplica> GetARPaymentChequeReplicas(string paymentId, int tenant)
         {
-            return (from a in context.ARPaymentChequeReplicas where a.PaymentId == paymentId && a.Tenant == tenant select a).Include("ARPaymentChequeStatusReplica");
+            return (from a in context.ARPaymentChequeReplicas where a.PaymentId == paymentId && a.Tenant == tenant select a);
         }
 
         public void Add(ARPaymentChequeReplica entity)

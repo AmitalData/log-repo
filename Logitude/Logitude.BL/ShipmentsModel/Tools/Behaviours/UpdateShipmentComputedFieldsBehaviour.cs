@@ -78,7 +78,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
         private void MapEntity()
         {
             MapFields();
-            MapContainersNumbers();
+            MapContainersNumbersAndTypesArray();
             MapFirstPickUp();
             MapLastPickUp();
             MapLastDelivery();
@@ -141,35 +141,47 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             entity.LastDocumentDateTime = null;// new DateTime(1900, 1, 1);
             entity.CreatedFromDigital = shipmentPM.CreatedFromDigital;
         }
-        private void MapContainersNumbers()
+        private void MapContainersNumbersAndTypesArray()
         {
-            string myContainersNumbers = null;
-            string myContainersNumbersAndTypesArray = null;
-
             if (shipmentPM.ShipmentPackages != null)
             {
-                foreach (ShipmentPackagePM packagePM in shipmentPM.ShipmentPackages.Where(p => p.ChangeSetOp != ChangeSetOperation.Delete))
-                {
-                    if (string.IsNullOrEmpty(myContainersNumbers))
-                    {
-                        myContainersNumbers = packagePM.ContainerNumber;
-                        myContainersNumbersAndTypesArray = packagePM.ContainerNumber + "[" + packagePM.PackageTypeCode + "]";
-                    }
-                    else
-                    {
-                        myContainersNumbers += ", " + packagePM.ContainerNumber;
-                        myContainersNumbersAndTypesArray += ", " + packagePM.ContainerNumber + "[" + packagePM.PackageTypeCode + "]";
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(myContainersNumbers) && myContainersNumbers.Length > 1000)
-                {
-                    myContainersNumbers = myContainersNumbers.Substring(0, 1000);
-                }
+                MapContainersNumbersAndTypesArrayFromShipmentPackages();
+            }
+        }
+        private void MapContainersNumbersAndTypesArrayFromShipmentPackages()
+        {
+            string shipmentContainersNumbers = string.Empty;
+            string shipmentContainersNumbersAndTypesArray = string.Empty;
+            foreach (ShipmentPackagePM packagePM in shipmentPM.ShipmentPackages.Where(p => p.ChangeSetOp != ChangeSetOperation.Delete))
+            {
+                shipmentContainersNumbers = AddPackageContainerNumberToShipmentContainersNumbers(shipmentContainersNumbers, packagePM.ContainerNumber);
+                shipmentContainersNumbersAndTypesArray = AddPackageContainerNumberAndTypeToShipmentContainersNumbersAndTypesArray(shipmentContainersNumbersAndTypesArray, packagePM.ContainerNumber, packagePM.PackageTypeCode);
             }
 
-            entity.ContainersNumbers = myContainersNumbers;
-            entity.ContainersNumbersAndTypesArray = myContainersNumbersAndTypesArray;
+            if (!string.IsNullOrEmpty(shipmentContainersNumbers) && shipmentContainersNumbers.Length > 1000)
+            {
+                shipmentContainersNumbers = shipmentContainersNumbers.Substring(0, 1000);
+            }
+            entity.ContainersNumbers = string.IsNullOrEmpty(shipmentContainersNumbers) ? null : shipmentContainersNumbers;
+            entity.ContainersNumbersAndTypesArray = string.IsNullOrEmpty(shipmentContainersNumbersAndTypesArray) ? null : shipmentContainersNumbersAndTypesArray;
+        }
+        private string AddPackageContainerNumberToShipmentContainersNumbers(string shipmentContainersNumbers, string packageContainerNumber)
+        {
+            string allShipmentContainersNumbers = shipmentContainersNumbers;
+            if (!string.IsNullOrEmpty(packageContainerNumber))
+            {
+                allShipmentContainersNumbers += (!string.IsNullOrEmpty(allShipmentContainersNumbers) ? ", " : "") + packageContainerNumber;
+            }
+            return allShipmentContainersNumbers;
+        }
+        private string AddPackageContainerNumberAndTypeToShipmentContainersNumbersAndTypesArray(string shipmentContainersNumbersAndTypesArray, string packageContainerNumber, string packageTypeCode)
+        {
+            string allShipmentContainersNumbersAndTypesArray = shipmentContainersNumbersAndTypesArray;
+            if (!string.IsNullOrEmpty(packageContainerNumber))
+            {
+                allShipmentContainersNumbersAndTypesArray += (!string.IsNullOrEmpty(allShipmentContainersNumbersAndTypesArray) ? ", " : "") + packageContainerNumber + "[" + packageTypeCode + "]";
+            }
+            return allShipmentContainersNumbersAndTypesArray;
         }
         private void MapFirstPickUp()
         {

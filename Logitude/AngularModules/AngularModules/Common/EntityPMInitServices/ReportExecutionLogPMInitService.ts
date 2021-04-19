@@ -18,6 +18,7 @@ export class ReportExecutionLogPMInitService {
         entityPM.UIProperties.SetEnabled("StartDate", "ReportExecutionLog", false);
         entityPM.UIProperties.SetEnabled("ExecutedByServerName", "ReportExecutionLog", false);
         entityPM.UIProperties.SetEnabled("DisablePreview", "ReportExecutionLog", false);
+        entityPM.UIProperties.SetEnabled("ReportName", "ReportExecutionLog", false);
     }
 
 }

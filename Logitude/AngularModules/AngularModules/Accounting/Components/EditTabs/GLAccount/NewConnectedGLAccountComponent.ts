@@ -136,7 +136,8 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
                                   this.accountPM.AutomaticReconcileId = this.entityPM.AutomaticReconcileId;
                                   this.accountPM.ControlAccountId = this.entityPM.ControlAccountId;
                                   this.accountPM.Tenant = this.entityPM.Tenant;
-                                  this.accountPM.Type = "ADDED";
+                              this.accountPM.Type = "ADDED";
+                              this.accountPM.CardsDataId = this.entityPM.CardsDataId;
                                //   this.accountPM.ParentAccountByCurrency = this.entityPM.in;
 
 

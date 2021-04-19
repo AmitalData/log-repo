@@ -116,6 +116,7 @@ export class NewARInvoiceComponent extends BaseComponent {
             this.EntityPM.IsCustomsChargesOnly = (this.InvoiceTypeCode == "CI" || this.InvoiceTypeCode == "CC") ? true : false;
             this.EntityPM.MainEntityId = this.shipmentPM.Id;
             this.EntityPM.MainEntityReference = this.shipmentPM.ShipmentNumber;
+            this.EntityPM.ShipmentsNumbers = this.shipmentPM.ShipmentNumber;
             this.EntityPM.HouseNumber = this.shipmentPM.House;
             this.EntityPM.MasterNumber = this.shipmentPM.LongMaster;
             this.EntityPM.ProfitCurrencyId = this.shipmentPM.ProfitCurrencyId;

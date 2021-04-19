@@ -1,0 +1,78 @@
+﻿<Script DBType="Main" Module="Invoice" AOT="true" TargetTableName="ARInvoices">
+  <Sql Version="2">
+    <![CDATA[  
+  
+
+declare @InvoiceId as varchar(15)
+declare @Tenant as int
+declare @IsConsolidationInvoice as bit
+declare @MainEntityReference as varchar(50)
+declare @ShipmentsNumbers as varchar(1000)
+declare @SearchFields as nvarchar(4000)
+
+BEGIN 
+		DECLARE InvoicesCursor CURSOR READ_ONLY
+		FOR
+		SELECT Id, Tenant, IsConsolidationInvoice, MainEntityReference, SearchFields
+		FROM ARInvoices
+		where  $LastCounterWhere$
+		OPEN InvoicesCursor FETCH NEXT FROM InvoicesCursor INTO @InvoiceId, @Tenant, @IsConsolidationInvoice, @MainEntityReference, @SearchFields
+		WHILE @@FETCH_STATUS = 0
+			BEGIN
+
+				set @ShipmentsNumbers = ''
+
+				if (@IsConsolidationInvoice = 1)
+				begin
+					
+					declare @ConstituentShipmentNumber as varchar(50)
+
+					BEGIN 
+							DECLARE ConstituentsCursor CURSOR READ_ONLY
+							FOR
+							SELECT MainEntityReference
+							FROM ARInvoices
+							where  Tenant = @Tenant and ConsolidationInvoiceId = @InvoiceId and IsConstituentInvoice = 1 
+							OPEN ConstituentsCursor FETCH NEXT FROM ConstituentsCursor INTO @ConstituentShipmentNumber
+							WHILE @@FETCH_STATUS = 0
+								BEGIN
+
+									if (@ShipmentsNumbers = '') set @ShipmentsNumbers = @ConstituentShipmentNumber
+									else 
+										if CHARINDEX(@ConstituentShipmentNumber,@ShipmentsNumbers) > 0										
+											print 'nothing'								
+
+										else 
+											set @ShipmentsNumbers = @ShipmentsNumbers + ', ' + @ConstituentShipmentNumber
+
+								FETCH NEXT FROM ConstituentsCursor INTO @ConstituentShipmentNumber
+								END
+							CLOSE ConstituentsCursor
+							DEALLOCATE ConstituentsCursor
+					END
+
+				end
+
+				else
+				begin
+					set @ShipmentsNumbers = @MainEntityReference
+				end
+
+				if(@IsConsolidationInvoice = 1)
+				begin
+					set @SearchFields = @SearchFields +',' + @ShipmentsNumbers;
+					update ARInvoices set SearchFields = @SearchFields where Id = @InvoiceId and Tenant = @Tenant
+				end
+
+				update ARInvoices set ShipmentsNumbers = @ShipmentsNumbers where Id = @InvoiceId and Tenant = @Tenant
+
+			FETCH NEXT FROM InvoicesCursor INTO @InvoiceId, @Tenant, @IsConsolidationInvoice, @MainEntityReference, @SearchFields
+			END
+		CLOSE InvoicesCursor
+		DEALLOCATE InvoicesCursor
+END
+
+    
+    ]]>
+  </Sql>
+</Script>

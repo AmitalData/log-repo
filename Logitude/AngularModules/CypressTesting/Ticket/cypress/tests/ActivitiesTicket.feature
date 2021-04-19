@@ -1,4 +1,4 @@
-@smoke @release @stable
+@smoke @release @stable @all
 Feature: Activities Ticket Test
     This file will create ticket then test the following
     Create and complete Call, Task and Appointment activities

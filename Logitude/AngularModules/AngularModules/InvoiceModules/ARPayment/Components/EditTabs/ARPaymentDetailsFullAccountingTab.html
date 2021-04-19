@@ -155,19 +155,19 @@
                                             <tr class="customtrclass">
                                                 <td style="width:120px; height:25px; ">
                                                     <LogLabel [ObjectFieldName]="'BillToId'"
-                                                              [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                                                     </LogLabel>
                                                 </td>
 
                                                 <td style="width:230px; ">
                                                     <LogLov [ObjectFieldName]="'BillToId'"
-                                                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                            [SelectedValue]="BillToId" [LookUpTableName]="'Card'"
-                                                            [DependencyFilter1Value]="'CS,AG,AL,CG,SG,SL,TR,VD,WH'"
-                                                            [DependencyFilter1IsList]="true"
-                                                            [DisplayFieldsFromList]="DisplayFieldsFromList"
-                                                            [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
-                                                            [CustomizedWidth]="BillToLovSizeForFullAccounting">
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                        [SelectedValue]="BillToId" [LookUpTableName]="'Card'"
+                                                        [DependencyFilter1Value]="'CS,AG,AL,CG,SG,SL,TR,VD,WH'"
+                                                        [DependencyFilter1IsList]="true"
+                                                        [DisplayFieldsFromList]="DisplayFieldsFromList"
+                                                        [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
+                                                        [CustomizedWidth]="BillToLovSizeForFullAccounting">
                                                     </LogLov>
                                                 </td>
 
@@ -181,15 +181,15 @@
                                             <tr class="customtrclass">
                                                 <td style="width:120px; height:25px; ">
                                                     <LogLabel [ObjectFieldName]="'BillToAddressId'"
-                                                              [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                                                     </LogLabel>
                                                 </td>
 
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'BillToAddressId'"
-                                                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                            [SelectedValue]="BillToAddressId" [LookUpTableName]="'Address'"
-                                                            [DependencyFilter1Value]="BillToId">
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                        [SelectedValue]="BillToAddressId" [LookUpTableName]="'Address'"
+                                                        [DependencyFilter1Value]="BillToId">
                                                     </LogLov>
                                                 </td>
 
@@ -203,16 +203,16 @@
                                             <tr class="customtrclass">
                                                 <td style="width:120px; height:25px; ">
                                                     <LogLabel [ObjectFieldName]="'AccountingPaymentMethodId'"
-                                                              [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                                                     </LogLabel>
                                                 </td>
 
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'AccountingPaymentMethodId'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [SelectedValue]="AccountingPaymentMethodId"
-                                                            [DataContext]="DataContext" [DependencyFilter1Value]="'true'"
-                                                            [LookUpTableName]="'AccountingPaymentMethod'">
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [SelectedValue]="AccountingPaymentMethodId"
+                                                        [DataContext]="DataContext" [DependencyFilter1Value]="'true'"
+                                                        [LookUpTableName]="'AccountingPaymentMethod'">
                                                     </LogLov>
                                                 </td>
 
@@ -226,15 +226,15 @@
                                             <tr class="customtrclass" *ngIf="VisibleIfCash">
                                                 <td style="width:120px; height:25px; ">
                                                     <LogLabel [ObjectFieldName]="'AmountInPaymentCurrency'"
-                                                              [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                                                     </LogLabel>
                                                 </td>
 
                                                 <td>
                                                     <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'"
-                                                                [DigitsAfterPoint]="2"
-                                                                [InputType]="IsNegativeAmountEnabled ? 'sigdouble':'double'"
-                                                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                        [DigitsAfterPoint]="2"
+                                                        [InputType]="IsNegativeAmountEnabled ? 'sigdouble':'double'"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                                                     </LogTextBox>
                                                 </td>
 
@@ -281,7 +281,7 @@
                                             <tr class="customtrclass">
                                                 <td style="width:120px;height:25px;">
                                                     <LogLabel [ObjectFieldName]="'PaymentCurrencyId'"
-                                                              [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                                                     </LogLabel>
                                                 </td>
 
@@ -290,11 +290,11 @@
                                                         <tr>
                                                             <td>
                                                                 <LogLov [ObjectFieldName]="'PaymentCurrencyId'"
-                                                                        [HideColumns]="true"
-                                                                        [ObjectTableName]="ObjectTableName"
-                                                                        [DataContext]="DataContext"
-                                                                        [SelectedValue]="PaymentCurrencyId"
-                                                                        [LookUpTableName]="'Currency'">
+                                                                    [HideColumns]="true"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [SelectedValue]="PaymentCurrencyId"
+                                                                    [LookUpTableName]="'Currency'">
                                                                 </LogLov>
                                                             </td>
 
@@ -309,21 +309,21 @@
 
                                                             <td style="width: 70px;">
                                                                 <LogTextBox [DigitsAfterPoint]="'5'"
-                                                                            [HideColumns]="true"
-                                                                            [Text]="PaymentCurrencyExchangeRate"
-                                                                            [ObjectFieldName]="'PaymentCurrencyExchangeRate'"
-                                                                            [InputType]="'double'"
-                                                                            [ObjectTableName]="ObjectTableName"
-                                                                            [DataContext]="DataContext"></LogTextBox>
+                                                                    [HideColumns]="true"
+                                                                    [Text]="PaymentCurrencyExchangeRate"
+                                                                    [ObjectFieldName]="'PaymentCurrencyExchangeRate'"
+                                                                    [InputType]="'double'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"></LogTextBox>
                                                             </td>
 
                                                             <td style="width:36px;">
                                                                 <div [style.float]="isRTL ? 'left' : 'right'"
-                                                                     style="display: block;"
-                                                                     *ngIf="IsEditExchangeRateVisible">
+                                                                    style="display: block;"
+                                                                    *ngIf="IsEditExchangeRateVisible">
                                                                     <IconButton [Name]="'Edit'" [IsSmall]="true"
-                                                                                (click)="UpdateCurrencyRateMethod()"
-                                                                                [IsEnabled]="RateIsEnabled"></IconButton>
+                                                                        (click)="UpdateCurrencyRateMethod()"
+                                                                        [IsEnabled]="RateIsEnabled"></IconButton>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -339,13 +339,13 @@
                                             <tr class="customtrclass">
                                                 <td style="width:120px;height:25px;">
                                                     <LogLabel [ObjectFieldName]="'RegisterDate'"
-                                                              [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                                                     </LogLabel>
                                                 </td>
 
                                                 <td style="width:240px;">
                                                     <LogDatePicker [ObjectFieldName]="'RegisterDate'"
-                                                                   [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                                                     </LogDatePicker>
                                                 </td>
 
@@ -358,14 +358,14 @@
                                             <tr class="customtrclass">
                                                 <td style="width:120px;height:25px;">
                                                     <LogLabel [ObjectFieldName]="'BranchId'"
-                                                              [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                                                     </LogLabel>
                                                 </td>
 
                                                 <td style="width:240px;">
                                                     <LogLov [ObjectFieldName]="'BranchId'"
-                                                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                            [SelectedValue]="BranchId" [LookUpTableName]="'Branch'">
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                        [SelectedValue]="BranchId" [LookUpTableName]="'Branch'">
                                                     </LogLov>
                                                 </td>
 
@@ -416,12 +416,11 @@
 
                                                 <td *ngIf="isFullAccounting  && IsCashBookValid">
                                                     <div [style.text-align]="isRTL ? 'right' : 'left'" float-start
-                                                         style="display: block;padding-top: 5px;">
+                                                        style="display: block;padding-top: 5px;">
                                                         {{ 'Cashbook.O.Name'|TextCodeTranslationPipe }}:
                                                         {{CashBookName}}
                                                         (<span (click)="EditGLAccount('CB')" class="hyperlink">
-                                                            {{BranchGLAccountNumber}}
-                                                        </span>)
+                                                            {{BranchGLAccountNumber}} </span>)
                                                     </div>
                                                 </td>
                                             </tr>
@@ -442,29 +441,9 @@
                             <div></div>
                         </td>
                     </tr>
-                    <!--Multiple Cheques-->
 
-                    <tr *ngIf="isMultipleCheques" style="height:22px">
-                        <td colspan="2">
-                            <table>
-                                <tr>
-                                   <!-- <td style="width:200px" colspan="2"></td>-->
-                                    <td>
-                                        <div style="width:500px;margin:0 auto;">
-                                            <div class="DisbleBox">
-                                                {{'Accounting.O.MoreThanPaymentCheque' | TextCodeTranslationPipe }}
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td style="width:100%"></td>
-                                </tr>
-                            </table>
-                        </td>
-
-                    </tr>
                     <!-- Cheque -->
-                    <tr style="height:1px;" *ngIf="CollapsedIfCash ">
+                    <tr style="height:1px;" *ngIf="CollapsedIfCash && !isMultipleCheques">
                         <td>
                             <table>
                                 <tr>
@@ -481,32 +460,32 @@
                                             <tr class="customtrclass">
                                                 <td style="width:150px; left: -10px;">
                                                     <LogLabel [ObjectFieldName]="'AmountInPaymentCurrency'"
-                                                              [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                                                     </LogLabel>
                                                 </td>
 
                                                 <td style="width:150px; left: -10px;">
                                                     <LogLabel [ObjectFieldName]="'ValueDate'"
-                                                              [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                                                     </LogLabel>
                                                 </td>
 
                                                 <td style="width:150px; left: -10px;">
                                                     <LogLabel [ObjectFieldName]="'ChequeOrPaymentRef'"
-                                                              [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                              [Text]="ChequePaymentRefLabel"></LogLabel>
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                        [Text]="ChequePaymentRefLabel"></LogLabel>
                                                 </td>
 
                                                 <td style="width:150px; left: -10px;" *ngIf="BankAccountIdVisibility">
                                                     <LogLabel [ObjectFieldName]="'BankAccountId'"
-                                                              [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                                                     </LogLabel>
                                                 </td>
 
                                                 <td style="width:150px; left: -10px;"
                                                     *ngIf="CreditCardTypeIdVisibility">
                                                     <LogLabel [ObjectFieldName]="'CreditCardTypeId'"
-                                                              [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                                                     </LogLabel>
                                                 </td>
                                                 <td style="width:450px" *ngIf="BankFieldsVisibile">
@@ -514,22 +493,22 @@
                                                         <tr>
                                                             <td style="width:150px; left: -10px;">
                                                                 <LogLabel [ObjectFieldName]="'Bank'"
-                                                                          [ObjectTableName]="ObjectTableName"
-                                                                          [DataContext]="DataContext">
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext">
                                                                 </LogLabel>
                                                             </td>
 
                                                             <td style="width:150px; left: -10px;">
                                                                 <LogLabel [ObjectFieldName]="'BankBranch'"
-                                                                          [ObjectTableName]="ObjectTableName"
-                                                                          [DataContext]="DataContext">
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext">
                                                                 </LogLabel>
                                                             </td>
 
                                                             <td style="width:150px; left: -10px;">
                                                                 <LogLabel [ObjectFieldName]="'Account'"
-                                                                          [ObjectTableName]="ObjectTableName"
-                                                                          [DataContext]="DataContext">
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext">
                                                                 </LogLabel>
                                                             </td>
                                                         </tr>
@@ -540,8 +519,8 @@
                                                 <td *ngIf="isFullAccounting && AccountingPaymentMethodCode == 'CH'"
                                                     style="width:150px; left: -10px;">
                                                     <LogLabel [ObjectFieldName]="'StatusCode'"
-                                                              [ObjectTableName]="'ARPaymentCheque'"
-                                                              [DataContext]="DataContext"></LogLabel>
+                                                        [ObjectTableName]="'ARPaymentCheque'"
+                                                        [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td colspan="2">
@@ -549,53 +528,43 @@
                                                 </td>
                                             </tr>
 
-                                            <tr>
-                                                <td style="width:150px;" *ngIf="AccountingPaymentMethodCode != 'CH'">
+                                            <tr class="customtrclass">
+                                                <td style="width:150px;">
                                                     <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'"
-                                                                [DigitsAfterPoint]="2" [Text]="AmountInPaymentCurrency"
-                                                                [InputType]="'double'" [ObjectTableName]="ObjectTableName"
-                                                                [DataContext]="DataContext">
+                                                        [DigitsAfterPoint]="2" [Text]="AmountInPaymentCurrency"
+                                                        [InputType]="'double'" [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext">
                                                     </LogTextBox>
-                                                </td>
-                                                <td style="width:150px;" *ngIf="isFullAccounting && AccountingPaymentMethodCode == 'CH'">
-                                                 
-                                                    <LogTextBox [ObjectFieldName]="'ChequeAmount'"
-                                                                [Text]="ChequeAmount"
-                                                                [InputType]="'double'"
-                                                                [DataContext]="DataContext"
-                                                                [NoObjectField]="true"
-                                                                [ObjectTableName]="ObjectTableName"
-                                                               ></LogTextBox>
                                                 </td>
 
                                                 <td style="width:150px;">
                                                     <LogDatePicker [ObjectFieldName]="'ValueDate'"
-                                                                   [SelectedDateValue]="ValueDate"
-                                                                   [ObjectTableName]="ObjectTableName" [InputType]="'date'"
-                                                                   [DataContext]="DataContext"></LogDatePicker>
+                                                        [SelectedDateValue]="ValueDate"
+                                                        [ObjectTableName]="ObjectTableName" [InputType]="'date'"
+                                                        [DataContext]="DataContext"></LogDatePicker>
                                                 </td>
 
                                                 <td style="width:150px;">
                                                     <LogTextBox [ObjectFieldName]="'ChequeOrPaymentRef'"
-                                                                [Text]="ChequeOrPaymentRef" [InputType]="'text'"
-                                                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                        [Text]="ChequeOrPaymentRef" [InputType]="'text'"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                                                     </LogTextBox>
                                                 </td>
 
                                                 <td style="width:150px;" *ngIf="BankAccountIdVisibility">
                                                     <LogLov [ObjectFieldName]="'BankAccountId'"
-                                                            [SelectedValue]="BankAccountId"
-                                                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                            [DisplayMemberPath]="'LocalName'"
-                                                            [LookUpTableName]="'BankAccount'">
+                                                        [SelectedValue]="BankAccountId"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                        [DisplayMemberPath]="'LocalName'"
+                                                        [LookUpTableName]="'BankAccount'">
                                                     </LogLov>
                                                 </td>
 
                                                 <td style="width:150px;" *ngIf="CreditCardTypeIdVisibility">
                                                     <LogLov [ObjectFieldName]="'CreditCardTypeId'"
-                                                            [SelectedValue]="CreditCardTypeId"
-                                                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                            [LookUpTableName]="'CreditCardType'">
+                                                        [SelectedValue]="CreditCardTypeId"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                        [LookUpTableName]="'CreditCardType'">
                                                     </LogLov>
                                                 </td>
                                                 <td style="width:450px" *ngIf="BankFieldsVisibile">
@@ -603,23 +572,23 @@
                                                         <tr>
                                                             <td style="width:150px;">
                                                                 <LogTextBox [ObjectFieldName]="'Bank'" [Text]="Bank"
-                                                                            [InputType]="'text'"
-                                                                            [ObjectTableName]="ObjectTableName"
-                                                                            [DataContext]="DataContext"></LogTextBox>
+                                                                    [InputType]="'text'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"></LogTextBox>
                                                             </td>
 
                                                             <td style="width:150px;">
                                                                 <LogTextBox [ObjectFieldName]="'BankBranch'"
-                                                                            [Text]="BankBranch" [InputType]="'text'"
-                                                                            [ObjectTableName]="ObjectTableName"
-                                                                            [DataContext]="DataContext"></LogTextBox>
+                                                                    [Text]="BankBranch" [InputType]="'text'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"></LogTextBox>
                                                             </td>
 
                                                             <td style="width:150px;">
                                                                 <LogTextBox [ObjectFieldName]="'Account'"
-                                                                            [Text]="Account" [InputType]="'text'"
-                                                                            [ObjectTableName]="ObjectTableName"
-                                                                            [DataContext]="DataContext"></LogTextBox>
+                                                                    [Text]="Account" [InputType]="'text'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"></LogTextBox>
                                                             </td>
 
                                                         </tr>
@@ -631,29 +600,15 @@
                                                 <td *ngIf="isFullAccounting && AccountingPaymentMethodCode == 'CH'"
                                                     style="width:150px;text-align:center;">
                                                     <div class="MediaFill"
-                                                         style="font-size:12px;vertical-align:central;font-weight:bolder;text-align:center;"
-                                                         [ngStyle]="{color: ARPaymentChequeStatusColor}">
+                                                        style="font-size:12px;vertical-align:central;font-weight:bolder;text-align:center;"
+                                                        [ngStyle]="{color: ARPaymentChequeStatusColor}">
                                                         {{ARPaymentChequeStatus}}
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    <table>
-                                                        <tr>
-                                                            <td *ngIf="isFullAccounting && AccountingPaymentMethodCode == 'CH'" style="width:10px">
-                                                                <div *ngIf="EntityPM.StatusCode !='AD'">
-                                                                    <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddChequesButtonClicked()"></IconButton>
-                                                                </div>
-                                                                <div *ngIf="isMultipleCheques && EntityPM.StatusCode=='AD'">
-                                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="DisplayChequesButtonClicked()"></IconButton>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
 
-                                                <td></td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
                                             </tr>
                                         </table>
                                     </td>
@@ -666,8 +621,27 @@
                         </td>
                     </tr>
 
+                    <!--Multiple Cheques-->
 
+                    <tr *ngIf="isMultipleCheques" style="height:22px">
+                        <td colspan="2">
+                            <table>
+                                <tr>
+                                    <td style="width:200px" colspan="2"></td>
+                                    <td>
+                                        <div style="width:500px;text-align:center;margin:0 auto;">
+                                            <div class="DisbleBox">
+                                                {{'Accounting.O.MoreThanPaymentCheque' | TextCodeTranslationPipe }}
 
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="width:100%"></td>
+                                </tr>
+                            </table>
+                        </td>
+
+                    </tr>
                     <tr style="height:10px;">
                         <td>
                             <div></div>
@@ -709,15 +683,16 @@
                         <td>
                             <div class="MediaFill">
                                 <logitude-edit-grid [IsReadOnly]="IsGridReadOnly || IsDisplayOnly" GridWidth="100%"
-                                                    GridHeight="100%" [ItemSource]="TransactionsList" [UseVirtuallization]="true">
+                                    GridHeight="100%" [ItemSource]="TransactionsList" [UseVirtuallization]="true">
 
                                     <!-- Is Reconciled -->
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'30'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true">
-                                                <CheckBox [IsChecked]="item.IsChecked || item.IsReconciled || item.PaymentReconciledAmount != 0"
-                                                          (Checked)="item.IsChecked = $event"
-                                                          [IsEnabled]="!item.IsReconciled && (item.PaymentReconciledAmount == 0) && !(IsGridReadOnly || IsDisplayOnly)">
+                                                <CheckBox
+                                                    [IsChecked]="item.IsChecked || item.IsReconciled || item.PaymentReconciledAmount != 0"
+                                                    (Checked)="item.IsChecked = $event"
+                                                    [IsEnabled]="!item.IsReconciled && (item.PaymentReconciledAmount == 0) && !(IsGridReadOnly || IsDisplayOnly)">
                                                 </CheckBox>
                                             </log-cell-template>
                                         </ng-template>
@@ -725,13 +700,13 @@
 
                                     <!-- Source -->
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'"
-                                                [header]="'Accounting.O.ARP.InvoiceNumber' | TextCodeTranslationPipe"
-                                                [width]="'100'" [binding]="'Source'">
+                                        [header]="'Accounting.O.ARP.InvoiceNumber' | TextCodeTranslationPipe"
+                                        [width]="'100'" [binding]="'Source'">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                                 <div class="TextTrimming" text-start>
                                                     <a href="javascript:;"
-                                                       (click)="OpenSource(item.SourceId,item.SourceTypeCode)">{{item.SourceNumber}}</a>
+                                                        (click)="OpenSource(item.SourceId,item.SourceTypeCode)">{{item.SourceNumber}}</a>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
@@ -742,7 +717,7 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [TabIndex]="-1">
                                                 <div style="width: 100%;padding: 0 3px; text-align: right;direction: ltr;"
-                                                     class="TextTrimming">
+                                                    class="TextTrimming">
                                                     {{ item.OriginalAmount | NumbersPipe:'N2'}}
                                                     <!-- {{item.OriginalAmountCurrency}} -->
                                                 </div>
@@ -752,7 +727,7 @@
 
                                     <!-- OpenAmount -->
                                     <log-column [width]="'130'" [header]="OpenAmountCurrency"
-                                                [Alignment]="isRTL ? 'right' : 'left'">
+                                        [Alignment]="isRTL ? 'right' : 'left'">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [TabIndex]="-1" [Alignment]="'right'">
                                                 {{item.CalculatedOpenAmount | NumbersPipe:'N2'}}
@@ -762,8 +737,8 @@
 
                                     <!--OreginalInvoiceAmount -->
                                     <log-column [width]="'130'"
-                                                [header]="'ARPayment.O.OriginalInvoiceAmount' | TextCodeTranslationPipe"
-                                                [Alignment]="isRTL ? 'right' : 'left'">
+                                        [header]="'ARPayment.O.OriginalInvoiceAmount' | TextCodeTranslationPipe"
+                                        [Alignment]="isRTL ? 'right' : 'left'">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [TabIndex]="-1" [Alignment]="'right'">
                                                 {{item.OriginalInvoiceAmount | NumbersPipe:'N2'}}
@@ -774,20 +749,20 @@
 
                                     <!-- AmountToReconcile -->
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'"
-                                                [header]="'LedgerTransaction.F.AmountToReconcile' | TextCodeTranslationPipe"
-                                                [width]="'135'" [binding]="'AmountToReconcile'">
+                                        [header]="'LedgerTransaction.F.AmountToReconcile' | TextCodeTranslationPipe"
+                                        [width]="'135'" [binding]="'AmountToReconcile'">
                                         <ng-template let-item>
                                             <log-cell-template [IsEditMode]="true" #logcelltemplate>
                                                 <div>
                                                     <!-- *ngIf="!item.IsReconciled"  -->
                                                     <LogTextBox #AmountToReconcileTextBox [FocusOnMe]="'true'"
-                                                                [ObjectFieldName]="'AmountToReconcile'"
-                                                                [AlignTextToRight]="true" [DebounceTime]="1"
-                                                                [InputType]="'decimal'" [DigitsAfterPoint]="2"
-                                                                [DataContext]="item" [ObjectTableName]="item.ObjectTableName"
-                                                                [HideColumns]="true" [Text]="item.AmountToReconcile"
-                                                                [ForceDisable]="IsDisplayOnly"
-                                                                (LostFocus)="item.OnAmountToReconcileLostFocus(logcelltemplate,AmountToReconcileTextBox)">
+                                                        [ObjectFieldName]="'AmountToReconcile'"
+                                                        [AlignTextToRight]="true" [DebounceTime]="1"
+                                                        [InputType]="'decimal'" [DigitsAfterPoint]="2"
+                                                        [DataContext]="item" [ObjectTableName]="item.ObjectTableName"
+                                                        [HideColumns]="true" [Text]="item.AmountToReconcile"
+                                                        [ForceDisable]="IsDisplayOnly"
+                                                        (LostFocus)="item.OnAmountToReconcileLostFocus(logcelltemplate,AmountToReconcileTextBox)">
                                                     </LogTextBox>
                                                 </div>
                                             </log-cell-template>
@@ -796,11 +771,11 @@
 
                                     <!-- DueDate -->
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'"
-                                                [header]="'Accounting.O.ARP.Duedate' | TextCodeTranslationPipe">
+                                        [header]="'Accounting.O.ARP.Duedate' | TextCodeTranslationPipe">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [TabIndex]="-1">
                                                 <div style="width: 100%;" text-start
-                                                     [ngStyle]="{color: item.DueDate | DateTimeToColorPipe}">
+                                                    [ngStyle]="{color: item.DueDate | DateTimeToColorPipe}">
                                                     {{item.DueDate | DateTimeToDatePipe}}
                                                 </div>
                                             </log-cell-template>
@@ -809,19 +784,19 @@
 
                                     <!-- Status -->
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'140'"
-                                                [header]="'Accounting.O.ARP.Status' | TextCodeTranslationPipe">
+                                        [header]="'Accounting.O.ARP.Status' | TextCodeTranslationPipe">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [TabIndex]="-1">
                                                 <div class="TextTrimming" text-start
-                                                     [style.color]="item.GetStatusColor()">
+                                                    [style.color]="item.GetStatusColor()">
 
                                                     <span float-start>
                                                         {{item.Status}}
                                                     </span>
 
                                                     <LogToolTip float-start
-                                                                [direction]="isRTL?'bottomleft':'bottomright'" [name]="item.Id"
-                                                                *ngIf="item.Status == TextStore.partiallyOpened">
+                                                        [direction]="isRTL?'bottomleft':'bottomright'" [name]="item.Id"
+                                                        *ngIf="item.Status == TextStore.partiallyOpened">
                                                         <span style="font-size: bold;">
                                                             {{ 'Accounting.O.ARP.ReconciledAmount' | TextCodeTranslationPipe }}:
                                                             {{ item.ReconciledAmount }}
@@ -835,20 +810,20 @@
 
                                     <!-- Reconciliation Number -->
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'120'"
-                                                [header]="'Accounting.O.ARP.ReconciliationNumber' | TextCodeTranslationPipe">
+                                        [header]="'Accounting.O.ARP.ReconciliationNumber' | TextCodeTranslationPipe">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [TabIndex]="-1">
                                                 <div class="TextTrimming" text-start>
 
                                                     <a *ngFor="let recoNum of item.RecociliationNumbers; let i = index"
-                                                       (click)="OpenReco(recoNum)">{{recoNum}}{{ i>=item.RecociliationNumbers.length-1?'':', ' }}</a>
+                                                        (click)="OpenReco(recoNum)">{{recoNum}}{{ i>=item.RecociliationNumbers.length-1?'':', ' }}</a>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
                                 </logitude-edit-grid>
 
-                                <div *ngIf="TransactionsList?.Length == 0 && !_loading" id="{{'ARPaymentSpinner' | IdGeneratorPipe}}" class="NoDataText">
+                                <div  *ngIf="TransactionsList?.Length == 0 && !_loading" id="{{'ARPaymentSpinner' | IdGeneratorPipe}}" class="NoDataText">
                                     {{'ARPayment.S.NoInvoicesFound' | TextCodeTranslationPipe}}
                                 </div>
                                 <div *ngIf="_loading" class="NoDataText">

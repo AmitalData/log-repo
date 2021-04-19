@@ -92,6 +92,7 @@
     <Compile Include="EntityKeys\CalculatedChartsOfAccountsLineKeys.cs" />
     <Compile Include="EntityKeys\ExternalPageAdditionalDataKeys.cs" />
     <Compile Include="EntityKeys\GLAccountAgingDataKeys.cs" />
+    <Compile Include="EntityKeys\GLAccountCardsDataKeys.cs" />
     <Compile Include="EntityKeys\GLAccountCounterKeys.cs" />
     <Compile Include="EntityKeys\GLAccountInterestPeriodKeys.cs" />
     <Compile Include="EntityKeys\GLAccountRecocileDataKeys.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="EntityListQueryServices\Generated\CalculatedChartsOfAccountsLineListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ExternalPageAdditionalDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\GLAccountAgingDataListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\GLAccountCardsDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\GLAccountCounterListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\GLAccountInterestPeriodListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\GLAccountRecocileDataListQueryService.Generated.cs" />
@@ -169,6 +171,7 @@
     <Compile Include="EntityListQueryServices\Generated\UserDefinedReportListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\VatReportStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\GLAccountAgingDataListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\GLAccountCardsDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\GLAccountCounterListQueryService.cs" />
     <Compile Include="EntityListQueryServices\GLAccountInterestPeriodListQueryService.cs" />
     <Compile Include="EntityListQueryServices\GLAccountRecocileDataListQueryService.cs" />
@@ -207,6 +210,7 @@
     <Compile Include="EntityLists\Generated\CalculatedChartsOfAccountsLineList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ExternalPageAdditionalDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GLAccountAgingDataList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\GLAccountCardsDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GLAccountCounterList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GLAccountInterestPeriodList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GLAccountRecocileDataList.Generated.cs" />
@@ -245,6 +249,7 @@
     <Compile Include="EntityMapping\CalculatedChartsOfAccountsLineMap.cs" />
     <Compile Include="EntityMapping\ExternalPageAdditionalDataMap.cs" />
     <Compile Include="EntityMapping\GLAccountAgingDataMap.cs" />
+    <Compile Include="EntityMapping\GLAccountCardsDataMap.cs" />
     <Compile Include="EntityMapping\GLAccountCounterMap.cs" />
     <Compile Include="EntityMapping\GLAccountInterestPeriodMap.cs" />
     <Compile Include="EntityMapping\GLAccountRecocileDataMap.cs" />
@@ -284,6 +289,7 @@
     <Compile Include="EntityPOCOs\CalculatedChartsOfAccountsLine.cs" />
     <Compile Include="EntityPOCOs\ExternalPageAdditionalData.cs" />
     <Compile Include="EntityPOCOs\GLAccountAgingData.cs" />
+    <Compile Include="EntityPOCOs\GLAccountCardsData.cs" />
     <Compile Include="EntityPOCOs\GLAccountCounter.cs" />
     <Compile Include="EntityPOCOs\GLAccountInterestPeriod.cs" />
     <Compile Include="EntityPOCOs\GLAccountRecocileData.cs" />
@@ -314,6 +320,7 @@
     <Compile Include="EntityPOCOs\TaxReportStatus.cs" />
     <Compile Include="EntityPOCOs\UserDefinedReport.cs" />
     <Compile Include="EntityPOCOs\VatReportStatus.cs" />
+    <Compile Include="Enums\AccountingEntityCodes.cs" />
     <Compile Include="Enums\InterestReportStatusCodes.cs" />
     <Compile Include="Repositories\CalculatedChartsLineTypeRepository.cs" />
     <Compile Include="Repositories\CalculatedChartsOfAccountRepository.cs" />
@@ -326,6 +333,7 @@
 
     <Compile Include="Repositories\Generated\GLAccountAgingDataRepository.Generated.cs" />
 
+    <Compile Include="Repositories\Generated\GLAccountCardsDataRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\InterestLastBatchServiceRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\InterestReportLineRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\InterestReportLinesByDateRepository.Generated.cs" />
@@ -338,6 +346,7 @@
 
     <Compile Include="Repositories\GLAccountAgingDataRepository.cs" />
 
+    <Compile Include="Repositories\GLAccountCardsDataRepository.cs" />
     <Compile Include="Repositories\InterestLastBatchServiceRepository.cs" />
     <Compile Include="Repositories\InterestReportLineRepository.cs" />
     <Compile Include="Repositories\InterestReportLinesByDateRepository.cs" />

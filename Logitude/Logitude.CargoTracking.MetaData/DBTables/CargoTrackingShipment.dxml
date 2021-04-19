@@ -487,6 +487,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ShipmentTypeCode"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="EntityType"
     ReferencedTable="CargoTrackingHeaderEntityTypes"

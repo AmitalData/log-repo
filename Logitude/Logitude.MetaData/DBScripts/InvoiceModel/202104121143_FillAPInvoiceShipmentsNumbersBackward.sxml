@@ -1,0 +1,72 @@
+﻿<Script DBType="Main" Module="Invoice" AOT="true" TargetTableName="APInvoices">
+  <Sql Version="1">
+    <![CDATA[
+    
+declare @InvoiceId as varchar(15)
+declare @Tenant as int
+declare @IsMultipleEntities as bit
+declare @MainEntityReference as varchar(50)
+declare @ShipmentsNumbers as varchar(1000)
+
+
+BEGIN 
+		DECLARE InvoicesCursor CURSOR READ_ONLY
+		FOR
+		SELECT Id, Tenant, IsMultipleEntities, MainEntityReference
+		FROM APInvoices
+		where  $LastCounterWhere$
+		OPEN InvoicesCursor FETCH NEXT FROM InvoicesCursor INTO @InvoiceId, @Tenant, @IsMultipleEntities, @MainEntityReference	
+		WHILE @@FETCH_STATUS = 0
+			BEGIN
+
+				set @ShipmentsNumbers = ''
+
+				if (@IsMultipleEntities = 1)
+				begin
+					
+					declare @MultipleEntityShipmentNumber as varchar(50)
+
+					BEGIN 
+							DECLARE APInvoiceEntitiesCursor CURSOR READ_ONLY
+							FOR
+							SELECT EntityReference
+							FROM APInvoiceEntities
+							where Tenant = @Tenant and APInvoiceId = @InvoiceId
+							OPEN APInvoiceEntitiesCursor FETCH NEXT FROM APInvoiceEntitiesCursor INTO @MultipleEntityShipmentNumber
+							WHILE @@FETCH_STATUS = 0
+								BEGIN
+
+									if (@ShipmentsNumbers = '') set @ShipmentsNumbers = @MultipleEntityShipmentNumber
+									else 
+                  if CHARINDEX(@MultipleEntityShipmentNumber,@ShipmentsNumbers) > 0										
+											print 'nothing'									
+
+										else 
+											set @ShipmentsNumbers = @ShipmentsNumbers + ', ' + @MultipleEntityShipmentNumber
+
+								FETCH NEXT FROM APInvoiceEntitiesCursor INTO @MultipleEntityShipmentNumber
+								END
+							CLOSE APInvoiceEntitiesCursor
+							DEALLOCATE APInvoiceEntitiesCursor
+					END
+
+				end
+
+				else
+				begin
+					set @ShipmentsNumbers = @MainEntityReference
+				end
+
+				update APInvoices set ShipmentsNumbers = @ShipmentsNumbers where Id = @InvoiceId and Tenant = @Tenant
+
+			FETCH NEXT FROM InvoicesCursor INTO @InvoiceId, @Tenant, @IsMultipleEntities, @MainEntityReference
+			END
+		CLOSE InvoicesCursor
+		DEALLOCATE InvoicesCursor
+END
+
+
+    
+    ]]>
+  </Sql>
+</Script>
