@@ -27,8 +27,8 @@ Declare GLAccountCards cursor
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
       insert into @cards (Id,paymentTermId,SalesmanUserId,VatNumber,collectorId,Phone,glaccountid) select Id, PaymentTermId, SalesmanUserId,VatNumber,CollectorId,Phone,GLAccountId from Cards  where GLAccountId = @Id
-	select * from @cards
-	select  paymentTermId  top1 from @cards where paymentTermId is not null
+	
+	
 	set @paymentTermId = (select    top 1  percent paymenttermId from @cards where paymentTermId is not null) 
 	   set @vatnumber = (select top 1  percent VatNumber  from @cards where vatnumber is not null ) 
 		set @collector = (select top 1  percent collectorId   from @cards where collectorId is not null) 
