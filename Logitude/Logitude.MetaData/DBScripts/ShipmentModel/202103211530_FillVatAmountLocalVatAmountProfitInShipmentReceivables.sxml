@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="ShipmentReceivables">
-  <Sql Version="4">
+  <Sql Version="5">
     <![CDATA[
 	declare @Tenant as int
      declare @EntityId as varchar(15)
@@ -26,7 +26,7 @@
      	FROM ShipmentReceivables
      	left join ARInvoiceLines  on ARInvoiceLines.Id = ShipmentReceivables.ARInvoiceLineId
      	left join ARInvoices  on ARInvoices.Id = ARInvoiceLines.ARInvoiceId
-     	where ShipmentReceivables.ARInvoiceLineId is not null 
+     	where ShipmentReceivables.ARInvoiceLineId is not null  and $LastCounterWhere$
      	OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @VatTypeId, @CreateDate, @TotalAmountLocal, @LocalCurrencyAmount, @ProfitCurrencyAmount, @VatPercentage, @IsRegionalTax,@RegionalTaxPercentage
      	WHILE @@FETCH_STATUS = 0
      	BEGIN
