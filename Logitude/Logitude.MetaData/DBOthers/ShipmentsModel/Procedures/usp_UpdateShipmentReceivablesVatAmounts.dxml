@@ -43,93 +43,91 @@ BEGIN
 	BEGIN
   -- Open lines 
       DECLARE DataCursor CURSOR READ_ONLY
-      FOR
-      SELECT ShipmentReceivables.Id, ShipmentReceivables.Tenant, VatTypeId, CreateDate, TotalAmountLocal, AmountInProfitCurrency, Shipments.CustomerId
-      FROM ShipmentReceivables 
-      left join Shipments  on Shipments.Id = ShipmentReceivables.ShipmentId where ShipmentReceivables.ARInvoiceLineId is null  and ShipmentReceivables.ShipmentId = @HouseId
-      OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @ShipmentReceivablesVatTypeId, @CreateDate, @TotalAmountLocal, @AmountInProfitCurrency, @CustomerId
-      WHILE @@FETCH_STATUS = 0
-      BEGIN
+         	FOR
+         	SELECT ShipmentReceivables.Id, ShipmentReceivables.Tenant, VatTypeId, CreateDate, TotalAmountLocal, AmountInProfitCurrency, Shipments.CustomerId
+         	FROM ShipmentReceivables 
+         	left join Shipments  on Shipments.Id = ShipmentReceivables.ShipmentId where ShipmentReceivables.ARInvoiceLineId is null and ShipmentId = @HouseId
+         	OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @ShipmentReceivablesVatTypeId, @CreateDate, @TotalAmountLocal, @AmountInProfitCurrency, @CustomerId
+         	WHILE @@FETCH_STATUS = 0
+         	BEGIN
     
-      set @ReceivableVatTypeId = null;
-      set @VatAmountLocal = @TotalAmountLocal;
-      set @VatAmountProfit = @AmountInProfitCurrency;
+         	set @ReceivableVatTypeId = null;
+          set @VatAmountLocal = @TotalAmountLocal;
+          set @VatAmountProfit = @AmountInProfitCurrency;
             
-      if (@CustomerId is not null)
-      begin
-        set @ReceivableVatTypeId = (select top 1 VatTypeId from cards where id = @CustomerId);
-      end 
+         	if (@CustomerId is not null)
+         	begin
+         		set @ReceivableVatTypeId = (select top 1 VatTypeId from cards where id = @CustomerId);
+         	end 
          
-      if (@ReceivableVatTypeId is null) 
-      begin
-        set @ReceivableVatTypeId = @VatTypeId;
-      end
+         	if (@ReceivableVatTypeId is null) 
+         	begin
+         		set @ReceivableVatTypeId = @VatTypeId;
+         	end
     
-      set @IsMultiPercentage = (select IsMultiPercentage from VatTypes where Tenant = @Tenant AND Id = @VatTypeId)
-      if(@IsMultiPercentage = '0')
-      begin 
-        set @VatPercentage = (select top 1 Percentage from VatTypePercentages where VatTypeId = @ReceivableVatTypeId AND Tenant = @Tenant and FromDate <= @CreateDate order by FromDate desc)
-        if(@VatPercentage is not null)
-        begin
-          set @VatAmountLocal = Round(@VatAmountLocal + (@TotalAmountLocal * @VatPercentage / 100), 2);
-          set @VatAmountProfit = Round(@VatAmountProfit +( @AmountInProfitCurrency * @VatPercentage / 100), 2);
-        end
-      end
+         	set @IsMultiPercentage = (select IsMultiPercentage from VatTypes where Tenant = @Tenant AND Id = @ReceivableVatTypeId)
+         	if(@IsMultiPercentage = '0')
+         	begin 
+         		set @VatPercentage = (select top 1 Percentage from VatTypePercentages where VatTypeId = @ReceivableVatTypeId AND Tenant = @Tenant and FromDate <= @CreateDate order by FromDate desc)
+         		if(@VatPercentage is not null)
+            begin
+              set @VatAmountLocal = Round(@VatAmountLocal + (@TotalAmountLocal * @VatPercentage / 100), 2);
+         		  set @VatAmountProfit = Round(@VatAmountProfit +( @AmountInProfitCurrency * @VatPercentage / 100), 2);
+            end
+         	end
          
-      else 
-      begin 
-        set @VatAmountLocal = @TotalAmountLocal;
-        set @VatAmountProfit = @AmountInProfitCurrency;
-        DECLARE VatGroups_CURSOR CURSOR 
-        FOR 
-        SELECT SingleVATTypeId
-        FROM VATTypesGroups where GroupVATTypeId = @VatTypeId
-        OPEN VatGroups_CURSOR
-        FETCH NEXT FROM VatGroups_CURSOR INTO @SingleVATTypeId
-        WHILE @@FETCH_STATUS = 0
-        BEGIN 
-          set @VatPercentage = (select top 1 Percentage from VatTypePercentages where VatTypeId = @SingleVATTypeId AND Tenant = @Tenant and FromDate <= GETDATE() order by FromDate desc)
-          if(@VatPercentage is not null)
-          begin
-            set @VatAmountLocal = @VatAmountLocal + (@TotalAmountLocal * @VatPercentage / 100);
-         	  set @VatAmountProfit = @VatAmountProfit + (@AmountInProfitCurrency * @VatPercentage / 100);
-          end
-        FETCH NEXT FROM VatGroups_CURSOR INTO @SingleVATTypeId
-        END
-        CLOSE VatGroups_CURSOR
-        DEALLOCATE VatGroups_CURSOR
-      end
+         	else 
+         	begin 
+         		set @VatAmountLocal = @TotalAmountLocal;
+         		set @VatAmountProfit = @AmountInProfitCurrency;
+         		DECLARE VatGroups_CURSOR CURSOR 
+         		FOR 
+         		SELECT SingleVATTypeId
+         		FROM VATTypesGroups where GroupVATTypeId =  @ReceivableVatTypeId
+         		OPEN VatGroups_CURSOR
+         		FETCH NEXT FROM VatGroups_CURSOR INTO @SingleVATTypeId
+         		WHILE @@FETCH_STATUS = 0
+         		BEGIN 
+         			set @VatPercentage = (select top 1 Percentage from VatTypePercentages where VatTypeId = @SingleVATTypeId AND Tenant = @Tenant and FromDate <= GETDATE() order by FromDate desc)
+         			if(@VatPercentage is not null)
+              begin
+                set @VatAmountLocal = @VatAmountLocal + (@TotalAmountLocal * @VatPercentage / 100);
+         			  set @VatAmountProfit = @VatAmountProfit + (@AmountInProfitCurrency * @VatPercentage / 100);
+              end
+         		FETCH NEXT FROM VatGroups_CURSOR INTO @SingleVATTypeId
+         		END
+         		CLOSE VatGroups_CURSOR
+         		DEALLOCATE VatGroups_CURSOR
+         	end
          
-      update ShipmentReceivables set VatAmountLocal =  Round(@VatAmountLocal, 2),  VatAmountProfit =  Round(@VatAmountProfit,2) where Id = @EntityId and Tenant = @Tenant
+          update ShipmentReceivables set VatAmountLocal =  Round(@VatAmountLocal, 2),  VatAmountProfit =  Round(@VatAmountProfit,2) where Id = @EntityId and Tenant = @Tenant
 
-      FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @ShipmentReceivablesVatTypeId,@CreateDate, @TotalAmountLocal, @AmountInProfitCurrency, @CustomerId
-      END
-      CLOSE DataCursor
-      DEALLOCATE DataCursor
+         	FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @ShipmentReceivablesVatTypeId,@CreateDate, @TotalAmountLocal, @AmountInProfitCurrency, @CustomerId
+         	END
+         	CLOSE DataCursor
+         	DEALLOCATE DataCursor
+        
 	
      -- Connected lines 
      DECLARE DataCursor CURSOR READ_ONLY
-     FOR
-      SELECT ShipmentReceivables.Id, ShipmentReceivables.Tenant, ARInvoiceLines.VatTypeId, ShipmentReceivables.CreateDate, TotalAmountLocal,LocalCurrencyAmount, ProfitCurrencyAmount, VatPercentage, IsRegionalTax, RegionalTaxPercentage
+     	FOR
+         SELECT ShipmentReceivables.Id, ShipmentReceivables.Tenant, ARInvoiceLines.VatTypeId, ShipmentReceivables.CreateDate, TotalAmountLocal,LocalCurrencyAmount, ProfitCurrencyAmount, VatPercentage, IsRegionalTax, RegionalTaxPercentage
      	FROM ShipmentReceivables
      	left join ARInvoiceLines  on ARInvoiceLines.Id = ShipmentReceivables.ARInvoiceLineId
      	left join ARInvoices  on ARInvoices.Id = ARInvoiceLines.ARInvoiceId
-     	where ShipmentReceivables.ARInvoiceLineId is not null and ShipmentReceivables.ShipmentId = @HouseId
+     	where ShipmentReceivables.ARInvoiceLineId is not null  and ShipmentId = @HouseId
      	OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @VatTypeId, @CreateDate, @TotalAmountLocal, @LocalCurrencyAmount, @ProfitCurrencyAmount, @VatPercentage, @IsRegionalTax,@RegionalTaxPercentage
      	WHILE @@FETCH_STATUS = 0
      	BEGIN
      	
-     	set @VatAmountLocal = @LocalCurrencyAmount;
-     	set @VatAmountProfit = @ProfitCurrencyAmount;
      
      	set @IsMultiPercentage = (select IsMultiPercentage from VatTypes where Tenant = @Tenant AND Id = @VatTypeId)
      	if(@IsMultiPercentage = '0')
      	begin 
-     		set @VatPercentage = (select top 1 Percentage from VatTypePercentages where VatTypeId = @ReceivableVatTypeId AND Tenant = @Tenant and FromDate <= @CreateDate order by FromDate desc)
-     		if(@VatPercentage is not null)
+     	if(@VatPercentage is not null)
         begin
-          set @VatAmountLocal = Round(@VatAmountLocal + (@LocalCurrencyAmount * @VatPercentage / 100), 2);
-     		  set @VatAmountProfit = Round(@VatAmountProfit +( @ProfitCurrencyAmount * @VatPercentage / 100), 2);
+          set @VatAmountLocal = Round(@LocalCurrencyAmount + (@LocalCurrencyAmount * @VatPercentage / 100), 2);
+     	set @VatAmountProfit = Round(@ProfitCurrencyAmount +( @ProfitCurrencyAmount * @VatPercentage / 100), 2);
         end
      
      		if(@IsRegionalTax = '1')
