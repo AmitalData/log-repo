@@ -598,6 +598,8 @@ export class QuoteUtilities {
         shipmentPM.ToPortId = entityPM.ToPortId;
         shipmentPM.MainCarriageCarrierId = entityPM.MainCarriageCarrierId;
         shipmentPM.MainCarriageFinalDestinationPortId = entityPM.ToPortId;
+        shipmentPM.MainCarriageETA = entityPM.ETA;
+        shipmentPM.MainCarriageETD = entityPM.ETD;
 
         //Measurments
         shipmentPM.VolumeUnitCode = entityPM.VolumeUnitCode;
