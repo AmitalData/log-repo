@@ -2979,6 +2979,8 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.EntityPM.ToPortId = this.SourceEntityPM.ToPortId;
             this.EntityPM.MainCarriageCarrierId = this.SourceEntityPM.MainCarriageCarrierId;
             this.EntityPM.MainCarriageFinalDestinationPortId = this.SourceEntityPM.MainCarriageFinalDestinationPortId;
+            this.EntityPM.MainCarriageETA = this.SourceEntityPM.MainCarriageETA;
+            this.EntityPM.MainCarriageETD = this.SourceEntityPM.MainCarriageETD
         }
     }
     CopyPartners() {

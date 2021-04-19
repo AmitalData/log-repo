@@ -1,8 +1,6 @@
 ﻿using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.ExtendedServices;
 using Logitude.Server.Tools;
-using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,30 +24,9 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             System1000FlatFileAnalyserArgs parameterArgs = serializer.Deserialize(stringReader) as System1000FlatFileAnalyserArgs;
             string winHebrewString = GetCommunicationsData
                 (parameterArgs.Tenant, parameterArgs.CommunicationLogId);
-            try
-            {
 
-
-                using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(600)))
-                {
-
-                    var system1000FlatFileAnalyser = new System1000FlatFileAnalyser();
-                    system1000FlatFileAnalyser.Analyse(parameterArgs.Tenant, winHebrewString, parameterArgs.LoggingUserId);
-                    string responseText = system1000FlatFileAnalyser.MyResultLoadFlatFile.SuccessVendorList.ToString();
-                    ChangeStatus("D", null, responseText);
-
-                    scope.Complete();
-
-                }
-
-            }
-            catch (Exception ex)
-            {
-
-                LogitudeSettings.HandleLogMe(ex.ToString(), true, "BatchSystem1000FlatFileAnalyser", new DateTime(2019, 10, 1));
-                throw;
-
-            }
+            var system1000FlatFileAnalyser = new System1000FlatFileAnalyser();
+            system1000FlatFileAnalyser.Analyse(parameterArgs.Tenant, winHebrewString, parameterArgs.LoggingUserId);
         }
 
         string GetCommunicationsData(int tenant, string CommunicationLogId)

@@ -1837,6 +1837,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region 1
             string myCodesText = "";
+
             List<string> mySpecialHandlingCodes = this.GetSpecialHandlingCodes(shipmentPM);
             if (mySpecialHandlingCodes.Count > 0)
             {
@@ -1853,6 +1854,53 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
             }
+            #endregion
+
+            #region 2
+            //string myReferenceText = "";
+
+            //string myReferenceField = "";
+            //myReferenceField = shipmentPM.ReferenceNumber;
+            //if (!string.IsNullOrEmpty(myReferenceField))
+            //{
+            //    if (string.IsNullOrEmpty(myReferenceText))
+            //    {
+            //        myReferenceText = myReferenceField;
+            //    }
+
+            //    else
+            //    {
+            //        myReferenceText += " " + myReferenceField;
+            //    }
+            //}
+
+            //myReferenceField = shipmentPM.SupplementaryShipmentInformation1;
+            //if (!string.IsNullOrEmpty(myReferenceField))
+            //{
+            //    if (string.IsNullOrEmpty(myReferenceText))
+            //    {
+            //        myReferenceText = myReferenceField;
+            //    }
+
+            //    else
+            //    {
+            //        myReferenceText += " " + myReferenceField;
+            //    }
+            //}
+
+            //myReferenceField = shipmentPM.SupplementaryShipmentInformation2;
+            //if (!string.IsNullOrEmpty(myReferenceField))
+            //{
+            //    if (string.IsNullOrEmpty(myReferenceText))
+            //    {
+            //        myReferenceText = myReferenceField;
+            //    }
+
+            //    else
+            //    {
+            //        myReferenceText += " " + myReferenceField;
+            //    }
+            //}
             #endregion
 
             #region 3
@@ -1922,6 +1970,21 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
+            //if (!string.IsNullOrEmpty(shipmentPM.MainHarmonize))
+            //{
+            //    string myMainHarmonize = "HCC Code " + shipmentPM.MainHarmonize;
+
+            //    if (string.IsNullOrEmpty(myHandlingInformation))
+            //    {
+            //        myHandlingInformation = myMainHarmonize;
+            //    }
+
+            //    else
+            //    {
+            //        myHandlingInformation += Environment.NewLine + myMainHarmonize;
+            //    }
+            //}
+
             List<string> myHandlingInformationList0_3 = new List<string>();
             List<string> myHandlingInformationList3_X = new List<string>();
 
@@ -1975,58 +2038,106 @@ namespace WebFreight.Web.ReportsWebServices
             myDataProvider.SupplementaryInformation1 = string.IsNullOrEmpty(shipmentPM.SupplementaryShipmentInformation1) ? "" : shipmentPM.SupplementaryShipmentInformation1;
             myDataProvider.SupplementaryInformation2 = string.IsNullOrEmpty(shipmentPM.SupplementaryShipmentInformation2) ? "" : shipmentPM.SupplementaryShipmentInformation2;
             myDataProvider.HouseReferenceNumber = string.IsNullOrEmpty(shipmentPM.MasterShipmentNumber) ? "" : shipmentPM.MasterShipmentNumber;
-            this.SetSpecialHandlingCodes(myDataProvider, shipmentPM);
-        }
-
-        private void SetSpecialHandlingCodes(AWBDataProvider aWBDataProvider, ShipmentPM shipmentPM)
-        {
-            List<string> specialHandlingCodes = GetSpecialHandlingCodes(shipmentPM);
-            if(specialHandlingCodes != null && specialHandlingCodes.Count() > 0)
-            {
-                foreach (string code in specialHandlingCodes)
-                {
-                    this.AppendSpecialHandlingCodes(aWBDataProvider, code);
-                }
-            }
-        }
-
-        private void AppendSpecialHandlingCodes(AWBDataProvider aWBDataProvider, string specialHandlingCode)
-        {
-            if (string.IsNullOrEmpty(aWBDataProvider.SpecialHandlingCodes))
-            {
-                aWBDataProvider.SpecialHandlingCodes = specialHandlingCode;
-            }
-            else
-            {
-                aWBDataProvider.SpecialHandlingCodes += "/ " + specialHandlingCode;
-            }
-        }
-
-        private List<string> GetSpecialHandlingIds(ShipmentPM shipment)
-        {
-            List<string> specialHandlingIds = new List<string>();
-            for (int i = 1; i <=9 ;  i++)
-            {
-                var specialHandlingId = (string)shipment.GetType().GetProperty("AWBSpecialHandlingCodeId" + i).GetValue(shipment);
-                AppendSpecialHandlingIdIfNotNullAndNotExist(specialHandlingIds, specialHandlingId);
-            }
-            return specialHandlingIds;
-        }
-
-        private void AppendSpecialHandlingIdIfNotNullAndNotExist(List<string> specialHandlingIds, string specialHandlingId)
-        {
-            var isExist = specialHandlingIds.Where(a => a == specialHandlingId).Any();
-            if (!string.IsNullOrEmpty(specialHandlingId) && !isExist)
-            {
-                specialHandlingIds.Add(specialHandlingId);
-            }
         }
 
         private List<string> GetSpecialHandlingCodes(ShipmentPM entityPM)
         {
+            List<string> myResult = new List<string>();
+
+            string myFieldId = null;
             AWBSpecialHandlingCodeRepository myRepository = new AWBSpecialHandlingCodeRepository(entityPM.Tenant);
-            List<string> specialHandlingIds = GetSpecialHandlingIds(entityPM);
-            List<string> myResult = myRepository.GetAWBHandlingCodesByIds(specialHandlingIds).ToList();
+            List<AWBSpecialHandlingCode> list = myRepository.GetAWBHandlingCodes().ToList();
+
+            myFieldId = entityPM.AWBSpecialHandlingCodeId1;
+            if (!string.IsNullOrEmpty(myFieldId))
+            {
+                AWBSpecialHandlingCode item = list.Where(d => d.Id == myFieldId).FirstOrDefault();
+                if (item != null)
+                {
+                    myResult.Add(item.Code);
+                }
+            }
+
+            myFieldId = entityPM.AWBSpecialHandlingCodeId2;
+            if (!string.IsNullOrEmpty(myFieldId))
+            {
+                AWBSpecialHandlingCode item = list.Where(d => d.Id == myFieldId).FirstOrDefault();
+                if (item != null)
+                {
+                    myResult.Add(item.Code);
+                }
+            }
+
+            myFieldId = entityPM.AWBSpecialHandlingCodeId3;
+            if (!string.IsNullOrEmpty(myFieldId))
+            {
+                AWBSpecialHandlingCode item = list.Where(d => d.Id == myFieldId).FirstOrDefault();
+                if (item != null)
+                {
+                    myResult.Add(item.Code);
+                }
+            }
+
+            myFieldId = entityPM.AWBSpecialHandlingCodeId4;
+            if (!string.IsNullOrEmpty(myFieldId))
+            {
+                AWBSpecialHandlingCode item = list.Where(d => d.Id == myFieldId).FirstOrDefault();
+                if (item != null)
+                {
+                    myResult.Add(item.Code);
+                }
+            }
+
+            myFieldId = entityPM.AWBSpecialHandlingCodeId5;
+            if (!string.IsNullOrEmpty(myFieldId))
+            {
+                AWBSpecialHandlingCode item = list.Where(d => d.Id == myFieldId).FirstOrDefault();
+                if (item != null)
+                {
+                    myResult.Add(item.Code);
+                }
+            }
+
+            myFieldId = entityPM.AWBSpecialHandlingCodeId6;
+            if (!string.IsNullOrEmpty(myFieldId))
+            {
+                AWBSpecialHandlingCode item = list.Where(d => d.Id == myFieldId).FirstOrDefault();
+                if (item != null)
+                {
+                    myResult.Add(item.Code);
+                }
+            }
+
+            myFieldId = entityPM.AWBSpecialHandlingCodeId7;
+            if (!string.IsNullOrEmpty(myFieldId))
+            {
+                AWBSpecialHandlingCode item = list.Where(d => d.Id == myFieldId).FirstOrDefault();
+                if (item != null)
+                {
+                    myResult.Add(item.Code);
+                }
+            }
+
+            myFieldId = entityPM.AWBSpecialHandlingCodeId8;
+            if (!string.IsNullOrEmpty(myFieldId))
+            {
+                AWBSpecialHandlingCode item = list.Where(d => d.Id == myFieldId).FirstOrDefault();
+                if (item != null)
+                {
+                    myResult.Add(item.Code);
+                }
+            }
+
+            myFieldId = entityPM.AWBSpecialHandlingCodeId9;
+            if (!string.IsNullOrEmpty(myFieldId))
+            {
+                AWBSpecialHandlingCode item = list.Where(d => d.Id == myFieldId).FirstOrDefault();
+                if (item != null)
+                {
+                    myResult.Add(item.Code);
+                }
+            }
+
             return myResult;
         }
 

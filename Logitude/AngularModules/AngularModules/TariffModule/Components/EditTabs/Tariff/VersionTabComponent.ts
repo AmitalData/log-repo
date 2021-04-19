@@ -49,7 +49,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
     public SelectedVersionNumber: number;
     public OriginDependencyFilterValue: string = "A";
     public DestinationDependencyFilterValue = "A";
-    public ViaDependencyFilterValue = "A";
     public IsAir: boolean = false;
     public LineIdFromPriceCheck: string;
     public AllInCharges: string;
@@ -90,7 +89,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
         if (this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
             this.OriginDependencyFilterValue = "O";
             this.DestinationDependencyFilterValue = "O";
-            this.ViaDependencyFilterValue = "O";
         }
     }
 
@@ -387,7 +385,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
         this.ItemsCollection.forEach((item: AirCostTariffLineData) => {
             item.IsNewEntity = false;
 
-            var line = this.compareTariffLines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId && a.ViaPortId == item.ViaPortId )[0];
+            var line = this.compareTariffLines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
             if (line) {
                 item.ComparedEntity = line;
                 item.SetCellsComparingText();
@@ -408,7 +406,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
         }
 
         this.compareTariffLines.sort(p => p.Index).forEach(item => {
-            var line = lines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId && a.ViaPortId == item.ViaPortId)[0];
+            var line = lines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
             if (line == null) {
                 this.DeletedTariffsLines.push(new AirCostTariffLineData(item, this));// Deleted 
             }
@@ -704,10 +702,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
                         tariffLine.DestinationPortCode = item.DestinationPortCode;
                         tariffLine.DestinationPortCombinedCode = item.DestinationPortCombinedCode;
                         tariffLine.DestinationPortName = item.DestinationPortName;
-                        tariffLine.ViaPortId = item.ViaPortId;
-                        tariffLine.ViaPortCode = item.ViaPortCode;
-                        tariffLine.ViaPortCombinedCode = item.ViaPortCombinedCode;
-                        tariffLine.ViaPortName = item.ViaPortName;
                         tariffLine.MinPrice = item.MinPrice;
                         tariffLine.Step1Price = item.Step1Price;
                         tariffLine.Step2Price = item.Step2Price;

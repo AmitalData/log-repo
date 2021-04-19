@@ -58,10 +58,11 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     private CurrentSession = SessionLocator.SelectedSession;
     public InvoiceNumberFilterList: CodeNameClass[] = [];
     public NumbersPipe: NumbersPipe;
-
     constructor(private entityArgs: EntityArgs) {
         super();
+
         this.NumbersPipe = new NumbersPipe();
+
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");          
         this.EntityPM = entityArgs.EntityPM;
         this.IsManifest = this.EntityPM.ARInvoiceTypeCode == "MN" ? true : false;
@@ -94,19 +95,6 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
         this.BuildInvoiceNumberFilters();
         this.SetRegionalTaxVisibility();
-    }
-
-    private SetRegionalTaxValuesForLines() {
-        this.ItemsSource.filter(f=>f.VatIsMultiPercentage == false).forEach(item => {
-            this.myChargesTypeListService.getSingle(item.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    var list: ChargesTypeList = myResponse.Result;
-                    if (list != null) {
-                        item.IsRegionalTax = list.ApplyRegionalTax;
-                    }
-                }
-            });
-        });
     }
 
     public IsFixMeButtonVisible: boolean = false;
@@ -1095,7 +1083,6 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         }
 
         this.SetGridColumnsWidth();
-
     }
     LoadEntityOpenReceivables() {
 
@@ -1746,19 +1733,19 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
             else {
                 this.RegionalTaxPercentage = this.GetVatTypePercentage(newValue);
-                this.SetRegionalTaxValuesForLines();
-                //if (AppTool.IsNullOrEmpty(oldValue)) {
-                //    this.ItemsSource.filter(f => f.IsRegionalTax == false && f.VatIsMultiPercentage == false).forEach(item => {
-                //        this.myChargesTypeListService.getSingleFromCache(item.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
-                //            if (!myResponse.HasError) {
-                //                var list: ChargesTypeList = myResponse.Result;
-                //                if (list != null) {
-                //                    item.IsRegionalTax = list.ApplyRegionalTax;
-                //                }
-                //            }
-                //        });
-                //    });
-                //}
+
+                if (AppTool.IsNullOrEmpty(oldValue)) {
+                    this.ItemsSource.filter(f => f.IsRegionalTax == false && f.VatIsMultiPercentage == false).forEach(item => {
+                        this.myChargesTypeListService.getSingleFromCache(item.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
+                            if (!myResponse.HasError) {
+                                var list: ChargesTypeList = myResponse.Result;
+                                if (list != null) {
+                                    item.IsRegionalTax = list.ApplyRegionalTax;
+                                }
+                            }
+                        });
+                    });
+                }
             }
         }
     }

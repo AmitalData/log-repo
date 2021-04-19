@@ -1,4 +1,4 @@
-@smoke @stable @all
+@smoke @stable
 Feature: Copy Direct Export Air Shipment
     The user creates a Direct Export Air shipment and copies it.
     

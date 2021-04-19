@@ -48,7 +48,6 @@ export class VersionHistoryTabComponent implements OnDestroy {
     public selectedRow: any;
     public changeScrollPosition: EventEmitter<any> = new EventEmitter();
     public darkerColler: string = "#f8ca12";
-    public IsViaFieldVisible: boolean = true;
 
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
@@ -64,7 +63,6 @@ export class VersionHistoryTabComponent implements OnDestroy {
 
         else if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
             this.IsDownloadExcelTemplateVisible = false;
-            this.IsViaFieldVisible = false;
             this.GetAllChargesTypes();
         }
         
@@ -574,10 +572,6 @@ export class VersionHistoryTabComponent implements OnDestroy {
             tariffLine.DestinationPortCode = item.DestinationPortCode;
             tariffLine.DestinationPortCombinedCode = item.DestinationPortCombinedCode;
             tariffLine.DestinationPortName = item.DestinationPortName;
-            tariffLine.ViaPortId = item.ViaPortId;
-            tariffLine.ViaPortCode = item.ViaPortCode;
-            tariffLine.ViaPortCombinedCode = item.ViaPortCombinedCode;
-            tariffLine.ViaPortName = item.ViaPortName;
             tariffLine.Index = item.Index;
             tariffLine.Notes = item.Notes;
             tariffLine.TransitTime = item.TransitTime;
@@ -708,8 +702,6 @@ export class VersionHistoryTariffLine {
     public DestinationPortCode: string;
     public OriginPortCombinedCode: string;
     public DestinationPortCombinedCode: string;
-    public ViaPortCode: string;
-    public ViaPortCombinedCode: string;
     public Notes: string;
     public ExpirationDate: Date;
     public IsFromAllOtherPorts: boolean;
@@ -798,10 +790,8 @@ export class VersionHistoryTariffLine {
     private AssignCommonData() {
         this.OriginPortCode = this.myTariffLine.OriginPortCode;
         this.DestinationPortCode = this.myTariffLine.DestinationPortCode;
-        this.ViaPortCode = this.myTariffLine.ViaPortCode;
         this.OriginPortCombinedCode = this.myTariffLine.OriginPortCombinedCode;
         this.DestinationPortCombinedCode = this.myTariffLine.DestinationPortCombinedCode;
-        this.ViaPortCombinedCode = this.myTariffLine.ViaPortCombinedCode;
         this.Notes = this.myTariffLine.Notes;
         this.ExpirationDate = this.myTariffLine.ExpirationDate;
         this.IsFromAllOtherPorts = this.myTariffLine.IsFromAllOtherPorts;

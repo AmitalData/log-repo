@@ -10,14 +10,8 @@
                         <td>
                             <div class="MediaFill">
                                 <!-- Shipment Number -->
-                                <div *ngIf="FieldName == 'ShipmentsNumbers'">
-                                    <span *ngIf="IsHeaderScreenTemplate && !Entity.IsConsolidationInvoice" class="hyperlink" (click)="ViewEntityClicked('SHI')">{{Entity[FieldName]}}</span>
-                                    <span *ngIf="IsHeaderScreenTemplate && Entity.IsConsolidationInvoice">{{Entity[FieldName]}}</span>
-                                    <span *ngIf="!IsHeaderScreenTemplate">{{Entity[FieldName]}}</span>
-                                </div>
-
-                                <div *ngIf="FieldName == 'MainEntityReference' && !IsHeaderScreenTemplate">
-                                    <span>{{FieldValue}}</span>
+                                <div *ngIf="FieldName == 'MainEntityReference' && IsHeaderScreenTemplate">
+                                    <span class="hyperlink" (click)="ViewEntityClicked('SHI')">{{Entity['MainEntityReference']}}</span>
                                 </div>
 
                                 <div *ngIf="FieldName == 'SATTransferStatusName'" [attr.title]="Entity.SATTransferStatusName">{{FieldValue}}</div>
@@ -172,14 +166,8 @@
                         <td>
                             <div class="MediaFill">
                                 <!-- Shipment Number -->
-                                <div *ngIf="FieldName == 'ShipmentsNumbers'">
-                                    <span *ngIf="IsHeaderScreenTemplate && !Entity.IsMultipleEntities" class="hyperlink" (click)="ViewEntityClicked('SHI')">{{Entity[FieldName]}}</span>
-                                    <span *ngIf="IsHeaderScreenTemplate && Entity.IsMultipleEntities">{{Entity[FieldName]}}</span>
-                                    <span *ngIf="!IsHeaderScreenTemplate">{{Entity[FieldName]}}</span>
-                                </div>
-
-                                <div *ngIf="FieldName == 'MainEntityReference' && !IsHeaderScreenTemplate">
-                                    <span>{{FieldValue}}</span>
+                                <div *ngIf="FieldName == 'ConnectedEntityReferences' && IsHeaderScreenTemplate">
+                                    <span class="hyperlink" (click)="ViewEntityClicked('SHI')">{{Entity['ConnectedEntityReferences']}}</span>
                                 </div>
 
                                 <!-- StatusName -->
@@ -202,13 +190,11 @@
                                         </table>
                                     </div>
                                 </div>
-
                                 <div *ngIf="FieldName == 'JournalNumber' && IsHeaderScreenTemplate">
                                     <div>
                                         <a href="#" (click)="OpenJournal(Entity.JournalId)">{{Entity.JournalNumber}}</a>
                                     </div>
                                 </div>
-
                                 <!-- DueDate -->
                                 <div *ngIf="FieldName == 'DueDate'" [ngStyle]="{color: Entity[FieldName] | InvoiceDueDateForegroundPipe:Entity.IsClosed}">
                                     <span>{{Entity[FieldName] | DateTimeToDatePipe}}</span>
@@ -319,7 +305,7 @@
                                     <img style="width:10.5px;height:10px;" *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
                                 </div>
                             </div>
-</td>
+                        </td>
                     </tr>
                 </table>
 

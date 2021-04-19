@@ -21,40 +21,36 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             repository = new ReportExecutionLogRepository(tenant);
         }
-        public ReportExecutionLogQuery(ReportExecutionLogRepository reportExecutionLogRepository)
+        public ReportExecutionLogQuery(ReportExecutionLogRepository communicationLogRepository)
         {
-            repository = reportExecutionLogRepository;
+            repository = communicationLogRepository;
         }
         public ReportExecutionLogPM GetSinglePM(string id, int tenant)
         {
-            return (from a in repository.context.ReportExecutionLogs.Include("CommunicationStatusType").Include("CreatedByUser.Contact").Include("Report")
+            return (from a in repository.context.ReportExecutionLogs.Include("CommunicationStatusType").Include("CreatedByUser.Contact").Include("ObjectTable").Include("CurrentTenant")
                     where a.Id == id
                     select new ReportExecutionLogPM()
                     {
                         Id = a.Id,
                         Tenant = a.Tenant,  
                         CreatedByUserId = a.CreatedByUserId,
-                        CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
-                        StatusCode = a.StatusCode,
-                        StatusName = a.CommunicationStatusType.Name,
+                        StatusCode = a.StatusCode, 
                         ExceptionMessage = a.ExceptionMessage, 
                         CreateDate = a.CreateDate,
                         DoneDate = a.DoneDate,
                         ReportFilterXML = a.ReportFilterXML,
                         ReportId = a.ReportId,
-                        ReportName = a.Report != null ? a.Report.Name: null,
                         ReportTemplateId = a.ReportTemplateId,
                         RetryNumber = a.RetryNumber,
                         StartDate = a.StartDate,
                         ExecutedByServerName = a.ExecutedByServerName,
-                        DisablePreview = a.DisablePreview,
-                        SearchFields = a.SearchFields,
+                        DisablePreview = a.DisablePreview, 
                     }).FirstOrDefault();
         }
       
         public IQueryable<ReportExecutionLogPM> GetReportExecutionLogPMsByTenant(int tenant)
         {
-            return (from a in repository.context.ReportExecutionLogs.Include("CommunicationStatusType").Include("CreatedByUser.Contact")
+            return (from a in repository.context.ReportExecutionLogs.Include("CommunicationStatusType").Include("CreatedByUser.Contact").Include("ObjectTable").Include("CurrentTenant")
                     where a.Tenant == tenant
                     select new ReportExecutionLogPM()
                     {
@@ -72,33 +68,28 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         StartDate = a.StartDate,
                         ExecutedByServerName = a.ExecutedByServerName,
                         DisablePreview = a.DisablePreview,
-                        SearchFields = a.SearchFields,
                     });
         }
         public IQueryable<ReportExecutionLogList> GetIQueryableEntityList(IQueryable<ReportExecutionLog> iQueryable)
         {
-            IQueryable<ReportExecutionLogList> result =  from a in repository.context.ReportExecutionLogs.Include("CommunicationStatusType").Include("CreatedByUser.Contact").Include("Report")
-                                                         select new ReportExecutionLogList()
+            IQueryable<ReportExecutionLogList> result = from a in iQueryable.Include("CommunicationStatusType").Include("CreatedByUser.Contact").Include("ObjectTable").Include("CurrentTenant")
+                                                      select new ReportExecutionLogList()
                                                       {
-                                                             Id = a.Id,
-                                                             Tenant = a.Tenant,
-                                                             CreatedByUserId = a.CreatedByUserId,
-                                                             CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
-                                                             StatusCode = a.StatusCode,
-                                                             StatusName = a.CommunicationStatusType.Name,
-                                                             ExceptionMessage = a.ExceptionMessage,
-                                                             CreateDate = a.CreateDate,
-                                                             DoneDate = a.DoneDate,
-                                                             ReportFilterXML = a.ReportFilterXML,
-                                                             ReportId = a.ReportId,
-                                                             ReportName = a.Report != null ? a.Report.Name : null,
-                                                             ReportTemplateId = a.ReportTemplateId,
-                                                             RetryNumber = a.RetryNumber,
-                                                             StartDate = a.StartDate,
-                                                             ExecutedByServerName = a.ExecutedByServerName,
-                                                             DisablePreview = a.DisablePreview,
-                                                             SearchFields = a.SearchFields,
-                                                         };
+                                                          Id = a.Id,
+                                                          Tenant = a.Tenant,
+                                                          CreatedByUserId = a.CreatedByUserId,
+                                                          StatusCode = a.StatusCode,
+                                                          ExceptionMessage = a.ExceptionMessage,
+                                                          CreateDate = a.CreateDate,
+                                                          DoneDate = a.DoneDate,
+                                                          ReportFilterXML = a.ReportFilterXML,
+                                                          ReportId = a.ReportId,
+                                                          ReportTemplateId = a.ReportTemplateId,
+                                                          RetryNumber = a.RetryNumber,
+                                                          StartDate = a.StartDate,
+                                                          ExecutedByServerName = a.ExecutedByServerName,
+                                                          DisablePreview = a.DisablePreview,
+                                                      };
             return result;
         }
          

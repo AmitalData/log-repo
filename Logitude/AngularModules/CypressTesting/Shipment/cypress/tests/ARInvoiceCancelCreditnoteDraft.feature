@@ -1,4 +1,4 @@
-@release @stable @all
+@release @stable
 Feature: AR Invoice Cancel Credit Note Draft
     The user creates a Direct Export Air shipment, creates receivable, creates AR Invoice, 
     creates credit note draft and cancels it.

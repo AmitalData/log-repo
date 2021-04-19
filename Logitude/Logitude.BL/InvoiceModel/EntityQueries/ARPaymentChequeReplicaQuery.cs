@@ -1,4 +1,6 @@
-﻿using Logitude.BL.InvoiceModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.Resolvers;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
 using System;
@@ -45,7 +47,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public List<ARPaymentChequeReplicaPM> GetARPaymentChequeReplicaPMsByPaymentId(string paymentId, int tenant)
         {
-
+            bool showLocal =! GetLoggedContact(tenant).DontShowLocal;
             List<ARPaymentChequeReplica> paymentCheques = repository.GetARPaymentChequeReplicas(paymentId, tenant).ToList();
             return (from a in paymentCheques
                     where a.PaymentId == paymentId && a.Tenant == tenant
@@ -62,8 +64,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         LineNumber = a.LineNumber ,
                         BankId = a.BankId,
                         StatusCode= a.StatusCode,
+                        StatusName= showLocal? a.ARPaymentChequeStatusReplica.LocalName : a.ARPaymentChequeStatusReplica.EnglishName,
                         CurrencyId = a.CurrencyId
-                    }).ToList();
+                    }).OrderBy(d=> d.LineNumber).ToList();
            
         }
 
@@ -74,7 +77,16 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
           
 
         }
-
+        public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
+        public static ContactPM GetLoggedContact(int tenant)
+        {
+            if (OverrideGetLoggedContactFunc != null)
+            {
+                return OverrideGetLoggedContactFunc(tenant);
+            }
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
+        }
 
     }
 }

@@ -69,7 +69,7 @@ Cypress.Commands.add("FillDate", (selector, value) => {
         cy.get(selector).focus().clear().type("+1{enter}")
     }
     else {
-        cy.get(selector).focus().clear().type(value+'{enter}')
+        cy.get(selector).focus().clear().type(value)
     }
 })
 

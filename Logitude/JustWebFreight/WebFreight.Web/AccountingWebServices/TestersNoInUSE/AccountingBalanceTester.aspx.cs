@@ -2674,7 +2674,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 
                 var myExternalReconcileJournalService = new ExternalReconcileMoveBankCheckFromTransfer2GLAccountService();
                 myExternalReconcileJournalService.MustInit(new ExternalReconcileDataProvider( AccountingContext.GetContext(Tenant)));
-                myExternalReconcileJournalService.CreateJournalWithExtReconcile(Tenant, new List<string>() { LedgerTransactionId }, ReconcileExternalPageLineId);
+                myExternalReconcileJournalService.CreateJournalWithExtReconcile(Tenant, LedgerTransactionId, ReconcileExternalPageLineId);
                 var us = new JournalUpdateService(AccountingContext.GetContext(Tenant), new Dictionary<string, IContext>(),Tenant);
                 us.Update(myExternalReconcileJournalService.TheJournalPM, true);
                 _LabelResult.Text = JsonConvert.SerializeObject(myExternalReconcileJournalService.TheJournalPM); ;

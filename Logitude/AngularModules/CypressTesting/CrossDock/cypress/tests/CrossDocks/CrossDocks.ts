@@ -215,7 +215,6 @@ When("save release", () => {
 
 Then("the release should update sucessfully", () => {
     Actions.AssertUpdateCrossdockRelease();
-    BaseAssertion.AssertElementNotExist(BaseSelectors.BusyIndicatorControlInner)
 });
 
 Then("release status should be {string}", (status) => {
@@ -228,9 +227,7 @@ Then("release date should be {string}", (date) => {
 
 Then("the Warehouse Terminal in shipment routing tab should have the following release details", (dataTable) => {
     let releaseDetails = Assists.CreateInstance<CrossDockDetails>(dataTable, true);
-    BaseAssertion.AssertElementNotExist(BaseSelectors.BusyIndicatorControlInner)
     cy.BackButton(BaseSelectors.ContainsShipment + CrossDockContext.ShipmentNumber)
-    BaseAssertion.AssertElementNotExist(BaseSelectors.BusyIndicatorControlInner)
     Actions.ValidateRoutingsReleaseFields(releaseDetails)
 });
 //#endregion

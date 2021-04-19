@@ -188,6 +188,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public DateTime? PaidDate { get; set; }
         public string PartnerId { get; set; }
         public string PartnerName { get; set; }
-        public string ShipmentsNumbers { get; set; }
+
     }
 }

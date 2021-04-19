@@ -120,9 +120,9 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.Field8 = entityPM.Field8 != null ? entityPM.Field8.Value : null;
             entity.Field9 = entityPM.Field9 != null ? entityPM.Field9.Value : null;
             entity.Field10 = entityPM.Field10 != null ? entityPM.Field10.Value : null;
+
             entity.TotalVATOnly = entityPM.TotalVATOnly;
             entity.PaidDate = entityPM.PaidDate;
-            entity.ShipmentsNumbers = entityPM.ShipmentsNumbers;
 
             if (entityPM.SetApproved)
             {

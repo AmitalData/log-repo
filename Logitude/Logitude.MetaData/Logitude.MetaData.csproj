@@ -192,9 +192,7 @@
     <None Include="DBOthers\QuoteModel\Triggers\Trigger_AutomaticLastUpdateDateQuotes.dxml" />
     <None Include="DBScripts\CommonModel\202103161606_AddNewUOMPercentOForeignChargesLocalAmounts.sxml" />
     <None Include="DBScripts\CommonModel\202104161424_UpdateTenantRatios.sxml" />
-    <None Include="DBScripts\CommonModel\202104161425_UpdateTenantRatiosOnCloud.sxml" />
     <None Include="DBScripts\GlobalModel\202102161503_UpdateTenantManagmentPrivatLabelDomain.sxml" />
-    <None Include="DBScripts\GlobalModel\AddCollaborationToolSgipmentUpdateBatchService.sxml" />
     <None Include="DBScripts\InfrastructureModel\202101120950_ModifyDBMigrationLastScriptTrigger.sxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\dbo.usp_DoTheTableDeletionSet.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\usp_SearchForeignkeyTree.dxml" />
@@ -296,11 +294,6 @@
     <None Include="DBScripts\InvoiceModel\202012201448_SAT voided invoices and payments.sxml" />
     <None Include="DBScripts\InvoiceModel\202101231210_FillPartnerIdARInvoices.sxml" />
     <None Include="DBScripts\InvoiceModel\202101231212_FillPartnerIdARPayments.sxml" />
-    <None Include="DBScripts\QuoteModel\202103071310_RemoveQuoteComputedFileds.sxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="DBScripts\InvoiceModel\202104120952_FillARInvoiceShipmentsNumbersBackward.sxml" />
-    <None Include="DBScripts\InvoiceModel\202104121143_FillAPInvoiceShipmentsNumbersBackward.sxml" />
     <None Include="DBScripts\ShipmentModel\202103201130_CreateCalculatePayableVatOpenAmountFunction.sxml" />
     <None Include="DBScripts\ShipmentModel\202103211530_FillVatAmountLocalVatAmountProfitInShipmentReceivables.sxml" />
     <None Include="DBScripts\ShipmentModel\202103211610_FillVatAmountLocalVatAmountProfitInShipmentPayables.sxml" />
@@ -471,7 +464,6 @@
     <None Include="DBScripts\ShipmentModel\202006111515_AddShipmentSubTypesToTenants.sxml" />
     <None Include="DBScripts\ShipmentModel\202006140958_FillAirShipmentShipmentTypeField.sxml" />
     <None Include="DBScripts\ShipmentModel\202006141227_FillShipmentSubTypeBackward.sxml" />
-    <None Include="DBScripts\ShipmentModel\202104181355_UpdateContainerNumbersAndTypesArray.sxml" />
     <None Include="DBScripts\ShipmentModel\202009031302_FillDataFromShipmentPackagesToShipmentComputedFields.sxml" />
     <None Include="DBScripts\ShipmentModel\202008110940_SetIsBondedWarehouseField.sxml" />
     <None Include="DBScripts\ShipmentModel\202007051320_UpdateAirShipmentSubType.sxml" />

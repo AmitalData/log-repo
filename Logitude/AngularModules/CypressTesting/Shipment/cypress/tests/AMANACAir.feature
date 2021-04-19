@@ -1,4 +1,4 @@
-@release @dev @all
+@release @dev
 Feature: AMANAC Air Shipment Validations, Marked as Blocked, Marked as Not Blocked, Transfers and Retransfer
 
     The user configures AMANAC customs for the tenant, creates Direct Export Air shipment,
@@ -51,9 +51,9 @@ Feature: AMANAC Air Shipment Validations, Marked as Blocked, Marked as Not Block
         Then a validation message "Transferred Successfully" should appear
         And should not appear in the "New Transfer" view in the AMANAC workspace
         And AMANAC and customs transmissions statuses should be as following
-            | Status   | Sent       |
-            | LastSent | Today      |
-            | SentBy   | LoggedUser |
+            | Status   | Sent         |
+            | LastSent | Today        |
+            | SentBy   | SpecflowTest |
 
     Scenario: Retransfer
         When the user retransfer the shipment
@@ -69,6 +69,6 @@ Feature: AMANAC Air Shipment Validations, Marked as Blocked, Marked as Not Block
         Then a validation message "Transferred Successfully" should appear
         And should not appear in the "New Transfer" view in the AMANAC workspace
         And AMANAC and customs transmissions statuses should be as following
-            | Status   | Sent       |
-            | LastSent | Today      |
-            | SentBy   | LoggedUser |
+            | Status   | Sent         |
+            | LastSent | Today        |
+            | SentBy   | SpecflowTest |

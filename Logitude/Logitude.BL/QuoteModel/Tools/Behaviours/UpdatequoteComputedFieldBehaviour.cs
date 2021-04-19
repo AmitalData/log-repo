@@ -35,7 +35,7 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
             MapFromLocationField();
             MapToLocationField();
             MapPickupFromField();
-            MapDeliveryToField();
+            MapDeliveryFromField();
             FilterDeletedQuoteCharges();
             MapEstimatedPayablesInLocalCurrencyField();
             MapEstimatedPayablesInSalesCurrencyField();
@@ -94,35 +94,27 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
             {
                 if (!string.IsNullOrEmpty(quoteEntityPM.PickUpAddressId))
                 {
-                    quoteComputedField.PickupFrom = CalculatePickupAndDeliveryToByAddressId(quoteEntityPM.PickUpAddressId);
+                    quoteComputedField.PickupFrom = CalculatePickupAndDeliveryFromByAddressId(quoteEntityPM.PickUpAddressId);
                 }
                 else
                 {
                     quoteComputedField.PickupFrom = CalculatePickupFromUsingFromAddressCountryAndCity();
                 }
             }
-            else
-            {
-                quoteComputedField.PickupFrom = null;
-            }
         }
 
-        private void MapDeliveryToField()
+        private void MapDeliveryFromField()
         {
             if (quoteEntityPM.IncludeDelivery)
             {
                 if (!string.IsNullOrEmpty(quoteEntityPM.DeliveryAddressId))
                 {
-                    quoteComputedField.DeliveryTo = CalculatePickupAndDeliveryToByAddressId(quoteEntityPM.DeliveryAddressId);
+                    quoteComputedField.DeliveryFrom = CalculatePickupAndDeliveryFromByAddressId(quoteEntityPM.DeliveryAddressId);
                 }
                 else
                 {
-                    quoteComputedField.DeliveryTo = CalculateDeliveryToUsingToAddressCountryAndCity();
+                    quoteComputedField.DeliveryFrom = CalculateDeliveryFromUsingToAddressCountryAndCity();
                 }
-            }
-            else
-            {
-                quoteComputedField.DeliveryTo = null;
             }
         }
 
@@ -131,7 +123,7 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
                 return (quoteEntityPM.DirectionId == "D" && quoteEntityPM.TransportModeId == "I");
         }
 
-        private string CalculatePickupAndDeliveryToByAddressId(string id)
+        private string CalculatePickupAndDeliveryFromByAddressId(string id)
         {
             Address address = initializer.AddressRepository.GetSingleAddress(id, initializer.Tenant);
             if (address != null)
@@ -171,7 +163,7 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
             return location;
         }
 
-        private string CalculateDeliveryToUsingToAddressCountryAndCity()
+        private string CalculateDeliveryFromUsingToAddressCountryAndCity()
         {
             string location = (!string.IsNullOrEmpty(quoteEntityPM.ToAddressCity)) ? quoteEntityPM.ToAddressCity: "";
 

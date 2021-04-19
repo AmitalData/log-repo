@@ -60,6 +60,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="AutoGenerators\AccountingClassesGenerator1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AccountingClassesGenerator.tt</DependentUpon>
+    </Compile>
     <Compile Include="AutoGenerators\ContextGenerator.cs">
       <DependentUpon>ContextGenerator.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -68,7 +73,6 @@
     <Content Include="DBOthers\0Types\GLAccountAgingDataType.xml" />
     <None Include="DBOthers\SProcedures\usp_AccountingStreaming.dxml" />
     <None Include="DBOthers\Views\CardGLAccountDataView.dxml" />
-    <None Include="DBScripts\202103301145_UpdateGLAccountCardsData.sxml" />
     <None Include="DBScripts\202008241136_EventTypesConverteLocalNameToEnglishName.sxml" />
     <None Include="DBScripts\202009231117_UpdateActiveForInterestFieldOnGLAccount.sxml" />
     <None Include="DBScripts\202012251232_UpdateUserDefinedReportLocalName.sxml" />
@@ -78,7 +82,6 @@
     <None Include="DBScripts\202102070900_UpdateNullableGLAccountFutureFields.sxml" />
     <None Include="DBScripts\202101141620_ UpdateStatusCodeFieldOnTaxReportLine.sxml" />
     <None Include="DBScripts\202103311233_BankAccountSearchFields.sxml" />
-    <None Include="DBScripts\202104111142_PaymentChequesSearchFields.sxml" />
     <None Include="DBScripts\Post\202103160820_ RebuildGLAccountRecocileDatas.sxml" />
     <None Include="DBScripts\202103180820_ InsertGLAccountAgingDatas.sxml" />
     <None Include="DBScripts\202103240820_usp_AccountingStreamingTypes.sxml" />
@@ -180,7 +183,6 @@
     <None Include="EntityFiles\CalculatedChartsOfAccountsLine.lxml" />
     <None Include="EntityFiles\CalculatedChartsLineType.lxml" />
     <None Include="EntityFiles\GLAccountAgingData.lxml" />
-    <None Include="EntityFiles\GLAccountCardsData.lxml" />
     <None Include="EntityFiles\GLAccountCounter.lxml" />
     <None Include="EntityFiles\GLAccountInterestPeriod.lxml" />
     <None Include="EntityFiles\GLAccountRecocileData.lxml" />

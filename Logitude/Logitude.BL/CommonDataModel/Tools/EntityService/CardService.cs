@@ -12,13 +12,6 @@ using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Helpers;
 using Logitude.BL.DataContracts;
-using Logitude.Accounting.Def.EntityUpdateServicesExt;
-using Logitude.Server.Tools;
-using Microsoft.Practices.Unity;
-using Logitude.Accounting.Def.EntityQueryServicesExt;
-using Logitude.Accounting.Def.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Simplog.Server.Infrastructure;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -33,7 +26,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private ICommonDataContext objectContext;
         private CardRepository entityRepository;
         private ContactRepository contactRepository;
-        GLAccountCardDataService gLAccountCardDataService;
         public CardService(ICommonDataContext objectContext, CardPM entityPM)
         {
             this.entityPM = entityPM;
@@ -42,7 +34,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityRepository = new CardRepository(objectContext);
             this.addressRepository = new AddressRepository(objectContext);
             this.contactRepository = new ContactRepository(objectContext);
-
             this.GetLoggedContact();
         }
         public CardService(ICommonDataContext objectContext,int tenant)
@@ -136,7 +127,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             this.isNewEntity = false;
             this.Poco = entityRepository.GetSingleCard(entityPM.Id , tenant);
-          
+
             this.Initialize();
 
             CardValidating.Validate(entityPM);
@@ -149,7 +140,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
-            //UpdateGLaccountCardsDara();
+
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
 
             if (entityPM.DisconectFromContact)
@@ -159,37 +150,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 CardContactRepository.Remove(cardContact);
                 CardContactRepository.SubmitChanges();
             }
-            if((entityPM.PartnerTypeId== PartnerTypes.Customer || entityPM.PartnerTypeId == PartnerTypes.Vendor) && entityPM.GLAccountId !=null)
-            {
-                HandleGLAccountCardData(entityPM.Id,entityPM.GLAccountId,entityPM.Tenant);              
-            }
-
         }
 
-        public void HandleGLAccountCardData(string cardId,string glaccountId, int tenant)
-        {
-            if (glaccountId != null)
-            {
-                gLAccountCardDataService = new GLAccountCardDataService(cardId, glaccountId, tenant);
-                if (gLAccountCardDataService.cardGLaccount != null)
-                {
-                    bool GlAccountCardDataExists = CheckIfGlAccountCardDataExists();
-                    if (GlAccountCardDataExists)
-                    {
-                        gLAccountCardDataService.UpdateGLaccountCardsData();
-                    }
-                    else { gLAccountCardDataService.CreateGLaccountCardsDara(); }
-                }
-            }
-        }
-        private bool CheckIfGlAccountCardDataExists()
-        {
-                if (gLAccountCardDataService.gLAccountCardsDataPM == null)
-                {
-                    return false;
-                }
-                else return true;            
-        }
+
+
         private void RunStoredProcedures()
         {
 
@@ -271,13 +235,4 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
     }
-
-    public static class PartnerTypes
-    {
-
-        public static string Customer = "CS";
-        public static string Vendor = "VD";
-     
 }
-}
-

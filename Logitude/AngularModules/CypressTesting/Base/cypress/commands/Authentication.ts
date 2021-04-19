@@ -5,7 +5,6 @@ declare namespace Cypress {
         LogoutThenLogin(customerCareUser?: boolean): Chainable<Element>
         OpenChangePasswordPage(): Chainable<Element>
         RedirectToLogin(): Chainable<Element>
-        GetCurrentPassword():Chainable<Element>
     }
 }
 
@@ -40,11 +39,7 @@ Cypress.Commands.add("GetLoggedInUser", (customerCareUser = false) => {
         return customerCareUser ? Cypress.env("CustomerCareEmail") : Cypress.env("Email");
     }
 })
-Cypress.Commands.add("GetCurrentPassword", () => {
-        cy.fixture("Login.json").then(loginData => {
-            return loginData.password ;
-        })
-})
+
 Cypress.Commands.add("LogoutThenLogin", (customerCareUser = false) => {
     cy.intercept("**/Login.aspx").as("LoginPage");
     cy.get("iconbutton[title='Sign Out'] img").click();

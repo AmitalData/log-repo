@@ -378,21 +378,6 @@
                                             </td>
                                         </tr>
 
-                                        <tr style="height:10px">
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-
-                                        <!-- Default Ratios Settings -->
-                                        <tr style="height: 1px;" *ngIf="HasDefaultRatiosFeature">
-                                            <td>
-                                                <div>
-                                                    <Hyperlink (click)="ViewRatioSettingsClicked()" [Text]="'Default Ratios Settings'"></Hyperlink>
-                                                </div>
-                                            </td>
-                                        </tr>
-
                                         <tr>
                                             <td>
                                                 <div></div>
@@ -538,6 +523,27 @@
                                                                                     </td>
                                                                                 </tr>
 
+                                                                                <tr style="height:10px">
+                                                                                    <td colspan="2">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- Default Ratios Settings -->
+                                                                                <tr style="height: 1px;" *ngIf="HasDefaultRatiosFeature">
+                                                                                    <td colspan="2">
+                                                                                        <div style="padding-left: 10px;">
+                                                                                            <Hyperlink (click)="ViewRatioSettingsClicked()" [Text]="'Default Ratios Settings'"></Hyperlink>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr style="height:5px">
+                                                                                    <td colspan="2">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+
                                                                                 <tr>
                                                                                     <td colspan="2">
                                                                                         <div></div>
@@ -546,7 +552,6 @@
 
                                                                             </table>
                                                                         </td>
-
                                                                     </tr>
 
                                                                 </table>

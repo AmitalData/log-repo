@@ -449,10 +449,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string Phone { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? ReadyForActivationDate { get; set; }
 
          [DataMember]

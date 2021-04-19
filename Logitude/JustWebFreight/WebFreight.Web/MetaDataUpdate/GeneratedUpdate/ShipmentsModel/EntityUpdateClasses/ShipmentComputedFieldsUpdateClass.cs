@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentComputedFieldsUpdateClass
    {  		
-		public const string HashString = "4e9e95dc3e4f30fe082b4bee2f602cff";
+		public const string HashString = "cb6d80f81cad140263b921f30f5230f0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "ShipmentComputedField",
-			      				    Code =  "3ebf",
+			      				    Code =  "daf2",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
@@ -2025,7 +2025,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ObjectTableName =  "ShipmentComputedFields",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  30,
+					  						MaxLength =  15,
 					  						IsRequired =  false,
 					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
@@ -2306,7 +2306,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ObjectTableName =  "ShipmentComputedFields",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  30,
+					  						MaxLength =  15,
 					  						IsRequired =  false,
 					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,

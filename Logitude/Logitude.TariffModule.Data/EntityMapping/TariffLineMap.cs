@@ -182,10 +182,6 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.Surcharge9CurrencyId).HasColumnName("Surcharge9CurrencyId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Surcharge10CurrencyId).HasColumnName("Surcharge10CurrencyId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.ViaPortId).HasColumnName("ViaPortId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.ViaPortText).HasColumnName("ViaPortText").HasMaxLength(20).IsUnicode(false);
         }
     }
 }

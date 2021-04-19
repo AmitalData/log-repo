@@ -18,10 +18,6 @@ namespace Simplog.Data.Helpers
             public string DelaytimeOp { get; set; }
             public string SelectedDelaytimeFieldCode { get; set; } 
             public List<AutomationCondition> ConditionsList { get; set; }
-            public AutomatedBackup AutomatedBackup { get; set; }
-
-        
-
     }
  
 }

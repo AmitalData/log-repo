@@ -396,20 +396,5 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string TransferQuotationsToUnifreightTrigger { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool SharedLogisMasterMessageLink { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? AirRatio { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? LCLRatio { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? FCLRatio { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? LTLRatio { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? FTLRatio { get; set; }
     }
 }

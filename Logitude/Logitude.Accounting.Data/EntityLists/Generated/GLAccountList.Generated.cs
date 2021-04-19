@@ -250,10 +250,6 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ChartOfAccountsTypeLocalName  { get; set; }
        [DataMember]
        public string ChartOfAccountsLocalName  { get; set; }
-       [DataMember]
-       public string CardsDataId  { get; set; }
-       [DataMember]
-       public string PaymentTermName  { get; set; }
    }
 
 }

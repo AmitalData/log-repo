@@ -62,7 +62,7 @@ function AssertPostCrossdockEntry() {
 }
 export function UpdateCrossdockEntry() {
     DefinePutCrossdockEntryRequest()
-    cy.Click(CrossdockSelectors.WarehouseEntrySaveButton , null,true);
+    cy.Click(CrossdockSelectors.WarehouseEntrySaveButton + BaseSelectors.LastElement, null,true);
 }
 function DefinePutCrossdockEntryRequest() {
     cy.DefineRequestWait(RestAPI.PUT, CrossDockURLs.WarehouseEntry, RequestAliases.PutCrossdockEntry);
@@ -105,7 +105,6 @@ export function AssertCancleEntry() {
 
 export function ValidateEntryDisableFields() {
     cy.Click(CrossdockSelectors.WarehouseEntryGeneralTab, null);
-    BaseAssertion.AssertElementNotExist(BaseSelectors.BusyIndicatorControlInner)
     BaseAssertion.AssertElementHaveClasss(CrossdockSelectors.CrossdockExpectedEntryDateDiv, BaseSelectors.HaveClass, CrossdockSelectors.ContainsDatePickerDisabled)
     cy.Click(CrossdockSelectors.WarehouseEntryPackagesTab + BaseSelectors.LastElement, null);
     BaseAssertion.AssertElementDisabled(CrossdockSelectors.WarehousePackageEditButton, BaseSelectors.BeDisabled)
@@ -115,14 +114,12 @@ export function NavigateToShipmentConnectedEntities() {
     cy.DefineRequestWait(RestAPI.GET, URLs.GetMenuButtonGrouppms, RequestAliases.GetWarehouseMenuButtonGroups);
     cy.Click(CrossdockSelectors.EntityNumberLink(CrossDockContext.EntryNumber), null, true);
     BaseAssertion.AssertStatusCode(RequestAliases.GetWarehouseMenuButtonGroups, 200);
-    BaseAssertion.AssertElementNotExist(BaseSelectors.BusyIndicatorControlInner)
     cy.Navigate(CrossdockSelectors.ShipmentEntryConnectedEntities);
 }
 function NavigateToShipmentConnectedReleases() {
     cy.DefineRequestWait(RestAPI.GET, URLs.GetMenuButtonGrouppms, RequestAliases.GetWarehouseMenuButtonGroups);
     cy.Click(CrossdockSelectors.EntityNumberLink(CrossDockContext.ReleaseNumber), null, true)
     BaseAssertion.AssertStatusCode(RequestAliases.GetWarehouseMenuButtonGroups, 200);
-    BaseAssertion.AssertElementNotExist(BaseSelectors.BusyIndicatorControlInner)
     cy.Navigate(CrossdockSelectors.ShipmentEntryConnectedReleases);
 }
 
@@ -190,7 +187,6 @@ function AssertPutCancleRelease() {
 }
 export function ValidateReleaseDisableFields() {
     cy.Click(CrossdockSelectors.WarehouseReleaseGeneralTab, null);
-    BaseAssertion.AssertElementNotExist(BaseSelectors.BusyIndicatorControlInner)
     BaseAssertion.AssertElementHaveClasss(CrossdockSelectors.CrossdockExpectedReleaseDateDiv, BaseSelectors.HaveClass, CrossdockSelectors.ContainsDatePickerDisabled)
     BaseAssertion.AssertElementHaveClasss(CrossdockSelectors.CrossdockActualReleaseDateDiv, BaseSelectors.HaveClass, CrossdockSelectors.ContainsDatePickerDisabled)
     BaseAssertion.AssertElementHaveClasss(CrossdockSelectors.CrossdockExpectedReleaseTimeDiv, BaseSelectors.HaveClass, CrossdockSelectors.ContainsDatePickerDisabled)
@@ -257,16 +253,8 @@ export function FillCrossDockDate(selector:string,date:string){
 function GetTodayDate(){ 
     var dateString =  new Date().toLocaleDateString("en-US", { timeZone: "Asia/Jerusalem"})  
     var currentDateArray = dateString.split("/");
-    if ((parseInt(currentDateArray[0]) > 0 && parseInt(currentDateArray[0]) < 10) && (parseInt(currentDateArray[1]) > 0 && parseInt(currentDateArray[1]) < 10)) {
+    if(parseInt(currentDateArray[0]) > 0 && parseInt(currentDateArray[0]) < 10){
     return "0" + currentDateArray[1] + "/" + "0" + currentDateArray[0] + "/" + currentDateArray[2];
-    }
-    else if(parseInt(currentDateArray[0]) > 0 && parseInt(currentDateArray[0]) < 10) {
-        return  currentDateArray[1] + "/" + "0" + currentDateArray[0] + "/" + currentDateArray[2];
- 
-    }
-    else if(parseInt(currentDateArray[1]) > 0 && parseInt(currentDateArray[1]) < 10) {
-        return   "0" + currentDateArray[1] + "/" + currentDateArray[0] + "/" + currentDateArray[2];
- 
     }
    return currentDateArray[1] + "/" + currentDateArray[0] + "/" + currentDateArray[2];
 }

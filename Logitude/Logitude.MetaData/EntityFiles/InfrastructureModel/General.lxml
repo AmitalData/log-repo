@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;c009&quot;"
+  Code="&quot;9efb&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -4629,8 +4629,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Accounting.O.MoreThanPaymentCheque&quot;"
-      DefaultText="&quot;There are more than one cheques for this payment&quot;"
-      LocalDefaultText="&quot;קיימת יותר מהמחאה אחת עבור קבלה זו&quot;"
+      DefaultText="&quot;There are more than one Cheque for this payment. Click on Edit to view them&quot;"
+      LocalDefaultText="&quot;ישנם מספר שקים לקבלה זאת, לחץ על כפתור &quot;עריכה&quot; כדי להציגם&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -6715,8 +6715,7 @@
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" 
-      ToggleCode="&quot;TAR&quot;"/>
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;CREATETENANT&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
@@ -7091,15 +7090,6 @@
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.REPORTEXECUTIONLOGS&quot;"
       FeatureDefaultText="&quot;Report Execution Logs&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
-    <Feature
-      Code="&quot;DefaultRatios&quot;"
-      FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.DefaultRatios&quot;"
-      FeatureDefaultText="&quot;Default Ratios&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

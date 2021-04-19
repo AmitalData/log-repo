@@ -49,10 +49,9 @@ export class ARPaymentValidator {
       }
     }
 
-    if (entityPm.AccountingPaymentMethodCode == "CH") {
-      if (AppTool.IsNullOrEmpty(entityPm.ChequeOrPaymentRef)) {
-        validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.S.Details.ChequeRef")));
-      }
+      if (entityPm.AccountingPaymentMethodCode == "CH") {
+          this.ValidatePaymentChequeFields(entityPm, validationResults,msg);
+      
     }
 
 
@@ -140,6 +139,20 @@ export class ARPaymentValidator {
     return validationResults;
   }
 
+    private  ValidatePaymentChequeFields(entityPm: ARPaymentPM, validationResults: any[], msg:string) {
+        if (AppTool.IsNullOrEmpty(entityPm.ChequeOrPaymentRef)) {
+            validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.S.Details.ChequeRef")));
+        }
+        if (AppTool.IsNullOrEmpty(entityPm.Bank)) {
+            validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.Bank")));
+        }
+        if (AppTool.IsNullOrEmpty(entityPm.Account)) {
+            validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.Account")));
+        }
+        if (AppTool.IsNullOrEmpty(entityPm.BankBranch)) {
+            validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.BankBranch")));
+        }
+    }
     public static ValidateCurrenctEntity(entityPm: ARPaymentPM) {
         var errors = [];
 

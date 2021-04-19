@@ -225,7 +225,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
 
         this.StaticPlaceHolder = this.Placeholder;
         if (this.IsRatioBox == true) {
-            this.DigitsAfterPoint = 3;
+            this.DigitsAfterPoint = 1;
             this.InputDivStyle = {};
         }
 

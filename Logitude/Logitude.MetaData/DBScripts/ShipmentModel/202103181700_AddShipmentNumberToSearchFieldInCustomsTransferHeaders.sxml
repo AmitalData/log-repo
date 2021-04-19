@@ -1,7 +1,7 @@
 ﻿<Script DBType="Main" Module="Shipment" >
-  <Sql Version="2">
+  <Sql Version="1">
     <![CDATA[
-           update CustomsTransferHeaders set SearchFields = LEFT((SearchFields + ','+ ShipmentNumber), 1000)
+           update CustomsTransferHeaders set SearchFields = SearchFields + ','+ ShipmentNumber
     ]]>
   </Sql>
 </Script>

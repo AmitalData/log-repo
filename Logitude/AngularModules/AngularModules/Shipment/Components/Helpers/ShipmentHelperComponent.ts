@@ -278,7 +278,7 @@ export class ShipmentHelperComponent implements OnDestroy {
     AWBButtonClicked() {
         if (!this.isAWBButtonClicked) {
             this.isAWBButtonClicked = true;
-            this.ComputeFreightChargesFromFreightPayableLine();
+            this.ComputeAWBChargeRate();
            
             if (this.entityArgs.EditComponent) {
                 this.entityArgs.EditComponent.SaveChanges();
@@ -286,12 +286,12 @@ export class ShipmentHelperComponent implements OnDestroy {
         }
     }
 
-    ComputeFreightChargesFromFreightPayableLine() {
+    ComputeAWBChargeRate() {
         if (!this.EntityPM.IsMultipleCommodities && AppTool.IsNullOrZero(this.EntityPM.AWBChargeRate)) {
             var airFreightCode = "AFT";
             var airFreightCharge = this.EntityPM.ShipmentPayables.filter(a => a.ChargesTypeCode == airFreightCode)[0];
             if (airFreightCharge != null && this.ValidateCurrencyOfShipmentAWBPrintOnlies(airFreightCharge)) {
-                this.SetAWBFreightChargeFields(airFreightCharge); 
+                this.SetAWBFreightChargeFields(airFreightCharge);
             }
         }
     }
@@ -300,9 +300,6 @@ export class ShipmentHelperComponent implements OnDestroy {
         this.EntityPM.AWBChargeRate = airFreightCharge.UnitPrice;
         this.EntityPM.AWBCurrencyId = airFreightCharge.CurrencyId;
         this.EntityPM.AWBChargeAmount = ShipmentTool.ComputeAWBChargeAmount(this.EntityPM);
-        this.EntityPM.FreightPrepaidCollectId = airFreightCharge.PrepaidCollectId;
-        ShipmentTool.BuildAWBChargesCodeCode(this.EntityPM);
-        ShipmentTool.ComputeAWBFrieghtAmountCollectAndPrepaid(this.EntityPM);
     }
 
     private ValidateCurrencyOfShipmentAWBPrintOnlies(airFreightCharge) {
@@ -322,7 +319,7 @@ export class ShipmentHelperComponent implements OnDestroy {
             this.isAWBImportButtonClicked = true;
             var isFullWizard: boolean = this.IsFullWizard();
             if (isFullWizard) {
-                this.ComputeFreightChargesFromFreightPayableLine();
+                this.ComputeAWBChargeRate();
             }
             if (this.entityArgs.EditComponent) {
                 this.entityArgs.EditComponent.SaveChanges();

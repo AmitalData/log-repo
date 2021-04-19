@@ -65,6 +65,21 @@ export class JournalMenuButtonsHandler {
                     //  3- Voided
 
                     switch (button.EventCode) {
+                        case "JournalSaveButton":
+                            {
+                                if (this.EntityPM.StatusCode == "2") {
+                                    button.IsDisabled = false;
+                                    button.IsHidden = false;
+                                }
+
+                                else {
+                                    button.IsDisabled = true;
+                                    button.IsHidden = true;
+                                }
+                                break;
+                    
+                            }
+
                         case "JournalSave": // save and close
                             {
                                 if (this.EntityPM.StatusCode == "2" || this.EntityPM.StatusCode == "3") {
@@ -89,11 +104,15 @@ export class JournalMenuButtonsHandler {
                             }
                         case "JournalSaveAsDraft":
                             {
-                                if (this.EntityPM.StatusCode == "2" || this.EntityPM.StatusCode == "3") {
+                                if (this.EntityPM.StatusCode == "2") {
+                                    button.IsHidden = true;
+                                }
+
+                               else if (this.EntityPM.StatusCode == "3") {
                                     button.IsDisabled = true;
                                 }
 
-                                else {
+                               else {
                                     button.IsDisabled = false;
                                 }
                                 break;
@@ -180,7 +199,10 @@ export class JournalMenuButtonsHandler {
         //this.copyAccountingDates();
 
         switch (menuButton.EventCode) {
-
+            case "JournalSaveButton": {
+                this.SaveChenges();
+                break;
+            }
             case "JournalSave": // save and close
                 {
                     this.EntityPM.StatusCode = "1"; // Waiting

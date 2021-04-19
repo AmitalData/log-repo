@@ -1,13 +1,15 @@
 ﻿
 <Script DBType="Main" Module="Quote" AOT="true" TargetTableName="Quotes"  Pre="true">
-  <Sql Version="2">
+  <Sql Version="1">
     <![CDATA[
-If(OBJECT_ID('tempdb..#temp ')  Is Not Null)
+
+
+If(OBJECT_ID('tempdb..#temp') Is Not Null)
 Begin
     Drop Table #temp
 End
 
-If(OBJECT_ID(' tempdb..#temp_QuoteComputedFields ') Is Not Null)
+If(OBJECT_ID('tempdb..#temp_QuoteComputedFields') Is Not Null)
 Begin
     Drop Table #temp_QuoteComputedFields
 End
@@ -20,7 +22,7 @@ CREATE TABLE #temp_QuoteComputedFields
 	ConnectedToTicket bit not null,
 	ToLocation varchar(500) NUll,
 	FromLocation varchar(500) NUll,
-	DeliveryTo varchar(500) NUll,
+	DeliveryFrom varchar(500) NUll,
 	PickupFrom varchar(500) NUll
 
 )
@@ -118,7 +120,7 @@ where $LastCounterWhere$
 	declare @DeliveryAddressZipCode as varchar(15)
 	declare @ToLocation as varchar(500)
 	declare @FromLocation as varchar(500)
-	declare @DeliveryTo as varchar(500)
+	declare @DeliveryFrom as varchar(500)
 	declare @PickupFrom as varchar(500)
     
 	declare @Count as int
@@ -140,7 +142,7 @@ where $LastCounterWhere$
 	 set @FromLocation = null 
 	 set @ToLocation = null
 	 set @PickupFrom = null 
-	 set @DeliveryTo = null 
+	 set @DeliveryFrom = null 
 
 	 -- FromLocation -----------------------------------------
 		if ((@DirectionId = 'D') AND (@TransportModeId = 'I'))
@@ -176,33 +178,33 @@ where $LastCounterWhere$
 	        end 
         end 
 
-     -- DeliveryTo -----------------------------------------
+     -- DeliveryFrom -----------------------------------------
 	   if(@IncludeDelivery = '1')
 	   begin 
 	     if(@DeliveryAddressId is not null) 
 		   begin 
-		     set @DeliveryTo = CASE WHEN @DeliveryAddressCity IS NULL THEN '' ELSE @DeliveryAddressCity END 
+		     set @DeliveryFrom = CASE WHEN @DeliveryAddressCity IS NULL THEN '' ELSE @DeliveryAddressCity END 
 		     if(@DeliveryAddressCountryId is not null) 
-		     set @DeliveryTo = CASE WHEN @DeliveryCountryCode IS NULL THEN @DeliveryTo ELSE @DeliveryTo + ' ' +@DeliveryCountryCode  END 
-			 set @DeliveryTo = CASE WHEN @DeliveryAddressZipCode IS NULL THEN @DeliveryTo ELSE @DeliveryTo + ' ' +@DeliveryAddressZipCode  END 
+		     set @DeliveryFrom = CASE WHEN @DeliveryCountryCode IS NULL THEN @DeliveryFrom ELSE @DeliveryFrom + ' ' +@DeliveryCountryCode  END 
+			 set @DeliveryFrom = CASE WHEN @DeliveryAddressZipCode IS NULL THEN @DeliveryFrom ELSE @DeliveryFrom + ' ' +@DeliveryAddressZipCode  END 
 	        end 
 		 else 
            begin 
-		     set @DeliveryTo = CASE WHEN @QuotesToAddressCity IS NULL THEN '' ELSE @QuotesToAddressCity  END 
-		     set @DeliveryTo = CASE WHEN @QuotesToAddressCountryCode IS NULL THEN @DeliveryTo ELSE @DeliveryTo + ' '+ @QuotesToAddressCountryCode END 
-		     set @DeliveryTo = CASE WHEN @ToAddressZipCode IS NULL THEN @DeliveryTo ELSE @DeliveryTo + ' ' +@ToAddressZipCode  END 
+		     set @DeliveryFrom = CASE WHEN @QuotesToAddressCity IS NULL THEN '' ELSE @QuotesToAddressCity  END 
+		     set @DeliveryFrom = CASE WHEN @QuotesToAddressCountryCode IS NULL THEN @DeliveryFrom ELSE @DeliveryFrom + ' '+ @QuotesToAddressCountryCode END 
+		     set @DeliveryFrom = CASE WHEN @ToAddressZipCode IS NULL THEN @DeliveryFrom ELSE @DeliveryFrom + ' ' +@ToAddressZipCode  END 
 	        end 
         end 
 
-		   insert into #temp_QuoteComputedFields (Id,Tenant,ConnectedToShipment,ConnectedToTicket,ToLocation,FromLocation,DeliveryTo,PickupFrom)
-		   values(@Id, @Tenant,@ConnectedToShipment,@ConnectedToTicket,@ToLocation,@FromLocation,@DeliveryTo,@PickupFrom)
+		   insert into #temp_QuoteComputedFields (Id,Tenant,ConnectedToShipment,ConnectedToTicket,ToLocation,FromLocation,DeliveryFrom,PickupFrom)
+		   values(@Id, @Tenant,@ConnectedToShipment,@ConnectedToTicket,@ToLocation,@FromLocation,@DeliveryFrom,@PickupFrom)
 
 		set @Count = @Count + 1;
 		if(@Count = 1000)
 		begin		
 
-		   INSERT INTO QuoteComputedFields (Id,Tenant,ConnectedToShipment,ConnectedToTicket,ToLocation,FromLocation,DeliveryTo,PickupFrom)
-           SELECT Id,Tenant,ConnectedToShipment,ConnectedToTicket,ToLocation,FromLocation,DeliveryTo,PickupFrom
+		   INSERT INTO QuoteComputedFields (Id,Tenant,ConnectedToShipment,ConnectedToTicket,ToLocation,FromLocation,DeliveryFrom,PickupFrom)
+           SELECT Id,Tenant,ConnectedToShipment,ConnectedToTicket,ToLocation,FromLocation,DeliveryFrom,PickupFrom
            FROM #temp_QuoteComputedFields
 
 			truncate table #temp_QuoteComputedFields
@@ -217,8 +219,8 @@ where $LastCounterWhere$
 	DEALLOCATE DataCursor
 		if (@Count > 0)
 	begin
-    	   INSERT INTO QuoteComputedFields (Id,Tenant,ConnectedToShipment,ConnectedToTicket,ToLocation,FromLocation,DeliveryTo,PickupFrom)
-           SELECT Id,Tenant,ConnectedToShipment,ConnectedToTicket,ToLocation,FromLocation,DeliveryTo,PickupFrom
+    	   INSERT INTO QuoteComputedFields (Id,Tenant,ConnectedToShipment,ConnectedToTicket,ToLocation,FromLocation,DeliveryFrom,PickupFrom)
+           SELECT Id,Tenant,ConnectedToShipment,ConnectedToTicket,ToLocation,FromLocation,DeliveryFrom,PickupFrom
            FROM #temp_QuoteComputedFields
 
 	end

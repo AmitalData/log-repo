@@ -135,20 +135,6 @@ namespace MeatadataGeneratorTool.Features
         }
 
 
-        private string toggleCode;
-        public string ToggleCode
-        {
-            get
-            {
-                return toggleCode;
-            }
-            set
-            {
-                toggleCode = value;
-                FirePropertyChanged("ToggleCode");
-            }
-        }
-
 
         private Visibility buttonsVisibility = Visibility.Collapsed;
         public Visibility ButtonsVisibility

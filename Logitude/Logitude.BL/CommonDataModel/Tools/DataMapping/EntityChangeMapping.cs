@@ -50,11 +50,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.SendInterfaceAutomationSsucceedXml = entityPM.SendInterfaceAutomationSsucceedXml;
             entityPOCO.SendDocumentAutomationFailedXml = entityPM.SendDocumentAutomationFailedXml;
             entityPOCO.SendDocumentAutomationSsucceedXml = entityPM.SendDocumentAutomationSsucceedXml;
-
-            entityPOCO.CreateTaskAutomationFailedXml = entityPM.CreateTaskAutomationFailedXml;
-            entityPOCO.CreateTaskAutomationSsucceedXml = entityPM.CreateTaskAutomationSsucceedXml;
-
-
         }
 
     }

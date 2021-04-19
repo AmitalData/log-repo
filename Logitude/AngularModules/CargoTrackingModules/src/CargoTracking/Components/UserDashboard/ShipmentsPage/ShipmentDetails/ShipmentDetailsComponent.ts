@@ -6,8 +6,6 @@ import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/Ca
 import { CargoTrackingShipmentList } from 'src/CargoTracking/EntityLists/CargoTrackingShipmentList';
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 import { CargoTrackingShipmentWithMilestones, Milestone } from 'src/CargoTracking/Components/PublicSite/PublicShipmentDetailsComponent/PublicShipmentDetailsComponent';
-import { CargoTrackingPortService } from '../../../../Services/Others/CargoTrackingPortService';
-import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoTrackingShipmentService';
 
 
 @Component({
@@ -26,40 +24,38 @@ export class ShipmentDetailsComponent implements AfterViewInit
     showMoreReferences: boolean = false;
     SecurityKey: string = "";
     Shipment: CargoTrackingShipmentWithMilestones = null;
-    public ShipmentWithMilestones: CargoTrackingShipmentWithMilestones;
-    public toPortCode: string;
-    public fromPortCode: string;
-    isFromPortCodeFilled: boolean = false;
     SearchText: string = "";
-    ShipmentReferences: string[] = [];
-    CustomsBrokerReference: string;
-    ShipmentPM: any;
-
-
+    CustomersReferences = [
+        '5689974987646132',
+        '5689974987646132',
+        '5689974987646132',
+        '5689974987646132',
+        '5689974987646132',
+        '5689974987646132',
+        '5689974987646132',
+    ]
     get tenant()
     {
         return CargoTrackingBrandingData.Tenant;
     }
     constructor(private router: Router,
         private route: ActivatedRoute,
-        private searchService: CargoTrackingSearchService,
-        private cargoTrackingPortService: CargoTrackingPortService,
-        private cargoTrackingShipmentService: CargoTrackingShipmentService
-  )
+        private searchService: CargoTrackingSearchService)
     {
 
         this.GetIdFromURI();
-        this.LoadShipment();
 
     }
     ngAfterViewInit(): void
     {
+        this.LoadShipment();
         setTimeout(() => {
             this.InitSlider();
             this.BuildSliderCards();
 
         }, 200);
         this.InitRoutes();
+        this.InitPartnerCards();
 
     }
     @HostListener('window:resize', ['$event'])
@@ -109,54 +105,19 @@ export class ShipmentDetailsComponent implements AfterViewInit
         this.isLoading = true;
         this.searchService.getShipment(this.SecurityKey, this.tenant).subscribe((result: any) =>
         {
+            this.isLoading = false;
             console.log("[getShipment]", result);
-            this.ShipmentWithMilestones = result;
-            if (this.ShipmentWithMilestones) {
-                this.Shipment = result;
-                this.ShipmentReferences = result.ShipmentList.CustomerReference ? result.ShipmentList.CustomerReference.split(',') : null;
-                this.SetRoutingVariables();
-                this.GetShipmentPM();
-            }
+            this.Shipment = result;
+
+            setTimeout(() =>
+            {
+                this.InitSlider();
+                this.BuildSliderCards();
+
+            }, 200);
 
         });
     }
-
-    SetRoutingVariables() {
-       this.GetCargoTrackingPortById(this.Shipment.ShipmentList.FromPortId);
-    }
-
-    GetCargoTrackingPortById(id: string) {
-        this.cargoTrackingPortService.get(id).subscribe((result: any) => {
-            var code = result.Code;
-            this.SetFromPortCodeORToPortCode(code);
-        })
-    }
-
-    private SetFromPortCodeORToPortCode(code: any) {
-
-        if (!this.isFromPortCodeFilled) {
-            this.fromPortCode = code;
-            this.isFromPortCodeFilled = true;
-        }
-
-        else
-            this.toPortCode = code;
-       this.GetCargoTrackingPortById(this.Shipment.ShipmentList.ToPortId);
-
-    }
-
-
-    GetShipmentPM() {
-        this.cargoTrackingShipmentService.get(this.Shipment.ShipmentList.EntityId).subscribe((result: any) => {
-            if (result) {
-                this.ShipmentPM = result;
-                this.CustomsBrokerReference = result.CustomFileNumber;
-                this.isLoading = false;
-            }
-        });
-    }
-
-
     private GetIdFromURI()
     {
 
@@ -303,41 +264,79 @@ export class ShipmentDetailsComponent implements AfterViewInit
         this.router.navigate(['cargo-tracking', 'shipments']);
     }
 
-    ShipmentRouteSteps: RoutingStep[] = [];
-    InitRoutes(){
-        var step1 = new RoutingStep();
-        step1.FromPortLabel = "US-BOS";
-        step1.ToPortLabel = "US-NYC";
-        step1.Description = "Via lorem ipsum co.";
-        step1.TransportModeCode = "A";
-        step1.Directions = [
-            new RouteDirection(new Date(),"ATA","in"),
-            new RouteDirection(new Date(),"ETD","out"),
-        ];
+    PartnerCards: PartnerCard[] = [];
+    InitPartnerCards(){
+        var partner1 = new PartnerCard();
+        partner1.Type = "customer";
+        partner1.Name = "Fratelli Fantini SPA";
+        partner1.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner1.PhoneNumber = "+39 0322918458";
+
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+
+        this.PartnerCards =  [partner1,partner2];
+
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
+        var partner2 = new PartnerCard();
+        partner2.Type = "vendor";
+        partner2.Name = "Fratelli Abood SPA";
+        partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
+        partner2.PhoneNumber = "+39 0322918458";
+        this.PartnerCards.push(partner2);
 
 
-        var step2 = new RoutingStep();
-        step2.FromPortLabel = "US-QAL";
-        step2.ToPortLabel = "US-NYC";
-        step2.Description = "Via lorem ipsum co.";
-        step2.TransportModeCode = "I";
-        step2.Directions = [
-            new RouteDirection(new Date(),"ATA","in"),
-            new RouteDirection(new Date(),"ETD","out"),
-        ];
-
-        var step3 = new RoutingStep();
-        step3.FromPortLabel = "US-QAL";
-        step3.ToPortLabel = "US-NAB";
-        step3.Description = "Rafedia main st.";
-        step3.TransportModeCode = "O";
-        step3.IsActive = true;
-        step3.Directions = [
-            new RouteDirection(new Date(),"ATA","in"),
-            new RouteDirection(new Date(),"ATD","in"),
-        ];
-
-        this.ShipmentRouteSteps =  [step1,step2,step3];
     }
 }
 
@@ -371,4 +370,14 @@ export class RouteDirection{
     Date: Date;
     Label: string;
     Direction: 'in' | 'out' = 'in';
+}
+
+export class PartnerCard{
+    constructor() {
+    }
+    Name: string;
+    Type: string;
+    Address: string;
+    PhoneNumber: string;
+    ShowDetails: boolean = false;
 }

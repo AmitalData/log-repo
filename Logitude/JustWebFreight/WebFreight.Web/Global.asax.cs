@@ -624,12 +624,7 @@ namespace WebFreight.Web
                 HttpContext.Current.Response.AddHeader("Access-Control-Expose-Headers", "http://localhost:4200");
                 HttpContext.Current.Response.AddHeader("Access-Control-Allow-Credentials", "true");
             }
-            if (LogitudeSettings.DeploymentStage.ToLower() == "test2")
-            {
-                HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", "https://test.logitudeworld.com/");
-                HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", "http://test.logitudeworld.com/");
 
-            }
             //   if (HttpContext.Current.Request.HttpMethod == "OPTIONS")
             //    {
             //These headers are handling the "pre-flight" OPTIONS call sent by the browser

@@ -100,7 +100,6 @@
     <Compile Include="EntityPMs\Generated\ExternalReconciliationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FullAccountingSettingPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountAgingDataPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\GLAccountCardsDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountCounterPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountCurrencyPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountInterestPeriodPM.Generated.cs" />
@@ -178,8 +177,6 @@
     <Compile Include="EntityQueryServicesExt\IBankAccountQueryServiceExt.cs" />
     <Compile Include="EntityQueryServicesExt\IBankCodeQueryServiceExt.cs" />
     <Compile Include="EntityQueryServicesExt\ICashBookQueryServiceExt.cs" />
-    <Compile Include="EntityQueryServicesExt\IGLAccountCardsDataQueryServiceExt.cs" />
-    <Compile Include="EntityQueryServicesExt\IGLAccountCurrencyQueryServiceExt.cs" />
     <Compile Include="EntityQueryServicesExt\IInterestTransactionQueryServiceExt.cs" />
     <Compile Include="EntityQueryServicesExt\IFullAccountingSettingQueryServiceExt.cs" />
     <Compile Include="EntityQueryServicesExt\IGLAccountQueryServiceExt.cs" />
@@ -187,7 +184,6 @@
     <Compile Include="EntityQueryServicesExt\IJournalQueryServiceExt.cs" />
     <Compile Include="EntityQueryServicesExt\IPaymentChequeQueryServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\IARPaymentChequeUpdateServiceExt.cs" />
-    <Compile Include="EntityUpdateServicesExt\GLAccountCardsDataUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\IInterestReportsConnectedInvoiceUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\IInterestReportUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\IBankCodeUpdateServiceExt.cs" />

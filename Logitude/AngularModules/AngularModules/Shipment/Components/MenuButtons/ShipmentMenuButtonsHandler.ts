@@ -1334,17 +1334,6 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
             || this.EntityPM.Transshipment2ATA != null || this.EntityPM.Transshipment3ATA != null) {
             errors.push("Shipment has departed/arrived, can't change direction");
         }
-        else if (this.HasPayablesAmounts() && this.HasReceivablesAmounts()) {
-            errors.push("Shipment has Payables and Receivables amounts, can't change direction");
-        }
-
-        else if (this.HasPayablesAmounts()) {
-            errors.push("Shipment has Payables amounts, can't change direction");
-        }
-
-        else if (this.HasReceivablesAmounts()) {
-            errors.push("Shipment has Receivables amounts, can't change direction");
-        }
 
         if (errors.length == 0) {
             this.shipmentService.CheckIfConnectedEntryOrRelease(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
@@ -1364,30 +1353,6 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
             this.ShowConvertShipmentDirectionWindow(errors);
         }
     }
-
-    private HasPayablesAmounts() {
-        var hasAnyPayablesAmount: boolean = false;
-        if (this.EntityPM.ShipmentPayables != null) {
-            var filterdPayableLineWithAmounts = this.EntityPM.ShipmentPayables.filter(payable => payable.ExpectedAmount != null && payable.ExpectedAmount != 0.0)[0];
-            if (filterdPayableLineWithAmounts != null) {
-                hasAnyPayablesAmount = true;
-            }            
-        }       
-        return hasAnyPayablesAmount;
-    }
-
-    private HasReceivablesAmounts() {
-        var hasAnyReceivablesAmount: boolean = false;
-        if (this.EntityPM.ShipmentReceivables != null) {
-            var filterdReceivableLineWithAmounts = this.EntityPM.ShipmentReceivables.filter(payable => payable.TotalAmount != null && payable.TotalAmount != 0.0)[0];
-            if (filterdReceivableLineWithAmounts != null) {
-                hasAnyReceivablesAmount = true;
-            }   
-        }
-        return hasAnyReceivablesAmount;
-    }
-
-
     private ShowConvertShipmentDirectionWindow(errors: string[]) {
         this.currentActionName = "ConvertShipmentDirection";
 

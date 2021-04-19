@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "2d3114ef45fa1e30f312991245dc2873";
+		public const string HashString = "d5bd327109733a82d0273f93b123db10";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "c009",
+			      				    Code =  "9efb",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -2283,7 +2283,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingOYearTransferCancelledAlready = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.YearTransferCancelledAlready", DefaultText = " for chosen yead is cancelled already",LocalDefaultText = @" להשנה שנבחרה כבר בוטלה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingOMoreThanPaymentCheque = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.MoreThanPaymentCheque", DefaultText = "There are more than one cheques for this payment",LocalDefaultText = @"קיימת יותר מהמחאה אחת עבור קבלה זו", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingOMoreThanPaymentCheque = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.MoreThanPaymentCheque", DefaultText = "There are more than one Cheque for this payment. Click on Edit to view them",LocalDefaultText = "ישנם מספר שקים לקבלה זאת, לחץ על כפתור ''עריכה'' כדי להציגם", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingOCantIncludeTwoOrMorePayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.CantIncludeTwoOrMorePayment", DefaultText = "Can’t include more than one payment in the same reconciliation",LocalDefaultText = @"לא ניתן לכלול יותר מקבלה אחת באותה התאמה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

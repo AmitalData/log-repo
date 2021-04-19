@@ -166,11 +166,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 VatUniquePartnerTypeCode = a.VatUniquePartnerTypeCode,
                                                 TransferQuotationsToUnifreightTrigger = a.TransferQuotationsToUnifreightTrigger,
                                                 SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
-                                                AirRatio = a.AirRatio,
-                                                FCLRatio = a.FCLRatio,
-                                                LCLRatio = a.LCLRatio,
-                                                FTLRatio = a.FTLRatio,
-                                                LTLRatio = a.LTLRatio,
                                             });
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -344,11 +339,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         DisplayDocumentsAndEvents = tt.DisplayDocumentsAndEvents,
                         TransferQuotationsToUnifreightTrigger = tt.TransferQuotationsToUnifreightTrigger,
                         SharedLogisMasterMessageLink = tt.SharedLogisMasterMessageLink,
-                        AirRatio = tt.AirRatio,
-                        FCLRatio = tt.FCLRatio,
-                        LCLRatio = tt.LCLRatio,
-                        FTLRatio = tt.FTLRatio,
-                        LTLRatio = tt.LTLRatio,
                     };
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -512,11 +502,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     DisplayDocumentsAndEvents = tt.DisplayDocumentsAndEvents,
                     TransferQuotationsToUnifreightTrigger = tt.TransferQuotationsToUnifreightTrigger,
                     SharedLogisMasterMessageLink = tt.SharedLogisMasterMessageLink,
-                    AirRatio = tt.AirRatio,
-                    FCLRatio = tt.FCLRatio,
-                    LCLRatio = tt.LCLRatio,
-                    FTLRatio = tt.FTLRatio,
-                    LTLRatio = tt.LTLRatio,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -662,11 +647,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                            TransferQuotationsToUnifreightTrigger = a.TransferQuotationsToUnifreightTrigger,
                                            SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
-                                           AirRatio = a.AirRatio,
-                                           FCLRatio = a.FCLRatio,
-                                           LCLRatio = a.LCLRatio,
-                                           FTLRatio = a.FTLRatio,
-                                           LTLRatio = a.LTLRatio,
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -808,11 +788,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                        TransferQuotationsToUnifreightTrigger = a.TransferQuotationsToUnifreightTrigger,
                                        SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
-                                       AirRatio = a.AirRatio,
-                                       FCLRatio = a.FCLRatio,
-                                       LCLRatio = a.LCLRatio,
-                                       FTLRatio = a.FTLRatio,
-                                       LTLRatio = a.LTLRatio,
                                    }).FirstOrDefault();
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -966,11 +941,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                                TransferQuotationsToUnifreightTrigger = a.TransferQuotationsToUnifreightTrigger,
                                                SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
-                                               AirRatio = a.AirRatio,
-                                               FCLRatio = a.FCLRatio,
-                                               LCLRatio = a.LCLRatio,
-                                               FTLRatio = a.FTLRatio,
-                                               LTLRatio = a.LTLRatio,
                                            }).FirstOrDefault();
 
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1126,11 +1096,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                            TransferQuotationsToUnifreightTrigger = a.TransferQuotationsToUnifreightTrigger,
                                            SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
-                                           AirRatio = a.AirRatio,
-                                           FCLRatio = a.FCLRatio,
-                                           LCLRatio = a.LCLRatio,
-                                           FTLRatio = a.FTLRatio,
-                                           LTLRatio = a.LTLRatio,
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1274,11 +1239,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                        TransferQuotationsToUnifreightTrigger = a.TransferQuotationsToUnifreightTrigger,
                                        SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
-                                       AirRatio = a.AirRatio,
-                                       FCLRatio = a.FCLRatio,
-                                       LCLRatio = a.LCLRatio,
-                                       FTLRatio = a.FTLRatio,
-                                       LTLRatio = a.LTLRatio,
                                    }).FirstOrDefault();
                 if (tenant != null)
                 {
@@ -1441,11 +1401,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     DisplayDocumentsAndEvents = myPOCO.DisplayDocumentsAndEvents,
                     TransferQuotationsToUnifreightTrigger = myPOCO.TransferQuotationsToUnifreightTrigger,
                     SharedLogisMasterMessageLink = myPOCO.SharedLogisMasterMessageLink,
-                    AirRatio = myPOCO.AirRatio,
-                    FCLRatio = myPOCO.FCLRatio,
-                    LCLRatio = myPOCO.LCLRatio,
-                    FTLRatio = myPOCO.FTLRatio,
-                    LTLRatio = myPOCO.LTLRatio,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())

@@ -45,7 +45,7 @@
   <Column
     Name="CarrierNumber"
     Type="varchar"
-    Size="30">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>

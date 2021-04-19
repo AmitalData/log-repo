@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,9 +35,11 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public decimal ForeignAmount { get; set; }
        
         public string BankId { get; set; }
-       
-       
-       
+
+        [ForeignKey("StatusCode")]
+        public virtual ARPaymentChequeStatusReplica ARPaymentChequeStatusReplica { get; set; }
+
+        
         public string BankBranch { get; set; }
        
         public string BankAccount { get; set; }

@@ -10,7 +10,6 @@ namespace Logitude.TariffModule.BL.EntityPMs
     {
         public string OriginPortId { get; set; }
         public string DestinationPortId { get; set; }
-        public string ViaPortId { get; set; }
         public DateTime? ExpirationDate { get; set; }
     }
 }

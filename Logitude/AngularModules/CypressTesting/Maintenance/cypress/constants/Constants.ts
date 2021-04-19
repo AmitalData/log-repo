@@ -7,6 +7,5 @@ export class Constants {
     public static readonly Country = "Country"
     public static readonly State = "State"
     public static readonly GlobalZone = "GlobalZone"
-    public static readonly Commodity="Commodity"
-    public static readonly Region="Region"
+
 }

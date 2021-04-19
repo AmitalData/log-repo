@@ -18,11 +18,6 @@ import {EventTypeClass, EventTypeArgs} from '../../Infrastructure/DataContracts/
 import {ClassLevelValidator} from '../../Infrastructure/Validators/ClassLevelValidator';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import { WarehouseExtendedListService } from '../../Common/Services/ExtendedLists/WarehouseExtendedListService';
-import { PartnersDomainService } from '../../Common/Services/PartnersDomainService';
-import { WarehouseStoragePricingPM } from '../../Common/EntityPMs/WarehouseStoragePricingPM';
-import { ShipmentStoragePricingPM } from '../../Shipment/EntityPMs/ShipmentStoragePricingPM';
-import { CardList } from '../../Common/EntityLists/CardList';
-
 export class WarehouseHelper {
     validator: ClassLevelValidator;
     public _warehouseEntryPMService: WarehouseEntryPMService;
@@ -46,91 +41,16 @@ export class WarehouseHelper {
     }
 
     SetIsCFSWarehouseProperities(shipmentPM: ShipmentPM, WarehouseLegWarehouseId) {
-        var cardListService: CardListService = new CardListService();
-        cardListService.getSingle(WarehouseLegWarehouseId).subscribe((serviceResponse: ServiceResponse) => {
-            if (serviceResponse != null) {
-                if (!serviceResponse.HasError) {
-                    var result: CardList = serviceResponse.Result;
-                    if (result) {
-                        if (result.WarehouseTypeCode == "CFS") {
-                            shipmentPM.IsCFSWarehouse = true;
-                            this.SetStorageDefaults(result, shipmentPM);
-                            this.LoadWarehouseStoragePricing(shipmentPM);
-                        }
-
-                        else {
-                            shipmentPM.IsCFSWarehouseChanged = true;
-                            shipmentPM.IsUpdateWarehouseLegData = true;
-                            this.SaveChanges();
-                            this.CurrentSession.FireEvent("RefreshWareHouseLeg");
-                        }
-                    }                   
-                }
-            }            
-        });
-    }
-    private SetStorageDefaults(myWarehouse: CardList, shipmentPM: ShipmentPM) {
-        shipmentPM.ChargeStorage = myWarehouse.ChargeStorage;
-        shipmentPM.ChargeStorageCurrencyId = myWarehouse.ChargeStorageCurrencyId;
-
-        switch (shipmentPM.TransportModeId) {
-            case "A":
-                {
-                    shipmentPM.WeightMeasurementCode = myWarehouse.AirWeightMeasurementCode;
-                    shipmentPM.WeightRoundingCode = myWarehouse.AirWeightRoundingCode;
-                    break;
-                }
-
-            case "O":
-                {
-                    shipmentPM.WeightMeasurementCode = myWarehouse.OceanWeightMeasurementCode;
-                    shipmentPM.WeightRoundingCode = myWarehouse.OceanWeightRoundingCode;
-                    break;
-                }
-
-            case "I":
-                {
-                    shipmentPM.WeightMeasurementCode = myWarehouse.InlandWeightMeasurementCode;
-                    shipmentPM.WeightRoundingCode = myWarehouse.InlandWeightRoundingCode;
-                    break;
-                }
-        }
-    }
-    private LoadWarehouseStoragePricing(shipmentPM: ShipmentPM) {
-        var myService: PartnersDomainService = new PartnersDomainService();
-        myService.GetWarehouseStoragePricingForWarehouse(shipmentPM.WarehouseLegWarehouseId).subscribe((myResponse: ServiceResponse) => {
-            if (myResponse != null) {
-                if (!myResponse.HasError) {
-                    var warehouseStoragePricings: WarehouseStoragePricingPM[] = warehouseStoragePricings = myResponse.Result;
-                    this.FillDefaultPricings(shipmentPM, warehouseStoragePricings);
-
-                    shipmentPM.IsCFSWarehouseChanged = true;
-                    shipmentPM.IsUpdateWarehouseLegData = true;
-                    this.SaveChanges();
-                    this.CurrentSession.FireEvent("RefreshWareHouseLeg");
-                }
+        this.warehouseExtendedListService.GetWarehouseTypeById(WarehouseLegWarehouseId).subscribe((serviceResponse: ServiceResponse) => {
+            var warehouseType = serviceResponse.Result;
+            if (warehouseType == "CFS") {
+                shipmentPM.IsCFSWarehouse = true;
             }
+            shipmentPM.IsCFSWarehouseChanged = true;
+            shipmentPM.IsUpdateWarehouseLegData = true;
+            this.SaveChanges();
+            this.CurrentSession.FireEvent("RefreshWareHouseLeg");
         });
-    }
-    private FillDefaultPricings(shipmentPM: ShipmentPM, warehouseStoragePricings: WarehouseStoragePricingPM[]) {
-        shipmentPM.ShipmentStoragePricings = [];
-
-        if (warehouseStoragePricings != null && warehouseStoragePricings.length > 0) {
-            var count: number = 1;
-            warehouseStoragePricings.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 }).forEach(item => {
-                var defaultItem: ShipmentStoragePricingPM = new ShipmentStoragePricingPM(shipmentPM);
-                defaultItem.Tenant = SessionLocator.Tenant;
-                defaultItem.ShipmentId = shipmentPM.Id;
-                defaultItem.WarehouseId = shipmentPM.WarehouseLegWarehouseId;
-                defaultItem.StepFrom = item.StepFrom;
-                defaultItem.StepTo = item.StepTo;
-                defaultItem.Days = item.Days;
-                defaultItem.SalePrice = item.SalePrice;
-                defaultItem.LineNumber = count++;
-
-                shipmentPM.AddShipmentStoragePricing(defaultItem);
-            });
-        }
     }
 
     SaveChanges() {

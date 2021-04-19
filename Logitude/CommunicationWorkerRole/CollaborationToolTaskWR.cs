@@ -1,14 +1,16 @@
 ﻿using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
-using Newtonsoft.Json;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
-using System.Configuration;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace CommunicationWorkerRole
 {
@@ -16,7 +18,7 @@ namespace CommunicationWorkerRole
     {
         DbQueueService queueservice;
         string queueName = "CreateTaskCollaborationTool";
-        string URL = ConfigurationManager.AppSettings["CT_URL"];
+        string URL = "https://localhost:44362/api/Task/PostExternal";
 
         public override void Run()
         {
@@ -38,23 +40,11 @@ namespace CommunicationWorkerRole
                                 var serializedObject = JsonConvert.SerializeObject(collaborationToolTask);
                                 var result = client.PostAsync(URL, new StringContent(serializedObject, Encoding.UTF8, "application/json"));
                                 result.Wait();
-                                if (result.Result.StatusCode == System.Net.HttpStatusCode.Created)
-                                {
-                                    //var temp = result.Result.Content.ReadAsStringAsync().Result; 
-                                    queueservice.Complete();
-                                }
-                                else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
-                                {
-                                    var Msg = result.Result.Content.ReadAsStringAsync().Result;
-                                    ExceptionHandler.HandleException(new Exception(Msg), DateTime.Now, 1, null, "CreateTaskCollaborationTool Request Faild", null, null); 
-                                    queueservice.CompleteAsFailed();
-                                }
                             }
                         }
                     }
                     catch (Exception ex)
                     {
-                        queueservice.CompleteAsFailed();
                         ConnectClient();
                         ExceptionHandler.HandleException(ex, DateTime.Now, 1, null, "CreateTaskCollaborationTool worker role start", null, null);
                         Thread.Sleep(10000);
@@ -98,16 +88,16 @@ namespace CommunicationWorkerRole
             int tenant = int.Parse(response.MessageValues["Tenant"].ToString());
             return new CollaborationToolTask()
             {
-                Tenant = tenant, 
+                Tenant = tenant,
+                Title = "New task from Logitude",
                 StartDate = DateTime.UtcNow,
                 EndDate = DateTime.Parse(response.MessageValues["EndDate"]),
                 AssigneeEmail = GetUserEmailFromId(tenant, response.MessageValues["AssigneeId"].ToString()),
                 PriorityCode = "M",
                 OwnerEmail = GetUserEmailFromId(tenant, response.MessageValues["OwnerId"].ToString()),
-                StatusCode = "TOD",
+                StatusCode = "NEW",
                 EntityNumber = response.MessageValues["EntityNumber"].ToString(),
                 TaskTypeName = response.MessageValues["TaskType"].ToString(),
-                Title = "New " + response.MessageValues["TaskType"].ToString(),
                 CreatedDate = DateTime.UtcNow,
                 CreatedByUserEmail = GetUserEmailFromId(tenant, response.MessageValues["OwnerId"].ToString())
             };
