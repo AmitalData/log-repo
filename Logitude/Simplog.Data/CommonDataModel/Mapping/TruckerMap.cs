@@ -29,6 +29,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.PrimaryContactName).HasColumnName("PrimaryContactName");
             this.Property(t => t.PrimaryContactEmail).HasColumnName("PrimaryContactEmail");
             this.Property(t => t.PrimaryContactPhone).HasColumnName("PrimaryContactPhone");
+            this.Property(t => t.TransmitToPort).HasColumnName("TransmitToPort");
 
             // Relationships
             this.HasRequired(t => t.Card)
