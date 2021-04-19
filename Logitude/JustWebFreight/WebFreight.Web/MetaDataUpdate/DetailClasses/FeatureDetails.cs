@@ -16,6 +16,7 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public bool IsCoreFeature { get;  set; }
         public string FeatureUniqeCode { get; set; }
         public string ObjectTableName { get; set; }
+        public string ToggleCode { get; set; }
 
     }
 }
