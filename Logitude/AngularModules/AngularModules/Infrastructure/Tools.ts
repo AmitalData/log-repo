@@ -545,8 +545,8 @@ export class AppTool {
                     }
 
                     case "O": {
-                        if (shipmentTypeId == "FCL") {
-                            SessionLocator.TenantPM.FCLRatio;
+                        if (shipmentTypeId == "FCL" || shipmentTypeId == "FCLD") {
+                            myResult = SessionLocator.TenantPM.FCLRatio;
                         }
 
                         else {
@@ -558,11 +558,11 @@ export class AppTool {
 
                     case "I": {
                         if (shipmentTypeId == "FTL") {
-                            SessionLocator.TenantPM.FTLRatio;
+                            myResult = SessionLocator.TenantPM.FTLRatio;
                         }
 
                         else {
-                            SessionLocator.TenantPM.LTLRatio;
+                            myResult = SessionLocator.TenantPM.LTLRatio;
                         }
 
                         break;
