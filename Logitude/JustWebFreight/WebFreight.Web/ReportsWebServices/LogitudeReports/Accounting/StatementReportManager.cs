@@ -1048,26 +1048,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             dataProvider.FromDate = fromDate != null ? fromDate : null;
             dataProvider.ToDate = toDate != null ? toDate : null;
             dataProvider.Currency = currencyCodeFilter != null ? currencyCodeFilter : "All Currencies";
-            FillARAPFilterValueInDataProvider();
-            FillPaymentInvoiceFilterValueInDataProvider();
-        }
-        private void FillARAPFilterValueInDataProvider()
-        {
-            if (ARAPFilter == "AR")
-                dataProvider.AROrAPFilter = "AR";
-            else if (ARAPFilter == "AP")
-                dataProvider.AROrAPFilter = "AP";
-            else
-                dataProvider.AROrAPFilter = "All AR and AP";
-        }
-        private void FillPaymentInvoiceFilterValueInDataProvider()
-        {
-            if (invoicePaymentFilter == "Payments")
-                dataProvider.PaymentOrInvoiceFilter = "Payments";
-            else if (invoicePaymentFilter == "Invoices")
-                dataProvider.PaymentOrInvoiceFilter = "Invoices";
-            else
-                dataProvider.PaymentOrInvoiceFilter = "All Payments and Invoices";
+            dataProvider.AROrAPFilter = ARAPFilter == null ? "All AR and AP" : ARAPFilter;
+            dataProvider.PaymentOrInvoiceFilter = invoicePaymentFilter == null ? "All Payments and Invoices" : invoicePaymentFilter;
         }
     }
 
