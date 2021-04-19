@@ -51,6 +51,7 @@ namespace WebFreight.Web.WcfApi
                    
                     ICommonDataContext objectContext = CommonDataContext.GetContext(entityPM.Tenant);
 
+                    PaymentTermRepository paymentTermRepository = new PaymentTermRepository(entityPM.Tenant);
                     AccountingPartnerRepository AccountingPartnerRepository = new AccountingPartnerRepository(objectContext);
                     AccountingPartnerService service = new AccountingPartnerService(objectContext, entityPM.Tenant);
 
@@ -66,6 +67,21 @@ namespace WebFreight.Web.WcfApi
                         {
                             response.HasError = true;
                             response.ErrorMessage = "PrimaryContactId field doesn't exist in the database,Upsert this entity before using it.";
+                            return response;
+                        }
+                    }
+
+                    if (entityPM.PaymentTermId != null)
+                    {
+                        var paymentTerm = paymentTermRepository.GetSinglePaymentTermByCode(entityPM.PaymentTermId, entityPM.Tenant);
+                        if (paymentTerm != null)
+                        {
+                            entityPM.PaymentTermId = paymentTerm.Id;
+                        }
+                        else
+                        {
+                            response.HasError = true;
+                            response.ErrorMessage = "PaymentTermId field doesn't exist in the database,Upsert this entity before using it.";
                             return response;
                         }
                     }

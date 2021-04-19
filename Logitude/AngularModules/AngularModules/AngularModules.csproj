@@ -52,6 +52,7 @@
     <Content Include="Accounting\Components\EditTabs\InterestReport\GeneralTab\InterestReportLineByDateDetails\InterestReportLineByDateDetailsComponent.html" />
     <Content Include="Accounting\Components\EditTabs\Interest\DetailsTab\AddEditInterestBasesPeriod\AddEditInterestBasesPeriodComponent.html" />
     <Content Include="Accounting\Components\EditTabs\Interest\DetailsTab\InterestBasesTypeDetailsTabComponent.html" />
+    <Content Include="Accounting\Components\EditTabs\Journal\UpdateJournalLineNoteComponent.html" />
     <Content Include="Accounting\Components\EditTabs\OpenFormatReport\OpenFormatReportLogTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\PaymentCheque\PaymentChequeGeneralTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\ExternalReconciliation\ExternalRecoDetailsTabComponent.html" />
@@ -298,6 +299,7 @@
     <Content Include="InfrastructureModules\InfrastructureCommunications\Components\ReportExecutionLog\ReportExecutionLogErrorComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCommunications\Components\ReportExecutionLog\ReportExecutionLogMessageBodyComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureGettingStarted\Components\SystemCurrencies\ChangeCurrencyComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureGettingStarted\Components\SystemDefaults\DefaultRatiosComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\FeatureToggle\FeatureToggleGeneralTabComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\FeatureToggle\NewFeatureToggleComponent.html" />
     <Content Include="Infrastructure\Components\LoginComponent\PrivateLabelComponents\PrivateLabelLoginProcessComponent.css" />
@@ -314,6 +316,7 @@
     <Content Include="_Resources\css\PrimeWebComponent.css" />
     <Content Include="_Resources\js\UnifreightJSBridge.js" />
     <TypeScriptCompile Include="Abstractions\Services\BaseService.ts" />
+    <TypeScriptCompile Include="Accounting\Components\EditTabs\Journal\UpdateJournalLineNoteComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Maintenance\Tester\AccountingMainTesterComponent.ts" />
     <TypeScriptCompile Include="App\DynamicLoader\LazyWidgetsLogitude.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\CopyJournalComponent.ts" />
@@ -1749,6 +1752,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\AccountingSettings\AccountingAdvancedAPSettingsComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\PaymentGateway\PaymentGatewayComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\SystemCurrencies\ChangeCurrencyComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\SystemDefaults\DefaultRatiosComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureHelpResource\Components\HelpResouceGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureHelpResource\Components\NewHelpResouceComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureHelpResource\ModuleDeclarations.ts" />

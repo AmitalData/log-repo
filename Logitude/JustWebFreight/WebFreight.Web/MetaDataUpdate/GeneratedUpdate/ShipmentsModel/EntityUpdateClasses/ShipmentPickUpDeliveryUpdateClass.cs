@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentPickUpDeliveryUpdateClass
    {  		
-		public const string HashString = "328e11a4919455a2b75685764a905623";
+		public const string HashString = "112743ed65d28040ba7f3c022206272b";		
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Pickup Delivery",
-			      				    Code =  "7455",
+			      				    Code =  "ad85",
 			      				    Name =  "ShipmentPickUpDelivery",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
@@ -2795,6 +2795,61 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChildDeliveryIndex",
 					  						DefaultText =  "ChildDeliveryIndex",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "BookingConfirmationNumber",
+					  						ObjectTableName =  "ShipmentPickUpDelivery",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  25,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  25,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "BookingConfirmationNumber",
+					  						ListPropertyPath =  "BookingConfirmationNumber",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "BookingConfirmationNumber",
+					  						DefaultText =  "Booking Conf #",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

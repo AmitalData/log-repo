@@ -63,8 +63,10 @@ export function OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemNameToSear
     cy.Click(maintenanceItemSelector, null);
 }
 
-export function FillChangePasswordWindow(CurrentPassword: string, NewPassword: string, RetypePassword: string) {
-    cy.FillLogTextBox(MaintenanceSelectors.CurrentPassword, CurrentPassword)
+export function FillChangePasswordWindow( NewPassword: string, RetypePassword: string) {
+    cy.GetCurrentPassword().then(CurrentPassword => {
+    cy.FillLogTextBox(MaintenanceSelectors.CurrentPassword, CurrentPassword.toString())
+    })
     cy.FillLogTextBox(MaintenanceSelectors.NewPassword, NewPassword)
     if (RetypePassword != null) {
         cy.FillLogTextBox(MaintenanceSelectors.RetypePassword, RetypePassword)
