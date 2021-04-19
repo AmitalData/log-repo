@@ -203,7 +203,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ReportingAsAnotherDocument, 
 	         CreditAllotmentPercentage, 
 	         RelatedGLAccount, 
-	         CardsDataId,
+	         CardsDataId, 
 	         PaymentTermName,
 	      }
 
