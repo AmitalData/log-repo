@@ -476,11 +476,12 @@ h1 {
 
 .partners-cards-wrapper{
     display: flex;
+    flex-wrap: wrap;
 }
 .partner-card {
     width: 140px;
     height: 180px;
-    margin: 0 10px;
+    margin: 0 10px 20px;
     padding: 15px;
 
 }
