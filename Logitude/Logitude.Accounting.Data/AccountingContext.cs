@@ -134,8 +134,6 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new GLAccountMap());
 	
-            modelBuilder.Configurations.Add(new GLAccountCardsDataMap());
-	
             modelBuilder.Configurations.Add(new GLAccountAgingDataMap());
 	
             modelBuilder.Configurations.Add(new GLAccountCounterMap());
@@ -292,8 +290,6 @@ namespace Logitude.Accounting.Data
 			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.Period5).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.PeriodFuture).HasPrecision(16, 2);
-				
-			modelBuilder.Entity<GLAccountCardsData>().Property(x => x.TotalOpenShipments).HasPrecision(18, 2);
 				
 			modelBuilder.Entity<GLAccountInterestPeriod>().Property(x => x.StandardAddInterestPercent).HasPrecision(4, 2);
 				
@@ -900,12 +896,6 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<GLAccountAgingData> GLAccountAgingDatas 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<GLAccountCardsData> GLAccountCardsDatas 
 	 {
 	      get; set;
 	 

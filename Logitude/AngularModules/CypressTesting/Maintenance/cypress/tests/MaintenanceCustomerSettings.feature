@@ -1,5 +1,5 @@
 @release @all @stable 
-Feature: Update customers settings from Maintenance 
+Feature:  Select Phone and Fax Fields as Mandatory for Potential and Active Customers, and Address 1 as Mandatory for Active Customers from Maintenance
 
     The user enables phone, fax and address 1 fields to be mandatory when creating an active customer 
     and enables phone, fax to be mandatory when creating a potential customer then activates it.

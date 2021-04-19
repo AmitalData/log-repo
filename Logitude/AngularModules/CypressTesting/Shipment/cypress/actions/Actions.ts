@@ -930,11 +930,11 @@ export function FillEventNotesWizard(notes: string) {
 }
 
 export function ConvertShipmentDirection() {
-    ConvertShipment();
+    ConvertShipment(true);
 }
 
 export function ConvertShipmentType() {
-    ConvertShipment();
+    ConvertShipment(false);
 }
 
 export function ValidateShipmentTypeInHeaderScreen(expectedShipmentType: string) {
@@ -1009,9 +1009,13 @@ function OpenConversionWizard(convertButtonSelector: string) {
     cy.Click(convertButtonSelector, null);
 }
 
-function ConvertShipment(){
+function ConvertShipment(isDirectionConversion: boolean){
     cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.PutShipment);
     cy.Click(BaseSelectors.RedButton + ":last", null);
+    if(isDirectionConversion){
+        cy.get(BaseSelectors.ConfirmWindow).should("be.visible")
+        cy.Click(BaseSelectors.ConfirmWindowButton + ":last", null);
+    }
 }
 
 //#endregion

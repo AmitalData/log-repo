@@ -17,17 +17,11 @@ export function AssertAMANAandCustomsTransmissionsStatusDetails(amanacStatusDeta
     var currentDate = Actions.FormatDate(amanacStatusDetails.LastSent);
     BaseAssertion.AssertElementContain(ShipmentSelectors.StatusValue, amanacStatusDetails.Status);
     BaseAssertion.AssertElementContain(ShipmentSelectors.StatusDate, currentDate);
-    cy.get(BaseSelectors.LoggedUser).invoke('text').then(text => {
-        var SentBy = text.replace(/\s/g, "");
-        BaseAssertion.AssertElementContain(ShipmentSelectors.UserName, SentBy);
-        })
-    
+    BaseAssertion.AssertElementContain(ShipmentSelectors.UserName, amanacStatusDetails.SentBy);
+
     cy.Click(BaseSelectors.Button, BaseSelectors.ContainsSendtoCustoms);
     BaseAssertion.AssertElementContain(ShipmentSelectors.CustomsTransmissionsStatusValue, amanacStatusDetails.Status);
     BaseAssertion.AssertElementContain(ShipmentSelectors.CustomsTransmissionsStatusDate, currentDate);
-    cy.get(BaseSelectors.LoggedUser).invoke('text').then(text => {
-        var SentBy = text.replace(/\s/g, "");
-        BaseAssertion.AssertElementContain(ShipmentSelectors.CustomsTransmissionsUserName, SentBy);
-    })
+    BaseAssertion.AssertElementContain(ShipmentSelectors.CustomsTransmissionsUserName, amanacStatusDetails.SentBy);
     cy.Click(ShipmentSelectors.CloseCustomsTransmissions, null)
 }

@@ -62,11 +62,7 @@ export class UserDashboardComponent implements AfterViewInit
         this.SetDefaultBackgroundColor();
         this.GetBrandingData();
         this.GetLoggedUserIfNotSet();
-        //this.Authenticate();
-        this.LoggedUserData();
-    }
-    LoggedUserData() {
-        SessionInfo.Token = sessionStorage.getItem("Token");
+        this.Authenticate();
     }
 
 
@@ -126,9 +122,9 @@ export class UserDashboardComponent implements AfterViewInit
 
     private Authenticate()
     {
-        let token = sessionStorage.getItem("Token");
-        if (!token)
-            this.router.navigate(["cargo-tracking", "login"]);
+        var loggedEmail = sessionStorage.getItem("LoggedUserEmail");
+        if (!loggedEmail)
+            this.router.navigate(["Cargo-Tracking", "login"]);
     }
 
     isNavOpened = false;
@@ -145,9 +141,9 @@ export class UserDashboardComponent implements AfterViewInit
         sessionStorage.clear();
         if (this.tenant)
 
-            this.router.navigate(["cargo-tracking/login"]);//,{ queryParams: {tenant: this.tenant}}
+            this.router.navigate(["Cargo-Tracking/login"]);//,{ queryParams: {tenant: this.tenant}}
         else
-            this.router.navigate(["cargo-tracking/login"]);
+            this.router.navigate(["Cargo-Tracking/login"]);
     }
 
 

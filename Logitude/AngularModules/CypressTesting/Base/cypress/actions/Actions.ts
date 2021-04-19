@@ -39,9 +39,11 @@ export function FillWarehouseStorageWeightDetails(warehouseDetails : WarehouseSt
 }
 
 export function FillWarehouseStoragePricing(warehousePricingList: WarehouseStorage[]) {
-        if (Cypress.$(BaseSelectors.LogitudeIconButton).length > 2) {  
+    cy.get("body").then($body => {
+        if ($body.find(BaseSelectors.DeleteButton).length > 0) {  
             DeletePricingDefaults()
         }
+    });
     AddPricingDefaults(warehousePricingList);
 }
 function DeletePricingDefaults(){

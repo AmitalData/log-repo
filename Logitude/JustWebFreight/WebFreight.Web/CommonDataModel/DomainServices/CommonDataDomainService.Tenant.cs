@@ -32,7 +32,6 @@ using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
-using Logitude.BL.CommonDataModel.Tools.Validating;
 
 namespace WebFreight.Web.CommonDataModel.DomainServices
 {
@@ -200,7 +199,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 throw new ApplicationException("You are not authorized to do this operation");
             }
 
-            TenantValidating.Validate(currentTenant);
+
 
             if (CacheManager.CacheWrapper.Get(entityName) != null)
             {
@@ -316,7 +315,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                     currentTenant.InvoiceSection2 = currentTenant.Company;
                 }
             }
-
 
             TenantMapping.MapEntity(currentTenant, entity, false);
 

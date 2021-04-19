@@ -398,7 +398,6 @@ namespace WebFreight.Web.DataProviders
         public string AmountInWordsFrench { get; set; }
         public string AmountInWordsFrenchWithFR { get; set; }
         public string AmountInWordsFrenchNoFR { get; set; }
-        public string NewAmountInWordsFrenchWithFraction { get; set; }
 
         public string AmountInWordsSpanish { get; set; }
         public string AmountInWordsSpanishWithZero { get; set; }

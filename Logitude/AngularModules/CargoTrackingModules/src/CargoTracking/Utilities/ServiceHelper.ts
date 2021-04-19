@@ -1,5 +1,4 @@
 import { HttpHeaders } from '@angular/common/http';
-import { SessionInfo } from '../../Infrastructure/Utilities/SessionInfo';
 import { CargoTrackingBrandingData } from '../DataContracts/CargoTrackingBrandingData';
 import { CargoTrackingBrandingDataRequest } from '../DataContracts/CargoTrackingBrandingDataRequest';
 import { CargoTrackingImage } from '../DataContracts/CargoTrackingImage';
@@ -177,17 +176,5 @@ export  class ServiceHelper{
         authHeader.append('Access-Control-Allow-Origin', '*');
 
         return authHeader;
-    }
-
-    public static GetHeadersWithToken() {
-
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Token': SessionInfo.Token
-            })
-        };
-       
-        return httpOptions;
     }
 }

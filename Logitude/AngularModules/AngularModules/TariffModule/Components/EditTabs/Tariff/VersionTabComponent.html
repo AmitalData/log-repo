@@ -167,7 +167,7 @@
 
                                                 <td>
                                                     <ToggleButton [Title]="'New'" [DropDownWidth]="100" [DropDownHeight]="30" [Position]="'Left'" [IconButtonName]="'Actions'">
-                                                        <ToggleButtonItem [Text]="'Delete Lines'" (click)="DeleteLinesClicked()"></ToggleButtonItem>
+                                                        <ToggleButtonItem [Text]="'Delete Lines'" (click)="DeleteLinesClicked()"></ToggleButtonItem>                                                        
                                                     </ToggleButton>
                                                 </td>
                                             </tr>
@@ -275,35 +275,10 @@
                             </ng-template>
                         </log-column>
 
-                        <!-- ViaPortId -->
-                        <log-column [header]="'TariffLine.F.ViaPortId' | TextCodeTranslationPipe" [width]="'70'">
-                            <ng-template let-item>
-                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
-                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                        <span [ngStyle]="{color: item.ViaPortColor}">{{item.ViaPortValue}}</span>
-                                    </div>
-                                    <div *ngIf="logcelltemplate.IsEditMode">
-                                        <LogLov [ObjectFieldName]="'ViaPortId'"
-                                                [ObjectTableName]="'TariffLine'"
-                                                [DataContext]="item"
-                                                [LookUpTableName]="'Port'"
-                                                [HideColumns]="true"
-                                                (SelectedItemChanged)="item.ViaPort = $event"
-                                                [DisplayMemberPath]="GetDisplayMemberPath()"
-                                                [FocusOnMe]="'true'"
-                                                [SelectedValue]="item.ViaPortId"
-                                                [DependencyFilter1Value]="ViaDependencyFilterValue">
-                                        </LogLov>
-
-                                    </div>
-                                </log-cell-template>
-                            </ng-template>
-                        </log-column>
-
                         <!-- MinPrice -->
                         <log-column [header]="'TariffLine.F.MinPrice' | TextCodeTranslationPipe" [width]="'120'">
                             <ng-template let-item>
-                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
+                                <log-cell-template  #logcelltemplate [IsEnabled]="item.IsEditEnabled" [CellColor]="item.CellColor">
                                     <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;" [ngStyle]="{background: (chargeableWeightInKG < 0 && item.EntityPM.Id == this.LineIdFromPriceCheck) ? darkerColler:item.CellColor}">
                                         <table>
                                             <tr>
@@ -509,8 +484,8 @@
                         <!-- Step7Price -->
                         <log-column *ngIf="Step7PriceVisibility" [Alignment]="'center'" [header]="Step7PriceLabel" [width]="'120'">
                             <ng-template let-item>
-                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled">
-                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" >
+                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;" >
                                         <table>
                                             <tr>
                                                 <td [ngStyle]="{color: item.Step7ComparingTextColor}" *ngIf="item.Step7ComparingPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
@@ -539,8 +514,8 @@
                         <!-- Step8Price -->
                         <log-column *ngIf="Step8PriceVisibility" [Alignment]="'center'" [header]="Step8PriceLabel" [width]="'120'">
                             <ng-template let-item>
-                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled">
-                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditEnabled" >
+                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;" >
                                         <table>
                                             <tr>
                                                 <td [ngStyle]="{color: item.Step8ComparingTextColor}" *ngIf="item.Step8ComparingPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
@@ -714,9 +689,6 @@
                                                 </td>
                                                 <td class="CellDisabled" style="width: 70px; text-align: left;">
                                                     {{item.DestinationPortValue}}
-                                                </td>
-                                                <td class="CellDisabled" style="width: 70px; text-align: left;">
-                                                    {{item.ViaPortValue}}
                                                 </td>
                                                 <td class="CellDisabled" style="width: 120px; text-align: right;">
                                                     {{item.MinPriceValue}}

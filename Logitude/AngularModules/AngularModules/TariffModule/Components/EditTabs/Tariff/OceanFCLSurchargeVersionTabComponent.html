@@ -457,7 +457,7 @@
                         <log-column *ngIf="Surcharge1PriceVisibility" [Alignment]="'center'" [header]="Surcharge1PriceLabel" [width]="'180'">
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
-                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">                                       
                                         <span *ngFor="let itemArray of item.Surcharge1PriceArray" [ngStyle]="{color: itemArray.Color}">
                                             {{itemArray.Price}}
                                         </span>

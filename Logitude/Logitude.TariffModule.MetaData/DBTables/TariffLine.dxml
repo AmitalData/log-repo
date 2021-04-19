@@ -586,20 +586,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="ViaPortId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ViaPortText"
-    Type="varchar"
-    Size="20">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="OriginPortId"
     ReferencedTable="Ports"
@@ -658,11 +644,6 @@
   <Relation
     ForeignKeyColumn="Surcharge10CurrencyId"
     ReferencedTable="Currencies"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ViaPortId"
-    ReferencedTable="Ports"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <UniqueConstraint

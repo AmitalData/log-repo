@@ -189,10 +189,5 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool DisplayDocumentsAndEvents { get; set; }
         public string TransferQuotationsToUnifreightTrigger { get; set; }
 
-        public double? AirRatio { get; set; }
-        public double? LCLRatio { get; set; }
-        public double? FCLRatio { get; set; }
-        public double? LTLRatio { get; set; }
-        public double? FTLRatio { get; set; }
     }
 }

@@ -181,16 +181,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 ServiceHelper.UpdateWaterMarkAfterFinishCheck(bulkDataPreperation.CargoTrackingTable, bulkDataPreperation.AutomaticLastUpdateDate, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs);
 
             }
-
-            SyncShipmentMilstones(bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs);
         }
-
-        private static void SyncShipmentMilstones(CargoTrackingArgs buildCargoArgs)
-        {
-            ShipmentMilestonesSyncService syncService = new ShipmentMilestonesSyncService();
-            syncService.SyncShipmentMilstones(buildCargoArgs);
-        }
-
         private RecordUpdated UpdateCargoTrackingDatabase(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs, 
                                                          bool isUpadteWaterMark = false)
         {

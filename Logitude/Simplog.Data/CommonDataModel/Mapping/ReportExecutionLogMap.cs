@@ -56,10 +56,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .HasMaxLength(100)
                 .IsUnicode(false);
 
-            this.Property(t => t.SearchFields)
-               .HasMaxLength(1000)
-               .IsUnicode(true);
-
 
             // Table & Column Mappings
             this.ToTable("ReportExecutionLogs");
@@ -79,7 +75,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ExecutedByServerName).HasColumnName("ExecutedByServerName");
             this.Property(t => t.DisablePreview).HasColumnName("DisablePreview");
 
-            this.Property(t => t.SearchFields).HasColumnName("SearchFields");
+
 
 
             // Relationships
@@ -91,16 +87,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasRequired(t => t.CreatedByUser)
              .WithMany()
              .HasForeignKey(d => d.CreatedByUserId);
-
-            this.HasRequired(t => t.ReportsTemplate)
-             .WithMany()
-             .HasForeignKey(d => d.ReportTemplateId);
-
-            this.HasRequired(t => t.Report)
-             .WithMany()
-             .HasForeignKey(d => d.ReportId);
-             
-
 
 
         }

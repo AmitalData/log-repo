@@ -78,8 +78,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Smallcashbook, 
 	         MinimumInterestInvoiceBilling, 
 	         ReportingAsAnotherDocument, 
-	         CreditAllotmentPercentage, 
-	         CardsDataId,
+	         CreditAllotmentPercentage,
 	      }
 
 
@@ -202,9 +201,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ParentCurrencyId, 
 	         ReportingAsAnotherDocument, 
 	         CreditAllotmentPercentage, 
-	         RelatedGLAccount, 
-	         CardsDataId,
-	         PaymentTermName,
+	         RelatedGLAccount,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -491,11 +488,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreditAllotmentPercentage))
             {
 				entityPOCO.CreditAllotmentPercentage = entityPM.CreditAllotmentPercentage;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CardsDataId))
-            {
-				entityPOCO.CardsDataId = entityPM.CardsDataId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -789,11 +781,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.CreditAllotmentPercentage = entityPOCO.CreditAllotmentPercentage;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CardsDataId))
-            {
-					entityPM.CardsDataId = entityPOCO.CardsDataId;
-            }
-
 		}
 
 		public void PMToOldPM(GLAccountPM entityPM, GLAccountPM oldEntityPM)
@@ -1078,11 +1065,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreditAllotmentPercentage))
             {
                 oldEntityPM.CreditAllotmentPercentage = entityPM.CreditAllotmentPercentage;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CardsDataId))
-            {
-                oldEntityPM.CardsDataId = entityPM.CardsDataId;
             }
 			
 		}

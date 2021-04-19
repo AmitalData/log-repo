@@ -1005,32 +1005,6 @@ export class ShipmentTool {
             entityPM.AWBChargesCodeCode = "PC";
         }
     }
-    public static ComputeAWBFrieghtAmountCollectAndPrepaid(entityPM: ShipmentPM) {
-        var computedAmount = entityPM.AWBChargeAmount;
-        var totaAmount = entityPM.AWBFreightAmountPrepaid + entityPM.AWBFreightAmountCollect;
-
-        var recompute = true;
-        var isPrepaidHasAmount = (entityPM.AWBFreightAmountPrepaid != 0 && entityPM.AWBFreightAmountPrepaid != null);
-        var isCollectHasAmount = (entityPM.AWBFreightAmountCollect != 0 && entityPM.AWBFreightAmountCollect != null);
-
-        if (!AppTool.IsNullOrEmpty(entityPM.FreightPrepaidCollectId)) {
-            if (isPrepaidHasAmount && isCollectHasAmount && (computedAmount == totaAmount)) {
-                recompute = false;
-            }
-        }
-
-        if (recompute) {
-            if (entityPM.FreightPrepaidCollectId == "P") {
-                entityPM.AWBFreightAmountCollect = 0;
-                entityPM.AWBFreightAmountPrepaid = computedAmount == null ? 0 : computedAmount;
-            }
-
-            else if (entityPM.FreightPrepaidCollectId == "C") {
-                entityPM.AWBFreightAmountPrepaid = 0;
-                entityPM.AWBFreightAmountCollect = computedAmount == null ? 0 : computedAmount;
-            }
-        }
-    }
 
     public static ComputeAWBChargeAmount(entityPm: any, isShipmentCommodity = false) {
         var myResult: number = null;

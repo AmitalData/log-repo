@@ -1,5 +1,3 @@
-import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors"
-
 export class CrossdockSelectors {
 
     public static readonly CrossdockWarehouseEntry = "#WarehouseEntry_WarehouseId"
@@ -44,7 +42,7 @@ export class CrossdockSelectors {
     }
 
     public static EntityNumberLink( entityNumber: string) {
-        return "[data-cy='Hyperlink_" + entityNumber + "']"+BaseSelectors.LastElement
+        return "[data-cy='Hyperlink_" + entityNumber + "']"
     }
 
     public static CrossdockStatus(entityNumber: string) {

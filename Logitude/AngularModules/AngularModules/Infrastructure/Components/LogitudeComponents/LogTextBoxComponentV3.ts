@@ -213,7 +213,7 @@ export class LogTextBoxComponentV3 implements BeforeOnDestroy, OnInit, AfterView
     ngOnInit() {
 
         if (this.IsRatioBox == true) {
-            this.DigitsAfterPoint = 3;
+            this.DigitsAfterPoint = 1;
             this.InputDivStyle = {};
         }
 

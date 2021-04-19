@@ -389,13 +389,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="CardsDataId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="AccountTypeCode"
     ReferencedTable="GLAccountTypes"
@@ -489,11 +482,6 @@
   <Relation
     ForeignKeyColumn="UpdatedByUserId"
     ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="CardsDataId"
-    ReferencedTable="GLAccountCardsDatas"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

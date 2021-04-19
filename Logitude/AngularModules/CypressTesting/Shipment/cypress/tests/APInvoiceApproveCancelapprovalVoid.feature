@@ -1,4 +1,4 @@
-@smoke @release @stable @all
+@smoke @release @stable 
 Feature: AP Invoice Approve, Cancel Approval and Void
     The user creates a Direct Export Air shipment, updates routings and packages, adds payable, 
     creates AP Invoice, approves the AP Invoice, cancels the AP Invoice approval and voids the AP Invoice.

@@ -313,6 +313,11 @@ export class APInvoicePM {
     public set BranchName(newValue: string) { if (this.branchName != newValue) { this.branchName = newValue; this.MarkAsDirty("BranchName"); } }
        
 	 
+    private connectedEntityReferences: string;
+    public get ConnectedEntityReferences() { return this.connectedEntityReferences; }
+    public set ConnectedEntityReferences(newValue: string) { if (this.connectedEntityReferences != newValue) { this.connectedEntityReferences = newValue; this.MarkAsDirty("ConnectedEntityReferences"); } }
+       
+	 
     private houseNumber: string;
     public get HouseNumber() { return this.houseNumber; }
     public set HouseNumber(newValue: string) { if (this.houseNumber != newValue) { this.houseNumber = newValue; this.MarkAsDirty("HouseNumber"); } }
@@ -496,11 +501,6 @@ export class APInvoicePM {
     private field10: CustomFieldClass;
     public get Field10() {if(!this.field10){ this.field10 = new CustomFieldClass(null, "Field10", "APInvoice");} return this.field10; }
     public set Field10(newValue: CustomFieldClass) {  this.field10 = newValue; this.MarkAsDirty("Field10");  }
-       
-	 
-    private shipmentsNumbers: string;
-    public get ShipmentsNumbers() { return this.shipmentsNumbers; }
-    public set ShipmentsNumbers(newValue: string) { if (this.shipmentsNumbers != newValue) { this.shipmentsNumbers = newValue; this.MarkAsDirty("ShipmentsNumbers"); } }
        
 	 
      

@@ -24,7 +24,7 @@ Feature: Change Time Zone and Date Time Format from Maintenance
 
     Scenario: Validate HAWB Date in "MM/dd/yyyy"
         Given open the direct shipment and navigate to general tab
-        When fill "18/12/2020" as HAWB date
+        When fill "Today" as HAWB date
         Then the date format should be "MM/dd/yyyy"
 
     Scenario: Validate Shipment Updated with time in "UTC-06:00" timezone
@@ -43,7 +43,7 @@ Feature: Change Time Zone and Date Time Format from Maintenance
     Scenario: Validate HAWB Date in "dd/MM/yyyy"
         Given the user navigates to shipments workspace
         And open the direct shipment and navigate to general tab
-        When fill "18/12/2020" as HAWB date
+        When fill "Today" as HAWB date
         Then the date format should be "dd/MM/yyyy"
 
     Scenario: Validate Shipment Updated with time in "UTC+03:00" timezone

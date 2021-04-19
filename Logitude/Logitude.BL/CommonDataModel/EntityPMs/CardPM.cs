@@ -28,8 +28,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string IBANNumber { get; set; }
         public int Tenant { get; set; }
         public string GLAccountDisplayNumber { get; set; }
-        public double? CreditLimitAmount { get; set; }
-        public string Phone { get; set; }
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string VatNumber { get; set; }
 

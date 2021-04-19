@@ -48,12 +48,6 @@ namespace Logitude.TariffModule.Data.EntityLists
        public string DestinationPortCombinedCode  { get; set; }
        [DataMember]
        public string TransitTime  { get; set; }
-       [DataMember]
-       public string ViaPortName  { get; set; }
-       [DataMember]
-       public string ViaPortCombinedCode  { get; set; }
-       [DataMember]
-       public string ViaPortCode  { get; set; }
    }
 
 }

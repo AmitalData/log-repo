@@ -472,12 +472,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 var newContextWhileStreamingLedger = AccountingContext.GetContext(entityPM.Tenant);
                 var reconciliationUpdateAgingService = new ReconciliationUpdateAgingService(newContextWhileStreamingLedger);
                 var deltaGLAccountAgingDataPM = reconciliationUpdateAgingService.GetDelta(this._CancelledAction, entityPM);
-                if (!string.IsNullOrWhiteSpace(deltaGLAccountAgingDataPM.AccountId))
-                {
-                    reconciliationUpdateAgingService.UpdateDelta(deltaGLAccountAgingDataPM, false);
-                    newContextWhileStreamingLedger.SaveChanges();// MUST SAVE DUE NEW CONTEXT !!!
-
-                }
+                reconciliationUpdateAgingService.UpdateDelta(deltaGLAccountAgingDataPM, false);
+                newContextWhileStreamingLedger.SaveChanges();// MUST SAVE DUE NEW CONTEXT !!!
 
 
             }

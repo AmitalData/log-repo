@@ -1,4 +1,5 @@
-import {Component, } from '@angular/core';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -15,10 +16,10 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
-import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    selector: 'SystemDefaultsComponent',   
+    selector: 'SystemDefaultsComponent',
+    
     templateUrl: './SystemDefaultsComponent.html',
 })
 
@@ -29,12 +30,8 @@ export class SystemDefaultsComponent extends BaseComponent{
     public TenantPm: TenantPM = new TenantPM();
     public IsVisibile: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public HasDefaultRatiosFeature: boolean = false;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
-
-        this.HasDefaultRatiosFeature = FeatureLocator.HasFeaturePermession('General', 'DefaultRatios');
-
         this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response:any) => {
             this.LoadTenantPMMethod();
         });
@@ -47,7 +44,6 @@ export class SystemDefaultsComponent extends BaseComponent{
         var myService: TenantPMService = new TenantPMService();
         myService.get(SessionLocator.TenantPM.Id).subscribe((response: ServiceResponse) => {
             this.TenantPm = response.Result;
-
             this.LoadCachedLists();
             this.IsVisibile = true;
 
@@ -635,16 +631,6 @@ export class SystemDefaultsComponent extends BaseComponent{
         }
 
         return result;
-    }
-
-    ViewRatioSettingsClicked() {
-        var windowTitle = "Default Ratios Settings ";
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 600;
-        logWindow.Height = 400;
-        logWindow.Title = windowTitle;
-        logWindow.DataContext = this;
-        logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/SystemDefaults/DefaultRatiosComponent');
     }
 
     //Commands 

@@ -14,7 +14,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
     public class ShipmentPickUpDeliveryQuery
     {
-        ShipmentPickUpDeliveryRepository repository;
+        ShipmentPickUpDeliveryRepository repository;         
         public ShipmentPickUpDeliveryQuery(int tenant)
         {
             repository = new ShipmentPickUpDeliveryRepository(tenant);
@@ -33,18 +33,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             ShipmentPickUpDelivery entityPOCO = repository.GetSingleShipmentPickUpDelivery(tenant, id);
             ShipmentPickUpPM pickUp = null;
             ShipmentDeliveryPM delivery = null;
-            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-            string shipmentNumber = "", bookingConfirmationNumber = "";
+            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+      
              
             if (entityPOCO != null)
             {
-                Tuple<string, string> shipmentFields = shipmentQuery.GetShipmentFieldsForPickUpDelivery(entityPOCO.ShipmentId, entityPOCO.Tenant);
-                if (shipmentFields != null)
-                {
-                    shipmentNumber = shipmentFields.Item1;
-                    bookingConfirmationNumber = shipmentFields.Item2;
-                }
-
+                string shipmentNumber = shipmentRepository.GetShipmentNumberByShipmentIdTenant(entityPOCO.ShipmentId, entityPOCO.Tenant);
                 if (entityPOCO.PickUpDeliveryTypeCode == "PICK")
                 {
                     pickUp = new ShipmentPickUpPM()
@@ -100,7 +94,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         TransportModeCode = entityPOCO.TransportModeCode,
                         ParentPickUpDeliveryId = entityPOCO.ParentPickUpDeliveryId,
                         ChildPickUpIndex = entityPOCO.ChildPickUpIndex,
-                        BookingConfirmationNumber = bookingConfirmationNumber,
                     };
 
                     ShipmentPickUpDeliveryPackageQuery packagesQuery = new ShipmentPickUpDeliveryPackageQuery(tenant);
@@ -352,7 +345,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         TransportModeCode = entityPOCO.TransportModeCode,
                         ParentPickUpDeliveryId = entityPOCO.ParentPickUpDeliveryId,
                         ChildDeliveryIndex = entityPOCO.ChildDeliveryIndex,
-                        BookingConfirmationNumber = bookingConfirmationNumber,
                     };
 
                     ShipmentPickUpDeliveryPackageQuery packagesQuery = new ShipmentPickUpDeliveryPackageQuery(tenant);
@@ -574,6 +566,5 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return entityId;
 
         }      
-
     }
 }

@@ -244,10 +244,8 @@
                                             </td>
                                         </tr>
 
-                                        <tr style="height:10px">
-                                            <td>
-                                                <div></div>
-                                            </td>
+                                        <tr style="margin-top:10px">
+                                            <td colspan="2"> </td>
                                         </tr>
 
                                         <!-- VAT-->
@@ -255,7 +253,7 @@
                                             <td>
                                                 <table>
                                                     <tr>
-                                                        <td>
+                                                        <td style="height: 100%">
                                                             <div class="SystemDefaultsBox">
                                                                 <table>
                                                                     <tr class="SystemDefaultsBoxHeader">
@@ -375,29 +373,11 @@
 
                                                     </tr>
                                                 </table>
+
                                             </td>
+
                                         </tr>
 
-                                        <tr style="height:10px">
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-
-                                        <!-- Default Ratios Settings -->
-                                        <tr style="height: 1px;" *ngIf="HasDefaultRatiosFeature">
-                                            <td>
-                                                <div>
-                                                    <Hyperlink (click)="ViewRatioSettingsClicked()" [Text]="'Default Ratios Settings'"></Hyperlink>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
                                     </table>
                                 </td>
 
@@ -682,20 +662,20 @@
 
                                                                                 <!-- CustomerId -->
                                                                                 <!--<tr class="FormFieldRow" *ngIf="CustomerIdVisibility">
-                                                                                    <td style="width: 200px;">
-                                                                                        <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
+        <td style="width: 200px;">
+            <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
 
-                                                                                    <td>
-                                                                                        <LogLov [ObjectFieldName]="'CustomerId'"
-                                                                                                [ObjectTableName]="'Tenant'"
-                                                                                                [DataContext]="DataContext"
-                                                                                                [LookUpTableName]="'Card'"
-                                                                                                [DependencyFilter1Value]="'CS'"
-                                                                                                [SelectedValue]="CustomerId">
-                                                                                        </LogLov>
-                                                                                    </td>
-                                                                                </tr>-->
+        <td>
+            <LogLov [ObjectFieldName]="'CustomerId'"
+                    [ObjectTableName]="'Tenant'"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'Card'"
+                    [DependencyFilter1Value]="'CS'"
+                    [SelectedValue]="CustomerId">
+            </LogLov>
+        </td>
+    </tr>-->
                                                                                 <!-- IsCustomerTenantShare -->
                                                                                 <tr class="FormFieldRow" *ngIf="IsCustomerTenantShareVisible">
                                                                                     <td colspan="2">

@@ -467,15 +467,9 @@ foreach(XElement featureElement in AdditionalFeatures.Elements("Feature")){
 					var IsBusinessUnitEnabled = featureElement.Attributes().Where(a => a.Name == "IsBusinessUnitEnabled").FirstOrDefault().Value;
 					var IsOld = featureElement.Attributes().Where(a => a.Name == "IsOld").FirstOrDefault().Value;
 					var IsCoreFeature = featureElement.Attributes().Where(a => a.Name == "IsCoreFeature").FirstOrDefault().Value;
-					var ToggleCode = (featureElement.Attributes().Where(a => a.Name == "ToggleCode").FirstOrDefault()!= null?featureElement.Attributes().Where(a => a.Name == "ToggleCode").FirstOrDefault().Value:"null");
-                
-					var toggleCodeString ="";
-					if(ToggleCode != "null"){
-						toggleCodeString= ", ToggleCode = "+ToggleCode;
-					}
 
 #>
-		   Feature <#= ObjectTbl.Trim('"') #>Feature_<#=Code.Replace(".","_")#> = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "<#=Code#>", FeatureTypeCode = "<#=FeatureTypeCode#>", Packagable = <#=IsPackagable#>, IsBusinessUnitEnabled = <#=IsBusinessUnitEnabled#>, IsOld = <#=IsOld#>, IsCoreFeature = <#=IsCoreFeature#>, ObjectTableId = <#= ObjectTbl.Trim('"') #>ObjectTable.Id, Tenant = 0, NameTextCodeCode = "<#=FeatureTextCodeCode#>", NameTextCodeDefaultText = @"<#=FeatureDefaultText#>"<#=toggleCodeString #> }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,<#= ObjectTbl.Trim('"') #>ObjectTable);
+		   Feature <#= ObjectTbl.Trim('"') #>Feature_<#=Code.Replace(".","_")#> = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "<#=Code#>", FeatureTypeCode = "<#=FeatureTypeCode#>", Packagable = <#=IsPackagable#>, IsBusinessUnitEnabled = <#=IsBusinessUnitEnabled#>, IsOld = <#=IsOld#>, IsCoreFeature = <#=IsCoreFeature#>, ObjectTableId = <#= ObjectTbl.Trim('"') #>ObjectTable.Id, Tenant = 0, NameTextCodeCode = "<#=FeatureTextCodeCode#>", NameTextCodeDefaultText = @"<#=FeatureDefaultText#>" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,<#= ObjectTbl.Trim('"') #>ObjectTable);
 
 <#+
 	  

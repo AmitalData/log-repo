@@ -459,13 +459,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="ShipmentsNumbers"
-    Type="varchar"
-    Size="1000">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="VendorId"
     ReferencedTable="Cards"

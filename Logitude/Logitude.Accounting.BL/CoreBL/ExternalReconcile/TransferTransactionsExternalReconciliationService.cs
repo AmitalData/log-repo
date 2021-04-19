@@ -45,14 +45,10 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             {
                 
                 List<ExternalReconciliationLinePM> transferRecoLines = GetRecoLinesOfTransferAccount();
-                //externalRecoPM.ExternalReconciliationLines
 
-
-                //if (transferRecoLines.Count == 1)
-                if (externalRecoPM.ExternalReconciliationLines.Where(r=>!string.IsNullOrWhiteSpace(r.LedgerTransactionId)).ToList().Count== transferRecoLines.Count && transferRecoLines.Count >= 1)
+                if (transferRecoLines.Count == 1)
                 {
-                    //MoveTransactionFromTransferGLAccountToBankGLAccount(transferRecoLines.First().LedgerTransactionId);
-                    MoveTransactionFromTransferGLAccountToBankGLAccount(transferRecoLines.Select(r=>r.LedgerTransactionId).ToList());
+                    MoveTransactionFromTransferGLAccountToBankGLAccount(transferRecoLines.First().LedgerTransactionId);
                 }
                 else if (transferRecoLines.Count == 0)
                 {
@@ -85,14 +81,14 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         }
 
 
-        private void MoveTransactionFromTransferGLAccountToBankGLAccount(List<string> transactionIds)
+        private void MoveTransactionFromTransferGLAccountToBankGLAccount(string transactionId)
         {
-            //LedgerTransactionPM transferAccountTransaction = GetLedgerTransactionById(transactionIds);
+            LedgerTransactionPM transferAccountTransaction = GetLedgerTransactionById(transactionId);
             ExternalReconciliationLinePM pageLine = externalRecoPM.ExternalReconciliationLines.FirstOrDefault(d => d.ExternalPageLineId != null);
 
             ExternalReconcileMoveBankCheckFromTransfer2GLAccountService extRecoJournalService = new ExternalReconcileMoveBankCheckFromTransfer2GLAccountService();
             extRecoJournalService.MustInit(new ExternalReconcileDataProvider(AccountingContext.GetContext(tenant)));
-            extRecoJournalService.CreateJournalWithExtReconcile(tenant, transactionIds /*transferAccountTransaction.Id*/, pageLine.ExternalPageLineId);
+            extRecoJournalService.CreateJournalWithExtReconcile(tenant, transferAccountTransaction.Id, pageLine.ExternalPageLineId);
             JournalPM journalPM = extRecoJournalService.TheJournalPM;
 
             //JournalPM journalPM = CreateMovingJournal(transferAccountTransaction);
@@ -103,7 +99,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             SubmitJournal(journalPM);
 
         }
-#if noReference
+
         private void BuildExternalReconciliationForTransferTransaction(LedgerTransactionPM ledgerTransactionForTransferAccount, JournalPM journalPM)
         {
             var autoExternalReconcileService = new CreateAutoExternalReconcileWhileStreamingService();
@@ -130,8 +126,6 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             //autoExternalReconcileService.MoveBankCheckFromTransfer2GLAccount();
         }
 
-
-#endif
         private List<ExternalReconciliationLinePM> GetRecoLinesOfTransferAccount()
         {
 

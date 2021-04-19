@@ -46,7 +46,6 @@ using System.IO;
 using Logitude.BL.Resolvers;
 using Logitude.BL.ExternalService;
 using Logitude.BL.InvoiceModel.CloseTables;
-using Logitude.BL.InvoiceModel.Tools.Behaviours.ARInvoiceBehaviours;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -110,7 +109,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             allShipments = new List<Shipment>();
             allReceivables = new List<ShipmentReceivable>();
             shipmentRepository = new ShipmentRepository(myShipmentContext);
-            shipmentReceivableRepository = new ShipmentReceivableRepository(myShipmentContext);            
+            shipmentReceivableRepository = new ShipmentReceivableRepository(myShipmentContext);
 
             this.TenantObject = (from d in myCommonContext.Tenants where d.Id == tenant select d).FirstOrDefault();
             this.allVatGroups = (from d in myCommonContext.VATTypesGroups where d.Tenant == this.tenant select d).ToList();
@@ -279,7 +278,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.InitializeSalesmanField();
 
-            this.BuildShipmentsNumbers();
             this.UpdateInvoiceLines();
             this.UpdateTotalVats();
             this.BuildSearchFields();
@@ -314,10 +312,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.RunStoredProcedures();
             this.AfterServiceFinished();
             if (entityPM.ARInvoiceTypeCode == "IT")
-            {                
+            {
+                
                 this.UpdateInterestReportFields(entityPM);
                 this.UpdateInterestReportsConnectedInvoice(entityPM);
             }
+
+
         }
 
         private void InitializeSalesmanField()
@@ -581,7 +582,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 this.UpdateInvoiceLines();
                 this.UpdateTotalVats();
-                this.BuildShipmentsNumbers();
 
                 ARInvoiceHelper helper = new ARInvoiceHelper(this.tenant, this.loggedContactId);
                 if (entityPM.SetReSendQBO)
@@ -625,10 +625,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     this.UpdateInvoiceAmountDue();
                     this.UpdatePaidDate();
                 }
-                
+
                 this.BuildSearchFields();
+
                 entityAutomationService.RunAutomation();
+
             }
+
 
             invoiceRepository.Update(invoice);
             invoiceRepository.SubmitChanges();
@@ -3579,20 +3582,17 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             #endregion
 
             #region Entity References
-
-            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ShipmentsNumbers);
-
-            //if (allActiveShipmentIds != null)
-            //{
-            //    if (allActiveShipmentIds.Count > 0)
-            //    {
-            //        List<Shipment> iActiveShipments = this.allShipments.Where(d => allActiveShipmentIds.Contains(d.Id)).ToList();
-            //        foreach (Shipment iShipment in iActiveShipments)
-            //        {
-            //            MethodHelper.AddToSearchFields(ref mySearchFields, iShipment.ShipmentNumber);
-            //        }
-            //    }
-            //}
+            if (allActiveShipmentIds != null)
+            {
+                if (allActiveShipmentIds.Count > 0)
+                {
+                    List<Shipment> iActiveShipments = this.allShipments.Where(d => allActiveShipmentIds.Contains(d.Id)).ToList();
+                    foreach (Shipment iShipment in iActiveShipments)
+                    {
+                        MethodHelper.AddToSearchFields(ref mySearchFields, iShipment.ShipmentNumber);
+                    }
+                }
+            }
             #endregion
 
             #region Payments
@@ -4031,6 +4031,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.OnVoidingInvoise();
             }
         }
+
         private void UpdatePaymentsNumbers()
         {
             if (this.isUpdatingPayments)
@@ -4324,10 +4325,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
         }
 
-        private void BuildShipmentsNumbers()
-        {
-            ARInvoiceShipmentsNumbersBehaviour invoiceShipmentsNumbersBehaviour = new ARInvoiceShipmentsNumbersBehaviour(entityPM);
-            invoiceShipmentsNumbersBehaviour.CopmuteShipmentsNumbers();
-        }
+
+ 
+
+         
+     
     }
 }

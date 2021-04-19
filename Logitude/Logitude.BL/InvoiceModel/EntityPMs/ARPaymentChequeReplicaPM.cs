@@ -49,6 +49,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string BankAccount { get; set; }
 
         public string StatusCode { get; set; }
+        public string StatusName { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
 
         public decimal? ExchangeRate { get; set; }

@@ -487,10 +487,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             }
                         }
 
-                        foreach (ShipmentStoragePricingPM pricingPM in entityPM.ShipmentStoragePricings.Where(d => d.ChangeSetOp == ChangeSetOperation.Update))
-                        {
-                            this.UpdateShipmentStoragePricing(pricingPM);
-                        }
+                        this.UpdateShipmentStoragePricingsCollection();
                     }
 
                     if (shipmentBehaviourFacade.DatesUpdated_CrossDoc)
@@ -3182,113 +3179,112 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 if (entityPM.TransportModeId == "A")
                 {
-                    this.ComputeFreightChargesFromFreightPayableLine();
+                    this.ComputeAWBChargeRate();
                   
                     if (string.IsNullOrEmpty(entityPM.RateClassCode))
                     {
                         entityPM.RateClassCode = "Q";
                     }
 
-                    if (entityPM.ShipmentCommodities.Count == 0)
-                    {
-                        entityPM.ShipmentCommodities.Add(new ShipmentCommodityPM()
-                        {
-                            Id = IdCounter.GetNumber("ShipmentCommodity", tenant).ToString(),
-                            Tenant = tenant,
-                            ShipmentId = entityPM.Id,
-                            ChargeableWeight = entityPM.ChargeableWeight,
-                            ChargeAmount = entityPM.AWBChargeAmount,
-                            ChargeRate = entityPM.AWBChargeRate,
-                            CommodityNumber = entityPM.AWBCommodityItemNumber,
-                            GrossWeight = entityPM.GrossWeight,
-                            DescriptionOfGoods = entityPM.DescriptionOfGoods,
-                            NumberOfPackages = entityPM.NumberOfPackages,
-                            RateClassCode = entityPM.RateClassCode,
-                            Volume = entityPM.Volume,
-                            VolumetricWeight = entityPM.VolumetricWeight,
-                            IsFirstLine = true,
-                        });
-                    }
+                    //if (entityPM.ShipmentCommodities.Count == 0)
+                    //{
+                    //    entityPM.ShipmentCommodities.Add(new ShipmentCommodityPM()
+                    //    {
+                    //        Id = IdCounter.GetNumber("ShipmentCommodity", tenant).ToString(),
+                    //        Tenant = tenant,
+                    //        ShipmentId = entityPM.Id,
+                    //        ChargeableWeight = entityPM.ChargeableWeight,
+                    //        ChargeAmount = entityPM.AWBChargeAmount,
+                    //        ChargeRate = entityPM.AWBChargeRate,
+                    //        CommodityNumber = entityPM.AWBCommodityItemNumber,
+                    //        GrossWeight = entityPM.GrossWeight,
+                    //        DescriptionOfGoods = entityPM.DescriptionOfGoods,
+                    //        NumberOfPackages = entityPM.NumberOfPackages,
+                    //        RateClassCode = entityPM.RateClassCode,
+                    //        Volume = entityPM.Volume,
+                    //        VolumetricWeight = entityPM.VolumetricWeight,
+                    //        IsFirstLine = true,
+                    //    });
+                    //}
 
-                    else
-                    {
-                        ShipmentCommodityPM myShipmentCommodity = entityPM.ShipmentCommodities.Where(d => d.IsFirstLine).FirstOrDefault();
+                    //else
+                    //{
+                    //    ShipmentCommodityPM myShipmentCommodity = entityPM.ShipmentCommodities.OrderBy(d => d.Id).FirstOrDefault();
 
-                        if (myShipmentCommodity != null)
-                        {
-                            bool isUpdatingSingleCommodity = false;
+                    //    if (myShipmentCommodity != null)
+                    //    {
+                    //        bool isUpdatingSingleCommodity = false;
 
-                            if (myShipmentCommodity.ChargeableWeight != entityPM.ChargeableWeight)
-                            {
-                                myShipmentCommodity.ChargeableWeight = entityPM.ChargeableWeight;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.ChargeableWeight != entityPM.ChargeableWeight)
+                    //        {
+                    //            myShipmentCommodity.ChargeableWeight = entityPM.ChargeableWeight;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.ChargeAmount != entityPM.AWBChargeAmount)
-                            {
-                                myShipmentCommodity.ChargeAmount = entityPM.AWBChargeAmount;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.ChargeAmount != entityPM.AWBChargeAmount)
+                    //        {
+                    //            myShipmentCommodity.ChargeAmount = entityPM.AWBChargeAmount;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.ChargeRate != entityPM.AWBChargeRate)
-                            {
-                                myShipmentCommodity.ChargeRate = entityPM.AWBChargeRate;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.ChargeRate != entityPM.AWBChargeRate)
+                    //        {
+                    //            myShipmentCommodity.ChargeRate = entityPM.AWBChargeRate;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.CommodityNumber != entityPM.AWBCommodityItemNumber)
-                            {
-                                myShipmentCommodity.CommodityNumber = entityPM.AWBCommodityItemNumber;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.CommodityNumber != entityPM.AWBCommodityItemNumber)
+                    //        {
+                    //            myShipmentCommodity.CommodityNumber = entityPM.AWBCommodityItemNumber;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.GrossWeight != entityPM.GrossWeight)
-                            {
-                                myShipmentCommodity.GrossWeight = entityPM.GrossWeight;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.GrossWeight != entityPM.GrossWeight)
+                    //        {
+                    //            myShipmentCommodity.GrossWeight = entityPM.GrossWeight;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.DescriptionOfGoods != entityPM.DescriptionOfGoods)
-                            {
-                                myShipmentCommodity.DescriptionOfGoods = entityPM.DescriptionOfGoods;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.DescriptionOfGoods != entityPM.DescriptionOfGoods)
+                    //        {
+                    //            myShipmentCommodity.DescriptionOfGoods = entityPM.DescriptionOfGoods;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.NumberOfPackages != entityPM.NumberOfPackages)
-                            {
-                                myShipmentCommodity.NumberOfPackages = entityPM.NumberOfPackages;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.NumberOfPackages != entityPM.NumberOfPackages)
+                    //        {
+                    //            myShipmentCommodity.NumberOfPackages = entityPM.NumberOfPackages;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.RateClassCode != entityPM.RateClassCode)
-                            {
-                                myShipmentCommodity.RateClassCode = entityPM.RateClassCode;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.RateClassCode != entityPM.RateClassCode)
+                    //        {
+                    //            myShipmentCommodity.RateClassCode = entityPM.RateClassCode;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.Volume != entityPM.Volume)
-                            {
-                                myShipmentCommodity.Volume = entityPM.Volume;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.Volume != entityPM.Volume)
+                    //        {
+                    //            myShipmentCommodity.Volume = entityPM.Volume;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (myShipmentCommodity.VolumetricWeight != entityPM.VolumetricWeight)
-                            {
-                                myShipmentCommodity.VolumetricWeight = entityPM.VolumetricWeight;
-                                isUpdatingSingleCommodity = true;
-                            }
+                    //        if (myShipmentCommodity.VolumetricWeight != entityPM.VolumetricWeight)
+                    //        {
+                    //            myShipmentCommodity.VolumetricWeight = entityPM.VolumetricWeight;
+                    //            isUpdatingSingleCommodity = true;
+                    //        }
 
-                            if (isUpdatingSingleCommodity)
-                            {
-                                this.UpdateShipmentCommodity(myShipmentCommodity);
-                            }
-                        }
-                    }
+                    //        if (isUpdatingSingleCommodity)
+                    //        {
+                    //            this.UpdateShipmentCommodity(myShipmentCommodity);
+                    //        }
+                    //    }
+                    //}
                 }
             }
         }
-
-        private void ComputeFreightChargesFromFreightPayableLine()
+        private void ComputeAWBChargeRate()
         {
             if (entityPM.AWBChargeRate == null)
             {
@@ -3296,11 +3292,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 var airFreightCharge =entityPM.ShipmentPayables.Where(a => a.ChargesTypeCode == airFreightCode).FirstOrDefault();
                 if (airFreightCharge != null && ValidateCurrencyOfShipmentAWBPrintOnlies(airFreightCharge))
                 {
-                    this.SetAWBFreightChargeFields(airFreightCharge);
+                    this.ComputeAWBChargeAmount(airFreightCharge);
                 }
             }
         }
-
         private bool ValidateCurrencyOfShipmentAWBPrintOnlies(ShipmentPayablePM airFreightCharge)
         {
             var isValid = true;
@@ -3317,72 +3312,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             return isValid;
         }
 
-        private void SetAWBFreightChargeFields(ShipmentPayablePM airFreightCharge)
+        private void ComputeAWBChargeAmount(ShipmentPayablePM airFreightCharge)
         {
             entityPM.AWBChargeRate = airFreightCharge.UnitPrice;
             entityPM.AWBCurrencyId = airFreightCharge.CurrencyId;
-            entityPM.AWBChargeAmount = this.SetAWBChargeAmount();
-            entityPM.FreightPrepaidCollectId = airFreightCharge.PrepaidCollectId;
-            entityPM.AWBChargesCodeCode = this.SetAWBChargesCodeCode();
-            SetAWBFrieghtAmountCollectAndPrepaid();
+            entityPM.AWBChargeAmount =this.ComputeAWBChargeAmount(entityPM);
         }
-
-        public string SetAWBChargesCodeCode()
-        {
-            if (entityPM.FreightPrepaidCollectId == "P" && entityPM.OtherPrepaidCollectId == "P")
-            {
-                return "PP";
-            }
-
-            else if (entityPM.FreightPrepaidCollectId == "C" && entityPM.OtherPrepaidCollectId == "C")
-            {
-                return "CC";
-            }
-
-            else
-            {
-                return "PC";
-            }
-        }
-        public void SetAWBFrieghtAmountCollectAndPrepaid()
-        {
-            var computedAmount = entityPM.AWBChargeAmount;
-            var totaAmount = entityPM.AWBFreightAmountPrepaid + entityPM.AWBFreightAmountCollect;
-
-            var recomputeAmounts = true;
-            var isPrepaidHasAmount = (entityPM.AWBFreightAmountPrepaid != 0 && entityPM.AWBFreightAmountPrepaid != null);
-            var isCollectHasAmount = (entityPM.AWBFreightAmountCollect != 0 && entityPM.AWBFreightAmountCollect != null);
-
-            if (!string.IsNullOrEmpty(entityPM.FreightPrepaidCollectId))
-            {
-                if (isPrepaidHasAmount && isCollectHasAmount && (computedAmount == totaAmount))
-                {
-                    recomputeAmounts = false;
-                }
-            }
-
-            if (recomputeAmounts)
-            {
-                RecomputeAWBFrieghtAmountCollectAndPrepaid(computedAmount);
-            }
-        }
-        public void RecomputeAWBFrieghtAmountCollectAndPrepaid(double? computedAmount)
-        {
-
-            if (entityPM.FreightPrepaidCollectId == "P")
-            {
-                entityPM.AWBFreightAmountCollect = 0;
-                entityPM.AWBFreightAmountPrepaid = computedAmount == null ? 0 : computedAmount;
-            }
-
-            else if (entityPM.FreightPrepaidCollectId == "C")
-            {
-                entityPM.AWBFreightAmountPrepaid = 0;
-                entityPM.AWBFreightAmountCollect = computedAmount == null ? 0 : computedAmount;
-            }
-        }
-
-        public double? SetAWBChargeAmount()
+        public double? ComputeAWBChargeAmount(ShipmentPM entityPM)
         {
             double? myResult = null;
             var myRateClassCode = entityPM.RateClassCode;

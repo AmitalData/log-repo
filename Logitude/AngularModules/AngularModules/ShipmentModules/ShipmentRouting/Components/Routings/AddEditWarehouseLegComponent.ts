@@ -633,24 +633,23 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName };
             logitudeWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/WarehouseStoragePricingComponent");
             logitudeWindow.WindowClosed.subscribe(s => {
-                if (s) {
-                    if (s.indexOf('+') > -1) {
+                if (s.indexOf('+') > -1) {
+                    this.PricesChanged = true;
+                    this.CheckStorageProperties(this.WarehouseLegActualReleaseDate);
+                    this.UpdateCurrency();
+                }
+
+                else {
+                    if (s == "PricesChanged") {
                         this.PricesChanged = true;
                         this.CheckStorageProperties(this.WarehouseLegActualReleaseDate);
+                    }
+
+                    else if (s == "CurrencyChanged") {
                         this.UpdateCurrency();
                     }
+                }               
 
-                    else {
-                        if (s == "PricesChanged") {
-                            this.PricesChanged = true;
-                            this.CheckStorageProperties(this.WarehouseLegActualReleaseDate);
-                        }
-
-                        else if (s == "CurrencyChanged") {
-                            this.UpdateCurrency();
-                        }
-                    }
-                }
             });
         });
     }

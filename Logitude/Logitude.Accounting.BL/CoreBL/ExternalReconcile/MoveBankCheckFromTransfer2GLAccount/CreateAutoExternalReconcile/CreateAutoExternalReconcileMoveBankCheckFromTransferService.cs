@@ -53,43 +53,38 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         public void MoveBankCheckFromTransfer()
         {
             this.ExternalReconciliationList = new List<ExternalReconciliationPM>();
-            //if (_JournalPM.JournalExternalReconciles.Count > 1)
-            //{
-            //    throw new Exception("Sorry (MoveBankCheckFromTransfer) meanwhile only one Adjust Allowed !!!");
-            //    //errorsList.Add(TranslateMyTextCode("Sorry meanwhile only one Adjust Allowed !!!", myJournalPM.Tenant));
-            //}
-            var my1stJournalExternalReconcile = _JournalPM.JournalExternalReconciles[0];//meanwhile only one Adjust Allowed !!!
+            if (_JournalPM.JournalExternalReconciles.Count > 1)
+            {
+                throw new Exception("Sorry (MoveBankCheckFromTransfer) meanwhile only one Adjust Allowed !!!");
+                //errorsList.Add(TranslateMyTextCode("Sorry meanwhile only one Adjust Allowed !!!", myJournalPM.Tenant));
+            }
+            var myJournalExternalReconcile = _JournalPM.JournalExternalReconciles[0];//meanwhile only one Adjust Allowed !!!
 
-            List<LedgerTransactionPM> allOldLedgerToReconcileInCredit = GetOldTransToReconcileThrowIfNotInProgress();
+            List<LedgerTransactionPM> myOldTransToReconcile = GetOldTransToReconcileThrowIfNotInProgress();
 
 
-            var my1stLedgerTransactionTransferInCredit = allOldLedgerToReconcileInCredit.FirstOrDefault(r => r.Id == my1stJournalExternalReconcile.LedgerTransactionId);
-            //var allLedgerTransactionTransferInCredit = _JournalPM.JournalExternalReconciles.Where(r => !string.IsNullOrWhiteSpace(r.LedgerTransactionId)).ToList();
-            if (_JournalPM.Tenant != my1stLedgerTransactionTransferInCredit.Tenant)
+            var myLedgerTransactionTransferInCredit = myOldTransToReconcile.FirstOrDefault(r => r.Id == myJournalExternalReconcile.LedgerTransactionId);
+            if (_JournalPM.Tenant != myLedgerTransactionTransferInCredit.Tenant)
             {
                 throw new Exception("_JournalPM.Tenant!= myLedgerTransactionTransferInCredit.Tenant");
             }
-            var accountIds=allOldLedgerToReconcileInCredit.Select(r => r.AccountId).Distinct().ToList();
-            if (accountIds.Count > 1)
-            {
-                throw new Exception("All old ledger have to be in bank transfer account !!");
-            }
 
-            BankAccountPM bankAccountFromTransfer = _ExternalReconcileDataProvider.GetBankAccountFromTransferAccount(my1stLedgerTransactionTransferInCredit.AccountId, _JournalPM.Tenant);
-            BankAccountPM bankAccountFromPage = _ExternalReconcileDataProvider.GetBankAccountFromReconcileExternalPageLineId(my1stJournalExternalReconcile.ReconcileExternalPageLineId, _JournalPM.Tenant);
+
+            BankAccountPM bankAccountFromTransfer = _ExternalReconcileDataProvider.GetBankAccountFromTransferAccount(myLedgerTransactionTransferInCredit.AccountId, _JournalPM.Tenant);
+            BankAccountPM bankAccountFromPage = _ExternalReconcileDataProvider.GetBankAccountFromReconcileExternalPageLineId(myJournalExternalReconcile.ReconcileExternalPageLineId, _JournalPM.Tenant);
             if (bankAccountFromTransfer.Id != bankAccountFromPage.Id)
             {
                 throw new Exception("bankAccountFromTransfer.Id != bankAccountFromPage.Id");
             }
 
-            
-            LedgerTransactionPM myNewLedgerTransactionTransferInDebit = GetTheNewLedgerTransactionTransferInDebit(my1stLedgerTransactionTransferInCredit);
-            AddExReconcile_DebitCreditLedgerOnly_4TransferGLaccout(allOldLedgerToReconcileInCredit, myNewLedgerTransactionTransferInDebit);
+
+            LedgerTransactionPM myNewLedgerTransactionTransferInDebit = GetTheNewLedgerTransactionTransferInDebit(myLedgerTransactionTransferInCredit);
+            AddExReconcile_DebitCreditTransferGL(myLedgerTransactionTransferInCredit, myNewLedgerTransactionTransferInDebit);
             LedgerTransactionPM myNewLedgerTransactionBankGLAccountInCredit = GetTheNewLedgerTransactionBankGLAccountInCredit(bankAccountFromTransfer);
             bool includeAdjustDueBankFees = this._JournalPM.JournalLines.Count == 4;
             if (!includeAdjustDueBankFees)
             {
-                AddExReconcile_DebitPage_4CreditGLAccount(my1stJournalExternalReconcile, myNewLedgerTransactionBankGLAccountInCredit);
+                AddExReconcile_DebitPage_CreditGLAccount(myJournalExternalReconcile, myNewLedgerTransactionBankGLAccountInCredit);
             }
             else
             {
@@ -98,7 +93,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
                    var myNewLedgerTransactionBankListOfGLAccount =
                         _NewLedgerTransactionsWithCounters
                         .Where(r => r.AccountId == bankAccountFromTransfer.GLAccountId ).ToList();
-                AddExReconcileGLAccount_DebitPage_NewLedgerGLAccount(my1stJournalExternalReconcile, myNewLedgerTransactionBankListOfGLAccount);
+                AddExReconcileGLAccount_DebitPage_NewLedgerGLAccount(myJournalExternalReconcile, myNewLedgerTransactionBankListOfGLAccount);
 
 
 
@@ -151,7 +146,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
 
 
-        private void AddExReconcile_DebitPage_4CreditGLAccount(JournalExternalReconcilePM myJournalExternalReconcile, LedgerTransactionPM myNewLedgerTransactionBankGLAccountInCredit)
+        private void AddExReconcile_DebitPage_CreditGLAccount(JournalExternalReconcilePM myJournalExternalReconcile, LedgerTransactionPM myNewLedgerTransactionBankGLAccountInCredit)
         {
             var reconcile_DebitPage_CreditGLAccount = new ExternalReconciliationPM();
             reconcile_DebitPage_CreditGLAccount.Tenant = _JournalPM.Tenant;
@@ -240,37 +235,33 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
 
 
-        private void AddExReconcile_DebitCreditLedgerOnly_4TransferGLaccout(List<LedgerTransactionPM> allOldLedgerToReconcileInCredit, LedgerTransactionPM myNewLedgerTransactionTransferInDebit)
+        private void AddExReconcile_DebitCreditTransferGL(LedgerTransactionPM myLedgerTransactionTransferInCredit, LedgerTransactionPM myNewLedgerTransactionTransferInDebit)
         {
             var reconcile_DebitCreditTransferGL = new ExternalReconciliationPM();
             reconcile_DebitCreditTransferGL.Tenant = _JournalPM.Tenant;
             reconcile_DebitCreditTransferGL.ChangeSetOp = ChangeSetOperation.Insert;
-            reconcile_DebitCreditTransferGL.GLAccountId = allOldLedgerToReconcileInCredit.First().AccountId;
+            reconcile_DebitCreditTransferGL.GLAccountId = myLedgerTransactionTransferInCredit.AccountId;
             reconcile_DebitCreditTransferGL.Id = "new";
 
-            BankAccountPM bankAccount = GetBankAccountByTransferAccountId(allOldLedgerToReconcileInCredit.First().AccountId);
+            BankAccountPM bankAccount = GetBankAccountByTransferAccountId(myLedgerTransactionTransferInCredit.AccountId);
             reconcile_DebitCreditTransferGL.BankAccountId = bankAccount.Id;
 
             //reconcile_DebitCreditTransferGL.AccountCurrencyId = myLedgerTransactionTransferInCredit.CurrencyId;
             //reconcile_DebitCreditTransferGL.CreatedByUserId = _JournalPM.CreatedByUserId;
             //reconcile_DebitCreditTransferGL.CreateDate = 
 
-            int line = 1;
-            foreach (var itemOldLedgerToReconcileInCredit in allOldLedgerToReconcileInCredit)
-            {
-                var reconcileLine_CreditTransferGL = new ExternalReconciliationLinePM()
-                {
-                    Tenant = _JournalPM.Tenant,
-                    ChangeSetOp = ChangeSetOperation.Insert,
-                    GroupNumber = 1,
-                    ReconciliationId = reconcile_DebitCreditTransferGL.Id,
-                    Line = line++,
 
-                    LedgerTransactionId = itemOldLedgerToReconcileInCredit.Id,
-                };
-                reconcile_DebitCreditTransferGL.ExternalReconciliationLines.Add(reconcileLine_CreditTransferGL);
-            }
-            
+            var reconcileLine_CreditTransferGL = new ExternalReconciliationLinePM()
+            {
+                Tenant = _JournalPM.Tenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                GroupNumber = 1,
+                ReconciliationId = reconcile_DebitCreditTransferGL.Id,
+                Line = 1,
+
+                LedgerTransactionId = myLedgerTransactionTransferInCredit.Id,
+            };
+            reconcile_DebitCreditTransferGL.ExternalReconciliationLines.Add(reconcileLine_CreditTransferGL);
 
             var reconcileLine_DebitTransferGL = new ExternalReconciliationLinePM()
             {
@@ -278,7 +269,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
                 ChangeSetOp = ChangeSetOperation.Insert,
                 GroupNumber = 1,
                 ReconciliationId = reconcile_DebitCreditTransferGL.Id,
-                Line = line++,
+                Line = 2,
 
                 LedgerTransactionId = myNewLedgerTransactionTransferInDebit.Id,
             };

@@ -8,8 +8,8 @@ Given("the user logged in and navigates to change password window from maintenan
   Actions.OpenChangeUserPasswordWindow()
 });
 
-Given("current password and {string} as a new paswword", (NewPassword) => {
-    Actions.FillChangePasswordWindow(NewPassword,NewPassword); 
+Given("{string} as a current password and {string} as a new paswword", (CurrentPassword,NewPassword) => {
+    Actions.FillChangePasswordWindow(CurrentPassword,NewPassword,NewPassword); 
 });
 
 When("change password",()=>{

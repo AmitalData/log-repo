@@ -44,9 +44,9 @@ using WebFreight.Web.Helpers;
                 CreditInterestPercentage = d.CreditInterestPercentage,
                 CalculationDetails = d.CalculationDetails,
                 TotalInterest = d.CalculatedCreditInterestAmount + d.CalculatedExcepInterestAmount + d.CalculatedStandInterestAmount,
-                TotalLocalAmount = interestTransactionLists == null ? 0 : interestTransactionLists.Sum(s => s.LocalAmount),
-                InterestTransactionList = interestTransactionLists == null ? null : interestTransactionLists.Where(s => s.InterestValueDate.Date == d.FromDate.Date).Select(a =>
-
+                TotalLocalAmount = interestTransactionLists ==null ? 0: interestTransactionLists.Sum(s => s.LocalAmount),
+                InterestTransactionList = interestTransactionLists ==null ?null: interestTransactionLists.Where(s=> s.InterestValueDate.Date == d.FromDate.Date).Select (a =>
+             
                 new InterestTransactionProvider
                 {
                     EntityType = a.InterestEntityIconCode,
@@ -56,15 +56,15 @@ using WebFreight.Web.Helpers;
                     CurrencyCode = a.CurrencyCode,
                     ForeignAmount = a.ForeignAmount,
                 }).ToList(),
-                GroupedInterestTransactionList = interestTransactionLists == null ? null : interestTransactionLists.Where(s => s.InterestValueDate.Date == d.FromDate.Date).GroupBy(x => new { x.InterestEntityNumber, x.InterestEntityIconCode, x.CurrencyCode, x.InterestValueDate }).Select(a =>
+                GroupedInterestTransactionList = interestTransactionLists == null ? null : interestTransactionLists.Where(s => s.InterestValueDate.Date == d.FromDate.Date).GroupBy(x=> new { x.InterestEntityNumber, x.InterestEntityIconCode, x.CurrencyCode, x.InterestValueDate }).Select(a =>
                    new InterestTransactionProvider
                    {
-                       EntityType = a.Key.InterestEntityIconCode,
-                       EntityNumber = a.Key.InterestEntityNumber,
-                       LocalAmount = a.Sum(x => x.LocalAmount),
+                       EntityType =a.Key.InterestEntityIconCode,
+                       EntityNumber =a.Key.InterestEntityNumber,
+                       LocalAmount = a.Sum(x=> x.LocalAmount),
                        InterestValueDate = a.Key.InterestValueDate,
-                       CurrencyCode = a.Key.CurrencyCode,
-                       ForeignAmount = a.Sum(x => x.ForeignAmount),
+                       CurrencyCode =a.Key.CurrencyCode,
+                       ForeignAmount = a.Sum(x=> x.ForeignAmount),
                    }).ToList(),
             }).ToList();
 
@@ -77,19 +77,7 @@ using WebFreight.Web.Helpers;
             InterestReportDP.TotalAmount = InteerstReportPM.TotalAmount;
             InterestReportDP.CreditAllotmentPercentage = InteerstReportPM.CreditAllotmentPercentage;
             InterestReportDP.CalCreditAllotmentCommission = InteerstReportPM.CalCreditAllotmentCommission;
-            InterestReportDP.AllotmentCommession = InteerstReportPM.CalCreditAllotmentCommission;
-            InterestReportDP.AllotmentCalculation= SetAllotmentCalculationEquation(InterestReportDP, InteerstReportPM);
-
             return InterestReportDP;
-        }
-
-         private static string SetAllotmentCalculationEquation(InterestDataProvider InterestReportDP, InterestReportPM InteerstReportPM)
-        {
-            if (InteerstReportPM.CreditAllotmentPercentage != null)
-            {
-                return string.Concat(InteerstReportPM.GLAccountInterestCreditLimit, " * ", '(', InteerstReportPM.CreditAllotmentPercentage, " / 100)");
-            }
-            return null;
         }
     }
 }

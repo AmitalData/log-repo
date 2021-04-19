@@ -2082,7 +2082,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             #region Header screen
             Screen HeaderScreen = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ARInvoice.HeaderScreen", Name = "Header Screen", ObjectTableId = ThisObject.Id, NumberOfColumns = 5, NumberOfRows = 1, IsReadOnly = true }, ScreensRepository, tenantScreens);
-            ObjectField ObjectField1 = ObjectContext.ObjectFields.Where(d => d.FieldName == "ShipmentsNumbers" && d.ObjectTableId == ThisObject.Id).FirstOrDefault();
+            ObjectField ObjectField1 = ObjectContext.ObjectFields.Where(d => d.FieldName == "MainEntityReference" && d.ObjectTableId == ThisObject.Id).FirstOrDefault();
             ObjectField ObjectField2 = ObjectContext.ObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ThisObject.Id).FirstOrDefault();
             ObjectField ObjectField3 = ObjectContext.ObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ThisObject.Id).FirstOrDefault();
             ObjectField ObjectField4 = ObjectContext.ObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ThisObject.Id).FirstOrDefault();
@@ -2102,7 +2102,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             #region Header screen - Full Accounting
             Screen HeaderScreen4FullAccounting = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ARInvoice.FullAccHeaderScreen", Name = "Header Screen", ObjectTableId = ThisObject.Id, NumberOfColumns = 5, NumberOfRows = 1, IsReadOnly = true }, ScreensRepository, tenantScreens);
-            ObjectField FAObjectField1 = ObjectContext.ObjectFields.Where(d => d.FieldName == "ShipmentsNumbers" && d.ObjectTableId == ThisObject.Id).FirstOrDefault();
+            ObjectField FAObjectField1 = ObjectContext.ObjectFields.Where(d => d.FieldName == "MainEntityReference" && d.ObjectTableId == ThisObject.Id).FirstOrDefault();
             ObjectField FAObjectField2 = ObjectContext.ObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ThisObject.Id).FirstOrDefault();
             ObjectField FAObjectField3 = ObjectContext.ObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ThisObject.Id).FirstOrDefault();
             ObjectField FAObjectField4 = ObjectContext.ObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ThisObject.Id).FirstOrDefault();
@@ -2404,7 +2404,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             #region Header Screen
             Screen HeaderScreen = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "APInvoice.HeaderScreen", Name = "Header Screen", ObjectTableId = APInvoiceObject.Id, NumberOfColumns = 5, NumberOfRows = 1, IsReadOnly = true }, ScreensRepository, tenantScreens);
-            ObjectField ObjectField1 = ObjectContext.ObjectFields.Where(d => d.FieldName == "ShipmentsNumbers" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault();
+            ObjectField ObjectField1 = ObjectContext.ObjectFields.Where(d => d.FieldName == "ConnectedEntityReferences" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault();
             ObjectField ObjectField2 = ObjectContext.ObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault();
             ObjectField ObjectField3 = ObjectContext.ObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault();
             ObjectField ObjectField4 = ObjectContext.ObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault();

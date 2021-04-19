@@ -560,7 +560,6 @@ namespace CommunicationWorkerRole
             else if (resultCode == "QUEUE") result = "Queued Task";
             else if (resultCode == "SENDINTERFACE") result = "Send Interface";
             else if (resultCode == "SENDDOCUMENT") result = "Documents Send";
-            else if (resultCode == "CREATETASK") result = "Create Task";
 
             return result;
 
@@ -829,11 +828,6 @@ namespace CommunicationWorkerRole
             entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.SendInterfaceAutomationFailedXml)).ToList();
             entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.SendDocumentAutomationSsucceedXml)).ToList();
             entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.SendDocumentAutomationFailedXml)).ToList();
-            entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.CreateTaskAutomationSsucceedXml)).ToList();
-            entityChangeAutomationList = entityChangeAutomationList.Concat(GetEntityChangeAutomationList(entityChange.CreateTaskAutomationFailedXml)).ToList();
-
-
-
             return entityChangeAutomationList;
         }
 

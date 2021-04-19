@@ -54,9 +54,8 @@ export class RatioBoxComponent extends BaseComponent implements OnInit, OnDestro
     public get Ratio() { return this.iRatio; }
     public set Ratio(value: number) {
         if (this.iRatio != value) {
-            this.iRatio = AppTool.Round(value, 3);
-
-            this.DataContext[this.ObjectFieldName] = this.iRatio;
+            this.iRatio = value;
+            this.DataContext[this.ObjectFieldName] = value;
             this.Validate();
 
             this.CurrentSession.FireEvent("RatioBoxValueChanged");

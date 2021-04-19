@@ -234,9 +234,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='ForwardingShipmentNumber' Type='varchar' Size='100'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='ShipmentTypeCode' Type='varchar' Size='5'>"+
-"    <Constraints Nullable='true' />"+
-"  </Column>"+
 "  <Relation ForeignKeyColumn='EntityType' ReferencedTable='CargoTrackingHeaderEntityTypes' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='CurrentMilestoneCode' ReferencedTable='CargoTrackingMilestones' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+
 "  <Index Columns='EntityId' />"+

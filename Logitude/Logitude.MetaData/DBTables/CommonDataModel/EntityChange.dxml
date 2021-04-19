@@ -195,25 +195,6 @@
     <Constraints
       Nullable="true" />
   </Column>
- 
-    <Column
-      Name="CreateTaskAutomationFailedXml"
-      ShortName="CreateTaskFailedXml"
-      Type="nvarchar"
-      Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CreateTaskAutomationSsucceedXml"
-    ShortName="CreateTaskSsucceedXml"
-    Type="nvarchar"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  
-  
   <Relation
     ForeignKeyColumn="CreateByUserId"
     ReferencedTable="Users"

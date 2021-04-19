@@ -729,18 +729,6 @@ export class GLAccountPM {
         }
     }
 
-    private cardsDataId: string;
-    public get CardsDataId() { return this.cardsDataId; }
-    public set CardsDataId(newValue: string) { if (this.cardsDataId != newValue) { this.cardsDataId = newValue; this.MarkAsDirty("CardsDataId"); } }
-       
-	 
-
-    private paymentTermName: string;
-    public get PaymentTermName() { return this.paymentTermName; }
-    public set PaymentTermName(newValue: string) { if (this.paymentTermName != newValue) { this.paymentTermName = newValue; this.MarkAsDirty("PaymentTermName"); } }
-       
-	 
-
     public OldEntityPM: GLAccountPM;
 		
     public IsDirty: boolean;

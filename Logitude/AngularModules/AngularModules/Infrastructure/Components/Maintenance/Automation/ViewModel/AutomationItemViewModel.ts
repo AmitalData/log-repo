@@ -110,7 +110,6 @@ export class AutomationItemViewModel {
             else if (entityPM.ResultCode == "SETSLA") this.ResultName = "Set SLA";
             else if (entityPM.ResultCode == "QUEUE") this.ResultName = "Queued Task";
             else if (entityPM.ResultCode == "SENDINTERFACE") this.ResultName = "Send Interface";
-            else if (entityPM.ResultCode == "CREATETASK") this.ResultName = "Create Task";
 
         }
 

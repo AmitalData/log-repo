@@ -40,7 +40,6 @@ using Logitude.BL.ExternalService;
 using Logitude.BL.InvoiceModel.Tools.Behaviours;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -62,6 +61,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private ShipmentRepository shipmentRepository;
         private ShipmentPayableRepository shipmentPayableRepository;
         private string QBOAPPaymentId;
+
         private APInvoiceServiceInitializer initializer;
 
         public APInvoiceNormalService(IInvoiceContext objectContext, APInvoicePM entityPM)
@@ -81,6 +81,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             allPayables = new List<ShipmentPayable>();
             shipmentRepository = new ShipmentRepository(tenant);
             shipmentPayableRepository = new ShipmentPayableRepository(tenant);
+
+            //this.GetLoggedContact();
+            //this.GetAccountingSystem();
         }
         public APInvoiceNormalService(MockInvoiceContext objectContext, APInvoicePM entityPM)
         {
@@ -89,16 +92,53 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.tenant = entityPM.Tenant;
             this.entityPM = entityPM;
+            //this.isInvoiceLinesChanged = false;
+            //this.invoiceRepository = new APInvoiceRepository(objectContext);
             this.invoiceLineRepository = new APInvoiceLineRepository(objectContext);
+            //this.invoiceTotalVatRepository = new APInvoiceTotalVATRepository(objectContext);
             this.invoiceEntityRepository = new APInvoiceEntityRepository(objectContext);
             this.invoicePaymentRepository = new APInvoicePaymentRepository(objectContext);
             this.paymentRepository = new APPaymentRepository(objectContext);
+            //this.vatTypeRepository = new VatTypeRepository(commonMockContext);
+            //this.accountingSettingRepository = new AccountingSettingRepository(commonMockContext);
+            //this.accountingSystemRepository = new AccountingSystemRepository(commonMockContext);
 
             allShipments = new List<Shipment>();
             allPayables = new List<ShipmentPayable>();
             shipmentRepository = new ShipmentRepository(shipmentMockContext);
             shipmentPayableRepository = new ShipmentPayableRepository(shipmentMockContext);
+
+            //this.GetLoggedContact();
+            //this.GetAccountingSystem();
         }
+
+        //private void GetLoggedContact()
+        //{
+        //    if (entityPM.CreatedFromAPI)
+        //    {
+        //        this.loggedContactId = entityPM.CreatedByUserId;
+        //    }
+
+        //    else
+        //    {
+        //        ContactRepository contactRepository = new ContactRepository(tenant);
+
+        //        string email = HttpContext.Current.User.Identity.Name;
+
+        //        if (email != null)
+        //        {
+        //            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
+        //            this.loggedContactId = loggedContact.Id;
+        //        }
+
+        //        else
+        //        {
+        //            ContactPM loggedContact = new ContactQuery(tenant).GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedUser(), tenant, true);
+        //            this.loggedContactId = loggedContact.Id;
+        //        }
+        //    }
+        //}
+
 
         private List<APInvoiceLinePM> invoiceLinesChangeSet = new List<APInvoiceLinePM>();
         private List<APInvoicePaymentPM> invoicePaymentsChangeSet = new List<APInvoicePaymentPM>();
@@ -145,8 +185,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.UpdateInvoiceEntities();
             }
 
-            this.BuildShipmentsNumbers();
             this.UpdateInvoiceLines();
+            //this.UpdateTotalVats();
             this.BuildSearchFields();
 
             var setApproved = entityPM.SetApproved;
@@ -407,8 +447,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             this.invoice = initializer.EntityPOCO;
+
             this.ValidateHigherStatus();
+
             this.initializer.HandleBehaviours();
+
             this.InitializeComponent();
 
             APInvoiceValidator.Validate(entityPM, invoice, initializer.IsNewEntity, initializer.Context, initializer.CommonContext, this.MainShipmentConcurrencyGUID);
@@ -423,7 +466,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             this.UpdateInvoiceLines();
-            this.BuildShipmentsNumbers();
+            //this.UpdateTotalVats();
 
             // Journal Work
             this.AddAPInvoiceJournalAndJournalLines(entityPM, entityPM.SetApproved);
@@ -439,6 +482,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 helper.APInvoiceQuickbooksValidating(entityPM, initializer.Flags.IsSetApproved, initializer.IsNewEntity, initializer.Context, initializer.CommonContext);
             }
+
+
 
             EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new APInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "APInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityAutomationMappingPMFields = new EntityAutomationAPInvoiceMappingPMFields() });
             entityAutomationService.RunAutomation();
@@ -476,13 +521,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
                 }
             }
-            
+
             this.BuildSearchFields();
             initializer.Repository.Update(invoice);
             initializer.Repository.SubmitChanges();
 
             if (!String.IsNullOrEmpty(QBOAPPaymentId))
             {
+
                 APPaymentHelper service = new APPaymentHelper();
                 APPaymentQuery PaymentQuery = new APPaymentQuery(paymentRepository);
                 APPaymentPM paymentPM = PaymentQuery.GetSinglePM(QBOAPPaymentId, tenant);
@@ -2310,11 +2356,5 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             else return null;
         }
         #endregion
-
-        private void BuildShipmentsNumbers()
-        {
-            APInvoiceShipmentsNumbersBehaviour invoiceShipmentsNumbersBehaviour = new APInvoiceShipmentsNumbersBehaviour(entityPM);
-            invoiceShipmentsNumbersBehaviour.CopmuteShipmentsNumbers();
-        }
     }
 }

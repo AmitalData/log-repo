@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class AutomationUpdateClass
    {  		
-		public const string HashString = "f85c79caef2dd1bef06f63673b917b6a";
+		public const string HashString = "50c970dc172e89ae310eb1e1343b7efc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Automation",
-			      				    Code =  "5681",
+			      				    Code =  "aedf",
 			      				    Name =  "Automation",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -360,8 +360,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   		   //--------------> Additional Features <--------------\\
 
 		   Feature AutomationFeature_SENDINTERFACERESULT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SENDINTERFACERESULT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AutomationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Automation.Features.SENDINTERFACERESULT", NameTextCodeDefaultText = @"Send Interface Result" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AutomationObjectTable);
-
-		   Feature AutomationFeature_CREATETASKRESULT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CREATETASKRESULT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AutomationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Automation.Features.CREATETASKRESULT", NameTextCodeDefaultText = @"Create Task in Collaboration Tool" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AutomationObjectTable);
 
    
 	    

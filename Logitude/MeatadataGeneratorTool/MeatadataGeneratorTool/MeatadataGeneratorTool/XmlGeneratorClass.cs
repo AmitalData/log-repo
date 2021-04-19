@@ -1950,7 +1950,7 @@ namespace MeatadataGeneratorTool
                 SetAttribute("IsOld", f.IsOld.ToString().ToLower(), TextCodeElement, null);
                 SetAttribute("IsCoreFeature", f.IsCoreFeature.ToString().ToLower(), TextCodeElement, null);
                 SetAttribute("IsBusinessUnitEnabled", f.IsBusinessUnitEnabled.ToString().ToLower(), TextCodeElement, null);
-                SetAttribute("ToggleCode", GetStringValue(f.ToggleCode), TextCodeElement, null);
+
 
 
             }

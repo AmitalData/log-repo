@@ -234,7 +234,6 @@ namespace WebFreight.Web.DataProviders
         public byte[] CustomerLogo { get; set; }
         public string HouseReferenceNumber { get; set; }
         public string Notify2NameAddress { get; set; }
-        public string SpecialHandlingCodes { get; set; }
     }
 
     public class CommodityLine

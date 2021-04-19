@@ -144,8 +144,6 @@ namespace Logitude.Accounting.Data.EntityLists
        public decimal CalculatedLocalAmount  { get; set; }
        [DataMember]
        public decimal CalculatedForeignAmount  { get; set; }
-       [DataMember]
-       public string AccountDisplayNumber  { get; set; }
    }
 
 }

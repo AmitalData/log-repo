@@ -1,13 +1,13 @@
 ﻿
 <Script DBType="Main" Module="Quote" AOT="true" TargetTableName="QuoteComputedFields">
-  <Sql Version="2">
-    <![CDATA[ 
+  <Sql Version="1">
+    <![CDATA[
 declare @QuoteId as varchar(15)
 declare @Tenant as int
 declare @EstimatedPayablesInLocal as float 
 declare @EstimatedPayablesInSales as float
-declare @EstimatedReceivablesInLocal as  float
-declare @EstimatedReceivablesInSales as  float
+declare @EstimatedReceivablesInLocal as float
+declare @EstimatedReceivablesInSales as float
 
 BEGIN
 

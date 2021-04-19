@@ -1,120 +1,120 @@
-﻿<Script DBType="Main" Module="Shipment" TargetTableName="ShipmentPayables">
+﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="ShipmentPayables">
   <Sql Version="1">
     <![CDATA[
-		--declare @Tenant as int
-	--	declare @EntityId as varchar(15)
-	--	declare @VatTypeId as varchar(15)
-	--	declare @VatPercentage as float
-	--	declare @VendorId as varchar(15)
-	--	declare @PayableVatTypeId as varchar(15)
-	--	declare @CreateDate as Datetime
-	--	declare @VatAmountLocal as float
-	--	declare @VatAmountProfit as float
-	--	declare @ExpectedAmountLocal as float 
-	--	declare @ExpectedAmountInProfitCurrency as float 
-	--	declare @IsMultiPercentage as bit
-	--	declare @SingleVATTypeId as varchar(15)
-	--	declare @InvoiceLinesVatAmountLocal  as float 
-	--	declare @InvoiceLinesVatAmountProfit as float 
-	--	declare @OpenAmountInLocalCurrency as float 
-	--	declare @OpenAmountInProfitCurrency as float 
-	--	declare @LocalCurrencyAmount as float 
-	--	declare @ProfitCurrencyAmount as float 
+		declare @Tenant as int
+		declare @EntityId as varchar(15)
+		declare @VatTypeId as varchar(15)
+		declare @VatPercentage as float
+		declare @VendorId as varchar(15)
+		declare @PayableVatTypeId as varchar(15)
+		declare @CreateDate as Datetime
+		declare @VatAmountLocal as float
+		declare @VatAmountProfit as float
+		declare @ExpectedAmountLocal as float 
+		declare @ExpectedAmountInProfitCurrency as float 
+		declare @IsMultiPercentage as bit
+		declare @SingleVATTypeId as varchar(15)
+		declare @InvoiceLinesVatAmountLocal  as float 
+		declare @InvoiceLinesVatAmountProfit as float 
+		declare @OpenAmountInLocalCurrency as float 
+		declare @OpenAmountInProfitCurrency as float 
+		declare @LocalCurrencyAmount as float 
+		declare @ProfitCurrencyAmount as float 
 
-	--	BEGIN
-	--		DECLARE DataCursor CURSOR READ_ONLY
-	--		FOR
-	--		SELECT Id, Tenant, VendorId, VatTypeId, CreateDate, ExpectedAmountLocal, ExpectedAmountInProfitCurrency
-	--		FROM ShipmentPayables where ReceivableId is null and $LastCounterWhere$
-	--		OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @VendorId, @VatTypeId, @CreateDate, @ExpectedAmountLocal, @ExpectedAmountInProfitCurrency
-	--		WHILE @@FETCH_STATUS = 0
-	--		BEGIN
+		BEGIN
+			DECLARE DataCursor CURSOR READ_ONLY
+			FOR
+			SELECT Id, Tenant, VendorId, VatTypeId, CreateDate, ExpectedAmountLocal, ExpectedAmountInProfitCurrency
+			FROM ShipmentPayables where ReceivableId is null and $LastCounterWhere$
+			OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @VendorId, @VatTypeId, @CreateDate, @ExpectedAmountLocal, @ExpectedAmountInProfitCurrency
+			WHILE @@FETCH_STATUS = 0
+			BEGIN
 
-	--				set @VatAmountLocal =  dbo.CalculatePayableVatOpenAmount(@VendorId,@VatTypeId, @Tenant, @CreateDate, @ExpectedAmountLocal) ;
-	--					set @VatAmountProfit = dbo.CalculatePayableVatOpenAmount(@VendorId,@VatTypeId, @Tenant, @CreateDate, @ExpectedAmountInProfitCurrency);
+					set @VatAmountLocal =  dbo.CalculatePayableVatOpenAmount(@VendorId,@VatTypeId, @Tenant, @CreateDate, @ExpectedAmountLocal) ;
+						set @VatAmountProfit = dbo.CalculatePayableVatOpenAmount(@VendorId,@VatTypeId, @Tenant, @CreateDate, @ExpectedAmountInProfitCurrency);
 
-	--				update ShipmentPayables
-	--			set VatAmountLocal = @VatAmountLocal, 
-	--					VatAmountProfit = @VatAmountProfit
-	--			where Id = @EntityId and Tenant = @Tenant
+					update ShipmentPayables
+				set VatAmountLocal = @VatAmountLocal, 
+						VatAmountProfit = @VatAmountProfit
+				where Id = @EntityId and Tenant = @Tenant
 
-	--		FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @VendorId, @VatTypeId, @CreateDate, @ExpectedAmountLocal, @ExpectedAmountInProfitCurrency
-	--		END
-	--		CLOSE DataCursor
-	--		DEALLOCATE DataCursor
-	--	END
+			FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @VendorId, @VatTypeId, @CreateDate, @ExpectedAmountLocal, @ExpectedAmountInProfitCurrency
+			END
+			CLOSE DataCursor
+			DEALLOCATE DataCursor
+		END
 
-	--	BEGIN
-	--		DECLARE DataCursor CURSOR READ_ONLY
-	--		FOR
-	--		SELECT Id, Tenant, VendorId, VatTypeId, CreateDate, ExpectedAmountLocal, ExpectedAmountInProfitCurrency
-	--		FROM ShipmentPayables
-	--		where ReceivableId is not null and $LastCounterWhere$
-	--		OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @VendorId, @VatTypeId, @CreateDate, @ExpectedAmountLocal, @ExpectedAmountInProfitCurrency
-	--		WHILE @@FETCH_STATUS = 0
-	--		BEGIN
-	--		set @VatAmountLocal = 0;
-	--		set @VatAmountProfit = 0;
+		BEGIN
+			DECLARE DataCursor CURSOR READ_ONLY
+			FOR
+			SELECT Id, Tenant, VendorId, VatTypeId, CreateDate, ExpectedAmountLocal, ExpectedAmountInProfitCurrency
+			FROM ShipmentPayables
+			where ReceivableId is not null and $LastCounterWhere$
+			OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @VendorId, @VatTypeId, @CreateDate, @ExpectedAmountLocal, @ExpectedAmountInProfitCurrency
+			WHILE @@FETCH_STATUS = 0
+			BEGIN
+			set @VatAmountLocal = 0;
+			set @VatAmountProfit = 0;
 
-	--		DECLARE APInvoiceLine_CURSOR CURSOR 
-	--			FOR 
-	--			SELECT LocalCurrencyAmount, ProfitCurrencyAmount
-	--			FROM APInvoiceLines
-	--			OPEN APInvoiceLine_CURSOR
-	--			FETCH NEXT FROM APInvoiceLine_CURSOR INTO @LocalCurrencyAmount, @ProfitCurrencyAmount
-	--			WHILE @@FETCH_STATUS = 0
-	--			BEGIN 
+			DECLARE APInvoiceLine_CURSOR CURSOR 
+				FOR 
+				SELECT LocalCurrencyAmount, ProfitCurrencyAmount
+				FROM APInvoiceLines
+				OPEN APInvoiceLine_CURSOR
+				FETCH NEXT FROM APInvoiceLine_CURSOR INTO @LocalCurrencyAmount, @ProfitCurrencyAmount
+				WHILE @@FETCH_STATUS = 0
+				BEGIN 
 			
-	--				set @IsMultiPercentage = (select IsMultiPercentage from VatTypes where Tenant = @Tenant AND Id = @VatTypeId)
-	--				if(@IsMultiPercentage = '0')
-	--				begin 
-	--					set @InvoiceLinesVatAmountLocal = @InvoiceLinesVatAmountLocal + (@LocalCurrencyAmount + @LocalCurrencyAmount * @VatPercentage / 100);
-	--					set @InvoiceLinesVatAmountProfit = @InvoiceLinesVatAmountProfit + (@ProfitCurrencyAmount + @ProfitCurrencyAmount * @VatPercentage / 100);
-	--				end
+					set @IsMultiPercentage = (select IsMultiPercentage from VatTypes where Tenant = @Tenant AND Id = @VatTypeId)
+					if(@IsMultiPercentage = '0')
+					begin 
+						set @InvoiceLinesVatAmountLocal = @InvoiceLinesVatAmountLocal + (@LocalCurrencyAmount + @LocalCurrencyAmount * @VatPercentage / 100);
+						set @InvoiceLinesVatAmountProfit = @InvoiceLinesVatAmountProfit + (@ProfitCurrencyAmount + @ProfitCurrencyAmount * @VatPercentage / 100);
+					end
 
-	--				else 
-	--				begin 
-	--					set @InvoiceLinesVatAmountLocal = @LocalCurrencyAmount;
-	--					set @InvoiceLinesVatAmountProfit = @ProfitCurrencyAmount;
-	--					DECLARE VatGroups_CURSOR CURSOR 
-	--					FOR 
-	--					SELECT SingleVATTypeId
-	--					FROM VATTypesGroups
-	--					OPEN VatGroups_CURSOR
-	--					FETCH NEXT FROM VatGroups_CURSOR INTO @SingleVATTypeId
-	--					WHILE @@FETCH_STATUS = 0
-	--					BEGIN 
-	--						set @VatPercentage = (select top 1 Percentage from VatTypePercentages where VatTypeId = @SingleVATTypeId AND Tenant = @Tenant and FromDate <= GETDATE() order by FromDate desc)
-	--						set @InvoiceLinesVatAmountLocal = @InvoiceLinesVatAmountLocal + Round(@LocalCurrencyAmount * @VatPercentage / 100, 2);
-	--						set @InvoiceLinesVatAmountProfit = @InvoiceLinesVatAmountProfit + Round(@ProfitCurrencyAmount * @VatPercentage / 100, 2);
-	--					FETCH NEXT FROM VatGroups_CURSOR INTO @SingleVATTypeId
-	--					END
-	--					CLOSE VatGroups_CURSOR
-	--					DEALLOCATE VatGroups_CURSOR
-	--				end
+					else 
+					begin 
+						set @InvoiceLinesVatAmountLocal = @LocalCurrencyAmount;
+						set @InvoiceLinesVatAmountProfit = @ProfitCurrencyAmount;
+						DECLARE VatGroups_CURSOR CURSOR 
+						FOR 
+						SELECT SingleVATTypeId
+						FROM VATTypesGroups
+						OPEN VatGroups_CURSOR
+						FETCH NEXT FROM VatGroups_CURSOR INTO @SingleVATTypeId
+						WHILE @@FETCH_STATUS = 0
+						BEGIN 
+							set @VatPercentage = (select top 1 Percentage from VatTypePercentages where VatTypeId = @SingleVATTypeId AND Tenant = @Tenant and FromDate <= GETDATE() order by FromDate desc)
+							set @InvoiceLinesVatAmountLocal = @InvoiceLinesVatAmountLocal + Round(@LocalCurrencyAmount * @VatPercentage / 100, 2);
+							set @InvoiceLinesVatAmountProfit = @InvoiceLinesVatAmountProfit + Round(@ProfitCurrencyAmount * @VatPercentage / 100, 2);
+						FETCH NEXT FROM VatGroups_CURSOR INTO @SingleVATTypeId
+						END
+						CLOSE VatGroups_CURSOR
+						DEALLOCATE VatGroups_CURSOR
+					end
 
-	--			FETCH NEXT FROM APInvoiceLine_CURSOR INTO @LocalCurrencyAmount, @ProfitCurrencyAmount
-	--			END
-	--			CLOSE APInvoiceLine_CURSOR
-	--			DEALLOCATE APInvoiceLine_CURSOR
+				FETCH NEXT FROM APInvoiceLine_CURSOR INTO @LocalCurrencyAmount, @ProfitCurrencyAmount
+				END
+				CLOSE APInvoiceLine_CURSOR
+				DEALLOCATE APInvoiceLine_CURSOR
 
 
-	--		set @OpenAmountInLocalCurrency =  dbo.CalculatePayableVatOpenAmount(@VendorId,@VatTypeId, @Tenant, @CreateDate, @ExpectedAmountLocal) ;
-	--			set @OpenAmountInProfitCurrency = dbo.CalculatePayableVatOpenAmount(@VendorId,@VatTypeId, @Tenant, @CreateDate, @ExpectedAmountInProfitCurrency);
+			set @OpenAmountInLocalCurrency =  dbo.CalculatePayableVatOpenAmount(@VendorId,@VatTypeId, @Tenant, @CreateDate, @ExpectedAmountLocal) ;
+				set @OpenAmountInProfitCurrency = dbo.CalculatePayableVatOpenAmount(@VendorId,@VatTypeId, @Tenant, @CreateDate, @ExpectedAmountInProfitCurrency);
 	
-	--		set @VatAmountLocal = Round(@InvoiceLinesVatAmountLocal + @OpenAmountInLocalCurrency, 2);
-	--			set @VatAmountProfit = Round(@InvoiceLinesVatAmountProfit + @OpenAmountInProfitCurrency, 2);
+			set @VatAmountLocal = Round(@InvoiceLinesVatAmountLocal + @OpenAmountInLocalCurrency, 2);
+				set @VatAmountProfit = Round(@InvoiceLinesVatAmountProfit + @OpenAmountInProfitCurrency, 2);
 
-	--			update ShipmentPayables
-	--			set VatAmountLocal = @VatAmountLocal, 
-	--					VatAmountProfit = @VatAmountProfit
-	--			where Id = @EntityId and Tenant = @Tenant
+				update ShipmentPayables
+				set VatAmountLocal = @VatAmountLocal, 
+						VatAmountProfit = @VatAmountProfit
+				where Id = @EntityId and Tenant = @Tenant
 
-	--		FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @VendorId, @VatTypeId, @CreateDate, @ExpectedAmountLocal, @ExpectedAmountInProfitCurrency
-	--		END
-	--		CLOSE DataCursor
-	--		DEALLOCATE DataCursor
-	--	END
+			FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @VendorId, @VatTypeId, @CreateDate, @ExpectedAmountLocal, @ExpectedAmountInProfitCurrency
+			END
+			CLOSE DataCursor
+			DEALLOCATE DataCursor
+		END
 
     ]]>
   </Sql>

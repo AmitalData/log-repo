@@ -215,13 +215,6 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public string Surcharge10CurrencyId { get; set; }
 	      
         public virtual Currency Surcharge10Currency { get; set; }
-        [ForeignKey("ViaPort")]
-        [Column("ViaPortId")]
-	    public string ViaPortId { get; set; }
-	      
-        public virtual Port ViaPort { get; set; }
-        [Column("ViaPortText")]
-	    public string ViaPortText { get; set; }
     }
 }
 	 
