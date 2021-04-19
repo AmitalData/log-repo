@@ -430,11 +430,11 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         {
             foreach (CargoTrackingShipmentList shipment in shipmetsLists)
             {
-                if (shipment.CurrentMilestoneCode == null)
-                {
+                //if (shipment.CurrentMilestoneCode == null)
+                //{
                     List<Milestone> shipmentMilestones = BuildShipmentMilstones(shipment);
                     SetMilestonesStatus(shipment, shipmentMilestones);
-                }
+                //}
             }
             return shipmetsLists;
         }
