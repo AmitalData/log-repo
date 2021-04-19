@@ -1,4 +1,4 @@
-@release @stable 
+@release  @WaitingForFixing
 Feature: Create Consolidation Invoice
     After the user logging in the system,Update Accounting System to be None and navigate to customers workspace
     will create a customer as shipper in the new shipment, after update packages and payables tabs,
