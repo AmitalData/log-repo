@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExportStorgeUpdateClass
    {  		
-		public const string HashString = "ce6e62d36ad4f457cdb3983a1ecb3934";
+		public const string HashString = "1865fdc73c7d22cb260cfea0f5eb47f4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -94,7 +94,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
+			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
@@ -858,10 +858,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VoyageNo",
 					  						DefaultText =  "VoyageNo",
-					  						FullLocalDefaultText =  "מספר הפלגה",
+					  						FullLocalDefaultText =  "Voyage No.",
 					  						ListFieldLable =  "VoyageNoListLable",
 					  						ListLableDefaultText =  "Voyage No.",
-					  						ListLocalDefaultText =  "מספר הפלגה",
+					  						ListLocalDefaultText =  "Voyage No.",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1044,10 +1044,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StorageStatusName",
 					  						DefaultText =  "Storage Status",
-					  						FullLocalDefaultText =  "שם סטטוס אחסנה",
+					  						FullLocalDefaultText =  "Storage Status",
 					  						ListFieldLable =  "StorageStatusNameListLable",
-					  						ListLableDefaultText =  "Storage Status Name",
-					  						ListLocalDefaultText =  "שם סטטוס אחסנה",
+					  						ListLableDefaultText =  "Storage Status",
+					  						ListLocalDefaultText =  "Storage Status",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3867,11 +3867,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Manifest",
-					  						DefaultText =  "Manifest",
-					  						FullLocalDefaultText =  "מפתח מטען ראשי",
+					  						DefaultText =  "Manifest No.",
+					  						FullLocalDefaultText =  "Manifest No.",
 					  						ListFieldLable =  "ManifestListLable",
-					  						ListLableDefaultText =  "Manifest",
-					  						ListLocalDefaultText =  "מפתח מטען ראשי",
+					  						ListLableDefaultText =  "Manifest No.",
+					  						ListLocalDefaultText =  "Manifest No.",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -6744,9 +6744,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Hatara",
 					  						DefaultText =  "Hatara",
+					  						FullLocalDefaultText =  "Hatara Date",
 					  						ListFieldLable =  "HataraListLable",
-					  						ListLableDefaultText =  "Hatara",
-					  						ListLocalDefaultText =  "Hatara",
+					  						ListLableDefaultText =  "Hatara Date",
+					  						ListLocalDefaultText =  "Hatara Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -6906,6 +6907,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LoadingSiteCode",
 					  						ListPropertyPath =  "LoadingSiteCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -6965,6 +6967,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "FinalDestinationCode",
 					  						ListPropertyPath =  "FinalDestinationCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -6986,6 +6989,67 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "FinalDestinationCodeListLable",
 					  						ListLableDefaultText =  "Port Of Dis.",
 					  						ListLocalDefaultText =  "Port Of Dis.",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Routing",
+					  						ObjectTableName =  "Customs.ExportStorge",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  500,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  500,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Routing",
+					  						ListPropertyPath =  "Routing",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ExportStorge",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Routing",
+					  						DefaultText =  "Routing",
+					  						FullLocalDefaultText =  "Routing",
+					  						ListFieldLable =  "RoutingListLable",
+					  						ListLableDefaultText =  "Routing",
+					  						ListLocalDefaultText =  "Routing",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -7131,8 +7195,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen ExportStorgeCustomsExportStorgeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ExportStorge.HeaderScreen", Name = "Customs.ExportStorgeHeaderScreen", ObjectTableId = ExportStorgeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
-      	
+	         Screen ExportStorgeCustomsExportStorgeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.ExportStorgeHeaderScreen", Name = "Customs.ExportStorgeHeaderScreen", ObjectTableId = ExportStorgeObjectTable.Id, NumberOfColumns = 5, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
+      
+             ScreenField CustomsExportStorgeCustomsExportStorgeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ExportStorgeCustomsExportStorgeHeaderScreenScreen0.Id,ScreenCode = ExportStorgeCustomsExportStorgeHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.ExportStorge.ExportFileNo", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsExportStorgeCustomsExportStorgeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ExportStorgeCustomsExportStorgeHeaderScreenScreen0.Id,ScreenCode = ExportStorgeCustomsExportStorgeHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.ExportStorge.OrderNo", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsExportStorgeCustomsExportStorgeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ExportStorgeCustomsExportStorgeHeaderScreenScreen0.Id,ScreenCode = ExportStorgeCustomsExportStorgeHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.ExportStorge.ContainerNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsExportStorgeCustomsExportStorgeHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = ExportStorgeCustomsExportStorgeHeaderScreenScreen0.Id,ScreenCode = ExportStorgeCustomsExportStorgeHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.ExportStorge.VoyageNo", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsExportStorgeCustomsExportStorgeHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ExportStorgeCustomsExportStorgeHeaderScreenScreen0.Id,ScreenCode = ExportStorgeCustomsExportStorgeHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.ExportStorge.Manifest", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsExportStorgeCustomsExportStorgeHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = ExportStorgeCustomsExportStorgeHeaderScreenScreen0.Id,ScreenCode = ExportStorgeCustomsExportStorgeHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.ExportStorge.Routing", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsExportStorgeCustomsExportStorgeHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = ExportStorgeCustomsExportStorgeHeaderScreenScreen0.Id,ScreenCode = ExportStorgeCustomsExportStorgeHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.ExportStorge.CustomFileNo", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsExportStorgeCustomsExportStorgeHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = ExportStorgeCustomsExportStorgeHeaderScreenScreen0.Id,ScreenCode = ExportStorgeCustomsExportStorgeHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.ExportStorge.Hatara", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsExportStorgeCustomsExportStorgeHeaderScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = ExportStorgeCustomsExportStorgeHeaderScreenScreen0.Id,ScreenCode = ExportStorgeCustomsExportStorgeHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.ExportStorge.StorageDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsExportStorgeCustomsExportStorgeHeaderScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 1, ScreenId = ExportStorgeCustomsExportStorgeHeaderScreenScreen0.Id,ScreenCode = ExportStorgeCustomsExportStorgeHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.ExportStorge.StorageStatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    ExportStorgeObjectTable.HeaderScreenId = ExportStorgeCustomsExportStorgeHeaderScreenScreen0.Id;
 		    ExportStorgeObjectTable.HeaderScreenCode = ExportStorgeCustomsExportStorgeHeaderScreenScreen0.Code;
 

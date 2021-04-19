@@ -684,6 +684,7 @@
   </Column>
   <Column
     Name="SealNumber"
+    OldNames="sealNumber"
     Type="nvarchar"
     Size="35">
     <Constraints
@@ -691,6 +692,7 @@
   </Column>
   <Column
     Name="SealType"
+    OldNames="sealType"
     Type="varchar"
     Size="3">
     <Constraints

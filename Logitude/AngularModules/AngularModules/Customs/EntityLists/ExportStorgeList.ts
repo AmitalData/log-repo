@@ -91,6 +91,7 @@ export class ExportStorgeList {
 	ShipAgentName: string;
 	LoadingSiteCode: string;
 	FinalDestinationCode: string;
+	Routing: string;
 	
 }
  

@@ -180,6 +180,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string LoadingSiteCode  { get; set; }
        [DataMember]
        public string FinalDestinationCode  { get; set; }
+       [DataMember]
+       public string Routing  { get; set; }
    }
 
 }

@@ -301,6 +301,7 @@ import { CustomsCountryPMService } from './Services/StandardPMs/CustomsCountryPM
 import { PendingByKeywordPMService } from './Services/StandardPMs/PendingByKeywordPMService';
 import { ReferantTeamPMService } from './Services/StandardPMs/ReferantTeamPMService';
 
+import { ExportStorgePMService } from './Services/StandardPMs/ExportStorgePMService';
 
 //#endregion
 
@@ -724,6 +725,7 @@ export class ModuleProviders {
             case "PendingByKeywordPMService": { myResult = new PendingByKeywordPMService(); break; }
             case "CurrencyTypePMService": { myResult = new CurrencyTypePMService(); break; }
             case "ReferantTeamPMService": { myResult = new ReferantTeamPMService(); break; }
+            case "ExportStorgePMService": { myResult = new ExportStorgePMService(); break; }
 
             //#endregion
 

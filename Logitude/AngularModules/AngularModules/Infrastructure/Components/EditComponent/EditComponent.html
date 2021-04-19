@@ -148,7 +148,7 @@
 
 <div class="MediaFillAbsolute LogitudeEditComponent" [ngStyle]="{background: ComponentBackground}">
     <div class="MarginAbsolute10" style="top: 5px; bottom: 8px;" [style.overflow-y]="IsSplitBtnVisible ? 'auto' : 'none'">
-        <table>
+        <table [dir]="LayoutDirection">
             <tr>
 
                 <!-- Edit Component -->
@@ -246,7 +246,7 @@
                                     <table>
                                         <tr>
                                             <td style="width: 1px;">
-                                                <BackButton  id="{{'BackButton' | IdGeneratorPipe}}" [Text]="BackButtonLabel" (click)="BackButtonClicked()"></BackButton>
+                                                <BackButton [LayoutDirection]="LayoutDirection"  id="{{'BackButton' | IdGeneratorPipe}}" [Text]="BackButtonLabel" (click)="BackButtonClicked()"></BackButton>
                                             </td>
 
                                             <td style="width: 10px; min-width: 10px;">
@@ -364,7 +364,7 @@
 
                                                                 <td   *ngIf="row.HideField == false" class="HeaderScreenValue" [style.height.px]="HeaderScreenRowHeight">
                                                                     <div [style.height.px]="HeaderScreenRowHeight" [style.line-height.px]="HeaderScreenRowHeight" style="width: 100%; position: relative;" *ngIf="EntityPM">
-                                                                        <ObjectFieldTemplate [ObjectTable]="ObjectTable" [ObjectField]="row.ObjectField" [Entity]="EntityPM" [IsHeaderScreenTemplate]="true"></ObjectFieldTemplate>
+                                                                        <ObjectFieldTemplate [Direction]="LayoutDirection" [ObjectTable]="ObjectTable" [ObjectField]="row.ObjectField" [Entity]="EntityPM" [IsHeaderScreenTemplate]="true"></ObjectFieldTemplate>
                                                                     </div>
                                                                 </td>
                                                             </tr>

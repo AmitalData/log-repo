@@ -28,6 +28,17 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPOCOToPM(ExportStorgePM entityPM, ExportStorge entityPOCO)
         {
+
+            entityPM.Routing = entityPOCO.LoadingSite;
+
+            if (!string.IsNullOrEmpty(entityPM.Routing)) entityPM.Routing += " - ";
+
+            entityPM.Routing += entityPOCO.FirstDestinationInternatID;
+
+            if (!string.IsNullOrEmpty(entityPOCO.FirstDestinationInternatID))
+                entityPM.Routing += " - ";
+
+                entityPM.Routing +=  entityPOCO.FinalDestinationInternatID;
             //throw new NotImplementedException();
         }
         private static void BuildSearchFields(ExportStorgePM entityPM, ExportStorge poco, bool isNewEntity)
