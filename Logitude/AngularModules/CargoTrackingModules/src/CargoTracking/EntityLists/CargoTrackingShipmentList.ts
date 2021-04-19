@@ -96,6 +96,9 @@ export class CargoTrackingShipmentList {
 	ShipmentTypeCode: string;
 	CustomerEnglishName: string;
 	CustomerLocalName: string;
+	FromPortCode: string;
+	ToPortCode: string;
+	NumberOfPackages: number;
 	
 }
  

@@ -1998,6 +1998,75 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private string fromPortCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FromPortCode  
+	   {
+	    
+	     get
+		{
+		   return fromPortCode;
+		 }
+		 set
+		 {
+		   if(fromPortCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromPortCode",OldValue=fromPortCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fromPortCode=value;
+		   }
+			
+		 }
+	   }
+	  private string toPortCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToPortCode  
+	   {
+	    
+	     get
+		{
+		   return toPortCode;
+		 }
+		 set
+		 {
+		   if(toPortCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToPortCode",OldValue=toPortCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toPortCode=value;
+		   }
+			
+		 }
+	   }
+	  private int? numberOfPackages ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? NumberOfPackages  
+	   {
+	    
+	     get
+		{
+		   return numberOfPackages;
+		 }
+		 set
+		 {
+		   if(numberOfPackages != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NumberOfPackages",OldValue=numberOfPackages,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   numberOfPackages=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

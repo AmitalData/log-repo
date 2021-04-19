@@ -8,7 +8,8 @@ import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/Ca
 import { CargoTrackingShipmentList } from 'src/CargoTracking/EntityLists/CargoTrackingShipmentList';
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 import { CargoTrackingShipmentWithMilestones, Milestone } from 'src/CargoTracking/Components/PublicSite/PublicShipmentDetailsComponent/PublicShipmentDetailsComponent';
-
+import { CargoTrackingPortService } from '../../../../Services/Others/CargoTrackingPortService';
+import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoTrackingShipmentService';
 
 @Component({
     selector: 'ShipmentDetailsComponent',
@@ -25,6 +26,10 @@ export class ShipmentDetailsComponent implements AfterViewInit {
     showMoreReferences: boolean = false;
     SecurityKey: string = "";
     Shipment: CargoTrackingShipmentWithMilestones = null;
+    public ShipmentWithMilestones: CargoTrackingShipmentWithMilestones;
+    public toPortCode: string;
+    public fromPortCode: string;
+    ShipmentReferences: string[] = [];
     SearchText: string = "";
     CustomersReferences = [
         '5689974987646132',
@@ -35,12 +40,16 @@ export class ShipmentDetailsComponent implements AfterViewInit {
         '5689974987646132',
         '5689974987646132',
     ]
+    CustomsBrokerReference: string;
+    ShipmentPM: any;
     get tenant() {
         return CargoTrackingBrandingData.Tenant;
     }
     constructor(private router: Router,
         private route: ActivatedRoute,
-        private searchService: CargoTrackingSearchService) {
+        private searchService: CargoTrackingSearchService,
+        private cargoTrackingPortService: CargoTrackingPortService,
+        private cargoTrackingShipmentService: CargoTrackingShipmentService) {
 
         this.GetIdFromURI();
 
@@ -94,19 +103,53 @@ export class ShipmentDetailsComponent implements AfterViewInit {
         this.sliderMarginLeft = screenwidth < 470 ? (this.sliderCardWidth + 55) * -1 : 0; // mobile: add
 
     }
+
     LoadShipment() {
         this.isLoading = true;
         this.searchService.getShipment(this.SecurityKey, this.tenant).subscribe((result: any) => {
             this.isLoading = false;
             console.log("[getShipment]", result);
-            this.Shipment = result;
+            this.ShipmentWithMilestones = result;
+            if (this.ShipmentWithMilestones) {
+                this.Shipment = result;
+                this.ShipmentReferences = result.ShipmentList.CustomerReference ? result.ShipmentList.CustomerReference.split(',') : null;
+                this.SetRoutingVariables();
+                this.GetShipmentPM();
+            }
 
             setTimeout(() => {
                 this.InitSlider();
                 this.BuildSliderCards();
 
             }, 200);
+        });
+    }
 
+    SetRoutingVariables() {
+        this.SetFromPortCode(this.Shipment.ShipmentList.FromPortId);
+        this.SetToPortCode(this.Shipment.ShipmentList.ToPortId);
+    }
+
+    private SetFromPortCode(id: string) {
+        this.cargoTrackingPortService.get(id).subscribe((result: any) => {
+            this.fromPortCode = result.Code;
+        })
+    }
+
+    private SetToPortCode(id: string) {
+        this.cargoTrackingPortService.get(id).subscribe((result: any) => {
+            this.toPortCode = result.Code;
+        })
+    }
+
+
+    GetShipmentPM() {
+        this.cargoTrackingShipmentService.get(this.Shipment.ShipmentList.EntityId).subscribe((result: any) => {
+            if (result) {
+                this.ShipmentPM = result;
+                this.CustomsBrokerReference = result.CustomFileNumber;
+                this.isLoading = false;
+            }
         });
     }
     private GetIdFromURI() {
