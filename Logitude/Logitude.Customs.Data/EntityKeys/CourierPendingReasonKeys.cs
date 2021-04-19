@@ -12,7 +12,7 @@ namespace Logitude.Customs.Data.EntityKeys
 {
    public partial class CourierPendingReasonKeys : EntityKeyFields
    {
-   	  public string Id  { get; set; }
+   	  public string Code  { get; set; }
 	  
 				 
 	    			   
@@ -20,7 +20,7 @@ namespace Logitude.Customs.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-                 return Id ;
+                 return Code ;
                  
       }
 

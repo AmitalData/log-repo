@@ -254,7 +254,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
             if (res.Result.SkipAutoInsurance === true) {
                 this._SkipAutoInsurance = true;
             }
-            if (FeatureLocator.IsFeatureGrantedByCode("IFRITZ")) { // If FRITZ always check insurance- Task 37656
+            if (FeatureLocator.IsFeatureGrantedByCode("IFRITZ") || FeatureLocator.IsFeatureGrantedByCode("ICL")) { // If FRITZ always check insurance- Task 37656
                 this._SkipAutoInsurance = false;
             }
             this.GetDocumentFilingId().subscribe((res: any) => {
@@ -2570,7 +2570,7 @@ export class AnalyzeUnifreightInsuranceService {
         }
         //}
 
-        if (FeatureLocator.IsFeatureGrantedByCode("IFRITZ")) {//    o        לאחר שמירה ובדיקת שדות לשליחה, יש לבדוק Feature כפי שבודקים במסך חשבון ספק
+        if (FeatureLocator.IsFeatureGrantedByCode("IFRITZ") || FeatureLocator.IsFeatureGrantedByCode("ICL")) {//    o        לאחר שמירה ובדיקת שדות לשליחה, יש לבדוק Feature כפי שבודקים במסך חשבון ספק
             console.log("FritzFeatureIsON .. ");
 
             if (toUpdateFreightAmount && !AppTool.IsNullOrEmpty(sFreightAmount) && !AppTool.IsNullOrEmpty(sFreightAmountCurr)) {

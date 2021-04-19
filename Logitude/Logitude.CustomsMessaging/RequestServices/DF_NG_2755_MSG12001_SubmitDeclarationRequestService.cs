@@ -458,7 +458,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                     CommunicationLoggingEntityReference = connectedDeclarationPM.DeclarationNumber,
                     EntityId = declarationPaymentPM.DeclarationId,
                     UserId = loggingUserId,
-
+                    UServerDelayTime = TimeSpan.FromMinutes(5),
                     CommunicationSubject = "FU Status PHF from logitude ",
                     MyFUStatus = new AmitalEventTracerModel.FUStatus()
                     {
