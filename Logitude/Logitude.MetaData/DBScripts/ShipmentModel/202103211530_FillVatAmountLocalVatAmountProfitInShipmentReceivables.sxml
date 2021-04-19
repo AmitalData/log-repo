@@ -1,7 +1,7 @@
 ﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="ShipmentReceivables">
-  <Sql Version="3">
+  <Sql Version="4">
     <![CDATA[
-	 declare @Tenant as int
+	declare @Tenant as int
      declare @EntityId as varchar(15)
      declare @VatTypeId as varchar(15)
      declare @VatPercentage as float
@@ -26,22 +26,19 @@
      	FROM ShipmentReceivables
      	left join ARInvoiceLines  on ARInvoiceLines.Id = ShipmentReceivables.ARInvoiceLineId
      	left join ARInvoices  on ARInvoices.Id = ARInvoiceLines.ARInvoiceId
-     	where ShipmentReceivables.ARInvoiceLineId is not null and $LastCounterWhere$
+     	where ShipmentReceivables.ARInvoiceLineId is not null 
      	OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @VatTypeId, @CreateDate, @TotalAmountLocal, @LocalCurrencyAmount, @ProfitCurrencyAmount, @VatPercentage, @IsRegionalTax,@RegionalTaxPercentage
      	WHILE @@FETCH_STATUS = 0
      	BEGIN
      	
-     	set @VatAmountLocal = @LocalCurrencyAmount;
-     	set @VatAmountProfit = @ProfitCurrencyAmount;
      
      	set @IsMultiPercentage = (select IsMultiPercentage from VatTypes where Tenant = @Tenant AND Id = @VatTypeId)
      	if(@IsMultiPercentage = '0')
      	begin 
-     		set @VatPercentage = (select top 1 Percentage from VatTypePercentages where VatTypeId = @ReceivableVatTypeId AND Tenant = @Tenant and FromDate <= @CreateDate order by FromDate desc)
-     		if(@VatPercentage is not null)
+     	if(@VatPercentage is not null)
         begin
-          set @VatAmountLocal = Round(@VatAmountLocal + (@LocalCurrencyAmount * @VatPercentage / 100), 2);
-     		  set @VatAmountProfit = Round(@VatAmountProfit +( @ProfitCurrencyAmount * @VatPercentage / 100), 2);
+          set @VatAmountLocal = Round(@LocalCurrencyAmount + (@LocalCurrencyAmount * @VatPercentage / 100), 2);
+     	set @VatAmountProfit = Round(@ProfitCurrencyAmount +( @ProfitCurrencyAmount * @VatPercentage / 100), 2);
         end
      
      		if(@IsRegionalTax = '1')

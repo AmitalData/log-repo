@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="ShipmentReceivables">
-  <Sql Version="2">
+  <Sql Version="3">
     <![CDATA[
 	 declare @Tenant as int
          declare @EntityId as varchar(15)
@@ -21,7 +21,7 @@
          	FOR
          	SELECT ShipmentReceivables.Id, ShipmentReceivables.Tenant, VatTypeId, CreateDate, TotalAmountLocal, AmountInProfitCurrency, Shipments.CustomerId
          	FROM ShipmentReceivables 
-         	left join Shipments  on Shipments.Id = ShipmentReceivables.ShipmentId where ShipmentReceivables.ARInvoiceLineId is null  and  $LastCounterWhere$
+         	left join Shipments  on Shipments.Id = ShipmentReceivables.ShipmentId where ShipmentReceivables.ARInvoiceLineId is null and $LastCounterWhere$
          	OPEN DataCursor FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @ShipmentReceivablesVatTypeId, @CreateDate, @TotalAmountLocal, @AmountInProfitCurrency, @CustomerId
          	WHILE @@FETCH_STATUS = 0
          	BEGIN
@@ -40,7 +40,7 @@
          		set @ReceivableVatTypeId = @VatTypeId;
          	end
     
-         	set @IsMultiPercentage = (select IsMultiPercentage from VatTypes where Tenant = @Tenant AND Id = @VatTypeId)
+         	set @IsMultiPercentage = (select IsMultiPercentage from VatTypes where Tenant = @Tenant AND Id = @ReceivableVatTypeId)
          	if(@IsMultiPercentage = '0')
          	begin 
          		set @VatPercentage = (select top 1 Percentage from VatTypePercentages where VatTypeId = @ReceivableVatTypeId AND Tenant = @Tenant and FromDate <= @CreateDate order by FromDate desc)
@@ -58,7 +58,7 @@
          		DECLARE VatGroups_CURSOR CURSOR 
          		FOR 
          		SELECT SingleVATTypeId
-         		FROM VATTypesGroups where GroupVATTypeId = @VatTypeId
+         		FROM VATTypesGroups where GroupVATTypeId =  @ReceivableVatTypeId
          		OPEN VatGroups_CURSOR
          		FETCH NEXT FROM VatGroups_CURSOR INTO @SingleVATTypeId
          		WHILE @@FETCH_STATUS = 0
