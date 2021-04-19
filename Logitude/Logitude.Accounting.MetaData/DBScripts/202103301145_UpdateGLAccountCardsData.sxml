@@ -1,4 +1,4 @@
-﻿<Script DBType="Main" Module="Accounting" AOT="true"  TargetTableName="GLAccountCardsDatas">
+﻿<Script DBType="Main" Module="Accounting"   TargetTableName="GLAccountCardsDatas">
   <Sql Version="5">
     <![CDATA[
 
