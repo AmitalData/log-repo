@@ -309,6 +309,7 @@
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationConditionsDetailsComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\CreateTaskResultComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationsConditionsViewDetailsComponent.html" />
+    <Content Include="InvoiceModules\ARPayment\Components\Other\ARPaymentMultiChequesComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityPackageComponent.html" />
     <Content Include="TasksApp\Components\TasksAppComponent.html" />
@@ -2904,6 +2905,7 @@
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\EditTabs\EditMultiCurrency.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\NewEntity\ARPaymentTransferTemplate.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\NewEntity\NewARPaymentComponent.ts" />
+    <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\Other\ARPaymentMultiChequesComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\Other\CancelARPaymentComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\ModuleARPayment.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\ModuleDeclarations.ts" />

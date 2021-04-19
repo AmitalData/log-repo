@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ARPaymentChequeUpdateClass
    {  		
-		public const string HashString = "a0ae30c1634ffc95e767cbd533c45640";
+		public const string HashString = "5287e440c4f4d7b8356f9e1cce5c1c8e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -123,7 +123,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "שורת המחאה",
 			      				    DefaultText =  "Cheque Line",
-			      				    Code =  "d544",
+			      				    Code =  "2923",
 			      				    Name =  "ARPaymentCheque Query Group",
 			      				    GenerateDomainService =  true,
 			      				    ClientModuleName =  "Accounting",
@@ -370,10 +370,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LineNumber",
 					  						DefaultText =  "Line No.",
-					  						FullLocalDefaultText =  "מספר שורה",
+					  						FullLocalDefaultText =  "שורה",
 					  						ListFieldLable =  "LineNumberListLable",
 					  						ListLableDefaultText =  "Line No.",
-					  						ListLocalDefaultText =  "מספר שורה",
+					  						ListLocalDefaultText =  "שורה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1435,7 +1435,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ARPaymentChequeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ARPaymentCheque" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ARPaymentChequeTextCode_ARPaymentChequeOCheques = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPaymentCheque.O.Cheques", DefaultText = "Cheques",LocalDefaultText = @"המחאה", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 
