@@ -1142,9 +1142,15 @@ _Param.AgingForDate.Date, false, true, true, false);
                 var reconciliationQueryService = new ReconciliationQueryService(accountingContext);
                 var reconciliationPM=reconciliationQueryService.GetSingle(reconcileId, true, false);
                 var reconciliationUpdateAgingService = new ReconciliationUpdateAgingService(accountingContext);
-                var deltaPM=reconciliationUpdateAgingService.GetDelta(false, reconciliationPM);
-                reconciliationUpdateAgingService.UpdateDelta(deltaPM, false);
-                accountingContext.SaveChanges();
+                var deltaGLAccountAgingDataPM =reconciliationUpdateAgingService.GetDelta(false, reconciliationPM);
+                //reconciliationUpdateAgingService.UpdateDelta(deltaPM, false);
+                //accountingContext.SaveChanges();
+                if (!string.IsNullOrWhiteSpace(deltaGLAccountAgingDataPM.AccountId))
+                {
+                    reconciliationUpdateAgingService.UpdateDelta(deltaGLAccountAgingDataPM, false);
+                    accountingContext.SaveChanges();// MUST SAVE DUE NEW CONTEXT !!!
+
+                }
                 scope.Complete();
 
             }

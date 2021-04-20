@@ -68,7 +68,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         ChartOfAccountsName = a.ChartOfAccount != null ? a.ChartOfAccount.LocalName : null,
                                                         ChartOfAccountsEnglishName = a.ChartOfAccount != null ? a.ChartOfAccount.EnglishName : null,
                                                         ChartOfAccountsLocalName = a.ChartOfAccount != null ? a.ChartOfAccount.LocalName : null,
-
+                                                        CardsDataId= a.CardsDataId,
                                                         ActiveStatusName = a.Inactive == false ? active : inactive,
                                                         AutomaticReconcileId = a.AutomaticReconcileId,
                                                         AutomaticReconcileName = a.AutomaticReconcile != null ?

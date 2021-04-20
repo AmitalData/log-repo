@@ -30,6 +30,8 @@ import { AuthGuardService } from 'src/Infrastructure/Services/auth-guard.service
 import { Error401Component } from 'src/CargoTracking/Components/Errors/Error401Component';
 import { LoginServiceHelper } from 'src/Infrastructure/Utilities/LoginServiceHelper';
 import { CommonModule, DatePipe } from '@angular/common';
+import { CargoTrackingPortService } from '../CargoTracking/Services/Others/CargoTrackingPortService';
+import { CargoTrackingShipmentService } from '../CargoTracking/Services/Others/CargoTrackingShipmentService';
 
 
 export function getBaseUrl() {
@@ -77,6 +79,8 @@ export function getBaseUrl() {
         CargoTrackingSearchService,
         CargoTrackingBrandingDataExtendedService,
         LoginExtendedService,
+        CargoTrackingPortService,
+        CargoTrackingShipmentService,
         CommonDataExtendedService,
         CargoTrackingMilestoneService,
         AuthGuardService,

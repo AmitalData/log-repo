@@ -13,7 +13,7 @@ export class QuoteComputedFieldList {
 		ConnectedToTicket: boolean;
 		ToLocation: string;
 		FromLocation: string;
-		DeliveryFrom: string;
+		DeliveryTo: string;
 		PickupFrom: string;
 		EstimatedPayablesInSales: number;
 		EstimatedPayablesInLocal: number;

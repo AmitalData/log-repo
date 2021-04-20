@@ -1929,6 +1929,75 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private string shipmentTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShipmentTypeCode  
+	   {
+	    
+	     get
+		{
+		   return shipmentTypeCode;
+		 }
+		 set
+		 {
+		   if(shipmentTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentTypeCode",OldValue=shipmentTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shipmentTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string customerEnglishName ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerEnglishName  
+	   {
+	    
+	     get
+		{
+		   return customerEnglishName;
+		 }
+		 set
+		 {
+		   if(customerEnglishName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerEnglishName",OldValue=customerEnglishName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerEnglishName=value;
+		   }
+			
+		 }
+	   }
+	  private string customerLocalName ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerLocalName  
+	   {
+	    
+	     get
+		{
+		   return customerLocalName;
+		 }
+		 set
+		 {
+		   if(customerLocalName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerLocalName",OldValue=customerLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerLocalName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

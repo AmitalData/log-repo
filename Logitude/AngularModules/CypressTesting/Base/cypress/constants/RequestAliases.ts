@@ -101,10 +101,16 @@ export class RequestAliases {
     public static readonly PutState="PutState"
     public static readonly PostGlobalZone="PostGlobalZone"
     public static readonly PutGlobalZone="PutGlobalZone"
-
+   
     public static readonly PostCity="PostCity"
     public static readonly PutCity="PutCity"
 
+    public static readonly PostCommodity="PostCommodity"
+    public static readonly PutCommodity="PutCommodity"
+    
+    public static readonly PostRegions="PostRegions"
+    public static readonly PutRegions="PutRegions"
+    
     public static readonly PostQuoteTemplate = "PostQuoteTemplate";
     public static readonly PutQuoteTemplate = "PutQuoteTemplate";
     public static readonly PutQuoteTemplateHeaderFields = "PutQuoteTemplateHeaderFields";

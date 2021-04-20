@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteComputedFieldUpdateClass
    {  		
-		public const string HashString = "9a6058767daaa5f79af71495bef7abf7";
+		public const string HashString = "19b768bc161458ddd5727b606fa1e443";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "QuoteComputedField",
-			      				    Code =  "fe0e",
+			      				    Code =  "f03b",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Quote",
@@ -366,7 +366,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "DeliveryFrom",
+					 						FieldName =  "DeliveryTo",
 					  						ObjectTableName =  "QuoteComputedField",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -384,8 +384,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "DeliveryFrom",
-					  						ListPropertyPath =  "DeliveryFrom",
+					  						PMPropertyPath =  "DeliveryTo",
+					  						ListPropertyPath =  "DeliveryTo",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -402,8 +402,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "DeliveryFrom",
-					  						DefaultText =  "Delivery From",
+					  						FullFieldLable =  "DeliveryTo",
+					  						DefaultText =  "Delivery To",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

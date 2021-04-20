@@ -1,4 +1,4 @@
-@release @stable 
+@release @stable @all 
 Feature: Containers Follow-Up
 
     The user creates a Direct Import Ocean FCL shipment,

@@ -31,7 +31,12 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         public bool DisablePreview { get; set; }
 
-        public string CommunicationStatusTypeName { get; set; }
+        public string StatusName { get; set; }
         public string CreatedByUserName { get; set; }
+
+
+        public string SearchFields { get; set; }
+        public string ReportName { get; set; }
+
     }
 }

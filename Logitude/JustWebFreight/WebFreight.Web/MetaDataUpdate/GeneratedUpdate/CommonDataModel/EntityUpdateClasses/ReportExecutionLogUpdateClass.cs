@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ReportExecutionLogUpdateClass
    {  		
-		public const string HashString = "cd92ad82882160a0cd2750ded30277fe";
+		public const string HashString = "4304c206c098147ce0fadf6f6f45955a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,8 +89,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "ReportExecutionLog",
 			      				    IsNew =  true,
 			      				    DBTableName =  "ReportExecutionLogs",
-			      				    ObjectTableSingular =  "ReportExecutionLog",
-			      				    ObjectTablePlural =  "ReportExecutionLogs",
+			      				    ObjectTableSingular =  "Report Execution Log",
+			      				    ObjectTablePlural =  "Report Execution Logs",
 			      				    HasCustomFilter =  true,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -139,6 +139,66 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
 	         
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Tenant",
+					  						ObjectTableName =  "ReportExecutionLog",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  true,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ReportExecutionLog",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
@@ -232,6 +292,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ReportExecutionLog",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -569,7 +630,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
@@ -629,12 +690,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -754,6 +816,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -854,6 +917,244 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ReportName",
+					  						ObjectTableName =  "ReportExecutionLog",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ReportName",
+					  						ListPropertyPath =  "ReportName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ReportExecutionLog",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ReportName",
+					  						DefaultText =  "Report Name",
+					  						ListFieldLable =  "ReportNameListLable",
+					  						ListLableDefaultText =  "Report Name",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "StatusName",
+					  						ObjectTableName =  "ReportExecutionLog",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  25,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "StatusName",
+					  						ListPropertyPath =  "StatusName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ReportExecutionLog",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "StatusName",
+					  						DefaultText =  "Status",
+					  						ListFieldLable =  "StatusNameListLable",
+					  						ListLableDefaultText =  "Status",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SearchFields",
+					  						ObjectTableName =  "ReportExecutionLog",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  100,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Contains",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SearchFields",
+					  						ListPropertyPath =  "SearchFields",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ReportExecutionLog",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SearchFields",
+					  						DefaultText =  "Search",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CreatedByUserName",
+					  						ObjectTableName =  "ReportExecutionLog",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  60,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CreatedByUserName",
+					  						ListPropertyPath =  "CreatedByUserName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ReportExecutionLog",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CreatedByUserName",
+					  						DefaultText =  "Created By User",
+					  						ListFieldLable =  "CreatedByUserNameListLable",
+					  						ListLableDefaultText =  "Created By User",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -879,69 +1180,81 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode ReportExecutionLogTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ReportExecutionLog.Q.AllReportExecutionLogs", DefaultText = @"All Report Execution Logs",LocalDefaultText = null, ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ReportExecutionLogFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReportExecutionLog.Q.AllReportExecutionLogs", ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportExecutionLogFeatures.AllReportExecutionLogs", NameTextCodeDefaultText = "All Report Execution Logs", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ReportExecutionLogObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ReportExecutionLogTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ReportExecutionLog.Q.TodayReportExecutionLog", DefaultText = @"Today",LocalDefaultText = null, ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ReportExecutionLogFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReportExecutionLog.Q.TodayReportExecutionLog", ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportExecutionLogFeatures.TodayReportExecutionLog", NameTextCodeDefaultText = "Today Report Execution Log", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ReportExecutionLogObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ReportExecutionLogTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ReportExecutionLog.Q.TodayReportExecutionLog", DefaultText = @"Today",LocalDefaultText = null, ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ReportExecutionLogFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReportExecutionLog.Q.TodayReportExecutionLog", ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportExecutionLogFeatures.TodayReportExecutionLog", NameTextCodeDefaultText = "Today Report Execution Log", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ReportExecutionLogObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ReportExecutionLogTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ReportExecutionLog.Q.AllReportExecutionLogs", DefaultText = @"All Report Execution Logs",LocalDefaultText = null, ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ReportExecutionLogFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReportExecutionLog.Q.AllReportExecutionLogs", ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportExecutionLogFeatures.AllReportExecutionLogs", NameTextCodeDefaultText = "All Report Execution Logs", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ReportExecutionLogObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllReportExecutionLogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ReportExecutionLogTextCode_0.Id, NameTextCodeCode = ReportExecutionLogTextCode_0.Code, ObjectTableName = "ReportExecutionLog", Code = "All Report Execution Logs",  QueryGroupCode = "4df5", IndexOrder = 0, Tenant = 0, ObjectTableId = ReportExecutionLogObjectTable.Id, QuerySection = "ReportExecutionLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ReportExecutionLogFeature_0.Id,FeatureUniqeCode= ReportExecutionLogFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query TodayReportExecutionLogQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ReportExecutionLogTextCode_0.Id, NameTextCodeCode = ReportExecutionLogTextCode_0.Code, ObjectTableName = "ReportExecutionLog", Code = "Today Report Execution Log",  QueryGroupCode = "4df5", IndexOrder = 0, Tenant = 0, ObjectTableId = ReportExecutionLogObjectTable.Id, QuerySection = "ReportExecutionLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ReportExecutionLogFeature_0.Id,FeatureUniqeCode= ReportExecutionLogFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllReportExecutionLogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportExecutionLogsQuery.Id,QueryCode = AllReportExecutionLogsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ReportExecutionLog.CreateDate" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TodayReportExecutionLogQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ReportExecutionLog.Tenant" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllReportExecutionLogsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportExecutionLogsQuery.Id,QueryCode = AllReportExecutionLogsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ReportExecutionLog.StatusCode" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn TodayReportExecutionLogQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ReportExecutionLog.CreateDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllReportExecutionLogsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportExecutionLogsQuery.Id,QueryCode = AllReportExecutionLogsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ReportExecutionLog.ExceptionMessage" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TodayReportExecutionLogQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ReportExecutionLog.ReportName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllReportExecutionLogsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportExecutionLogsQuery.Id,QueryCode = AllReportExecutionLogsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ReportExecutionLog.DoneDate" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TodayReportExecutionLogQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ReportExecutionLog.CreatedByUserName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllReportExecutionLogsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportExecutionLogsQuery.Id,QueryCode = AllReportExecutionLogsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ReportExecutionLog.ReportFilterXML" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TodayReportExecutionLogQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ReportExecutionLog.ExecutedByServerName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllReportExecutionLogsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportExecutionLogsQuery.Id,QueryCode = AllReportExecutionLogsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ReportExecutionLog.ReportTemplateId" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TodayReportExecutionLogQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ReportExecutionLog.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllReportExecutionLogsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportExecutionLogsQuery.Id,QueryCode = AllReportExecutionLogsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ReportExecutionLog.ReportId" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TodayReportExecutionLogQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ReportExecutionLog.ExceptionMessage" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllReportExecutionLogsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportExecutionLogsQuery.Id,QueryCode = AllReportExecutionLogsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ReportExecutionLog.RetryNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TodayReportExecutionLogQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ReportExecutionLog.DoneDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn AllReportExecutionLogsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportExecutionLogsQuery.Id,QueryCode = AllReportExecutionLogsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ReportExecutionLog.StartDate" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TodayReportExecutionLogQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ReportExecutionLog.ReportFilterXML" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllReportExecutionLogsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportExecutionLogsQuery.Id,QueryCode = AllReportExecutionLogsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ReportExecutionLog.ExecutedByServerName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TodayReportExecutionLogQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ReportExecutionLog.ReportId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllReportExecutionLogsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportExecutionLogsQuery.Id,QueryCode = AllReportExecutionLogsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ReportExecutionLog.DisablePreview" , ColumnWidth = 130 }, addedQueryColumns);
-  
-	      
+			 QueryColumn TodayReportExecutionLogQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ReportExecutionLog.ReportTemplateId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			  Query TodayReportExecutionLogQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ReportExecutionLogTextCode_1.Id, NameTextCodeCode = ReportExecutionLogTextCode_1.Code, ObjectTableName = "ReportExecutionLog", Code = "Today Report Execution Log",  QueryGroupCode = "4df5", IndexOrder = 1, Tenant = 0, ObjectTableId = ReportExecutionLogObjectTable.Id, QuerySection = "ReportExecutionLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ReportExecutionLogFeature_1.Id,FeatureUniqeCode= ReportExecutionLogFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
-	
-			 QueryColumn TodayReportExecutionLogQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ReportExecutionLog.CreateDate" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TodayReportExecutionLogQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "ReportExecutionLog.RetryNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn TodayReportExecutionLogQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ReportExecutionLog.StatusCode" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn TodayReportExecutionLogQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "ReportExecutionLog.DisablePreview" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn TodayReportExecutionLogQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ReportExecutionLog.ExceptionMessage" , ColumnWidth = 130 }, addedQueryColumns);
-
-			 QueryColumn TodayReportExecutionLogQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ReportExecutionLog.DoneDate" , ColumnWidth = 130 }, addedQueryColumns);
-
-			 QueryColumn TodayReportExecutionLogQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ReportExecutionLog.ReportFilterXML" , ColumnWidth = 130 }, addedQueryColumns);
-
-			 QueryColumn TodayReportExecutionLogQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ReportExecutionLog.ReportTemplateId" , ColumnWidth = 130 }, addedQueryColumns);
-
-			 QueryColumn TodayReportExecutionLogQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ReportExecutionLog.ReportId" , ColumnWidth = 130 }, addedQueryColumns);
-
-			 QueryColumn TodayReportExecutionLogQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ReportExecutionLog.RetryNumber" , ColumnWidth = 130 }, addedQueryColumns);
-
-			 QueryColumn TodayReportExecutionLogQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ReportExecutionLog.StartDate" , ColumnWidth = 130 }, addedQueryColumns);
-
-			 QueryColumn TodayReportExecutionLogQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ReportExecutionLog.ExecutedByServerName" , ColumnWidth = 130 }, addedQueryColumns);
-
-			 QueryColumn TodayReportExecutionLogQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ReportExecutionLog.DisablePreview" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TodayReportExecutionLogQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "ReportExecutionLog.StartDate" , ColumnWidth = 130 }, addedQueryColumns);
 
              AdvancedQueryFilter TodayReportExecutionLogQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ReportExecutionLog.CreateDate", PredefinedValue = "Today",PredefinedValue2 = null, QueryId = TodayReportExecutionLogQuery.Id,QueryCode = TodayReportExecutionLogQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
+  
+	      
+
+			  Query AllReportExecutionLogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ReportExecutionLogTextCode_1.Id, NameTextCodeCode = ReportExecutionLogTextCode_1.Code, ObjectTableName = "ReportExecutionLog", Code = "All Report Execution Logs",  QueryGroupCode = "4df5", IndexOrder = 1, Tenant = 0, ObjectTableId = ReportExecutionLogObjectTable.Id, QuerySection = "ReportExecutionLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ReportExecutionLogFeature_1.Id,FeatureUniqeCode= ReportExecutionLogFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn AllReportExecutionLogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportExecutionLogsQuery.Id,QueryCode = AllReportExecutionLogsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ReportExecutionLog.Tenant" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllReportExecutionLogsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportExecutionLogsQuery.Id,QueryCode = AllReportExecutionLogsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ReportExecutionLog.CreateDate" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn AllReportExecutionLogsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportExecutionLogsQuery.Id,QueryCode = AllReportExecutionLogsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ReportExecutionLog.ReportName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn AllReportExecutionLogsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportExecutionLogsQuery.Id,QueryCode = AllReportExecutionLogsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ReportExecutionLog.CreatedByUserName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn AllReportExecutionLogsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportExecutionLogsQuery.Id,QueryCode = AllReportExecutionLogsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ReportExecutionLog.ExecutedByServerName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn AllReportExecutionLogsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportExecutionLogsQuery.Id,QueryCode = AllReportExecutionLogsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ReportExecutionLog.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllReportExecutionLogsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportExecutionLogsQuery.Id,QueryCode = AllReportExecutionLogsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ReportExecutionLog.ExceptionMessage" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn AllReportExecutionLogsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportExecutionLogsQuery.Id,QueryCode = AllReportExecutionLogsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ReportExecutionLog.DoneDate" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn AllReportExecutionLogsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportExecutionLogsQuery.Id,QueryCode = AllReportExecutionLogsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ReportExecutionLog.ReportFilterXML" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn AllReportExecutionLogsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportExecutionLogsQuery.Id,QueryCode = AllReportExecutionLogsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ReportExecutionLog.ReportId" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllReportExecutionLogsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportExecutionLogsQuery.Id,QueryCode = AllReportExecutionLogsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ReportExecutionLog.ReportTemplateId" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllReportExecutionLogsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportExecutionLogsQuery.Id,QueryCode = AllReportExecutionLogsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "ReportExecutionLog.RetryNumber" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllReportExecutionLogsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportExecutionLogsQuery.Id,QueryCode = AllReportExecutionLogsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "ReportExecutionLog.DisablePreview" , ColumnWidth = 50 }, addedQueryColumns);
+
+			 QueryColumn AllReportExecutionLogsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportExecutionLogsQuery.Id,QueryCode = AllReportExecutionLogsQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "ReportExecutionLog.StartDate" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -958,11 +1271,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		       
 	      
 
-	         Screen ReportExecutionLogHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ReportExecutionLog.HeaderScreen", Name = "Header Screen", ObjectTableId = ReportExecutionLogObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen ReportExecutionLogHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ReportExecutionLog.HeaderScreen", Name = "Header Screen", ObjectTableId = ReportExecutionLogObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-             ScreenField ReportExecutionLogReportExecutionLogHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ReportExecutionLogHeaderScreenScreen0.Id,ScreenCode = ReportExecutionLogHeaderScreenScreen0.Code, ObjectFieldCode = "ReportExecutionLog.CreateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ReportExecutionLogReportExecutionLogHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ReportExecutionLogHeaderScreenScreen0.Id,ScreenCode = ReportExecutionLogHeaderScreenScreen0.Code, ObjectFieldCode = "ReportExecutionLog.ReportName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ReportExecutionLogReportExecutionLogHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ReportExecutionLogHeaderScreenScreen0.Id,ScreenCode = ReportExecutionLogHeaderScreenScreen0.Code, ObjectFieldCode = "ReportExecutionLog.StatusCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ReportExecutionLogReportExecutionLogHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ReportExecutionLogHeaderScreenScreen0.Id,ScreenCode = ReportExecutionLogHeaderScreenScreen0.Code, ObjectFieldCode = "ReportExecutionLog.CreateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          	
 		    ReportExecutionLogObjectTable.HeaderScreenId = ReportExecutionLogHeaderScreenScreen0.Id;
 		    ReportExecutionLogObjectTable.HeaderScreenCode = ReportExecutionLogHeaderScreenScreen0.Code;
@@ -970,25 +1283,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	   		  
 	      
 
-	         Screen ReportExecutionLogGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ReportExecutionLog.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ReportExecutionLogObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 5, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen ReportExecutionLogGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ReportExecutionLog.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ReportExecutionLogObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 4, IsReadOnly = true }, screensRepository, tenantScreens);
       
              ScreenField ReportExecutionLogReportExecutionLogGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ReportExecutionLogGeneralTabScreenScreen1.Id,ScreenCode = ReportExecutionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ReportExecutionLog.CreateDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ReportExecutionLogReportExecutionLogGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ReportExecutionLogGeneralTabScreenScreen1.Id,ScreenCode = ReportExecutionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ReportExecutionLog.CreatedByUserId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ReportExecutionLogReportExecutionLogGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ReportExecutionLogGeneralTabScreenScreen1.Id,ScreenCode = ReportExecutionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ReportExecutionLog.StatusCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ReportExecutionLogReportExecutionLogGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ReportExecutionLogGeneralTabScreenScreen1.Id,ScreenCode = ReportExecutionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ReportExecutionLog.StatusCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ReportExecutionLogReportExecutionLogGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ReportExecutionLogGeneralTabScreenScreen1.Id,ScreenCode = ReportExecutionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ReportExecutionLog.DoneDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ReportExecutionLogReportExecutionLogGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = ReportExecutionLogGeneralTabScreenScreen1.Id,ScreenCode = ReportExecutionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ReportExecutionLog.DoneDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ReportExecutionLogReportExecutionLogGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = ReportExecutionLogGeneralTabScreenScreen1.Id,ScreenCode = ReportExecutionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ReportExecutionLog.StartDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ReportExecutionLogReportExecutionLogGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = ReportExecutionLogGeneralTabScreenScreen1.Id,ScreenCode = ReportExecutionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ReportExecutionLog.StartDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ReportExecutionLogReportExecutionLogGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ReportExecutionLogGeneralTabScreenScreen1.Id,ScreenCode = ReportExecutionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ReportExecutionLog.ReportName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ReportExecutionLogReportExecutionLogGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = ReportExecutionLogGeneralTabScreenScreen1.Id,ScreenCode = ReportExecutionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ReportExecutionLog.ReportId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ReportExecutionLogReportExecutionLogGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = ReportExecutionLogGeneralTabScreenScreen1.Id,ScreenCode = ReportExecutionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ReportExecutionLog.ReportId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ReportExecutionLogReportExecutionLogGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = ReportExecutionLogGeneralTabScreenScreen1.Id,ScreenCode = ReportExecutionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ReportExecutionLog.ReportTemplateId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ReportExecutionLogReportExecutionLogGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = ReportExecutionLogGeneralTabScreenScreen1.Id,ScreenCode = ReportExecutionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ReportExecutionLog.ReportTemplateId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField ReportExecutionLogReportExecutionLogGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = ReportExecutionLogGeneralTabScreenScreen1.Id,ScreenCode = ReportExecutionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ReportExecutionLog.StartDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-	          
-             ScreenField ReportExecutionLogReportExecutionLogGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = ReportExecutionLogGeneralTabScreenScreen1.Id,ScreenCode = ReportExecutionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ReportExecutionLog.ExecutedByServerName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField ReportExecutionLogReportExecutionLogGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = ReportExecutionLogGeneralTabScreenScreen1.Id,ScreenCode = ReportExecutionLogGeneralTabScreenScreen1.Code, ObjectFieldCode = "ReportExecutionLog.ExecutedByServerName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	            
 
 	    }

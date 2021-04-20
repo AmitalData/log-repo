@@ -55,9 +55,9 @@ export class QuoteComputedFieldPM {
     public set FromLocation(newValue: string) { if (this.fromLocation != newValue) { this.fromLocation = newValue; this.MarkAsDirty("FromLocation"); } }
        
 	 
-    private deliveryFrom: string;
-    public get DeliveryFrom() { return this.deliveryFrom; }
-    public set DeliveryFrom(newValue: string) { if (this.deliveryFrom != newValue) { this.deliveryFrom = newValue; this.MarkAsDirty("DeliveryFrom"); } }
+    private deliveryTo: string;
+    public get DeliveryTo() { return this.deliveryTo; }
+    public set DeliveryTo(newValue: string) { if (this.deliveryTo != newValue) { this.deliveryTo = newValue; this.MarkAsDirty("DeliveryTo"); } }
        
 	 
     private pickupFrom: string;

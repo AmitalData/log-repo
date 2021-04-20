@@ -1,4 +1,4 @@
-@smoke @stable
+@smoke @stable @all
 Feature: Create Direct Export Air Shipment
   The user creates a Direct Export Air shipment.
 
