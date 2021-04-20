@@ -147,7 +147,6 @@ export class EditComponent implements OnDestroy {
         this.NavigationIds = args['NavigationIds'];
         this.EntityFields = args['EntityFields'];
 
-        debugger;
 
         if (this.ObjectTableName == "Customs.ExportStorge") {
             this.LayoutDirection = 'ltr'
