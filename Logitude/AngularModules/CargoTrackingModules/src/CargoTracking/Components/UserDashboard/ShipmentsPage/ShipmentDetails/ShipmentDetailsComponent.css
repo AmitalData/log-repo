@@ -23,7 +23,7 @@ h1 {
 }
 
 .circle-image {
-    font-size: 15px;
+    background: #e5e9ef; /*#F2F4F7;*/
     border-radius: 50%;
     width: 90px !important;
     height: 90px;
