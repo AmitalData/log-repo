@@ -12271,6 +12271,16 @@ namespace WebFreight.Web.ReportsWebServices
                             }
                         }
 
+                        else if (!string.IsNullOrEmpty(Item.OnForwardingToPortId))
+                        {
+                            PortPM myPort = PortQuery.GetSinglePort(tenant, Item.OnForwardingToPortId, true);
+                            if (myPort != null)
+                            {
+                                shipment.FinalCountryofDestination = myPort.CountryName;
+                                shipment.FinalPortofDestination = myPort.Code;
+                            }
+                        }
+
                         else if (!string.IsNullOrEmpty(Item.OnCarriageToPortId))
                         {
                             PortPM onCarriageToPort = PortQuery.GetSinglePort(tenant, Item.OnCarriageToPortId, true);
@@ -12278,7 +12288,6 @@ namespace WebFreight.Web.ReportsWebServices
                             {
                                 shipment.FinalCountryofDestination = onCarriageToPort.CountryName;
                                 shipment.FinalPortofDestination = onCarriageToPort.Code;
-
                             }
                         }
 
@@ -12341,6 +12350,11 @@ namespace WebFreight.Web.ReportsWebServices
                     if (!string.IsNullOrEmpty(Item.OnCarriageTransportModeId))
                     {
                         shipment.OnCarriageTransportMode = Item.OnCarriageTransportModeId == "I" ? "Inland" : Item.OnCarriageTransportModeId == "A" ? "Air" : "Ocean";
+                    }
+
+                    if (!string.IsNullOrEmpty(Item.OnForwardingTransportModeId))
+                    {
+                        shipment.OnForwardingTransportMode = Item.OnForwardingTransportModeId == "I" ? "Inland" : Item.OnForwardingTransportModeId == "A" ? "Air" : "Ocean";
                     }
 
                     if (!string.IsNullOrEmpty(Item.MasterShipmentDataId))

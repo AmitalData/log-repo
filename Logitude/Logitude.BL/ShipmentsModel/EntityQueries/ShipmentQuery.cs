@@ -11259,6 +11259,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      PackageVolume = jd.Volume,
                      MainCarriageCarrierId = m.MainCarriageCarrierId,
                      NumberOfContainers = shipment.NumberOfContainers,
+                     OnForwardingTo = shipment.OnForwardingToPort != null ? shipment.OnForwardingToPort.EnglishName : null,
+                     OnForwardingATD = shipment.OnForwardingATD,
+                     OnForwardingATA = shipment.OnForwardingATA,
+                     OnForwardingETA = shipment.OnForwardingETA,
+                     OnForwardingToPortCode = shipment.OnForwardingToPort != null ? shipment.OnForwardingToPort.Code : null,
+                     OnForwardingToPortId = shipment.OnForwardingToPortId,
                  });
 
             return dataList;

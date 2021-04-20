@@ -112,12 +112,12 @@
                     </div>
 
                     <!-- Shipment Data -->
-                    <div *ngIf="shipment" style="width: 100%; height: 100%;">
-                        <div class="column mode-icon" style="width: 8%;">
+                    <div *ngIf="shipment" style="width: 100%; height: 100%;"  [attr.src]="SetShipmentTypeAndDirectionTooltip(shipment)">
+                        <div class="column mode-icon" [attr.title]="ShipmentTypeAndDirectionTooltip" style="width: 8%;">
                             <div class="circle-image">
                                 <!-- <img class="path " [attr.src]="GetModeIcon(shipment.TransportModeId)" alt=" " /> -->
 
-                                <div [ngSwitch]="shipment.TransportModeId" style="display: inline-block;    position: relative;     top: 30px">
+                                <div [ngSwitch]="shipment.TransportModeId" style="display: inline-block;    position: relative;     top: 30px" [attr.title]="ShipmentTypeAndDirectionTooltip" >
                                     <svg *ngSwitchCase="'O'" width="47px" height="20px" viewBox="0 0 47 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                         <title>0FD17A4A-5C03-438A-96BD-5AE25DEE0482</title>
                                         <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -134,19 +134,19 @@
                                     </svg>
 
                                     <svg *ngSwitchCase="'A'" width="36px" height="32px" viewBox="0 0 36 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                            <title>0115CEBC-E18D-4587-8E9E-7A1A01FA23E5</title>
-                                            <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <g id="Search-Results" transform="translate(-375.000000, -804.000000)" fill="#002664">
-                                                    <g id="Group-14-Copy-2" transform="translate(308.000000, 732.000000)">
-                                                        <g id="Type/boat" transform="translate(45.000000, 46.000000)">
-                                                            <g id="Group">
-                                                                <path fill="var(--MainColor)" d="M28.2010781,26 L44.9721135,32.4312677 C46.8367468,31.1081412 48.7257202,29.7863693 50.5260794,28.5557714 C51.8003996,27.6847188 57.0176923,27.3267788 57.7639616,28.3543079 L57.7639616,28.3543079 L57.8454343,28.4667753 C58.5922106,29.4947934 56.4585397,34.1000925 55.1737396,34.9563124 C53.4750773,36.0893977 51.6720921,37.2654064 49.8681811,38.4256513 L50.4013143,55.8435582 L47.2072029,58 L45.7311918,55.9677976 L46.4843162,55.4596112 L41.7760232,43.5398952 C37.7106852,46.0706551 34.750133,47.8626901 34.750133,47.8626901 L34.750133,47.8626901 L33.3792963,52.8533126 L29.7502134,55.3041258 L28.875312,48.0677395 L28.7522579,47.8982233 L22,44.6307983 L25.629421,42.179985 L30.9638518,42.6479476 C30.9638518,42.6479476 33.557413,40.7024661 37.2302404,38.0156431 L27.2355389,29.6802767 L26.4826023,30.1888253 L25.0069668,28.1571663 L28.2010781,26 Z" id="plane"></path>
-                                                            </g>
+                                        <title>0115CEBC-E18D-4587-8E9E-7A1A01FA23E5</title>
+                                        <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <g id="Search-Results" transform="translate(-375.000000, -804.000000)" fill="#002664">
+                                                <g id="Group-14-Copy-2" transform="translate(308.000000, 732.000000)">
+                                                    <g id="Type/boat" transform="translate(45.000000, 46.000000)">
+                                                        <g id="Group">
+                                                            <path fill="var(--MainColor)" d="M28.2010781,26 L44.9721135,32.4312677 C46.8367468,31.1081412 48.7257202,29.7863693 50.5260794,28.5557714 C51.8003996,27.6847188 57.0176923,27.3267788 57.7639616,28.3543079 L57.7639616,28.3543079 L57.8454343,28.4667753 C58.5922106,29.4947934 56.4585397,34.1000925 55.1737396,34.9563124 C53.4750773,36.0893977 51.6720921,37.2654064 49.8681811,38.4256513 L50.4013143,55.8435582 L47.2072029,58 L45.7311918,55.9677976 L46.4843162,55.4596112 L41.7760232,43.5398952 C37.7106852,46.0706551 34.750133,47.8626901 34.750133,47.8626901 L34.750133,47.8626901 L33.3792963,52.8533126 L29.7502134,55.3041258 L28.875312,48.0677395 L28.7522579,47.8982233 L22,44.6307983 L25.629421,42.179985 L30.9638518,42.6479476 C30.9638518,42.6479476 33.557413,40.7024661 37.2302404,38.0156431 L27.2355389,29.6802767 L26.4826023,30.1888253 L25.0069668,28.1571663 L28.2010781,26 Z" id="plane"></path>
                                                         </g>
                                                     </g>
                                                 </g>
                                             </g>
-                                        </svg>
+                                        </g>
+                                    </svg>
 
 
                                     <svg *ngSwitchCase="'I'" width="39px" height="24px" viewBox="0 0 39 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -166,105 +166,138 @@
                                 </div>
 
                                 <svg [class.FlipImgDiagonal]="shipment.DirectionId=='E'" width="14" height="14" version="1.1" viewBox="0 0 512.17 512.17"
-                                 xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
-                                 class="direction-icon">
-                                    <g xmlns="http://www.w3.org/2000/svg">
-                                            <path class="" d="m479.05 283.92c-1.664-3.989-5.547-6.592-9.856-6.592h-116.88v-266.67c0-5.888-4.779-10.667-10.667-10.667h-170.67c-5.888 0-10.667 4.779-10.667 10.667v266.67h-117.33c-4.309 0-8.192 2.603-9.856 6.571-1.643 3.989-0.747 8.576 2.304 11.627l212.8 213.5c2.005 2.005 4.715 3.136 7.552 3.136s5.547-1.131 7.552-3.115l213.42-213.5c3.051-3.052 3.968-7.638 2.304-11.628z"
-                                            fill="var(--MainColor)" data-original="#000000"/>
+                                     xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                                     class="direction-icon">
+                                <g xmlns="http://www.w3.org/2000/svg">
+                                <path class="" d="m479.05 283.92c-1.664-3.989-5.547-6.592-9.856-6.592h-116.88v-266.67c0-5.888-4.779-10.667-10.667-10.667h-170.67c-5.888 0-10.667 4.779-10.667 10.667v266.67h-117.33c-4.309 0-8.192 2.603-9.856 6.571-1.643 3.989-0.747 8.576 2.304 11.627l212.8 213.5c2.005 2.005 4.715 3.136 7.552 3.136s5.547-1.131 7.552-3.115l213.42-213.5c3.051-3.052 3.968-7.638 2.304-11.628z"
+                                      fill="var(--MainColor)" data-original="#000000" />
                                     </g>
-                                </svg>
-
+                                    </svg>
                             </div>
                         </div>
                         <!-- References -->
-                        <div class="column col-md-2 reference" style="width: 14%;">
+                        <div class="column col-md-2 reference" style="width: 12%;">
                             <div>
                                 <div [attr.src]="SplitReference(shipment.CustomerReference)" class="subtitle">
                                     Reference NO.
-                                    <span *ngIf="shipment.IsFavorite">&nbsp;<img src="/assets/images/icons/favoritesicon@1x.png"
-                                            alt=""></span>
-                                </div>
-                                <div class="truncateText" *ngFor="let item of references; let i = index">
-                                    <span [ngClass]="{'hide-mobile': i > 0}">
-                                        {{item}}
+                                    <span *ngIf="shipment.IsFavorite">
+                                        &nbsp;<img src="/assets/images/icons/favoritesicon@1x.png"
+                                                   alt="">
                                     </span>
                                 </div>
+                                <div class="truncateText" *ngFor="let item of references; let i = index">
+                                    <span [ngClass]="{'hide-mobile': i > 0}" *ngIf="i < 4">
+                                        {{item}}
+                                    </span>
+
+                                </div>
+                                <span *ngIf="references?.length > 4" [attr.src]="SetMoreReferenceText(shipment.CustomerReference)">
+                                    <img src="./assets/images/icons/info.png" alt=" " style="margin-right: 6px; margin-top: 6px" />
+                                    <u [attr.title]="MoreReferenceText">+ {{references?.length - 4}} More</u>
+                                </span>
                             </div>
                         </div>
+
+                        <!-- Shipment Number -->
+                        <div class="column col-md-2 hide-mobile" style="width: 12%;">
+                            <div>
+                                <div class="subtitle">Shipment Number</div>
+                                <div class="value uppercase truncateText">{{ shipment.ShipmentNumber }}</div>
+
+                                <div class="subtitle" [attr.src]="SetConsignmentNumber(shipment)">Consignment No.</div>
+                                <div class="value uppercase truncateText">{{ ConsignmentNumber }}</div>
+                            </div>
+                        </div>
+
 
                         <div class="column seperator"></div>
 
                         <!-- Sender -->
-                        <div class="column col-md-2 sender" style="width: 14%;">
-                            <div>
-                                <div class="subtitle">Origin Port</div>
+                        <div class="column col-md-2 sender" style="width: 12%;">
+                            <div  [attr.src]="SetSupplierOrClientTitle(shipment)">
+                                <div class="subtitle">{{SupplierOrClientTitle}}</div>
+                                <div class="value truncateText"></div>
+
+
+                                <div class="subtitle hide-mobile"  [attr.src]="SetShipmenTypeForRouting(shipment)">ROUTING</div>
                                 <div class="value truncateText">
-                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.FromPortName }} ,
-                                    {{shipment.FromPortCountryCode}}
-                                </div>
-
-
-                                <div class="subtitle hide-mobile">Destination Port</div>
-                                <div class="value truncateText hide-mobile">
-                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.ToPortName }} ,
-                                    {{shipment.ToPortCountryCode}}
+                                    {{shipment.FromPortCode}} to {{shipment.ToPortCode}} <br>
+                                    {{ShipmenTypeForRouting}}
                                 </div>
 
                             </div>
                         </div>
-                        <!-- Pickup -->
-                        <!--<div class="column col-md-2 hide-mobile" style="width: 14%;">
-                                            <div>
-                                                <div class="subtitle">Pickup</div>
-                                                <div class="value uppercase">
-                                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.PickupDone }}
-                                                </div>
-
-                                                <div class="subtitle">Delivery Location</div>
-                                                <div class="value uppercase">
-                                                    <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.Delivery }}
-                                                </div>
-
-                                            </div>
-                                        </div>-->
 
 
-                        <!-- Shipment Id -->
-                        <div class="column col-md-2 hide-mobile" style="width: 12%;">
+                        <!-- QUANTITY & WEIGHT -->
+                        <div class="column col-md-2 sender" style="width: 12%;">
                             <div>
-                                <div class="subtitle">Shipment ID</div>
-                                <div class="value uppercase truncateText">{{ shipment.ShipmentNumber }}</div>
+                                <div class="subtitle">QUANTITY & WEIGHT </div>
+                                <div class="value truncateText">
+                                    {{shipment.NumberOfPackages || 0}} Units <br>
+                                    {{shipment.GrossWeight || 0}} {{shipment.GrossWeightUnitCode}}
+                                </div>
+
+                                <div class="subtitle hide-mobile" [attr.src]="SetEstimationORActualDate(shipment)">{{TitleOfEstimationORActualDate}}</div>
+                                <div class="value truncateText">
+                                    {{ValueOfEstimationORActualDate | date: "d-MMM-y, h:mm"}}
+                                </div>
 
                             </div>
                         </div>
-
                         <div class="column seperator"></div>
 
+
+                        <!-- Pickup -->
+                        <!--<div class="column col-md-2 hide-mobile" style="width: 14%;">
+        <div>
+            <div class="subtitle">Pickup</div>
+            <div class="value uppercase">
+                <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.PickupDone }}
+            </div>
+
+            <div class="subtitle">Delivery Location</div>
+            <div class="value uppercase">
+                <img src="./assets/images/icons/info.png" alt=" " /> {{ shipment.Delivery }}
+            </div>
+
+        </div>
+    </div>-->
                         <!-- From -->
                         <!-- <div class="column col-md-2">
-                                            <div>
-                                                <div class="header subtitle">From</div>
-                                                {{ shipment.From | date: " MMMM d, y, h:mm" }}
-                                            </div>
-                                        </div> -->
-
+        <div>
+            <div class="header subtitle">From</div>
+            {{ shipment.From | date: " MMMM d, y, h:mm" }}
+        </div>
+    </div> -->
                         <!-- To -->
                         <!-- <div class="column col-md-2">
-                                            <div>
-                                                <div class="header subtitle">To</div>
-                                                {{ shipment.To | date: " MMMM d, y, h:mm" }}
-                                            </div>
-                                        </div> -->
-
+        <div>
+            <div class="header subtitle">To</div>
+            {{ shipment.To | date: " MMMM d, y, h:mm" }}
+        </div>
+    </div> -->
                         <!-- Status -->
-                        <div class="column col-md-1 status" style="width: 17%;">
+                        <div class="column col-md-1 status" style="width: 12%;">
                             <div>
                                 <div class="subtitle">Status</div>
                                 <div class="value truncateText">{{ shipment.CurrentMilestoneName }}</div>
 
 
-                                <div class="subtitle hide-mobile">Last Updated</div>
+                                <div class="truncateText hide-mobile">Last Updated</div>
                                 <div class="value hide-mobile">{{ shipment.CurrentMilestoneDate | date: "d-MMM-y, h:mm" }}</div>
+                            </div>
+                        </div>
+
+                        <!-- NEXT STATUS -->
+                        <div class="column col-md-1 status" style="width: 12%;">
+                            <div>
+                                <div class="subtitle">NEXT STATUS</div>
+                                <div class="value truncateText">{{ shipment.FutureMilstoneName }}</div>
+
+
+                                <div class="truncateText hide-mobile">Estimated Date</div>
+                                <div class="value hide-mobile">{{ shipment.FutureMilstoneDate | date: "d-MMM-y, h:mm" }}</div>
                             </div>
                         </div>
 

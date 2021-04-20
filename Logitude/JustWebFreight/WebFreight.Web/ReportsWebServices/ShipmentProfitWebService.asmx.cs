@@ -41,6 +41,11 @@ namespace WebFreight.Web.ReportsWebServices
     // [System.Web.Script.Services.ScriptService]
     public class ShipmentProfitWebService : System.Web.Services.WebService
     {
+        private int tenant;
+        private PortRepository portRepository;
+        private CountryRepository countryRepository;
+        private ICommonDataContext commonContext;
+
         [WebMethod]
         public byte[] GetProfitData(string shipmentId, int tenant, string accountingCurrencyId, string currentUser)
         {
@@ -71,9 +76,10 @@ namespace WebFreight.Web.ReportsWebServices
 
         public ShipmentProfitDataProvider GetProfitDataProvider(string shipmentId, int tenant, string accountingCurrencyId, string currentUser)
         {
+            this.tenant = tenant;
             ShipmentProfitDataProvider provider = new ShipmentProfitDataProvider();
             IWebFreightContext context = WebFreightContext.GetContext(tenant);
-            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            commonContext = CommonDataContext.GetContext(tenant);
             ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
             CurrencyRepository currencyRepository = new CurrencyRepository(commonContext);
@@ -82,7 +88,8 @@ namespace WebFreight.Web.ReportsWebServices
             VatTypeQuery vatTypeQuery = new VatTypeQuery(vatTypeRepository);
             List<Currency> listCurrency = currencyRepository.GetCurrencies(tenant).ToList();
             ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
-
+            portRepository = new PortRepository(commonContext);
+            countryRepository = new CountryRepository(commonContext);
             TenantRepository tenantRepository = new TenantRepository(tenant);
             Tenant tenantSettings = (from a in commonContext.Tenants where a.Id == tenant select a).FirstOrDefault();
 
@@ -747,6 +754,11 @@ namespace WebFreight.Web.ReportsWebServices
 
         private ShipmentProfitInvoicesDataProvider BuildProfitInvoicesProvider(string shipmentId, int tenant, string accountingCurrencyId, string currentUser)
         {
+            this.tenant = tenant;
+            commonContext = CommonDataContext.GetContext(tenant);
+            portRepository = new PortRepository(commonContext);
+            countryRepository = new CountryRepository(commonContext);
+
             ShipmentProfitInvoicesDataProvider provider = new ShipmentProfitInvoicesDataProvider();
 
             ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
@@ -834,8 +846,6 @@ namespace WebFreight.Web.ReportsWebServices
 
                 #region Routings
 
-                PortRepository portRepository = new PortRepository(tenant);
-                CountryRepository countryRepository = new CountryRepository(tenant);
                 AddressRepository addressRepository = new AddressRepository(tenant);
 
                 bool isInlandDomestic = shipment.DirectionId == "D" && shipment.TransportModeId == "I";
@@ -925,40 +935,8 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                     }
 
-                    if (masterData != null)
-                    {
-                        if (!string.IsNullOrEmpty(masterData.PreCarriageFromPortId) && string.IsNullOrEmpty(masterData.PreCarriageToPortId))
-                        {
-                            Port port = portRepository.GetSinglePort(tenant, masterData.PreCarriageFromPortId);
-                            if (port != null)
-                            {
-                                provider.OriginLocation = port.EnglishName + " - " + port.Code;
-
-                                Country country = countryRepository.GetSingleCountry(port.CountryId, tenant);
-                                if (country != null)
-                                {
-                                    provider.OriginCountryCode = country.Code;
-                                    provider.OriginCountryName = country.EnglishName;
-                                }
-                            }
-                        }
-
-                        if (!string.IsNullOrEmpty(masterData.OnCarriageFromPortId) && string.IsNullOrEmpty(masterData.OnCarriageToPortId))
-                        {
-                            Port port = portRepository.GetSinglePort(tenant, masterData.OnCarriageToPortId);
-                            if (port != null)
-                            {
-                                provider.DestinationLocation = port.EnglishName + " - " + port.Code;
-
-                                Country country = countryRepository.GetSingleCountry(port.CountryId, tenant);
-                                if (country != null)
-                                {
-                                    provider.DestinationCountryCode = country.Code;
-                                    provider.DestinationCountryName = country.EnglishName;
-                                }
-                            }
-                        }
-                    }
+                    this.ComputeOriginCountryAndLocationVariables(provider, shipment, masterData);
+                    this.ComputeDestinationCountryAndLocationVariables(provider, shipment, masterData);                                        
                 }
                 #endregion
 
@@ -1104,6 +1082,65 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             return provider;
+        }
+
+        private void ComputeOriginCountryAndLocationVariables(ShipmentProfitInvoicesDataProvider provider, Shipment shipment, ShipmentMasterData masterData)
+        {
+            string originPortId = null;
+            if (shipment.ShipmentLevelCode == "H")
+            {
+                originPortId = shipment.PreForwardingFromPortId;
+            }
+
+            else if(masterData != null)
+            {
+                originPortId = masterData.PreCarriageFromPortId;
+            }
+
+            if(!string.IsNullOrEmpty(originPortId))
+            {
+                Port originPort = portRepository.GetSinglePort(tenant, originPortId);
+                if (originPort != null)
+                {
+                    provider.OriginLocation = originPort.EnglishName + " - " + originPort.Code;
+
+                    Country country = countryRepository.GetSingleCountry(originPort.CountryId, tenant);
+                    if (country != null)
+                    {
+                        provider.OriginCountryCode = country.Code;
+                        provider.OriginCountryName = country.EnglishName;
+                    }
+                }
+            }
+        }
+        private void ComputeDestinationCountryAndLocationVariables(ShipmentProfitInvoicesDataProvider provider, Shipment shipment, ShipmentMasterData masterData)
+        {
+            string destinationPortId = null;
+            if (shipment.ShipmentLevelCode == "H")
+            {
+                destinationPortId = shipment.OnForwardingToPortId;
+            }
+
+            else if (masterData != null)
+            {
+                destinationPortId = masterData.OnCarriageToPortId;
+            }
+
+            if(!string.IsNullOrEmpty(destinationPortId))
+            {
+                Port destinationPort = portRepository.GetSinglePort(tenant, destinationPortId);
+                if (destinationPort != null)
+                {
+                    provider.DestinationLocation = destinationPort.EnglishName + " - " + destinationPort.Code;
+
+                    Country country = countryRepository.GetSingleCountry(destinationPort.CountryId, tenant);
+                    if (country != null)
+                    {
+                        provider.DestinationCountryCode = country.Code;
+                        provider.DestinationCountryName = country.EnglishName;
+                    }
+                }
+            }
         }
 
         private string ServiceStringConvertor(string str)

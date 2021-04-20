@@ -15,6 +15,14 @@
         </td>
     </tr>
 
+    <tr style="height: 1px;" *ngIf="IsCloseMasterInfoVisible">
+        <td colspan="2">
+            <div class="OrangeInfo" style="margin: 5px;">
+                This master is departed and connected to house shipments, can't edit pre carriage from or to ports
+            </div>
+        </td>
+    </tr>
+
     <tr *ngIf="LegType =='Pre Carriage'">
         <td>
             <table>

@@ -321,7 +321,7 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 if (shipmentPM.ShipmentLevelCode == "H")
                 {
-                    awbDp.LastToInMainCarriage = shipmentPM.OnCarriageToPortName;
+                    awbDp.LastToInMainCarriage = shipmentPM.OnForwardingToPortName;
                 }
             }
 

@@ -144,10 +144,10 @@ export class AddEditOnCarriageComponent extends BaseComponent {
     }
 
     public IsEditingEnabled: boolean = false;
+    public IsCloseMasterInfoVisible: boolean = false;
     SetUIProperties() {
         var isEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
         this.IsEditingEnabled = isEditingEnabled;
-
 
         if (this.EntityPM.ShipmentLevelCode == "H") {
             this.SetUIProperties_Forwarding();
@@ -165,7 +165,19 @@ export class AddEditOnCarriageComponent extends BaseComponent {
     SetUIProperties_Carriage() {
         var isTransportFieldEnabled = false;
         var isCarrierNumberFieldEnabled = false;
+        var isConnectedMasterPortsEnabled = false;
+        this.IsCloseMasterInfoVisible = false;
+
         if (this.IsEditingEnabled) {
+            isConnectedMasterPortsEnabled = true;
+
+            if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentConsoleShipments.length > 0) {
+                if (this.EntityPM.StatusWeight >= 60) {
+                    isConnectedMasterPortsEnabled = false;
+                    this.IsCloseMasterInfoVisible = true;
+                }
+            }
+
             if (!AppTool.IsNullOrEmpty(this.OnCarriageTransportModeId)) {
                 isTransportFieldEnabled = true;
             }
@@ -175,9 +187,9 @@ export class AddEditOnCarriageComponent extends BaseComponent {
             }
         }
 
-        this.UIProperties.SetEnabled("OnCarriageTransportModeId", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("OnCarriageFromPortId", this.ObjectTableName, isTransportFieldEnabled && this.IsConnectedHouse == false);
-        this.UIProperties.SetEnabled("OnCarriageToPortId", this.ObjectTableName, isTransportFieldEnabled);
+        this.UIProperties.SetEnabled("OnCarriageTransportModeId", this.ObjectTableName, isConnectedMasterPortsEnabled);
+        this.UIProperties.SetEnabled("OnCarriageFromPortId", this.ObjectTableName, isConnectedMasterPortsEnabled && !this.IsConnectedHouse && isTransportFieldEnabled);
+        this.UIProperties.SetEnabled("OnCarriageToPortId", this.ObjectTableName, isConnectedMasterPortsEnabled && isTransportFieldEnabled);
         this.UIProperties.SetEnabled("OnCarriageCarrierId", this.ObjectTableName, isTransportFieldEnabled);
         this.UIProperties.SetEnabled("OnCarriageCarrierNumber", this.ObjectTableName, isCarrierNumberFieldEnabled);
         this.UIProperties.SetEnabled("OnCarriageVesselId", this.ObjectTableName, this.IsEditingEnabled);
@@ -213,8 +225,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         this.UIProperties.SetEnabled("OnForwardingETD", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("OnForwardingETA", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("OnForwardingATD", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("OnForwardingATA", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("SplitOnForwarding", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("OnForwardingATA", this.ObjectTableName, this.IsEditingEnabled);        
         this.UIProperties.SetEnabled("OnForwardingAdditionalTransportModeCode", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetVisibility("OnForwardingVesselId", this.ObjectTableName, this.OnForwardingTransportModeId == "O" ? true : false);
         this.SetUIProperties_Forwarding_RequiredFields();
@@ -706,33 +717,6 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         }
     }
 
-    get SplitOnForwarding() { return this.EntityPM.SplitOnForwarding; }
-    set SplitOnForwarding(value: boolean) {
-        if (this.EntityPM.SplitOnForwarding != value) {
-            this.EntityPM.SplitOnForwarding = value;
-
-            this.EntityPM.ShipmentPackages.forEach((item) => {
-                //if (item.OnForwardingETD == null) {
-                //    item.OnForwardingETD = this.OnForwardingETD;
-                //}
-
-                //if (item.OnForwardingATD == null) {
-                //    item.OnForwardingATD = this.OnForwardingATD;
-                //}
-
-                //if (item.OnForwardingETA == null) {
-                //    item.OnForwardingETA = this.OnForwardingETA;
-                //}
-
-                //if (item.OnForwardingATA == null) {
-                //    item.OnForwardingATA = this.OnForwardingATA;
-                //}
-            });
-
-            this.BuildData();
-        }
-    }
-
     private searchText: string = null;
     public get SearchText() { return this.searchText; }
     public set SearchText(value: string) {
@@ -847,15 +831,6 @@ export class AddEditOnCarriageComponent extends BaseComponent {
 
         if (AppTool.IsNullOrEmpty(this.OnForwardingToPortId)) {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("Shipment.O.Routings.To")));
-        }
-
-        if (!this.SplitOnForwarding) {
-            //this.EntityPM.ShipmentPackages.forEach((item) => {
-                //item.OnForwardingETD = null;
-                //item.OnForwardingATD = null;
-                //item.OnForwardingETA = null;
-                //item.OnForwardingATA = null;
-            //});
         }
 
         // Series Dates
@@ -1008,7 +983,6 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         this.myCloner.AddField('OnForwardingETA');
         this.myCloner.AddField('OnForwardingATD');
         this.myCloner.AddField('OnForwardingATA');
-        this.myCloner.AddField('SplitOnForwarding');
         this.myCloner.AddEntity(this.EntityPM);
 
         this.entityCloner = new Cloner(this.EntityPM);
@@ -1046,7 +1020,6 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         this.entityCloner.AddField('MainCarriageFinalDestinationPortCountryName');
 
         this.entityCloner.AddEntity(this.EntityPM);
-
     }
     private RejectChanges() {
 
@@ -1109,10 +1082,6 @@ export class OnCarriagePackageItem extends BaseComponent {
         this.myCloner.AddField('OnCarriageETA');
         this.myCloner.AddField('OnCarriageATD');
         this.myCloner.AddField('OnCarriageATA');
-        this.myCloner.AddField('OnForwardingETD');
-        this.myCloner.AddField('OnForwardingETA');
-        this.myCloner.AddField('OnForwardingATD');
-        this.myCloner.AddField('OnForwardingATA');
         this.myCloner.AddEntity(this.EntityPM);
     }
     public RejectChanges() {
@@ -1135,13 +1104,6 @@ export class OnCarriagePackageItem extends BaseComponent {
         var myETA: Date = this.EntityPM.OnCarriageETA;
         var myATA: Date = this.EntityPM.OnCarriageATA;
 
-        //if (this.ShipmentPM.ShipmentLevelCode == "H") {
-        //    var myETD: Date = this.EntityPM.OnForwardingETD;
-        //    var myATD: Date = this.EntityPM.OnForwardingATD;
-        //    var myETA: Date = this.EntityPM.OnForwardingETA;
-        //    var myATA: Date = this.EntityPM.OnForwardingATA;    
-        //}
-        
         if (myATD != null) {
             myDepartureDate = myATD;
             myDepartureColor = FontTool.Green;
