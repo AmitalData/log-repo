@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 using Logitude.AmitalMessaging.Utils;
 using Logitude.Customs.BL.Messaging.Customs;
 using Simplog.Server.Infrastructure.Helpers;
-
+using System.Threading;
 
 namespace WebFreight.Web.CustomWebServices
 {
@@ -108,7 +108,7 @@ namespace WebFreight.Web.CustomWebServices
 
             curr = "Logitude.Customs.BL.Messaging.U2L.CommDec.CommDecService";
             _AllIUnifreightGenericService.Add(curr);
-            _UnityContainer.RegisterType<UnifreightGenericService, Logitude.Customs.BL.Messaging.U2L.CommDec.CommDecService>(curr);
+            _UnityContainer.RegisterType<UnifreightGenericService, Logitude.CustomsMessaging.U2L.CommDec.CommDecService>(curr);
 
             curr = "Logitude.Customs.BL.Messaging.U2L.Reshimon.ReshimonService"; 
             _AllIUnifreightGenericService.Add(curr);
@@ -452,11 +452,12 @@ SUCCESS={4}"
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(10)))//new TransactionScope(TransactionScopeOption.RequiresNew, TimeSpan.FromMinutes(10)))
                 {
                     unifreightGenericService.ProccessGenericRequest(DataIn1, ref MoreParams, out MessageOutWS);
-
-                    if (unifreightGenericService.MyGenericResponseObj.StatusType == Logitude.AmitalMessaging.Infrastructure.GenericResponseObj.StatusEnum.Success)
-                    {
-                        scope.Complete();
-                    }
+                   
+                        if (unifreightGenericService.MyGenericResponseObj.StatusType == Logitude.AmitalMessaging.Infrastructure.GenericResponseObj.StatusEnum.Success)
+                        {
+                            scope.Complete();
+                        }
+ 
                 }
                 //DataOut1 = XmlGenericUtil<GenericResponseObj>.SerializeObject(unifreightGenericService.MyGenericResponseObj);
             }
@@ -494,15 +495,16 @@ SUCCESS={4}"
                     }
                 }
 
+
             }
 
             finally
             {
+   
                 unifreightGenericService.MyGenericResponseObj.Log = unifreightGenericService.GetLog();
                 DataOut1 = XmlGenericUtil<GenericResponseObj>.SerializeObject(unifreightGenericService.MyGenericResponseObj);
 
                 DataOut1 = LogCommunication(unifreightGenericService, DataIn1, DataOut1);
-
             }
 
 

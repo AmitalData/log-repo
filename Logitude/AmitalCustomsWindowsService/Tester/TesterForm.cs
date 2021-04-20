@@ -24,10 +24,10 @@ using System.Threading;
 using Logitude.Customs.BL.Messaging;
 using System.Net;
 using CommunicationWorkerRole;
-using Logitude.Customs.BL.Messaging.U2L.CommDec;
-using Logitude.Server.Tools.Helpers;
+ using Logitude.Server.Tools.Helpers;
 using WebFreight.Web.CustomWebServices;
-//using System.Windows.Interactivity;
+using Logitude.CustomsMessaging.U2L.CommDec;
+ //using System.Windows.Interactivity;
 
 namespace AmitalCustomsWindowsService.Tester
 {
@@ -273,8 +273,9 @@ namespace AmitalCustomsWindowsService.Tester
 
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            clsTester.GetListByCourierHAWB();
-            
+            clsTester.TestUpdateLOGITUDE_FILE();
+            //clsTester.GetListByCourierHAWB();
+
             return;
             clsTester.MultiProccessTestLockTab();
             string customsResponseXml = File.ReadAllText(@"C:\Users\itzik\Desktop\zevel\1-43468729.xml");

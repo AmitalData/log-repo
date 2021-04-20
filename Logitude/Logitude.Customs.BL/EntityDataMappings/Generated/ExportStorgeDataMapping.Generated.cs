@@ -239,7 +239,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         RiskGroup, 
 	         ExporterRef, 
 	         Hatara, 
-	         CustomStatus,
+	         CustomStatus, 
+	         Routing,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

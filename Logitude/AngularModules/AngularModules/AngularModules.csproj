@@ -293,6 +293,7 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.html" />
     <Content Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddEditExceptionReasonComponent.html" />
     <Content Include="CustomsModules\CustomsReferant\Components\ReferantWorkspaces\ReferantWorkspaceComponent.html" />
+    <Content Include="Customs\Components\ShortTitles\ExportStorgeShortTitleComponent.html" />
     <Content Include="_Resources\js\UnifreightJSBridge.js" />
     <TypeScriptCompile Include="App\DynamicLoader\LazyWidgetsLogitude.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\CopyJournalComponent.ts" />
@@ -1272,6 +1273,7 @@
     <TypeScriptCompile Include="Customs\Components\ListTemplates\EndDateComponent.ts" />
     <TypeScriptCompile Include="Customs\Components\ListTemplates\SupplierInvoiceItemListTemplate.ts" />
     <TypeScriptCompile Include="Customs\Components\MenuButtons\PhysicalCheckMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Customs\Components\ShortTitles\ExportStorgeShortTitleComponent.ts" />
     <TypeScriptCompile Include="Customs\Components\Spotlight\ReferantSpotlightDataTemplate.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\BankAccountToRefundRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\CargoSealsRequestParams.ts" />
