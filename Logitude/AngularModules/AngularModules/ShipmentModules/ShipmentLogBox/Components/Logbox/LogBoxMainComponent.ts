@@ -862,7 +862,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         windowArgs.IsNew = true;
         let newWindow = new LogitudeWindow();
         newWindow.Width = 600;
-        newWindow.Height = this.isPrivateLabel ? 376 : 350;
+        newWindow.Height = this.isPrivateLabel ? (this.IsDSV ? 376:  420) : 350;
         newWindow.Title = "Create New Shipment";
         newWindow.WindowArgs = windowArgs;
         let newWindowComponentPath = './ShipmentModules/ShipmentLogBox/Components/Logbox/';
