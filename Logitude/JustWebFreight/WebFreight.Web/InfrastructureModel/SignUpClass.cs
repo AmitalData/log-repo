@@ -738,7 +738,7 @@ namespace WebFreight.Web.InfrastructureModel
                     }
                 }
             }
-
+            signUpInfo.Tenant = tenant;
             return password;
         }
 

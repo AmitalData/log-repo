@@ -55,6 +55,8 @@
         public static string CountryCityViewsGetByFilters = "CountryCityViews/GetByFilters";
         public static string CountryCities = "CountryCities";
         public static string ChargesTypes = "ChargesTypes";
+        public static string Airlines = "airlines";
+        
 
         public static string TenantsGetSingle(int id)
         {
@@ -99,6 +101,11 @@
         public static string ARPaymentsGetSingle(string id)
         {
             return "ARPayments/GetSingle?id=" + id;
+        }
+
+        public static string AirlineGetSingle(string id)
+        {
+            return "airlines/getsingle?id=" + id;
         }
 
         public static string CommonDomainGetPortCopyToCurrentTenant(string portId)
