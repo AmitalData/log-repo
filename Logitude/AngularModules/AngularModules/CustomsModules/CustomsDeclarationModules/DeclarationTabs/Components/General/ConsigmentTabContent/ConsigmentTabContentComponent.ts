@@ -254,7 +254,7 @@ export class ConsigmentTabContentComponent
     GetDeclarationCourierStatusData() {
         if (this.IsCourierDeclaration) {
 
-            this.entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe((response: any) => {
+           // this.entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe((response: any) => {
                 let myDeclarationCourierStatusListService: DeclarationCourierStatusListService = new DeclarationCourierStatusListService();
 
                 let filters = new ApiQueryFilters();
@@ -271,7 +271,7 @@ export class ConsigmentTabContentComponent
                         }
 
                     });
-            });
+          //  });
         }
     }
 

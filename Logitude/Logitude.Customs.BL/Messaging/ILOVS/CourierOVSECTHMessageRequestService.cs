@@ -145,6 +145,20 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(myDeclarationPM.Id, true, false);
             if(currentDeclarationCourierStatusPM != null && !String.IsNullOrWhiteSpace(currentDeclarationCourierStatusPM.CrateNumber))crateNumber = currentDeclarationCourierStatusPM.CrateNumber;
 
+            string importerVat = "";
+            if (!String.IsNullOrWhiteSpace(myDeclarationPM.ImporterId))
+            {
+                ClientQueryService clientQueryService = new ClientQueryService(myCourierMasterPM.Tenant);
+
+                var clientPM = clientQueryService.GetSingle(myDeclarationPM.ImporterId, false, true); 
+                if (clientPM != null && !String.IsNullOrWhiteSpace(clientPM.Code)) importerVat = clientPM.Code;
+            }
+            else if(!String.IsNullOrWhiteSpace(myDeclarationPM.ImporterCode))
+            {
+                importerVat = myDeclarationPM.ImporterCode;
+            }
+
+
             var courierHawbMamanModel = new CourierOVSHAWBRequest()
             {
 
@@ -176,7 +190,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
                 CustomsSuspention = myDeclarationPM.CourierSuspentionCode??"",
                 Preclearence = myDeclarationPM.CourierCustomStatusCode== "1"  /*released*/,
 
-                ImporterVat = myDeclarationPM.ImporterId ?? myDeclarationPM.ImporterCode ?? "",
+                ImporterVat = importerVat,
                 BoxBarcode = crateNumber,
 
 
