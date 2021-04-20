@@ -58,7 +58,7 @@ export class ShipmentDetailsComponent implements AfterViewInit {
     }
     @HostListener('window:resize', ['$event'])
     onResize() {
-        //event.target.innerWidth;  
+        //event.target.innerWidth;
         this.InitSlider();
     }
 
@@ -105,7 +105,8 @@ export class ShipmentDetailsComponent implements AfterViewInit {
                 this.Shipment = result;
                 this.ShipmentReferences = result.ShipmentList.CustomerReference ? result.ShipmentList.CustomerReference.split(',') : null;
                 this.SetRoutingVariables();
-                this.SetCustomsBrokerReference();
+                this.GetShipmentPM();
+
             }
 
             setTimeout(() => {
@@ -134,7 +135,7 @@ export class ShipmentDetailsComponent implements AfterViewInit {
     }
 
 
-    SetCustomsBrokerReference() {
+    GetShipmentPM() {
         this.cargoTrackingShipmentService.get(this.Shipment.ShipmentList.EntityId).subscribe((result: any) => {
             if (result) {
                 this.ShipmentPM = result;
@@ -304,7 +305,7 @@ export class ShipmentDetailsComponent implements AfterViewInit {
         partner2.Type = "vendor";
         partner2.Name = "Fratelli Abood SPA";
         partner2.Address = "Via sorelle Tubi 4/6 28010 Pella (no) Italy";
-        partner2.PhoneNumber = "+39 0322918458";  
+        partner2.PhoneNumber = "+39 0322918458";
         this.PartnerCards.push(partner2);
         var partner2 = new PartnerCard();
         partner2.Type = "vendor";

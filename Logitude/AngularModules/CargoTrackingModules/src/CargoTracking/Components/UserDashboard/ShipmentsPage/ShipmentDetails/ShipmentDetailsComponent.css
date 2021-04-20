@@ -23,23 +23,22 @@ h1 {
 }
 
 .circle-image {
-    background: #e5e9ef; /*#F2F4F7;*/
+    font-size: 15px;
     border-radius: 50%;
-    width: 80px !important;
-    height: 80px;
+    width: 90px !important;
+    height: 90px;
     padding: 0 !important;
     margin: 0 auto;
-    /* top: 50%; */
+    margin-top: 18px;
     position: relative;
     text-align: center;
 }
 
-    .circle-image img {
-        width: 30px;
-        height: 24px;
-        position: relative;
-        top: calc(50% - 9px);
-    }
+.circle-image .direction-icon {
+    position: relative;
+    bottom: -30px;
+    transform: rotate(45deg);
+}
 
 .shipment-header::after,
 .slider::after {
@@ -239,7 +238,7 @@ h1 {
     line-height: 24px;
     margin: 10px;
     float: left;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .data-cards .title {
