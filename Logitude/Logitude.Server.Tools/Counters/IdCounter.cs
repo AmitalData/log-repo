@@ -30,7 +30,7 @@ namespace Logitude.Server.Tools.Counters
             string number = null;
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-                throw new Exception("itzik+elisheva= not in GetNewReadCommittedTransaction !!!!!! ");
+              //  throw new Exception("itzik+elisheva= not in GetNewReadCommittedTransaction !!!!!! ");
 
                 
                 using (OracleConnection cn = new OracleConnection(connectionString))
@@ -319,8 +319,8 @@ namespace Logitude.Server.Tools.Counters
                             catch (Exception ex)
                             {
                                 System.Console.WriteLine("Exception: {0}", ex.ToString());
-                                scope.Dispose();
-                                cn.Close();
+                               // scope.Dispose();
+                                //cn.Close();
 
                                 throw;
                             }
