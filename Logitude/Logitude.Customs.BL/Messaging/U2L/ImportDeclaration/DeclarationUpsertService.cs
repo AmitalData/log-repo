@@ -1455,6 +1455,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 {
                     MyGenericResponseObj.InnerException = formatedException.InnerException.ToString();
                 }
+
+                MessageOut = MyGenericResponseObj.ErrorDescription;
             }
             catch (Exception e)
             {
@@ -1466,6 +1468,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 {
                     MyGenericResponseObj.InnerException = e.InnerException.ToString();
                 }
+                MessageOut = MyGenericResponseObj.ErrorDescription;
 
             }
             finally
