@@ -694,7 +694,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             CustomsAutonomyKeywordQueryService customsAutonomyKeywordQueryService = new CustomsAutonomyKeywordQueryService(_context);
             var casualImportelTel = _AmitalCustomsFile.CasualImportelTel;
             if (!String.IsNullOrWhiteSpace(casualImportelTel)) casualImportelTel = _AmitalCustomsFile.CasualImportelTel.TrimStart(new Char[] { '0' });
-            if (customsAutonomyKeywordQueryService.CheckIfsAutonomy(_AmitalCustomsFile.CasualImporterCity, casualImportelTel, _tenant))
+            if (customsAutonomyKeywordQueryService.CheckIfsAutonomy(_AmitalCustomsFile.CasualImporterCity, casualImportelTel,"", _tenant))
             {
                 this.IsAutonomy = true;
                 return;
