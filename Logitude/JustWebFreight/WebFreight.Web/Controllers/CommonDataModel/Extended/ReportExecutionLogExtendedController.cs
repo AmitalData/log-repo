@@ -37,10 +37,10 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 SecurityUtility.CheckContactFeature("ReportExecutionLog", "READ", authToken.Tenant);
-                ReportExecutionLogQuery communicationLogQuery = new ReportExecutionLogQuery(authToken.Tenant);
-                ReportExecutionLogPM communicationLogPM = communicationLogQuery.GetSinglePM(id, authToken.Tenant);
+                ReportExecutionLogQuery reportExecutionLogQuery = new ReportExecutionLogQuery(authToken.Tenant);
+                ReportExecutionLogPM reportExecutionLogPM = reportExecutionLogQuery.GetSinglePM(id, authToken.Tenant);
 
-                return Request.CreateResponse(HttpStatusCode.OK, communicationLogPM);
+                return Request.CreateResponse(HttpStatusCode.OK, reportExecutionLogPM);
 
             }
             catch (Exception ex)

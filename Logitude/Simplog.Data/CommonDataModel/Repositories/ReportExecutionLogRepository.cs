@@ -37,17 +37,23 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 return (from record in context.ReportExecutionLogs select record);
             }
         }
-
+        // used by generated controller
         public ReportExecutionLog GetSingleReportExecutionLog(string id, int tenant)
+        {
+           var result = (from record in context.ReportExecutionLogs.Include("CommunicationStatusType").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("Report") where record.Id == id  select record).FirstOrDefault();
+            return result; 
+        }
+
+        public ReportExecutionLog GetReportExecutionLog(string id, int tenant)
         {
             return (from record in context.ReportExecutionLogs where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
- 
+
 
 
         public void Add(ReportExecutionLog entity)
         {
-            entity.SearchFields = entity.CreatedByUserId + "," + entity.ReportId + "," + entity.StatusCode + "," + entity.ExecutedByServerName + "," + entity.Tenant;
+            entity.SearchFields = entity.ReportId;
             context.ReportExecutionLogs.Add(entity);
         }
 
