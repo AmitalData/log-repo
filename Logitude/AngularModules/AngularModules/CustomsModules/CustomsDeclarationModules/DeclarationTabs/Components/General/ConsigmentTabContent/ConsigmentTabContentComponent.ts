@@ -246,15 +246,13 @@ export class ConsigmentTabContentComponent
         this.InitLOVFilters();//38388
         this.CheckRequrierdFieldsForSend();
         this.GetDeclarationCourierStatusData();
-
-  
+        
         console.log("Tabs Args: ", args);
     }
 
     GetDeclarationCourierStatusData() {
         if (this.IsCourierDeclaration) {
 
-           // this.entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe((response: any) => {
                 let myDeclarationCourierStatusListService: DeclarationCourierStatusListService = new DeclarationCourierStatusListService();
 
                 let filters = new ApiQueryFilters();
@@ -271,7 +269,7 @@ export class ConsigmentTabContentComponent
                         }
 
                     });
-          //  });
+          
         }
     }
 
@@ -338,8 +336,12 @@ export class ConsigmentTabContentComponent
     //#region Properties
 
 
-    public get CrateNumber() { return this._DeclarationCourierStatus.CrateNumber; }
-    public set CrateNumber(newValue: string) { this._DeclarationCourierStatus.CrateNumber = newValue; }
+    public get CrateNumber() { return this._DeclarationCourierStatus != null ? this._DeclarationCourierStatus.CrateNumber : null; }
+    public set CrateNumber(newValue: string) {
+        if (this._DeclarationCourierStatus != null) {
+            this._DeclarationCourierStatus.CrateNumber = newValue;
+        }
+    }
 
     couriersVatId: string;
     public get CouriersVatId() { return this.couriersVatId; }
