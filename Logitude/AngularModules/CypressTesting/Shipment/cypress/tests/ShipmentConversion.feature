@@ -31,7 +31,6 @@ Feature: Convert Shipment from House to Direct, Direct to House, FCL to LCL, LCL
         And following events should appear in events tab
             | Event                        | Notes                               |
             | Shipment Direction Converted | Converted from [Export] to [Import] |
-            | Shipment Number Changed      | Old Number: "OldShipmentNumber"     |
 
     Scenario: Change shipment type to house
         Given the user open direct to house conversion wizard
