@@ -119,6 +119,7 @@
     <None Include="DBScripts\Post\2021011719371_UpdateREQUESTEDCUSTOMSDOCID.sxml" />
     <None Include="DBScripts\Post\2021011719372_UpdateREQUESTEDCUSTOMSDOCID2.sxml" />
     <None Include="DBScripts\Post\2021022202_UpdatephysicalcheckDeclaration.sxml" />
+    <None Include="DBScripts\Post\202104201027_AddCOURIERPENDINGREASONS903.sxml" />
     <None Include="DBScripts\Pre\202005210104_DropUnneededTables_Global.sxml" />
     <None Include="DBScripts\Pre\202005210105_DropUnneededTables_Main.sxml" />
     <None Include="DBScripts\Pre\202005210106_DropUnneededTables_SystemLogs.sxml" />
