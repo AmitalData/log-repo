@@ -1,4 +1,4 @@
-﻿import { AmitalGatewayUtil, UnifreightMessageM } from '../../Infrastructure/Utilities/AmitalGatewayUtil';
+import { AmitalGatewayUtil, UnifreightMessageM } from '../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { AppTool } from '../../Infrastructure/Tools';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
 import { IEditComponentController } from '../../Infrastructure/Components/EditComponent/EditComponent';
@@ -69,4 +69,34 @@ export class UnifreightResponseEventArgs {
     constructor(
         public UnifreightMessage: UnifreightMessageM,
         public UnifreightResponseStatus: boolean) { }
+}
+
+
+export class UnifreightInstructionController {
+    constructor(private EntityPM: DeclarationPM, private ViewPlace: string) { }
+
+    public ShowInstruction(OnResponceOKMethod: () => void, OnResponceFailedMethod: () => void) {
+        if (AmitalGatewayUtil.Instance.IsDeclarationInUse(this.EntityPM.CustomFileNo, this.EntityPM.IsConvertedDeclaration, this.EntityPM.IsConnectedToUnifreight)) {
+            SessionLocator.SelectedSession.StartBusyIndicator("Check Instruction...");
+
+            var myUnifreightController = new UnifreightController(this.EntityPM,
+                "UnifreightInstructionController");
+
+            myUnifreightController.SendRequestInstructionToUnifreightAsync(this.ViewPlace/*"SENDTOMEHES"*/);
+            myUnifreightController.GetPromise().
+                then((e) => {
+                    SessionLocator.SelectedSession.StopBusyIndicator();
+                    var UnifreightResponseStatus = e.UnifreightResponseStatus;
+                    var UnifreightMessage = e.UnifreightMessage;
+                    if (UnifreightResponseStatus) {
+                        OnResponceOKMethod();
+                    }
+                    else {
+                        OnResponceFailedMethod();
+                    }
+                });
+        } else {
+            OnResponceOKMethod();
+        }
+    }
 }
