@@ -51,7 +51,7 @@ namespace TestTenantConfiguration
     {
         private int Tenant;
         private string AgentId, AddressId, EmployeeId, ContactID;
-        private string TenantEmail, TenantCompanyName , NewPassword;
+        private string TenantEmail, TenantCompanyName, NewPassword;
         private bool ValidateEmail = false, ValidateCompany = false;
 
         public Form1()
@@ -123,7 +123,7 @@ namespace TestTenantConfiguration
         #region Setup before creating tenant
         private void TenantEmailTextBox_TextChanged(object sender, EventArgs e)
         {
-            if(TenantEmailTextBox.Text != null)
+            if (TenantEmailTextBox.Text != null)
             {
                 this.TenantEmailValidation.Text = "";
             }
@@ -137,7 +137,7 @@ namespace TestTenantConfiguration
             }
             this.TenantCompanyName = TenantCompanyTextBox.Text;
         }
-        
+
         private void TenantEmailTextBox_LostFocus(object sender, EventArgs e)
         {
             ValidateEmailTB();
@@ -194,7 +194,7 @@ namespace TestTenantConfiguration
 
         private void CreateTenantBtn_Click(object sender, EventArgs e)
         {
-            if(ValidateEmail && ValidateCompany)
+            if (ValidateEmail && ValidateCompany)
             {
                 Thread thread = new Thread(() => StartCreateTenant());
                 thread.IsBackground = true;
@@ -249,17 +249,17 @@ namespace TestTenantConfiguration
             CreateTenantConfiguration();
 
             //Maintenance settings
-            CreateTranslationsInComputingPartners();
+            ComputingPartnersPrepare();
             UpdateQuoteSettings();
             UpdateAMANACTab();
             UpdateTrialStatus();
             TicketPrepareData();
 
-            //Prepare data
+            //Prepare data location , partners , shipment
             PrepareDataForTenant();
         }
 
-        #region Create & Update Tenant 
+        #region Create Tenant Configuration
         private ICommonDataContext MyContext;
 
         private void CreateTenantConfiguration()
@@ -271,19 +271,20 @@ namespace TestTenantConfiguration
             CreateRatesTables();
             UpdateTenant();
             AcceptTerms();
+            displayGettingStarted();
             ResetPassword();
         }
 
         private void TenantConstructor()
         {
             MyContext = CommonDataContext.GetContext(this.Tenant);
-            this.ContactID = GetContactIdByEmail(this.TenantEmail);
+            this.ContactID = GetContactIdByEmail(this.TenantEmail, this.Tenant);
         }
 
-        private string GetContactIdByEmail(String email)
+        private string GetContactIdByEmail(string email, int tenant)
         {
             ContactQuery contactQuery = new ContactQuery(this.Tenant);
-            ContactPM contactPM = contactQuery.GetSingleContact(email, this.Tenant);
+            ContactPM contactPM = contactQuery.GetSingleContact(email, tenant);
             return contactPM?.Id;
         }
 
@@ -301,7 +302,7 @@ namespace TestTenantConfiguration
             {
                 Email = this.TenantEmail,
                 Company = this.TenantCompanyName,
-                Name = this.TenantCompanyName,
+                Name = "SpecflowTest",
                 Phone = "050808080",
                 PackageCode = "DVMT",
                 CountryCode = "PS",
@@ -498,16 +499,18 @@ namespace TestTenantConfiguration
         #region Accept Terms
         private void AcceptTerms()
         {
-            TermsofUseSignaturePM entityPM = CreateTermInstance();
-            TermsofUseSignatureService service = new TermsofUseSignatureService(MyContext, entityPM.Tenant);
-            service.Create(entityPM);
+            TermsofUseSignaturePM MyTenant = CreateTermInstance(this.ContactID);
+            TermsofUseSignaturePM CustomerCareTenant = CreateTermInstance(GetContactIdByEmail("specflowtest_customercare@logitudeworld.com", 0));
+            TermsofUseSignatureService service = new TermsofUseSignatureService(MyContext, MyTenant.Tenant);
+            service.Create(MyTenant);
+            service.Create(CustomerCareTenant);
         }
 
-        private TermsofUseSignaturePM CreateTermInstance()
+        private TermsofUseSignaturePM CreateTermInstance(string ContactId)
         {
             TermsofUseSignaturePM entityPM = new TermsofUseSignaturePM()
             {
-                ContactId = this.ContactID,
+                ContactId = ContactId,
                 SignedDatetime = TenantServerConfigration.GetCurrentDateTime(this.Tenant),
                 Tenant = this.Tenant,
                 TermsofUseVersion = 2
@@ -516,6 +519,20 @@ namespace TestTenantConfiguration
         }
         #endregion
 
+        #region Getting started 
+        private void displayGettingStarted()
+        {
+            ContactQuery query = new ContactQuery(this.Tenant);
+            ContactPM contact = query.GetSingleContact(this.TenantEmail, this.Tenant);
+            contact.DisplayGettingStarted = false;
+            contact.IsHybrid = true;
+            ICommonDataContext MyContext = CommonDataContext.GetContext(this.Tenant);
+            ContactService service = new ContactService(MyContext, this.Tenant);
+            service.Update(contact);
+        }
+        #endregion
+        
+        #region Reset Password
         private void ResetPassword()
         {
             this.NewPassword = "!Cypress1";
@@ -528,29 +545,107 @@ namespace TestTenantConfiguration
                 SetControlPropertyValue(ValidateCopy, "Text", "New password was successfully changed");
             }
         }
-
+        #endregion
+        
         #endregion
 
         #region Computing Partner Translation
+
+        private void ComputingPartnersPrepare()
+        {
+            CreateNewTableForTranslation();
+            CreateTranslationsInComputingPartners();
+        }
         private void CreateTranslationsInComputingPartners()
         {
-            ComputingPartnerTranslationPM entityPM = CreateComputingPartnerTranslationInstance();
-            ComputingPartnerTranslationService service = new ComputingPartnerTranslationService(MyContext, entityPM.Tenant, this.ContactID);
-            service.Create(entityPM);
+            ComputingPartnerTranslationPM translationFor40GP = CreateComputingPartnerTranslationInstance("PackageType", "40GP", "CCCC");
+            ComputingPartnerTranslationPM translationForCT = CreateComputingPartnerTranslationInstance("PackageType", "CT", "CT");
+            ComputingPartnerTranslationPM translationForPTP = CreateComputingPartnerTranslationInstance("MoveType", "PTP", "PortToPort");
+            ComputingPartnerTranslationService service = new ComputingPartnerTranslationService(MyContext, this.Tenant, this.ContactID);
+            service.Create(translationFor40GP);
+            service.Create(translationForCT);
+            service.Create(translationForPTP);
         }
 
-        private ComputingPartnerTranslationPM CreateComputingPartnerTranslationInstance()
+        private void CreateNewTableForTranslation()
+        {
+            ComputingPartnerPM entityPM = CreatenewComputingPartnerTableInstance();
+            ICommonDataContext MyContext = CommonDataContext.GetContext(this.Tenant);
+            ComputingPartnerService service = new ComputingPartnerService(MyContext, entityPM, this.ContactID);
+            service.Update(entityPM.PartnerTables);
+        }
+
+        private ComputingPartnerPM CreatenewComputingPartnerTableInstance()
+        {
+            List<ComputingPartnerTablePM> PartnerTablesList = new List<ComputingPartnerTablePM>();
+            ComputingPartnerTablePM computingPartnerTable = new ComputingPartnerTablePM()
+            {
+                ChangeSetOp = ChangeSetOperation.None,
+                ComputingPartnerId = GetComputingPartnerByName("INTTRA").Id,
+                ComputingPartnerName = "INTTRA",
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant),
+                CreatedByUserId = GetComputingPartnerByName("INTTRA").CreatedByUserId,
+                //CreatedByUserName = "Lana" , 
+                HasPartnerList = false,
+                MustUsePartnerList = false,
+                Name = "Package type",
+                ObjectTableId = GetObjectTableIdByName("PackageType"),
+                ObjectTableName = "PackageType",
+                Tenant = 0,
+                TenantLevelTranslationBlocked = false,
+                TransalationRequired = false,
+                UpdateDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant),
+                UpdatedByUserId = GetComputingPartnerByName("INTTRA").CreatedByUserId,
+                //UpdatedByUserName = "Lana",
+            };
+            ComputingPartnerTablePM computingPartnerTable2 = new ComputingPartnerTablePM()
+            {
+                ChangeSetOp = ChangeSetOperation.Insert,
+                ComputingPartnerId = GetComputingPartnerByName("INTTRA").Id,
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant),
+                CreatedByUserId = GetUserId(this.TenantEmail),
+                Name = "MoveType",
+                ObjectTableId = GetObjectTableIdByName("MoveType"),
+                ObjectTableName = "MoveType",
+                Tenant = this.Tenant,
+                UpdateDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant),
+                UpdatedByUserId = GetUserId(this.TenantEmail),
+                //UpdatedByUserName = "TeamR3",
+            };
+            PartnerTablesList.Add(computingPartnerTable);
+            PartnerTablesList.Add(computingPartnerTable2);
+
+            ComputingPartnerPM entityPM = new ComputingPartnerPM()
+            {
+                Code = "G-INTTRA",
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant),
+                CreatedByUserId = GetComputingPartnerByName("INTTRA").CreatedByUserId,
+                //CreatedByUserName = ,
+                Id = GetComputingPartnerByName("INTTRA").Id,
+                Name = "INTTRA",
+                SearchFields = "INTTRA",
+                Tenant = 0,
+                UpdateDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant),
+                UpdatedByUserId = GetUserId(this.TenantEmail),
+                InActive = false,
+                LoggedTenantId = this.Tenant,
+                PartnerTables = PartnerTablesList
+            };
+            return entityPM;
+        }
+
+        private ComputingPartnerTranslationPM CreateComputingPartnerTranslationInstance(string objectTable, string ourCode, string partnerCode)
         {
             ComputingPartnerTranslationPM entityPM = new ComputingPartnerTranslationPM
             {
-                ComputingPartnerId = GetComputingPartnerIdByName("INTTRA"),
+                ComputingPartnerId = GetComputingPartnerByName("INTTRA").Id,
                 ComputingPartnerName = "INTTRA",
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant),
                 CreatedByUserId = GetUserId(this.TenantEmail),
-                ObjectTableId = GetObjectTableIdByName("PackageType"),
-                ObjectTableName = "PackageType",
-                OurCode = "40GP",
-                PartnerCode = "CCCC",
+                ObjectTableId = GetObjectTableIdByName(objectTable),
+                ObjectTableName = objectTable,
+                OurCode = ourCode,
+                PartnerCode = partnerCode,
                 UpdateDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant),
                 UpdatedByUserId = GetUserId(this.TenantEmail),
                 Tenant = this.Tenant
@@ -565,11 +660,11 @@ namespace TestTenantConfiguration
             return userPM.Id;
         }
 
-        private string GetComputingPartnerIdByName(string name)
+        private ComputingPartnerPM GetComputingPartnerByName(string name)
         {
             ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(this.Tenant);
             ComputingPartnerPM computingPartnerPM = computingPartnerQuery.GetSinglePMByName(name, 0);
-            return computingPartnerPM.Id;
+            return computingPartnerPM;
         }
 
         private string GetObjectTableIdByName(string name)
