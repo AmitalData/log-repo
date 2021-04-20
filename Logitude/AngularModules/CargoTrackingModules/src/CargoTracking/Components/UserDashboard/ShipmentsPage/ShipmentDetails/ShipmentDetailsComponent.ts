@@ -31,15 +31,6 @@ export class ShipmentDetailsComponent implements AfterViewInit {
     public fromPortCode: string;
     ShipmentReferences: string[] = [];
     SearchText: string = "";
-    CustomersReferences = [
-        '5689974987646132',
-        '5689974987646132',
-        '5689974987646132',
-        '5689974987646132',
-        '5689974987646132',
-        '5689974987646132',
-        '5689974987646132',
-    ]
     CustomsBrokerReference: string;
     ShipmentPM: any;
     get tenant() {
@@ -114,7 +105,7 @@ export class ShipmentDetailsComponent implements AfterViewInit {
                 this.Shipment = result;
                 this.ShipmentReferences = result.ShipmentList.CustomerReference ? result.ShipmentList.CustomerReference.split(',') : null;
                 this.SetRoutingVariables();
-                this.GetShipmentPM();
+                this.SetCustomsBrokerReference();
             }
 
             setTimeout(() => {
@@ -143,7 +134,7 @@ export class ShipmentDetailsComponent implements AfterViewInit {
     }
 
 
-    GetShipmentPM() {
+    SetCustomsBrokerReference() {
         this.cargoTrackingShipmentService.get(this.Shipment.ShipmentList.EntityId).subscribe((result: any) => {
             if (result) {
                 this.ShipmentPM = result;
