@@ -221,6 +221,7 @@ namespace WebFreight.Web.ReportsWebServices
             this.MapShipmentCutoffDate();
             this.MapShipmentFreightLocation();
             this.MapShipmentOnCarriage();
+            this.MapShipmentOnForwarding();
             this.MapShipmentShipper();
             this.MapShipmentConsignee();
             this.MapShipmentCustomer();
@@ -323,6 +324,16 @@ namespace WebFreight.Web.ReportsWebServices
                 if (shipment.OnCarriageCarrierId != null)
                 {
                     dataProvider.OnCarriageCarrier = shipment.OnCarriageCarrierName;
+                }
+            }
+        }
+        private void MapShipmentOnForwarding()
+        {
+            if (shipment.OnForwardingFromPortId != null && shipment.OnForwardingToPortId != null)
+            {
+                if (shipment.OnForwardingCarrierId != null)
+                {
+                    dataProvider.OnForwardingCarrier = shipment.OnForwardingCarrierName;
                 }
             }
         }

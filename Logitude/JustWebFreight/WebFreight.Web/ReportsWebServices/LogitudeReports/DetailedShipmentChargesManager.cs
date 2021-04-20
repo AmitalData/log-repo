@@ -1378,6 +1378,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     }
                 }
 
+                else if (!string.IsNullOrEmpty(myShipment.OnForwardingToPortId))
+                {
+                    PortPM onForwardingToPort = PortQuery.GetSinglePort(tenant, myShipment.OnForwardingToPortId, true);
+                    if (onForwardingToPort != null)
+                    {
+                        countryName = onForwardingToPort.CountryName;
+                    }
+                }
+
                 else if (!string.IsNullOrEmpty(myShipment.OnCarriageToPortId))
                 {
                     PortPM onCarriageToPort = PortQuery.GetSinglePort(tenant, myShipment.OnCarriageToPortId, true);

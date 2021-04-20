@@ -1148,10 +1148,17 @@ namespace WebFreight.Web.ReportsWebServices
 
                 #region PlaceOfDelivery
                 Port onCarriageToPort = null;
+                Port onForwardingToPort = null;
                 Port mainToPort = null;
+
                 if (shipmentpm.OnCarriageToPortId != null)
                 {
                     onCarriageToPort = (from a in commonContext.Ports where a.Id == shipmentpm.OnCarriageToPortId select a).FirstOrDefault();
+                }
+
+                if (shipmentpm.OnForwardingToPortId != null)
+                {
+                    onForwardingToPort = (from a in commonContext.Ports where a.Id == shipmentpm.OnForwardingToPortId select a).FirstOrDefault();
                 }
 
                 if (shipmentpm.MainCarriageToPortId != null)
@@ -1208,6 +1215,11 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
 
+                else if (onForwardingToPort != null)
+                {
+                    prealertDataProvider.PlaceOfDelivery = onForwardingToPort.EnglishName;
+                }
+
                 else if (onCarriageToPort != null)
                 {
                     prealertDataProvider.PlaceOfDelivery = onCarriageToPort.EnglishName;
@@ -1236,10 +1248,17 @@ namespace WebFreight.Web.ReportsWebServices
 
                 #region PickUpAddress
                 Port preCarriageFromPort = null;
+                Port preForwardingFromPort = null;
                 Port mainFromPort = null;
+
                 if (shipmentpm.PreCarriageFromPortId != null)
                 {
                     preCarriageFromPort = (from a in commonContext.Ports where a.Id == shipmentpm.PreCarriageFromPortId select a).FirstOrDefault();
+                }
+
+                if (shipmentpm.PreForwardingFromPortId != null)
+                {
+                    preForwardingFromPort = (from a in commonContext.Ports where a.Id == shipmentpm.PreForwardingFromPortId select a).FirstOrDefault();
                 }
 
                 if (shipmentpm.MainCarriageFromPortId != null)
@@ -1309,14 +1328,16 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
 
+                else if (preForwardingFromPort != null)
+                {
+                    prealertDataProvider.PickUpAddress = preForwardingFromPort.EnglishName; 
+                    prealertDataProvider.PlaceOfReceiptCountryName = preForwardingFromPort.CountryName;                    
+                }
+
                 else if (preCarriageFromPort != null)
                 {
-                    prealertDataProvider.PickUpAddress = preCarriageFromPort.EnglishName;
-                    PortPM myPort = portQuery.GetSinglePM(shipmentpm.PreCarriageFromPortId, tenant);
-                    if (myPort != null)
-                    {
-                        prealertDataProvider.PlaceOfReceiptCountryName = myPort.CountryName;
-                    }
+                    prealertDataProvider.PickUpAddress = preCarriageFromPort.EnglishName;                    
+                    prealertDataProvider.PlaceOfReceiptCountryName = preCarriageFromPort.CountryName;                    
                 }
 
                 else if (mainFromPort != null)
@@ -1352,15 +1373,16 @@ namespace WebFreight.Web.ReportsWebServices
 
                 #region PickUpsAndDeliveries
                 GetShipmentPickUpAndDeliveries();
-                #endregion
+                #endregion               
 
-                ////////////////////////////////////////////////////////////////////
-
-                //prealertDataProvider.FullRoutings
                 prealertDataProvider.PreCarriageETD = shipmentpm.PreCarriageETD;
                 prealertDataProvider.PreCarriageATD = shipmentpm.PreCarriageATD;
                 prealertDataProvider.PreCarriageCarrierCode = shipmentpm.PreCarriageCarrierCode;
                 prealertDataProvider.PreCarriageCarrierNumber = shipmentpm.PreCarriageCarrierNumber;
+                prealertDataProvider.PreForwardingETD = shipmentpm.PreForwardingETD;
+                prealertDataProvider.PreForwardingATD = shipmentpm.PreForwardingATD;
+                prealertDataProvider.PreForwardingCarrierCode = shipmentpm.PreForwardingCarrierCode;
+                prealertDataProvider.PreForwardingCarrierNumber = shipmentpm.PreForwardingCarrierNumber;
                 prealertDataProvider.MainCarriageATD = shipmentpm.MainCarriageATD;
                 prealertDataProvider.Transhipment1ATD = shipmentpm.Transshipment1ATD;
                 prealertDataProvider.Transshipment1CarrierCode = shipmentpm.Transshipment1CarrierCode;
@@ -1377,118 +1399,7 @@ namespace WebFreight.Web.ReportsWebServices
                 prealertDataProvider.TotalQuantity = shipmentpm.NumberOfPackages;
                 prealertDataProvider.Salesman = shipmentpm.SalesmanUserName;
 
-                string routing = "";
-
-                //pick ups
-                List<ShipmentPickUpPM> myPickups = shipmentPickUpQuery.GetShipmentPickUpPMsByTenantAndShipment(shipmentid, tenant).Where(a => a.PickUpDeliveryToTypeCode == "PORT").ToList();
-                if (myPickups.Count > 0)
-                {
-                    foreach (ShipmentPickUpPM item in myPickups)
-                    {
-                        if (string.IsNullOrEmpty(routing))
-                        {
-                            routing = item.FromPortCode + "-" + item.ToPortCode;
-                        }
-                        else
-                        {
-                            routing = routing + "-" + item.ToPortCode;
-                        }
-                    }
-                }
-
-                //pre carriage
-                if (shipmentpm.PreCarriageFromPortId != null && shipmentpm.PreCarriageToPortId != null)
-                {
-                    if (string.IsNullOrEmpty(routing))
-                    {
-                        routing = shipmentpm.PreCarriageFromPortCode + "-" + shipmentpm.PreCarriageToPortCode;
-                    }
-                    else
-                    {
-                        routing = routing + "-" + shipmentpm.PreCarriageToPortCode;
-                    }
-                }
-
-                //main carriage
-                if (string.IsNullOrEmpty(routing))
-                {
-                    routing = shipmentpm.MainCarriageFromPortCode + "-" + shipmentpm.MainCarriageToPortCode;
-                }
-                else
-                {
-                    routing = routing + "-" + shipmentpm.MainCarriageToPortCode;
-                }
-
-                //transshipment 1
-                if (shipmentpm.Transshipment1FromPortId != null && shipmentpm.Transshipment1ToPortId != null)
-                {
-                    if (string.IsNullOrEmpty(routing))
-                    {
-                        routing = shipmentpm.Transshipment1ToPortCode;
-                    }
-                    else
-                    {
-                        routing = routing + "-" + shipmentpm.Transshipment1ToPortCode;
-                    }
-                }
-
-                //transshipment 2
-                if (shipmentpm.Transshipment2FromPortId != null && shipmentpm.Transshipment2ToPortId != null)
-                {
-                    if (string.IsNullOrEmpty(routing))
-                    {
-                        routing = shipmentpm.Transshipment2ToPortCode;
-                    }
-                    else
-                    {
-                        routing = routing + "-" + shipmentpm.Transshipment2ToPortCode;
-                    }
-                }
-
-                //transshipment 3
-                if (shipmentpm.Transshipment3FromPortId != null && shipmentpm.Transshipment3ToPortId != null)
-                {
-                    if (string.IsNullOrEmpty(routing))
-                    {
-                        routing = shipmentpm.Transshipment3ToPortCode;
-                    }
-                    else
-                    {
-                        routing = routing + "-" + shipmentpm.Transshipment3ToPortCode;
-                    }
-                }
-
-                // on carriage
-                if (shipmentpm.OnCarriageFromPortId != null && shipmentpm.OnCarriageToPortId != null)
-                {
-                    if (string.IsNullOrEmpty(routing))
-                    {
-                        routing = shipmentpm.OnCarriageToPortCode;
-                    }
-                    else
-                    {
-                        routing = routing + "-" + shipmentpm.OnCarriageToPortCode;
-                    }
-                }
-
-                //deliveries
-                List<ShipmentDeliveryPM> myDeliveries = shipmentDeliveryQuery.GetShipmentDeliveryPMsByTenantAndShipment(shipmentid, tenant).Where(a => a.PickUpDeliveryToTypeCode == "PORT").ToList();
-                if (myDeliveries.Count > 0)
-                {
-                    foreach (ShipmentDeliveryPM item in myDeliveries)
-                    {
-                        if (string.IsNullOrEmpty(routing))
-                        {
-                            routing = item.ToPortCode;
-                        }
-                        else
-                        {
-                            routing = routing + "-" + item.ToPortCode;
-                        }
-                    }
-                }
-
-                prealertDataProvider.FullRoutings = routing;
+                prealertDataProvider.FullRoutings = this.GetFullRouting(shipmentpm, shipmentPickUpQuery, shipmentDeliveryQuery);
 
                 ARInvoiceRepository invoiceRep = new ARInvoiceRepository(tenant);
                 List<ARInvoice> invoices = invoiceRep.GetInvoicesByMainEntityId(shipmentpm.Id, tenant);
@@ -1529,6 +1440,11 @@ namespace WebFreight.Web.ReportsWebServices
                     prealertDataProvider.OriginCountryName = this.GetPickUpDeliveryFromCityOrPortName(myFirstPickup);
                 }
 
+                else if (shipmentpm.PreForwardingFromPortId != null)
+                {
+                    prealertDataProvider.OriginCountryName = shipmentpm.PreForwardingFromPortCountryName;
+                }
+
                 else if (shipmentpm.PreCarriageFromPortId != null)
                 {
                     prealertDataProvider.OriginCountryName = shipmentpm.PreCarriageFromPortCountryName;
@@ -1538,7 +1454,6 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     prealertDataProvider.OriginCountryName = shipmentpm.MainCarriageFromPortCountryName;
                 }
-
 
                 if (customer != null)
                 {
@@ -1659,6 +1574,148 @@ namespace WebFreight.Web.ReportsWebServices
             return prealertDataProvider;
 
             #endregion
+        }
+
+        private string GetFullRouting(ShipmentPM shipmentpm, ShipmentPickUpQuery shipmentPickUpQuery, ShipmentDeliveryQuery shipmentDeliveryQuery)
+        {
+            string routing = "";
+
+            //pick ups
+            List<ShipmentPickUpPM> myPickups = shipmentPickUpQuery.GetShipmentPickUpPMsByTenantAndShipment(shipmentid, tenant).Where(a => a.PickUpDeliveryToTypeCode == "PORT").ToList();
+            if (myPickups.Count > 0)
+            {
+                foreach (ShipmentPickUpPM item in myPickups)
+                {
+                    if (string.IsNullOrEmpty(routing))
+                    {
+                        routing = item.FromPortCode + "-" + item.ToPortCode;
+                    }
+                    else
+                    {
+                        routing = routing + "-" + item.ToPortCode;
+                    }
+                }
+            }
+
+            //pre forwarding
+            if (shipmentpm.PreForwardingFromPortId != null && shipmentpm.PreForwardingToPortId != null)
+            {
+                if (string.IsNullOrEmpty(routing))
+                {
+                    routing = shipmentpm.PreForwardingFromPortCode + "-" + shipmentpm.PreForwardingToPortCode;
+                }
+                else
+                {
+                    routing = routing + "-" + shipmentpm.PreForwardingToPortCode;
+                }
+            }
+
+            //pre carriage
+            if (shipmentpm.PreCarriageFromPortId != null && shipmentpm.PreCarriageToPortId != null)
+            {
+                if (string.IsNullOrEmpty(routing))
+                {
+                    routing = shipmentpm.PreCarriageFromPortCode + "-" + shipmentpm.PreCarriageToPortCode;
+                }
+                else
+                {
+                    routing = routing + "-" + shipmentpm.PreCarriageToPortCode;
+                }
+            }
+
+            //main carriage
+            if (string.IsNullOrEmpty(routing))
+            {
+                routing = shipmentpm.MainCarriageFromPortCode + "-" + shipmentpm.MainCarriageToPortCode;
+            }
+            else
+            {
+                routing = routing + "-" + shipmentpm.MainCarriageToPortCode;
+            }
+
+            //transshipment 1
+            if (shipmentpm.Transshipment1FromPortId != null && shipmentpm.Transshipment1ToPortId != null)
+            {
+                if (string.IsNullOrEmpty(routing))
+                {
+                    routing = shipmentpm.Transshipment1ToPortCode;
+                }
+                else
+                {
+                    routing = routing + "-" + shipmentpm.Transshipment1ToPortCode;
+                }
+            }
+
+            //transshipment 2
+            if (shipmentpm.Transshipment2FromPortId != null && shipmentpm.Transshipment2ToPortId != null)
+            {
+                if (string.IsNullOrEmpty(routing))
+                {
+                    routing = shipmentpm.Transshipment2ToPortCode;
+                }
+                else
+                {
+                    routing = routing + "-" + shipmentpm.Transshipment2ToPortCode;
+                }
+            }
+
+            //transshipment 3
+            if (shipmentpm.Transshipment3FromPortId != null && shipmentpm.Transshipment3ToPortId != null)
+            {
+                if (string.IsNullOrEmpty(routing))
+                {
+                    routing = shipmentpm.Transshipment3ToPortCode;
+                }
+                else
+                {
+                    routing = routing + "-" + shipmentpm.Transshipment3ToPortCode;
+                }
+            }
+
+            // on carriage
+            if (shipmentpm.OnCarriageFromPortId != null && shipmentpm.OnCarriageToPortId != null)
+            {
+                if (string.IsNullOrEmpty(routing))
+                {
+                    routing = shipmentpm.OnCarriageToPortCode;
+                }
+                else
+                {
+                    routing = routing + "-" + shipmentpm.OnCarriageToPortCode;
+                }
+            }
+
+            // on Forwarding
+            if (shipmentpm.OnForwardingFromPortId != null && shipmentpm.OnForwardingToPortId != null)
+            {
+                if (string.IsNullOrEmpty(routing))
+                {
+                    routing = shipmentpm.OnForwardingToPortCode;
+                }
+                else
+                {
+                    routing = routing + "-" + shipmentpm.OnForwardingToPortCode;
+                }
+            }
+
+            //deliveries
+            List<ShipmentDeliveryPM> myDeliveries = shipmentDeliveryQuery.GetShipmentDeliveryPMsByTenantAndShipment(shipmentid, tenant).Where(a => a.PickUpDeliveryToTypeCode == "PORT").ToList();
+            if (myDeliveries.Count > 0)
+            {
+                foreach (ShipmentDeliveryPM item in myDeliveries)
+                {
+                    if (string.IsNullOrEmpty(routing))
+                    {
+                        routing = item.ToPortCode;
+                    }
+                    else
+                    {
+                        routing = routing + "-" + item.ToPortCode;
+                    }
+                }
+            }
+
+            return routing;
         }
 
         public string GetPickUpDeliveryFromCityOrPortName(ShipmentPickUpDelivery entity)

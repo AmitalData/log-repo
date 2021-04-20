@@ -128,9 +128,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                     if (entityPM.ConvertFromDirectToHouse)
                     {
-                        entityPM.ConvertFromDirectToHouse = false;
-                        entityPM.ConvertFromHouseToDirect = false;
-
                         if (entityMasterData != null)
                         {
                             this.CreateTraceEvent("CSDH", entityPM.EventNote);
@@ -139,9 +136,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                     if (entityPM.ConvertFromHouseToDirect)
                     {
-                        entityPM.ConvertFromDirectToHouse = false;
-                        entityPM.ConvertFromHouseToDirect = false;
-
                         this.CreateTraceEvent("CSHD", entityPM.EventNote);
                     }
 
