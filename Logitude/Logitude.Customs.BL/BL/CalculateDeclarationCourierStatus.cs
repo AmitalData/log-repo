@@ -133,13 +133,18 @@ namespace Logitude.Customs.BL.BL
                 CalcHighLowValue(myDeclarationCourierStatusPM);
                 CalcSpecialActionStatus(myDeclarationCourierStatusPM);
                 CalcFastIndividualProcess(myDeclarationCourierStatusPM);
-                CalcDeclarationPendings(myDeclarationCourierStatusPM);
+                CalcDeclarationPendings902(myDeclarationCourierStatusPM);
+                
+
+                var updateDeclarationPending903InvalidPhoneNumberService = new UpdateDeclarationPending903InvalidPhoneNumberService(declarationPM);
+                updateDeclarationPending903InvalidPhoneNumberService.Calc(myDeclarationCourierStatusPM);
 
                 return myDeclarationCourierStatusPM;
 
             }
             return null;
         }
+
 
         public void CalcDocumentStatusCode(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
@@ -477,7 +482,7 @@ namespace Logitude.Customs.BL.BL
 
         }
 
-        public void CalcDeclarationPendings(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
+        public void CalcDeclarationPendings902(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
             if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
 
@@ -510,6 +515,82 @@ namespace Logitude.Customs.BL.BL
                 declarationPendingPM_902.Status = "S";
                 //LogMessagingUtil.Instance.AppendLine("Courier Pending Reason Code 900 Set as Solved");
             }
+        }
+    }
+
+
+    public class UpdateDeclarationPending903InvalidPhoneNumberService
+    {
+        private DeclarationPM declarationPM;
+
+        public UpdateDeclarationPending903InvalidPhoneNumberService(DeclarationPM declarationPM)
+        {
+            this.declarationPM = declarationPM;
+        }
+        public void Calc(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
+        {
+            if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
+            string courierReasonCode = "903";
+            if (myDeclarationCourierStatusPM == null)
+            {
+                return;//not courier 
+            }
+            var declarationPending903PM = myDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == declarationPM.Id && r.CourierPendingReasonCode == courierReasonCode).FirstOrDefault();
+            bool valid = false;
+            if (string.IsNullOrWhiteSpace(declarationPM.CasualImporterTel))
+            {
+                valid = true;
+            }
+            else if (declarationPM.CasualImporterTel.StartsWith("9725") && declarationPM.CasualImporterTel.Length == 12)
+            {
+                valid = true;
+            }
+            else if (declarationPM.CasualImporterTel.StartsWith("05") && declarationPM.CasualImporterTel.Length == 10)
+            {
+                valid = true;
+            }
+
+            if (valid)
+            {
+                if (declarationPending903PM != null && declarationPending903PM.Status == "A")
+                {
+                    //UPDATE to solve
+                    declarationPending903PM.Status = "S";
+                    declarationPending903PM.ChangeSetOp = ChangeSetOperation.Update;
+                    myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                }
+
+            }
+            else//invalid 
+            {
+                if (declarationPending903PM == null)
+                {
+
+                    declarationPending903PM = new DeclarationPendingPM()
+                    {
+                        ChangeSetOp = ChangeSetOperation.Insert,
+                        DeclarationID = declarationPM.Id,
+                        Tenant = declarationPM.Tenant,
+                        CourierPendingReasonCode = courierReasonCode,
+                        Status = "A",
+                    };
+
+                    myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPending903PM);
+                    myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+
+                }
+                else
+                {
+                    if (declarationPending903PM.Status == "S")
+                    {
+                        declarationPending903PM.Status = "A";
+                        declarationPending903PM.ChangeSetOp = ChangeSetOperation.Update;
+                        myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+
+                    }
+                }
+            }
+
         }
     }
 }

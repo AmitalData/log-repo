@@ -28,6 +28,16 @@ namespace Unifreight.Data.AmitalModel
         public static DbModelBuilder GetBuilder()//protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             DbModelBuilder modelBuilder = new DbModelBuilder(DbModelBuilderVersion.V4_1);
+            bool its4Grant = true;
+            if (its4Grant)
+            {
+
+                modelBuilder.Entity<CFIFILEM>()
+                    .HasKey(p => new { p.FILE_NO })
+                    .ToTable("CFIFILEM", "AMITESTM");
+
+            }
+
 
             #region YCULPROCESS
 
