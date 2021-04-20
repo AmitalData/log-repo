@@ -8617,7 +8617,7 @@
   <Query
     Code="&quot;OpenStorages&quot;"
     TextCode="&quot;Open Storages&quot;"
-    LocalTextCode="&quot;Closed Storages&quot;"
+    LocalTextCode="&quot;Open Storages&quot;"
     QueryGroupCode="&quot;cfdc&quot;"
     IndexOrder="0"
     ObjectTableName="&quot;Customs.ExportStorge&quot;"
@@ -8835,6 +8835,109 @@
         Operator="&quot;Equal&quot;"
         IndexOrder="0" />
     </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;AllStorages&quot;"
+    TextCode="&quot;All Storages&quot;"
+    LocalTextCode="&quot;All Storages&quot;"
+    QueryGroupCode="&quot;cfdc&quot;"
+    IndexOrder="2"
+    ObjectTableName="&quot;Customs.ExportStorge&quot;"
+    QuerySection="&quot;Customs.ExportStorge&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;OpenDate&quot;"
+    DefaultSortDirection="&quot;Ascending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;AllStorages&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;OpenDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllStorages&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;StorageNo&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllStorages&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;ContainerNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllStorages&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;StorageDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllStorages&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;FclLclName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllStorages&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;ExporterRef&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllStorages&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;ExporterName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllStorages&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;ShipAgent&quot;"
+        ColumnWidth="94" />
+      <QueryColumn
+        QueryCode="&quot;AllStorages&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;VesselAndVoyage&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllStorages&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;LoadingSite&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllStorages&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;FinalDestinationInternatID&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllStorages&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;ExportFileNo&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllStorages&quot;"
+        IndexOrder="12"
+        ObjectFieldName="&quot;DriverName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllStorages&quot;"
+        IndexOrder="13"
+        ObjectFieldName="&quot;Customs&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllStorages&quot;"
+        IndexOrder="14"
+        ObjectFieldName="&quot;Hatara&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllStorages&quot;"
+        IndexOrder="15"
+        ObjectFieldName="&quot;CustomStatus&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllStorages&quot;"
+        IndexOrder="16"
+        ObjectFieldName="&quot;StorageStatus&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters />
   </Query>
   <Screen
     Name="&quot;Customs.ExportStorgeHeaderScreen&quot;"
