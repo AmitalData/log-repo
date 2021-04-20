@@ -23,13 +23,13 @@ h1 {
 }
 
 .circle-image {
-    background: #e5e9ef; /*#F2F4F7;*/
+    background: #fff; /*#F2F4F7;*/
     border-radius: 50%;
     width: 90px !important;
     height: 90px;
     padding: 0 !important;
     margin: 0 auto;
-    margin-top: 18px;
+    /* top: 50%; */
     position: relative;
     text-align: center;
 }
